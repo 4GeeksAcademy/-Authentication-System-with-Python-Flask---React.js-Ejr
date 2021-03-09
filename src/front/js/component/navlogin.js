@@ -9,7 +9,7 @@ export const NavLogin = () => {
 		$("span", this).toggleClass("lnr-menu lnr-cross");
 		$(".main-menu").addClass("mobile-menu");
 	};
-
+    //para hacer commit push
 	return (
 		<Container>
 			<div className="header-wrap">
@@ -26,9 +26,9 @@ export const NavLogin = () => {
 					</div>
 					<div className="main-menubar d-flex align-items-center">
 						<nav className="hide">
-							<a href="index.html">About Us</a>
-							<a href="generic.html">About Content</a>
-							<a href="elements.html">Login</a>
+							<a href="#AboutUs">About Us</a>
+							<a href="#AboutContent">About Content</a>
+							<a href="#Login">Login</a>
 						</nav>
 						<div className="menu-bar" onClick={e => handleMenu(e)}>
 							<span className="fas fa-bars" />
