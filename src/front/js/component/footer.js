@@ -8,3 +8,5 @@ export const Footer = () => (
 		</p>
 	</footer>
 );
+
+//mi comentario
