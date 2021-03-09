@@ -1,5 +1,7 @@
-<<<<<<< HEAD
-// agregue carpeta de img y logos
-=======
-//comentario
->>>>>>> d5701d9e0972554821f7c518afbf07ed9b824248
+import React from "react";
+import { Link } from "react-router-dom";
+import { Container } from "react-bootstrap";
+
+export const Login = () => {
+	return <Container>holaaaaaa</Container>;
+};
