@@ -3,8 +3,9 @@ import { Link } from "react-router-dom";
 import { Container } from "react-bootstrap";
 import "../../styles/home.scss";
 
-// Probando para Pull Request de Angel
 
+
+// Prueba de Angel
 export const Navbar = () => {
 	const handleMenu = e => {
 		$("nav").toggleClass("hide");
