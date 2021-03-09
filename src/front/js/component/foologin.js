@@ -7,5 +7,5 @@ export const FooLogin = () => (
 			<a href="http://www.4geeksacademy.com">4Geeks Academy</a>
 		</p>
 	</footer>
-    //Sorry
+	//Sorry
 );

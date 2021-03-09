@@ -1,7 +1,7 @@
 import React from "react";
 //import { Link } from "react-router-dom";
 import { Container } from "react-bootstrap";
-//import tomatelo from "../../img/logo/TOMATE´LO2-02.png";
+import tomatelo from "../../img/logo/tomatelo2.png";
 import "../../styles/home.scss";
 
 export const Navbar = () => {
@@ -17,12 +17,10 @@ export const Navbar = () => {
 				<div className="header-top d-flex justify-content-between align-items-center">
 					<div className="logo">
 						<a href="##">
-							<img
-								className="logomove"
-								src="https://es.freelogodesign.org/Content/img/logo-samples/flooop.png"
-							/>
+							<span>
+								<img className="logomove" src={tomatelo} alt="Logo de la página" />
+							</span>
 						</a>
-						{/* src={tomatelo}  */}
 						{/* <span className="text-white top text-uppercase">PROYECTO M||RA</span> */}
 					</div>
 					<div className="main-menubar d-flex align-items-center">
