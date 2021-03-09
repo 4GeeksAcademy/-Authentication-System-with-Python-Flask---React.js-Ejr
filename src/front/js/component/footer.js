@@ -8,3 +8,6 @@ export const Footer = () => (
 		</p>
 	</footer>
 );
+
+//mi comentario
+//soy mauriel
