@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Container } from "react-bootstrap";
 import "../../styles/home.scss";
-
+//ffdfdfdfHOLAAAAAAAAAAAAAAAAAAAAAA********************************************
 export const Navbar = () => {
 	const handleMenu = e => {
 		$("nav").toggleClass("hide");
