@@ -1,6 +1,7 @@
 import React from "react";
-import { Link } from "react-router-dom";
+//import { Link } from "react-router-dom";
 import { Container } from "react-bootstrap";
+//import tomatelo from "../../img/logo/TOMATE´LO2-02.png";
 import "../../styles/home.scss";
 
 export const Navbar = () => {
@@ -18,11 +19,11 @@ export const Navbar = () => {
 						<a href="##">
 							<img
 								className="logomove"
-								src="https://logos-download.com/wp-content/uploads/2016/09/Star_Wars_logo-1.png"
-								alt=""
+								src="https://es.freelogodesign.org/Content/img/logo-samples/flooop.png"
 							/>
 						</a>
-						<span className="text-white top text-uppercase">PROYECTO M||RA</span>
+						{/* src={tomatelo}  */}
+						{/* <span className="text-white top text-uppercase">PROYECTO M||RA</span> */}
 					</div>
 					<div className="main-menubar d-flex align-items-center">
 						<nav className="hide">

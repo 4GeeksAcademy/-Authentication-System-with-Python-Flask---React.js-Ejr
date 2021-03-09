@@ -2,9 +2,12 @@ import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
 import injectContext from "./store/appContext";
+
 // Contenido Publico
 //import { NavLogin } from "./component/navlogin";
+
 //import { FooLogin } from "./component/foologin";
+
 //Contenido Privado
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
