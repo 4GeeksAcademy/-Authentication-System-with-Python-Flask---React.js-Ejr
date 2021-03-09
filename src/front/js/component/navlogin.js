@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Container } from "react-bootstrap";
 import "../../styles/home.scss";
 
-export const Navbar = () => {
+export const NavLogin = () => {
 	const handleMenu = e => {
 		$("nav").toggleClass("hide");
 		$("span", this).toggleClass("lnr-menu lnr-cross");
@@ -22,13 +22,13 @@ export const Navbar = () => {
 								alt=""
 							/>
 						</a>
-						<span className="text-white top text-uppercase">PROYECTO M||RA</span>
+						<span className="text-white top text-uppercase">TOMATE'LO</span>
 					</div>
 					<div className="main-menubar d-flex align-items-center">
 						<nav className="hide">
-							<a href="index.html">Inicio</a>
-							<a href="generic.html">Generico</a>
-							<a href="elements.html">Elementos</a>
+							<a href="index.html">About Us</a>
+							<a href="generic.html">About Content</a>
+							<a href="elements.html">Login</a>
 						</nav>
 						<div className="menu-bar" onClick={e => handleMenu(e)}>
 							<span className="fas fa-bars" />
