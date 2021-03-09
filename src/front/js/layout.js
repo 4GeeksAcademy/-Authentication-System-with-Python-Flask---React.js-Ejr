@@ -46,6 +46,8 @@ const Layout = () => {
 						{/* <Route>
 							<h1>Not found!</h1>
 						</Route> */}
+
+                       
 					</Switch>
 				</ScrollToTop>
 			</BrowserRouter>
