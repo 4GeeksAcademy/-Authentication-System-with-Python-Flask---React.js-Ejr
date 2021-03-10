@@ -35,16 +35,14 @@ const Layout = () => {
 							<Footer />
 						</Route>
 						{/* <Route exact path="/demo">
-							<Demo />
-						</Route> */}
+                            <Demo />
+                        </Route> */}
 						{/* <Route exact path="/single/:theid">
-							<Single />
-						</Route> */}
+                            <Single />
+                        </Route> */}
 						{/* <Route>
-							<h1>Not found!</h1>
-						</Route> */}
-
-                       
+                            <h1>Not found!</h1>
+                        </Route> */}
 					</Switch>
 				</ScrollToTop>
 			</BrowserRouter>
@@ -53,4 +51,3 @@ const Layout = () => {
 };
 
 export default injectContext(Layout);
-//Comentario
