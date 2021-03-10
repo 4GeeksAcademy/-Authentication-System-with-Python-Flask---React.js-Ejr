@@ -6,9 +6,12 @@ import { Home } from "./pages/home";
 import { Demo } from "./pages/demo";
 import { Single } from "./pages/single";
 import injectContext from "./store/appContext";
+import { ViewGeneral } from "./pages/viewGeneral";
 
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
+import { Jumbotron } from "./component/jumbotron";
+import { Card } from "./component/Card";
 
 //create your first component
 const Layout = () => {
@@ -27,6 +30,9 @@ const Layout = () => {
 						</Route>
 						<Route exact path="/demo">
 							<Demo />
+						</Route>
+						<Route exact path="/viewGeneral">
+							<ViewGeneral />
 						</Route>
 						<Route exact path="/single/:theid">
 							<Single />
