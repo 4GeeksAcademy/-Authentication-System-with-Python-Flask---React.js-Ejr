@@ -1,5 +1,5 @@
 body {
-    background-color: cyan;
+    background-color: #000;
     font-family: "Poppins", sans-serif;
     font-size: 14px;
     font-weight: 300;
@@ -13,11 +13,10 @@ body {
 // Estilos para el menu
 // Estilos para el menu
 .header-wrap {
-    border: 1px solid red;
+    z-index: 99999;
     position: relative;
-    height: 90px;
 }
- 
+
 .header-top {
     padding: 30px 0;
     position: absolute;
@@ -25,9 +24,9 @@ body {
 }
 
 @media (max-width: 767px) {
-  .header-top {
-    padding: 15px 0;
-  }
+    .header-top {
+        padding: 15px 0;
+    }
 }
 
 .menu-bar {
@@ -68,14 +67,16 @@ nav.hide {
 
 nav a {
     font-size: 12px;
-    font-weight: 500;
+    font-weight: 700;
     text-transform: uppercase;
     color: rgba(255, 255, 255, 0.7);
-    // margin: 0 25px;
+    margin: 0 25px;
 }
 
 nav a:hover {
-    color:red;
+    color: #beff4b;
+    text-decoration:none;
+    transition: .2s;
 }
 
 .logo{
@@ -84,7 +85,7 @@ nav a:hover {
 
 .logo a img{
     position: relative;
-    width: 60px;
+    width: 100px;
 }
 
 .logomove:hover{
@@ -104,4 +105,17 @@ nav a:hover {
     40%, 90%{
         transform: rotate(-2deg) scale(.85);
     }
+}
+
+// Estilos para el Login
+// Estilos para el Login
+// Estilos para el Login
+//Estilos para el carousel
+.Carousel{
+    border-radius: 20px;
+    box-shadow: 0 0 15px #000;
+}
+
+.Carousel img{
+    height: 100vh;
 }

@@ -37,6 +37,5 @@ export const Login = () => {
 				</Link>
 			</Carousel.Item>
 		</Carousel>
-		//Comentarios
 	);
 };
