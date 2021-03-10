@@ -176,7 +176,7 @@ class Movement_Inventory(db.Model):
     id_Orden = db.Column(db.String(50), nullable=False)
     quantity_Product_Movement = db.Column(db.Float, nullable=False)
     type_Movement = db.Column(db.String(3), nullable=False)
-    date_Movement = db.Column(db.Datetime, nullable= False)
+    date_Movement = db.Column(db.Date, nullable= False)
 
     def __repr__(self):
         return '<Movement_Inventory %r>' % self.id_Movement
