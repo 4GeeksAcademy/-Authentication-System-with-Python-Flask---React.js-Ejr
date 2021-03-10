@@ -30,10 +30,9 @@ class Pymes(db.Model):
     imagen = db.Column(db.String(1000), unique=False, nullable=False)
     lat = db.Column(db.Float, unique=False, nullable=False)
     lon = db.Column(db.Float, unique=False, nullable=False)
-    tipo = db.Column(db.String(100), unique=True, nullable=False)
+    tipo = db.Column(db.String(100), unique=False, nullable=False)
     amenity = db.Column(db.String(100), unique=False, nullable=False)
     id_osm = db.Column(db.Integer,unique=False, nullable=False)
-    mi_pasaporte = db.relationship('Mi_pasaporte')
 
     def __repr__(self):
         return '<Playa %r>' % self.id
@@ -57,8 +56,8 @@ class Mi_pasaporte(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     #tipo playa o montaña
-    tipo_pymes = db.Column(db.String(100))
-    nombre = db.Column(db.String(250), unique=False, nullable=False)
+    tipo_pymes = db.Column(db.String(100), unique=False, nullable=False)
+    name = db.Column(db.String(250), unique=False, nullable=False)
 
     #id del pyme
 
@@ -69,6 +68,6 @@ class Mi_pasaporte(db.Model):
         return {
             "id": self.id,
             "user_id": self.user_id,
-            "nombre": self.nombre,
+            "nombre": self.name,
             "tipo_pymes": self.tipo_pymes
         }

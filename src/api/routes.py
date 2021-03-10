@@ -52,7 +52,12 @@ def get_un_elemento(user_id):
     list_usuario = list(filter(lambda x: x['user_id'] == user_id, list_elements))
     return jsonify(list_usuario)
 
-#falta el profile
+@app.route('/profile', methods=['GET'])
+@jwt_required()
+def profile():
+    if request.method == 'GET':
+        token = get_jwt_identity()
+        return jsonify({"success": "Acceso a espacio privado", "usuario": token}), 200
 
 #bloque de POST's
 @api.route('/mi_pasaporte', methods=['POST'])
@@ -69,7 +74,7 @@ def agregar_pymes():
     pymes = Pymes(name = request_body["name"], descripcion = request_body["descripcion"], provincia = request_body["provincia"], contacto = request_body["contacto"], imagen = request_body["imagen"], lat = request_body["lat"], lon = request_body["lon"], tipo = request_body["tipo"], amenity = request_body["amenity"], id_osm = request_body["id_osm"])
     db.session.add(pymes)
     db.session.commit()
-    return jsonify({"msg": "el pymes de playa se ha agregado con exito"}), 200
+    return jsonify({"msg": "el pymes se ha agregado con exito"}), 200
 
 @api.route('/registro', methods=["POST"])
 def registro():
@@ -101,8 +106,44 @@ def registro():
 
         return jsonify({"exito!": "gracias, su regristro fue exitoso", "status": "true"}), 200
 
+@app.route('/login', methods=['POST'])
+def login():
+    if request.method == 'POST':
+        email = request.json.get("email", None)
+        password = request.json.get("password", None)
+
+        if not email:
+            return jsonify({"msg": "el email es requerido, por favor ingreselo"}), 400
+        if not password:
+            return jsonify({"msg": "la contraseña es requerida, por favor ingresela"}), 400
+
+        user = User.query.filter_by(email=email).first()
+        if not user:
+            return jsonify({"msg": "Usuario o contraseña incorrecta"}), 401
+
+        if not check_password_hash(user.password, password):
+            return jsonify({"msg": "Usuario o contraseña incorrecta"}), 401
+
+        # crear el token
+        expiracion = datetime.timedelta(days=1)
+        access_token = create_access_token(identity=user.email, expires_delta=expiracion)
+
+        data = {
+            "user": user.serialize(),
+            "token": access_token,
+            "expires": expiracion.total_seconds()*1000
+        }
+
+        return jsonify(data), 200
+
 #bloque de metodo DELETE
-#@api.route('/mi_pasaporte/<int:user_id>/<nombre_pymes>')
+@api.route('/mi_pasaporte/<int:user_id>/<nombre_pymes>', methods=['DELETE'])
 #@jwt_required()
-#def borrar_mi_pasaporte():
+def borrar_mi_pasaporte(user_id, nombre_pymes):
+    favorito = Mi_pasaporte.query.filter_by(user_id = user_id, nombre_pymes = nombre_pymes).first()
+    if favorito is None:
+        raise APIException('favorito no encontrado', status_code=404)
+    db.session.delete(favorito)
+    db.session.commit()
+    return jsonify({"msg": "el favorito se elimino con exito"}),200
 
