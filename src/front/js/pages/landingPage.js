@@ -5,7 +5,7 @@ import {logoBlanco, backGround, freeman} from "../../img/image"
 import { withRouter } from "react-router-dom"
 import {Container} from 'react-bootstrap'
 
-const landingPage = () => {
+const LandingPage = () => {
 
 	return (
 		<div style={{ 
@@ -13,7 +13,6 @@ const landingPage = () => {
 		  }}>
 		<Container>
 			<div className="transBox">
-
 			</div>
 			<div>
 
@@ -29,4 +28,4 @@ const landingPage = () => {
 	);
 };
 
-export default withRouter(landingPage)
+export default withRouter(LandingPage)
