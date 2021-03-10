@@ -23,9 +23,9 @@ const Layout = () => {
 				<ScrollToTop>
 					<Navbar />
 					<Switch>
-					  <Route exact path="/">
+						<Route exact path="/">
 							<Landingpage />
-					  </Route>
+						</Route>
 						<Route exact path="/home">
 							<Home />
 						</Route>
