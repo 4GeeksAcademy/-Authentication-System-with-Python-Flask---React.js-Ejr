@@ -6,7 +6,7 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(250), unique=False, nullable=False)
-    nombre = db.Column(db.String(120), unique=False, nullable=False)
+    nombre_completo = db.Column(db.String(120), unique=False, nullable=False)
     respuesta_de_seguridad = db.Column(db.String(120), unique=False, nullable=False)
     mi_pasaporte = db.relationship('Mi_pasaporte', lazy=True)
 
@@ -17,7 +17,7 @@ class User(db.Model):
         return {
             "id": self.id,
             "email": self.email,
-            "nombre": self.nombre
+            "nombre_completo": self.nombre_completo
             # do not serialize the password, its a security breach
         }
 
@@ -38,7 +38,8 @@ class Playa(db.Model):
             "nombre": self.nombre,
             "descripcion": self.descripcion,
             "provincia": self.provincia,
-            "contacto": self.contacto
+            "contacto": self.contacto,
+            "imagen": self.imagen
         }
 
 class Montana(db.Model):
@@ -58,7 +59,8 @@ class Montana(db.Model):
             "nombre": self.nombre,
             "descripcion": self.descripcion,
             "provincia": self.provincia,
-            "contacto": self.contacto
+            "contacto": self.contacto,
+            "imagen": self.imagen
         }
 
 class Mi_pasaporte(db.Model):
