@@ -112,10 +112,25 @@ nav a:hover {
 // Estilos para el Login
 //Estilos para el carousel
 .Carousel{
-    border-radius: 20px;
+    background-image: linear-gradient(20deg, #000 20%, rgba(189, 255, 75, 0.752) 100%);
     box-shadow: 0 0 15px #000;
 }
 
 .Carousel img{
     height: 100vh;
+}
+
+.Contenedor{
+    z-index: 100;
+}
+
+.Card{
+    background-color: transparent;
+    box-shadow: 0 0 15px #000;
+}
+
+.logimg{
+    display:flex;
+    margin:0 auto;
+    width: 100px;
 }

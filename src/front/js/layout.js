@@ -5,7 +5,8 @@ import injectContext from "./store/appContext";
 
 // Contenido Publico
 import { NavLogin } from "./component/navlogin";
-import { Login } from "./pages/login";
+import { AboutUs } from "./component/aboutus";
+import { Presentation } from "./component/presentation";
 import { FooLogin } from "./component/foologin";
 
 //Contenido Privado
@@ -26,7 +27,9 @@ const Layout = () => {
 					<Switch>
 						<Route exact path="/">
 							<NavLogin />
-							<Login />
+							<Presentation />
+							<AboutUs />
+							{/* <Login /> */}
 							<FooLogin />
 						</Route>
 						<Route exact path="/home">

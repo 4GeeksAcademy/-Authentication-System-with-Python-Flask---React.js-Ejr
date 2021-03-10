@@ -1,11 +1,11 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import { Container, Carousel, CarouselItem, CarouselItemProps, CarouselProps } from "react-bootstrap";
+//import { Link } from "react-router-dom";
+import { Carousel } from "react-bootstrap";
 
 export const Login = () => {
 	return (
-		<Carousel className="Carousel">
-			<Carousel.Item interval={3000}>
+		<Carousel fade className="Carousel">
+			<Carousel.Item>
 				<div className="bg-shadow">
 					<Link to="##">
 						<img
@@ -20,7 +20,7 @@ export const Login = () => {
 					</Link>
 				</div>
 			</Carousel.Item>
-			<Carousel.Item interval={3000}>
+			<Carousel.Item>
 				<div className="bg-shadow">
 					<Link to="##">
 						<img className="d-block w-100" src="https://i.imgur.com/fiKu58y.jpg" alt="Planets" />
@@ -31,7 +31,7 @@ export const Login = () => {
 					</Link>
 				</div>
 			</Carousel.Item>
-			<Carousel.Item interval={3000}>
+			<Carousel.Item>
 				<div className="bg-shadow">
 					<Link to="##">
 						<img className="d-block w-100" src="http://i.imgur.com/rE70lnQ.jpg" alt="Vehicles" />
