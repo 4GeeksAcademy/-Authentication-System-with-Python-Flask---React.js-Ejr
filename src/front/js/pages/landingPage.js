@@ -15,6 +15,12 @@ const landingPage = () => {
 			<div className="transBox">
 
 			</div>
+			<div>
+
+			</div>
+			<div className="iconBox">
+
+			</div>
 
 
 		</Container>
