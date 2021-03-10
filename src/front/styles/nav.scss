@@ -1,0 +1,108 @@
+body {
+    background-color: #000;
+    font-family: "Poppins", sans-serif;
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 1.5em;
+    position: relative;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+// Estilos para el menu
+// Estilos para el menu
+// Estilos para el menu
+.header-wrap {
+    z-index: 99999;
+    position: relative;
+}
+
+.header-top {
+    padding: 30px 0;
+    position: absolute;
+    width: 100%;
+}
+
+@media (max-width: 767px) {
+    .header-top {
+        padding: 15px 0;
+    }
+}
+
+.menu-bar {
+    cursor: pointer;
+}
+
+.menu-bar span {
+    color: #fff;
+    font-size: 24px;
+}
+
+.main-menubar {
+    position: relative;
+}
+
+nav {
+    margin-right: 70px;
+    -webkit-transition: all 0.3s ease 0s;
+    -moz-transition: all 0.3s ease 0s;
+    -o-transition: all 0.3s ease 0s;
+    transition: all 0.3s ease 0s;
+    transform-origin: 100% 50%;
+}
+
+@media (max-width: 767px) {
+  nav {
+    margin-right: 0;
+    position: absolute;
+    right: 0;
+    top: 50px;
+    text-align: right;
+  }
+}
+
+nav.hide {
+    transform: scale(0);
+}
+
+nav a {
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.7);
+    margin: 0 25px;
+}
+
+nav a:hover {
+    color: #beff4b;
+    text-decoration:none;
+    transition: .2s;
+}
+
+.logo{
+    position: relative;
+}
+
+.logo a img{
+    position: relative;
+    width: 100px;
+}
+
+.logomove:hover{
+    animation: 1s rotar2 1;
+    transform-origin: top center;
+}
+
+@-webkit-keyframes rotar2{
+    20%{
+        transform: rotate(15deg) scale(.7);
+    }
+    
+    30%, 60%{
+        transform: rotate(-10deg) scale(1.2);
+    }
+    
+    40%, 90%{
+        transform: rotate(-2deg) scale(.85);
+    }
+}
