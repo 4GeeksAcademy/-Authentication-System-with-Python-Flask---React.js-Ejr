@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Container } from "react-bootstrap";
 import tomatelo from "../../img/logo/tomatelo2.png";
-import "../../styles/home.scss";
+import "../../styles/public.scss";
 
 export const NavLogin = () => {
 	const handleMenu = e => {
