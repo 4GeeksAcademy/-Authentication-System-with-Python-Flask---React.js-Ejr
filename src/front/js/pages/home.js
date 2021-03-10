@@ -54,10 +54,7 @@ export const Home = () => {
 			</Row>
 			<Row>
 				<Col xs={6} md={4}>
-					<Image
-						src="https://s2.best-wallpaper.net/wallpaper/3840x2160/1807/Three-cups-fruit-cocktails-citrus-pomegranate-ice-cubes_3840x2160.jpg"
-						thumbnail
-					/>
+					<Image src="https://www.wallpapertip.com/wmimgs/50-504541_best-cocktails.jpg" thumbnail />
 				</Col>
 				<Col xs={6} md={4}>
 					<Image src="https://images2.alphacoders.com/876/876244.jpg" thumbnail />
@@ -102,3 +99,5 @@ export const Home = () => {
 		</Container>
 	);
 };
+
+//Comentario
