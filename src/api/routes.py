@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint, json
-from api.models import db, User, Playa, Montana, Mi_pasaporte
+from api.models import db, User, Pymes, Mi_pasaporte
 from api.utils import generate_sitemap, APIException
 import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -25,29 +25,15 @@ def get_user(user_id):
     userjson = user.serialize()
     return jsonify(userjson), 200
 
-@api.route('/playa', methods=['GET'])
+@api.route('/pymes', methods=['GET'])
 def get_playa():
-    playa = Playa.query.all()
-    list_playa = list(map(lambda x: x.serialize(), playa))
-    return jsonify(list_playa), 200
+    pymes = Pymes.query.all()
+    list_pymes = list(map(lambda x: x.serialize(), pymes))
+    return jsonify(list_pymes), 200
 
-@api.route('/playa/<int:pymes_id>', methods=['GET'])
+@api.route('/pymes/<int:pymes_id>', methods=['GET'])
 def get_pymes_playa(pymes_id):
-    pymes = Playa.query.get(pymes_id)
-    if pymes is None:
-        raise APIException('El pymes no existe', status_code=404)
-    pymesjson = pymes.serialize()
-    return jsonify(pymesjson), 200
-
-@api.route('/montana', methods=['GET'])
-def get_montana():
-    montana = Montana.query.all()
-    list_montana = list(map(lambda x: x.serialize(), montana))
-    return jsonify(list_montana), 200
-
-@api.route('/montana/<int:pymes_id>', methods=['GET'])
-def get_pymes_montana(pymes_id):
-    pymes = Montana.query.get(pymes_id)
+    pymes = Pymes.query.get(pymes_id)
     if pymes is None:
         raise APIException('El pymes no existe', status_code=404)
     pymesjson = pymes.serialize()
@@ -77,21 +63,13 @@ def agregar_mi_pasaporte():
     db.session.commit()
     return jsonify({"msg": "el favorito se ha agregado con exito"}), 200
 
-@api.route('/playa', methods=['POST'])
-def agregar_pymes_playa():
+@api.route('/pymes', methods=['POST'])
+def agregar_pymes():
     request_body = request.get_json()
-    pymes_playa = Playa(nombre = request_body["nombre"], descripcion = request_body["descripcion"], provincia = request_body["provincia"], contacto = request_body["contacto"], imagen = request_body["imagen"])
-    db.session.add(pymes_playa)
+    pymes = Pymes(name = request_body["name"], descripcion = request_body["descripcion"], provincia = request_body["provincia"], contacto = request_body["contacto"], imagen = request_body["imagen"], lat = request_body["lat"], lon = request_body["lon"], tipo = request_body["tipo"], amenity = request_body["amenity"], id_osm = request_body["id_osm"])
+    db.session.add(pymes)
     db.session.commit()
     return jsonify({"msg": "el pymes de playa se ha agregado con exito"}), 200
-
-@api.route('/montana', methods=['POST'])
-def agregar_pymes_montana():
-    request_body = request.get_json()
-    pymes_montana = Montana(nombre = request_body["nombre"], descripcion = request_body["descripcion"], provincia = request_body["provincia"], contacto = request_body["contacto"], imagen = request_body["imagen"])
-    db.session.add(pymes_montana)
-    db.session.commit()
-    return jsonify({"msg": "el pymes de montaña se ha agregado con exito"}), 200
 
 @api.route('/registro', methods=["POST"])
 def registro():
