@@ -2,10 +2,12 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Container } from "react-bootstrap";
 import tomatelo from "../../img/logo/tomatelo2.png";
+import "../../styles/nav.scss";
 import "../../styles/public.scss";
 
 export const NavLogin = () => {
 	const handleMenu = e => {
+		e.preventDefault();
 		$("nav").toggleClass("hide");
 	};
 
