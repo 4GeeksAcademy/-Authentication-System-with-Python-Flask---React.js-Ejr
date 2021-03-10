@@ -67,19 +67,9 @@ export const Home = () => {
 			</Row>
 
 			{/* categorias login */}
+
 			<Row>
-				<Col xs={6} md={4}>
-					xs=6 md=4
-				</Col>
-				<Col xs={6} md={4}>
-					xs=6 md=4
-				</Col>
-				<Col xs={6} md={4}>
-					xs=6 md=4
-				</Col>
-			</Row>
-			<Row>
-				<Card>
+				<Card id="cardid">
 					<Media>
 						<Col xs={6} md={4}>
 							<img
@@ -102,7 +92,7 @@ export const Home = () => {
 					</Media>
 				</Card>
 
-				<Card>
+				<Card id="cardid">
 					<Media>
 						<Media.Body>
 							<Col>
@@ -125,7 +115,7 @@ export const Home = () => {
 					</Media>
 				</Card>
 
-				<Card>
+				<Card id="cardid">
 					<Media>
 						<Col xs={6} md={4}>
 							<img
@@ -147,7 +137,7 @@ export const Home = () => {
 						</Media.Body>
 					</Media>
 				</Card>
-				<Card>
+				<Card id="cardid">
 					<Media>
 						<Media.Body>
 							<Col>
@@ -170,7 +160,7 @@ export const Home = () => {
 					</Media>
 				</Card>
 
-				<Card>
+				<Card id="cardid">
 					<Media>
 						<Col xs={6} md={4}>
 							<img
@@ -193,7 +183,7 @@ export const Home = () => {
 					</Media>
 				</Card>
 
-				<Card>
+				<Card id="cardid">
 					<Media>
 						<Media.Body>
 							<Col>
