@@ -9,21 +9,21 @@ export const Presentation = () => {
 				<img
 					className="d-block w-100"
 					src="https://s2.best-wallpaper.net/wallpaper/1920x1200/1909/Cocktail-pineapple-coconut-kiwi-black-background_1920x1200.jpg"
-					alt="Planets"
+					alt="Imagen ilustrativa"
 				/>
 			</Carousel.Item>
 			<Carousel.Item>
 				<img
 					className="d-block w-100"
 					src="https://img5.goodfon.com/wallpaper/nbig/8/2d/kokteil-miata-led-apnlsin-laim.jpg"
-					alt="Characters"
+					alt="Imagen ilustrativa"
 				/>
 			</Carousel.Item>
 			<Carousel.Item>
 				<img
 					className="d-block w-100"
 					src="https://img2.goodfon.com/wallpaper/nbig/d/c9/bokal-napitok-kokteyl.jpg"
-					alt="Vehicles"
+					alt="Imagen ilustrativa"
 				/>
 			</Carousel.Item>
 		</Carousel>
