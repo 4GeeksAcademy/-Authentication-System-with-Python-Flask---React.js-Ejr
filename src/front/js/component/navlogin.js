@@ -7,8 +7,6 @@ import "../../styles/home.scss";
 export const NavLogin = () => {
 	const handleMenu = e => {
 		$("nav").toggleClass("hide");
-		$("span", this).toggleClass("lnr-menu lnr-cross");
-		$(".main-menu").addClass("mobile-menu");
 	};
 
 	return (
