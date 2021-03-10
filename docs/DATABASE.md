@@ -27,6 +27,7 @@ Note: Make sure to update the `DB_CONNECTION_STRING` on the `.env` file with the
 ```sql
 \c example;
 ```
+pipenv run reset_db
 
 *Result*
 ```sql
