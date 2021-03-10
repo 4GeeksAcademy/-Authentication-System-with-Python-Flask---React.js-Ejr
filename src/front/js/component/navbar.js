@@ -1,17 +1,34 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Navbar } from "react-bootstrap";
+import { logoAzul } from "../../img/image";
+import { withRouter } from "react-router-dom";
 
-export const Navbar = () => {
-	return (
-		<nav className="navbar navbar-light bg-light mb-3">
-			<Link to="/">
-				<span className="navbar-brand mb-0 h1">React Boilerplate</span>
-			</Link>
-			<div className="ml-auto">
-				<Link to="/demo">
-					<button className="btn btn-primary">Check the Context in action</button>
-				</Link>
-			</div>
-		</nav>
-	);
+const MyNavbar = props => {
+	useEffect(() => {
+		console.log(props.location.pathname);
+	}, []);
+
+	if (props.location.pathname === "/") {
+		return "";
+	} else {
+		return (
+			<>
+				<Navbar bg="light">
+					<div className="container">
+						<Navbar.Brand href="/">
+							<img
+								src={logoAzul}
+								width="84"
+								height="25"
+								className="d-inline-block align-top"
+								alt="cotec logo"
+							/>
+						</Navbar.Brand>
+					</div>
+				</Navbar>
+			</>
+		);
+	}
 };
+
+export default withRouter(MyNavbar);
