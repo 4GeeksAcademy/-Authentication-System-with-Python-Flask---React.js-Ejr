@@ -4,15 +4,14 @@ import ScrollToTop from "./component/scrollToTop";
 import injectContext from "./store/appContext";
 
 // Contenido Publico
-//import { NavLogin } from "./component/navlogin";
-
-//import { FooLogin } from "./component/foologin";
+import { NavLogin } from "./component/navlogin";
+import { Login } from "./pages/login";
+import { FooLogin } from "./component/foologin";
 
 //Contenido Privado
 import { Navbar } from "./component/navbar";
-import { Footer } from "./component/footer";
 import { Home } from "./pages/home";
-import { Login } from "./pages/login";
+import { Footer } from "./component/footer";
 
 //create your first component
 const Layout = () => {
@@ -25,17 +24,15 @@ const Layout = () => {
 			<BrowserRouter basename={basename}>
 				<ScrollToTop>
 					<Switch>
-						{/* <Route exact path="/">
-							<Login />
-						</Route> */}
 						<Route exact path="/">
+							<NavLogin />
+							<Login />
+							<FooLogin />
+						</Route>
+						<Route exact path="/home">
 							<Navbar />
 							<Home />
 							<Footer />
-						</Route>
-
-						<Route exact path="/login">
-							<Login />
 						</Route>
 						{/* <Route exact path="/demo">
 							<Demo />

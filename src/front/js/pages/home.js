@@ -16,7 +16,7 @@ export const Home = () => {
             <Row>
                 
                 <Col xs={6} md={4}>
-                    <Image src="https://s2.best-wallpaper.net/wallpaper/3840x2160/1807/Three-cups-fruit-cocktails-citrus-pomegranate-ice-cubes_3840x2160.jpg" thumbnail />
+                    <Image src="https://images6.alphacoders.com/349/349908.jpg" thumbnail />
                 </Col>
                 <Col xs={6} md={4}>
                     <Image src="https://images2.alphacoders.com/876/876244.jpg" thumbnail />
