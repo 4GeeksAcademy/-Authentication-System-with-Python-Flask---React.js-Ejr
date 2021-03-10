@@ -64,6 +64,10 @@ export const Home = () => {
 					/>
 				</Col>
 			</Row>
+
+			{/* CATEGORIAS */}
+			{/* CATEGORIAS */}
+			{/* CATEGORIAS */}
 		</Container>
 	);
 };
