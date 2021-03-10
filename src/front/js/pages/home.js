@@ -1,10 +1,10 @@
 import React, { useContext } from "react";
-import { Context } from "../store/appContext";
+//import { Context } from "../store/appContext";
 import { Container, Row, Col, Image } from "react-bootstrap";
 import "../../styles/home.scss";
 
 export const Home = () => {
-	const { store, actions } = useContext(Context);
+	//const { store, actions } = useContext(Context);
 
 	return (
 		<Container>
