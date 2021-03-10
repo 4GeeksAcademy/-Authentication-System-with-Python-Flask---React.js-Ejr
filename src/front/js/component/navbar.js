@@ -6,9 +6,8 @@ import "../../styles/home.scss";
 
 export const Navbar = () => {
 	const handleMenu = e => {
+		e.preventDefault();
 		$("nav").toggleClass("hide");
-		$("span", this).toggleClass("lnr-menu lnr-cross");
-		$(".main-menu").addClass("mobile-menu");
 	};
 
 	return (
@@ -25,9 +24,9 @@ export const Navbar = () => {
 					</div>
 					<div className="main-menubar d-flex align-items-center">
 						<nav className="hide">
-							<a href="index.html">Inicio</a>
-							<a href="generic.html">Generico</a>
-							<a href="elements.html">Elementos</a>
+							<a href="#">Inicio</a>
+							<a href="#">Generico</a>
+							<a href="#">Elementos</a>
 						</nav>
 						<div className="menu-bar" onClick={e => handleMenu(e)}>
 							<span className="fas fa-bars" />

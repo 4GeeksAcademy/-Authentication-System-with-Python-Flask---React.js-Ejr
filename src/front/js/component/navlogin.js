@@ -7,12 +7,8 @@ import "../../styles/home.scss";
 export const NavLogin = () => {
 	const handleMenu = e => {
 		$("nav").toggleClass("hide");
-		$("span", this).toggleClass("lnr-menu lnr-cross");
-		$(".main-menu").addClass("mobile-menu");
 	};
-	//para hacer commit push
-	//fafasdfasf
-	//MONICA LOGOOOOO
+
 	return (
 		<Container fluid>
 			<div className="container">
@@ -28,8 +24,8 @@ export const NavLogin = () => {
 						</div>
 						<div className="main-menubar d-flex align-items-center">
 							<nav className="hide">
-								<a href="#AboutUs">About Us</a>
-								<a href="#AboutContent">About Content</a>
+								<a href="#AboutUs">About_Us</a>
+								<a href="#AboutContent">Content</a>
 								<a href="#Login">Login</a>
 							</nav>
 							<div className="menu-bar" onClick={e => handleMenu(e)}>
