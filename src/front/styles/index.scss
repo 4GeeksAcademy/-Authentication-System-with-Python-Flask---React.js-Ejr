@@ -29,7 +29,34 @@ h1, h2, h3, h4, h5{
 }
 .iconBox{
     width: 100%;
-    height: 100px;
+    height: 150px;
+    background-color: #fff;
+    border-radius: 10px;
+    padding-top: 1rem;
+}
+.cardBox{
+    width: 100%;
+    height: 300px;
     background-color: #fff;
     border-radius: 10px;
 }
+.icon{
+    color:#333333;
+    font-size: 3rem;
+}
+.icon:hover{
+    color: #007BEA;
+}
+.background{
+    content: "";
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    height: 280%;
+    position: absolute;
+    z-index: -1;   
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
