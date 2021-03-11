@@ -9,7 +9,7 @@ export const Content = () => {
 				<div className="d-flex justify-content-end" id="padre">
 					<Image
 						className="col-12 col-md-8"
-						src="https://img5.goodfon.com/wallpaper/nbig/8/2d/kokteil-miata-led-apnlsin-laim.jpg"
+						src="https://foodandtravel.mx/wp-content/uploads/2019/02/coctelesclassic.jpg"
 						fluid
 					/>
 					<div className="col-12 col-md-6" id="uno">
