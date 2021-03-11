@@ -5,7 +5,7 @@ import "../../styles/galeria.scss";
 
 export const Home = () => {
 	return (
-		<div className="container">
+		<div className="container" id="galeria">
 			<div className="row">
 				<div className="col-md-4 caja1">
 					<img

@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import { Redirect } from "react-router-dom";
 // import { Context } from "./store/appContext";
 //import { Link } from "react-router-dom";
-import { Container, Row, Col, Card, CardDeck, InputGroup, FormControl, Button } from "react-bootstrap";
+import { Container, Row, Button } from "react-bootstrap";
 
 export const Login = () => {
 	// const { actions, store } = useContext(Context);
@@ -30,97 +30,85 @@ export const Login = () => {
 	};
 
 	return (
-		<Container>
+		<Container className="mt-2 mb-2">
 			<Row>
-				<Col className="mt-2 mb-2" id="Login">
-					<CardDeck>
-						{/* Card para Login */}
-						<Card className="Card text-light text-center">
-							<Card.Img
-								className="Imglog"
-								variant="top"
-								src="https://lh3.googleusercontent.com/proxy/RrUvNH1tb8cqbEa3GfvMqsIvCyD-8a4LYuAaCStlQDAAtS2BEH-DU-t_6VC5feCJI57dt5Gae20neUDeqJr4CFXeeZG00TMrN86flNLXXpDE-4d5xRhVoduHQGggaDqqrWubnPvOmeVH"
+				<article className="text-center text-light offset-lg-2 col-12 col-md-12 col-lg-8">
+					<h4 className="display-5">
+						Ingresa a <span className="glitch1">M||RA</span> y enterate de todo lo relacionado a este
+						proyecto!
+					</h4>
+					<p className="lead">
+						Esta página esta ligada a una base de datos ya creada por lo cual para poder ingresar deberás
+						revisar F12 y conocer los usuarios en lista ya creados!
+					</p>
+					<hr className="my-1" />
+				</article>
+
+				<form className="col-12 col-md-6 text-center text-light" onSubmit={e => actionLogin(e)}>
+					<h4 className="display-5">Login</h4>
+					<hr className="my-1" />
+					<div className="form-group align-items-center">
+						<div className="col-auto">
+							<label className="inlineFormInput">Email</label>
+							<input
+								type="text"
+								className="form-control mb-2 text-center"
+								id="User"
+								placeholder="nickname@gmail.com"
 							/>
-							<form onSubmit={e => actionLogin(e)}>
-								<Card.Body>
-									<Card.Title>Log In</Card.Title>
-									<Card.Text>
-										<p>Aqui podras hacer el Login a la página si ya estas registrado</p>
-										<InputGroup size="sm" className="mb-3">
-											<InputGroup.Prepend>
-												<InputGroup.Text id="inputGroup-sizing-sm">@email</InputGroup.Text>
-											</InputGroup.Prepend>
-											<FormControl
-												id="email"
-												onChange={e => setEmail(e.target.value)}
-												aria-label="Small"
-												aria-describedby="inputGroup-sizing-sm"
-											/>
-										</InputGroup>
-										<InputGroup size="sm" className="mb-3">
-											<InputGroup.Prepend>
-												<InputGroup.Text id="inputGroup-sizing-sm">Password</InputGroup.Text>
-											</InputGroup.Prepend>
-											<FormControl
-												id="password"
-												onChange={e => setPassword(e.target.value)}
-												type="password"
-												aria-label="Small"
-												aria-describedby="inputGroup-sizing-sm"
-											/>
-										</InputGroup>
-									</Card.Text>
-								</Card.Body>
-								<Card.Footer>
-									<Button type="submit" variant="outline-danger">
-										Log In
-									</Button>
-								</Card.Footer>
-							</form>
-							{/* {store.boolean ? <Redirect to="/home" /> : ""} */}
-						</Card>
-						{/* Card para Register */}
-						<Card className="Card text-light text-center">
-							<Card.Img className="Imglog" variant="top" src="https://w.wallha.com/ws/7/lr8q4G9s.jpg" />
-							<form onSubmit={e => actionRegister(e)}>
-								<Card.Body>
-									<Card.Title>Register</Card.Title>
-									<Card.Text>
-										<p>Aquí podrás hacer el Registro para poder acceder a la página</p>
-										<InputGroup size="sm" className="mb-3">
-											<InputGroup.Prepend>
-												<InputGroup.Text id="inputGroup-sizing-sm">@email</InputGroup.Text>
-											</InputGroup.Prepend>
-											<FormControl
-												onChange={e => setEmail(e.target.value)}
-												id="email"
-												aria-label="Small"
-												aria-describedby="inputGroup-sizing-sm"
-											/>
-										</InputGroup>
-										<InputGroup size="sm" className="mb-3">
-											<InputGroup.Prepend>
-												<InputGroup.Text id="inputGroup-sizing-sm">Password</InputGroup.Text>
-											</InputGroup.Prepend>
-											<FormControl
-												onChange={e => setPassword(e.target.value)}
-												id="password"
-												type="password"
-												aria-label="Small"
-												aria-describedby="inputGroup-sizing-sm"
-											/>
-										</InputGroup>
-									</Card.Text>
-								</Card.Body>
-								<Card.Footer>
-									<Button type="submit" variant="outline-primary">
-										Register
-									</Button>
-								</Card.Footer>
-							</form>
-						</Card>
-					</CardDeck>
-				</Col>
+							<small id="emailHelp" className="form-text text-muted">
+								Por favor revisa bien tus datos cuando termines.
+							</small>
+						</div>
+						<div className="col-auto">
+							<label className="inlineFormInputGroup">Password</label>
+							<div className="input-group mb-2">
+								<input
+									type="password"
+									className="form-control text-center"
+									id="Password"
+									placeholder="tomatelo2x3"
+								/>
+							</div>
+						</div>
+						<Button type="submit" variant="outline-info">
+							Log In
+						</Button>
+						{/* {store.boolean ? <Redirect to="/home" /> : ""} */}
+					</div>
+				</form>
+				<form className="col-12 col-md-6 text-center text-light" onSubmit={e => actionLogin(e)}>
+					<h4 className="display-5">Register</h4>
+					<hr className="my-1" />
+					<div className="form-group align-items-center">
+						<div className="col-auto">
+							<label className="inlineFormInput">Email</label>
+							<input
+								type="text"
+								className="form-control mb-2 text-center"
+								id="User"
+								placeholder="nickname@gmail.com"
+							/>
+							<small id="emailHelp" className="form-text text-muted">
+								Por favor revisa bien tus datos cuando termines.
+							</small>
+						</div>
+						<div className="col-auto">
+							<label className="inlineFormInputGroup">Password</label>
+							<div className="input-group mb-2">
+								<input
+									type="password"
+									className="form-control text-center"
+									id="Password"
+									placeholder="tomatelo2x3"
+								/>
+							</div>
+						</div>
+						<Button type="submit" variant="outline-info">
+							Register
+						</Button>
+					</div>
+				</form>
 			</Row>
 		</Container>
 	);
