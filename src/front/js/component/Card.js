@@ -44,11 +44,11 @@ const MontanasCard = () => {
 
 export const Card = () => {
 	return (
-		<div className="card mx-1" style={{ minWidth: "100px", maxWidth: "350px" }}>
+		<div className="card my-2" style={{ minWidth: "180px", maxWidth: "440px" }}>
 			<div className="shadow-lg card-body">
 				{true ? <PlayasCard /> : <MontanasCard />}
 				<div className="d-flex justify-content-between mt-5 align-items-center">
-					<Link className="btn btn-sm btn-outline-primary" to={`/`}>
+					<Link className="btn btn-sm btn-outline-primary" data-toggle="popover" to={`/`}>
 						Learn more
 					</Link>
 					<i className="ml-5 fas fa-passport fa-2x" />

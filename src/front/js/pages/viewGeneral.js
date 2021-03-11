@@ -11,10 +11,13 @@ export function ViewGeneral() {
 	return (
 		<div className="text-center container-fluid">
 			<Jumbotron />
-			<div className="row px-1 my-5">
+			<div className="row px-1 my-4">
 				{carouselList.map((value, index) => {
 					return (
-						<div className="col-sm-12 col-md-4 col-lg-4 my-2" key={index}>
+						<div
+							className="col-sm-12 col-md-4 col-lg-3 my-2"
+							style={{ paddingLeft: "2px", paddingRight: "2px" }}
+							key={index}>
 							<Card />
 						</div>
 					);
