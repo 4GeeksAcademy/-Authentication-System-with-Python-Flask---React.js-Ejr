@@ -54,7 +54,8 @@ export const Login = () => {
 								type="text"
 								className="form-control mb-2 text-center"
 								id="User"
-								placeholder="nickname@gmail.com"></input>
+								placeholder="nickname@gmail.com"
+							/>
 							<small id="emailHelp" className="form-text text-muted">
 								Por favor revisa bien tus datos cuando termines.
 							</small>
@@ -66,7 +67,8 @@ export const Login = () => {
 									type="password"
 									className="form-control text-center"
 									id="Password"
-									placeholder="tomatelo2x3"></input>
+									placeholder="tomatelo2x3"
+								/>
 							</div>
 						</div>
 						<Button type="submit" variant="outline-info">
@@ -85,7 +87,8 @@ export const Login = () => {
 								type="text"
 								className="form-control mb-2 text-center"
 								id="User"
-								placeholder="nickname@gmail.com"></input>
+								placeholder="nickname@gmail.com"
+							/>
 							<small id="emailHelp" className="form-text text-muted">
 								Por favor revisa bien tus datos cuando termines.
 							</small>
@@ -97,7 +100,8 @@ export const Login = () => {
 									type="password"
 									className="form-control text-center"
 									id="Password"
-									placeholder="tomatelo2x3"></input>
+									placeholder="tomatelo2x3"
+								/>
 							</div>
 						</div>
 						<Button type="submit" variant="outline-info">

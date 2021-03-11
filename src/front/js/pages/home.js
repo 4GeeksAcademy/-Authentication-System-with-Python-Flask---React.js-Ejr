@@ -14,7 +14,7 @@ export const Home = () => {
                             className="img-fluid"
                             alt="Responsive image"
                         /> */}
-						<div className="frente"></div>
+						<div className="frente" />
 						<div className="atras">
 							<h4>Titulo</h4>
 							<p>
