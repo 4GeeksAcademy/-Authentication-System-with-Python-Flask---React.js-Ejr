@@ -11,6 +11,9 @@ export const Navbar = () => {
 				<Link to="/viewGeneral">
 					<button className="btn btn-primary">jumbotron</button>
 				</Link>
+				<Link to="/register">
+					<button className="btn btn-primary">regi</button>
+				</Link>
 			</div>
 		</nav>
 	);

@@ -1,16 +1,13 @@
 import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import ScrollToTop from "./component/scrollToTop";
 
 import { Home } from "./pages/home";
-import { Demo } from "./pages/demo";
-import { Single } from "./pages/single";
 import injectContext from "./store/appContext";
 import { ViewGeneral } from "./pages/viewGeneral";
 import { PymeView } from "./pages/viewPyme";
+import { Register } from "./pages/register";
 
 import { Navbar } from "./component/navbar";
-import { Footer } from "./component/footer";
 import { Jumbotron } from "./component/jumbotron";
 import { Card } from "./component/Card";
 
@@ -29,23 +26,16 @@ const Layout = () => {
 						<Route exact path="/">
 							<Home />
 						</Route>
-						<Route exact path="/demo">
-							<Demo />
-						</Route>
 						<Route exact path="/viewGeneral">
 							<ViewGeneral />
 						</Route>
 						<Route exact path="/viewPyme">
 							<PymeView />
 						</Route>
-						<Route exact path="/single/:theid">
-							<Single />
-						</Route>
 						<Route>
 							<h1>Not found!</h1>
 						</Route>
 					</Switch>
-					<Footer />
 				</ScrollToTop>
 			</BrowserRouter>
 		</div>
