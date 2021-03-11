@@ -11,7 +11,7 @@ class User(db.Model):
     last_name = db.Column(db.String(250), unique=False, nullable=False)
     email= db.Column(db.String(250), unique=True, nullable=True)
     password= db.Column(db.String(250), unique=False, nullable=False)
-    is_older= db.Column(db.DateTime(timezone=True), nullable=False, unique=False)
+    is_older= db.Column(db.DateTime, nullable=False, unique=False)
     favorites: db.relationship('Favorite', lazy=True, backref='user')
 
     def __repr__(self):

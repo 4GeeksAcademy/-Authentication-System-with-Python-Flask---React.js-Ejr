@@ -41,7 +41,10 @@ setup_admin(app)
 # Add all endpoints form the API with a "api" prefix
 app.register_blueprint(api, url_prefix='/api')
 
-#JSON Web Token
+
+#JWT Key 
+app.config['JWT_SECRET_KEY'] = '$An$Jo$Mo$Ma$'
+#JSON Web Token Management
 jwt = JWTManager(app)
 
 # Handle/serialize errors like a JSON object
@@ -146,8 +149,36 @@ def delete_fav_by_id():
         db.session.commit()
         return jsonify(fav.serialize()), 204 #indicates that the server has successfully fulfilled the request and that there is no content to send in the response payload body
 
-
 #endregion Favorite
+#region LOGIN
+@app.route('/login', methods=['POST'])
+def user_login():
+    if not request.is_json:
+        return ({"msg": "Missing JSON request"}), 400 #Bad request
+
+    req = resquest.get_json()
+    email = req.get("email", None)
+    password =  req.get("password", None)
+
+    if not email:
+        return jsonify({"msg": "Email required"}), 400
+    if not password:
+        return jsonify({"msg": "Password is required"}), 400
+
+                ###CHECKING FOR VALID USER
+    chk_usr = User.query.filter_by(email=email, password=password).first_or_404()
+    if chk_usr == None:
+        return jsonify({"msg": "Email\Password required"}), 401 #this status => lacks valid authentication credentials
+                
+                ###TOKEN GENERATOR###
+    myToken = {'jwt': create_jwt(identity=chk_usr.id), 'id':chk_usr.id, 'user':chk_usr.serialize()}
+    return jsonify(myToken), 200 
+
+
+
+
+
+#endregion LOGIN
 # this only runs if `$ python src/main.py` is executed
 if __name__ == '__main__':
     PORT = int(os.environ.get('PORT', 3001))
