@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 //import { Context } from "../store/appContext";
-import { Container, Row, Col, Image, Card, Media } from "react-bootstrap";
+import { Container, Row, Col, Image, Card, Media, Button, Link } from "react-bootstrap";
 import "../../styles/home.scss";
 import "../../styles/home_cards.scss";
 import tomatelo from "../../img/logo/tomatelo2.png";
@@ -27,6 +27,9 @@ export const Categories = () => {
 									turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue
 									felis in faucibus.
 								</p>
+								<Button variant="outline-info" href="/">
+									Deseo ir a esta categoría
+								</Button>
 							</Col>
 						</Media.Body>
 					</Media>
@@ -43,6 +46,9 @@ export const Categories = () => {
 									turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue
 									felis in faucibus.
 								</p>
+								<Button variant="outline-info" href="/">
+									Deseo ir a esta categoría
+								</Button>
 							</Col>
 						</Media.Body>
 						<Col xs={6} md={4}>
@@ -73,6 +79,9 @@ export const Categories = () => {
 									turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue
 									felis in faucibus.
 								</p>
+								<Button variant="outline-info" href="/">
+									Deseo ir a esta categoría
+								</Button>
 							</Col>
 						</Media.Body>
 					</Media>
@@ -88,6 +97,9 @@ export const Categories = () => {
 									turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue
 									felis in faucibus.
 								</p>
+								<Button variant="outline-info" href="/">
+									Deseo ir a esta categoría
+								</Button>
 							</Col>
 						</Media.Body>
 						<Col xs={6} md={4}>
@@ -118,6 +130,9 @@ export const Categories = () => {
 									turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue
 									felis in faucibus.
 								</p>
+								<Button variant="outline-info" href="/">
+									Deseo ir a esta categoría
+								</Button>
 							</Col>
 						</Media.Body>
 					</Media>
@@ -134,6 +149,9 @@ export const Categories = () => {
 									turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue
 									felis in faucibus.
 								</p>
+								<Button variant="outline-info" href="/">
+									Deseo ir a esta categoría
+								</Button>
 							</Col>
 						</Media.Body>
 						<Col xs={6} md={4}>
