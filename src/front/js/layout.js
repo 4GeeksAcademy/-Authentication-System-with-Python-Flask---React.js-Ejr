@@ -7,6 +7,14 @@ import { Demo } from "./pages/demo";
 import { Single } from "./pages/single";
 import injectContext from "./store/appContext";
 
+//folder popUpsLandingPage
+import { Login } from "./component/popUpsLandingPage/login";
+import { SignUp } from "./component/popUpsLandingPage/signUp";
+import { Recovery } from "./component/popUpsLandingPage/recovery";
+import { VerifyMessage } from "./component/popUpsLandingPage/verifyMessage";
+
+// folder component
+import { NewCostumer } from "./component/newCostumer";
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 
@@ -30,6 +38,21 @@ const Layout = () => {
 						</Route>
 						<Route exact path="/single/:theid">
 							<Single />
+						</Route>
+						<Route exact path="/newCostumer">
+							<NewCostumer />
+						</Route>
+						<Route exact path="/login">
+							<Login />
+						</Route>
+						<Route exact path="/signUp">
+							<SignUp />
+						</Route>
+						<Route exact path="/recovery">
+							<Recovery />
+						</Route>
+						<Route exact path="/verifyMessage">
+							<VerifyMessage />
 						</Route>
 						<Route>
 							<h1>Not found!</h1>
