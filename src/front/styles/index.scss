@@ -1,3 +1,85 @@
 /* 
     General Styles
 */
+
+
+/*
+CSS Sign up
+*/
+
+.userIcon {
+    font-size: 50px;
+    position: relative;
+    left: 200px;
+    margin-bottom: 50px;
+    
+}
+
+/*
+CSS REcovery
+*/
+
+.card {
+    margin-top: 30px;
+    width: 600px;
+    height: 500px;
+    position: relative;
+    left: 450px;
+}
+
+.icon {
+    position: relative;
+    left: 250px;
+    font-size: 50px;
+
+}
+.pass{
+    margin-top: 100px;
+}
+
+.submit{
+    position: relative;
+    margin-bottom: 50px;
+    left: 140px;
+    width: 300px;
+}
+
+/*
+jumbotron
+*/
+.jumbotron{
+    width: 800px;
+    position: relative;
+    left: 400px;
+    margin-top: 30px;
+}
+
+/*
+CSS NewCostumer
+*/
+
+.newmodal {
+    width: 300px;
+    height: 400px;
+
+}
+
+.cedula {
+    width: 200px;
+}
+
+.nombre {
+    width: 400px;
+}
+
+.correo {
+    width: 350px;
+    position: relative;
+    margin-top: 40px;
+}
+
+.telefono {
+    position: relative;
+    margin-top: 80px;
+}
+

@@ -1,5 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { Login } from "./popUpsLandingPage/login";
+import { SignUp } from "./popUpsLandingPage/signUp";
+import { NewCostumer } from "./newCostumer";
 
 export const Navbar = () => {
 	return (
@@ -8,6 +11,17 @@ export const Navbar = () => {
 				<i className="fas fa-book-open text-dark ml-2" />
 				<span className="navbar-brand mb-0 h1 ml-1">PlanificApp</span>
 			</Link>
+			<div>
+				<Login />
+			</div>
+			<hr />
+			<div>
+				<SignUp />
+			</div>
+			<div>
+				<NewCostumer />
+			</div>
+
 			<div className="ml-auto">
 				<Link to="/contacto">
 					<a className="ml-2 text-dark">Contacto</a>
