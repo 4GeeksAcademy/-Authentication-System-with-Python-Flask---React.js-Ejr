@@ -1,213 +1,106 @@
 import React, { useContext } from "react";
 //import { Context } from "../store/appContext";
-import { Container, Row, Col, Image, Card, Media } from "react-bootstrap";
-import "../../styles/home.scss";
-import "../../styles/home_cards.scss";
-import tomatelo from "../../img/logo/tomatelo2.png";
+import { Container, Row, Col, Img } from "react-bootstrap";
+import "../../styles/galeria.scss";
+
 export const Home = () => {
-	//const { store, actions } = useContext(Context);
-
 	return (
-		<Container>
-			<Row>
-				<Col xs={6} md={4}>
-					<Image src="https://images6.alphacoders.com/349/349908.jpg" thumbnail />
-				</Col>
-				<Col xs={6} md={4}>
-					<Image src="https://images2.alphacoders.com/876/876244.jpg" thumbnail />
-				</Col>
-				<Col xs={6} md={4}>
-					<Image
-						src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRmFaVw6IQbSpeDIH7oeJ8DF5yD0A35u5onlA&usqp=CAU"
-						thumbnail
+		<div className="container">
+			<div className="row">
+				<div className="col-md-4 caja1">
+					<img
+						src="https://i.insider.com/5eb4d1d548d92c2f6e2a0e42?width=1100&format=jpeg&auto=webp"
+						className="img-fluid"
+						alt="Responsive image"
 					/>
-				</Col>
-				<Col xs={6} md={4}>
-					<Image src="https://images8.alphacoders.com/503/thumb-1920-503131.jpg" thumbnail />
-				</Col>
-				<Col xs={6} md={4}>
-					<Image
+				</div>
+				<div className="col-md-4 caja2">
+					<img
+						src="https://s2.best-wallpaper.net/wallpaper/1920x1080/1702/Fruit-drinks-cocktail-cold-glass-cups_1920x1080.jpg"
+						className="img-fluid"
+						alt="Responsive image"
+					/>
+				</div>
+				<div className="col-md-4 caja3">
+					<img
 						src="https://kkinziger.files.wordpress.com/2014/08/8589130414963-grasshopper-cocktail-wallpaper-hd.jpg"
-						thumbnail
+						className="img-fluid"
+						alt="Responsive image"
 					/>
-				</Col>
-				<Col xs={6} md={4}>
-					<Image
-						src="https://www.wallpapers4u.org/wp-content/uploads/vodka_alcohol_cocktail_bottle_glass_5447_1920x1080.jpg"
-						thumbnail
+				</div>
+			</div>
+
+			<div className="row">
+				<div className="col-md-4 caja4">
+					<img
+						src="https://img.elo7.com.br/product/main/1E47FBA/adesivo-para-bar-caipirinha-bebida-restaurante-adesivo-limonada.jpg"
+						className="img-fluid"
+						alt="Responsive image"
 					/>
-				</Col>
-				<Col xs={6} md={4}>
-					<Image
-						src="https://lh3.googleusercontent.com/proxy/VhePaqXfEvavwmpZ2R5jSBi81BZdP2AfaNtNAlX8ddUjYLd_MZcOkMHEVqW1qhfQAGHZYU_E4JB5nFMBAz8VK6mNeBojePiQd4QGBeeapLb2NpP9x11dwPO9"
-						thumbnail
+				</div>
+				<div className="col-md-4 caja5">
+					<img
+						src="https://wallpapercave.com/wp/wp7495149.jpg"
+						className="img-fluid"
+						alt="Responsive image"
 					/>
-				</Col>
-				<Col xs={6} md={4}>
-					<Image
-						src="https://i.pinimg.com/originals/72/31/ee/7231ee17808ec6ddab1806870716a76c.jpg"
-						thumbnail
+				</div>
+				<div className="col-md-4 caja6">
+					<img
+						src="https://st2.depositphotos.com/1177973/7383/i/600/depositphotos_73831175-stock-photo-glasses-of-cocktails-on-bar.jpg"
+						className="img-fluid"
+						alt="Responsive image"
 					/>
-				</Col>
-				<Col xs={6} md={4}>
-					<Image src="https://www.wallpapertip.com/wmimgs/50-504541_best-cocktails.jpg" thumbnail />
-				</Col>
-				<Col xs={6} md={4}>
-					<Image src="https://www.wallpapertip.com/wmimgs/50-504541_best-cocktails.jpg" thumbnail />
-				</Col>
-				<Col xs={6} md={4}>
-					<Image src="https://images2.alphacoders.com/876/876244.jpg" thumbnail />
-				</Col>
-				<Col xs={6} md={4}>
-					<Image
-						src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRmFaVw6IQbSpeDIH7oeJ8DF5yD0A35u5onlA&usqp=CAU"
-						thumbnail
+				</div>
+			</div>
+
+			<div className="row">
+				<div className="col-md-4 caja7">
+					<img
+						src="http://ibgnews.com/wp-content/uploads/2016/12/alcohol-fire.jpg"
+						className="img-fluid"
+						alt="Responsive image"
 					/>
-				</Col>
-			</Row>
+				</div>
+				<div className="col-md-4 caja8">
+					<img
+						src="https://c1.wallpaperflare.com/preview/338/571/673/cocktail-bar-nightlife-icee.jpg"
+						className="img-fluid"
+						alt="Responsive image"
+					/>
+				</div>
+				<div className="col-md-4 caja9">
+					<img
+						src="https://wallpapermemory.com/uploads/523/cocktail-wallpaper-hd-3200x2048-242804.jpg"
+						className="img-fluid"
+						alt="Responsive image"
+					/>
+				</div>
+			</div>
 
-			{/* categorias login */}
-
-			<Row>
-				<Card id="cardid">
-					<Media>
-						<Col xs={6} md={4}>
-							<img
-								className="mr-I"
-								src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRmFaVw6IQbSpeDIH7oeJ8DF5yD0A35u5onlA&usqp=CAU"
-								alt="Generic placeholder"
-							/>
-						</Col>
-						<Media.Body>
-							<Col>
-								<h5>Media Heading</h5>
-								<p>
-									Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante
-									sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra
-									turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue
-									felis in faucibus.
-								</p>
-							</Col>
-						</Media.Body>
-					</Media>
-				</Card>
-
-				<Card id="cardid">
-					<Media>
-						<Media.Body>
-							<Col>
-								<h5>Media Heading</h5>
-								<p>
-									Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante
-									sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra
-									turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue
-									felis in faucibus.
-								</p>
-							</Col>
-						</Media.Body>
-						<Col xs={6} md={4}>
-							<img
-								className="mr-D"
-								src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRmFaVw6IQbSpeDIH7oeJ8DF5yD0A35u5onlA&usqp=CAU"
-								alt="Generic placeholder"
-							/>
-						</Col>
-					</Media>
-				</Card>
-
-				<Card id="cardid">
-					<Media>
-						<Col xs={6} md={4}>
-							<img
-								className="mr-I"
-								src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRmFaVw6IQbSpeDIH7oeJ8DF5yD0A35u5onlA&usqp=CAU"
-								alt="Generic placeholder"
-							/>
-						</Col>
-						<Media.Body>
-							<Col>
-								<h5>Media Heading</h5>
-								<p>
-									Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante
-									sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra
-									turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue
-									felis in faucibus.
-								</p>
-							</Col>
-						</Media.Body>
-					</Media>
-				</Card>
-				<Card id="cardid">
-					<Media>
-						<Media.Body>
-							<Col>
-								<h5>Media Heading</h5>
-								<p>
-									Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante
-									sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra
-									turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue
-									felis in faucibus.
-								</p>
-							</Col>
-						</Media.Body>
-						<Col xs={6} md={4}>
-							<img
-								className="mr-D"
-								src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRmFaVw6IQbSpeDIH7oeJ8DF5yD0A35u5onlA&usqp=CAU"
-								alt="Generic placeholder"
-							/>
-						</Col>
-					</Media>
-				</Card>
-
-				<Card id="cardid">
-					<Media>
-						<Col xs={6} md={4}>
-							<img
-								className="mr-I"
-								src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRmFaVw6IQbSpeDIH7oeJ8DF5yD0A35u5onlA&usqp=CAU"
-								alt="Generic placeholder"
-							/>
-						</Col>
-						<Media.Body>
-							<Col>
-								<h5>Media Heading</h5>
-								<p>
-									Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante
-									sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra
-									turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue
-									felis in faucibus.
-								</p>
-							</Col>
-						</Media.Body>
-					</Media>
-				</Card>
-
-				<Card id="cardid">
-					<Media>
-						<Media.Body>
-							<Col>
-								<h5>Media Heading</h5>
-								<p>
-									Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante
-									sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra
-									turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue
-									felis in faucibus.
-								</p>
-							</Col>
-						</Media.Body>
-						<Col xs={6} md={4}>
-							<img
-								className="mr-D"
-								src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRmFaVw6IQbSpeDIH7oeJ8DF5yD0A35u5onlA&usqp=CAU"
-								alt="Generic placeholder"
-							/>
-						</Col>
-					</Media>
-				</Card>
-			</Row>
-		</Container>
+			<div className="row">
+				<div className="col-md-4 caja10">
+					<img
+						src="https://assets.blog.foodnetwork.ca/wp-content/uploads/sites/6/2016/06/Cranberry-Mojito.jpg"
+						className="img-fluid"
+						alt="Responsive image"
+					/>
+				</div>
+				<div className="col-md-4 caja11">
+					<img
+						src="https://www.shutterfly.com/ideas/wp-content/uploads/2017/05/peach-melba-cooler3.jpg"
+						className="img-fluid"
+						alt="Responsive image"
+					/>
+				</div>
+				<div className="col-md-4 caja12">
+					<img
+						src="http://blog.tefal.co.uk/wp-content/uploads/2018/01/Delicious-mocktail-ideas-for-Dry-January-Winter-spiced-mojito.jpg"
+						className="img-fluid"
+						alt="Responsive image"
+					/>
+				</div>
+			</div>
+		</div>
 	);
 };
-
-//Comentario
