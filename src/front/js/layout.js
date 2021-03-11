@@ -15,6 +15,7 @@ import { FooLogin } from "./component/foologin";
 import { Navbar } from "./component/navbar";
 import { Home } from "./pages/home";
 import { Footer } from "./component/footer";
+import { Categories } from "./component/CardsCategories";
 
 //create your first component
 const Layout = () => {
@@ -38,6 +39,7 @@ const Layout = () => {
 						<Route exact path="/home">
 							<Navbar />
 							<Home />
+							<Categories />
 							<Footer />
 						</Route>
 					</Switch>
