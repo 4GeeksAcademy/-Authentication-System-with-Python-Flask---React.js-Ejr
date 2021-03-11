@@ -1,6 +1,3 @@
-// BODY GENERAL STYLES
-// BODY GENERAL STYLES
-// BODY GENERAL STYLES
 body {
     background-color: #000;
     font-family: "Poppins", sans-serif;
@@ -11,31 +8,30 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
+// Galeria
+// Galeria
+// Galeria
+.contenedor{
+    border: 100px;
+    margin-top: 150px;
+}
 
-// Galeria
-// Galeria
-// Galeria
 .principal{
-    margin-top: 200px;
-    border: 1px solid greenyellow;
-    width: 250px;
-    height: 200px;
+    // height: 200px;
     position: relative;
     transition: 1s;
-    transform-style: preserve-3d;
-    transform: perspective(1000px);
 }
 
 .principal > div{
     position: absolute;
     height: 100%;
     width: 100%;
-    border: 1px solid #000;
+    transition: 1s;
 }
 
 .atras{
     background-color: transparent;
-    opacity: none;
+    opacity: 0;
     //transform: translateZ(-50px) rotateY(90deg);
 }
 
@@ -44,14 +40,47 @@ body {
     color: #fff;
 }
 
-.principal:hover{
+.atras:hover{
+    transition: 1s;
+    opacity: .9;
+    background-color: rgba(0,0,0,.9);
     //transform: perspective(1000px) rotateY(-90deg);
-    opacity: .1;
 }
 
-.principal:nth-child(1) .frente{
+.contenedor .row .col-md-4:nth-child(1) .frente {
     background: url(https://www.dazzlingwallpapers.com/wp-content/uploads/2014/08/Best-Green-Cocktail-wallpaper.jpg);
     background-size: cover;
+    height: 200px;
+}
+
+.contenedor .row .col-md-4:nth-child(2) .frente {
+    background: url(https://www.ecestaticos.com/image/clipping/4eb8656ff0afe661bfc8301b80bb3af5/los-nuevos-cocteles-que-deberias-probar-la-proxima-vez-que-salgas.jpg);
+    background-size: cover;
+    height: 200px;
+}
+
+.contenedor .row .col-md-4:nth-child(3) .frente {
+    background: url(https://i.pinimg.com/originals/21/86/bb/2186bb2bf663c1dfbb6f1dbf4d93baa3.jpg);
+    background-size: cover;
+    height: 200px;
+}
+
+.contenedor .row .col-md-8 .frente {
+    background: url(https://www.ecestaticos.com/image/clipping/4eb8656ff0afe661bfc8301b80bb3af5/los-nuevos-cocteles-que-deberias-probar-la-proxima-vez-que-salgas.jpg);
+    background-size: cover;
+    height: 400px;
+}
+
+.contenedor .row .col-md-4:nth-child(5) .frente {
+    background: url(https://www.dazzlingwallpapers.com/wp-content/uploads/2014/08/Best-Green-Cocktail-wallpaper.jpg);
+    background-size: cover;
+    height: 400px;
+}
+
+.contenedor .row .col-md-4:nth-child(6) .frente {
+    background: url(https://www.ecestaticos.com/image/clipping/4eb8656ff0afe661bfc8301b80bb3af5/los-nuevos-cocteles-que-deberias-probar-la-proxima-vez-que-salgas.jpg);
+    background-size: cover;
+    height: 200px;
 }
 
 .principal h4{
