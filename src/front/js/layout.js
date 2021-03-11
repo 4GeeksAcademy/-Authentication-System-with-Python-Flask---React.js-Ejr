@@ -8,7 +8,7 @@ import { NavLogin } from "./component/navlogin";
 import { AboutUs } from "./component/aboutus";
 import { Presentation } from "./component/presentation";
 import { Content } from "./component/content";
-//import { Login } from "./component/login";
+import { Login } from "./component/login";
 import { FooLogin } from "./component/foologin";
 
 //Contenido Privado
@@ -32,7 +32,7 @@ const Layout = () => {
 							<Presentation />
 							<AboutUs />
 							<Content />
-							{/* <Login /> */}
+							<Login />
 							<FooLogin />
 						</Route>
 						<Route exact path="/home">
