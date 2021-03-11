@@ -16,6 +16,22 @@ const getState = ({ getStore, getActions, setStore }) => {
 			]
 		},
 		actions: {
+			//f(x) built for testing reg form(experimental by now)
+			signup: async (first_name, last_name, email, password, is_older) => {
+				const res = await fetch(`${BE_Url}user`, {
+					method: "POST",
+					headers: { "Content-Type": "application/json" },
+					body: JSON.jsonify({
+						first_name: first_name,
+						last_name: last_name,
+						email: email,
+						password: password,
+						is_older: is_older
+					})
+				});
+				const data = await res.json();
+				console.table(data.msg);
+			},
 			// Use getActions to call a function within a fuction
 			exampleFunction: () => {
 				getActions().changeColor(0, "green");
