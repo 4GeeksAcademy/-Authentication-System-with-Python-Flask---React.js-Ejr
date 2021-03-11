@@ -1,115 +1,115 @@
-//ESTLOS GALLERY******************************************************************************************************
-.img-fluid {
-  width: 120%;
-  height: 100%;
+// SCSS
+body {
+    background-color: #000;
+    font-family: "Poppins", sans-serif;
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 1.5em;
+    position: relative;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+// Galeria
+// Galeria
+// Galeria
+.contenedor{
+    border: 100px;
+    margin-top: 150px;
 }
 
-.caja1{
-    height: 200px;
-    //border: 1px solid red;
-}
-
-.caja1{
-     height: 300px;
-    //@at-root: 1px solid red;
-}
-#galeria{
-    margin-top: 250px;
-    border: 2px solid red;
-}
-.row{
-    margin-bottom: 30px;
-}
-
-
-
-
-// CSS
-// CSS
-// CSS
-.caja1{
-    display: inline-block;
-    margin: 30px 100px;
-    width: 200px;
+.principal{
     height: 200px;
     position: relative;
     transition: 1s;
-    transform-style: preserve-3d;
-    transform: perspective(1000px);
 }
 
-.caja1 > div{
+.principal > div{
     position: absolute;
     height: 100%;
     width: 100%;
-    border: 1px solid #000;
-}
-
-.caja1{
-    background-color: greenyellow;
+    transition: 1s;
 }
 
 .atras{
-    background-color: #000;
-    transform: translateZ(-100px) rotateY(90deg);
-    left: 100px;
+    background-color: transparent;
+    opacity: 0;
+    //transform: translateZ(-50px) rotateY(90deg);
 }
 
-.caja1 h4, p{
+.principal h4, p{
     text-align: center;
     color: #fff;
 }
 
-.caja1:hover{
-    transform: perspective(1000px) rotateY(-90deg);
+.atras:hover{
+    transition: 1s;
+    opacity: .9;
+    background-color: rgba(0,0,0,.9);
+    //transform: perspective(1000px) rotateY(-90deg);
 }
 
-.caja1:nth-child(1) .frente{
-    background: url(https://i.insider.com/5eb4d1d548d92c2f6e2a0e42?width=1100&format=jpeg&auto=webp);
+.contenedor .row .col-md-4:nth-child(1) .frente {
+    background: url(https://www.dazzlingwallpapers.com/wp-content/uploads/2014/08/Best-Green-Cocktail-wallpaper.jpg);
     background-size: cover;
 }
 
-.caja1:nth-child(2) .frente{
-    background: url(https://i.insider.com/5eb4d1d548d92c2f6e2a0e42?width=1100&format=jpeg&auto=webp);
+.contenedor .row .col-md-4:nth-child(2) .frente {
+    background: url(https://www.ecestaticos.com/image/clipping/4eb8656ff0afe661bfc8301b80bb3af5/los-nuevos-cocteles-que-deberias-probar-la-proxima-vez-que-salgas.jpg);
     background-size: cover;
 }
 
-.caja1 h4{
+.contenedor .row .col-md-4:nth-child(3) .frente {
+    background: url(https://image.freepik.com/foto-gratis/rosa-cocteles-exoticos-frutas-rosa_155003-6346.jpg);
+    background-size: cover;
+}
+
+.contenedor .row .col-md-8 .frente {
+    background: url(https://image.freepik.com/vector-gratis/conjunto-cocteles-coloridos-colores-brillantes-coberturas-citricos-bayas_1268-15113.jpg);
+    background-size: cover;
+}
+
+.contenedor .row .col-md-4:nth-child(5) .frente {
+    background: url(https://image.freepik.com/foto-gratis/seleccion-varios-cocteles-mesa_140725-2909.jpg);
+    background-size: cover;
+}
+
+.contenedor .row .col-md-4:nth-child(6) .frente {
+    background: url(https://image.freepik.com/foto-gratis/rosa-exotica-coctel-fruta-azul_155003-4159.jpg);
+    background-size: cover;
+}
+
+.contenedor .row .col-md-4:nth-child(7) .frente {
+    background: url(https://image.freepik.com/foto-gratis/coctel-gin-tonic-limon_82893-14732.jpg);
+    background-size: cover;
+}
+
+.contenedor .row .col-md-4:nth-child(8) .frente {
+    background: url(https://image.freepik.com/foto-gratis/bebida-semillas-albahaca-naranja_114579-38839.jpg);
+    background-size: cover;
+}
+
+.contenedor .row .col-md-4:nth-child(9) .frente {
+    background: url(https://image.freepik.com/foto-gratis/bebidas-amarillas-suaves-naranja-rodajas-fresa-menta-vasos_23-2148145338.jpg);
+    background-size: cover;
+}
+
+.contenedor .row .col-md-4:nth-child(10) .frente {
+    background: url(https://image.freepik.com/foto-gratis/rosa-cocteles-exoticos-frutas-rosa_155003-6345.jpg);
+    background-size: cover;
+}
+
+.contenedor .row .col-md-4:nth-child(11) .frente {
+    background: url(https://image.freepik.com/foto-gratis/vista-lateral-coctel-cosmopolita-licor-rodaja-limon_141793-3623.jpg);
+    background-size: cover;
+}
+
+.contenedor .row .col-md-4:nth-child(12) .frente {
+    background: url(https://image.freepik.com/foto-gratis/vista-lateral-vasos-chupito-bebidas-color-lima_176474-2513.jpg);
+    background-size: cover;
+}
+
+.principal h4{
     margin: 10px;
     width: 90%;
     border-bottom: 2px solid orange;
-}
-
-//PRUEBA 5
-
-.caja2 img {
-	transition: all 0.3s ease-in-out; 
-}
-.caja2 .mask { 
-	background-color: rgba(146,96,91,0.3);
-	transform: translateX(-300px);
-	opacity: 1;
-	transition: all 0.4s ease-in-out; 
-}
-.caja2 h2{
-    background: rgba(255, 255, 255, 0.5);
-    color: #000;
-    box-shadow: 0px 1px 3px rgba(159, 141, 140, 0.5);
-}
-.caja2 p{
-    opacity: 0;
-    color: #333;
-    transition: all 0.2s linear;
-}
-
-.caja2:hover .mask { 
-	transform: translateX(0px);
-}						
-.caja2:hover img { 
-	transform: translateX(300px);
-	transition-delay: 0.1s;
-}
-.caja2:hover p{
-    opacity: 1;
-    transition-delay: 0.4s;
 }
