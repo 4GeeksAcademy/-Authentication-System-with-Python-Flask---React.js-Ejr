@@ -9,7 +9,6 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 api = Blueprint('api', __name__)
 
-
 #bloque de GET's
 @api.route('/users', methods=['GET'])
 def get_users():
@@ -52,15 +51,15 @@ def get_un_elemento(user_id):
     list_usuario = list(filter(lambda x: x['user_id'] == user_id, list_elements))
     return jsonify(list_usuario)
 
-@app.route('/profile', methods=['GET'])
-@jwt_required()
+@api.route('/profile', methods=['GET'])
+#@jwt_required()
 def profile():
     if request.method == 'GET':
         token = get_jwt_identity()
         return jsonify({"success": "Acceso a espacio privado", "usuario": token}), 200
 
 #bloque de POST's
-@api.route('/mi_pasaporte', methods=['POST'])
+@api.route('users/mi_pasaporte/', methods=['POST'])
 def agregar_mi_pasaporte():
     request_body = request.get_json()
     mi_pasaporte = Mi_pasaporte(user_id = request_body["user_id"], nombre = request_body["nombre"], tipo = request_body["tipo"])
@@ -106,7 +105,7 @@ def registro():
 
         return jsonify({"exito!": "gracias, su regristro fue exitoso", "status": "true"}), 200
 
-@app.route('/login', methods=['POST'])
+@api.route('/login', methods=['POST'])
 def login():
     if request.method == 'POST':
         email = request.json.get("email", None)

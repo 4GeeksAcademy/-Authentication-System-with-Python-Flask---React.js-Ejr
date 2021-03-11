@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 8931413f6f62
+Revision ID: 871c55207028
 Revises: 
-Create Date: 2021-03-10 21:36:34.049191
+Create Date: 2021-03-11 02:36:00.689627
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '8931413f6f62'
+revision = '871c55207028'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -21,15 +21,16 @@ def upgrade():
     op.create_table('pymes',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=250), nullable=False),
-    sa.Column('descripcion', sa.String(length=300), nullable=False),
+    sa.Column('descripcion', sa.String(length=10000), nullable=False),
     sa.Column('provincia', sa.String(length=300), nullable=False),
     sa.Column('contacto', sa.String(length=300), nullable=False),
     sa.Column('imagen', sa.String(length=1000), nullable=False),
+    sa.Column('info_adicional', sa.String(length=10000), nullable=True),
     sa.Column('lat', sa.Float(), nullable=False),
     sa.Column('lon', sa.Float(), nullable=False),
     sa.Column('tipo', sa.String(length=100), nullable=False),
     sa.Column('amenity', sa.String(length=100), nullable=False),
-    sa.Column('id_osm', sa.Integer(), nullable=False),
+    sa.Column('id_osm', sa.BigInteger(), nullable=False),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('name')
     )
