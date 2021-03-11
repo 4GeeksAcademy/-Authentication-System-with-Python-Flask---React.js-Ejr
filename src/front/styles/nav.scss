@@ -1,24 +1,13 @@
-body {
-    background-color: #000;
-    font-family: "Poppins", sans-serif;
-    font-size: 14px;
-    font-weight: 300;
-    line-height: 1.5em;
-    position: relative;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-}
-
-// Estilos para el menu
-// Estilos para el menu
-// Estilos para el menu
+// NAVBAR STYLES
+// NAVBAR STYLES
+// NAVBAR STYLES
 .header-wrap {
     z-index: 99999;
     position: relative;
 }
 
 .header-top {
-    padding: 30px 0;
+    padding: 40px 0;
     position: absolute;
     width: 100%;
 }
@@ -43,6 +32,8 @@ body {
 }
 
 nav {
+    background: -webkit-linear-gradient(right, rgba(0,0,0,.5) 0%, transparent 100%);
+    border-radius: 5px;
     margin-right: 70px;
     -webkit-transition: all 0.3s ease 0s;
     -moz-transition: all 0.3s ease 0s;
@@ -56,7 +47,7 @@ nav {
     margin-right: 0;
     position: absolute;
     right: 0;
-    top: 50px;
+    top: 60px;
     text-align: right;
   }
 }
@@ -66,11 +57,11 @@ nav.hide {
 }
 
 nav a {
-    font-size: 12px;
+    padding: 2px;
     font-weight: 500;
     text-transform: uppercase;
     color: rgba(255, 255, 255, 0.7);
-    margin: 0 25px;
+    margin: 0 10px;
 }
 
 nav a:hover {
@@ -85,24 +76,26 @@ nav a:hover {
 
 .logo a img{
     position: relative;
-    width: 100px;
+    width: 80px;
 }
 
-.logomove:hover{
-    animation: 1s rotar2 1;
-    transform-origin: top center;
+.logomove{
+    animation: 3s girar1 infinite;
+    backface-visibility: visible;
 }
 
-@-webkit-keyframes rotar2{
-    20%{
-        transform: rotate(15deg) scale(.7);
+@keyframes girar1{
+    0%{
+        opacity: .5;
+        transform: perspective(100px) rotateY(90deg);
     }
-    
-    30%, 60%{
-        transform: rotate(-10deg) scale(1.2);
+    40%{
+        transform: perspective(200px) rotateY(-20deg);
     }
-    
-    40%, 90%{
-        transform: rotate(-2deg) scale(.85);
+    80%{
+        transform: perspective(70px) rotateY(5deg);
+    }
+    100%{
+        transform: perspective(70px) rotateY(2deg);
     }
 }

@@ -7,7 +7,7 @@ import { Container, Card, CardDeck } from "react-bootstrap";
 
 export const AboutUs = () => {
 	return (
-		<Container className="mt-5">
+		<Container className="mt-4 mb-2">
 			<CardDeck>
 				<Card className="text-light text-left Card">
 					<Card.Img className="logimg" variant="top" src={tomatelo1} />

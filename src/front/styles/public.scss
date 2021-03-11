@@ -22,7 +22,6 @@
 // ABOUTUS
 .Card{
     background-color: transparent;
-    box-shadow: 0 0 15px #000;
 }
 
 .logimg{
@@ -34,10 +33,27 @@
 // CONTENT
 // CONTENT
 // CONTENT
-
-// LOGIN
-// LOGIN
-// LOGIN
-.Imglog{
-    height: 250px;
+#padre{
+    position:relative;
 }
+
+#uno {
+    border: 1px solid #fff;
+    background-color: #000;
+    position: absolute;
+    top: 150px;
+    left: 0;
+    right: 0;
+}
+
+@media (max-width: 767px) {
+    #uno {
+        top: 0;
+    }
+}
+// LOGIN
+// LOGIN
+// LOGIN
+
+
+

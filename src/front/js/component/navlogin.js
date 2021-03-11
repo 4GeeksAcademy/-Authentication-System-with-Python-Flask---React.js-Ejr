@@ -26,7 +26,7 @@ export const NavLogin = () => {
 						</div>
 						<div className="main-menubar d-flex align-items-center">
 							<nav className="hide">
-								<a href="#AboutUs">About_Us</a>
+								<a href="#Tomatelo">TOMATE`LO</a>
 								<a href="#AboutContent">Content</a>
 								<a href="#Login">Login</a>
 							</nav>
