@@ -8,7 +8,7 @@ export const Presentation = () => {
 			<Carousel.Item>
 				<img
 					className="d-block w-100"
-					src="https://s2.best-wallpaper.net/wallpaper/1920x1200/1909/Cocktail-pineapple-coconut-kiwi-black-background_1920x1200.jpg"
+					src="https://www.dazzlingwallpapers.com/wp-content/uploads/2014/08/Best-Green-Cocktail-wallpaper.jpg"
 					alt="Imagen ilustrativa"
 				/>
 			</Carousel.Item>
