@@ -70,7 +70,7 @@ def agregar_mi_pasaporte():
 @api.route('/pymes', methods=['POST'])
 def agregar_pymes():
     request_body = request.get_json()
-    pymes = Pymes(name = request_body["name"], descripcion = request_body["descripcion"], provincia = request_body["provincia"], contacto = request_body["contacto"], imagen = request_body["imagen"], lat = request_body["lat"], lon = request_body["lon"], tipo = request_body["tipo"], amenity = request_body["amenity"], id_osm = request_body["id_osm"])
+    pymes = Pymes(name = request_body["name"], descripcion = request_body["descripcion"], provincia = request_body["provincia"], telefono = request_body["telefono"], email = request_body["email"], horario = request_body["horario"], imagen = request_body["imagen"], logo = request_body["logo"], info_adicional = request_body["info_adicional"], link_youtube = request_body["link_youtube"], sitio_web = request_body["sitio_web"], lat = request_body["lat"], lon = request_body["lon"], tipo = request_body["tipo"], amenity = request_body["amenity"], id_osm = request_body["id_osm"])
     db.session.add(pymes)
     db.session.commit()
     return jsonify({"msg": "el pymes se ha agregado con exito"}), 200
