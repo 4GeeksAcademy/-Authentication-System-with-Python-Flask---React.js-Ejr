@@ -5,6 +5,10 @@ import ScrollToTop from "./component/scrollToTop";
 import { Home } from "./pages/home";
 import { Demo } from "./pages/demo";
 import { Single } from "./pages/single";
+import { LandingPage } from "./pages/landingPage";
+import { ContactoView } from "./pages/contacto";
+import { CaracteristicasView } from "./pages/caracteristicas";
+import { PreciosView } from "./pages/precios";
 import injectContext from "./store/appContext";
 
 //folder popUpsLandingPage
@@ -33,10 +37,16 @@ const Layout = () => {
 					<Sidebar />
 					<Switch>
 						<Route exact path="/">
-							<Home />
+							<LandingPage />
 						</Route>
-						<Route exact path="/demo">
-							<Demo />
+						<Route exact path="/contacto">
+							<ContactoView />
+						</Route>
+						<Route exact path="/caracteristicas">
+							<CaracteristicasView />
+						</Route>
+						<Route exact path="/precios">
+							<PreciosView />
 						</Route>
 						<Route exact path="/single/:theid">
 							<Single />

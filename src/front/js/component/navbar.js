@@ -6,9 +6,10 @@ import { NewCostumer } from "./newCostumer";
 
 export const Navbar = () => {
 	return (
-		<nav className="navbar navbar-light bg-light mb-3">
+		<nav className="navbar navbar-light bg-light mb-3 border border-dark">
 			<Link to="/">
-				<span className="navbar-brand mb-0 h1">PlanificApp</span>
+				<i className="fas fa-book-open text-dark ml-2" />
+				<span className="navbar-brand mb-0 h1 ml-1">PlanificApp</span>
 			</Link>
 			<div>
 				<Login />
@@ -22,11 +23,25 @@ export const Navbar = () => {
 			</div>
 
 			<div className="ml-auto">
-				<button type="button" className="btn btn-outline-dark rounded-circle">
-					<i className="fas fa-user-circle" />
-				</button>
-				<span> </span>
-				<span className="navbar-brand mb-0 h1">user name</span>
+				<Link to="/contacto">
+					<a className="ml-2 text-dark">Contacto</a>
+				</Link>
+				<Link to="/caracteristicas">
+					<a className="ml-2 text-dark">Características</a>
+				</Link>
+				<Link to="/precios">
+					<a className="ml-2 text-dark">Precios</a>
+				</Link>
+				<Link to="/">
+					<button type="button" className="btn btn-light border-secondary text-secondary ml-2">
+						Iniciar Sesión
+					</button>
+				</Link>
+				<Link to="/">
+					<button type="button" className="btn btn-light bg-secondary text-white ml-2">
+						Registrarse
+					</button>
+				</Link>
 			</div>
 		</nav>
 	);
