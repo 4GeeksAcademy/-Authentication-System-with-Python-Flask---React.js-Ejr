@@ -1,20 +1,30 @@
 import React, { useContext } from "react";
 //import { Context } from "../store/appContext";
 import { Container, Row, Col, Img } from "react-bootstrap";
-import "../../styles/galeria.scss";
+import "../../styles/home.scss";
 
 export const Home = () => {
 	return (
 		<div className="container">
 			<div className="row">
-				<div className="col-md-4 caja1">
-					<img
-						src="https://i.insider.com/5eb4d1d548d92c2f6e2a0e42?width=1100&format=jpeg&auto=webp"
-						className="img-fluid"
-						alt="Responsive image"
-					/>
+				<div className="col-md4">
+					<div className="principal">
+						{/* <img
+                            src="https://i.insider.com/5eb4d1d548d92c2f6e2a0e42?width=1100&format=jpeg&auto=webp"
+                            className="img-fluid"
+                            alt="Responsive image"
+                        /> */}
+						<div className="frente"></div>
+						<div className="atras">
+							<h4>Titulo</h4>
+							<p>
+								Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corrupti repellendus labore
+								quia dolore saepe maxime esse repellat quaerat aspernatur deleniti assumenda nihil.
+							</p>
+						</div>
+					</div>
 				</div>
-				<div className="col-md-4 caja2">
+				{/* <div className="col-md-4 caja2">
 					<img
 						src="https://s2.best-wallpaper.net/wallpaper/1920x1080/1702/Fruit-drinks-cocktail-cold-glass-cups_1920x1080.jpg"
 						className="img-fluid"
@@ -99,7 +109,7 @@ export const Home = () => {
 						className="img-fluid"
 						alt="Responsive image"
 					/>
-				</div>
+				</div> */}
 			</div>
 		</div>
 	);

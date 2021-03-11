@@ -16,6 +16,8 @@ import { Navbar } from "./component/navbar";
 import { Home } from "./pages/home";
 import { Footer } from "./component/footer";
 
+// import { Base } from "./component//base";
+
 //create your first component
 const Layout = () => {
 	//the basename is used when your project is published in a subdirectory and not in the root of the domain
@@ -40,6 +42,11 @@ const Layout = () => {
 							<Home />
 							<Footer />
 						</Route>
+						{/* <Route exact path="/base">
+							<Navbar />
+							<Base />
+							<Footer />
+						</Route> */}
 					</Switch>
 				</ScrollToTop>
 			</BrowserRouter>
