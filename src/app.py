@@ -99,9 +99,9 @@ def del_user_by_ID(user_id):
     if user is None:
         raise APIException("Usuario no encontrado", status_code=404)
     else:
-    db.session.delete(user)
-    db.session.commit()
-    return jsonify(user.serialize()), 204   #indicates that the server has successfully fulfilled the request and that there is no content to send in the response payload body
+        db.session.delete(user)
+        db.session.commit()
+        return jsonify(user.serialize()), 204   #indicates that the server has successfully fulfilled the request and that there is no content to send in the response payload body
 
                     #### UPDATE USER ####
 @app.route('/user/<int:user_id>', methods=['PUT'])
@@ -142,9 +142,9 @@ def delete_fav_by_id():
     if fav is None:
         raise APIException('Favorito no encontrado', status_code=404)
     else:
-    db.session.delete(fav)
-    db.session.commit()
-    return jsonify(fav.serialize()), 204 #indicates that the server has successfully fulfilled the request and that there is no content to send in the response payload body
+        db.session.delete(fav)
+        db.session.commit()
+        return jsonify(fav.serialize()), 204 #indicates that the server has successfully fulfilled the request and that there is no content to send in the response payload body
 
 
 #endregion Favorite
