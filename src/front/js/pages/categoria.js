@@ -4,7 +4,7 @@ import { Link, useParams } from "react-router-dom";
 import { Context } from "../store/appContext";
 
 const Categoria = props => {
-    var idcategoria = props.id;
+	var idcategoria = props.id;
 	return (
 		<div className="container">
 			<div className=" post col-12 d-flex">
