@@ -7,6 +7,7 @@ import { Demo } from "./pages/demo";
 import { Single } from "./pages/single";
 import injectContext from "./store/appContext";
 import { ViewGeneral } from "./pages/viewGeneral";
+import { PymeView } from "./pages/viewPyme";
 
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
@@ -33,6 +34,9 @@ const Layout = () => {
 						</Route>
 						<Route exact path="/viewGeneral">
 							<ViewGeneral />
+						</Route>
+						<Route exact path="/viewPyme">
+							<PymeView />
 						</Route>
 						<Route exact path="/single/:theid">
 							<Single />

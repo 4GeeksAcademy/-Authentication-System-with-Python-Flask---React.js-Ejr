@@ -48,7 +48,7 @@ export const Card = () => {
 			<div className="shadow-lg card-body">
 				{true ? <PlayasCard /> : <MontanasCard />}
 				<div className="d-flex justify-content-between mt-5 align-items-center">
-					<Link className="btn btn-sm btn-outline-primary" data-toggle="popover" to={`/`}>
+					<Link className="btn btn-sm btn-outline-primary" data-toggle="popover" to="/viewPyme">
 						Learn more
 					</Link>
 					<i className="ml-5 fas fa-passport fa-2x" />
