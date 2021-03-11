@@ -67,15 +67,40 @@ const PymeProfile = () => {
 						para el día o preparándose para la noche.
 					</p>
 				</div>
-				<div className="row mt-3 mb-3" style={{ paddingLeft: "14px" }}>
-					<h3>Contantenos:</h3>
+				<div className="row mt-3 mb-3" style={{ paddingLeft: "13px" }}>
+					<h3>Contáctenos:</h3>
 				</div>
-				<div className="row">
-					<ul>
-						<li className="mb-3">Teléfono:+(506) 4000-2026</li>
-						<li className="mb-3">Correo: info@chachaguarainforest.com</li>
-						<li className="mb-3">Horario de atención: 6:00am to 10:00pm </li>
-					</ul>
+				<div className="pl-3">
+					<div className="row">
+						<div className="d-flex mb-3">
+							<div className="d-inline mr-3">
+								<i className="fas fa-phone" />
+							</div>
+							<div className="d-inline font-italic">
+								<h5>+(506) 4000-2026</h5>
+							</div>
+						</div>
+					</div>
+					<div className="row">
+						<div className="d-flex mb-3">
+							<div className="d-inline mr-3">
+								<i className="far fa-envelope" />
+							</div>
+							<div className="d-inline font-italic">
+								<h5>info@chachaguarainforest.com</h5>
+							</div>
+						</div>
+					</div>
+					<div className="row">
+						<div className="d-flex mb-3">
+							<div className="d-inline mr-3">
+								<i className="fas fa-clock" />
+							</div>
+							<div className="d-inline font-italic">
+								<h5>6:00am to 10:00pm</h5>
+							</div>
+						</div>
+					</div>
 				</div>
 				<div className="embed-responsive embed-responsive-16by9">
 					<iframe
