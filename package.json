@@ -76,10 +76,12 @@
 		]
 	},
 	"dependencies": {
+		"@react-icons/all-files": "^4.1.0",
 		"bootstrap": "^4.3.1",
 		"prop-types": "^15.6.1",
 		"react": "^16.8.4",
 		"react-dom": "^16.8.4",
+		"react-icons": "^4.2.0",
 		"react-polyfills": "0.0.1",
 		"react-router-dom": "^5.2.0",
 		"react-scrollmagic": "^2.2.0"

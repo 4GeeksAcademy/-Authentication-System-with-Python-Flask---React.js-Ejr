@@ -17,6 +17,7 @@ import { VerifyMessage } from "./component/popUpsLandingPage/verifyMessage";
 import { NewCostumer } from "./component/newCostumer";
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
+import Sidebar from "./component/Sidebar";
 
 //create your first component
 const Layout = () => {
@@ -28,7 +29,8 @@ const Layout = () => {
 		<div className="d-flex flex-column h-100">
 			<BrowserRouter basename={basename}>
 				<ScrollToTop>
-					<Navbar />
+					{/* <Navbar /> */}
+					<Sidebar />
 					<Switch>
 						<Route exact path="/">
 							<Home />
