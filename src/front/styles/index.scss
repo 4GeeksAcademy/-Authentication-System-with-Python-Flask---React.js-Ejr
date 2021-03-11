@@ -1,3 +1,61 @@
-/* 
-    General Styles
-*/
+$theme-colors: (
+  "primary": #000BD8,
+  "secondary": #0E0071,
+  "success": #5D0ECC,
+  "dark": #333333,
+  "info":#007BEA,
+  "warning": #FFEC00,
+  "danger": #D658CD,
+  "subBlue": #17CADD,
+  "subLightBlue": #9AEDF4,
+  "lightGray": #F2F2F2,
+  "gray": #A7A7A8,
+  "green": #00D952,
+  "greenB": #00BFA8
+);
+
+h1{
+font-size: 3rem;
+font-family: 'Catamaran', sans-serif;
+font-weight: 700;
+}
+h1, h2, h3, h4, h5{
+    font-family: 'Catamaran', sans-serif;
+    }
+.transBox{
+    width: 100%;
+    height: 70px;
+    border-radius: 10px;
+}
+.iconBox{
+    width: 100%;
+    height: 150px;
+    background-color: #fff;
+    border-radius: 10px;
+    padding-top: 1rem;
+}
+.cardBox{
+    width: 100%;
+    height: 300px;
+    background-color: #fff;
+    border-radius: 10px;
+}
+.icon{
+    color:#333333;
+    font-size: 3rem;
+}
+.icon:hover{
+    color: #007BEA;
+}
+.background{
+    content: "";
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    height: 280%;
+    position: absolute;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
