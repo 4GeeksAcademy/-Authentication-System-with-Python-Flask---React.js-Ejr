@@ -10,7 +10,7 @@ from api.utils import APIException, generate_sitemap
 from api.models import db
 from api.routes import api
 from api.admin import setup_admin
-from flask_jwt_simple import JWTManager, jwt_required, create_jwt, get_jwt_identity
+from flask_jwt_simple import (JWTManager, jwt_required, create_jwt, get_jwt_identity)
 from models import User, Favorite 
 from datetime import datetime
 
