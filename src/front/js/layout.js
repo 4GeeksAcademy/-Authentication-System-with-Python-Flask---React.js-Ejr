@@ -5,8 +5,8 @@ import injectContext from "./store/appContext";
 
 // Contenido Publico
 import { NavLogin } from "./component/navlogin";
-import { AboutUs } from "./component/aboutus";
 import { Presentation } from "./component/presentation";
+import { AboutUs } from "./component/aboutus";
 import { Content } from "./component/content";
 import { Login } from "./component/login";
 import { FooLogin } from "./component/foologin";
@@ -15,6 +15,8 @@ import { FooLogin } from "./component/foologin";
 import { Navbar } from "./component/navbar";
 import { Home } from "./pages/home";
 import { Footer } from "./component/footer";
+
+// import { Info_Category } from "./component/info_category";
 
 //create your first component
 const Layout = () => {
@@ -40,6 +42,11 @@ const Layout = () => {
 							<Home />
 							<Footer />
 						</Route>
+						{/* <Route exact path="/base">
+							<Navbar />
+							<Info_Category />
+							<Footer />
+						</Route> */}
 					</Switch>
 				</ScrollToTop>
 			</BrowserRouter>
