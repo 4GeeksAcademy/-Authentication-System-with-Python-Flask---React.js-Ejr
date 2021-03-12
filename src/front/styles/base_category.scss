@@ -1,0 +1,33 @@
+#padre{
+    position:relative;
+}
+
+#padre .contentimg {
+    height: 300px;
+}
+
+#uno {
+    border: 1px solid #fff;
+    background-color: #000;
+    position: absolute;
+    top: 75px;
+    left: 0;
+}
+
+#two {
+    border: 1px solid #fff;
+    background-color: #000;
+    position: absolute;
+    top: 75px;
+    right: 0;
+}
+
+@media (max-width: 768px) {
+    #uno {
+        top: 0;
+    }
+
+    #two{
+        top: 0;
+    }
+}
