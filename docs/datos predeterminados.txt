@@ -1,0 +1,9 @@
+{
+    "id_Provider": "Prov-001",
+    "name_Provider": "Concentrix",
+    "active_Provider": "active",
+    "email_Provider_Details": "kevinmezamc@gmail.com",
+    "phone_Provider_Details": "61953103",
+    "address_Provider_Details": "EL Roble, Puntarenas",
+    "payment_Type_Provider_Details": "tbd"
+}

@@ -40,4 +40,6 @@ def addProvider():
     db.session.add(provider)
     db.session.add(properties)
     db.session.commit()
-    return jsonify("All good"), 200
+    provider = Provider.query.all()
+    provider_serialized = list(map(lambda data: data.serialize(), provider))
+    return jsonify(provider_serialized),200

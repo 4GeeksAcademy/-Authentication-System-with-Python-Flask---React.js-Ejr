@@ -47,6 +47,28 @@ const getState = ({ getStore, getActions, setStore }) => {
 				fetch("https://3001-plum-catshark-11aarra7.ws-us03.gitpod.io/api/provider")
 					.then(response => response.json())
 					.then(response => setStore({ providers: response }));
+			},
+			insertData: data => {
+				console.log(data);
+				fetch(
+					"https://3001-plum-catshark-11aarra7.ws-us03.gitpod.io/api/provider",
+
+					{
+						method: "POST",
+						headers: {
+							"Content-Type": "application/json"
+						},
+						body: JSON.stringify(data)
+					}
+				)
+					.then(response => response.json())
+					.then(data => {
+						console.log("Success:", data);
+						setStore({ providers: data });
+					})
+					.catch(error => {
+						console.error("Error:", error);
+					});
 			}
 		}
 	};
