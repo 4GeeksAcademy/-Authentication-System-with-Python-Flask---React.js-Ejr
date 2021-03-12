@@ -85,10 +85,10 @@ def get_user_by_ID(user_id):
 @app.route('/user', methods=['POST'])
 def add_user():
     req = json.loads(request.data)
-    if req["first_name"] == None and req["last_name"] == None and req["email"] == None and req["password"] == None and req["is_older"] == None:
+    if req["first_name"] == None and req["last_name"] == None and req["email"] == None and req["password"] == None and req["birthday"] == None:
         flash("Los datos ingresados están incompletos o vacíos")
     else:
-        user = User(first_name = req["first_name"], last_name= req["last_name"], email= req["email"], password= req["password"], is_older= req["is_older"])
+        user = User(first_name= req["first_name"], last_name= req["last_name"], email= req["email"], password= req["password"], birthday= req["birthday"])
         db.session.add(user)
         db.session.commit()
         return "El usuario ha sido agregado exitosamente"
@@ -108,7 +108,7 @@ def del_user_by_ID(user_id):
 @app.route('/user/<int:user_id>', methods=['PUT'])
 def update_user(user_id):
     req = User.query.filter_by(id=user_id).first_or_404()
-    if req["name"] == None and req["first_name"] == None and req["last_name"] == None and req["email"] == None and req[password] == None and req["is_older"] == None:
+    if req["email"] == None and req["password"] == None:
         db.session.commit()
         return jsonify(req.serialize()), 200
 #endregion USER
@@ -125,13 +125,13 @@ def get_favorites():
 @app.route('/favorite', methods=['POST'])
 @jwt_required
 def add_favorite():
-    fk_user_id = get_jwt_identity()
+    user_id = get_jwt_identity()                #getting tokenid from user 
 
     req = json.loads(request.data)
     if req["cocktail_name"] == None and req["cocktail_img"] == None:
         flash('Espacios en blanco o invalidos')
     else:
-        fav = Favorite(user_id= fk_user_id, cocktail_name= req["cocktail_name"], cocktail_img= req["cocktail"])
+        fav = Favorite(cocktail_name= req["cocktail_name"], cocktail_img= req["cocktail_img"], user_id= user_id)
         db.session.add(fav)
         db.session.commit()
         return "Hecho", 200  #It is OK
@@ -148,6 +148,7 @@ def delete_fav_by_id():
         return jsonify(fav.serialize()), 204 #indicates that the server has successfully fulfilled the request and that there is no content to send in the response payload body
 
 #endregion Favorite
+
 #region LOGIN
 @app.route('/login', methods=['POST'])
 def user_login():
@@ -166,7 +167,7 @@ def user_login():
                 ###CHECKING FOR VALID USER
     chk_usr = User.query.filter_by(email=email, password=password).first_or_404()
     if chk_usr == None:
-        return jsonify({"msg": "Email\Password required"}), 401 #this status => lacks valid authentication credentials
+        return jsonify({"msg": "Email\Password required"}), 401 #this status =>  it lacks valid authentication credentials
                 
                 ###TOKEN GENERATOR###
     myToken = {'jwt': create_jwt(identity=chk_usr.id), 'id':chk_usr.id, 'user':chk_usr.serialize()}
