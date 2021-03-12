@@ -46,14 +46,12 @@ def listCategory():
 @api.route('/category',methods=['POST'])
 def addCategory():
     request_body = request.get_json()
-    category = Category(    
-            id_Category=request_body["id_Category"],
-            name_Category=request_body["name_Category"],
-            description_Category=request_body["description_Category"],
-            active_Product=request_body["active_Product"]
-            
+    category = Category(id_Category=request_body["id_Category"],
+                        name_Category=request_body["name_Category"],
+                        description_Category=request_body["description_Category"],
+                        active_Product=request_body["active_Product"]
     print(request_body)
-    db.session.add(category)
+    db.session.add(provider)
     db.session.add(properties)
     db.session.add(category)
     db.session.commit()
