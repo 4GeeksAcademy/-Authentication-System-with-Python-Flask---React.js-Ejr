@@ -23,25 +23,23 @@ class User(db.Model):
 
 class Pymes(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(250), unique=True, nullable=False)
+    name = db.Column(db.String(600), unique=True, nullable=False)
     descripcion = db.Column(db.String(10485760), unique=False, nullable=True)
-    provincia = db.Column(db.String(300), unique=False, nullable=False)
-    telefono = db.Column(db.String(300), unique=False, nullable=True)
-    email = db.Column(db.String(300), unique=False, nullable=True)
-    horario = db.Column(db.String(300), unique=False, nullable=True)
+    provincia = db.Column(db.String(600), unique=False, nullable=False)
+    telefono = db.Column(db.String(600), unique=False, nullable=True)
+    email = db.Column(db.String(600), unique=False, nullable=True)
+    horario = db.Column(db.String(1000), unique=False, nullable=True)
     imagen = db.Column(db.String(1000), unique=False, nullable=False)
     logo = db.Column(db.String(1000), unique=False, nullable=True)
-    info_adicional = db.Column(db.String(10000), unique=False, nullable=True)
-    link_youtube = db.Column(db.String(600), unique=False, nullable=True)
-    sitio_web = db.Column(db.String(600), unique=False, nullable=True)
-    lat = db.Column(db.Float, unique=False, nullable=False)
-    lon = db.Column(db.Float, unique=False, nullable=False)
-    tipo = db.Column(db.String(100), unique=False, nullable=False)
-    amenity = db.Column(db.String(100), unique=False, nullable=False)
+    info_adicional = db.Column(db.String(10485760), unique=False, nullable=True)
+    link_youtube = db.Column(db.String(1000), unique=False, nullable=True)
+    sitio_web = db.Column(db.String(1000), unique=False, nullable=True)
+    tipo = db.Column(db.String(1000), unique=False, nullable=False)
+    categoria = db.Column(db.String(1000), unique=False, nullable=False)
     id_osm = db.Column(db.BigInteger,unique=False, nullable=False)
 
     def __repr__(self):
-        return '<Playa %r>' % self.id
+        return '<Pymes %r>' % self.id
 
     def serialize(self):
         return {
@@ -49,13 +47,16 @@ class Pymes(db.Model):
             "name": self.name,
             "descripcion": self.descripcion,
             "provincia": self.provincia,
-            "contacto": self.contacto,
+            "telefono": self.telefono,
+            "email": self.email,
+            "horario": self.horario,
             "imagen": self.imagen,
+            "logo": self.logo,
             "info_adicional": self.info_adicional,
-            "lat": self.lat,
-            "lon": self.lon,
+            "link_youtube": self.link_youtube,
+            "sitio_web": self.sitio_web,
             "tipo": self.tipo,
-            "amenity": self.amenity,
+            "categoria": self.categoria,
             "id_osm": self.id_osm
         }
 
