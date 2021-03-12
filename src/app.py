@@ -85,10 +85,10 @@ def get_user_by_ID(user_id):
 @app.route('/user', methods=['POST'])
 def add_user():
     req = json.loads(request.data)
-    if req["email"] == None and req["password"] == None:
+    if req["first_name"] == None and req["last_name"] == None and req["email"] == None and req["password"] == None and req["birthday"] == None:
         flash("Los datos ingresados están incompletos o vacíos")
     else:
-        user = User(email= req["email"], password= req["password"])
+        user = User(first_name= req["first_name"], last_name= req["last_name"], email= req["email"], password= req["password"], birthday= req["birthday"])
         db.session.add(user)
         db.session.commit()
         return "El usuario ha sido agregado exitosamente"
