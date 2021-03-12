@@ -11,7 +11,6 @@ from api.models import db, User, Favorite
 from api.routes import api
 from api.admin import setup_admin
 from flask_jwt_simple import JWTManager, jwt_required, create_jwt, get_jwt_identity
-# from models import User, Favorite
 from datetime import datetime
 
 
@@ -40,7 +39,6 @@ setup_admin(app)
 
 # Add all endpoints form the API with a "api" prefix
 app.register_blueprint(api, url_prefix='/api')
-
 
 #JWT Key 
 app.config['JWT_SECRET_KEY'] = '$An$Jo$Mo$Ma$'
@@ -173,9 +171,6 @@ def user_login():
                 ###TOKEN GENERATOR###
     myToken = {'jwt': create_jwt(identity=chk_usr.id), 'id':chk_usr.id, 'user':chk_usr.serialize()}
     return jsonify(myToken), 200 
-
-
-
 
 
 #endregion LOGIN
