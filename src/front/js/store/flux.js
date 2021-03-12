@@ -13,7 +13,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 					background: "white",
 					initial: "white"
 				}
-			]
+			],
+			providers: null
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
@@ -41,6 +42,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				//reset the global store
 				setStore({ demo: demo });
+			},
+			loadProviders: () => {
+				fetch("https://3001-plum-catshark-11aarra7.ws-us03.gitpod.io/api/provider")
+					.then(response => response.json())
+					.then(response => setStore({ providers: response }));
 			}
 		}
 	};
