@@ -11,7 +11,7 @@ const PymeProfile = () => {
 	return (
 		<>
 			<img
-				className="card-img-top rounded-right shadow"
+				className="card-img-top rounded-right shadow mt-5"
 				style={{ width: "100%", height: "300px", margin: "0 auto" }}
 				src="https://fondosmil.com/fondo/74500.jpg"
 				alt="Card image cap"
@@ -98,6 +98,16 @@ const PymeProfile = () => {
 							</div>
 							<div className="d-inline font-italic">
 								<h5>6:00am to 10:00pm</h5>
+							</div>
+						</div>
+					</div>
+					<div className="row">
+						<div className="d-flex mb-3">
+							<div className="d-inline mr-3">
+								<i className="fas fa-globe" />
+							</div>
+							<div className="d-inline font-italic">
+								<h5>Visitanos en nuetra página</h5>
 							</div>
 						</div>
 					</div>

@@ -14,7 +14,7 @@ export function ViewGeneral() {
 			<div className="row px-1 my-5">
 				{carouselList.map((value, index) => {
 					return (
-						<div className="col-sm-12 col-md-4 col-lg-4 my-2" key={index}>
+						<div className="col-sm-12 col-md-4 col-lg-3 my-2" key={index}>
 							<Card />
 						</div>
 					);
