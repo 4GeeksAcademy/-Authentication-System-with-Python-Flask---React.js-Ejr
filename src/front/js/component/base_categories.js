@@ -23,7 +23,7 @@ export const Base_Categories = () => {
 					<div className="col-12 col-md-6" id="uno">
 						<Card className="Card text-light p-3">
 							<blockquote className="blockquote mb-0 card-body">
-								<p>Vodka</p>
+								<p>VODKA</p>
 								<footer className="blockquote-footer">
 									<small className="text-muted">
 										<cite title="Source Title">
@@ -48,13 +48,13 @@ export const Base_Categories = () => {
 					<div className="col-12 col-md-6" id="two">
 						<Card className="Card text-light p-3">
 							<blockquote className="blockquote mb-0 card-body">
-								<p>
-									Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a
-									ante.
-								</p>
+								<p>RON</p>
 								<footer className="blockquote-footer">
 									<small className="text-muted">
-										Someone famous in <cite title="Source Title">Source Title</cite>
+										<cite title="Source Title">
+											Perspiciatis minima nesciunt dolorem! Officiis iure rerum voluptates a
+											cumque velit quibusdam sed amet tempora.
+										</cite>
 									</small>
 								</footer>
 								<Button type="submit" variant="outline-info">

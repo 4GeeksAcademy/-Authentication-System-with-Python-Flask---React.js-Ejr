@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 //import { Context } from "../store/appContext";
-import { Container, Row, Col } from "react-bootstrap";
+import { Container, Row, Col, Button } from "react-bootstrap";
 import "../../styles/galeria.scss";
 
 export const Home = () => {
@@ -23,11 +23,10 @@ export const Home = () => {
 							<div className="frente" />
 							<div className="atras">
 								<h4>Titulo</h4>
-								<p>
-									Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corrupti repellendus
-									labore quia dolore saepe maxime esse repellat quaerat aspernatur deleniti assumenda
-									nihil.
-								</p>
+								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+								<Button className="Button" variant="success">
+									Ver más
+								</Button>{" "}
 							</div>
 						</div>
 					</div>
@@ -36,11 +35,10 @@ export const Home = () => {
 							<div className="frente" />
 							<div className="atras">
 								<h4>Titulo</h4>
-								<p>
-									Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corrupti repellendus
-									labore quia dolore saepe maxime esse repellat quaerat aspernatur deleniti assumenda
-									nihil.
-								</p>
+								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+								<Button className="Button" variant="success">
+									Ver más
+								</Button>{" "}
 							</div>
 						</div>
 					</div>
@@ -49,11 +47,10 @@ export const Home = () => {
 							<div className="frente" />
 							<div className="atras">
 								<h4>Titulo</h4>
-								<p>
-									Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corrupti repellendus
-									labore quia dolore saepe maxime esse repellat quaerat aspernatur deleniti assumenda
-									nihil.
-								</p>
+								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+								<Button className="Button" variant="success">
+									Ver más
+								</Button>{" "}
 							</div>
 						</div>
 					</div>
@@ -65,11 +62,10 @@ export const Home = () => {
 							<div className="frente" />
 							<div className="atras">
 								<h4>Titulo</h4>
-								<p>
-									Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corrupti repellendus
-									labore quia dolore saepe maxime esse repellat quaerat aspernatur deleniti assumenda
-									nihil.
-								</p>
+								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+								<Button className="Button" variant="success">
+									Ver más
+								</Button>{" "}
 							</div>
 						</div>
 					</div>
@@ -78,11 +74,10 @@ export const Home = () => {
 							<div className="frente" />
 							<div className="atras">
 								<h4>Titulo</h4>
-								<p>
-									Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corrupti repellendus
-									labore quia dolore saepe maxime esse repellat quaerat aspernatur deleniti assumenda
-									nihil.
-								</p>
+								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+								<Button className="Button" variant="success">
+									Ver más
+								</Button>{" "}
 							</div>
 						</div>
 					</div>
@@ -94,11 +89,10 @@ export const Home = () => {
 							<div className="frente" />
 							<div className="atras">
 								<h4>Titulo</h4>
-								<p>
-									Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corrupti repellendus
-									labore quia dolore saepe maxime esse repellat quaerat aspernatur deleniti assumenda
-									nihil.
-								</p>
+								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+								<Button className="Button" variant="success">
+									Ver más
+								</Button>{" "}
 							</div>
 						</div>
 					</div>
@@ -107,11 +101,10 @@ export const Home = () => {
 							<div className="frente" />
 							<div className="atras">
 								<h4>Titulo</h4>
-								<p>
-									Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corrupti repellendus
-									labore quia dolore saepe maxime esse repellat quaerat aspernatur deleniti assumenda
-									nihil.
-								</p>
+								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+								<Button className="Button" variant="success">
+									Ver más
+								</Button>{" "}
 							</div>
 						</div>
 					</div>
@@ -120,11 +113,10 @@ export const Home = () => {
 							<div className="frente" />
 							<div className="atras">
 								<h4>Titulo</h4>
-								<p>
-									Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corrupti repellendus
-									labore quia dolore saepe maxime esse repellat quaerat aspernatur deleniti assumenda
-									nihil.
-								</p>
+								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+								<Button className="Button" variant="success">
+									Ver más
+								</Button>{" "}
 							</div>
 						</div>
 					</div>
@@ -136,11 +128,10 @@ export const Home = () => {
 							<div className="frente" />
 							<div className="atras">
 								<h4>Titulo</h4>
-								<p>
-									Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corrupti repellendus
-									labore quia dolore saepe maxime esse repellat quaerat aspernatur deleniti assumenda
-									nihil.
-								</p>
+								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+								<Button className="Button" variant="success">
+									Ver más
+								</Button>{" "}
 							</div>
 						</div>
 					</div>
@@ -149,11 +140,10 @@ export const Home = () => {
 							<div className="frente" />
 							<div className="atras">
 								<h4>Titulo</h4>
-								<p>
-									Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corrupti repellendus
-									labore quia dolore saepe maxime esse repellat quaerat aspernatur deleniti assumenda
-									nihil.
-								</p>
+								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+								<Button className="Button" variant="success">
+									Ver más
+								</Button>{" "}
 							</div>
 						</div>
 					</div>
@@ -162,11 +152,10 @@ export const Home = () => {
 							<div className="frente" />
 							<div className="atras">
 								<h4>Titulo</h4>
-								<p>
-									Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corrupti repellendus
-									labore quia dolore saepe maxime esse repellat quaerat aspernatur deleniti assumenda
-									nihil.
-								</p>
+								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+								<Button className="Button" variant="success">
+									Ver más
+								</Button>{" "}
 							</div>
 						</div>
 					</div>
