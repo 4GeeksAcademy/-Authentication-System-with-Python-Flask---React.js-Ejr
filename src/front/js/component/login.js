@@ -54,7 +54,7 @@ export const Login = () => {
 								type="text"
 								className="form-control mb-2 text-center"
 								id="User"
-								placeholder="nickname@gmail.com"
+								placeholder="tomate.lo@gmail.com"
 							/>
 							<small id="emailHelp" className="form-text text-muted">
 								Por favor revisa bien tus datos cuando termines.
@@ -81,17 +81,34 @@ export const Login = () => {
 					<h4 className="display-5">Register</h4>
 					<hr className="my-1" />
 					<div className="form-group align-items-center">
+						<Row>
+							<div className="col-12 col-md-6">
+								<label className="inlineFormInput">First Name</label>
+								<input
+									type="text"
+									className="form-control mb-2 text-center"
+									id="User"
+									placeholder="Tomatico"
+								/>
+							</div>
+							<div className="col-12 col-md-6">
+								<label className="inlineFormInput">Last Name</label>
+								<input
+									type="text"
+									className="form-control mb-2 text-center"
+									id="User"
+									placeholder="Tomate"
+								/>
+							</div>
+						</Row>
 						<div className="col-auto">
 							<label className="inlineFormInput">Email</label>
 							<input
 								type="text"
 								className="form-control mb-2 text-center"
 								id="User"
-								placeholder="nickname@gmail.com"
+								placeholder="tomate.lo@gmail.com"
 							/>
-							<small id="emailHelp" className="form-text text-muted">
-								Por favor revisa bien tus datos cuando termines.
-							</small>
 						</div>
 						<div className="col-auto">
 							<label className="inlineFormInputGroup">Password</label>
@@ -104,6 +121,18 @@ export const Login = () => {
 								/>
 							</div>
 						</div>
+						<div className="col-auto">
+							<label className="inlineFormInput">Birthday</label>
+							<input
+								type="text"
+								className="form-control mb-2 text-center"
+								id="User"
+								placeholder="2021-04-08"
+							/>
+						</div>
+						<small id="emailHelp" className="form-text text-muted">
+							Por favor revisa bien tus datos cuando termines.
+						</small>
 						<Button type="submit" variant="outline-info">
 							Register
 						</Button>

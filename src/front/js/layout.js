@@ -18,7 +18,7 @@ import { Base_Categories } from "./component/base_categories";
 import { Footer } from "./component/footer";
 
 // Segunda Vista
-//import { Info_Category } from "./component/info_category";
+import { Info_Category } from "./component/info_category";
 
 // Tercera Vista
 import { Cocktails } from "./component/Cocktails";
@@ -48,11 +48,11 @@ const Layout = () => {
 							<Base_Categories />
 							<Footer />
 						</Route>
-						{/* <Route exact path="/base">
+						<Route exact path="/base">
 							<Navbar />
 							<Info_Category />
 							<Footer />
-						</Route> */}
+						</Route>
 						<Route exact path="/cocktails">
 							<Navbar />
 							<Cocktails />
