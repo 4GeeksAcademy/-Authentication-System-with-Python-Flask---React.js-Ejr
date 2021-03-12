@@ -1,3 +1,5 @@
+const be_url = "https://3001-apricot-tahr-nih1bqo0.ws-us03.gitpod.io";
+
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
@@ -13,12 +15,17 @@ const getState = ({ getStore, getActions, setStore }) => {
 					background: "white",
 					initial: "white"
 				}
-			]
+			],
+			favorites: [],
+			classification: [],
+			jwtoken: null,
+			sessionUID: null,
+			sessionUser: null
 		},
 		actions: {
 			//f(x) built for testing reg form(experimental by now)
 			signup: async (first_name, last_name, email, password, is_older) => {
-				const res = await fetch(`${BE_Url}user`, {
+				const res = await fetch(`${be_url}user`, {
 					method: "POST",
 					headers: { "Content-Type": "application/json" },
 					body: JSON.jsonify({
@@ -31,6 +38,20 @@ const getState = ({ getStore, getActions, setStore }) => {
 				});
 				const data = await res.json();
 				console.table(data.msg);
+			},
+			login: async (email, password) => {
+				await fetch(`${BE_Url}login`, {
+					method: "POST",
+					headers: { "Content-Type": "application/json" },
+					body: { email: email, password: password }
+				})
+					.then(response => response.json())
+					.then(jwtkn => {
+						if (typeof jwtoken.msg != "undefined") {
+						} else {
+							setStore({ jwtoken: jwtkn.jtw, sessionUID: jwtkn.id, sessionUser: jwtkn.user.favorites });
+						}
+					});
 			},
 			// Use getActions to call a function within a fuction
 			exampleFunction: () => {

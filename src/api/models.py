@@ -7,11 +7,8 @@ db= SQLAlchemy()
 class User(db.Model):
 
     id = db.Column(db.Integer,primary_key=True)
-    first_name = db.Column(db.String(250), unique=False, nullable=False)
-    last_name = db.Column(db.String(250), unique=False, nullable=False)
     email= db.Column(db.String(250), unique=True, nullable=True)
     password= db.Column(db.String(250), unique=False, nullable=False)
-    is_older= db.Column(db.DateTime, nullable=False, unique=False)
     favorites: db.relationship('Favorite', lazy=True, backref='user')
 
     def __repr__(self):
@@ -20,18 +17,16 @@ class User(db.Model):
     def serialize(self):
         return{
             "id": self.id,
-            "first_name": self.first_name,
-            "last_name": self.last_name,
+            "password": self.password,
             "email": self.email,
-            "is_older": self.is_older,
-            "favorites": list(map(lambda x: x.serialize(), self.favorites))
+            "favorites": list(map(lambda u: u.serialize(), self.favorites))
         }
 
 class Favorite(db.Model):
 
     id= db.Column(db.Integer, primary_key=True)
-    cockatail_name= db.Column(db.String(250), nullable=False)
-    cocktail_img= db.Column(db.String(500), nullable=False )
+    cocktail_name= db.Column(db.String(250), nullable=False)
+    cocktail_img= db.Column(db.String(500), nullable=True )
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
     def __repr__(self):

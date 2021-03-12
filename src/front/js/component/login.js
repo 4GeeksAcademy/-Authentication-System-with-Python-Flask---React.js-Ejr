@@ -55,6 +55,7 @@ export const Login = () => {
 								className="form-control mb-2 text-center"
 								id="User"
 								placeholder="nickname@gmail.com"
+								onChange={e => setEmail(e.target.value)}
 							/>
 							<small id="emailHelp" className="form-text text-muted">
 								Por favor revisa bien tus datos cuando termines.
@@ -68,6 +69,7 @@ export const Login = () => {
 									className="form-control text-center"
 									id="Password"
 									placeholder="tomatelo2x3"
+									onChange={e => setPassword(e.target.value)}
 								/>
 							</div>
 						</div>
@@ -88,6 +90,7 @@ export const Login = () => {
 								className="form-control mb-2 text-center"
 								id="User"
 								placeholder="nickname@gmail.com"
+								onCharge={e => setEmail(e.target.value)}
 							/>
 							<small id="emailHelp" className="form-text text-muted">
 								Por favor revisa bien tus datos cuando termines.
@@ -101,6 +104,7 @@ export const Login = () => {
 									className="form-control text-center"
 									id="Password"
 									placeholder="tomatelo2x3"
+									onChange={e => setPassword(e.target.value)}
 								/>
 							</div>
 						</div>
