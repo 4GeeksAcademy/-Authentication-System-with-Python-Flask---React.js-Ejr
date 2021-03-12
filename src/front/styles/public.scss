@@ -46,7 +46,11 @@
     right: 0;
 }
 
-@media (max-width: 767px) {
+@media (max-width: 768px) {
+    #padre .contentimg{
+        margin-top: 150px;
+    }
+
     #uno {
         top: 0;
     }

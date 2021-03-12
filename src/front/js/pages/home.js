@@ -1,12 +1,19 @@
 import React, { useContext } from "react";
 //import { Context } from "../store/appContext";
-import { Container, Row, Col, Img } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
 import "../../styles/galeria.scss";
 
 export const Home = () => {
 	return (
-		<div className="container">
+		<div className="container mb-4">
 			<div className="contenedor">
+				<article className="text-light">
+					<h4>Ingresa y enterate de todo lo relacionado a este proyecto!</h4>
+					{/* <p>
+						Esta página esta ligada a una base de datos ya creada por lo cual para poder ingresar deberás
+						revisar F12 y conocer los usuarios en lista ya creados!
+					</p> */}
+				</article>
 				<div className="row">
 					{/* 1era Fila */}
 					{/* 1era Fila */}

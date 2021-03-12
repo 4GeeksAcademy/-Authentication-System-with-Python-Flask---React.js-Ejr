@@ -1,11 +1,9 @@
 import React, { useContext } from "react";
 //import { Context } from "../store/appContext";
 import { Container, Row, Col, Image, Card, Media, Button, Link } from "react-bootstrap";
-import "../../styles/home.scss";
-import "../../styles/home_cards.scss";
-import tomatelo from "../../img/logo/tomatelo2.png";
+import "../../styles/info_category.scss";
 
-export const Categories = () => {
+export const Info_Category = () => {
 	return (
 		<Container>
 			<Row>
