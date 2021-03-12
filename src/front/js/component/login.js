@@ -56,9 +56,6 @@ export const Login = () => {
 								id="User"
 								placeholder="tomate.lo@gmail.com"
 							/>
-							<small id="emailHelp" className="form-text text-muted">
-								Por favor revisa bien tus datos cuando termines.
-							</small>
 						</div>
 						<div className="col-auto">
 							<label className="inlineFormInputGroup">Password</label>
@@ -71,6 +68,9 @@ export const Login = () => {
 								/>
 							</div>
 						</div>
+						<small id="emailHelp" className="form-text text-muted">
+							Por favor revisa bien tus datos cuando termines.
+						</small>
 						<Button type="submit" variant="outline-info">
 							Log In
 						</Button>
