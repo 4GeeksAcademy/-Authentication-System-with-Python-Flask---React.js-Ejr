@@ -15,6 +15,8 @@ import { FooLogin } from "./component/foologin";
 import { Navbar } from "./component/navbar";
 import { Home } from "./pages/home";
 import { Footer } from "./component/footer";
+import { Categories } from "./component/CardsCategories";
+import { Cocktails } from "./component/Cocktails";
 
 // import { Info_Category } from "./component/info_category";
 
@@ -40,6 +42,13 @@ const Layout = () => {
 						<Route exact path="/home">
 							<Navbar />
 							<Home />
+							<Categories />
+							<Footer />
+						</Route>
+
+						<Route exact path="/cocktails">
+							<Navbar />
+							<Cocktails />
 							<Footer />
 						</Route>
 						{/* <Route exact path="/base">
