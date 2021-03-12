@@ -1,22 +1,22 @@
 import React, { useState, useContext } from "react";
 import { Redirect } from "react-router-dom";
-// import { Context } from "./store/appContext";
+import { Context } from "../store/appContext";
 //import { Link } from "react-router-dom";
 import { Container, Row, Button } from "react-bootstrap";
 
 export const Login = () => {
-	// const { actions, store } = useContext(Context);
+	const { actions, store } = useContext(Context);
 	const [username, setUsername] = useState("");
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [redirect, setRedirect] = useState(false);
 
 	const actionRegister = e => {
-		if (username === "" || email === "" || password === "") {
+		if (email === "" || password === "") {
 			alert("ActionRegister: Faltan datos por llenar!");
 		} else {
 			alert(username, email);
-			actions.validacionRegistro(username, email, password);
+			actions.signup(email, password);
 		}
 	};
 
@@ -55,7 +55,6 @@ export const Login = () => {
 								className="form-control mb-2 text-center"
 								id="User"
 								placeholder="nickname@gmail.com"
-								onChange={e => setEmail(e.target.value)}
 							/>
 							<small id="emailHelp" className="form-text text-muted">
 								Por favor revisa bien tus datos cuando termines.
@@ -69,7 +68,6 @@ export const Login = () => {
 									className="form-control text-center"
 									id="Password"
 									placeholder="tomatelo2x3"
-									onChange={e => setPassword(e.target.value)}
 								/>
 							</div>
 						</div>
@@ -79,7 +77,7 @@ export const Login = () => {
 						{/* {store.boolean ? <Redirect to="/home" /> : ""} */}
 					</div>
 				</form>
-				<form className="col-12 col-md-6 text-center text-light" onSubmit={e => actionLogin(e)}>
+				<form className="col-12 col-md-6 text-center text-light" onSubmit={e => actionRegister(e)}>
 					<h4 className="display-5">Register</h4>
 					<hr className="my-1" />
 					<div className="form-group align-items-center">
@@ -90,7 +88,7 @@ export const Login = () => {
 								className="form-control mb-2 text-center"
 								id="User"
 								placeholder="nickname@gmail.com"
-								onCharge={e => setEmail(e.target.value)}
+								onChange={e => setEmail(e.target.value)}
 							/>
 							<small id="emailHelp" className="form-text text-muted">
 								Por favor revisa bien tus datos cuando termines.

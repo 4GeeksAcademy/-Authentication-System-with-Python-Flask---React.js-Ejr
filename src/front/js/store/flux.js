@@ -1,4 +1,4 @@
-const be_url = "https://3001-apricot-tahr-nih1bqo0.ws-us03.gitpod.io";
+const be_url = "https://3001-apricot-tahr-nih1bqo0.ws-us03.gitpod.io/";
 
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
@@ -23,17 +23,15 @@ const getState = ({ getStore, getActions, setStore }) => {
 			sessionUser: null
 		},
 		actions: {
+			////////////////////BEGIN TESTING PURPOSES @JVM && @ANMORA//////////////////////
 			//f(x) built for testing reg form(experimental by now)
-			signup: async (first_name, last_name, email, password, is_older) => {
-				const res = await fetch(`${be_url}user`, {
+			signup: async (email, password) => {
+				const res = await fetch("https://3001-apricot-tahr-nih1bqo0.ws-us03.gitpod.io/user", {
 					method: "POST",
 					headers: { "Content-Type": "application/json" },
 					body: JSON.jsonify({
-						first_name: first_name,
-						last_name: last_name,
 						email: email,
-						password: password,
-						is_older: is_older
+						password: password
 					})
 				});
 				const data = await res.json();
@@ -47,12 +45,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 				})
 					.then(response => response.json())
 					.then(jwtkn => {
-						if (typeof jwtoken.msg != "undefined") {
+						if (typeof jwtkn.msg != "undefined") {
 						} else {
-							setStore({ jwtoken: jwtkn.jtw, sessionUID: jwtkn.id, sessionUser: jwtkn.user.favorites });
+							setStore({ jwtoken: jwtkn.jtw, sessionUID: jwtkn.id, sessionUser: jwtkn.user.favorites }); //syntax {store:data}
 						}
 					});
 			},
+			/////////////////////END TESTING PURPOSES @JVM && @ANMORA///////////////////////
 			// Use getActions to call a function within a fuction
 			exampleFunction: () => {
 				getActions().changeColor(0, "green");
