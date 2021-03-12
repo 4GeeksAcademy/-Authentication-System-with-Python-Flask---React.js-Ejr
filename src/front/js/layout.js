@@ -8,6 +8,7 @@ import { Provider } from "./pages/provider";
 import { Register } from "./pages/register";
 import { Login } from "./pages/login";
 import { Single } from "./pages/single";
+import { ProductRegister } from "./pages/productRegister";
 import injectContext from "./store/appContext";
 
 import { Navbar } from "./component/navbar";
@@ -42,6 +43,9 @@ const Layout = () => {
 						</Route>
 						<Route exact path="/single/:theid">
 							<Single />
+						</Route>
+						<Route exact path="/product-register">
+							<ProductRegister />
 						</Route>
 						<Route>
 							<h1>Not found!</h1>
