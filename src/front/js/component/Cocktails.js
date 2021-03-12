@@ -4,7 +4,7 @@ import { Container, Row, Col, Image, Card, Media, Button, ListGroup, Item } from
 import "../../styles/home.scss";
 import "../../styles/Cocktails.scss";
 import tomatelo from "../../img/logo/tomatelo2.png";
-
+//actualizado
 export const Cocktails = () => {
 	return (
 		<Container>
@@ -42,3 +42,4 @@ export const Cocktails = () => {
 		</Container>
 	);
 };
+
