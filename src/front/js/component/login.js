@@ -1,24 +1,27 @@
 import React, { useState, useContext } from "react";
-import { Redirect } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
 import { Context } from "../store/appContext";
 //import { Link } from "react-router-dom";
 import { Container, Row, Button } from "react-bootstrap";
 
 export const Login = () => {
-	const { actions, store } = useContext(Context);
-	const [username, setUsername] = useState("");
+    const { actions, store } = useContext(Context);
+    const history = useHistory();
+    const [first_name, setFirst_name] = useState("");
+    const [last_name, setLast_name] = useState("");
 	const [email, setEmail] = useState("");
-	const [password, setPassword] = useState("");
+    const [password, setPassword] = useState("");
+    const [birthday, setBirthday] = useState("");
 	const [redirect, setRedirect] = useState(false);
 
-	const actionRegister = e => {
-		if (email === "" || password === "") {
-			alert("ActionRegister: Faltan datos por llenar!");
-		} else {
-			alert(username, email);
-			actions.signup(email, password);
-		}
-	};
+	// const actionRegister = e => {
+	// 	if (email === "" || password === "") {
+	// 		alert("ActionRegister: Faltan datos por llenar!");
+	// 	} else {
+	// 		alert(username, email);
+	// 		actions.signup(email, password);
+	// 	}
+	// };
 
 	const actionLogin = e => {
 		if (email === "" || password === "") {
@@ -30,6 +33,9 @@ export const Login = () => {
 	};
 
 	return (
+
+            <>
+            {store.jwtkn ? <Redirect to="/" /> : ""}
 		<Container className="mt-2 mb-2">
 			<Row>
 				<article className="text-center text-light offset-lg-2 col-12 col-md-12 col-lg-8">
@@ -54,7 +60,7 @@ export const Login = () => {
 								type="text"
 								className="form-control mb-2 text-center"
 								id="User"
-								placeholder="nickname@gmail.com"
+								placeholder="tomate.lo@gmail.com"
 							/>
 							<small id="emailHelp" className="form-text text-muted">
 								Por favor revisa bien tus datos cuando termines.
@@ -77,10 +83,32 @@ export const Login = () => {
 						{/* {store.boolean ? <Redirect to="/home" /> : ""} */}
 					</div>
 				</form>
-				<form className="col-12 col-md-6 text-center text-light" onSubmit={e => actionRegister(e)}>
+				<form className="col-12 col-md-6 text-center text-light">
 					<h4 className="display-5">Register</h4>
 					<hr className="my-1" />
 					<div className="form-group align-items-center">
+						<Row>
+							<div className="col-12 col-md-6">
+								<label className="inlineFormInput">First Name</label>
+								<input
+									type="text"
+									className="form-control mb-2 text-center"
+									id="User"
+                                    placeholder="Tomatico"
+                                    onChange={e => setFirst_name(e.target.value)}
+								/>
+							</div>
+							<div className="col-12 col-md-6">
+								<label className="inlineFormInput">Last Name</label>
+								<input
+									type="text"
+									className="form-control mb-2 text-center"
+									id="User"
+                                    placeholder="Tomate"
+                                    onChange={e => setLast_name(e.target.value)}
+								/>
+							</div>
+						</Row>
 						<div className="col-auto">
 							<label className="inlineFormInput">Email</label>
 							<input
@@ -90,9 +118,6 @@ export const Login = () => {
 								placeholder="nickname@gmail.com"
 								onChange={e => setEmail(e.target.value)}
 							/>
-							<small id="emailHelp" className="form-text text-muted">
-								Por favor revisa bien tus datos cuando termines.
-							</small>
 						</div>
 						<div className="col-auto">
 							<label className="inlineFormInputGroup">Password</label>
@@ -106,12 +131,35 @@ export const Login = () => {
 								/>
 							</div>
 						</div>
-						<Button type="submit" variant="outline-info">
+						<div className="col-auto">
+							<label className="inlineFormInput">Birthday</label>
+							<input
+								type="text"
+								className="form-control mb-2 text-center"
+								id="User"
+                                placeholder="2021-04-08"
+                                onChange={e => setBirthday(e.target.value)}
+							/>
+						</div>
+						<small id="emailHelp" className="form-text text-muted">
+							Por favor revisa bien tus datos cuando termines.
+						</small>
+                        <Button type="submit" 
+                                variant="outline-info" 
+                                onClick={async () => {
+                                let ok = await actions.signup(first_name, last_name, email, password, birthday);
+                                if(ok){
+                                    history.push("/");
+                                }else {
+                                    alert("failed to submit registration, lets try again");
+                                }
+                        }}>
 							Register
 						</Button>
 					</div>
 				</form>
 			</Row>
 		</Container>
+        </>
 	);
 };
