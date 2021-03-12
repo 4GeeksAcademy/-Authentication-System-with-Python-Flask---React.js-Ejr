@@ -21,6 +21,11 @@ export function Changepass() {
 												<Form.Control type="text" placeholder="Usuario" />
 											</Col>
 										</Form.Group>
+										<Form.Group as={Row} controlId="formHorizontalPassword">
+											<Col sm={12}>
+												<Form.Control type="password" placeholder="Contraseña" />
+											</Col>
+										</Form.Group>
 
 										<Form.Group as={Row}>
 											<Col sm={{ span: 9, offset: 3 }}>
