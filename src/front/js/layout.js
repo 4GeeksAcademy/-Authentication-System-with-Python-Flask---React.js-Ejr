@@ -19,7 +19,7 @@ import { Footer } from "./component/footer";
 
 // Segunda Vista
 import { Info_Category } from "./component/info_category";
-
+// comentarios
 // Tercera Vista
 import { Cocktails } from "./component/Cocktails";
 
