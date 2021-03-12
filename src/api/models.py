@@ -66,7 +66,7 @@ class Provider_Details(db.Model):
     email_Provider_Details = db.Column(db.String(25), nullable=False)
     phone_Provider_Details = db.Column(db.String(30), nullable=False)
     address_Provider_Details = db.Column(db.String(250), nullable=False)
-    payment_Type_Provider_Details = db.Column(db.String(3), nullable=False)
+    payment_Type_Provider_Details = db.Column(db.String(30), nullable=False)
     
 
     def __repr__(self):
