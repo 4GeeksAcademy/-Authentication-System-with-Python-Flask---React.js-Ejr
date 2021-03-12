@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Context } from "../store/appContext";
-import { Carrusel } from "/workspace/react-flask-hello-proyecto-final-grupo-6A/src/front/js/component/carrusel.js";
+import { Carrusel } from "/workspace/react-flask-hello/src/front/js/component/carrusel";
 import "../../styles/home.scss";
 
 export const Home = () => {
