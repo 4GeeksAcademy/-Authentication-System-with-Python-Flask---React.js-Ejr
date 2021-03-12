@@ -15,9 +15,9 @@ const Categoria = props => {
 						alt="..."
 					/>
 					<div className="card-body">
-						<p className="card-text">Categoría: {props.gender}</p>
+						<p className="card-text">Categoría: {props.categoria}</p>
 						<div className="col-12 d-flex justify-content-between button-space">
-							<Link to={"/detailpeople/" + idpeople}>
+							<Link to={"/detailpeople/" + idcategoria}>
 								<button type="button" className="btn btn-outline-success">
 									Learn more!
 								</button>
@@ -35,10 +35,7 @@ const Categoria = props => {
 
 Cards.propTypes = {
 	id: PropTypes.any,
-	name: PropTypes.string,
-	hair_color: PropTypes.string,
-	eye_color: PropTypes.string,
-	gender: PropTypes.string
+	name: categoria
 };
 
 export default Cards;
