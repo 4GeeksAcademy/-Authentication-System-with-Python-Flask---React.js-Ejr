@@ -46,28 +46,18 @@ export const Register = () => {
 				<div className="row">
 					<img
 						style={{ Maxwidth: "422px", width: "425px", marginBottom: "20px" }}
-						src="https://i.ytimg.com/vi/3nr4tRNE8QE/maxresdefault.jpg"
+						src="https://www.costaricavibes.com/wp-content/uploads/2019/09/Untitled-design-2019-09-18T103527.260.jpg"
 					/>
 				</div>
 				<div className="form-floating mb-3">
 					<input
-						type="name"
+						type="fullName"
 						className="form-control"
 						id="floatingInput"
-						placeholder="Enter your name"
-						onChange={e => setName(e.target.value)}
+						placeholder="Ingrese su nombre y apellido"
+						onChange={e => setNombre_Completo(e.target.value)}
 					/>
-					<label htmlFor="floatingInput">Name</label>
-				</div>
-				<div className="form-floating mb-3">
-					<input
-						type="lastName"
-						className="form-control"
-						id="floatingInput"
-						placeholder="Enter your last name"
-						onChange={e => setLastName(e.target.value)}
-					/>
-					<label htmlFor="floatingInput">Last name </label>
+					<label htmlFor="floatingInput">Nombre Completo</label>
 				</div>
 				<div className="form-floating mb-3">
 					<input

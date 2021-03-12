@@ -30,4 +30,4 @@ const Montana = () => {
 	);
 };
 
-export const Jumbotron = () => <div className="jumbotron text-left shadow">{true ? <Playa /> : <Montana />}</div>;
+export const Jumbotron = () => <div className="jumbotron text-left shadow mt-5">{true ? <Playa /> : <Montana />}</div>;
