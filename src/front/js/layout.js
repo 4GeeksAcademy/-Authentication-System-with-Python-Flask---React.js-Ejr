@@ -4,8 +4,8 @@ import ScrollToTop from "./component/scrollToTop";
 
 import { Home } from "./pages/home";
 import { ViewGeneral } from "./pages/viewGeneral";
-import { Single } from "./pages/single";
 import injectContext from "./store/appContext";
+import { Login } from "./pages/login";
 
 import { Barra } from "./component/barra";
 import { Footer } from "./component/footer";
@@ -28,8 +28,8 @@ const Layout = () => {
 						<Route exact path="/viewgeneral/:theid">
 							<ViewGeneral />
 						</Route>
-						<Route>
-							<h1>Not found!</h1>
+						<Route exact path="/login">
+							<Login />
 						</Route>
 					</Switch>
 					<Footer />

@@ -14,7 +14,7 @@ export function Barra() {
 			<Navbar.Toggle />
 			<Navbar.Collapse className="justify-content-end">
 				<Navbar.Text>
-					<Link to="/demo">
+					<Link to="/login">
 						<a href="#login">Log In</a>
 					</Link>
 				</Navbar.Text>
