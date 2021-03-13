@@ -10,6 +10,7 @@ import { Register } from "./pages/register";
 import { Jumbotron } from "./component/jumbotron";
 import { Barra } from "./component/barra";
 import { Footer } from "./component/footer";
+import ScrollToTop from "./component/scrollToTop";
 
 //create your first component
 const Layout = () => {
@@ -19,22 +20,24 @@ const Layout = () => {
 	return (
 		<div className="d-flex flex-column h-100">
 			<BrowserRouter basename={basename}>
-				<Barra />
-				<Switch>
-					<Route exact path="/">
-						<Home />
-					</Route>
-					<Route exact path="/viewGeneral">
-						<ViewGeneral />
-					</Route>
-					<Route exact path="/viewPyme">
-						<PymeView />
-					</Route>
-					<Route exact path="/login">
-						<Login />
-					</Route>
-				</Switch>
-				<Footer />
+				<ScrollToTop>
+					<Barra />
+					<Switch>
+						<Route exact path="/">
+							<Home />
+						</Route>
+						<Route exact path="/viewGeneral">
+							<ViewGeneral />
+						</Route>
+						<Route exact path="/viewPyme">
+							<PymeView />
+						</Route>
+						<Route exact path="/login">
+							<Login />
+						</Route>
+					</Switch>
+					<Footer />
+				</ScrollToTop>
 			</BrowserRouter>
 		</div>
 	);
