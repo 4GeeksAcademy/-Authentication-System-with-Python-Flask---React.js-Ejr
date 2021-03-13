@@ -4,9 +4,9 @@ import { Home } from "./pages/home";
 import { ViewGeneral } from "./pages/viewGeneral";
 import injectContext from "./store/appContext";
 import { Login } from "./pages/login";
+import { Register } from "./pages/register";
 
 import { PymeView } from "./pages/viewPyme";
-import { Register } from "./pages/register";
 import { Jumbotron } from "./component/jumbotron";
 import { Barra } from "./component/barra";
 import { Footer } from "./component/footer";
@@ -32,6 +32,9 @@ const Layout = () => {
 					</Route>
 					<Route exact path="/login">
 						<Login />
+					</Route>
+					<Route exact path="/register">
+						<Register />
 					</Route>
 				</Switch>
 				<Footer />

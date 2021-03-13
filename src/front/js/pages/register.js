@@ -41,8 +41,52 @@ export const Register = () => {
 	return (
 		<div
 			className="container text-center mt-5 d-flex justify-content-center align-items-center"
+			style={{ Maxwidth: "750px", background: "white", paddingTop: "150px", paddingBottom: "250px" }}>
+			<form style={{ width: "400px" }}>
+				<div className="form-floating mb-3">
+					<input
+						type="fullName"
+						className="form-control"
+						id="floatingInput"
+						placeholder="Ingrese su nombre y apellido"
+					/>
+				</div>
+				<div className="form-floating mb-3">
+					<input type="email" className="form-control" id="floatingInput" placeholder="name@example.com" />
+				</div>
+				<div className="form-floating" style={{ marginBottom: "15px" }}>
+					<input
+						type="password"
+						className="form-control"
+						id="floatingPassword"
+						placeholder="Enter a password"
+					/>
+				</div>
+				<input type="submit" className="btn btn-primary" style={{ width: "398px" }} value="Register" />
+			</form>
+		</div>
+	);
+};
+/*	<div className="row">
+					<img
+						style={{
+							Maxwidth: "422px",
+							width: "401px",
+							borderRadius: "67px",
+							margin: "0 auto",
+							height: "200pxs",
+							paddingBottom: "20px"
+						}}
+						src="https://www.costaricavibes.com/wp-content/uploads/2019/09/Untitled-design-2019-09-18T103527.260.jpg"
+					/>
+				</div>*/
+/*
+	return (
+		<div
+			className="container text-center mt-5 d-flex justify-content-center align-items-center"
 			style={{ Maxwidth: "750px", background: "white", paddingTop: "92px", paddingBottom: "92px" }}>
-			<form style={{ width: "400px" }} onSubmit={e => handleSubmit(e)}>
+			
+            <form style={{ width: "400px" }} onSubmit={e => handleSubmit(e)}>
 				<div className="row">
 					<img
 						style={{ Maxwidth: "422px", width: "425px", marginBottom: "20px" }}
@@ -85,3 +129,4 @@ export const Register = () => {
 		</div>
 	);
 };
+*/
