@@ -1,11 +1,27 @@
 import React from "react";
 import "../../styles/home.scss";
 import "../../styles/index.scss";
+import { CardCategory } from "./cardCategory.jsx";
+import { serviceDiseno, serviceMarketing, serviceIt } from "../../img/image.js";
+import { Jumbotron, Row, Col } from "react-bootstrap";
 
 export const CardBox = () => {
 	return (
-		<div className="cardBox shadow-lg p-3 mb-5">
-			<h2>Categorias mas buscadas</h2>
-		</div>
+		<>
+			<Jumbotron className="whiteBox shadow-lg p-5 mb-5">
+				<h2 className="mb-3">Categorias mas buscadas</h2>
+				<Row className="row-cols-1 row-cols-sm-2 row-cols-md-4 align-items-center scroll">
+					<Col md={4}>
+						<CardCategory img={serviceIt} title="Desarollar/IT" valor="desde 300.000" />
+					</Col>
+					<Col md={4}>
+						<CardCategory img={serviceDiseno} title="Diseno" valor="desde 50.000" />
+					</Col>
+					<Col md={4}>
+						<CardCategory img={serviceMarketing} title="Marketing" valor="desde desde 50.000" />
+					</Col>
+				</Row>
+			</Jumbotron>
+		</>
 	);
 };
