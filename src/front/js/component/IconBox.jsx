@@ -1,11 +1,11 @@
 import React from "react";
 import "../../styles/home.scss";
 import "../../styles/index.scss";
-import { Table } from "react-bootstrap";
+import { Table, Jumbotron } from "react-bootstrap";
 
 export const IconBox = () => {
 	return (
-		<div className="iconBox shadow-lg p-3 mb-5">
+		<Jumbotron className="whiteBox shadow-lg p-3 mb-5">
 			<Table responsive className="table table-borderless text-center">
 				<thead>
 					<tr>
@@ -36,6 +36,6 @@ export const IconBox = () => {
 					</tr>
 				</tbody>
 			</Table>
-		</div>
+		</Jumbotron>
 	);
 };
