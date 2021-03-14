@@ -81,7 +81,7 @@ export const ComponenteInf = () => {
 					/>
 				</Media>
 			</ul>
-			<div className="embed-responsive embed-responsive-16by9 mt-5">
+			<div className="embed-responsive embed-responsive-16by9 mt-5 mb-5">
 				<iframe
 					className="embed-responsive-item"
 					src="https://www.youtube.com/embed/Kn6qgfTmsyA?rel=0"

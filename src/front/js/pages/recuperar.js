@@ -27,14 +27,7 @@ export const Recuperar = () => {
 						placeholder="¿Cuál era el nombre de tu primera mascota?"
 					/>
 				</div>
-				<Link to={`./newPassword/`}>
-					<input
-						type="submit"
-						className="btn btn-primary"
-						style={{ width: "400px" }}
-						value="Enviar respuesta"
-					/>
-				</Link>
+				<input type="submit" className="btn btn-primary" style={{ width: "400px" }} value="Enviar respuesta" />
 			</form>
 		</div>
 	);

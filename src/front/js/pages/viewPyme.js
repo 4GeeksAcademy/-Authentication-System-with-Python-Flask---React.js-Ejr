@@ -5,17 +5,14 @@ import "../../styles/home.scss";
 //import PropTypes from "prop-types";
 //import { Context } from "../store/appContext";
 //import { useParams } from "react-router-dom";
+import { Link, animateScroll as scroll } from "react-scroll";
+import { Review } from "../component/review";
+import { Comment } from "../component/comment";
 
 //const PymeView = ({ pymes })
 const PymeProfile = () => {
 	return (
 		<>
-			<img
-				className="card-img-top rounded-right shadow mt-5"
-				style={{ width: "100%", height: "300px", margin: "0 auto" }}
-				src="https://fondosmil.com/fondo/74500.jpg"
-				alt="Card image cap"
-			/>
 			<div className="container">
 				<div className="row" style={{ marginBottom: "37px", marginTop: "68px" }}>
 					<h1 className="font-weight-bolder" style={{ paddingLeft: "13px" }}>
@@ -139,8 +136,38 @@ const PymeProfile = () => {
 	);*/
 export const PymeView = () => {
 	return (
-		<div className="container">
-			<PymeProfile />
+		<div>
+			<div>
+				<img
+					className="card-img-top rounded-right shadow"
+					style={{ width: "100%", height: "600px", margin: "0 auto" }}
+					src="https://sfo2.digitaloceanspaces.com/elpaiscr/2021/02/Volcan-Arenal..jpeg"
+					alt="Card image cap"
+				/>
+			</div>
+			<div className="container">
+				<PymeProfile />
+			</div>
+			<Link activeClass="active" to="navb" spy={true} smooth={true} offset={-70} duration={500}>
+				<i
+					className="fas fa-chevron-circle-up fa-3x"
+					id="main"
+					style={{ marginLeft: "1750px", marginBottom: "50px" }}
+				/>
+			</Link>
+			<hr />
+			<div style={{ background: "#DCDCDC", width: "100%", height: "auto" }}>
+				<Review />
+			</div>
+			<div
+				style={{
+					background: "#DCDCDC",
+					width: "100%",
+					height: "auto",
+					paddingBottom: "50px"
+				}}>
+				<Comment />
+			</div>
 		</div>
 	);
 };

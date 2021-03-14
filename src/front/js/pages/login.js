@@ -39,7 +39,7 @@ export function Login() {
 							variant="primary"
 							type="submit"
 							style={{ width: "398px", background: "#17a2b8", border: "none" }}>
-							Registrarse
+							Regístrate Aquí
 						</Button>
 					</Link>
 				</Form.Group>

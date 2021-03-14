@@ -9,6 +9,8 @@ import { Recuperar } from "./pages/recuperar";
 import { NewPassword } from "./pages/newPassword";
 
 import { PymeView } from "./pages/viewPyme";
+import { Review } from "./component/review";
+import { Comment } from "./component/comment";
 import { Jumbotron } from "./component/jumbotron";
 import { Barra } from "./component/barra";
 import { Footer } from "./component/footer";
@@ -53,6 +55,7 @@ const Layout = () => {
 						</Route>
 					</div>
 				</Switch>
+
 				<Footer />
 			</BrowserRouter>
 		</div>

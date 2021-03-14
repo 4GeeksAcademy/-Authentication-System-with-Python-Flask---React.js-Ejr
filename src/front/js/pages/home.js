@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import { Link, animateScroll as scroll } from "react-scroll";
 import { Context } from "../store/appContext";
 import { Carrusel } from "../component/carrusel";
 import { Intro } from "../component/intro";
