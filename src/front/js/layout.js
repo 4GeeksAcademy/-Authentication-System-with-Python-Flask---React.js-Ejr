@@ -5,6 +5,8 @@ import { ViewGeneral } from "./pages/viewGeneral";
 import injectContext from "./store/appContext";
 import { Login } from "./pages/login";
 import { Register } from "./pages/register";
+import { Recuperar } from "./pages/recuperar";
+import { NewPassword } from "./pages/newPassword";
 
 import { PymeView } from "./pages/viewPyme";
 import { Jumbotron } from "./component/jumbotron";
@@ -30,12 +32,26 @@ const Layout = () => {
 					<Route exact path="/viewPyme">
 						<PymeView />
 					</Route>
-					<Route exact path="/login">
-						<Login />
-					</Route>
-					<Route exact path="/register">
-						<Register />
-					</Route>
+					<div
+						style={{
+							backgroundImage:
+								"url('https://wallpapersplanet.net/sites/default/files/costa-rica-wallpapers-36777-877629.png')",
+							height: "100%",
+							opacity: "0.7"
+						}}>
+						<Route exact path="/login">
+							<Login />
+						</Route>
+						<Route exact path="/register">
+							<Register />
+						</Route>
+						<Route exact path="/recuperar">
+							<Recuperar />
+						</Route>
+						<Route exact path="/newPassword">
+							<NewPassword />
+						</Route>
+					</div>
 				</Switch>
 				<Footer />
 			</BrowserRouter>
