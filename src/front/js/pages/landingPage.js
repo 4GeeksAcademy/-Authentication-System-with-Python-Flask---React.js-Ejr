@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import "../../styles/home.scss";
 import "../../styles/index.scss";
 import { logoBlanco, man } from "../../img/image";
-import { withRouter } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import { Container, Button, Form, FormControl, Row, Col } from "react-bootstrap";
 import { IconBox } from "../component/IconBox.jsx";
 import { CardBox } from "../component/cardBox.jsx";
@@ -38,9 +38,12 @@ const LandingPage = () => {
 									className="mr-sm-2 my-3 "
 									style={{ borderRadius: "1.75rem", width: "526px" }}
 								/>
-								<Button variant="outline-light" className="mr-3 mt-2 px-5">
+								{/* <Button variant="outline-light" className="mr-3 mt-2 px-5">
+                                    Buscar una freelancer
+								</Button> */}
+								<Link className="mr-3 mt-2 px-5" to="/home">
 									Buscar una freelancer
-								</Button>
+								</Link>
 								<Button variant="secondary" className="mt-2 px-5">
 									Soy un freelancer
 								</Button>
