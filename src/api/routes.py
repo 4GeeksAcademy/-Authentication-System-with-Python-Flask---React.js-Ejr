@@ -17,6 +17,8 @@ def handle_hello():
 
     return jsonify(response_body), 200
 
+#-----------------------------------Provider-----------------------------------------------------------------------------------------------
+
 @api.route('/provider',methods=['GET'])
 def listProvider():
     provider = Provider.query.all()
@@ -57,7 +59,7 @@ def addCategory():
     db.session.commit()
     return jsonify("All good"), 200
 
-
+#------------------------------------------------------User----------------------------------------------------------------------------
 
 @api.route('/user',methods=['GET'])
 def get_user():
@@ -87,3 +89,5 @@ def add_user():
     provider = Provider.query.all()
     provider_serialized = list(map(lambda data: data.serialize(), provider))
     return jsonify(provider_serialized),200
+
+#----------------------------------------------------------------------------------------------------------------------------------

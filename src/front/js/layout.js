@@ -14,6 +14,7 @@ import { AddProduct } from "./pages/addProduct";
 import { Reports } from "./pages/reports";
 import injectContext from "./store/appContext";
 import { Category } from "./pages/category";
+import { ProductRegister } from "./component/productRegisterForm";
 
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
@@ -59,7 +60,7 @@ const Layout = () => {
 						</Route>
 						<Route exact path="/product-register">
 							<ProductRegister />
-                        </Route>
+						</Route>
 						<Route exact path="/addproduct">
 							<AddProduct />
 						</Route>
