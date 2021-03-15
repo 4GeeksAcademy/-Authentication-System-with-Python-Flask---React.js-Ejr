@@ -3,7 +3,7 @@ import React, { useContext } from "react";
 import { Container, Row, Col, Image, Card, Media, Button, ListGroup, Item } from "react-bootstrap";
 import "../../styles/Cocktails.scss";
 import tomatelo from "../../img/logo/tomatelo2.png";
-//actualizado
+//listo
 export const Cocktails = () => {
 	return (
 		//
