@@ -2,6 +2,7 @@ import React from "react";
 //import { Link } from "react-router-dom";
 import { Container } from "react-bootstrap";
 import tomatelo from "../../img/logo/tomatelo2.png";
+import "../../styles/disable_scroll.scss";
 import "../../styles/home.scss";
 
 export const Navbar = () => {
