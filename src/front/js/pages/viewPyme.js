@@ -5,9 +5,7 @@ import "../../styles/home.scss";
 //import PropTypes from "prop-types";
 //import { Context } from "../store/appContext";
 //import { useParams } from "react-router-dom";
-import { Link, animateScroll as scroll } from "react-scroll";
-import { Review } from "../component/review";
-import { Comment } from "../component/comment";
+import Comment from "../component/comment";
 
 //const PymeView = ({ pymes })
 const PymeProfile = () => {
@@ -117,7 +115,7 @@ const PymeProfile = () => {
 						</div>
 					</div>
 				</div>
-				<div className="embed-responsive embed-responsive-16by9">
+				<div className="embed-responsive embed-responsive-16by9 mb-5">
 					<iframe
 						className="embed-responsive-item"
 						src="https://www.youtube.com/embed/pHBh5DNQ1cw?rel=0"
@@ -135,18 +133,8 @@ export const PymeView = () => {
 			<div className="container">
 				<PymeProfile />
 			</div>
-
 			<hr />
-			<div style={{ background: "#DCDCDC", width: "100%", height: "auto" }}>
-				<Review />
-			</div>
-			<div
-				style={{
-					background: "#DCDCDC",
-
-					height: "auto",
-					paddingBottom: "50px"
-				}}>
+			<div className="container">
 				<Comment />
 			</div>
 		</div>
