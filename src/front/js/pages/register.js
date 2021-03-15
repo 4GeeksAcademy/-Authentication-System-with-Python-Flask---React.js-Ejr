@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { Context } from "../store/appContext";
 import { Form, Button, Row, Col, Card } from "react-bootstrap";
 import "../../styles/register.scss";
 
@@ -18,7 +19,7 @@ export function Register() {
 									<Form>
 										<Form.Group as={Row} controlId="formHorizontalText">
 											<Col sm={12}>
-												<Form.Control type="text" placeholder="Nombre" />
+												<Form.Control type="text" placeholder="Documento ID" />
 											</Col>
 										</Form.Group>
 
