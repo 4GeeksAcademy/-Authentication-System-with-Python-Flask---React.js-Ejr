@@ -23,21 +23,21 @@ def get_user(user_id):
         raise APIException('este usuario no existe en la base de datos', status_code=404)
     userjson = user.serialize()
     return jsonify(userjson), 200
-
+#------------------------------------------------------------------------------------------------
 @api.route('/pymes', methods=['GET'])
-def get_playa():
+def get_pymes():
     pymes = Pymes.query.all()
     list_pymes = list(map(lambda x: x.serialize(), pymes))
     return jsonify(list_pymes), 200
 
 @api.route('/pymes/<int:pymes_id>', methods=['GET'])
-def get_pymes_playa(pymes_id):
+def get_pymes_id(pymes_id):
     pymes = Pymes.query.get(pymes_id)
     if pymes is None:
         raise APIException('El pymes no existe', status_code=404)
     pymesjson = pymes.serialize()
     return jsonify(pymesjson), 200
-
+#------------------------------------------------------------------------------------------------
 @api.route('/mi_pasaporte', methods=['GET'])
 def get_todos_los_elementos():
     all_elements = Mi_pasaporte.query.all()
