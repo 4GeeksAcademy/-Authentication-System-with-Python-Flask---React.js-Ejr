@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 //import { Context } from "../store/appContext";
 import { Container, Row, Image, Card, Button } from "react-bootstrap";
 import "../../styles/base_category.scss";
+import "../../styles/disable_scroll.scss";
 import tomatelo from "../../img/logo/tomatelo2.png";
 
 export const Base_Categories = () => {

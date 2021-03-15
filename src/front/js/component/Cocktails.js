@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 //import { Context } from "../store/appContext";
 import { Container, Row, Col, Image, Card, Media, Button, ListGroup, Item } from "react-bootstrap";
 import "../../styles/Cocktails.scss";
+import "../../styles/disable_scroll.scss";
 import tomatelo from "../../img/logo/tomatelo2.png";
 //listo
 export const Cocktails = () => {

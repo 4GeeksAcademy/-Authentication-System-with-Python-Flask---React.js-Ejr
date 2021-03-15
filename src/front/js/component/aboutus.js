@@ -3,6 +3,7 @@ import React from "react";
 import tomatelo1 from "../../img/logo/tomatelo3.png";
 import tomatelo2 from "../../img/logo/tomatelo2.png";
 import tomatelo3 from "../../img/logo/tomateloazul.png";
+import "../../styles/disable_scroll.scss";
 import { Container, Card, CardDeck } from "react-bootstrap";
 
 export const AboutUs = () => {
