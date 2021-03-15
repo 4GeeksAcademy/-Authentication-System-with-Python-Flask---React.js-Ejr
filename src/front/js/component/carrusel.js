@@ -1,8 +1,8 @@
 import React from "react";
 import { Carousel } from "react-bootstrap";
-import montana from "../../img/montana.jpg";
-import playa from "../../img/playa.jpg";
-import cr from "../../img/cr.jpg";
+import montana from "../../img/montana.png";
+import playa from "../../img/playa.png";
+import cr from "../../img/cr.png";
 import { Link } from "react-router-dom";
 
 export function Carrusel() {

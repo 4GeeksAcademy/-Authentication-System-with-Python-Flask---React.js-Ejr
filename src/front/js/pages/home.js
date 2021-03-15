@@ -8,9 +8,13 @@ export const Home = () => {
 	const { store, actions } = useContext(Context);
 
 	return (
-		<div className="container" style={{ width: "75%" }}>
-			<Carrusel />
-			<ComponenteInf />
+		<div>
+			<div style={{ width: "100%" }}>
+				<Carrusel />
+			</div>
+			<div className="container">
+				<ComponenteInf />
+			</div>
 		</div>
 	);
 };
