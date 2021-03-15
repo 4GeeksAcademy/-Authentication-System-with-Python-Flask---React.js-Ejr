@@ -1,43 +1,34 @@
 import React, { useContext } from "react";
 //import { Context } from "../store/appContext";
 import { Container, Row, Col, Image, Card, Media, Button, ListGroup, Item } from "react-bootstrap";
-import "../../styles/home.scss";
 import "../../styles/Cocktails.scss";
+import "../../styles/disable_scroll.scss";
 import tomatelo from "../../img/logo/tomatelo2.png";
-
+//listo
 export const Cocktails = () => {
 	return (
+		//
 		<Container>
 			<Row>
-				{/* Comentarios */}
-				<Card className="CarsCocktails">
-					<Media>
-						<Col xs={6} md={4}>
-							<img
-								className="mr-cocktail"
-								src="https://c0.wallpaperflare.com/preview/1002/324/1/blue-margarita-filled-glass.jpg"
-								alt="Generic placeholder"
-							/>
-						</Col>
-						<Media.Body>
-							<Col>
-								<h5>Margarita</h5>
-								<p>
-									Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante
-									sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra
-									turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue
-									felis in faucibus.
-								</p>
-							</Col>
-						</Media.Body>
-					</Media>
-					{/* <ListGroup>
-						<ListGroup.Item>Cras justo odio</ListGroup.Item>
-						<ListGroup.Item>Dapibus ac facilisis in</ListGroup.Item>
-						<ListGroup.Item>Morbi leo risus</ListGroup.Item>
-						<ListGroup.Item>Porta ac consectetur ac</ListGroup.Item>
-						<ListGroup.Item>Vestibulum at eros</ListGroup.Item>
-					</ListGroup> */}
+				<Card className="cardtotal" style={{ width: "100rem" }}>
+					<Card.Img variant="top" src="https://images7.alphacoders.com/397/thumb-1920-397308.jpg" />
+					<Card.Body>
+						<Card.Title>Margarita</Card.Title>
+					</Card.Body>
+
+					<Card.Body>
+						<Card.Title>Ingredientes</Card.Title>
+						<Card className="ingredientes-instru">
+							<Card.Body>ingredientes.</Card.Body>
+						</Card>
+					</Card.Body>
+
+					<Card.Body>
+						<Card.Title>Instrucciones</Card.Title>
+						<Card className="ingredientes-instru">
+							<Card.Body>instrucciones.</Card.Body>
+						</Card>
+					</Card.Body>
 				</Card>
 			</Row>
 		</Container>

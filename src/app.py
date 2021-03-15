@@ -10,7 +10,8 @@ from api.utils import APIException, generate_sitemap
 from api.models import db, User, Favorite
 from api.routes import api
 from api.admin import setup_admin
-from flask_jwt_simple import JWTManager, jwt_required, create_jwt, get_jwt_identity
+# from flask_jwt_simple import JWTManager, jwt_required, create_jwt, get_jwt_identity
+from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
 from datetime import datetime
 
 
@@ -158,10 +159,10 @@ def user_login():
     if not request.is_json:
         return ({"msg": "Missing JSON request"}), 400 #Bad request
 
-    req = resquest.get_json()
-    email = req.get("email", None)
-    password =  req.get("password", None)
-
+    req = request.get_json()
+    email = req.get('email', None)
+    password =  req.get('password', None)
+    print("LINEA 165", req)
     if not email:
         return jsonify({"msg": "Email required"}), 400
     if not password:
@@ -169,11 +170,15 @@ def user_login():
 
                 ###CHECKING FOR VALID USER
     chk_usr = User.query.filter_by(email=email, password=password).first_or_404()
+    chk_usr = chk_usr.serialize()
+    print("CHECK USER", chk_usr['id'])
     if chk_usr == None:
+        
         return jsonify({"msg": "Email\Password required"}), 401 #this status =>  it lacks valid authentication credentials
                 
                 ###TOKEN GENERATOR###
-    myToken = {'jwt': create_jwt(identity=chk_usr.id), 'id':chk_usr.id, 'user':chk_usr.serialize()}
+    myToken = {'jwt': create_access_token(identity=chk_usr['id']), 'id':chk_usr['id'], 'user':chk_usr}
+    print(myToken)
     return jsonify(myToken), 200 
 
 

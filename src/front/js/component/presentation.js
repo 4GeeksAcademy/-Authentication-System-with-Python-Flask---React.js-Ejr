@@ -1,4 +1,5 @@
 import React from "react";
+import "../../styles/disable_scroll.scss";
 //import { Link } from "react-router-dom";
 import { Carousel } from "react-bootstrap";
 

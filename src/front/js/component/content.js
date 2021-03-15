@@ -1,6 +1,6 @@
 import React from "react";
 import { Container, Row, Image, Card } from "react-bootstrap";
-
+import "../../styles/disable_scroll.scss";
 export const Content = () => {
 	return (
 		<Container className="mt-2 mb-2">

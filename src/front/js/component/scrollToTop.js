@@ -1,4 +1,5 @@
 import React from "react";
+import "../../styles/disable_scroll.scss";
 import PropTypes from "prop-types";
 
 class ScrollToTop extends React.Component {
