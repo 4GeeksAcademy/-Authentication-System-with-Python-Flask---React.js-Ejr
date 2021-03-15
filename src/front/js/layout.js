@@ -53,7 +53,7 @@ const Layout = () => {
 						<Route exact path="/single/:theid">
 							<Single />
 						</Route>
-						<Route exact path="/c"ategory>
+						<Route exact path="/c" ategory>
 							<Category />
 						</Route>
 						<Route exact path="/product-register">
