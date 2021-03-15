@@ -19,12 +19,10 @@ export function Carrusel() {
 				</Link>
 				<Carousel.Caption />
 			</Carousel.Item>
-
 			<Carousel.Item>
 				<Link to="/viewgeneral/:theid">
 					<img className="d-block w-100" style={{ height: "900px" }} src={montana} alt="Montaña" />
 				</Link>
-
 				<Carousel.Caption />
 			</Carousel.Item>
 		</Carousel>

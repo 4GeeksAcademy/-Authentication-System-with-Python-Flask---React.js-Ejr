@@ -13,6 +13,7 @@ import { Comment } from "./component/comment";
 import { Jumbotron } from "./component/jumbotron";
 import { Barra } from "./component/barra";
 import { Footer } from "./component/footer";
+import ScrollToTop from "./component/scrollToTop";
 
 //create your first component
 const Layout = () => {
