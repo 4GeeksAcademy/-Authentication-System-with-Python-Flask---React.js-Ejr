@@ -29,7 +29,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				const res = await fetch("https://3001-apricot-tahr-nih1bqo0.ws-us03.gitpod.io/user", {
 					method: "POST",
 					headers: { "Content-Type": "application/json" },
-					body: JSON.jsonify({
+					body: JSON.stringify({
 						first_name: first_name,
 						last_name: last_name,
 						email: email,
@@ -37,11 +37,15 @@ const getState = ({ getStore, getActions, setStore }) => {
 						birthday: birthday
 					})
 				});
-				const data = await res.json();
-				console.table(data.msg);
+				if (res.ok) {
+					return true;
+				} else {
+					return false;
+				}
 			},
+
 			login: async (email, password) => {
-				await fetch(`${BE_Url}login`, {
+				await fetch("https://3001-apricot-tahr-nih1bqo0.ws-us03.gitpod.io/signin", {
 					method: "POST",
 					headers: { "Content-Type": "application/json" },
 					body: { email: email, password: password }
