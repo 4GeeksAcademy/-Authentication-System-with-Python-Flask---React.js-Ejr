@@ -4,23 +4,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
 			message: null,
-			demo: [
-				{
-					title: "FIRST",
-					background: "white",
-					initial: "white"
-				},
-				{
-					title: "SECOND",
-					background: "white",
-					initial: "white"
-				}
-			],
 			favorites: [],
 			classification: [],
 			jwtoken: null,
 			sessionUID: null,
-			sessionUser: null
+			sessionUser: null,
+			base: []
 		},
 		actions: {
 			////////////////////BEGIN TESTING PURPOSES @JVM && @ANMORA//////////////////////
@@ -45,18 +34,35 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 
 			login: async (email, password) => {
-				await fetch("https://3001-apricot-tahr-nih1bqo0.ws-us03.gitpod.io/signin", {
+				await fetch("https://3001-apricot-tahr-nih1bqo0.ws-us03.gitpod.io/login", {
 					method: "POST",
 					headers: { "Content-Type": "application/json" },
-					body: { email: email, password: password }
+					body: JSON.stringify({ email: email, password: password })
 				})
 					.then(response => response.json())
-					.then(jwtkn => {
-						if (typeof jwtkn.msg != "undefined") {
+					.then(jwtoken => {
+						if (typeof jwtoken.msg != "undefined") {
+							Notify.error(jtwtoken.msg);
 						} else {
-							setStore({ jwtoken: jwtkn.jtw, sessionUID: jwtkn.id, sessionUser: jwtkn.user.favorites }); //syntax {store:data}
+							console.log(jwtoken);
+
+							setStore({
+								jwtoken: jwtoken.jwt,
+								sessionUID: jwtoken.id,
+								favorites: jwtoken.user.favorites
+							}); //syntax {store:jwtoken.attr}
+							console.log(getStore());
 						}
 					});
+			},
+
+			signout: () => {
+				setStore({ jwtoken: null, sessionUID: null, sessionUser: null });
+			},
+
+			//Building Favorites f(x)s
+			addFavorites: async (drink_name, drink_img) => {
+				const store = getStore();
 			},
 			/////////////////////END TESTING PURPOSES @JVM && @ANMORA///////////////////////
 			// Use getActions to call a function within a fuction
