@@ -14,7 +14,7 @@ class User(db.Model):
 
     def serialize(self):
         return {
-            "id_Document_User": self.id,
+            "id_Document_User": self.id_Document_User,
             "name_User": self.name_User,
             "active_User": self.active_User,
             "properties": list(map(lambda det_properties: det_properties.serialize(),self.properties))
@@ -23,9 +23,9 @@ class User(db.Model):
 class User_Details(db.Model):
     id_User_Details = db.Column(db.Integer, primary_key=True)
     id_Document_User = db.Column(db.String(25), db.ForeignKey('user.id_Document_User'), nullable=False)
-    email_User_Details = db.Column(db.String(25), nullable=False)
+    email_User_Details = db.Column(db.String(50), nullable=False)
     password_User_Details = db.Column(db.String(300), nullable=False)
-    cargo_User_Details = db.Column(db.String(3), nullable=False)
+    cargo_User_Details = db.Column(db.String(20), nullable=False)
     phone_User_Details = db.Column(db.String(30), nullable=False)
     address_Details = db.Column(db.String(250), nullable=False)
 

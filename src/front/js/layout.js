@@ -59,6 +59,7 @@ const Layout = () => {
 						</Route>
 						<Route exact path="/product-register">
 							<ProductRegister />
+                        </Route>
 						<Route exact path="/addproduct">
 							<AddProduct />
 						</Route>
