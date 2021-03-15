@@ -41,3 +41,31 @@ def addProvider():
     db.session.add(properties)
     db.session.commit()
     return jsonify("All good"), 200
+
+
+
+@api.route('/user',methods=['GET'])
+def get_user():
+    user = User.query.all()
+    user_serialized = list(map(lambda data: data.serialize(), user))
+    return jsonify(user_serialized),200
+
+@api.route('/user',methods=['POST'])
+def add_user():
+    request_body = request.get_json()
+    user = User(id_Document_User=request_body["id_Document_User"],
+                         name_User=request_body["name_User"],
+                         active_User=request_body["active_User"])
+    properties = User_Details(
+                            id_User_Details=request_body["id_Document_User"],
+                            id_Document_User=request_body["id_Document_User"],
+                            email_User_Details=request_body["email_User_Details"],
+                            password_User_Details=request_body["password_User_Details"], 
+                            cargo_User_Details=request_body["cargo_User_Details"],
+                            phone_User_Details=request_body["phone_User_Details"],
+                            address_Details=request_body["address_Details"])
+    print(request_body)
+    db.session.add(user)
+    db.session.add(properties)
+    db.session.commit()
+    return jsonify("All good"), 200

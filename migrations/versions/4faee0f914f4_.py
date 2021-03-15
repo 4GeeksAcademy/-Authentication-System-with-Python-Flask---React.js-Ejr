@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 937c9e99471e
+Revision ID: 4faee0f914f4
 Revises: 
-Create Date: 2021-03-11 20:36:25.881647
+Create Date: 2021-03-15 18:02:01.138891
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '937c9e99471e'
+revision = '4faee0f914f4'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -60,9 +60,9 @@ def upgrade():
     op.create_table('user__details',
     sa.Column('id_User_Details', sa.Integer(), nullable=False),
     sa.Column('id_Document_User', sa.String(length=25), nullable=False),
-    sa.Column('email_User_Details', sa.String(length=25), nullable=False),
+    sa.Column('email_User_Details', sa.String(length=50), nullable=False),
     sa.Column('password_User_Details', sa.String(length=300), nullable=False),
-    sa.Column('cargo_User_Details', sa.String(length=3), nullable=False),
+    sa.Column('cargo_User_Details', sa.String(length=20), nullable=False),
     sa.Column('phone_User_Details', sa.String(length=30), nullable=False),
     sa.Column('address_Details', sa.String(length=250), nullable=False),
     sa.ForeignKeyConstraint(['id_Document_User'], ['user.id_Document_User'], ),
