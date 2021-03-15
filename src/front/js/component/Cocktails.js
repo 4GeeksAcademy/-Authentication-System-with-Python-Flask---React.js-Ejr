@@ -10,6 +10,7 @@ export const Cocktails = () => {
 		//
 		<Container>
 			<Row>
+				{/* Comentarios */}
 				<Card className="CarsCocktails">
 					<Media>
 						<Col xs={6} md={4}>
