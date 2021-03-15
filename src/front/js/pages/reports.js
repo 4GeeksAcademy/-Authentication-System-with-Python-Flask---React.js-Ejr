@@ -1,23 +1,19 @@
 import React from "react";
 import { ProviderReport } from "../component/reportProvider";
-import Card from "react-bootstrap/Card";
-import Accordion from "react-bootstrap/Accordion";
-import Button from "react-bootstrap/Button";
-import Badge from "react-bootstrap/Badge";
-import Link from "react-router-dom";
+import { Card, Accordion, Button, Badge, Link, Col, Row } from "react-bootstrap";
 
 export const Reports = () => {
 	return (
-		<div>
-			<Card>
-				<Badge variant="primary">
-					<h1>REPORTES</h1>
-				</Badge>
-			</Card>
-			<ProviderReport />
-			<ProviderReport />
-			<ProviderReport />
-			<ProviderReport />
-		</div>
+		<Col className="reportsContainer container-fluid">
+			<Badge className="titleReportes container fluid" variant="primary">
+				<h1>REPORTES</h1>
+			</Badge>
+			<Col>
+				<ProviderReport />
+				<ProviderReport />
+				<ProviderReport />
+				<ProviderReport />
+			</Col>
+		</Col>
 	);
 };

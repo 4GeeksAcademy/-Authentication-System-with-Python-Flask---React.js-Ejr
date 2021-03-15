@@ -11,20 +11,16 @@ import Link from "react-router-dom";
 export const AddProduct = () => {
 	return (
 		<Jumbotron className="jumbotronCSS">
-			<h1>
-				<i className="fas fa-sign-in-alt" />
-			</h1>
-			<h5>Registro de productos</h5>
-
-			<Card body style={{ display: "flex" }}>
+			<h1>Registro de productos</h1>
+			<Card body className="formBodyCard">
 				<Row>
 					<Col md={3}>
-						<Image src="https://via.placeholder.com/250C/O https://placeholder.com/" fluid />
+						<i className="fas fa-sign-in-alt" />
 					</Col>
-					<Col>
+					<Col md={9} className="nombreMarcarCat">
 						<Form>
 							<Form.Group as={Col}>
-								<Form.Control size="sm" type="text" placeholder="Nombre" />
+								<Form.Control size="sm" type="text" placeholder="Nombre" block />
 							</Form.Group>
 							<Form.Group as={Col}>
 								<Form.Control size="sm" type="text" placeholder="Marca" />
@@ -55,18 +51,18 @@ export const AddProduct = () => {
 							</Form.Group>
 						</Form>
 					</Col>
-				</Row>
-				<Row className="buttonsCSS">
-					<Col md={2}>
-						<Button size="sm" variant="primary">
-							Guardar
-						</Button>
-					</Col>
-					<Col md={2}>
-						<Button size="sm" variant="secondary">
-							Eliminar
-						</Button>
-					</Col>
+					<Row className="buttonsCSS">
+						<Col md={2}>
+							<Button className="buttonGuardar" size="sm" variant="primary">
+								Guardar
+							</Button>
+						</Col>
+						<Col md={2}>
+							<Button className="buttonEliminar" size="sm" variant="secondary">
+								Eliminar
+							</Button>
+						</Col>
+					</Row>
 				</Row>
 			</Card>
 		</Jumbotron>

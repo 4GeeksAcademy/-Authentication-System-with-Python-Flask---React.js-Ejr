@@ -3,5 +3,32 @@
     align-items: center;
     align-self: center;
     flex-direction: column;
-    max-width: 600px;
+    min-width: 900px;
+}
+.fas, .fas{ 
+    display: flex;
+    margin-top: 20px;
+    font-size: 500% !important;
+}
+.nombreMarcarCat{
+    display: flex;
+    justify-content: flex-end;
+
+}
+.formBodyCard{
+    display: flex;
+    min-width: 400px;
+    justify-content: center;
+
+}
+.buttonsCSS{ 
+    display: flex;
+}
+.buttonGuardar{ 
+    display: flex;
+    margin-left: 10px;
+}
+.buttonEliminar{ 
+    display: flex;
+    margin-left: 40px;
 }

@@ -1,0 +1,101 @@
+
+.cardBody{   
+    border: solid 3px lightgray;
+    display: flex;
+    flex-direction: row;
+    border-radius: 10px;
+    width: 250px !important;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.container{ 
+    display: flex;
+    flex-wrap: wrap;
+    width: 250px;
+}
+.productName{ 
+    display: flex;
+    width: 195px;
+    justify-content: space-around;
+    margin-left: 15px;
+}
+.providerName{ 
+    display: flex;
+    width: 195px;
+    margin-left: 15px;
+}
+.productSize{ 
+    display: flex;
+    width: 195px;
+    margin-left: 15px;
+}
+hr.line{
+    border: 1px solid lightgray;
+    width: 200px;
+}
+.buttonsGroup{  
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    width: fit-content;
+    height: 175px;
+}
+h4{ 
+    display: flex;
+    justify-self: center;
+    font-size: 30px;
+}
+.checkButton{  
+    display:flex;
+    width: 200px;
+    height: 50px;
+    justify-content: space-around;
+    justify-self: center;
+}
+.checkBackspaceInSymbols{ 
+    display: flex;
+    font-size: 200% !important;
+    margin-top: 0px;
+}.orderInput{
+    display: flex;
+    width: 200px;
+    height: 50px;
+}
+// .allNumberButtons{ 
+//     display: flex;
+//     flex-direction: row;
+//     flex-wrap:wrap;
+//     justify-content: center;
+//     height: 210px;
+//     width: 210px;
+// }
+// .numberButton{ border: solid 1px white;
+//     display: flex;
+//     justify-content: center;
+//     width: 66px;
+//     height: 66px;
+// }
+.bottomButtons{
+    display:flex;
+    flex-direction: row;
+    height: 50px;
+    width: 200px;
+}
+.backspaceButton{ 
+    display: flex;
+    flex-direction: row;
+    width: 65px;
+    height: 50px;
+}
+.orderButton{
+    display:flex;
+    flex-direction: row;
+    height: 50px;
+    width: 130px !important;
+    justify-content: space-around;
+    margin-left: 5px;
+}

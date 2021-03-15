@@ -1,0 +1,11 @@
+.reportsContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+.titleReportes{ 
+display: flex;
+flex-direction: row;
+justify-content: center;
+max-height: fit-content;
+}
