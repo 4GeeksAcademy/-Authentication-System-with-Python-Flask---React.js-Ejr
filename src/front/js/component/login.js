@@ -15,22 +15,22 @@ export const Login = () => {
 	const [redirect, setRedirect] = useState(false);
 
 	// const actionRegister = e => {
-	// 	if (email === "" || password === "") {
+	// 	if (first_name == "" || last_name == "", email === "" || password === "", birthday == "") {
 	// 		alert("ActionRegister: Faltan datos por llenar!");
 	// 	} else {
-	// 		alert(username, email);
-	// 		actions.signup(email, password);
+	// 		alert(first_name, last_name, username, email, password, birthday);
+	// 		actions.signup(first_name, last_name, email, password, birthday);
 	// 	}
 	// };
 
-	const actionLogin = e => {
-		if (email === "" || password === "") {
-			alert("Actionlogin: Faltan datos por llenar!");
-		} else {
-			console.log(email);
-			actions.validacionLogin(email, password);
-		}
-	};
+	// const actionLogin = e => {
+	// 	if (email === "" || password === "") {
+	// 		alert("Actionlogin: Faltan datos por llenar!");
+	// 	} else {
+	// 		console.log(email, password);
+	// 		actions.validacionLogin(email, password);
+	// 	}
+	// };
 
 	return (
 		<>
@@ -61,6 +61,20 @@ export const Login = () => {
 									id="User"
 									placeholder="tomate.lo@gmail.com"
 								/>
+								<small id="emailHelp" className="form-text text-muted">
+									Por favor revisa bien tus datos cuando termines.
+								</small>
+							</div>
+							<div className="col-auto">
+								<label className="inlineFormInputGroup">Password</label>
+								<div className="input-group mb-2">
+									<input
+										type="password"
+										className="form-control text-center"
+										id="Password"
+										placeholder="tomatelo2x3"
+									/>
+								</div>
 							</div>
 							<div className="col-auto">
 								<label className="inlineFormInputGroup">Password</label>
@@ -82,7 +96,18 @@ export const Login = () => {
 							{/* {store.boolean ? <Redirect to="/home" /> : ""} */}
 						</div>
 					</form>
-					<form className="col-12 col-md-6 text-center text-light">
+					<form
+						className="col-12 col-md-6 text-center text-light"
+						onSubmit={async e => {
+							e.preventDefault();
+							let success = await actions.signup(first_name, last_name, email, password, birthday);
+							if (success) {
+								// history.push("/");
+								window.scrollTo(0, 0);
+							} else {
+								alert("failed to submit registration, lets try again");
+							}
+						}}>
 						<h4 className="display-5">Register</h4>
 						<hr className="my-1" />
 						<div className="form-group align-items-center">
@@ -143,17 +168,7 @@ export const Login = () => {
 							<small id="emailHelp" className="form-text text-muted">
 								Por favor revisa bien tus datos cuando termines.
 							</small>
-							<Button
-								type="submit"
-								variant="outline-info"
-								onClick={async () => {
-									let ok = await actions.signup(first_name, last_name, email, password, birthday);
-									if (ok) {
-										history.push("/");
-									} else {
-										alert("failed to submit registration, lets try again");
-									}
-								}}>
+							<Button type="submit" variant="outline-info">
 								Register
 							</Button>
 						</div>

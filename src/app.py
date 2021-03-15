@@ -85,13 +85,16 @@ def get_user_by_ID(user_id):
 @app.route('/user', methods=['POST'])
 def add_user():
     req = json.loads(request.data)
+    print(req)
     if req["first_name"] == None and req["last_name"] == None and req["email"] == None and req["password"] == None and req["birthday"] == None:
         flash("Los datos ingresados están incompletos o vacíos")
     else:
-        user = User(first_name= req["first_name"], last_name= req["last_name"], email= req["email"], password= req["password"], birthday= req["birthday"])
-        db.session.add(user)
-        db.session.commit()
-        return "El usuario ha sido agregado exitosamente"
+        user_exist = User.query.filter_by(email=req['email']).first()
+        if not user_exist:
+            user = User(first_name= req["first_name"], last_name= req["last_name"], email= req["email"], password= req["password"], birthday= req["birthday"])
+            db.session.add(user)
+            db.session.commit()
+            return "El usuario ha sido agregado exitosamente"
                     
                     #### DEL USER####
 @app.route('/user/<int:user_id>', methods=['DELETE'])
@@ -123,15 +126,15 @@ def get_favorites():
     
             ###ADD FAVORITE###
 @app.route('/favorite', methods=['POST'])
-@jwt_required
+#@jwt_required
 def add_favorite():
-    user_id = get_jwt_identity()                #getting tokenid from user 
+    #user_id = get_jwt_identity()                #getting tokenid from user 
 
     req = json.loads(request.data)
     if req["cocktail_name"] == None and req["cocktail_img"] == None:
         flash('Espacios en blanco o invalidos')
     else:
-        fav = Favorite(cocktail_name= req["cocktail_name"], cocktail_img= req["cocktail_img"], user_id= user_id)
+        fav = Favorite(cocktail_name= req["cocktail_name"], cocktail_img= req["cocktail_img"], user_id= req["user_id"])
         db.session.add(fav)
         db.session.commit()
         return "Hecho", 200  #It is OK
