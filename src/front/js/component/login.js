@@ -15,7 +15,11 @@ export const Login = () => {
 	const [redirect, setRedirect] = useState(false);
 
 	// const actionRegister = e => {
-	// 	if (first_name == "" || last_name == "", email === "" || password === "", birthday == "") {
+	// 	alert(first_name + last_name + email + password + birthday);
+	// };
+
+	// const actionRegister = e => {
+	// 	if (email === "" || password === "") {
 	// 		alert("ActionRegister: Faltan datos por llenar!");
 	// 	} else {
 	// 		alert(first_name, last_name, username, email, password, birthday);
@@ -37,7 +41,7 @@ export const Login = () => {
 			{store.jwtoken != null ? <Redirect to="/home" /> : ""}
 			<Container className="mt-2 mb-2">
 				<Row>
-					<article className="text-center text-light offset-lg-2 col-12 col-md-12 col-lg-8">
+					<article className="text-center text-light offset-lg-2 col-12 col-md-12 col-lg-8" id="Login">
 						<h4 className="display-5">
 							Ingresa a <span className="glitch1">M||RA</span> y enterate de todo lo relacionado a este
 							proyecto!
@@ -83,6 +87,9 @@ export const Login = () => {
 									/>
 								</div>
 							</div>
+							<small id="emailHelp" className="form-text text-muted">
+								Por favor revisa bien tus datos cuando termines.
+							</small>
 							<Button type="submit" variant="outline-info">
 								Log In
 							</Button>

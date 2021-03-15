@@ -9,6 +9,7 @@ export const Cocktails = () => {
 	return (
 		<Container>
 			<Row>
+				{/* Comentarios */}
 				<Card className="CarsCocktails">
 					<Media>
 						<Col xs={6} md={4}>
