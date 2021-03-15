@@ -6,7 +6,7 @@ import logo from "../../img/logo.png";
 export function Barra() {
 	return (
 		<Navbar bg="dark" variant="dark">
-			<Link to="/" id="navb">
+			<Link to="/">
 				<Navbar.Brand href="#home">
 					<img src={logo} height="60px" />
 				</Navbar.Brand>

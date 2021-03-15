@@ -13,6 +13,14 @@ import { Comment } from "../component/comment";
 const PymeProfile = () => {
 	return (
 		<>
+			<div>
+				<img
+					className="card-img-top rounded-right shadow mt-3"
+					style={{ width: "100%", height: "400px", margin: "0 auto" }}
+					src="https://sfo2.digitaloceanspaces.com/elpaiscr/2021/02/Volcan-Arenal..jpeg"
+					alt="Card image cap"
+				/>
+			</div>
 			<div className="container">
 				<div className="row" style={{ marginBottom: "37px", marginTop: "68px" }}>
 					<h1 className="font-weight-bolder" style={{ paddingLeft: "13px" }}>
@@ -28,7 +36,7 @@ const PymeProfile = () => {
 					</div>
 				</div>
 				<div className="row d-flex">
-					<div className="col-8">
+					<div className="col-sm-12 col-md-8">
 						<p>
 							Chachagua Rainforest Hotel and Ecolodge se encuentra en un bello paraíso selvático cerca del
 							Volcán Arenal. Aclamado por las publicaciones de viajes de confianza, somos el principal
@@ -46,10 +54,10 @@ const PymeProfile = () => {
 							edades y las habilidades.
 						</p>
 					</div>
-					<div className="col-4">
+					<div className="col-sm-12 col-md-4">
 						<img
 							className="card-img-top"
-							style={{ width: "352px", height: "230px", margin: "0 auto" }}
+							style={{ height: "230px", margin: "0 auto" }}
 							src="https://images.squarespace-cdn.com/content/v1/555cbc7ee4b059e095f39179/1488390070674-CXYQU17QO2DSEV4TJ5V5/ke17ZwdGBToddI8pDm48kMxP3zelORv554bfrCgYiuNZw-zPPgdn4jUwVcJE1ZvWQUxwkmyExglNqGp0IvTJZamWLI2zvYWH8K3-s_4yszcp2ryTI0HqTOaaUohrI8PIO3p9JfP_jmAUPHyNnkpZX7wqTYQ8n-Q3yghIWqr7I-w/map-la-fortuna-arenal-costa-rica.jpg"
 							alt="Card image cap"
 						/>
@@ -121,40 +129,13 @@ const PymeProfile = () => {
 	);
 };
 
-/*export const Profile = () => {
-	const { entity, id } = useParams();
-	const storeContext = useContext(Context);
-	const {
-		store: { characterEntity, planetsEntity }
-	} = storeContext;
-
-	useEffect(
-		() => {
-			storeContext.actions.fetchEntity(entity, id);
-		},
-		[entity, id]
-	);*/
 export const PymeView = () => {
 	return (
 		<div>
-			<div>
-				<img
-					className="card-img-top rounded-right shadow"
-					style={{ width: "100%", height: "600px", margin: "0 auto" }}
-					src="https://sfo2.digitaloceanspaces.com/elpaiscr/2021/02/Volcan-Arenal..jpeg"
-					alt="Card image cap"
-				/>
-			</div>
 			<div className="container">
 				<PymeProfile />
 			</div>
-			<Link activeClass="active" to="navb" spy={true} smooth={true} offset={-70} duration={500}>
-				<i
-					className="fas fa-chevron-circle-up fa-3x"
-					id="main"
-					style={{ marginLeft: "1750px", marginBottom: "50px" }}
-				/>
-			</Link>
+
 			<hr />
 			<div style={{ background: "#DCDCDC", width: "100%", height: "auto" }}>
 				<Review />
@@ -162,7 +143,7 @@ export const PymeView = () => {
 			<div
 				style={{
 					background: "#DCDCDC",
-					width: "100%",
+
 					height: "auto",
 					paddingBottom: "50px"
 				}}>
