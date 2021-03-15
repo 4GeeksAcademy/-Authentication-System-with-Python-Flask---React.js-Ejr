@@ -1,6 +1,7 @@
 import React from "react";
 import { ProviderReport } from "../component/reportProvider";
 import { Card, Accordion, Button, Badge, Link, Col, Row } from "react-bootstrap";
+import "../../styles/reportProvider.scss";
 
 export const Reports = () => {
 	return (

@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
+import { Context } from "../store/appContext";
 import { Form, Button, Row, Col, Card, Badge, CardDeck, ButtonToolbar, ButtonGroup } from "react-bootstrap";
+import "../../styles/orderCard.scss";
 
 export function OrderCard() {
+	const { store, actions } = useContext(Context);
 	return (
 		<Card className="cardBody">
 			<div className="container">
@@ -15,15 +18,6 @@ export function OrderCard() {
 					</Button>
 					<div className="allNumberButtons">
 						<Form.Control className="orderInput" size="lg" type="text" placeholder="Ingrese orden" />
-						{/* <Button className="numberButton">1</Button>
-						<Button className="numberButton">2</Button>
-						<Button className="numberButton">3</Button>
-						<Button className="numberButton">4</Button>
-						<Button className="numberButton">5</Button>
-						<Button className="numberButton">6</Button>
-						<Button className="numberButton">7</Button>
-						<Button className="numberButton">8</Button>
-						<Button className="numberButton">9</Button> */}
 					</div>
 					<div className="bottomButtons">
 						<Button className="backspaceButton" variant="secondary">
