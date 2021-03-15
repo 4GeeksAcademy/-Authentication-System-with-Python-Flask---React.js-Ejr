@@ -1,3 +1,5 @@
+const be_url = "https://3001-apricot-tahr-nih1bqo0.ws-us03.gitpod.io/";
+
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
@@ -13,35 +15,51 @@ const getState = ({ getStore, getActions, setStore }) => {
 					background: "white",
 					initial: "white"
 				}
-			]
+			],
+			favorites: [],
+			classification: [],
+			jwtoken: null,
+			sessionUID: null,
+			sessionUser: null
 		},
 		actions: {
-			// Use getActions to call a function within a fuction
-			exampleFunction: () => {
-				getActions().changeColor(0, "green");
-			},
-
-			getMessage: () => {
-				// fetching data from the backend
-				fetch(process.env.BACKEND_URL + "/api/hello")
-					.then(resp => resp.json())
-					.then(data => setStore({ message: data.message }))
-					.catch(error => console.log("Error loading message from backend", error));
-			},
-			changeColor: (index, color) => {
-				//get the store
-				const store = getStore();
-
-				//we have to loop the entire demo array to look for the respective index
-				//and change its color
-				const demo = store.demo.map((elm, i) => {
-					if (i === index) elm.background = color;
-					return elm;
+			////////////////////BEGIN TESTING PURPOSES @JVM && @ANMORA//////////////////////
+			//f(x) built for testing reg form(experimental by now)
+			signup: async (first_name, last_name, email, password, birthday) => {
+				const res = await fetch("https://3001-apricot-tahr-nih1bqo0.ws-us03.gitpod.io/user", {
+					method: "POST",
+					headers: { "Content-Type": "application/json" },
+					body: JSON.stringify({
+						first_name: first_name,
+						last_name: last_name,
+						email: email,
+						password: password,
+						birthday: birthday
+					})
 				});
+				if (res.ok) {
+					return true;
+				} else {
+					return false;
+				}
+			},
 
-				//reset the global store
-				setStore({ demo: demo });
+			login: async (email, password) => {
+				await fetch("https://3001-apricot-tahr-nih1bqo0.ws-us03.gitpod.io/signin", {
+					method: "POST",
+					headers: { "Content-Type": "application/json" },
+					body: { email: email, password: password }
+				})
+					.then(response => response.json())
+					.then(jwtkn => {
+						if (typeof jwtkn.msg != "undefined") {
+						} else {
+							setStore({ jwtoken: jwtkn.jtw, sessionUID: jwtkn.id, sessionUser: jwtkn.user.favorites }); //syntax {store:data}
+						}
+					});
 			}
+			/////////////////////END TESTING PURPOSES @JVM && @ANMORA///////////////////////
+			// Use getActions to call a function within a fuction
 		}
 	};
 };

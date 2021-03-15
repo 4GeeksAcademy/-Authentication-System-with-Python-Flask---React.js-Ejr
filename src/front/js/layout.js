@@ -5,17 +5,22 @@ import injectContext from "./store/appContext";
 
 // Contenido Publico
 import { NavLogin } from "./component/navlogin";
-import { AboutUs } from "./component/aboutus";
 import { Presentation } from "./component/presentation";
+import { AboutUs } from "./component/aboutus";
 import { Content } from "./component/content";
 import { Login } from "./component/login";
-import { FooLogin } from "./component/foologin";
 
 //Contenido Privado
+// Primera Vista
 import { Navbar } from "./component/navbar";
 import { Home } from "./pages/home";
+import { Base_Categories } from "./component/base_categories";
 import { Footer } from "./component/footer";
-import { Categories } from "./component/CardsCategories";
+
+// Segunda Vista
+import { Info_Category } from "./component/info_category";
+// comentarios
+// Tercera Vista
 import { Cocktails } from "./component/Cocktails";
 
 //create your first component
@@ -35,15 +40,19 @@ const Layout = () => {
 							<AboutUs />
 							<Content />
 							<Login />
-							<FooLogin />
+							<Footer />
 						</Route>
 						<Route exact path="/home">
 							<Navbar />
 							<Home />
-							<Categories />
+							<Base_Categories />
 							<Footer />
 						</Route>
-
+						<Route exact path="/base">
+							<Navbar />
+							<Info_Category />
+							<Footer />
+						</Route>
 						<Route exact path="/cocktails">
 							<Navbar />
 							<Cocktails />

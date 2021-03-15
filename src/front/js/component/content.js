@@ -1,5 +1,4 @@
 import React from "react";
-//import { Link } from "react-router-dom";
 import { Container, Row, Image, Card } from "react-bootstrap";
 
 export const Content = () => {
@@ -8,7 +7,7 @@ export const Content = () => {
 			<Row>
 				<div className="d-flex justify-content-end" id="padre">
 					<Image
-						className="col-12 col-md-8"
+						className="contentimg col-12 col-md-8"
 						src="https://foodandtravel.mx/wp-content/uploads/2019/02/coctelesclassic.jpg"
 						fluid
 					/>

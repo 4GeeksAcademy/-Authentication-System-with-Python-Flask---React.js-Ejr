@@ -1,15 +1,219 @@
-//ESTLOS GALLERY******************************************************************************************************
-.img-fluid {
-  width: 120%;
-  height: 100%;
+// Galeria
+// Galeria
+// Galeria
+.contenedor{
+    cursor: pointer;
+    border: 100px;
+    margin-top: 150px;
 }
 
-.caja{
+.principal{
     height: 200px;
-    //border: 1px solid red;
+    position: relative;
+    transition: 1s;
 }
 
-.caja5{
-     height: 300px;
-    //@at-root: 1px solid red;
+.principal > div{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    transition: 1s;
+}
+
+.atras{
+    background-color: transparent;
+    opacity: 0;
+    //transform: translateZ(-50px) rotateY(90deg);
+}
+
+.principal h4, p{
+    text-align: center;
+    color: #fff;
+}
+
+.atras:hover{
+    transition: 1s;
+    opacity: .9;
+    background-color: rgba(0,0,0,.9);
+    //transform: perspective(1000px) rotateY(-90deg);
+}
+
+.contenedor .row .col-md-4:nth-child(1) .frente {
+    background: url(https://www.dazzlingwallpapers.com/wp-content/uploads/2014/08/Best-Green-Cocktail-wallpaper.jpg);
+    background-size: cover;
+
+}
+
+.contenedor .row .col-md-4:nth-child(2) .frente {
+    background: url(https://www.ecestaticos.com/image/clipping/4eb8656ff0afe661bfc8301b80bb3af5/los-nuevos-cocteles-que-deberias-probar-la-proxima-vez-que-salgas.jpg);
+    background-size: cover;
+}
+
+.contenedor .row .col-md-4:nth-child(3) .frente {
+    background: url(https://image.freepik.com/foto-gratis/rosa-cocteles-exoticos-frutas-rosa_155003-6346.jpg);
+    background-size: cover;
+}
+
+.contenedor .row .col-md-8 .frente {
+    background: url(https://image.freepik.com/vector-gratis/conjunto-cocteles-coloridos-colores-brillantes-coberturas-citricos-bayas_1268-15113.jpg);
+    background-size: cover;
+}
+
+.contenedor .row .col-md-4:nth-child(5) .frente {
+    background: url(https://image.freepik.com/foto-gratis/seleccion-varios-cocteles-mesa_140725-2909.jpg);
+    background-size: cover;
+}
+
+.contenedor .row .col-md-4:nth-child(6) .frente {
+    background: url(https://image.freepik.com/foto-gratis/rosa-exotica-coctel-fruta-azul_155003-4159.jpg);
+    background-size: cover;
+}
+
+.contenedor .row .col-md-4:nth-child(7) .frente {
+    background: url(https://image.freepik.com/foto-gratis/coctel-gin-tonic-limon_82893-14732.jpg);
+    background-size: cover;
+}
+
+.contenedor .row .col-md-4:nth-child(8) .frente {
+    background: url(https://image.freepik.com/foto-gratis/bebida-semillas-albahaca-naranja_114579-38839.jpg);
+    background-size: cover;
+}
+
+.contenedor .row .col-md-4:nth-child(9) .frente {
+    background: url(https://image.freepik.com/foto-gratis/bebidas-amarillas-suaves-naranja-rodajas-fresa-menta-vasos_23-2148145338.jpg);
+    background-size: cover;
+}
+
+.contenedor .row .col-md-4:nth-child(10) .frente {
+    background: url(https://image.freepik.com/foto-gratis/rosa-cocteles-exoticos-frutas-rosa_155003-6345.jpg);
+    background-size: cover;
+}
+
+.contenedor .row .col-md-4:nth-child(11) .frente {
+    background: url(https://image.freepik.com/foto-gratis/vista-lateral-coctel-cosmopolita-licor-rodaja-limon_141793-3623.jpg);
+    background-size: cover;
+}
+
+.contenedor .row .col-md-4:nth-child(12) .frente {
+    background: url(https://image.freepik.com/foto-gratis/vista-lateral-vasos-chupito-bebidas-color-lima_176474-2513.jpg);
+    background-size: cover;
+}
+
+.principal h4{
+    margin: 10px;
+    width: 90%;
+    border-bottom: 2px solid #beff4b;
+}
+
+.col-md-4:nth-child(1){
+        position: relative;
+    width: 100%;
+    padding-right: 2px;
+    padding-left: 2px;
+    padding-top: 0px;
+    padding-bottom: 1px
+}
+
+.col-md-4:nth-child(2){
+        position: relative;
+    width: 100%;
+    padding-right: 2px;
+    padding-left: 2px;
+    padding-top: 0px;
+    padding-bottom: 1px
+}
+
+.col-md-4:nth-child(3){
+        position: relative;
+    width: 100%;
+    padding-right: 2px;
+    padding-left: 2px;
+    padding-top: 0px;
+    padding-bottom: 1px
+}
+
+.col-md-8{
+        position: relative;
+    width: 100%;
+    padding-right: 2px;
+    padding-left: 2px;
+    padding-top: 0px;
+    padding-bottom: 1px
+}
+
+.col-md-4:nth-child(5){
+        position: relative;
+    width: 100%;
+    padding-right: 2px;
+    padding-left: 2px;
+    padding-top: 0px;
+    padding-bottom: 1px
+}
+
+.col-md-4:nth-child(6){
+        position: relative;
+    width: 100%;
+    padding-right: 2px;
+    padding-left: 2px;
+    padding-top: 0px;
+    padding-bottom: 1px
+}
+
+.col-md-4:nth-child(7){
+        position: relative;
+    width: 100%;
+    padding-right: 2px;
+    padding-left: 2px;
+    padding-top: 0px;
+    padding-bottom: 1px
+}
+
+.col-md-4:nth-child(8){
+        position: relative;
+    width: 100%;
+    padding-right: 2px;
+    padding-left: 2px;
+    padding-top: 0px;
+    padding-bottom: 1px
+}
+
+.col-md-4:nth-child(9){
+        position: relative;
+    width: 100%;
+    padding-right: 2px;
+    padding-left: 2px;
+    padding-top: 0px;
+    padding-bottom: 1px
+}
+
+.col-md-4:nth-child(10){
+        position: relative;
+    width: 100%;
+    padding-right: 2px;
+    padding-left: 2px;
+    padding-top: 0px;
+    padding-bottom: 1px
+}
+
+.col-md-4:nth-child(11){
+        position: relative;
+    width: 100%;
+    padding-right: 2px;
+    padding-left: 2px;
+    padding-top: 0px;
+    padding-bottom: 1px
+}
+
+.col-md-4:nth-child(12){
+        position: relative;
+    width: 100%;
+    padding-right: 2px;
+    padding-left: 2px;
+    padding-top: 0px;
+    padding-bottom: 1px
+}
+
+.Button{
+    position: relative;
+    margin-left: 40%;
 }
