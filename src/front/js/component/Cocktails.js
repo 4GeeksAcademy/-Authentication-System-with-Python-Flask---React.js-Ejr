@@ -7,6 +7,7 @@ import tomatelo from "../../img/logo/tomatelo2.png";
 //actualizado
 export const Cocktails = () => {
 	return (
+		//
 		<Container>
 			<Row>
 				<Card className="CarsCocktails">
@@ -42,4 +43,3 @@ export const Cocktails = () => {
 		</Container>
 	);
 };
-
