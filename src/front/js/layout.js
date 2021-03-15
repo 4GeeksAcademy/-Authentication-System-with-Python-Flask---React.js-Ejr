@@ -4,9 +4,12 @@ import { Home } from "./pages/home";
 import { ViewGeneral } from "./pages/viewGeneral";
 import injectContext from "./store/appContext";
 import { Login } from "./pages/login";
+import { Register } from "./pages/register";
+import { Recuperar } from "./pages/recuperar";
+import { NewPassword } from "./pages/newPassword";
 
 import { PymeView } from "./pages/viewPyme";
-import { Register } from "./pages/register";
+import { Comment } from "./component/comment";
 import { Jumbotron } from "./component/jumbotron";
 import { Barra } from "./component/barra";
 import { Footer } from "./component/footer";
@@ -20,24 +23,40 @@ const Layout = () => {
 	return (
 		<div className="d-flex flex-column h-100">
 			<BrowserRouter basename={basename}>
-				<ScrollToTop>
-					<Barra />
-					<Switch>
-						<Route exact path="/">
-							<Home />
-						</Route>
-						<Route exact path="/viewGeneral">
-							<ViewGeneral />
-						</Route>
-						<Route exact path="/viewPyme">
-							<PymeView />
-						</Route>
+				<Barra />
+				<Switch>
+					<Route exact path="/">
+						<Home />
+					</Route>
+					<Route exact path="/viewGeneral">
+						<ViewGeneral />
+					</Route>
+					<Route exact path="/viewPyme">
+						<PymeView />
+					</Route>
+					<div
+						style={{
+							backgroundImage:
+								"url('https://wallpapersplanet.net/sites/default/files/costa-rica-wallpapers-36777-877629.png')",
+							height: "100%",
+							opacity: "0.7"
+						}}>
 						<Route exact path="/login">
 							<Login />
 						</Route>
-					</Switch>
-					<Footer />
-				</ScrollToTop>
+						<Route exact path="/register">
+							<Register />
+						</Route>
+						<Route exact path="/recuperar">
+							<Recuperar />
+						</Route>
+						<Route exact path="/newPassword">
+							<NewPassword />
+						</Route>
+					</div>
+				</Switch>
+
+				<Footer />
 			</BrowserRouter>
 		</div>
 	);

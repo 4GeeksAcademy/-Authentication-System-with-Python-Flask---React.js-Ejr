@@ -12,7 +12,7 @@ export function Barra() {
 				</Navbar.Brand>
 			</Link>
 			<Navbar.Toggle />
-			<Navbar.Collapse className="justify-content-end">
+			<Navbar.Collapse className="justify-content-end text-dark">
 				<Navbar.Text>
 					<Link to="/login">
 						<a href="#login">Log In</a>

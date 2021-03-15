@@ -10,7 +10,7 @@ export const ComponenteInf = () => {
 						height={150}
 						style={{ marginTop: 25 }}
 						className="mr-3 rounded-circle"
-						src="https://st4.depositphotos.com/2610779/22764/v/600/depositphotos_227641426-stock-illustration-costa-rica-flag-bright-icon.jpg "
+						src="https://revistasumma.com/wp-content/uploads/2017/01/costa-rica.jpg"
 						alt="Generic placeholder"
 					/>
 					<Media.Body className="mt-2">
@@ -42,7 +42,7 @@ export const ComponenteInf = () => {
 						width={150}
 						height={150}
 						className="ml-3 rounded-circle"
-						src="https://149478393.v2.pressablecdn.com/wp-content/uploads/2016/08/75e53b8036759421d27f2c1dad2a06b9.jpg"
+						src="https://www.196flavors.com/wp-content/uploads/2019/01/olla-de-carne-1-FP.jpg"
 						alt="Generic placeholder"
 					/>
 				</Media>
@@ -51,7 +51,7 @@ export const ComponenteInf = () => {
 						width={150}
 						height={150}
 						className="mr-3 rounded-circle"
-						src="https://conozcasucanton.com/wp-content/uploads/sites/11/2016/01/Isla-Tortuga-Puntarenas1.jpg"
+						src="https://www.surfertoday.com/images/stories/costaricansurfer.jpg"
 						alt="Generic placeholder"
 					/>
 					<Media.Body style={{ marginTop: 35 }}>
@@ -81,6 +81,13 @@ export const ComponenteInf = () => {
 					/>
 				</Media>
 			</ul>
+			<div className="embed-responsive embed-responsive-16by9 mt-5 mb-5">
+				<iframe
+					className="embed-responsive-item"
+					src="https://www.youtube.com/embed/Kn6qgfTmsyA?rel=0"
+					allowFullScreen
+				/>
+			</div>
 		</div>
 	);
 };
