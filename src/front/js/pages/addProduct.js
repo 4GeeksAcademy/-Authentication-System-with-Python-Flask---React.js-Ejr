@@ -1,12 +1,6 @@
 import React from "react";
-import Jumbotron from "react-bootstrap/Jumbotron";
-import Button from "react-bootstrap/Button";
-import Card from "react-bootstrap/Card";
-import Image from "react-bootstrap/Image";
-import Col from "react-bootstrap/Col";
-import Row from "react-bootstrap/Row";
-import Form from "react-bootstrap/Form";
-import Link from "react-router-dom";
+import { Jumbotron, Button, Card, Image, Col, Row, Form, Link } from "react-bootstrap";
+import "../../styles/addProduct.scss";
 
 export const AddProduct = () => {
 	return (

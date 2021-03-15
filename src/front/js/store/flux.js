@@ -14,7 +14,18 @@ const getState = ({ getStore, getActions, setStore }) => {
 					initial: "white"
 				}
 			],
-			providers: null
+			providers: null,
+			products: [
+				{
+					nombre: "Vino",
+					marca: "Clos",
+					presentacion: "1 Litros",
+					impuesto: "13%",
+					codigo: "12413525245",
+					codigoCabys: "j83r932jd",
+					proveedor: "DIstribuidora de vinos"
+				}
+			]
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
@@ -43,8 +54,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 				//reset the global store
 				setStore({ demo: demo });
 			},
-
-			//-----------------------------------Provider------------------------------------------------------------------------
 			loadProviders: () => {
 				fetch("https://3001-plum-catshark-11aarra7.ws-us03.gitpod.io/api/provider")
 					.then(response => response.json())
@@ -72,7 +81,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 						console.error("Error:", error);
 					});
 			}
-			//-----------------------------------------------------------------------------------------------------------
 		}
 	};
 };
