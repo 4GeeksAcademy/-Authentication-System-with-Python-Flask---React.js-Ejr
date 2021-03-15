@@ -76,6 +76,20 @@ export const Login = () => {
 									/>
 								</div>
 							</div>
+							<div className="col-auto">
+								<label className="inlineFormInputGroup">Password</label>
+								<div className="input-group mb-2">
+									<input
+										type="password"
+										className="form-control text-center"
+										id="Password"
+										placeholder="tomatelo2x3"
+									/>
+								</div>
+							</div>
+							<small id="emailHelp" className="form-text text-muted">
+								Por favor revisa bien tus datos cuando termines.
+							</small>
 							<Button type="submit" variant="outline-info">
 								Log In
 							</Button>
