@@ -29,18 +29,17 @@ export const Login = () => {
 	// };
 
 	// const actionLogin = e => {
-	// 	alert(email + "\n" + password);
-	// if (email === "" || password === "") {
-	// 	alert("Actionlogin: Faltan datos por llenar!");
-	// } else {
-	// 	console.log(email, password);
-	// 	actions.validacionLogin(email, password);
-	// }
+	// 	if (email === "" || password === "") {
+	// 		alert("Actionlogin: Faltan datos por llenar!");
+	// 	} else {
+	// 		console.log(email, password);
+	// 		actions.login(email, password);
+	// 	}
 	// };
 
 	return (
 		<>
-			{store.jwtkn ? <Redirect to="/" /> : ""}
+			{store.jwtoken != null ? <Redirect to="/home" /> : ""}
 			<Container className="mt-2 mb-2">
 				<Row>
 					<article className="text-center text-light offset-lg-2 col-12 col-md-12 col-lg-8" id="Login">
@@ -49,13 +48,18 @@ export const Login = () => {
 							proyecto!
 						</h4>
 						<p className="lead">
-							Esta página esta ligada a una base de datos ya creada por lo cual para poder ingresar
+							Esta página esta vinculada a una base de datos ya creada por lo cual para poder ingresar
 							deberás revisar F12 y conocer los usuarios en lista ya creados!
 						</p>
 						<hr className="my-1" />
 					</article>
 
-					<form className="col-12 col-md-6 text-center text-light" onSubmit={e => actionLogin(e)}>
+					<form
+						className="col-12 col-md-6 text-center text-light"
+						onSubmit={async e => {
+							e.preventDefault();
+							await actions.login(email, password);
+						}}>
 						<h4 className="display-5">Login</h4>
 						<hr className="my-1" />
 						<div className="form-group align-items-center">
@@ -66,6 +70,7 @@ export const Login = () => {
 									className="form-control mb-2 text-center"
 									id="User"
 									placeholder="tomate.lo@gmail.com"
+									onChange={e => setEmail(e.target.value)}
 								/>
 								<small id="emailHelp" className="form-text text-muted">
 									Por favor revisa bien tus datos cuando termines.
@@ -79,6 +84,7 @@ export const Login = () => {
 										className="form-control text-center"
 										id="Password"
 										placeholder="tomatelo2x3"
+										onChange={e => setPassword(e.target.value)}
 									/>
 								</div>
 							</div>
@@ -88,15 +94,14 @@ export const Login = () => {
 							<Button type="submit" variant="outline-info">
 								Log In
 							</Button>
-							{/* {store.boolean ? <Redirect to="/home" /> : ""} */}
 						</div>
 					</form>
 					<form
 						className="col-12 col-md-6 text-center text-light"
 						onSubmit={async e => {
 							e.preventDefault();
-							let success = await actions.signup(first_name, last_name, email, password, birthday);
-							if (success) {
+							let ok = await actions.signup(first_name, last_name, email, password, birthday);
+							if (ok) {
 								// history.push("/");
 								window.scrollTo(0, 0);
 							} else {
