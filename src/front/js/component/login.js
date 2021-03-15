@@ -28,12 +28,13 @@ export const Login = () => {
 	// };
 
 	// const actionLogin = e => {
-	// 	if (email === "" || password === "") {
-	// 		alert("Actionlogin: Faltan datos por llenar!");
-	// 	} else {
-	// 		console.log(email, password);
-	// 		actions.validacionLogin(email, password);
-	// 	}
+	// 	alert(email + "\n" + password);
+	// if (email === "" || password === "") {
+	// 	alert("Actionlogin: Faltan datos por llenar!");
+	// } else {
+	// 	console.log(email, password);
+	// 	actions.validacionLogin(email, password);
+	// }
 	// };
 
 	return (
