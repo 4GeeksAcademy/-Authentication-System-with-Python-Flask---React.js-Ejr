@@ -12,7 +12,7 @@ import { Newpass } from "./pages/newpass";
 import { Single } from "./pages/single";
 import { ProductRegister } from "./pages/productRegister";
 import injectContext from "./store/appContext";
-import { Categoria } from "./pages/categoria";
+import { Category } from "./pages/category";
 
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
@@ -53,8 +53,8 @@ const Layout = () => {
 						<Route exact path="/single/:theid">
 							<Single />
 						</Route>
-						<Route exact path="/categoria">
-							<Categoria />
+						<Route exact path="/c"ategory>
+							<Category />
 						</Route>
 						<Route exact path="/product-register">
 							<ProductRegister />

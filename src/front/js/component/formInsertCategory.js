@@ -8,7 +8,7 @@ import Image from "react-bootstrap/Image";
 import Table from "react-bootstrap/Table";
 import Card from "react-bootstrap/Card";
 
-export const FormProvider = () => {
+export const FormInsertCategory = () => {
 	const { store, actions } = useContext(Context);
 	useEffect(() => {
 		actions.loadProviders();

@@ -49,10 +49,12 @@ def addCategory():
     category = Category(id_Category=request_body["id_Category"],
                         name_Category=request_body["name_Category"],
                         description_Category=request_body["description_Category"],
-                        active_Product=request_body["active_Product"]
+                        active_Product=request_body["active_Product"])
     print(request_body)
     db.session.add(provider)
     db.session.add(properties)
     db.session.add(category)
     db.session.commit()
-    return jsonify("All good"), 200
+    provider = Provider.query.all()
+    provider_serialized = list(map(lambda data: data.serialize(), provider))
+    return jsonify(provider_serialized),200
