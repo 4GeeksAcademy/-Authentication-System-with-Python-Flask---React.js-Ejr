@@ -10,7 +10,8 @@ import { Login } from "./pages/login";
 import { Changepass } from "./pages/changepass";
 import { Newpass } from "./pages/newpass";
 import { Single } from "./pages/single";
-import { ProductRegister } from "./pages/productRegister";
+import { AddProduct } from "./pages/addProduct";
+import { Reports } from "./pages/reports";
 import injectContext from "./store/appContext";
 
 import { Navbar } from "./component/navbar";
@@ -52,8 +53,11 @@ const Layout = () => {
 						<Route exact path="/single/:theid">
 							<Single />
 						</Route>
-						<Route exact path="/product-register">
-							<ProductRegister />
+						<Route exact path="/addproduct">
+							<AddProduct />
+						</Route>
+						<Route exact path="/reports">
+							<Reports />
 						</Route>
 						<Route>
 							<h1>Not found!</h1>

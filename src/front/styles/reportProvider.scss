@@ -1,0 +1,75 @@
+.cardsContainer{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.body{
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+}
+.jumbotron{
+    display: flex;
+    min-height: fit-content;
+    align-self: center;
+    flex-direction: column;
+    align-items: center;
+    overflow-x: scroll;	
+}
+.accordion{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 10px;
+    min-width: fit-content;
+}
+h4{
+    display: flex;
+    justify-self: center;
+}
+.header{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+.productSymbolAccordion{
+    margin-right: 10px;
+    font-size: 100% !important;
+}
+.cardSymbolCSS{
+    display: flex;
+    flex-direction: row;
+    width: fit-content;
+    align-self: center;
+    margin-bottom: 20px;
+    font-size: 600% !important;
+}
+.enBodega{
+    display: flex;
+    justify-content: center;
+    width: 207px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+.deckCSS{
+    display: flex;
+    flex-direction: row;
+    margin-top: 20px;
+    margin-left: 50px;
+    margin-right: 50px;
+    width: max-content;
+    overflow-x: scroll;
+}
+.dataRow{
+    display: flex;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    flex-direction: column;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    max-width: 240px;
+}
+.checkCSS{
+    font-size: 300% !important;
+}
