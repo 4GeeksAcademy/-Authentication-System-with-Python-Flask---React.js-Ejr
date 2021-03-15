@@ -15,6 +15,10 @@ export const Login = () => {
 	const [redirect, setRedirect] = useState(false);
 
 	// const actionRegister = e => {
+	// 	alert(first_name + last_name + email + password + birthday);
+	// };
+
+	// const actionRegister = e => {
 	// 	if (email === "" || password === "") {
 	// 		alert("ActionRegister: Faltan datos por llenar!");
 	// 	} else {
@@ -37,7 +41,7 @@ export const Login = () => {
 			{store.jwtkn ? <Redirect to="/" /> : ""}
 			<Container className="mt-2 mb-2">
 				<Row>
-					<article className="text-center text-light offset-lg-2 col-12 col-md-12 col-lg-8">
+					<article className="text-center text-light offset-lg-2 col-12 col-md-12 col-lg-8" id="Login">
 						<h4 className="display-5">
 							Ingresa a <span className="glitch1">M||RA</span> y enterate de todo lo relacionado a este
 							proyecto!
@@ -83,6 +87,7 @@ export const Login = () => {
 						</div>
 					</form>
 					<form className="col-12 col-md-6 text-center text-light">
+						{/* onSubmit={e => actionRegister(e)} */}
 						<h4 className="display-5">Register</h4>
 						<hr className="my-1" />
 						<div className="form-group align-items-center">
@@ -156,6 +161,9 @@ export const Login = () => {
 								}}>
 								Register
 							</Button>
+							{/* <Button type="submit" variant="outline-primary">
+								Register
+							</Button> */}
 						</div>
 					</form>
 				</Row>
