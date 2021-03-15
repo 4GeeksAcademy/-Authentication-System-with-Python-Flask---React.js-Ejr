@@ -5,17 +5,20 @@ import "../../styles/home.scss";
 //import PropTypes from "prop-types";
 //import { Context } from "../store/appContext";
 //import { useParams } from "react-router-dom";
+import Comment from "../component/comment";
 
 //const PymeView = ({ pymes })
 const PymeProfile = () => {
 	return (
 		<>
-			<img
-				className="card-img-top rounded-right shadow mt-5"
-				style={{ width: "100%", height: "300px", margin: "0 auto" }}
-				src="https://fondosmil.com/fondo/74500.jpg"
-				alt="Card image cap"
-			/>
+			<div>
+				<img
+					className="card-img-top rounded-right shadow mt-3"
+					style={{ width: "100%", height: "400px", margin: "0 auto" }}
+					src="https://sfo2.digitaloceanspaces.com/elpaiscr/2021/02/Volcan-Arenal..jpeg"
+					alt="Card image cap"
+				/>
+			</div>
 			<div className="container">
 				<div className="row" style={{ marginBottom: "37px", marginTop: "68px" }}>
 					<h1 className="font-weight-bolder" style={{ paddingLeft: "13px" }}>
@@ -31,7 +34,7 @@ const PymeProfile = () => {
 					</div>
 				</div>
 				<div className="row d-flex">
-					<div className="col-8">
+					<div className="col-sm-12 col-md-8">
 						<p>
 							Chachagua Rainforest Hotel and Ecolodge se encuentra en un bello paraíso selvático cerca del
 							Volcán Arenal. Aclamado por las publicaciones de viajes de confianza, somos el principal
@@ -49,10 +52,10 @@ const PymeProfile = () => {
 							edades y las habilidades.
 						</p>
 					</div>
-					<div className="col-4">
+					<div className="col-sm-12 col-md-4">
 						<img
 							className="card-img-top"
-							style={{ width: "352px", height: "230px", margin: "0 auto" }}
+							style={{ height: "230px", margin: "0 auto" }}
 							src="https://images.squarespace-cdn.com/content/v1/555cbc7ee4b059e095f39179/1488390070674-CXYQU17QO2DSEV4TJ5V5/ke17ZwdGBToddI8pDm48kMxP3zelORv554bfrCgYiuNZw-zPPgdn4jUwVcJE1ZvWQUxwkmyExglNqGp0IvTJZamWLI2zvYWH8K3-s_4yszcp2ryTI0HqTOaaUohrI8PIO3p9JfP_jmAUPHyNnkpZX7wqTYQ8n-Q3yghIWqr7I-w/map-la-fortuna-arenal-costa-rica.jpg"
 							alt="Card image cap"
 						/>
@@ -112,7 +115,7 @@ const PymeProfile = () => {
 						</div>
 					</div>
 				</div>
-				<div className="embed-responsive embed-responsive-16by9">
+				<div className="embed-responsive embed-responsive-16by9 mb-5">
 					<iframe
 						className="embed-responsive-item"
 						src="https://www.youtube.com/embed/pHBh5DNQ1cw?rel=0"
@@ -124,23 +127,16 @@ const PymeProfile = () => {
 	);
 };
 
-/*export const Profile = () => {
-	const { entity, id } = useParams();
-	const storeContext = useContext(Context);
-	const {
-		store: { characterEntity, planetsEntity }
-	} = storeContext;
-
-	useEffect(
-		() => {
-			storeContext.actions.fetchEntity(entity, id);
-		},
-		[entity, id]
-	);*/
 export const PymeView = () => {
 	return (
-		<div className="container">
-			<PymeProfile />
+		<div>
+			<div className="container">
+				<PymeProfile />
+			</div>
+			<hr />
+			<div className="container">
+				<Comment />
+			</div>
 		</div>
 	);
 };

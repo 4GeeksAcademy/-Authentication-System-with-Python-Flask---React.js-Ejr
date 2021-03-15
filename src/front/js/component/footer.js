@@ -3,9 +3,7 @@ import cinde from "../../img/cinde.png";
 import micitt from "../../img/micitt.png";
 
 export const Footer = () => (
-	<div
-		className="card text-center mt-5"
-		style={{ background: "rgb(39, 34, 34)", border: "none", marginTop: "230px" }}>
+	<div className="card text-center" style={{ background: "rgb(39, 34, 34)", border: "none" }}>
 		<div className="card-body text-right text-light">
 			<p>© 2021 Pura Vida Passport. Derechos reservados.</p>
 		</div>

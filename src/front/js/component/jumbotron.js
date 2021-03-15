@@ -2,7 +2,7 @@ import React from "react";
 
 const Playa = () => {
 	return (
-		<>
+		<div>
 			<h1 className="display-4">Playa</h1>
 			<p className="lead">
 				Costa Rica ocupa un lugar privilegiado en el corazón de Centroamérica por la riqueza de sus playas,
@@ -11,13 +11,13 @@ const Playa = () => {
 			</p>
 			<hr className="my-4" />
 			<p>Se estima que 600 playas rodean todo el territorio nacional.</p>
-		</>
+		</div>
 	);
 };
 
 const Montana = () => {
 	return (
-		<>
+		<div>
 			<h1 className="display-4">Montaña</h1>
 			<p className="lead">
 				Costa Rica es una tierra de volcanes, bosques húmedos y nubosos, enormes cataratas y ríos caudalosos.
@@ -26,8 +26,12 @@ const Montana = () => {
 			</p>
 			<hr className="my-4" />
 			<p>Hermosos paisajes, atrevidas rutas y mucha diversión es lo puedes esperar.</p>
-		</>
+		</div>
 	);
 };
 
-export const Jumbotron = () => <div className="jumbotron text-left shadow mt-5">{true ? <Playa /> : <Montana />}</div>;
+export const Jumbotron = () => (
+	<div id="select1" className="jumbotron text-left shadow mt-5">
+		{true ? <Playa /> : <Montana />}
+	</div>
+);
