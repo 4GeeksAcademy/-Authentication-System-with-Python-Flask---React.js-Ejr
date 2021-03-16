@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 //import { Context } from "../store/appContext";
-import { Container, Row, Col, Button } from "react-bootstrap";
+import { Button, Breadcrumb } from "react-bootstrap";
 import "../../styles/galeria.scss";
 
 export const Home = () => {
