@@ -1,6 +1,7 @@
 import React from "react";
-import { render } from "react-dom";
-import { Map, MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import { render, ReactDOM } from "react-dom";
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import "../../styles/index.scss";
 
 class Mapa extends React.Component {
 	constructor() {
@@ -10,7 +11,12 @@ class Mapa extends React.Component {
 	render() {
 		const position = [51.505, -0.09];
 		return (
-			<Map center={position} zoom={13}>
+			<MapContainer
+				center={position}
+				zoom={13}
+				scrollWheelZoom={false}
+				/*style={{ height: "230px", width: "100%" }}*/
+			>
 				<TileLayer
 					attribution="&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
 					url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"
@@ -22,14 +28,8 @@ class Mapa extends React.Component {
 						</span>
 					</Popup>
 				</Marker>
-			</Map>
+			</MapContainer>
 		);
 	}
 }
-export const Mapa2 = () => {
-	return (
-		<div className="container">
-			<Mapa />
-		</div>
-	);
-};
+export default Mapa;

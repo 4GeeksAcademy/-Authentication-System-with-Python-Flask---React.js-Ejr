@@ -6,7 +6,16 @@
     margin-top: 50px;
 }
 
-.leaflet-container {
-    height: 400px;
-    width: 100%;
+.MapContainer {
+  height: 500px;
+  background-color: white;
+  padding: 1rem;
+  border-radius: 20px;
+  margin-top: 16px;
+  box-shadow: 0 0 8px -4px rgba(0, 0, 0, 0.5);
+}
+
+.MapContainer .leaflet-container {
+  height: 100%;
+  border-radius: 12px;
 }

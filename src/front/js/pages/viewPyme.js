@@ -5,7 +5,8 @@ import "../../styles/home.scss";
 //import PropTypes from "prop-types";
 //import { Context } from "../store/appContext";
 //import { useParams } from "react-router-dom";
-import { Mapa2 } from "../component/mapa";
+import Mapa from "../component/mapa";
+import Comentarios from "../component/disqus";
 
 //const PymeView = ({ pymes })
 const PymeProfile = () => {
@@ -50,9 +51,8 @@ const PymeProfile = () => {
 							edades y las habilidades.
 						</p>
 					</div>
-					<div className="col-4" />
-					<div>
-						<Mapa2 />
+					<div className="row">
+						<Mapa />
 					</div>
 				</div>
 				<div className="row" style={{ paddingLeft: "14px" }}>
@@ -105,6 +105,9 @@ const PymeProfile = () => {
 						src="https://www.youtube.com/embed/pHBh5DNQ1cw?rel=0"
 						allowFullScreen
 					/>
+				</div>
+				<div>
+					<Comentarios />
 				</div>
 			</div>
 		</>

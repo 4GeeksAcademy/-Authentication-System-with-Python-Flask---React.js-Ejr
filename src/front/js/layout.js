@@ -8,6 +8,7 @@ import { Register } from "./pages/register";
 import { Jumbotron } from "./component/jumbotron";
 import { Barra } from "./component/barra";
 import { Footer } from "./component/footer";
+import Mapa from "./component/mapa";
 
 //create your first component
 const Layout = () => {
@@ -26,6 +27,9 @@ const Layout = () => {
 				</Route>
 				<Route exact path="/viewPyme">
 					<PymeView />
+				</Route>
+				<Route exact path="/mapa">
+					<Mapa />
 				</Route>
 				<Route exact path="/viewgeneral/:theid">
 					<ViewGeneral />
