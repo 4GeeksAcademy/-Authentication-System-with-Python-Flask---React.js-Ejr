@@ -5,12 +5,14 @@ import "../../styles/home.scss";
 //import PropTypes from "prop-types";
 //import { Context } from "../store/appContext";
 //import { useParams } from "react-router-dom";
+import Mapa from "../component/mapa";
+import Comentarios from "../component/disqus";
 import Comment from "../component/comment";
 
 //const PymeView = ({ pymes })
 const PymeProfile = () => {
 	return (
-		<>
+        <>
 			<div>
 				<img
 					className="card-img-top rounded-right shadow mt-3"
@@ -52,6 +54,8 @@ const PymeProfile = () => {
 							edades y las habilidades.
 						</p>
 					</div>
+					<div className="row"/>
+						<Mapa />
 					<div className="col-sm-12 col-md-4">
 						<img
 							className="card-img-top"
@@ -121,6 +125,9 @@ const PymeProfile = () => {
 						src="https://www.youtube.com/embed/pHBh5DNQ1cw?rel=0"
 						allowFullScreen
 					/>
+				</div>
+				<div>
+					<Comentarios />
 				</div>
 			</div>
 		</>
