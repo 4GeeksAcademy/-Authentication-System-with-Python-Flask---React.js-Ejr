@@ -162,7 +162,7 @@ def user_login():
     req = request.get_json()
     email = req.get('email', None)
     password =  req.get('password', None)
-    print("LINEA 165", req)
+    print("LINEA 165", req)                         #Checking data
     if not email:
         return jsonify({"msg": "Email required"}), 400
     if not password:
