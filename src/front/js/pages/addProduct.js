@@ -4,7 +4,7 @@ import "../../styles/addProduct.scss";
 
 export const AddProduct = () => {
 	return (
-		<Form className="add-product-form container-fluid">
+		<Form className="add-product-form">
 			<i className="fas fa-sign-in-alt add-product-symbol" />
 			<h2>Registro de productos</h2>
 			<Form.Row>
@@ -27,7 +27,6 @@ export const AddProduct = () => {
 				<Form.Group as={Col}>
 					<Form.Control type="text" placeholder="Proveedor" />
 				</Form.Group>
-
 				<Form.Group as={Col}>
 					<Form.Control type="text" placeholder="Categoría" />
 				</Form.Group>

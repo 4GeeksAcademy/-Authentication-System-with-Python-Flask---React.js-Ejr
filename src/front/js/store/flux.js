@@ -15,7 +15,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			],
 			providers: null,
-			category: null,
+			datosUpdate: null,
 			products: [
 				{
 					id_Product: "1",
@@ -83,6 +83,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 					.then(response => response.json())
 					.then(response => setStore({ providers: response }));
 			},
+			updateProvider: data => {
+				setStore({ datosUpdate: data });
+			},
 			loadCategory: () => {
 				fetch("https://3001-plum-catshark-11aarra7.ws-us03.gitpod.io/api/category")
 					.then(response => response.json())
@@ -121,7 +124,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 					.then(response => response.json())
 					.then(data => {
 						console.log("Success:", data);
-						setStore({ providers: data });
+						setStore({ providers: getStore().providers, data });
+					})
+					.then(() => {
+						getActions().loadProviders();
 					})
 					.catch(error => {
 						console.error("Error:", error);
