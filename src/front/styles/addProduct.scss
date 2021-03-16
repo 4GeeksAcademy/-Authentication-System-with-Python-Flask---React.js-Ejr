@@ -1,34 +1,18 @@
-.jumbotronCSS{
+.add-product-form { 
     display: flex;
+    flex-direction: column;
+    min-width: 500px;
+    background-color: lightgray;
+    border-radius: 10px;
     align-items: center;
     align-self: center;
-    flex-direction: column;
-    min-width: 900px;
 }
-.fas, .fas{ 
+.add-product-symbol{ 
     display: flex;
+    width: fit-content;
     margin-top: 20px;
     font-size: 500% !important;
 }
-.nombreMarcarCat{
-    display: flex;
-    justify-content: flex-end;
-
-}
-.formBodyCard{
-    display: flex;
-    min-width: 400px;
-    justify-content: center;
-
-}
-.buttonsCSS{ 
-    display: flex;
-}
-.buttonGuardar{ 
-    display: flex;
-    margin-left: 10px;
-}
-.buttonEliminar{ 
-    display: flex;
-    margin-left: 40px;
+.guardar-button{
+    margin-bottom: 20px;
 }

@@ -80,17 +80,39 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({ demo: demo });
 			},
 			loadProviders: () => {
-				fetch("https://3001-plum-catshark-11aarra7.ws-us03.gitpod.io/api/provider")
+				fetch("https://3001-teal-tortoise-5hgr6djn.ws-us03.gitpod.io/api/provider")
 					.then(response => response.json())
 					.then(response => setStore({ providers: response }));
 			},
 			updateProvider: data => {
 				setStore({ datosUpdate: data });
 			},
+			loadCategory: () => {
+				fetch("https://3001-teal-tortoise-5hgr6djn.ws-us03.gitpod.io/api/category")
+					.then(response => response.json())
+					.then(response => setStore({ category: response }));
+			},
+			insertCategory: data => {
+				fetch("https://3001-teal-tortoise-5hgr6djn.ws-us03.gitpod.io/api/category", {
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json"
+					},
+					body: JSON.stringify(data)
+				})
+					.then(response => response.json())
+					.then(data => {
+						console.log("Success:", data);
+						setStore({ category: data });
+					})
+					.catch(error => {
+						console.error("Error:", error);
+					});
+			},
 			insertData: data => {
 				console.log(data);
 				fetch(
-					"https://3001-plum-catshark-11aarra7.ws-us03.gitpod.io/api/provider",
+					"https://3001-teal-tortoise-5hgr6djn.ws-us03.gitpod.io/api/provider",
 
 					{
 						method: "POST",
@@ -103,10 +125,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					.then(response => response.json())
 					.then(data => {
 						console.log("Success:", data);
-						setStore({ providers: getStore().providers, data });
-					})
-					.then(() => {
-						getActions().loadProviders();
+						setStore({ providers: data });
 					})
 					.catch(error => {
 						console.error("Error:", error);
