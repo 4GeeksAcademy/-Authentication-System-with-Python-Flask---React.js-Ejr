@@ -1,6 +1,5 @@
 import React from "react";
 import { Container, Row, Image, Card } from "react-bootstrap";
-
 export const Content = () => {
 	return (
 		<Container className="mt-2 mb-2">
