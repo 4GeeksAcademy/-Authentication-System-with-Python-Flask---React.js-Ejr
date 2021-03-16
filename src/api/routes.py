@@ -38,9 +38,24 @@ def addProvider():
                             phone_Provider_Details=request_body["phone_Provider_Details"],
                             address_Provider_Details=request_body["address_Provider_Details"],
                             payment_Type_Provider_Details=request_body["payment_Type_Provider_Details"])
+
+@api.route('/category',methods=['GET'])
+def listCategory():
+    category = Provider.query.all()
+    provider_serialized = list(map(lambda data: data.serialize(), category))
+    return jsonify(provider_serialized),200
+
+@api.route('/category',methods=['POST'])
+def addCategory():
+    request_body = request.get_json()
+    category = Category(id_Category=request_body["id_Category"],
+                        name_Category=request_body["name_Category"],
+                        description_Category=request_body["description_Category"],
+                        active_Product=request_body["active_Product"])
     print(request_body)
     db.session.add(provider)
     db.session.add(properties)
+    db.session.add(category)
     db.session.commit()
     return jsonify("All good"), 200
 
