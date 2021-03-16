@@ -1,12 +1,13 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Link, animateScroll as scroll } from "react-scroll";
-import { Context } from "../store/appContext";
 import { Carrusel } from "../component/carrusel";
-import "../../styles/home.scss";
-import { ComponenteInf } from "../component/ComponentInf";
+import { Card } from "../component/Card";
 
-export const Home = () => {
-	const { store, actions } = useContext(Context);
+import "../../styles/home.scss";
+
+
+export const viewPassport = () => {
+	
 
 	return (
 		<div>
@@ -14,7 +15,7 @@ export const Home = () => {
 				<Carrusel />
 			</div>
 			<div className="container">
-				<ComponenteInf />
+				<Card />
 			</div>
 		</div>
 	);

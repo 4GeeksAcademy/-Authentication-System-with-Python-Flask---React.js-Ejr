@@ -51,7 +51,7 @@ export const Card = () => {
 					<Link className="btn btn-sm btn-outline-primary" data-toggle="popover" to="/viewPyme">
 						Learn more
 					</Link>
-					<i className="ml-5 fas fa-passport fa-2x" />
+					<i className="ml-5 far fa-heart fa-2x" style={{ color: "red" }} />
 				</div>
 			</div>
 		</div>

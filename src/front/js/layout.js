@@ -3,8 +3,13 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { Home } from "./pages/home";
 import { ViewGeneral } from "./pages/viewGeneral";
 import injectContext from "./store/appContext";
-import { PymeView } from "./pages/viewPyme";
+import { Login } from "./pages/login";
 import { Register } from "./pages/register";
+import { Recuperar } from "./pages/recuperar";
+import { NewPassword } from "./pages/newPassword";
+
+import { PymeView } from "./pages/viewPyme";
+import { Comment } from "./component/comment";
 import { Jumbotron } from "./component/jumbotron";
 import { Barra } from "./component/barra";
 import { Footer } from "./component/footer";
