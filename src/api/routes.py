@@ -6,8 +6,12 @@ from api.models import db, User, Pymes, Mi_pasaporte
 from api.utils import generate_sitemap, APIException
 import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
+from flask_cors import CORS, cross_origin
+from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
 
 api = Blueprint('api', __name__)
+
+CORS(api) # This will enable CORS for all routes
 
 #bloque de GET's
 @api.route('/users', methods=['GET'])
@@ -23,21 +27,21 @@ def get_user(user_id):
         raise APIException('este usuario no existe en la base de datos', status_code=404)
     userjson = user.serialize()
     return jsonify(userjson), 200
-
+#------------------------------------------------------------------------------------------------
 @api.route('/pymes', methods=['GET'])
-def get_playa():
+def get_pymes():
     pymes = Pymes.query.all()
     list_pymes = list(map(lambda x: x.serialize(), pymes))
     return jsonify(list_pymes), 200
 
 @api.route('/pymes/<int:pymes_id>', methods=['GET'])
-def get_pymes_playa(pymes_id):
+def get_pymes_id(pymes_id):
     pymes = Pymes.query.get(pymes_id)
     if pymes is None:
         raise APIException('El pymes no existe', status_code=404)
     pymesjson = pymes.serialize()
     return jsonify(pymesjson), 200
-
+#------------------------------------------------------------------------------------------------
 @api.route('/mi_pasaporte', methods=['GET'])
 def get_todos_los_elementos():
     all_elements = Mi_pasaporte.query.all()
@@ -45,6 +49,7 @@ def get_todos_los_elementos():
     return jsonify(list_elements)
 
 @api.route('/mi_pasaporte/<int:user_id>', methods=['GET'])
+@jwt_required()
 def get_un_elemento(user_id):
     all_elements = Mi_pasaporte.query.all()
     list_elements = list(map(lambda x: x.serialize(), all_elements))
@@ -52,7 +57,7 @@ def get_un_elemento(user_id):
     return jsonify(list_usuario)
 
 @api.route('/profile', methods=['GET'])
-#@jwt_required()
+@jwt_required()
 def profile():
     if request.method == 'GET':
         token = get_jwt_identity()
@@ -60,9 +65,10 @@ def profile():
 
 #bloque de POST's
 @api.route('users/mi_pasaporte/', methods=['POST'])
+@jwt_required()
 def agregar_mi_pasaporte():
     request_body = request.get_json()
-    mi_pasaporte = Mi_pasaporte(user_id = request_body["user_id"], nombre = request_body["nombre"], tipo = request_body["tipo"])
+    mi_pasaporte = Mi_pasaporte(user_id = request_body["user_id"], name = request_body["name"], tipo_pymes = request_body["tipo_pymes"])
     db.session.add(mi_pasaporte)
     db.session.commit()
     return jsonify({"msg": "el favorito se ha agregado con exito"}), 200
@@ -136,10 +142,10 @@ def login():
         return jsonify(data), 200
 
 #bloque de metodo DELETE
-@api.route('/mi_pasaporte/<int:user_id>/<nombre_pymes>', methods=['DELETE'])
-#@jwt_required()
-def borrar_mi_pasaporte(user_id, nombre_pymes):
-    favorito = Mi_pasaporte.query.filter_by(user_id = user_id, nombre_pymes = nombre_pymes).first()
+@api.route('/mi_pasaporte/<int:user_id>/<name>', methods=['DELETE'])
+@jwt_required()
+def borrar_mi_pasaporte(user_id, name):
+    favorito = Mi_pasaporte.query.filter_by(user_id = user_id, name = name).first()
     if favorito is None:
         raise APIException('favorito no encontrado', status_code=404)
     db.session.delete(favorito)

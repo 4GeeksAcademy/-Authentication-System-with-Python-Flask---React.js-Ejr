@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import Disqus from "disqus-react";
 
-export default class Comment extends Component {
+export default class Comentarios extends Component {
 	render() {
-		const disqusShortname = "puravidapassport";
+		const disqusShortname = "costaricapassport";
 		const disqusConfig = {
 			url: "https://3000-aquamarine-cat-14f9pgld.ws-us03.gitpod.io/",
 			identifier: "article-id",
@@ -12,9 +12,9 @@ export default class Comment extends Component {
 
 		return (
 			<div className="article-container">
-				<h3>Reseña de los usuarios</h3>
+				<h1>Reseña de los usuarios</h1>
 
-				<p>Escribe aquí tu reseña!!</p>
+				<p>Escribe aqui tu reseña!!</p>
 
 				<Disqus.DiscussionEmbed shortname={disqusShortname} config={disqusConfig} />
 			</div>

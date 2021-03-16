@@ -13,7 +13,7 @@ import { Comment } from "./component/comment";
 import { Jumbotron } from "./component/jumbotron";
 import { Barra } from "./component/barra";
 import { Footer } from "./component/footer";
-import ScrollToTop from "./component/scrollToTop";
+import MapContainer from "./component/mapa";
 
 //create your first component
 const Layout = () => {
@@ -28,10 +28,10 @@ const Layout = () => {
 					<Route exact path="/">
 						<Home />
 					</Route>
-					<Route exact path="/viewGeneral">
+					<Route exact path="/viewGeneral/:type">
 						<ViewGeneral />
 					</Route>
-					<Route exact path="/viewPyme">
+					<Route exact path="/viewPyme/:id">
 						<PymeView />
 					</Route>
 					<div
