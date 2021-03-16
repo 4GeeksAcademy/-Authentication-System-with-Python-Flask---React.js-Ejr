@@ -9,7 +9,7 @@ export const AboutUs = () => {
 	return (
 		<Container className="mt-4 mb-2">
 			<CardDeck>
-				<Card className="text-light text-left Card">
+				<Card className="text-light text-left Card" id="Tomatelo">
 					<Card.Img className="logimg" variant="top" src={tomatelo1} />
 					<Card.Body>
 						<Card.Title>Card title</Card.Title>

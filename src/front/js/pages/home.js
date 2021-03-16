@@ -21,7 +21,7 @@ export const Home = () => {
 					<div className="mb-1 col-md-4">
 						<div className="principal">
 							<div className="frente" />
-							<div className="atras">
+							<div className="atras text-light">
 								<h4>Titulo</h4>
 								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
 								<Button className="Button" variant="outline-success">
@@ -33,7 +33,7 @@ export const Home = () => {
 					<div className="mb-1 col-md-4">
 						<div className="principal">
 							<div className="frente" />
-							<div className="atras">
+							<div className="atras text-light">
 								<h4>Titulo</h4>
 								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
 								<Button className="Button" variant="outline-success">
@@ -45,7 +45,7 @@ export const Home = () => {
 					<div className="mb-1 col-md-4">
 						<div className="principal">
 							<div className="frente" />
-							<div className="atras">
+							<div className="atras text-light">
 								<h4>Titulo</h4>
 								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
 								<Button className="Button" variant="outline-success">
@@ -72,7 +72,7 @@ export const Home = () => {
 					<div className="mb-1 col-md-4">
 						<div className="principal">
 							<div className="frente" />
-							<div className="atras">
+							<div className="atras text-light">
 								<h4>Titulo</h4>
 								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
 								<Button className="Button" variant="outline-success">
@@ -84,7 +84,7 @@ export const Home = () => {
 					<div className="mb-1 col-md-4">
 						<div className="principal">
 							<div className="frente" />
-							<div className="atras">
+							<div className="atras text-light">
 								<h4>Titulo</h4>
 								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
 								<Button className="Button" variant="outline-success">
@@ -99,7 +99,7 @@ export const Home = () => {
 					<div className="mb-1 col-md-4">
 						<div className="principal">
 							<div className="frente" />
-							<div className="atras">
+							<div className="atras text-light">
 								<h4>Titulo</h4>
 								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
 								<Button className="Button" variant="outline-success">
@@ -111,7 +111,7 @@ export const Home = () => {
 					<div className="mb-1 col-md-4">
 						<div className="principal">
 							<div className="frente" />
-							<div className="atras">
+							<div className="atras text-light">
 								<h4>Titulo</h4>
 								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
 								<Button className="Button" variant="outline-success">
@@ -123,7 +123,7 @@ export const Home = () => {
 					<div className="mb-1 col-md-4">
 						<div className="principal">
 							<div className="frente" />
-							<div className="atras">
+							<div className="atras text-light">
 								<h4>Titulo</h4>
 								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
 								<Button className="Button" variant="outline-success">
@@ -138,7 +138,7 @@ export const Home = () => {
 					<div className="mb-1 col-md-4">
 						<div className="principal">
 							<div className="frente" />
-							<div className="atras">
+							<div className="atras text-light">
 								<h4>Titulo</h4>
 								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
 								<Button className="Button" variant="outline-success">
@@ -150,7 +150,7 @@ export const Home = () => {
 					<div className="mb-1 col-md-4">
 						<div className="principal">
 							<div className="frente" />
-							<div className="atras">
+							<div className="atras text-light">
 								<h4>Titulo</h4>
 								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
 								<Button className="Button" variant="outline-success">
@@ -162,7 +162,7 @@ export const Home = () => {
 					<div className="mb-1 col-md-4">
 						<div className="principal">
 							<div className="frente" />
-							<div className="atras">
+							<div className="atras text-light">
 								<h4>Titulo</h4>
 								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
 								<Button className="Button" variant="outline-success">
