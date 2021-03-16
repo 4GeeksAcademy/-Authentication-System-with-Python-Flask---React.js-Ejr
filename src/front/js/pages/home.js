@@ -6,7 +6,7 @@ import "../../styles/galeria.scss";
 export const Home = () => {
 	return (
 		<div className="container mb-4">
-			<div className="contenedor">
+			<div className="contenedor text-center">
 				<article className="text-light">
 					<h4>Ingresa y enterate de todo lo relacionado a este proyecto!</h4>
 					{/* <p>
@@ -24,7 +24,7 @@ export const Home = () => {
 							<div className="atras">
 								<h4>Titulo</h4>
 								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-								<Button className="Button" variant="success">
+								<Button className="Button" variant="outline-success">
 									Ver más
 								</Button>{" "}
 							</div>
@@ -36,7 +36,7 @@ export const Home = () => {
 							<div className="atras">
 								<h4>Titulo</h4>
 								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-								<Button className="Button" variant="success">
+								<Button className="Button" variant="outline-success">
 									Ver más
 								</Button>{" "}
 							</div>
@@ -48,7 +48,7 @@ export const Home = () => {
 							<div className="atras">
 								<h4>Titulo</h4>
 								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-								<Button className="Button" variant="success">
+								<Button className="Button" variant="outline-success">
 									Ver más
 								</Button>{" "}
 							</div>
@@ -63,7 +63,7 @@ export const Home = () => {
 							<div className="atras">
 								<h4>Titulo</h4>
 								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-								<Button className="Button" variant="success">
+								<Button className="Button" variant="outline-success">
 									Ver más
 								</Button>{" "}
 							</div>
@@ -75,7 +75,7 @@ export const Home = () => {
 							<div className="atras">
 								<h4>Titulo</h4>
 								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-								<Button className="Button" variant="success">
+								<Button className="Button" variant="outline-success">
 									Ver más
 								</Button>{" "}
 							</div>
@@ -90,7 +90,7 @@ export const Home = () => {
 							<div className="atras">
 								<h4>Titulo</h4>
 								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-								<Button className="Button" variant="success">
+								<Button className="Button" variant="outline-success">
 									Ver más
 								</Button>{" "}
 							</div>
@@ -102,7 +102,7 @@ export const Home = () => {
 							<div className="atras">
 								<h4>Titulo</h4>
 								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-								<Button className="Button" variant="success">
+								<Button className="Button" variant="outline-success">
 									Ver más
 								</Button>{" "}
 							</div>
@@ -114,7 +114,7 @@ export const Home = () => {
 							<div className="atras">
 								<h4>Titulo</h4>
 								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-								<Button className="Button" variant="success">
+								<Button className="Button" variant="outline-success">
 									Ver más
 								</Button>{" "}
 							</div>
@@ -129,7 +129,7 @@ export const Home = () => {
 							<div className="atras">
 								<h4>Titulo</h4>
 								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-								<Button className="Button" variant="success">
+								<Button className="Button" variant="outline-success">
 									Ver más
 								</Button>{" "}
 							</div>
@@ -141,7 +141,7 @@ export const Home = () => {
 							<div className="atras">
 								<h4>Titulo</h4>
 								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-								<Button className="Button" variant="success">
+								<Button className="Button" variant="outline-success">
 									Ver más
 								</Button>{" "}
 							</div>
@@ -153,7 +153,7 @@ export const Home = () => {
 							<div className="atras">
 								<h4>Titulo</h4>
 								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-								<Button className="Button" variant="success">
+								<Button className="Button" variant="outline-success">
 									Ver más
 								</Button>{" "}
 							</div>
