@@ -1,7 +1,5 @@
 import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
-import { Context } from "../store/appContext";
-import "../../styles/disable_scroll.scss";
 import { Container, Row, Col, Card, Media, Button } from "react-bootstrap";
 import "../../styles/info_category.scss";
 
