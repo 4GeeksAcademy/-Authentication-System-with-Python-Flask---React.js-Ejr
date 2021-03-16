@@ -1,21 +1,34 @@
-import React from "react";
-
+import React, { useContext, useEffect, useMemo } from "react";
+import { useParams } from "react-router-dom";
 import { Jumbotron } from "../component/jumbotron";
 import { Card } from "../component/Card";
-
+import { Context } from "../store/appContext";
 import "../../styles/home.scss";
 
-let carouselList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12];
-//create your first component
 export function ViewGeneral() {
+	const { type } = useParams();
+	const storeContext = useContext(Context);
+	const {
+		store: { pymes }
+	} = storeContext;
+	useEffect(() => {
+		storeContext.actions.loadPymeData();
+	}, []);
+	const data = useMemo(
+		() => {
+			return pymes.filter(current => current.tipo === type);
+		},
+		[type, pymes]
+	);
+
 	return (
 		<div className="text-center container-fluid">
-			<Jumbotron />
+			<Jumbotron type={type} />
 			<div className="row px-1 my-5">
-				{carouselList.map((value, index) => {
+				{data.map((value, index) => {
 					return (
 						<div className="col-sm-12 col-md-4 col-lg-3 my-2" key={index}>
-							<Card />
+							<Card item={value} type={type} />
 						</div>
 					);
 				})}

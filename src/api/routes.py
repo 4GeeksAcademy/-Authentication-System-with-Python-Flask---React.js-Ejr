@@ -6,9 +6,12 @@ from api.models import db, User, Pymes, Mi_pasaporte
 from api.utils import generate_sitemap, APIException
 import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
+from flask_cors import CORS, cross_origin
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
 
 api = Blueprint('api', __name__)
+
+CORS(api) # This will enable CORS for all routes
 
 #bloque de GET's
 @api.route('/users', methods=['GET'])
@@ -24,7 +27,7 @@ def get_user(user_id):
         raise APIException('este usuario no existe en la base de datos', status_code=404)
     userjson = user.serialize()
     return jsonify(userjson), 200
-
+#------------------------------------------------------------------------------------------------
 @api.route('/pymes', methods=['GET'])
 def get_pymes():
     pymes = Pymes.query.all()
@@ -38,7 +41,7 @@ def get_pymes_id(pymes_id):
         raise APIException('El pymes no existe', status_code=404)
     pymesjson = pymes.serialize()
     return jsonify(pymesjson), 200
-
+#------------------------------------------------------------------------------------------------
 @api.route('/mi_pasaporte', methods=['GET'])
 def get_todos_los_elementos():
     all_elements = Mi_pasaporte.query.all()

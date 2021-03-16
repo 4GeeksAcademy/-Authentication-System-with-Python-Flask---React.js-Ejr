@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 const Playa = () => {
 	return (
@@ -30,8 +31,12 @@ const Montana = () => {
 	);
 };
 
-export const Jumbotron = () => (
+export const Jumbotron = ({ type }) => (
 	<div id="select1" className="jumbotron text-left shadow mt-5">
-		{true ? <Playa /> : <Montana />}
+		{type === "playa" ? <Playa /> : <Montana />}
 	</div>
 );
+
+Jumbotron.propTypes = {
+	type: PropTypes.string
+};

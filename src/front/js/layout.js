@@ -21,33 +21,44 @@ const Layout = () => {
 	// you can set the basename on the .env file located at the root of this project, E.g: BASENAME=/react-hello-webapp/
 	const basename = process.env.BASENAME || "";
 	return (
-		<BrowserRouter basename={basename}>
-			<Barra />
-			<Switch>
-				<Route exact path="/">
-					<Home />
-				</Route>
-				<Route exact path="/viewGeneral">
-					<ViewGeneral />
-				</Route>
-				<Route exact path="/viewPyme">
-					<PymeView />
-				</Route>
-				<Route exact path="/register">
-					<Register />
-				</Route>
-				<Route exact path="/login">
-					<Login />
-				</Route>
-				<Route exact path="/viewgeneral/:theid">
-					<ViewGeneral />
-				</Route>
-				<Route>
-					<h1>Not found!</h1>
-				</Route>
-			</Switch>
-			<Footer />
-		</BrowserRouter>
+		<div className="d-flex flex-column h-100">
+			<BrowserRouter basename={basename}>
+				<Barra />
+				<Switch>
+					<Route exact path="/">
+						<Home />
+					</Route>
+					<Route exact path="/viewGeneral/:type">
+						<ViewGeneral />
+					</Route>
+					<Route exact path="/viewPyme/:id">
+						<PymeView />
+					</Route>
+					<div
+						style={{
+							backgroundImage:
+								"url('https://wallpapersplanet.net/sites/default/files/costa-rica-wallpapers-36777-877629.png')",
+							height: "100%",
+							opacity: "0.7"
+						}}>
+						<Route exact path="/login">
+							<Login />
+						</Route>
+						<Route exact path="/register">
+							<Register />
+						</Route>
+						<Route exact path="/recuperar">
+							<Recuperar />
+						</Route>
+						<Route exact path="/newPassword">
+							<NewPassword />
+						</Route>
+					</div>
+				</Switch>
+
+				<Footer />
+			</BrowserRouter>
+		</div>
 	);
 };
 
