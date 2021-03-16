@@ -142,7 +142,7 @@ export const Base_Categories = () => {
 				<div className="mt-1 mb-1 d-flex justify-content-start" id="padre">
 					<Image
 						className="contentimg col-12 col-md-8"
-						src="https://www.wallpaperup.com/uploads/wallpapers/2015/06/02/708845/5064001e98ce2a2cac2144f90644d0c9.jpg"
+						src="https://okdiario.com/img/2016/05/21/recetas-cocteles-fruta-sin-alcohol.jpg"
 						fluid
 					/>
 					<div className="col-12 col-md-6" id="two">
