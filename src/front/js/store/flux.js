@@ -15,16 +15,40 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			],
 			providers: null,
+			datosUpdate: null,
 			category: null,
 			products: [
 				{
-					nombre: "Vino",
-					marca: "Clos",
-					presentacion: "1 Litros",
-					impuesto: "13%",
-					codigo: "12413525245",
-					codigoCabys: "j83r932jd",
-					proveedor: "DIstribuidora de vinos"
+					id_Product: "1",
+					name_Product: "Vino tinto",
+					id_Category: "Bebida",
+					id_Provider: "1A",
+					provider: "Mucho vino tinto",
+					cantidad: "3"
+				},
+				{
+					id_Product: "2",
+					name_Product: "Vino blanco",
+					id_Category: "Bebida",
+					id_Provider: "1A",
+					provider: "Mucho vino tinto",
+					cantidad: "9"
+				},
+				{
+					id_Product: "3",
+					name_Product: "Vino tinto suave",
+					id_Category: "Bebida",
+					id_Provider: "1B",
+					provider: "Distribuidora de vinos",
+					cantidad: "20"
+				},
+				{
+					id_Product: "4",
+					name_Product: "Vino tinto amargo",
+					id_Category: "Bebida",
+					id_Provider: "1B",
+					provider: "Distribuidora de vinos",
+					cantidad: "14"
 				}
 			]
 		},
@@ -60,6 +84,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 					.then(response => response.json())
 					.then(response => setStore({ providers: response }));
 			},
+			updateProvider: data => {
+				setStore({ datosUpdate: data });
+			},
 			loadCategory: () => {
 				fetch("https://3001-plum-catshark-11aarra7.ws-us03.gitpod.io/api/category")
 					.then(response => response.json())
@@ -81,7 +108,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					.catch(error => {
 						console.error("Error:", error);
 					});
-			},
+            },
 			insertData: data => {
 				console.log(data);
 				fetch(
@@ -98,11 +125,21 @@ const getState = ({ getStore, getActions, setStore }) => {
 					.then(response => response.json())
 					.then(data => {
 						console.log("Success:", data);
-						setStore({ providers: data });
+						setStore({ providers: getStore().providers, data });
+					})
+					.then(() => {
+						getActions().loadProviders();
 					})
 					.catch(error => {
 						console.error("Error:", error);
 					});
+			},
+			//Sección de funciones para página de reportes
+			// Filtra productos por proveedor para reporte
+			filterByProvider: provider_id => {
+				const filterProducts = getStore().products.filter(item => {
+					return item.id_Provider === provider_id;
+				});
 			}
 		}
 	};

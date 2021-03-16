@@ -119,7 +119,6 @@ class Product(db.Model):
             'id_Provider':self.id_Provider,
             'active_Product':self.active_Product,
             "properties": list(map(lambda det_properties: det_properties.serialize(),self.properties))
-        
             }
 class Product_Details(db.Model):
     id_Product_Details = db.Column(db.Integer, primary_key=True)

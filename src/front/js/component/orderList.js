@@ -5,7 +5,7 @@ export const OrderList = () => {
 	return (
 		<div>
 			<Accordion.Toggle as={Card.Header} eventKey="1">
-				<strong>Ver pedido: [Nombre de proveedor]</strong>
+				<strong>Ver pedido</strong>
 			</Accordion.Toggle>
 			<Accordion.Collapse eventKey="1">
 				<Card.Body>
