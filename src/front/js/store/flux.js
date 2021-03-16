@@ -15,9 +15,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			],
 			providers: null,
-<<<<<<< HEAD
-			category: null
-=======
+			category: null,
 			products: [
 				{
 					nombre: "Vino",
@@ -29,7 +27,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 					proveedor: "DIstribuidora de vinos"
 				}
 			]
->>>>>>> 8b2d8bb5e86b268be6c4f89a909171e686e61cb3
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
