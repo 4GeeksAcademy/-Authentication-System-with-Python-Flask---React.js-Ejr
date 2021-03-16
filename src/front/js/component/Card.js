@@ -2,12 +2,10 @@ import React from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 
-
 const PlayasCard = ({ item }) => {
 	return (
-
 		<>
-			<img style={{ maxHeight: '220px' }} className="card-img-top" src={item.imagen} alt={item.categoria} />
+			<img style={{ maxHeight: "220px" }} className="card-img-top" src={item.imagen} alt={item.categoria} />
 			<h3 className="card-title">{item.name}</h3>
 		</>
 	);
@@ -29,11 +27,9 @@ export const Card = ({ type, item }) => {
 	);
 };
 
-
 Card.propTypes = {
 	type: PropTypes.string,
 	item: PropTypes.object
-
 };
 
 PlayasCard.propTypes = {

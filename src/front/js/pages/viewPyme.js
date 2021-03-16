@@ -9,7 +9,7 @@ import Comment from "../component/comment";
 
 const PymeProfile = ({ entity }) => {
 	return (
-        <>
+		<>
 			<div>
 				<img
 					className="card-img-top rounded-right shadow mt-3"
@@ -36,8 +36,8 @@ const PymeProfile = ({ entity }) => {
 					<div className="col-sm-12 col-md-8">
 						<p>{entity.descripcion}</p>
 					</div>
-					<div className="row"/>
-						<Mapa />
+					<div className="row" />
+					<Mapa />
 					<div className="col-sm-12 col-md-4">
 						<img
 							className="card-img-top"
@@ -51,7 +51,7 @@ const PymeProfile = ({ entity }) => {
 					<p>{entity.info_adicional}</p>
 				</div>
 				<div className="row mt-3 mb-3" style={{ paddingLeft: "13px" }}>
-					<h3>Contáctenos:</h3>
+					<h3>Contacto:</h3>
 				</div>
 				<div className="pl-3">
 					<div className="row">

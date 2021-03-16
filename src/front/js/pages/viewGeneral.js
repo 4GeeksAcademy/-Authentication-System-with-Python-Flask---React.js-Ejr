@@ -5,7 +5,6 @@ import { Card } from "../component/Card";
 import { Context } from "../store/appContext";
 import "../../styles/home.scss";
 
-
 export function ViewGeneral() {
 	const { type } = useParams();
 	const storeContext = useContext(Context);
