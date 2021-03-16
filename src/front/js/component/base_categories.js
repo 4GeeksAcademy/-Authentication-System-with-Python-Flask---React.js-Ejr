@@ -3,7 +3,10 @@ import React, { useContext } from "react";
 import { Container, Row, Image, Card, Button } from "react-bootstrap";
 import "../../styles/base_category.scss";
 import tomatelo from "../../img/logo/tomatelo2.png";
-
+import not_alcohol from "../../img/categories_jpg/not_alcohol.jpg";
+import ron_alcohol from "../../img/categories_jpg/ron.jpg";
+import gin_alcohol from "../../img/categories_jpg/gin.jpg";
+import whisky_alcohol from "../../img/categories_jpg/whisky.jpg";
 export const Base_Categories = () => {
 	return (
 		<Container className="mt-2 mb-2">
@@ -15,11 +18,7 @@ export const Base_Categories = () => {
 					</p>
 				</article>
 				<div className="mt-1 mb-1 d-flex justify-content-end" id="padre">
-					<Image
-						className="contentimg col-12 col-md-8"
-						src="https://www.wallpaperup.com/uploads/wallpapers/2015/06/02/708845/5064001e98ce2a2cac2144f90644d0c9.jpg"
-						fluid
-					/>
+					<Image className="contentimg col-12 col-md-8" src={not_alcohol} fluid />
 					<div className="col-12 col-md-6" id="uno">
 						<Card className="Card text-light p-3">
 							<blockquote className="blockquote mb-0 card-body">
@@ -39,12 +38,9 @@ export const Base_Categories = () => {
 						</Card>
 					</div>
 				</div>
+				{/* parte de ron */}
 				<div className="mt-1 mb-1 d-flex justify-content-start" id="padre">
-					<Image
-						className="contentimg col-12 col-md-8"
-						src="https://www.wallpaperup.com/uploads/wallpapers/2015/06/02/708845/5064001e98ce2a2cac2144f90644d0c9.jpg"
-						fluid
-					/>
+					<Image className="contentimg col-12 col-md-8" src={ron_alcohol} fluid />
 					<div className="col-12 col-md-6" id="two">
 						<Card className="Card text-light p-3">
 							<blockquote className="blockquote mb-0 card-body">
@@ -64,12 +60,9 @@ export const Base_Categories = () => {
 						</Card>
 					</div>
 				</div>
+				{/* gin parte */}
 				<div className="mt-1 mb-1 d-flex justify-content-end" id="padre">
-					<Image
-						className="contentimg col-12 col-md-8"
-						src="https://www.wallpaperup.com/uploads/wallpapers/2015/06/02/708845/5064001e98ce2a2cac2144f90644d0c9.jpg"
-						fluid
-					/>
+					<Image className="contentimg col-12 col-md-8" src={gin_alcohol} fluid />
 					<div className="col-12 col-md-6" id="uno">
 						<Card className="Card text-light p-3">
 							<blockquote className="blockquote mb-0 card-body">
@@ -90,11 +83,7 @@ export const Base_Categories = () => {
 					</div>
 				</div>
 				<div className="mt-1 mb-1 d-flex justify-content-start" id="padre">
-					<Image
-						className="contentimg col-12 col-md-8"
-						src="https://www.wallpaperup.com/uploads/wallpapers/2015/06/02/708845/5064001e98ce2a2cac2144f90644d0c9.jpg"
-						fluid
-					/>
+					<Image className="contentimg col-12 col-md-8" src={whisky_alcohol} fluid />
 					<div className="col-12 col-md-6" id="two">
 						<Card className="Card text-light p-3">
 							<blockquote className="blockquote mb-0 card-body">
@@ -142,7 +131,7 @@ export const Base_Categories = () => {
 				<div className="mt-1 mb-1 d-flex justify-content-start" id="padre">
 					<Image
 						className="contentimg col-12 col-md-8"
-						src="https://okdiario.com/img/2016/05/21/recetas-cocteles-fruta-sin-alcohol.jpg"
+						src="https://www.wallpaperup.com/uploads/wallpapers/2015/06/02/708845/5064001e98ce2a2cac2144f90644d0c9.jpg"
 						fluid
 					/>
 					<div className="col-12 col-md-6" id="two">
