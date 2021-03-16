@@ -1,5 +1,5 @@
 
-.cardBody{   
+.orderCardBody{   
     border: solid 3px lightgray;
     display: flex;
     flex-direction: row;
@@ -12,7 +12,7 @@
     margin-top: 10px;
     margin-bottom: 10px;
 }
-.container{ 
+.containerOrder{ 
     display: flex;
     flex-wrap: wrap;
     width: 250px;
@@ -44,7 +44,7 @@ hr.line{
     width: fit-content;
     height: 175px;
 }
-h4{ 
+.productsInPlace{ 
     display: flex;
     justify-self: center;
     font-size: 30px;
