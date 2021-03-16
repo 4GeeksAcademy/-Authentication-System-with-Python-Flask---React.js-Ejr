@@ -16,6 +16,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			],
 			providers: null,
 			datosUpdate: null,
+			category: null,
 			products: [
 				{
 					id_Product: "1",
@@ -79,7 +80,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({ demo: demo });
 			},
 			loadProviders: () => {
-				fetch("https://3001-plum-catshark-11aarra7.ws-us03.gitpod.io/api/provider")
+				fetch("https://3001-teal-tortoise-5hgr6djn.ws-us03.gitpod.io/api/provider")
 					.then(response => response.json())
 					.then(response => setStore({ providers: response }));
 			},
@@ -87,12 +88,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({ datosUpdate: data });
 			},
 			loadCategory: () => {
-				fetch("https://3001-plum-catshark-11aarra7.ws-us03.gitpod.io/api/category")
+				fetch("https://3001-teal-tortoise-5hgr6djn.ws-us03.gitpod.io/api/category")
 					.then(response => response.json())
 					.then(response => setStore({ category: response }));
 			},
 			insertCategory: data => {
-				fetch("https://3001-plum-catshark-11aarra7.ws-us03.gitpod.io/api/category", {
+				fetch("https://3001-teal-tortoise-5hgr6djn.ws-us03.gitpod.io/api/category", {
 					method: "POST",
 					headers: {
 						"Content-Type": "application/json"
@@ -102,7 +103,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					.then(response => response.json())
 					.then(data => {
 						console.log("Success:", data);
-						setStore({ providers: data });
+						setStore({ category: data });
 					})
 					.catch(error => {
 						console.error("Error:", error);
@@ -111,7 +112,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			insertData: data => {
 				console.log(data);
 				fetch(
-					"https://3001-plum-catshark-11aarra7.ws-us03.gitpod.io/api/provider",
+					"https://3001-teal-tortoise-5hgr6djn.ws-us03.gitpod.io/api/provider",
 
 					{
 						method: "POST",
@@ -124,10 +125,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					.then(response => response.json())
 					.then(data => {
 						console.log("Success:", data);
-						setStore({ providers: getStore().providers, data });
-					})
-					.then(() => {
-						getActions().loadProviders();
+						setStore({ providers: data });
 					})
 					.catch(error => {
 						console.error("Error:", error);
