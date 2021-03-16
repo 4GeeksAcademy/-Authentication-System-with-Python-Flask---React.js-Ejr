@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 
 import { Context } from "../store/appContext";
-import { FormInsertCategory } from "../component/formInsertCategory";
+import { FormCategory } from "../component/formCategory";
 import "../../styles/provider.scss";
 
 export const Category = () => {
@@ -10,7 +10,7 @@ export const Category = () => {
 
 	return (
 		<div className="container">
-			<FormInsertCategory />
+			<FormCategory />
 		</div>
 	);
 };
