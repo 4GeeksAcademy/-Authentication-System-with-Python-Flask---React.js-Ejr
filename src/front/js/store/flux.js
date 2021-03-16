@@ -8,10 +8,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 			classification: [],
 			jwtoken: null,
 			sessionUID: null,
-            sessionUser: null,
-            random: [],
-            ingredient: [],
-            modifier: []
+			sessionUser: null,
+			random: [],
+			ingredient: [],
+			modifier: []
 		},
 		actions: {
 			////////////////////BEGIN TESTING PURPOSES @JVM && @ANMORA//////////////////////
@@ -57,16 +57,16 @@ const getState = ({ getStore, getActions, setStore }) => {
 						}
 					});
 			},
-            
+
 			signout: () => {
 				setStore({ jwtoken: null, sessionUID: null, sessionUser: null });
-            },
-            
-            RandCocktail: async () => {
-                const res = await fetch("https://www.thecocktaildb.com/api/json/v2/9973533/randomselection.php");
-                cocktail = await res.json();
-                setStore({random: res.drink});
-            },
+			},
+
+			RandCocktail: async () => {
+				const res = await fetch("https://www.thecocktaildb.com/api/json/v2/9973533/randomselection.php");
+				cocktail = await res.json();
+				setStore({ random: res.drink });
+			},
 			//Building Favorites f(x)s
 			addFavorites: async (drink_name, drink_img) => {
 				const store = getStore();
