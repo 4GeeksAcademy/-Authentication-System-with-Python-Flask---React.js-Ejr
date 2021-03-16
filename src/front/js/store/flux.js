@@ -15,6 +15,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			],
 			providers: null,
+			datosUpdate: null,
 			products: [
 				{
 					nombre: "Vino",
@@ -59,6 +60,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 					.then(response => response.json())
 					.then(response => setStore({ providers: response }));
 			},
+			updateProvider: data => {
+				setStore({ datosUpdate: data });
+			},
 			insertData: data => {
 				console.log(data);
 				fetch(
@@ -75,7 +79,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 					.then(response => response.json())
 					.then(data => {
 						console.log("Success:", data);
-						setStore({ providers: data });
+						setStore({ providers: getStore().providers, data });
+					})
+					.then(() => {
+						getActions().loadProviders();
 					})
 					.catch(error => {
 						console.error("Error:", error);

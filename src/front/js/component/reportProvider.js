@@ -19,7 +19,7 @@ import {
 import Link from "react-router-dom";
 import { OrderCard } from "./orderCard";
 import { OrderList } from "./orderList";
-import "../../styles/reportProvider.scss";
+//import "../../styles/reportProvider.scss";
 
 export const ProviderReport = () => {
 	return (
