@@ -1,7 +1,6 @@
 import React from "react";
-import { ProviderReport } from "../component/reportProvider";
+import { ProductsByProviderReport } from "../component/productsByProviderReport";
 import { Card, Accordion, Button, Badge, Link, Col, Row } from "react-bootstrap";
-import "../../styles/reportProvider.scss";
 
 export const Reports = () => {
 	return (
@@ -10,10 +9,7 @@ export const Reports = () => {
 				<h1>REPORTES</h1>
 			</Badge>
 			<Col>
-				<ProviderReport />
-				<ProviderReport />
-				<ProviderReport />
-				<ProviderReport />
+				<ProductsByProviderReport />
 			</Col>
 		</Col>
 	);
