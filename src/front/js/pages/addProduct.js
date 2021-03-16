@@ -1,6 +1,6 @@
 import React from "react";
 import { Jumbotron, Button, Card, Image, Col, Row, Form, Link } from "react-bootstrap";
-//import "../../styles/addProduct.scss";
+import "../../styles/addProduct.scss";
 
 export const AddProduct = () => {
 	return (
