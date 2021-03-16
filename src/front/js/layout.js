@@ -33,8 +33,11 @@ const Layout = () => {
 				<Route exact path="/viewPyme">
 					<PymeView />
 				</Route>
-				<Route exact path="/mapa">
-					<Mapa />
+				<Route exact path="/register">
+					<Register />
+				</Route>
+				<Route exact path="/login">
+					<Login />
 				</Route>
 				<Route exact path="/viewgeneral/:theid">
 					<ViewGeneral />

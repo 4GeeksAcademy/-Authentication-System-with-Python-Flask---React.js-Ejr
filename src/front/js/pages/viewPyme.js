@@ -12,7 +12,7 @@ import Comment from "../component/comment";
 //const PymeView = ({ pymes })
 const PymeProfile = () => {
 	return (
-        <>
+		<>
 			<div>
 				<img
 					className="card-img-top rounded-right shadow mt-3"
@@ -54,8 +54,8 @@ const PymeProfile = () => {
 							edades y las habilidades.
 						</p>
 					</div>
-					<div className="row"/>
-						<Mapa />
+					<div className="row" />
+					<Mapa />
 					<div className="col-sm-12 col-md-4">
 						<img
 							className="card-img-top"
