@@ -3,7 +3,7 @@ import { Context } from "../store/appContext";
 import { serviceIt } from "../../img/image.js";
 import "../../styles/home.scss";
 import "../../styles/index.scss";
-import { Row, Col, Container, Card, Button, Accordion } from "react-bootstrap";
+import { Row, Col, Container, Jumbotron, Button } from "react-bootstrap";
 
 export const Servicioindividual = () => {
 	const { store, actions } = useContext(Context);
@@ -27,9 +27,14 @@ export const Servicioindividual = () => {
 						alt="service image"
 					/>
 				</Col>
-
 				<Col>
-					<div className="transBox" />
+					<Jumbotron className="whiteBox">
+						<h1>Crearé un sitio web</h1>
+						<p>$300.000/proyecto</p>
+						<p>
+							<Button variant="primary">Learn more</Button>
+						</p>
+					</Jumbotron>
 				</Col>
 			</Row>
 			<div className="transBox" />
