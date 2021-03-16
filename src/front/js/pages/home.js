@@ -57,7 +57,19 @@ export const Home = () => {
 					{/* 2da Fila */}
 					{/* 2da Fila */}
 					{/* 2da Fila */}
-					<div className="mb-1 col-md-8">
+					<div className="mb-1 col-md-4">
+						<div className="principal">
+							<div className="frente" />
+							<div className="atras">
+								<h4>Titulo</h4>
+								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+								<Button className="Button" variant="outline-success">
+									Ver más
+								</Button>{" "}
+							</div>
+						</div>
+					</div>
+					<div className="mb-1 col-md-4">
 						<div className="principal">
 							<div className="frente" />
 							<div className="atras text-light">
