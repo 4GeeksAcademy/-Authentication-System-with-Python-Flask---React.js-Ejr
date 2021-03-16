@@ -5,11 +5,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 		store: {
 			message: null,
 			favorites: [],
-			classification: [],
+			basecocktail: [],
 			jwtoken: null,
 			sessionUID: null,
 			sessionUser: null,
-			random: [],
+			randomcocktail: [],
 			ingredient: [],
 			modifier: []
 		},
@@ -62,10 +62,18 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({ jwtoken: null, sessionUID: null, sessionUser: null });
 			},
 
-			RandCocktail: async () => {
+			randCocktail: async () => {
+				//It fetchs cocktails via random
 				const res = await fetch("https://www.thecocktaildb.com/api/json/v2/9973533/randomselection.php");
 				cocktail = await res.json();
-				setStore({ random: res.drink });
+				setStore({ randomcocktail: cocktail.drinks });
+			},
+
+			info_baseCocktail: async idDrink => {
+				//It gets base cocktails via filter
+				const res = await fetch(`https://www.thecocktaildb.com/api/json/v2/9973533/search.php?s=${idDrink}`);
+				const cocktail = await res.json();
+				setStore({ basecocktail: cocktail.drinks });
 			},
 			//Building Favorites f(x)s
 			addFavorites: async (drink_name, drink_img) => {

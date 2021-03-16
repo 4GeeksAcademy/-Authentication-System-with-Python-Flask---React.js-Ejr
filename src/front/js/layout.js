@@ -18,9 +18,17 @@ import { Base_Categories } from "./component/base_categories";
 import { Footer } from "./component/footer";
 
 // Segunda Vista
-import { Info_Category } from "./component/info_category";
+import { NavFav } from "./component/navfav";
+import { Info_WithoutBase } from "./component/info_withoutBase";
+import { Info_Rum } from "./component/info_rum";
+import { Info_Gin } from "./component/info_gin";
+import { Info_Vodka } from "./component/info_vodka";
+import { Info_Tequila } from "./component/info_tequila";
+import { Info_Whisky } from "./component/info_whisky";
+
 // comentarios
 // Tercera Vista
+// utiliza NavFav
 import { Cocktails } from "./component/Cocktails";
 
 //create your first component
@@ -48,13 +56,38 @@ const Layout = () => {
 							<Base_Categories />
 							<Footer />
 						</Route>
-						<Route exact path="/base">
-							<Navbar />
-							<Info_Category />
+						<Route exact path="/info_withoutBase">
+							<NavFav />
+							<Info_WithoutBase />
+							<Footer />
+						</Route>
+						<Route exact path="/info_Rum">
+							<NavFav />
+							<Info_Rum />
+							<Footer />
+						</Route>
+						<Route exact path="/info_Gin">
+							<NavFav />
+							<Info_Gin />
+							<Footer />
+						</Route>
+						<Route exact path="/info_Vodka">
+							<NavFav />
+							<Info_Vodka />
+							<Footer />
+						</Route>
+						<Route exact path="/info_Tequila">
+							<NavFav />
+							<Info_Tequila />
+							<Footer />
+						</Route>
+						<Route exact path="/info_Whisky">
+							<NavFav />
+							<Info_Whisky />
 							<Footer />
 						</Route>
 						<Route exact path="/cocktails">
-							<Navbar />
+							<NavFav />
 							<Cocktails />
 							<Footer />
 						</Route>

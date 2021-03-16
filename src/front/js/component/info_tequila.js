@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Container, Row, Col, Card, Media, Button } from "react-bootstrap";
 import "../../styles/info_category.scss";
 
-export const Info_Rum = () => {
+export const Info_Tequila = () => {
 	// const { store, actions } = useContext(Context);
 
 	return (
@@ -22,7 +22,7 @@ export const Info_Rum = () => {
 					<Col className="text col-auto col-md-8">
 						<Card.Body className="text-light text-center">
 							{/* <Card.Title>{arrayinfocate.name}</Card.Title> */}
-							<Card.Title>Cocktail</Card.Title>
+							<Card.Title>Cocktails Tequila</Card.Title>
 							<Card.Text>
 								{/* {arrayinfocate.climate}
                                     <br />

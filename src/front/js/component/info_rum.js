@@ -22,7 +22,7 @@ export const Info_Rum = () => {
 					<Col className="text col-auto col-md-8">
 						<Card.Body className="text-light text-center">
 							{/* <Card.Title>{arrayinfocate.name}</Card.Title> */}
-							<Card.Title>Cocktail</Card.Title>
+							<Card.Title>Cocktail Rum</Card.Title>
 							<Card.Text>
 								{/* {arrayinfocate.climate}
                                     <br />
