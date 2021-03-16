@@ -2,7 +2,7 @@ import React from "react";
 import { Container, Row, Image, Card } from "react-bootstrap";
 export const Content = () => {
 	return (
-		<Container className="mt-2 mb-2">
+		<Container className="mt-2 mb-2" id="AboutContent">
 			<Row>
 				<div className="d-flex justify-content-end" id="padre">
 					<Image
