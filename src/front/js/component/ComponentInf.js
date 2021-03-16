@@ -1,93 +1,88 @@
 import React, { Component } from "react";
-import { Media } from "react-bootstrap";
+import { Media, Jumbotron, Container } from "react-bootstrap";
+import titulo from "../../img/titulo.png";
+import jumbo from "../../img/jumbo.png";
+import uno from "../../img/uno.png";
+import dos from "../../img/dos.png";
+import tres from "../../img/tres.png";
+import cuatro from "../../img/cuatro.png";
+import about from "../../img/about.png";
+
 export const ComponenteInf = () => {
 	return (
 		<div style={{ marginTop: 100 }}>
-			<ul className="list-unstyled">
-				<Media as="li" className="mt-2">
-					<img
-						width={150}
-						height={150}
-						style={{ marginTop: 25 }}
-						className="mr-3 rounded-circle"
-						src="https://revistasumma.com/wp-content/uploads/2017/01/costa-rica.jpg"
-						alt="Generic placeholder"
-					/>
-					<Media.Body className="mt-2">
-						<h5>Informacion General</h5>
-						<i>
-							El Colón costarricense, llamado así en honor al Almirante Cristóbal Colón, es la moneda
-							oficial de la República de Costa Rica en América Central. Su símbolo es una letra C
-							atravesada por dos barras inclinadas verticales ₡. El clima de Costa Rica es casi ideal la
-							mayor parte del año, oscilando de lo tropical en la costa a lo templado en las tierras
-							altas. El promedio anual de temperaturas va de los 31.7° C (89° F) en la costa hasta los
-							16.7° C (62° F) tierra adentro. Las noches en San José son frescas y libres de humedad. Por
-							tierra, limita hacia la zona norte con la república de Nicaragua y en la parte sur, limita
-							con la república de Panamá. Actualmente, esta es una posición muy codiciada para el comercio
-							y el turismo.
-						</i>
-					</Media.Body>
-				</Media>
-				<Media style={{ marginTop: 15 }}>
-					<Media.Body className="mt-4">
-						<h5>Comidas Tipicas</h5>
-						<i>
-							Gallo pinto. Conocido como el plato nacional de Costa Rica, el gallo pinto es esencialmente
-							frijoles cocidos y arroz, mezclados juntos. ... Casado. El Casado, es uno de los principales
-							platos tradicionales de Costa Rica, no es un plato singular, sino un plato compuesto por
-							varios alimentos. ... Olla de Carne. Tamales, Casado.
-						</i>
-					</Media.Body>
-					<img
-						width={150}
-						height={150}
-						className="ml-3 rounded-circle"
-						src="https://www.196flavors.com/wp-content/uploads/2019/01/olla-de-carne-1-FP.jpg"
-						alt="Generic placeholder"
-					/>
-				</Media>
-				<Media as="li" style={{ marginTop: 15 }}>
-					<img
-						width={150}
-						height={150}
-						className="mr-3 rounded-circle"
-						src="https://www.surfertoday.com/images/stories/costaricansurfer.jpg"
-						alt="Generic placeholder"
-					/>
-					<Media.Body style={{ marginTop: 35 }}>
-						<h5>Actividades al Aire libre</h5>
-						<i>
-							Tours de Canopy, Surf y Rafting en aguas claras,Pesca Deportiva,Volcanes,Unas vacaciones en
-							Costa Rica no están completas hasta que usted visite uno de sus muchos bosques tropicales.
-						</i>
-					</Media.Body>
-				</Media>
-				<Media style={{ marginTop: 35 }}>
-					<Media.Body className="mt-3">
-						<h5>Actividades Culturales</h5>
-						<i>
-							Una de las formas más seguras de experimentar la cultura de Costa Rica es sin duda aprender
-							el idioma, tambien puedes visitar nuestros museos por ejemplo el museo de los niños, el
-							museo del Delito. Algunos de los museos más populares son el Museo de Arte Nacional, el
-							Museo del Oro y el Museo de Jade.
-						</i>
-					</Media.Body>
-					<img
-						width={150}
-						height={150}
-						className="ml-3 rounded-circle"
-						src="https://upload.wikimedia.org/wikipedia/commons/6/6c/Fachada_del_Museo_Nacional_de_Costa_Rica.JPG"
-						alt="Generic placeholder"
-					/>
-				</Media>
-			</ul>
-			<div className="embed-responsive embed-responsive-16by9 mt-5 mb-5">
-				<iframe
-					className="embed-responsive-item"
-					src="https://www.youtube.com/embed/Kn6qgfTmsyA?rel=0"
-					allowFullScreen
+			<img src={titulo} height="300px" />
+			<Jumbotron fluid>
+				<Container>
+					<img src={jumbo} height="300px" width="1080px" />
+					<p>This is a modified jumbotron that occupies the entire horizontal space of its parent.</p>
+				</Container>
+			</Jumbotron>
+			<Media>
+				<img src={uno} height="300px" width="300px" className="mr-3 rounded-circle" alt="Generic placeholder" />
+				<Media.Body>
+					<h2>
+						<span>TIQUICIA</span>
+					</h2>
+					<p>
+						Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin
+						commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum
+						nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+					</p>
+				</Media.Body>
+			</Media>
+			<Media>
+				<Media.Body>
+					<h2>
+						<span>GASTRONOMÍA</span>
+					</h2>
+					<p>
+						Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin
+						commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum
+						nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+					</p>
+				</Media.Body>
+				<img src={dos} height="300px" width="300px" className="mr-3 rounded-circle" alt="Generic placeholder" />
+			</Media>
+			<Media>
+				<img
+					src={tres}
+					height="300px"
+					width="300px"
+					className="mr-3 rounded-circle"
+					alt="Generic placeholder"
 				/>
-			</div>
+				<Media.Body>
+					<h2>
+						<span>AVENTURAS</span>
+					</h2>
+					<p>
+						Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin
+						commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum
+						nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+					</p>
+				</Media.Body>
+			</Media>
+			<Media>
+				<Media.Body>
+					<h2>
+						<span>CULTURA</span>
+					</h2>
+					<p>
+						Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin
+						commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum
+						nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+					</p>
+				</Media.Body>
+				<img
+					src={cuatro}
+					height="300px"
+					width="300px"
+					className="mr-3 rounded-circle"
+					alt="Generic placeholder"
+				/>
+			</Media>
+			<img src={about} height="600px" />
 		</div>
 	);
 };

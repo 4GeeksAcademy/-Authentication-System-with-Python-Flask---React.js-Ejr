@@ -13,6 +13,15 @@ export function Barra() {
 			</Link>
 			<Navbar.Toggle />
 			<Navbar.Collapse className="justify-content-end">
+				<Button id="btn" style={{ marginRight: 20 }} variant="outline-success">
+					<Navbar.Text>
+						<Link to="/register">
+							<a style={{ color: "orange" }} href="#login">
+								Regístrate
+							</a>
+						</Link>
+					</Navbar.Text>
+				</Button>
 				<Button id="btn" variant="outline-success">
 					<Navbar.Text>
 						<Link to="/">
@@ -25,6 +34,15 @@ export function Barra() {
 						<Link to="/login">
 							<a style={{ color: "green" }} href="#login">
 								Log In
+							</a>
+						</Link>
+					</Navbar.Text>
+				</Button>
+				<Button id="btn" style={{ marginLeft: 20 }} variant="outline-success">
+					<Navbar.Text>
+						<Link to="/login">
+							<a style={{ color: "green" }} href="#login">
+								Logout
 							</a>
 						</Link>
 					</Navbar.Text>
