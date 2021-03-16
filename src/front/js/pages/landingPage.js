@@ -6,6 +6,7 @@ import { withRouter } from "react-router-dom";
 import { Container, Button, Form, FormControl, Row, Col } from "react-bootstrap";
 import { IconBox } from "../component/IconBox.jsx";
 import { CardBox } from "../component/cardBox.jsx";
+import { ServiceBox } from "../component/serviceBox.jsx";
 
 const LandingPage = () => {
 	return (
@@ -46,20 +47,27 @@ const LandingPage = () => {
 								</Button>
 							</Form>
 						</Col>
-						<Col md={6} sm={12} className="d-flex align-items-end align-items-sm-center ">
+						<Col md={6} sm={12} className="mt-5">
+							<Button variant="secondary" className="float-right">
+								Registrase
+							</Button>
+							<Button variant="outline-light" className="float-right" style={{ border: "none" }}>
+								Inicia Seción
+							</Button>
 							<img
 								src={man}
-								width="700px"
-								height="500px"
-								className="d-inline-block align-top mt-3 "
+								width="500px"
+								height="450px"
+								className="d-inline-block align-top mt-2 "
 								alt="freelancer"
 							/>
 						</Col>
 					</Row>
-					<div className="transBox" />
-
 					<IconBox />
 					<CardBox />
+					<ServiceBox />
+					<br />
+
 					<Button variant="primary">Primary</Button>
 					<Button variant="secondary">Secondary</Button>
 					<Button variant="success">Success</Button>
