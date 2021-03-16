@@ -1,13 +1,11 @@
 import React, { useContext, useEffect, useMemo } from "react";
 import { useParams } from "react-router-dom";
-
 import { Jumbotron } from "../component/jumbotron";
 import { Card } from "../component/Card";
 import { Context } from "../store/appContext";
-
 import "../../styles/home.scss";
 
-//create your first component
+
 export function ViewGeneral() {
 	const { type } = useParams();
 	const storeContext = useContext(Context);

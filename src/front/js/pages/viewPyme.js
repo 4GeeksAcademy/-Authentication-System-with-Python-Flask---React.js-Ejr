@@ -1,16 +1,15 @@
 import React, { useContext, useEffect } from "react";
 import { useParams } from "react-router-dom";
-//import React, { useContext, useEffect } from "react";
 import "../../styles/home.scss";
-//import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { Context } from "../store/appContext";
-//import { useParams } from "react-router-dom";
+import Mapa from "../component/mapa";
+import Comentarios from "../component/disqus";
 import Comment from "../component/comment";
 
 const PymeProfile = ({ entity }) => {
 	return (
-		<>
+        <>
 			<div>
 				<img
 					className="card-img-top rounded-right shadow mt-3"
@@ -37,6 +36,8 @@ const PymeProfile = ({ entity }) => {
 					<div className="col-sm-12 col-md-8">
 						<p>{entity.descripcion}</p>
 					</div>
+					<div className="row"/>
+						<Mapa />
 					<div className="col-sm-12 col-md-4">
 						<img
 							className="card-img-top"
@@ -100,6 +101,9 @@ const PymeProfile = ({ entity }) => {
 				</div>
 				<div className="embed-responsive embed-responsive-16by9 mb-5">
 					<iframe className="embed-responsive-item" src={entity.link_youtube} allowFullScreen />
+				</div>
+				<div>
+					<Comentarios />
 				</div>
 			</div>
 		</>
