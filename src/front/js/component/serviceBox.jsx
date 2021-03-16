@@ -11,7 +11,7 @@ export const ServiceBox = () => {
 				<br />
 				<Row>
 					<Col md={1}>
-						<i className="fas fa-dollar-sign icon" />
+						<i className="fas fa-wallet icon" />
 					</Col>
 					<Col md={11}>
 						<h4>Lo mejor para cada presupuesto</h4>

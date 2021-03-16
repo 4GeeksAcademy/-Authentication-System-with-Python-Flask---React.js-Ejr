@@ -47,10 +47,11 @@ const LandingPage = () => {
 							<Form inline>
 								<FormControl
 									type="text"
-									placeholder="Search"
+									placeholder="Buscar"
 									className="mr-sm-2 my-3 "
 									style={{ borderRadius: "1.75rem", width: "526px" }}
 								/>
+
 								<Button variant="outline-light" className="mr-3 mt-2 px-5" sm={12}>
 									Buscar una freelancer
 								</Button>
@@ -70,7 +71,7 @@ const LandingPage = () => {
 						</Col>
 					</Row>
 					<IconBox />
-					<CardBox />
+					<CardBox title="Categorias más buscadas" />
 					<ServiceBox />
 					<br />
 
