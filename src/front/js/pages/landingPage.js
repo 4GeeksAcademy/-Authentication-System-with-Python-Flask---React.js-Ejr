@@ -55,7 +55,7 @@ const LandingPage = () => {
 									Buscar una freelancer
 								</Button>
 								<Button variant="secondary" className="mt-2 px-5" sm={12}>
-									&nbsp;&nbsp;&nbsp;Soy un freelancer&nbsp;&nbsp;&nbsp;
+									&nbsp;&nbsp;&nbsp;&nbsp;Soy un freelancer&nbsp;&nbsp;&nbsp;
 								</Button>
 							</Form>
 						</Col>
