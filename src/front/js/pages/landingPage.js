@@ -8,6 +8,7 @@ import { IconBox } from "../component/IconBox.jsx";
 import { CardBox } from "../component/cardBox.jsx";
 import { ServiceBox } from "../component/serviceBox.jsx";
 import { Footer } from "../component/footer";
+import { Link } from "react-router-dom";
 
 const LandingPage = () => {
 	return (
@@ -30,10 +31,10 @@ const LandingPage = () => {
 						</Col>
 						<Col xs={8}>
 							<Button variant="secondary" className="float-right mt-5">
-								Registrase
+								Registrate
 							</Button>
 							<Button variant="outline-light" className="float-right mt-5" style={{ border: "none" }}>
-								Inicia Seción
+								Inicia Sesión
 							</Button>
 						</Col>
 					</Row>
@@ -51,10 +52,11 @@ const LandingPage = () => {
 									className="mr-sm-2 my-3 "
 									style={{ borderRadius: "1.75rem", width: "526px" }}
 								/>
-
-								<Button variant="outline-light" className="mr-3 mt-2 px-5" sm={12}>
-									Buscar una freelancer
-								</Button>
+								<Link to="/home">
+									<Button variant="outline-light" className="mr-3 mt-2 px-5" sm={12}>
+										Buscar un freelancer
+									</Button>
+								</Link>
 								<Button variant="secondary" className="mt-2 px-5" sm={12}>
 									&nbsp;&nbsp;&nbsp;Soy un freelancer&nbsp;&nbsp;&nbsp;
 								</Button>
