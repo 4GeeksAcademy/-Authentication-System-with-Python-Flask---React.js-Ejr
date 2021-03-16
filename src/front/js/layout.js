@@ -3,13 +3,14 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
 
 import { Home } from "./pages/home";
-import { Demo } from "./pages/demo";
-import { Single } from "./pages/single";
+import { ServicioCategory } from "./pages/servicio-category";
+import { Servicioindividual } from "./pages/servicio-Individual";
 import injectContext from "./store/appContext";
 
 import Navbar from "./component/navbar";
 import { Footer } from "./component/footer";
 import Landingpage from "./pages/landingpage";
+import { Registro } from "./pages/registro";
 
 //create your first component
 const Layout = () => {
@@ -29,11 +30,14 @@ const Layout = () => {
 						<Route exact path="/home">
 							<Home />
 						</Route>
-						<Route exact path="/demo">
-							<Demo />
+						<Route exact path="/category">
+							<ServicioCategory />
 						</Route>
-						<Route exact path="/single/:theid">
-							<Single />
+						<Route exact path="/category/:theid">
+							<Servicioindividual />
+						</Route>
+						<Route exact path="/registro">
+							<Registro />
 						</Route>
 						<Route>
 							<h1>Not found!</h1>
