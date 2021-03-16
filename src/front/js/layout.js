@@ -9,7 +9,7 @@ import injectContext from "./store/appContext";
 
 import Navbar from "./component/navbar";
 import { Footer } from "./component/footer";
-import Landingpage from "./pages/landingpage";
+import Landingpage from "./pages/landingPage";
 import { Registro } from "./pages/registro";
 
 //create your first component

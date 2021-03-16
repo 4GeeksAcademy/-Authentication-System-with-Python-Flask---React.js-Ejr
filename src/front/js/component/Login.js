@@ -39,8 +39,8 @@ export function LoginModal() {
 
 	return (
 		<>
-			<Button variant="primary" onClick={() => setModalShow(true)}>
-				Launch vertically centered modal
+			<Button variant="secondary" className="float-right mt-5" onClick={() => setModalShow(true)}>
+				Inicia Sesión
 			</Button>
 
 			<MyVerticallyCenteredModal show={modalShow} onHide={() => setModalShow(false)} />
