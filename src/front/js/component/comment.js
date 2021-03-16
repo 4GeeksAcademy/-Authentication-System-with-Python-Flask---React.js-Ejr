@@ -3,7 +3,7 @@ import Disqus from "disqus-react";
 
 export default class Comment extends Component {
 	render() {
-		const disqusShortname = "costaricapassport";
+		const disqusShortname = "puravidapassport";
 		const disqusConfig = {
 			url: "https://3000-aquamarine-cat-14f9pgld.ws-us03.gitpod.io/",
 			identifier: "article-id",

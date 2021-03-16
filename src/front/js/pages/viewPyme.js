@@ -5,7 +5,7 @@ import "../../styles/home.scss";
 //import PropTypes from "prop-types";
 //import { Context } from "../store/appContext";
 //import { useParams } from "react-router-dom";
-import Mapa from "../component/mapa";
+import MapContainer from "../component/mapa";
 import Comentarios from "../component/disqus";
 import Comment from "../component/comment";
 
@@ -54,15 +54,8 @@ const PymeProfile = () => {
 							edades y las habilidades.
 						</p>
 					</div>
-					<div className="row" />
-					<Mapa />
-					<div className="col-sm-12 col-md-4">
-						<img
-							className="card-img-top"
-							style={{ height: "230px", margin: "0 auto" }}
-							src="https://images.squarespace-cdn.com/content/v1/555cbc7ee4b059e095f39179/1488390070674-CXYQU17QO2DSEV4TJ5V5/ke17ZwdGBToddI8pDm48kMxP3zelORv554bfrCgYiuNZw-zPPgdn4jUwVcJE1ZvWQUxwkmyExglNqGp0IvTJZamWLI2zvYWH8K3-s_4yszcp2ryTI0HqTOaaUohrI8PIO3p9JfP_jmAUPHyNnkpZX7wqTYQ8n-Q3yghIWqr7I-w/map-la-fortuna-arenal-costa-rica.jpg"
-							alt="Card image cap"
-						/>
+					<div className="col-sm-12 col-md-4 col-lg-2">
+						<MapContainer />
 					</div>
 				</div>
 				<div className="row" style={{ paddingLeft: "14px" }}>

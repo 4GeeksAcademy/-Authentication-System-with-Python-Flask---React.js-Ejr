@@ -13,7 +13,7 @@ import { Comment } from "./component/comment";
 import { Jumbotron } from "./component/jumbotron";
 import { Barra } from "./component/barra";
 import { Footer } from "./component/footer";
-import Mapa from "./component/mapa";
+import MapContainer from "./component/mapa";
 
 //create your first component
 const Layout = () => {
