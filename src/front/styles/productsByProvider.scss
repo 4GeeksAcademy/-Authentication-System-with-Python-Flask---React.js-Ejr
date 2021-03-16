@@ -1,0 +1,21 @@
+.cards-container{ 
+    display: flex;
+}
+.first-accordion{ 
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 10px;
+    min-width: fit-content;
+}
+.second-accordion{ 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 10px;
+}
+.font-awesome-symbols{
+    margin-right: 10px;
+    font-size: 200% !important;
+    margin-top: 0px;
+}

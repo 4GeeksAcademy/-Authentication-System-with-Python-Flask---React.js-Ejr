@@ -1,5 +1,5 @@
 
-.orderCardBody{   
+.order-body{   
     border: solid 3px lightgray;
     display: flex;
     flex-direction: row;
@@ -7,28 +7,28 @@
     width: 250px !important;
     padding-top: 10px;
     padding-bottom: 10px;
-    margin-left: 10px;
-    margin-right: 10px;
+    margin-left: 20px;
     margin-top: 10px;
     margin-bottom: 10px;
 }
-.containerOrder{ 
+.order-container{ 
     display: flex;
     flex-wrap: wrap;
     width: 250px;
 }
-.productName{ 
+.product-name{ 
     display: flex;
     width: 195px;
-    justify-content: space-around;
+    justify-content: flex-start;
     margin-left: 15px;
 }
-.providerName{ 
+.provider-name{ 
     display: flex;
+    color: gray;
     width: 195px;
     margin-left: 15px;
 }
-.productSize{ 
+.product-size{ 
     display: flex;
     width: 195px;
     margin-left: 15px;
@@ -37,61 +37,47 @@ hr.line{
     border: 1px solid lightgray;
     width: 200px;
 }
-.buttonsGroup{  
+.buttons-group{  
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
     width: fit-content;
     height: 175px;
 }
-.productsInPlace{ 
+.products-in-place{ 
     display: flex;
     justify-self: center;
     font-size: 30px;
 }
-.checkButton{  
+.check-button{  
     display:flex;
     width: 200px;
     height: 50px;
     justify-content: space-around;
     justify-self: center;
 }
-.checkBackspaceInSymbols{ 
+.font-awesome-symbols{ 
     display: flex;
     font-size: 200% !important;
     margin-top: 0px;
-}.orderInput{
+}.order-input{
     display: flex;
     width: 200px;
     height: 50px;
 }
-// .allNumberButtons{ 
-//     display: flex;
-//     flex-direction: row;
-//     flex-wrap:wrap;
-//     justify-content: center;
-//     height: 210px;
-//     width: 210px;
-// }
-// .numberButton{ border: solid 1px white;
-//     display: flex;
-//     justify-content: center;
-//     width: 66px;
-//     height: 66px;
-// }
-.bottomButtons{
+.bottom-buttons{
     display:flex;
     flex-direction: row;
     height: 50px;
     width: 200px;
 }
-.backspaceButton{ 
+.backspace-button{ 
     display: flex;
     flex-direction: row;
     width: 65px;
     height: 50px;
 }
-.orderButton{
+.order-button{
     display:flex;
     flex-direction: row;
     height: 50px;
