@@ -1,69 +1,55 @@
 const getState = ({ getStore, getActions, setStore }) => {
-    return {
-        store: {
-            message: null,
-            demo: [
-                {
-                    title: "FIRST",
-                    background: "white",
-                    initial: "white"
-                },
-                {
-                    title: "SECOND",
-                    background: "white",
-                    initial: "white"
-                }
-            ]
-        },
-        pymes: [],
-        pymesEntity: {},
+	return {
+		store: {
+			message: null,
+			pymes: [],
+			pymeEntity: {}
+		},
 
+		actions: {
+			// Use getActions to call a function within a fuction
+			exampleFunction: () => {
+				getActions().changeColor(0, "green");
+			},
 
-        actions: {
-            // Use getActions to call a function within a fuction
-            exampleFunction: () => {
-                getActions().changeColor(0, "green");
-            },
+			getMessage: () => {
+				// fetching data from the backend
+				fetch(process.env.BACKEND_URL + "/api/hello")
+					.then(resp => resp.json())
+					.then(data => setStore({ message: data.message }))
+					.catch(error => console.log("Error loading message from backend", error));
+			},
+			changeColor: (index, color) => {
+				//get the store
+				const store = getStore();
 
-            getMessage: () => {
-                // fetching data from the backend
-                fetch(process.env.BACKEND_URL + "/api/hello")
-                    .then(resp => resp.json())
-                    .then(data => setStore({ message: data.message }))
-                    .catch(error => console.log("Error loading message from backend", error));
-            },
-            changeColor: (index, color) => {
-                //get the store
-                const store = getStore();
+				//we have to loop the entire demo array to look for the respective index
+				//and change its color
+				const demo = store.demo.map((elm, i) => {
+					if (i === index) elm.background = color;
+					return elm;
+				});
 
-                //we have to loop the entire demo array to look for the respective index
-                //and change its color
-                const demo = store.demo.map((elm, i) => {
-                    if (i === index) elm.background = color;
-                    return elm;
-                });
+				//reset the global store
+				setStore({ demo: demo });
+			},
 
-                //reset the global store
-                setStore({ demo: demo });
-            },
-
-            loadPymeData: () => {
-                fetch("https://3001-lavender-snail-22gwwo22.ws-us03.gitpod.io/pymes")
-                    .then(res => res.json())
-                    .then(data => {
-                        return setStore({ pymes: data });
-                    });
-            },
-
-            fetchEntity: (entity, id) => {
-                fetch(`https://3001-lavender-snail-22gwwo22.ws-us03.gitpod.io/${entity}/${id}`)
-                    .then(res => res.json())
-                    .then(data => {
-                        return setStore({ [`${entity}tipo`]: data });
-                    });
-            }
-        }
-    };
+			loadPymeData: () => {
+				fetch("https://3001-lavender-snail-22gwwo22.ws-us03.gitpod.io/api/pymes")
+					.then(res => res.json())
+					.then(data => {
+						return setStore({ pymes: data });
+					});
+			},
+			fetchEntity: id => {
+				fetch(`https://3001-lavender-snail-22gwwo22.ws-us03.gitpod.io/api/pymes/${id}`)
+					.then(res => res.json())
+					.then(data => {
+						return setStore({ pymeEntity: data });
+					});
+			}
+		}
+	};
 };
 
 export default getState;

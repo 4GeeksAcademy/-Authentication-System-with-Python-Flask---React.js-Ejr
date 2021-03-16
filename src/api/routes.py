@@ -6,8 +6,11 @@ from api.models import db, User, Pymes, Mi_pasaporte
 from api.utils import generate_sitemap, APIException
 import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
+from flask_cors import CORS, cross_origin
 
 api = Blueprint('api', __name__)
+
+CORS(api) # This will enable CORS for all routes
 
 #bloque de GET's
 @api.route('/users', methods=['GET'])

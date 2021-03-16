@@ -28,10 +28,10 @@ const Layout = () => {
 					<Route exact path="/">
 						<Home />
 					</Route>
-					<Route exact path="/viewGeneral">
+					<Route exact path="/viewGeneral/:type">
 						<ViewGeneral />
 					</Route>
-					<Route exact path="/viewPyme">
+					<Route exact path="/viewPyme/:id">
 						<PymeView />
 					</Route>
 					<div
