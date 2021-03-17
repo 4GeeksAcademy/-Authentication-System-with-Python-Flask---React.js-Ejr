@@ -2,6 +2,7 @@ import React from "react";
 import { Link, withRouter } from "react-router-dom";
 import { Button, Form, FormControl, Navbar, Nav, Col } from "react-bootstrap";
 import { logoAzul } from "../../img/image";
+import { LoginModal } from "./Login";
 
 const MyNavbar = props => {
 	if (props.location.pathname === "/") {
@@ -26,15 +27,14 @@ const MyNavbar = props => {
 							<i className="fas fa-search" />
 						</Button>
 					</Form>
-					<div className="ml-auto">
+					<div className="ml-auto" style={{ display: "block", marginRight: "auto", marginLeft: "auto" }}>
 						<Link to="/register">
 							<button className="btn btn-outline-primary" style={{ border: "none" }}>
 								Registrate
 							</button>
 						</Link>
-						&nbsp;
-						<Link to="/login">{<button className="btn btn-primary">Ingresa</button>}</Link>
-					</<button className="btn btn-primary">Ingresa</button>
+						{LoginModal()}
+					</div>
 				</nav>
 				<Navbar bg="light" expand="lg" style={{ borderBottom: "1px solid gray " }}>
 					<Navbar.Toggle aria-controls="basic-navbar-nav" />

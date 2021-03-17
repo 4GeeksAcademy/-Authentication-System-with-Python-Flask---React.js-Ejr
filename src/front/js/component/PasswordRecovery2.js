@@ -2,7 +2,7 @@ import React from "react";
 import { withRouter } from "react-router-dom";
 import { Form, Button } from "react-bootstrap";
 
-export const PasswordRecovery = () => {
+export const PasswordRecovery2 = () => {
 	return (
 		<div className="container">
 			<div className="row">
@@ -14,16 +14,28 @@ export const PasswordRecovery = () => {
 								<i className="fas fa-user-lock" style={{ marginRight: "10px" }} />
 								Reestablecer contraseña
 							</h2>
-							<div style={{ paddingLeft: "50px", paddingRight: "50px" }}>
-								<h4>
-									Para recuperar tu contraseña favor ingresa tu correo electrónico registrado y te
-									enviaremos la clave por email
-								</h4>
+							<div style={{ paddingLeft: "30px", paddingRight: "30px" }}>
+								<h4>Ingresa una nueva contraseña para tu cuenta</h4>
 								<br />
 								<Form>
 									<Form.Group controlId="formBasicEmail">
-										{/* <Form.Label>Correo Electrónico</Form.Label> */}
-										<Form.Control type="email" placeholder="Ingresa tu correo electrónico" />
+										<Form.Label>
+											<strong>Correo Electrónico</strong>
+										</Form.Label>
+
+										<Form.Control type="email" placeholder="" />
+									</Form.Group>
+									<Form.Group controlId="formBasicPassword">
+										<Form.Label>
+											<strong>Nueva Password</strong>
+										</Form.Label>
+										<Form.Control type="password" placeholder="" />
+									</Form.Group>
+									<Form.Group controlId="formBasicPassword2">
+										<Form.Label>
+											<strong>Confirmar Password</strong>
+										</Form.Label>
+										<Form.Control type="password" placeholder="" />
 									</Form.Group>
 									<Button
 										variant="primary"
@@ -31,7 +43,7 @@ export const PasswordRecovery = () => {
 										type="submit"
 										block
 										style={{ marginTop: "20px", marginBottom: "40px" }}>
-										Ingresar
+										Continuar
 									</Button>
 								</Form>
 							</div>
@@ -44,4 +56,4 @@ export const PasswordRecovery = () => {
 	);
 };
 
-export default withRouter(PasswordRecovery);
+export default withRouter(PasswordRecovery2);

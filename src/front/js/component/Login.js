@@ -43,7 +43,7 @@ export function LoginModal() {
 	return (
 		<>
 			<Button variant="secondary" className="float-right mt-5" onClick={() => setModalShow(true)}>
-				Inicia Sesión
+				Ingresa
 			</Button>
 
 			<MyVerticallyCenteredModal show={modalShow} onHide={() => setModalShow(false)} />
