@@ -1,8 +1,9 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
-//import { Context } from "../store/appContext";
 import { Container, Row, Image, Card, Button } from "react-bootstrap";
 import "../../styles/base_category.scss";
+
+// Imagenes a usar , propiedad de TOMATE'LO
 import tomatelo from "../../img/logo/tomatelo2.png";
 import not_alcohol from "../../img/categories_jpg/not_alcohol.jpg";
 import ron_alcohol from "../../img/categories_jpg/ron.jpg";
@@ -10,6 +11,7 @@ import gin_alcohol from "../../img/categories_jpg/gin.jpg";
 import whisky_alcohol from "../../img/categories_jpg/whisky.jpg";
 import vodka_alcohol from "../../img/categories_jpg/vodka.jpg";
 import tequila_alcohol from "../../img/categories_jpg/tequila_alcohol.jpg";
+// Imagenes a usar , propiedad de TOMATE'LO
 
 export const Base_Categories = () => {
 	return (
@@ -39,7 +41,7 @@ export const Base_Categories = () => {
 										</cite>
 									</small>
 								</footer>
-								<Link to="/Info_Category">
+								<Link to="/Info_WithoutBase">
 									<Button type="submit" variant="outline-info">
 										Ver más
 									</Button>
