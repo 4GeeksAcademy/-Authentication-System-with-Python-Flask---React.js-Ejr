@@ -4,6 +4,7 @@ import "../../styles/index.scss";
 import { CardCategory } from "./cardCategory.jsx";
 import { serviceDiseno, serviceMarketing, serviceIt } from "../../img/image.js";
 import { Jumbotron, Row, Col } from "react-bootstrap";
+import PropTypes from "prop-types";
 
 export const CardBox = props => {
 	return (
@@ -27,4 +28,8 @@ export const CardBox = props => {
 			</Jumbotron>
 		</>
 	);
+};
+
+CardBox.propTypes = {
+	title: PropTypes.string
 };
