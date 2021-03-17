@@ -7,6 +7,7 @@ import { Login } from "./pages/login";
 import { Register } from "./pages/register";
 import { Recuperar } from "./pages/recuperar";
 import { NewPassword } from "./pages/newPassword";
+import { ViewPassport } from "./pages/viewPassport";
 
 import { PymeView } from "./pages/viewPyme";
 import { Comment } from "./component/comment";
@@ -33,6 +34,9 @@ const Layout = () => {
 					</Route>
 					<Route exact path="/viewPyme/:id">
 						<PymeView />
+					</Route>
+					<Route exact path="/viewPassport">
+						<ViewPassport />
 					</Route>
 					<div
 						style={{

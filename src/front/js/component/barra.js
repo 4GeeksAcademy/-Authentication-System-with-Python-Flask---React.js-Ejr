@@ -33,6 +33,15 @@ export function Barra() {
 				</Button>
 				<Button style={{ marginLeft: 10 }} variant="outline-light">
 					<Navbar.Text>
+						<Link to="/viewPassport">
+							<a style={{ color: "#090a" }} href="#login">
+								MyPassport
+							</a>
+						</Link>
+					</Navbar.Text>
+				</Button>
+				<Button style={{ marginLeft: 10 }} variant="outline-light">
+					<Navbar.Text>
 						<Link to="/login">
 							<a style={{ color: "#090a" }} href="#login">
 								Log In
