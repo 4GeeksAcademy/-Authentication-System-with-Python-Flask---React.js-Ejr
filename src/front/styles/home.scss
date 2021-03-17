@@ -1,5 +1,10 @@
 body {
-    background-color: #000;
+    background-attachment: fixed;
+    background-image: url("http://d30i07b9wlivv4.cloudfront.net/uploads/2017/07/22151850/ezgif.com-gif-maker3.gif");
+    background-position: center;
+    background-repeat: repeat;
+    background-size: cover;
+    position: relative;
     font-family: "Poppins", sans-serif;
     font-size: 14px;
     font-weight: 300;
@@ -9,6 +14,18 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
+body:after {
+  position: absolute;
+  content: "";
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  background-image: -webkit-linear-gradient(0deg, #000 50%, transparent 100%);
+  opacity: 1;
+  z-index: -1;
+}
 // Footer
 // Footer
 // Footer
