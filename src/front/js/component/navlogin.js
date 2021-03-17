@@ -17,7 +17,7 @@ export const NavLogin = () => {
 				<div className="header-wrap">
 					<div className="header-top d-flex justify-content-between align-items-center">
 						<div className="logo">
-							<a href="##">
+							<a>
 								<span>
 									<img className="logomove" src={tomatelo} alt="Logo de la página" />
 								</span>
