@@ -11,6 +11,7 @@ import gin_alcohol from "../../img/categories_jpg/gin.jpg";
 import whisky_alcohol from "../../img/categories_jpg/whisky.jpg";
 import vodka_alcohol from "../../img/categories_jpg/vodka.jpg";
 import tequila_alcohol from "../../img/categories_jpg/tequila_alcohol.jpg";
+
 export const Base_Categories = () => {
 	return (
 		<Container className="mt-2 mb-2">
@@ -39,7 +40,7 @@ export const Base_Categories = () => {
 										</cite>
 									</small>
 								</footer>
-								<Link to="/Info_WithoutBase">
+								<Link to="/Info_Category">
 									<Button type="submit" variant="outline-info">
 										Ver más
 									</Button>
@@ -65,7 +66,7 @@ export const Base_Categories = () => {
 										</cite>
 									</small>
 								</footer>
-								<Link to="/Info_rum">
+								<Link to="/Info_Rum">
 									<Button type="submit" variant="outline-info">
 										Ver más
 									</Button>
