@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 //import { Context } from "../store/appContext";
+// listo
 import { Container, Row, Image, Card, Button } from "react-bootstrap";
 import "../../styles/base_category.scss";
 import tomatelo from "../../img/logo/tomatelo2.png";
