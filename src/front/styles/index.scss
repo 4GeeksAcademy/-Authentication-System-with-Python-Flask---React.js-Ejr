@@ -1,10 +1,6 @@
 
 
-#carrusel{
-    
-    overflow: hidden;
-    margin-top: 50px;
-}
+
 
 .MapContainer {
   height: 500px;
@@ -28,4 +24,14 @@
     box-sizing: border-box;
     font-weight:300;  
     
+    
+}
+
+#jumbo{
+    border: rgba(160, 148, 148, 0.274) 3px groove;
+    border-radius: 8px;
+}
+
+#caja{
+    border-radius: 8px;
 }

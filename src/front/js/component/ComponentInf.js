@@ -11,14 +11,18 @@ import about from "../../img/about.png";
 export const ComponenteInf = () => {
 	return (
 		<div style={{ marginTop: 100 }}>
-			<img src={titulo} height="300px" />
-			<Jumbotron fluid>
+			<img src={titulo} height="300px" className="mt-5" />
+			<br />
+			<br />
+			<br />
+			<Jumbotron fluid id="jumbo">
 				<Container>
 					<img src={jumbo} height="300px" width="1080px" />
 					<p>This is a modified jumbotron that occupies the entire horizontal space of its parent.</p>
 				</Container>
 			</Jumbotron>
-			<Media>
+			<br />
+			<Media id="caja">
 				<img src={uno} height="300px" width="300px" className="mr-3 rounded-circle" alt="Generic placeholder" />
 				<Media.Body>
 					<h2>
@@ -31,7 +35,8 @@ export const ComponenteInf = () => {
 					</p>
 				</Media.Body>
 			</Media>
-			<Media>
+			<br />
+			<Media id="caja">
 				<Media.Body>
 					<h2>
 						<span>GASTRONOMÍA</span>
@@ -44,7 +49,8 @@ export const ComponenteInf = () => {
 				</Media.Body>
 				<img src={dos} height="300px" width="300px" className="mr-3 rounded-circle" alt="Generic placeholder" />
 			</Media>
-			<Media>
+			<br />
+			<Media id="caja">
 				<img
 					src={tres}
 					height="300px"
@@ -63,7 +69,8 @@ export const ComponenteInf = () => {
 					</p>
 				</Media.Body>
 			</Media>
-			<Media>
+			<br />
+			<Media id="caja">
 				<Media.Body>
 					<h2>
 						<span>CULTURA</span>
@@ -82,6 +89,7 @@ export const ComponenteInf = () => {
 					alt="Generic placeholder"
 				/>
 			</Media>
+			<br />
 			<img src={about} height="600px" />
 		</div>
 	);
