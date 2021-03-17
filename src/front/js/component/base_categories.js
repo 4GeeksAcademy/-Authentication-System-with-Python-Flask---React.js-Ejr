@@ -1,5 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
+//import { Context } from "../store/appContext";
+// listo
 import { Container, Row, Image, Card, Button } from "react-bootstrap";
 import "../../styles/base_category.scss";
 
