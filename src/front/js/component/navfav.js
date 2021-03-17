@@ -25,6 +25,9 @@ export const NavFav = () => {
 					</div>
 					<div className="main-menubar d-flex align-items-center">
 						<nav className="hide">
+							<Link to="/home">
+								<a>Home</a>
+							</Link>
 							<a href="#Favorites">Favorites</a>
 						</nav>
 						<div className="menu-bar" onClick={e => handleMenu(e)}>
