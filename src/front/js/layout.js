@@ -7,7 +7,7 @@ import { ServicioCategory } from "./pages/servicio-category";
 import { Servicioindividual } from "./pages/servicio-Individual";
 import injectContext from "./store/appContext";
 
-import Navbar from "./component/navbar";
+import MyNavbar from "./component/navbar";
 import { Footer } from "./component/footer";
 import Landingpage from "./pages/landingPage";
 import { Registro } from "./pages/registro";
@@ -23,7 +23,7 @@ const Layout = () => {
 		<div className="d-flex flex-column h-100">
 			<BrowserRouter basename={basename}>
 				<ScrollToTop>
-					<Navbar />
+					<MyNavbar />
 					<Switch>
 						<Route exact path="/">
 							<Landingpage />

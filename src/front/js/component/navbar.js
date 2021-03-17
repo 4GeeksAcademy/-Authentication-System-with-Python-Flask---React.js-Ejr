@@ -1,23 +1,65 @@
 import React from "react";
 import { Link, withRouter } from "react-router-dom";
+import { Button, Form, FormControl, Navbar, Nav, Col } from "react-bootstrap";
+import { logoAzul } from "../../img/image";
 
-const Navbar = props => {
+const MyNavbar = props => {
 	if (props.location.pathname === "/") {
 		return " ";
 	} else {
 		return (
-			<nav className="navbar navbar-light bg-light mb-3">
-				<Link to="/">
-					<span className="navbar-brand mb-0 h1">React Boilerplate</span>
-				</Link>
-				<div className="ml-auto">
-					<Link to="/demo">
-						<button className="btn btn-primary">Check the Context in action</button>
+			<>
+				<nav className="navbar navbar-light my-3">
+					<Link to="/">
+						<img
+							src={logoAzul}
+							width="110"
+							height="33"
+							className="d-inline-block align-top mt-2"
+							alt="cotec logo"
+						/>
 					</Link>
-				</div>
-			</nav>
+					<Col md={6} />
+					<Form inline className="Buscar">
+						<FormControl type="text" placeholder="Buscar" className="mr-sm-4" />
+						<Button variant="btn">
+							<i className="fas fa-search" />
+						</Button>
+					</Form>
+					<div className="ml-auto">
+						<Link to="/register">
+							<button className="btn btn-outline-primary" style={{ border: "none" }}>
+								Registrate
+							</button>
+						</Link>
+						&nbsp;
+						<Link to="/login">{<button className="btn btn-primary">Ingresa</button>}</Link>
+					</<button className="btn btn-primary">Ingresa</button>
+				</nav>
+				<Navbar bg="light" expand="lg" style={{ borderBottom: "1px solid gray " }}>
+					<Navbar.Toggle aria-controls="basic-navbar-nav" />
+					<Navbar.Collapse id="basic-navbar-nav">
+						<Nav className="navbar-nav justify-content-between w-100">
+							<Nav.Link href="/category" className="h5 text-dark">
+								Desarrolloar/IT
+							</Nav.Link>
+							<Nav.Link href="/category" className="h5 text-dark">
+								Diseño
+							</Nav.Link>
+							<Nav.Link href="/category" className="h5 text-dark">
+								Contabilidad
+							</Nav.Link>
+							<Nav.Link href="/category" className="h5 text-dark">
+								Marketing
+							</Nav.Link>
+							<Nav.Link href="/category" className="h5 text-dark">
+								Ley/Derecho
+							</Nav.Link>
+						</Nav>
+					</Navbar.Collapse>
+				</Navbar>
+			</>
 		);
 	}
 };
-
-export default withRouter(Navbar);
+export default withRouter(MyNavbar);
