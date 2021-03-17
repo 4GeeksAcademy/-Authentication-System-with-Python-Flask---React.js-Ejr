@@ -19,8 +19,8 @@ import { Footer } from "./component/footer";
 
 // Segunda Vista
 import { NavFav } from "./component/navfav";
-import { Info_Category } from "./component/info_category";
-// import { Info_WithoutBase } from "./component/info_withoutBase";
+// import { Info_Category } from "./component/info_category";
+import { Info_WithoutBase } from "./component/info_withoutBase";
 import { Info_Rum } from "./component/info_rum";
 import { Info_Gin } from "./component/info_gin";
 import { Info_Vodka } from "./component/info_vodka";
@@ -57,9 +57,9 @@ const Layout = () => {
 							<Base_Categories />
 							<Footer />
 						</Route>
-						<Route exact path="/info_Category">
+						<Route exact path="/Info_WithoutBase">
 							<NavFav />
-							<Info_Category />
+							<Info_WithoutBase />
 							<Footer />
 						</Route>
 						<Route exact path="/info_Rum">
