@@ -103,7 +103,7 @@ class Product(db.Model):
     name_Product = db.Column(db.String(120), nullable=False)
     id_Category = db.Column(db.Integer, db.ForeignKey('category.id_Category') , nullable=False)
     id_Provider = db.Column(db.String(25), db.ForeignKey('provider.id_Provider') , nullable=False)
-    active_Product = db.Column(db.String(3), nullable=False)
+    active_Product = db.Column(db.String(80), nullable=False)
     properties = db.relationship('Product_Details', backref='product', lazy=True)
     inventory = db.relationship('Inventory', backref='product', lazy=True)
     move = db.relationship('Movement_Inventory', backref='product', lazy=True)

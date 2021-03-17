@@ -92,6 +92,62 @@ def add_user():
     db.session.add(user)
     db.session.add(properties)
     db.session.commit()
+    return jsonify("All good"), 200  
+
+@api.route('/login',methods=['POST'])
+def login():
+    request_body = request.get_json()
+
+    user = User(
+                name_User = request_body["name_User"], 
+                active_User = request_body["active_User"])
+    properties = User_Details(
+                              password_User_Details = request_body["password_User_Details"])
+    
+    return jsonify("All good"), 200   
+
+
+
+
+#----------------------------------------Product------------------------------------------------------------------------------------------
+@api.route('/product',methods=['GET'])
+def get_product():
+    product = Product.query.all()
+    product_serialized = list(map(lambda data: data.serialize(), product))
+    return jsonify(product_serialized),200
+
+@api.route('/product',methods=['POST'])
+def add_product():
+    request_body = request.get_json()
+    product = Product(id_Product=request_body["id_Product"],
+                         name_Product=request_body["name_Product"],
+                         id_Category=request_body["id_Category"],
+                         id_Provider=request_body["id_Provider"],
+                         active_Product=request_body["active_Product"])
+    properties = Product_Details(
+                            id_Product_Details=request_body["id_Product"],
+                            id_Product=request_body["id_Product"],
+                            trade_Product_Details=request_body["trade_Product_Details"],
+                            image_Product_Details=request_body["image_Product_Details"], 
+                            tax_Product_Details=request_body["tax_Product_Details"],
+                            description_Product_Details=request_body["description_Product_Details"],
+                            price_In_Product_Details=request_body["price_In_Product_Details"],
+                            profit_Product_Details=request_body["profit_Product_Details"],
+                            price_Out_Product_Details=request_body["price_Out_Product_Details"], 
+                            discount_Product_Details=request_body["discount_Product_Details"])
+    print(request_body)
+    db.session.add(product)
+    db.session.add(properties)
+    db.session.commit()
+    return jsonify("All good"), 200
+                                                  
+#----------------------------------------Inventory------------------------------------------------------------------------------------------
+@api.route('/inventory',methods=['GET'])
+def get_inventory():
+    inventory = Inventory.query.all()
+    inventory_serialized = list(map(lambda data: data.serialize(), inventory))
+    return jsonify(inventory_serialized),200
+
     return jsonify("All good"), 200
 
 #----------------------------------------------------------------------------------------------------------------------------------
