@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Container, Row, Col, Card, Media, Button } from "react-bootstrap";
 import "../../styles/info_category.scss";
 
+// Ambiente de pruebas
 export const Info_Category = () => {
 	// const { store, actions } = useContext(Context);
 
