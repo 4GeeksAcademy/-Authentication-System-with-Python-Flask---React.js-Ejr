@@ -11,7 +11,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 			sessionUser: null,
 			randomcocktail: [],
 			ingredient: [],
-			modifier: []
+			modifier: [],
+			rum_cocktail: []
 		},
 		actions: {
 			////////////////////BEGIN TESTING PURPOSES @JVM && @ANMORA//////////////////////
@@ -75,6 +76,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 				const cocktail = await res.json();
 				setStore({ basecocktail: cocktail.drinks });
 			},
+
+			info_rumCocktail: async () => {
+				//It gets base cocktails via filter
+				const res = await fetch("https://www.thecocktaildb.com/api/json/v2/9973533/search.php?s=rum");
+				const cocktail = await res.json();
+				setStore({ rum_cocktail: cocktail.drinks });
+			},
+
 			//Building Favorites f(x)s
 			addFavorites: async (drink_name, drink_img) => {
 				const store = getStore();
