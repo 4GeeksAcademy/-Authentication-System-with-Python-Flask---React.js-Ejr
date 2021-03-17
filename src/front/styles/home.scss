@@ -22,8 +22,8 @@ body:after {
   width: 100%;
   height: 100%;
   position: fixed;
-  background-image: -webkit-linear-gradient(0deg, #000 0%, #000 100%);
-  opacity: 0.8;
+  background-image: -webkit-linear-gradient(0deg, #000 50%, transparent 100%);
+  opacity: 1;
   z-index: -1;
 }
 // Footer
