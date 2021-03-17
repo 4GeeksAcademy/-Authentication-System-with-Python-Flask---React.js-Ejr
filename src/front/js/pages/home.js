@@ -22,11 +22,11 @@ export const Home = () => {
 						<div className="principal">
 							<div className="frente" />
 							<div className="atras text-light">
-								<h4>Titulo</h4>
-								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-								<Button className="Button" variant="outline-success">
+								<h4>Pedri Tos 69</h4>
+								<p>Sabias que este coctel esta a base de RUM(Ron)</p>
+								<Button href="#RUM" className="Button" variant="outline-success">
 									Ver más
-								</Button>{" "}
+								</Button>
 							</div>
 						</div>
 					</div>
@@ -36,9 +36,9 @@ export const Home = () => {
 							<div className="atras text-light">
 								<h4>Titulo</h4>
 								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-								<Button className="Button" variant="outline-success">
+								<Button href="#WHISKY" className="Button" variant="outline-success">
 									Ver más
-								</Button>{" "}
+								</Button>
 							</div>
 						</div>
 					</div>
@@ -48,24 +48,24 @@ export const Home = () => {
 							<div className="atras text-light">
 								<h4>Titulo</h4>
 								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-								<Button className="Button" variant="outline-success">
+								<Button href="#TEQUILA" className="Button" variant="outline-success">
 									Ver más
-								</Button>{" "}
+								</Button>
 							</div>
 						</div>
 					</div>
 					{/* 2da Fila */}
 					{/* 2da Fila */}
 					{/* 2da Fila */}
-					<div className="mb-1 col-md-8">
+					<div className="mb-1 col-md-4">
 						<div className="principal">
 							<div className="frente" />
 							<div className="atras text-light">
 								<h4>Titulo</h4>
 								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-								<Button className="Button" variant="outline-success">
+								<Button href="#GIN" className="Button" variant="outline-success">
 									Ver más
-								</Button>{" "}
+								</Button>
 							</div>
 						</div>
 					</div>
@@ -75,9 +75,21 @@ export const Home = () => {
 							<div className="atras text-light">
 								<h4>Titulo</h4>
 								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-								<Button className="Button" variant="outline-success">
+								<Button href="#VODKA" className="Button" variant="outline-success">
 									Ver más
-								</Button>{" "}
+								</Button>
+							</div>
+						</div>
+					</div>
+					<div className="mb-1 col-md-4">
+						<div className="principal">
+							<div className="frente" />
+							<div className="atras text-light">
+								<h4>Titulo</h4>
+								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+								<Button href="#WithoutBase" className="Button" variant="outline-success">
+									Ver más
+								</Button>
 							</div>
 						</div>
 					</div>
@@ -90,7 +102,19 @@ export const Home = () => {
 							<div className="atras text-light">
 								<h4>Titulo</h4>
 								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-								<Button className="Button" variant="outline-success">
+								<Button href="#WHISKY" className="Button" variant="outline-success">
+									Ver más
+								</Button>
+							</div>
+						</div>
+					</div>
+					<div className="mb-1 col-md-4">
+						<div className="principal">
+							<div className="frente" />
+							<div className="atras text-light">
+								<h4>Titulo</h4>
+								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+								<Button href="#VODKA" className="Button" variant="outline-success">
 									Ver más
 								</Button>{" "}
 							</div>
@@ -102,21 +126,9 @@ export const Home = () => {
 							<div className="atras text-light">
 								<h4>Titulo</h4>
 								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-								<Button className="Button" variant="outline-success">
+								<Button href="#GIN" className="Button" variant="outline-success">
 									Ver más
-								</Button>{" "}
-							</div>
-						</div>
-					</div>
-					<div className="mb-1 col-md-4">
-						<div className="principal">
-							<div className="frente" />
-							<div className="atras text-light">
-								<h4>Titulo</h4>
-								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-								<Button className="Button" variant="outline-success">
-									Ver más
-								</Button>{" "}
+								</Button>
 							</div>
 						</div>
 					</div>
@@ -129,9 +141,9 @@ export const Home = () => {
 							<div className="atras text-light">
 								<h4>Titulo</h4>
 								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-								<Button className="Button" variant="outline-success">
+								<Button href="#TEQUILA" className="Button" variant="outline-success">
 									Ver más
-								</Button>{" "}
+								</Button>
 							</div>
 						</div>
 					</div>
@@ -141,9 +153,9 @@ export const Home = () => {
 							<div className="atras text-light">
 								<h4>Titulo</h4>
 								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-								<Button className="Button" variant="outline-success">
+								<Button href="#WithoutBase" className="Button" variant="outline-success">
 									Ver más
-								</Button>{" "}
+								</Button>
 							</div>
 						</div>
 					</div>
@@ -153,9 +165,9 @@ export const Home = () => {
 							<div className="atras text-light">
 								<h4>Titulo</h4>
 								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-								<Button className="Button" variant="outline-success">
+								<Button href="#RUM" className="Button" variant="outline-success">
 									Ver más
-								</Button>{" "}
+								</Button>
 							</div>
 						</div>
 					</div>

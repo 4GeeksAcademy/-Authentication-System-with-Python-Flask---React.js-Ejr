@@ -29,8 +29,12 @@ export const Base_Categories = () => {
 								<footer className="blockquote-footer">
 									<small className="text-muted">
 										<cite title="Source Title">
-											Perspiciatis minima nesciunt dolorem! Officiis iure rerum voluptates a
-											cumque velit quibusdam sed amet tempora.
+											Los cócteles sin alcohol (o “mocktails”) son siempre una buena alternativa
+											para disfrutar de un ambiente festivo de manera responsable y también tienen
+											cabida en el mundo de la coctelería. Los cócteles sin alcohol están muchas
+											veces destinados a conductores, mujeres embarazadas, niños, intolerantes al
+											alcohol, etc. de manera que también puedan disfrutar de un buen cóctel sin
+											correr riesgo alguno.
 										</cite>
 									</small>
 								</footer>
@@ -53,8 +57,10 @@ export const Base_Categories = () => {
 								<footer className="blockquote-footer">
 									<small className="text-muted">
 										<cite title="Source Title">
-											Perspiciatis minima nesciunt dolorem! Officiis iure rerum voluptates a
-											cumque velit quibusdam sed amet tempora.
+											El ron es un destilado elaborado a partir de la caña de azúcar que, en sus
+											distintas variedades como pueden ser el ron blanco, oscuro o dorado, se
+											adaptan perfectamente a su utilización en una gran cantidad de cócteles
+											gracias a la versatilidad de este destilado.
 										</cite>
 									</small>
 								</footer>
@@ -77,8 +83,11 @@ export const Base_Categories = () => {
 								<footer className="blockquote-footer">
 									<small className="text-muted">
 										<cite title="Source Title">
-											Perspiciatis minima nesciunt dolorem! Officiis iure rerum voluptates a
-											cumque velit quibusdam sed amet tempora.
+											Su mezcla de cítricos, aromas florales y botánicos la hace un ingrediente
+											perfecto para que las mezclas siempre salgan bien. Los dos únicos requisitos
+											fundamentales son: suficientes mezcladores y, obviamente, una buena ginebra.
+											Aquí tienes nueve propuestas deliciosas y fáciles de preparar, para que este
+											verano le des un sello de autor a las copas en tu casa.
 										</cite>
 									</small>
 								</footer>
@@ -101,8 +110,11 @@ export const Base_Categories = () => {
 								<footer className="blockquote-footer">
 									<small className="text-muted">
 										<cite title="Source Title">
-											Perspiciatis minima nesciunt dolorem! Officiis iure rerum voluptates a
-											cumque velit quibusdam sed amet tempora.
+											El vodka es una bebida originaria de Rusia y Polonia, se produce al destilar
+											grano, centeno, patatas o algunas frutas, pero ¿por qué el vodka es una
+											bebida ideal para la preparar cócteles? El secreto del vodka reside en su
+											aroma y sabor, que por su neutralidad e intensidad lo hacen una bebida
+											idónea para la preparación de cócteles.
 										</cite>
 									</small>
 								</footer>
@@ -125,8 +137,12 @@ export const Base_Categories = () => {
 								<footer className="blockquote-footer">
 									<small className="text-muted">
 										<cite title="Source Title">
-											Perspiciatis minima nesciunt dolorem! Officiis iure rerum voluptates a
-											cumque velit quibusdam sed amet tempora.
+											Cuando pensamos en tragos hechos con tequila, de inmediato pensamos en la
+											clásica margarita, un trago delicioso, preferido por la mayoría de los
+											amantes de los tragos mezclados. Sin embargo, hay muchísimos cócteles
+											riquísimos a base de mezcal o tequila que desconocemos, pero que una vez
+											pruebes, estoy segura encontratás más de uno que se podrá convertir en tu
+											nuevo trago favorito.
 										</cite>
 									</small>
 								</footer>
@@ -149,8 +165,11 @@ export const Base_Categories = () => {
 								<footer className="blockquote-footer">
 									<small className="text-muted">
 										<cite title="Source Title">
-											Perspiciatis minima nesciunt dolorem! Officiis iure rerum voluptates a
-											cumque velit quibusdam sed amet tempora.
+											El whisky es una de las bebidas que te invita a probarla no solo una, dos o
+											tres veces, sino tantas veces como sea posible. Su sabor es inconfundible,
+											conserva en sí mismo el rico aroma de las barricas de madera, y su aroma te
+											encanta apenas lo acercas a tu boca. No por nada su nombre significa «agua
+											de vida«, término derivado del gaélico escocés Uisge beatha.
 										</cite>
 									</small>
 								</footer>
