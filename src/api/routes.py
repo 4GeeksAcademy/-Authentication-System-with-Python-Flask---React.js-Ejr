@@ -44,6 +44,24 @@ def addProvider():
     db.session.commit()
     return jsonify("All good"), 200
 
+@api.route('/update_favorite/<int:fid>', methods=['PUT'])
+def update_fav(fid):
+
+    # recibir info del request
+    
+    fav = Favorites.query.get(fid)
+    if fav is None:
+        raise APIException('Favorite not found', status_code=404)
+
+    request_body = request.get_json()
+
+    if "name" in request_body:
+        fav.name = request_body["name"]
+
+    db.session.commit()
+
+    return jsonify("All good"), 200
+
 
 #------------------------------------------------------User----------------------------------------------------------------------------
 
