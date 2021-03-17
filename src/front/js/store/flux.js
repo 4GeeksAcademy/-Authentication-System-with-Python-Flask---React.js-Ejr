@@ -12,7 +12,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 			randomcocktail: [],
 			ingredient: [],
 			modifier: [],
-			rum_cocktail: []
+			rum_cocktail: [],
+			gin_cocktail: [],
+			vodka_cocktail: [],
+			tequila_cocktail: [],
+			whisky_cocktail: [],
+			non_alcoholic: []
 		},
 		actions: {
 			////////////////////BEGIN TESTING PURPOSES @JVM && @ANMORA//////////////////////
@@ -70,18 +75,44 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({ randomcocktail: cocktail.drinks });
 			},
 
-			info_baseCocktail: async idDrink => {
+			info_Cocktail: async idDrink => {
 				//It gets base cocktails via filter
-				const res = await fetch(`https://www.thecocktaildb.com/api/json/v2/9973533/search.php?s=${idDrink}`);
+				const res = await fetch(`https://www.thecocktaildb.com/api/json/v2/9973533/lookup.php?i=${idDrink}`);
 				const cocktail = await res.json();
 				setStore({ basecocktail: cocktail.drinks });
 			},
 
 			info_rumCocktail: async () => {
 				//It gets base cocktails via filter
-				const res = await fetch("https://www.thecocktaildb.com/api/json/v2/9973533/search.php?s=rum");
+				const res = await fetch("https://www.thecocktaildb.com/api/json/v2/9973533/search.php?s=Rum");
 				const cocktail = await res.json();
 				setStore({ rum_cocktail: cocktail.drinks });
+			},
+
+			info_vodkaCocktail: async () => {
+				//It gets base cocktails via filter
+				const res = await fetch("https://www.thecocktaildb.com/api/json/v2/9973533/search.php?s=Vodka");
+				const cocktail = await res.json();
+				setStore({ vodka_cocktail: cocktail.drinks });
+			},
+
+			info_tequilaCocktail: async () => {
+				//It gets base cocktails via filter
+				const res = await fetch("https://www.thecocktaildb.com/api/json/v2/9973533/search.php?s=Tequila");
+				const cocktail = await res.json();
+				setStore({ tequila_cocktail: cocktail.drinks });
+			},
+			info_whiskyCocktail: async () => {
+				//It gets base cocktails via filter
+				const res = await fetch("https://www.thecocktaildb.com/api/json/v2/9973533/search.php?s=Whisky");
+				const cocktail = await res.json();
+				setStore({ whisky_cocktail: cocktail.drinks });
+			},
+			info_ginCocktail: async () => {
+				//It gets base cocktails via filter
+				const res = await fetch("https://www.thecocktaildb.com/api/json/v2/9973533/filter.php?i=Gin");
+				const cocktail = await res.json();
+				setStore({ gin_cocktail: cocktail.drinks });
 			},
 
 			//Building Favorites f(x)s
