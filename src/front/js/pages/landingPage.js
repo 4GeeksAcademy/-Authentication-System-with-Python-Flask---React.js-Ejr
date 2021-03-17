@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import "../../styles/home.scss";
 import "../../styles/index.scss";
 import { logoBlanco, man } from "../../img/image";
@@ -8,6 +8,7 @@ import { IconBox } from "../component/IconBox.jsx";
 import { CardBox } from "../component/cardBox.jsx";
 import { ServiceBox } from "../component/serviceBox.jsx";
 import { Footer } from "../component/footer";
+import { LoginModal } from "../component/Login";
 import { Link } from "react-router-dom";
 
 const LandingPage = () => {
@@ -15,7 +16,7 @@ const LandingPage = () => {
 		<div
 			className="background"
 			style={{
-				backgroundImage: `url(http://localhost:3000/backGround.png)`
+				backgroundImage: `url(https://3000-salmon-otter-elqylgff.ws-us03.gitpod.io/backGround.png)`
 			}}>
 			<Container>
 				<div>
@@ -30,12 +31,10 @@ const LandingPage = () => {
 							/>
 						</Col>
 						<Col xs={8}>
-							<Button variant="secondary" className="float-right mt-5">
+							<Button variant="outline-light" className="float-right mt-5" style={{ border: "none" }}>
 								Registrate
 							</Button>
-							<Button variant="outline-light" className="float-right mt-5" style={{ border: "none" }}>
-								Inicia Sesión
-							</Button>
+							<a>{LoginModal()}</a>
 						</Col>
 					</Row>
 					<Row>
