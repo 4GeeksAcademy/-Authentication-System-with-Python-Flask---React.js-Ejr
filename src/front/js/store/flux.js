@@ -14,18 +14,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					initial: "white"
 				}
 			],
-			providers: null,
-			products: [
-				{
-					nombre: "Vino",
-					marca: "Clos",
-					presentacion: "1 Litros",
-					impuesto: "13%",
-					codigo: "12413525245",
-					codigoCabys: "j83r932jd",
-					proveedor: "DIstribuidora de vinos"
-				}
-			]
+			providers: null
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
@@ -54,6 +43,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 				//reset the global store
 				setStore({ demo: demo });
 			},
+
+			//-----------------------------------Provider------------------------------------------------------------------------
 			loadProviders: () => {
 				fetch("https://3001-plum-catshark-11aarra7.ws-us03.gitpod.io/api/provider")
 					.then(response => response.json())
@@ -63,6 +54,52 @@ const getState = ({ getStore, getActions, setStore }) => {
 				console.log(data);
 				fetch(
 					"https://3001-plum-catshark-11aarra7.ws-us03.gitpod.io/api/provider",
+
+					{
+						method: "POST",
+						headers: {
+							"Content-Type": "application/json"
+						},
+						body: JSON.stringify(data)
+					}
+				)
+					.then(response => response.json())
+					.then(data => {
+						console.log("Success:", data);
+						setStore({ providers: data });
+					})
+					.catch(error => {
+						console.error("Error:", error);
+					});
+			},
+
+			//--------------------------------------------Users---------------------------------------------------------------
+			insertUserdata: data => {
+				console.log(data);
+				fetch(
+					"https://3001-pink-crane-guzshfxs.ws-us03.gitpod.io/api/user",
+
+					{
+						method: "POST",
+						headers: {
+							"Content-Type": "application/json"
+						},
+						body: JSON.stringify(data)
+					}
+				)
+					.then(response => response.json())
+					.then(data => {
+						console.log("Success:", data);
+						setStore({ providers: data });
+					})
+					.catch(error => {
+						console.error("Error:", error);
+					});
+			},
+			insertLogindata: data => {
+				console.log(data);
+				fetch(
+					"https://3001-pink-crane-guzshfxs.ws-us03.gitpod.io/api/login",
 
 					{
 						method: "POST",
