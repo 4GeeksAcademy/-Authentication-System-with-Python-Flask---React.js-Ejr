@@ -9,7 +9,7 @@ export const Info_WithoutBase = () => {
 
 	return (
 		<Container>
-			{store.noalcohol_cocktail.map((cocktail, index) => (
+			{store.non_alcoholic.map((cocktail, index) => (
 				<Card className="info_cards" key={index}>
 					<Row>
 						<Col className="col-auto col-md-4">
