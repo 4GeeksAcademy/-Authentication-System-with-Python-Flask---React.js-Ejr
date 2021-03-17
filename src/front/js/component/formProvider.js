@@ -16,6 +16,16 @@ export const FormProvider = () => {
 	const [payment_Type_Provider_Details, setPayment_Type_Provider_Details] = useState("");
 	const [address_Provider_Details, setAddress_Provider_Details] = useState("");
 
+	const update = data => {
+		console.log(data);
+		setId_Provider(data.id_Provider);
+		setName_Provider(data.name_Provider);
+		setEmail_Provider_Details(data.properties[0].email_Provider_Details);
+		setPayment_Type_Provider_Details(data.properties[0].payment_Type_Provider_Details);
+		setPhone_Provider_Details(data.properties[0].phone_Provider_Details);
+		setAddress_Provider_Details(data.properties[0].address_Provider_Details);
+	};
+
 	const handleSubmit = e => {
 		e.preventDefault();
 		if (
@@ -63,6 +73,7 @@ export const FormProvider = () => {
 											size="sm"
 											type="text"
 											placeholder=""
+											value={id_Provider}
 											onChange={e => setId_Provider(e.target.value)}
 										/>
 										<Form.Text className="text-muted" />
@@ -73,6 +84,7 @@ export const FormProvider = () => {
 											size="sm"
 											type="text"
 											placeholder=""
+											value={name_Provider}
 											onChange={e => setName_Provider(e.target.value)}
 										/>
 										<Form.Text className="text-muted" />
@@ -85,6 +97,7 @@ export const FormProvider = () => {
 										size="sm"
 										type="email"
 										placeholder="Enter email"
+										value={email_Provider_Details}
 										onChange={e => setEmail_Provider_Details(e.target.value)}
 									/>
 								</Form.Group>
@@ -94,6 +107,7 @@ export const FormProvider = () => {
 										<Form.Control
 											size="sm"
 											as="select"
+											value={payment_Type_Provider_Details}
 											onChange={e => setPayment_Type_Provider_Details(e.target.value)}>
 											<option>Transferencia Bancaria</option>
 											<option>Pago en Efectivo</option>
@@ -106,6 +120,7 @@ export const FormProvider = () => {
 											size="sm"
 											type="text"
 											placeholder=""
+											value={phone_Provider_Details}
 											onChange={e => setPhone_Provider_Details(e.target.value)}
 										/>
 										<Form.Text className="text-muted" />
@@ -117,6 +132,7 @@ export const FormProvider = () => {
 									<Form.Control
 										size="sm"
 										as="textarea"
+										value={address_Provider_Details}
 										rows={3}
 										onChange={e => setAddress_Provider_Details(e.target.value)}
 									/>
@@ -124,6 +140,15 @@ export const FormProvider = () => {
 
 								<Button size="sm" variant="primary" type="submit">
 									Submit
+								</Button>
+								<Button
+									size="sm"
+									variant="primary"
+									type="button"
+									onClick={() => {
+										actions.addFavorite(item);
+									}}>
+									Update
 								</Button>
 							</Form>
 						</Col>
@@ -155,7 +180,12 @@ export const FormProvider = () => {
 										<td>{item.properties[0].payment_Type_Provider_Details}</td>
 										<td>{item.properties[0].phone_Provider_Details}</td>
 										<td>
-											<i className="fas fa-pen" />
+											<i
+												className="fas fa-pen"
+												onClick={() => {
+													update(item);
+												}}
+											/>
 										</td>
 										<td>
 											<i className="fas fa-trash-alt" />

@@ -29,18 +29,40 @@ def listProvider():
 def addProvider():
     request_body = request.get_json()
     provider = Provider(id_Provider=request_body["id_Provider"],
-                         name_Provider=request_body["name_Provider"],
-                         active_Provider=request_body["active_Provider"])
+                name_Provider=request_body["name_Provider"],
+                active_Provider=request_body["active_Provider"])
     properties = Provider_Details(
-                            id_Provider_Details=request_body["id_Provider"],
-                            id_Provider=request_body["id_Provider"],
-                            email_Provider_Details=request_body["email_Provider_Details"], 
-                            phone_Provider_Details=request_body["phone_Provider_Details"],
-                            address_Provider_Details=request_body["address_Provider_Details"],
-                            payment_Type_Provider_Details=request_body["payment_Type_Provider_Details"])
-    print(request_body)
+                id_Provider_Details=request_body["id_Provider"],
+                id_Provider=request_body["id_Provider"],
+                email_Provider_Details=request_body["email_Provider_Details"], 
+                phone_Provider_Details=request_body["phone_Provider_Details"],
+                address_Provider_Details=request_body["address_Provider_Details"],
+                payment_Type_Provider_Details=request_body["payment_Type_Provider_Details"])
+
     db.session.add(provider)
     db.session.add(properties)
+    db.session.commit()
+    return jsonify("All good"), 200
+
+
+#------------------------------------------------------User----------------------------------------------------------------------------
+
+
+@api.route('/category',methods=['GET'])
+def listCategory():
+    category = Provider.query.all()
+    provider_serialized = list(map(lambda data: data.serialize(), category))
+    return jsonify(provider_serialized),200
+
+@api.route('/category',methods=['POST'])
+def addCategory():
+    request_body = request.get_json()
+    category = Category(id_Category=request_body["id_Category"],
+                        name_Category=request_body["name_Category"],
+                        description_Category=request_body["description_Category"],
+                        active_Product=request_body["active_Product"])
+    print(request_body)
+    db.session.add(category)
     db.session.commit()
     return jsonify("All good"), 200
 
@@ -125,3 +147,7 @@ def get_inventory():
     inventory = Inventory.query.all()
     inventory_serialized = list(map(lambda data: data.serialize(), inventory))
     return jsonify(inventory_serialized),200
+
+    return jsonify("All good"), 200
+
+#----------------------------------------------------------------------------------------------------------------------------------
