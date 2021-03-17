@@ -28,7 +28,7 @@ export const Info_Rum = () => {
 								</Card.Text>
 								{/* <Link to={`/cocktails/${index}`}> */}
 								<Link>
-									<Button variant="primary">Leer más..</Button>
+									<Button variant="outline-success">Leer más..</Button>
 								</Link>
 							</Card.Body>
 						</Col>

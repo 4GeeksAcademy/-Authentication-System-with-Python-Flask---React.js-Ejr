@@ -33,25 +33,25 @@
 // CONTENT
 // CONTENT
 // CONTENT
-#padre{
+#content1{
     position:relative;
 }
 
-#uno {
+#content2 {
     border: 1px solid #fff;
     background-color: #000;
     position: absolute;
-    top: 200px;
+    top: 100px;
     left: 0;
     right: 0;
 }
 
 @media (max-width: 768px) {
-    #padre .contentimg{
+    #content1 .contentimg{
         margin-top: 150px;
     }
 
-    #uno {
+    #content2 {
         top: 0;
     }
 }
