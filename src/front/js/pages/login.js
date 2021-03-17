@@ -1,8 +1,27 @@
-import React from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { Context } from "../store/appContext";
 import { Form, Button, Row, Col, Card } from "react-bootstrap";
 import "../../styles/register.scss";
 
 export function Login() {
+	const { store, actions } = useContext(Context);
+	const [name_User, setName_User] = useState("");
+	const [password_User_Details, setPassword_User_Details] = useState("");
+
+	const handleSubmit = e => {
+		e.preventDefault();
+		if (name_User === "" || password_User_Details === "") {
+			alert("Existen campos vacios");
+		} else {
+			const data = {
+				name_User: name_User,
+				password_User_Details: password_User_Details,
+				active_User: "Activo"
+			};
+			actions.insertLogindata(data);
+		}
+	};
+
 	return (
 		<>
 			<Row className="vh-100 align-items-center">
@@ -15,16 +34,24 @@ export function Login() {
 							</Card.Title>
 							<Row>
 								<Col md={{ span: 6, offset: 3 }}>
-									<Form>
+									<Form onSubmit={e => handleSubmit(e)}>
 										<Form.Group as={Row} controlId="formHorizontalText">
 											<Col sm={12}>
-												<Form.Control type="text" placeholder="Usuario" />
+												<Form.Control
+													type="text"
+													placeholder="Usuario"
+													onChange={e => setName_User(e.target.value)}
+												/>
 											</Col>
 										</Form.Group>
 
 										<Form.Group as={Row} controlId="formHorizontalPassword">
 											<Col sm={12}>
-												<Form.Control type="password" placeholder="Contraseña" />
+												<Form.Control
+													type="password"
+													placeholder="Contraseña"
+													onChange={e => setPassword_User_Details(e.target.value)}
+												/>
 											</Col>
 										</Form.Group>
 

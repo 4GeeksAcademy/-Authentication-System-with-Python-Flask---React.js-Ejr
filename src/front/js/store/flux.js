@@ -14,6 +14,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					initial: "white"
 				}
 			],
+
 			providers: null,
 			datosUpdate: null,
 			category: null,
@@ -79,6 +80,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 				//reset the global store
 				setStore({ demo: demo });
 			},
+
+			//-----------------------------------Provider------------------------------------------------------------------------
 			loadProviders: () => {
 				fetch("https://3001-plum-catshark-11aarra7.ws-us03.gitpod.io/api/provider")
 					.then(response => response.json())
@@ -134,6 +137,52 @@ const getState = ({ getStore, getActions, setStore }) => {
 						console.error("Error:", error);
 					});
 			},
+
+			//--------------------------------------------Users---------------------------------------------------------------
+			insertUserdata: data => {
+				console.log(data);
+				fetch(
+					"https://3001-pink-crane-guzshfxs.ws-us03.gitpod.io/api/user",
+
+					{
+						method: "POST",
+						headers: {
+							"Content-Type": "application/json"
+						},
+						body: JSON.stringify(data)
+					}
+				)
+					.then(response => response.json())
+					.then(data => {
+						console.log("Success:", data);
+						setStore({ providers: data });
+					})
+					.catch(error => {
+						console.error("Error:", error);
+					});
+			},
+			insertLogindata: data => {
+				console.log(data);
+				fetch(
+					"https://3001-pink-crane-guzshfxs.ws-us03.gitpod.io/api/login",
+
+					{
+						method: "POST",
+						headers: {
+							"Content-Type": "application/json"
+						},
+						body: JSON.stringify(data)
+					}
+				)
+					.then(response => response.json())
+					.then(data => {
+						console.log("Success:", data);
+						setStore({ providers: data });
+					})
+					.catch(error => {
+						console.error("Error:", error);
+					});
+
 			//Sección de funciones para página de reportes
 			// Filtra productos por proveedor para reporte
 			filterByProvider: provider_id => {
