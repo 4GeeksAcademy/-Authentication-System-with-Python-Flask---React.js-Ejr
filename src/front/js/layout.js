@@ -57,7 +57,7 @@ const Layout = () => {
 							<Base_Categories />
 							<Footer />
 						</Route>
-						<Route exact path="/Info_Category">
+						<Route exact path="/info_Category">
 							<NavFav />
 							<Info_Category />
 							<Footer />

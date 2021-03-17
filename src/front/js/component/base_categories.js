@@ -12,7 +12,7 @@ import vodka_alcohol from "../../img/categories_jpg/vodka.jpg";
 import tequila_alcohol from "../../img/categories_jpg/tequila_alcohol.jpg";
 
 export const Base_Categories = () => {
-
+	return (
 		<Container className="mt-2 mb-2">
 			<Row>
 				<article className="text-light" id="BaseDrinks">
