@@ -22,7 +22,7 @@ export const Home = () => {
 						<div className="principal">
 							<div className="frente" />
 							<div className="atras text-light">
-								<h4>Pedri Tos 69</h4>
+								<h4>Frankenstein</h4>
 								<p>Sabias que este coctel esta a base de RUM(Ron)</p>
 								<Button href="#RUM" className="Button" variant="outline-success">
 									Ver más
@@ -34,8 +34,8 @@ export const Home = () => {
 						<div className="principal">
 							<div className="frente" />
 							<div className="atras text-light">
-								<h4>Titulo</h4>
-								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+								<h4>Atardecer en Hawaii</h4>
+								<p>Sabias que este coctel esta a base de Whisky</p>
 								<Button href="#WHISKY" className="Button" variant="outline-success">
 									Ver más
 								</Button>
@@ -46,8 +46,8 @@ export const Home = () => {
 						<div className="principal">
 							<div className="frente" />
 							<div className="atras text-light">
-								<h4>Titulo</h4>
-								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+								<h4>Miss Honolulu</h4>
+								<p>Sabias que este coctel esta a base de Tequila</p>
 								<Button href="#TEQUILA" className="Button" variant="outline-success">
 									Ver más
 								</Button>
@@ -61,8 +61,8 @@ export const Home = () => {
 						<div className="principal">
 							<div className="frente" />
 							<div className="atras text-light">
-								<h4>Titulo</h4>
-								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+								<h4>Michelada</h4>
+								<p>Sabias que este coctel esta a base de Gin</p>
 								<Button href="#GIN" className="Button" variant="outline-success">
 									Ver más
 								</Button>
@@ -73,8 +73,8 @@ export const Home = () => {
 						<div className="principal">
 							<div className="frente" />
 							<div className="atras text-light">
-								<h4>Titulo</h4>
-								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+								<h4>Hierba Santa</h4>
+								<p>Sabias que este coctel esta a base de Vodka</p>
 								<Button href="#VODKA" className="Button" variant="outline-success">
 									Ver más
 								</Button>
@@ -85,8 +85,8 @@ export const Home = () => {
 						<div className="principal">
 							<div className="frente" />
 							<div className="atras text-light">
-								<h4>Titulo</h4>
-								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+								<h4>Acid Genesis</h4>
+								<p>Sabias que este coctel no tiene de base Alcohol</p>
 								<Button href="#WithoutBase" className="Button" variant="outline-success">
 									Ver más
 								</Button>
@@ -100,8 +100,8 @@ export const Home = () => {
 						<div className="principal">
 							<div className="frente" />
 							<div className="atras text-light">
-								<h4>Titulo</h4>
-								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+								<h4>Vampire Queen</h4>
+								<p>Sabias que este coctel esta a base de Whisky</p>
 								<Button href="#WHISKY" className="Button" variant="outline-success">
 									Ver más
 								</Button>
@@ -112,8 +112,8 @@ export const Home = () => {
 						<div className="principal">
 							<div className="frente" />
 							<div className="atras text-light">
-								<h4>Titulo</h4>
-								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+								<h4>Orange Machine</h4>
+								<p>Sabias que este coctel esta a base de Vodka</p>
 								<Button href="#VODKA" className="Button" variant="outline-success">
 									Ver más
 								</Button>{" "}
@@ -124,8 +124,8 @@ export const Home = () => {
 						<div className="principal">
 							<div className="frente" />
 							<div className="atras text-light">
-								<h4>Titulo</h4>
-								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+								<h4>Pradera Dorada</h4>
+								<p>Sabias que este coctel esta a base de Gin</p>
 								<Button href="#GIN" className="Button" variant="outline-success">
 									Ver más
 								</Button>
@@ -139,8 +139,8 @@ export const Home = () => {
 						<div className="principal">
 							<div className="frente" />
 							<div className="atras text-light">
-								<h4>Titulo</h4>
-								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+								<h4>Blue Monday</h4>
+								<p>Sabias que este coctel esta a base de Tequila</p>
 								<Button href="#TEQUILA" className="Button" variant="outline-success">
 									Ver más
 								</Button>
@@ -151,8 +151,8 @@ export const Home = () => {
 						<div className="principal">
 							<div className="frente" />
 							<div className="atras text-light">
-								<h4>Titulo</h4>
-								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+								<h4>Holy Moly</h4>
+								<p>Sabias que este coctel no tiene Alcohol como base.</p>
 								<Button href="#WithoutBase" className="Button" variant="outline-success">
 									Ver más
 								</Button>
@@ -163,8 +163,8 @@ export const Home = () => {
 						<div className="principal">
 							<div className="frente" />
 							<div className="atras text-light">
-								<h4>Titulo</h4>
-								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+								<h4>Viernes 13</h4>
+								<p>Sabias que este coctel esta a base de RUM(Ron)</p>
 								<Button href="#RUM" className="Button" variant="outline-success">
 									Ver más
 								</Button>
