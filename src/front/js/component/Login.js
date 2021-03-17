@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
+import { Link } from "react-router-dom";
 
 function MyVerticallyCenteredModal(props) {
 	return (
@@ -26,7 +27,9 @@ function MyVerticallyCenteredModal(props) {
 						className="text-muted"
 						style={{ textAlign: "center", marginTop: "20px", marginBottom: "60px" }}>
 						¿Olvidaste tu contraseña?
-						<a href="#">Recuperala aquí </a>
+						<Link to="/passwordrecovery">
+							<a> Recuperala aquí </a>
+						</Link>
 					</Form.Text>
 				</Form>
 			</Modal.Body>

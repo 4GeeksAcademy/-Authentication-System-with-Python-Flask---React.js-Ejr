@@ -11,6 +11,7 @@ import Navbar from "./component/navbar";
 import { Footer } from "./component/footer";
 import Landingpage from "./pages/landingPage";
 import { Registro } from "./pages/registro";
+import { PasswordRecovery } from "./component/PasswordRecovery";
 
 //create your first component
 const Layout = () => {
@@ -38,6 +39,9 @@ const Layout = () => {
 						</Route>
 						<Route exact path="/registro">
 							<Registro />
+						</Route>
+						<Route exact path="/passwordrecovery">
+							<PasswordRecovery />
 						</Route>
 						<Route>
 							<h1>Not found!</h1>
