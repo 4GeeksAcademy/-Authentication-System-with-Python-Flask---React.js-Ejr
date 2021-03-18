@@ -30,7 +30,7 @@ import { Info_Whisky } from "./component/info_whisky";
 // comentarios
 // Tercera Vista
 // utiliza NavFav
-import { Cocktails } from "./component/Cocktails";
+import { Cocktail_noAlcohol } from "./component/cocktail_noalcohol";
 
 //create your first component
 const Layout = () => {
@@ -87,11 +87,36 @@ const Layout = () => {
 							<Info_Whisky />
 							<Footer />
 						</Route>
-						<Route exact path="/cocktails">
+						<Route exact path="/Cocktail_noAlcohol">
+							<NavFav />
+							<Cocktail_noAlcohol />
+							<Footer />
+						</Route>
+						{/* <Route exact path="/Cocktail_noAlcohol">
+							<NavFav />
+							<Cocktail_noAlcohol />
+							<Footer />
+						</Route>
+						 <Route exact path="/Cocktail_noAlcohol">
 							<NavFav />
 							<Cocktails />
 							<Footer />
 						</Route>
+                        <Route exact path="/Cocktail_noAlcohol">
+							<NavFav />
+							<Cocktails />
+							<Footer />
+						</Route>
+                        <Route exact path="/Cocktail_noAlcohol">
+							<NavFav />
+							<Cocktails />
+							<Footer />
+						</Route>
+                        <Route exact path="/Cocktail_noAlcohol">
+							<NavFav />
+							<Cocktails />
+							<Footer />
+						</Route> */}
 					</Switch>
 				</ScrollToTop>
 			</BrowserRouter>

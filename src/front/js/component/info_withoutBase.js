@@ -29,7 +29,7 @@ export const Info_WithoutBase = () => {
 								<Card className="Card text-light p-3">
 									<blockquote className="blockquote mb-0 card-body">
 										<p>{cocktail.strDrink}</p>
-										{/* <Link to={`/cocktails/${index}`}> */}
+										{/* <Link to={`/Cocktail_noAlcohol/${index}`}> */}
 										<Link>
 											<Button variant="outline-success">Leer más..</Button>
 										</Link>

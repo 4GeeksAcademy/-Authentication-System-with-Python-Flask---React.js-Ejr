@@ -4,7 +4,7 @@ import { Container, Row, Col, Image, Card, Media, Button, ListGroup, Item } from
 import "../../styles/Cocktails.scss";
 import tomatelo from "../../img/logo/tomatelo2.png";
 //listo
-export const Cocktails = () => {
+export const Cocktail_noAlcohol = () => {
 	return (
 		//
 		<Container>
