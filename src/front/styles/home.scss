@@ -13,11 +13,19 @@ $theme-colors: (
   "green": #00D952,
   "greenB": #00BFA8
 );
+// por favor usar el nombre de cada color "primary, secondary...." 
+// para usar el color en sass puedes usar "map-get($theme-colors, 'primary')"
+// solamente en el caso que no puede usar el color con el nombre, puedes usar el number de color 
 
 .btn-primary {
     color: #fff;
     background-color: map-get($theme-colors, 'primary');
     border-color:map-get($theme-colors, 'primary');
+}
+.btn-primary:hover {
+    color: #fff;
+    background-color: map-get($theme-colors, 'info');
+    border-color:map-get($theme-colors, 'info');
 }
 
 .btn-outline-primary {
@@ -117,4 +125,7 @@ $theme-colors: (
     color: #fff;
     background-color: map-get($theme-colors, 'info');
     border-color: map-get($theme-colors, 'info');
+}
+.mt-5{
+    margin-top:0rem;
 }

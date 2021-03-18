@@ -3,13 +3,16 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
 
 import { Home } from "./pages/home";
-import { Demo } from "./pages/demo";
-import { Single } from "./pages/single";
+import { ServicioCategory } from "./pages/servicio-category";
+import { Servicioindividual } from "./pages/servicio-Individual";
 import injectContext from "./store/appContext";
 
-import Navbar from "./component/navbar";
+import MyNavbar from "./component/navbar";
 import { Footer } from "./component/footer";
-import Landingpage from "./pages/landingpage";
+import Landingpage from "./pages/landingPage";
+import { Registro } from "./pages/registro";
+import { PasswordRecovery } from "./component/PasswordRecovery";
+import { PasswordRecovery2 } from "./component/PasswordRecovery2";
 
 //create your first component
 const Layout = () => {
@@ -21,7 +24,7 @@ const Layout = () => {
 		<div className="d-flex flex-column h-100">
 			<BrowserRouter basename={basename}>
 				<ScrollToTop>
-					<Navbar />
+					<MyNavbar />
 					<Switch>
 						<Route exact path="/">
 							<Landingpage />
@@ -29,11 +32,20 @@ const Layout = () => {
 						<Route exact path="/home">
 							<Home />
 						</Route>
-						<Route exact path="/demo">
-							<Demo />
+						<Route exact path="/category">
+							<ServicioCategory />
 						</Route>
-						<Route exact path="/single/:theid">
-							<Single />
+						<Route exact path="/category/:theid">
+							<Servicioindividual />
+						</Route>
+						<Route exact path="/registro">
+							<Registro />
+						</Route>
+						<Route exact path="/passwordrecovery">
+							<PasswordRecovery />
+						</Route>
+						<Route exact path="/passwordrecovery2">
+							<PasswordRecovery2 />
 						</Route>
 						<Route>
 							<h1>Not found!</h1>
