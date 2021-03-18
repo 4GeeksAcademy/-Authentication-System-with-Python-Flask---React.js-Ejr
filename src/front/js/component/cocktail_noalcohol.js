@@ -1,31 +1,36 @@
 import React, { useContext } from "react";
-//import { Context } from "../store/appContext";
-import { Container, Row, Col, Image, Card, Media, Button, ListGroup, Item } from "react-bootstrap";
+import { Context } from "../store/appContext";
+import { useParams } from "react-router-dom";
+// import { Link } from "react-router-dom";
+import { Container, Row, Card, Button } from "react-bootstrap";
 import "../../styles/Cocktails.scss";
-import tomatelo from "../../img/logo/tomatelo2.png";
-//listo
+
 export const Cocktail_noAlcohol = () => {
+	const params = useParams();
+	const { store, actions } = useContext(Context);
+	const element = store.characters[params.theid];
+
 	return (
-		//
 		<Container>
 			<Row>
 				<Card className="cardtotal" style={{ width: "100rem" }}>
-					<Card.Img variant="top" src="https://images7.alphacoders.com/397/thumb-1920-397308.jpg" />
+					<Card.Img variant="top" src={cocktail.strDrinkThumb} />
 					<Card.Body>
-						<Card.Title>Margarita</Card.Title>
+						<Card.Title>{cocktail.strDrink}</Card.Title>
 					</Card.Body>
 
 					<Card.Body>
-						<Card.Title>Ingredientes</Card.Title>
+						<Card.Title>{cocktail.add}</Card.Title>
 						<Card className="ingredientes-instru">
-							<Card.Body>ingredientes.</Card.Body>
+							<Card.Body>{cocktail.add}</Card.Body>
 						</Card>
 					</Card.Body>
 
 					<Card.Body>
-						<Card.Title>Instrucciones</Card.Title>
+						<Card.Title>{cocktail.add}</Card.Title>
 						<Card className="ingredientes-instru">
-							<Card.Body>instrucciones.</Card.Body>
+							{/* Ingredientes == add the differents names to details with more description*/}
+							<Card.Body>{cocktail.add}</Card.Body>
 						</Card>
 					</Card.Body>
 				</Card>
