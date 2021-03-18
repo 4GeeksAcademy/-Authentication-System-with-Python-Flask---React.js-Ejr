@@ -16,7 +16,7 @@ const LandingPage = () => {
 		<div
 			className="background"
 			style={{
-				backgroundImage: `url(https://3000-salmon-otter-elqylgff.ws-us03.gitpod.io/backGround.png)`
+				backgroundImage: `url(http://localhost:3000/backGround.png)`
 			}}>
 			<Container>
 				<div>
@@ -44,24 +44,35 @@ const LandingPage = () => {
 							<div className="transBox" />
 							<h1 className="text-white mt-3">
 								Contrata en línea
-								<br />a los mejores freelancers
+								<br />a los mejores equipos!
 							</h1>
-							<Form inline>
+							<Form inline className="Buscar sb d-flex float-left" style={{ width: "452px" }}>
+								<Button variant="btn">
+									<i className="fas fa-search" />
+								</Button>
 								<FormControl
 									type="text"
 									placeholder="Buscar"
-									className="mr-sm-2 my-3 "
-									style={{ borderRadius: "1.75rem", width: "526px" }}
+									className="mr-sm-2 search"
+									style={{ width: "302px" }}
 								/>
-								<Link to="/home">
-									<Button variant="outline-light" className="mr-3 mt-2 px-5" sm={12}>
-										Buscar un freelancer
-									</Button>
-								</Link>
-								<Button variant="secondary" className="mt-2 px-5" sm={12}>
-									&nbsp;&nbsp;&nbsp;Soy un freelancer&nbsp;&nbsp;&nbsp;
-								</Button>
 							</Form>
+							<Link to="/home">
+								<Button
+									variant="outline-light"
+									className="mr-3 mt-2 px-4"
+									sm={12}
+									style={{ borderRadius: "1.75rem" }}>
+									&nbsp;&nbsp;Buscar un freelancer&nbsp;&nbsp;
+								</Button>
+							</Link>
+							<Button
+								variant="secondary"
+								className="mt-2 px-4"
+								sm={12}
+								style={{ borderRadius: "1.75rem" }}>
+								&nbsp;&nbsp;&nbsp;&nbsp;Soy un freelancer&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							</Button>
 						</Col>
 						<Col md={5} sm={12} className="mt-5">
 							<img

@@ -10,10 +10,35 @@ export const CategoryBox = props => {
 	return (
 		<>
 			<Container>
-				<Row
-					className="row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 align-items-center"
-					style={{ margin: "none" }}>
-					<Col className="m-3">
+				<Row className="row-cols-sm-2 row-cols-md-3  row-cols-lg-3 align-items-center">
+					<Col className="mb-4">
+						<CardIndividual
+							img={serviceIt}
+							title="Crearé un sitio web"
+							valor="50.000/hora"
+							punta="4.5"
+							trabajo="50"
+						/>
+					</Col>
+					<Col className="mb-4">
+						<CardIndividual
+							img={serviceIt}
+							title="Crearé un sitio web"
+							valor="50.000/hora"
+							punta="4.5"
+							trabajo="50"
+						/>
+					</Col>
+					<Col className="mb-4">
+						<CardIndividual
+							img={serviceIt}
+							title="Crearé un sitio web"
+							valor="50.000/hora"
+							punta="4.5"
+							trabajo="50"
+						/>
+					</Col>
+					<Col className="mb-4">
 						<CardIndividual
 							img={serviceIt}
 							title="Desarollar/IT"
@@ -22,7 +47,7 @@ export const CategoryBox = props => {
 							trabajo="50"
 						/>
 					</Col>
-					<Col className="m-3">
+					<Col className="mb-4">
 						<CardIndividual
 							img={serviceIt}
 							title="Desarollar/IT"
@@ -31,7 +56,7 @@ export const CategoryBox = props => {
 							trabajo="50"
 						/>
 					</Col>
-					<Col className="m-3">
+					<Col className="mb-4">
 						<CardIndividual
 							img={serviceIt}
 							title="Desarollar/IT"
@@ -40,7 +65,7 @@ export const CategoryBox = props => {
 							trabajo="50"
 						/>
 					</Col>
-					<Col className="m-3">
+					<Col className="mb-4">
 						<CardIndividual
 							img={serviceIt}
 							title="Desarollar/IT"
@@ -49,43 +74,7 @@ export const CategoryBox = props => {
 							trabajo="50"
 						/>
 					</Col>
-					<Col className="m-3">
-						<CardIndividual
-							img={serviceIt}
-							title="Desarollar/IT"
-							valor="50.000/hora"
-							punta="4.5"
-							trabajo="50"
-						/>
-					</Col>
-					<Col className="m-3">
-						<CardIndividual
-							img={serviceIt}
-							title="Desarollar/IT"
-							valor="50.000/hora"
-							punta="4.5"
-							trabajo="50"
-						/>
-					</Col>
-					<Col className="m-3">
-						<CardIndividual
-							img={serviceIt}
-							title="Desarollar/IT"
-							valor="50.000/hora"
-							punta="4.5"
-							trabajo="50"
-						/>
-					</Col>
-					<Col className="m-3">
-						<CardIndividual
-							img={serviceIt}
-							title="Desarollar/IT"
-							valor="50.000/hora"
-							punta="4.5"
-							trabajo="50"
-						/>
-					</Col>
-					<Col className="m-3">
+					<Col className="mb-4">
 						<CardIndividual
 							img={serviceIt}
 							title="Desarollar/IT"

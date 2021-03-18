@@ -48,6 +48,7 @@ export function LoginModal() {
 				onClick={() => setModalShow(true)}>
 				Ingresa
 			</Button>
+
 			<MyVerticallyCenteredModal show={modalShow} onHide={() => setModalShow(false)} />
 		</>
 	);
