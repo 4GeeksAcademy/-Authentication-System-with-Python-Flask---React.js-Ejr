@@ -39,7 +39,6 @@ export const Info_Rum = () => {
 												<i className="far fa-heart" />
 											</Button>
 										</Link>
-
 									</blockquote>
 								</Card>
 							</div>
