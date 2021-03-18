@@ -126,6 +126,7 @@ $theme-colors: (
     background-color: map-get($theme-colors, 'info');
     border-color: map-get($theme-colors, 'info');
 }
+<<<<<<< HEAD
 
 
 .btn-outline-dark {
@@ -141,3 +142,8 @@ $theme-colors: (
 }
 
 
+=======
+.mt-5{
+    margin-top:0rem;
+}
+>>>>>>> 4baf5dc5109bca01e99922ae8b1828ba6029f2a6
