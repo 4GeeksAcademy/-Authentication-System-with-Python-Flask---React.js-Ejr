@@ -14,6 +14,7 @@ import { Registro } from "./pages/registro";
 import { PasswordRecovery } from "./component/PasswordRecovery";
 import { PasswordRecovery2 } from "./component/PasswordRecovery2";
 import Register from "./pages/register";
+import registerService from "./pages/registerService";
 
 //create your first component
 const Layout = () => {
@@ -50,6 +51,9 @@ const Layout = () => {
 						</Route>
 						<Route exact path="/register">
 							<Register />
+						</Route>
+						<Route exact path="/registerservice">
+							<registerService />
 						</Route>
 						<Route>
 							<h1>Not found!</h1>

@@ -22,15 +22,17 @@ const Register = () => {
 			<Container>
 				<div>
 					<Row>
-						<Col xs={4}>
-							<img
-								src={logoBlanco}
-								width="110"
-								height="33"
-								className="d-inline-block align-top mt-5"
-								alt="cotec"
-							/>
-						</Col>
+						<Link to="/">
+							<Col xs={4}>
+								<img
+									src={logoBlanco}
+									width="110"
+									height="33"
+									className="d-inline-block align-top mt-5"
+									alt="cotec"
+								/>
+							</Col>
+						</Link>
 					</Row>
 					<Row>
 						<Col md={7}>
@@ -78,8 +80,8 @@ const Register = () => {
 								</Col>
 								<Col sm={1}></Col>
 							</Form.Group>
-							<div>
-								<ButtonGroup toggle className="trans mb-1">
+							<div className="row" style={{ justifyContent: "center" }}>
+								<ButtonGroup toggle className="trans mb-5">
 									<ToggleButton
 										type="checkbox"
 										variant="outline-primary"
@@ -98,16 +100,12 @@ const Register = () => {
 										Quiero contratar servicios
 									</ToggleButton>
 								</ButtonGroup>
-								<br />
-								<Button
-									variant="primary"
-									size="lg"
-									type="submit"
-									block
-									style={{ marginBottom: "70px" }}>
+							</div>
+							<Row style={{ justifyContent: "center"}}}>
+								<Button variant="primary" size="lg" type="submit" style={{ marginBottom: "70px" }}>
 									Crear cuenta
 								</Button>
-							</div>
+							</Row>
 						</Form>
 					</div>
 				</div>
