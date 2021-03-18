@@ -11,15 +11,14 @@ export const ServicioCategory = props => {
 		<Container>
 			<div>
 				<Row>
-					<Col className="my-3">
-						<h3>Desarrollar/IT</h3>
+					<Col className="mt-5">
+						<h4>Desarrollar/IT</h4>
 					</Col>
 				</Row>
 				<Row>
 					<Col md={3}>
 						<MyFilter />
 					</Col>
-
 					<Col>
 						<CategoryBox />
 						<div className="transBox" />

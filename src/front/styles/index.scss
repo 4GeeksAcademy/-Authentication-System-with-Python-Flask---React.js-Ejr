@@ -82,4 +82,33 @@ h1, h2, h3, h4, h5{
     background: map-get($theme-colors, 'info'); 
   }
 
+.caimg{
+  position: relative;
   
+}
+.favorito{
+  position: absolute; 
+  top:0; 
+  right:0;
+  z-index: 1;
+  font-size: 25px;
+  color:gray;
+  background-color: transparent;
+
+}
+.search{
+  border: none;
+  width: 60%;
+}
+.sb{
+  border: 1px solid gray;
+  border-radius:1.75rem;
+  padding-left: 13px;
+  background: white;
+}
+.fa-search{
+  width: 10%;
+}
+.no-outline{
+  border:none;
+}
