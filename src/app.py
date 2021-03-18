@@ -118,28 +118,42 @@ def update_user(user_id):
 #endregion USER
 
 #region Favorite
+#region add GET FAVORITE
             ###GET ALL FAVORITES###
-@app.route('/favorite', methods=['GET'])
-def get_favorites():
-    fav = Favorite.query.all()
-    payload = list(map(lambda f: f.serialize(), fav))
-    return jsonify(payload), 200
+# @app.route('/favorite', methods=['GET'])
+# @jwt_required
+# def get_favorites():
     
+#     fav = Favorite.query.all()
+#     payload = list(map(lambda f: f.serialize(), fav))
+#     return jsonify(payload), 200
+ #endregion END GET FAVORITE   
             ###ADD FAVORITE###
-@app.route('/favorite', methods=['POST'])
-#@jwt_required
+@app.route('/favorite', methods=['POST', 'GET'])
+@jwt_required
 def add_favorite():
-    #user_id = get_jwt_identity()                #getting tokenid from user 
+    user_id = get_jwt_identity()                #getting tokenid from user 
 
-    req = json.loads(request.data)
-    if req["cocktail_name"] == None and req["cocktail_img"] == None:
-        flash('Espacios en blanco o invalidos')
-    else:
-        fav = Favorite(cocktail_name= req["cocktail_name"], cocktail_img= req["cocktail_img"], user_id= req["user_id"])
+    if request.method == 'POST':
+        req = request.get_json()
+        if req is None:
+            raise APIException("Resquest is need as a json object", status_code=400)
+        if 'cocktail_id' not in req:
+            raise APIException("Cocktail ID must be typed ", status_code=400)
+        if 'cocktail_name' not in req:
+            raise APIException("Cocktail name must be typed", status_code=400)
+        if 'cocktail_img' not in req:
+            raise APIException("Cocktail image must be typed", status_code=400)
+        fav = Favorite(cocktail_id=req["cocktail_id"],cocktail_name= req["cocktail_name"], cocktail_img= req["cocktail_img"], user_id= req["user_id"])
         db.session.add(fav)
         db.session.commit()
         return "Hecho", 200  #It is OK
 
+    if request.method == 'GET':
+        myfavs = Favorite.query.all()
+        myfavs = list(map(lambda f: f.serialize(), favs))
+        return  jsonify(myfavs), 200
+    return "Error, invalid method", 404
         ###DELETE FAVORITE BY ID###
 @app.route('/delete/<int:fav_id>', methods=['DELETE'])
 def delete_fav_by_id():

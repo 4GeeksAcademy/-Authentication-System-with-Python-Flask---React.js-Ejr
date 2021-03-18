@@ -38,6 +38,7 @@ const injectContext = PassedComponent => {
 			state.actions.info_vodkaCocktail();
 			state.actions.info_tequilaCocktail();
 			state.actions.info_whiskyCocktail();
+			state.actions.info_non_alcoholicCocktail();
 		}, []);
 
 		// The initial value for the context is not null anymore, but the current state of this component,
