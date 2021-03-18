@@ -35,11 +35,11 @@ export const Info_Rum = () => {
 										</Link>
 
 										<Link>
-											<Button variant="outline-warning ">
+											<Button variant="outline-warning">
 												<i className="far fa-heart" />
 											</Button>
 										</Link>
-                                        
+
 									</blockquote>
 								</Card>
 							</div>

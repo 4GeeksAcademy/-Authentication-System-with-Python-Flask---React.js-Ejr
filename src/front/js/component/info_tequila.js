@@ -35,11 +35,11 @@ export const Info_Tequila = () => {
 										</Link>
 
 										<Link>
-											<Button variant="outline-warning ">
+											<Button variant="outline-warning">
 												<i className="far fa-heart" />
 											</Button>
 										</Link>
-                                        
+
 									</blockquote>
 								</Card>
 							</div>
