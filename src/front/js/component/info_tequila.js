@@ -33,6 +33,12 @@ export const Info_Tequila = () => {
 										<Link>
 											<Button variant="outline-success">Leer más..</Button>
 										</Link>
+
+										<Link>
+											<Button variant="outline-warning ">
+												<i className="far fa-heart" />
+											</Button>
+										</Link>
 									</blockquote>
 								</Card>
 							</div>
