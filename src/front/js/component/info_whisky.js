@@ -39,6 +39,7 @@ export const Info_Whisky = () => {
 												<i className="far fa-heart" />
 											</Button>
 										</Link>
+                                        
 									</blockquote>
 								</Card>
 							</div>
