@@ -122,8 +122,50 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 
 			//Building Favorites f(x)s
+			//It checks by exiting favs
+			faverify: fav => {
+				console.table("fav", fav);
+				const favStore = getStore();
+				let matching = store.favorites.find(f => f.cocktail_name === fav); //if fav has been found
+				console.table("Done", matching);
+				if (matching != undefined) {
+					return true;
+				} else {
+					return false;
+				}
+			},
+			//It is getting favorites by User ID
+			favorite_by_user: async id => {
+				const res = await fetch(`https://3001-apricot-tahr-nih1bqo0.ws-us03.gitpod.io/user/${id}`);
+				usr_fav = res.json();
+				setStore({ favorites: usr_fav.favorites });
+			},
+			//Function managed to delete favorites by ID
+			delFavorite: async id => {
+				const favStore = getStore();
+				const cocktail_ID = store.favorites(f => f.cocktail_id == id);
+				console.table("DELETE:", cocktail_ID);
+				const favID = await store.favorites[cocktail_ID].id;
+				console.table("ID", favID);
+				if (cocktail_ID != -1) {
+					fetch(`https://3001-apricot-tahr-nih1bqo0.ws-us03.gitpod.io\favorite\${id}`, {
+						method: "DELETE"
+					}).then(() => getActions().favorite_by_user(store.sessionUID));
+				}
+			},
+			//Function managed to add favorites to verified user
 			addFavorites: async (cocktail_id, cocktail_name, cocktail_img) => {
 				const store = getStore();
+				const faverify = await getActions.faverify(cocktail_name);
+				if (!faverify) {
+					await fetch("https://3001-apricot-tahr-nih1bqo0.ws-us03.gitpod.io/favorite", {
+						method: "POST",
+						headers: { "Content-Type": "application/json", authorization: `Bearer ${store.jwtoken}` },
+						body: JSON.stringify({ cocktail_id: drink_id, cocktail_name: cocktail_name, cocktail })
+					}).then(() => getActions().favorite_by_user(store.sessionUID));
+				} else {
+					getActions().delFavorite(cocktail_ID);
+				}
 			}
 			/////////////////////END TESTING PURPOSES @JVM && @ANMORA///////////////////////
 			// Use getActions to call a function within a fuction
