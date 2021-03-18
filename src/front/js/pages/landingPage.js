@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import "../../styles/home.scss";
 import "../../styles/index.scss";
 import { logoBlanco, man } from "../../img/image";
@@ -8,6 +8,7 @@ import { IconBox } from "../component/IconBox.jsx";
 import { CardBox } from "../component/cardBox.jsx";
 import { ServiceBox } from "../component/serviceBox.jsx";
 import { Footer } from "../component/footer";
+import { LoginModalA } from "../component/Login";
 import { Link } from "react-router-dom";
 
 const LandingPage = () => {
@@ -33,9 +34,7 @@ const LandingPage = () => {
 							<Button variant="secondary" className="float-right mt-5">
 								Registrate
 							</Button>
-							<Button variant="outline-light" className="float-right mt-5" style={{ border: "none" }}>
-								Inicia Sesión
-							</Button>
+							<a>{LoginModalA()}</a>
 						</Col>
 					</Row>
 					<Row>
