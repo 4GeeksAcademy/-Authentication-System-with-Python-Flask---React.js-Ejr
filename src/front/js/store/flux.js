@@ -122,7 +122,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 
 			//Building Favorites f(x)s
-			addFavorites: async (drink_name, drink_img) => {
+			addFavorites: async (cocktail_id, cocktail_name, cocktail_img) => {
 				const store = getStore();
 			}
 			/////////////////////END TESTING PURPOSES @JVM && @ANMORA///////////////////////
