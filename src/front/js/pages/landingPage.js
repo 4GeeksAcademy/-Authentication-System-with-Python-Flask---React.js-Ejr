@@ -8,7 +8,7 @@ import { IconBox } from "../component/IconBox.jsx";
 import { CardBox } from "../component/cardBox.jsx";
 import { ServiceBox } from "../component/serviceBox.jsx";
 import { Footer } from "../component/footer";
-import { LoginModal } from "../component/Login";
+import { LoginModal, LoginModalA } from "../component/Login";
 import { Link } from "react-router-dom";
 
 const LandingPage = () => {
@@ -31,10 +31,12 @@ const LandingPage = () => {
 							/>
 						</Col>
 						<Col xs={8}>
-							<Button variant="outline-light" className="float-right mt-5" style={{ border: "none" }}>
-								Registrate
-							</Button>
-							<a>{LoginModal()}</a>
+							<Link to="/register">
+								<Button variant="outline-light" className="float-right mt-5" style={{ border: "none" }}>
+									Registrate
+								</Button>
+							</Link>
+							<a>{LoginModalA()}</a>
 						</Col>
 					</Row>
 					<Row>

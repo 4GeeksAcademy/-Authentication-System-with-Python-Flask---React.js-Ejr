@@ -39,13 +39,26 @@ function MyVerticallyCenteredModal(props) {
 
 export function LoginModal() {
 	const [modalShow, setModalShow] = React.useState(false);
-
 	return (
 		<>
-			<Button variant="secondary" className="float-right mt-5" onClick={() => setModalShow(true)}>
+			<Button
+				variant="outline-primary "
+				className="no-outline mr-2"
+				style={{ borderRadius: "1.75rem" }}
+				onClick={() => setModalShow(true)}>
 				Ingresa
 			</Button>
-
+			<MyVerticallyCenteredModal show={modalShow} onHide={() => setModalShow(false)} />
+		</>
+	);
+}
+export function LoginModalA() {
+	const [modalShow, setModalShow] = React.useState(false);
+	return (
+		<>
+			<Button variant="outline-light " className="no-outline float-right mt-5" onClick={() => setModalShow(true)}>
+				Ingresa
+			</Button>
 			<MyVerticallyCenteredModal show={modalShow} onHide={() => setModalShow(false)} />
 		</>
 	);
