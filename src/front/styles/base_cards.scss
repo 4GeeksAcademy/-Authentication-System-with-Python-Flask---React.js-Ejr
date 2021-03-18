@@ -1,0 +1,26 @@
+.base_cards{
+    margin-top: 150px;
+}
+
+#base_cards1{
+    position:relative;
+}
+
+#base_cards1 .contentimg {
+    width: 100%;
+    height: 300px;
+}
+
+#base_cards2 {
+    border: 1px solid #fff;
+    background-color: #000;
+    position: absolute;
+    top: 70px;
+    left: 0;
+}
+
+@media (max-width: 768px) {
+    #base_cards2 {
+        top: 0;
+    }
+}
