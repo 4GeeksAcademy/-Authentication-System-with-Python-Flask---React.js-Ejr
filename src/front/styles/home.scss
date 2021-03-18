@@ -126,3 +126,18 @@ $theme-colors: (
     background-color: map-get($theme-colors, 'info');
     border-color: map-get($theme-colors, 'info');
 }
+
+
+.btn-outline-dark {
+    color:  map-get($theme-colors, 'gray');
+    border-color:  map-get($theme-colors, 'gray');
+    background-color: transparent;
+}
+
+.btn-outline-dark:hover {
+    color: #fff;
+    background-color: map-get($theme-colors, 'info');
+    border-color: map-get($theme-colors, 'info');
+}
+
+
