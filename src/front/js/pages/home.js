@@ -4,29 +4,17 @@ import { homeSlideA, homeSlideB, homeSlideC, serviceDiseno, serviceMarketing, se
 import "../../styles/home.scss";
 import "../../styles/index.scss";
 import MyCarousel from "../component/MyCarousel.jsx";
+import { CardBox } from "../component/cardBox.jsx";
+import { PersonBox } from "../component/personBox.jsx";
 
 export const Home = () => {
 	const { store, actions } = useContext(Context);
 	return (
 		<>
-			<div className="text-center mt-5">
+			<div className="text-center mt-5 espacio">
 				<MyCarousel />
-				<p>
-					<img
-						src={homeSlideA}
-						width="100%"
-						height="450px"
-						className="d-inline-block align-top mt-3 "
-						alt="Home Slide"
-					/>
-				</p>
-				<div className="alert alert-info">{store.message || "Loading message from the backend..."}</div>
-				<p>
-					This boilerplate comes with lots of documentation:{" "}
-					<a href="https://github.com/4GeeksAcademy/react-flask-hello/tree/95e0540bd1422249c3004f149825285118594325/docs">
-						Read documentation
-					</a>
-				</p>
+				<PersonBox title="Profesionales más solicitados" />
+				<CardBox title="Categorias más buscadas" />
 			</div>
 		</>
 	);
