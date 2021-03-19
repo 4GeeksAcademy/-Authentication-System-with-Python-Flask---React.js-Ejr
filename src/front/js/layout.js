@@ -104,7 +104,7 @@ const Layout = () => {
 							<Cocktail_Vodka />
 							<Footer />
 						</Route>
-						<Route exact path="/Cocktail_Tequila/:theid">
+						{/* <Route exact path="/Cocktail_Tequila/:theid">
 							<NavFav />
 							<Cocktail_Tequila />
 							<Footer />
@@ -118,7 +118,7 @@ const Layout = () => {
 							<NavFav />
 							<Cocktails_Gin />
 							<Footer />
-						</Route>
+						</Route> */}
 					</Switch>
 				</ScrollToTop>
 			</BrowserRouter>
