@@ -117,8 +117,17 @@ const getState = ({ getStore, getActions, setStore }) => {
 			info_non_alcoholicCocktail: async () => {
 				//It gets base cocktails via filter classification
 				const res = await fetch("https://www.thecocktaildb.com/api/json/v2/9973533/filter.php?a=Non_Alcoholic");
+				let cocktailList = [];
 				const cocktail = await res.json();
-				setStore({ non_alcoholic: cocktail.drinks });
+				cocktail.forEach(item => {
+					fetch(`https://www.thecocktaildb.com/api/json/v2/9973533/lookup.php?i=${item.idDrink}`)
+						.then(res2 => res2.json())
+						.then(data => {
+							cocktailList.push(data);
+							console.log(data);
+						});
+				});
+				//setStore({ non_alcoholic: cocktail.drinks });
 			},
 
 			//Building Favorites f(x)s
