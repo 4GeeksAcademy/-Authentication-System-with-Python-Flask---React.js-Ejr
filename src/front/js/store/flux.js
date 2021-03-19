@@ -16,7 +16,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			gin_cocktail: [],
 			vodka_cocktail: [],
 			tequila_cocktail: [],
-			info_whiskyCocktail: [],
+			whisky_cocktail: [],
 			non_alcoholic: []
 		},
 		actions: {
@@ -116,6 +116,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					fetch(`https://www.thecocktaildb.com/api/json/v2/9973533/lookup.php?i=${item.idDrink}`)
 						.then(res2 => res2.json())
 						.then(data => {
+							//console.log(data.drinks[0])
 							cocktailList.push(data.drinks[0]);
 						});
 				});
