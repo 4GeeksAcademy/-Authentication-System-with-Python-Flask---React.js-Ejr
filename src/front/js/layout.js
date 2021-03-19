@@ -30,7 +30,7 @@ import { Info_Whisky } from "./component/info_whisky";
 // comentarios
 // Tercera Vista
 // utiliza NavFav
-import { Cocktail_noAlcohol } from "./component/cocktail_noalcohol";
+import { Cocktail_nonAlcohol } from "./component/cocktail_noalcohol";
 
 //create your first component
 const Layout = () => {
@@ -87,9 +87,9 @@ const Layout = () => {
 							<Info_Whisky />
 							<Footer />
 						</Route>
-						<Route exact path="/Cocktail_noAlcohol">
+						<Route exact path="/Cocktail_nonAlcohol/:theid">
 							<NavFav />
-							<Cocktail_noAlcohol />
+							<Cocktail_nonAlcohol />
 							<Footer />
 						</Route>
 						{/* <Route exact path="/Cocktail_noAlcohol">
