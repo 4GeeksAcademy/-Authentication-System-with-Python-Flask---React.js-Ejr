@@ -33,6 +33,7 @@ const injectContext = PassedComponent => {
 			// Se extraen las funciones de Fetch para mostrar datos:
 			// Usar estos mismos nombres para flux y en components:
 			// state.actions.info_noalcoholCocktail();
+			// state.actions.info_Cocktail();
 			state.actions.info_rumCocktail();
 			state.actions.info_ginCocktail();
 			state.actions.info_vodkaCocktail();

@@ -16,7 +16,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			gin_cocktail: [],
 			vodka_cocktail: [],
 			tequila_cocktail: [],
-			whisky_cocktail: [],
+			brandy_cocktail: [],
 			non_alcoholic: []
 		},
 		actions: {
@@ -75,59 +75,102 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({ randomcocktail: cocktail.drinks });
 			},
 
-			info_Cocktail: async idDrink => {
-				//It gets base cocktails via filter
-				const res = await fetch(`https://www.thecocktaildb.com/api/json/v2/9973533/lookup.php?i=${idDrink}`);
-				const cocktail = await res.json();
-				setStore({ basecocktail: cocktail.drinks });
-			},
-
-			info_rumCocktail: async () => {
-				//It gets base cocktails via filter
-				const res = await fetch("https://www.thecocktaildb.com/api/json/v2/9973533/search.php?s=Rum");
-				const cocktail = await res.json();
-				setStore({ rum_cocktail: cocktail.drinks });
-			},
-
-			info_vodkaCocktail: async () => {
-				//It gets base cocktails via filter classification
-				const res = await fetch("https://www.thecocktaildb.com/api/json/v2/9973533/search.php?s=Vodka");
-				const cocktail = await res.json();
-				setStore({ vodka_cocktail: cocktail.drinks });
-			},
-
-			info_tequilaCocktail: async () => {
-				//It gets base cocktails via filter classification
-				const res = await fetch("https://www.thecocktaildb.com/api/json/v2/9973533/search.php?s=Tequila");
-				const cocktail = await res.json();
-				setStore({ tequila_cocktail: cocktail.drinks });
-			},
-			info_whiskyCocktail: async () => {
-				//It gets base cocktails via filter classification
-				const res = await fetch("https://www.thecocktaildb.com/api/json/v2/9973533/search.php?s=Whisky");
-				const cocktail = await res.json();
-				setStore({ whisky_cocktail: cocktail.drinks });
-			},
-			info_ginCocktail: async () => {
-				//It gets base cocktails via filter classification
-				const res = await fetch("https://www.thecocktaildb.com/api/json/v2/9973533/filter.php?i=Gin");
-				const cocktail = await res.json();
-				setStore({ gin_cocktail: cocktail.drinks });
-			},
 			info_non_alcoholicCocktail: async () => {
 				//It gets base cocktails via filter classification
 				const res = await fetch("https://www.thecocktaildb.com/api/json/v2/9973533/filter.php?a=Non_Alcoholic");
 				let cocktailList = [];
 				const cocktail = await res.json();
+				cocktail.drinks.forEach(item => {
+					fetch(`https://www.thecocktaildb.com/api/json/v2/9973533/lookup.php?i=${item.idDrink}`)
+						.then(res2 => res2.json())
+						.then(data => {
+							// console.log(data.drinks[0]);
+							cocktailList.push(data.drinks[0]);
+						});
+				});
+				setStore({ non_alcoholic: cocktailList });
+			},
+
+			// info_rumCocktail: async () => {
+			// 	//It gets base cocktails via filter
+			// 	const res = await fetch("https://www.thecocktaildb.com/api/json/v2/9973533/search.php?s=Rum");
+			// 	const cocktail = await res.json();
+			// 	setStore({ rum_cocktail: cocktail.drinks });
+			// },
+
+			info_rumCocktail: async () => {
+				//It gets base cocktails via filter classification
+				const res = await fetch("https://www.thecocktaildb.com/api/json/v2/9973533/filter.php?i=Rum");
+				let cocktailList = [];
+				const cocktail = await res.json();
+				cocktail.drinks.forEach(item => {
+					fetch(`https://www.thecocktaildb.com/api/json/v2/9973533/lookup.php?i=${item.idDrink}`)
+						.then(res2 => res2.json())
+						.then(data => {
+							// console.log(data.drinks[0]);
+							cocktailList.push(data.drinks[0]);
+						});
+				});
+				setStore({ rum_cocktail: cocktailList });
+			},
+
+			info_vodkaCocktail: async () => {
+				//It gets base cocktails via filter classification
+				const res = await fetch("https://www.thecocktaildb.com/api/json/v2/9973533/filter.php?i=Vodka");
+				const cocktail = await res.json();
+				let cocktailList = [];
 				cocktail.forEach(item => {
 					fetch(`https://www.thecocktaildb.com/api/json/v2/9973533/lookup.php?i=${item.idDrink}`)
 						.then(res2 => res2.json())
 						.then(data => {
-							cocktailList.push(data);
-							console.log(data);
+							cocktailList.push(data.drinks[0]);
 						});
 				});
-				//setStore({ non_alcoholic: cocktail.drinks });
+				setStore({ vodka_cocktail: cocktail.drinks });
+			},
+
+			info_tequilaCocktail: async () => {
+				//It gets base cocktails via filter classification
+				const res = await fetch("https://www.thecocktaildb.com/api/json/v2/9973533/filter.php?i=Tequila");
+				const cocktail = await res.json();
+				let cocktailList = [];
+				cocktail.forEach(item => {
+					fetch(`https://www.thecocktaildb.com/api/json/v2/9973533/lookup.php?i=${item.idDrink}`)
+						.then(res2 => res2.json())
+						.then(data => {
+							cocktailList.push(data.drinks[0]);
+						});
+				});
+				setStore({ tequila_cocktail: cocktail.drinks });
+			},
+
+			info_brandyCocktail: async () => {
+				//It gets base cocktails via filter classification
+				const res = await fetch("https://www.thecocktaildb.com/api/json/v2/9973533/filter.php?i=Brandy");
+				const cocktail = await res.json();
+				let cocktailList = [];
+				cocktail.forEach(item => {
+					fetch(`https://www.thecocktaildb.com/api/json/v2/9973533/lookup.php?i=${item.idDrink}`)
+						.then(res2 => res2.json())
+						.then(data => {
+							cocktailList.push(data.drinks[0]);
+						});
+				});
+				setStore({ brandy_cocktail: cocktail.drinks });
+			},
+			info_ginCocktail: async () => {
+				//It gets base cocktails via filter classification
+				const res = await fetch("https://www.thecocktaildb.com/api/json/v2/9973533/filter.php?i=Gin");
+				const cocktail = await res.json();
+				let cocktailList = [];
+				cocktail.forEach(item => {
+					fetch(`https://www.thecocktaildb.com/api/json/v2/9973533/lookup.php?i=${item.idDrink}`)
+						.then(res2 => res2.json)
+						.then(data => {
+							cocktailList.push(data.drinks[0]);
+						});
+				});
+				setStore({ gin_cocktail: cocktail.drinks });
 			},
 
 			//Building Favorites f(x)s
