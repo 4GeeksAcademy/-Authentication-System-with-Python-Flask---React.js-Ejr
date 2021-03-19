@@ -33,6 +33,9 @@ import { Info_Whisky } from "./component/info_whisky";
 import { Cocktail_nonAlcohol } from "./component/cocktail_noalcohol";
 import { Cocktail_Rum } from "./component/cocktail_rum";
 import { Cocktail_Vodka } from "./component/cocktail_vodka";
+import { Cocktail_Tequila } from "./component/cocktail_tequila";
+import { Cocktail_Whisky } from "./component/cocktail_whisky";
+import { Cocktail_Gin } from "./component/cocktail_gin";
 
 //create your first component
 const Layout = () => {
@@ -104,21 +107,21 @@ const Layout = () => {
 							<Cocktail_Vodka />
 							<Footer />
 						</Route>
-						{/* <Route exact path="/Cocktail_Tequila/:theid">
+						<Route exact path="/Cocktail_Tequila/:theid">
 							<NavFav />
 							<Cocktail_Tequila />
 							<Footer />
 						</Route>
-						<Route exact path="/Cocktail_Brandy/:theid">
+						<Route exact path="/Cocktail_Whisky/:theid">
 							<NavFav />
-							<Cocktail_Brandy />
+							<Cocktail_Whisky />
 							<Footer />
 						</Route>
 						<Route exact path="/Cocktail_Gin/:theid">
 							<NavFav />
-							<Cocktails_Gin />
+							<Cocktail_Gin />
 							<Footer />
-						</Route> */}
+						</Route>
 					</Switch>
 				</ScrollToTop>
 			</BrowserRouter>
