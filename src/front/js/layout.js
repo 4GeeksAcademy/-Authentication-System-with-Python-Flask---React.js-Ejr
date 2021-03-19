@@ -32,6 +32,10 @@ import { Info_Whisky } from "./component/info_whisky";
 // utiliza NavFav
 import { Cocktail_nonAlcohol } from "./component/cocktail_noalcohol";
 import { Cocktail_Rum } from "./component/cocktail_rum";
+// import { Cocktail_Vodka } from "./component/cocktail_vodka";
+// import { Cocktail_Tequila } from "./component/cocktail_tequila";
+// import { Cocktail_Whisky } from "./component/cocktail_whisky";
+// import { Cocktail_Gin } from "./component/cocktail_gin";
 
 //create your first component
 const Layout = () => {
@@ -93,29 +97,29 @@ const Layout = () => {
 							<Cocktail_nonAlcohol />
 							<Footer />
 						</Route>
-						<Route exact path="/Cocktail_Rum">
+						<Route exact path="/Cocktail_Rum/:theid">
 							<NavFav />
 							<Cocktail_Rum />
 							<Footer />
 						</Route>
-						{/* <Route exact path="/Cocktail_noAlcohol">
+						{/* <Route exact path="/Cocktail_Vodka/:theid">
 							<NavFav />
-							<Cocktails />
+							<Cocktail_Vodka />
 							<Footer />
 						</Route>
-                        <Route exact path="/Cocktail_noAlcohol">
+                        <Route exact path="/Cocktail_Tequila/:theid">
 							<NavFav />
-							<Cocktails />
+							<Cocktail_Tequila />
 							<Footer />
 						</Route>
-                        <Route exact path="/Cocktail_noAlcohol">
+                        <Route exact path="/Cocktail_Whisky/:theid">
 							<NavFav />
-							<Cocktails />
+							<Cocktail_Whisky />
 							<Footer />
 						</Route>
-                        <Route exact path="/Cocktail_noAlcohol">
+                        <Route exact path="/Cocktail_Gin/:theid">
 							<NavFav />
-							<Cocktails />
+							<Cocktail_Gin />
 							<Footer />
 						</Route> */}
 					</Switch>
