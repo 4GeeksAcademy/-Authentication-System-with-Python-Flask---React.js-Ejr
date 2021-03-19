@@ -29,16 +29,15 @@ export const Info_Gin = () => {
 								<Card className="Card text-light p-3">
 									<blockquote className="blockquote mb-0 card-body">
 										<p>{cocktail.strDrink}</p>
-										{/* <Link to={`/cocktails/${index}`}> */}
-										<Link>
+										<Link to={`/Cocktail_Gin/${index}`}>
 											<Button variant="outline-success">Leer más..</Button>
 										</Link>
 
-										<Link>
-											<Button variant="outline-warning">
-												<i className="far fa-heart" />
-											</Button>
-										</Link>
+										{/* <Link> */}
+										<Button variant="outline-warning">
+											<i className="far fa-heart" />
+										</Button>
+										{/* </Link> */}
 									</blockquote>
 								</Card>
 							</div>
