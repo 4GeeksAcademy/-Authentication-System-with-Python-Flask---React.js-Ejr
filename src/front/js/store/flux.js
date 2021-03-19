@@ -117,10 +117,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 						.then(res2 => res2.json())
 						.then(data => {
 							//console.log(data.drinks[0])
+							// console.log(data.drinks[0]);
 							cocktailList.push(data.drinks[0]);
 						});
 				});
-				setStore({ vodka_cocktail: cocktail.drinks });
+				setStore({ vodka_cocktail: cocktailList });
 			},
 
 			info_tequilaCocktail: async () => {
@@ -135,7 +136,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 							cocktailList.push(data.drinks[0]);
 						});
 				});
-				setStore({ tequila_cocktail: cocktail.drinks });
+				setStore({ tequila_cocktail: cocktailList });
 			},
 
 			info_whiskyCocktail: async () => {
@@ -150,7 +151,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 							cocktailList.push(data.drinks[0]);
 						});
 				});
-				setStore({ brandy_cocktail: cocktail.drinks });
+				setStore({ whisky_cocktail: cocktailList });
 			},
 
 			info_ginCocktail: async () => {
@@ -160,12 +161,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 				let cocktailList = [];
 				cocktail.drinks.forEach(item => {
 					fetch(`https://www.thecocktaildb.com/api/json/v2/9973533/lookup.php?i=${item.idDrink}`)
-						.then(res2 => res2.json)
+						.then(res2 => res2.json())
 						.then(data => {
 							cocktailList.push(data.drinks[0]);
 						});
 				});
-				setStore({ gin_cocktail: cocktail.drinks });
+				setStore({ gin_cocktail: cocktailList });
 			},
 
 			//Building Favorites f(x)s
@@ -213,6 +214,24 @@ const getState = ({ getStore, getActions, setStore }) => {
 				} else {
 					getActions().delFavorite(cocktail_ID);
 				}
+			},
+
+			addFavorites: myfav => {
+				const store = getStore();
+
+				setStore({ favorites: [...store.favorites, [myfav]] });
+			},
+			//alternative Implementation for experimental testing
+			counterFavorites: () => {
+				const favStore = getStore();
+				const length = store.favorites.length;
+				return length;
+			},
+
+			deleteFavorites: id => {
+				const store = getStore();
+				const FavList = store.favorites.filter((item, f) => id != f);
+				setStore({ favorites: [...FavList] });
 			}
 			/////////////////////END TESTING PURPOSES @JVM && @ANMORA///////////////////////
 			// Use getActions to call a function within a fuction

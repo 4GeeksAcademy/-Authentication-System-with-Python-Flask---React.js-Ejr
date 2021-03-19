@@ -33,7 +33,7 @@ export const Info_WithoutBase = () => {
 											<Button variant="outline-success">Leer más..</Button>
 										</Link>
 
-										{/* <Link to="##"> */}
+										{/* <Link to="##"> 
 										<Button variant="outline-warning">
 											<i className="far fa-heart" />
 										</Button>
