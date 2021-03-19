@@ -15,7 +15,7 @@ export const NavFav = () => {
 
 	return (
 		<>
-			{/* {store.jwtoken == null ? <Redirect to="/" /> : ""} */}
+			{store.jwtoken == null ? <Redirect to="/" /> : ""}
 			<Container>
 				<div className="header-wrap">
 					<div className="header-top d-flex justify-content-between align-items-center">

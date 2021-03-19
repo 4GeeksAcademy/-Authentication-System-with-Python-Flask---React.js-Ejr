@@ -14,28 +14,6 @@ export const Login = () => {
 	const [birthday, setBirthday] = useState("");
 	const [redirect, setRedirect] = useState(false);
 
-	// const actionRegister = e => {
-	// 	alert(first_name + last_name + email + password + birthday);
-	// };
-
-	// const actionRegister = e => {
-	// 	if (email === "" || password === "") {
-	// 		alert("ActionRegister: Faltan datos por llenar!");
-	// 	} else {
-	// 		alert(first_name, last_name, username, email, password, birthday);
-	// 		actions.signup(first_name, last_name, email, password, birthday);
-	// 	}
-	// };
-
-	// const actionLogin = e => {
-	// 	if (email === "" || password === "") {
-	// 		alert("Actionlogin: Faltan datos por llenar!");
-	// 	} else {
-	// 		console.log(email, password);
-	// 		actions.login(email, password);
-	// 	}
-	// };
-
 	return (
 		<>
 			{store.jwtoken != null ? <Redirect to="/home" /> : ""}
