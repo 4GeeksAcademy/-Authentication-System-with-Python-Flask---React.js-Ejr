@@ -36,10 +36,7 @@ export const Base_Categories = () => {
 										<cite title="Source Title">
 											Los cócteles sin alcohol (o “mocktails”) son siempre una buena alternativa
 											para disfrutar de un ambiente festivo de manera responsable y también tienen
-											cabida en el mundo de la coctelería. Los cócteles sin alcohol están muchas
-											veces destinados a conductores, mujeres embarazadas, niños, intolerantes al
-											alcohol, etc. de manera que también puedan disfrutar de un buen cóctel sin
-											correr riesgo alguno.
+											cabida en el mundo de la coctelería.
 										</cite>
 									</small>
 								</footer>

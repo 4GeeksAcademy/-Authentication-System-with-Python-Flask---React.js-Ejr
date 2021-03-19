@@ -11,8 +11,9 @@ export const Info_WithoutBase = () => {
 		<Container className="base_cards">
 			<article className="text-light mt-1 mb-1">
 				<p>
-					Esta página esta ligada a una base de datos ya creada por lo cual para poder ingresar deberás
-					revisar F12 y conocer los usuarios en lista ya creados!
+					Los cócteles sin alcohol están muchas veces destinados a conductores, mujeres embarazadas, niños,
+					intolerantes al alcohol, etc. de manera que también puedan disfrutar de un buen cóctel sin correr
+					riesgo alguno.
 				</p>
 			</article>
 			<Row>

@@ -11,8 +11,9 @@ export const Info_Gin = () => {
 		<Container className="base_cards">
 			<article className="text-light mt-1 mb-1">
 				<p>
-					Esta página esta ligada a una base de datos ya creada por lo cual para poder ingresar deberás
-					revisar F12 y conocer los usuarios en lista ya creados!
+					La Ginebra o Gin, en Ingles, es un aguardiente de grano del maíz, centeno o cebada principalmente.
+					Primero tenemos una primera fermentación de los jugos del grano y posteriormente se destila
+					obteniendo un aguardiente que se aromatiza con bayas de enebro como normal principal.
 				</p>
 			</article>
 			<Row>
