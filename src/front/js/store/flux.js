@@ -16,7 +16,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			gin_cocktail: [],
 			vodka_cocktail: [],
 			tequila_cocktail: [],
-			info_whiskyCocktail: [],
+			whisky_cocktail: [],
 			non_alcoholic: []
 		},
 		actions: {
@@ -116,10 +116,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 					fetch(`https://www.thecocktaildb.com/api/json/v2/9973533/lookup.php?i=${item.idDrink}`)
 						.then(res2 => res2.json())
 						.then(data => {
+							// console.log(data.drinks[0]);
 							cocktailList.push(data.drinks[0]);
 						});
 				});
-				setStore({ vodka_cocktail: cocktail.drinks });
+				setStore({ vodka_cocktail: cocktailList });
 			},
 
 			info_tequilaCocktail: async () => {
@@ -134,7 +135,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 							cocktailList.push(data.drinks[0]);
 						});
 				});
-				setStore({ tequila_cocktail: cocktail.drinks });
+				setStore({ tequila_cocktail: cocktailList });
 			},
 
 			info_whiskyCocktail: async () => {
@@ -149,7 +150,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 							cocktailList.push(data.drinks[0]);
 						});
 				});
-				setStore({ brandy_cocktail: cocktail.drinks });
+				setStore({ whisky_cocktail: cocktailList });
 			},
 
 			info_ginCocktail: async () => {
@@ -159,12 +160,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 				let cocktailList = [];
 				cocktail.drinks.forEach(item => {
 					fetch(`https://www.thecocktaildb.com/api/json/v2/9973533/lookup.php?i=${item.idDrink}`)
-						.then(res2 => res2.json)
+						.then(res2 => res2.json())
 						.then(data => {
 							cocktailList.push(data.drinks[0]);
 						});
 				});
-				setStore({ gin_cocktail: cocktail.drinks });
+				setStore({ gin_cocktail: cocktailList });
 			},
 
 			//Building Favorites f(x)s

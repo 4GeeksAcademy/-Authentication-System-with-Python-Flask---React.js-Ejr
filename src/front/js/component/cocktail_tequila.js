@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 import { Container, Row, Card } from "react-bootstrap";
 import "../../styles/Cocktails.scss";
 
-export const Cocktail_Vodka = () => {
+export const Cocktail_Tequila = () => {
 	const params = useParams();
 	const { store, actions } = useContext(Context);
 	const cocktail = store.tequila_cocktail[params.theid];
