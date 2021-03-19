@@ -8,7 +8,7 @@ import { IconBox } from "../component/IconBox.jsx";
 import { CardBox } from "../component/cardBox.jsx";
 import { ServiceBox } from "../component/serviceBox.jsx";
 import { Footer } from "../component/footer";
-import { LoginModalA } from "../component/Login";
+import { LoginModal, LoginModalA } from "../component/Login";
 import { Link } from "react-router-dom";
 
 const LandingPage = () => {
@@ -16,7 +16,7 @@ const LandingPage = () => {
 		<div
 			className="background"
 			style={{
-				backgroundImage: `url(http://localhost:3000/backGround.png)`
+				backgroundImage: `url(https://3000-salmon-otter-elqylgff.ws-us03.gitpod.io/)`
 			}}>
 			<Container>
 				<div>
@@ -31,9 +31,11 @@ const LandingPage = () => {
 							/>
 						</Col>
 						<Col xs={8}>
-							<Button variant="secondary" className="float-right mt-5">
-								Registrate
-							</Button>
+							<Link to="/register">
+								<Button variant="outline-light" className="float-right mt-5" style={{ border: "none" }}>
+									Registrate
+								</Button>
+							</Link>
 							<a>{LoginModalA()}</a>
 						</Col>
 					</Row>
