@@ -29,8 +29,7 @@ export const Info_Rum = () => {
 								<Card className="Card text-light p-3">
 									<blockquote className="blockquote mb-0 card-body">
 										<p>{cocktail.strDrink}</p>
-										{/* <Link to={`/cocktails/${index}`}> */}
-										<Link>
+										<Link to={`/Cocktail_Rum/${index}`}>
 											<Button variant="outline-success">Leer más..</Button>
 										</Link>
 
