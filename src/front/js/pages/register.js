@@ -4,11 +4,6 @@ import "../../styles/index.scss";
 import { logoBlanco, man } from "../../img/image";
 import { withRouter } from "react-router-dom";
 import { Container, Button, Form, FormControl, Row, Col, ButtonGroup, ToggleButton } from "react-bootstrap";
-import { IconBox } from "../component/IconBox.jsx";
-import { CardBox } from "../component/cardBox.jsx";
-import { ServiceBox } from "../component/serviceBox.jsx";
-import { Footer } from "../component/footer";
-import { LoginModal } from "../component/Login";
 import { Link } from "react-router-dom";
 
 const Register = () => {
@@ -35,9 +30,10 @@ const Register = () => {
 						</Link>
 					</Row>
 					<Row>
+						<Col md={2}></Col>
 						<Col md={7}>
 							<div className="transBox" />
-							<h1 className="text-white mt-3">Obtenga su cuenta gratis</h1>
+							<h2 className="text-white mt-3">Obtenga su cuenta gratis</h2>
 						</Col>
 					</Row>
 					<div
@@ -46,7 +42,7 @@ const Register = () => {
 							height: "100%",
 							backgroundColor: "white",
 							borderRadius: "10px",
-							width: "800px"
+							width: "730px"
 						}}>
 						<Form>
 							<Form.Group as={Row} controlId="formHorizontalEmail">
@@ -81,7 +77,7 @@ const Register = () => {
 								<Col sm={1}></Col>
 							</Form.Group>
 							<div className="row" style={{ justifyContent: "center" }}>
-								<ButtonGroup toggle className="trans mb-5">
+								<ButtonGroup toggle className="mb-5">
 									<ToggleButton
 										type="checkbox"
 										variant="outline-primary"
@@ -101,10 +97,16 @@ const Register = () => {
 									</ToggleButton>
 								</ButtonGroup>
 							</div>
-							<Row style={{ justifyContent: "center"}}}>
-								<Button variant="primary" size="lg" type="submit" style={{ marginBottom: "70px" }}>
-									Crear cuenta
-								</Button>
+							<Row style={{ justifyContent: "center" }}>
+								<Link to="/registerservice">
+									<Button
+										variant="primary"
+										size="lg"
+										type="submit"
+										style={{ marginBottom: "40px", width: "300px" }}>
+										<strong>Crear cuenta</strong>
+									</Button>
+								</Link>
 							</Row>
 						</Form>
 					</div>
