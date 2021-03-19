@@ -16,7 +16,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			gin_cocktail: [],
 			vodka_cocktail: [],
 			tequila_cocktail: [],
-			brandy_cocktail: [],
+			info_whiskyCocktail: [],
 			non_alcoholic: []
 		},
 		actions: {
@@ -91,13 +91,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({ non_alcoholic: cocktailList });
 			},
 
-			// info_rumCocktail: async () => {
-			// 	//It gets base cocktails via filter
-			// 	const res = await fetch("https://www.thecocktaildb.com/api/json/v2/9973533/search.php?s=Rum");
-			// 	const cocktail = await res.json();
-			// 	setStore({ rum_cocktail: cocktail.drinks });
-			// },
-
 			info_rumCocktail: async () => {
 				//It gets base cocktails via filter classification
 				const res = await fetch("https://www.thecocktaildb.com/api/json/v2/9973533/filter.php?i=Rum");
@@ -119,7 +112,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				const res = await fetch("https://www.thecocktaildb.com/api/json/v2/9973533/filter.php?i=Vodka");
 				const cocktail = await res.json();
 				let cocktailList = [];
-				cocktail.forEach(item => {
+				cocktail.drinks.forEach(item => {
 					fetch(`https://www.thecocktaildb.com/api/json/v2/9973533/lookup.php?i=${item.idDrink}`)
 						.then(res2 => res2.json())
 						.then(data => {
@@ -134,7 +127,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				const res = await fetch("https://www.thecocktaildb.com/api/json/v2/9973533/filter.php?i=Tequila");
 				const cocktail = await res.json();
 				let cocktailList = [];
-				cocktail.forEach(item => {
+				cocktail.drinks.forEach(item => {
 					fetch(`https://www.thecocktaildb.com/api/json/v2/9973533/lookup.php?i=${item.idDrink}`)
 						.then(res2 => res2.json())
 						.then(data => {
@@ -144,12 +137,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({ tequila_cocktail: cocktail.drinks });
 			},
 
-			info_brandyCocktail: async () => {
+			info_whiskyCocktail: async () => {
 				//It gets base cocktails via filter classification
 				const res = await fetch("https://www.thecocktaildb.com/api/json/v2/9973533/filter.php?i=Brandy");
 				const cocktail = await res.json();
 				let cocktailList = [];
-				cocktail.forEach(item => {
+				cocktail.drinks.forEach(item => {
 					fetch(`https://www.thecocktaildb.com/api/json/v2/9973533/lookup.php?i=${item.idDrink}`)
 						.then(res2 => res2.json())
 						.then(data => {
@@ -158,12 +151,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 				});
 				setStore({ brandy_cocktail: cocktail.drinks });
 			},
+
 			info_ginCocktail: async () => {
 				//It gets base cocktails via filter classification
 				const res = await fetch("https://www.thecocktaildb.com/api/json/v2/9973533/filter.php?i=Gin");
 				const cocktail = await res.json();
 				let cocktailList = [];
-				cocktail.forEach(item => {
+				cocktail.drinks.forEach(item => {
 					fetch(`https://www.thecocktaildb.com/api/json/v2/9973533/lookup.php?i=${item.idDrink}`)
 						.then(res2 => res2.json)
 						.then(data => {
