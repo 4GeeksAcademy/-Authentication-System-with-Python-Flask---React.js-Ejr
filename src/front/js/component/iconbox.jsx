@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 export const IconBox = () => {
 	return (
 		<Jumbotron className="whiteBox shadow-lg p-3 mb-5 align-item-center">
-			<Row className="row-cols-1 row-cols-sm-2 row-cols-md-5 align-item-center px-5">
+			<Row className="row-cols-1 row-cols-sm-2 row-cols-md-5 align-item-center px-1">
 				<Col className="text-center p-3 text-muted">
 					<Link to="/category">
 						<i className="fas fa-tv icon" />

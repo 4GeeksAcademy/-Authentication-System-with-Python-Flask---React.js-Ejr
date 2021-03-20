@@ -8,16 +8,12 @@ import injectContext from "./store/appContext";
 
 import MyNavbar from "./component/navbar";
 import { Footer } from "./component/footer";
-<<<<<<< HEAD
-import { Landingpage } from "./pages/landingpage";
-=======
 import Landingpage from "./pages/landingPage";
 import { Registro } from "./pages/registro";
 import { PasswordRecovery } from "./component/PasswordRecovery";
 import { PasswordRecovery2 } from "./component/PasswordRecovery2";
 import Register from "./pages/register";
 import RegisterService from "./pages/registerService";
->>>>>>> 2e10dc16ebf3e51eaa20cf0c4264e351b31b4fdd
 
 //create your first component
 const Layout = () => {

@@ -1,11 +1,3 @@
-<<<<<<< HEAD
-import logoBlanco from "./logoBlanco.png";
-import logoAzul from "./logoAzul.png";
-import logoGris from "./logoGris.png";
-import backGround from "./backGround.png";
-
-export { logoBlanco, logoAzul, logoGris, backGround };
-=======
 import logoBlanco from "./cotecBlanco.png";
 import logoAzul from "./cotecAzul.png";
 import logoGris from "./cotecGris.png";
@@ -39,4 +31,3 @@ export {
 	serviceIt,
 	serviceMarketing
 };
->>>>>>> 2e10dc16ebf3e51eaa20cf0c4264e351b31b4fdd

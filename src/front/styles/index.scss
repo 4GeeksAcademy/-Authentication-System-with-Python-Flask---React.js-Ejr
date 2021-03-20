@@ -1,77 +1,5 @@
 $theme-colors: (
   "primary": #000BD8,
-<<<<<<< HEAD
-  "maindark":    #333333,
-  "subbleuA":       #007BEA,
-  "subDarkBlue": #0E0071,
-  "subCielo": #17CADD,
-  "subLightCielo": #9AEDF4,
-  "subLightGray": #F2F2F2,
-  "subGray": #A7A7A8,
-  "pointYellow": #FFEC00,
-  "pointGreen": #00D952,
-  "pointGreenB" : #00BFA8,
-  "pointviolet" : #5D0ECC,
-  "pointPink" : #D658CD
-);
-
-h1, h2, h3, h4 {
-  font-family: 'Catamaran', sans-serif; 
-  color: #333333;
-}
-
-h1 {
-  margin-bottom: 0.5rem;
-  font-weight: 700;
-  line-height: 1.2;
-  font-size: 3rem;
-}
-
-.iconBox{
-  background-color: #fff;
-  width:100%;
-  height:150px;
-  border-radius: 10px;
-}
-
-.icon {
-  font-size: 3rem;
-  text-align: center;
-  color: #333333;
-}
-.icon:hover {
-  font-size: 3rem;
-  color: #000BD8;
-}
-
-.cardBox{
-  background-color: #fff;
-  width:100%;
-  height:300px;
-  border-radius: 10px;
-}
-
-.boxTrans{
-  width:100%;
-  height:100px;
-
-}
-.background {
-  content: "";
-  opacity: 1;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  width:100%;
-  height: 170%;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  position: absolute;
-  z-index: -1;   
-}
-=======
   "secondary": #0E0071,
   "success": #5D0ECC,
   "dark": #333333,
@@ -186,4 +114,3 @@ h1, h2, h3, h4, h5, p{
 }
 
 
->>>>>>> 2e10dc16ebf3e51eaa20cf0c4264e351b31b4fdd

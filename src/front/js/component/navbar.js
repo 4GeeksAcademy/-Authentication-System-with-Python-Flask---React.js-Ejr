@@ -1,32 +1,3 @@
-<<<<<<< HEAD
-import React, { useEffect } from "react";
-import { Navbar } from "react-bootstrap";
-import { logoAzul } from "../../img/image";
-import { withRouter } from "react-router-dom";
-
-const MyNavbar = props => {
-	useEffect(() => {
-		console.log(props.location.pathname);
-	}, []);
-
-	if (props.location.pathname === "/") {
-		return "";
-	} else {
-		return (
-			<>
-				<Navbar bg="light">
-					<div className="container">
-						<Navbar.Brand href="/">
-							<img
-								src={logoAzul}
-								width="84"
-								height="25"
-								className="d-inline-block align-top"
-								alt="cotec logo"
-							/>
-						</Navbar.Brand>
-					</div>
-=======
 import React from "react";
 import { Link, withRouter } from "react-router-dom";
 import { Button, Form, FormControl, Navbar, Nav, Col, Container } from "react-bootstrap";
@@ -95,14 +66,9 @@ const MyNavbar = props => {
 							</Nav>
 						</Navbar.Collapse>
 					</Container>
->>>>>>> 2e10dc16ebf3e51eaa20cf0c4264e351b31b4fdd
 				</Navbar>
 			</>
 		);
 	}
 };
-<<<<<<< HEAD
-
-=======
->>>>>>> 2e10dc16ebf3e51eaa20cf0c4264e351b31b4fdd
 export default withRouter(MyNavbar);
