@@ -30,7 +30,7 @@ const Register = () => {
 						</Link>
 					</Row>
 					<Row>
-						<Col md={2}></Col>
+						<Col md={2} />
 						<Col md={7}>
 							<div className="transBox" />
 							<h2 className="text-white mt-3">Obtenga su cuenta gratis</h2>
@@ -46,35 +46,35 @@ const Register = () => {
 						}}>
 						<Form>
 							<Form.Group as={Row} controlId="formHorizontalEmail">
-								<Col sm={1}></Col>
+								<Col sm={1} />
 								<Form.Label column sm={3}>
 									<h6>Correo electrónico</h6>
 								</Form.Label>
 								<Col sm={6}>
 									<Form.Control type="email" />
 								</Col>
-								<Col sm={1}></Col>
+								<Col sm={1} />
 							</Form.Group>
 
 							<Form.Group as={Row} controlId="formHorizontalPassword">
-								<Col sm={1}></Col>
+								<Col sm={1} />
 								<Form.Label column sm={3}>
 									<h6>Contraseña</h6>
 								</Form.Label>
 								<Col sm={6}>
 									<Form.Control type="password" />
 								</Col>
-								<Col sm={1}></Col>
+								<Col sm={1} />
 							</Form.Group>
 							<Form.Group as={Row} className="pb-3" controlId="formHorizontalPassword">
-								<Col sm={1}></Col>
+								<Col sm={1} />
 								<Form.Label column sm={3}>
 									<h6>Confirmar contraseña</h6>
 								</Form.Label>
 								<Col sm={6}>
 									<Form.Control type="password" />
 								</Col>
-								<Col sm={1}></Col>
+								<Col sm={1} />
 							</Form.Group>
 							<div className="row" style={{ justifyContent: "center" }}>
 								<ButtonGroup toggle className="mb-5">

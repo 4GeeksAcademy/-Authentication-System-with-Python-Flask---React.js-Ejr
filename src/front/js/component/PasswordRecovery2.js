@@ -50,7 +50,7 @@ export const PasswordRecovery2 = () => {
 						</>
 					</div>
 				</div>
-				<div className="col-2"></div>
+				<div className="col-2" />
 			</div>
 		</div>
 	);

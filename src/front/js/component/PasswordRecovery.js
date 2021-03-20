@@ -38,7 +38,7 @@ export const PasswordRecovery = () => {
 						</>
 					</div>
 				</div>
-				<div className="col-2"></div>
+				<div className="col-2" />
 			</div>
 		</div>
 	);
