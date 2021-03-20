@@ -34,9 +34,10 @@ export const Info_WithoutBase = () => {
 											<Button variant="outline-success">Leer más..</Button>
 										</Link>
 
-										<Button variant="outline-warning">
+										<Button
+											variant="outline-warning"
+											onClick={() => actions.addFavorites(cocktail.strDrink, "cocktail")}>
 											<i className="far fa-heart" />
-											{/* Boton de Favoritos */}
 										</Button>
 									</blockquote>
 								</Card>
