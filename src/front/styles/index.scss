@@ -1,5 +1,6 @@
 $theme-colors: (
   "primary": #000BD8,
+<<<<<<< HEAD
   "maindark":    #333333,
   "subbleuA":       #007BEA,
   "subDarkBlue": #0E0071,
@@ -70,3 +71,119 @@ h1 {
   position: absolute;
   z-index: -1;   
 }
+=======
+  "secondary": #0E0071,
+  "success": #5D0ECC,
+  "dark": #333333,
+  "info":#007BEA,
+  "warning": #FFEC00,
+  "danger": #D658CD,
+  "subBlue": #17CADD,
+  "subLightBlue": #9AEDF4,
+  "lightGray": #F2F2F2,
+  "gray": #A7A7A8,
+  "green": #00D952,
+  "greenB": #00BFA8
+);
+// por favor usar el nombre de cada color "primary, secondary...." 
+// para usar el color en sass puedes usar "map-get($theme-colors, 'primary')"
+// solamente en el caso que no puede usar el color con el nombre, puedes usar el number de color 
+
+h1{
+font-size: 3rem;
+font-family: 'Catamaran', sans-serif;
+font-weight: 700;
+}
+h1, h2, h3, h4, h5, p{
+    font-family: 'Catamaran', sans-serif;
+    font-weight: 700;
+    }
+.transBox{
+    width: 100%;
+    height: 70px;
+    border-radius: 10px;
+}
+.whiteBox{
+    background-color:white;
+    border-radius: 10px;
+}
+.icon{
+    color:#333333;
+    font-size: 3rem;
+    padding: 5px;
+}
+.icon:hover{
+    color: #007BEA;
+}
+.background{
+    content: "";
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    height: 280%;
+    position: absolute;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+
+  .scroll {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    .card {
+      flex: 0 0 auto;
+    }
+  }
+
+  ::-webkit-scrollbar {
+    width: 20px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    border-radius: 10px;
+  }
+   
+  ::-webkit-scrollbar-thumb {
+    background: map-get($theme-colors, 'gray'); 
+    border-radius: 10px;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: map-get($theme-colors, 'info'); 
+  }
+
+.caimg{
+  position: relative;
+  
+}
+.favorito{
+  position: absolute; 
+  top:0; 
+  right:0;
+  z-index: 1;
+  font-size: 25px;
+  color:gray;
+  background-color: transparent;
+
+}
+.search{
+  border: none;
+  width: 60%;
+}
+.sb{
+  border: 1px solid gray;
+  border-radius:1.75rem;
+  padding-left: 13px;
+  background: white;
+}
+.fa-search{
+  width: 10%;
+}
+.no-outline{
+  border:none;
+}
+
+
+>>>>>>> 2e10dc16ebf3e51eaa20cf0c4264e351b31b4fdd

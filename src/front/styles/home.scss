@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 .btn-primary {
     color: #fff;
     background-color: #000BD8;
@@ -7,16 +8,57 @@
 .btn-outline-primary {
     color: #000BD8;
     border-color: #000BD8;
+=======
+$theme-colors: (
+  "primary": #000BD8,
+  "secondary": #0E0071,
+  "success": #5D0ECC,
+  "dark": #333333,
+  "info":#007BEA,
+  "warning": #FFEC00,
+  "danger": #D658CD,
+  "subBlue": #17CADD,
+  "subLightBlue": #9AEDF4,
+  "lightGray": #F2F2F2,
+  "gray": #A7A7A8,
+  "green": #00D952,
+  "greenB": #00BFA8
+);
+// por favor usar el nombre de cada color "primary, secondary...." 
+// para usar el color en sass puedes usar "map-get($theme-colors, 'primary')"
+// solamente en el caso que no puede usar el color con el nombre, puedes usar el number de color 
+
+.btn-primary {
+    color: #fff;
+    background-color: map-get($theme-colors, 'primary');
+    border-color:map-get($theme-colors, 'primary');
+}
+.btn-primary:hover {
+    color: #fff;
+    background-color: map-get($theme-colors, 'info');
+    border-color:map-get($theme-colors, 'info');
+}
+
+.btn-outline-primary {
+    color: map-get($theme-colors, 'primary');
+    border-color: map-get($theme-colors, 'primary');
+>>>>>>> 2e10dc16ebf3e51eaa20cf0c4264e351b31b4fdd
 }
 
 .btn-secondary {
     color: #fff;
+<<<<<<< HEAD
     background-color:#0E0071;
     border-color: #0E0071;
+=======
+    background-color:map-get($theme-colors, 'secondary');
+    border-color: map-get($theme-colors, 'secondary');
+>>>>>>> 2e10dc16ebf3e51eaa20cf0c4264e351b31b4fdd
 }
 
 .btn-secondary:hover {
     color: #fff;
+<<<<<<< HEAD
     background-color: #007BEA;
     border-color: #007BEA;
 }
@@ -24,10 +66,20 @@
 .btn-outline-secondary {
     color: #0E0071;
     border-color: #0E0071;
+=======
+    background-color: map-get($theme-colors, 'info');
+    border-color: map-get($theme-colors, 'info');
+}
+
+.btn-outline-secondary {
+    color: map-get($theme-colors, 'secondary');
+    border-color:map-get($theme-colors, 'secondary');
+>>>>>>> 2e10dc16ebf3e51eaa20cf0c4264e351b31b4fdd
 }
 
 .btn-outline-secondary:hover {
     color: #fff;
+<<<<<<< HEAD
     background-color: #007BEA;
     border-color: #007BEA;
 }
@@ -35,10 +87,20 @@
     color: #fff;
     background-color: #5D0ECC;
     border-color: #5D0ECC;
+=======
+    background-color: map-get($theme-colors, 'info');
+    border-color: map-get($theme-colors, 'info');
+}
+.btn-success {
+    color: #fff;
+    background-color: map-get($theme-colors, 'success');
+    border-color: map-get($theme-colors, 'success');
+>>>>>>> 2e10dc16ebf3e51eaa20cf0c4264e351b31b4fdd
 }
 
 .btn-success:hover {
     color: #fff;
+<<<<<<< HEAD
     background-color: #007BEA;
     border-color: #007BEA;
 }
@@ -47,24 +109,47 @@
 .btn-outline-success {
     color: #5D0ECC;
     border-color: #5D0ECC;
+=======
+    background-color: map-get($theme-colors, 'info');
+    border-color: map-get($theme-colors, 'info');
+}
+
+.btn-outline-success {
+    color: map-get($theme-colors, 'success');
+    border-color: map-get($theme-colors, 'success');
+>>>>>>> 2e10dc16ebf3e51eaa20cf0c4264e351b31b4fdd
 }
 
 .btn-outline-success:hover {
     color: #fff;
+<<<<<<< HEAD
     background-color: #5D0ECC;
     border-color: #5D0ECC;
 }
 
 .btn-light {
     color: #11118E;
+=======
+    background-color: map-get($theme-colors, 'success');
+    border-color: map-get($theme-colors, 'success');
+}
+
+.btn-light {
+    color: map-get($theme-colors, 'secondary');
+>>>>>>> 2e10dc16ebf3e51eaa20cf0c4264e351b31b4fdd
     background-color: #f8f9fa;
     border-color: #f8f9fa;
 }
 
 .btn-outline-light:hover {
     color: #fff;
+<<<<<<< HEAD
     background-color: #007BEA;
     border-color: #007BEA;
+=======
+    background-color: map-get($theme-colors, 'info');
+    border-color: map-get($theme-colors, 'info');
+>>>>>>> 2e10dc16ebf3e51eaa20cf0c4264e351b31b4fdd
 }
 
 .btn-light {
@@ -75,8 +160,25 @@
 
 .btn-light:hover {
     color: #fff;
+<<<<<<< HEAD
     background-color: #007BEA;
     border-color: #007BEA;
+=======
+    background-color: map-get($theme-colors, 'info');
+    border-color: map-get($theme-colors, 'info');
+}
+
+.btn-light {
+    color: map-get($theme-colors, 'secondary');
+    border-color: #fff;
+    background-color:#fff;
+}
+
+.btn-light:hover {
+    color: #fff;
+    background-color: map-get($theme-colors, 'info');
+    border-color: map-get($theme-colors, 'info');
+>>>>>>> 2e10dc16ebf3e51eaa20cf0c4264e351b31b4fdd
 }
 
 .btn-outline-light {
@@ -87,6 +189,27 @@
 
 .btn-outline-light:hover {
     color: #fff;
+<<<<<<< HEAD
     background-color: #007BEA;
     border-color: #007BEA;
 }
+=======
+    background-color: map-get($theme-colors, 'info');
+    border-color: map-get($theme-colors, 'info');
+}
+
+
+.btn-outline-dark {
+    color:  map-get($theme-colors, 'gray');
+    border-color:  map-get($theme-colors, 'gray');
+    background-color: transparent;
+}
+
+.btn-outline-dark:hover {
+    color: #fff;
+    background-color: map-get($theme-colors, 'info');
+    border-color: map-get($theme-colors, 'info');
+}
+
+
+>>>>>>> 2e10dc16ebf3e51eaa20cf0c4264e351b31b4fdd

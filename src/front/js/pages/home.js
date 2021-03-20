@@ -1,15 +1,24 @@
 import React, { useContext } from "react";
 import { Context } from "../store/appContext";
+<<<<<<< HEAD
 import { Container, Form, FormControl, Button, ButtonGroup } from "react-bootstrap";
 import "../../styles/home.scss";
 import "../../styles/index.scss";
 import { IconBox } from "../component/iconbox.jsx";
 import { CardBox } from "../component/cardBox.jsx";
+=======
+import { homeSlideA, homeSlideB, homeSlideC, serviceDiseno, serviceMarketing, serviceIt } from "../../img/image.js";
+import "../../styles/home.scss";
+import "../../styles/index.scss";
+import MyCarousel from "../component/MyCarousel.jsx";
+import { CardBox } from "../component/cardBox.jsx";
+import { PersonBox } from "../component/personBox.jsx";
+>>>>>>> 2e10dc16ebf3e51eaa20cf0c4264e351b31b4fdd
 
 export const Home = () => {
 	const { store, actions } = useContext(Context);
-
 	return (
+<<<<<<< HEAD
 		<div
 			className="background"
 			style={{
@@ -39,5 +48,14 @@ export const Home = () => {
 				<CardBox />
 			</Container>
 		</div>
+=======
+		<>
+			<div className="text-center mt-5">
+				<MyCarousel />
+				<PersonBox title="Profesionales más solicitados" />
+				<CardBox title="Categorias más buscadas" />
+			</div>
+		</>
+>>>>>>> 2e10dc16ebf3e51eaa20cf0c4264e351b31b4fdd
 	);
 };
