@@ -5,16 +5,17 @@ import { logoBlanco, man } from "../../img/image";
 import { withRouter } from "react-router-dom";
 import { Container, Button, Form, FormControl, Row, Col, ButtonGroup, ToggleButton } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { Footer } from "../component/footer";
 
 const Register = () => {
 	const [checked, setChecked] = useState(false);
 	return (
 		<div
-			className="background"
+			className="backgroundRegistro"
 			style={{
-				backgroundImage: `url(https://3000-salmon-otter-elqylgff.ws-us03.gitpod.io/backGround.png)`
+				backgroundImage: `url(http://localhost:3000/loginBackGround.png)`
 			}}>
-			<Container>
+			<Container className="mb-5">
 				<div>
 					<Row>
 						<Link to="/">
@@ -112,6 +113,8 @@ const Register = () => {
 					</div>
 				</div>
 			</Container>
+			<div className="transBox" />
+			<Footer />
 		</div>
 	);
 };

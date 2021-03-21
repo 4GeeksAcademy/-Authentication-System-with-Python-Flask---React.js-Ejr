@@ -42,7 +42,10 @@ export const IndividualCard = props => {
 					Realizado más de 100 sitios web al mejor nivel. La satisfacción del cliente es mi primera prioridad.
 					Calidad proporcionada y trabajo garantizado dentro de las 24 horas. Actitud profesional.
 				</Card.Text>
-				<Card.Title className="mt-4">Sobre el vendedor</Card.Title>
+				<Card.Title className="mt-4" id="Second">
+					{" "}
+					Sobre el vendedor
+				</Card.Title>
 				<Media className="border p-2 bg-light rounded mb-3">
 					<img
 						src={personB}

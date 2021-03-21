@@ -7,10 +7,10 @@ import PropTypes from "prop-types";
 export const CardCategory = props => {
 	return (
 		<div>
-			<Card style={{ width: "17rem" }} className="g-2">
+			<Card className="g-2">
 				<Card.Img variant="top" src={props.img} />
 				<Card.Body>
-					<Card.Title>{props.title}</Card.Title>
+					<h5>{props.title}</h5>
 					<Card.Text>{props.valor}</Card.Text>
 					<Button variant="primary">Más info</Button>
 				</Card.Body>

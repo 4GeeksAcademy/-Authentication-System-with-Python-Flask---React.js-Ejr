@@ -22,7 +22,7 @@ font-size: 3rem;
 font-family: 'Catamaran', sans-serif;
 font-weight: 700;
 }
-h1, h2, h3, h4, h5, p{
+h1, h2, h3, h4, h5{
     font-family: 'Catamaran', sans-serif;
     font-weight: 700;
     }
@@ -112,5 +112,45 @@ h1, h2, h3, h4, h5, p{
 .no-outline{
   border:none;
 }
+.slideTitle{
+  position:absolute;
+  top:40px;
+}
 
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  height: 70px;
+  width: 70px;
+  background-size: 100%, 100%;
+  border-radius: 50%;
+  text-align: top;
+  border: 3px solid rgb(255, 255, 255);
+  background: rgba(68, 68, 68, 0.247);
+}
+
+.carousel-control-next-icon:after
+{
+  content: '>';
+  font-size: 45px;
+  margin-bottom: 40px;
+  color: rgb(255, 255, 255);
+}
+
+.carousel-control-prev-icon:after {
+  content: '<';
+  font-size: 55px;
+  color: rgb(255, 255, 255);
+}
+.backgroundRegistro{
+  content: "";
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  height: 150%;
+  position: absolute;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
 
