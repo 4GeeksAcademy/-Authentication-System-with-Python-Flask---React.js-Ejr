@@ -5,16 +5,17 @@ import { logoBlanco, man } from "../../img/image";
 import { withRouter } from "react-router-dom";
 import { Container, Button, Form, FormControl, Row, Col, ButtonGroup, ToggleButton } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { Footer } from "../component/footer";
 
 const Register = () => {
 	const [checked, setChecked] = useState(false);
 	return (
 		<div
-			className="background"
+			className="backgroundRegistro"
 			style={{
-				backgroundImage: `url(https://3000-salmon-otter-elqylgff.ws-us03.gitpod.io/backGround.png)`
+				backgroundImage: `url(http://localhost:3000/loginBackGround.png)`
 			}}>
-			<Container>
+			<Container className="mb-5">
 				<div>
 					<Row>
 						<Link to="/">
@@ -30,7 +31,7 @@ const Register = () => {
 						</Link>
 					</Row>
 					<Row>
-						<Col md={2}></Col>
+						<Col md={2} />
 						<Col md={7}>
 							<div className="transBox" />
 							<h2 className="text-white mt-3">Obtenga su cuenta gratis</h2>
@@ -46,35 +47,35 @@ const Register = () => {
 						}}>
 						<Form>
 							<Form.Group as={Row} controlId="formHorizontalEmail">
-								<Col sm={1}></Col>
+								<Col sm={1} />
 								<Form.Label column sm={3}>
 									<h6>Correo electrónico</h6>
 								</Form.Label>
 								<Col sm={6}>
 									<Form.Control type="email" />
 								</Col>
-								<Col sm={1}></Col>
+								<Col sm={1} />
 							</Form.Group>
 
 							<Form.Group as={Row} controlId="formHorizontalPassword">
-								<Col sm={1}></Col>
+								<Col sm={1} />
 								<Form.Label column sm={3}>
 									<h6>Contraseña</h6>
 								</Form.Label>
 								<Col sm={6}>
 									<Form.Control type="password" />
 								</Col>
-								<Col sm={1}></Col>
+								<Col sm={1} />
 							</Form.Group>
 							<Form.Group as={Row} className="pb-3" controlId="formHorizontalPassword">
-								<Col sm={1}></Col>
+								<Col sm={1} />
 								<Form.Label column sm={3}>
 									<h6>Confirmar contraseña</h6>
 								</Form.Label>
 								<Col sm={6}>
 									<Form.Control type="password" />
 								</Col>
-								<Col sm={1}></Col>
+								<Col sm={1} />
 							</Form.Group>
 							<div className="row" style={{ justifyContent: "center" }}>
 								<ButtonGroup toggle className="mb-5">
@@ -112,6 +113,8 @@ const Register = () => {
 					</div>
 				</div>
 			</Container>
+			<div className="transBox" />
+			<Footer />
 		</div>
 	);
 };

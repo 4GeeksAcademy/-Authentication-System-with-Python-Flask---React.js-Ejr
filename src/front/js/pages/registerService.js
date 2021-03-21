@@ -17,7 +17,7 @@ const RegisterService = () => {
 		<div
 			className="background"
 			style={{
-				backgroundImage: `url(https://3000-salmon-otter-elqylgff.ws-us03.gitpod.io/backGround.png)`
+				backgroundImage: `url(http://localhost:3000/backGround.png)`
 			}}>
 			<Container>
 				<div>
@@ -33,7 +33,7 @@ const RegisterService = () => {
 						</Col>
 					</Row>
 					<Row>
-						<Col md={2}></Col>
+						<Col md={2} />
 						<Col md={7}>
 							<div className="transBox" />
 							<p className="text-white mt-3">
@@ -101,7 +101,8 @@ const RegisterService = () => {
 								<Form.Control
 									type="textarea"
 									placeholder="Ingresa el valor del servicio"
-									style={{ backgroundColor: "lightgray", marginBottom: "10px" }}></Form.Control>
+									style={{ backgroundColor: "lightgray", marginBottom: "10px" }}
+								/>
 								<p>La tarifa del servicio de Cotec es del 2.5% del valor del trabajo realizado</p>
 								<br />
 								<Form.Label>
@@ -162,6 +163,10 @@ const RegisterService = () => {
 					</div>
 				</div>
 			</Container>
+			<div className="transBox" />
+			<div className="transBox" />
+			<div className="transBox" />
+			<Footer />
 		</div>
 	);
 };

@@ -16,7 +16,7 @@ const LandingPage = () => {
 		<div
 			className="background"
 			style={{
-				backgroundImage: `url(https://3000-salmon-otter-elqylgff.ws-us03.gitpod.io/)`
+				backgroundImage: `url(http://localhost:3000/backGround.png)`
 			}}>
 			<Container>
 				<div>
@@ -32,7 +32,7 @@ const LandingPage = () => {
 						</Col>
 						<Col xs={8}>
 							<Link to="/register">
-								<Button variant="outline-light" className="float-right mt-5" style={{ border: "none" }}>
+								<Button variant="light" className="float-right mt-5">
 									Registrate
 								</Button>
 							</Link>
@@ -66,13 +66,15 @@ const LandingPage = () => {
 									&nbsp;&nbsp;Buscar un freelancer&nbsp;&nbsp;
 								</Button>
 							</Link>
-							<Button
-								variant="secondary"
-								className="mt-2 px-4"
-								sm={12}
-								style={{ borderRadius: "1.75rem" }}>
-								&nbsp;&nbsp;&nbsp;&nbsp;Soy un freelancer&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-							</Button>
+							<Link to="/register">
+								<Button
+									variant="secondary"
+									className="mt-2 px-4"
+									sm={12}
+									style={{ borderRadius: "1.75rem" }}>
+									&nbsp;&nbsp;&nbsp;&nbsp;Soy un freelancer&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								</Button>
+							</Link>
 						</Col>
 						<Col md={5} sm={12} className="mt-5">
 							<img
@@ -85,7 +87,7 @@ const LandingPage = () => {
 						</Col>
 					</Row>
 					<IconBox />
-					<CardBox title="Categorias más buscadas" />
+					<CardBox title="Categorias más buscadas" className="whiteBox" />
 					<ServiceBox />
 					<br />
 
@@ -97,9 +99,9 @@ const LandingPage = () => {
 					<Button variant="outline-success">Success</Button>
 					<Button variant="light">Light</Button>
 					<Button variant="outline-light">Light</Button>
-					<Footer />
 				</div>
 			</Container>
+			<Footer />
 		</div>
 	);
 };
