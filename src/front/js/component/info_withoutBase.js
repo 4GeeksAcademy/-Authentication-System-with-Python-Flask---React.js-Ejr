@@ -33,7 +33,6 @@ export const Info_WithoutBase = () => {
 										<Link to={`/Cocktail_nonAlcohol/${index}`}>
 											<Button variant="outline-success">Leer más..</Button>
 										</Link>
-
 										<Button
 											variant="outline-warning"
 											onClick={() => actions.addFavorites(cocktail.idDrink, cocktail.strDrink)}>

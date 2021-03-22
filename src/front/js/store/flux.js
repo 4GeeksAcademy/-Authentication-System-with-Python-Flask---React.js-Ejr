@@ -1,5 +1,3 @@
-const be_url = "https://3001-apricot-tahr-nih1bqo0.ws-us03.gitpod.io/";
-
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
@@ -23,7 +21,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			////////////////////BEGIN TESTING PURPOSES @JVM && @ANMORA//////////////////////
 			//f(x) built for testing reg form(experimental by now)
 			signup: async (first_name, last_name, email, password, birthday) => {
-				const res = await fetch("https://3001-apricot-tahr-nih1bqo0.ws-us03.gitpod.io/user", {
+				const res = await fetch(`${process.env.BACKEND_URL}/user`, {
 					method: "POST",
 					headers: { "Content-Type": "application/json" },
 					body: JSON.stringify({
@@ -42,7 +40,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 
 			login: async (email, password) => {
-				await fetch("https://3001-apricot-tahr-nih1bqo0.ws-us03.gitpod.io/login", {
+				await fetch(`${process.env.BACKEND_URL}/login`, {
 					method: "POST",
 					headers: { "Content-Type": "application/json" },
 					body: JSON.stringify({ email: email, password: password })
@@ -169,22 +167,19 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({ gin_cocktail: cocktailList });
 			},
 
-			addFavorites: myfav => {
+			addFavorites: async myfav => {
 				const store = getStore();
-				setStore({ favorites: [...store.favorites, [myfav]] });
-			},
-			//alternative Implementation for experimental testing
-			counterFavorites: () => {
-				const store = getStore();
-				const length = store.favorites.length;
-				return length;
-			},
-
-			deleteFavorites: id => {
-				const store = getStore();
-				const FavList = store.favorites.filter((item, f) => id != f);
-				setStore({ favorites: [...FavList] });
+				await fetch(`${process.env.BACKEND_URL}/favorites`, {
+					method: "POST",
+					headers: { "Content-Type": "application/json", authorization: `Bearer ${store.jwtoken}` },
+					body: JSON.stringify(myfav)
+				})
+					.then(response => response.json())
+					.then(data => {
+						console.log(data);
+					});
 			}
+
 			////////////////END TESTING PURPOSES @JVM && @ANMORA///////////////////////
 			// Use getActions to call a function within a fuction
 		}
