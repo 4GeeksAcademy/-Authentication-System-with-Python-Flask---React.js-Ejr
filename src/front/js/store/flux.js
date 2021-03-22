@@ -12,7 +12,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 			randomcocktail: [],
 			ingredient: [],
 			modifier: [],
-			rum_cocktail: []
+			rum_cocktail: [],
+			gin_cocktail: [],
+			vodka_cocktail: [],
+			tequila_cocktail: [],
+			whisky_cocktail: [],
+			non_alcoholic: []
 		},
 		actions: {
 			////////////////////BEGIN TESTING PURPOSES @JVM && @ANMORA//////////////////////
@@ -64,29 +69,121 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 
 			randCocktail: async () => {
-				//It fetchs cocktails via random
+				//It fetchs 10 cocktails via random
 				const res = await fetch("https://www.thecocktaildb.com/api/json/v2/9973533/randomselection.php");
 				cocktail = await res.json();
 				setStore({ randomcocktail: cocktail.drinks });
 			},
 
-			info_baseCocktail: async idDrink => {
-				//It gets base cocktails via filter
-				const res = await fetch(`https://www.thecocktaildb.com/api/json/v2/9973533/search.php?s=${idDrink}`);
+			info_non_alcoholicCocktail: async () => {
+				//It gets base cocktails via filter classification
+				const res = await fetch("https://www.thecocktaildb.com/api/json/v2/9973533/filter.php?a=Non_Alcoholic");
+				let cocktailList = [];
 				const cocktail = await res.json();
-				setStore({ basecocktail: cocktail.drinks });
+				cocktail.drinks.forEach(item => {
+					fetch(`https://www.thecocktaildb.com/api/json/v2/9973533/lookup.php?i=${item.idDrink}`)
+						.then(res2 => res2.json())
+						.then(data => {
+							// console.log(data.drinks[0]);
+							cocktailList.push(data.drinks[0]);
+						});
+				});
+				setStore({ non_alcoholic: cocktailList });
 			},
 
 			info_rumCocktail: async () => {
-				//It gets base cocktails via filter
-				const res = await fetch("https://www.thecocktaildb.com/api/json/v2/9973533/search.php?s=rum");
+				//It gets base cocktails via filter classification
+				const res = await fetch("https://www.thecocktaildb.com/api/json/v2/9973533/filter.php?i=Rum");
+				let cocktailList = [];
 				const cocktail = await res.json();
-				setStore({ rum_cocktail: cocktail.drinks });
+				cocktail.drinks.forEach(item => {
+					fetch(`https://www.thecocktaildb.com/api/json/v2/9973533/lookup.php?i=${item.idDrink}`)
+						.then(res2 => res2.json())
+						.then(data => {
+							// console.log(data.drinks[0]);
+							cocktailList.push(data.drinks[0]);
+						});
+				});
+				setStore({ rum_cocktail: cocktailList });
 			},
 
-			//Building Favorites f(x)s
-			addFavorites: async (drink_name, drink_img) => {
+			info_vodkaCocktail: async () => {
+				//It gets base cocktails via filter classification
+				const res = await fetch("https://www.thecocktaildb.com/api/json/v2/9973533/filter.php?i=Vodka");
+				const cocktail = await res.json();
+				let cocktailList = [];
+				cocktail.drinks.forEach(item => {
+					fetch(`https://www.thecocktaildb.com/api/json/v2/9973533/lookup.php?i=${item.idDrink}`)
+						.then(res2 => res2.json())
+						.then(data => {
+							//console.log(data.drinks[0])
+							// console.log(data.drinks[0]);
+							cocktailList.push(data.drinks[0]);
+						});
+				});
+				setStore({ vodka_cocktail: cocktailList });
+			},
+
+			info_tequilaCocktail: async () => {
+				//It gets base cocktails via filter classification
+				const res = await fetch("https://www.thecocktaildb.com/api/json/v2/9973533/filter.php?i=Tequila");
+				const cocktail = await res.json();
+				let cocktailList = [];
+				cocktail.drinks.forEach(item => {
+					fetch(`https://www.thecocktaildb.com/api/json/v2/9973533/lookup.php?i=${item.idDrink}`)
+						.then(res2 => res2.json())
+						.then(data => {
+							cocktailList.push(data.drinks[0]);
+						});
+				});
+				setStore({ tequila_cocktail: cocktailList });
+			},
+
+			info_whiskyCocktail: async () => {
+				//It gets base cocktails via filter classification
+				const res = await fetch("https://www.thecocktaildb.com/api/json/v2/9973533/filter.php?i=Brandy");
+				const cocktail = await res.json();
+				let cocktailList = [];
+				cocktail.drinks.forEach(item => {
+					fetch(`https://www.thecocktaildb.com/api/json/v2/9973533/lookup.php?i=${item.idDrink}`)
+						.then(res2 => res2.json())
+						.then(data => {
+							cocktailList.push(data.drinks[0]);
+						});
+				});
+				setStore({ whisky_cocktail: cocktailList });
+			},
+
+			info_ginCocktail: async () => {
+				//It gets base cocktails via filter classification
+				const res = await fetch("https://www.thecocktaildb.com/api/json/v2/9973533/filter.php?i=Gin");
+				const cocktail = await res.json();
+				let cocktailList = [];
+				cocktail.drinks.forEach(item => {
+					fetch(`https://www.thecocktaildb.com/api/json/v2/9973533/lookup.php?i=${item.idDrink}`)
+						.then(res2 => res2.json())
+						.then(data => {
+							cocktailList.push(data.drinks[0]);
+						});
+				});
+				setStore({ gin_cocktail: cocktailList });
+			},
+
+			addFavorites: myfav => {
 				const store = getStore();
+				setStore({ favorites: [...store.favorites, [myfav]] });
+			},
+			//alternative Implementation for experimental testing
+			counterFavorites: () => {
+				const store = getStore();
+				const length = store.favorites.length;
+				return length;
+			},
+
+			deleteFavorites: id => {
+				const store = getStore();
+				const FavList = store.favorites.filter((item, f) => id != f);
+				setStore({ favorites: [...FavList] });
 			}
 			/////////////////////END TESTING PURPOSES @JVM && @ANMORA///////////////////////
 			// Use getActions to call a function within a fuction

@@ -1,40 +1,50 @@
 import React, { useContext } from "react";
 import { Context } from "../store/appContext";
 import { Link } from "react-router-dom";
-import { Container, Row, Col, Card, Button } from "react-bootstrap";
-import "../../styles/info_category.scss";
+import { Container, Row, Col, Image, Card, Button } from "react-bootstrap";
+import "../../styles/base_cards.scss";
 
 export const Info_Rum = () => {
 	const { store, actions } = useContext(Context);
 
 	return (
-		<Container>
-			{store.rum_cocktail.map((cocktail, index) => (
-				<Card className="info_cards" key={index}>
-					<Row>
-						<Col className="col-auto col-md-4">
-							{/* <Col className="col-auto col-md-4"> */}
-							<img className="mr-I" src={cocktail.strDrinkThumb} alt="Generic placeholder" />
-						</Col>
-						<Col className="text col-auto col-md-8">
-							<Card.Body className="text-light text-center">
-								<Card.Title>{cocktail.strDrink}</Card.Title>
-								<Card.Text>
-									{cocktail.strAlcoholic}
-									<br />
-									{cocktail.strInstructions}
-									<br />
-									{cocktail.strInstructionsDE}
-								</Card.Text>
-								{/* <Link to={`/cocktails/${index}`}> */}
-								<Link>
-									<Button variant="outline-success">Leer más..</Button>
-								</Link>
-							</Card.Body>
-						</Col>
-					</Row>
-				</Card>
-			))}
+		<Container className="base_cards">
+			<article className="text-light mt-1 mb-1">
+				<p>
+					Esta página esta ligada a una base de datos ya creada por lo cual para poder ingresar deberás
+					revisar F12 y conocer los usuarios en lista ya creados!
+				</p>
+			</article>
+			<Row>
+				{store.rum_cocktail.map((cocktail, index) => (
+					<Col className="col-auto col-md-6" key={index}>
+						<div className="mt-1 mb-1 d-flex justify-content-end text-center" id="base_cards1">
+							<Image
+								className="contentimg col-12 col-md-8"
+								src={cocktail.strDrinkThumb}
+								fluid
+								id="WithoutBase"
+							/>
+							<div className="col-12 col-md-6" id="base_cards2">
+								<Card className="Card text-light p-3">
+									<blockquote className="blockquote mb-0 card-body">
+										<p>{cocktail.strDrink}</p>
+										<Link to={`/Cocktail_Rum/${index}`}>
+											<Button variant="outline-success">Leer más..</Button>
+										</Link>
+
+										{/* <Link> */}
+										<Button variant="outline-warning">
+											<i className="far fa-heart" />
+										</Button>
+										{/* </Link> */}
+									</blockquote>
+								</Card>
+							</div>
+						</div>
+					</Col>
+				))}
+			</Row>
 		</Container>
 	);
 };
