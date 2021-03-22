@@ -1,3 +1,5 @@
+const be_url = "https://3001-apricot-tahr-nih1bqo0.ws-us03.gitpod.io/";
+
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
@@ -21,7 +23,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			////////////////////BEGIN TESTING PURPOSES @JVM && @ANMORA//////////////////////
 			//f(x) built for testing reg form(experimental by now)
 			signup: async (first_name, last_name, email, password, birthday) => {
-				const res = await fetch(`${process.env.BACKEND_URL}/user`, {
+				const res = await fetch("https://3001-apricot-tahr-nih1bqo0.ws-us03.gitpod.io/user", {
 					method: "POST",
 					headers: { "Content-Type": "application/json" },
 					body: JSON.stringify({
@@ -40,7 +42,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 
 			login: async (email, password) => {
-				await fetch(`${process.env.BACKEND_URL}/login`, {
+				await fetch("https://3001-apricot-tahr-nih1bqo0.ws-us03.gitpod.io/login", {
 					method: "POST",
 					headers: { "Content-Type": "application/json" },
 					body: JSON.stringify({ email: email, password: password })
@@ -167,23 +169,71 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({ gin_cocktail: cocktailList });
 			},
 
-			addFavorites: async myfav => {
+			checkFav: favName => {
+				console.log("FAV: ", favName);
 				const store = getStore();
-				await fetch(`${process.env.BACKEND_URL}/favorites`, {
-					method: "POST",
-					headers: { "Content-Type": "application/json", authorization: `Bearer ${store.jwtoken}` },
-					body: JSON.stringify(myfav)
-				})
-					.then(response => response.json())
-					.then(data => {
-						console.log(data);
-					});
-			}
+				let existing = store.favorites.find(i => i.cocktail_name === favName);
+				console.log("DONE: ", existing);
+				if (existing != undefined) {
+					return true;
+				} else {
+					return false;
+				}
+			},
 
-			////////////////END TESTING PURPOSES @JVM && @ANMORA///////////////////////
+			addFavorites: async (cocktail_id, cocktail_name) => {
+				const store = getStore();
+				let checking = await getActions().checkFav(cocktail_name);
+				console.log("Checking:", checking);
+
+				if (!checking) {
+					await fetch("https://3001-apricot-tahr-nih1bqo0.ws-us03.gitpod.io/favorite", {
+						method: "POST",
+						headers: {
+							"Content-Type": "application/json",
+							Authorization: `Bearer ${store.jwtoken}`
+						},
+						body: JSON.stringify({
+							cocktail_id: cocktail_id,
+							cocktail_name: cocktail_name
+						})
+					})
+						.then(response => response.json())
+						.then(data => {
+							setStore({ favorites: data });
+						});
+				}
+			},
+
+			getUserFavorites: id => {
+				fetch(`https://3001-apricot-tahr-nih1bqo0.ws-us03.gitpod.io/user/${id}`)
+					.then(data => data.json())
+					.then(response => {
+						setStore({ favorites: response.favorites });
+					});
+			},
+			//alternative Implementation for experimental testing
+			counterFavorites: () => {
+				const store = getStore();
+				const length = store.favorites.length;
+				return length;
+			},
+
+			deleteFavorite: async id => {
+				const store = getStore();
+				const drinkIndex = store.favorites.findIndex(i => i.drink_id == id);
+				console.log("####$: ", drinkIndex);
+				let favID = await store.favorites[drinkIndex].id;
+				console.log("ID: ", favId);
+				if (drinkIndex != -1) {
+					fetch(`https://3001-apricot-tahr-nih1bqo0.ws-us03.gitpod.io/favorites/${favID}`, {
+						method: "DELETE"
+					}).then(() => getActions().getUserFavorites(store.sessionUID));
+				}
+			}
+			/////////////////////END TESTING PURPOSES @JVM && @ANMORA///////////////////////
 			// Use getActions to call a function within a fuction
 		}
 	};
 };
-
 export default getState;

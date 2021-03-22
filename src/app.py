@@ -130,11 +130,14 @@ def update_user(user_id):
     #endregion END GET FAVORITE   
             ###ADD FAVORITE###
 @app.route('/favorite', methods=['POST', 'GET'])
-@jwt_required
+@jwt_required()
 def add_favorite():
+
+    # Agregar validación para que no hayan repetidos en el mismo usuario.
+
     user_id = get_jwt_identity() #THIS CAN BE THE EMAIL 
     print("Hola", user_id)
-    user = User.query.filter_by(email=user_id).first_or_404()
+    user = User.query.filter_by(id=user_id).first()
 
     if request.method == 'POST':
         req = request.get_json()
@@ -144,12 +147,21 @@ def add_favorite():
             raise APIException("Cocktail ID must be typed ", status_code=400)
         if 'cocktail_name' not in req:
             raise APIException("Cocktail name must be typed", status_code=400)
-        if 'cocktail_img' not in req:
-            raise APIException("Cocktail image must be typed", status_code=400)
-        fav = Favorite(cocktail_id=req["cocktail_id"],cocktail_name= req["cocktail_name"], cocktail_img= req["cocktail_img"], user_id= user.id)
+        # if 'cocktail_img' not in req:
+        #     raise APIException("Cocktail image must be typed", status_code=400)
+        # fav = Favorite(cocktail_id=req["cocktail_id"],cocktail_name= req["cocktail_name"], cocktail_img= req["cocktail_img"], user_id= req["user_id"])
+        #fav = Favorite(cocktail_id=req["cocktail_id"], cocktail_name= req["cocktail_name"], user_id= req["user_id"])
+        #if 'cocktail_img' not in req:
+            #raise APIException("Cocktail image must be typed", status_code=400)
+        fav = Favorite(cocktail_id=req["cocktail_id"],cocktail_name= req["cocktail_name"], user_id=user.id)
         db.session.add(fav)
         db.session.commit()
-        return "Hecho", 200  #It is OK
+        
+        
+        getFavUser = Favorite.query.filter_by(user_id = user.id)
+        mapping = list(map(lambda f: f.serialize(), getFavUser))
+        
+        return jsonify(mapping), 200  #It is OK
 
     if request.method == 'GET':
         myfavs = Favorite.query.all()
