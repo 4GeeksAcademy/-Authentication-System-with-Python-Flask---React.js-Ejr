@@ -187,22 +187,24 @@ const getState = ({ getStore, getActions, setStore }) => {
 				console.log("Checking:", checking);
 
 				if (!checking) {
-					await fetch("https://3001-apricot-tahr-nih1bqo0.ws-us03.gitpod.io/favorites", {
+					await fetch("https://3001-apricot-tahr-nih1bqo0.ws-us03.gitpod.io/favorite", {
 						method: "POST",
 						headers: {
 							"Content-Type": "application/json",
-							authorization: `Bearer ${store.jwtoken}`
+							Authorization: `Bearer ${store.jwtoken}`
 						},
 						body: JSON.stringify({
 							cocktail_id: cocktail_id,
 							cocktail_name: cocktail_name
 						})
-					}).then(() => getActions().getUserFavorites(store.sessionUID));
-				} else {
-					getActions().deleteFavorite(cocktail_id);
+					})
+						.then(response => response.json())
+						.then(data => {
+							setStore({ favorites: data });
+						});
 				}
-            },
-            
+			},
+
 			getUserFavorites: id => {
 				fetch(`https://3001-apricot-tahr-nih1bqo0.ws-us03.gitpod.io/user/${id}`)
 					.then(data => data.json())

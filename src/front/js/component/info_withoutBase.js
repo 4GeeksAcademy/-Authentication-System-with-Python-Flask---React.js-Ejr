@@ -36,7 +36,9 @@ export const Info_WithoutBase = () => {
 
 										<Button
 											variant="outline-warning"
-											onClick={async () => actions.addFavorites(cocktail.drinks.idDrink,)}>
+											onClick={async () => {
+												actions.addFavorites(cocktail.idDrink, cocktail.strDrink);
+											}}>
 											<i className="far fa-heart" />
 										</Button>
 									</blockquote>
