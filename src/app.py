@@ -132,7 +132,9 @@ def update_user(user_id):
 @app.route('/favorite', methods=['POST', 'GET'])
 @jwt_required
 def add_favorite():
-    user_id = get_jwt_identity()                #getting tokenid from user 
+    user_id = get_jwt_identity() #THIS CAN BE THE EMAIL 
+    print("Hola", user_id)
+    user = User.query.filter_by(email=user_id).first_or_404()
 
     if request.method == 'POST':
         req = request.get_json()
@@ -146,6 +148,9 @@ def add_favorite():
         #     raise APIException("Cocktail image must be typed", status_code=400)
         # fav = Favorite(cocktail_id=req["cocktail_id"],cocktail_name= req["cocktail_name"], cocktail_img= req["cocktail_img"], user_id= req["user_id"])
         fav = Favorite(cocktail_id=req["cocktail_id"], cocktail_name= req["cocktail_name"], user_id= req["user_id"])
+        if 'cocktail_img' not in req:
+            raise APIException("Cocktail image must be typed", status_code=400)
+        fav = Favorite(cocktail_id=req["cocktail_id"],cocktail_name= req["cocktail_name"], cocktail_img= req["cocktail_img"], user_id= user.id)
         db.session.add(fav)
         db.session.commit()
         return "Hecho", 200  #It is OK

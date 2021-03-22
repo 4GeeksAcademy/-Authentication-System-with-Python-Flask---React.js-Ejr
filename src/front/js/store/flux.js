@@ -201,7 +201,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 				} else {
 					getActions().deleteFavorite(cocktail_id);
 				}
-			},
+            },
+            
 			getUserFavorites: id => {
 				fetch(`https://3001-apricot-tahr-nih1bqo0.ws-us03.gitpod.io/user/${id}`)
 					.then(data => data.json())
