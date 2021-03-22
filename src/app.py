@@ -127,7 +127,7 @@ def update_user(user_id):
 #     fav = Favorite.query.all()
 #     payload = list(map(lambda f: f.serialize(), fav))
 #     return jsonify(payload), 200
- #endregion END GET FAVORITE   
+    #endregion END GET FAVORITE   
             ###ADD FAVORITE###
 @app.route('/favorite', methods=['POST', 'GET'])
 @jwt_required
