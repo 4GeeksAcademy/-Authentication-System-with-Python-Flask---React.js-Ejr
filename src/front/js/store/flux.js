@@ -169,11 +169,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({ gin_cocktail: cocktailList });
 			},
 
-			checkFav: favID => {
-				console.log("FAV: ", favID);
+			checkFav: favName => {
+				console.log("FAV: ", favName);
 				const store = getStore();
-				let existing = store.favorites.find(i => i.drink_name === item);
-				console.log("DONE: ", found);
+				let existing = store.favorites.find(i => i.cocktail_name === favName);
+				console.log("DONE: ", existing);
 				if (existing != undefined) {
 					return true;
 				} else {
@@ -181,12 +181,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
-			addFavorites: async cocktail_name => {
+			addFavorites: async (cocktail_id, cocktail_name) => {
 				const store = getStore();
 				let checking = await getActions().checkFav(cocktail_name);
 				console.log("Checking:", checking);
 
-				setStore({ favorites: [...store.favorites, [myfav]] });
 				if (!checking) {
 					await fetch("https://3001-apricot-tahr-nih1bqo0.ws-us03.gitpod.io/favorites", {
 						method: "POST",
@@ -195,15 +194,16 @@ const getState = ({ getStore, getActions, setStore }) => {
 							authorization: `Bearer ${store.jwtoken}`
 						},
 						body: JSON.stringify({
-							drink_name: drink_name
+							cocktail_id: cocktail_id,
+							cocktail_name: cocktail_name
 						})
 					}).then(() => getActions().getUserFavorites(store.sessionUID));
 				} else {
-					getActions().deleteFavorite(drink_id);
+					getActions().deleteFavorite(cocktail_id);
 				}
 			},
 			getUserFavorites: id => {
-				fetch("https://3001-apricot-tahr-nih1bqo0.ws-us03.gitpod.io/user/${id}")
+				fetch(`https://3001-apricot-tahr-nih1bqo0.ws-us03.gitpod.io/user/${id}`)
 					.then(data => data.json())
 					.then(response => {
 						setStore({ favorites: response.favorites });
@@ -223,7 +223,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				let favID = await store.favorites[drinkIndex].id;
 				console.log("ID: ", favId);
 				if (drinkIndex != -1) {
-					fetch("https://3001-apricot-tahr-nih1bqo0.ws-us03.gitpod.io/favorites/${favID}", {
+					fetch(`https://3001-apricot-tahr-nih1bqo0.ws-us03.gitpod.io/favorites/${favID}`, {
 						method: "DELETE"
 					}).then(() => getActions().getUserFavorites(store.sessionUID));
 				}

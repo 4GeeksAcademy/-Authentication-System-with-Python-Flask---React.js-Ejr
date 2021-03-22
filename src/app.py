@@ -138,25 +138,14 @@ def add_favorite():
         req = request.get_json()
         if req is None:
             raise APIException("Resquest is need as a json object", status_code=400)
-<<<<<<< HEAD
-        #if 'cocktail_id' not in req:
-            #raise APIException("Cocktail ID must be typed ", status_code=400)
-        if 'cocktail_name' not in req:
-            raise APIException("Cocktail name must be typed", status_code=400)
-        #if 'cocktail_img' not in req:
-            #raise APIException("Cocktail image must be typed", status_code=400)
-        #fav = Favorite(cocktail_id=req["cocktail_id"],cocktail_name= req["cocktail_name"], cocktail_img= req["cocktail_img"], user_id= req["user_id"])
-        fav = Favorite(cocktail_name= req["cocktail_name"], user_id=req["user_id"])
-=======
-        # if 'cocktail_id' not in req:
-        #     raise APIException("Cocktail ID must be typed ", status_code=400)
+        if 'cocktail_id' not in req:
+            raise APIException("Cocktail ID must be typed ", status_code=400)
         if 'cocktail_name' not in req:
             raise APIException("Cocktail name must be typed", status_code=400)
         # if 'cocktail_img' not in req:
         #     raise APIException("Cocktail image must be typed", status_code=400)
         # fav = Favorite(cocktail_id=req["cocktail_id"],cocktail_name= req["cocktail_name"], cocktail_img= req["cocktail_img"], user_id= req["user_id"])
-        fav = Favorite(cocktail_name= req["cocktail_name"], user_id= req["user_id"])
->>>>>>> c685933e5653593bf840642eba349c3eee20aeab
+        fav = Favorite(cocktail_id=req["cocktail_id"], cocktail_name= req["cocktail_name"], user_id= req["user_id"])
         db.session.add(fav)
         db.session.commit()
         return "Hecho", 200  #It is OK
