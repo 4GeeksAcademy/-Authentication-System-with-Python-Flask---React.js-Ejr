@@ -34,7 +34,6 @@ export const NavFav = () => {
 									<a>Home</a>
 								</Link> */}
 								{/* Para anadir favoritos */}
-								{/* <a href="#Favorites">Favorites</a> */}
 								<DropdownButton
 									id="dropdown-basic-button"
 									variant="outline-light"
