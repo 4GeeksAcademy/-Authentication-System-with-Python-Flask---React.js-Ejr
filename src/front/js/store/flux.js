@@ -169,45 +169,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({ gin_cocktail: cocktailList });
 			},
 
-			checkFav: favID => {
-				console.log("FAV: ", favID);
+			addFavorites: myfav => {
 				const store = getStore();
-				let existing = store.favorites.find(i => i.drink_name === item);
-				console.log("DONE: ", found);
-				if (existing != undefined) {
-					return true;
-				} else {
-					return false;
-				}
-			},
-
-			addFavorites: async cocktail_name => {
-				const store = getStore();
-				let checking = await getActions().checkFav(cocktail_name);
-				console.log("Checking:", checking);
-
 				setStore({ favorites: [...store.favorites, [myfav]] });
-				if (!checking) {
-					await fetch("https://3001-apricot-tahr-nih1bqo0.ws-us03.gitpod.io/favorites", {
-						method: "POST",
-						headers: {
-							"Content-Type": "application/json",
-							authorization: `Bearer ${store.jwtoken}`
-						},
-						body: JSON.stringify({
-							drink_name: drink_name
-						})
-					}).then(() => getActions().getUserFavorites(store.sessionUID));
-				} else {
-					getActions().deleteFavorite(drink_id);
-				}
-			},
-			getUserFavorites: id => {
-				fetch("https://3001-apricot-tahr-nih1bqo0.ws-us03.gitpod.io/user/${id}")
-					.then(data => data.json())
-					.then(response => {
-						setStore({ favorites: response.favorites });
-					});
 			},
 			//alternative Implementation for experimental testing
 			counterFavorites: () => {
@@ -216,19 +180,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 				return length;
 			},
 
-			deleteFavorite: async id => {
+			deleteFavorites: id => {
 				const store = getStore();
-				const drinkIndex = store.favorites.findIndex(i => i.drink_id == id);
-				console.log("####$: ", drinkIndex);
-				let favID = await store.favorites[drinkIndex].id;
-				console.log("ID: ", favId);
-				if (drinkIndex != -1) {
-					fetch("https://3001-apricot-tahr-nih1bqo0.ws-us03.gitpod.io/favorites/${favID}", {
-						method: "DELETE"
-					}).then(() => getActions().getUserFavorites(store.sessionUID));
-				}
+				const FavList = store.favorites.filter((item, f) => id != f);
+				setStore({ favorites: [...FavList] });
 			}
-			/////////////////////END TESTING PURPOSES @JVM && @ANMORA///////////////////////
+			////////////////END TESTING PURPOSES @JVM && @ANMORA///////////////////////
 			// Use getActions to call a function within a fuction
 		}
 	};
