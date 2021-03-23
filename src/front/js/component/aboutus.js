@@ -24,11 +24,11 @@ export const AboutUs = () => {
 								Podŕas aprender de deliciosas mezclas para hacer desde la comodidad de tu casa
 							</Card.Text>
 						</Card.Body>
-						<Card.Footer>
+						{/* <Card.Footer>
 							<div data-aos="zoom-in">
 								<small className="text-muted">Last updated 3 mins ago</small>
 							</div>
-						</Card.Footer>
+						</Card.Footer> */}
 					</div>
 				</Card>
 				<Card className="text-light text-center Card">
@@ -41,9 +41,9 @@ export const AboutUs = () => {
 								para resaltar nuestros orígenes
 							</Card.Text>
 						</Card.Body>
-						<Card.Footer>
+						{/* <Card.Footer>
 							<small className="text-muted">Last updated 3 mins ago</small>
-						</Card.Footer>
+						</Card.Footer> */}
 					</div>
 				</Card>
 				<Card className="text-light text-right Card">
@@ -55,13 +55,12 @@ export const AboutUs = () => {
 								Se formo a partir de una manera creativa y llamativa relacionado al nombre del proyecto
 							</Card.Text>
 						</Card.Body>
-						<Card.Footer>
+						{/* <Card.Footer>
 							<small className="text-muted">Last updated 3 mins ago</small>
-						</Card.Footer>
+						</Card.Footer> */}
 					</div>
 				</Card>
 			</CardDeck>
 		</Container>
 	);
 };
-//Come
