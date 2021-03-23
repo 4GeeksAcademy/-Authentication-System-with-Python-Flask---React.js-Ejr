@@ -170,14 +170,15 @@ def add_favorite():
     return "Error, invalid method", 404
         ###DELETE FAVORITE BY ID###
 @app.route('/favorite/<int:fav_id>', methods=['DELETE'])
-def delete_fav_by_id():
+def delete_fav_by_id(fav_id):
     fav = Favorite.query.filter_by(id=fav_id).first_or_404()
+    print(fav)
     if fav is None:
         raise APIException('Favorito no encontrado', status_code=404)
     else:
         db.session.delete(fav)
         db.session.commit()
-        return jsonify(fav.serialize()), 204 #indicates that the server has successfully fulfilled the request and that there is no content to send in the response payload body
+        return jsonify(fav.serialize()), 200 #indicates that the server has successfully fulfilled the request and that there is no content to send in the response payload body
 
 #endregion Favorite
 

@@ -220,20 +220,22 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 
 			deleteFavorites: async fav_id => {
+				console.log(fav_id);
+
 				const res = await fetch(
 					`https://3001-chocolate-tarantula-5ng0qguc.ws-us03.gitpod.io/favorite/${fav_id}`,
 					{
 						method: "DELETE",
 						headers: {
 							"Content-Type": "application/json",
-							Authorization: `Bearer ${store.jwtoken}`
+							Authorization: `Bearer ${getStore().jwtoken}`
 						}
 					}
 				);
 				const info = await res.json(); //traemos data del fetch
 				console.log(info);
 				const delFav = getStore().favorites;
-				const existingFav = delFav.filter(i => i.cocktail_id !== fav_id);
+				const existingFav = delFav.filter(i => i.id !== fav_id);
 				setStore({ favorites: [...existingFav] });
 			},
 

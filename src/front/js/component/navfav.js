@@ -50,7 +50,7 @@ export const NavFav = () => {
 												<Dropdown.Item
 													eventKey={i}
 													key={i}
-													onClick={() => actions.deleteFavorites(i)}>
+													onClick={() => actions.deleteFavorites(favorite.id)}>
 													<div>
 														{favorite.cocktail_name}
 														<i className="far fa-trash-alt" />
