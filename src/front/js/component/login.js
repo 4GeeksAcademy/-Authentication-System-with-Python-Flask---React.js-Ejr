@@ -47,25 +47,9 @@ export const Login = () => {
 							<h4 className="display-5">Login</h4>
 							<hr className="my-1" />
 							<div className="form-group align-items-center">
-<<<<<<< HEAD
 								<div data-aos="flip-left" data-aos-easing="ease-out-cubic" data-aos-duration="2000">
 									<div className="col-auto">
 										<label className="inlineFormInput">Email</label>
-=======
-								<div className="col-auto">
-									<label className="inlineFormInput">Email</label>
-									<input
-										type="text"
-										className="form-control mb-2 text-center"
-										id="User"
-										placeholder="tomate.lo@gmail.com"
-										onChange={e => setEmail(e.target.value)}
-									/>
-								</div>
-								<div className="col-auto">
-									<label className="inlineFormInputGroup">Password</label>
-									<div className="input-group mb-2">
->>>>>>> 3eb30c5d5aafbb288ce2cd045fb560c34e60dc22
 										<input
 											type="text"
 											className="form-control mb-2 text-center"
@@ -73,28 +57,40 @@ export const Login = () => {
 											placeholder="tomate.lo@gmail.com"
 											onChange={e => setEmail(e.target.value)}
 										/>
-										<small id="emailHelp" className="form-text text-muted">
-											Por favor revisa bien tus datos cuando termines.
-										</small>
 									</div>
 									<div className="col-auto">
 										<label className="inlineFormInputGroup">Password</label>
 										<div className="input-group mb-2">
 											<input
-												type="password"
-												className="form-control text-center"
-												id="Password"
-												placeholder="tomatelo2x3"
-												onChange={e => setPassword(e.target.value)}
+												type="text"
+												className="form-control mb-2 text-center"
+												id="User"
+												placeholder="tomate.lo@gmail.com"
+												onChange={e => setEmail(e.target.value)}
 											/>
+											<small id="emailHelp" className="form-text text-muted">
+												Por favor revisa bien tus datos cuando termines.
+											</small>
 										</div>
+										<div className="col-auto">
+											<label className="inlineFormInputGroup">Password</label>
+											<div className="input-group mb-2">
+												<input
+													type="password"
+													className="form-control text-center"
+													id="Password"
+													placeholder="tomatelo2x3"
+													onChange={e => setPassword(e.target.value)}
+												/>
+											</div>
+										</div>
+										<small id="emailHelp" className="form-text text-muted">
+											Por favor revisa bien tus datos cuando termines.
+										</small>
+										<Button type="submit" variant="outline-info">
+											Log In
+										</Button>
 									</div>
-									<small id="emailHelp" className="form-text text-muted">
-										Por favor revisa bien tus datos cuando termines.
-									</small>
-									<Button type="submit" variant="outline-info">
-										Log In
-									</Button>
 								</div>
 							</div>
 						</form>
