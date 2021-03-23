@@ -11,12 +11,16 @@ export const Home = () => {
 			{store.jwtoken == null ? <Redirect to="/" /> : "/home"}
 			<div className="container mb-4">
 				<div className="contenedor text-center">
-					<article className="text-light">
-						<h4>Nuestros cócteles más populares seleccionados para tí</h4>
-						{/* <p>
-						Esta página esta ligada a una base de datos ya creada por lo cual para poder ingresar deberás
-						revisar F12 y conocer los usuarios en lista ya creados!
-					</p> */}
+					<article className="text-light textBox">
+						<p>
+							Mas que una pagina ilustrativa, en TOMATE`LO puedes encontrar los cócteles más populares
+							seleccionados para tí!
+						</p>
+						<footer className="blockquote-footer">
+							<small className="text-muted">
+								Sabias que puedes encontrar informacion dentro de las imagenes
+							</small>
+						</footer>
 					</article>
 					<div className="row">
 						{/* 1era Fila */}
