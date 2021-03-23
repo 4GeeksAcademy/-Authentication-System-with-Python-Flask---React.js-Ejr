@@ -4,46 +4,32 @@ import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
-import useUserSession from "./userSession";
+// import useUserSession from "./userSession";
 
 function MyVerticallyCenteredModal(props) {
-	const { store, actions } = useContext(Context);
-	const [user, setUser] = useUserSession("user");
+	// const { store, actions } = useContext(Context);
+	// const [user, setUser] = useUserSession("user");
 
-	const handleSubmit = async evento => {
-		evento.preventDefault();
-		await actions.onLogin();
-		await setUser(JSON.stringify(store.logged_user));
-		console.log(user);
-	};
+	// const handleSubmit = async evento => {
+	// 	evento.preventDefault();
+	// 	await actions.onLogin();
+	// 	await setUser(JSON.stringify(store.logged_user));
+	// 	console.log(user);
+	// };
 	return (
 		<Modal {...props} size="md" aria-labelledby="contained-modal-title-vcenter" centered>
 			<Modal.Header closeButton style={{ paddingRight: "40px", paddingLeft: "40px" }}>
 				<Modal.Title id="contained-modal-title-vcenter">Inicia Sesión</Modal.Title>
 			</Modal.Header>
 			<Modal.Body>
-				<Form
-					style={{ paddingRight: "30px", paddingLeft: "20px", marginTop: "50px" }}
-					onSubmit={e => handleSubmit(e)}>
+				<Form style={{ paddingRight: "30px", paddingLeft: "20px", marginTop: "50px" }}>
 					<Form.Group controlId="formBasicEmail">
 						{/* <Form.Label>Email address</Form.Label> */}
-						<Form.Control
-							type="email"
-							placeholder="Ingresa tu correo electrónico"
-							className="form-control"
-							name="emailLogin"
-							onChange={e => actions.onChangeLogin(e)}
-						/>
+						<Form.Control type="email" placeholder="Ingresa tu correo electrónico" />
 					</Form.Group>
 					<Form.Group controlId="formBasicPassword">
 						{/* <Form.Label>Password</Form.Label> */}
-						<Form.Control
-							type="password"
-							placeholder="Ingresa tu contraseña"
-							className="form-control"
-							name="passWord"
-							onChange={e => actions.onChangeLogin(e)}
-						/>
+						<Form.Control type="password" placeholder="Ingresa tu contraseña" />
 					</Form.Group>
 					<Button variant="primary" size="lg" type="submit" block style={{ marginTop: "70px" }}>
 						Ingresar
