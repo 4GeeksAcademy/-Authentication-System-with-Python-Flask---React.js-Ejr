@@ -2,9 +2,17 @@ import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
 
-import { Home } from "./pages/home";
+import { CheckOut } from "./pages/checkout";
+import { Complex } from "./pages/complex";
+import { Contact } from "./pages/contact";
 import { Demo } from "./pages/demo";
-import { Single } from "./pages/single";
+import { Home } from "./pages/home";
+import { Login } from "./pages/login";
+import { NotFound } from "./pages/notfound";
+import { Profile } from "./pages/profile";
+import { Recover } from "./pages/recover";
+import { Reserve } from "./pages/reserve";
+
 import injectContext from "./store/appContext";
 
 import { Navbar } from "./component/navbar";
@@ -22,17 +30,35 @@ const Layout = () => {
 				<ScrollToTop>
 					<Navbar />
 					<Switch>
-						<Route exact path="/">
-							<Home />
+						<Route exact path="/checkout">
+							<CheckOut />
+						</Route>
+						<Route exact path="/complex/:theId">
+							<Complex id="theId" />
+						</Route>
+						<Route exact path="/contact">
+							<Contact />
 						</Route>
 						<Route exact path="/demo">
 							<Demo />
 						</Route>
-						<Route exact path="/single/:theid">
-							<Single />
+						<Route exact path="/home">
+							<Home />
+						</Route>
+						<Route exact path="/login">
+							<Login />
+						</Route>
+						<Route exact path="/profile/:userID">
+							<Profile id="userID" />
+						</Route>
+						<Route exact path="/recover">
+							<Recover />
+						</Route>
+						<Route exact path="/reserve">
+							<Reserve />
 						</Route>
 						<Route>
-							<h1>Not found!</h1>
+							<NotFound />
 						</Route>
 					</Switch>
 					<Footer />
