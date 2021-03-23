@@ -20,7 +20,7 @@ export const Login = () => {
 	return (
 		<>
 			{store.jwtoken != null ? <Redirect to="/home" /> : ""}
-			<Container className="mt-2 mb-2" id="Login">
+			<Container className="mt-4 mb-2" id="Login">
 				<Row>
 					<article className="text-center text-light offset-lg-2 col-12 col-md-12 col-lg-8" id="Login">
 						<div data-aos="zoom-in">
@@ -47,9 +47,25 @@ export const Login = () => {
 							<h4 className="display-5">Login</h4>
 							<hr className="my-1" />
 							<div className="form-group align-items-center">
+<<<<<<< HEAD
 								<div data-aos="flip-left" data-aos-easing="ease-out-cubic" data-aos-duration="2000">
 									<div className="col-auto">
 										<label className="inlineFormInput">Email</label>
+=======
+								<div className="col-auto">
+									<label className="inlineFormInput">Email</label>
+									<input
+										type="text"
+										className="form-control mb-2 text-center"
+										id="User"
+										placeholder="tomate.lo@gmail.com"
+										onChange={e => setEmail(e.target.value)}
+									/>
+								</div>
+								<div className="col-auto">
+									<label className="inlineFormInputGroup">Password</label>
+									<div className="input-group mb-2">
+>>>>>>> 3eb30c5d5aafbb288ce2cd045fb560c34e60dc22
 										<input
 											type="text"
 											className="form-control mb-2 text-center"
