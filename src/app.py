@@ -96,7 +96,7 @@ def update_user(id):
             if re.search(email_reg, request.json.get("email")):
                 email = request.json.get("email")
         else:
-            return jsonify({"msg": "Este correo no tiene formato váºlido"}), 401
+            return jsonify({"msg": "Este correo no tiene formato válido"}), 401
 
         if request.json.get("password") is not None:
             if re.search(password_reg, request.json.get("password")):
@@ -104,7 +104,7 @@ def update_user(id):
                 request.json.get("password"))
                 _password = password_hash
         else:
-            return jsonify({"msg": "El formato de la contraseña no es válido"}), 401
+            return jsonify({"msg": "El formato de la contraseña no es válido, debe ser alfanumérica"}), 401
 
             _email = request.json.get(
             "email") if not request.json.get("email") else _email

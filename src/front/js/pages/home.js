@@ -11,13 +11,8 @@ export const Home = () => {
 	const { store, actions } = useContext(Context);
 	return (
 		<>
-<<<<<<< HEAD
-			<div className="text-center mt-5">
-				<MyCarousel className="carousel-size" />
-=======
 			<div className="text-center">
 				<MyCarousel />
->>>>>>> acc3bf9b62b8cca87cfe19564fe519793114cbfa
 				<PersonBox title="Profesionales más solicitados" />
 				<CardBox title="Categorias más buscadas" />
 				<CarouselReviews />
