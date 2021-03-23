@@ -8,12 +8,12 @@ import "../../styles/home.scss";
 
 export const NavFav = () => {
 	const { actions, store } = useContext(Context);
+	console.log(store.favorites);
 
 	const handleMenu = e => {
 		e.preventDefault();
 		$("nav").toggleClass("hide");
 	};
-
 	return (
 		<>
 			{store.jwtoken == null ? <Redirect to="/" /> : ""}
@@ -34,7 +34,6 @@ export const NavFav = () => {
 									<a>Home</a>
 								</Link> */}
 								{/* Para anadir favoritos */}
-								{/* <a href="#Favorites">Favorites</a> */}
 								<DropdownButton
 									id="dropdown-basic-button"
 									variant="outline-light"
@@ -48,25 +47,13 @@ export const NavFav = () => {
 													eventKey={i}
 													key={i}
 													onClick={() => actions.deleteFavorites(i)}>
-													{favorite.type == "cocktail" ? (
-														<div>
-															<i className="fas fa-id-card">
-																&nbsp;
-																{favorite.strDrink}
-															</i>
-															&nbsp;&nbsp;&nbsp;
-															<i className="far fa-trash-alt" />
-														</div>
-													) : (
-														<div>
-															<i className="fas fa-globe-americas">
-																&nbsp;
-																{favorite.strDrink}
-															</i>
-															&nbsp;&nbsp;&nbsp;
-															<i className="far fa-trash-alt" />
-														</div>
-													)}
+													<div>
+														<i className="fas fa-globe-americas" />
+														&nbsp;
+														{favorite.cocktail_name}
+														&nbsp;&nbsp;&nbsp;
+														<i className="far fa-trash-alt" />
+													</div>
 												</Dropdown.Item>
 											);
 										})

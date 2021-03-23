@@ -29,11 +29,9 @@ class User(db.Model):
         }
 
 class Favorite(db.Model):
-
     id= db.Column(db.Integer, primary_key=True)
-    cocktail_id=db.Column(db.Integer, nullable=False, unique=True)
+    cocktail_id=db.Column(db.Integer, nullable=False, unique=False)
     cocktail_name= db.Column(db.String(250), nullable=True, unique=False)
-    cocktail_img= db.Column(db.String(500), nullable=True, unique=False )
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
     def __repr__(self):
@@ -44,6 +42,5 @@ class Favorite(db.Model):
         "id": self.id,
         "cocktail_id": self.cocktail_id,
         "cocktail_name": self.cocktail_name,
-        "cocktail_img": self.cocktail_img,
         "user_id": self.user_id
         }

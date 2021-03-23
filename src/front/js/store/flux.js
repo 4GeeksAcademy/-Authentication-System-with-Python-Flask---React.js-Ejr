@@ -169,9 +169,48 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({ gin_cocktail: cocktailList });
 			},
 
-			addFavorites: myfav => {
+			checkFav: favName => {
+				console.log("FAV: ", favName);
 				const store = getStore();
-				setStore({ favorites: [...store.favorites, [myfav]] });
+				let existing = store.favorites.find(i => i.cocktail_name === favName);
+				console.log("DONE: ", existing);
+				if (existing != undefined) {
+					return true;
+				} else {
+					return false;
+				}
+			},
+
+			addFavorites: async (cocktail_id, cocktail_name) => {
+				const store = getStore();
+				let checking = await getActions().checkFav(cocktail_name);
+				console.log("Checking:", checking);
+
+				if (!checking) {
+					await fetch("https://3001-apricot-tahr-nih1bqo0.ws-us03.gitpod.io/favorite", {
+						method: "POST",
+						headers: {
+							"Content-Type": "application/json",
+							Authorization: `Bearer ${store.jwtoken}`
+						},
+						body: JSON.stringify({
+							cocktail_id: cocktail_id,
+							cocktail_name: cocktail_name
+						})
+					})
+						.then(response => response.json())
+						.then(data => {
+							setStore({ favorites: data });
+						});
+				}
+			},
+
+			getUserFavorites: id => {
+				fetch(`https://3001-apricot-tahr-nih1bqo0.ws-us03.gitpod.io/user/${id}`)
+					.then(data => data.json())
+					.then(response => {
+						setStore({ favorites: response.favorites });
+					});
 			},
 			//alternative Implementation for experimental testing
 			counterFavorites: () => {
@@ -180,15 +219,21 @@ const getState = ({ getStore, getActions, setStore }) => {
 				return length;
 			},
 
-			deleteFavorites: id => {
+			deleteFavorite: async id => {
 				const store = getStore();
-				const FavList = store.favorites.filter((item, f) => id != f);
-				setStore({ favorites: [...FavList] });
+				const drinkIndex = store.favorites.findIndex(i => i.drink_id == id);
+				console.log("####$: ", drinkIndex);
+				let favID = await store.favorites[drinkIndex].id;
+				console.log("ID: ", favId);
+				if (drinkIndex != -1) {
+					fetch(`https://3001-apricot-tahr-nih1bqo0.ws-us03.gitpod.io/favorites/${favID}`, {
+						method: "DELETE"
+					}).then(() => getActions().getUserFavorites(store.sessionUID));
+				}
 			}
 			/////////////////////END TESTING PURPOSES @JVM && @ANMORA///////////////////////
 			// Use getActions to call a function within a fuction
 		}
 	};
 };
-
 export default getState;
