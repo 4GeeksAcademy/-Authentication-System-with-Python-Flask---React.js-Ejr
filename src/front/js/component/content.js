@@ -3,7 +3,7 @@ import Content_jpg from "../../img/logo/conten.jpg";
 import { Container, Row, Image, Card } from "react-bootstrap";
 export const Content = () => {
 	return (
-		<Container className="mt-2 mb-2" id="AboutContent">
+		<Container className="mt-4 mb-4" id="AboutContent">
 			<Row>
 				<div className="d-flex justify-content-end" id="content1">
 					<Image className="contentimg col-12 col-md-8" src={Content_jpg} fluid />

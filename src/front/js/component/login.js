@@ -17,7 +17,7 @@ export const Login = () => {
 	return (
 		<>
 			{store.jwtoken != null ? <Redirect to="/home" /> : ""}
-			<Container className="mt-2 mb-2" id="Login">
+			<Container className="mt-4 mb-2" id="Login">
 				<Row>
 					<article className="text-center text-light offset-lg-2 col-12 col-md-12 col-lg-8" id="Login">
 						<h4 className="display-5">
@@ -51,9 +51,6 @@ export const Login = () => {
 										placeholder="tomate.lo@gmail.com"
 										onChange={e => setEmail(e.target.value)}
 									/>
-									<small id="emailHelp" className="form-text text-muted">
-										Por favor revisa bien tus datos cuando termines.
-									</small>
 								</div>
 								<div className="col-auto">
 									<label className="inlineFormInputGroup">Password</label>
