@@ -11,7 +11,7 @@ export const Home = () => {
 	const { store, actions } = useContext(Context);
 	return (
 		<>
-			<div>
+			<div className="text-center">
 				<MyCarousel />
 				<PersonBox title="Profesionales más solicitados" />
 				<CardBox title="Categorias más buscadas" />
