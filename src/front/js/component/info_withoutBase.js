@@ -50,5 +50,3 @@ export const Info_WithoutBase = () => {
 		</Container>
 	);
 };
-
-//me equivoque
