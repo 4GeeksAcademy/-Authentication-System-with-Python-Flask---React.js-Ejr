@@ -9,7 +9,7 @@ export const Home = () => {
 	return (
 		<>
 			{store.jwtoken == null ? <Redirect to="/" /> : "/home"}
-			<div className="container mb-4">
+			<div className="container">
 				<div className="contenedor text-center">
 					<article className="text-light textBox">
 						<p>
@@ -17,9 +17,7 @@ export const Home = () => {
 							seleccionados para tí!
 						</p>
 						<footer className="blockquote-footer">
-							<small className="text-muted">
-								Sabias que puedes encontrar informacion dentro de las imagenes
-							</small>
+							Sabias que puedes encontrar informacion dentro de las imagenes
 						</footer>
 					</article>
 					<div className="row">

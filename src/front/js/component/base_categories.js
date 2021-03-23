@@ -18,11 +18,16 @@ import tequila_alcohol from "../../img/categories_jpg/tequila_alcohol.jpg";
 
 export const Base_Categories = () => {
 	return (
-		<Container className="mt-2 mb-2">
-			<Row>
-				<article className="text-light" id="BaseDrinks">
-					<p>Las mejores categorias seleccionadas de nuestros cócteles a base de ingredientes especificos</p>
+		<Container className="mt-2 mb-2" id="BaseDrinks">
+			<div className="text-center textBox">
+				<article className="text-light">
+					<p>Las mejores categorias seleccionadas de los cócteles a base de su ingrediente especifica</p>
 				</article>
+				<footer className="blockquote-footer">
+					Puedes conocer mas cocteles y sus detalles dando en ver más!
+				</footer>
+			</div>
+			<Row>
 				<div data-aos="fade-right" data-aos-offset="300" data-aos-easing="ease-in-sine">
 					<div className="mt-1 mb-1 d-flex justify-content-end" id="padre">
 						<Image className="contentimg col-12 col-md-8" src={not_alcohol} fluid id="WithoutBase" />
