@@ -15,31 +15,33 @@ export const Cocktail_Vodka = () => {
 			<Row>
 				<Card className="cardtotal text-light" style={{ width: "100rem" }}>
 					<Card.Img variant="top" src={cocktail.strDrinkThumb} />
-					<Card.Body>
-						<Card.Title>{cocktail.strDrink}</Card.Title>
-						<Card.Title>{cocktail.strCategory}</Card.Title>
-						<Card.Title>{cocktail.strIBA}</Card.Title>
-						<Card.Title>{cocktail.strIBA}</Card.Title>
-					</Card.Body>
+					<div data-aos="fade-up" data-aos-anchor-placement="center-center">
+						<Card.Body>
+							<Card.Title>{cocktail.strDrink}</Card.Title>
+							<Card.Title>{cocktail.strCategory}</Card.Title>
+							<Card.Title>{cocktail.strIBA}</Card.Title>
+							<Card.Title>{cocktail.strIBA}</Card.Title>
+						</Card.Body>
 
-					<Card.Body>
-						<Card.Title>ingredientes:</Card.Title>
-						<Card className="ingredientes-instru">
-							<Card.Body>{cocktail.strIngredient1}</Card.Body>
-							<Card.Body>{cocktail.strIngredient2}</Card.Body>
-							<Card.Body>{cocktail.strIngredient3}</Card.Body>
-							<Card.Body>{cocktail.strIngredient4}</Card.Body>
-						</Card>
-					</Card.Body>
-					<Card.Body>
-						<Card.Title>Instrucciones:</Card.Title>
-						<Card className="ingredientes-instru">
-							<Card.Body>{cocktail.strInstructions}</Card.Body>
-							<Card.Body>{cocktail.strMeasure1}</Card.Body>
-							<Card.Body>{cocktail.strMeasure2}</Card.Body>
-							<Card.Body>{cocktail.strMeasure3}</Card.Body>
-						</Card>
-					</Card.Body>
+						<Card.Body>
+							<Card.Title>ingredientes:</Card.Title>
+							<Card className="ingredientes-instru">
+								<Card.Body>{cocktail.strIngredient1}</Card.Body>
+								<Card.Body>{cocktail.strIngredient2}</Card.Body>
+								<Card.Body>{cocktail.strIngredient3}</Card.Body>
+								<Card.Body>{cocktail.strIngredient4}</Card.Body>
+							</Card>
+						</Card.Body>
+						<Card.Body>
+							<Card.Title>Instrucciones:</Card.Title>
+							<Card className="ingredientes-instru">
+								<Card.Body>{cocktail.strInstructions}</Card.Body>
+								<Card.Body>{cocktail.strMeasure1}</Card.Body>
+								<Card.Body>{cocktail.strMeasure2}</Card.Body>
+								<Card.Body>{cocktail.strMeasure3}</Card.Body>
+							</Card>
+						</Card.Body>
+					</div>
 				</Card>
 			</Row>
 		</Container>

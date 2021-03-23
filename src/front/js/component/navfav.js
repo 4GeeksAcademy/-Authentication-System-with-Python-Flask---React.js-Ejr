@@ -5,6 +5,10 @@ import { Container, Dropdown, DropdownButton } from "react-bootstrap";
 import tomatelo from "../../img/logo/tomatelo2.png";
 import "../../styles/disable_scroll.scss";
 import "../../styles/home.scss";
+//Animaciones
+import AOS from "aos";
+import "aos/dist/aos.css";
+AOS.init({ duration: 2000 });
 
 export const NavFav = () => {
 	const { actions, store } = useContext(Context);

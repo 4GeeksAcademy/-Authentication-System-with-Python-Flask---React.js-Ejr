@@ -4,7 +4,10 @@ import { Container } from "react-bootstrap";
 import tomatelo from "../../img/logo/tomatelo2.png";
 import "../../styles/nav.scss";
 import "../../styles/public.scss";
-
+//Animaciones
+import AOS from "aos";
+import "aos/dist/aos.css";
+AOS.init({ duration: 2000 });
 export const NavLogin = () => {
 	const handleMenu = e => {
 		e.preventDefault();

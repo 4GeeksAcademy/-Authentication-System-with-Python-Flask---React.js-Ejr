@@ -76,6 +76,7 @@
 		]
 	},
 	"dependencies": {
+		"aos": "^2.3.4",
 		"bootstrap": "^4.6.0",
 		"photoswipe": "^4.1.3",
 		"prop-types": "^15.6.1",

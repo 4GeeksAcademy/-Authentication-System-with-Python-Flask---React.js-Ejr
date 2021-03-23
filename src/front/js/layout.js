@@ -37,6 +37,10 @@ import { Cocktail_Tequila } from "./component/cocktail_tequila";
 import { Cocktail_Whisky } from "./component/cocktail_whisky";
 import { Cocktail_Gin } from "./component/cocktail_gin";
 
+//Animaciones
+import AOS from "aos";
+import "aos/dist/aos.css";
+AOS.init({ duration: 2000 });
 //create your first component.
 const Layout = () => {
 	//the basename is used when your project is published in a subdirectory and not in the root of the domain
