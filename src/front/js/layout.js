@@ -146,3 +146,5 @@ const Layout = () => {
 };
 
 export default injectContext(Layout);
+
+// pedir a mauriel el npm para instalar la galeria
