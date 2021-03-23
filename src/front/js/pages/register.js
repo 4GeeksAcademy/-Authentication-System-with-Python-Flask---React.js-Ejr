@@ -15,7 +15,7 @@ const Register = () => {
 			style={{
 				backgroundImage: `url(http://localhost:3000/loginBackGround.png)`
 			}}>
-			<Container className="mb-5">
+			<Container>
 				<div>
 					<Row>
 						<Link to="/">
@@ -113,6 +113,8 @@ const Register = () => {
 					</div>
 				</div>
 			</Container>
+			<div className="transBox" />
+			<div className="transBox" />
 			<div className="transBox" />
 			<Footer />
 		</div>
