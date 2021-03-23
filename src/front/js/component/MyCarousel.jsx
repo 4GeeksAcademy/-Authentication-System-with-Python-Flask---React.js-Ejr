@@ -1,8 +1,9 @@
 import React from "react";
 import { Link, withRouter } from "react-router-dom";
 import { useState } from "react";
-import { homeSlideA, homeSlideB, homeSlideC, serviceDiseno, serviceMarketing, serviceIt } from "../../img/image.js";
-import { Carousel } from "react-bootstrap";
+import { homeSlideA, homeSlideB, homeSlideC } from "../../img/image.js";
+import { Carousel, Container } from "react-bootstrap";
+
 const MyCarousel = () => {
 	const [index, setIndex] = useState(0);
 	const handleSelect = (selectedIndex, e) => {

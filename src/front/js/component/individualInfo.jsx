@@ -3,50 +3,58 @@ import { Context } from "../store/appContext";
 import "../../styles/home.scss";
 import "../../styles/index.scss";
 import { Row, Col, Jumbotron, Button } from "react-bootstrap";
+import { personB } from "../../img/image.js";
 
 export const Individuallnfo = () => {
-    const { store, actions } = useContext(Context);
+	const { store, actions } = useContext(Context);
 
-    return (
-    <>
-        <Jumbotron className="whiteBox border p-3">
-            <div>
-                <h1>Crearé un sitio web</h1>
-                <span className="d-flex">
-                    <h2>$300.000</h2>
-                    <p className="mt-2">/proyecto</p>
-                </span>
-            </div>
-            <div>
-                <p>
-                    1 pagina <br />
-								Personalización del diseño <br />
-								Carga de contenido
-							</p>
-            </div>
-            <Row>
-                <Col md={6}>
-                    <p className="float-left text-dark">
-                        <i className="far fa-clock h3" /> 10 dias hablies
-									<br />
-                        <i className="far fa-star h3" /> 4.8/5 (10 comentarios)
-								</p>
-                </Col>
-                <Col md={6}>
-                    <p className="float-right text-dark">
-                        <i className="far fa-thumbs-up h3" /> 10 trabajos
-									<br />
-                        <i className="fas fa-sync-alt h3" /> 3 modificación
-								</p>
-                </Col>
-            </Row>
+	return (
+		<>
+			<h2>Crearé un sitio web flexibles</h2>
+			<Jumbotron className="whiteBox border-top pt-3 p-0 position-static">
+				<Row className="d-inline-block d-flex">
+					<Col sm={8} style={{ width: "180px" }}>
+						<span className="d-flex">
+							<h2>$300.000</h2>
+							<p className="mt-2">/proyecto</p>
+						</span>
+					</Col>
+					<Col sm={4} style={{ width: "180px" }}>
+						<Button variant="outline-dark" className="float-right ">
+							<i className="fas fa-star " />
+						</Button>
 
-            <p>
-                <Button variant="primary" size="lg" block>
-                    Comprar Servicio
-							</Button>
-            </p>
-        </Jumbotron>
-    </>
-    )
-    };
+						<Button variant="outline-dark" className="float-right mr-1">
+							<i className="fas fa-share-alt" />
+						</Button>
+					</Col>
+				</Row>
+				<div>
+					<p>1 pagina, Personalización del diseño, Carga de contenido</p>
+				</div>
+
+				<Row className="d-inline-block d-flex">
+					<Col sm={6} style={{ width: "180px" }}>
+						<p className="float-left text-dark">
+							<i className="far fa-clock h3" /> 10 dias
+							<br />
+							<i className="far fa-star h3" /> 4.8/5 (10)
+						</p>
+					</Col>
+					<Col sm={6} style={{ width: "180px" }}>
+						<p className="float-right text-dark">
+							<i className="far fa-handshake h3" /> 10 trabajos
+							<br />
+							<i className="fas fa-retweet " style={{ fontSize: "1.75rem" }} /> 3 Revisión
+						</p>
+					</Col>
+				</Row>
+				<p>
+					<Button variant="primary" size="lg" block>
+						Comprar Servicio
+					</Button>
+				</p>
+			</Jumbotron>
+		</>
+	);
+};

@@ -67,7 +67,6 @@ $theme-colors: (
     border-color: map-get($theme-colors, 'info');
 }
 
-
 .btn-outline-success {
     color: map-get($theme-colors, 'success');
     border-color: map-get($theme-colors, 'success');
@@ -126,17 +125,26 @@ $theme-colors: (
     background-color: map-get($theme-colors, 'info');
     border-color: map-get($theme-colors, 'info');
 }
-.mt-5{
-    margin-top: 0rem !important;
+
+
+.btn-outline-dark {
+    color:  map-get($theme-colors, 'gray');
+    border-color:  map-get($theme-colors, 'gray');
+    background-color: transparent;
 }
 
-.texto{
-    position: relative;
-    bottom: 400px;
-    left: 200px;
-    width: 400px;
-  }
-  
-.carousel-size{
-    height: 500px;
+.btn-outline-dark:hover {
+    color: #fff;
+    background-color: map-get($theme-colors, 'info');
+    border-color: map-get($theme-colors, 'info');
 }
+
+
+.texto{
+position: absolute;
+top: 100px;
+left: 150px;
+width: 400px;
+}
+
+

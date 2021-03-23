@@ -8,7 +8,7 @@ import { IconBox } from "../component/IconBox.jsx";
 import { CardBox } from "../component/cardBox.jsx";
 import { ServiceBox } from "../component/serviceBox.jsx";
 import { Footer } from "../component/footer";
-import { LoginModalA } from "../component/Login";
+import { LoginModal, LoginModalA } from "../component/Login";
 import { Link } from "react-router-dom";
 
 const LandingPage = () => {
@@ -31,9 +31,11 @@ const LandingPage = () => {
 							/>
 						</Col>
 						<Col xs={8}>
-							<Button variant="secondary" className="float-right mt-5">
-								Registrate
-							</Button>
+							<Link to="/register">
+								<Button variant="light" className="float-right mt-5">
+									Registrate
+								</Button>
+							</Link>
 							<a>{LoginModalA()}</a>
 						</Col>
 					</Row>
@@ -64,13 +66,15 @@ const LandingPage = () => {
 									&nbsp;&nbsp;Buscar un freelancer&nbsp;&nbsp;
 								</Button>
 							</Link>
-							<Button
-								variant="secondary"
-								className="mt-2 px-4"
-								sm={12}
-								style={{ borderRadius: "1.75rem" }}>
-								&nbsp;&nbsp;&nbsp;&nbsp;Soy un freelancer&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-							</Button>
+							<Link to="/register">
+								<Button
+									variant="secondary"
+									className="mt-2 px-4"
+									sm={12}
+									style={{ borderRadius: "1.75rem" }}>
+									&nbsp;&nbsp;&nbsp;&nbsp;Soy un freelancer&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								</Button>
+							</Link>
 						</Col>
 						<Col md={5} sm={12} className="mt-5">
 							<img
@@ -83,7 +87,7 @@ const LandingPage = () => {
 						</Col>
 					</Row>
 					<IconBox />
-					<CardBox title="Categorias más buscadas" />
+					<CardBox title="Categorias más buscadas" className="whiteBox" />
 					<ServiceBox />
 					<br />
 
@@ -95,9 +99,9 @@ const LandingPage = () => {
 					<Button variant="outline-success">Success</Button>
 					<Button variant="light">Light</Button>
 					<Button variant="outline-light">Light</Button>
-					<Footer />
 				</div>
 			</Container>
+			<Footer />
 		</div>
 	);
 };
