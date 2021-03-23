@@ -12,7 +12,7 @@ export const Home = () => {
 	return (
 		<>
 			<div className="text-center mt-5">
-				<MyCarousel />
+				<MyCarousel className="carousel-size" />
 				<PersonBox title="Profesionales más solicitados" />
 				<CardBox title="Categorias más buscadas" />
 			</div>
