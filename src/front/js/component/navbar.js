@@ -6,7 +6,10 @@ import { Container } from "react-bootstrap";
 import tomatelo from "../../img/logo/tomatelo2.png";
 import "../../styles/disable_scroll.scss";
 import "../../styles/home.scss";
-
+//Animaciones
+import AOS from "aos";
+import "aos/dist/aos.css";
+AOS.init({ duration: 2000 });
 export const Navbar = () => {
 	const { actions, store } = useContext(Context);
 	const handleMenu = e => {

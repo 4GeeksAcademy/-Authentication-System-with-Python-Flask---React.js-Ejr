@@ -3,7 +3,10 @@ import { Redirect, useHistory } from "react-router-dom";
 import { Context } from "../store/appContext";
 //import { Link } from "react-router-dom";
 import { Container, Row, Button } from "react-bootstrap";
-
+//Animaciones
+import AOS from "aos";
+import "aos/dist/aos.css";
+AOS.init({ duration: 2000 });
 export const Login = () => {
 	const { actions, store } = useContext(Context);
 	const history = useHistory();
@@ -20,11 +23,13 @@ export const Login = () => {
 			<Container className="mt-2 mb-2" id="Login">
 				<Row>
 					<article className="text-center text-light offset-lg-2 col-12 col-md-12 col-lg-8" id="Login">
-						<h4 className="display-5">
-							Si deseas saber más y ver los diferentes cócteles{" "}
-							<span className="glitch1">Registrate y seguido haz login</span> y así podrás ver todo
-							nuestro contenido
-						</h4>
+						<div data-aos="zoom-in">
+							<h4 className="display-5">
+								Si deseas saber más y ver los diferentes cócteles{" "}
+								<span className="glitch1">Registrate y seguido haz login</span> y así podrás ver todo
+								nuestro contenido
+							</h4>
+						</div>
 						<p className="lead">
 							{/* Esta página esta vinculada a una base de datos ya creada por lo cual para poder ingresar
 							deberás revisar F12 y conocer los usuarios en lista ya creados! */}
@@ -42,37 +47,39 @@ export const Login = () => {
 							<h4 className="display-5">Login</h4>
 							<hr className="my-1" />
 							<div className="form-group align-items-center">
-								<div className="col-auto">
-									<label className="inlineFormInput">Email</label>
-									<input
-										type="text"
-										className="form-control mb-2 text-center"
-										id="User"
-										placeholder="tomate.lo@gmail.com"
-										onChange={e => setEmail(e.target.value)}
-									/>
+								<div data-aos="flip-left" data-aos-easing="ease-out-cubic" data-aos-duration="2000">
+									<div className="col-auto">
+										<label className="inlineFormInput">Email</label>
+										<input
+											type="text"
+											className="form-control mb-2 text-center"
+											id="User"
+											placeholder="tomate.lo@gmail.com"
+											onChange={e => setEmail(e.target.value)}
+										/>
+										<small id="emailHelp" className="form-text text-muted">
+											Por favor revisa bien tus datos cuando termines.
+										</small>
+									</div>
+									<div className="col-auto">
+										<label className="inlineFormInputGroup">Password</label>
+										<div className="input-group mb-2">
+											<input
+												type="password"
+												className="form-control text-center"
+												id="Password"
+												placeholder="tomatelo2x3"
+												onChange={e => setPassword(e.target.value)}
+											/>
+										</div>
+									</div>
 									<small id="emailHelp" className="form-text text-muted">
 										Por favor revisa bien tus datos cuando termines.
 									</small>
+									<Button type="submit" variant="outline-info">
+										Log In
+									</Button>
 								</div>
-								<div className="col-auto">
-									<label className="inlineFormInputGroup">Password</label>
-									<div className="input-group mb-2">
-										<input
-											type="password"
-											className="form-control text-center"
-											id="Password"
-											placeholder="tomatelo2x3"
-											onChange={e => setPassword(e.target.value)}
-										/>
-									</div>
-								</div>
-								<small id="emailHelp" className="form-text text-muted">
-									Por favor revisa bien tus datos cuando termines.
-								</small>
-								<Button type="submit" variant="outline-info">
-									Log In
-								</Button>
 							</div>
 						</form>
 					</>
@@ -83,6 +90,7 @@ export const Login = () => {
 							className="col-12 col-md-6 text-center text-light"
 							onSubmit={async e => {
 								e.preventDefault();
+
 								let ok = await actions.signup(first_name, last_name, email, password, birthday);
 								if (ok) {
 									history.push("/");
@@ -91,69 +99,71 @@ export const Login = () => {
 									alert("failed to submit registration, lets try again");
 								}
 							}}>
-							<h4 className="display-5">Register</h4>
-							<hr className="my-1" />
-							<div className="form-group align-items-center">
-								<Row>
-									<div className="col-12 col-md-6">
-										<label className="inlineFormInput">First Name</label>
+							<div data-aos="flip-left" data-aos-easing="ease-out-cubic" data-aos-duration="2000">
+								<h4 className="display-5">Register</h4>
+								<hr className="my-1" />
+								<div className="form-group align-items-center">
+									<Row>
+										<div className="col-12 col-md-6">
+											<label className="inlineFormInput">First Name</label>
+											<input
+												type="text"
+												className="form-control mb-2 text-center"
+												id="User"
+												placeholder="Tomatico"
+												onChange={e => setFirst_name(e.target.value)}
+											/>
+										</div>
+										<div className="col-12 col-md-6">
+											<label className="inlineFormInput">Last Name</label>
+											<input
+												type="text"
+												className="form-control mb-2 text-center"
+												id="User"
+												placeholder="Tomate"
+												onChange={e => setLast_name(e.target.value)}
+											/>
+										</div>
+									</Row>
+									<div className="col-auto">
+										<label className="inlineFormInput">Email</label>
 										<input
 											type="text"
 											className="form-control mb-2 text-center"
 											id="User"
-											placeholder="Tomatico"
-											onChange={e => setFirst_name(e.target.value)}
+											placeholder="nickname@gmail.com"
+											onChange={e => setEmail(e.target.value)}
 										/>
 									</div>
-									<div className="col-12 col-md-6">
-										<label className="inlineFormInput">Last Name</label>
+									<div className="col-auto">
+										<label className="inlineFormInputGroup">Password</label>
+										<div className="input-group mb-2">
+											<input
+												type="password"
+												className="form-control text-center"
+												id="Password"
+												placeholder="tomatelo2x3"
+												onChange={e => setPassword(e.target.value)}
+											/>
+										</div>
+									</div>
+									<div className="col-auto">
+										<label className="inlineFormInput">Birthday</label>
 										<input
 											type="text"
 											className="form-control mb-2 text-center"
 											id="User"
-											placeholder="Tomate"
-											onChange={e => setLast_name(e.target.value)}
+											placeholder="2021-04-08"
+											onChange={e => setBirthday(e.target.value)}
 										/>
 									</div>
-								</Row>
-								<div className="col-auto">
-									<label className="inlineFormInput">Email</label>
-									<input
-										type="text"
-										className="form-control mb-2 text-center"
-										id="User"
-										placeholder="nickname@gmail.com"
-										onChange={e => setEmail(e.target.value)}
-									/>
+									<small id="emailHelp" className="form-text text-muted">
+										Por favor revisa bien tus datos cuando termines.
+									</small>
+									<Button type="submit" variant="outline-info">
+										Register
+									</Button>
 								</div>
-								<div className="col-auto">
-									<label className="inlineFormInputGroup">Password</label>
-									<div className="input-group mb-2">
-										<input
-											type="password"
-											className="form-control text-center"
-											id="Password"
-											placeholder="tomatelo2x3"
-											onChange={e => setPassword(e.target.value)}
-										/>
-									</div>
-								</div>
-								<div className="col-auto">
-									<label className="inlineFormInput">Birthday</label>
-									<input
-										type="text"
-										className="form-control mb-2 text-center"
-										id="User"
-										placeholder="2021-04-08"
-										onChange={e => setBirthday(e.target.value)}
-									/>
-								</div>
-								<small id="emailHelp" className="form-text text-muted">
-									Por favor revisa bien tus datos cuando termines.
-								</small>
-								<Button type="submit" variant="outline-info">
-									Register
-								</Button>
 							</div>
 						</form>
 					</>
