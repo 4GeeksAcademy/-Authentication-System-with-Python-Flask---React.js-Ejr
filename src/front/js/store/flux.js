@@ -220,7 +220,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 
 			deleteFavorites: async fav_id => {
-				const res = await fetch(`https://3001-apricot-tahr-nih1bqo0.ws-us03.gitpod.io/favorite/${fav_id}`, {
+				const res = await fetch(`https://3001-silver-swallow-9lpsxvlk.ws-us03.gitpod.io/favorite/${fav_id}`, {
 					method: "DELETE",
 					headers: {
 						"Content-Type": "application/json",
