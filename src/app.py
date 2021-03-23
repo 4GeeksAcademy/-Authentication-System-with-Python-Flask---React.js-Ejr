@@ -169,9 +169,9 @@ def add_favorite():
         return  jsonify(myfavs), 200
     return "Error, invalid method", 404
         ###DELETE FAVORITE BY ID###
-@app.route('/delete/<int:fav_id>', methods=['DELETE'])
+@app.route('/favorite/<int:fav_id>', methods=['DELETE'])
 def delete_fav_by_id():
-    fav= Favorite.query.filter_by(id=fav_id).first_or_404()
+    fav = Favorite.query.filter_by(id=fav_id).first_or_404()
     if fav is None:
         raise APIException('Favorito no encontrado', status_code=404)
     else:
