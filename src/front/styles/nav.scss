@@ -14,7 +14,7 @@
 
 @media (max-width: 767px) {
     .header-top {
-        padding: 15px 0;
+        padding: 12px 0;
     }
 }
 
@@ -47,7 +47,7 @@ nav {
     margin-right: 0;
     position: absolute;
     right: 0;
-    top: 60px;
+    top: 55px;
     text-align: right;
   }
 }
@@ -57,7 +57,6 @@ nav.hide {
 }
 
 nav a {
-    padding: 2px;
     font-weight: 500;
     text-transform: uppercase;
     color: rgba(255, 255, 255, 0.7);
