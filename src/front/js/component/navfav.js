@@ -34,12 +34,12 @@ export const NavFav = () => {
 						</div>
 						<div className="main-menubar d-flex align-items-center">
 							<nav className="hide">
-								{/* <Link to="/home">
+								<Link to="/home" className="float-left mt-1">
 									<a>Home</a>
-								</Link> */}
-								{/* Para anadir favoritos */}
+								</Link>
 								<DropdownButton
-									id="dropdown-basic-button"
+									size="sm"
+									className="float-left"
 									variant="outline-light"
 									title={"Favorites " + store.favorites.length}>
 									{store.favorites.length == 0 ? (

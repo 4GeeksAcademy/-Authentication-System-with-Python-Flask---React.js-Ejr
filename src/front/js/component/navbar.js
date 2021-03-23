@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import Redirect from "react-router-dom";
 import { Context } from "../store/appContext";
 import { Link } from "react-router-dom";
-import { Container } from "react-bootstrap";
+import { Container, Dropdown, DropdownButton } from "react-bootstrap";
 import tomatelo from "../../img/logo/tomatelo2.png";
 import "../../styles/disable_scroll.scss";
 import "../../styles/home.scss";
@@ -30,9 +30,33 @@ export const Navbar = () => {
 					</div>
 					<div className="main-menubar d-flex align-items-center">
 						<nav className="hide">
-							<a href="#BaseDrinks">Base</a>
-							<a href="#Favorites">Favorites</a>
-							<Link to="/" onClick={() => actions.signout()}>
+							<DropdownButton
+								size="sm"
+								className="float-left"
+								variant="outline-light"
+								title={"Favorites " + store.favorites.length}>
+								{store.favorites.length == 0 ? (
+									<Dropdown.Item>Empty</Dropdown.Item>
+								) : (
+									store.favorites.map((favorite, i) => {
+										return (
+											<Dropdown.Item
+												eventKey={i}
+												key={i}
+												onClick={() => actions.deleteFavorites(i)}>
+												<div>
+													{favorite.cocktail_name}
+													<i className="far fa-trash-alt" />
+												</div>
+											</Dropdown.Item>
+										);
+									})
+								)}
+							</DropdownButton>
+							<a href="#BaseDrinks" className="float-left mt-1">
+								Base
+							</a>
+							<Link to="/" className="float-left mt-1" onClick={() => actions.signout()}>
 								LogOut
 							</Link>
 						</nav>
