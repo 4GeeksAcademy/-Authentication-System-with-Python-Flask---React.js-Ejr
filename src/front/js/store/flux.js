@@ -23,7 +23,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			////////////////////BEGIN TESTING PURPOSES @JVM && @ANMORA//////////////////////
 			//f(x) built for testing reg form(experimental by now)
 			signup: async (first_name, last_name, email, password, birthday) => {
-				const res = await fetch("https://3001-apricot-tahr-nih1bqo0.ws-us03.gitpod.io/user", {
+				const res = await fetch("https://3001-silver-swallow-9lpsxvlk.ws-us03.gitpod.io/user", {
 					method: "POST",
 					headers: { "Content-Type": "application/json" },
 					body: JSON.stringify({
@@ -42,7 +42,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 
 			login: async (email, password) => {
-				await fetch("https://3001-apricot-tahr-nih1bqo0.ws-us03.gitpod.io/login", {
+				await fetch("https://3001-silver-swallow-9lpsxvlk.ws-us03.gitpod.io/login", {
 					method: "POST",
 					headers: { "Content-Type": "application/json" },
 					body: JSON.stringify({ email: email, password: password })
