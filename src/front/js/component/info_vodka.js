@@ -11,8 +11,11 @@ export const Info_Vodka = () => {
 		<Container className="base_cards">
 			<article className="text-light mt-1 mb-1">
 				<p>
-					Esta página esta ligada a una base de datos ya creada por lo cual para poder ingresar deberás
-					revisar F12 y conocer los usuarios en lista ya creados!
+					El vodka es una de las bebidas alcohólicas más populares y consumidas del mundo. Quizás tu mismo
+					seas un consumidor de esta espirituosa bebida, pero ¿sabes de qué está hecho el vodka? Se produce a
+					través de la fermentación de granos y otras platas ricas en almidón. Normalmente su contenido en
+					alcohol se encuentra entre 30 y 50% por volumen. Su sabor, suave y delicado, permite tomarlo solo;
+					pero lo más común es combinarlo con otras bebidas no alcohólicas.
 				</p>
 			</article>
 			<Row>

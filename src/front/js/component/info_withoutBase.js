@@ -11,9 +11,8 @@ export const Info_WithoutBase = () => {
 		<Container className="base_cards">
 			<article className="text-light mt-1 mb-1">
 				<p>
-					Los cócteles sin alcohol están muchas veces destinados a conductores, mujeres embarazadas, niños,
-					intolerantes al alcohol, etc. de manera que también puedan disfrutar de un buen cóctel sin correr
-					riesgo alguno.
+					Los cócteles sin alcohol son una opción para mujeres embarazadas, jovenes o para personas que
+					después manejan en la vía pública, con estos cócteles ¡puedes disfrutar de manera responsable!
 				</p>
 			</article>
 			<Row>

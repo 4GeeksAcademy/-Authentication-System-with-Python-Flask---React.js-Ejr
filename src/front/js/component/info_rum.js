@@ -11,8 +11,8 @@ export const Info_Rum = () => {
 		<Container className="base_cards">
 			<article className="text-light mt-1 mb-1">
 				<p>
-					Esta página esta ligada a una base de datos ya creada por lo cual para poder ingresar deberás
-					revisar F12 y conocer los usuarios en lista ya creados!
+					El ron es uno de los destilados más bebidos en las clases medias y altas. Suele sentar de maravilla
+					tras una buena y larga cena o comida porque nos aligerará de las digestiones pesadas.
 				</p>
 			</article>
 			<Row>

@@ -11,12 +11,14 @@ export const Content = () => {
 						<Card className="Card text-light p-3">
 							<blockquote className="blockquote mb-0 card-body">
 								<p>
-									Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a
-									ante.
+									Un pequeño grupo de estudiantes de 4geeks Academy becados por CINDE, desarrolló este
+									proyecto para apoyar la iniciativa de quedarnos en casa y ¡porque no disfrutar en
+									nuestro paladar un delicioso cóctel!
 								</p>
 								<footer className="blockquote-footer">
 									<small className="text-muted">
-										Someone famous in <cite title="Source Title">Source Title</cite>
+										Primera generación de estudiantes{" "}
+										<cite title="Source Title">4geeks Academy</cite>
 									</small>
 								</footer>
 							</blockquote>

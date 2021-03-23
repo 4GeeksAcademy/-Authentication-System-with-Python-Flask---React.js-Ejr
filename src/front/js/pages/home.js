@@ -12,7 +12,7 @@ export const Home = () => {
 			<div className="container mb-4">
 				<div className="contenedor text-center">
 					<article className="text-light">
-						<h4>Ingresa y enterate de todo lo relacionado a este proyecto!</h4>
+						<h4>Nuestros cócteles más populares seleccionados para tí</h4>
 						{/* <p>
 						Esta página esta ligada a una base de datos ya creada por lo cual para poder ingresar deberás
 						revisar F12 y conocer los usuarios en lista ya creados!

@@ -11,9 +11,9 @@ export const Info_Gin = () => {
 		<Container className="base_cards">
 			<article className="text-light mt-1 mb-1">
 				<p>
-					La Ginebra o Gin, en Ingles, es un aguardiente de grano del maíz, centeno o cebada principalmente.
-					Primero tenemos una primera fermentación de los jugos del grano y posteriormente se destila
-					obteniendo un aguardiente que se aromatiza con bayas de enebro como normal principal.
+					Es un alcohol que se obtiene de otros licores que no sean aguardiente, idealmente puros e insípidos,
+					tales como el whisky. La cualidad que lo diferencia es el hecho de que se le añaden aromatizantes,
+					dando lugar a muchas opciones de Gin. Predomina el sabor a bayas de enebro (nebrina).
 				</p>
 			</article>
 			<Row>
