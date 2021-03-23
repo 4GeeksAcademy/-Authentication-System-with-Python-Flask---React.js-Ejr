@@ -13,7 +13,7 @@ from api.admin import setup_admin
 # from flask_jwt_simple import JWTManager, jwt_required, create_jwt, get_jwt_identity
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
 from datetime import datetime
-
+from flask_mail import Mail, Message
 
 #from models import Person
 
@@ -57,7 +57,6 @@ MAIL_USERNAME = 'a1groupcr@gmail.com',
 MAIL_PASSWORD = '$$2021$$a1group$$'
 )
 mail = Mail(app)
-
 
 @app.route('/reset', methods=['POST'])
 def test_request():
