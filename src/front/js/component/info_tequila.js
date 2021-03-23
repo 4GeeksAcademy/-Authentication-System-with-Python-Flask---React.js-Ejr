@@ -11,8 +11,10 @@ export const Info_Tequila = () => {
 		<Container className="base_cards">
 			<article className="text-light mt-1 mb-1">
 				<p>
-					Esta página esta ligada a una base de datos ya creada por lo cual para poder ingresar deberás
-					revisar F12 y conocer los usuarios en lista ya creados!
+					Seguramente cuando hablamos de tequila, todos pensamos que se trata de una bebida típica mejicana,
+					que ha protagonizado muchas canciones y cuya forma de beberla más clásica es con sal y limón. Pero
+					un amante del tequila sabe muchas más cosas, y algunas te esas deliciosas mezclas te la damos a
+					continuación.
 				</p>
 			</article>
 			<Row>

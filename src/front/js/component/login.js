@@ -17,16 +17,17 @@ export const Login = () => {
 	return (
 		<>
 			{store.jwtoken != null ? <Redirect to="/home" /> : ""}
-			<Container className="mt-2 mb-2" id="Login">
+			<Container className="mt-4 mb-2" id="Login">
 				<Row>
 					<article className="text-center text-light offset-lg-2 col-12 col-md-12 col-lg-8" id="Login">
 						<h4 className="display-5">
-							Ingresa a <span className="glitch1">M||RA</span> y enterate de todo lo relacionado a este
-							proyecto!
+							Si deseas saber más y ver los diferentes cócteles{" "}
+							<span className="glitch1">Registrate y seguido haz login</span> y así podrás ver todo
+							nuestro contenido
 						</h4>
 						<p className="lead">
-							Esta página esta vinculada a una base de datos ya creada por lo cual para poder ingresar
-							deberás revisar F12 y conocer los usuarios en lista ya creados!
+							{/* Esta página esta vinculada a una base de datos ya creada por lo cual para poder ingresar
+							deberás revisar F12 y conocer los usuarios en lista ya creados! */}
 						</p>
 						<hr className="my-1" />
 					</article>
@@ -50,9 +51,6 @@ export const Login = () => {
 										placeholder="tomate.lo@gmail.com"
 										onChange={e => setEmail(e.target.value)}
 									/>
-									<small id="emailHelp" className="form-text text-muted">
-										Por favor revisa bien tus datos cuando termines.
-									</small>
 								</div>
 								<div className="col-auto">
 									<label className="inlineFormInputGroup">Password</label>

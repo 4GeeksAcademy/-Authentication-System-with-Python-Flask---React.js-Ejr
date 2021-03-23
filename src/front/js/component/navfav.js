@@ -48,10 +48,7 @@ export const NavFav = () => {
 													key={i}
 													onClick={() => actions.deleteFavorites(i)}>
 													<div>
-														<i className="fas fa-globe-americas" />
-														&nbsp;
 														{favorite.cocktail_name}
-														&nbsp;&nbsp;&nbsp;
 														<i className="far fa-trash-alt" />
 													</div>
 												</Dropdown.Item>

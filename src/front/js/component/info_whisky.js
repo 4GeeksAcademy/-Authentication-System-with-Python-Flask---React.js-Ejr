@@ -11,8 +11,8 @@ export const Info_Whisky = () => {
 		<Container className="base_cards">
 			<article className="text-light mt-1 mb-1">
 				<p>
-					Esta página esta ligada a una base de datos ya creada por lo cual para poder ingresar deberás
-					revisar F12 y conocer los usuarios en lista ya creados!
+					El whisky es uno de los destilados más destacados de toda la historia. Sigue adquiriendo gran
+					relevancia en todo el mundo y está destinado a sibaritas que saben apreciar su color y sabor.
 				</p>
 			</article>
 			<Row>
