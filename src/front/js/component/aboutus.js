@@ -12,10 +12,9 @@ export const AboutUs = () => {
 				<Card className="text-light text-left Card" id="Tomatelo">
 					<Card.Img className="logimg" variant="top" src={tomatelo1} />
 					<Card.Body>
-						<Card.Title>Card title</Card.Title>
+						<Card.Title>¿Quieres aprender Mixología?</Card.Title>
 						<Card.Text>
-							This is a wider card with supporting text below as a natural lead-in to additional content.
-							This content is a little bit longer.
+							Podŕas aprender de deliciosas mezclas para hacer desde la comodidad de tu casa
 						</Card.Text>
 					</Card.Body>
 					<Card.Footer>
@@ -25,9 +24,10 @@ export const AboutUs = () => {
 				<Card className="text-light text-center Card">
 					<Card.Img className="logimg" variant="top" src={tomatelo2} />
 					<Card.Body>
-						<Card.Title>Card title</Card.Title>
+						<Card.Title>¿Por qué este nombre?</Card.Title>
 						<Card.Text>
-							This card has supporting text below as a natural lead-in to additional content.
+							Lo llamamos así de una manera llamativa y oriundo de nuestras raíces latinoamericanas para
+							resaltar nuestros orígenes
 						</Card.Text>
 					</Card.Body>
 					<Card.Footer>
@@ -37,10 +37,9 @@ export const AboutUs = () => {
 				<Card className="text-light text-right Card">
 					<Card.Img className="logimg" variant="top" src={tomatelo3} />
 					<Card.Body>
-						<Card.Title>Card title</Card.Title>
+						<Card.Title>¿Por qué un Tomate?</Card.Title>
 						<Card.Text>
-							This is a wider card with supporting text below as a natural lead-in to additional content.
-							This card has even longer content than the first to show that equal height action.
+							Se formo a partir de una manera creativa y llamativa relacionado al nombre del proyecto
 						</Card.Text>
 					</Card.Body>
 					<Card.Footer>

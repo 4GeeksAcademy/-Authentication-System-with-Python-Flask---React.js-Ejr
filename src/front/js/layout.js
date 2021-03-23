@@ -37,7 +37,7 @@ import { Cocktail_Tequila } from "./component/cocktail_tequila";
 import { Cocktail_Whisky } from "./component/cocktail_whisky";
 import { Cocktail_Gin } from "./component/cocktail_gin";
 
-//create your first component
+//create your first component.
 const Layout = () => {
 	//the basename is used when your project is published in a subdirectory and not in the root of the domain
 	// you can set the basename on the .env file located at the root of this project, E.g: BASENAME=/react-hello-webapp/
@@ -46,84 +46,96 @@ const Layout = () => {
 	return (
 		<div className="d-flex flex-column h-100">
 			<BrowserRouter basename={basename}>
-				<ScrollToTop>
-					<Switch>
-						<Route exact path="/">
-							<NavLogin />
-							<Presentation />
-							<AboutUs />
-							<Content />
-							<Login />
-							<Footer />
-						</Route>
-						<Route exact path="/home">
-							<Navbar />
-							<Home />
-							<Base_Categories />
-							<Footer />
-						</Route>
-						<Route exact path="/Info_WithoutBase">
-							<NavFav />
-							<Info_WithoutBase />
-							<Footer />
-						</Route>
-						<Route exact path="/info_Rum">
-							<NavFav />
-							<Info_Rum />
-							<Footer />
-						</Route>
-						<Route exact path="/info_Gin">
-							<NavFav />
-							<Info_Gin />
-							<Footer />
-						</Route>
-						<Route exact path="/info_Vodka">
-							<NavFav />
-							<Info_Vodka />
-							<Footer />
-						</Route>
-						<Route exact path="/info_Tequila">
-							<NavFav />
-							<Info_Tequila />
-							<Footer />
-						</Route>
-						<Route exact path="/info_Whisky">
-							<NavFav />
-							<Info_Whisky />
-							<Footer />
-						</Route>
-						<Route exact path="/Cocktail_nonAlcohol/:theid">
-							<NavFav />
-							<Cocktail_nonAlcohol />
-							<Footer />
-						</Route>
-						<Route exact path="/Cocktail_Rum/:theid">
-							<NavFav />
-							<Cocktail_Rum />
-							<Footer />
-						</Route>
-						<Route exact path="/Cocktail_Vodka/:theid">
-							<NavFav />
-							<Cocktail_Vodka />
-							<Footer />
-						</Route>
-						<Route exact path="/Cocktail_Tequila/:theid">
-							<NavFav />
-							<Cocktail_Tequila />
-							<Footer />
-						</Route>
-						<Route exact path="/Cocktail_Whisky/:theid">
-							<NavFav />
-							<Cocktail_Whisky />
-							<Footer />
-						</Route>
-						<Route exact path="/Cocktail_Gin/:theid">
-							<NavFav />
-							<Cocktail_Gin />
-							<Footer />
-						</Route>
-					</Switch>
-				</ScrollToTop>
+				<ScrollToTop />
+				<Switch>
+					<Route exact path="/">
+						<ScrollToTop />
+						<NavLogin />
+						<Presentation />
+						<AboutUs />
+						<Content />
+						<Login />
+						<Footer />
+					</Route>
+					<Route exact path="/home">
+						<Navbar />
+						<Home />
+						<Base_Categories />
+						<Footer />
+					</Route>
+					<Route exact path="/Info_WithoutBase">
+						<ScrollToTop />
+						<NavFav />
+						<Info_WithoutBase />
+						<Footer />
+					</Route>
+					<Route exact path="/info_Rum">
+						<ScrollToTop />
+						<NavFav />
+						<Info_Rum />
+						<Footer />
+					</Route>
+					<Route exact path="/info_Gin">
+						<ScrollToTop />
+						<NavFav />
+						<Info_Gin />
+						<Footer />
+					</Route>
+					<Route exact path="/info_Vodka">
+						<ScrollToTop />
+						<NavFav />
+						<Info_Vodka />
+						<Footer />
+					</Route>
+					<Route exact path="/info_Tequila">
+						<ScrollToTop />
+						<NavFav />
+						<Info_Tequila />
+						<Footer />
+					</Route>
+					<Route exact path="/info_Whisky">
+						<ScrollToTop />
+						<NavFav />
+						<Info_Whisky />
+						<Footer />
+					</Route>
+					<Route exact path="/Cocktail_nonAlcohol/:theid">
+						<ScrollToTop />
+						<NavFav />
+						<Cocktail_nonAlcohol />
+						<Footer />
+					</Route>
+					<Route exact path="/Cocktail_Rum/:theid">
+						<ScrollToTop />
+						<NavFav />
+						<Cocktail_Rum />
+						<Footer />
+					</Route>
+					<Route exact path="/Cocktail_Vodka/:theid">
+						<ScrollToTop />
+						<NavFav />
+						<Cocktail_Vodka />
+						<Footer />
+					</Route>
+					<Route exact path="/Cocktail_Tequila/:theid">
+						<ScrollToTop />
+						<NavFav />
+						<Cocktail_Tequila />
+						<Footer />
+					</Route>
+					<Route exact path="/Cocktail_Whisky/:theid">
+						<ScrollToTop />
+						<NavFav />
+						<Cocktail_Whisky />
+						<Footer />
+					</Route>
+					<Route exact path="/Cocktail_Gin/:theid">
+						<ScrollToTop />
+						<NavFav />
+						<Cocktail_Gin />
+						<Footer />
+					</Route>
+				</Switch>
 			</BrowserRouter>
 		</div>
 	);
