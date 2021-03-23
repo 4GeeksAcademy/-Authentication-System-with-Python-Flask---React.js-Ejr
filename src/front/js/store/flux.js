@@ -219,17 +219,15 @@ const getState = ({ getStore, getActions, setStore }) => {
 				return length;
 			},
 
-			deleteFavorite: async id => {
+			deleteFavorites: fav_id => {
 				const store = getStore();
-				const drinkIndex = store.favorites.findIndex(i => i.drink_id == id);
-				console.log("####$: ", drinkIndex);
-				let favID = await store.favorites[drinkIndex].id;
-				console.log("ID: ", favId);
-				if (drinkIndex != -1) {
-					fetch(`https://3001-apricot-tahr-nih1bqo0.ws-us03.gitpod.io/favorites/${favID}`, {
-						method: "DELETE"
-					}).then(() => getActions().getUserFavorites(store.sessionUID));
-				}
+				fetch(`https://3001-apricot-tahr-nih1bqo0.ws-us03.gitpod.io/delete/${fav_id}`, {
+					method: "DELETE"
+				})
+					.then(response => response.json())
+					.then(data => {
+						setStore({ favorites: data });
+					});
 			}
 			/////////////////////END TESTING PURPOSES @JVM && @ANMORA///////////////////////
 			// Use getActions to call a function within a fuction
