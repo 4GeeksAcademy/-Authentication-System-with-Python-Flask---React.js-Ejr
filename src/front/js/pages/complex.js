@@ -8,7 +8,11 @@ export const Complex = props => {
 	const params = useParams();
 	// en este código se llama a la matriz demo dentro del Store y se utiliza params.theid para obtener la id de la URL
 	//  {store.demo[params.theid].title} y luego ocupar "title" que es la key almacenada dentro de demo[id].title.
-	return <div>none</div>;
+	return (
+		<div>
+			<h1>Complex</h1>
+		</div>
+	);
 };
 
 Complex.propTypes = {
