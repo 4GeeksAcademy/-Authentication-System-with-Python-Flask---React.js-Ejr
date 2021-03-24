@@ -43,7 +43,11 @@ export const NavFav = () => {
 									variant="outline-light"
 									title={"Favorites " + store.favorites.length}>
 									{store.favorites.length == 0 ? (
-										<Dropdown.Item>Empty</Dropdown.Item>
+										<Dropdown.Item>
+											<footer className="blockquote-footer">
+												<small className="text-muted">Empty</small>
+											</footer>
+										</Dropdown.Item>
 									) : (
 										store.favorites.map((favorite, i) => {
 											return (
@@ -51,10 +55,10 @@ export const NavFav = () => {
 													eventKey={i}
 													key={i}
 													onClick={() => actions.deleteFavorites(favorite.id)}>
-													<div>
-														{favorite.cocktail_name}
+													<footer className="blockquote-footer">
+														<small className="text-muted">{favorite.cocktail_name}</small>
 														<i className="far fa-trash-alt" />
-													</div>
+													</footer>
 												</Dropdown.Item>
 											);
 										})

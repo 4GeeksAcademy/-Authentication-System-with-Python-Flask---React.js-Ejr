@@ -48,29 +48,29 @@ jwt = JWTManager(app)
 
 #Flask-mail
 app.config.update(
-DEBUG=True,
-#EMAIL SETTINGS
-MAIL_SERVER='smtp.gmail.com',
-MAIL_PORT=465,
-MAIL_USE_SSL=True,
-MAIL_USERNAME = 'a1groupcr@gmail.com',
-MAIL_PASSWORD = '$$2021$$a1group$$'
+    DEBUG=True,
+    #EMAIL SETTINGS
+    MAIL_SERVER='smtp.gmail.com',
+    MAIL_PORT=465,
+    MAIL_USE_SSL=True,
+    MAIL_USERNAME = 'a1groupcr@gmail.com',
+    MAIL_PASSWORD = '$$2021$$a1group$$'
 )
 mail = Mail(app)
 
 @app.route('/reset', methods=['POST'])
 def test_request():
-# json_obj = {"name": "johnDoe"}
-recipient = "littlenoobhtb@gmail.com"
-try:
-msg = Message("Hello",
-sender="a1groupcr@gmail.com",
-recipients=[recipient])
-msg.body = "Welcome to blah blah blah"
-mail.send(msg)
-return "Mail Sent"
-except Exception as e:
-return (str(e))
+    # json_obj = {"name": "johnDoe"}
+    recipient = "littlenoobhtb@gmail.com"
+    try:
+        msg = Message("Hello",
+                sender="a1groupcr@gmail.com",
+                recipients=[recipient])
+        msg.body = "Welcome to blah blah blah"
+        mail.send(msg)
+        return "Mail Sent"
+    except Exception as e:
+        return (str(e))
 
 # Handle/serialize errors like a JSON object
 @app.errorhandler(APIException)

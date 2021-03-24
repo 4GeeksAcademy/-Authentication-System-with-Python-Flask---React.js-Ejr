@@ -9,7 +9,7 @@ export const Info_Whisky = () => {
 
 	return (
 		<Container className="base_cards">
-			<article className="text-light mt-1 mb-1">
+			<article className="text-light textBox">
 				<p>
 					El whisky es uno de los destilados más destacados de toda la historia. Sigue adquiriendo gran
 					relevancia en todo el mundo y está destinado a sibaritas que saben apreciar su color y sabor.
@@ -33,11 +33,13 @@ export const Info_Whisky = () => {
 											<Button variant="outline-success">Leer más..</Button>
 										</Link>
 
-										{/* <Link> */}
-										<Button variant="outline-warning">
+										<Button
+											variant="outline-warning"
+											onClick={async () => {
+												actions.addFavorites(cocktail.idDrink, cocktail.strDrink);
+											}}>
 											<i className="far fa-heart" />
 										</Button>
-										{/* </Link> */}
 									</blockquote>
 								</Card>
 							</div>

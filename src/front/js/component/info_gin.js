@@ -9,7 +9,7 @@ export const Info_Gin = () => {
 
 	return (
 		<Container className="base_cards">
-			<article className="text-light mt-1 mb-1">
+			<article className="text-light textBox">
 				<p>
 					Es un alcohol que se obtiene de otros licores que no sean aguardiente, idealmente puros e insípidos,
 					tales como el whisky. La cualidad que lo diferencia es el hecho de que se le añaden aromatizantes,
@@ -34,11 +34,13 @@ export const Info_Gin = () => {
 											<Button variant="outline-success">Leer más..</Button>
 										</Link>
 
-										{/* <Link> */}
-										<Button variant="outline-warning">
+										<Button
+											variant="outline-warning"
+											onClick={async () => {
+												actions.addFavorites(cocktail.idDrink, cocktail.strDrink);
+											}}>
 											<i className="far fa-heart" />
 										</Button>
-										{/* </Link> */}
 									</blockquote>
 								</Card>
 							</div>

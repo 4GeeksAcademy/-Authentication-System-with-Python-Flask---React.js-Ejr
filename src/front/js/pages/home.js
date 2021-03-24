@@ -13,7 +13,7 @@ export const Home = () => {
 				<div className="contenedor text-center">
 					<article className="text-light textBox">
 						<p>
-							Mas que una pagina ilustrativa, en TOMATE`LO puedes encontrar los cócteles más populares
+							Más que una pagina ilustrativa, en TOMATE`LO puedes encontrar los cócteles más populares
 							seleccionados para tí!
 						</p>
 						<footer className="blockquote-footer">
