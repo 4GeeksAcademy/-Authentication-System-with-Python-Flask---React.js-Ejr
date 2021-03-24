@@ -22,13 +22,12 @@ export const Login = () => {
 			{store.jwtoken != null ? <Redirect to="/home" /> : ""}
 			<Container className="mt-4 mb-2" id="Login">
 				<Row>
-					<article className="text-center text-light offset-lg-2 col-12 col-md-12 col-lg-8" id="Login">
+					<article className="text-center text-light col-12 col-md-12 textBox" id="Login">
 						<div data-aos="zoom-in">
-							<h4 className="display-5">
-								Si deseas saber más y ver los diferentes cócteles{" "}
-								<span className="glitch1">Registrate y seguido haz login</span> y así podrás ver todo
-								nuestro contenido
-							</h4>
+							<p className="display-5">
+								Si deseas saber más y ver los diferentes cócteles registrate y seguido haz login y así
+								podrás ver todo nuestro contenido.
+							</p>
 						</div>
 						<p className="lead">
 							{/* Esta página esta vinculada a una base de datos ya creada por lo cual para poder ingresar
@@ -39,7 +38,7 @@ export const Login = () => {
 
 					<>
 						<form
-							className="col-12 col-md-6 text-center text-light"
+							className="p-1 col-12 col-md-6 text-center text-light textBox"
 							onSubmit={async e => {
 								e.preventDefault();
 								await actions.login(email, password);
@@ -84,7 +83,7 @@ export const Login = () => {
 					<>
 						{/* {store.jwtoken ? <Redirect to="/" /> : ""} */}
 						<form
-							className="col-12 col-md-6 text-center text-light"
+							className="p-1 col-12 col-md-6 text-center text-light textBox"
 							onSubmit={async e => {
 								e.preventDefault();
 

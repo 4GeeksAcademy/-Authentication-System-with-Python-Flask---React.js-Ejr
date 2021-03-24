@@ -13,7 +13,7 @@ export const AboutUs = () => {
 	return (
 		<Container className="mt-4 mb-2">
 			<CardDeck>
-				<Card className="text-light text-left Card " id="Tomatelo">
+				<Card className="text-light text-center Card textBox" id="Tomatelo">
 					<div data-aos="fade-right" data-aos-offset="300" data-aos-easing="ease-in-sine">
 						<Card.Img className="logimg" variant="top" src={tomatelo1} />
 						<Card.Body>
@@ -31,7 +31,7 @@ export const AboutUs = () => {
 						</Card.Footer> */}
 					</div>
 				</Card>
-				<Card className="text-light text-center Card">
+				<Card className="text-light text-center Card textBox">
 					<div data-aos="fade-up" data-aos-anchor-placement="center-center">
 						<Card.Img className="logimg" variant="top" src={tomatelo2} />
 						<Card.Body>
@@ -46,7 +46,7 @@ export const AboutUs = () => {
 						</Card.Footer> */}
 					</div>
 				</Card>
-				<Card className="text-light text-right Card">
+				<Card className="text-light text-center Card textBox">
 					<div data-aos="fade-left" data-aos-offset="300" data-aos-easing="ease-in-sine">
 						<Card.Img className="logimg" variant="top" src={tomatelo3} />
 						<Card.Body>
