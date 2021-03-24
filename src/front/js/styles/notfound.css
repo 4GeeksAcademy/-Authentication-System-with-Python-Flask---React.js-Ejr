@@ -1,8 +1,16 @@
-.content{
+.yellowBG{
     background-color: #FFD200;
 }
 
-#homeBtn{
+.notFound{
     background-color: #005032;
     color: wheat;
+}
+
+.lGreenText{
+    color: #26A514;
+}
+
+.dGreenText{
+    color:#005032;
 }
