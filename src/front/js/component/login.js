@@ -36,14 +36,13 @@ export const Login = () => {
 						<hr className="my-1" />
 					</article>
 
-					<>
+					<div className="p-1 col-12 col-md-6 text-center text-light textBox">
 						<form
-							className="p-1 col-12 col-md-6 text-center text-light textBox"
 							onSubmit={async e => {
 								e.preventDefault();
 								await actions.login(email, password);
 							}}>
-							<h4 className="display-5">Login</h4>
+							<h4 className="display-5">Log In</h4>
 							<hr className="my-1" />
 							<div className="form-group align-items-center">
 								<div data-aos="flip-left" data-aos-easing="ease-out-cubic" data-aos-duration="2000">
@@ -78,12 +77,39 @@ export const Login = () => {
 								</div>
 							</div>
 						</form>
-					</>
 
-					<>
-						{/* {store.jwtoken ? <Redirect to="/" /> : ""} */}
 						<form
-							className="p-1 col-12 col-md-6 text-center text-light textBox"
+							onSubmit={async e => {
+								e.preventDefault();
+								await actions.forgotPass(password);
+							}}>
+							<div className="form-group align-items-center">
+								<div data-aos="flip-left" data-aos-easing="ease-out-cubic" data-aos-duration="2000">
+									<div className="col-auto">
+										<label className="inlineFormInputGroup">Olvidaste tu password?</label>
+										<div className="input-group mb-2">
+											<input
+												type="password"
+												className="form-control text-center"
+												id="Password"
+												placeholder="tomatelo3x2"
+												onChange={e => setPassword(e.target.value)}
+											/>
+										</div>
+									</div>
+									<small id="emailHelp" className="form-text text-muted">
+										Por favor revisa bien tus datos cuando termines.
+									</small>
+									<Button type="submit" variant="outline-info">
+										Cambiar
+									</Button>
+								</div>
+							</div>
+						</form>
+					</div>
+
+					<div className="p-1 col-12 col-md-6 text-center text-light textBox">
+						<form
 							onSubmit={async e => {
 								e.preventDefault();
 
@@ -96,12 +122,12 @@ export const Login = () => {
 								}
 							}}>
 							<div data-aos="flip-left" data-aos-easing="ease-out-cubic" data-aos-duration="2000">
-								<h4 className="display-5">Register</h4>
+								<h4 className="display-5">Registro</h4>
 								<hr className="my-1" />
 								<div className="form-group align-items-center">
 									<Row>
 										<div className="col-12 col-md-6">
-											<label className="inlineFormInput">First Name</label>
+											<label className="inlineFormInput">Nombre</label>
 											<input
 												type="text"
 												className="form-control mb-2 text-center"
@@ -111,7 +137,7 @@ export const Login = () => {
 											/>
 										</div>
 										<div className="col-12 col-md-6">
-											<label className="inlineFormInput">Last Name</label>
+											<label className="inlineFormInput">Apellido</label>
 											<input
 												type="text"
 												className="form-control mb-2 text-center"
@@ -157,12 +183,12 @@ export const Login = () => {
 										Por favor revisa bien tus datos cuando termines.
 									</small>
 									<Button type="submit" variant="outline-info">
-										Register
+										Registro
 									</Button>
 								</div>
 							</div>
 						</form>
-					</>
+					</div>
 				</Row>
 			</Container>
 		</>
