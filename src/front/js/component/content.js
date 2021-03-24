@@ -20,7 +20,7 @@ export const Content = () => {
 									<footer className="blockquote-footer">
 										<small className="text-muted">
 											Primera generación de estudiantes{" "}
-											<cite title="Source Title">4geeks Academy Costa Rica</cite>
+											<cite title="Source Title">4Geeks Academy Costa Rica</cite>
 										</small>
 									</footer>
 								</div>

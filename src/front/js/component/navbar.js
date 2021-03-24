@@ -58,7 +58,7 @@ export const Navbar = () => {
 								)}
 							</DropdownButton>
 							<a href="#BaseDrinks" className="float-left mt-1">
-								Base
+								Destilado
 							</a>
 							<Link to="/" className="float-left mt-1" onClick={() => actions.signout()}>
 								LogOut

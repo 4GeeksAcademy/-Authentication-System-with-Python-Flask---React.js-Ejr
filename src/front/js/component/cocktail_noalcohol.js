@@ -39,8 +39,8 @@ export const Cocktail_nonAlcohol = () => {
 				</div>
 			</div>
 			<Row>
-				<Col className="col-auto col-md-4">
-					<article className="text-light text-center textBox">
+				<Col className="col-12 col-md-4">
+					<article className="p-1 text-light text-center textBox">
 						<h4>Ingredientes</h4>
 						<p>{cocktail.strIngredient1}</p>
 						<p>{cocktail.strIngredient2}</p>
@@ -48,13 +48,13 @@ export const Cocktail_nonAlcohol = () => {
 						<p>{cocktail.strIngredient4}</p>
 					</article>
 				</Col>
-				<Col className="col-auto col-md-8">
-					<article className="text-light text-center textBox">
+				<Col className="col-12 col-md-8">
+					<article className="p-1 text-light text-center textBox">
 						<h4>Instrucciones</h4>
 						<p>{cocktail.strInstructions}</p>
 						<p>
 							We start by filling {cocktail.strMeasure1} of a jug with fresh {cocktail.strIngredient1},
-							adding {cocktail.strMeasure2} {cocktail.strIngredient2} and another
+							adding {cocktail.strMeasure2} {cocktail.strIngredient2} and another{" "}
 							{cocktail.strIngredient3}. Finally we add {cocktail.strMeasure3} cava or{" "}
 							{cocktail.strIngredient4}, stir gently and transfer to the fridge where we let it cool for
 							an hour before serving and enjoy this wonderful cocktail whenever you want.
