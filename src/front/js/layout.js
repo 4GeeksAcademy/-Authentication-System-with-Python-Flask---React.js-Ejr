@@ -24,8 +24,8 @@ const Layout = () => {
 	return (
 		<div className="d-flex flex-column h-100">
 			<BrowserRouter basename={basename}>
+				<MyNavbar />
 				<ScrollToTop>
-					<MyNavbar />
 					<Switch>
 						<Route exact path="/">
 							<Landingpage />
@@ -58,8 +58,8 @@ const Layout = () => {
 							<h1>Not found!</h1>
 						</Route>
 					</Switch>
-					<Footer />
 				</ScrollToTop>
+				<Footer />
 			</BrowserRouter>
 		</div>
 	);

@@ -33,6 +33,12 @@ export const Servicioindividual = () => {
 				</Col>
 			</Row>
 			<div className="transBox" />
+			<Row>
+				<Col>
+					<h3 id="Theird">Opiniones sobre ABC</h3>
+				</Col>
+			</Row>
+			<div className="transBox" />
 		</Container>
 	);
 };
