@@ -234,36 +234,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 				const delFav = getStore().favorites;
 				const existingFav = delFav.filter(i => i.id !== fav_id);
 				setStore({ favorites: [...existingFav] });
-			},
-
-			deleteFavoritez: async fav_id => {
-				const store = getStore();
-				const drinkIndex = store.favorites.findIndex(i => i.cocktail_id == fav_id);
-				console.log("####$: ", drinkIndex);
-				let favID = await store.favorites[drinkIndex].id;
-				console.log("ID: ", favId);
-				if (drinkIndex != -1) {
-					fetch(`https://3001-crimson-cougar-z836dm9x.ws-us03.gitpod.io/favorites/${favID}`, {
-						method: "DELETE"
-					}).then(() => getActions().getUserFavorites(store.sessionUID));
-				}
-			},
-
-			deleteFavoritex: id => {
-				const store = getStore();
-				const FavList = store.favorites.filter((item, f) => id != f);
-				setStore({ favorites: [...FavList] });
-			},
-
-			deleteFavoritess: async fav_id => {
-				const res = await fetch(`https://3001-crimson-cougar-z836dm9x.ws-us03.gitpod.io/favorite/${fav_id}`, {
-					method: "DELETE"
-				});
-				const info = await res.json(); //traemos data del fetch
-				console.log(info);
-				const delFav = getStore().favorites;
-				const existingFav = delFav.filter(i => i.cocktail_id !== fav_id);
-				setStore({ favorites: [...existingFav] });
 			}
 			/////////////////////END TESTING PURPOSES @JVM && @ANMORA///////////////////////
 			// Use getActions to call a function within a fuction
