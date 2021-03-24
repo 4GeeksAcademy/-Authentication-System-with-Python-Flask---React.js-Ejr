@@ -12,11 +12,12 @@ export const Cocktail_nonAlcohol = () => {
 
 	return (
 		<Container className="contenedor">
-			<article className="text-light textBox">
+			<article className="text-light text-center textBox">
 				<p>
-					Los cócteles sin alcohol son una opción para mujeres embarazadas, jovenes o para personas que
-					después manejan en la vía pública, con estos cócteles ¡puedes disfrutar de manera responsable!
+					Hacer buenos combinados no tiene demasiado misterio: la única máxima reside en respetar a rajatabla
+					las proporciones, ser cuidadoso en el manejo de copas y hielos y usar destilados de cierta calidad.
 				</p>
+				<footer className="blockquote-footer">Aprende con TOMATE`LO hacer tus propios cocktails!</footer>
 			</article>
 			<div className="mt-1 mb-1 d-flex justify-content-start text-center" id="padre">
 				<Image className="contentimg1 col-12 col-md-10" src={cocktail.strDrinkThumb} fluid />
@@ -38,7 +39,7 @@ export const Cocktail_nonAlcohol = () => {
 				</div>
 			</div>
 			<Row>
-				<Col className="col-auto col-md-6">
+				<Col className="col-auto col-md-4">
 					<article className="text-light text-center textBox">
 						<h4>Ingredientes</h4>
 						<p>{cocktail.strIngredient1}</p>
@@ -47,7 +48,7 @@ export const Cocktail_nonAlcohol = () => {
 						<p>{cocktail.strIngredient4}</p>
 					</article>
 				</Col>
-				<Col className="col-auto col-md-6">
+				<Col className="col-auto col-md-8">
 					<article className="text-light text-center textBox">
 						<h4>Instrucciones</h4>
 						<p>{cocktail.strInstructions}</p>
@@ -64,36 +65,3 @@ export const Cocktail_nonAlcohol = () => {
 		</Container>
 	);
 };
-
-{
-	/* <Card className="cardtotal text-light" style={{ width: "100rem" }}>
-        <Card.Img variant="top" src={cocktail.strDrinkThumb} />
-        <div data-aos="fade-up" data-aos-anchor-placement="center-center">
-            <Card.Body>
-                <Card.Title>{cocktail.strDrink}</Card.Title>
-                <Card.Title>{cocktail.strCategory}</Card.Title>
-                <Card.Title>{cocktail.strIBA}</Card.Title>
-                <Card.Title>{cocktail.strIBA}</Card.Title>
-            </Card.Body>
-
-            <Card.Body>
-                <Card.Title>ingredientes:</Card.Title>
-                <Card className="ingredientes-instru">
-                    <Card.Body>{cocktail.strIngredient1}</Card.Body>
-                    <Card.Body>{cocktail.strIngredient2}</Card.Body>
-                    <Card.Body>{cocktail.strIngredient3}</Card.Body>
-                    <Card.Body>{cocktail.strIngredient4}</Card.Body>
-                </Card>
-            </Card.Body>
-            <Card.Body>
-                <Card.Title>Instrucciones:</Card.Title>
-                <Card className="ingredientes-instru">
-                    <Card.Body>{cocktail.strInstructions}</Card.Body>
-                    <Card.Body>{cocktail.strMeasure1}</Card.Body>
-                    <Card.Body>{cocktail.strMeasure2}</Card.Body>
-                    <Card.Body>{cocktail.strMeasure3}</Card.Body>
-                </Card>
-            </Card.Body>
-        </div>
-    </Card> */
-}

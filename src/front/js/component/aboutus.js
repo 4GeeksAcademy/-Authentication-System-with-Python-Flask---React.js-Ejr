@@ -21,7 +21,7 @@ export const AboutUs = () => {
 								<Card.Title>¿Quieres aprender Mixología?</Card.Title>
 							</div>
 							<Card.Text>
-								Podŕas aprender de deliciosas mezclas para hacer desde la comodidad de tu casa
+								Podrás aprender de deliciosas mezclas para hacer desde la comodidad de tu casa
 							</Card.Text>
 						</Card.Body>
 						{/* <Card.Footer>
