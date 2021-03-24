@@ -1,10 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import { Link } from "react-router-dom";
+import { Context } from "../store/appContext";
+// import useUserSession from "./userSession";
 
 function MyVerticallyCenteredModal(props) {
+	// const { store, actions } = useContext(Context);
+	// const [user, setUser] = useUserSession("user");
+
+	// const handleSubmit = async evento => {
+	// 	evento.preventDefault();
+	// 	await actions.onLogin();
+	// 	await setUser(JSON.stringify(store.logged_user));
+	// 	console.log(user);
+	// };
 	return (
 		<Modal {...props} size="md" aria-labelledby="contained-modal-title-vcenter" centered>
 			<Modal.Header closeButton style={{ paddingRight: "40px", paddingLeft: "40px" }}>
@@ -39,6 +50,7 @@ function MyVerticallyCenteredModal(props) {
 
 export function LoginModal() {
 	const [modalShow, setModalShow] = React.useState(false);
+
 	return (
 		<>
 			<Button
