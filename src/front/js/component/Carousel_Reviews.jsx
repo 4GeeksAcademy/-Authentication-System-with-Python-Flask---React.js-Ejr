@@ -24,17 +24,17 @@ const CarouselReviews = () => {
 							style={{ borderRadius: "50%" }}
 						/>
 						<Media.Body className="ml-3 ">
-							<h5 className="font-weight-bold">El Nombre de Freelancer</h5>
+							<h5 className="font-weight-bold">Felipe Morales - Arquitectura TI</h5>
 							<p>
-								<i className="far fa-star h4" />
-								<i className="far fa-star h4" />
-								<i className="far fa-star h4" />
-								<i className="far fa-star h4" />
-								<i className="far fa-star h4" /> calificación 4.8/5
+								<i className="fas fa-star" style={{ fontSize: "23px" }} />
+								<i className="fas fa-star" style={{ fontSize: "23px" }} />
+								<i className="fas fa-star" style={{ fontSize: "23px" }} />
+								<i className="fas fa-star" style={{ fontSize: "23px" }} />
+								<i className="far fa-star h4" /> calificación 4/5
 							</p>
 							<p>
-								Never before has there been a good film portrayal of ancient Greece favourite myth. So
-								why would Hollywood start now
+								Excelente trabajo, muy buen servicio y la aplicación muy expedita para comunicarme con
+								el desarrollador.
 							</p>
 						</Media.Body>
 					</Media>
@@ -50,17 +50,17 @@ const CarouselReviews = () => {
 							style={{ borderRadius: "50%" }}
 						/>
 						<Media.Body className="ml-3 ">
-							<h5 className="font-weight-bold">El Nombre de Freelancer</h5>
+							<h5 className="font-weight-bold">Marcia Canales - Desarrollador Full Stack</h5>
 							<p>
+								<i className="fas fa-star" style={{ fontSize: "23px" }} />
+								<i className="fas fa-star" style={{ fontSize: "23px" }} />
+								<i className="fas fa-star" style={{ fontSize: "23px" }} />
 								<i className="far fa-star h4" />
-								<i className="far fa-star h4" />
-								<i className="far fa-star h4" />
-								<i className="far fa-star h4" />
-								<i className="far fa-star h4" /> calificación 4.8/5
+								<i className="far fa-star h4" /> calificación 3/5
 							</p>
 							<p>
-								Never before has there been a good film portrayal of ancient Greece favourite myth. So
-								why would Hollywood start now
+								Si bien la desarrolladora hizo lo que le pedimos, al momento de mostrar destreza en
+								temas, no fue lo que esperabamos.
 							</p>
 						</Media.Body>
 					</Media>
@@ -76,17 +76,17 @@ const CarouselReviews = () => {
 							style={{ borderRadius: "50%" }}
 						/>
 						<Media.Body className="ml-3 ">
-							<h5 className="font-weight-bold">El Nombre de Freelancer</h5>
+							<h5 className="font-weight-bold">Federico Ruiz-Tagle - Diseño de logos</h5>
 							<p>
-								<i className="far fa-star h4" />
-								<i className="far fa-star h4" />
-								<i className="far fa-star h4" />
-								<i className="far fa-star h4" />
-								<i className="far fa-star h4" /> calificación 4.8/5
+								<i className="fas fa-star" style={{ fontSize: "23px" }} />
+								<i className="fas fa-star" style={{ fontSize: "23px" }} />
+								<i className="fas fa-star" style={{ fontSize: "23px" }} />
+								<i className="fas fa-star" style={{ fontSize: "23px" }} />
+								<i className="far fa-star h4" /> calificación 4/5
 							</p>
 							<p>
-								Never before has there been a good film portrayal of ancient Greece favourite myth. So
-								why would Hollywood start now
+								Muy buen servicio, muy buen diseñador, esperamos poder volver a trabajar con él en el
+								futuro, se adecuó anuestros requerimientos y especificaciones!!
 							</p>
 						</Media.Body>
 					</Media>

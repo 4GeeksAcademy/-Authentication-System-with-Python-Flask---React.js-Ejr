@@ -1,328 +1,334 @@
 import React from "react";
 import { personA, personB, personC, personD } from "../../img/image";
+import { ProgressBar } from "react-bootstrap";
 
 export const Comments = () => {
 	return (
 		<div className="container">
-			<nav className="navbar navbar-default navbar-fixed-top">
-				<div className="container">
-					<div className="navbar-header">
+			<div className="row">
+				<div className="col-sm-3">
+					<div className="rating-block">
+						<h4>Average user rating</h4>
+						<h2 className="bold padding-bottom-7">
+							4.3 <small>/ 5</small>
+						</h2>
+						{/* Estrellas de puntuación */}
 						<button
 							type="button"
-							className="navbar-toggle collapsed"
-							data-toggle="collapse"
-							data-target="#navbar"
-							aria-expanded="false"
-							aria-controls="navbar">
-							<span className="sr-only">Toggle navigation</span>
-							<span className="icon-bar"></span>
-							<span className="icon-bar"></span>
-							<span className="icon-bar"></span>
+							className="btn btn-warning btn-sm"
+							aria-label="Left Align"
+							style={{ margin: "1px" }}>
+							<span className="fas fa-star" aria-hidden="true"></span>
 						</button>
-						<a className="navbar-brand" href="#">
-							Demo
-						</a>
-					</div>
-					<div id="navbar" className="navbar-collapse collapse">
-						<ul className="nav navbar-nav navbar-right">
-							<li>
-								<a href="../navbar/">Default</a>
-							</li>
-						</ul>
+						<button
+							type="button"
+							className="btn btn-warning btn-sm"
+							aria-label="Left Align"
+							style={{ margin: "1px" }}>
+							<span className="fas fa-star" aria-hidden="true"></span>
+						</button>
+						<button
+							type="button"
+							className="btn btn-warning btn-sm"
+							aria-label="Left Align"
+							style={{ margin: "1px" }}>
+							<span className="fas fa-star" aria-hidden="true"></span>
+						</button>
+						<button
+							type="button"
+							className="btn btn-default btn-grey btn-sm"
+							aria-label="Left Align"
+							style={{ margin: "1px", backgroundColor: "#C0C0C0" }}>
+							<span className="fas fa-star" aria-hidden="true"></span>
+						</button>
+						<button
+							type="button"
+							className="btn btn-default btn-grey btn-sm"
+							aria-label="Left Align"
+							style={{ margin: "1px", backgroundColor: "#C0C0C0" }}>
+							<span className="fas fa-star" aria-hidden="true"></span>
+						</button>
 					</div>
 				</div>
-			</nav>
-</div>
-			<div className="container">
-				<div className="row">
-					<div className="col-sm-3">
-						<div className="rating-block">
-							<h4>Average user rating</h4>
-							<h2 className="bold padding-bottom-7">
-								4.3 <small>/ 5</small>
-							</h2>
-							<button type="button" className="btn btn-warning btn-sm" aria-label="Left Align">
-								<span className="glyphicon glyphicon-star" aria-hidden="true"></span>
-							</button>
-							<button type="button" className="btn btn-warning btn-sm" aria-label="Left Align">
-								<span className="glyphicon glyphicon-star" aria-hidden="true"></span>
-							</button>
-							<button type="button" className="btn btn-warning btn-sm" aria-label="Left Align">
-								<span className="glyphicon glyphicon-star" aria-hidden="true"></span>
-							</button>
-							<button type="button" className="btn btn-default btn-grey btn-sm" aria-label="Left Align">
-								<span className="glyphicon glyphicon-star" aria-hidden="true"></span>
-							</button>
-							<button type="button" className="btn btn-default btn-grey btn-sm" aria-label="Left Align">
-								<span className="glyphicon glyphicon-star" aria-hidden="true"></span>
-							</button>
+				{/* Barras de progreso */}
+				<div className="col-sm-3">
+					<h4>Rating breakdown</h4>
+					<div className="pull-left">
+						<div className="pull-left" style={{ width: "35px", lineHeight: "1.5" }}>
+							<div style={{ height: "9px", margin: "{5px 0}" }}>
+								<span className="fas fa-star" style={{ position: "relative", left: "-20px" }}></span>
+							</div>
+						</div>
+						<div className="pull-left" style={{ width: "180px" }}>
+							<div className="progress" style={{ height: "9px", margin: "{8px 0}" }}>
+								<ProgressBar variant="success" now={100} style={{ width: "100%" }} />
+								<span className="sr-only">80% Complete (danger)</span>
+							</div>
+						</div>
+						<div className="pull-right" style={{ marginLeft: "-35px", marginTop: "-20px" }}>
+							1
 						</div>
 					</div>
-					<div className="col-sm-3">
-						<h4>Rating breakdown</h4>
-						<div className="pull-left">
-							<div className="pull-left" style={{width:"35px", line_height:1}}>
-								<div style={{height:"9px", margin:"{5px 0}"}}>
-									5 <span className="glyphicon glyphicon-star"></span>
-								</div>
-							</div>
-							<div className="pull-left" style={{width:"180px"}}>
-								<div className="progress" style={{height:"9px", margin:"{8px 0}"}}>
-									<div
-										className="progress-bar progress-bar-success"
-										role="progressbar"
-										aria-valuenow="5"
-										aria-valuemin="0"
-										aria-valuemax="5"
-										style={{width: "1000%"}}>
-										<span className="sr-only">80% Complete (danger)</span>
-									</div>
-								</div>
-							</div>
-							<div className="pull-right" style={{margin_left:"10px"}}>
-								1
+					<div className="pull-left">
+						<div className="pull-left" style={{ width: "35px", lineHeight: "1" }}>
+							<div style={{ height: "9px", margin: "{5px 0}" }}>
+								<span className="fas fa-star" style={{ position: "relative", left: "-20px" }}></span>
 							</div>
 						</div>
-						<div className="pull-left">
-							<div className="pull-left" style={{width:"35px", line_height:1}}>
-								<div style={{height:"9px", margin:"{5px 0}"}}>
-									4 <span className="glyphicon glyphicon-star"></span>
-								</div>
-							</div>
-							<div className="pull-left" style={{width:"180px"}}>
-								<div className="progress" style={{height:"9px", margin:"{8px 0}"}}>
-									<div
-										className="progress-bar progress-bar-primary"
-										role="progressbar"
-										aria-valuenow="4"
-										aria-valuemin="0"
-										aria-valuemax="5"
-										style={{width: "80%"}}>
-										<span className="sr-only">80% Complete (danger)</span>
-									</div>
-								</div>
-							</div>
-							<div className="pull-right" style={{margin_left:"10px"}}>
-								1
+						<div className="pull-left" style={{ width: "180px" }}>
+							<div className="progress" style={{ height: "9px", margin: "{8px 0}" }}>
+								<ProgressBar variant="info" now={80} style={{ width: "100%" }} />
 							</div>
 						</div>
-						<div className="pull-left">
-							<div className="pull-left" style={{width:"35px", line_height:"1"}}>
-								<div style={{height:"9px", margin:"5px"}}>
-									3 <span className="glyphicon glyphicon-star"></span>
-								</div>
-							</div>
-							<div className="pull-left" style={{width:"180px"}}>
-								<div className="progress" style={{height:"9px", margin:"8px"}}>
-									<div
-										className="progress-bar progress-bar-info"
-										role="progressbar"
-										aria-valuenow="3"
-										aria-valuemin="0"
-										aria-valuemax="5"
-										style={{width: "60%"}}>
-										<span className="sr-only">80% Complete (danger)</span>
-									</div>
-								</div>
-							</div>
-							<div className="pull-right" style={{margin_left:"10px"}}>
-								0
-							</div>
-						</div>
-						<div className="pull-left">
-							<div className="pull-left" style={{width:"35px", line_height:1}}>
-								<div style={{height:"9px", margin:"{5px 0}"}}>
-                                    2 
-                                    <span className="glyphicon glyphicon-star"></span>
-								</div>
-                            </div>
-                       
-							<div className="pull-left" style={{width:"180px"}}>
-								<div className="progress" style={{height:"9px", margin:"{8px 0}"}}>
-									<div
-										className="progress-bar progress-bar-warning"
-										role="progressbar"
-										aria-valuenow="2"
-										aria-valuemin="0"
-										aria-valuemax="5"
-										style={{width: "40%"}}>
-										<span className="sr-only">80% Complete (danger)</span>
-									</div>
-								</div>
-							</div>
-							<div className="pull-right" style={{margin_left:"10px"}}>
-								0
-							</div>
-						</div>
-						<div className="pull-left">
-							<div className="pull-left" style={{width:"35px", line_height:"1"}}>
-								<div style={{height:"9px", margin:"{5px 0}"}}>
-									1 <span className="glyphicon glyphicon-star"></span>
-								</div>
-							</div>
-							<div className="pull-left" style={{width:"180px"}}>
-								<div className="progress" style={{height:"9px", margin:"{8px 0}"}}>
-									<div
-										className="progress-bar progress-bar-danger"
-										role="progressbar"
-										aria-valuenow="1"
-										aria-valuemin="0"
-										aria-valuemax="5"
-										style={{width: "20%"}}>
-										<span className="sr-only">80% Complete (danger)</span>
-									</div>
-								</div>
-							</div>
-							<div className="pull-right" style={{margin_left:"10px"}}>
-								0
-							</div>
+						<div className="pull-right" style={{ marginLeft: "-35px", marginTop: "-20px" }}>
+							2
 						</div>
 					</div>
-                </div>
-    
+					<div className="pull-left">
+						<div className="pull-left" style={{ width: "35px", lineHeight: "1" }}>
+							<div style={{ height: "9px", margin: "{5px 0}" }}>
+								<span className="fas fa-star" style={{ position: "relative", left: "-20px" }}></span>
+							</div>
+						</div>
+						<div className="pull-left" style={{ width: "180px" }}>
+							<div className="progress" style={{ height: "9px", margin: "{8px 0}" }}>
+								<ProgressBar now={60} style={{ width: "100%" }} />
+							</div>
+						</div>
+						<div className="pull-right" style={{ marginLeft: "-35px", marginTop: "-20px" }}>
+							3
+						</div>
+					</div>
+					<div className="pull-left">
+						<div className="pull-left" style={{ width: "35px", lineHeight: "1" }}>
+							<div style={{ height: "9px", margin: "{5px 0}" }}>
+								<span className="fas fa-star" style={{ position: "relative", left: "-20px" }}></span>
+							</div>
+						</div>
 
-				<div className="row">
-					<div className="col-sm-7">
-						<hr />
-						<div className="review-block">
-							<div className="row">
-								<div className="col-sm-3">
-									<img src={personA} className="img-rounded" />
-									<div className="review-block-name">
-										<a href="#">nktailor</a>
-									</div>
-									<div className="review-block-date">
-										January 29, 2016
-										<br />1 day ago
-									</div>
+						<div className="pull-left" style={{ width: "180px" }}>
+							<div className="progress" style={{ height: "9px", margin: "{8px 0}" }}>
+								<ProgressBar variant="warning" now={40} style={{ width: "100%" }} />
+							</div>
+						</div>
+						<div
+							className="pull-right"
+							style={{ marginLeft: "-35px", marginTop: "-20px", fontFamily: "Catamaran" }}>
+							4
+						</div>
+					</div>
+					<div className="pull-left">
+						<div className="pull-left" style={{ width: "35px", lineHeight: "1" }}>
+							<div style={{ height: "9px", margin: "{5px 0}" }}>
+								<span className="fas fa-star" style={{ position: "relative", left: "-20px" }}></span>
+							</div>
+						</div>
+						<div className="pull-left" style={{ width: "180px" }}>
+							<div className="progress" style={{ height: "9px", margin: "{8px 0}" }}>
+								<ProgressBar variant="danger" now={20} style={{ width: "100%" }} />
+							</div>
+						</div>
+						<div
+							className="pull-right"
+							style={{ marginLeft: "-35px", marginTop: "-20px", fontFamily: "Catamaran" }}>
+							5
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div className="row">
+				<div className="col-sm-7">
+					<hr />
+					<div className="review-block">
+						<div className="row">
+							<div className="col-sm-3">
+								<img
+									src="http://dummyimage.com/60x60/666/ffffff&text=No+Image"
+									className="img-rounded"
+								/>
+								<div className="review-block-name">
+									<a href="#">Romina Fuentes</a>
+								</div>
+								<div className="review-block-date">
+									24 Marzo 2021
+									<br />
+									Hoy
 								</div>
 							</div>
 
 							<div className="col-sm-9">
 								<div className="review-block-rate">
-									<button type="button" className="btn btn-warning btn-xs" aria-label="Left Align">
-										<span className="glyphicon glyphicon-star" aria-hidden="true"></span>
-									</button>
-									<button type="button" className="btn btn-warning btn-xs" aria-label="Left Align">
-										<span className="glyphicon glyphicon-star" aria-hidden="true"></span>
-									</button>
-									<button type="button" className="btn btn-warning btn-xs" aria-label="Left Align">
-										<span className="glyphicon glyphicon-star" aria-hidden="true"></span>
+									<button
+										type="button"
+										className="btn btn-warning btn-sm"
+										aria-label="Left Align"
+										style={{ margin: "1px" }}>
+										<span className="fas fa-star" aria-hidden="true"></span>
 									</button>
 									<button
 										type="button"
-										className="btn btn-default btn-grey btn-xs"
-										aria-label="Left Align">
-										<span className="glyphicon glyphicon-star" aria-hidden="true"></span>
+										className="btn btn-warning btn-sm"
+										aria-label="Left Align"
+										style={{ margin: "1px" }}>
+										<span className="fas fa-star" aria-hidden="true"></span>
 									</button>
 									<button
 										type="button"
-										className="btn btn-default btn-grey btn-xs"
-										aria-label="Left Align">
-										<span className="glyphicon glyphicon-star" aria-hidden="true"></span>
+										className="btn btn-warning btn-sm"
+										aria-label="Left Align"
+										style={{ margin: "1px" }}>
+										<span className="fas fa-star" aria-hidden="true"></span>
+									</button>
+									<button
+										type="button"
+										className="btn btn-warning btn-sm"
+										aria-label="Left Align"
+										style={{ margin: "1px" }}>
+										<span className="fas fa-star" aria-hidden="true"></span>
+									</button>
+									<button
+										type="button"
+										className="btn btn-default btn-grey btn-sm"
+										aria-label="Left Align"
+										style={{ margin: "1px", backgroundColor: "#C0C0C0" }}>
+										<span className="fas fa-star" aria-hidden="true"></span>
 									</button>
 								</div>
-								<div className="review-block-title">this was nice in buy</div>
+								<div className="review-block-title">Excelente Servicio</div>
 								<div className="review-block-description">
-									this was nice in buy. this was nice in buy. this was nice in buy. this was nice in
-									buy this was nice in buy this was nice in buy this was nice in buy this was nice in
-									buy
+									Me encanto su trabajo, 100% recomendable. Todo lo que pedí es justo lo que
+									necesitaba
 								</div>
 							</div>
 						</div>
 						<hr />
 						<div className="row">
 							<div className="col-sm-3">
-								<img src={personB} className="img-rounded" />
+								<img
+									src="http://dummyimage.com/60x60/666/ffffff&text=No+Image"
+									className="img-rounded"
+								/>
 								<div className="review-block-name">
-									<a href="#">nktailor</a>
+									<a href="#">Nik Taylor</a>
 								</div>
 								<div className="review-block-date">
-									January 29, 2016
-									<br />1 day ago
+									10 Marzo 2021
+									<br />
+									10 días antes
 								</div>
 							</div>
 
 							<div className="col-sm-9">
 								<div className="review-block-rate">
-									<button type="button" className="btn btn-warning btn-xs" aria-label="Left Align">
-										<span className="glyphicon glyphicon-star" aria-hidden="true"></span>
-									</button>
-									<button type="button" className="btn btn-warning btn-xs" aria-label="Left Align">
-										<span className="glyphicon glyphicon-star" aria-hidden="true"></span>
-									</button>
-									<button type="button" className="btn btn-warning btn-xs" aria-label="Left Align">
-										<span className="glyphicon glyphicon-star" aria-hidden="true"></span>
+									<button
+										type="button"
+										className="btn btn-warning btn-sm"
+										aria-label="Left Align"
+										style={{ margin: "1px" }}>
+										<span className="fas fa-star" aria-hidden="true"></span>
 									</button>
 									<button
 										type="button"
-										className="btn btn-default btn-grey btn-xs"
-										aria-label="Left Align">
-										<span className="glyphicon glyphicon-star" aria-hidden="true"></span>
+										className="btn btn-warning btn-sm"
+										aria-label="Left Align"
+										style={{ margin: "1px" }}>
+										<span className="fas fa-star" aria-hidden="true"></span>
 									</button>
 									<button
 										type="button"
-										className="btn btn-default btn-grey btn-xs"
-										aria-label="Left Align">
-										<span className="glyphicon glyphicon-star" aria-hidden="true"></span>
+										className="btn btn-warning btn-sm"
+										aria-label="Left Align"
+										style={{ margin: "1px" }}>
+										<span className="fas fa-star" aria-hidden="true"></span>
+									</button>
+									<button
+										type="button"
+										className="btn btn-warning btn-sm"
+										aria-label="Left Align"
+										style={{ margin: "1px" }}>
+										<span className="fas fa-star" aria-hidden="true"></span>
+									</button>
+									<button
+										type="button"
+										className="btn btn-warning btn-sm"
+										aria-label="Left Align"
+										style={{ margin: "1px" }}>
+										<span className="fas fa-star" aria-hidden="true"></span>
 									</button>
 								</div>
-								<div className="review-block-title">this was nice in buy</div>
+								<div className="review-block-title">Muy Profesional</div>
 								<div className="review-block-description">
-									this was nice in buy. this was nice in buy. this was nice in buy. this was nice in
-									buy this was nice in buy this was nice in buy this was nice in buy this was nice in
-									buy
+									Desde el principio de la comunicación fue una personas muy formal y cumplió con
+									todos los requerimientos que hice.
 								</div>
 							</div>
 						</div>
 						<hr />
 						<div className="row">
 							<div className="col-sm-3">
-								<img src={personC} className="img-rounded" />
+								<img
+									src="http://dummyimage.com/60x60/666/ffffff&text=No+Image"
+									className="img-rounded"
+								/>
 								<div className="review-block-name">
-									<a href="#">nktailor</a>
+									<a href="#">Freddy Scott</a>
 								</div>
 								<div className="review-block-date">
-									January 29, 2016
-									<br />1 day ago
+									15 Abril 2021
+									<br />
+									10 días atrás
 								</div>
 							</div>
 
 							<div className="col-sm-9">
 								<div className="review-block-rate">
-									<button type="button" className="btn btn-warning btn-xs" aria-label="Left Align">
-										<span className="glyphicon glyphicon-star" aria-hidden="true"></span>
-									</button>
-									<button type="button" className="btn btn-warning btn-xs" aria-label="Left Align">
-										<span className="glyphicon glyphicon-star" aria-hidden="true"></span>
-									</button>
-									<button type="button" className="btn btn-warning btn-xs" aria-label="Left Align">
-										<span className="glyphicon glyphicon-star" aria-hidden="true"></span>
+									<button
+										type="button"
+										className="btn btn-warning btn-sm"
+										aria-label="Left Align"
+										style={{ margin: "1px" }}>
+										<span className="fas fa-star" aria-hidden="true"></span>
 									</button>
 									<button
 										type="button"
-										className="btn btn-default btn-grey btn-xs"
-										aria-label="Left Align">
-										<span className="glyphicon glyphicon-star" aria-hidden="true"></span>
+										className="btn btn-warning btn-sm"
+										aria-label="Left Align"
+										style={{ margin: "1px" }}>
+										<span className="fas fa-star" aria-hidden="true"></span>
 									</button>
 									<button
 										type="button"
-										className="btn btn-default btn-grey btn-xs"
-										aria-label="Left Align">
-										<span className="glyphicon glyphicon-star" aria-hidden="true"></span>
+										className="btn btn-default btn-grey btn-sm"
+										aria-label="Left Align"
+										style={{ margin: "1px", backgroundColor: "#C0C0C0" }}>
+										<span className="fas fa-star" aria-hidden="true"></span>
+									</button>
+									<button
+										type="button"
+										className="btn btn-default btn-grey btn-sm"
+										aria-label="Left Align"
+										style={{ margin: "1px", backgroundColor: "#C0C0C0" }}>
+										<span className="fas fa-star" aria-hidden="true"></span>
+									</button>
+									<button
+										type="button"
+										className="btn btn-default btn-grey btn-sm"
+										aria-label="Left Align"
+										style={{ margin: "1px", backgroundColor: "#C0C0C0" }}>
+										<span className="fas fa-star" aria-hidden="true"></span>
 									</button>
 								</div>
-								<div className="review-block-title">this was nice in buy</div>
+								<div className="review-block-title">Recomendable para otros trabajos</div>
 								<div className="review-block-description">
-									this was nice in buy. this was nice in buy. this was nice in buy. this was nice in
-									buy this was nice in buy this was nice in buy this was nice in buy this was nice in
-									buy
+									Una persona muy responsable, fue un gusto trabajar con él. Seguiré ocupando sus
+									servicios en mis próximos pryoectos, Gracias por tu ayuda!!
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-		
+		</div>
 	);
 };
