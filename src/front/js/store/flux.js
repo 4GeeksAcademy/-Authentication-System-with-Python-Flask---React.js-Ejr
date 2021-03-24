@@ -64,6 +64,24 @@ const getState = ({ getStore, getActions, setStore }) => {
 					});
 			},
 
+			// forgotPass: password => {
+			// 	// const store = store.recovery.toString();
+			// 	fetch(`https://3001-crimson-cougar-z836dm9x.ws-us03.gitpod.io/${password}`, {
+			// 		method: "PUT",
+			// 		headers: { "Content-Type": "application/json" },
+			// 		body: JSON.stringify(data)
+			// 	})
+			// 		.then((response = responde.json()))
+			// 		.then(data => {
+			// 			console.log(data);
+			// 			alert("Password modificado satisfactoriamente");
+			// 			setRedirect(true);
+			// 		})
+			// 		.catch(error => {
+			// 			console.table("Error", error);
+			// 		});
+			// },
+
 			signout: () => {
 				setStore({ jwtoken: null, sessionUID: null, sessionUser: null });
 			},

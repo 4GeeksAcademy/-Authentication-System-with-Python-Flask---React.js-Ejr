@@ -17,8 +17,8 @@ export const Gallery = () => {
 							Más que una página ilustrativa, en TOMATE`LO puedes encontrar los cócteles más populares
 							seleccionados para tí!
 						</p>
-						<footer className="blockquote-footer">
-							Sabias que puedes encontrar informacion dentro de las imagenes
+						<footer className="blockquote-footer text-little">
+							Sabias que puedes encontrar informacion dentro de las imágenes!
 						</footer>
 					</article>
 					<div className="row">

@@ -17,6 +17,8 @@ export const Login = () => {
 	const [birthday, setBirthday] = useState("");
 	const [redirect, setRedirect] = useState(false);
 
+	const [recover, setRecover] = useState("");
+
 	return (
 		<>
 			{store.jwtoken != null ? <Redirect to="/home" /> : ""}
@@ -29,10 +31,6 @@ export const Login = () => {
 								podrás ver todo nuestro contenido.
 							</p>
 						</div>
-						<p className="lead">
-							{/* Esta página esta vinculada a una base de datos ya creada por lo cual para poder ingresar
-							deberás revisar F12 y conocer los usuarios en lista ya creados! */}
-						</p>
 						<hr className="my-1" />
 					</article>
 
@@ -68,7 +66,7 @@ export const Login = () => {
 											/>
 										</div>
 									</div>
-									<small id="emailHelp" className="form-text text-muted">
+									<small id="emailHelp" className="form-text text-muted text-little">
 										Por favor revisa bien tus datos cuando termines.
 									</small>
 									<Button type="submit" variant="outline-info">
@@ -78,10 +76,10 @@ export const Login = () => {
 							</div>
 						</form>
 
-						<form
+						{/* <form
 							onSubmit={async e => {
 								e.preventDefault();
-								await actions.forgotPass(password);
+								await actions.forgotPass(recover);
 							}}>
 							<div className="form-group align-items-center">
 								<div data-aos="flip-left" data-aos-easing="ease-out-cubic" data-aos-duration="2000">
@@ -93,7 +91,7 @@ export const Login = () => {
 												className="form-control text-center"
 												id="Password"
 												placeholder="tomatelo3x2"
-												onChange={e => setPassword(e.target.value)}
+												onChange={e => setRecover(e.target.value)}
 											/>
 										</div>
 									</div>
@@ -105,7 +103,7 @@ export const Login = () => {
 									</Button>
 								</div>
 							</div>
-						</form>
+						</form> */}
 					</div>
 
 					<div className="p-1 col-12 col-md-6 text-center text-light textBox">
@@ -179,7 +177,7 @@ export const Login = () => {
 											onChange={e => setBirthday(e.target.value)}
 										/>
 									</div>
-									<small id="emailHelp" className="form-text text-muted">
+									<small id="emailHelp" className="form-text text-muted text-little">
 										Por favor revisa bien tus datos cuando termines.
 									</small>
 									<Button type="submit" variant="outline-info">

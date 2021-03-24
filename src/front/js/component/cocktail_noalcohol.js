@@ -17,7 +17,9 @@ export const Cocktail_nonAlcohol = () => {
 					Hacer buenos combinados no tiene demasiado misterio: la única máxima reside en respetar a rajatabla
 					las proporciones, ser cuidadoso en el manejo de copas y hielos y usar destilados de cierta calidad.
 				</p>
-				<footer className="blockquote-footer">Aprende con TOMATE`LO hacer tus propios cocktails!</footer>
+				<footer className="blockquote-footer text-little">
+					Aprende con TOMATE`LO hacer tus propios cocktails!
+				</footer>
 			</article>
 			<div className="mt-1 mb-1 d-flex justify-content-start text-center" id="padre">
 				<Image className="contentimg1 col-12 col-md-10" src={cocktail.strDrinkThumb} fluid />

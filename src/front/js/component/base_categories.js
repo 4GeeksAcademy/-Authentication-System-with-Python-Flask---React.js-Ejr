@@ -23,7 +23,7 @@ export const Base_Categories = () => {
 				<article className="text-light">
 					<p>Las mejores categorias seleccionadas de los cócteles a base de su ingrediente especifica</p>
 				</article>
-				<footer className="blockquote-footer">
+				<footer className="blockquote-footer text-little">
 					Puedes conocer mas cocteles y sus detalles dando en ver más!
 				</footer>
 			</div>
@@ -35,13 +35,9 @@ export const Base_Categories = () => {
 							<Card className="Card text-light p-3">
 								<blockquote className="blockquote mb-0 card-body">
 									<p>Sin Alcohol</p>
-									<footer className="blockquote-footer">
-										<small className="text-muted">
-											<cite title="Source Title">
-												Los cócteles sin alcohol (o “mocktails”) son siempre una buena
-												alternativa para disfrutar de un ambiente festivo de manera responsable
-											</cite>
-										</small>
+									<footer className="blockquote-footer text-little">
+										Los cócteles sin alcohol (o “mocktails”) son siempre una buena alternativa para
+										disfrutar de un ambiente festivo de manera responsable
 									</footer>
 									<Link to="/Info_WithoutBase">
 										<Button type="submit" variant="outline-success">
@@ -61,17 +57,9 @@ export const Base_Categories = () => {
 							<Card className="Card text-light p-3">
 								<blockquote className="blockquote mb-0 card-body">
 									<p>RON</p>
-									<footer className="blockquote-footer">
-										<small className="text-muted">
-											<cite title="Source Title">
-												Los rones más finos y de mejor calidad son los que se preparan
-												directamente del jugo de la caña de azúcar.
-												{/* El ron es un destilado elaborado a partir de la caña de azúcar que, en sus
-											distintas variedades como pueden ser el ron blanco, oscuro o dorado, se
-											adaptan perfectamente a su utilización en una gran cantidad de cócteles
-											gracias a la versatilidad de este destilado. */}
-											</cite>
-										</small>
+									<footer className="blockquote-footer text-little">
+										Los rones más finos y de mejor calidad son los que se preparan directamente del
+										jugo de la caña de azúcar.
 									</footer>
 									<Link to="/Info_Rum">
 										<Button type="submit" variant="outline-success">
@@ -91,19 +79,10 @@ export const Base_Categories = () => {
 							<Card className="Card text-light p-3">
 								<blockquote className="blockquote mb-0 card-body">
 									<p>GIN</p>
-									<footer className="blockquote-footer">
-										<small className="text-muted">
-											<cite title="Source Title">
-												El sabor central en todo gin es el enebro. Tiene un aroma fresco,
-												balsámico, amaderado dulce y parecido a una hoja (aguja) de pino que
-												crea un sabor seco, casi amargo.
-												{/* Su mezcla de cítricos, aromas florales y botánicos la hace un ingrediente
-											perfecto para que las mezclas siempre salgan bien. Los dos únicos requisitos
-											fundamentales son: suficientes mezcladores y, obviamente, una buena ginebra.
-											Aquí tienes nueve propuestas deliciosas y fáciles de preparar, para que este
-											verano le des un sello de autor a las copas en tu casa. */}
-											</cite>
-										</small>
+									<footer className="blockquote-footer text-little">
+										El sabor central en todo gin es el enebro. Tiene un aroma fresco, balsámico,
+										amaderado dulce y parecido a una hoja (aguja) de pino que crea un sabor seco,
+										casi amargo.
 									</footer>
 									<Link to="/Info_Gin">
 										<Button type="submit" variant="outline-success">
@@ -123,13 +102,9 @@ export const Base_Categories = () => {
 							<Card className="Card text-light p-3">
 								<blockquote className="blockquote mb-0 card-body">
 									<p>VODKA</p>
-									<footer className="blockquote-footer">
-										<small className="text-muted">
-											<cite title="Source Title">
-												Su sabor, suave y delicado, permite tomarlo solo; pero lo más común es
-												combinarlo con otras bebidas no alcohólicas.
-											</cite>
-										</small>
+									<footer className="blockquote-footer text-little">
+										Su sabor, suave y delicado, permite tomarlo solo; pero lo más común es
+										combinarlo con otras bebidas no alcohólicas.
 									</footer>
 									<Link to="/Info_Vodka">
 										<Button type="submit" variant="outline-success">
@@ -149,14 +124,10 @@ export const Base_Categories = () => {
 							<Card className="Card text-light p-3">
 								<blockquote className="blockquote mb-0 card-body">
 									<p>TEQUILA</p>
-									<footer className="blockquote-footer">
-										<small className="text-muted">
-											<cite title="Source Title">
-												En un excelente Tequila se debe buscar que tenga un color brillante, que
-												tenga aromas no ofensivos y que en boca sus sabores queden en el paladar
-												y no queme en garganta.
-											</cite>
-										</small>
+									<footer className="blockquote-footer text-little">
+										En un excelente Tequila se debe buscar que tenga un color brillante, que tenga
+										aromas no ofensivos y que en boca sus sabores queden en el paladar y no queme en
+										garganta.
 									</footer>
 									<Link to="/Info_Tequila">
 										<Button type="submit" variant="outline-success">
@@ -176,14 +147,10 @@ export const Base_Categories = () => {
 							<Card className="Card text-light p-3">
 								<blockquote className="blockquote mb-0 card-body">
 									<p>WHISKY</p>
-									<footer className="blockquote-footer">
-										<small className="text-muted">
-											<cite title="Source Title">
-												El sabor es diferente donde destacan los vainillas suaves, los ahumados,
-												la fruta como manzanas o naranjas, los frutos secos como la nuez, el
-												caramelo, la madera de roble y los tostados procedentes de la malta.
-											</cite>
-										</small>
+									<footer className="blockquote-footer text-little">
+										El sabor es diferente donde destacan los vainillas suaves, los ahumados, la
+										fruta como manzanas o naranjas, los frutos secos como la nuez, el caramelo, la
+										madera de roble y los tostados procedentes de la malta.
 									</footer>
 									<Link to="/Info_Whisky">
 										<Button type="submit" variant="outline-success">

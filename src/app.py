@@ -208,6 +208,18 @@ def delete_fav_by_id(fav_id):
 
 #endregion Favorite
 
+##################UPDATE_PASS##########################
+# @api.route('/user/updatepass/<int:id>', methods=['PUT'])
+# def update_pass(id):
+#     payload = request.get_json()
+#     pass = payload.get("password")
+#     user = User.query.get(id)
+#     if user == None:
+#         return jsonify({"status": "failed", "msg":"User not found"}), 404
+#         db.session.add(user)
+#         db.session.commit()
+#     return jsonify("status": "failed", "msg": "Password has been changed successfully"), 200
+
 #region LOGIN
 @app.route('/login', methods=['POST'])
 def user_login():
