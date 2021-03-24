@@ -66,7 +66,7 @@ export const Login = () => {
 											/>
 										</div>
 									</div>
-									<small id="emailHelp" className="form-text text-muted text-little">
+									<small id="emailHelp" className="form-text text-little">
 										Por favor revisa bien tus datos cuando termines.
 									</small>
 									<Button type="submit" variant="outline-info">
@@ -177,7 +177,7 @@ export const Login = () => {
 											onChange={e => setBirthday(e.target.value)}
 										/>
 									</div>
-									<small id="emailHelp" className="form-text text-muted text-little">
+									<small id="emailHelp" className="form-text text-little">
 										Por favor revisa bien tus datos cuando termines.
 									</small>
 									<Button type="submit" variant="outline-info">
