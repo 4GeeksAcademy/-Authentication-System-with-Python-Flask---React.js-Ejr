@@ -9,7 +9,7 @@ export const Info_Rum = () => {
 
 	return (
 		<Container className="base_cards">
-			<article className="text-light mt-1 mb-1">
+			<article className="text-light textBox">
 				<p>
 					El ron es uno de los destilados más bebidos en las clases medias y altas. Suele sentar de maravilla
 					tras una buena y larga cena o comida porque nos aligerará de las digestiones pesadas.
@@ -33,11 +33,13 @@ export const Info_Rum = () => {
 											<Button variant="outline-success">Leer más..</Button>
 										</Link>
 
-										{/* <Link> */}
-										<Button variant="outline-warning">
+										<Button
+											variant="outline-warning"
+											onClick={async () => {
+												actions.addFavorites(cocktail.idDrink, cocktail.strDrink);
+											}}>
 											<i className="far fa-heart" />
 										</Button>
-										{/* </Link> */}
 									</blockquote>
 								</Card>
 							</div>

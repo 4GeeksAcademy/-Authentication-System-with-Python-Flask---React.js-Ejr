@@ -17,11 +17,8 @@ export const Content = () => {
 										disfrutar en nuestro paladar un delicioso cóctel!
 									</p>
 
-									<footer className="blockquote-footer">
-										<small className="text-muted">
-											Primera generación de estudiantes{" "}
-											<cite title="Source Title">4geeks Academy Costa Rica</cite>
-										</small>
+									<footer className="blockquote-footer text-little">
+										Primera generación de estudiantes 4Geeks Academy Costa Rica
 									</footer>
 								</div>
 							</blockquote>

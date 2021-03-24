@@ -9,7 +9,7 @@ export const Info_Vodka = () => {
 
 	return (
 		<Container className="base_cards">
-			<article className="text-light mt-1 mb-1">
+			<article className="text-light textBox">
 				<p>
 					El vodka es una de las bebidas alcohólicas más populares y consumidas del mundo. Quizás tu mismo
 					seas un consumidor de esta espirituosa bebida, pero ¿sabes de qué está hecho el vodka? Se produce a
@@ -36,11 +36,13 @@ export const Info_Vodka = () => {
 											<Button variant="outline-success">Leer más..</Button>
 										</Link>
 
-										{/* <Link> */}
-										<Button variant="outline-warning">
+										<Button
+											variant="outline-warning"
+											onClick={async () => {
+												actions.addFavorites(cocktail.idDrink, cocktail.strDrink);
+											}}>
 											<i className="far fa-heart" />
 										</Button>
-										{/* </Link> */}
 									</blockquote>
 								</Card>
 							</div>

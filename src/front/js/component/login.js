@@ -17,34 +17,30 @@ export const Login = () => {
 	const [birthday, setBirthday] = useState("");
 	const [redirect, setRedirect] = useState(false);
 
+	const [recover, setRecover] = useState("");
+
 	return (
 		<>
 			{store.jwtoken != null ? <Redirect to="/home" /> : ""}
 			<Container className="mt-4 mb-2" id="Login">
 				<Row>
-					<article className="text-center text-light offset-lg-2 col-12 col-md-12 col-lg-8" id="Login">
+					<article className="text-center text-light col-12 col-md-12 textBox" id="Login">
 						<div data-aos="zoom-in">
-							<h4 className="display-5">
-								Si deseas saber más y ver los diferentes cócteles{" "}
-								<span className="glitch1">Registrate y seguido haz login</span> y así podrás ver todo
-								nuestro contenido
-							</h4>
+							<p className="display-5">
+								Si deseas saber más y ver los diferentes cócteles registrate y seguido haz login y así
+								podrás ver todo nuestro contenido.
+							</p>
 						</div>
-						<p className="lead">
-							{/* Esta página esta vinculada a una base de datos ya creada por lo cual para poder ingresar
-							deberás revisar F12 y conocer los usuarios en lista ya creados! */}
-						</p>
 						<hr className="my-1" />
 					</article>
 
-					<>
+					<div className="p-1 col-12 col-md-6 text-center text-light textBox">
 						<form
-							className="col-12 col-md-6 text-center text-light"
 							onSubmit={async e => {
 								e.preventDefault();
 								await actions.login(email, password);
 							}}>
-							<h4 className="display-5">Login</h4>
+							<h4 className="display-5">Log In</h4>
 							<hr className="my-1" />
 							<div className="form-group align-items-center">
 								<div data-aos="flip-left" data-aos-easing="ease-out-cubic" data-aos-duration="2000">
@@ -70,7 +66,7 @@ export const Login = () => {
 											/>
 										</div>
 									</div>
-									<small id="emailHelp" className="form-text text-muted">
+									<small id="emailHelp" className="form-text text-little">
 										Por favor revisa bien tus datos cuando termines.
 									</small>
 									<Button type="submit" variant="outline-info">
@@ -79,12 +75,39 @@ export const Login = () => {
 								</div>
 							</div>
 						</form>
-					</>
 
-					<>
-						{/* {store.jwtoken ? <Redirect to="/" /> : ""} */}
+						{/* <form
+							onSubmit={async e => {
+								e.preventDefault();
+								await actions.forgotPass(recover);
+							}}>
+							<div className="form-group align-items-center">
+								<div data-aos="flip-left" data-aos-easing="ease-out-cubic" data-aos-duration="2000">
+									<div className="col-auto">
+										<label className="inlineFormInputGroup">Olvidaste tu password?</label>
+										<div className="input-group mb-2">
+											<input
+												type="password"
+												className="form-control text-center"
+												id="Password"
+												placeholder="tomatelo3x2"
+												onChange={e => setRecover(e.target.value)}
+											/>
+										</div>
+									</div>
+									<small id="emailHelp" className="form-text text-muted">
+										Por favor revisa bien tus datos cuando termines.
+									</small>
+									<Button type="submit" variant="outline-info">
+										Cambiar
+									</Button>
+								</div>
+							</div>
+						</form> */}
+					</div>
+
+					<div className="p-1 col-12 col-md-6 text-center text-light textBox">
 						<form
-							className="col-12 col-md-6 text-center text-light"
 							onSubmit={async e => {
 								e.preventDefault();
 
@@ -97,12 +120,12 @@ export const Login = () => {
 								}
 							}}>
 							<div data-aos="flip-left" data-aos-easing="ease-out-cubic" data-aos-duration="2000">
-								<h4 className="display-5">Register</h4>
+								<h4 className="display-5">Registro</h4>
 								<hr className="my-1" />
 								<div className="form-group align-items-center">
 									<Row>
 										<div className="col-12 col-md-6">
-											<label className="inlineFormInput">First Name</label>
+											<label className="inlineFormInput">Nombre</label>
 											<input
 												type="text"
 												className="form-control mb-2 text-center"
@@ -112,7 +135,7 @@ export const Login = () => {
 											/>
 										</div>
 										<div className="col-12 col-md-6">
-											<label className="inlineFormInput">Last Name</label>
+											<label className="inlineFormInput">Apellido</label>
 											<input
 												type="text"
 												className="form-control mb-2 text-center"
@@ -154,18 +177,19 @@ export const Login = () => {
 											onChange={e => setBirthday(e.target.value)}
 										/>
 									</div>
-									<small id="emailHelp" className="form-text text-muted">
+									<small id="emailHelp" className="form-text text-little">
 										Por favor revisa bien tus datos cuando termines.
 									</small>
 									<Button type="submit" variant="outline-info">
-										Register
+										Registro
 									</Button>
 								</div>
 							</div>
 						</form>
-					</>
+					</div>
 				</Row>
 			</Container>
 		</>
 	);
 };
+// comentario

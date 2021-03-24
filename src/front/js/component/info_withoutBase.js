@@ -9,7 +9,7 @@ export const Info_WithoutBase = () => {
 
 	return (
 		<Container className="base_cards">
-			<article className="text-light mt-1 mb-1">
+			<article className="text-light textBox">
 				<p>
 					Los cócteles sin alcohol son una opción para mujeres embarazadas, jovenes o para personas que
 					después manejan en la vía pública, con estos cócteles ¡puedes disfrutar de manera responsable!

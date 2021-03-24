@@ -13,7 +13,7 @@ from api.admin import setup_admin
 # from flask_jwt_simple import JWTManager, jwt_required, create_jwt, get_jwt_identity
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
 from datetime import datetime
-
+from flask_mail import Mail, Message
 
 #from models import Person
 
@@ -45,6 +45,32 @@ app.register_blueprint(api, url_prefix='/api')
 app.config['JWT_SECRET_KEY'] = '$An$Jo$Mo$Ma$'
 #JSON Web Token Management
 jwt = JWTManager(app)
+
+#Flask-mail
+app.config.update(
+    DEBUG=True,
+    #EMAIL SETTINGS
+    MAIL_SERVER='smtp.gmail.com',
+    MAIL_PORT=465,
+    MAIL_USE_SSL=True,
+    MAIL_USERNAME = 'a1groupcr@gmail.com',
+    MAIL_PASSWORD = '$$2021$$a1group$$'
+)
+mail = Mail(app)
+
+@app.route('/reset', methods=['POST'])
+def test_request():
+    # json_obj = {"name": "johnDoe"}
+    recipient = "littlenoobhtb@gmail.com"
+    try:
+        msg = Message("Hello",
+                sender="a1groupcr@gmail.com",
+                recipients=[recipient])
+        msg.body = "Welcome to blah blah blah"
+        mail.send(msg)
+        return "Mail Sent"
+    except Exception as e:
+        return (str(e))
 
 # Handle/serialize errors like a JSON object
 @app.errorhandler(APIException)
@@ -170,16 +196,29 @@ def add_favorite():
     return "Error, invalid method", 404
         ###DELETE FAVORITE BY ID###
 @app.route('/favorite/<int:fav_id>', methods=['DELETE'])
-def delete_fav_by_id():
+def delete_fav_by_id(fav_id):
     fav = Favorite.query.filter_by(id=fav_id).first_or_404()
+    print(fav)
     if fav is None:
         raise APIException('Favorito no encontrado', status_code=404)
     else:
         db.session.delete(fav)
         db.session.commit()
-        return jsonify(fav.serialize()), 204 #indicates that the server has successfully fulfilled the request and that there is no content to send in the response payload body
+        return jsonify(fav.serialize()), 200 #indicates that the server has successfully fulfilled the request and that there is no content to send in the response payload body
 
 #endregion Favorite
+
+##################UPDATE_PASS##########################
+# @api.route('/user/updatepass/<int:id>', methods=['PUT'])
+# def update_pass(id):
+#     payload = request.get_json()
+#     pass = payload.get("password")
+#     user = User.query.get(id)
+#     if user == None:
+#         return jsonify({"status": "failed", "msg":"User not found"}), 404
+#         db.session.add(user)
+#         db.session.commit()
+#     return jsonify("status": "failed", "msg": "Password has been changed successfully"), 200
 
 #region LOGIN
 @app.route('/login', methods=['POST'])

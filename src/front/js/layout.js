@@ -13,7 +13,7 @@ import { Login } from "./component/login";
 //Contenido Privado
 // Primera Vista
 import { Navbar } from "./component/navbar";
-import { Home } from "./pages/home";
+import { Gallery } from "./component/gallery";
 import { Base_Categories } from "./component/base_categories";
 import { Footer } from "./component/footer";
 
@@ -63,7 +63,7 @@ const Layout = () => {
 					</Route>
 					<Route exact path="/home">
 						<Navbar />
-						<Home />
+						<Gallery />
 						<Base_Categories />
 						<Footer />
 					</Route>

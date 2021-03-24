@@ -9,7 +9,7 @@ export const Info_Tequila = () => {
 
 	return (
 		<Container className="base_cards">
-			<article className="text-light mt-1 mb-1">
+			<article className="text-light textBox">
 				<p>
 					Seguramente cuando hablamos de tequila, todos pensamos que se trata de una bebida típica mejicana,
 					que ha protagonizado muchas canciones y cuya forma de beberla más clásica es con sal y limón. Pero
@@ -35,11 +35,13 @@ export const Info_Tequila = () => {
 											<Button variant="outline-success">Leer más..</Button>
 										</Link>
 
-										{/* <Link> */}
-										<Button variant="outline-warning">
+										<Button
+											variant="outline-warning"
+											onClick={async () => {
+												actions.addFavorites(cocktail.idDrink, cocktail.strDrink);
+											}}>
 											<i className="far fa-heart" />
 										</Button>
-										{/* </Link> */}
 									</blockquote>
 								</Card>
 							</div>
