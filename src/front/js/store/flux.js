@@ -1,4 +1,4 @@
-const be_url = "https://3001-crimson-cougar-z836dm9x.ws-us03.gitpod.io/";
+const be_url = "https://3001-purple-caterpillar-dzi6n2qs.ws-us03.gitpod.io/";
 
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
@@ -23,7 +23,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			////////////////////BEGIN TESTING PURPOSES @JVM && @ANMORA//////////////////////
 			//f(x) built for testing reg form(experimental by now)
 			signup: async (first_name, last_name, email, password, birthday) => {
-				const res = await fetch("https://3001-crimson-cougar-z836dm9x.ws-us03.gitpod.io/user", {
+				const res = await fetch("https://3001-purple-caterpillar-dzi6n2qs.ws-us03.gitpod.io/user", {
 					method: "POST",
 					headers: { "Content-Type": "application/json" },
 					body: JSON.stringify({
@@ -42,7 +42,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 
 			login: async (email, password) => {
-				await fetch("https://3001-crimson-cougar-z836dm9x.ws-us03.gitpod.io/login", {
+				await fetch("https://3001-purple-caterpillar-dzi6n2qs.ws-us03.gitpod.io/login", {
 					method: "POST",
 					headers: { "Content-Type": "application/json" },
 					body: JSON.stringify({ email: email, password: password })
@@ -66,7 +66,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			// forgotPass: password => {
 			// 	// const store = store.recovery.toString();
-			// 	fetch(`https://3001-crimson-cougar-z836dm9x.ws-us03.gitpod.io/${password}`, {
+			// 	fetch(`https://3001-purple-caterpillar-dzi6n2qs.ws-us03.gitpod.io/${password}`, {
 			// 		method: "PUT",
 			// 		headers: { "Content-Type": "application/json" },
 			// 		body: JSON.stringify(data)
@@ -205,7 +205,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				console.log("Checking:", checking);
 
 				if (!checking) {
-					await fetch("https://3001-crimson-cougar-z836dm9x.ws-us03.gitpod.io/favorite", {
+					await fetch("https://3001-purple-caterpillar-dzi6n2qs.ws-us03.gitpod.io/favorite", {
 						method: "POST",
 						headers: {
 							"Content-Type": "application/json",
@@ -224,7 +224,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 
 			getUserFavorites: id => {
-				fetch(`https://3001-crimson-cougar-z836dm9x.ws-us03.gitpod.io/user/${id}`)
+				fetch(`https://3001-purple-caterpillar-dzi6n2qs.ws-us03.gitpod.io/user/${id}`)
 					.then(data => data.json())
 					.then(response => {
 						setStore({ favorites: response.favorites });
@@ -240,13 +240,16 @@ const getState = ({ getStore, getActions, setStore }) => {
 			deleteFavorites: async fav_id => {
 				console.log(fav_id);
 
-				const res = await fetch(`https://3001-crimson-cougar-z836dm9x.ws-us03.gitpod.io/favorite/${fav_id}`, {
-					method: "DELETE",
-					headers: {
-						"Content-Type": "application/json",
-						Authorization: `Bearer ${getStore().jwtoken}`
+				const res = await fetch(
+					`https://3001-purple-caterpillar-dzi6n2qs.ws-us03.gitpod.io/favorite/${fav_id}`,
+					{
+						method: "DELETE",
+						headers: {
+							"Content-Type": "application/json",
+							Authorization: `Bearer ${getStore().jwtoken}`
+						}
 					}
-				});
+				);
 				const info = await res.json(); //traemos data del fetch
 				console.log(info);
 				const delFav = getStore().favorites;
