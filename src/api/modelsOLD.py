@@ -19,7 +19,7 @@ class Tipo_User(db.Model):
 class User(db.Model):
     __tablename__ = 'user'
     id = db.Column(db.Integer, primary_key=True)
-    # id_tipo_user = db.Column(db.Integer, ForeignKey('tipo_user.id'), nullable=False)
+    # id_tipo_user = db.Column(db.Integer, db.ForeignKey('tipo_user.id'), nullable=False)
     username = db.Column(db.String(45), unique=True, nullable=False)
     email = db.Column(db.String(50), unique=True, nullable=False)
     password = db.Column(db.String(10), nullable=False)
@@ -42,6 +42,7 @@ class User(db.Model):
 #             "id": self.id,
 #             "name_tipocobro": self.name_tipocobro
 #         }
+
 # class Category(db.Model):
 #     __tablename__ = 'category'
 #     id = db.Column(db.Integer,primary_key=True)

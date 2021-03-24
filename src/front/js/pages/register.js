@@ -13,7 +13,11 @@ const Register = () => {
 		<div
 			className="backgroundRegistro"
 			style={{
+<<<<<<< HEAD
+				backgroundImage: `url(http://localhost:3000/backGround.png)`
+=======
 				backgroundImage: `url(http://localhost:3000/loginBackGround.png)`
+>>>>>>> acc3bf9b62b8cca87cfe19564fe519793114cbfa
 			}}>
 			<Container>
 				<div>

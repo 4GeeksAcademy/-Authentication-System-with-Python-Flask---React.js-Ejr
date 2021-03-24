@@ -1,7 +1,6 @@
 import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
-
 import { Home } from "./pages/home";
 import { ServicioCategory } from "./pages/servicio-category";
 import { Servicioindividual } from "./pages/servicio-Individual";
