@@ -1,49 +1,47 @@
+import React, { useContext, useState, useEffect } from "react";
+
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
-			message: null,
-			demo: [
-				{
-					title: "FIRST",
-					background: "white",
-					initial: "white"
-				},
-				{
-					title: "SECOND",
-					background: "white",
-					initial: "white"
-				}
-			]
+			newContact: [],
+
+			login_data: {
+				userLogin: "",
+				userPass: ""
+			}
 		},
+
 		actions: {
-			// Use getActions to call a function within a fuction
-			exampleFunction: () => {
-				getActions().changeColor(0, "green");
-			},
-
-			getMessage: () => {
-				// fetching data from the backend
-				fetch(process.env.BACKEND_URL + "/api/hello")
-					.then(resp => resp.json())
-					.then(data => setStore({ message: data.message }))
-					.catch(error => console.log("Error loading message from backend", error));
-			},
-			changeColor: (index, color) => {
-				//get the store
+			onChangeLogin: e => {
 				const store = getStore();
+				const { login_data } = store;
+				login_data[e.target.name] = e.target.value;
+				setStore({ login_data });
+				console.log(store.login_data);
+			},
 
-				//we have to loop the entire demo array to look for the respective index
-				//and change its color
-				const demo = store.demo.map((elm, i) => {
-					if (i === index) elm.background = color;
-					return elm;
-				});
-
-				//reset the global store
-				setStore({ demo: demo });
+			createContact: async (e, email, password, confirm, checked) => {
+				e.preventDefault();
+				try {
+					const response = await fetch("http://0.0.0.0:3001/register", {
+						method: "POST",
+						headers: { "Content-Type": "application/json" },
+						body: JSON.stringify({
+							email: `${email}`,
+							password: `${password}`,
+							confirm: `${confirm}`,
+							checked: `${checked}`
+						})
+					});
+					const json = await response.json();
+					console.log(json);
+					setStore({ newContact: JSON.stringify(json) });
+					getActions().getAgenda();
+				} catch (error) {
+					console.log(error);
+				}
 			}
 		}
 	};
 };
-
 export default getState;

@@ -5,6 +5,7 @@ import "../../styles/index.scss";
 import { Row, Col, Container, Jumbotron, Button } from "react-bootstrap";
 import { Individuallnfo } from "../component/individualInfo.jsx";
 import { IndividualCard } from "../component/IndividualCard.jsx";
+import { Comments } from "../component/Mycomments.jsx";
 import Portafolio from "../component/Portafolio.jsx";
 
 export const Servicioindividual = () => {
@@ -39,6 +40,7 @@ export const Servicioindividual = () => {
 				</Col>
 			</Row>
 			<div className="transBox" />
+			<Comments />
 		</Container>
 	);
 };
