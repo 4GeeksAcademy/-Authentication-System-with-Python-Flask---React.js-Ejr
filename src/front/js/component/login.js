@@ -184,7 +184,7 @@ export const Login = () => {
 											type="text"
 											className="form-control mb-2 text-center"
 											id="User"
-											placeholder="2021-04-08"
+											placeholder="año-mes-día"
 											onChange={e => setBirthday(e.target.value)}
 										/>
 									</div>
