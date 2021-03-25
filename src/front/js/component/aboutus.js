@@ -4,7 +4,7 @@ import tomatelo1 from "../../img/logo/tomatelo3.png";
 import tomatelo2 from "../../img/logo/tomatelo2.png";
 import tomatelo4 from "../../img/logo/tomateloazul.png";
 import { Container, Card, CardDeck } from "react-bootstrap";
-//Animaciones..
+//Animaciones....
 import AOS from "aos";
 import "aos/dist/aos.css";
 AOS.init({ duration: 2000 });
