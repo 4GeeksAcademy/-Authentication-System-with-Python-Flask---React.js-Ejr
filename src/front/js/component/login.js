@@ -38,7 +38,11 @@ export const Login = () => {
 						<form
 							onSubmit={async e => {
 								e.preventDefault();
-								await actions.login(email, password);
+								if (email === "" || password === "") {
+									alert("TOMATE`LO: Faltan datos por llenar!");
+								} else {
+									await actions.login(email, password);
+								}
 							}}>
 							<h4 className="display-5">Log In</h4>
 							<hr className="my-1" />
@@ -110,13 +114,20 @@ export const Login = () => {
 						<form
 							onSubmit={async e => {
 								e.preventDefault();
-
 								let ok = await actions.signup(first_name, last_name, email, password, birthday);
-								if (ok) {
+								if (
+									first_name === "" ||
+									last_name === "" ||
+									email === "" ||
+									password === "" ||
+									birthday === ""
+								) {
+									alert("TOMATE`LO: Faltan datos por llenar!");
+								} else if (ok) {
 									history.push("/");
-									window.scrollTo(0, 0);
+									alert("TOMATE`LO: Te invitamos poner tus datos en Login e ingresar!");
 								} else {
-									alert("failed to submit registration, lets try again");
+									alert("Fallo al registrar, porfavor intentalo de nuevo!");
 								}
 							}}>
 							<div data-aos="flip-left" data-aos-easing="ease-out-cubic" data-aos-duration="2000">
@@ -181,6 +192,7 @@ export const Login = () => {
 										Por favor revisa bien tus datos cuando termines.
 									</small>
 									<Button type="submit" variant="outline-info">
+										{/* onPress={this.reset} */}
 										Registro
 									</Button>
 								</div>
