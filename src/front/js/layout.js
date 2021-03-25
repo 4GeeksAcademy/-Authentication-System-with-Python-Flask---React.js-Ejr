@@ -9,7 +9,6 @@ import injectContext from "./store/appContext";
 import MyNavbar from "./component/navbar";
 import { Footer } from "./component/footer";
 import Landingpage from "./pages/landingPage";
-import { Registro } from "./pages/registro";
 import { PasswordRecovery } from "./component/PasswordRecovery";
 import { PasswordRecovery2 } from "./component/PasswordRecovery2";
 import Register from "./pages/register";
@@ -38,9 +37,6 @@ const Layout = () => {
 						</Route>
 						<Route exact path="/category/:theid">
 							<Servicioindividual />
-						</Route>
-						<Route exact path="/registro">
-							<Registro />
 						</Route>
 						<Route exact path="/passwordrecovery">
 							<PasswordRecovery />

@@ -5,7 +5,11 @@ import { logoAzul } from "../../img/image";
 import { LoginModal } from "./Login";
 
 const MyNavbar = props => {
-	if (props.location.pathname === "/") {
+	if (
+		props.location.pathname === "/" ||
+		props.location.pathname === "/register" ||
+		props.location.pathname === "/registerservice"
+	) {
 		return " ";
 	} else {
 		return (

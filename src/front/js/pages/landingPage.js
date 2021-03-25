@@ -16,7 +16,7 @@ const LandingPage = () => {
 		<div
 			className="background"
 			style={{
-				backgroundImage: `url(http://localhost:3000/backGround.png)`
+				backgroundImage: `url(https://3000-aqua-stork-kkm23d33.ws-us03.gitpod.io/backGround.png)`
 			}}>
 			<Container>
 				<div>
