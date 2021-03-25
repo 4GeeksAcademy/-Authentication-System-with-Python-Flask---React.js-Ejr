@@ -9,39 +9,43 @@ export const Info_Rum = () => {
 
 	return (
 		<Container className="base_cards">
-			<article className="text-light textBox">
-				<p>
-					El ron es uno de los destilados más bebidos en las clases medias y altas. Suele sentar de maravilla
-					tras una buena y larga cena o comida porque nos aligerará de las digestiones pesadas.
-				</p>
-			</article>
+			<div data-aos="zoom-out">
+				<article className="text-light textBox">
+					<p>
+						El ron es uno de los destilados más bebidos en las clases medias y altas. Suele sentar de
+						maravilla tras una buena y larga cena o comida porque nos aligerará de las digestiones pesadas.
+					</p>
+				</article>
+			</div>
 			<Row>
 				{store.rum_cocktail.map((cocktail, index) => (
 					<Col className="col-auto col-md-6" key={index}>
-						<div className="mt-1 mb-1 d-flex justify-content-end text-center" id="base_cards1">
-							<Image
-								className="contentimg col-12 col-md-8"
-								src={cocktail.strDrinkThumb}
-								fluid
-								id="WithoutBase"
-							/>
-							<div className="col-12 col-md-6" id="base_cards2">
-								<Card className="Card text-light p-3">
-									<blockquote className="blockquote mb-0 card-body">
-										<p>{cocktail.strDrink}</p>
-										<Link to={`/Cocktail_Rum/${index}`}>
-											<Button variant="outline-success">Leer más..</Button>
-										</Link>
+						<div data-aos="fade-up">
+							<div className="mt-1 mb-1 d-flex justify-content-end text-center" id="base_cards1">
+								<Image
+									className="contentimg col-12 col-md-8"
+									src={cocktail.strDrinkThumb}
+									fluid
+									id="WithoutBase"
+								/>
+								<div className="col-12 col-md-6" id="base_cards2">
+									<Card className="Card text-light p-3">
+										<blockquote className="blockquote mb-0 card-body">
+											<p>{cocktail.strDrink}</p>
+											<Link to={`/Cocktail_Rum/${index}`}>
+												<Button variant="outline-success">Leer más..</Button>
+											</Link>
 
-										<Button
-											variant="outline-warning"
-											onClick={async () => {
-												actions.addFavorites(cocktail.idDrink, cocktail.strDrink);
-											}}>
-											<i className="far fa-heart" />
-										</Button>
-									</blockquote>
-								</Card>
+											<Button
+												variant="outline-warning"
+												onClick={async () => {
+													actions.addFavorites(cocktail.idDrink, cocktail.strDrink);
+												}}>
+												<i className="far fa-heart" />
+											</Button>
+										</blockquote>
+									</Card>
+								</div>
 							</div>
 						</div>
 					</Col>
