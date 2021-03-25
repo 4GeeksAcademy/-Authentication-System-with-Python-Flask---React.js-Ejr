@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "../styles/notfound.css";
+import SadPlayer from "../../img/favpng_marcel-sabitzer-rb-leipzig-jersey-soccer-player-clip-art.png";
 // import { Context } from "../store/appContext";
 
 export const NotFound = () => {
@@ -24,11 +25,7 @@ export const NotFound = () => {
 					</Link>
 				</div>
 				<div className="col-2">
-					<img
-						src="https://orange-mandrill-xwxs9okw.ws-us03.gitpod.io/files/download/?id=800804cf-f60e-4841-9b77-bfe537ca6362"
-						alt="Sad Player"
-						height="450 px"
-					/>
+					<img src={SadPlayer} alt="Sad Player" height="450 px" />
 				</div>
 				<div className="col-3" />
 			</div>
