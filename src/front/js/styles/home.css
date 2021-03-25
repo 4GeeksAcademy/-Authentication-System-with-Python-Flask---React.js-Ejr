@@ -1,0 +1,11 @@
+.card-title{
+    display: flex;
+    justify-content: center;
+    background-color: #ffd200;
+}
+
+.stepper-1, .stepper-2, .stepper-3{
+    margin-left: 8rem;
+    width: 20rem;
+    height: 20rem;
+}
