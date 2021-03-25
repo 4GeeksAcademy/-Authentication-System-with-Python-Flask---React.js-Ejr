@@ -18,7 +18,7 @@ export const Gallery = () => {
 							seleccionados para tí!
 						</p>
 						<footer className="blockquote-footer text-little">
-							Sabias que puedes encontrar informacion dentro de las imágenes!
+							Sabías que puedes encontrar informacion dentro de las imágenes!
 						</footer>
 					</article>
 					<div className="row">

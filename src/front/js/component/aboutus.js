@@ -17,9 +17,8 @@ export const AboutUs = () => {
 					<div data-aos="fade-right" data-aos-offset="300" data-aos-easing="ease-in-sine">
 						<Card.Img className="logimg" variant="top" src={tomatelo1} />
 						<Card.Body>
-							<div data-aos="zoom-in">
-								<Card.Title>¿Quieres aprender Mixología?</Card.Title>
-							</div>
+							<Card.Title>¿Quieres aprender Mixología?</Card.Title>
+
 							<Card.Text>
 								Podrás aprender de deliciosas mezclas para hacer desde la comodidad de tu casa
 							</Card.Text>

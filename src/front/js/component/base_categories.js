@@ -24,7 +24,7 @@ export const Base_Categories = () => {
 					<p>Las mejores categorias seleccionadas de los cócteles a base de su ingrediente especifica</p>
 				</article>
 				<footer className="blockquote-footer text-little">
-					Puedes conocer mas cocteles y sus detalles dando en ver más!
+					Puedes conocer mas cócteles y sus detalles dando en ver más!
 				</footer>
 			</div>
 			<Row>
