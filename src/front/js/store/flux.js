@@ -88,6 +88,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			// },
 
 			signout: () => {
+				alert("TOMATE`LO: Esperamos te haya gustado la página \n Visitanos pronto!");
 				setStore({ jwtoken: null, sessionUID: null, sessionUser: null });
 			},
 

@@ -3,7 +3,7 @@ import { Context } from "../store/appContext";
 import { useParams } from "react-router-dom";
 // import { Link } from "react-router-dom";
 import { Container, Row, Col, Image, Card, Button } from "react-bootstrap";
-import "../../styles/Cocktails.scss";
+import "../../styles/cocktails.scss";
 
 export const Cocktail_Gin = () => {
 	const params = useParams();
