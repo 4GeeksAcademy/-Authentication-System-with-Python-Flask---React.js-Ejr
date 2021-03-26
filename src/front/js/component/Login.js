@@ -7,15 +7,18 @@ import { Context } from "../store/appContext";
 // import useUserSession from "./userSession";
 
 function MyVerticallyCenteredModal(props) {
-	// const { store, actions } = useContext(Context);
-	// const [user, setUser] = useUserSession("user");
+	const { store, actions } = useContext(Context);
+	const [email, setEmail] = useState("");
+	const [password, setPassword] = useState("");
 
-	// const handleSubmit = async evento => {
-	// 	evento.preventDefault();
-	// 	await actions.onLogin();
-	// 	await setUser(JSON.stringify(store.logged_user));
-	// 	console.log(user);
-	// };
+	const handleSubmit = e => {
+		e.preventDefault();
+
+		actions.setLogin({
+			email: email,
+			password: password
+		});
+	};
 	return (
 		<Modal {...props} size="md" aria-labelledby="contained-modal-title-vcenter" centered>
 			<Modal.Header closeButton style={{ paddingRight: "40px", paddingLeft: "40px" }}>
@@ -25,13 +28,27 @@ function MyVerticallyCenteredModal(props) {
 				<Form style={{ paddingRight: "30px", paddingLeft: "20px", marginTop: "50px" }}>
 					<Form.Group controlId="formBasicEmail">
 						{/* <Form.Label>Email address</Form.Label> */}
-						<Form.Control type="email" placeholder="Ingresa tu correo electrónico" />
+						<Form.Control
+							type="email"
+							placeholder="Ingresa tu correo electrónico"
+							onChange={e => setEmail(e.target.value)}
+						/>
 					</Form.Group>
 					<Form.Group controlId="formBasicPassword">
 						{/* <Form.Label>Password</Form.Label> */}
-						<Form.Control type="password" placeholder="Ingresa tu contraseña" />
+						<Form.Control
+							type="password"
+							placeholder="Ingresa tu contraseña"
+							onChange={e => setPassword(e.target.value)}
+						/>
 					</Form.Group>
-					<Button variant="primary" size="lg" type="submit" block style={{ marginTop: "70px" }}>
+					<Button
+						variant="primary"
+						size="lg"
+						type="submit"
+						block
+						style={{ marginTop: "70px" }}
+						onClick={e => handleSubmit(e)}>
 						Ingresar
 					</Button>
 					<Form.Text

@@ -3,6 +3,7 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, User
+# from flask_cors import CORS, cross_origin
 from api.utils import generate_sitemap, APIException
 from werkzeug.security import generate_password_hash, check_password_hash       ## Nos permite manejar tokens por authentication (usuarios)    
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity   #from models import Person
@@ -18,15 +19,15 @@ api = Blueprint('api', __name__)
 #         "message": "Hello! I'm a message that came from the backend"
 #     }
 
-@api.route('/hello', methods=['POST', 'GET'])
-def handle_hello():
-    users = User.query.all()
-    users = list(map(lambda x: x.serialize(), users))
-    response_body = {
-        "users": users
-    }
+# @api.route('/hello', methods=['POST', 'GET'])
+# def handle_hello():
+#     users = User.query.all()
+#     users = list(map(lambda x: x.serialize(), users))
+#     response_body = {
+#         "users": users
+#     }
 
-    return jsonify(response_body), 200
+#     return jsonify(response_body), 200
 
 
 @api.route('/hash', methods=['POST', 'GET'])
@@ -75,81 +76,86 @@ def login():
         "token": access_token,
         "expires": expiracion.total_seconds()*1000,
         "userId": user.id,
-        "username": user.username
+        "email": user.email
     }
 
 
     return jsonify(data), 200
 
-
 @api.route('/register', methods=['POST'])
 def register():
- if request.method == 'POST':
+    
     email = request.json.get("email", None)
     password = request.json.get("password", None)
-    username = request.json.get("username", None)
-    
-    if not email:
-        return "Email required", 401
-    username = request.json.get("username", None)
-    if not username:
-        return "Username required", 401
-    password = request.json.get("password", None)
-    if not password:
-        return "Password required", 401
 
     email_query = User.query.filter_by(email=email).first()
     if email_query:
         return "This email has been already taken", 401
-    
+
     user = User()
     user.email = email
-    # user.is_active= True
-    user.username = username
-    hashed_password = generate_password_hash(password)
-    user.password = hashed_password
+    user.password = password
     print(user)
     db.session.add(user)
     db.session.commit()
 
-    response = {
+
+    expiracion = datetime.timedelta(days=3)
+    access_token = create_access_token(identity=user.email, expires_delta=expiracion)
+
+    response_token = {
         "msg": "Added successfully",
-        "username": username
+        "email": user.email,
+        "userId":user.id,
+        "token": access_token
     }
     #return jsonify(response), 200
 
 
-    return jsonify(response_body), 200
+    return jsonify(response_token), 200
 
-@api.route('/Comments', methods=['POST'])
-def add_comment():
- if request.method == 'POST':
-    comment_text = request.json.get("comment_text", None)
 
-    if not comment_text:
-        return "Comment required", 401
+# @api.route('/register', methods=['POST', 'OPTIONS'])
+# def register():
 
-    comment = Comment()
-    comment.comment_text = comment_text
-    comment.id_user = 1
-    comment.id_servicio_registrados = 1
-    comment.evaluacion = 3
+#     if request.method == 'POST':
+#         email = request.json.get("email", None)
+#         password = request.json.get("password", None)
+#         # id_tipo_user = request.json.get("typeUser",None)
+        
+#         if not email:
+#             return "Email required", 401
+        
+#         if not password:
+#             return "Password required", 401
 
-    db.session.add(comment)
-    db.session.commit()
+#         # if not id_tipo_user:
+#         #     return "User type required", 401
+        
+#         email_query = User.query.filter_by(email=email).first()
+#         if email_query:
+#             return "This email has been already taken", 401
 
-    response = {
-        "msg": "Added successfully",
-        "comment": comment_text
-    }
-    return jsonify(response_body), 200
+#         user = User()
+#         user.email = email
+#         # user.typeUser = typeUser
+#         # hashed_password = generate_password_hash(password)
+#         # user.password = hashed_password
+#         user.password = password
+#         print(user)
+#         db.session.add(user)
+#         db.session.commit()
 
-@api.route('/Comments', methods=['GET'])
-def list_comments():
-    comments = Comment.query.all()
-    comments = list(map(lambda x: x.serialize(), comments))
-    response_body = {
-        "comments": comments
-    }
+#         expiracion = datetime.timedelta(days=3)
+#         access_token = create_access_token(identity=user.email, expires_delta=expiracion)
 
-    return jsonify(response_body), 200
+#         response = {
+#             "msg": "Added successfully",
+#             "email": user.email,
+#             "userId":user.id,
+#             "token":access_token
+#         }
+
+#         return jsonify(response), 200
+
+#         return jsonify(response_body), 200

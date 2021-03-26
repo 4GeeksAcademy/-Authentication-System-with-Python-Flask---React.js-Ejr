@@ -10,13 +10,15 @@ import { ServiceBox } from "../component/serviceBox.jsx";
 import { Footer } from "../component/footer";
 import { LoginModal, LoginModalA } from "../component/Login";
 import { Link } from "react-router-dom";
+import { Context } from "../store/appContext";
 
 const LandingPage = () => {
+	const { store, actions } = useContext(Context);
 	return (
 		<div
 			className="background"
 			style={{
-				backgroundImage: `url(http://localhost:3000/backGround.png)`
+				backgroundImage: `url(https://3000-aqua-stork-kkm23d33.ws-us03.gitpod.io/backGround.png)`
 			}}>
 			<Container>
 				<div>
@@ -31,12 +33,26 @@ const LandingPage = () => {
 							/>
 						</Col>
 						<Col xs={8}>
+							{/* {store.user.token !== null ? (
+								<>
+									<Button variant="light" className="float-right mt-5">
+										Ir a mi Cuenta
+									</Button>
+
+									<Button variant="primary" className="float-right mt-5">
+										Cerrar sesión
+									</Button>
+								</>
+							) : (
+								<> */}
 							<Link to="/register">
 								<Button variant="light" className="float-right mt-5">
 									Registrate
 								</Button>
 							</Link>
 							<a>{LoginModalA()}</a>
+							{/* </>
+							)} */}
 						</Col>
 					</Row>
 					<Row>
