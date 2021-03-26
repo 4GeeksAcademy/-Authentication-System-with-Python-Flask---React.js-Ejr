@@ -63,7 +63,6 @@ def login():
         "status": 401
         
         }), 401
-
     # if not check_password_hash(user.password, password):
     #      return jsonify({"msg": "The password is not correct",
     #     "status": 401
@@ -110,6 +109,8 @@ def register():
         "userId":user.id,
         "token": access_token
     }
+    return jsonify(response), 200
+
 
     return jsonify(response_token), 200
 

@@ -55,7 +55,7 @@ const Register = () => {
 						</Link>
 					</Row>
 					<Row>
-						<Col md={2}></Col>
+						<Col md={2} />
 						<Col md={7}>
 							<div className="transBox" />
 							<h2 className="text-white mt-3">Obtenga su cuenta gratis</h2>
