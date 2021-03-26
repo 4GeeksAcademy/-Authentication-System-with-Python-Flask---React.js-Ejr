@@ -9,16 +9,18 @@ class User(db.Model):
     email = db.Column(db.String(200), unique=True, nullable=False)
     password = db.Column(db.String(200), nullable=False)
     tipo_user = db.Column(db.String(200), nullable=False)
+    servicio_registrados = db.relationship('Servicio_registrados', backref='user',lazy=True)
+    servicios_prestados = db.relationship('Servicios_prestados', backref='user',lazy=True)
+    favoritos = db.relationship('Favoritos', backref='user',lazy=True)
 
     def __repr__(self):
-        return '<User %r>' % self.email
+        return f'<User {self.name}>'
 
     def serialize(self):
         return {
             "id": self.id,
             "email": self.email,
-            "username": self.username,
-            "tipo_user": self.tipo_user.name_tipo_user
+            "tipo_user": self.tipo_user
         }
         
 class Servicio_registrados(db.Model):
@@ -39,7 +41,11 @@ class Servicio_registrados(db.Model):
     experiencia = db.Column(db.Integer, nullable=False)
     portafolio = db.Column(db.String(250), nullable=True)
     merit = db.Column(db.String(250), nullable=True)
-    user = db.relationship('User', lazy=True)
+    servicios_prestados = db.relationship('Servicios_prestados', backref='servicio_registrados',lazy=True)
+    favoritos = db.relationship('Favoritos', backref='servicio_registrados',lazy=True)
+
+    def __repr__(self):
+        return f'<Servicio_registrados {self.name}>'
 
     def serialize(self):
         return {
@@ -59,12 +65,13 @@ class Servicio_registrados(db.Model):
             "experiencia": self.experiencia,
             "portafolio": self.portafolio,
             "merit":self.merit,
+            "evaluacion": self.servicios_prestados.evaluacion
         }
 
 class Servicios_prestados(db.Model):
     __tablename__ = 'servicios_prestados'
     id = db.Column(db.Integer, primary_key=True)
-    id_users_compra = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    id_user_compra = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     id_servicio_registrados = db.Column(db.Integer, db.ForeignKey('servicio_registrados.id'), nullable=False)
     cantidad_servicio = db.Column(db.Integer,nullable=False)
     total_valor_servicio = db.Column(db.Integer,nullable=False)
@@ -72,14 +79,17 @@ class Servicios_prestados(db.Model):
     fecha_termino = db.Column(db.DateTime)
     text_comment = db.Column(db.String(250), nullable=True)
     evaluacion = db.Column(db.Integer, nullable=True)
-    user = db.relationship('User', lazy=True)
-    servicio_registrados = db.relationship('Servicio_registrados', lazy=True)
+    
+
+    def __repr__(self):
+        return f'<Servicios_prestados {self.name}>'
+    
 
     def serialize(self):
         return {
             "id": self.id,
-            "id_users_compra": self.user.id,
-            "id_servicios_registrados": self.servicios_registrados.id,
+            "id_user_compra": self.user.id,
+            "id_servicio_registrados": self.servicio_registrados.id,
             "name_servicio": self.servicio_registrados.name_servicio,
             "cantidad_servicio": self.cantidad_servicio,
             "total_valor_servicio":self.total_valor_servicio,
@@ -92,16 +102,17 @@ class Servicios_prestados(db.Model):
 class Favoritos(db.Model):
     __tablename__ = 'favoritos'
     id = db.Column(db.Integer, primary_key=True, nullable=False)
-    id_users = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    id_user = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     id_servicio_registrados = db.Column(db.Integer, db.ForeignKey('servicio_registrados.id'), nullable=False)
-    user = db.relationship('User', lazy=True)
-    servicio_registrados = db.relationship('Servicio_registrados', lazy=True)
+
+    def __repr__(self):
+        return f'<Favoritos {self.name}>'
     
 
     def serialize(self):
         return {
             "id": self.id,
-            "id_users": self.user.id,
+            "id_user": self.user.id,
             "id_servicio_registrados": self.servicio_registrados.id,
             "name_servicio": self.servicio_registrados.name_servicio
         }

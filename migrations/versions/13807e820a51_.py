@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 870481b82d4f
+Revision ID: 13807e820a51
 Revises: 
-Create Date: 2021-03-26 09:38:25.704100
+Create Date: 2021-03-26 11:04:45.344665
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '870481b82d4f'
+revision = '13807e820a51'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -48,15 +48,15 @@ def upgrade():
     )
     op.create_table('favoritos',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('id_users', sa.Integer(), nullable=False),
+    sa.Column('id_user', sa.Integer(), nullable=False),
     sa.Column('id_servicio_registrados', sa.Integer(), nullable=False),
     sa.ForeignKeyConstraint(['id_servicio_registrados'], ['servicio_registrados.id'], ),
-    sa.ForeignKeyConstraint(['id_users'], ['user.id'], ),
+    sa.ForeignKeyConstraint(['id_user'], ['user.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('servicios_prestados',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('id_users_compra', sa.Integer(), nullable=False),
+    sa.Column('id_user_compra', sa.Integer(), nullable=False),
     sa.Column('id_servicio_registrados', sa.Integer(), nullable=False),
     sa.Column('cantidad_servicio', sa.Integer(), nullable=False),
     sa.Column('total_valor_servicio', sa.Integer(), nullable=False),
@@ -65,7 +65,7 @@ def upgrade():
     sa.Column('text_comment', sa.String(length=250), nullable=True),
     sa.Column('evaluacion', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['id_servicio_registrados'], ['servicio_registrados.id'], ),
-    sa.ForeignKeyConstraint(['id_users_compra'], ['user.id'], ),
+    sa.ForeignKeyConstraint(['id_user_compra'], ['user.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
     # ### end Alembic commands ###

@@ -12,24 +12,6 @@ import datetime
 api = Blueprint('api', __name__)
 
 
-# @api.route('/hello', methods=['POST', 'GET'])
-# def handle_hello():
-
-#     response_body = {
-#         "message": "Hello! I'm a message that came from the backend"
-#     }
-
-# @api.route('/hello', methods=['POST', 'GET'])
-# def handle_hello():
-#     users = User.query.all()
-#     users = list(map(lambda x: x.serialize(), users))
-#     response_body = {
-#         "users": users
-#     }
-
-#     return jsonify(response_body), 200
-
-
 @api.route('/hash', methods=['POST', 'GET'])
 def handle_hash():
     
@@ -63,10 +45,6 @@ def login():
         "status": 401
         
         }), 401
-    # if not check_password_hash(user.password, password):
-    #      return jsonify({"msg": "The password is not correct",
-    #     "status": 401
-    #     }), 400
 
     expiracion = datetime.timedelta(days=3)
     access_token = create_access_token(identity=user.email, expires_delta=expiracion)
@@ -113,49 +91,3 @@ def register():
 
 
     return jsonify(response_token), 200
-
-
-# @api.route('/register', methods=['POST', 'OPTIONS'])
-# def register():
-
-#     if request.method == 'POST':
-#         email = request.json.get("email", None)
-#         password = request.json.get("password", None)
-#         # id_tipo_user = request.json.get("typeUser",None)
-        
-#         if not email:
-#             return "Email required", 401
-        
-#         if not password:
-#             return "Password required", 401
-
-#         # if not id_tipo_user:
-#         #     return "User type required", 401
-        
-#         email_query = User.query.filter_by(email=email).first()
-#         if email_query:
-#             return "This email has been already taken", 401
-
-#         user = User()
-#         user.email = email
-#         # user.typeUser = typeUser
-#         # hashed_password = generate_password_hash(password)
-#         # user.password = hashed_password
-#         user.password = password
-#         print(user)
-#         db.session.add(user)
-#         db.session.commit()
-
-#         expiracion = datetime.timedelta(days=3)
-#         access_token = create_access_token(identity=user.email, expires_delta=expiracion)
-
-#         response = {
-#             "msg": "Added successfully",
-#             "email": user.email,
-#             "userId":user.id,
-#             "token":access_token
-#         }
-
-#         return jsonify(response), 200
-
-#         return jsonify(response_body), 200
