@@ -3,7 +3,7 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, User
-from flask_cors import CORS, cross_origin
+# from flask_cors import CORS, cross_origin
 from api.utils import generate_sitemap, APIException
 from werkzeug.security import generate_password_hash, check_password_hash       ## Nos permite manejar tokens por authentication (usuarios)    
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity   #from models import Person
@@ -82,47 +82,78 @@ def handle_hash():
 
 #     return jsonify(data), 200
 
-@api.route('/register', methods=['POST', 'OPTIONS'])
+@api.route('/register', methods=['POST'])
 def register():
+    
+    email = request.json.get("email", None)
+    password = request.json.get("password", None)
 
-    if request.method == 'POST':
-        email = request.json.get("email", None)
-        password = request.json.get("password", None)
-        id_tipo_user = request.json.get("typeUser",None)
+    email_query = User.query.filter_by(email=email).first()
+    if email_query:
+        return "This email has been already taken", 401
+
+    user = User()
+    user.email = email
+    user.password = password
+    print(user)
+    db.session.add(user)
+    db.session.commit()
+
+
+    expiracion = datetime.timedelta(days=3)
+    access_token = create_access_token(identity=user.email, expires_delta=expiracion)
+
+    response_token = {
+        "msg": "Added successfully",
+        "email": user.email,
+        "userId":user.id,
+        "token": access_token
+    }
+
+    return jsonify(response_token), 200
+
+
+# @api.route('/register', methods=['POST', 'OPTIONS'])
+# def register():
+
+#     if request.method == 'POST':
+#         email = request.json.get("email", None)
+#         password = request.json.get("password", None)
+#         # id_tipo_user = request.json.get("typeUser",None)
         
-        if not email:
-            return "Email required", 401
+#         if not email:
+#             return "Email required", 401
         
-        if not password:
-            return "Password required", 401
+#         if not password:
+#             return "Password required", 401
 
-        if not id_tipo_user:
-            return "User type required", 401
+#         # if not id_tipo_user:
+#         #     return "User type required", 401
         
-        email_query = User.query.filter_by(email=email).first()
-        if email_query:
-            return "This email has been already taken", 401
+#         email_query = User.query.filter_by(email=email).first()
+#         if email_query:
+#             return "This email has been already taken", 401
 
-        user = User()
-        user.email = email
-        # user.typeUser = typeUser
-        # hashed_password = generate_password_hash(password)
-        # user.password = hashed_password
-        user.password = password
-        print(user)
-        db.session.add(user)
-        db.session.commit()
+#         user = User()
+#         user.email = email
+#         # user.typeUser = typeUser
+#         # hashed_password = generate_password_hash(password)
+#         # user.password = hashed_password
+#         user.password = password
+#         print(user)
+#         db.session.add(user)
+#         db.session.commit()
 
-        expiracion = datetime.timedelta(days=3)
-        access_token = create_access_token(identity=user.email, expires_delta=expiracion)
+#         expiracion = datetime.timedelta(days=3)
+#         access_token = create_access_token(identity=user.email, expires_delta=expiracion)
 
-        response = {
-            "msg": "Added successfully",
-            "email": user.email,
-            "userId":user.id,
-            "token":access_token
-        }
+#         response = {
+#             "msg": "Added successfully",
+#             "email": user.email,
+#             "userId":user.id,
+#             "token":access_token
+#         }
 
-        return jsonify(response), 200
+#         return jsonify(response), 200
 
-        return jsonify(response_body), 200
+#         return jsonify(response_body), 200

@@ -20,20 +20,20 @@ class User(db.Model):
     # # id_tipo_user = db.Column(db.Integer, db.ForeignKey('tipo_user.id'), nullable=False)
     email = db.Column(db.String(200), unique=True, nullable=False)
     password = db.Column(db.String(200), unique=False, nullable=False)
-    username = db.Column(db.String(200), unique=True, nullable=False)
+    # username = db.Column(db.String(200), unique=True, nullable=False)
     # favoritos = db.relationship('Favoritos', backref="user", lazy=True)
     
 
     def __repr__(self):
-        return '<User %r>' % self.username
+        return '<User %r>' % self.email
 
     def serialize(self):
         return {
             "id": self.id,
             "email": self.email,
-            "username": self.username,
-            "id_tipo_user": self.tipo_user.id,
-            "name_tipo_user": self.tipo_user.name_tipo_user
+            # "username": self.username,
+            # "id_tipo_user": self.tipo_user.id,
+            # "name_tipo_user": self.tipo_user.name_tipo_user
         }
 
 class Category(db.Model):
