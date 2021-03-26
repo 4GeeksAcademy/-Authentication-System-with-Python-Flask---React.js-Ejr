@@ -15,7 +15,9 @@ const injectContext = PassedComponent => {
 					})
 			})
 		);
-		useEffect(() => {}, []);
+		useEffect(() => {
+			state.actions.getServiceInfo();
+		}, []);
 		return (
 			<Context.Provider value={state}>
 				<PassedComponent {...props} />

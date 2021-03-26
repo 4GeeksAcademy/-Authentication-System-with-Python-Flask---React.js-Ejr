@@ -14,7 +14,7 @@ class User(db.Model):
     favoritos = db.relationship('Favoritos', backref='user',lazy=True)
 
     def __repr__(self):
-        return f'<User {self.name}>'
+        return "<User %r>" % self.id
 
     def serialize(self):
         return {
@@ -35,17 +35,17 @@ class Servicio_registrados(db.Model):
     valor = db.Column(db.Integer, nullable=False)
     name_servicio = db.Column(db.String(50), nullable=False)
     descrip_servicio = db.Column(db.String(250), nullable=False)
-    duracion = db.Column(db.String(30), nullable=False)
+    duracion = db.Column(db.String(30))
     revision = db.Column(db.String(30), nullable=False)
-    proceso = db.Column(db.String(250), nullable=True)
+    proceso = db.Column(db.String(250))
     experiencia = db.Column(db.Integer, nullable=False)
     portafolio = db.Column(db.String(250), nullable=True)
-    merit = db.Column(db.String(250), nullable=True)
+    merit = db.Column(db.String(250))
     servicios_prestados = db.relationship('Servicios_prestados', backref='servicio_registrados',lazy=True)
     favoritos = db.relationship('Favoritos', backref='servicio_registrados',lazy=True)
 
     def __repr__(self):
-        return f'<Servicio_registrados {self.name}>'
+        return "<Servicio_registrados %r>" % self.id
 
     def serialize(self):
         return {
@@ -82,7 +82,7 @@ class Servicios_prestados(db.Model):
     
 
     def __repr__(self):
-        return f'<Servicios_prestados {self.name}>'
+        return "<Servicios_prestados %r>" % self.id
     
 
     def serialize(self):
@@ -106,7 +106,7 @@ class Favoritos(db.Model):
     id_servicio_registrados = db.Column(db.Integer, db.ForeignKey('servicio_registrados.id'), nullable=False)
 
     def __repr__(self):
-        return f'<Favoritos {self.name}>'
+        return "<Servicios_prestados %r>" % self.id
     
 
     def serialize(self):

@@ -4,6 +4,8 @@ import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
+import { DropdownButton, Dropdown } from "react-bootstrap";
+import PropTypes from "prop-types";
 // import useUserSession from "./userSession";
 
 function MyVerticallyCenteredModal(props) {
@@ -56,7 +58,7 @@ function MyVerticallyCenteredModal(props) {
 						style={{ textAlign: "center", marginTop: "20px", marginBottom: "60px" }}>
 						¿Olvidaste tu contraseña?
 						<Link to="/passwordrecovery">
-							<a> Recuperala aquí </a>
+							<p> Recuperala aquí </p>
 						</Link>
 					</Form.Text>
 				</Form>
@@ -65,20 +67,38 @@ function MyVerticallyCenteredModal(props) {
 	);
 }
 
-export function LoginModal() {
+export function LoginModal(props) {
 	const [modalShow, setModalShow] = React.useState(false);
 
 	return (
 		<>
-			<Button
-				variant="outline-primary "
-				className="no-outline mr-2"
-				style={{ borderRadius: "1.75rem" }}
-				onClick={() => setModalShow(true)}>
-				Ingresa
-			</Button>
+			{props.user.id !== undefined ? (
+				<>
+					<DropdownButton
+						menuAlign="right"
+						title="Mi cuenta"
+						id="dropdown-menu-align-right"
+						className="mr-2"
+						style={{ borderRadius: "1.75rem" }}>
+						<Dropdown.Item eventKey="1">Favoritos</Dropdown.Item>
+						<Dropdown.Item eventKey="2">Mis datos</Dropdown.Item>
+						<Dropdown.Divider />
+						<Dropdown.Item eventKey="3">Salir</Dropdown.Item>
+					</DropdownButton>
+				</>
+			) : (
+				<>
+					<Button
+						variant="outline-primary "
+						className="no-outline mr-2"
+						style={{ borderRadius: "1.75rem" }}
+						onClick={() => setModalShow(true)}>
+						Ingresa
+					</Button>
 
-			<MyVerticallyCenteredModal show={modalShow} onHide={() => setModalShow(false)} />
+					<MyVerticallyCenteredModal show={modalShow} onHide={() => setModalShow(false)} />
+				</>
+			)}
 		</>
 	);
 }
@@ -93,3 +113,7 @@ export function LoginModalA() {
 		</>
 	);
 }
+
+LoginModal.propTypes = {
+	user: PropTypes.object
+};

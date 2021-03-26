@@ -24,7 +24,6 @@ def handle_hash():
 
     return jsonify(response_token), 200
 
-
 @api.route('/login', methods=['POST'])
 def login():
     
@@ -87,7 +86,103 @@ def register():
         "userId":user.id,
         "token": access_token
     }
-    return jsonify(response), 200
-
-
+  
     return jsonify(response_token), 200
+
+
+@api.route('/servicio-registrados/<int:id_servicio_registrados>', methods=['POST', 'GET'])
+def servicio_individual(id_servicio_registrados):
+        if request.method == 'GET':
+            pass
+
+        if request.method == 'POST':
+            id_user= request.json.get('id_user')
+            username= request.json.get('username')
+            tipo_membresia = request.json.get('tipo_membresia')
+            category = request.json.get('category')
+            subcategory = request.json.get('subcategory')
+            tipo_cobro = request.json.get('tipo_cobro')
+            valor = request.json.get('valor')
+            name_servicio = request.json.get('name_servicio')
+            descrip_servicio = request.json.get('descrip_servicio')
+            duracion = request.json.get('duracion')
+            revision = request.json.get('revision')
+            proceso = request.json.get('proceso')
+            experiencia = request.json.get('experiencia')
+            portafolio = request.json.get('portafolio')
+            merit = request.json.get('merit')
+            
+
+            if not id_users:
+                return jsonify({"msg":"user_id esta vacio"}), 400
+            if not username:
+                return jsonify({"msg":"user nombre esta vacio"}), 400
+            if not tipo_membresia:
+                return jsonify({"msg":"el tipo_membresia esta vacio"}), 400
+            if not category:
+                return jsonify({"msg":"el category de servicio esta vacio"}), 400
+            if not subcategory:
+                return jsonify({"msg":"el subcategory de servicio esta vacio"}), 400
+            if not tipo_cobro:
+                return jsonify({"msg":"tipo de cobro esta vacio"}), 400
+            if not valor:
+                return jsonify({"msg":"el valor de servicio esta vacio"}), 400
+            if not name_servicio:
+                return jsonify({"msg":"el nombre de servicio esta vacio"}), 400
+            if not descrip_servicio:
+                return jsonify({"msg":"el descripcion de servicio esta vacio"}), 400
+            if not revision:
+                return jsonify({"msg":"el revision de servicio esta vacio"}), 400
+            if not experiencia:
+                return jsonify({"msg":"su experiencia esta vacio"}), 400 
+            
+
+        servicio_registrados = Servicio_registrados()
+        servicio_registrados.id = request.json.get("id", None)
+        servicio_registrados.username = request.json.get("username", None)
+        servicio_registrados.tipo_membresia = request.json.get("tipo_membresia", None)
+        servicio_registrados.category = request.json.get("category", None)
+        servicio_registrados.subcategory = request.json.get("subcategory", None)
+        servicio_registrados.tipo_cobro = request.json.get("tipo_cobro", None)
+        servicio_registrados.valor = request.json.get("valor", None)
+        servicio_registrados.name_servicio = request.json.get("name_servicio", None)
+        servicio_registrados.descrip_servicio = request.json.get("descrip_servicio", None)
+        servicio_registrados.duracion = request.json.get("duracion", None)
+        servicio_registrados.revision = request.json.get("revision", None)
+        servicio_registrados.proceso = request.json.get("proceso", None)
+        servicio_registrados.experiencia = request.json.get("experiencia", None)
+        servicio_registrados.portafolio = request.json.get("portafolio", None)
+        servicio_registrados.merit = request.json.get("merit", None)
+        
+        db.session.add(servicio_registrados)
+        db.session.commit()
+
+        return jsonify({
+            "msg": "me he guardado exitosamente",
+            "name_servicio":"name_servicio"
+            }), 200
+
+@api.route('/favoritos', methods=["GET, POST"])
+def add_favoritos():
+        if request.method == 'GET':
+            pass
+
+        if request.method == 'POST':
+            id_user= request.json.get(id_user)
+            id_servicio_registrados= request.json.get(id_servicio_registrados)
+            name_servicio= request.json.get(name_servicio)
+
+            if not id_user:
+                return jsonify({"msg":"user id esta vacio"}), 400
+            if not id_servicio_registrados:
+                return jsonify({"msg":"servicio id esta vacio"}), 400
+            if not name_servicio:
+                return jsonify({"msg":"el nombre de servicio esta vacio"}), 400
+
+        favoritos = Favoritos()
+        favoritos.id_users = request.json.get("id_users", None)
+        favoritos.id_servicio_registrados = request.json.get("id_servicio_registrados", None)
+        favoritos.name_servicio= request.json.get("name_servicio", None)
+
+        db.session.add(favoritos)
+        db.session.commit()
