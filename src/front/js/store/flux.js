@@ -17,14 +17,41 @@ const getState = ({ getStore, getActions, setStore }) => {
 		},
 
 		actions: {
-			// onChangeLogin: e => {
-			// 	const store = getStore();
-			// 	const { login_data } = store;
-			// 	login_data[e.target.name] = e.target.value;
-			// 	setStore({ login_data });
-			// 	console.log(store.login_data);
-			// },
-
+			addFavorioto: async () => {
+				fetch(process.env.BACKEND_URL + "/favoritos", {
+					method: "POST",
+					headers: { "Content-Type": "application/json" },
+					body: JSON.stringify({
+						id_users: store.id_user,
+						id_servicio_registrados: store.id_servicio_registrados,
+						name_servicio: store.name_servicio
+					})
+				})
+					.then(resp => resp.json())
+					.then(data => {
+						console.log({ "--favoritos--": json });
+						setStore({ favoritos: json });
+					})
+					.catch(error => console.log("Error loading message from backend", error));
+            },
+            
+			eliminaFavorioto: async id => {
+				console.log(id);
+				const store = getStore();
+				const newList = store.favoritos.filter(item => item.id !== id);
+				setStore({
+					favoritos: newList
+				});
+				fetch(`process.env.BACKEND_URL/favoritos/${id}`, {
+					method: "DELETE",
+					headers: { "Content-Type": "application/json" }
+				})
+					.then(resp => resp.json())
+					.then(data => {
+                        console.log(json);
+                    })    
+            },
+            
 			getToken: () => {
 				const tokenLocal = localStorage.getItem("token");
 				const userLocal = JSON.parse(localStorage.getItem("user"));
