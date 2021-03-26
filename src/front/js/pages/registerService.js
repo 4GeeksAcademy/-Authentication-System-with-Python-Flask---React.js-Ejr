@@ -17,7 +17,7 @@ const RegisterService = () => {
 		<div
 			className="background"
 			style={{
-				backgroundImage: `url(https://3000-salmon-otter-elqylgff.ws-us03.gitpod.io/backGround.png)`
+				backgroundImage: `url(http://localhost:3000/backGround.png)`
 			}}>
 			<Container>
 				<div>
@@ -163,6 +163,10 @@ const RegisterService = () => {
 					</div>
 				</div>
 			</Container>
+			<div className="transBox" />
+			<div className="transBox" />
+			<div className="transBox" />
+			<Footer />
 		</div>
 	);
 };

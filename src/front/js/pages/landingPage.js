@@ -10,13 +10,15 @@ import { ServiceBox } from "../component/serviceBox.jsx";
 import { Footer } from "../component/footer";
 import { LoginModal, LoginModalA } from "../component/Login";
 import { Link } from "react-router-dom";
+import { Context } from "../store/appContext";
 
 const LandingPage = () => {
+	const { store, actions } = useContext(Context);
 	return (
 		<div
 			className="background"
 			style={{
-				backgroundImage: `url(https://3000-salmon-otter-elqylgff.ws-us03.gitpod.io/)`
+				backgroundImage: `url(https://3000-aqua-stork-kkm23d33.ws-us03.gitpod.io/backGround.png)`
 			}}>
 			<Container>
 				<div>
@@ -31,12 +33,26 @@ const LandingPage = () => {
 							/>
 						</Col>
 						<Col xs={8}>
+							{/* {store.user.token !== null ? (
+								<>
+									<Button variant="light" className="float-right mt-5">
+										Ir a mi Cuenta
+									</Button>
+
+									<Button variant="primary" className="float-right mt-5">
+										Cerrar sesión
+									</Button>
+								</>
+							) : (
+								<> */}
 							<Link to="/register">
-								<Button variant="outline-light" className="float-right mt-5" style={{ border: "none" }}>
+								<Button variant="light" className="float-right mt-5">
 									Registrate
 								</Button>
 							</Link>
 							<a>{LoginModalA()}</a>
+							{/* </>
+							)} */}
 						</Col>
 					</Row>
 					<Row>
@@ -66,13 +82,15 @@ const LandingPage = () => {
 									&nbsp;&nbsp;Buscar un freelancer&nbsp;&nbsp;
 								</Button>
 							</Link>
-							<Button
-								variant="secondary"
-								className="mt-2 px-4"
-								sm={12}
-								style={{ borderRadius: "1.75rem" }}>
-								&nbsp;&nbsp;&nbsp;&nbsp;Soy un freelancer&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-							</Button>
+							<Link to="/register">
+								<Button
+									variant="secondary"
+									className="mt-2 px-4"
+									sm={12}
+									style={{ borderRadius: "1.75rem" }}>
+									&nbsp;&nbsp;&nbsp;&nbsp;Soy un freelancer&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								</Button>
+							</Link>
 						</Col>
 						<Col md={5} sm={12} className="mt-5">
 							<img
@@ -85,7 +103,7 @@ const LandingPage = () => {
 						</Col>
 					</Row>
 					<IconBox />
-					<CardBox title="Categorias más buscadas" />
+					<CardBox title="Categorias más buscadas" className="whiteBox" />
 					<ServiceBox />
 					<br />
 
@@ -97,9 +115,9 @@ const LandingPage = () => {
 					<Button variant="outline-success">Success</Button>
 					<Button variant="light">Light</Button>
 					<Button variant="outline-light">Light</Button>
-					<Footer />
 				</div>
 			</Container>
+			<Footer />
 		</div>
 	);
 };
