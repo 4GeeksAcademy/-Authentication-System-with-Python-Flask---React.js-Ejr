@@ -115,8 +115,8 @@ class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     id_user = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     id_servicio_registrados = db.Column(db.Integer, db.ForeignKey('servicio_registrados.id'), nullable=False)
-    text_comment = db.Column(db.String(250), nullable=True)
-    evaluacion = db.Column(db.Integer, nullable=True)
+    comment_text = db.Column(db.String(250), nullable=False)
+    evaluacion = db.Column(db.Integer, nullable=False)
     user = db.relationship('User', lazy=True)
 
     def serialize(self):
@@ -124,7 +124,7 @@ class Comment(db.Model):
             "id": self.id,
             "id_user": self.user.id,
             "id_servicio_registrados": self.servicio_registrados.id,
-            "text_comment": self.text_comment,
+            "comment_text": self.comment_text,
             "evaluacion": self.evaluacion
         }
     

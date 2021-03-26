@@ -116,7 +116,40 @@ def register():
         "msg": "Added successfully",
         "username": username
     }
-    return jsonify(response), 200
+    #return jsonify(response), 200
 
+
+    return jsonify(response_body), 200
+
+@api.route('/Comments', methods=['POST'])
+def add_comment():
+ if request.method == 'POST':
+    comment_text = request.json.get("comment_text", None)
+
+    if not comment_text:
+        return "Comment required", 401
+
+    comment = Comment()
+    comment.comment_text = comment_text
+    comment.id_user = 1
+    comment.id_servicio_registrados = 1
+    comment.evaluacion = 3
+
+    db.session.add(comment)
+    db.session.commit()
+
+    response = {
+        "msg": "Added successfully",
+        "comment": comment_text
+    }
+    return jsonify(response_body), 200
+
+@api.route('/Comments', methods=['GET'])
+def list_comments():
+    comments = Comment.query.all()
+    comments = list(map(lambda x: x.serialize(), comments))
+    response_body = {
+        "comments": comments
+    }
 
     return jsonify(response_body), 200
