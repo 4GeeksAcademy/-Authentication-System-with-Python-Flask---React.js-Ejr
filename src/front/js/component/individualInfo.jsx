@@ -25,7 +25,7 @@ export const Individuallnfo = () => {
 						</Button>
 
 						<Button variant="outline-dark" className="float-right mr-1">
-							<i className="fas fa-share-alt"></i>
+							<i className="fas fa-share-alt" />
 						</Button>
 					</Col>
 				</Row>

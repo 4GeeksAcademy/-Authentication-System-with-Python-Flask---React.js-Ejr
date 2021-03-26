@@ -12,7 +12,7 @@ export const IndividualCard = props => {
 			<Card.Header>
 				<Nav variant="tabs" defaultActiveKey="#first">
 					<Nav.Item>
-						<Nav.Link href="#first">Servicio</Nav.Link>
+						<Nav.Link href="#First">Servicio</Nav.Link>
 					</Nav.Item>
 					<Nav.Item>
 						<Nav.Link href="#Second">Sobre el vendedor</Nav.Link>
@@ -23,7 +23,9 @@ export const IndividualCard = props => {
 				</Nav>
 			</Card.Header>
 			<Card.Body>
-				<Card.Title className="mt-4">Nuestro servicio</Card.Title>
+				<Card.Title className="mt-4" id="First">
+					Nuestro servicio
+				</Card.Title>{" "}
 				<Card.Text>
 					¿Estás buscando a alguien para crear el diseño de sitios web de wix o la tienda en línea de wix?
 					¡Entonces, ha venido al lugar correcto! Crearé un sitio web profesional de wix o un sitio web de
@@ -42,7 +44,10 @@ export const IndividualCard = props => {
 					Realizado más de 100 sitios web al mejor nivel. La satisfacción del cliente es mi primera prioridad.
 					Calidad proporcionada y trabajo garantizado dentro de las 24 horas. Actitud profesional.
 				</Card.Text>
-				<Card.Title className="mt-4">Sobre el vendedor</Card.Title>
+				<Card.Title className="mt-4" id="Second">
+					{" "}
+					Sobre el vendedor
+				</Card.Title>
 				<Media className="border p-2 bg-light rounded mb-3">
 					<img
 						src={personB}
