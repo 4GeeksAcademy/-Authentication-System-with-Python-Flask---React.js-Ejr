@@ -109,7 +109,7 @@ def register():
         "userId":user.id,
         "token": access_token
     }
-    return jsonify(response), 200
+    #return jsonify(response), 200
 
 
     return jsonify(response_token), 200

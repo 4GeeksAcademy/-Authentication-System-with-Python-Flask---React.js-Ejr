@@ -38,6 +38,59 @@ const getState = ({ getStore, getActions, setStore }) => {
 				console.log("-->", JSON.stringify(userLocal));
 			},
 
+			createContact: async (e, email, password, confirm, checked) => {
+				e.preventDefault();
+				try {
+					const response = await fetch("http://0.0.0.0:3001/register", {
+						method: "POST",
+						headers: { "Content-Type": "application/json" },
+						body: JSON.stringify({
+							email: `${email}`,
+							password: `${password}`,
+							confirm: `${confirm}`,
+							checked: `${checked}`
+						})
+					});
+					const json = await response.json();
+					console.log(json);
+					setStore({ newContact: JSON.stringify(json) });
+					getActions().getAgenda();
+				} catch (error) {
+					console.log(error);
+				}
+			},
+			addComment: async commentText => {
+				e.preventDefault();
+				try {
+					const response = await fetch("http://0.0.0.0:3001/Comments", {
+						method: "POST",
+						headers: { "Content-Type": "application/json" },
+						body: JSON.stringify({
+							comment_text: `${commentText}`
+						})
+					});
+					const json = await response.json();
+					console.log(json);
+					//setStore({ newContact: JSON.stringify(json) });
+					getActions().listComments();
+				} catch (error) {
+					console.log(error);
+				}
+			},
+			listComments: async () => {
+				e.preventDefault();
+				try {
+					const response = await fetch("http://0.0.0.0:3001/Comments", {
+						method: "GET",
+						headers: { "Content-Type": "application/json" }
+					});
+					const json = await response.json();
+					console.log(json);
+					setStore({ Comments: JSON.stringify(json) });
+				} catch (error) {
+					console.log(error);
+                }
+            },
 			setRegister: user => {
 				console.log(user);
 				fetch(process.env.BACKEND_URL + "/api/register", {
@@ -57,7 +110,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					})
 					.catch(error => console.log("error creating account in the backend", error));
 			},
-			setLogin: user => {
+			setLogin:user => {
 				fetch(process.env.BACKEND_URL + "/api/login", {
 					method: "POST",
 					body: JSON.stringify(user),
