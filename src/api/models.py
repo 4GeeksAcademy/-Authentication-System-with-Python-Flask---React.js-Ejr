@@ -20,6 +20,10 @@ class User(db.Model):
     # # id_tipo_user = db.Column(db.Integer, db.ForeignKey('tipo_user.id'), nullable=False)
     email = db.Column(db.String(200), unique=True, nullable=False)
     password = db.Column(db.String(200), unique=False, nullable=False)
+    
+    # valoracion = db.engine.execute("SELECT sum() FORM ")
+
+
     # username = db.Column(db.String(200), unique=True, nullable=False)
     # favoritos = db.relationship('Favoritos', backref="user", lazy=True)
     

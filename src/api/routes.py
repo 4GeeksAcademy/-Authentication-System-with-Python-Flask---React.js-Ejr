@@ -43,44 +43,45 @@ def handle_hash():
     return jsonify(response_token), 200
 
 
-# @api.route('/login', methods=['POST'])
-# def login():
+@api.route('/login', methods=['POST'])
+def login():
     
-#     email = request.json.get("email", None)
-#     password = request.json.get("password", None)
+    email = request.json.get("email", None)
+    password = request.json.get("password", None)
 
-#     if not email:
-#         return jsonify({"msg":"Email required"}), 400
+    if not email:
+        return jsonify({"msg":"Email required"}), 400
 
-#     if not password:
-#         return jsonify({"msg":"Password required"}), 400
+    if not password:
+        return jsonify({"msg":"Password required"}), 400
     
-#     user = User.query.filter_by(email=email).first()
-#     print(user)
+    user = User.query.filter_by(email=email).first()
+    print(user)
 
-#     if not user:
-#         return jsonify({"msg": "The email is not correct",
-#         "status": 401
+    if not user:
+        return jsonify({"msg": "The email is not correct",
+        "status": 401
         
-#         }), 401
-#     # if not check_password_hash(user.password, password):
-#     #      return jsonify({"msg": "The password is not correct",
-#     #     "status": 401
-#     #     }), 400
+        }), 401
 
-#     expiracion = datetime.timedelta(days=3)
-#     access_token = create_access_token(identity=user.email, expires_delta=expiracion)
+    # if not check_password_hash(user.password, password):
+    #      return jsonify({"msg": "The password is not correct",
+    #     "status": 401
+    #     }), 400
 
-#     data = {
-#         "user": user.serialize(),
-#         "token": access_token,
-#         "expires": expiracion.total_seconds()*1000,
-#         "userId": user.id,
-#         "username": user.username
-#     }
+    expiracion = datetime.timedelta(days=3)
+    access_token = create_access_token(identity=user.email, expires_delta=expiracion)
+
+    data = {
+        "user": user.serialize(),
+        "token": access_token,
+        "expires": expiracion.total_seconds()*1000,
+        "userId": user.id,
+        "email": user.email
+    }
 
 
-#     return jsonify(data), 200
+    return jsonify(data), 200
 
 @api.route('/register', methods=['POST'])
 def register():

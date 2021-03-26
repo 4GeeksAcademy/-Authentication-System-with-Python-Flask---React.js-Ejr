@@ -70,10 +70,9 @@ const Register = () => {
 							width: "730px"
 						}}>
 						{store.user.token !== null ? (
-							<div className="text-center mt-5">
+							<div className="text-center mt-3 mb-5">
 								{/* <span>User: {JSON.stringify(store.user)}</span> */}
 								La sesión ya se encuentra iniciada
-								<span>User: {JSON.stringify(store.user)}</span>
 							</div>
 						) : (
 							<Form>

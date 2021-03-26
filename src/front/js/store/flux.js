@@ -52,33 +52,28 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 						if (typeof Storage !== "undefined") {
 							localStorage.setItem("token", data.token);
-							localStorage.setItem("user", JSON.stringify(data.user));
+							localStorage.setItem("user", JSON.stringify(data.email));
 						}
 					})
 					.catch(error => console.log("error creating account in the backend", error));
+			},
+			setLogin: user => {
+				fetch(process.env.BACKEND_URL + "/api/login", {
+					method: "POST",
+					body: JSON.stringify(user),
+					headers: { "Content-type": "application/json" }
+				})
+					.then(resp => resp.json())
+					.then(data => {
+						console.log("--data--", data);
+						setStore({ user: data });
+						if (typeof Storage !== "undefined") {
+							localStorage.setItem("token", data.token);
+							localStorage.setItem("email", data.email);
+						}
+					})
+					.catch(error => console.log("Error loading message from backend", error));
 			}
-
-			// createContact: async (e, email, password, confirm, checked) => {
-			// 	e.preventDefault();
-			// 	try {
-			// 		const response = await fetch("http://0.0.0.0:3001/register", {
-			// 			method: "POST",
-			// 			headers: { "Content-Type": "application/json" },
-			// 			body: JSON.stringify({
-			// 				email: `${email}`,
-			// 				password: `${password}`,
-			// 				confirm: `${confirm}`,
-			// 				checked: `${checked}`
-			// 			})
-			// 		});
-			// 		const json = await response.json();
-			// 		console.log(json);
-			// 		setStore({ newContact: JSON.stringify(json) });
-			// 		getActions().getAgenda();
-			// 	} catch (error) {
-			// 		console.log(error);
-			// 	}
-			// }
 		}
 	};
 };
