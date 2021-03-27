@@ -1,0 +1,15 @@
+.navbar{
+    font-size: 20px;
+    background-color: #FFD200;
+    font-family: 'Pacifico', cursive;
+}
+
+.navbar-expand-lg .navbar-collapse{
+    display: flex !important;
+    justify-content: flex-end;
+    vertical-align: middle;
+}
+
+.btn{
+    margin: 5px;
+}
