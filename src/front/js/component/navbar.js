@@ -42,12 +42,12 @@ const MyNavbar = props => {
 						</Col>
 						<Col sm={6} md={3}>
 							<div className="ml-auto float-right mt-2">
-								<LoginModal user={store.user} />
 								<Link to="/register">
-									<button className="btn btn-primary " style={{ borderRadius: "1.75rem" }}>
+									<Button variant="outline-primary " className="no-outline mr-2">
 										&nbsp;&nbsp;&nbsp;Registrate&nbsp;&nbsp;&nbsp;
-									</button>
+									</Button>
 								</Link>
+								<LoginModal user={store.user} />
 							</div>
 						</Col>
 					</Container>
