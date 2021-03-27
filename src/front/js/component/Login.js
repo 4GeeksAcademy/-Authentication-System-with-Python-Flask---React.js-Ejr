@@ -69,33 +69,43 @@ function MyVerticallyCenteredModal(props) {
 
 export function LoginModal(props) {
 	const [modalShow, setModalShow] = React.useState(false);
+	const { store, actions } = useContext(Context);
+	console.log(store.favoritos);
 
 	return (
 		<>
 			{props.user.id !== undefined ? (
 				<>
-					<DropdownButton
-						menuAlign="right"
-						title="Mi cuenta"
-						id="dropdown-menu-align-right"
-						className="mr-2"
-						style={{ borderRadius: "1.75rem" }}>
-						<Dropdown.Item eventKey="1">Favoritos</Dropdown.Item>
-						<Dropdown.Item eventKey="2">Mis datos</Dropdown.Item>
+					<DropdownButton menuAlign="right" title="Mi favoritos" id="dropdown-menu-align-right">
+						<Dropdown.Item eventKey="1" style={{ width: "200px" }}>
+							servicio_name
+							<Button variant="light" className="float-right">
+								<i className="fas fa-trash-alt float-right" />
+							</Button>
+						</Dropdown.Item>
+
+						{/* {store.favoritos.map(item => {
+							return (
+								<Dropdown.Item eventkey={index} key={item.id_servicio_registrados}>
+									{item.name_servicio}
+									<Button
+										variant="outline-dark float-right"
+										style={{ width: "100px" }}
+										onClick={() => actions.eliminaFavorito(item)}>
+										<i className="fas fa-trash-alt float-right"></i>
+									</Button>
+								</Dropdown.Item>
+							);
+						})} */}
 						<Dropdown.Divider />
 						<Dropdown.Item eventKey="3">Salir</Dropdown.Item>
 					</DropdownButton>
 				</>
 			) : (
 				<>
-					<Button
-						variant="outline-primary "
-						className="no-outline mr-2"
-						style={{ borderRadius: "1.75rem" }}
-						onClick={() => setModalShow(true)}>
+					<Button variant="primary" onClick={() => setModalShow(true)}>
 						Ingresa
 					</Button>
-
 					<MyVerticallyCenteredModal show={modalShow} onHide={() => setModalShow(false)} />
 				</>
 			)}
@@ -115,5 +125,6 @@ export function LoginModalA() {
 }
 
 LoginModal.propTypes = {
-	user: PropTypes.object
+	user: PropTypes.object,
+	name_servicio: PropTypes.string
 };

@@ -6,11 +6,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 				userPass: ""
 			},
 			user: {
-				token: "",
-				email: ""
-				//id: ""
+				token: "12345",
+				email: "yunjoug@gmail.com",
+				id: "1"
 			},
-			Favoritos: {
+			favoritos: {
 				id_user: "",
 				id_servicio_registrados: "",
 				name_servicio: ""
@@ -19,52 +19,58 @@ const getState = ({ getStore, getActions, setStore }) => {
 		},
 
 		actions: {
-			getServiceInfo: () => {
-				fetch(`process.env.BACKEND_URL/servicio-registrados`, {
-					method: "GET",
-					headers: { "Content-Type": "application/json" }
-				})
-					.then(resp => resp.json())
-					.then(data => {
-						console.log(data);
-						setStore({ serviceInfo: data });
-					})
-					.catch(error => console.log("Error loading message from backend", error));
-			},
-			addFavorioto: item => {
-				const store = getStore();
-				fetch(process.env.BACKEND_URL + "/favoritos", {
-					method: "POST",
-					headers: { "Content-Type": "application/json" },
-					body: JSON.stringify({
-						id_users: store.id,
-						id_servicio_registrados: store.id_servicio_registrados,
-						name_servicio: store.name_servicio
-					})
-				})
-					.then(resp => resp.json())
-					.then(data => {
-						console.log({ "--favoritos--": json });
-						setStore({ Favoritos: json });
-					})
-					.catch(error => console.log("Error loading message from backend", error));
+			getServiceInfo: async () => {
+				try {
+					const response = await fetch(`process.env.BACKEND_URL/servicio-registrados`, {
+						method: "GET",
+						headers: { "Content-Type": "application/json" }
+					});
+					const json = await response.json();
+					console.log(json);
+					setStore({ serviceInfo: JSON.stringify(json) });
+				} catch (error) {
+					console.log("Error loading message from backend", error);
+				}
 			},
 
-			eliminaFavorioto: id => {
-				console.log(id);
+			addFavorito: async item => {
+				const store = getStore();
+				//setStore({ favoritos: [...store.favoritos, item] });
+				try {
+					const response = await fetch(process.env.BACKEND_URL + "/favoritos", {
+						mode: "no-cors",
+						method: "POST",
+						headers: { "Content-Type": "application/json" },
+						body: JSON.stringify({
+							id_user: store.id,
+							id_servicio_registrados: store.id_servicio_registrados,
+							name_servicio: store.name_servicio
+						})
+					});
+					const json = await response.json();
+					console.log({ "--favoritos--": json });
+					setStore({ favoritos: JSON.stringify(json) });
+				} catch (error) {
+					console.log("Error loading message from backend", error);
+				}
+			},
+
+			eliminaFavorito: async id => {
 				const store = getStore();
 				const newList = store.favoritos.filter(item => item.id !== id);
 				setStore({
-					Favoritos: newList
+					favoritos: newList
 				});
-				fetch(`process.env.BACKEND_URL/favoritos/${id}`, {
-					method: "DELETE",
-					headers: { "Content-Type": "application/json" }
-				})
-					.then(resp => resp.json())
-					.then(data => {
-						console.log(json);
+				try {
+					const response = await fetch(`process.env.BACKEND_URL/favoritos/${id}`, {
+						method: "DELETE",
+						headers: { "Content-Type": "application/json" }
 					});
+					const json = await response.json();
+					console.log(json);
+				} catch (error) {
+					console.log("Error loading message from backend", error);
+				}
 			},
 
 			getToken: () => {

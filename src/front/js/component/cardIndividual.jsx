@@ -12,7 +12,7 @@ export const CardIndividual = props => {
 	return (
 		<div>
 			<Card style={{ width: "14rem" }}>
-				<Button variant="btn" className="favorito" onClick={() => actions.addFavorioto(props.name)}>
+				<Button variant="btn" className="favorito" onClick={() => actions.addFavorito(props.name)}>
 					<i className="far fa-heart" />
 				</Button>
 				<Link to="/category/individual">
@@ -34,12 +34,12 @@ export const CardIndividual = props => {
 };
 
 CardIndividual.propTypes = {
-	img: PropTypes.object,
+	img: PropTypes.string,
 	title: PropTypes.string,
 	valor: PropTypes.string,
 	punta: PropTypes.string,
 	valor: PropTypes.string,
 	trabajo: PropTypes.string,
-	name: PropTypes.string,
+	name: PropTypes.function,
 	tipoCobro: PropTypes.string
 };
