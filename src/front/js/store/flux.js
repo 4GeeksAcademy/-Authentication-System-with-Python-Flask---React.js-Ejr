@@ -59,14 +59,16 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log(error);
 				}
 			},
-			addComment: async commentText => {
-				e.preventDefault();
+			addComment: async text_comment => {
 				try {
-					const response = await fetch("http://0.0.0.0:3001/Comments", {
+					const response = await fetch(process.env.BACKEND_URL + "/comentarios", {
 						method: "POST",
 						headers: { "Content-Type": "application/json" },
 						body: JSON.stringify({
-							comment_text: `${commentText}`
+							id_servicios_prestados: 6,
+							id_servicio_registrados: 1,
+							text_comment: text_comment,
+							evaluacion: 3
 						})
 					});
 					const json = await response.json();
@@ -89,8 +91,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 					setStore({ Comments: JSON.stringify(json) });
 				} catch (error) {
 					console.log(error);
-                }
-            },
+				}
+			},
 			setRegister: user => {
 				console.log(user);
 				fetch(process.env.BACKEND_URL + "/api/register", {
@@ -110,7 +112,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					})
 					.catch(error => console.log("error creating account in the backend", error));
 			},
-			setLogin:user => {
+			setLogin: user => {
 				fetch(process.env.BACKEND_URL + "/api/login", {
 					method: "POST",
 					body: JSON.stringify(user),
