@@ -8,8 +8,18 @@
     display: flex !important;
     justify-content: flex-end;
     vertical-align: middle;
+    
 }
 
 .btn{
     margin: 5px;
+    color: white;
+}
+
+a:hover{
+    color:aquamarine;
+    text-decoration: none;
+}
+a{
+    color:white;
 }
