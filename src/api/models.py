@@ -6,9 +6,9 @@ class User(db.Model):
     email = db.Column(db.String(200), unique=True, nullable=False)
     password = db.Column(db.String(200), nullable=False)
     tipo_user = db.Column(db.String(200), nullable=False)
-    # servicio_registrados = db.relationship('Servicio_registrados', backref='user',lazy=True)
-    # servicios_prestados = db.relationship('Servicios_prestados', backref='user',lazy=True)
-    # favoritos = db.relationship('Favoritos', backref='user',lazy=True)
+    servicio_registrados = db.relationship('Servicio_registrados', backref='user',lazy=True)
+    servicios_prestados = db.relationship('Servicios_prestados', backref='user',lazy=True)
+    favoritos = db.relationship('Favoritos', backref='user',lazy=True)
     def __repr__(self):
         return "<User %r>" % self.id
     def serialize(self):
@@ -21,7 +21,7 @@ class Servicio_registrados(db.Model):
     __tablename__ = 'servicio_registrados'
     id = db.Column(db.Integer, primary_key=True)
     id_user = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    # username = db.Column(db.String(50), nullable=False)
+    username = db.Column(db.String(50), nullable=False)
     tipo_membresia = db.Column(db.String(50), nullable=False)
     category = db.Column(db.String(50), nullable=False)
     subcategory = db.Column(db.String(50), nullable=False)
@@ -35,18 +35,16 @@ class Servicio_registrados(db.Model):
     experiencia = db.Column(db.Integer, nullable=False)
     portafolio = db.Column(db.String(250), nullable=True)
     merit = db.Column(db.String(250))
-    user= db.relationship('User',         
-        backref=db.backref('Servicio_registrados', lazy=True, uselist=False))     
-    # servicios_prestados = db.relationship('Servicios_prestados', backref='servicio_registrados',lazy=True)
-    # favoritos = db.relationship('Favoritos', backref='servicio_registrados',lazy=True)
-    # comentarios = db.relationship('Comentarios', backref='servicio_registrados',lazy=True)
+    servicios_prestados = db.relationship('Servicios_prestados', backref='servicio_registrados',lazy=True)
+    favoritos = db.relationship('Favoritos', backref='servicio_registrados',lazy=True)
+    comentarios = db.relationship('Comentarios', backref='servicio_registrados',lazy=True)
     def __repr__(self):
         return "<Servicio_registrados %r>" % self.id
     def serialize(self):
         return {
             "id": self.id,
-            "id_user": self.id_user,
-            # "username": self.username,
+            "id_user": self.user.id,
+            "username": self.username,
             "tipo_membresia": self.tipo_membresia,
             "category": self.category,
             "subcategory": self.subcategory,
@@ -60,7 +58,7 @@ class Servicio_registrados(db.Model):
             "experiencia": self.experiencia,
             "portafolio": self.portafolio,
             "merit":self.merit,
-            # "evaluacion": self.comentarios.evaluacion
+            "evaluacion": self.comentarios.evaluacion
         }
 class Servicios_prestados(db.Model):
     __tablename__ = 'servicios_prestados'
@@ -71,18 +69,14 @@ class Servicios_prestados(db.Model):
     total_valor_servicio = db.Column(db.Integer,nullable=False)
     fecha_inicio = db.Column(db.DateTime)
     fecha_termino = db.Column(db.DateTime)
-    user= db.relationship('User',         
-        backref=db.backref('Servicios_prestados', lazy=True, uselist=False)) 
-    servicio_registrados= db.relationship('Servicio_registrados',         
-        backref=db.backref('Servicios_prestados', lazy=True, uselist=False)) 
-    # comentarios = db.relationship('Comentarios', backref='servicios_prestados',lazy=True)
+    comentarios = db.relationship('Comentarios', backref='servicios_prestados',lazy=True)
     def __repr__(self):
         return "<Servicios_prestados %r>" % self.id
     def serialize(self):
         return {
             "id": self.id,
-            "id_user_compra": self.id_user_compra,
-            "id_servicio_registrados": self.id_servicio_registrados,
+            "id_user_compra": self.user.id,
+            "id_servicio_registrados": self.servicio_registrados.id,
             "name_servicio": self.servicio_registrados.name_servicio,
             "cantidad_servicio": self.cantidad_servicio,
             "total_valor_servicio":self.total_valor_servicio,
@@ -110,10 +104,6 @@ class Comentarios(db.Model):
     id_servicio_registrados = db.Column(db.Integer, db.ForeignKey('servicio_registrados.id'), nullable=False)
     text_comment = db.Column(db.String(250), nullable=True)
     evaluacion = db.Column(db.Integer, nullable=True)
-    servicios_prestados= db.relationship('Servicios_prestados',         
-        backref=db.backref('Comentarios', lazy=True, uselist=False))
-    Servicio_registrados= db.relationship('Servicio_registrados',         
-        backref=db.backref('Comentarios', lazy=True, uselist=False)) 
     def __repr__(self):
         return "<Comentarios %r>" % self.id
     def serialize(self):
@@ -124,6 +114,3 @@ class Comentarios(db.Model):
             "text_comment":self.text_comment,
             "evaluacion": self.evaluacion
         }
-    def get_all_comentarios():
-        db.session.commit()
-        return [Comentarios.serialize(Comentarios) for Comentarios in Comentarios.query.all()]
