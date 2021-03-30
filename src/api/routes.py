@@ -193,36 +193,39 @@ def add_favoritos():
 #     id_servicio_registrados = db.Column(db.Integer, db.ForeignKey('servicio_registrados.id'), nullable=False)
 #     text_comment = db.Column(db.String(250), nullable=True)
 #     evaluacion = db.Column(db.Integer, nullable=True)
+
 @api.route('/comentarios', methods=["POST"])
-def addComment ():  
-
+def addComment():  
         if request.method == 'POST':
-            id_servicios_prestados= request.json.get(id_servicios_prestados)
-            id_servicio_registrados= request.json.get(id_servicio_registrados)
-            text_comment= request.json.get(text_comment)
-            evaluacion= request.json.get(evaluacion)
+            if not request.is_json:
+                return jsonify({"msg": "El body o contenido esta vacio"}), 400
 
-            if not id_servicios_prestados:
-                return jsonify({"msg":"id_servicios_prestados esta vacio"}), 400
-            if not id_servicio_registrados:
-                return jsonify({"msg":"id_servicio_registrados esta vacio"}), 400
-            if not text_comment:
-                return jsonify({"msg":"el texto del comentario esta vacio"}), 400
-            if not evaluacion:
-                return jsonify({"msg":"la evaluacion esta vacia"}), 400
+        # id_servicios_prestados= request.json.get(id_servicios_prestados)
+        # id_servicio_registrados= request.json.get(id_servicio_registrados)
+        # text_comment= request.json.get(text_comment)
+        # evaluacion= request.json.get(evaluacion)
 
-        comentarios = Comentarios()
-        comentarios.id_servicios_prestados = request.json.get("id_servicios_prestados", None)
-        comentarios.id_servicio_registrados = request.json.get("id_servicio_registrados", None)
-        comentarios.text_comment= request.json.get("text_comment", None)
-        comentarios.evaluacion= request.json.get("evaluacion", None)
+        # if not id_servicios_prestados:
+        #     return jsonify({"msg":"id_servicios_prestados esta vacio"}), 400
+        # if not id_servicio_registrados:
+        #     return jsonify({"msg":"id_servicio_registrados esta vacio"}), 400
+        # if not text_comment:
+        #     return jsonify({"msg":"el texto del comentario esta vacio"}), 400
+        # if not evaluacion:
+        #     return jsonify({"msg":"la evaluacion esta vacia"}), 400
 
-        db.session.add(comentarios)
-        db.session.commit()
+            comentarios = Comentarios()
+            comentarios.id_servicios_prestados = request.json.get("id_servicios_prestados", None)
+            comentarios.id_servicio_registrados = request.json.get("id_servicio_registrados", None)
+            comentarios.text_comment= request.json.get("text_comment", None)
+            comentarios.evaluacion= request.json.get("evaluacion", None)
 
-@api.route('/comentarios', methods=["GET"])
-def listComments ():  
-    return jsonify({"Comentarios": Comentarios.get_all_comentarios()})
+            db.session.add(comentarios)
+            db.session.commit()
+
+# @api.route('/listComentarios', methods=["GET"])
+# def listComments ():  
+#     return jsonify({"Comentarios": Comentarios.get_all_comentarios()})
 
 
        

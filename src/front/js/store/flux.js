@@ -61,16 +61,26 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 			addComment: async text_comment => {
 				try {
-					const response = await fetch(process.env.BACKEND_URL + "/comentarios", {
+					let options = {
 						method: "POST",
-						headers: { "Content-Type": "application/json" },
+						headers: {
+							"Content-Type": "application/json",
+							"User-Agent": "PostmanRuntime/7.26.8",
+							Accept: "*/*",
+							"Accept-Encoding": "gzip, deflate, br",
+							Connection: "keep-alive"
+						},
 						body: JSON.stringify({
-							id_servicios_prestados: 6,
-							id_servicio_registrados: 1,
+							id_servicios_prestados: "6",
+                            id_servicio_registrados: "1",
+                            id_user:"1",
 							text_comment: text_comment,
-							evaluacion: 3
+							evaluacion: "3"
 						})
-					});
+					};
+
+					const response = await fetch(process.env.BACKEND_URL + "/comentarios", options);
+
 					const json = await response.json();
 					console.log(json);
 					//setStore({ newContact: JSON.stringify(json) });

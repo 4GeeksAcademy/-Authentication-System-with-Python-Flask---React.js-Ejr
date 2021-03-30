@@ -125,7 +125,8 @@ class Child(db.Model):
     parent_id = db.Column(db.Integer, db.ForeignKey("parent.id"), nullable=False)
     
     def __repr__(self):
-        return '<Child {self.name}>
+        return '<Child 
+        {self.name}>
         
     def serialize(self):
         return {
