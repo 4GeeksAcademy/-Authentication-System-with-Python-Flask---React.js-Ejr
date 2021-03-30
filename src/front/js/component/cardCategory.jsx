@@ -20,7 +20,7 @@ export const CardCategory = props => {
 };
 
 CardCategory.propTypes = {
-	img: PropTypes.object,
+	img: PropTypes.string,
 	title: PropTypes.string,
 	valor: PropTypes.string
 };

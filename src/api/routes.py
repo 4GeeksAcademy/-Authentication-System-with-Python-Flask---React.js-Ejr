@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User
+from api.models import db, User, Comentarios
 # from flask_cors import CORS, cross_origin
 from api.utils import generate_sitemap, APIException
 from werkzeug.security import generate_password_hash, check_password_hash       ## Nos permite manejar tokens por authentication (usuarios)    
@@ -53,9 +53,9 @@ def login():
         "token": access_token,
         "expires": expiracion.total_seconds()*1000,
         "userId": user.id,
-        "email": user.email
-    }
-
+        "email": user.email,
+        "tipo_user": user.tipo_user
+        }
 
     return jsonify(data), 200
 
@@ -64,6 +64,7 @@ def register():
     
     email = request.json.get("email", None)
     password = request.json.get("password", None)
+    tipo_user = request.json.get("tipo_user", None)
 
     email_query = User.query.filter_by(email=email).first()
     if email_query:
@@ -72,10 +73,10 @@ def register():
     user = User()
     user.email = email
     user.password = password
+    user.tipo_user = tipo_user
     print(user)
     db.session.add(user)
     db.session.commit()
-
 
     expiracion = datetime.timedelta(days=3)
     access_token = create_access_token(identity=user.email, expires_delta=expiracion)
@@ -84,10 +85,11 @@ def register():
         "msg": "Added successfully",
         "email": user.email,
         "userId":user.id,
+        "tipo_user": user.tipo_user,
         "token": access_token
     }
   
-    return jsonify(response_token), 200
+    return jsonify(response_token), 200    
 
 
 @api.route('/servicio-registrados/<int:id_servicio_registrados>', methods=['POST', 'GET'])
@@ -200,19 +202,19 @@ def addComment():
             if not request.is_json:
                 return jsonify({"msg": "El body o contenido esta vacio"}), 400
 
-        # id_servicios_prestados= request.json.get(id_servicios_prestados)
-        # id_servicio_registrados= request.json.get(id_servicio_registrados)
-        # text_comment= request.json.get(text_comment)
-        # evaluacion= request.json.get(evaluacion)
+            # id_servicios_prestados= request.json.get(id_servicios_prestados)
+            # id_servicio_registrados= request.json.get(id_servicio_registrados)
+            # text_comment= request.json.get(text_comment)
+            # evaluacion= request.json.get(evaluacion)
 
-        # if not id_servicios_prestados:
-        #     return jsonify({"msg":"id_servicios_prestados esta vacio"}), 400
-        # if not id_servicio_registrados:
-        #     return jsonify({"msg":"id_servicio_registrados esta vacio"}), 400
-        # if not text_comment:
-        #     return jsonify({"msg":"el texto del comentario esta vacio"}), 400
-        # if not evaluacion:
-        #     return jsonify({"msg":"la evaluacion esta vacia"}), 400
+            # if not id_servicios_prestados:
+            #     return jsonify({"msg":"id_servicios_prestados esta vacio"}), 400
+            # if not id_servicio_registrados:
+            #     return jsonify({"msg":"id_servicio_registrados esta vacio"}), 400
+            # if not text_comment:
+            #     return jsonify({"msg":"el texto del comentario esta vacio"}), 400
+            # if not evaluacion:
+            #     return jsonify({"msg":"la evaluacion esta vacia"}), 400
 
             comentarios = Comentarios()
             comentarios.id_servicios_prestados = request.json.get("id_servicios_prestados", None)
@@ -222,10 +224,33 @@ def addComment():
 
             db.session.add(comentarios)
             db.session.commit()
+            return jsonify({"Respuesta":"OK"}), 200    
 
-# @api.route('/listComentarios', methods=["GET"])
-# def listComments ():  
-#     return jsonify({"Comentarios": Comentarios.get_all_comentarios()})
+@api.route('/comentarios', methods=["GET"])
+def listComments ():  
+    return jsonify({"Comentarios": Comentarios.get_all_comentarios()})
 
 
        
+@api.route('/passwordrecovery1', methods=['POST'])
+def passwordrecovery1():
+    
+    email = request.json.get("email", None)
+    
+    email_query = User.query.filter_by(email=email).first()
+    if not email_query:
+        return "This email isn't in our database", 401
+
+    user = User()
+    user.email = email
+    recovery_hash = generate_password_hash(email)
+    user.hash = recovery_hash 
+    print(user)
+
+    response = {
+        "msg": "User found and Hash generated successfully",
+        "email": user.email,
+        "recovery_hash": user.hash
+    }
+  
+    return jsonify(response), 200  

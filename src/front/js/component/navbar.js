@@ -1,10 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link, withRouter } from "react-router-dom";
 import { Button, Form, FormControl, Navbar, Nav, Col, Container } from "react-bootstrap";
 import { logoAzul } from "../../img/image";
 import { LoginModal } from "./Login";
+import PropTypes from "prop-types";
+import { Context } from "../store/appContext";
 
 const MyNavbar = props => {
+	const { store, actions } = useContext(Context);
+	console.log(store.user);
+
 	if (
 		props.location.pathname === "/" ||
 		props.location.pathname === "/register" ||
@@ -37,12 +42,12 @@ const MyNavbar = props => {
 						</Col>
 						<Col sm={6} md={3}>
 							<div className="ml-auto float-right mt-2">
-								{LoginModal()}
 								<Link to="/register">
-									<button className="btn btn-primary " style={{ borderRadius: "1.75rem" }}>
+									<Button variant="outline-primary " className="no-outline mr-2">
 										&nbsp;&nbsp;&nbsp;Registrate&nbsp;&nbsp;&nbsp;
-									</button>
+									</Button>
 								</Link>
+								<LoginModal user={store.user} />
 							</div>
 						</Col>
 					</Container>
@@ -76,3 +81,7 @@ const MyNavbar = props => {
 	}
 };
 export default withRouter(MyNavbar);
+
+MyNavbar.propTypes = {
+	location: PropTypes.object
+};

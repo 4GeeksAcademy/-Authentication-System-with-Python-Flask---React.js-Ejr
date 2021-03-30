@@ -99,7 +99,7 @@ class Favoritos(db.Model):
         }
 class Comentarios(db.Model):
     __tablename__ = 'comentarios'
-    id = db.Column(db.Integer, primary_key=True, nullable=False)
+    id = db.Column(db.Integer, primary_key=True)
     id_servicios_prestados = db.Column(db.Integer, db.ForeignKey('servicios_prestados.id'), nullable=False)
     id_servicio_registrados = db.Column(db.Integer, db.ForeignKey('servicio_registrados.id'), nullable=False)
     text_comment = db.Column(db.String(250), nullable=True)
@@ -116,4 +116,4 @@ class Comentarios(db.Model):
         }
     def get_all_comentarios():
         db.session.commit()
-        return [Comentarios.serialize(Comentarios) for Comentarios in Comentarios.query.all()]
+        return [list(map(lambda x: x.serialize(), Comentarios.query.all()))]

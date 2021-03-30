@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import "../../styles/home.scss";
 import "../../styles/index.scss";
 import { logoBlanco, man } from "../../img/image";
@@ -11,14 +11,30 @@ import { Footer } from "../component/footer";
 import { LoginModal, LoginModalA } from "../component/Login";
 import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
+import PropTypes from "prop-types";
 
-const LandingPage = () => {
+const LandingPage = props => {
 	const { store, actions } = useContext(Context);
+
+	useEffect(() => {
+		actions.getToken();
+	}, []);
+	console.log(store.user);
+
+	const { id } = props.match.params;
+
+	if (props.user == null) {
+		console.log("no existe un usuario");
+	} else {
+		console.log("existe un usuario");
+		props.history.push("/home");
+	}
+
 	return (
 		<div
 			className="background"
 			style={{
-				backgroundImage: `url(https://3000-aqua-stork-kkm23d33.ws-us03.gitpod.io/backGround.png)`
+				backgroundImage: `url(https://3000-crimson-sparrow-lnsr60r4.ws-us03.gitpod.io/backGround.png)`
 			}}>
 			<Container>
 				<div>
@@ -33,26 +49,12 @@ const LandingPage = () => {
 							/>
 						</Col>
 						<Col xs={8}>
-							{/* {store.user.token !== null ? (
-								<>
-									<Button variant="light" className="float-right mt-5">
-										Ir a mi Cuenta
-									</Button>
-
-									<Button variant="primary" className="float-right mt-5">
-										Cerrar sesión
-									</Button>
-								</>
-							) : (
-								<> */}
 							<Link to="/register">
 								<Button variant="light" className="float-right mt-5">
 									Registrate
 								</Button>
 							</Link>
-							<a>{LoginModalA()}</a>
-							{/* </>
-							)} */}
+							<LoginModalA />
 						</Col>
 					</Row>
 					<Row>
@@ -123,3 +125,9 @@ const LandingPage = () => {
 };
 
 export default withRouter(LandingPage);
+
+LandingPage.propTypes = {
+	user: PropTypes.object,
+	history: PropTypes.object,
+	match: PropTypes.object
+};

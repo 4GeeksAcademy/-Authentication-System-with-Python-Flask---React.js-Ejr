@@ -1,29 +1,82 @@
-import React, { useContext, useState, useEffect } from "react";
-
+import emailjs from "emailjs-com";
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
-			newContact: [],
-
 			login_data: {
 				userLogin: "",
 				userPass: ""
 			},
+			recovery_data: {
+				userEmail: "",
+				userToken: ""
+			},
 			user: {
-				token: "",
-				email: "",
-				userId: ""
-			}
+				token: "12345",
+				email: "yunjoug@gmail.com",
+				id: "1"
+			},
+			favoritos: {
+				id_user: "",
+				id_servicio_registrados: "",
+				name_servicio: ""
+			},
+			serviceInfo: []
 		},
 
 		actions: {
-			// onChangeLogin: e => {
-			// 	const store = getStore();
-			// 	const { login_data } = store;
-			// 	login_data[e.target.name] = e.target.value;
-			// 	setStore({ login_data });
-			// 	console.log(store.login_data);
-			// },
+			getServiceInfo: async () => {
+				try {
+					const response = await fetch(`process.env.BACKEND_URL/servicio-registrados`, {
+						method: "GET",
+						headers: { "Content-Type": "application/json" }
+					});
+					const json = await response.json();
+					console.log(json);
+					setStore({ serviceInfo: JSON.stringify(json) });
+				} catch (error) {
+					console.log("Error loading message from backend", error);
+				}
+			},
+
+			addFavorito: async item => {
+				const store = getStore();
+				//setStore({ favoritos: [...store.favoritos, item] });
+				try {
+					const response = await fetch(process.env.BACKEND_URL + "/favoritos", {
+						mode: "no-cors",
+						method: "POST",
+						headers: { "Content-Type": "application/json" },
+						body: JSON.stringify({
+							id_user: store.id,
+							id_servicio_registrados: store.id_servicio_registrados,
+							name_servicio: store.name_servicio
+						})
+					});
+					const json = await response.json();
+					console.log({ "--favoritos--": json });
+					setStore({ favoritos: JSON.stringify(json) });
+				} catch (error) {
+					console.log("Error loading message from backend", error);
+				}
+			},
+
+			eliminaFavorito: async id => {
+				const store = getStore();
+				const newList = store.favoritos.filter(item => item.id !== id);
+				setStore({
+					favoritos: newList
+				});
+				try {
+					const response = await fetch(`process.env.BACKEND_URL/favoritos/${id}`, {
+						method: "DELETE",
+						headers: { "Content-Type": "application/json" }
+					});
+					const json = await response.json();
+					console.log(json);
+				} catch (error) {
+					console.log("Error loading message from backend", error);
+				}
+			},
 
 			getToken: () => {
 				const tokenLocal = localStorage.getItem("token");
@@ -61,25 +114,18 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 			addComment: async text_comment => {
 				try {
-					let options = {
+					const response = await fetch(process.env.BACKEND_URL + "/api/comentarios", {
 						method: "POST",
 						headers: {
-							"Content-Type": "application/json",
-							"User-Agent": "PostmanRuntime/7.26.8",
-							Accept: "*/*",
-							"Accept-Encoding": "gzip, deflate, br",
-							Connection: "keep-alive"
+							"Content-Type": "application/json"
 						},
 						body: JSON.stringify({
-							id_servicios_prestados: "6",
-                            id_servicio_registrados: "1",
-                            id_user:"1",
+							id_servicios_prestados: "1",
+							id_servicio_registrados: "1",
 							text_comment: text_comment,
 							evaluacion: "3"
 						})
-					};
-
-					const response = await fetch(process.env.BACKEND_URL + "/comentarios", options);
+					});
 
 					const json = await response.json();
 					console.log(json);
@@ -90,9 +136,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 			listComments: async () => {
-				e.preventDefault();
 				try {
-					const response = await fetch("http://0.0.0.0:3001/Comments", {
+					const response = await fetch(process.env.BACKEND_URL + "/api/comentarios", {
 						method: "GET",
 						headers: { "Content-Type": "application/json" }
 					});
@@ -108,7 +153,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				fetch(process.env.BACKEND_URL + "/api/register", {
 					method: "POST",
 					body: JSON.stringify(user),
-					headers: { "Content-type": "application/json; charset=UTF-8" }
+					headers: { "Content-type": "application/json" }
 				})
 					.then(resp => resp.json())
 					.then(data => {
@@ -118,6 +163,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						if (typeof Storage !== "undefined") {
 							localStorage.setItem("token", data.token);
 							localStorage.setItem("user", JSON.stringify(data.email));
+							localStorage.setItem("tipo_user", JSON.stringify(data.tipo_user));
 						}
 					})
 					.catch(error => console.log("error creating account in the backend", error));
@@ -134,10 +180,34 @@ const getState = ({ getStore, getActions, setStore }) => {
 						setStore({ user: data });
 						if (typeof Storage !== "undefined") {
 							localStorage.setItem("token", data.token);
-							localStorage.setItem("email", data.email);
+							localStorage.setItem("user", JSON.stringify(data.email));
+							localStorage.setItem("tipo_user", JSON.stringify(data.tipo_user));
 						}
 					})
 					.catch(error => console.log("Error loading message from backend", error));
+			},
+			sendEmail: user => {
+				fetch(process.env.BACKEND_URL + "/api/passwordrecovery1", {
+					method: "POST",
+					body: JSON.stringify(user),
+					headers: { "Content-type": "application/json" }
+				})
+					.then(data => data.json())
+					.then(data => {
+						setStore({ recovery_data: data });
+						console.log(data);
+						const templateParams = {
+							to_email: data.email,
+							recovery_hash: data.recovery_hash
+						};
+						emailjs.send(
+							"service_gtr9nn8",
+							"template_xht2g6m",
+							templateParams,
+							"user_Lg37b3jwPEh5fSo53yOsV"
+						);
+					})
+					.catch(error => console.log("Error sending email", error));
 			}
 		}
 	};
