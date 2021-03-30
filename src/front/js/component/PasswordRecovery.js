@@ -1,16 +1,25 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import { withRouter } from "react-router-dom";
 import { Form, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import emailjs from "emailjs-com";
+import { Context } from "../store/appContext";
 
 export const PasswordRecovery = () => {
+	const { store, actions } = useContext(Context);
+	const [email, setEmail] = useState("");
+	const handleSubmit = e => {
+		e.preventDefault();
+		actions.sendEmail({
+			email: email
+		});
+	};
 	return (
 		<div className="container ">
 			<div className="transBox" />
 			<div className="row">
 				<div className="col-2" />
 				<div className="col-8">
-					{/* Card  */}
 					<div className="whiteBox shadow-lg p-3">
 						<h2 className="text-center my-5">
 							<i className="fas fa-user-lock" style={{ marginRight: "10px" }} />
@@ -22,16 +31,18 @@ export const PasswordRecovery = () => {
 								enviaremos la clave por email
 							</h4>
 							<br />
-							<Form>
+							<Form onSubmit={handleSubmit}>
 								<Form.Group controlId="formBasicEmail">
 									{/* <Form.Label>Correo Electrónico</Form.Label> */}
-									<Form.Control type="email" placeholder="Ingresa tu correo electrónico" />
+									<Form.Control
+										type="email"
+										placeholder="Ingresa tu correo electrónico"
+										onChange={e => setEmail(e.target.value)}
+									/>
 								</Form.Group>
-								<Link to="/passwordrecovery2">
-									<Button variant="primary" size="lg" type="submit" block className=" my-5">
-										Ingresar
-									</Button>
-								</Link>
+								<Button variant="primary" size="lg" type="submit" block className=" my-5">
+									Recuperar
+								</Button>
 							</Form>
 						</div>
 						{/* Card  */}

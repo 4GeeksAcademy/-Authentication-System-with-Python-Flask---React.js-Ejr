@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import "../../styles/home.scss";
 import "../../styles/index.scss";
 import { logoBlanco, man } from "../../img/image";
@@ -15,6 +15,10 @@ import PropTypes from "prop-types";
 
 const LandingPage = props => {
 	const { store, actions } = useContext(Context);
+
+	useEffect(() => {
+		actions.getToken();
+	}, []);
 	console.log(store.user);
 
 	const { id } = props.match.params;
@@ -30,7 +34,7 @@ const LandingPage = props => {
 		<div
 			className="background"
 			style={{
-				backgroundImage: `url(https://3000-beige-walrus-q8a5cocf.ws-us03.gitpod.io/backGround.png)`
+				backgroundImage: `url(https://3000-crimson-sparrow-lnsr60r4.ws-us03.gitpod.io/backGround.png)`
 			}}>
 			<Container>
 				<div>

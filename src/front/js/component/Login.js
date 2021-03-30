@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
@@ -12,10 +12,11 @@ function MyVerticallyCenteredModal(props) {
 	const { store, actions } = useContext(Context);
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
+	const [show, setShow] = useState(true);
+	const handleClose = () => setShow(false);
 
 	const handleSubmit = e => {
 		e.preventDefault();
-
 		actions.setLogin({
 			email: email,
 			password: password
@@ -27,41 +28,50 @@ function MyVerticallyCenteredModal(props) {
 				<Modal.Title id="contained-modal-title-vcenter">Inicia Sesión</Modal.Title>
 			</Modal.Header>
 			<Modal.Body>
-				<Form style={{ paddingRight: "30px", paddingLeft: "20px", marginTop: "50px" }}>
-					<Form.Group controlId="formBasicEmail">
-						{/* <Form.Label>Email address</Form.Label> */}
-						<Form.Control
-							type="email"
-							placeholder="Ingresa tu correo electrónico"
-							onChange={e => setEmail(e.target.value)}
-						/>
-					</Form.Group>
-					<Form.Group controlId="formBasicPassword">
-						{/* <Form.Label>Password</Form.Label> */}
-						<Form.Control
-							type="password"
-							placeholder="Ingresa tu contraseña"
-							onChange={e => setPassword(e.target.value)}
-						/>
-					</Form.Group>
-					<Button
-						variant="primary"
-						size="lg"
-						type="submit"
-						block
-						style={{ marginTop: "70px" }}
-						onClick={e => handleSubmit(e)}>
-						Ingresar
-					</Button>
-					<Form.Text
-						className="text-muted"
-						style={{ textAlign: "center", marginTop: "20px", marginBottom: "60px" }}>
-						¿Olvidaste tu contraseña?
-						<Link to="/passwordrecovery">
-							<p> Recuperala aquí </p>
-						</Link>
-					</Form.Text>
-				</Form>
+				{store.user.token !== null ? (
+					<div className="text-center mt-3 mb-5">
+						{/* <span>User: {JSON.stringify(store.user)}</span> */}
+						La sesión ha sido iniciada
+					</div>
+				) : (
+					<Form style={{ paddingRight: "30px", paddingLeft: "20px", marginTop: "50px" }}>
+						<Form.Group controlId="formBasicEmail">
+							{/* <Form.Label>Email address</Form.Label> */}
+							<Form.Control
+								type="email"
+								placeholder="Ingresa tu correo electrónico"
+								onChange={e => setEmail(e.target.value)}
+							/>
+						</Form.Group>
+						<Form.Group controlId="formBasicPassword">
+							{/* <Form.Label>Password</Form.Label> */}
+							<Form.Control
+								type="password"
+								placeholder="Ingresa tu contraseña"
+								onChange={e => setPassword(e.target.value)}
+							/>
+						</Form.Group>
+						<Button
+							variant="primary"
+							size="lg"
+							type="submit"
+							block
+							style={{ marginTop: "70px" }}
+							onClick={e => {
+								handleSubmit(e);
+							}}>
+							Ingresar
+						</Button>
+						<Form.Text
+							className="text-muted"
+							style={{ textAlign: "center", marginTop: "20px", marginBottom: "60px" }}>
+							¿Olvidaste tu contraseña?
+							<Link to="/passwordrecovery">
+								<p> Recuperala aquí </p>
+							</Link>
+						</Form.Text>
+					</Form>
+				)}
 			</Modal.Body>
 		</Modal>
 	);
@@ -127,4 +137,9 @@ export function LoginModalA() {
 LoginModal.propTypes = {
 	user: PropTypes.object,
 	name_servicio: PropTypes.string
+};
+
+Modal.propTypes = {
+	onHide: PropTypes.func,
+	show: PropTypes.bool
 };
