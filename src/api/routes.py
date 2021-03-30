@@ -53,9 +53,9 @@ def login():
         "token": access_token,
         "expires": expiracion.total_seconds()*1000,
         "userId": user.id,
-        "email": user.email
-    }
-
+        "email": user.email,
+        "tipo_user": user.tipo_user
+        }
 
     return jsonify(data), 200
 
@@ -64,6 +64,7 @@ def register():
     
     email = request.json.get("email", None)
     password = request.json.get("password", None)
+    tipo_user = request.json.get("tipo_user", None)
 
     email_query = User.query.filter_by(email=email).first()
     if email_query:
@@ -72,10 +73,10 @@ def register():
     user = User()
     user.email = email
     user.password = password
+    user.tipo_user = tipo_user
     print(user)
     db.session.add(user)
     db.session.commit()
-
 
     expiracion = datetime.timedelta(days=3)
     access_token = create_access_token(identity=user.email, expires_delta=expiracion)
@@ -84,10 +85,11 @@ def register():
         "msg": "Added successfully",
         "email": user.email,
         "userId":user.id,
+        "tipo_user": user.tipo_user,
         "token": access_token
     }
   
-    return jsonify(response_token), 200
+    return jsonify(response_token), 200    
 
 
 @api.route('/servicio-registrados/<int:id_servicio_registrados>', methods=['POST', 'GET'])
@@ -186,3 +188,26 @@ def add_favoritos():
 
         db.session.add(favoritos)
         db.session.commit()
+
+@api.route('/passwordrecovery1', methods=['POST'])
+def passwordrecovery1():
+    
+    email = request.json.get("email", None)
+    
+    email_query = User.query.filter_by(email=email).first()
+    if not email_query:
+        return "This email isn't in our database", 401
+
+    user = User()
+    user.email = email
+    recovery_hash = generate_password_hash(email)
+    user.hash = recovery_hash 
+    print(user)
+
+    response = {
+        "msg": "User found and Hash generated successfully",
+        "email": user.email,
+        "recovery_hash": user.hash
+    }
+  
+    return jsonify(response), 200  

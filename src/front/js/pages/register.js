@@ -24,7 +24,7 @@ const Register = () => {
 			actions.setRegister({
 				email: email,
 				password: password,
-				typeUser: typeUser
+				tipo_user: typeUser
 			});
 		}
 	};
@@ -37,7 +37,7 @@ const Register = () => {
 		<div
 			className="background"
 			style={{
-				backgroundImage: `url(https://3000-beige-walrus-q8a5cocf.ws-us03.gitpod.io/loginBackGround.png)`
+				backgroundImage: `url(https://3000-crimson-sparrow-lnsr60r4.ws-us03.gitpod.io/backGround.png)`
 			}}>
 			<Container>
 				<div>

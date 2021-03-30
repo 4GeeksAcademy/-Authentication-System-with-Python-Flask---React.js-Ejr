@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import "../../styles/home.scss";
 import "../../styles/index.scss";
 import { logoBlanco, man } from "../../img/image";
@@ -11,14 +11,19 @@ import { Footer } from "../component/footer";
 import { LoginModal, LoginModalA } from "../component/Login";
 import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
+import LoginModalB from "../component/Login2";
 
 const LandingPage = () => {
 	const { store, actions } = useContext(Context);
+
+	useEffect(() => {
+		actions.getToken();
+	}, []);
 	return (
 		<div
 			className="background"
 			style={{
-				backgroundImage: `url(https://3000-beige-walrus-q8a5cocf.ws-us03.gitpod.io/backGround.png)`
+				backgroundImage: `url(https://3000-crimson-sparrow-lnsr60r4.ws-us03.gitpod.io/backGround.png)`
 			}}>
 			<Container>
 				<div>
