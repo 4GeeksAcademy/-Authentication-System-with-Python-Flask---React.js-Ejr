@@ -114,6 +114,10 @@ class Comentarios(db.Model):
             "text_comment":self.text_comment,
             "evaluacion": self.evaluacion
         }
+
+        
     def get_all_comentarios():
+        comentarios_query = Comentarios.query.all()
+        comentarios_query = Comentarios.query.filter_by(id_servicios_prestados)
         db.session.commit()
         return [list(map(lambda x: x.serialize(), Comentarios.query.all()))]

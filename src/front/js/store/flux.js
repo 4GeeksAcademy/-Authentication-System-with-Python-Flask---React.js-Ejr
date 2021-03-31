@@ -123,13 +123,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 							id_servicios_prestados: "1",
 							id_servicio_registrados: "1",
 							text_comment: text_comment,
-							evaluacion: "3"
+							evaluacion: "4"
 						})
 					});
 
 					const json = await response.json();
 					console.log(json);
-					//setStore({ newContact: JSON.stringify(json) });
+					setStore({ comments: JSON.stringify(json) });
 					getActions().listComments();
 				} catch (error) {
 					console.log(error);

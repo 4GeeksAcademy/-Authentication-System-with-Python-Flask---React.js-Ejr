@@ -18,6 +18,13 @@ export const Formcomment = () => {
 								<div className="col-md-10 col-sm-10">
 									<div className="panel panel-default arrow left">
 										<div className="panel-body">
+											<div className="col-sm-3">
+												<div className="review-block-date">
+													24 Marzo 2021
+													<br />
+													Hoy
+												</div>
+											</div>
 											<header className="text-left">
 												<ButtomStar />
 												<ButtomStar />
