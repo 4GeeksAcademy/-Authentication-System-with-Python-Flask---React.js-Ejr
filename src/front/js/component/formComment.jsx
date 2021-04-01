@@ -2,6 +2,7 @@ import React, { useState, useContext } from "react";
 import { Context } from "../store/appContext";
 import { ProgressBar } from "react-bootstrap";
 import ButtomStar from "./ButtomStar.jsx";
+import ButtomStar2 from "./ButtomStar2.jsx";
 import { Form, Button } from "react-bootstrap";
 
 export const Formcomment = () => {
@@ -29,8 +30,8 @@ export const Formcomment = () => {
 												<ButtomStar />
 												<ButtomStar />
 												<ButtomStar />
-												<ButtomStar />
-												<ButtomStar />
+												<ButtomStar2 />
+												<ButtomStar2 />
 											</header>
 											<div className="comment-post">
 												{/*<Form.Label>Titulo</Form.Label>
@@ -52,6 +53,15 @@ export const Formcomment = () => {
 													<i className="fa fa-reply"></i> reply
 												</Button>{" "}
 											</p>
+											<ul>
+												{store.comments
+													.filter(item => {
+														return item;
+													})
+													.map((item, index) => {
+														return <li key={index}>{item.text_comment}</li>;
+													})}
+											</ul>
 										</div>
 									</div>
 								</div>

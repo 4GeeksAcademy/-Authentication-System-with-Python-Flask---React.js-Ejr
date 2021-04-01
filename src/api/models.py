@@ -118,6 +118,6 @@ class Comentarios(db.Model):
         
     def get_all_comentarios():
         comentarios_query = Comentarios.query.all()
-        comentarios_query = Comentarios.query.filter_by(id_servicios_prestados)
+        comentarios_query = Comentarios.query.filter_by(id_servicios_prestados=1)
         db.session.commit()
         return [list(map(lambda x: x.serialize(), Comentarios.query.all()))]

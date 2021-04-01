@@ -1,4 +1,5 @@
 import emailjs from "emailjs-com";
+
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
@@ -20,7 +21,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 				id_servicio_registrados: "",
 				name_servicio: ""
 			},
-			serviceInfo: []
+			serviceInfo: [],
+
+			comments: []
 		},
 
 		actions: {
@@ -129,7 +132,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 					const json = await response.json();
 					console.log(json);
-					setStore({ comments: JSON.stringify(json) });
+					// setStore({ comments: JSON.stringify(json) });
 					getActions().listComments();
 				} catch (error) {
 					console.log(error);
@@ -143,7 +146,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					});
 					const json = await response.json();
 					console.log(json);
-					setStore({ Comments: JSON.stringify(json) });
+					setStore({ comments: json.Comentarios[0] });
 				} catch (error) {
 					console.log(error);
 				}

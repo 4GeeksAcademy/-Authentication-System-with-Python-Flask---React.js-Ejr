@@ -111,55 +111,26 @@ export const Comments = () => {
 				</div>
 			</div>
 			{/* Cuadro de comentario */}
-			<div className="col-sm-3">
-				<div className="review-block-date">
-					24 Marzo 2021
-					<br />
-					Hoy
-				</div>
-			</div>
 			<div className="row">
 				<div className="col-sm-7">
 					<hr />
 					<div className="review-block">
 						<div className="row">
+							<div className="col-sm-3">
+								<div className="review-block-date">
+									24 Marzo 2021
+									<br />
+									Hoy
+								</div>
+							</div>
+
 							<div className="col-sm-9">
 								<div className="review-block-rate">
-									<button
-										type="button"
-										className="btn btn-warning btn-sm"
-										aria-label="Left Align"
-										style={{ margin: "1px" }}>
-										<span className="fas fa-star" aria-hidden="true"></span>
-									</button>
-									<button
-										type="button"
-										className="btn btn-warning btn-sm"
-										aria-label="Left Align"
-										style={{ margin: "1px" }}>
-										<span className="fas fa-star" aria-hidden="true"></span>
-									</button>
-									<button
-										type="button"
-										className="btn btn-warning btn-sm"
-										aria-label="Left Align"
-										style={{ margin: "1px" }}>
-										<span className="fas fa-star" aria-hidden="true"></span>
-									</button>
-									<button
-										type="button"
-										className="btn btn-warning btn-sm"
-										aria-label="Left Align"
-										style={{ margin: "1px" }}>
-										<span className="fas fa-star" aria-hidden="true"></span>
-									</button>
-									<button
-										type="button"
-										className="btn btn-default btn-grey btn-sm"
-										aria-label="Left Align"
-										style={{ margin: "1px", backgroundColor: "#C0C0C0" }}>
-										<span className="fas fa-star" aria-hidden="true"></span>
-									</button>
+									<ButtomStar />
+									<ButtomStar />
+									<ButtomStar />
+									<ButtomStar2 />
+									<ButtomStar2 />
 								</div>
 								<div className="review-block-title">Excelente Servicio</div>
 								<div className="review-block-description">
