@@ -1,8 +1,7 @@
 import React from "react";
 import logo from "/workspace/canchapp2/src/front/img/logo_navbar.png";
 import "../styles/navbar.css";
-
-// import { Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 export const Navbar = () => {
 	return (
@@ -24,36 +23,14 @@ export const Navbar = () => {
 					</button>
 					<div className="collapse navbar-collapse" id="navbarSupportedContent">
 						<ul className="navbar-nav me-auto mb-2 mb-lg-0">
-							<li className="nav-item">
-								<a className="nav-link active" aria-current="page" href="#">
-									Home
-								</a>
-							</li>
-							<li className="nav-item">
-								<a className="nav-link" href="#">
-									El complejo
-								</a>
-							</li>
-							<li className="nav-item">
-								<a className="nav-link" href="#">
-									Reserva
-								</a>
-							</li>
-							<li className="nav-item">
-								<a className="nav-link" href="#">
-									Faqs
-								</a>
-							</li>
-							<li className="nav-item">
-								<a className="nav-link" href="#">
-									Contacto
-								</a>
-							</li>
+							<button type="button" className="btn btn-primary">
+								<Link to="/home">Home</Link>
+							</button>
 							<button type="button" className="btn btn-info">
-								Log in
+								<Link to="/login">Login</Link>
 							</button>
 							<button type="button" className="btn btn-success">
-								Registrate
+								<Link to="/registrate">Registrate</Link>
 							</button>
 						</ul>
 					</div>
