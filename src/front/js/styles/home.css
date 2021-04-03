@@ -1,25 +1,15 @@
-.card-title{
-    display: flex;
-    justify-content: center;
-    background-color: #ffd200;
+.row{
+    padding: 20px;
 }
 
-.stepper-1, .stepper-2, .stepper-3{
-    margin-left: 8rem;
-    width: 20rem;
-    height: 20rem;
-}
 
-.contenedor{
-    display: flex;
-}
 
 /*Estilos Home y calendario selección*/
 
 .fondo_header{
     background-color:red;
     background-image: url(../../img/fondo_header.jpg);background-repeat: no-repeat;background-size: cover;
-    height: 652px;
+    height: 511px;
     width: 100%;
 }
 
@@ -166,8 +156,10 @@ label {
   background: transparent;
   border: none;
   outline: none;
-  cursor: pointer; }
+  cursor: pointer; 
+}
 
+  
 @media screen and (max-width: 768px) {
   .container {
     width: calc( 100% - 30px);
@@ -186,3 +178,4 @@ label {
 @media screen and (max-width: 480px) {
   .booking-form {
     padding: 35px 30px 51px 30px; } }
+    

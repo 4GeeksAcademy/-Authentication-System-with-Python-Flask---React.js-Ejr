@@ -2,60 +2,46 @@ import React from "react";
 // import { Link } from "react-router-dom";
 import "../styles/home.css";
 import Picture from "/workspace/canchapp2/src/front/img/vectorstock_8229541.png";
+import Step1 from "/workspace/canchapp2/src/front/img/step1.jpg";
+import Step2 from "/workspace/canchapp2/src/front/img/step2.jpg";
+import Step3 from "/workspace/canchapp2/src/front/img/step3.jpg";
+import Step4 from "/workspace/canchapp2/src/front/img/step4.jpg";
+
 const Stepper = () => {
 	return (
-		<div className="card-group">
-			<div className="card">
-				<img src={Picture} className="stepper-1 card-img-top" alt="..." />
-				<div className="card-body">
-					<h5 className="card-title">Paso 1</h5>
-					<p className="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+		<>
+			<div className="row">
+				<div className="col-sm-3">
+					<div className="card">
+						<div className="card-body">
+							<img src={Step1} className="card-img" alt="..." />
+						</div>
+					</div>
 				</div>
-				{/* <div className="card-footer">
-					<small className="text-muted">Last updated 3 mins ago</small>
-				</div> */}
-			</div>
-			<div className="card">
-				<img src={Picture} className="stepper-2 card-img-top" alt="..." />
-				<div className="card-body">
-					<h5 className="card-title">Paso 2</h5>
-					<p className="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+
+				<div className="col-sm-3">
+					<div className="card">
+						<div className="card-body">
+							<img src={Step2} className="card-img" alt="..." />
+						</div>
+					</div>
 				</div>
-				{/* <div className="card-footer">
-					<small className="text-muted">Last updated 3 mins ago</small>
-				</div> */}
-			</div>
-			<div className="card">
-				<img src={Picture} className="stepper-3 card-img-top" alt="..." />
-				<div className="card-body">
-					<h5 className="card-title">Paso 3</h5>
-					<p className="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+				<div className="col-sm-3">
+					<div className="card">
+						<div className="card-body">
+							<img src={Step3} className="card-img" alt="..." />
+						</div>
+					</div>
 				</div>
-				{/* <div className="card-footer">
-					<small className="text-muted">Last updated 3 mins ago</small>
-				</div> */}
-			</div>
-            <div className="card">
-				<img src={Picture} className="stepper-3 card-img-top" alt="..." />
-				<div className="card-body">
-					<h5 className="card-title">Paso 3</h5>
-					<p className="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+				<div className="col-sm-3">
+					<div className="card">
+						<div className="card-body">
+							<img src={Step4} className="card-img" alt="..." />
+						</div>
+					</div>
 				</div>
-				{/* <div className="card-footer">
-					<small className="text-muted">Last updated 3 mins ago</small>
-				</div> */}
 			</div>
-             <div className="card">
-				<img src={Picture} className="stepper-3 card-img-top" alt="..." />
-				<div className="card-body">
-					<h5 className="card-title">Paso 3</h5>
-					<p className="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-				</div>
-				{/* <div className="card-footer">
-					<small className="text-muted">Last updated 3 mins ago</small>
-				</div> */}
-			</div>
-		</div>
+		</>
 	);
 };
 
