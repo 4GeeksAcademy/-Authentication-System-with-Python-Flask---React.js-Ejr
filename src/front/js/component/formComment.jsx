@@ -8,6 +8,7 @@ import { Form, Button } from "react-bootstrap";
 export const Formcomment = () => {
 	const { store, actions } = useContext(Context);
 	const [text_comment, setComment] = useState(null);
+	const [assessment, setAssessment] = useState();
 	return (
 		<>
 			<div className="container">
@@ -27,11 +28,11 @@ export const Formcomment = () => {
 												</div>
 											</div>
 											<header className="text-left">
-												<ButtomStar />
-												<ButtomStar />
-												<ButtomStar />
-												<ButtomStar2 />
-												<ButtomStar2 />
+												<ButtomStar onClick={() => setAssessment(1)} />
+												<ButtomStar onClick={() => setAssessment(2)} />
+												<ButtomStar onClick={() => setAssessment(3)} />
+												<ButtomStar onClick={() => setAssessment(4)} />
+												<ButtomStar onClick={() => setAssessment(5)} />
 											</header>
 											<div className="comment-post">
 												{/*<Form.Label>Titulo</Form.Label>

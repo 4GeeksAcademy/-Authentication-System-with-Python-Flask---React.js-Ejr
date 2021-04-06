@@ -7,6 +7,7 @@ import { Individuallnfo } from "../component/individualInfo.jsx";
 import { IndividualCard } from "../component/IndividualCard.jsx";
 import { Comments } from "../component/Mycomments.jsx";
 import { Formcomment } from "../component/formComment.jsx";
+import { ProgressBar } from "../component/ProgressBar.jsx";
 import Portafolio from "../component/Portafolio.jsx";
 
 export const Servicioindividual = () => {
@@ -42,7 +43,8 @@ export const Servicioindividual = () => {
 					</Col>
 				</Row>
 				<div className="transBox" />
-				<Formcomment />
+				<ProgressBar getTotales={getTotales} comments={state.comments} />
+				<Formcomment comments={state.comments} />
 				<Comments />
 			</Container>
 		</>
