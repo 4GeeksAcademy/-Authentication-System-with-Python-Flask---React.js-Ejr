@@ -7,7 +7,7 @@ class User(db.Model):
     UserID = db.Column(db.Integer, primary_key=True)
     Name = db.Column(db.String(100), unique=True, nullable=False)
     Password = db.Column(db.String(30), nullable=False)
-    email = db.Column(db.String(180), unique=True, nullable=False)
+    Email = db.Column(db.String(180), unique=True, nullable=False)
     TypeID = db.Column(db.Integer, db.ForeignKey("usertypes.TypeID"), nullable=False)
     usertypes = db.relationship('UserTypes')  
 
