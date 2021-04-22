@@ -4,6 +4,7 @@ import ScrollToTop from "./component/scrollToTop";
 
 import { Home } from "./pages/home";
 import { Demo } from "./pages/demo";
+import { ManageOrder } from "./pages/manageorder.js";
 import { Single } from "./pages/single";
 import { Login } from "./pages/login.js";
 import { Retrive1 } from "./pages/retrive1.js";
@@ -44,6 +45,9 @@ const Layout = () => {
 						</Route>
 						<Route exact path="/">
 							<Home />
+						</Route>
+						<Route exact path="/manageorder">
+							<ManageOrder />
 						</Route>
 						<Route exact path="/demo">
 							<Demo />

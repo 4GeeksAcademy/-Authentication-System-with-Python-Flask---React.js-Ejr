@@ -13,6 +13,18 @@ const getState = ({ getStore, getActions, setStore }) => {
 					background: "white",
 					initial: "white"
 				}
+			],
+			orders: [
+				{
+					OrderID: 101,
+					Quantity: 5,
+					State: "En Preparacion"
+				},
+				{
+					OrderID: 102,
+					Quantity: 3,
+					State: "Cerrada"
+				}
 			]
 		},
 		actions: {
