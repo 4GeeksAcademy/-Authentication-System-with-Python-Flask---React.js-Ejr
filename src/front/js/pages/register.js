@@ -1,6 +1,6 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import PropTypes from "prop-types";
-import { Container, Button, Image, Row, Form, FormGroup, Col, Card } from "react-bootstrap";
+import { Container, Button, Image, Row, Form, FormGroup, Col } from "react-bootstrap";
 import { BsEnvelope, BsPeopleCircle, BsFillLockFill } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
@@ -8,7 +8,17 @@ import { Context } from "../store/appContext";
 import "../../styles/demo.scss";
 
 export const Register = () => {
-	const { store, actions } = useContext(Context);
+	const [validated, setValidated] = useState(false);
+
+	const handleSubmit = event => {
+		const form = event.currentTarget;
+		if (form.checkValidity() === false) {
+			event.preventDefault();
+			event.stopPropagation();
+		}
+
+		setValidated(true);
+	};
 
 	return (
 		<Container>
@@ -17,7 +27,7 @@ export const Register = () => {
 					<FormGroup className="text-center pb-3">
 						<h1 className="text-dark">Registro</h1>
 					</FormGroup>
-					<Form>
+					<Form noValidate validated={validated} onClick={handleSubmit}>
 						<Form.Group controlId="formBasicUser">
 							<Form.Label>
 								{" "}
@@ -47,11 +57,13 @@ export const Register = () => {
 							</Form.Label>
 							<Form.Control type="password" placeholder="Contraseña" required isInvalid />
 						</Form.Group>
-						<FormGroup className="mx-sm-4 pb-3 text-center">
-							<Button variant="outline-success" type="submit">
-								Submit
-							</Button>
-						</FormGroup>
+						<Link to="/register1">
+							<FormGroup className="mx-sm-4 pb-3 text-center">
+								<Button variant="outline-success" type="submit">
+									Crear Usuario
+								</Button>
+							</FormGroup>
+						</Link>
 					</Form>
 				</Col>
 			</Row>

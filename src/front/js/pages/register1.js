@@ -22,9 +22,11 @@ export const Register1 = () => {
 						</Form.Group>
 					</Form>
 				</Modal.Body>
-				<Modal.Footer className="justify-content-center">
-					<Button variant="outline-primary">Volver a Inicio de Sesión</Button>
-				</Modal.Footer>
+				<Link to="/login">
+					<Modal.Footer className="justify-content-center">
+						<Button variant="outline-primary">Volver a Inicio de Sesión</Button>
+					</Modal.Footer>
+				</Link>
 			</Modal.Dialog>
 		</Container>
 	);

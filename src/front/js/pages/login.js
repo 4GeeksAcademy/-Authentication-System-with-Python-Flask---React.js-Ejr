@@ -50,21 +50,25 @@ export const Login = () => {
 								placeholder="Contraseña"
 								onChange={e => setPass(e.target.value)}
 							/>
-							<Button variant="link" size="sm">
-								¿Olvidó Contraseña?
-							</Button>{" "}
+							<Link to="/retrive1">
+								<Button variant="link" size="sm">
+									¿Olvidó Contraseña?
+								</Button>{" "}
+							</Link>
 						</FormGroup>
 						<FormGroup className="mx-sm-4 pb-3">
-							<Button
-								className="btn btn-block signin"
-								onClick={() => {
-									actions.loginValidation(user, pass);
-								}}>
-								Ingresar
-							</Button>
+							<Link to="/home">
+								<Button
+									className="btn btn-block signin"
+									onClick={() => {
+										actions.loginValidation(user, pass);
+									}}>
+									Ingresar
+								</Button>
+							</Link>
 						</FormGroup>
 						<FormGroup className="mx-sm-4 pb-3 text-center">
-							<Link to="/signup">
+							<Link to="/register">
 								<Button variant="outline-primary">Registrarse</Button>{" "}
 							</Link>
 						</FormGroup>

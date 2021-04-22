@@ -25,7 +25,9 @@ export const Retrive2 = () => {
 					</Form>
 				</Modal.Body>
 				<Modal.Footer className="justify-content-center">
-					<Button variant="outline-primary">Volver a Inicio de Sesión</Button>
+					<Link to="/login">
+						<Button variant="outline-primary">Volver a Inicio de Sesión</Button>
+					</Link>
 				</Modal.Footer>
 			</Modal.Dialog>
 		</Container>

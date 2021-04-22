@@ -30,7 +30,9 @@ export const Retrive1 = () => {
 				</Modal.Body>
 
 				<Modal.Footer className="justify-content-center">
-					<Button variant="outline-dark">Recuperar Contraseña</Button>
+					<Link to="/retrive2">
+						<Button variant="outline-dark">Recuperar Contraseña</Button>
+					</Link>
 				</Modal.Footer>
 			</Modal.Dialog>
 		</Container>
