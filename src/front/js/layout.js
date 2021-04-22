@@ -6,6 +6,10 @@ import { Home } from "./pages/home";
 import { Demo } from "./pages/demo";
 import { Single } from "./pages/single";
 import { Login } from "./pages/login.js";
+import { Retrive1 } from "./pages/retrive1.js";
+import { Retrive2 } from "./pages/retrive2.js";
+import { Register } from "./pages/register.js";
+import { Register1 } from "./pages/register1.js";
 import injectContext from "./store/appContext";
 
 import { Navbar } from "./component/navbar";
@@ -23,11 +27,23 @@ const Layout = () => {
 				<ScrollToTop>
 					<Navbar />
 					<Switch>
-						<Route exact path="/">
-							<Home />
-						</Route>
 						<Route exact path="/login">
 							<Login />
+						</Route>
+						<Route exact path="/register">
+							<Register />
+						</Route>
+						<Route exact path="/register1">
+							<Register1 />
+						</Route>
+						<Route exact path="/retrive1">
+							<Retrive1 />
+						</Route>
+						<Route exact path="/retrive2">
+							<Retrive2 />
+						</Route>
+						<Route exact path="/">
+							<Home />
 						</Route>
 						<Route exact path="/demo">
 							<Demo />

@@ -51,7 +51,7 @@ export const Login = () => {
 								onChange={e => setPass(e.target.value)}
 							/>
 							<Button variant="link" size="sm">
-								¿Olvido Contraseña?
+								¿Olvidó Contraseña?
 							</Button>{" "}
 						</FormGroup>
 						<FormGroup className="mx-sm-4 pb-3">
