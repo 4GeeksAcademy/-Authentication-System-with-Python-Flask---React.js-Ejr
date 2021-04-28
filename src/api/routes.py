@@ -16,3 +16,21 @@ def handle_hello():
     }
 
     return jsonify(response_body), 200
+
+@api.route('/pymeprovincia', methods=['GET'])
+def pyme_provincia():
+
+    response_body = {
+        "message": "Hello! I'm a message that came from the pymeprovincia"
+    }
+
+    return jsonify(response_body), 200
+
+@api.route('/pyme', methods=['GET'])
+def pyme():
+
+    response_body = {
+        "message": "Hello! I'm a message that came from the pymeprovincia"
+    }
+
+    return jsonify(response_body), 200
