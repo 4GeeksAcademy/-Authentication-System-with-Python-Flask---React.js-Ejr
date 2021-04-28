@@ -1,6 +1,8 @@
 from flask_sqlalchemy import SQLAlchemy
+from flask_marshmallow import Marshmallow
 
 db = SQLAlchemy()
+ma = Marshmallow()
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -78,7 +80,11 @@ class Couponlist(db.Model):
     user = db.relationship('User')
     coupons = db.relationship('Coupons')
     
-
     def __init__(self, user_id, coupon_id):
         self.user_id = user_id
         self.coupon_id = coupon_id
+
+# database schemas
+class UserSchema(ma.SQLAlchemyAutoSchema):
+    class Meta:
+        model = User
