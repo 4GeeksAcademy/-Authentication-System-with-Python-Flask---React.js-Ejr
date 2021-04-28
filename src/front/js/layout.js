@@ -11,6 +11,7 @@ import injectContext from "./store/appContext";
 
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
+import { Contactus } from "./pages/contact-us";
 
 //create your first component
 const Layout = () => {
@@ -35,6 +36,9 @@ const Layout = () => {
 						</Route>
 						<Route exact path="/recoverLogIn">
 							<RecoverLogIn />
+						</Route>
+						<Route exact path="/contact-us">
+							<Contactus />
 						</Route>
 						<Route exact path="/single/:theid">
 							<Single />
