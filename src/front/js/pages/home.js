@@ -3,7 +3,6 @@ import { Context } from "../store/appContext";
 import { Carousel } from "../component/carousel";
 import { Search } from "../component/search";
 import { Footer } from "../component/footer";
-import rigoImageUrl from "../../img/rigo-baby.jpg";
 import "../../styles/home.scss";
 
 export const Home = () => {
