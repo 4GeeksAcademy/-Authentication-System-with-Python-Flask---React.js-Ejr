@@ -41,10 +41,11 @@ class Product(db.Model):
     
     carts = db.relationship('Cart', backref='product', lazy=True)
 
-    def __init__(self, product_name, price, category):
+    def __init__(self, product_name, price, category, market_id):
         self.product_name = product_name
         self.price = price
         self.category = category
+        self.market_id = market_id
 
 class Cart(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -88,3 +89,7 @@ class Couponlist(db.Model):
 class UserSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         model = User
+
+class ProductSchema(ma.SQLAlchemyAutoSchema):
+    class Meta:
+        model = Product

@@ -1,9 +1,9 @@
 from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, ma
-from api.models import User, Supermarket
+from api.models import User, Supermarket, Product
 from api.utils import generate_sitemap, APIException
 
-from api.models import UserSchema
+from api.models import UserSchema, ProductSchema
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity, JWTManager
 
 api = Blueprint('api', __name__)
@@ -18,12 +18,18 @@ def login():
     if user is None:
         return jsonify({"Message": "Email or password wrong"}), 401
 
-    return 'something'
-
+    return 'passed'
 
 @api.route('/user/<int:id>', methods=['GET'])
 def get_users(id):
     users = User.query.get(id)
     users_schema = UserSchema()
     output = users_schema.dump(users)
+    return jsonify({"Result": output})
+
+@api.route('/products', methods=['GET'])
+def get_products():
+    products = Product.query.all()
+    products_schema = ProductSchema(many=True)
+    output = products_schema.dump(products)
     return jsonify({"Result": output})
