@@ -93,3 +93,7 @@ class UserSchema(ma.SQLAlchemyAutoSchema):
 class ProductSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         model = Product
+
+class MarketSchema(ma.SQLAlchemyAutoSchema):
+    class Meta:
+        model = Supermarket
