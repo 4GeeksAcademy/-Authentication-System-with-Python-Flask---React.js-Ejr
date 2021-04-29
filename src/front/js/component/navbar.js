@@ -20,6 +20,11 @@ export const Navbar = () => {
 				<Link to="/contact-us">
 					<button style={{ color: "white", background: "#859240", fontFamily: "Roboto" }}>Contacto</button>
 				</Link>
+				<Link to="/newProduct">
+					<button style={{ color: "white", background: "#859240", fontFamily: "Roboto" }}>
+						Nuevo Producto
+					</button>
+				</Link>
 			</div>
 		</nav>
 	);
