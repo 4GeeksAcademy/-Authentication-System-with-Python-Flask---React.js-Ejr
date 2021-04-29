@@ -29,16 +29,24 @@ def get_users(id):
         {"Result": output}
     )
 
+@api.route('/market', methods=['GET'])
+def get_a_markets():
+    markets = Supermarket.query.all()
+    markets_schema = MarketSchema(many=True)
+    output = markets_schema.dump(markets)
+    return jsonify(
+        {"Results": output}
+    )
+
 @api.route('/market/<int:id>', methods=['GET'])
 def get_a_market(id):
     market = Supermarket.query.get(id)
-    market_schema = MarketSchema()
-    output = market_schema.dump(market)
+    output = MarketSchema().dump(market)
     return jsonify(
-        {"result": output}
+        {"Result": output}
     )
 
-@api.route('/products', methods=['GET'])
+@api.route('/product', methods=['GET'])
 def get_products():
     products = Product.query.all()
     products_schema = ProductSchema(many=True)
@@ -50,8 +58,7 @@ def get_products():
 @api.route('/product/<int:id>', methods=['GET'])
 def get_product(id):
     product = Product.query.get(id)
-    product_schema = ProductSchema()
-    output = product_schema.dump(product)
+    output = ProductSchema().dump(product)
     return(
         {"Result": output}
     )
