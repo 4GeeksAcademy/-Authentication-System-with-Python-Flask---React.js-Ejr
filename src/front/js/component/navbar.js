@@ -6,7 +6,10 @@ export const Navbar = () => {
 		<nav className="navbar navbar-expand-lg navbar-light bg-transparent">
 			<div className="container-fluid">
 				<a className="navbar-brand" href="#">
-					Navbar
+					<img
+						src="https://www.global-retail.com/wp-content/uploads/2017/11/Global_Market.png"
+						width="150px"
+					/>
 				</a>
 				<button
 					className="navbar-toggler"
@@ -21,24 +24,56 @@ export const Navbar = () => {
 				<div className="collapse navbar-collapse" id="navbarSupportedContent">
 					<ul className="navbar-nav me-auto mb-2 mb-lg-0">
 						<li className="nav-item">
-							<a className="nav-link active" aria-current="page" href="#">
-								Home
+							<a className="btn btn-outline-success text-white" aria-current="page" href="#">
+								Inicio
 							</a>
 						</li>
+
 						<li className="nav-item">
-							<a className="nav-link" href="#">
-								Link
+							<a className="btn btn-outline-success text-white" href="#">
+								Categorias
 							</a>
 						</li>
+
+						<li className="nav-item">
+							<a
+								className="btn btn-outline-success text-white"
+								href="#"
+								tabIndex="-1"
+								aria-disabled="true">
+								Cupones
+							</a>
+						</li>
+
+						<li className="nav-item">
+							<a
+								className="btn btn-outline-success text-white"
+								href="#"
+								tabIndex="-1"
+								aria-disabled="true">
+								Registro
+							</a>
+						</li>
+
+						<li className="nav-item">
+							<a
+								className="btn btn-outline-success text-white"
+								href="#"
+								tabIndex="-1"
+								aria-disabled="true">
+								Login
+							</a>
+						</li>
+
 						<li className="nav-item dropdown">
 							<a
-								className="nav-link dropdown-toggle"
+								className="btn btn-outline-success text-white nav1"
 								href="#"
 								id="navbarDropdown"
 								role="button"
 								data-bs-toggle="dropdown"
 								aria-expanded="false">
-								Dropdown
+								°°°
 							</a>
 							<ul className="dropdown-menu" aria-labelledby="navbarDropdown">
 								<li>
@@ -61,17 +96,7 @@ export const Navbar = () => {
 								</li>
 							</ul>
 						</li>
-						<li className="nav-item">
-							<a className="nav-link disabled" href="#" tabIndex="-1" aria-disabled="true">
-								Disabled
-							</a>
-						</li>
 					</ul>
-					<div>
-						<button className="btn btn-success" type="submit">
-							Search
-						</button>
-					</div>
 				</div>
 			</div>
 		</nav>

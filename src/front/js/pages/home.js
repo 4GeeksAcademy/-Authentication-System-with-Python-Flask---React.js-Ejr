@@ -13,7 +13,6 @@ export const Home = () => {
 					</div>
 					<form>
 						<div className="form-group text-white">
-							<label htmlFor="exampleInputEmail1">Nombre del producto</label>
 							<div className="input-group mb-3">
 								<input
 									type="text"
@@ -30,7 +29,6 @@ export const Home = () => {
 							</div>
 						</div>
 						<div className="form-group text-white">
-							<label htmlFor="exampleInputPassword1">Ubicación</label>
 							<input
 								type="text"
 								className="form-control"

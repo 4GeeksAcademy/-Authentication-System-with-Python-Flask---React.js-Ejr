@@ -5,10 +5,13 @@ export const Login = () => {
 	return (
 		<div className="container rounded shadow w-75 h-50 bg-primary mt-5">
 			<div className="row align-items-stretch">
-				<div className="col col-md-4 col-lg-5 col-xl-6 rounded bg d-none d-lg-block" />
+				<div className="col rounded bg d-none d-lg-block" />
 				<div className="col bg-white p-2 rounded-end position-relative">
 					<div className="text-end pt-4">
-						{/* <img src="./images/login.svg" style="height: 40px;" alt=""/> */}
+						<img
+							src="https://cdn.pixabay.com/photo/2018/03/14/12/53/shopping-3225130__340.png"
+							width="150px"
+						/>
 					</div>
 					<h2 className="text-center py-5">Bienvenidos</h2>
 
