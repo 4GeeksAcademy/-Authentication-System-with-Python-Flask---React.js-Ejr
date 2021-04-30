@@ -8,6 +8,14 @@ from api.models import db, ma
 from api.routes import api
 from api.admin import setup_admin
 from flask_jwt_extended import JWTManager
+import sentry_sdk
+from sentry_sdk.integrations.flask import FlaskIntegration
+
+sentry_sdk.init(
+    dsn="https://ed62ab57760349d780f1cab3c6c9c3ec@o593885.ingest.sentry.io/5741831",
+    integrations=[FlaskIntegration()],
+    traces_sample_rate=1.0
+)
 
 ENV = os.getenv("FLASK_ENV")
 static_file_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), '../public/')

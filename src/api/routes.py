@@ -1,9 +1,9 @@
 from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, ma
-from api.models import User, Supermarket, Product
+from api.models import User, Supermarket, Product, Cart
 from api.utils import generate_sitemap, APIException
 
-from api.models import UserSchema, ProductSchema, MarketSchema
+from api.models import UserSchema, ProductSchema, MarketSchema, CartSchema
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity, JWTManager
 
 api = Blueprint('api', __name__)
@@ -62,3 +62,25 @@ def get_product(id):
     return(
         {"Result": output}
     )
+
+@api.route('/cart', methods=['POST', 'GET'])
+def cart_add():
+    if request.method == 'POST':
+        username = request.json.get('username')
+        product = request.json.get('product')
+
+        register = Cart(username, product)
+        db.session.add(register)
+        db.session.commit()
+        return jsonify({
+            "Message": "new register added susessfully"
+        })
+    #Handling the GET request
+    cart = Cart.query.all()
+    cart_schema = CartSchema(many=True)
+    output = cart_schema.dump(cart)
+    return jsonify({
+        "Results": output
+    })
+
+
