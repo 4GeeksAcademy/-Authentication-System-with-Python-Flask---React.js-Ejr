@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import logo from "../../img/logo.jpeg";
+import { Search } from "./search";
 
 export const Navbar = () => {
 	return (
@@ -8,6 +9,7 @@ export const Navbar = () => {
 			<Link to="/">
 				<img src={"logo.jpeg"} style={{ width: "80px", height: "40px" }} />
 			</Link>
+			<Search />
 			<div className="ml-auto">
 				<Link to="/RegisterUserIn">
 					<button style={{ color: "white", background: "#859240", fontFamily: "Roboto" }}>
@@ -24,6 +26,10 @@ export const Navbar = () => {
 					<button style={{ color: "white", background: "#859240", fontFamily: "Roboto" }}>
 						Nuevo Producto
 					</button>
+				</Link>
+
+				<Link to="/logueado">
+					<button style={{ color: "white", background: "#859240", fontFamily: "Roboto" }}>Logueado</button>
 				</Link>
 			</div>
 		</nav>
