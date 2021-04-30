@@ -5,11 +5,11 @@ import { Link } from "react-router-dom";
 export const Home = () => {
 	/*Pensar en lema*/
 	return (
-		<div className="container">
+		<div className="container principal">
 			<div className="row">
 				<div className="col-12">
 					<div className="text-white">
-						<h3>¡Con más opciones, ahorrás más colones!</h3>
+						<h3>¡Más opciones, ahorrás más colones!</h3>
 					</div>
 					<form>
 						<div className="form-group text-white">
@@ -39,7 +39,7 @@ export const Home = () => {
 								aria-describedby="basic-addon2"
 							/>
 						</div>
-						<button type="submit" className="btn btn-outline-warning btn-lg btn-block">
+						<button type="submit" className="btn btn-warning btn-lg btn-block">
 							Iniciar búsqueda
 						</button>
 					</form>
