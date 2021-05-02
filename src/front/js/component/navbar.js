@@ -2,6 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 import logo from "../../img/logo.jpeg";
 import { Search } from "./search";
+import "../../styles/home.scss";
+import "../../styles/index.scss";
 
 export const Navbar = () => {
 	return (
@@ -10,26 +12,44 @@ export const Navbar = () => {
 				<img src={"logo.jpeg"} style={{ width: "80px", height: "40px" }} />
 			</Link>
 			<Search />
-			<div className="ml-auto">
-				<Link to="/RegisterUserIn">
-					<button style={{ color: "white", background: "#859240", fontFamily: "Roboto" }}>
+			<div className="ml-auto nav">
+				<Link className="nav-item" to="/RegisterUserIn">
+					<a
+						className="nav-link"
+						style={{ color: "white", background: "#0", fontFamily: "'Roboto', sans-serif" }}>
 						Crear Cuenta
-					</button>
-				</Link>
-				<Link to="/logUserIn">
-					<button style={{ color: "white", background: "#859240", fontFamily: "Roboto" }}>Ingresar</button>
-				</Link>
-				<Link to="/contact-us">
-					<button style={{ color: "white", background: "#859240", fontFamily: "Roboto" }}>Contacto</button>
-				</Link>
-				<Link to="/newProduct">
-					<button style={{ color: "white", background: "#859240", fontFamily: "Roboto" }}>
-						Nuevo Producto
-					</button>
+					</a>
 				</Link>
 
-				<Link to="/logueado">
-					<button style={{ color: "white", background: "#859240", fontFamily: "Roboto" }}>Logueado</button>
+				<Link className="nav-item" to="/logUserIn">
+					<a
+						className="nav-link"
+						style={{ color: "white", background: "#0", fontFamily: "'Roboto', sans-serif" }}>
+						Ingresar
+					</a>
+				</Link>
+
+				<Link className="nav-item" to="/contact-us">
+					<a
+						className="nav-link"
+						style={{ color: "white", background: "#0", fontFamily: "'Roboto', sans-serif" }}>
+						Contacto
+					</a>
+				</Link>
+				<Link className="nav-item" to="/newProduct">
+					<a
+						className="nav-link"
+						style={{ color: "white", background: "#0", fontFamily: "'Roboto', sans-serif" }}>
+						Nuevo Producto
+					</a>
+				</Link>
+
+				<Link className="nav-item" to="/logueado">
+					<a
+						className="nav-link"
+						style={{ color: "white", background: "#0", fontFamily: "'Roboto', sans-serif" }}>
+						Logueado
+					</a>
 				</Link>
 			</div>
 		</nav>

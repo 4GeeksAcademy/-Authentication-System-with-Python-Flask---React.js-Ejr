@@ -3,7 +3,7 @@ import { Contact } from "../component/contact";
 
 export const Contactus = () => {
 	return (
-		<div className="container">
+		<div className="h-75 container">
 			<Contact />
 		</div>
 	);
