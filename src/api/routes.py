@@ -70,3 +70,12 @@ def tiposservicio():
     tiposservicio = list(map(lambda x: x.serialize(), tiposservicioQuery))
 
     return jsonify(tiposservicio), 200
+
+@api.route('/provincias', methods=['GET'])
+def provincias():
+
+    provinciasQuery = Provincias.query.all()
+    
+    provincias = list(map(lambda x: x.serialize(), provinciasQuery))
+
+    return jsonify(provincias), 200
