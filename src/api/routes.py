@@ -54,7 +54,7 @@ def canton():
 
     cantonID = request.json.get("cantonID", None)
     
-    cantonQuery = Canton.query.filter_by(id=cantonID)
+    cantonQuery = Cantones.query.filter_by(id=cantonID)
 
     canton = list(map(lambda x: x.serialize(), cantonQuery))
 

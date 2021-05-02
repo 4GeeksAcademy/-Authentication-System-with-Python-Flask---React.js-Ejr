@@ -64,7 +64,7 @@ class Cantones(db.Model):
         return {
             "id": self.id,
             "nombre": self.nombre,
-            "id_provincias": self.provincia,
+            "id_provincias": self.id_provincias,
             # do not serialize the password, its a security breach
         }
 
@@ -90,7 +90,6 @@ class Pyme(db.Model):
     id_canton = db.Column(db.Integer, ForeignKey('cantones.id'), unique=False, nullable=False)
     id_tiposServicio = db.Column(db.Integer, ForeignKey('tiposServicio.id'), unique=False, nullable=False)
     otrassenas = db.Column(db.String(80), unique=False, nullable=False)
-    servicio = db.Column(db.String(80), unique=False, nullable=False)
     telefono = db.Column(db.String(80), unique=False, nullable=False)
     facebook = db.Column(db.String(80), unique=False, nullable=False)
     instragram = db.Column(db.String(80), unique=False, nullable=False)
@@ -106,7 +105,6 @@ class Pyme(db.Model):
             "id_canton": self.id_canton,
             "id_tiposServicio": self.id_tiposServicio,
             "otrassenas": self.otrassenas,
-            "servicio": self.servicio,
             "telefono": self.telefono,
             "facebook": self.facebook,
             "instragram": self.instragram,
