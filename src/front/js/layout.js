@@ -39,9 +39,9 @@ const Layout = () => {
 							<h1>Not found!</h1>
 						</Route>
 					</Switch>
-					<Footer />
 				</ScrollToTop>
 			</BrowserRouter>
+			<Footer />
 		</div>
 	);
 };
