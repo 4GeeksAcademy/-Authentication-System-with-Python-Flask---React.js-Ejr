@@ -4,7 +4,7 @@ import { Home } from "./home";
 
 export const Actualizardatos = actualizardatos => {
 	return (
-		<div>
+		<div className="col-lg-6">
 			<div className="form-provincia">
 				<label form="sel1">Provincia:</label>
 				<select className="form-control" id="sel1">
