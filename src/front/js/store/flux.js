@@ -2,15 +2,40 @@ const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
 			message: null,
-			demo: [
+			provincia: [
 				{
-					title: "FIRST",
-					background: "white",
+					title: "Alajuela",
+					background: "#3f3f3f",
 					initial: "white"
 				},
 				{
-					title: "SECOND",
-					background: "white",
+					title: "San José",
+					background: "#3f3f3f",
+					initial: "white"
+				},
+				{
+					title: "Cartago",
+					background: "#3f3f3f",
+					initial: "white"
+				},
+				{
+					title: "Puntarenas",
+					background: "#3f3f3f",
+					initial: "white"
+				},
+				{
+					title: "Limón",
+					background: "#3f3f3f",
+					initial: "white"
+				},
+				{
+					title: "Guanacaste",
+					background: "#3f3f3f",
+					initial: "white"
+				},
+				{
+					title: "Heredia",
+					background: "#3f3f3f",
 					initial: "white"
 				}
 			]
@@ -34,13 +59,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				//we have to loop the entire demo array to look for the respective index
 				//and change its color
-				const demo = store.demo.map((elm, i) => {
+				const home = store.home.map((elm, i) => {
 					if (i === index) elm.background = color;
 					return elm;
 				});
 
 				//reset the global store
-				setStore({ demo: demo });
+				setStore({ home: home });
 			}
 		}
 	};
