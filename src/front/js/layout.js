@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 import { Home } from "./pages/home";
 import { Demo } from "./pages/demo";
@@ -40,9 +41,9 @@ const Layout = () => {
 							<h1>Not found!</h1>
 						</Route>
 					</Switch>
-					<Footer />
 				</ScrollToTop>
 			</BrowserRouter>
+			<Footer />
 		</div>
 	);
 };
