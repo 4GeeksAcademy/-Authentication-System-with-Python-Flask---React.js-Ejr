@@ -2,11 +2,11 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Container, Form, Col, Button, Row, Card } from "react-bootstrap";
 
-export const Login1 = () => {
+export const Register1 = () => {
 	return (
-		<Container bg={"Light"} text={"dark"} style={{ width: "20rem" }} className="mb-5">
+		<Container>
 			<Col>
-				<h1 text="white">Bienvebidos</h1>
+				<h1 text="white">Registro</h1>
 				<Form bg="white">
 					<Form.Group as={Row} controlId="formHorizontalEmail">
 						<Col sm={10}>
@@ -17,11 +17,12 @@ export const Login1 = () => {
 					<Form.Group as={Row} controlId="formHorizontalPassword">
 						<Col sm={10}>
 							<Form.Control type="password" placeholder="Contraseña" />
+							<Form.Text className="text-muted">Recuerde que la contraseña es de uso personal</Form.Text>
 						</Col>
 					</Form.Group>
-					<Form.Group as={Row} controlId="formHorizontalCheck">
-						<Col sm={{ span: 10, offset: 2 }}>
-							<Form.Check label="Recuerdarme" />
+					<Form.Group as={Row} controlId="formHorizontalPassword">
+						<Col sm={10}>
+							<Form.Control type="password" placeholder="Reingrese su Contraseña" />
 						</Col>
 					</Form.Group>
 					<Form.Group as={Row}>

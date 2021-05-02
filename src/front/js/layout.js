@@ -6,11 +6,13 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Home } from "./pages/home";
 import { Demo } from "./pages/demo";
 import { Single } from "./pages/single";
-import { Login } from "./pages/login";
+import { Login1 } from "./pages/login";
+import { Register1 } from "./pages/register";
+import { Forgot1 } from "./pages/forgot";
 import injectContext from "./store/appContext";
 
 import { Navbar1 } from "./component/navbar";
-import { Footer } from "./component/footer";
+import { Footer1 } from "./component/footer";
 
 //create your first component
 const Layout = () => {
@@ -34,13 +36,19 @@ const Layout = () => {
 							<Single />
 						</Route>
 						<Route exact path="/login">
-							<Login />
+							<Login1 />
+						</Route>
+						<Route exact path="/register">
+							<Register1 />
+						</Route>
+						<Route exact path="/forgot">
+							<Forgot1 />
 						</Route>
 						<Route>
 							<h1>Not found!</h1>
 						</Route>
 					</Switch>
-					<Footer />
+					<Footer1 />
 				</ScrollToTop>
 			</BrowserRouter>
 		</div>
