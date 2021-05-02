@@ -88,11 +88,13 @@ class Pyme(db.Model):
     nombre = db.Column(db.String(120), unique=True, nullable=False)
     id_provincia = db.Column(db.Integer, ForeignKey('provincias.id'), unique=False, nullable=False)
     id_canton = db.Column(db.Integer, ForeignKey('cantones.id'), unique=False, nullable=False)
+    id_tiposServicio = db.Column(db.Integer, ForeignKey('tiposServicio.id'), unique=False, nullable=False)
     otrassenas = db.Column(db.String(80), unique=False, nullable=False)
     servicio = db.Column(db.String(80), unique=False, nullable=False)
     telefono = db.Column(db.String(80), unique=False, nullable=False)
     facebook = db.Column(db.String(80), unique=False, nullable=False)
     instragram = db.Column(db.String(80), unique=False, nullable=False)
+    TiposServicio = relationship(TiposServicio)
     Provincias = relationship(Provincias)
     Cantones = relationship(Cantones)
 
@@ -102,6 +104,7 @@ class Pyme(db.Model):
             "nombre": self.nombre,
             "id_provincia": self.id_provincia,
             "id_canton": self.id_canton,
+            "id_tiposServicio": self.id_tiposServicio,
             "otrassenas": self.otrassenas,
             "servicio": self.servicio,
             "telefono": self.telefono,
