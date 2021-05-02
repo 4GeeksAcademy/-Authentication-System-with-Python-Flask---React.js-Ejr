@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User
+from api.models import db, User, Pyme
 from api.utils import generate_sitemap, APIException
 
 api = Blueprint('api', __name__)
@@ -19,18 +19,21 @@ def handle_hello():
 
 @api.route('/pymeprovincia', methods=['GET'])
 def pyme_provincia():
+    provinciaID = request.json.get("provinciaID", None)
+    
+    provincias = Pyme.query.filter_by(id_provincia=provinciaID)
 
-    response_body = {
-        "message": "Hello! I'm a message that came from the pymeprovincia"
-    }
+    provincia = list(map(lambda x: x.serialize(), provincias))
 
-    return jsonify(response_body), 200
+    return jsonify(provincia), 200
 
 @api.route('/pyme', methods=['GET'])
 def pyme():
 
-    response_body = {
-        "message": "Hello! I'm a message that came from the pymeprovincia"
-    }
+    pymeID = request.json.get("pymeID", None)
+    
+    pymes = Pyme.query.filter_by(id=pymeID)
 
-    return jsonify(response_body), 200
+    pyme = list(map(lambda x: x.serialize(), pymes))
+
+    return jsonify(pyme), 200

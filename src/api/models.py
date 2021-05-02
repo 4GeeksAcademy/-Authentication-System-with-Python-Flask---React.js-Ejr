@@ -100,9 +100,9 @@ class Pyme(db.Model):
         return {
             "id": self.id,
             "nombre": self.nombre,
-            "provincia": self.provincia,
-            "canton": self.canton,
-            "otrasenas": self.otrasenas,
+            "id_provincia": self.id_provincia,
+            "id_canton": self.id_canton,
+            "otrassenas": self.otrassenas,
             "servicio": self.servicio,
             "telefono": self.telefono,
             "facebook": self.facebook,
