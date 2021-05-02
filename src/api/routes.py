@@ -82,5 +82,3 @@ def cart_add():
     return jsonify({
         "Results": output
     })
-
-
