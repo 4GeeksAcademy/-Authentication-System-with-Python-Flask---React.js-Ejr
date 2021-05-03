@@ -4,7 +4,7 @@ export const Contact = () => {
 	return (
 		<div className="container">
 			<section className="mb-4">
-				<h2 className="h1-responsive font-weight-bold text-center my-4">Contáctenos</h2>
+				<h2 className="h1-responsive text-center my-4">Contáctenos</h2>
 
 				<p className="text-center w-responsive mx-auto mb-5">
 					Si tiene alguna consulta, no dude en contactarnos directamente, nuestro equipo le estrá respondiendo
