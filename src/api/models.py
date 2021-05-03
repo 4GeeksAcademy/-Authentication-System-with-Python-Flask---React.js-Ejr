@@ -47,15 +47,24 @@ class Product(db.Model):
         self.category = category
         self.market_id = market_id
 
+
 class Cart(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     product_id = db.Column(db.Integer, db.ForeignKey('product.id'))
     user = db.relationship('User')
 
-    def __init__(self, user_id, product_id):
-        self.user_id = user_id
-        self.product_id = product_id
+    def serialize(self):
+        return{
+            "user_id": self.user_id,
+            "product_id": self.product_id
+        }
+
+    def testcart():
+        return{
+            "user": User.name,
+            "product": Product.product_name
+        }
 
 class Coupons(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -97,7 +106,3 @@ class ProductSchema(ma.SQLAlchemyAutoSchema):
 class MarketSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         model = Supermarket
-
-class CartSchema(ma.SQLAlchemyAutoSchema):
-    class Meta:
-        model = Cart
