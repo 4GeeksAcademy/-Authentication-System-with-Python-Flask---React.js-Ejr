@@ -45,8 +45,12 @@ export const Home = () => {
 					</div>
 				</div>
 			</div>
+
 			<div className="cards">
-				<h1 className="text-center text-white font-weight-light">Productos rebajados</h1>
+				<p className="h1 font-weight-light text-center" margin-top="100px">
+					Promociones
+				</p>
+
 				<div className="row justify-content-md-center">
 					<div className="col-8">
 						<CardDeck>
