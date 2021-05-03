@@ -1,9 +1,30 @@
-.principal {
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
+
 .nav-item {
     float: right;
+    
+   
+}
+
+//CSS del Footer
+.fab{
+   justify-content: center; 
+}
+.f1{
+color: #ffc000;
+font-size: 30px;
+margin-left: 10px;
+}
+.fab.fa-facebook:hover {
+color: #3B5998;
+}
+.fab.fa-twitter:hover {
+color: #4099FF;
+}
+.fab.fa-instagram:hover {
+color: #fd1d1d;
+
+}
+.fab.fa-whatsapp:hover {
+color: #60b626;
+
 }

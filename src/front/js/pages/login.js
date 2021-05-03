@@ -7,7 +7,7 @@ export const Login1 = () => {
 			<div className="d-flex justify-content-center h-100">
 				<div className="card">
 					<div className="card-header">
-						<h3>Logearme</h3>
+						<h3>Acceder</h3>
 						<div className="d-flex justify-content-end social_icon">
 							<span>
 								<i className="fab fa-facebook-square" />
@@ -25,7 +25,7 @@ export const Login1 = () => {
 							<div className="input-group form-group">
 								<div className="input-group-prepend">
 									<span className="input-group-text">
-										<i className="fas fa-user" />
+										<i className="fa fa-envelope" />
 									</span>
 								</div>
 								<input type="text" className="form-control" placeholder="Email" />

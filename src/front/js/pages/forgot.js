@@ -14,7 +14,7 @@ export const Forgot1 = () => {
 							<div className="input-group form-group">
 								<div className="input-group-prepend">
 									<span className="input-group-text">
-										<i className="far fa-address-card" />
+										<i className="	fa fa-envelope" />
 									</span>
 								</div>
 								<input type="text" className="form-control" placeholder="Ingrese su Email" />
