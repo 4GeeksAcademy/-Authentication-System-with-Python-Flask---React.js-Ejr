@@ -4,7 +4,7 @@ import { Container, Form, Col, Button, Row, Card } from "react-bootstrap";
 
 export const Forgot1 = () => {
 	return (
-		<Container>
+		<Container style={{ width: "20rem" }} className="c1 mb-5">
 			<Col>
 				<h1 text="white">Olvido su contraseña</h1>
 				<Form bg="white">

@@ -5,7 +5,7 @@ import { Container, Navbar, Row, Col } from "react-bootstrap";
 export const Footer1 = () => (
 	<Container>
 		<Row md={4}>
-			<Col expand="lg" variant="light" bg="transparent" xs={6}>
+			<Col expand="lg" variant="light" bg="transparent" xs={1}>
 				<Navbar.Brand href="#">
 					<a className="fab fa-instagram text-white" href="https://www.instagram.com/" />
 				</Navbar.Brand>
