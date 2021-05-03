@@ -45,10 +45,10 @@ export const Navbar1 = () => {
 								<Link to={"/"}>
 									<Dropdown.Item eventKey="1">Alcancia</Dropdown.Item>
 								</Link>
-								<Dropdown.Item eventKey="2">Another action</Dropdown.Item>
-								<Dropdown.Item eventKey="3">Something else here</Dropdown.Item>
+								<Dropdown.Item eventKey="2">Action</Dropdown.Item>
+								<Dropdown.Item eventKey="3">Other Acction</Dropdown.Item>
 								<Dropdown.Divider />
-								<Dropdown.Item eventKey="4">Separated link</Dropdown.Item>
+								<Dropdown.Item eventKey="4">Cerrar secion</Dropdown.Item>
 							</DropdownButton>
 						))}
 					</div>
