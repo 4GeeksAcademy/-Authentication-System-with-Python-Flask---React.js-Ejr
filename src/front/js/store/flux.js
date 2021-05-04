@@ -1,44 +1,12 @@
-const getState = ({ getStore, getActions, setStore }) => {
+const getState = ({ getActions, setStore }) => {
 	return {
 		store: {
-			message: null,
-			provincia: [
-				{
-					title: "Alajuela",
-					background: "#3f3f3f",
-					initial: "white"
-				},
-				{
-					title: "San José",
-					background: "#3f3f3f",
-					initial: "white"
-				},
-				{
-					title: "Cartago",
-					background: "#3f3f3f",
-					initial: "white"
-				},
-				{
-					title: "Puntarenas",
-					background: "#3f3f3f",
-					initial: "white"
-				},
-				{
-					title: "Limón",
-					background: "#3f3f3f",
-					initial: "white"
-				},
-				{
-					title: "Guanacaste",
-					background: "#3f3f3f",
-					initial: "white"
-				},
-				{
-					title: "Heredia",
-					background: "#3f3f3f",
-					initial: "white"
-				}
-			]
+			alajuela: [],
+			cartago: [],
+			heredia: [],
+			limon: [],
+			puntarenas: [],
+			sanjose: []
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
@@ -46,26 +14,47 @@ const getState = ({ getStore, getActions, setStore }) => {
 				getActions().changeColor(0, "green");
 			},
 
-			getMessage: () => {
-				// fetching data from the backend
-				fetch(process.env.BACKEND_URL + "/api/hello")
-					.then(resp => resp.json())
-					.then(data => setStore({ message: data.message }))
-					.catch(error => console.log("Error loading message from backend", error));
+			loadAlajuela: async () => {
+				const url = "https://3001-copper-swordtall-9cwsa76y.ws-us04.gitpod.io";
+				const response = await fetch(url);
+				const data = await response.json();
+				setStore({ alajuela: data.results });
 			},
-			changeColor: (index, color) => {
-				//get the store
-				const store = getStore();
-
-				//we have to loop the entire demo array to look for the respective index
-				//and change its color
-				const home = store.home.map((elm, i) => {
-					if (i === index) elm.background = color;
-					return elm;
-				});
-
-				//reset the global store
-				setStore({ home: home });
+			loadCartago: async () => {
+				const url = "https://3001-copper-swordtall-9cwsa76y.ws-us04.gitpod.io";
+				const response = await fetch(url);
+				const data = await response.json();
+				setStore({ cartago: data.results });
+			},
+			loadGuanacaste: async () => {
+				const url = "https://3001-copper-swordtall-9cwsa76y.ws-us04.gitpod.io";
+				const response = await fetch(url);
+				const data = await response.json();
+				setStore({ guanacaste: data.results });
+			},
+			loadHeredia: async () => {
+				const url = "https://3001-copper-swordtall-9cwsa76y.ws-us04.gitpod.io";
+				const response = await fetch(url);
+				const data = await response.json();
+				setStore({ heredia: data.results });
+			},
+			loadLimon: async () => {
+				const url = "https://3001-copper-swordtall-9cwsa76y.ws-us04.gitpod.io";
+				const response = await fetch(url);
+				const data = await response.json();
+				setStore({ limon: data.results });
+			},
+			loadPuntarenas: async () => {
+				const url = "https://3001-copper-swordtall-9cwsa76y.ws-us04.gitpod.io";
+				const response = await fetch(url);
+				const data = await response.json();
+				setStore({ puntarenas: data.results });
+			},
+			loadSanjose: async () => {
+				const url = "https://3001-copper-swordtall-9cwsa76y.ws-us04.gitpod.io";
+				const response = await fetch(url);
+				const data = await response.json();
+				setStore({ sanjose: data.results });
 			}
 		}
 	};
