@@ -9,33 +9,34 @@ export const Alajuela = alajuela => {
 				<thead>
 					<tr>
 						<th scope="col">#</th>
-						{props.id}
+
 						<th scope="col">Provincia</th>
-						{props.id_provincia}
+
 						<th scope="col">Cantón</th>
-						{props.id_canton}
+
 						<th scope="col">Nombre PYMES</th>
-						{props.nombre}
+
 						<th scope="col">Servicio</th>
-						{props.id_tiposServicio}
+
 						<th scope="col">Teléfono</th>
-						{props.telefono}
+
 						<th scope="col">Facebook</th>
-						{props.facebook}
+
 						<th scope="col">Instagram</th>
-						{props.instagram}
 					</tr>
 				</thead>
 				<tbody>
 					<tr>
-						<th scope="row">1</th>
-						<td>Mark</td>
-						<td>Otto</td>
-						<td>@mdo</td>
-						<td>Mark</td>
-						<td>Otto</td>
-						<td>@mdo</td>
-						<td>@mdo</td>
+						<th scope="row">{props.id}</th>
+						<td>{props.id_provincia}</td>
+						<td>{props.id_canton}</td>
+						<td>
+							<a href="/single/:theid">{props.nombre}</a>
+						</td>
+						<td>{props.id_tiposServicio}</td>
+						<td>{props.telefono}</td>
+						<td> {props.facebook}</td>
+						<td>{props.instagram}</td>
 					</tr>
 					<tr>
 						<th scope="row">2</th>
