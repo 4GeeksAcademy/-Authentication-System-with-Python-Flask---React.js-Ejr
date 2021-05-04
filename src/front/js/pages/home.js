@@ -47,10 +47,7 @@ export const Home = () => {
 			</div>
 
 			<div className="cards">
-				<p className="h1 font-weight-light text-center" margin-top="100px">
-					Promociones
-				</p>
-
+				<p className="h1 font-weight-light text-center py-4 ">Promociones</p>
 				<div className="row justify-content-md-center">
 					<div className="col-8">
 						<CardDeck>
@@ -73,6 +70,7 @@ export const Home = () => {
 									variant="top"
 									src="http://triquitraque.cr/images/thumbs/0003016_mantequilla-con-sal-dos-pinos-115g_360.jpeg"
 									height="300px"
+									width="200px"
 								/>
 								<Card.Body>
 									<Card.Title>Mantequilla Dos Pinos</Card.Title>
