@@ -23,7 +23,9 @@ export const Cartago = cartago => {
 						<th scope="row">1</th>
 						<td>Mark</td>
 						<td>Otto</td>
-						<td>@mdo</td>
+						<td>
+							<a href="/single/:theid">N</a>
+						</td>
 						<td>Mark</td>
 						<td>Otto</td>
 						<td>@mdo</td>
