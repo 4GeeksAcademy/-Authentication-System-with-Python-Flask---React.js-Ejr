@@ -26,6 +26,6 @@
         "exports": "never",
         "functions": "ignore",
     }],
-    "react/prop-types": [2]
+    "react/prop-types": "off"//[2]
   }
 }
