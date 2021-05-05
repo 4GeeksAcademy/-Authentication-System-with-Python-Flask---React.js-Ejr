@@ -17,7 +17,7 @@ const getState = ({ getActions, setStore }) => {
 				getActions().changeColor(0, "green");
 			},
 			loadCantones: async () => {
-				const response = await fetch("https://3001-gold-ant-kpv46sbr.ws-us03.gitpod.io/api/cantones", {
+				const response = await fetch("https://busca-pyme.herokuapp.com/api/cantones", {
 					method: "GET"
 				});
 
@@ -27,7 +27,7 @@ const getState = ({ getActions, setStore }) => {
 				setStore({ cantones: data });
 			},
 			loadProvincias: async () => {
-				const response = await fetch("https://3001-gold-ant-kpv46sbr.ws-us03.gitpod.io/api/provincias", {
+				const response = await fetch("https://busca-pyme.herokuapp.com/api/provincias", {
 					method: "GET"
 				});
 
@@ -37,7 +37,7 @@ const getState = ({ getActions, setStore }) => {
 				setStore({ provincias: data });
 			},
 			loadServicios: async () => {
-				const response = await fetch("https://3001-gold-ant-kpv46sbr.ws-us03.gitpod.io/api/servicios", {
+				const response = await fetch("https://busca-pyme.herokuapp.com/api/servicios", {
 					method: "GET"
 				});
 
@@ -50,7 +50,7 @@ const getState = ({ getActions, setStore }) => {
 				const body = {
 					provinciaID: 1
 				};
-				const url = "https://3001-gold-ant-kpv46sbr.ws-us03.gitpod.io/api/pymeprovincia";
+				const url = "https://busca-pyme.herokuapp.com/api/pymeprovincia";
 				const response = await fetch(url, {
 					method: "POST",
 					body: JSON.stringify(body),
