@@ -17,7 +17,7 @@ def handle_hello():
 
     return jsonify(response_body), 200
 
-@api.route('/pymeprovincia', methods=['GET'])
+@api.route('/pymeprovincia', methods=['POST'])
 def pyme_provincia():
     provinciaID = request.json.get("provinciaID", None)
     
@@ -27,7 +27,7 @@ def pyme_provincia():
 
     return jsonify(provincias), 200
 
-@api.route('/pyme', methods=['GET'])
+@api.route('/pyme', methods=['POST'])
 def pyme():
 
     pymeID = request.json.get("pymeID", None)
@@ -38,7 +38,7 @@ def pyme():
 
     return jsonify(pyme), 200
 
-@api.route('/provincia', methods=['GET'])
+@api.route('/provincia', methods=['POST'])
 def provincia():
 
     provinciaID = request.json.get("provinciaID", None)
@@ -49,7 +49,7 @@ def provincia():
 
     return jsonify(provincia), 200
 
-@api.route('/canton', methods=['GET'])
+@api.route('/canton', methods=['POST'])
 def canton():
 
     cantonID = request.json.get("cantonID", None)
@@ -60,7 +60,7 @@ def canton():
 
     return jsonify(canton), 200
 
-@api.route('/tiposservicio', methods=['GET'])
+@api.route('/tiposservicio', methods=['POST'])
 def tiposservicio():
 
     tiposservicioID = request.json.get("tiposservicioID", None)
@@ -79,3 +79,21 @@ def provincias():
     provincias = list(map(lambda x: x.serialize(), provinciasQuery))
 
     return jsonify(provincias), 200
+
+@api.route('/cantones', methods=['GET'])
+def cantones():
+
+    cantonesQuery = Cantones.query.all()
+    
+    cantones = list(map(lambda x: x.serialize(), cantonesQuery))
+
+    return jsonify(cantones), 200
+
+@api.route('/servicios', methods=['GET'])
+def servicios():
+
+    serviciosQuery = TiposServicio.query.all()
+    
+    servicios = list(map(lambda x: x.serialize(), serviciosQuery))
+
+    return jsonify(servicios), 200
