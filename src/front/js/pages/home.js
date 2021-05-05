@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import "../../styles/home.scss";
-import { Link } from "react-router-dom";
-import { CardDeck, Card } from "react-bootstrap";
+import { Promociones } from "../component/promociones";
 
 export const Home = () => {
 	return (
@@ -14,7 +13,7 @@ export const Home = () => {
 						</div>
 						<form>
 							<div className="form-group text-white">
-								<div className="input-group mb-3">
+								<div className="input-group mb-3 lg">
 									<input
 										type="text"
 										className="form-control"
@@ -46,8 +45,12 @@ export const Home = () => {
 				</div>
 			</div>
 
-			<div className="cards">
-				<p className="h1 font-weight-light text-center py-4 " />
+			<div className="cards d-flex justify-content-center">
+				<Promociones />
+				<Promociones />
+				<Promociones />
+				<Promociones />
+				<Promociones />
 			</div>
 		</>
 	);

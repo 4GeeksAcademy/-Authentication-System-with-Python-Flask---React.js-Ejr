@@ -7,3 +7,11 @@ body{
   
   
 }
+.container {
+    display: flex;
+    justify-content:center;
+    align-items: center;
+}
+.tarjeta{
+    margin:20px;
+}

@@ -3,19 +3,28 @@ import { Link } from "react-router-dom";
 import { Container, Navbar, Row, Col } from "react-bootstrap";
 
 export const Footer1 = () => (
-	<Container>
-		<Row md={4}>
-			<Col expand="lg" variant="light" bg="transparent" xs={6}>
-				<Navbar.Brand href="#">
-					<a className="fab fa-instagram text-white" href="https://www.instagram.com/" />
-				</Navbar.Brand>
-				<Navbar.Brand href="#">
-					<a className="fab fa-facebook text-white" href="https://www.facebook.com/" />
-				</Navbar.Brand>
-				<Navbar.Brand href="#">
-					<a className="fab fa-twitter text-white" href="https://twitter.com/" />
-				</Navbar.Brand>
-			</Col>
-		</Row>
-	</Container>
+	<footer ClassName="section footer-classic context-dark bg-image" style={{ background: "transparent" }}>
+		<div ClassName="text-center f2">
+			<span>
+				<a href="https://www.facebook.com/">
+					<i className="fab fa-facebook f1" />
+				</a>
+			</span>
+			<span>
+				<a href="https://www.instagram.com/">
+					<i className="fab fa-instagram f1" />
+				</a>
+			</span>
+			<span>
+				<a href="https://www.twitter.com/">
+					<i className="fab fa-twitter f1" />
+				</a>
+			</span>
+			<span>
+				<a href="https://api.whatsapp.com/send?phone=+506">
+					<i className="fab fa-whatsapp f1" />
+				</a>
+			</span>
+		</div>
+	</footer>
 );

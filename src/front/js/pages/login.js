@@ -1,51 +1,67 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Container, Form, Col, Button, Row, Card } from "react-bootstrap";
 
 export const Login1 = () => {
 	return (
-		<Container bg={"Light"} text={"dark"} style={{ width: "20rem" }} className="mb-5">
-			<Col>
-				<h1 text="white">Bienvebidos</h1>
-				<Form bg="white">
-					<Form.Group as={Row} controlId="formHorizontalEmail">
-						<Col sm={10}>
-							<Form.Control type="email" placeholder="Correo Electronico" />
-						</Col>
-					</Form.Group>
-
-					<Form.Group as={Row} controlId="formHorizontalPassword">
-						<Col sm={10}>
-							<Form.Control type="password" placeholder="Contraseña" />
-						</Col>
-					</Form.Group>
-					<Form.Group as={Row} controlId="formHorizontalCheck">
-						<Col sm={{ span: 10, offset: 2 }}>
-							<Form.Check label="Recuerdarme" />
-						</Col>
-					</Form.Group>
-					<Form.Group as={Row}>
-						<Col sm={{ span: 10, offset: 2 }}>
-							<Button type="submit" size="lg">
-								Ingresar
-							</Button>
-						</Col>
-					</Form.Group>
-
-					<Form.Group as={Row}>
-						<Col sm={{ span: 10, offset: 2 }}>
-							<Button type="submit" variant="outline-danger" size="lg">
-								Google
-							</Button>
-						</Col>
-						<Col sm={{ span: 10, offset: 2 }}>
-							<Button type="submit" variant="outline-primary" size="lg">
-								Facebook
-							</Button>
-						</Col>
-					</Form.Group>
-				</Form>
-			</Col>
-		</Container>
+		<div className="container">
+			<div className="d-flex justify-content-center h-100">
+				<div className="card">
+					<div className="card-header">
+						<h3>Acceder</h3>
+						<div className="d-flex justify-content-end social_icon">
+							<span>
+								<i className="fab fa-facebook-square" />
+							</span>
+							<span>
+								<i className="fab fa-google-plus-square" />
+							</span>
+							<span>
+								<i className="fab fa-twitter-square" />
+							</span>
+						</div>
+					</div>
+					<div className="card-body">
+						<form>
+							<div className="input-group form-group">
+								<div className="input-group-prepend">
+									<span className="input-group-text">
+										<i className="fa fa-envelope" />
+									</span>
+								</div>
+								<input type="text" className="form-control" placeholder="Email" />
+							</div>
+							<div className="input-group form-group">
+								<div className="input-group-prepend">
+									<span className="input-group-text">
+										<i className="fas fa-key" />
+									</span>
+								</div>
+								<input type="password" className="form-control" placeholder="Contraseña" />
+							</div>
+							<div className="row align-items-center remember">
+								<input type="checkbox" />
+								Recordar
+							</div>
+							<div className="form-group">
+								<input type="login" value="Ingresar" className="btn float-right login_btn" />
+							</div>
+						</form>
+					</div>
+					<div className="card-footer">
+						<div className="d-flex justify-content-center links">
+							No tienes cuenta?
+							<Link to={"/register"} href="#">
+								Adquirir
+							</Link>
+						</div>
+						<div className="d-flex justify-content-center">
+							<Link to={"/forgot"} href="#">
+								Olvidaste la contraseña?
+							</Link>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 	);
 };

@@ -1,52 +1,63 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Container, Form, Col, Button, Row, Card } from "react-bootstrap";
 
 export const Register1 = () => {
 	return (
-		<Container>
-			<Col>
-				<h1 text="white">Registro</h1>
-				<Form bg="white">
-					<Form.Group as={Row} controlId="formHorizontalEmail">
-						<Col sm={10}>
-							<Form.Control type="email" placeholder="Correo Electronico" />
-						</Col>
-					</Form.Group>
-
-					<Form.Group as={Row} controlId="formHorizontalPassword">
-						<Col sm={10}>
-							<Form.Control type="password" placeholder="Contraseña" />
-							<Form.Text className="text-muted">Recuerde que la contraseña es de uso personal</Form.Text>
-						</Col>
-					</Form.Group>
-					<Form.Group as={Row} controlId="formHorizontalPassword">
-						<Col sm={10}>
-							<Form.Control type="password" placeholder="Reingrese su Contraseña" />
-						</Col>
-					</Form.Group>
-					<Form.Group as={Row}>
-						<Col sm={{ span: 10, offset: 2 }}>
-							<Button type="submit" size="lg">
-								Ingresar
-							</Button>
-						</Col>
-					</Form.Group>
-
-					<Form.Group as={Row}>
-						<Col sm={{ span: 10, offset: 2 }}>
-							<Button type="submit" variant="outline-danger" size="lg">
-								Google
-							</Button>
-						</Col>
-						<Col sm={{ span: 10, offset: 2 }}>
-							<Button type="submit" variant="outline-primary" size="lg">
-								Facebook
-							</Button>
-						</Col>
-					</Form.Group>
-				</Form>
-			</Col>
-		</Container>
+		<div className="container">
+			<div className="d-flex justify-content-center h-100">
+				<div className="card">
+					<div className="d-flex justify-content-center text-white">
+						<h3>Registrarme</h3>
+					</div>
+					<div className="card-body">
+						<form>
+							<div className="input-group form-group">
+								<div className="input-group-prepend">
+									<span className="input-group-text">
+										<i className="fas fa-user" />
+									</span>
+								</div>
+								<input type="text" className="form-control" placeholder="Nombre" />
+							</div>
+							<div className="input-group form-group">
+								<div className="input-group-prepend">
+									<span className="input-group-text">
+										<i className="fa fa-envelope" />
+									</span>
+								</div>
+								<input type="text" className="form-control" placeholder="Email" />
+							</div>
+							<div className="input-group form-group">
+								<div className="input-group-prepend">
+									<span className="input-group-text">
+										<i className="fas fa-key" />
+									</span>
+								</div>
+								<input type="password" className="form-control" placeholder="Contraseña" />
+							</div>
+							<div className="input-group form-group">
+								<div className="input-group-prepend">
+									<span className="input-group-text">
+										<i className="fas fa-key" />
+									</span>
+								</div>
+								<input type="password" className="form-control" placeholder="Confirme su contraseña" />
+							</div>
+							<div className="form-group">
+								<input type="register" value="Registrar" className="btn float-right login_btn" />
+							</div>
+							<div className="card-footer">
+								<div className="d-flex justify-content-center links">
+									Ya tienes cuenta?
+									<Link to={"/login"} href="#">
+										Ingresar
+									</Link>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
 	);
 };
