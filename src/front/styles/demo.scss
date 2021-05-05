@@ -14,7 +14,7 @@ background-color: rgba(0,0,0,0.5) !important;
 }
 
 .social_icon span{
-font-size: 60px;
+font-size: 45px;
 margin-left: 10px;
 color: #FFC312;
 }
@@ -31,7 +31,7 @@ color: white;
 .social_icon{
 position: absolute;
 right: 20px;
-top: -45px;
+transform: translateY(-125%)
 }
 
 .input-group-prepend span{

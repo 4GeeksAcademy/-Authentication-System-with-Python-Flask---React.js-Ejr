@@ -5,7 +5,7 @@ import { Navbar, Nav, Dropdown, DropdownButton, Button } from "react-bootstrap";
 export const Navbar1 = () => {
 	return (
 		<>
-			<Navbar collapseOnSelect expand="lg" bg="black" variant="dark" text="white">
+			<Navbar className="navigation" collapseOnSelect expand="lg" bg="black" variant="dark" text="white">
 				<Link to={"/"}>
 					<Navbar.Brand href="#home">
 						<img
