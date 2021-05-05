@@ -14,9 +14,11 @@ def login():
     email = request.json.get('email', None)
     password = request.json.get('password', None)
 
-    user = db.session.query(User).filter(User.email==email, User.password==password).first()
-    if user is None:
-        return jsonify({"Message": "Email or password wrong"}), 401
+    login = User.query.filter_by(email = email, password = password).first()
+    if login is None:
+        return jsonify({
+            "Message": "Email or Password Wrong"
+        })
 
     return 'passed'
 
@@ -63,7 +65,7 @@ def get_product(id):
         {"Result": output}
     )
 
-@api.route('/cart', methods=['POST', 'GET'])
+@api.route('/cart', methods=['POST'])
 def cart_add():
     if request.method == 'POST':
         username = request.json.get('username')
@@ -76,10 +78,10 @@ def cart_add():
             "Message": "new register added susessfully"
         })
     #Handling the GET request
-    #output2 = db.session.query(Cart, User, Product).select_from(Cart).join(User).join(Product).all()  
-    output = db.session.query(Cart, User, Product).join(User, User.id == Cart.user_id).join(Product, Product.id == Cart.product_id).all()
+    query = db.session.query(Cart, User, Product).join(User, User.id == Cart.user_id).join(Product, Product.id == Cart.product_id).all()
+    
+    output = [(user.name, product.product_name) for cart, user, product in query]
 
-    cart_all = Cart.query.all()
-    result = list(map(lambda x: x.testcart(),cart_all))
-
-    return jsonify(result)
+    return jsonify({
+        "Result": output    
+    })

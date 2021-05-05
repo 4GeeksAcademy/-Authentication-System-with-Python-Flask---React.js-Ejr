@@ -22,7 +22,7 @@ class User(db.Model):
 class Supermarket(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     market_name = db.Column(db.String(60), nullable=False)
-    location = db.Column(db.String(60), unique=True ,nullable=False)
+    location = db.Column(db.String(60), nullable=False)
     information = db.Column(db.String(255))
 
     def __init__(self, market_name, location, information):
@@ -57,13 +57,8 @@ class Cart(db.Model):
     def serialize(self):
         return{
             "user_id": self.user_id,
-            "product_id": self.product_id
-        }
-
-    def testcart():
-        return{
-            "user": User.name,
-            "product": Product.product_name
+            "product_id": self.product_id,
+            "product_name": user.name
         }
 
 class Coupons(db.Model):
