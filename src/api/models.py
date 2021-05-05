@@ -93,6 +93,7 @@ class Pyme(db.Model):
     telefono = db.Column(db.String(80), unique=False, nullable=False)
     facebook = db.Column(db.String(80), unique=False, nullable=False)
     instagram = db.Column(db.String(80), unique=False, nullable=False)
+    Imagen = db.Column(db.String(200), unique=False, nullable=False)
     TiposServicio = relationship(TiposServicio)
     Provincias = relationship(Provincias)
     Cantones = relationship(Cantones)
@@ -108,5 +109,6 @@ class Pyme(db.Model):
             "telefono": self.telefono,
             "facebook": self.facebook,
             "instagram": self.instagram,
+            "Imagen": self.Imagen
             # do not serialize the password, its a security breach
         }
