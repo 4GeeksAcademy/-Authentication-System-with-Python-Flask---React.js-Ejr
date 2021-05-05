@@ -6,19 +6,51 @@ const getState = ({ getActions, setStore }) => {
 			heredia: [],
 			limon: [],
 			puntarenas: [],
-			sanjose: []
+			sanjose: [],
+			cantones: [],
+			provincias: [],
+			servicios: []
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
 			exampleFunction: () => {
 				getActions().changeColor(0, "green");
 			},
+			loadCantones: async () => {
+				const response = await fetch("https://3001-gold-ant-kpv46sbr.ws-us03.gitpod.io/api/cantones", {
+					method: "GET"
+				});
 
+				const data = await response.json();
+				console.log("cantones", data);
+
+				setStore({ cantones: data });
+			},
+			loadProvincias: async () => {
+				const response = await fetch("https://3001-gold-ant-kpv46sbr.ws-us03.gitpod.io/api/provincias", {
+					method: "GET"
+				});
+
+				const data = await response.json();
+				console.log("provincias", data);
+
+				setStore({ provincias: data });
+			},
+			loadServicios: async () => {
+				const response = await fetch("https://3001-gold-ant-kpv46sbr.ws-us03.gitpod.io/api/servicios", {
+					method: "GET"
+				});
+
+				const data = await response.json();
+				console.log("servicios", data);
+
+				setStore({ servicios: data });
+			},
 			loadAlajuela: async () => {
 				const body = {
 					provinciaID: 1
 				};
-				const url = "https://3001-chocolate-mockingbird-ticd6xoq.ws-us03.gitpod.io/api/pymeprovincia";
+				const url = "https://3001-gold-ant-kpv46sbr.ws-us03.gitpod.io/api/pymeprovincia";
 				const response = await fetch(url, {
 					method: "POST",
 					body: JSON.stringify(body),
@@ -28,10 +60,11 @@ const getState = ({ getActions, setStore }) => {
 						Accept: "*/*"
 					}
 				});
-				console.log(response);
 
 				const data = await response.json();
-				setStore({ alajuela: data.results });
+
+				/* console.log("test", data); */
+				setStore({ alajuela: data });
 			},
 			loadCartago: async () => {
 				const url = "https://3001-chocolate-mockingbird-ticd6xoq.ws-us03.gitpod.io/api/pymeprovincia";

@@ -29,12 +29,15 @@ const injectContext = PassedComponent => {
 			 * store, instead use actions, like this:
 			 **/
 			state.actions.loadAlajuela();
-			state.actions.loadCartago();
+			state.actions.loadCantones();
+			state.actions.loadProvincias();
+			state.actions.loadServicios();
+			/* state.actions.loadCartago();
 			state.actions.loadGuanacaste();
 			state.actions.loadHeredia();
 			state.actions.loadLimon();
 			state.actions.loadPuntarenas();
-			state.actions.loadSanjose();
+			state.actions.loadSanjose(); */
 		}, []);
 
 		// The initial value for the context is not null anymore, but the current state of this component,

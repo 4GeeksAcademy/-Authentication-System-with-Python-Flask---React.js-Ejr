@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import "../../styles/demo.scss";
 import PropTypes from "prop-types";
+import { Context } from "../store/appContext";
 
 export const Alajuela = alajuela => {
+	const { store, actions } = useContext(Context);
+
 	return (
 		<div className="container">
 			<table className="table table-sl table-dark">
@@ -26,38 +29,20 @@ export const Alajuela = alajuela => {
 					</tr>
 				</thead>
 				<tbody>
-					<tr>
-						<th scope="row">{props.id}</th>
-						<td>{props.id_provincia}</td>
-						<td>{props.id_canton}</td>
-						<td>
-							<a href="/single/:theid">{props.nombre}</a>
-						</td>
-						<td>{props.id_tiposServicio}</td>
-						<td>{props.telefono}</td>
-						<td> {props.facebook}</td>
-						<td>{props.instagram}</td>
-					</tr>
-					<tr>
-						<th scope="row">2</th>
-						<td>Mark</td>
-						<td>Otto</td>
-						<td>@mdo</td>
-						<td>Mark</td>
-						<td>Otto</td>
-						<td>@mdo</td>
-						<td>@mdo</td>
-					</tr>
-					<tr>
-						<th scope="row">3</th>
-						<td>Mark</td>
-						<td>Otto</td>
-						<td>@mdo</td>
-						<td>Mark</td>
-						<td>Otto</td>
-						<td>@mdo</td>
-						<td>@mdo</td>
-					</tr>
+					{store.alajuela.map((item, index) => (
+						<tr key={index}>
+							<th scope="row">{item.id}</th>
+							<td>{store.provincias.find(x => x.id === item.id_provincia).nombre}</td>
+							<td>{store.cantones.find(x => x.id === item.id_canton).nombre}</td>
+							<td>
+								<a href="/single/:theid">{item.nombre}</a>
+							</td>
+							<td>{store.servicios.find(x => x.id === item.id_tiposServicio).tipo}</td>
+							<td>{item.telefono}</td>
+							<td> {item.facebook}</td>
+							<td>{item.instagram}</td>
+						</tr>
+					))}
 				</tbody>
 			</table>
 		</div>
@@ -68,7 +53,7 @@ Alajuela.propTypes = {
 	nombre: PropTypes.string,
 	id_provincia: PropTypes.string,
 	id_canton: PropTypes.string,
-	id_tiposServicio: PropTypes.sting,
+	id_tiposServicio: PropTypes.string,
 	telefono: PropTypes.string,
 	instagram: PropTypes.string,
 	facebook: PropTypes.string
