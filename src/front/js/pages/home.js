@@ -13,7 +13,7 @@ export const Home = () => {
 						</div>
 						<form>
 							<div className="form-group text-white">
-								<div className="input-group mb-3 lg">
+								<div className="input-group input-group-lg">
 									<input
 										type="text"
 										className="form-control"
@@ -28,7 +28,7 @@ export const Home = () => {
 									</div>
 								</div>
 							</div>
-							<div className="form-group text-white">
+							<div className="form-group text-white input-group-lg">
 								<input
 									type="text"
 									className="form-control"

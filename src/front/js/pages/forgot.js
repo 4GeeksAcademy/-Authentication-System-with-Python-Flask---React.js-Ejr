@@ -7,7 +7,7 @@ export const Forgot1 = () => {
 			<div className="d-flex justify-content-center h-100">
 				<div className="card">
 					<div className="d-flex justify-content-center text-white">
-						<h3>Recuperacion de contraseña</h3>
+						<h3>Recuperación de contraseña</h3>
 					</div>
 					<div className="card-body">
 						<form>

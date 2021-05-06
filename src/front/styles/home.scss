@@ -1,13 +1,18 @@
 
 .nav-item {
     float: right;
-    
-   
+}
+.navigation {
+background-color: rgba(0,0,0,0.5) !important;
 }
 
 //CSS del Footer
-.fab{
-   justify-content: center; 
+.ft1{
+display: flex;
+align-items: center;
+justify-content: center;
+width: 100%;
+background-color: rgba(0,0,0,0.5) !important;
 }
 .f1{
 color: #ffc000;
