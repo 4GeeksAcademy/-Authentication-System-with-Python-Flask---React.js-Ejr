@@ -26,7 +26,6 @@ export const Register = () => {
 		handleChange();
 		console.log(newUser);
 	};
-
 	return (
 		<div className="container">
 			<div className="login-form">
