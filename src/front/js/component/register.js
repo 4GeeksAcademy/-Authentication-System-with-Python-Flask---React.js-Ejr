@@ -26,7 +26,6 @@ export const Register = () => {
 		handleChange();
 		console.log(newUser);
 	};
-]
 	return (
 		<div className="container">
 			<div className="login-form">
@@ -40,7 +39,6 @@ export const Register = () => {
 								className="form-control"
 								name="name"
 								onChange={handleChange}
-
 								placeholder="Nombre Completo"
 								required="required"
 							/>
@@ -52,8 +50,7 @@ export const Register = () => {
 								type="text"
 								className="form-control"
 								name="username"
-								onChange={handleChange}=======
-
+								onChange={handleChange}
 								placeholder="Usuario"
 								required="required"
 							/>
@@ -67,7 +64,6 @@ export const Register = () => {
 								name="email"
 								onChange={handleChange}
 								placeholder="Email"
-
 								required="required"
 							/>
 						</div>
@@ -86,7 +82,6 @@ export const Register = () => {
 					</div>
 					<div className="form-group">
 						<button method="POST" className="btn btn-login login-btn btn-block" onClick={registerUser}>
-
 							Crear Cuenta
 						</button>
 					</div>

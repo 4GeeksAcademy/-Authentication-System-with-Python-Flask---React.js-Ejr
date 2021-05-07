@@ -39,10 +39,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 					redirect: "follow"
 				};
 
-				const apiEndPoint = "https://3001-chocolate-ox-jjqxr0q2.ws-us03.gitpod.io/api/register";
+				const apiEndPoint = "https://3001-chocolate-ox-jjqxr0q2.ws-us03.gitpod.io/api/userregistration";
 
 				fetch(apiEndPoint, requestOptions)
-					.then(response => response.text())
+					.then(response => response.json())
 					.then(result => console.log(result))
 					.catch(error => console.log("error", error));
 			},
