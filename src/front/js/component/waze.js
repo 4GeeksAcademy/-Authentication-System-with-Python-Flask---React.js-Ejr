@@ -2,11 +2,11 @@ import React from "react";
 
 export const Waze = () => {
 	return (
-		<div className="text-center" style={{ height: "500px" }}>
+		<div className="text-center mh-100" style={{ height: "500px" }}>
 			<iframe
-				src="https://embed.waze.com/es/iframe?zoom=12&lat=45.6906304&lon=-120.810983"
-				width="500"
-				height="500"
+				src="https://embed.waze.com/es/iframe?zoom=12&lat=9.748917&lon=-83.753428"
+				width="800"
+				height="700"
 				frameBorder="0"
 				style={{ border: "0" }}
 				allowFullScreen

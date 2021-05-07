@@ -3,7 +3,7 @@ import { Waze } from "../component/waze";
 
 export const WazeView = () => {
 	return (
-		<div>
+		<div className="container h-100">
 			{" "}
 			<Waze />
 		</div>
