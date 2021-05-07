@@ -5,7 +5,7 @@ export const Register1 = () => {
 	return (
 		<div className="container">
 			<div className="d-flex justify-content-center h-100">
-				<div className="card">
+				<div className="card c1">
 					<div className="d-flex justify-content-center text-white">
 						<h3>Registrarme</h3>
 					</div>
