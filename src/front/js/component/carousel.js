@@ -4,24 +4,20 @@ import { Link } from "react-router-dom";
 export const Carousel = () => {
 	return (
 		<div id="carouselExampleControls" className="carousel slide ml-50" data-ride="carousel">
-			<div className="carousel-inner ">
-				<div className="carousel-item active ">
+			<div className="carousel-inner">
+				<div className="carousel-item active">
 					<img
-						src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.-nuTDLiB74N0sFAG-ojc7wHaHa%26pid%3DApi&f=1"
+						src="https://cdni.rt.com/actualidad/public_images/2019.02/article/5c69d6c708f3d942578b4567.jpg"
 						className="center "
 						alt="..."
 					/>
 				</div>
 				<div className="carousel-item">
-					<img
-						src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse4.mm.bing.net%2Fth%3Fid%3DOIP.UYHUOoIV-u-sAlotVNh-iwHaHa%26pid%3DApi&f=1"
-						className="center "
-						alt="..."
-					/>
+					<img src="https://t2.kn3.net/taringa/1/D/9/A/0/5/Marcc333/8BD.jpg" className="center " alt="..." />
 				</div>
 				<div className="carousel-item">
 					<img
-						src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse3.mm.bing.net%2Fth%3Fid%3DOIP.4vX1ou2BSbuWzPVePjhx8QHaHa%26pid%3DApi&f=1"
+						src="http://tecnobitt.com/wp-content/uploads/2013/12/electronica.jpg"
 						className="center "
 						alt="..."
 					/>
