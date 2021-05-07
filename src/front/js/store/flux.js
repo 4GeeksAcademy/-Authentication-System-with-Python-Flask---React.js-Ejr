@@ -27,6 +27,26 @@ const getState = ({ getStore, getActions, setStore }) => {
 				return response;
 			},
 
+			manualRegistration: newuser => {
+				let myHeaders = new Headers();
+				myHeaders.append("Content-Type", "application/json");
+				let raw = JSON.stringify(newuser);
+
+				const requestOptions = {
+					method: "POST",
+					headers: myHeaders,
+					body: raw,
+					redirect: "follow"
+				};
+
+				const apiEndPoint = "https://3001-chocolate-ox-jjqxr0q2.ws-us03.gitpod.io/api/register";
+
+				fetch(apiEndPoint, requestOptions)
+					.then(response => response.text())
+					.then(result => console.log(result))
+					.catch(error => console.log("error", error));
+			},
+
 			//push login/registration information
 			getUserIn: () => {
 				//get the store
@@ -35,33 +55,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 				//push data to store
 				store.appAuth.push(getActions().responseGoogle());
 				store.appAuth.push(getActions().responseFacebook());
-			},
-
-			// Use getActions to call a function within a fuction
-			exampleFunction: () => {
-				getActions().changeColor(0, "green");
-			},
-
-			getMessage: () => {
-				// fetching data from the backend
-				fetch(process.env.BACKEND_URL + "/api/hello")
-					.then(resp => resp.json())
-					.then(data => setStore({ message: data.message }))
-					.catch(error => console.log("Error loading message from backend", error));
-			},
-			changeColor: (index, color) => {
-				//get the store
-				const store = getStore();
-
-				//we have to loop the entire demo array to look for the respective index
-				//and change its color
-				const demo = store.demo.map((elm, i) => {
-					if (i === index) elm.background = color;
-					return elm;
-				});
-
-				//reset the global store
-				setStore({ demo: demo });
 			}
 		}
 	};

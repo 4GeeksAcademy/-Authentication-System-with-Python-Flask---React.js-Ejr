@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useState, useContext } from "react";
 import { Context } from "../store/appContext";
 import { Link } from "react-router-dom";
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
@@ -6,8 +6,27 @@ import GoogleLogin from "react-google-login";
 import logo from "../../img/logo.jpeg";
 
 export const Register = () => {
+	const [newUser, setNewuser] = useState({
+		fullname: "",
+		username: "",
+		email: "",
+		password: ""
+	});
 	const { actions } = useContext(Context);
 
+	const handleChange = e => {
+		const { name, value } = e.target;
+		setNewuser(newUser => ({
+			...newUser,
+			[name]: value
+		}));
+	};
+
+	const registerUser = () => {
+		handleChange();
+		console.log(newUser);
+	};
+]
 	return (
 		<div className="container">
 			<div className="login-form">
@@ -20,6 +39,8 @@ export const Register = () => {
 								type="text"
 								className="form-control"
 								name="name"
+								onChange={handleChange}
+
 								placeholder="Nombre Completo"
 								required="required"
 							/>
@@ -31,6 +52,8 @@ export const Register = () => {
 								type="text"
 								className="form-control"
 								name="username"
+								onChange={handleChange}=======
+
 								placeholder="Usuario"
 								required="required"
 							/>
@@ -42,7 +65,9 @@ export const Register = () => {
 								type="email"
 								className="form-control"
 								name="email"
-								placeholder="email"
+								onChange={handleChange}
+								placeholder="Email"
+
 								required="required"
 							/>
 						</div>
@@ -53,13 +78,15 @@ export const Register = () => {
 								type="password"
 								className="form-control"
 								name="password"
+								onChange={handleChange}
 								placeholder="Contraseña"
 								required="required"
 							/>
 						</div>
 					</div>
 					<div className="form-group">
-						<button type="submit" className="btn btn-login login-btn btn-block">
+						<button method="POST" className="btn btn-login login-btn btn-block" onClick={registerUser}>
+
 							Crear Cuenta
 						</button>
 					</div>
