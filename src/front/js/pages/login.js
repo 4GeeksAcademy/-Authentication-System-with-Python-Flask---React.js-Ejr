@@ -5,7 +5,7 @@ export const Login1 = () => {
 	return (
 		<div className="container">
 			<div className="d-flex justify-content-center h-100">
-				<div className="card">
+				<div className="card c1">
 					<div className="card-header">
 						<h3>Acceder</h3>
 						<div className="d-flex justify-content-end social_icon">

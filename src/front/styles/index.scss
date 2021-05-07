@@ -1,21 +1,22 @@
-body{
+.contenedor {
+    display: flex;
+    justify-content:center;
+    align-items: center;
+    width: 80%;
+    
+   
+}
+
+.imagen-fondo {
     background-image: url("https://upserve.com/media/sites/2/farm-to-table-featured-image.jpg");
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
-    margin-bottom: 500px;
-  
-  
-}
-.container {
-    display: flex;
-    justify-content:center;
-    align-items: center;
-    margin:0%;
-   
+    width: 1000px;
+    height: 800px;
 }
 .tarjeta{
-    margin:20px;
+   margin-top: 80px;
    background-color: white !important;
 }
 .container1{
@@ -35,7 +36,23 @@ body{
 .card{
     margin: 50px;
     margin-bottom: 20px;
+
 }
 .h2{
     margin: 20px;
+}
+.form-group{
+    max-width: 100%;
+}
+.boton {
+    max-width: 50%;
+    font-size: 20px;
+}
+.title {
+    text-align: center;
+}
+.promos {
+    overflow-x:scroll;
+    min-height: 400px;
+
 }
