@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 export const Login1 = () => {
 	return (
-		<div className="container">
+		<div className="container login">
 			<div className="d-flex justify-content-center h-100">
 				<div className="card c1">
 					<div className="card-header">
