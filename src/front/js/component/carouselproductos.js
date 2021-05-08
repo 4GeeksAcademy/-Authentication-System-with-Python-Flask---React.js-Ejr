@@ -1,17 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
+import { Context } from "../store/appContext";
 import "../../styles/index.scss";
 
 export const Carouselproductos = () => {
-	let precios = ["₡100", "₡200", "₡300", "₡400", "₡500"];
-	let productos = [
-		"https://cdni.rt.com/actualidad/public_images/2019.02/article/5c69d6c708f3d942578b4567.jpg",
-		"http://tecnobitt.com/wp-content/uploads/2013/12/electronica.jpg",
-		"http://www.emprenomic.com/wp-content/uploads/2016/05/gadgets-638x368.jpg",
-		"https://s03.s3c.es/imag/_v0/635x300/6/5/5/aparatoselectronicos635.jpg",
-		"https://www.hipaajournal.com/wp-content/uploads/2018/08/19291916_s.jpg"
-	];
-
-	let descripciones = ["1", "2", "3", "4", "5"];
+	const { actions, store } = useContext(Context);
 
 	return (
 		<div className="container">
@@ -22,24 +14,34 @@ export const Carouselproductos = () => {
 					<li data-target="#carouselExampleCaptions" data-slide-to="2" />
 				</ol>
 				<div className="carousel-inner">
-					{productos.map((p, index) => {
+					{store.dataMart.map((p, index) => {
 						if (index === 0) {
 							return (
 								<div className="carousel-item active center">
-									<img src={p} className="mx-auto d-block w-100 h-25" alt="..." />
+									<img
+										src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse2.mm.bing.net%2Fth%3Fid%3DOIP.mpPOdTXO8FnJEm2BCW6nqwHaHe%26pid%3DApi&f=1"
+										className="mx-auto d-block img-fluid"
+										alt="..."
+									/>
 									<div className="carousel-caption d-none d-md-block">
-										<h5 className="text-secondary">{descripciones[0]}</h5>
-										<p className="text-secondary">{precios[0]}</p>
+										<h5 className="text-secondary">{p.title}</h5>
+										<p className="text-secondary">{p.description}</p>
+										<p className="text-secondary">{p.price}</p>
 									</div>
 								</div>
 							);
 						} else {
 							return (
 								<div className="carousel-item center" key={index}>
-									<img src={p} className="mx-auto d-block w-100 h-25" alt="..." />
+									<img
+										src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse4.mm.bing.net%2Fth%3Fid%3DOIP.CH0IUJzk8qtzrNKRGMiSvQHaHa%26pid%3DApi&f=1"
+										className="mx-auto d-block img-fluid"
+										alt="..."
+									/>
 									<div className="carousel-caption d-none d-md-block">
-										<h5>Second slide label</h5>
-										<p>Some representative placeholder content for the second slide.</p>
+										<h5 className="text-secondary">{p.title}</h5>
+										<p className="text-secondary">{p.description}</p>
+										<p className="text-secondary">{p.price}</p>
 									</div>
 								</div>
 							);

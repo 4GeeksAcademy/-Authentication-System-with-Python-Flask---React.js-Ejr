@@ -27,6 +27,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 				return response;
 			},
 
+			loadImageProduct: async () => {
+				let response = await fetch("https://fakestoreapi.com/products");
+				let data = await response.json();
+				console.log(data);
+				setStore({ dataMart: [...data] });
+			},
+
 			userRegistration: newuser => {
 				const store = getStore();
 				const apiEndPoint = store.endPoint + "userregistration";
