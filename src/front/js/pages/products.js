@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 export const Productos = () => {
 	return (
 		<>
-			<p className="h2 text-white mx-auto ">Productos disponibles</p>
+			<p className="h2 mx-auto py-4 font-weight-light">Productos disponibles</p>
 			<div className="container1">
 				<div className="card" style={{ width: "18rem" }}>
 					<img
@@ -13,14 +13,17 @@ export const Productos = () => {
 						alt="..."
 					/>
 					<div className="card-body">
-						<h5 className="card-title">Card title</h5>
-						<p className="card-text">
-							Some quick example text to build on the card title and make up the bulk of the cards
-							content.
-						</p>
-						<a href="#" className="btn btn-warning float-right">
+						<h5 className="card-title">Leche Dos Pinos</h5>
+						<ul>
+							<li className="Precio"> Precio: 680.00 colones</li>
+							<li className="Precio"> Supermercado: Palí</li>
+						</ul>
+						<a href="#" className="btn btn-outline-success float-right">
 							Ver detalles
 						</a>
+						<button type="button" className="btn btn-outline-success float-right">
+							<i className="fas fa-cart-arrow-down" />
+						</button>
 					</div>
 				</div>
 				<div className="card" style={{ width: "18rem" }}>
@@ -30,14 +33,17 @@ export const Productos = () => {
 						alt="..."
 					/>
 					<div className="card-body">
-						<h5 className="card-title">Card title</h5>
-						<p className="card-text">
-							Some quick example text to build on the card title and make up the bulk of the cards
-							content.
-						</p>
-						<a href="#" className="btn btn-warning float-right">
+						<h5 className="card-title">Leche Dos Pinos</h5>
+						<ul>
+							<li className="Precio"> Precio: 680.00 colones</li>
+							<li className="Precio"> Supermercado: Palí</li>
+						</ul>
+						<a href="#" className="btn btn-outline-success float-right">
 							Ver detalles
 						</a>
+						<button type="button" className="btn btn-outline-success float-right">
+							<i className="fas fa-cart-arrow-down" />
+						</button>
 					</div>
 				</div>
 				<div className="card " style={{ width: "18rem" }}>
@@ -47,14 +53,17 @@ export const Productos = () => {
 						alt="..."
 					/>
 					<div className="card-body">
-						<h5 className="card-title">Card title</h5>
-						<p className="card-text">
-							Some quick example text to build on the card title and make up the bulk of the cards
-							content.
-						</p>
-						<a href="#" className="btn btn-warning float-right">
+						<h5 className="card-title">Leche Dos Pinos</h5>
+						<ul>
+							<li className="Precio"> Precio: 680.00 colones</li>
+							<li className="Precio"> Supermercado: Palí</li>
+						</ul>
+						<a href="#" className="btn btn-outline-success float-right">
 							Ver detalles
 						</a>
+						<button type="button" className="btn btn-outline-success float-right">
+							<i className="fas fa-cart-arrow-down" />
+						</button>
 					</div>
 				</div>
 			</div>
@@ -66,14 +75,17 @@ export const Productos = () => {
 						alt="..."
 					/>
 					<div className="card-body">
-						<h5 className="card-title">Card title</h5>
-						<p className="card-text">
-							Some quick example text to build on the card title and make up the bulk of the cards
-							content.
-						</p>
-						<a href="#" className="btn btn-warning float-right">
+						<h5 className="card-title">Leche Dos Pinos</h5>
+						<ul>
+							<li className="Precio"> Precio: 680.00 colones</li>
+							<li className="Precio"> Supermercado: Palí</li>
+						</ul>
+						<a href="#" className="btn btn-outline-success float-right">
 							Ver detalles
 						</a>
+						<button type="button" className="btn btn-outline-success float-right">
+							<i className="fas fa-cart-arrow-down" />
+						</button>
 					</div>
 				</div>
 				<div className="card" style={{ width: "18rem" }}>
@@ -83,14 +95,17 @@ export const Productos = () => {
 						alt="..."
 					/>
 					<div className="card-body">
-						<h5 className="card-title">Card title</h5>
-						<p className="card-text">
-							Some quick example text to build on the card title and make up the bulk of the cards
-							content.
-						</p>
-						<a href="#" className="btn btn-warning float-right">
+						<h5 className="card-title">Leche Dos Pinos</h5>
+						<ul>
+							<li className="Precio"> Precio: 680.00 colones</li>
+							<li className="Precio"> Supermercado: Palí</li>
+						</ul>
+						<a href="#" className="btn btn-outline-success float-right">
 							Ver detalles
 						</a>
+						<button type="button" className="btn btn-outline-success float-right">
+							<i className="fas fa-cart-arrow-down" />
+						</button>
 					</div>
 				</div>
 				<div className="card" style={{ width: "18rem" }}>
@@ -100,14 +115,17 @@ export const Productos = () => {
 						alt="..."
 					/>
 					<div className="card-body">
-						<h5 className="card-title">Card title</h5>
-						<p className="card-text">
-							Some quick example text to build on the card title and make up the bulk of the cards
-							content.
-						</p>
-						<a href="#" className="btn btn-warning float-right">
+						<h5 className="card-title">Leche Dos Pinos</h5>
+						<ul>
+							<li className="Precio"> Precio: 680.00 colones</li>
+							<li className="Precio"> Supermercado: Palí</li>
+						</ul>
+						<a href="#" className="btn btn-outline-success float-right">
 							Ver detalles
 						</a>
+						<button type="button" className="btn btn-outline-success float-right">
+							<i className="fas fa-cart-arrow-down" />
+						</button>
 					</div>
 				</div>
 			</div>

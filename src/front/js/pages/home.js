@@ -10,7 +10,7 @@ export const Home = () => {
 				<div className="row">
 					<div className="col-12">
 						<div className="text-white">
-							<h3 className="title">¡Más opciones, ahorrás más colones!</h3>
+							<h3 className="title font-weight-light">¡Más opciones, ahorrás más colones!</h3>
 						</div>
 						<form>
 							<div className="form-group mx-auto text-white">
@@ -48,7 +48,7 @@ export const Home = () => {
 				</div>
 			</div>
 
-			<h2 className="Promociones">Promociones</h2>
+			<h1 className="Promociones text-center py-4 font-weight-light">Promociones</h1>
 			<div className="promos cards d-flex justify-content-center">
 				<Promociones />
 				<Promociones />
