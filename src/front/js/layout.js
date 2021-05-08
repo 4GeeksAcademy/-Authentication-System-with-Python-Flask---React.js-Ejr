@@ -13,6 +13,7 @@ import { Footer } from "./component/footer";
 import { Contactus } from "./pages/contact-us";
 import { NewProduct } from "./pages/newProduct";
 import { Logueado } from "./pages/logueado";
+import { ResetPassword } from "./pages/resetPassword";
 import { WazeView } from "./pages/wazeview";
 
 //create your first component
@@ -47,6 +48,9 @@ const Layout = () => {
 						</Route>
 						<Route exact path="/logueado">
 							<Logueado />
+						</Route>
+						<Route exact path="/resetPassword">
+							<ResetPassword />
 						</Route>
 						<Route exact path="/single/:theid">
 							<Single />
