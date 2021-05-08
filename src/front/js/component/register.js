@@ -1,4 +1,5 @@
 import React, { useState, useContext } from "react";
+import { Redirect } from "react-router-dom";
 import { Context } from "../store/appContext";
 import { Link } from "react-router-dom";
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
@@ -15,13 +16,16 @@ export const Register = () => {
 	});
 	const { actions } = useContext(Context);
 
-	const regAlert = () =>
+	const regAlert = () => {
 		Swal.fire({
 			icon: "success",
 			title: "Creación de Cuenta",
 			text: "Cuenta fue registrada exitosamente.",
 			showConfirmButton: true
+		}).then(() => {
+			window.location = "/logUserIn";
 		});
+	};
 
 	const handleChange = e => {
 		const { name, value } = e.target;
@@ -31,14 +35,15 @@ export const Register = () => {
 		}));
 	};
 
-	const registerUser = () => {
-		handleChange();
-		alert(newUser);
+	const createNewUser = event => {
+		event.preventDefault();
+		actions.userRegistration(newUser);
 	};
+
 	return (
 		<div className="container">
 			<div className="login-form">
-				<form onSubmit={registerUser}>
+				<form onSubmit={createNewUser}>
 					<h2 className="text-center">Crear Cuenta</h2>
 					<img src={logo} alt="logo" className="img-thumbnail mx-auto d-block rounded my-3" />
 					<div className="form-group">
@@ -90,7 +95,12 @@ export const Register = () => {
 						</div>
 					</div>
 					<div className="form-group">
-						<button type="submit" className="btn btn-login login-btn btn-block" onClick={regAlert}>
+						<button
+							className="btn btn-login login-btn btn-block"
+							onClick={() => {
+								createNewUser;
+								regAlert();
+							}}>
 							Crear Cuenta
 						</button>
 					</div>

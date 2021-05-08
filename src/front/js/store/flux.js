@@ -47,11 +47,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 					.catch(error => console.log("error", error));
 			},
 			// function to allow user log in user
-			userLogIn: newuser => {
+			userLogIn: user => {
 				const store = getStore();
 				const apiEndPoint = store.endPoint + "userlogin";
 				myHeaders.append("Content-Type", "application/json");
-				let raw = JSON.stringify(newuser);
+				let raw = JSON.stringify(user);
 
 				const requestOptions = {
 					method: "POST",
@@ -62,7 +62,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				fetch(apiEndPoint, requestOptions)
 					.then(response => response.json())
-					.then(result => console.log(result))
+					.then(result => {
+						let token = result.token;
+						//console.log(token);
+						if (token) {
+							sessionStorage.setItem("userToken", token);
+							setStore({ isLoggedIn: true });
+						}
+					})
 					.catch(error => console.log("error", error));
 			},
 
@@ -91,7 +98,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 								store.emailServiceID,
 								store.emailTemplate.recoverEmail,
 								{
-									from_name: "Pura_Vida_Mart",
+									from_name: "Pura Vida Mart",
 									message: resetURL,
 									temp_password: res,
 									to_email: email
@@ -126,7 +133,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 								store.emailServiceID,
 								store.emailTemplate.changedEmail,
 								{
-									from_name: "Pura_Vida_Mart",
+									from_name: "Pura Vida Mart",
 									to_email: resetDetails.email
 								},
 								store.emailUserID

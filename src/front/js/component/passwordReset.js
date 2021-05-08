@@ -1,4 +1,5 @@
 import React, { useState, useContext } from "react";
+import { Redirect } from "react-router-dom";
 import { Context } from "../store/appContext";
 import { Link } from "react-router-dom";
 import logo from "../../img/logo.jpeg";
@@ -19,6 +20,8 @@ export const PasswordReset = () => {
 			title: "Cambio de contraseña",
 			text: "Su contraseña ha sido modificada con existo",
 			showConfirmButton: true
+		}).then(() => {
+			window.location = "/logUserIn";
 		});
 
 	const passAlert = () =>
@@ -37,16 +40,16 @@ export const PasswordReset = () => {
 		}));
 	};
 
-	const submitPasschange = () => {
+	const submitPassChange = () => {
 		handleChange();
-		userToReset.newPassword !== userToReset.repeatPassword ? passAlert() : actions.resetPassword(userToReset);
+		actions.resetPassword(userToReset);
 	};
 
 	// reset api
 	return (
 		<div className="container">
 			<div className="login-form">
-				<form onSubmit={submitPasschange}>
+				<form onSubmit={submitPassChange}>
 					<h2 className="text-center">Re-establecer Contraseña</h2>
 					<img src={logo} alt="logo" className="img-thumbnail mx-auto d-block rounded my-3" />
 					<div className="form-group">

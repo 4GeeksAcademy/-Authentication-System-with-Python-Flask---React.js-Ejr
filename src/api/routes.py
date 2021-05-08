@@ -15,7 +15,7 @@ api = Blueprint('api', __name__)
 def register_user():
 
     username = request.json.get("username", None)
-    fullname = request.json.get("fullname", None)
+    fullname = request.json.get("name", None)
     email = request.json.get("email", None)
     password = request.json.get("password", None)
 
