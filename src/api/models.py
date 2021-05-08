@@ -10,14 +10,14 @@ class User(db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(80), unique=False, nullable=False)
     location = db.Column(db.String(50), nullable=False)
-    is_active = db.Column(db.Boolean(), unique=False, nullable=False)
+    is_active = db.Column(db.Boolean(), unique=False)
 
     def __init__(self, name, email, password, location, is_active):
         self.name = name
         self.email = email 
         self.password = password
         self.location = location
-        self.is_active = is_active
+        self.is_active = False
 
 class Supermarket(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -46,7 +46,6 @@ class Product(db.Model):
         self.price = price
         self.category = category
         self.market_id = market_id
-
 
 class Cart(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -92,7 +91,7 @@ class Couponlist(db.Model):
 # database schemas
 class UserSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
-        model = User
+        fields = ('id', 'name', 'email', 'location', 'is_active')
 
 class ProductSchema(ma.SQLAlchemyAutoSchema):
     class Meta:

@@ -14,13 +14,33 @@ def login():
     email = request.json.get('email', None)
     password = request.json.get('password', None)
 
-    login = User.query.filter_by(email = email, password = password).first()
-    if login is None:
+    user = User.query.filter_by(email = email, password = password).first()
+    if user is None:
         return jsonify({
             "Message": "Email or Password Wrong"
         })
 
-    return 'passed'
+    access_token = create_access_token(identity=user.id)
+    return jsonify(token=access_token)
+
+@api.route('/register', methods=['POST'])
+def register():
+    name = request.json.get('name')
+    email = request.json.get('email')
+    password = request.json.get('password')
+    location = request.json.get('location')
+    is_active = request.json.get('is_active')
+
+    user_email = User.query.filter_by(email = email).first()
+    if user_email is None:
+        register_info = User(name, email, password, location, is_active)
+        db.session.add(register_info)
+        db.session.commit()
+        return jsonify({
+            "message": "User register succesfully"
+        }), 200
+
+    return jsonify({"message": "this email is already exist"}), 400
 
 @api.route('/user/<int:id>', methods=['GET'])
 def get_users(id):
@@ -65,7 +85,7 @@ def get_product(id):
         {"Result": output}
     )
 
-@api.route('/cart', methods=['POST'])
+@api.route('/cart', methods=['POST', 'GET'])
 def cart_add():
     if request.method == 'POST':
         username = request.json.get('username')
