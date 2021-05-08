@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Context } from "../store/appContext";
 import { Link } from "react-router-dom";
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
@@ -7,11 +7,28 @@ import logo from "../../img/logo.jpeg";
 
 export const Login = () => {
 	const { actions } = useContext(Context);
+	const [user, setUser] = useState({
+		username: "",
+		password: ""
+	});
+
+	const handleChange = e => {
+		const { name, value } = e.target;
+		setUser(user => ({
+			...user,
+			[name]: value
+		}));
+	};
+
+	const logUser = event => {
+		event.preventDefault();
+		actions.userLogIn(user);
+	};
 
 	return (
 		<div className="container">
 			<div className="login-form">
-				<form action="/examples/actions/confirmation.php" method="post">
+				<form onSubmit={logUser}>
 					<h2 className="text-center">Ingresar</h2>
 					<img src={logo} alt="logo" className="img-thumbnail mx-auto d-block rounded my-3" />
 					<div className="form-group">
@@ -22,6 +39,7 @@ export const Login = () => {
 								name="username"
 								placeholder="Usuario"
 								required="required"
+								onChange={handleChange}
 							/>
 						</div>
 					</div>
@@ -33,11 +51,16 @@ export const Login = () => {
 								name="password"
 								placeholder="Contraseña"
 								required="required"
+								onChange={handleChange}
 							/>
 						</div>
 					</div>
 					<div className="form-group">
-						<button type="submit" className="btn btn-login login-btn btn-block">
+						<button
+							onClick={() => {
+								logUser;
+							}}
+							className="btn btn-login login-btn btn-block">
 							Ingresar
 						</button>
 					</div>

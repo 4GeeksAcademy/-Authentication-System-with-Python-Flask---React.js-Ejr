@@ -33,8 +33,8 @@ def generate_sitemap(app):
     links_html = "".join(["<li><a href='" + y + "'>" + y + "</a></li>" for y in links])
     return """
         <div style="text-align: center;">
-        <img style="max-height: 80px" src='https://github.com/jgarciaf106/t2-fp-4geeks/blob/development/src/front/img/logo.jpeg' />
+        <img style="max-height: 80px" src='https://github.com/jgarciaf106/t2-fp-4geeks/blob/development/src/front/img/logo.jpeg?raw=true' />
         <h1>Pura Vida Mart API!!</h1>
         <p>API HOST: <script>document.write('<input style="padding: 5px; width: 300px" type="text" value="'+window.location.href+'" />');</script></p>
-        <p>Remember to specify a real endpoint path like: </p>
+        <p>Pura vida endpoint paths: </p>
         <ul style="text-align: left;">"""+links_html+"</ul></div>"

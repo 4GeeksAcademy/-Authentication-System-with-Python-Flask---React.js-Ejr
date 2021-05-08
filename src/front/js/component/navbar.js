@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState, useContext } from "react";
+import { Context } from "../store/appContext";
 import { Link } from "react-router-dom";
 import logo from "../../img/logo.jpeg";
 import { Search } from "./search";
@@ -6,6 +7,7 @@ import "../../styles/home.scss";
 import "../../styles/index.scss";
 
 export const Navbar = () => {
+	const { store } = useContext(Context);
 	return (
 		<nav className="row navbar navbar-light bg-verde mb-3 verde">
 			<div className="col">
@@ -57,7 +59,7 @@ export const Navbar = () => {
 			</div>
 
 			<div className="col">
-				<Link className="nav-item" to="/logueado">
+				<Link className="nav-item" to="/logueado" style={store.isLoggedin}>
 					<a
 						className="nav-link"
 						style={{ color: "white", background: "#0", fontFamily: "'Roboto', sans-serif" }}>

@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 701f2d2a45f8
+Revision ID: 18e256bdd85f
 Revises: 
-Create Date: 2021-05-05 03:15:45.645158
+Create Date: 2021-05-07 20:10:22.357118
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '701f2d2a45f8'
+revision = '18e256bdd85f'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -22,21 +22,28 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('username', sa.String(length=80), nullable=False),
     sa.Column('fullName', sa.String(length=255), nullable=False),
-    sa.Column('email', sa.String(length=120), nullable=False),
+    sa.Column('phoneNumber', sa.String(length=11), nullable=False),
     sa.Column('password', sa.String(length=80), nullable=False),
     sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('email'),
-    sa.UniqueConstraint('fullName')
+    sa.UniqueConstraint('fullName'),
+    sa.UniqueConstraint('fullName'),
+    sa.UniqueConstraint('phoneNumber'),
+    sa.UniqueConstraint('phoneNumber')
     )
     op.create_table('seller',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('username', sa.String(length=80), nullable=False),
     sa.Column('fullName', sa.String(length=255), nullable=False),
+    sa.Column('phoneNumber', sa.String(length=11), nullable=False),
     sa.Column('email', sa.String(length=120), nullable=False),
     sa.Column('password', sa.String(length=80), nullable=False),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('email'),
-    sa.UniqueConstraint('fullName')
+    sa.UniqueConstraint('email'),
+    sa.UniqueConstraint('fullName'),
+    sa.UniqueConstraint('fullName'),
+    sa.UniqueConstraint('phoneNumber'),
+    sa.UniqueConstraint('phoneNumber')
     )
     op.create_table('user',
     sa.Column('id', sa.Integer(), nullable=False),
@@ -46,16 +53,19 @@ def upgrade():
     sa.Column('password', sa.String(length=80), nullable=False),
     sa.Column('is_Admin', sa.Boolean(), nullable=False),
     sa.PrimaryKeyConstraint('id'),
+    sa.UniqueConstraint('email'),
     sa.UniqueConstraint('email')
     )
     op.create_table('product',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('fk_id', sa.Integer(), nullable=False),
     sa.Column('productName', sa.String(length=255), nullable=False),
+    sa.Column('description', sa.String(length=255), nullable=False),
     sa.Column('price', sa.Integer(), nullable=False),
     sa.Column('image', sa.Integer(), nullable=False),
     sa.ForeignKeyConstraint(['fk_id'], ['seller.id'], ),
     sa.PrimaryKeyConstraint('id'),
+    sa.UniqueConstraint('fk_id'),
     sa.UniqueConstraint('fk_id')
     )
     # ### end Alembic commands ###

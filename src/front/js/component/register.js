@@ -1,35 +1,49 @@
 import React, { useState, useContext } from "react";
+import { Redirect } from "react-router-dom";
 import { Context } from "../store/appContext";
 import { Link } from "react-router-dom";
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 import GoogleLogin from "react-google-login";
 import logo from "../../img/logo.jpeg";
+import Swal from "sweetalert2";
 
 export const Register = () => {
-	const [newUser, setNewuser] = useState({
-		fullname: "",
+	const [newUser, setNewUser] = useState({
+		name: "",
 		username: "",
 		email: "",
 		password: ""
 	});
 	const { actions } = useContext(Context);
 
+	const regAlert = () => {
+		Swal.fire({
+			icon: "success",
+			title: "Creación de Cuenta",
+			text: "Cuenta fue registrada exitosamente.",
+			showConfirmButton: true
+		}).then(() => {
+			window.location = "/logUserIn";
+		});
+	};
+
 	const handleChange = e => {
 		const { name, value } = e.target;
-		setNewuser(newUser => ({
+		setNewUser(newUser => ({
 			...newUser,
 			[name]: value
 		}));
 	};
 
-	const registerUser = () => {
-		handleChange();
-		console.log(newUser);
+	const createNewUser = event => {
+		event.preventDefault();
+		actions.userRegistration(newUser);
 	};
+
 	return (
 		<div className="container">
 			<div className="login-form">
-				<form action="/examples/actions/confirmation.php" method="post">
+				<form onSubmit={createNewUser}>
 					<h2 className="text-center">Crear Cuenta</h2>
 					<img src={logo} alt="logo" className="img-thumbnail mx-auto d-block rounded my-3" />
 					<div className="form-group">
@@ -81,7 +95,12 @@ export const Register = () => {
 						</div>
 					</div>
 					<div className="form-group">
-						<button method="POST" className="btn btn-login login-btn btn-block" onClick={registerUser}>
+						<button
+							className="btn btn-login login-btn btn-block"
+							onClick={() => {
+								createNewUser;
+								regAlert();
+							}}>
 							Crear Cuenta
 						</button>
 					</div>
