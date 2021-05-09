@@ -13,7 +13,7 @@ export const Home = () => {
 		<div className="h-75 text-center mt-2" style={{ fontFamily: "Zen Dots" }}>
 			<h1>Pura Vida Mart</h1>
 			<h2>Bienvenido(a)</h2>
-			<Carousel />{" "}
+			<Carousel />
 		</div>
 	);
 };

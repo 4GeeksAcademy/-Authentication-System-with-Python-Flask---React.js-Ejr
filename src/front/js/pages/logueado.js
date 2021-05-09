@@ -7,9 +7,7 @@ export const Logueado = () => {
 		<div className="container">
 			<h1 className="text-center">Pura Vida Mart</h1>
 			<Carouselproductos />
-			<div className="text-center my-4">
-				<Search />
-			</div>
+			<div className="text-center my-4" />
 		</div>
 	);
 };

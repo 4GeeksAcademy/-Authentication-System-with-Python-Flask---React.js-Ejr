@@ -1,6 +1,18 @@
 /* 
     General Styles
 */
+.carousel {
+  max-height: 600px;
+  overflow: hidden;
+
+  .item img {
+    width: 100%;
+    height: auto;
+  }
+}
+.carousel-control-prev-icon, .carousel-control-next-icon{
+   background-color: black;
+}
 .img-thumbnail {width:115px;height:115px}
 
 .btn-login{
