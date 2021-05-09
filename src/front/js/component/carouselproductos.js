@@ -18,11 +18,7 @@ export const Carouselproductos = () => {
 						if (index === 0) {
 							return (
 								<div className="carousel-item active center">
-									<img
-										src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse2.mm.bing.net%2Fth%3Fid%3DOIP.mpPOdTXO8FnJEm2BCW6nqwHaHe%26pid%3DApi&f=1"
-										className="mx-auto d-block img-fluid"
-										alt="..."
-									/>
+									<img src={p.image} className="mx-auto d-block img-fluid" alt="..." />
 									<div className="carousel-caption d-none d-md-block">
 										<h5 className="text-secondary">{p.title}</h5>
 										<p className="text-secondary">{p.description}</p>
@@ -33,11 +29,7 @@ export const Carouselproductos = () => {
 						} else {
 							return (
 								<div className="carousel-item center" key={index}>
-									<img
-										src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse4.mm.bing.net%2Fth%3Fid%3DOIP.CH0IUJzk8qtzrNKRGMiSvQHaHa%26pid%3DApi&f=1"
-										className="mx-auto d-block img-fluid"
-										alt="..."
-									/>
+									<img src={p.image} className="mx-auto d-block img-fluid" alt="..." />
 									<div className="carousel-caption d-none d-md-block">
 										<h5 className="text-secondary">{p.title}</h5>
 										<p className="text-secondary">{p.description}</p>
