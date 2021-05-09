@@ -1,28 +1,31 @@
-import React from "react";
+import React, { useContext } from "react";
+import { Context } from "../store/appContext";
 import { Link } from "react-router-dom";
+import "../../styles/card.scss";
 
-export const Card = props => {
+export const Card = () => {
+	const { actions, store } = useContext(Context);
 	return (
-		<div className="card" style={{ width: "18rem;" }}>
-			<img
-				className="card-img-top"
-				src={p.image} className="mx-auto d-block img-fluid"
-				alt="Card image cap"
-			/>
-			<div className="card-body">
-				<h5 className="card-title">{props.name}</h5>
-				<p className="item Price">{props.price}</p>
-				<p className="card-text">{props.description}</p>
-				<Link to={"/carouselproducts" + props.index}>
-					<button className="btn btn-primary">Learn More</button>
-				</Link>
-			</div>
+		<div className="container my-3">
+			{store.dataMart.map((p, index) => {
+				return (
+					<div className="card my-5" style={{ width: "16rem;" }} key={index}>
+						<img
+							className="card-img-top mx-auto my-4 d-block img-fluid"
+							src={p.image}
+							alt="Card image cap"
+						/>
+						<div className="card-body">
+							<h5 className="card-title">{p.title}</h5>
+							<p className="item Price">{p.price}</p>
+							<p className="card-text">{p.description}</p>
+							<Link to={"/carouselproducts"}>
+								<button className="btn btn-primary">Contactar al vendedor</button>
+							</Link>
+						</div>
+					</div>
+				);
+			})}
 		</div>
 	);
-};
-Card.propTypes = {
-	name: PropTypes.string,
-	price: PropTypes.number,
-	description: PropTypes.string,
-	index: PropTypes.number
 };

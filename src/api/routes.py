@@ -43,16 +43,16 @@ def register_user():
 # user log in
 @api.route('/userlogin', methods=['POST']) 
 def login_user():
-    email = request.json.get("email", None)
+    username = request.json.get("username", None)
     password = request.json.get("password", None)
 
     # valida si estan vacios los ingresos
-    if email is None:
-        return jsonify({"msg": "Please provide a valid email."}), 400
+    if username is None:
+        return jsonify({"msg": "Please provide a valid username."}), 400
     if password is None:
         return jsonify({"msg": "Please provide a valid password."}), 400
         
-    user = User.query.filter_by(email=email, password=password).first()
+    user = User.query.filter_by(username=username, password=password).first()
 
     if user is None:
         return jsonify({"msg": "Invalid username or password"}), 401
