@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 export const Carousel = () => {
 	return (
-		<div id="carouselExampleControls" className="carousel slide ml-50" data-ride="carousel">
+		<div id="carouselExampleControls" className="carousel slide ml-50 mt-5" data-ride="carousel">
 			<div className="carousel-inner">
 				<div className="carousel-item active">
 					<img

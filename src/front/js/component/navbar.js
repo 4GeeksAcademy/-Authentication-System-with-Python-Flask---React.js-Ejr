@@ -9,7 +9,7 @@ import "../../styles/index.scss";
 export const Navbar = () => {
 	const { store } = useContext(Context);
 	return (
-		<nav className="row navbar navbar-light bg-verde mb-3 verde">
+		<nav className="navbar navbar mb-5" style={{ backgroundColor: "#5e2ced" }}>
 			<div className="col">
 				<Link to="/">
 					<img src={"logo.jpeg"} style={{ width: "80px", height: "40px" }} />
