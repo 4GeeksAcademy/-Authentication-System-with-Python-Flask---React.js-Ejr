@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import "../../styles/footer.scss";
 
 export const Footer = () => (
 	<footer className="new_footer_area bg_color">

@@ -3,7 +3,6 @@ import { Context } from "../store/appContext";
 import { Carousel } from "../component/carousel";
 import { Search } from "../component/search";
 import { Footer } from "../component/footer";
-import "../../styles/home.scss";
 import "../../styles/index.scss";
 
 export const Home = () => {
@@ -11,7 +10,7 @@ export const Home = () => {
 
 	return (
 		<div className="h-100 text-center mt-2" style={{ fontFamily: "Zen Dots" }}>
-			<h1>Pura Vida Mart</h1>
+			{/* <h1>Pura Vida Mart</h1> */}
 			<h2>Bienvenido(a)</h2>
 			<Carousel />
 		</div>

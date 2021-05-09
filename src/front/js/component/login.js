@@ -60,7 +60,7 @@ export const Login = () => {
 							onClick={() => {
 								logUser;
 							}}
-							className="btn btn-login login-btn btn-block">
+							className="btn btn-login btn-pvm btn-block">
 							Ingresar
 						</button>
 					</div>

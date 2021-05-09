@@ -1,6 +1,3 @@
-import Swal from "sweetalert2";
-import emailjs from "emailjs-com";
-
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
@@ -28,10 +25,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 
 			loadImageProduct: async () => {
+				const store = getStore();
 				let response = await fetch("https://fakestoreapi.com/products");
 				let data = await response.json();
-				console.log(data);
 				setStore({ dataMart: [...data] });
+				console.log(store.isLoggedIn);
 			},
 
 			userRegistration: newuser => {
@@ -57,6 +55,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			userLogIn: user => {
 				const store = getStore();
 				const apiEndPoint = store.endPoint + "userlogin";
+				let myHeaders = new Headers();
 				myHeaders.append("Content-Type", "application/json");
 				let raw = JSON.stringify(user);
 
@@ -71,7 +70,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					.then(response => response.json())
 					.then(result => {
 						let token = result.token;
-						//console.log(token);
+						console.log(token);
 						if (token) {
 							sessionStorage.setItem("userToken", token);
 							setStore({ isLoggedIn: true });
@@ -79,7 +78,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 					})
 					.catch(error => console.log("error", error));
 			},
-
+			// function to log user out
+			logUserOut: () => {
+				setStore({ isLoggedIn: false });
+				sessionStorage.clear();
+			},
 			// function to request a password change through the api
 			recoverPassword: email => {
 				const store = getStore();

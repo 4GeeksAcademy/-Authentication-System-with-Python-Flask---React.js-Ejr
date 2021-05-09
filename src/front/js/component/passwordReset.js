@@ -1,7 +1,5 @@
 import React, { useState, useContext } from "react";
-import { Redirect } from "react-router-dom";
 import { Context } from "../store/appContext";
-import { Link } from "react-router-dom";
 import logo from "../../img/logo.jpeg";
 import Swal from "sweetalert2";
 
