@@ -44,7 +44,7 @@ export const Register1 = () => {
 								<input type="password" className="form-control" placeholder="Confirme su contraseña" />
 							</div>
 							<div className="form-group">
-								<input type="register" value="Registrar" className="btn float-right login_btn" />
+								<input type="Submit" value="Registrar" className="btn float-right login_btn" />
 							</div>
 							<div className="card-footer">
 								<div className="d-flex justify-content-center links">

@@ -43,7 +43,7 @@ export const Login1 = () => {
 								Recordar
 							</div>
 							<div className="form-group">
-								<input type="login" value="Ingresar" className="btn float-right login_btn" />
+								<input type="Submit" value="Ingresar" className="btn float-right login_btn" />
 							</div>
 						</form>
 					</div>
