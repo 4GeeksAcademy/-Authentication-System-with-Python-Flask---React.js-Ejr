@@ -17,7 +17,7 @@ export const Forgot1 = () => {
 										<i className="	fa fa-envelope" />
 									</span>
 								</div>
-								<input type="text" className="form-control" placeholder="Ingrese su Email" />
+								<input type="text" className="form-control" placeholder="Ingrese su Email" required />
 							</div>
 							<div className="card-footer">
 								<div className="d-flex justify-content-center links">

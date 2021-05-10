@@ -17,7 +17,7 @@ export const Register1 = () => {
 										<i className="fas fa-user" />
 									</span>
 								</div>
-								<input type="text" className="form-control" placeholder="Nombre" />
+								<input type="text" className="form-control" placeholder="Nombre" required />
 							</div>
 							<div className="input-group form-group">
 								<div className="input-group-prepend">
@@ -25,7 +25,7 @@ export const Register1 = () => {
 										<i className="fa fa-envelope" />
 									</span>
 								</div>
-								<input type="text" className="form-control" placeholder="Email" />
+								<input type="text" className="form-control" placeholder="Email" required />
 							</div>
 							<div className="input-group form-group">
 								<div className="input-group-prepend">
@@ -33,7 +33,7 @@ export const Register1 = () => {
 										<i className="fas fa-key" />
 									</span>
 								</div>
-								<input type="password" className="form-control" placeholder="Contraseña" />
+								<input type="password" className="form-control" placeholder="Contraseña" required />
 							</div>
 							<div className="input-group form-group">
 								<div className="input-group-prepend">
@@ -41,7 +41,12 @@ export const Register1 = () => {
 										<i className="fas fa-key" />
 									</span>
 								</div>
-								<input type="password" className="form-control" placeholder="Confirme su contraseña" />
+								<input
+									type="password"
+									className="form-control"
+									placeholder="Confirme su contraseña"
+									required
+								/>
 							</div>
 							<div className="form-group">
 								<input type="Submit" value="Registrar" className="btn float-right login_btn" />

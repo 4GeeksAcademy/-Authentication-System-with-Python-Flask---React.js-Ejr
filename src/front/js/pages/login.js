@@ -28,7 +28,7 @@ export const Login1 = () => {
 										<i className="fa fa-envelope" />
 									</span>
 								</div>
-								<input type="text" className="form-control" placeholder="Email" />
+								<input type="text" className="form-control" placeholder="Email" required />
 							</div>
 							<div className="input-group form-group">
 								<div className="input-group-prepend">
@@ -36,7 +36,7 @@ export const Login1 = () => {
 										<i className="fas fa-key" />
 									</span>
 								</div>
-								<input type="password" className="form-control" placeholder="Contraseña" />
+								<input type="password" className="form-control" placeholder="Contraseña" required />
 							</div>
 							<div className="row align-items-center remember">
 								<input type="checkbox" />

@@ -9,6 +9,8 @@ import { Single } from "./pages/single";
 import { Login1 } from "./pages/login";
 import { Register1 } from "./pages/register";
 import { Forgot1 } from "./pages/forgot";
+import { Cupones1 } from "./pages/cupones";
+import { Categorias } from "./pages/categorias";
 import injectContext from "./store/appContext";
 
 import { Navbar1 } from "./component/navbar";
@@ -44,6 +46,12 @@ const Layout = () => {
 						</Route>
 						<Route exact path="/forgot">
 							<Forgot1 />
+						</Route>
+						<Route exact path="/cupones">
+							<Cupones1 />
+						</Route>
+						<Route exact path="/categorias">
+							<Categorias />
 						</Route>
 						<Route>
 							<h1>Not found!</h1>

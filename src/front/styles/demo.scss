@@ -77,3 +77,14 @@ color: white;
 .links a{
 margin-left: 4px;
 }
+
+
+// CSS de Cards de componentes
+
+
+.categorias{
+    display: flex;
+    overflow-x: auto;
+    min-height: 600px;
+    overflow-y: hidden;
+};

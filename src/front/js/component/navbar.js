@@ -8,10 +8,8 @@ export const Navbar1 = () => {
 			<Navbar className="navigation" collapseOnSelect expand="lg" bg="transparent" variant="dark" text="white">
 				<Link to={"/"}>
 					<Navbar.Brand href="#home">
-						<img
-							src="https://www.global-retail.com/wp-content/uploads/2017/11/Global_Market.png"
-							width="150px"
-						/>
+						<i className="fas fa-store" />
+						<strong>Global Market</strong>
 					</Navbar.Brand>
 				</Link>
 				<Navbar.Toggle aria-controls="responsive-navbar-nav" />
@@ -22,12 +20,12 @@ export const Navbar1 = () => {
 								Inicio
 							</Button>
 						</Link>{" "}
-						<Link to={"/"}>
+						<Link to={"/categorias"}>
 							<Button variant="outline-warning" href="#home" color="white">
 								Categorias
 							</Button>
 						</Link>{" "}
-						<Link to={"/"}>
+						<Link to={"/cupones"}>
 							<Button variant="outline-warning" href="#home" color="white">
 								Cupones
 							</Button>
@@ -52,7 +50,7 @@ export const Navbar1 = () => {
 									title=""
 									text="white">
 									<Link to={"/"}>
-										<Dropdown.Item eventKey="1">Alcancia</Dropdown.Item>
+										<Dropdown.Item eventKey="1">Carrito</Dropdown.Item>
 									</Link>
 									<Dropdown.Item eventKey="2">Action</Dropdown.Item>
 									<Dropdown.Item eventKey="3">Other Acction</Dropdown.Item>
