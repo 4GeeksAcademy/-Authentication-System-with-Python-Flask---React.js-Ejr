@@ -1,30 +1,18 @@
 """
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
+import os
 from flask import Flask, request, jsonify, url_for, Blueprint
 from flask import current_app
 from api.models import db, User, Pyme, TiposUsuario, Provincias, Cantones, TiposServicio
 from api.utils import generate_sitemap, APIException
-
-from werkzeug.security import generate_password_hash, check_password_hash       ## Nos permite manejar tokens por authentication (usuarios)    
-from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity   #from models import Person
+from flask_cors import CORS
+from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
+#from werkzeug.security import generate_password_hash, check_password_hash       ## Nos permite manejar tokens por authentication (usuarios)    
 import datetime
 
-import jwt
-#from flask import current_app
 
 api = Blueprint('api', __name__)
-
-#api = Flask(__name__)
-#app.config["MONGO_URI"] = "mongodb://localhost:27017/testdb"
-
-#jwt = JWTManager(api)
-
-#jwt = JWTManager(api)
-
-#def app_context():
-#    with app.app_context():
-#        yield
 
 @api.route('/hello', methods=['POST', 'GET'])
 def handle_hello():
@@ -119,37 +107,16 @@ def servicios():
 @api.route('/login', methods=['POST'])
 def login():
     #print("Ok")
-    email = request.json.get("email", None)
+    username = request.json.get("username", None)
     password = request.json.get("password", None)
 
-    if not email:
-        return jsonify({"msg":"Email required"}), 400
+    user = User.query.filter_by(email=username, contrasena=password).first()
 
-    if not password:
-        return jsonify({"msg":"Password required"}), 400
-    
-    user = User.query.filter_by(email=email).first()
-    #contrasena = User.query.filter_by(contrasena=password).first()
-    #print(user)
+    if user is None:
+        return jsonify({"msg": "Bad username or password"}), 401
 
-    if not user or password != user.contrasena:
-        return jsonify({"msg": "La información de login es incorrecta",
-        "status": 401
-        
-        }), 401
-
-    #expiracion = datetime.timedelta(hours=2)
-    #access_token = create_access_token(identity=user.email, expires_delta=expiracion)
-
-    data = {
-        #"user": user.serialize(),
-        #"token": access_token,
-        #"expires": expiracion.total_seconds()*1000,
-        "userId": user.email,
-        "tipoUsuario": user.tipo
-    }
-
-    return jsonify(data), 200
+    access_token = create_access_token(identity=user.id)
+    return jsonify(access_token=access_token)
 
 @api.route('/register', methods=['POST'])
 def register():

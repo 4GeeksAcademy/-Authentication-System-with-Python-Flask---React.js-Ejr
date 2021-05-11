@@ -89,6 +89,7 @@ class Pyme(db.Model):
     id_provincia = db.Column(db.Integer, ForeignKey('provincias.id'), unique=False, nullable=False)
     id_canton = db.Column(db.Integer, ForeignKey('cantones.id'), unique=False, nullable=False)
     id_tiposServicio = db.Column(db.Integer, ForeignKey('tiposServicio.id'), unique=False, nullable=False)
+    id_user = db.Column(db.Integer, ForeignKey('user.id'), unique=False, nullable=True)
     otrassenas = db.Column(db.String(80), unique=False, nullable=False)
     telefono = db.Column(db.String(80), unique=False, nullable=False)
     facebook = db.Column(db.String(80), unique=False, nullable=False)
@@ -97,6 +98,7 @@ class Pyme(db.Model):
     TiposServicio = relationship(TiposServicio)
     Provincias = relationship(Provincias)
     Cantones = relationship(Cantones)
+    User = relationship(User)
 
     def serialize(self):
         return {
@@ -105,6 +107,7 @@ class Pyme(db.Model):
             "id_provincia": self.id_provincia,
             "id_canton": self.id_canton,
             "id_tiposServicio": self.id_tiposServicio,
+            "id_user": self.id_user,
             "otrassenas": self.otrassenas,
             "telefono": self.telefono,
             "facebook": self.facebook,
