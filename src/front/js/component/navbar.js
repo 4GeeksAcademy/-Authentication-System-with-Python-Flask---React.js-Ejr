@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import { Context } from "../store/appContext";
 import { Link } from "react-router-dom";
-import logo from "../../img/logo.jpeg";
+import logo from "../../img/logo.png";
 import { Search } from "./search";
 import "../../styles/navbar.scss";
 
@@ -13,7 +13,7 @@ export const Navbar = () => {
 				<div className="row justify-content-between">
 					<div className="col">
 						<a className="navbar-brand" href="index.html">
-							Pura Vida <span>Mart</span>
+							<img src={logo} />
 						</a>
 					</div>
 					<div className="col d-flex justify-content-end">
@@ -101,11 +101,11 @@ export const Navbar = () => {
 									<a className="dropdown-item" href="#">
 										Nuevo Producto
 									</a>
-									<a className="dropdown-item" href="#">
+									<a className="dropdown-item" href="/checkoutview.js">
 										Comprar
 									</a>
-									<a className="dropdown-item" href="#">
-										Page 3
+									<a className="dropdown-item" href="/logueado.js">
+										logueado
 									</a>
 									<a className="dropdown-item" href="#">
 										Page 4
