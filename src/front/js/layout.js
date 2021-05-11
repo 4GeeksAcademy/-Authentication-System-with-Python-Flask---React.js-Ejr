@@ -15,7 +15,7 @@ import { NewProduct } from "./pages/newProduct";
 import { Logueado } from "./pages/logueado";
 import { ResetPassword } from "./pages/resetPassword";
 import { WazeView } from "./pages/wazeview";
-
+import { Checkoutview} from "./pages/checkoutview";
 //create your first component
 const Layout = () => {
 	//the basename is used when your project is published in a subdirectory and not in the root of the domain
@@ -57,6 +57,9 @@ const Layout = () => {
 						</Route>
 						<Route exact path="/wazeview">
 							<WazeView />
+						</Route>
+                        <Route exact path="/checkoutview">
+							<CheckoutView />
 						</Route>
 						<Route>
 							<h1>Not found!</h1>

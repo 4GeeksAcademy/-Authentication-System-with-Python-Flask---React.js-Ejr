@@ -3,7 +3,7 @@
 @import "/workspace/t2-fp-4geeks/node_modules/bootstrap/scss/mixins";
 
 $font-primary: 'Poppins',Arial, sans-serif;
-$primary: #f1bc31;
+$primary: #BAED2D;
 
 body{
 	font-family: $font-primary;
@@ -58,7 +58,7 @@ h1, h2, h3, h4, h5,
 }
 
 .ftco-navbar-light {
-	background: #202040 !important;
+	background: #5e2ced !important;
 	z-index: 3;
 	padding: 0;
 	@include media-breakpoint-down(md) {

@@ -44,6 +44,17 @@ export const Navbar = () => {
 									disabled={store.isLoggedIn ? false : true}>
 									<span className="fas fa-sign-out-alt" />
 								</Link>
+								<Link
+									to="/"
+									className="d-flex align-items-center justify-content-center"
+									data-toggle="tooltip"
+									title="Comprar"
+									onClick={() => {
+										//actions.logUserOut();
+									}}
+									disabled={store.isLoggedIn ? false : true}>
+									<span className="fa fa-shopping-cart" />
+								</Link>
 							</p>
 						</div>
 					</div>
