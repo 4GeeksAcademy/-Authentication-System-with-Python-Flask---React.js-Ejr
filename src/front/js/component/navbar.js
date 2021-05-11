@@ -8,15 +8,17 @@ export const Navbar1 = () => {
 			<Navbar className="navigation" collapseOnSelect expand="lg" bg="transparent" variant="dark" text="white">
 				<Link to={"/"}>
 					<Navbar.Brand href="#home">
-						<i className="fas fa-store" />
-						<strong>Global Market</strong>
+						<img
+							src="https://www.freelogoservices.com/api/main/images/1j+ojFVDOMkX9Wytexe43D6khvSBrBVOnx3IwXs1M3EMoAJtliItgPtj8v46 "
+							width="90px"
+						/>
 					</Navbar.Brand>
 				</Link>
 				<Navbar.Toggle aria-controls="responsive-navbar-nav" />
 				<Navbar.Collapse id="responsive-navbar-nav">
 					<Nav className="ml-auto mx-5">
 						<Link to={"/"}>
-							<Button variant="outline-warning" href="#home" color="white">
+							<Button variant="in1" href="#home" color="white">
 								Inicio
 							</Button>
 						</Link>{" "}

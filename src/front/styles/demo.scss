@@ -78,6 +78,42 @@ color: white;
 margin-left: 4px;
 }
 
+//css background de login,regiter y forgot
+.login{
+    background-image: url("https://cdn.pixabay.com/photo/2016/03/23/19/38/shopping-carts-1275480_960_720.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    position: absolute;
+    width: 100%;
+    z-index: -10;
+    top: 0;
+    left: 0;
+    height: 100%;
+}
+.backdrop{
+    position: absolute;
+    width: 100%;
+    z-index: -9;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background-color: rgba(0,0,0,0.6);
+}
+//CSS de "/categorias"
+.categoriaspage{
+    background: linear-gradient(0deg, rgb(224, 146, 123), white);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    position: absolute;
+    width: 100%;
+    z-index: -10;
+    top: 0;
+    left: 0;
+    height: 100%;
+}
+
 
 // CSS de Cards de componentes
 
