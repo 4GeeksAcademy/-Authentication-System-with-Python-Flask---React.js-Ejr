@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 export const Login1 = () => {
 	return (
 		<div className="container">
+			<div className="login" />
+			<div className="backdrop" />
 			<div className="d-flex justify-content-center h-100">
 				<div className="card c1">
 					<div className="card-header">
@@ -28,7 +30,7 @@ export const Login1 = () => {
 										<i className="fa fa-envelope" />
 									</span>
 								</div>
-								<input type="text" className="form-control" placeholder="Email" />
+								<input type="text" className="form-control" placeholder="Email" required />
 							</div>
 							<div className="input-group form-group">
 								<div className="input-group-prepend">
@@ -36,14 +38,14 @@ export const Login1 = () => {
 										<i className="fas fa-key" />
 									</span>
 								</div>
-								<input type="password" className="form-control" placeholder="Contraseña" />
+								<input type="password" className="form-control" placeholder="Contraseña" required />
 							</div>
 							<div className="row align-items-center remember">
 								<input type="checkbox" />
 								Recordar
 							</div>
 							<div className="form-group">
-								<input type="login" value="Ingresar" className="btn float-right login_btn" />
+								<input type="Submit" value="Ingresar" className="btn float-right login_btn" />
 							</div>
 						</form>
 					</div>

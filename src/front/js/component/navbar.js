@@ -5,12 +5,12 @@ import { Navbar, Nav, Dropdown, DropdownButton, Button } from "react-bootstrap";
 export const Navbar1 = () => {
 	return (
 		<>
-			<Navbar className="navigation" collapseOnSelect expand="lg" bg="black" variant="dark" text="white">
+			<Navbar className="navigation" collapseOnSelect expand="lg" bg="transparent" variant="dark" text="white">
 				<Link to={"/"}>
 					<Navbar.Brand href="#home">
 						<img
-							src="https://www.global-retail.com/wp-content/uploads/2017/11/Global_Market.png"
-							width="150px"
+							src="https://www.freelogoservices.com/api/main/images/1j+ojFVDOMkX9Wytexe43D6khvSBrBVOnx3IwXs1M3EMoAJtliItgPtj8v46 "
+							width="90px"
 						/>
 					</Navbar.Brand>
 				</Link>
@@ -18,16 +18,16 @@ export const Navbar1 = () => {
 				<Navbar.Collapse id="responsive-navbar-nav">
 					<Nav className="ml-auto mx-5">
 						<Link to={"/"}>
-							<Button variant="outline-warning" href="#home" color="white">
+							<Button variant="in1" href="#home" color="white">
 								Inicio
 							</Button>
 						</Link>{" "}
-						<Link to={"/"}>
+						<Link to={"/categorias"}>
 							<Button variant="outline-warning" href="#home" color="white">
 								Categorias
 							</Button>
 						</Link>{" "}
-						<Link to={"/"}>
+						<Link to={"/cupones"}>
 							<Button variant="outline-warning" href="#home" color="white">
 								Cupones
 							</Button>
@@ -52,7 +52,7 @@ export const Navbar1 = () => {
 									title=""
 									text="white">
 									<Link to={"/"}>
-										<Dropdown.Item eventKey="1">Alcancia</Dropdown.Item>
+										<Dropdown.Item eventKey="1">Carrito</Dropdown.Item>
 									</Link>
 									<Dropdown.Item eventKey="2">Action</Dropdown.Item>
 									<Dropdown.Item eventKey="3">Other Acction</Dropdown.Item>

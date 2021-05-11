@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 export const Forgot1 = () => {
 	return (
 		<div className="container">
+			<div className="login" />
+			<div className="backdrop" />
 			<div className="d-flex justify-content-center h-100">
 				<div className="card c1">
 					<div className="d-flex justify-content-center text-white">
@@ -17,7 +19,7 @@ export const Forgot1 = () => {
 										<i className="	fa fa-envelope" />
 									</span>
 								</div>
-								<input type="text" className="form-control" placeholder="Ingrese su Email" />
+								<input type="text" className="form-control" placeholder="Ingrese su Email" required />
 							</div>
 							<div className="card-footer">
 								<div className="d-flex justify-content-center links">

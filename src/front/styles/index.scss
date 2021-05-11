@@ -3,8 +3,6 @@
     justify-content:center;
     align-items: center;
     width: 80%;
-    
-   
 }
 
 .imagen-fondo {
@@ -16,7 +14,7 @@
     height: 800px;
 }
 .tarjeta{
-   margin-top: 80px;
+  
    background-color: white !important;
 }
 .container1{
@@ -52,9 +50,9 @@
     text-align: center;
 }
 .promos {
-    overflow-x:scroll;
+    overflow-x:auto;
     min-height: 400px;
-
+    overflow-y: hidden;
 }
 .update {
     margin-left: 10px;

@@ -27,6 +27,7 @@ export const Productos = () => {
 							</button>
 						</div>
 					</div>
+
 					<div className="card" style={{ width: "18rem" }}>
 						<img
 							src="https://express.dospinos.com/media/catalog/product/1/5/15000194.jpg"
