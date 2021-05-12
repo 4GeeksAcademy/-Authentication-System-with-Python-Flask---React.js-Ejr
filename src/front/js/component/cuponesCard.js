@@ -8,7 +8,7 @@ export const Cupones = props => {
 			<div className="row g-0">
 				<div className="col-md-4">
 					<img
-						src="http://assets.stickpng.com/images/5a0589189cf05203c4b603d9.png"
+						src="http://assets.stickpng.com/images/5a0589189cf05203c4b603d9.pngg"
 						className="card-img-top"
 						alt="..."
 					/>
