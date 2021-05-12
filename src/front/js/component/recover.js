@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import { Context } from "../store/appContext";
-import logo from "../../img/logo.jpeg";
+import logo from "../../img/logo.png";
 import Swal from "sweetalert2";
 
 export const PassRecovery = () => {

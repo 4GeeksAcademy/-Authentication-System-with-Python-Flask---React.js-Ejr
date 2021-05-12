@@ -2,11 +2,11 @@ import React, { Component } from "react";
 import "../../styles/footer.scss";
 
 export const Footer = () => (
-	<footer className="new_footer_area bg_color">
+	<footer className="new_footer_area bg_color mt-5">
 		<div className="new_footer_top">
 			<div className="container">
 				<div className="row">
-					<div className="col-lg-3 col-md-6">
+					<div className="col-lg-4 col-md-6 col-sm-12 mt-5">
 						<div
 							className="f_widget company_widget wow fadeInLeft"
 							data-wow-delay="0.2s"
@@ -29,7 +29,7 @@ export const Footer = () => (
 						</div>
 					</div>
 
-					<div className="col-lg-3 col-md-6">
+					<div className="col-lg-4 col-md-6 col-sm-12 mt-5">
 						<div
 							className="f_widget about-widget pl_70 wow fadeInLeft"
 							data-wow-delay="0.6s"
@@ -48,7 +48,8 @@ export const Footer = () => (
 							</ul>
 						</div>
 					</div>
-					<div className="col-lg-3 col-md-6">
+
+					<div className="col-lg-4 col-md-6 col-sm-12 mt-5">
 						<div
 							className="f_widget social-widget pl_70 wow fadeInLeft"
 							data-wow-delay="0.8s"

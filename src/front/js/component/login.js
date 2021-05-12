@@ -3,7 +3,7 @@ import { Context } from "../store/appContext";
 import { Link } from "react-router-dom";
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 import GoogleLogin from "react-google-login";
-import logo from "../../img/logo.jpeg";
+import logo from "../../img/logo.png";
 
 export const Login = () => {
 	const { actions } = useContext(Context);

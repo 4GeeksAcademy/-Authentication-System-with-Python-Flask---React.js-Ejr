@@ -2,8 +2,8 @@ import React from "react";
 
 export const Contact = () => {
 	return (
-		<div className="container">
-			<section className="mb-4">
+		<div className="container mb-5">
+			<section className="mb-5">
 				<h2 className="h1-responsive text-center my-4">Contáctenos</h2>
 
 				<p className="text-center w-responsive mx-auto mb-5">
@@ -16,7 +16,7 @@ export const Contact = () => {
 						<form id="contact-form" name="contact-form" action="mail.php" method="POST">
 							<div className="row">
 								<div className="col-md-6">
-									<div className="md-form mb-0">
+									<div className="md-form mb-5">
 										<input type="text" id="name" name="name" className="form-control" />
 										<label htmlFor="name" className="">
 											Nombre
@@ -25,21 +25,10 @@ export const Contact = () => {
 								</div>
 
 								<div className="col-md-6">
-									<div className="md-form mb-0">
+									<div className="md-form mb-5">
 										<input type="text" id="email" name="email" className="form-control" />
 										<label htmlFor="email" className="">
 											Email
-										</label>
-									</div>
-								</div>
-							</div>
-
-							<div className="row">
-								<div className="col-md-12">
-									<div className="md-form mb-0">
-										<input type="text" id="subject" name="subject" className="form-control" />
-										<label htmlFor="subject" className="">
-											Asunto
 										</label>
 									</div>
 								</div>
@@ -69,7 +58,7 @@ export const Contact = () => {
 						<div className="status" />
 					</div>
 
-					<div className="col-md-3 text-center">
+					<div className="col-md-3 col-sm-0 text-center">
 						<ul className="list-unstyled mb-0">
 							<li>
 								<i className="fas fa-map-marker-alt fa-2x" />
