@@ -21,6 +21,8 @@ def upgrade():
     op.alter_column('pyme', 'id_user',
                existing_type=sa.INTEGER(),
                nullable=False)
+    op.alter_column('user', 'contrasena',
+               existing_type=sa.String(length=200))
     # ### end Alembic commands ###
 
 

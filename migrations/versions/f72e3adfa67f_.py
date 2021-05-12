@@ -60,7 +60,7 @@ def upgrade():
     sa.UniqueConstraint('nombre')
     )
     op.add_column('user', sa.Column('activo', sa.Boolean(), nullable=False))
-    op.add_column('user', sa.Column('contrasena', sa.String(length=80), nullable=False))
+    op.add_column('user', sa.Column('contrasena', sa.String(length=200), nullable=False))
     op.add_column('user', sa.Column('tipo', sa.Integer(), nullable=False))
     op.create_foreign_key(None, 'user', 'tiposUsuario', ['tipo'], ['id'])
     op.drop_column('user', 'password')
