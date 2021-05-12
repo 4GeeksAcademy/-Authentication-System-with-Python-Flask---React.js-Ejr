@@ -23,22 +23,22 @@ export const Navbar1 = () => {
 							</Button>
 						</Link>{" "}
 						<Link to={"/categorias"}>
-							<Button variant="outline-warning" href="#home" color="white">
+							<Button variant="in1" href="#home" color="white">
 								Categorias
 							</Button>
 						</Link>{" "}
 						<Link to={"/cupones"}>
-							<Button variant="outline-warning" href="#home" color="white">
+							<Button variant="in1" href="#home" color="white">
 								Cupones
 							</Button>
 						</Link>
 						<Link to={"/register"}>
-							<Button variant="outline-warning" href="#home" color="white">
+							<Button variant="in1" href="#home" color="white">
 								Registro
 							</Button>
 						</Link>
 						<Link to={"/login"}>
-							<Button variant="outline-warning" href="#home" color="white">
+							<Button variant="in1" href="#home" color="white">
 								Ingresar
 							</Button>
 						</Link>
@@ -48,7 +48,7 @@ export const Navbar1 = () => {
 									key={direction}
 									id={`dropdown-button-drop-${direction}`}
 									drop={direction}
-									variant="outline-warning"
+									variant="in1"
 									title=""
 									text="white">
 									<Link to={"/"}>
