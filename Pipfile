@@ -22,6 +22,9 @@ marshmallow = "*"
 marshmallow-sqlalchemy = "*"
 flask-jwt = "*"
 flask-jwt-extended = "*"
+sentry-sdk = {extras = ["flask"], version = "*"}
+bcrypt = "*"
+flask-mail = "*"
 
 [requires]
 python_version = "3.8"

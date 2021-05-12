@@ -8,21 +8,20 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(40))
     email = db.Column(db.String(120), unique=True, nullable=False)
-    password = db.Column(db.String(80), unique=False, nullable=False)
+    password = db.Column(db.String(120), unique=False, nullable=False)
     location = db.Column(db.String(50), nullable=False)
-    is_active = db.Column(db.Boolean(), unique=False, nullable=False)
+    is_active = db.Column(db.Boolean(), unique=False, default=False)
 
     def __init__(self, name, email, password, location, is_active):
         self.name = name
         self.email = email 
         self.password = password
         self.location = location
-        self.is_active = is_active
 
 class Supermarket(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     market_name = db.Column(db.String(60), nullable=False)
-    location = db.Column(db.String(60), unique=True ,nullable=False)
+    location = db.Column(db.String(60), nullable=False)
     information = db.Column(db.String(255))
 
     def __init__(self, market_name, location, information):
@@ -53,9 +52,12 @@ class Cart(db.Model):
     product_id = db.Column(db.Integer, db.ForeignKey('product.id'))
     user = db.relationship('User')
 
-    def __init__(self, user_id, product_id):
-        self.user_id = user_id
-        self.product_id = product_id
+    def serialize(self):
+        return{
+            "user_id": self.user_id,
+            "product_id": self.product_id,
+            "product_name": user.name
+        }
 
 class Coupons(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -88,7 +90,7 @@ class Couponlist(db.Model):
 # database schemas
 class UserSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
-        model = User
+        fields = ('id', 'name', 'email', 'location', 'is_active')
 
 class ProductSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
