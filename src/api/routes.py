@@ -8,7 +8,7 @@ from api.models import db, User, Pyme, TiposUsuario, Provincias, Cantones, Tipos
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
-#from werkzeug.security import generate_password_hash, check_password_hash       ## Nos permite manejar tokens por authentication (usuarios)    
+from werkzeug.security import generate_password_hash, check_password_hash       ## Nos permite manejar tokens por authentication (usuarios)    
 import datetime
 
 
@@ -106,16 +106,30 @@ def servicios():
 
 @api.route('/login', methods=['POST'])
 def login():
-    #print("Ok")
-    username = request.json.get("username", None)
-    password = request.json.get("password", None)
+    usuario = request.json.get("usuario", None)
+    contrasena = request.json.get("contrasena", None)
 
-    user = User.query.filter_by(email=username, contrasena=password).first()
+    #hashed_password = generate_password_hash(password)
+    #user.password = hashed_password
+
+    user = User.query.filter_by(email=usuario, contrasena=contrasena).first()
 
     if user is None:
         return jsonify({"msg": "Bad username or password"}), 401
 
     access_token = create_access_token(identity=user.id)
+
+    data = {
+            "user": user.email,
+            "token": access_token,
+            #"expires": expiracion.total_seconds()*1000,
+            "userId": user.id,
+            #"username": user.username
+        }
+
+
+    return jsonify(data), 200
+
     return jsonify(access_token=access_token)
 
 @api.route('/register', methods=['POST'])
@@ -123,12 +137,22 @@ def register():
 
     email = request.json.get("email", None)
     contrasena = request.json.get("contrasena", None)
+    token = request.json.get("token", None)
 
     if not email:
         return jsonify({"msg":"Email required"}), 400
 
-    usuarioNuevo = User(email=email, contrasena=contrasena, activo=True, id_tipo=2)
-    db.session.add(usuarioNuevo)
+    hashed_password = generate_password_hash(contrasena)
+    contrasena = hashed_password
+
+    user = User()
+    user.email = email
+    user.contrasena = contrasena
+    user.activo = True
+    user.id_tipo = 2
+
+    #usuarioNuevo = User(email=email, contrasena=contrasena, activo=True, id_tipo=2)
+    db.session.add(user)
     db.session.commit()
 
     return jsonify("Registro correcto"), 200

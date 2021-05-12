@@ -20,7 +20,7 @@ class User(db.Model):
     __tablename__ = 'user'
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(120), unique=True, nullable=False)
-    contrasena = db.Column(db.String(80), unique=False, nullable=False)
+    contrasena = db.Column(db.String(200), unique=False, nullable=False)
     id_tipo = db.Column(db.Integer, ForeignKey('tiposUsuario.id'), unique=False, nullable=False)
     activo = db.Column(db.Boolean(), unique=False, nullable=False)
     TiposUsuario = relationship(TiposUsuario)
@@ -89,7 +89,7 @@ class Pyme(db.Model):
     id_provincia = db.Column(db.Integer, ForeignKey('provincias.id'), unique=False, nullable=False)
     id_canton = db.Column(db.Integer, ForeignKey('cantones.id'), unique=False, nullable=False)
     id_tiposServicio = db.Column(db.Integer, ForeignKey('tiposServicio.id'), unique=False, nullable=False)
-    id_user = db.Column(db.Integer, ForeignKey('user.id'), unique=False, nullable=True)
+    id_user = db.Column(db.Integer, ForeignKey('user.id'), unique=False, nullable=False)
     otrassenas = db.Column(db.String(80), unique=False, nullable=False)
     telefono = db.Column(db.String(80), unique=False, nullable=False)
     facebook = db.Column(db.String(80), unique=False, nullable=False)
