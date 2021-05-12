@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import "../../styles/home.scss";
 import { Promociones } from "../component/promociones";
+import { Cinta } from "../component/cinta";
 import { Link } from "react-router-dom";
 
 export const Home = () => {
@@ -57,6 +58,9 @@ export const Home = () => {
 				<Promociones />
 				<Promociones />
 				<Promociones />
+			</div>
+			<div className="cinta_mov">
+				<Cinta />
 			</div>
 		</>
 	);

@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { Card, ListGroupItem, ListGroup } from "react-bootstrap";
 import { propTypes } from "react-bootstrap/esm/Image";
-import { RiRegisteredLine } from "react-icons/fa";
 
 export const Promociones = props => {
 	return (

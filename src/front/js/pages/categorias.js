@@ -1,7 +1,5 @@
 import React from "react";
-import { Lacteos } from "../component/lacteos";
-import { Granos } from "../component/granos";
-import { CuidadoPersonal } from "../component/cuidadoPersonal";
+import { Globalcard } from "../component/globalcard";
 import { Link } from "react-router-dom";
 
 export const Categorias = () => {
@@ -16,45 +14,21 @@ export const Categorias = () => {
 					<strong>Lacteos</strong>
 				</h4>
 				<div className="categorias">
-					<Lacteos />
-					<Lacteos />
-					<Lacteos />
-					<Lacteos />
-					<Lacteos />
-					<Lacteos />
-					<Lacteos />
-					<Lacteos />
+					<Globalcard />
 				</div>
 				<br />
 				<h4>
 					<strong>Granos</strong>
 				</h4>
 				<div className="categorias">
-					<Granos />
-					<Granos />
-					<Granos />
-					<Granos />
-					<Granos />
-					<Granos />
-					<Granos />
-					<Granos />
-					<Granos />
+					<Globalcard />
 				</div>
 				<br />
 				<h4>
 					<strong>Cuidado Personal</strong>
 				</h4>
 				<div className="categorias">
-					<CuidadoPersonal />
-					<CuidadoPersonal />
-					<CuidadoPersonal />
-					<CuidadoPersonal />
-					<CuidadoPersonal />
-					<CuidadoPersonal />
-					<CuidadoPersonal />
-					<CuidadoPersonal />
-					<CuidadoPersonal />
-					<CuidadoPersonal />
+					<Globalcard />
 				</div>
 			</div>
 		</>
