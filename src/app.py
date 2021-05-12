@@ -23,7 +23,7 @@ app = Flask(__name__)
 app.url_map.strict_slashes = False
 jwt = JWTManager(app)
 
-# database condiguration
+# database configuration
 if os.getenv("DATABASE_URL") is not None:
     app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
 else:
@@ -38,6 +38,9 @@ ma.init_app(app)
 CORS(app)
 setup_admin(app)
 app.register_blueprint(api, url_prefix='/api')
+
+# Send emails
+
 
 # handel the serialize errors
 @app.errorhandler(APIException)
