@@ -1,12 +1,8 @@
-<<<<<<< HEAD
 import React from "react";
 import { Link } from "react-router-dom";
-=======
->>>>>>> 9860d2d53612471b48afdd6fd37a18c8dac2b3bb
 
 export const Login1 = () => {
 	return (
-<<<<<<< HEAD
 		<div className="container">
 			<div className="login" />
 			<div className="backdrop" />
@@ -70,8 +66,4 @@ export const Login1 = () => {
 			</div>
 		</div>
 	);
-=======
-		<h1>h</h1>
-	)
->>>>>>> 9860d2d53612471b48afdd6fd37a18c8dac2b3bb
 };

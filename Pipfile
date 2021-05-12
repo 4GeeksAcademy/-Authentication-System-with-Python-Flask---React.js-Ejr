@@ -20,7 +20,6 @@ flask-admin = "*"
 flask-marshmallow = "*"
 marshmallow = "*"
 marshmallow-sqlalchemy = "*"
-flask-jwt = "*"
 flask-jwt-extended = "*"
 sentry-sdk = {extras = ["flask"], version = "*"}
 bcrypt = "*"
