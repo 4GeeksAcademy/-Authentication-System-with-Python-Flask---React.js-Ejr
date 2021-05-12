@@ -132,37 +132,73 @@ def login():
 
     return jsonify(access_token=access_token)
 
-@api.route('/register', methods=['POST'])
-def register():
+@api.route('/UsuarioNuevo', methods=['POST'])
+@jwt_required()
+def UsuarioNuevo():
 
-    email = request.json.get("email", None)
-    contrasena = request.json.get("contrasena", None)
-    token = request.json.get("token", None)
+    current_user_id = get_jwt_identity()
+    user = User.query.filter_by(id=current_user_id).first
 
-    if not email:
-        return jsonify({"msg":"Email required"}), 400
+    if user is not None:
 
-    hashed_password = generate_password_hash(contrasena)
-    contrasena = hashed_password
+        email = request.json.get("email", None)
+        contrasena = request.json.get("contrasena", None)
+        token = request.json.get("token", None)
 
-    user = User()
-    user.email = email
-    user.contrasena = contrasena
-    user.activo = True
-    user.id_tipo = 2
+        if not email:
+            return jsonify({"msg":"Email required"}), 400
 
-    #usuarioNuevo = User(email=email, contrasena=contrasena, activo=True, id_tipo=2)
-    db.session.add(user)
-    db.session.commit()
+        hashed_password = generate_password_hash(contrasena)
+        contrasena = hashed_password
 
-    return jsonify("Registro correcto"), 200
+        user = User()
+        user.email = email
+        user.contrasena = contrasena
+        user.activo = True
+        user.id_tipo = 2
 
-    #data = {
-        #"user": user.serialize(),
-        #"token": access_token,
-        #"expires": expiracion.total_seconds()*1000,
-        #"userId": user.email
-    #}
+        #usuarioNuevo = User(email=email, contrasena=contrasena, activo=True, id_tipo=2)
+        db.session.add(user)
+        db.session.commit()
 
+        return jsonify("Registro correcto"), 200
+    else:
+        return jsonify({"msg": "Token invalid or expired"}), 401
 
+@api.route('/ActualizaPyme/<int:user_id>', methods=['POST'])
+@jwt_required()
+def ActualizaPyme(user_id):
+
+    current_user_id = get_jwt_identity()
+    user = User.query.filter_by(id=current_user_id).first
+
+    if user is not None:
+
+        provincia = request.json.get("provincia", None)
+        canton = request.json.get("canton", None)
+        nombrePyme = request.json.get("nombrePyme", None)
+        tipoServicio = request.json.get("tipoServicio", None)
+        telefono = request.json.get("telefono", None)
+        otrasSenas = request.json.get("otrasSenas", None)
+        instagram = request.json.get("instagram", None)
+        facebook = request.json.get("facebook", None)
+
+        pyme = Pyme()
+        pyme.nombre = nombrePyme
+        pyme.id_provincia = provincia
+        pyme.id_canton = canton
+        pyme.id_tiposServicio = tipoServicio
+        pyme.id_user = user_id
+        pyme.otrassenas = otrasSenas
+        pyme.telefono = telefono
+        pyme.facebook = facebook
+        pyme.instagram = instagram
+        pyme.Imagen = "Test String"
+
+        db.session.add(pyme)
+        db.session.commit()
+
+        return jsonify("Registro correcto"), 200
+    else:
+        return jsonify({"msg": "Token invalid or expired"}), 401
     
