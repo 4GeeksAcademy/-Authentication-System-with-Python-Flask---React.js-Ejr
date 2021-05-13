@@ -124,6 +124,7 @@ def login():
             "token": access_token,
             #"expires": expiracion.total_seconds()*1000,
             "userId": user.id,
+            "idTipo":user.id_tipo
             #"username": user.username
         }
 
@@ -137,7 +138,7 @@ def login():
 def UsuarioNuevo():
 
     current_user_id = get_jwt_identity()
-    user = User.query.filter_by(id=current_user_id).first
+    user = User.query.filter_by(id=current_user_id).first()
 
     if user is not None:
 
@@ -165,12 +166,16 @@ def UsuarioNuevo():
     else:
         return jsonify({"msg": "Token invalid or expired"}), 401
 
-@api.route('/ActualizaPyme/<int:user_id>', methods=['POST'])
+@api.route('/actualizapyme', methods=['POST'])
 @jwt_required()
-def ActualizaPyme(user_id):
+def ActualizaPyme():
 
     current_user_id = get_jwt_identity()
-    user = User.query.filter_by(id=current_user_id).first
+    user = User.query.filter_by(id=current_user_id).first()
+    user_has_pyme = Pyme.query.filter_by(id_user=current_user_id).first()
+    
+    if user_has_pyme:
+        return jsonify({"msg": "User has an existing PYME registered"}), 401
 
     if user is not None:
 
@@ -188,7 +193,7 @@ def ActualizaPyme(user_id):
         pyme.id_provincia = provincia
         pyme.id_canton = canton
         pyme.id_tiposServicio = tipoServicio
-        pyme.id_user = user_id
+        pyme.id_user = current_user_id
         pyme.otrassenas = otrasSenas
         pyme.telefono = telefono
         pyme.facebook = facebook
