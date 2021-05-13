@@ -1,7 +1,7 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
-			message: null,
+			token: null,
 			isLoggedIn: false,
 			emailServiceID: "service_69zpagb",
 			emailUserID: "user_z7x4Z98eeKRtg2hNKJyJC",
@@ -9,7 +9,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				recoverEmail: "template_8ynr9ye",
 				changedEmail: "template_2piuwtk"
 			},
-			endPoint: process.env.BACKEND_URL + "api/",
+			endPoint: "https://3001-apricot-squid-508x052a.ws-us04.gitpod.io" + "/api/", //process.env.BACKEND_URL
 			uriOrigin: window.location.origin,
 			appAuth: [],
 			dataMart: []
@@ -24,14 +24,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 				return response;
 			},
 
+			// function to fetch data from the api fake store
 			loadImageProduct: async () => {
-				const store = getStore();
 				let response = await fetch("https://fakestoreapi.com/products");
 				let data = await response.json();
 				setStore({ dataMart: [...data] });
-				console.log(store.isLoggedIn);
 			},
 
+			// function for user registration
 			userRegistration: newuser => {
 				const store = getStore();
 				const apiEndPoint = store.endPoint + "userregistration";
@@ -51,8 +51,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 					.then(result => console.log(result))
 					.catch(error => console.log("error", error));
 			},
-			// function to allow user log in user
-			userLogIn: user => {
+
+			// fucnction to allow user log in user
+			userLogIn: async user => {
 				const store = getStore();
 				const apiEndPoint = store.endPoint + "userlogin";
 				let myHeaders = new Headers();
@@ -66,23 +67,28 @@ const getState = ({ getStore, getActions, setStore }) => {
 					redirect: "follow"
 				};
 
-				fetch(apiEndPoint, requestOptions)
-					.then(response => response.json())
-					.then(result => {
-						let token = result.token;
-						console.log(token);
-						if (token) {
-							sessionStorage.setItem("userToken", token);
-							setStore({ isLoggedIn: true });
-						}
-					})
-					.catch(error => console.log("error", error));
+				try {
+					const resp = await fetch(apiEndPoint, requestOptions);
+					const data = await resp.json();
+					if (data.token) {
+						sessionStorage.setItem("userToken", data.token);
+						setStore({ token: data.token });
+					}
+				} catch (error) {
+					console.log(error);
+				}
 			},
-			// function to log user out
+			syncTokenOnRefresh: () => {
+				setStore({ token: sessionStorage.getItem("userToken") });
+			},
+
+			// function to log user out and clear token and log state
 			logUserOut: () => {
 				setStore({ isLoggedIn: false });
+				setStore({ token: null });
 				sessionStorage.clear();
 			},
+
 			// function to request a password change through the api
 			recoverPassword: email => {
 				const store = getStore();

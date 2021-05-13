@@ -2,6 +2,7 @@ import React, { useState, useContext } from "react";
 import { Context } from "../store/appContext";
 import logo from "../../img/logo.jpeg";
 import Swal from "sweetalert2";
+import "../../styles/registerNew.scss";
 
 export const PassRecovery = () => {
 	const { actions } = useContext(Context);
@@ -22,32 +23,33 @@ export const PassRecovery = () => {
 	};
 
 	return (
-		<div className="container">
-			<div className="login-form">
-				<form onSubmit={handleChange}>
-					<h2 className="text-center">Recuperacion de contraseña</h2>
-					<img src={logo} alt="logo" className="img-thumbnail mx-auto d-block rounded my-3" />
-					<div className="form-group">
-						<div className="input-group">
+		<div className="container my-5">
+			<section>
+				<div className="wrap-login100 p-l-55 p-r-55 p-t-35 p-b-54 mx-auto d-block">
+					<form onSubmit={handleChange} className="login100-form">
+						<span className="login100-form-title p-b-30">Recuperacion de Contraseña</span>
+						<div className="wrap-input100  m-b-23">
+							<span className="label-input100 fas fa-envelope"> Email</span>
 							<input
-								type="email"
-								className="form-control"
+								className="input100"
+								type="text"
 								name="email"
-								placeholder="Correo electronico"
-								required="required"
+								placeholder="Ingrese su Correo electronico"
 								onChange={event => {
 									setResetEmail({ email: event.target.value });
 								}}
 							/>
+							<span className="focus-input100" />
 						</div>
-					</div>
-					<div className="form-group">
-						<button type="submit" onClick={resetAlert} className="btn btn-login login-btn btn-block">
-							Recuperar Contraseña
-						</button>
-					</div>
-				</form>
-			</div>
+						<div className="container-login100-form-btn">
+							<div className="wrap-login100-form-btn">
+								<div className="login100-form-bgbtn" />
+								<button className="login100-form-btn">Recuperar Contraseña</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</section>
 		</div>
 	);
 };

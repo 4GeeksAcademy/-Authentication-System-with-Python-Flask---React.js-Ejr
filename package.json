@@ -79,6 +79,7 @@
 		"bootstrap": "^4.6.0",
 		"emailjs-com": "^2.6.4",
 		"jquery": "^3.6.0",
+		"jquery.steps": "^1.1.1",
 		"prop-types": "^15.6.1",
 		"react": "^16.8.4",
 		"react-dom": "^16.8.4",
