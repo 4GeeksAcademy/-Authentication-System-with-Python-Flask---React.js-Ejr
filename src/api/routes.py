@@ -11,6 +11,26 @@ from flask_jwt_extended import JWTManager, create_access_token, jwt_required, ge
 from werkzeug.security import generate_password_hash, check_password_hash       ## Nos permite manejar tokens por authentication (usuarios)    
 import datetime
 
+#for creating password from backend
+from urllib.request import urlopen
+import json
+
+#for sending email from flask mail
+from flask_mail import Mail, Message
+app = Flask(__name__)
+mail= Mail(app)
+
+app.config['MAIL_SERVER']='smtp.gmail.com'
+app.config['MAIL_PORT'] = 465
+app.config['MAIL_USERNAME'] = 'dirpro4g@gmail.com'
+app.config['MAIL_PASSWORD'] = 'a1b2c3D$'
+app.config['MAIL_USE_TLS'] = False
+app.config['MAIL_USE_SSL'] = True
+mail = Mail(app)
+#mail.init_app(api)
+#end of flask email setup
+
+
 
 api = Blueprint('api', __name__)
 
@@ -109,12 +129,9 @@ def login():
     usuario = request.json.get("usuario", None)
     contrasena = request.json.get("contrasena", None)
 
-    #hashed_password = generate_password_hash(password)
-    #user.password = hashed_password
+    user = User.query.filter_by(email=usuario).first()
 
-    user = User.query.filter_by(email=usuario, contrasena=contrasena).first()
-
-    if user is None:
+    if not check_password_hash(user.contrasena,contrasena) or user is None:
         return jsonify({"msg": "Bad username or password"}), 401
 
     access_token = create_access_token(identity=user.id)
@@ -140,11 +157,22 @@ def UsuarioNuevo():
     current_user_id = get_jwt_identity()
     user = User.query.filter_by(id=current_user_id).first()
 
+    with urlopen('https://makemeapassword.ligos.net/api/v1/alphanumeric/json?c=1&l=12') as r:
+        text = r.read().decode('UTF-8')
+        contrasena = json.loads(text)["pws"][0]
+
+        #return contrasena["pws"][0]
+
+        msg = Message('Busc@PYME aviso', sender = 'dirpro4g@gmail.com', recipients = ['juanca86@gmail.com'])
+        msg.body = "Hola. Esta es la contrasena para su nueva cuenta con Busc@PYME: " + contrasena#["pws"][0]
+        mail.send(msg)
+        #return "Sent"
+
     if user is not None:
 
         email = request.json.get("email", None)
-        contrasena = request.json.get("contrasena", None)
-        token = request.json.get("token", None)
+        #contrasena = request.json.get("contrasena", None)
+        #token = request.json.get("token", None)
 
         if not email:
             return jsonify({"msg":"Email required"}), 400
@@ -164,7 +192,7 @@ def UsuarioNuevo():
 
         return jsonify("Registro correcto"), 200
     else:
-        return jsonify({"msg": "Token invalid or expired"}), 401
+        return jsonify("Token invalid or expired"), 401
 
 @api.route('/actualizapyme', methods=['POST'])
 @jwt_required()
@@ -207,3 +235,32 @@ def ActualizaPyme():
     else:
         return jsonify({"msg": "Token invalid or expired"}), 401
     
+@api.route('/CambioContrasena', methods=['POST'])
+@jwt_required()
+def CambioContrasena():
+
+    current_user_id = get_jwt_identity()
+    user = User.query.filter_by(id=current_user_id).first()
+
+    contrasenaAnterior = request.json.get("contrasenaanterior", None)
+    contrasenaNueva = request.json.get("contrasenanueva", None)
+    contrasenaNueva2 = request.json.get("confirmacontrasenanueva", None)
+
+    if not contrasenaNueva == contrasenaNueva2:
+        return jsonify({"msg": "Las contrasena nueva y la confirmacion no concuerdan"}), 401
+
+    #user = User.query.filter_by(email=usuario).first()
+
+    if not check_password_hash(user.contrasena,contrasenaAnterior):
+        return jsonify({"msg": "La contrasena actual no concuerda"}), 401
+    
+    hashed_password = generate_password_hash(contrasenaNueva)
+    contrasenaNueva = hashed_password
+    user.contrasena = contrasenaNueva
+    db.session.commit()
+
+    msg = Message('Busc@PYME aviso', sender = 'dirpro4g@gmail.com', recipients = ['juanca86@gmail.com'])
+    msg.body = "Su contrasena ha sido cambiada"
+    mail.send(msg)
+
+    return jsonify({"msg": "Comtrasena cambiada correctamente"}), 200
