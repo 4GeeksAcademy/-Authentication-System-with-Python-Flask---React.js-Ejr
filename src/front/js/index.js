@@ -6,7 +6,6 @@ import ReactDOM from "react-dom";
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap/dist/js/bootstrap.bundle";
 
-
 //include your index.scss file into the bundle
 import "../styles/index.scss";
 

@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import { Context } from "../store/appContext";
 import { Link, useHistory } from "react-router-dom";
 import logo from "../../img/newAppLogo.jpeg";
-import { Search } from "./search";
+//import { Search } from "./search";
 import "../../styles/navbar.scss";
 
 export const Navbar = () => {
@@ -13,21 +13,19 @@ export const Navbar = () => {
 			<div className="container">
 				<div className="row justify-content-between">
 					<div className="col">
-						<span>
-							<Link to="/" className="navbar-brand">
-								<img
-									className="rounded float-left"
-									src={logo}
-									style={{ height: "100px", width: "200px" }}
-								/>
-							</Link>
-						</span>
-						{/* <Link to="/" className="navbar-brand">
+						{/* <span>
+							<img
+								className="rounded float-left"
+								src={logo}
+								style={{ height: "100px", width: "200px" }}
+							/>
+						</span> */}
+						<Link to="/" className="navbar-brand">
 							Pura Vida <span>Mart</span>
-						</Link> */}
+						</Link>
 					</div>
 					<div className="col d-flex justify-content-end">
-						<div className="social-media">
+						<div className="social-media mt-2">
 							<p className="mb-0 d-flex">
 								{store.token && store.token !== "" && store.token !== undefined ? null : (
 									<Link

@@ -42,7 +42,7 @@ export const Login = () => {
 		logInSuccess();
 	};
 	return (
-		<div className="container my-5">
+		<div className="container my-4">
 			<section>
 				<div className="wrap-login100 p-l-55 p-r-55 p-t-35 p-b-54 mx-auto d-block">
 					<form onSubmit={handleChange} className="login100-form">
