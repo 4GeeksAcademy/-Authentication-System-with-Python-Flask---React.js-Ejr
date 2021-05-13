@@ -1,9 +1,29 @@
 /* 
     General Styles
 */
+.verdeoscuro {color: #142107;}
+.verdeclaro {color: #105c02;}
+.naranja {color: #ff7b2d;}
+.amarillo {color: #ffef6b;}
+.cremita {color: #fffbd8;}
+
+body {
+  font-family: 'Poppins', Arial, sans-serif;
+}
+.carousel {
+  max-height: 600px;
+  overflow: hidden;
+
+  .item img {
+    width: 100%;
+    height: auto;
+  }
+}
+.carousel-control-prev-icon, .carousel-control-next-icon{
+   background-color: black;
+}
 .img-thumbnail {width:115px;height:115px}
 
-.btn-login{
-    color:#ffffff;
-    background-color: #7C8742 ;
+h1 {
+    font-family: 'Poppins', Arial, sans-serif;
 }
