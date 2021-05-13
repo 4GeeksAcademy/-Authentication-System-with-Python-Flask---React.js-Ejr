@@ -17,8 +17,9 @@ export const Card = () => {
 						/>
 						<div className="card-body">
 							<h5 className="card-title">{p.title}</h5>
-							<p className="item Price">{p.price}</p>
 							<p className="card-text">{p.description}</p>
+							<p className="item Price">{p.category}</p>
+							<p className="item Price">${p.price}</p>
 							<Link to={"/carouselproducts"}>
 								<button className="btn btn-primary">Contactar al vendedor</button>
 							</Link>
