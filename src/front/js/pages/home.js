@@ -49,6 +49,10 @@ export const Home = () => {
 				</div>
 			</div>
 
+			<div className="cinta_mov">
+				<Cinta />
+			</div>
+
 			<h1 className="Promociones text-center py-4 font-weight-light">Promociones</h1>
 			<div className="promos cards d-flex justify-content-center">
 				<Promociones />
@@ -58,9 +62,6 @@ export const Home = () => {
 				<Promociones />
 				<Promociones />
 				<Promociones />
-			</div>
-			<div className="cinta_mov">
-				<Cinta />
 			</div>
 		</>
 	);
