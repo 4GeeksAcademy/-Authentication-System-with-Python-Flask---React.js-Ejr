@@ -264,3 +264,54 @@ def CambioContrasena():
     mail.send(msg)
 
     return jsonify({"msg": "Comtrasena cambiada correctamente"}), 200
+
+
+#ESTE USUARIO ES PARA TEST Y PERMITE CREAR USUARIOS ADMIN
+#CREAR USUARIOS ADMIN DA UN PROBLEMA YA QUE EL PASS NO QUEDA HASHEADO
+#ES ALGO QUE DEBEMOS ANALIZAR CON RESPECTO A LA CREACION DE USUARIOS ADMIN
+
+@api.route('/AdminNuevo', methods=['POST'])
+#@jwt_required()
+def AdminNuevo():
+
+    #current_user_id = get_jwt_identity()
+    user = User.query.filter_by(id=1).first()
+
+    with urlopen('https://makemeapassword.ligos.net/api/v1/alphanumeric/json?c=1&l=12') as r:
+        text = r.read().decode('UTF-8')
+        contrasena = json.loads(text)["pws"][0]
+
+        #return contrasena["pws"][0]
+
+        msg = Message('Busc@PYME aviso', sender = 'dirpro4g@gmail.com', recipients = ['juanca86@gmail.com'])
+        msg.body = "Hola. Esta es la contrasena para su nueva cuenta con Busc@PYME: " + contrasena#["pws"][0]
+        mail.send(msg)
+        #return "Sent"
+
+    if user is not None:
+
+        email = request.json.get("email", None)
+        #contrasena = request.json.get("contrasena", None)
+        #token = request.json.get("token", None)
+
+        if not email:
+            return jsonify({"msg":"Email required"}), 400
+
+        hashed_password = generate_password_hash(contrasena)
+        contrasena = hashed_password
+
+        user = User()
+        user.email = email
+        user.contrasena = contrasena
+        user.activo = True
+        user.id_tipo = 1
+
+        #usuarioNuevo = User(email=email, contrasena=contrasena, activo=True, id_tipo=2)
+        db.session.add(user)
+        db.session.commit()
+
+        return jsonify("Registro correcto"), 200
+    else:
+        return jsonify("Token invalid or expired"), 401
+
+#FIN DE PRUEBA
