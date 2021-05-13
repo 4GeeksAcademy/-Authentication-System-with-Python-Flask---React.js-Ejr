@@ -5,7 +5,6 @@ import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props
 import GoogleLogin from "react-google-login";
 import logo from "../../img/logo.jpeg";
 import "../../styles/registerNew.scss";
-
 import Swal from "sweetalert2";
 
 export const Login = () => {
