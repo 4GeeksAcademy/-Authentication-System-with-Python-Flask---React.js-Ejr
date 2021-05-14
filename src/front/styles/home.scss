@@ -137,7 +137,7 @@ margin-left: 4px;
     display: flex;
     justify-content:center;
     align-items: center;
-    width: 80%;
+    width: 100%;
 }
 .container1{
     display: flex;
@@ -154,7 +154,7 @@ margin-left: 4px;
   
 }
 .whole_content {
-     background-image: url("https://cdn.pixabay.com/photo/2017/07/20/21/20/shopping-cart-2523838_960_720.png");
+    background-image: url("https://cdn.pixabay.com/photo/2017/07/20/21/20/shopping-cart-2523838_960_720.png");
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -172,9 +172,27 @@ margin-left: 4px;
     overflow-x:auto;
     min-height: 400px;
     overflow-y: hidden;
+    overflow: scroll;
+
 }
 
 //Slogan del home
 .title {
     text-align: center;
+}
+//CSS de la vista de favorites.js
+
+.contenedor_fav1{
+    display: flex;
+    justify-content:center;
+    align-items: center;
+    margin-bottom: 100px;
+    margin-top: 100px;
+}
+.contenedor_fav2 {
+    display: flex;
+    justify-content:center;
+    align-items: center;
+    margin-bottom: 170px;
+  
 }

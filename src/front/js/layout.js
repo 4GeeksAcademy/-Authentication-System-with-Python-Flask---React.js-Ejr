@@ -11,11 +11,13 @@ import { Register1 } from "./pages/register";
 import { Forgot1 } from "./pages/forgot";
 import { Cupones1 } from "./pages/cupones";
 import { Categorias } from "./pages/categorias";
+import { Favoritos } from "./pages/favorites";
 import injectContext from "./store/appContext";
 
 import { Navbar1 } from "./component/navbar";
 import { Footer1 } from "./component/footer";
 import { Productos } from "./pages/products";
+import { Modal1 } from "./component/modal";
 
 //create your first component
 const Layout = () => {
@@ -52,6 +54,9 @@ const Layout = () => {
 						</Route>
 						<Route exact path="/categorias">
 							<Categorias />
+						</Route>
+						<Route exact path="/favorites">
+							<Favoritos />
 						</Route>
 						<Route>
 							<h1>Not found!</h1>

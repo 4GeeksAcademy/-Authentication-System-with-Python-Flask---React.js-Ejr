@@ -2,19 +2,20 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Globalcard } from "../component/globalcard";
 
-export const Productos = () => {
+export const Favoritos = () => {
 	return (
 		<>
-			<p className="h2 mx-auto py-4 font-weight-light">Productos disponibles</p>
+			<p className="h2 mx-auto py-4 font-weight-light">Tus productos favoritos</p>
+
 			<div className="whole_content">
-				<div className="container1">
+				<div className="contenedor_fav1">
 					<Globalcard />
 					<Globalcard />
 					<Globalcard />
 					<Globalcard />
 					<Globalcard />
 				</div>
-				<div className="container2">
+				<div className="contenedor_fav2">
 					<Globalcard />
 					<Globalcard />
 					<Globalcard />

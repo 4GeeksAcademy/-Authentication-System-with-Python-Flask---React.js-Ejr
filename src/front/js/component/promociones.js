@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { Card, ListGroupItem, ListGroup } from "react-bootstrap";
 import { propTypes } from "react-bootstrap/esm/Image";
-import { RiRegisteredLine } from "react-icons/fa";
 
 export const Promociones = props => {
 	return (
@@ -16,7 +15,7 @@ export const Promociones = props => {
 						alt="..."
 					/>
 					<ul className="list-group list-group-flush">
-						<li className="list-group-item font-weight-bold">Leche Dos Pinos {RiRegisteredLine}</li>
+						<li className="list-group-item font-weight-bold">Leche Dos Pinos</li>
 						<li className="list-group-item"> 760.00 colones (-30%)</li>
 					</ul>
 					<p className="card-text">

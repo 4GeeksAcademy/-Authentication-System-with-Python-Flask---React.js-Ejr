@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import "../../styles/home.scss";
 import { Promociones } from "../component/promociones";
+import { Cinta } from "../component/cinta";
 import { Link } from "react-router-dom";
 
 export const Home = () => {
@@ -46,6 +47,10 @@ export const Home = () => {
 						</form>
 					</div>
 				</div>
+			</div>
+
+			<div className="cinta_mov">
+				<Cinta />
 			</div>
 
 			<h1 className="Promociones text-center py-4 font-weight-light">Promociones</h1>

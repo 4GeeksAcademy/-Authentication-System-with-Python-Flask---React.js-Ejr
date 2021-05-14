@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
+import { Modal1 } from "../component/modal";
 
 export const Globalcard = props => {
 	return (
@@ -15,14 +16,11 @@ export const Globalcard = props => {
 					<h5 className="card-title">Desodorante Rexona</h5>
 					<ul>
 						<p className="Precio"> Precio: 1900.00 colones</p>
-						<p className="Precio"> Supermercado: Magasuper</p>
+						<p className="Precio"> Supermercado: Megasuper</p>
 					</ul>
-					<a href="#" className="btn btn-outline-success float-right">
-						Ver detalles
-					</a>
-					<button type="button" className="btn btn-outline-success float-right">
-						<i className="fas fa-cart-arrow-down" />
-					</button>
+					<div className="modal_mov">
+						<Modal1 />
+					</div>
 				</div>
 			</div>
 		</div>
