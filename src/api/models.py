@@ -53,12 +53,9 @@ class Cart(db.Model):
     product_id = db.Column(db.Integer, db.ForeignKey('product.id'))
     user = db.relationship('User')
 
-    def serialize(self):
-        return{
-            "user_id": self.user_id,
-            "product_id": self.product_id,
-            "product_name": user.name
-        }
+    def __init__(self, user_id, product_id):
+        self.user_id = user_id
+        self.product_id = product_id
 
 class Coupons(db.Model):
     id = db.Column(db.Integer, primary_key=True)

@@ -2,18 +2,17 @@ from flask import Flask, request, jsonify, url_for, Blueprint, json, render_temp
 from api.models import db, ma
 from api.models import User, Supermarket, Product, Cart
 from api.utils import generate_sitemap, APIException
-
 from api.models import UserSchema, ProductSchema, MarketSchema
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity, JWTManager
 from werkzeug.security import generate_password_hash, check_password_hash
 import smtplib
+import random as rd
 import os
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
 api = Blueprint('api', __name__)
 
-#login route
 @api.route('/register', methods=['POST'])
 def register():
     name = request.json.get('name')
@@ -68,8 +67,39 @@ def login():
     else:
         return jsonify({"msg": "Email or Password Wrong"}), 400
 
-@api.route('/forgot-password/', methods=['PUT', 'GET'])
+@api.route('/forgot-password', methods=['PUT'])
 def forgot_password():
+    if request.method == 'PUT':
+        email = request.json.get('email', None)
+
+        user = User.query.filter_by(email = email).first()
+        if user is None:
+            return jsonify({"message": "this email it doesn't exist"})
+
+        base = os.getenv('USER_GENERIC_PASS')
+        temporal_password = base + str(rd.randint(100, 999))
+
+        msg = MIMEMultipart('alternative')
+        msg['Subject'] = "Cambio de contraseña"
+        text = ""
+        html = render_template('temporal_password.html', password = temporal_password, name = user.name)
+        part1 = MIMEText(text, 'plain')
+        part2 = MIMEText(html, 'html')
+        msg.attach(part1)
+        msg.attach(part2) 
+
+        server = smtplib.SMTP('smtp.gmail.com', 587)
+        server.starttls()
+        server.login(os.getenv("FLASK_EMAIL_APP"), os.getenv("FLASK_EMAIL_PASS"))
+        server.sendmail(os.getenv("FLASK_EMAIL_APP"), email, msg.as_string())
+
+        hashed_password = generate_password_hash(temporal_password)
+        user.password = hashed_password
+        db.session.commit()
+        return jsonify({"message": "Password sended to your email"})
+
+@api.route('/verifed-email/<int:id>', methods=['GET', 'POST'])
+def verifed_email(id):
     pass
 
 @api.route('/user/<int:id>', methods=['GET'])
@@ -144,7 +174,7 @@ def cart_add():
     #Handling the GET request
     current_user = get_jwt_identity()
     query = db.session.query(Cart, User, Product).join(User, User.id == Cart.user_id).join(Product, Product.id == Cart.product_id).all() 
-    output = [(user.name, product.product_name) for cart, user, product in query]
+    output = [(cart.id, product.product_name) for cart, user, product in query if cart.user_id == current_user]
     print(current_user)
     return jsonify({
         "Result": output    
