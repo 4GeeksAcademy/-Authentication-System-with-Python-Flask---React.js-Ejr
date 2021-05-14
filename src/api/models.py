@@ -69,9 +69,10 @@ class Product(db.Model):
     fk_id = db.Column(db.Integer, db.ForeignKey('seller.id'), unique=True, nullable=False)
     productName = db.Column(db.String(255),  nullable=False)
     description = db.Column(db.String(255),  nullable=False)
-    categiry = db.Column(db.String(255),  nullable=False)
+    category = db.Column(db.String(255),  nullable=False)
     price = db.Column(db.Integer, nullable=False)
-    image = db.Column(db.Integer, unique=False, nullable=False)
+    image = db.Column(db.Integer, nullable=False)
+    item_status = db.Column(db.String(20), nullable=False)
 
     def __repr__(self):
         return '<Product %r>' % self.productName
@@ -82,6 +83,8 @@ class Product(db.Model):
             "productName": self.productName,
             "description": self.description,
             "price": self.price,
-            "image": self.image
+            "image": self.image,
+            "category": self.category,
+            "item_status": self.item_status
             # do not serialize the password, its a security breach
         }

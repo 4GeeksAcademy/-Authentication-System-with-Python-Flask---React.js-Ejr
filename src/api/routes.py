@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Product
+from api.models import db, User, Product, Seller, Client
 from api.utils import generate_sitemap, APIException
 from flask_jwt_extended import JWTManager, jwt_required, get_jwt_identity, create_access_token 
 import random
@@ -103,3 +103,93 @@ def resetPassword():
         user.password=newPassword
         db.session.commit()
         return jsonify({"msg": "Password has been successfully changed."}), 200
+
+
+# Función para registrar producto
+@api.route("/newproduct", methods=["POST"])
+def addNewProduct():
+    productName = request.json.get("productname", None)
+    description = request.json.get("description", None)
+    category = request.json.get("category", None)
+    price = request.json.get("price", None)  
+    image = request.json.get("image", None)
+    item_status = request.json.get("item_status", None) 
+
+
+    if productName is None:
+        return jsonify({"msg": "Please provide a valid Product Name."}), 400
+    if description is None:
+        return jsonify({"msg": "Please enter a valid description"}), 400
+    if category is None:
+        return jsonify({"msg": "Please enter a valid category"}), 400
+    if price is None:
+        return jsonify({"msg": "Please enter a valid price"}), 400
+    if image is None:
+        return jsonify({"msg": "Please enter a valid image"}), 400
+    if item_status is None:
+        return jsonify({"msg": "Please enter a valid item status"}), 400
+    else:
+        new_product=Product()
+        new_product.productName=productName
+        new_product.fk_id=1
+        new_product.description=description
+        new_product.category=category
+        new_product.price=price
+        new_product.image=image
+        new_product.item_status=item_status
+
+        db.session.add(new_product)     
+        db.session.commit()
+        return jsonify({"msg": "The product has being successfully registered."}), 200
+
+    # Función para eliminar producto
+
+
+@api.route("/deleteproduct/<id>", methods=["DELETE"])
+def deleteProduct(id):
+    delproduct = Product.query.get(id)
+    if delproduct is None:
+        raise APIException("There is not product to delete", status_code=404)
+
+    db.session.delete(delproduct)     
+    db.session.commit()
+    return jsonify({"msg": "The product has being successfully deleted."}), 200
+
+
+    # Función para actualizar producto
+
+
+@api.route("/update/<id>", methods=["PUT"])
+def updateProduct(id):
+    productName = request.json.get("productname", None)
+    description = request.json.get("description", None)
+    category = request.json.get("category", None)
+    price = request.json.get("price", None)  
+    image = request.json.get("image", None)
+    item_status = request.json.get("item_status", None)
+
+    if productName is None:
+        return jsonify({"msg": "Please provide a valid Product Name."}), 400
+    if description is None:
+        return jsonify({"msg": "Please enter a valid description"}), 400
+    if category is None:
+        return jsonify({"msg": "Please enter a valid category"}), 400
+    if price is None:
+        return jsonify({"msg": "Please enter a valid price"}), 400
+    if image is None:
+        return jsonify({"msg": "Please enter a valid image"}), 400
+    if item_status is None:
+        return jsonify({"msg": "Please enter a valid item status"}), 400
+
+    updatedProduct = Product.query.filter_by(id=id).first()
+    updatedProduct.productName=productName
+    updatedProduct.description=description
+    updatedProduct.category=category
+    updatedProduct.price=price
+    updatedProduct.image=image
+    updatedProduct.item_status=item_status
+       
+    db.session.commit()
+    return jsonify({"msg": "The product has being successfully updated."}), 200
+
+
