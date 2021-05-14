@@ -8,6 +8,7 @@ import "../../styles/navbar.scss";
 export const Navbar = () => {
 	const { actions, store } = useContext(Context);
 	const history = useHistory();
+
 	return (
 		<section className="ftco-section">
 			<div className="container">
@@ -20,7 +21,7 @@ export const Navbar = () => {
 								style={{ height: "100px", width: "200px" }}
 							/>
 						</span> */}
-						<Link to="/" className="navbar-brand">
+						<Link to="/" className="navbar-brand mt-3">
 							Pura Vida <span>Mart</span>
 						</Link>
 					</div>
@@ -124,11 +125,14 @@ export const Navbar = () => {
 									</a>
 								</div>
 							</li>
-							<li className="nav-item">
-								<a href="#" className="nav-link">
-									Catalogo
-								</a>
-							</li>
+							{store.token && store.token !== "" && store.token !== undefined ? (
+								<li className="nav-item">
+									<Link to="/logueado" className="nav-link">
+										Catalogo
+									</Link>
+								</li>
+							) : null}
+
 							<li className="nav-item">
 								<Link to="/contact-us" className="nav-link">
 									Contacto

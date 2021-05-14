@@ -21,7 +21,7 @@ export const Card = () => {
 							<p className="item Price">{p.category}</p>
 							<p className="item Price">${p.price}</p>
 							<Link to={"/carouselproducts"}>
-								<button className="btn btn-primary">Contactar al vendedor</button>
+								<button className="login100-form-btn">Contactar al vendedor</button>
 							</Link>
 						</div>
 					</div>

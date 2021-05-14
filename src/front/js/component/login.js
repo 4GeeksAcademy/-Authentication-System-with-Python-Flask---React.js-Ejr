@@ -5,7 +5,6 @@ import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props
 import GoogleLogin from "react-google-login";
 import logo from "../../img/logo.jpeg";
 import "../../styles/registerNew.scss";
-
 import Swal from "sweetalert2";
 
 export const Login = () => {
@@ -20,9 +19,9 @@ export const Login = () => {
 		Swal.fire({
 			icon: "success",
 			title: "Ingreso exitoso",
-			text: "Redirigiendo a pagina principal",
+			text: "Cargando Catalogo",
 			showConfirmButton: false,
-			timer: 3500
+			timer: 1500
 		});
 		history.push("/logueado");
 	};
@@ -53,7 +52,7 @@ export const Login = () => {
 								className="input100"
 								type="text"
 								name="username"
-								placeholder="Ingrese su Correo electronico"
+								placeholder="Ingrese su usuario"
 								onChange={handleChange}
 							/>
 							<span className="focus-input100" />
@@ -64,7 +63,7 @@ export const Login = () => {
 								className="input100"
 								type="text"
 								name="password"
-								placeholder="Ingrese su Correo electronico"
+								placeholder="Ingrese su Contraseña"
 								onChange={handleChange}
 							/>
 							<span className="focus-input100" />
