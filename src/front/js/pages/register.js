@@ -32,6 +32,14 @@ export const Register1 = () => {
 							<div className="input-group form-group">
 								<div className="input-group-prepend">
 									<span className="input-group-text">
+										<i className="fas fa-location" />
+									</span>
+								</div>
+								<input type="text" className="form-control" placeholder="Ubicación" required />
+							</div>
+							<div className="input-group form-group">
+								<div className="input-group-prepend">
+									<span className="input-group-text">
 										<i className="fas fa-key" />
 									</span>
 								</div>

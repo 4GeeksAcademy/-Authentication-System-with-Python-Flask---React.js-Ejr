@@ -7,11 +7,7 @@ export const Cupones = props => {
 		<div className="card mb-3">
 			<div className="row g-0">
 				<div className="col-md-4">
-					<img
-						src="http://assets.stickpng.com/images/5a0589189cf05203c4b603d9.pngg"
-						className="card-img-top"
-						alt="..."
-					/>
+					<img src="https://grupolasser.com/wp-content/uploads/2015/04/aire-15-descuento.png" width="200px" />
 				</div>
 				<div className="col-md-8">
 					<div className="card-body">

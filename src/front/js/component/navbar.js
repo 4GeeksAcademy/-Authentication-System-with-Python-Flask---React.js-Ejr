@@ -52,12 +52,12 @@ export const Navbar1 = () => {
 									title=""
 									text="white">
 									<Link to={"/"}>
-										<Dropdown.Item eventKey="1">Carrito</Dropdown.Item>
+										<Dropdown.Item eventKey="1">Favoritos</Dropdown.Item>
 									</Link>
 									<Dropdown.Item eventKey="2">Action</Dropdown.Item>
 									<Dropdown.Item eventKey="3">Other Acction</Dropdown.Item>
 									<Dropdown.Divider />
-									<Dropdown.Item eventKey="4">Cerrar secion</Dropdown.Item>
+									<Dropdown.Item eventKey="4">Cerrar sesión</Dropdown.Item>
 								</DropdownButton>
 							))}
 						</div>
