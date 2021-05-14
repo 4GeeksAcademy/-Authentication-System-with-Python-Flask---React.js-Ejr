@@ -156,7 +156,7 @@ margin-left: 4px;
   
 }
 .whole_content {
-     background-image: url("https://cdn.pixabay.com/photo/2017/07/20/21/20/shopping-cart-2523838_960_720.png");
+    background-image: url("https://cdn.pixabay.com/photo/2017/07/20/21/20/shopping-cart-2523838_960_720.png");
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -174,6 +174,7 @@ margin-left: 4px;
     overflow-x:auto;
     min-height: 400px;
     overflow-y: hidden;
+    overflow: scroll;
 
 }
 

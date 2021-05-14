@@ -109,11 +109,11 @@ color: #60b626;
 }
 .slider .slider-track {
     display:flex;
-    width: calc(250px * 20);
+    width: calc(30% * 20);
     animation: scroll 60s infinite linear;
 }
 .slider .slide img {
-    width: 250px;
+    width: 80%;
     height: 100px;
 
 }

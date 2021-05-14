@@ -56,7 +56,7 @@ export const Cinta = () => {
 				</div>
 				<div className="slide">
 					<img
-						src="https://i2.wp.com/www.elpoderdelasideas.com/wp-content/uploads/logo-imperial.png?resize=600%2C339"
+						src="https://d1yjjnpx0p53s8.cloudfront.net/styles/logo-thumbnail/s3/0017/7200/brand.gif?itok=H9WETUB8"
 						className="card-img-top"
 						alt="..."
 					/>
