@@ -163,9 +163,6 @@ def UsuarioNuevo():
 
         #return contrasena["pws"][0]
 
-        msg = Message('Busc@PYME aviso', sender = 'dirpro4g@gmail.com', recipients = ['juanca86@gmail.com'])
-        msg.body = "Hola. Esta es la contrasena para su nueva cuenta con Busc@PYME: " + contrasena#["pws"][0]
-        mail.send(msg)
         #return "Sent"
 
     if user is not None:
@@ -178,17 +175,20 @@ def UsuarioNuevo():
             return jsonify({"msg":"Email required"}), 400
 
         hashed_password = generate_password_hash(contrasena)
-        contrasena = hashed_password
 
         user = User()
         user.email = email
-        user.contrasena = contrasena
+        user.contrasena = hashed_password
         user.activo = True
         user.id_tipo = 2
 
         #usuarioNuevo = User(email=email, contrasena=contrasena, activo=True, id_tipo=2)
         db.session.add(user)
         db.session.commit()
+
+        msg = Message('Busc@PYME aviso', sender = 'dirpro4g@gmail.com', recipients = ['dirpro4g@gmail.com',email])
+        msg.body = "Hola. Esta es la contrasena para su nueva cuenta con Busc@PYME: " + contrasena#["pws"][0]
+        mail.send(msg)
 
         return jsonify("Registro correcto"), 200
     else:
