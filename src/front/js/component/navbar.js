@@ -23,22 +23,22 @@ export const Navbar1 = () => {
 							</Button>
 						</Link>{" "}
 						<Link to={"/categorias"}>
-							<Button variant="outline-warning" href="#home" color="white">
+							<Button variant="in1" href="#home" color="white">
 								Categorias
 							</Button>
 						</Link>{" "}
 						<Link to={"/cupones"}>
-							<Button variant="outline-warning" href="#home" color="white">
+							<Button variant="in1" href="#home" color="white">
 								Cupones
 							</Button>
 						</Link>
 						<Link to={"/register"}>
-							<Button variant="outline-warning" href="#home" color="white">
+							<Button variant="in1" href="#home" color="white">
 								Registro
 							</Button>
 						</Link>
 						<Link to={"/login"}>
-							<Button variant="outline-warning" href="#home" color="white">
+							<Button variant="in1" href="#home" color="white">
 								Ingresar
 							</Button>
 						</Link>
@@ -48,16 +48,16 @@ export const Navbar1 = () => {
 									key={direction}
 									id={`dropdown-button-drop-${direction}`}
 									drop={direction}
-									variant="outline-warning"
+									variant="in1"
 									title=""
 									text="white">
 									<Link to={"/"}>
-										<Dropdown.Item eventKey="1">Carrito</Dropdown.Item>
+										<Dropdown.Item eventKey="1">Favoritos</Dropdown.Item>
 									</Link>
 									<Dropdown.Item eventKey="2">Action</Dropdown.Item>
 									<Dropdown.Item eventKey="3">Other Acction</Dropdown.Item>
 									<Dropdown.Divider />
-									<Dropdown.Item eventKey="4">Cerrar secion</Dropdown.Item>
+									<Dropdown.Item eventKey="4">Cerrar sesión</Dropdown.Item>
 								</DropdownButton>
 							))}
 						</div>

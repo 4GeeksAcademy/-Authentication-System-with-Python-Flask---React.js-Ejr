@@ -108,14 +108,9 @@ margin-left: 4px;
     background: linear-gradient(0deg, rgb(224, 146, 123), white);
     background-repeat: no-repeat;
     background-position: center;
-    background-size: cover;
-    position: absolute;
-    width: 100%;
-    z-index: -10;
-    top: 0;
-    left: 0;
-    height: 100%;
+    background-size: 400% 400%;
 }
+
 
 
 // CSS de "/products.js"
@@ -133,6 +128,9 @@ margin-left: 4px;
     height: 800px;
 }
 
+// .tarjeta{  
+//    background-color: white !important;
+// }
 
 //CSS del home y de view de resultado de busqueda
 .contenedor {
