@@ -31,19 +31,20 @@ class Supermarket(db.Model):
 
 class Product(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    product_name = db.Column(db.String(60), unique=True ,nullable=False)
+    product_name = db.Column(db.String(60), nullable=False)
     price = db.Column(db.Integer, nullable=False)
     category = db.Column(db.String(50), nullable=False)
+    image = db.Column(db.String(255))
     market_id = db.Column(db.Integer, db.ForeignKey('supermarket.id'))
 
-    supermarket = db.relationship('Supermarket')
-    
+    supermarket = db.relationship('Supermarket')  
     carts = db.relationship('Cart', backref='product', lazy=True)
 
-    def __init__(self, product_name, price, category, market_id):
+    def __init__(self, product_name, price, category, market_id, image):
         self.product_name = product_name
         self.price = price
         self.category = category
+        self.image = image
         self.market_id = market_id
 
 class Cart(db.Model):
@@ -94,7 +95,9 @@ class UserSchema(ma.SQLAlchemyAutoSchema):
 
 class ProductSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
-        model = Product
+        fields = ('id', 'product_name', 'price', 'category', 
+            'image', 'supermarket.market_name', 'supermarket.location'
+        )
 
 class MarketSchema(ma.SQLAlchemyAutoSchema):
     class Meta:

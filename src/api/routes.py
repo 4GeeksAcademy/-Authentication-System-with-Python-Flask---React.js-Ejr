@@ -120,12 +120,16 @@ def search_products():
     product = request.json.get('product')
     location = request.json.get('location')
 
-    query = db.session.query(Supermarket, Product).join(Product, Product.market_id == Supermarket.id)
-    output = [(market.market_name, product.product_name) for market, product in query]
-    print(output)
-    return 'ok'
+    products = Product.query.filter_by(product_name = product).all()
+    result = [items for items in products if items.supermarket.location == location]
+    products_schema = ProductSchema(many=True)
+    output = products_schema.dump(result)
+    return jsonify(
+        {"Result": output}
+    )
 
 @api.route('/cart', methods=['POST', 'GET'])
+@jwt_required()
 def cart_add():
     if request.method == 'POST':
         username = request.json.get('username')
@@ -138,9 +142,10 @@ def cart_add():
             "Message": "new register added susessfully"
         })
     #Handling the GET request
+    current_user = get_jwt_identity()
     query = db.session.query(Cart, User, Product).join(User, User.id == Cart.user_id).join(Product, Product.id == Cart.product_id).all() 
     output = [(user.name, product.product_name) for cart, user, product in query]
-
+    print(current_user)
     return jsonify({
         "Result": output    
     })
