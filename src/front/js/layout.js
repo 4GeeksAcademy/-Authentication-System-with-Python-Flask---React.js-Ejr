@@ -16,7 +16,7 @@ import { ResetPassword } from "./pages/resetPassword";
 import { WazeView } from "./pages/wazeview";
 import { Checkoutview } from "./pages/checkoutview";
 import { Actualizarvendedorview } from "./pages/actualizarvendedorview";
-import { Actualizarclienteview } from "./pages/actualizarclienterview";
+import { Actualizarclienteview } from "./pages/actualizarclienteview";
 
 //create your first component
 const Layout = () => {

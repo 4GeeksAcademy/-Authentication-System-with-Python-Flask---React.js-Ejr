@@ -4,7 +4,7 @@ import { Link, useHistory } from "react-router-dom";
 import logo from "../../img/newAppLogo.jpeg";
 import { Search } from "./search";
 import "../../styles/navbar.scss";
-import "../pages/actualizarclienterview";
+import "../pages/actualizarclienteview";
 import "../pages/actualizarvendedorview";
 
 export const Navbar = () => {
