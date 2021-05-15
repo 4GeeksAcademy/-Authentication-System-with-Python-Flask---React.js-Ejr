@@ -1,8 +1,8 @@
 from flask import Flask, request, jsonify, url_for, Blueprint, json, render_template
 from api.models import db, ma
-from api.models import User, Supermarket, Product, Cart
+from api.models import User, Supermarket, Product, Cart, Coupons
 from api.utils import generate_sitemap, APIException
-from api.models import UserSchema, ProductSchema, MarketSchema
+from api.models import UserSchema, ProductSchema, MarketSchema, CouponsSchema
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity, JWTManager
 from werkzeug.security import generate_password_hash, check_password_hash
 import smtplib
@@ -183,4 +183,13 @@ def cart_add():
     print(current_user)
     return jsonify({
         "Result": output    
+    })
+
+@api.route('/coupon', methods=['GET'])
+def get_coupons():
+    coupons = Coupons.query.all()
+    coupons_schema = CouponsSchema(many=True)
+    output = coupons_schema.dump(coupons)
+    return jsonify({
+        "Results": output
     })
