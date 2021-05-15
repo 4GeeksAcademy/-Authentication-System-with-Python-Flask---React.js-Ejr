@@ -2,8 +2,17 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { Modal1 } from "../component/modal";
+import {Context} from "../store/appContext";
 
 export const Globalcard = props => {
+    const {store, actions} = useContext(Context);
+
+    const OnClickEvent = e => {
+        const ProductName = props.name//over here!!!!
+
+    }
+
+
 	return (
 		<div className="tarjeta">
 			<div className="card" style={{ width: "16rem" }}>

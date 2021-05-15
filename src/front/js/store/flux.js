@@ -1,8 +1,9 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
-			message: null,
-			demo: [
+			products:[],//Creo un array de productos vacio para que se almacenen los productos seleccionados y mis favss?
+            favorites:[],
+            demo: [
 				{
 					title: "FIRST",
 					background: "white",
@@ -41,7 +42,22 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				//reset the global store
 				setStore({ demo: demo });
-			}
+            },
+//CODIGO PARA AGREGAR Y REMOVER FAVORITOS
+            /*addFavorites: favs => {
+                setStore ({favorites:getStore().favorites.concat(favs)});
+            },
+
+            removeFavorites: index => {
+                const NewArrayFavs = getStore().favorites.filter((item,index)=>{
+                    return index !== index;
+                });
+
+                setStore({favorites:NewArrayFavs})
+            }*/
+
+
+
 		}
 	};
 };
