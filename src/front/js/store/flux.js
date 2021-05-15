@@ -50,11 +50,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 
             removeFavorites: index => {
                 const NewArrayFavs = getStore().favorites.filter((item,index)=>{
-                    return index !== index;
-                });
+                    return index !== indice;
+                });*/
 
                 setStore({favorites:NewArrayFavs})
-            }*/
+            }
 
 
 
