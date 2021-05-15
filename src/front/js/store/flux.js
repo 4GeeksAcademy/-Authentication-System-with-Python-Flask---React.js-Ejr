@@ -30,20 +30,19 @@ const getState = ({ getStore, getActions, setStore }) => {
 				const data = await response.json();
 				setStore({ cupons: data });
 			}
-// Favorites
+			// Favorites
 
-            // addFavorites: favs => {
-            //     setStore ({favorites:getStore().favorites.concat(favs)});
-            // },
+			// addFavorites: favs => {
+			//     setStore ({favorites:getStore().favorites.concat(favs)});
+			// },
 
-            // removeFavorites: index => {
-            //     const NewArrayFavs = getStore().favorites.filter((item,index)=>{
-            //         return index !== indice;
-            //     });
+			// removeFavorites: index => {
+			//     const NewArrayFavs = getStore().favorites.filter((item,index)=>{
+			//         return index !== indice;
+			//     });
 
-            //     setStore({favorites:NewArrayFavs})
-            // }
-
+			//     setStore({favorites:NewArrayFavs})
+			// }
 		}
 	};
 };
