@@ -25,7 +25,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			//Pendiente agregar la ruta
 			loadCupons: async () => {
-				const url = "https://3001-moccasin-pigeon-4ixmcu8a.ws-us04.gitpod.io/api/";
+				const url = "https://3001-moccasin-pigeon-4ixmcu8a.ws-us04.gitpod.io/api/coupon";
 				const response = await fetch(url);
 				const data = await response.json();
 				setStore({ cupons: data });
