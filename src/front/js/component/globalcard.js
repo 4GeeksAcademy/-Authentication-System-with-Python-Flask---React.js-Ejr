@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { Modal1 } from "../component/modal";
+import { Context } from "../store/appContext";
 
 export const Globalcard = props => {
+        const { store, actions } = useContext(Context);
+
 	return (
 		<div className="tarjeta">
 			<div className="card" style={{ width: "16rem" }}>
@@ -13,10 +16,10 @@ export const Globalcard = props => {
 					alt="..."
 				/>
 				<div className="card-body">
-					<h5 className="card-title">Desodorante Rexona</h5>
+					<h5 className="card-title">{props.product_name}</h5>
 					<ul>
-						<p className="Precio"> Precio: 1900.00 colones</p>
-						<p className="Precio"> Supermercado: Megasuper</p>
+						<p className="Precio"> Precio: {props.price} colones</p>
+						<p className="Precio"> Supermercado: {props.market_id}</p>
 					</ul>
 					<div className="modal_mov">
 						<Modal1 />
@@ -25,4 +28,12 @@ export const Globalcard = props => {
 			</div>
 		</div>
 	);
+};
+Globalcard.propTypes = {
+    id: PropTypes.number,
+    product_name: PropTypes.string,
+    price: PropTypes.number,
+    category: PropTypes.string,
+    market_id:PropTypes.number
+	
 };
