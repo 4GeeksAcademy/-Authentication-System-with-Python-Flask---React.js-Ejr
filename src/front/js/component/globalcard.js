@@ -5,7 +5,7 @@ import { Modal1 } from "../component/modal";
 import { Context } from "../store/appContext";
 
 export const Globalcard = props => {
-        const { store, actions } = useContext(Context);
+	const { store, actions } = useContext(Context);
 
 	return (
 		<div className="tarjeta">
@@ -16,10 +16,10 @@ export const Globalcard = props => {
 					alt="..."
 				/>
 				<div className="card-body">
-					<h5 className="card-title">{props.product_name}</h5>
+					<h5 className="card-title">Ingresar props</h5>
 					<ul>
-						<p className="Precio"> Precio: {props.price} colones</p>
-						<p className="Precio"> Supermercado: {props.market_id}</p>
+						<p className="Precio"> Precio: Ingresar props colones</p>
+						<p className="Precio"> Supermercado: Ingresar props</p>
 					</ul>
 					<div className="modal_mov">
 						<Modal1 />
@@ -29,11 +29,10 @@ export const Globalcard = props => {
 		</div>
 	);
 };
-Globalcard.propTypes = {
-    id: PropTypes.number,
-    product_name: PropTypes.string,
-    price: PropTypes.number,
-    category: PropTypes.string,
-    market_id:PropTypes.number
-	
-};
+// Globalcard.propTypes = {
+// 	id: PropTypes.number,
+// 	product_name: PropTypes.string,
+// 	price: PropTypes.number,
+// 	category: PropTypes.string,
+// 	market_id: PropTypes.number
+// };
