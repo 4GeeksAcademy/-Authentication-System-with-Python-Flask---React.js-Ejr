@@ -1,6 +1,5 @@
 import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-
 import ScrollToTop from "./component/scrollToTop";
 import { Home } from "./pages/home";
 import { RegisterUserIn } from "./pages/registerUserIn";
@@ -16,6 +15,9 @@ import { Logueado } from "./pages/logueado";
 import { ResetPassword } from "./pages/resetPassword";
 import { WazeView } from "./pages/wazeview";
 import { Checkoutview } from "./pages/checkoutview";
+import { Actualizarvendedorview } from "./pages/actualizarvendedorview";
+import { Actualizarclienteview } from "./pages/actualizarclienterview";
+
 //create your first component
 const Layout = () => {
 	//the basename is used when your project is published in a subdirectory and not in the root of the domain
@@ -60,6 +62,12 @@ const Layout = () => {
 						</Route>
 						<Route exact path="/checkoutview">
 							<Checkoutview />
+						</Route>
+						<Route exact path="/actualizarvendedorview">
+							<Actualizarvendedorview />
+						</Route>
+						<Route exact path="/actualizarclienteview">
+							<Actualizarclienteview />
 						</Route>
 						<Route>
 							<h1>Not found!</h1>
