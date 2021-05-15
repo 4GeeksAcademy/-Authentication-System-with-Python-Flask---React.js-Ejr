@@ -32,11 +32,8 @@ def register():
         msg = MIMEMultipart('alternative')
         msg['Subject'] = "Bienvenido"
 
-        text = ""
         html = render_template('register.html', name = name)
-        part1 = MIMEText(text, 'plain')
         part2 = MIMEText(html, 'html')
-        msg.attach(part1)
         msg.attach(part2) 
 
         server = smtplib.SMTP('smtp.gmail.com', 587)
@@ -81,11 +78,8 @@ def forgot_password():
 
         msg = MIMEMultipart('alternative')
         msg['Subject'] = "Cambio de contraseña"
-        text = ""
         html = render_template('temporal_password.html', password = temporal_password, name = user.name)
-        part1 = MIMEText(text, 'plain')
         part2 = MIMEText(html, 'html')
-        msg.attach(part1)
         msg.attach(part2) 
 
         server = smtplib.SMTP('smtp.gmail.com', 587)
@@ -158,7 +152,7 @@ def search_products():
         {"Result": output}
     )
 
-@api.route('/cart', methods=['POST', 'GET'])
+@api.route('/cart', methods=['POST', 'DELETE', 'GET'])
 @jwt_required()
 def cart_add():
     if request.method == 'POST':
@@ -171,6 +165,17 @@ def cart_add():
         return jsonify({
             "Message": "new register added susessfully"
         })
+
+    if request.method == 'DELETE':
+        cart_id = request.json.get('id', None)
+
+        cart = Cart.query.filter_by(id = cart_id).first()
+        if cart is None:
+            return jsonify({"message": "Error, not item found"}), 400
+
+        db.session.delete(cart)
+        db.session.commit()
+        return jsonify({"message": "item deleted successfully"}), 200
     #Handling the GET request
     current_user = get_jwt_identity()
     query = db.session.query(Cart, User, Product).join(User, User.id == Cart.user_id).join(Product, Product.id == Cart.product_id).all() 
@@ -179,32 +184,3 @@ def cart_add():
     return jsonify({
         "Result": output    
     })
-
-@api.route('/sendmail', methods=['GET'])
-def send_mail():
-    email_to = 'carlosobandoup@gmail.com'
-    me = 'cr.globalmarket.app@gmail.com'
-    name = 'Carlos'
-
-    msg = MIMEMultipart('alternative')
-    msg['Subject'] = "Bienvenido"
-    msg['To'] = email_to
-
-    text = ""
-    html = render_template('register.html', name = name)
-
-    part1 = MIMEText(text, 'plain')
-    part2 = MIMEText(html, 'html')
-
-    msg.attach(part1)
-    msg.attach(part2)
-    
-    email_to = 'carlosobandoup@gmail.com'
-    message = render_template('register.html')
-
-    server = smtplib.SMTP('smtp.gmail.com', 587)
-    server.starttls()
-    server.login(os.getenv("FLASK_EMAIL_APP"), os.getenv("FLASK_EMAIL_PASS"))
-    server.sendmail(os.getenv("FLASK_EMAIL_APP"), email_to, msg.as_string())
-
-    return 'success'
