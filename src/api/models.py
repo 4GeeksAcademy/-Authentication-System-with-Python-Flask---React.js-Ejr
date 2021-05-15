@@ -99,3 +99,7 @@ class ProductSchema(ma.SQLAlchemyAutoSchema):
 class MarketSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         model = Supermarket
+
+class CouponsSchema(ma.SQLAlchemyAutoSchema):
+    class Meta:
+        fields = ('id', 'coupon_name', 'coupon_info', 'product.product_name', 'supermarket.market_name')
