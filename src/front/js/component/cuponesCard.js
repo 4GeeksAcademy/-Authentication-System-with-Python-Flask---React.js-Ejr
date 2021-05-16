@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
-import { Modal1 } from "../component/modal";
+import { Modal2 } from "../component/modalcupon";
 
 export const Cupones = props => {
 	const { store, actions } = useContext(Context);
@@ -20,7 +20,7 @@ export const Cupones = props => {
 						<p className="card-text">Ingresar props</p>
 						<br />
 						<h6 className="card-text">Ingresar props</h6>
-						<Modal1 />
+						<Modal2 />
 						<p className="card-text">
 							<small className="text-muted">Valido hasta el 11/05/21</small>
 						</p>
