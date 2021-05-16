@@ -17,6 +17,7 @@ import { WazeView } from "./pages/wazeview";
 import { Checkoutview } from "./pages/checkoutview";
 import { Actualizarvendedorview } from "./pages/actualizarvendedorview";
 import { Actualizarclienteview } from "./pages/actualizarclienteview";
+import { Perfildelproductoview } from "./pages/perfildelproductoview";
 
 //create your first component
 const Layout = () => {
@@ -68,6 +69,9 @@ const Layout = () => {
 						</Route>
 						<Route exact path="/actualizarclienteview">
 							<Actualizarclienteview />
+						</Route>
+						<Route exact path="/perfildelproductoview">
+							<Perfildelproductoview />
 						</Route>
 						<Route>
 							<h1>Not found!</h1>

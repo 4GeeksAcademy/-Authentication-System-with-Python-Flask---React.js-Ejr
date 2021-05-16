@@ -6,6 +6,7 @@ import { Search } from "./search";
 import "../../styles/navbar.scss";
 import "../pages/actualizarclienteview";
 import "../pages/actualizarvendedorview";
+import "../pages/perfildelproductoview";
 
 export const Navbar = () => {
 	const { actions, store } = useContext(Context);
@@ -123,12 +124,17 @@ export const Navbar = () => {
 									</a>
 									<a className="dropdown-item">
 										<Link to="/actualizarvendedorview" className="nav-link">
-											Atualizar Vendedor
+											Actualizar Vendedor
 										</Link>
 									</a>
 									<a className="dropdown-item">
 										<Link to="/actualizarclienteview" className="nav-link">
-											Atualizar Comprador
+											Actualizar Comprador
+										</Link>
+									</a>
+									<a className="dropdown-item">
+										<Link to="/perfildelproductoview" className="nav-link">
+											Perfil del Producto
 										</Link>
 									</a>
 								</div>
