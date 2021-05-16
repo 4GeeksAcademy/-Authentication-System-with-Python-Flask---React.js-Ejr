@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+import PropTypes from "prop-types";
 import { Context } from "../store/appContext";
 import { Link, useHistory } from "react-router-dom";
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
@@ -7,7 +8,7 @@ import "../../styles/registerNew.scss";
 import Swal from "sweetalert2";
 
 export const RegisterNew = () => {
-	const { actions } = useContext(Context);
+	const { actions, store } = useContext(Context);
 	const history = useHistory();
 	const [user, setUser] = useState({
 		name: "",
@@ -40,20 +41,12 @@ export const RegisterNew = () => {
 	const handleSubmit = e => {
 		e.preventDefault();
 		// ... submit to API or trigger function
+		user.usertype = store.isClient;
 		actions.userRegistration(user);
+		store.isClient === 1 ? actions.isSellerOrClient(1) : actions.isSellerOrClient(0);
 		registerSuccess();
 	};
 
-	const responseFacebook = response => {
-		console.log(response);
-	};
-	const componentClicked = () => {
-		alert("clicked");
-	};
-
-	const responseGoogle = response => {
-		console.log(response);
-	};
 	return (
 		<div className="container">
 			<div className="row">
@@ -73,12 +66,24 @@ export const RegisterNew = () => {
 				<div className="col-md-1">
 					<ul className="nav nav-tabs left-tabs sideways-tabs">
 						<li className="nav-item">
-							<a className="nav-link active" href="#buyer-sleft" data-toggle="tab">
+							<a
+								className="nav-link active"
+								href="#buyer-sleft"
+								data-toggle="tab"
+								onClick={() => {
+									actions.whosIsRegistering(0);
+								}}>
 								Comprador
 							</a>
 						</li>
 						<li className="nav-item">
-							<a className="nav-link" href="#seller-sleft" data-toggle="tab">
+							<a
+								className="nav-link"
+								href="#seller-sleft"
+								data-toggle="tab"
+								onClick={() => {
+									actions.whosIsRegistering(1);
+								}}>
 								Vendedor
 							</a>
 						</li>
@@ -135,15 +140,28 @@ export const RegisterNew = () => {
 										/>
 										<span className="focus-input100" />
 									</div>
-
-									<div className="text-right p-t-8 p-b-31">
-										<a href="#">Olvido su contraseña?</a>
+									<div className="wrap-input100  m-b-23">
+										<span className="label-input100 fas fa-phone-square"> Numero Telefonico</span>
+										<input
+											className="input100"
+											type="text"
+											name="phonenumber"
+											placeholder="Ingrese su numero telefonico"
+											onChange={handleChange}
+										/>
+										<span className="focus-input100" />
 									</div>
 
-									<div className="container-login100-form-btn">
+									<div className="container-login100-form-btn  mt-4">
 										<div className="wrap-login100-form-btn">
 											<div className="login100-form-bgbtn" />
-											<button className="login100-form-btn" onClick={handleSubmit}>
+											<button
+												type="submit"
+												className="login100-form-btn"
+												onClick={
+													//setUserType("True");
+													handleSubmit
+												}>
 												Registrarse
 											</button>
 										</div>
@@ -154,12 +172,36 @@ export const RegisterNew = () => {
 									</div>
 
 									<div className="flex-c-m">
-										<a href="#" className="login100-social-item bg1">
-											<i className="fa fa-facebook" />
+										<a className="login100-social-item bg1">
+											<FacebookLogin
+												appId="1167779733658455"
+												callback={actions.responseFacebook}
+												render={renderProps => (
+													<button
+														className="fa fa-facebook"
+														style={{ color: "white" }}
+														onClick={renderProps.onClick}
+													/>
+												)}
+											/>
 										</a>
 
-										<a href="#" className="login100-social-item bg3">
-											<i className="fa fa-google" />
+										<a className="login100-social-item bg3">
+											<GoogleLogin
+												clientId="253456588353-u3j0pe2o5mhoj8s93og3o2tt0qfhai7k.apps.googleusercontent.com"
+												render={renderProps => (
+													<button
+														className="fa fa-google"
+														style={{ color: "white" }}
+														onClick={renderProps.onClick}
+														//disabled={renderProps.disabled}
+													/>
+												)}
+												buttonText="Login"
+												onSuccess={actions.responseGoogle}
+												onFailure={actions.responseGoogle}
+												cookiePolicy={"single_host_origin"}
+											/>
 										</a>
 									</div>
 
@@ -223,12 +265,19 @@ export const RegisterNew = () => {
 										/>
 										<span className="focus-input100" />
 									</div>
-
-									<div className="text-right p-t-8 p-b-31">
-										<a href="#">Olvido su contraseña?</a>
+									<div className="wrap-input100  m-b-23">
+										<span className="label-input100 fas fa-phone-square"> Numero Telefonico</span>
+										<input
+											className="input100"
+											type="text"
+											name="phonenumber"
+											placeholder="Ingrese su numero telefonico"
+											onChange={handleChange}
+										/>
+										<span className="focus-input100" />
 									</div>
 
-									<div className="container-login100-form-btn">
+									<div className="container-login100-form-btn  mt-4">
 										<div className="wrap-login100-form-btn">
 											<div className="login100-form-bgbtn" />
 											<button className="login100-form-btn" onClick={handleSubmit}>
@@ -241,29 +290,39 @@ export const RegisterNew = () => {
 										<span>O registrese usando</span>
 									</div>
 
-									{/* <div className="flex-c-m">
-										<a href="#" className="login100-social-item bg1">
+									<div className="flex-c-m">
+										<a className="login100-social-item bg1">
 											<FacebookLogin
-												className="fa fa-facebook"
-												appId="1088597931155576"
-												autoLoad={true}
-												fields="name,email,picture"
-												onClick={componentClicked}
-												callback={responseFacebook}
+												appId="1167779733658455"
+												callback={actions.responseFacebook}
+												render={renderProps => (
+													<button
+														className="fa fa-facebook"
+														style={{ color: "white" }}
+														onClick={renderProps.onClick}
+													/>
+												)}
 											/>
 										</a>
 
-										<a href="#" className="login100-social-item bg3">
+										<a className="login100-social-item bg3">
 											<GoogleLogin
-												className="fa fa-google"
-												clientId="658977310896-knrl3gka66fldh83dao2rhgbblmd4un9.apps.googleusercontent.com"
+												clientId="253456588353-u3j0pe2o5mhoj8s93og3o2tt0qfhai7k.apps.googleusercontent.com"
+												render={renderProps => (
+													<button
+														className="fa fa-google"
+														style={{ color: "white" }}
+														onClick={renderProps.onClick}
+														//disabled={renderProps.disabled}
+													/>
+												)}
 												buttonText="Login"
-												onSuccess={responseGoogle}
-												onFailure={responseGoogle}
+												onSuccess={actions.responseGoogle}
+												onFailure={actions.responseGoogle}
 												cookiePolicy={"single_host_origin"}
 											/>
 										</a>
-									</div> */}
+									</div>
 
 									<div className="flex-col-c p-t-30">
 										<span className="txt1 p-b-17">Ya tiene cuenta?</span>

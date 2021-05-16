@@ -10,7 +10,7 @@ export const Navbar = () => {
 	const history = useHistory();
 
 	return (
-		<section className="ftco-section">
+		<section className="ftco-section bg-light">
 			<div className="container">
 				<div className="row justify-content-between">
 					<div className="col">
@@ -26,7 +26,7 @@ export const Navbar = () => {
 						</Link>
 					</div>
 					<div className="col d-flex justify-content-end">
-						<div className="social-media mt-2">
+						<div className="social-media mt-4">
 							<p className="mb-0 d-flex">
 								{store.token && store.token !== "" && store.token !== undefined ? null : (
 									<Link
@@ -42,8 +42,23 @@ export const Navbar = () => {
 										to="/logUserIn"
 										className="d-flex align-items-center justify-content-center"
 										data-toggle="tooltip"
-										title="Ingresar">
+										title="Ingresar como Cliente"
+										onClick={() => {
+											actions.isSellerOrClient(0);
+										}}>
 										<span className="fas fa-sign-in-alt" />
+									</Link>
+								)}
+								{store.token && store.token !== "" && store.token !== undefined ? null : (
+									<Link
+										to="/logUserIn"
+										className="d-flex align-items-center justify-content-center"
+										data-toggle="tooltip"
+										title="Ingresar como Vendedor"
+										onClick={() => {
+											actions.isSellerOrClient(1);
+										}}>
+										<span className="fas fa-money-bill" />
 									</Link>
 								)}
 								{store.token && store.token !== "" && store.token !== undefined ? (
@@ -59,13 +74,25 @@ export const Navbar = () => {
 										<span className="fas fa-sign-out-alt" />
 									</Link>
 								) : null}
-								{store.token && store.token !== "" && store.token !== undefined ? (
+								{store.token &&
+								store.token !== "" &&
+								store.token !== undefined &&
+								store.isSeller === null ? (
 									<Link
 										to="/"
 										className="d-flex align-items-center justify-content-center"
 										data-toggle="tooltip"
 										title="Carrito de Compras">
 										<span className="fas fa-shopping-cart" />
+									</Link>
+								) : null}
+								{store.token && store.token !== "" && store.token !== undefined ? (
+									<Link
+										to="/profile"
+										className="d-flex align-items-center justify-content-center"
+										data-toggle="tooltip"
+										title="Perfil">
+										<span className="fas fa-user-circle" />
 									</Link>
 								) : null}
 							</p>
@@ -100,31 +127,13 @@ export const Navbar = () => {
 									Inicio
 								</Link>
 							</li>
-							<li className="nav-item dropdown">
-								<a
-									className="nav-link dropdown-toggle"
-									href="#"
-									id="dropdown04"
-									data-toggle="dropdown"
-									aria-haspopup="true"
-									aria-expanded="false">
-									Vistas
-								</a>
-								<div className="dropdown-menu" aria-labelledby="dropdown04">
-									<a className="dropdown-item" href="#">
-										Nuevo Producto
-									</a>
-									<a className="dropdown-item" href="#">
-										Comprar
-									</a>
-									<a className="dropdown-item" href="#">
-										Page 3
-									</a>
-									<a className="dropdown-item" href="#">
-										Page 4
-									</a>
-								</div>
-							</li>
+							{store.sellerId !== null ? (
+								<li className="nav-item">
+									<Link to="/newProduct" className="nav-link">
+										Vender producto
+									</Link>
+								</li>
+							) : null}
 							{store.token && store.token !== "" && store.token !== undefined ? (
 								<li className="nav-item">
 									<Link to="/logueado" className="nav-link">
@@ -132,7 +141,6 @@ export const Navbar = () => {
 									</Link>
 								</li>
 							) : null}
-
 							<li className="nav-item">
 								<Link to="/contact-us" className="nav-link">
 									Contacto

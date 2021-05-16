@@ -2,6 +2,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
 			token: null,
+			sellerId: null,
+			isSeller: null,
+			isClient: null,
 			isLoggedIn: false,
 			emailServiceID: "service_69zpagb",
 			emailUserID: "user_z7x4Z98eeKRtg2hNKJyJC",
@@ -15,6 +18,17 @@ const getState = ({ getStore, getActions, setStore }) => {
 			dataMart: []
 		},
 		actions: {
+			// identify seller or client logging
+			isSellerOrClient: whoIs => {
+				const store = getStore();
+				setStore({ isSeller: whoIs });
+				console.log(store.isSeller);
+			},
+
+			// identify seller or client register
+			whosIsRegistering: whoIs => {
+				setStore({ isClient: whoIs });
+			},
 			// get login/registration information
 			responseGoogle: response => {
 				return response;
@@ -70,7 +84,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 				try {
 					const resp = await fetch(apiEndPoint, requestOptions);
 					const data = await resp.json();
-					if (data.token) {
+					if (data.token && data.userid) {
+						sessionStorage.setItem("userToken", data.token);
+						sessionStorage.setItem("sellerId", data.userid);
+						setStore({ token: data.token });
+						setStore({ sellerId: data.userid });
+					} else if (data.token) {
 						sessionStorage.setItem("userToken", data.token);
 						setStore({ token: data.token });
 					}
@@ -80,6 +99,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 			syncTokenOnRefresh: () => {
 				setStore({ token: sessionStorage.getItem("userToken") });
+			},
+
+			syncSellerIdOnRefresh: () => {
+				setStore({ sellerId: sessionStorage.getItem("sellerId") });
 			},
 
 			// function to log user out and clear token and log state
@@ -167,31 +190,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 				//push data to store
 				store.appAuth.push(getActions().responseGoogle());
 				store.appAuth.push(getActions().responseFacebook());
-			}
-			// fillStore: () => {
-			// 	fetch("https://fakestoreapi.com/products")
-			// 		.then(res => res.json())
-			// 		.then(json => setStore({ dataMart: json }));
-			// },
-			// fillDataBase: () => {
-			// 	let myHeaders = new Headers();
-			// 	myHeaders.append("Content-Type", "application/json");
-			// 	let raw = JSON.stringify(newuser);
-
-			// 	const requestOptions = {
-			// 		method: "POST",
-			// 		headers: myHeaders,
-			// 		body: raw,
-			// 		redirect: "follow"
-			// 	};
-
-			// 	const apiEndPoint = "https://3001-chocolate-ox-jjqxr0q2.ws-us03.gitpod.io/api/userregistration";
-
-			// 	fetch(apiEndPoint, requestOptions)
-			// 		.then(response => response.json())
-			// 		.then(result => console.log(result))
-			// 		.catch(error => console.log("error", error));
-			// }
+			},
+			createNewProduct: () => {},
+			uploadProductImage: () => {},
+			updateProduct: prdId => {},
+			deleteProduct: prdId => {}
 		}
 	};
 };

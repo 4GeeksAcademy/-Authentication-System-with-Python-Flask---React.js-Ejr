@@ -21,7 +21,7 @@ export const Logueado = () => {
 
 	if (store.token && store.token !== "" && store.token !== undefined) {
 		return (
-			<div className="container">
+			<div className="container fixed-content-mg">
 				{/*<h1 className="text-center">Pura Vida Mart</h1>*/}
 				<Card />
 				<div className="text-center my-4" />

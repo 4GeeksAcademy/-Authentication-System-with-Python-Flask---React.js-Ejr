@@ -9,7 +9,7 @@ export const Home = () => {
 	const { store, actions } = useContext(Context);
 
 	return (
-		<div className="h-100 text-center mt-2" style={{ fontFamily: "Zen Dots" }}>
+		<div className="h-100 text-center fixed-content-mg" style={{ fontFamily: "Zen Dots" }}>
 			{/* <h1>Pura Vida Mart</h1> */}
 			<h2>Bienvenido(a)</h2>
 			<Carousel />

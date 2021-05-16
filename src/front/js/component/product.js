@@ -1,6 +1,45 @@
-import React from "react";
+import React, { useState, useContext } from "react";
+import { Context } from "../store/appContext";
 
 export const Product = () => {
+	const { actions, store } = useContext(Context);
+	const [product, setProduct] = useState({
+		productName: "",
+		description: "",
+		category: "",
+		price: null,
+		itemstatus: ""
+	});
+	const [prdImage, setPrdImage] = useState({
+		image: null
+	});
+
+	const logInSuccess = () => {
+		Swal.fire({
+			icon: "success",
+			title: "Producto Creado exitosamente",
+			text: "Abrir catalogo para ver el producto ingresado recientemente",
+			showConfirmButton: false,
+			timer: 1500
+		});
+	};
+
+	const handleChange = e => {
+		setProduct({
+			...product,
+			// Trimming any whitespace
+			[e.target.name]: e.target.value.trim()
+		});
+	};
+
+	const handleSubmit = e => {
+		e.preventDefault();
+		// ... submit to API or something
+		product.sellerId = store.sellerId;
+		actions.createNewProduct(product);
+		actions.newPrdoductSuccess();
+		actions.uploadProductImage();
+	};
 	return (
 		<div className="container">
 			<section className="panel panel-default">

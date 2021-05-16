@@ -1,4 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
+import PropTypes from "prop-types";
 import { Context } from "../store/appContext";
 import { Link, useHistory } from "react-router-dom";
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
@@ -12,7 +13,8 @@ export const Login = () => {
 	const history = useHistory();
 	const [user, setUser] = useState({
 		username: "",
-		password: ""
+		password: "",
+		usertype: null
 	});
 
 	const logInSuccess = () => {
@@ -37,6 +39,7 @@ export const Login = () => {
 	const handleSubmit = e => {
 		e.preventDefault();
 		// ... submit to API or something
+		user.usertype = store.isSeller;
 		actions.userLogIn(user);
 		logInSuccess();
 	};
@@ -45,7 +48,9 @@ export const Login = () => {
 			<section>
 				<div className="wrap-login100 p-l-55 p-r-55 p-t-35 p-b-54 mx-auto d-block">
 					<form onSubmit={handleChange} className="login100-form">
-						<span className="login100-form-title p-b-30">Iniciar sesión</span>
+						<span className="login100-form-title p-b-30">
+							{store.isSeller === 1 ? "Iniciar sesión Vendedor" : "Iniciar sesión Comprador"}{" "}
+						</span>
 						<div className="wrap-input100  m-b-23">
 							<span className="label-input100 fas fa-envelope"> Usuario</span>
 							<input

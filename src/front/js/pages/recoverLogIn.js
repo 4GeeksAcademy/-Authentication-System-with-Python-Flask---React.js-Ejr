@@ -5,7 +5,7 @@ import "../../styles/reg_log_rec.scss";
 
 export const RecoverLogIn = () => {
 	return (
-		<div className="container">
+		<div className="container fixed-content-mg">
 			<PassRecovery />
 		</div>
 	);

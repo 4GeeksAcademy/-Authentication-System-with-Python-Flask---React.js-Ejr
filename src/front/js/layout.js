@@ -14,6 +14,7 @@ import { NewProduct } from "./pages/newProduct";
 import { Logueado } from "./pages/logueado";
 import { ResetPassword } from "./pages/resetPassword";
 import { WazeView } from "./pages/wazeview";
+import { Profile } from "./pages/profile";
 //create your first component
 const Layout = () => {
 	//the basename is used when your project is published in a subdirectory and not in the root of the domain

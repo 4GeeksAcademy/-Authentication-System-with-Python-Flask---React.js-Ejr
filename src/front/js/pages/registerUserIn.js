@@ -5,7 +5,7 @@ import { RegisterNew } from "../component/registerNew";
 
 export const RegisterUserIn = () => {
 	return (
-		<div className="container">
+		<div className="container fixed-content-mg">
 			<RegisterNew />
 		</div>
 	);

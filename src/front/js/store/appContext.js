@@ -30,6 +30,7 @@ const injectContext = PassedComponent => {
 			 **/
 			state.actions.loadImageProduct();
 			state.actions.syncTokenOnRefresh();
+			state.actions.syncSellerIdOnRefresh();
 			// <---- calling this function from the flux.js actions
 		}, []);
 

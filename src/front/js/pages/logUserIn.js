@@ -8,7 +8,7 @@ export const LogUserIn = () => {
 	const { store } = useContext(Context);
 
 	return (
-		<div className="container">
+		<div className="container fixed-content-mg">
 			{store.token && store.token != "" && store.token != undefined ? logInSuccess() : <Login />}
 		</div>
 	);
