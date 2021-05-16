@@ -1,61 +1,59 @@
 const getState = ({ getStore, getActions, setStore }) => {
-    return {
-        store: {
-            products: [],//Creo un array de productos vacio para que se almacenen los productos seleccionados y mis favss?
-            favorites: [],
-            demo: [
-                {
-                    title: "FIRST",
-                    background: "white",
-                    initial: "white"
-                },
-                {
-                    title: "SECOND",
-                    background: "white",
-                    initial: "white"
-                }
-            ]
-        },
-        actions: {
-            // Use getActions to call a function within a fuction
-            exampleFunction: () => {
-                getActions().changeColor(0, "green");
-            },
+	return {
+		store: {
+			products: [],
+			supermarket: [],
+			cupons: [],
+			favorites: [],
+			token: sessionStorage.getItem("my_token") || ""
+		},
+		actions: {
+			// Use getActions to call a function within a fuction
 
-            getMessage: () => {
-                // fetching data from the backend
-                fetch(process.env.BACKEND_URL + "/api/hello")
-                    .then(resp => resp.json())
-                    .then(data => setStore({ message: data.message }))
-                    .catch(error => console.log("Error loading message from backend", error));
-            },
-            changeColor: (index, color) => {
-                //get the store
-                const store = getStore();
+			loadProducts: async () => {
+				const url = "https://3001-moccasin-pigeon-4ixmcu8a.ws-us04.gitpod.io/api/product";
+				const response = await fetch(url);
+				const data = await response.json();
 
-                //we have to loop the entire demo array to look for the respective index
-                //and change its color
-                const demo = store.demo.map((elm, i) => {
-                    if (i === index) elm.background = color;
-                    return elm;
-                });
+				setStore({ products: data });
+			},
 
-                //reset the global store
-                setStore({ demo: demo });
-            },
-            //CODIGO PARA AGREGAR Y REMOVER FAVORITOS
-            /*agregarFavoritos: favs => {
-                setStore ({favorites:getStore().favoritos.concat(favs)}); // Crear array nuevo con data de favoritos.
-            },
+			loadSupermarket: async () => {
+				const url = "https://3001-moccasin-pigeon-4ixmcu8a.ws-us04.gitpod.io/api/market";
+				const response = await fetch(url);
+				const data = await response.json();
+				setStore({ supermarket: data });
+			},
 
-            removerFavoritos: index => {
-                const NuevoArrayFavs = getStore().favoritos.filter((item,index)=>{
-                    return indice !== index;
-                });*/
+			//Pendiente agregar la ruta
+			loadCupons: async () => {
+				const url = "https://3001-moccasin-pigeon-4ixmcu8a.ws-us04.gitpod.io/api/coupon";
+				const response = await fetch(url);
+				const data = await response.json();
+				setStore({ cupons: data });
+			},
+			// Favorites
+			loadFavorites: async () => {
+				const url = "https://3001-moccasin-pigeon-4ixmcu8a.ws-us04.gitpod.io/api/cart";
+				const response = await fetch(url);
+				const data = await response.json();
+				setStore({ favorites: data });
+			}
 
-            setStore({ favorites: NuevoArrayFavs })
-        }
-    };
+			// AgregarFavoritos: favs => {
+			//     setStore ({favoritos:getStore().favoritos.concat(favs)});
+			// },
 
-}
+			// RemoverFavoritos: index => {
+			//     const NuevoArrayFavoritos = getStore().favoritos.filter((item,index)=>{
+			//         return index !== indice;
+			//     });
+
+			//     setStore({favorites:NuevoArrayFavoritos})
+			//
+			// }
+		}
+	};
+};
+
 export default getState;

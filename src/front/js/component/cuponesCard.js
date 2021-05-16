@@ -1,8 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
+import { Context } from "../store/appContext";
+import { Modal1 } from "../component/modal";
 
 export const Cupones = props => {
+	const { store, actions } = useContext(Context);
+
 	return (
 		<div className="card mb-3">
 			<div className="row g-0">
@@ -11,14 +15,12 @@ export const Cupones = props => {
 				</div>
 				<div className="col-md-8">
 					<div className="card-body">
-						<h5 className="card-title">Cupon Aplicable por 15% de descuento</h5>
-						<p className="card-text">
-							Adquiera este cupon el dia de hoy y aplique a su compra un 15% de descuento en preductos
-							selecionados
-						</p>
-						<button type="button" className="btn btn-success">
-							Adquirir
-						</button>
+						<h3 className="card-title">Ingresar props</h3>
+						<h5 className="card-text">Ingresar props</h5>
+						<p className="card-text">Ingresar props</p>
+						<br />
+						<h6 className="card-text">Ingresar props</h6>
+						<Modal1 />
 						<p className="card-text">
 							<small className="text-muted">Valido hasta el 11/05/21</small>
 						</p>
@@ -28,3 +30,11 @@ export const Cupones = props => {
 		</div>
 	);
 };
+// CuponesCard.propTypes = {
+// 	id: PropTypes.number,
+// 	cupon_name: PropTypes.string,
+// 	information: PropTypes.string,
+// 	product_name: PropTypes.string,
+// 	category: PropTypes.string,
+// 	market_id: PropTypes.number
+// };

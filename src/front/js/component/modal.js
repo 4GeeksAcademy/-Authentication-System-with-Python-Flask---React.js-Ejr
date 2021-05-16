@@ -1,30 +1,43 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { Modal, Button, Table } from "react-bootstrap";
+import PropTypes from "prop-types";
+import { Context } from "../store/appContext";
 
-export function Modal1() {
+export function Modal1(props) {
+	const { store, actions } = useContext(Context);
+
+	//Agregar a favoritos por evento---------------------------------------------------------------->//
+
+	const OnClickEvent = e => {
+		const Id_Producto = props.id;
+		if (store.favoritos.find(Dif_Id_Producto => Dif_Id_Producto === Id_Producto)) {
+			//Al ser Dif_Id_Producto distinto de Id_Producto, find no lo retorna.
+		} else {
+			actions.AgregarFavoritos(Id_Producto);
+			//De lo contrario, agregar producto.
+		}
+	};
+
+	//Inicio codigo de modal React-Bootstrap//
+
 	const [show, setShow] = useState(false);
-
 	const handleClose = () => setShow(false);
 	const handleShow = () => setShow(true);
-
+	let elemento = props.location;
 	return (
 		<>
 			<Button variant="btn btn-outline-success float-right" onClick={handleShow}>
 				Ver detalles
 			</Button>
 			<button type="button" className="btn btn-outline-success float-right">
-				<i className="fas fa-cart-arrow-down" />
+				<i className="fas fa-cart-arrow-down" onClick={e => OnClickEvent(e)} />
 			</button>
 
 			<Modal show={show} onHide={handleClose} backdrop="static" keyboard={false}>
 				<Modal.Header closeButton>
 					<Modal.Title>
-						<img
-							src="https://www.cellshop.com/52067-large_default/desodorante-rexona-women-bamboo-48hs-150ml.jpg"
-							className="card-img-top"
-							alt="..."
-						/>
+						<img src="" className="card-img-top" alt="..." />
 					</Modal.Title>
 				</Modal.Header>
 				<Modal.Body>
@@ -32,25 +45,29 @@ export function Modal1() {
 						<thead>
 							<tr>
 								<th>Nombre del producto:</th>
-								<th>Desodorante Rexona</th>
+								<th>{props.product_name}</th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr>
 								<td>Supermercado:</td>
-								<td>Palí</td>
+								<td>{props.market_name}</td>
 							</tr>
 							<tr>
-								<td>Pasillo:</td>
-								<td>#8</td>
+								<td>Localización:</td>
+								<td>{elemento}</td>
 							</tr>
 							<tr>
 								<td>Unidades:</td>
-								<td>150 mL</td>
+								<td>1 ud</td>
 							</tr>
 							<tr>
 								<td>Categoría:</td>
-								<td>Cuidado personal</td>
+								<td>{props.category}</td>
+							</tr>
+							<tr>
+								<td>Precio:</td>
+								<td>{props.price}</td>
 							</tr>
 						</tbody>
 					</Table>
@@ -67,3 +84,11 @@ export function Modal1() {
 		</>
 	);
 }
+Modal1.propTypes = {
+	image: PropTypes.string,
+	product_name: PropTypes.string,
+	market_name: PropTypes.string,
+	location: PropTypes.string,
+	category: PropTypes.string,
+	price: PropTypes.number
+};
