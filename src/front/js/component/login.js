@@ -1,117 +1,102 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Context } from "../store/appContext";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 import GoogleLogin from "react-google-login";
-import logo from "../../img/logo.png";
+import logo from "../../img/logo.jpeg";
+import "../../styles/registerNew.scss";
+import Swal from "sweetalert2";
 
 export const Login = () => {
-	const { actions } = useContext(Context);
+	const { actions, store } = useContext(Context);
+	const history = useHistory();
 	const [user, setUser] = useState({
 		username: "",
 		password: ""
 	});
 
+	const logInSuccess = () => {
+		Swal.fire({
+			icon: "success",
+			title: "Ingreso exitoso",
+			text: "Redirigiendo a pagina principal",
+			showConfirmButton: false,
+			timer: 3500
+		});
+		history.push("/logueado");
+	};
+
 	const handleChange = e => {
-		const { name, value } = e.target;
-		setUser(user => ({
+		setUser({
 			...user,
-			[name]: value
-		}));
+			// Trimming any whitespace
+			[e.target.name]: e.target.value.trim()
+		});
 	};
 
-	const logUser = event => {
-		event.preventDefault();
+	const handleSubmit = e => {
+		e.preventDefault();
+		// ... submit to API or something
 		actions.userLogIn(user);
+		logInSuccess();
 	};
-
 	return (
-		<div className="container">
-			<div className="login-form">
-				<form onSubmit={logUser}>
-					<h2 className="text-center">Ingresar</h2>
-					<img src={logo} alt="logo" className="img-thumbnail mx-auto d-block rounded my-3" />
-					<div className="form-group">
-						<div className="input-group">
+		<div className="container my-5">
+			<section>
+				<div className="wrap-login100 p-l-55 p-r-55 p-t-35 p-b-54 mx-auto d-block">
+					<form onSubmit={handleChange} className="login100-form">
+						<span className="login100-form-title p-b-30">Iniciar sesión</span>
+						<div className="wrap-input100  m-b-23">
+							<span className="label-input100 fas fa-envelope"> Usuario</span>
 							<input
+								className="input100"
 								type="text"
-								className="form-control"
 								name="username"
-								placeholder="Usuario"
-								required="required"
+								placeholder="Ingrese su Correo electronico"
 								onChange={handleChange}
 							/>
+							<span className="focus-input100" />
 						</div>
-					</div>
-					<div className="form-group">
-						<div className="input-group">
+						<div className="wrap-input100  m-b-23">
+							<span className="label-input100 fas fa-envelope"> Contraseña</span>
 							<input
-								type="password"
-								className="form-control"
+								className="input100"
+								type="text"
 								name="password"
-								placeholder="Contraseña"
-								required="required"
+								placeholder="Ingrese su Correo electronico"
 								onChange={handleChange}
 							/>
+							<span className="focus-input100" />
 						</div>
-					</div>
-					<div className="form-group">
-						<button
-							onClick={() => {
-								logUser;
-							}}
-							className="btn btn-login btn-pvm btn-block">
-							Ingresar
-						</button>
-					</div>
-					<div className="clearfix">
-						<label className="float-left checkbox-inline">
-							<input type="checkbox" /> Recordarme.
-						</label>
-						<Link to="/recoverLogIn" className="float-right">
-							<a>Olvidaste la Contraseña?</a>
-						</Link>
-					</div>
-					<div className="or-seperator">
-						<i>o</i>
-					</div>
-					<p className="text-center">Ingresar con red sociales</p>
+						<div className="container-login100-form-btn">
+							<div className="wrap-login100-form-btn">
+								<div className="login100-form-bgbtn" />
+								<button type="submit" onClick={handleSubmit} className="login100-form-btn">
+									Ingresar
+								</button>
+							</div>
+						</div>
+						<div className="text-right p-t-8 p-b-31">
+							<Link to="/recoverLogIn">
+								<a>Olvido su contraseña?</a>
+							</Link>
+						</div>
+						<div className="txt1 text-center p-t-8 p-b-20">
+							<span>O ingrese usando</span>
+						</div>
 
-					<div className="text-center social-btn">
-						<FacebookLogin
-							appId="1167779733658455"
-							callback={actions.responseFacebook}
-							render={renderProps => (
-								<button className="social-btn btn-primary" onClick={renderProps.onClick}>
-									<i className="fab fa-facebook-f" /> Facebook
-								</button>
-							)}
-						/>{" "}
-						<GoogleLogin
-							clientId="253456588353-u3j0pe2o5mhoj8s93og3o2tt0qfhai7k.apps.googleusercontent.com"
-							render={renderProps => (
-								<button
-									className="social-btn btn-danger"
-									onClick={renderProps.onClick}
-									//disabled={renderProps.disabled}
-								>
-									<i className="fab fa-google" /> Google
-								</button>
-							)}
-							buttonText="Login"
-							onSuccess={actions.responseGoogle}
-							onFailure={actions.responseGoogle}
-							cookiePolicy={"single_host_origin"}
-						/>
-					</div>
-				</form>
-				<p className="text-center text-muted small">
-					No tienes una cuenta?{" "}
-					<Link to="/registerUserIn">
-						<a>Registrarse aqui!</a>
-					</Link>
-				</p>
-			</div>
+						<div className="flex-c-m">
+							<a href="#" className="login100-social-item bg1">
+								<i className="fa fa-facebook" />
+							</a>
+
+							<a href="#" className="login100-social-item bg3">
+								<i className="fa fa-google" />
+							</a>
+						</div>
+					</form>
+				</div>
+			</section>
 		</div>
 	);
 };
