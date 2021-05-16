@@ -54,8 +54,6 @@ export const Navbar1 = () => {
 									<Link to={"/"}>
 										<Dropdown.Item eventKey="1">Favoritos</Dropdown.Item>
 									</Link>
-									<Dropdown.Item eventKey="2">Action</Dropdown.Item>
-									<Dropdown.Item eventKey="3">Other Acction</Dropdown.Item>
 									<Dropdown.Divider />
 									<Dropdown.Item eventKey="4">Cerrar sesión</Dropdown.Item>
 								</DropdownButton>

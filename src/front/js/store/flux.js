@@ -1,47 +1,49 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
-			message: null,
-			demo: [
-				{
-					title: "FIRST",
-					background: "white",
-					initial: "white"
-				},
-				{
-					title: "SECOND",
-					background: "white",
-					initial: "white"
-				}
-			]
+			products: [],
+			supermarket: [],
+			cupons: [],
+            favorites: [],
+            token: sessionStorage.getItem("my_token") || ""
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
-			exampleFunction: () => {
-				getActions().changeColor(0, "green");
+
+			loadProducts: async () => {
+				const url = "https://3001-moccasin-pigeon-4ixmcu8a.ws-us04.gitpod.io/api/product";
+				const response = await fetch(url);
+				const data = await response.json();
+				setStore({ products: data });
 			},
 
-			getMessage: () => {
-				// fetching data from the backend
-				fetch(process.env.BACKEND_URL + "/api/hello")
-					.then(resp => resp.json())
-					.then(data => setStore({ message: data.message }))
-					.catch(error => console.log("Error loading message from backend", error));
+			loadSupermarket: async () => {
+				const url = "https://3001-moccasin-pigeon-4ixmcu8a.ws-us04.gitpod.io/api/market";
+				const response = await fetch(url);
+				const data = await response.json();
+				setStore({ supermarket: data });
 			},
-			changeColor: (index, color) => {
-				//get the store
-				const store = getStore();
 
-				//we have to loop the entire demo array to look for the respective index
-				//and change its color
-				const demo = store.demo.map((elm, i) => {
-					if (i === index) elm.background = color;
-					return elm;
-				});
-
-				//reset the global store
-				setStore({ demo: demo });
+			//Pendiente agregar la ruta
+			loadCupons: async () => {
+				const url = "https://3001-moccasin-pigeon-4ixmcu8a.ws-us04.gitpod.io/api/coupon";
+				const response = await fetch(url);
+				const data = await response.json();
+				setStore({ cupons: data });
 			}
+			// Favorites
+
+			// addFavorites: favs => {
+			//     setStore ({favorites:getStore().favorites.concat(favs)});
+			// },
+
+			// removeFavorites: index => {
+			//     const NewArrayFavs = getStore().favorites.filter((item,index)=>{
+			//         return index !== indice;
+			//     });
+
+			//     setStore({favorites:NewArrayFavs})
+			// }
 		}
 	};
 };
