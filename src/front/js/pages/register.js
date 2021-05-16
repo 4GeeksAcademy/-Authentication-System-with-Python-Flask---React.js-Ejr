@@ -64,7 +64,7 @@ export const Register1 = () => {
 									className="form-control"
 									placeholder="Nombre"
 									required
-									onChange={getName}
+									onChange={}
 								/>
 							</div>
 							<div className="input-group form-group">
@@ -123,7 +123,7 @@ export const Register1 = () => {
 								/>
 							</div>
 							<div className="form-group">
-								<input type="Submit" value="Registrar" className="btn float-right login_btn" />
+								<input type="submit" value="Registrar" className="btn float-right login_btn" />
 							</div>
 							<div className="card-footer">
 								<div className="d-flex justify-content-center links">
