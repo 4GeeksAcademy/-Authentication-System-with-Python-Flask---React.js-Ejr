@@ -12,6 +12,7 @@ import { Forgot1 } from "./pages/forgot";
 import { Cupones1 } from "./pages/cupones";
 import { Categorias } from "./pages/categorias";
 import { Favoritos } from "./pages/favorites";
+import { Contac1 } from "./pages/contact";
 import injectContext from "./store/appContext";
 
 import { Navbar1 } from "./component/navbar";
@@ -57,6 +58,9 @@ const Layout = () => {
 						</Route>
 						<Route exact path="/favorites">
 							<Favoritos />
+						</Route>
+						<Route exact path="/contact">
+							<Contac1 />
 						</Route>
 						<Route>
 							<h1>Not found!</h1>

@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
+import { Context } from "../store/appContext";
 import { Navbar, Nav, Dropdown, DropdownButton, Button } from "react-bootstrap";
 
 export const Navbar1 = () => {
+	const { store, actions } = useContext(Context);
 	return (
 		<>
 			<Navbar className="navigation" collapseOnSelect expand="lg" bg="transparent" variant="dark" text="white">
@@ -52,10 +54,26 @@ export const Navbar1 = () => {
 									title=""
 									text="white">
 									<Link to={"/"}>
-										<Dropdown.Item eventKey="1">Favoritos</Dropdown.Item>
+										<Dropdown.Item eventKey="1" style={{ backgroundColor: "rgb(255, 231, 133)" }}>
+											Favoritos {store.favorites.length}
+										</Dropdown.Item>
 									</Link>
 									<Dropdown.Divider />
-									<Dropdown.Item eventKey="4">Cerrar sesión</Dropdown.Item>
+									<Link to={"/contact"}>
+										<Dropdown.Item eventKey="1" style={{ backgroundColor: "rgb(255, 231, 133)" }}>
+											Contactenos
+										</Dropdown.Item>
+									</Link>
+									<Dropdown.Divider />
+									<Dropdown.Item
+										eventKey="3"
+										style={{ backgroundColor: "rgb(255, 231, 133)" }}
+										onClick={() => {
+											setLogin(false);
+											alert("Ha cerrado sesion correctamente");
+										}}>
+										Cerrar sesión
+									</Dropdown.Item>
 								</DropdownButton>
 							))}
 						</div>

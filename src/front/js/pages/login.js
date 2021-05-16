@@ -1,13 +1,14 @@
-import React, { useState, useContext } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect, useContext } from "react";
+import { Link, Redirect } from "react-router-dom";
+import { Context } from "../store/appContext";
 
 export const Login1 = () => {
 	const { store, actions } = useContext(Context);
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
-	const [mensaje, setmensaje] = useState("");
 	const { islogin } = store;
 	const { setLogin } = actions;
+<<<<<<< HEAD
 
 	const getEmail = event => {
 		setEmail(event.target.value);
@@ -29,6 +30,18 @@ export const Login1 = () => {
 		redirect: "follow" //Preguntar a carlos
 	};
 	const logearUsuario = () => {
+=======
+	const [mensaje, setmensaje] = useState("");
+
+	const handleSubmit = e => {
+		e.preventDefault();
+
+		const body = {
+			email: email,
+			password: password
+		};
+
+>>>>>>> f4f9a3f563668b46fa6ce6f3ff2f9a8f508295de
 		fetch("https://3001-moccasin-pigeon-4ixmcu8a.ws-us04.gitpod.io/api/login", {
 			method: "POST",
 			body: JSON.stringify(body),
@@ -39,8 +52,20 @@ export const Login1 = () => {
 			.then(res => res.json())
 			.then(data => {
 				console.log(data);
-				// añadir token a session
-				sessionStorage.setItem("my_token", data.token);
+				let token = data.token;
+				//console.log(token);
+				if (token) {
+					sessionStorage.setItem("my_token", token);
+					setLogin(true);
+					console.log("is login ", islogin);
+
+					alert("Inicio de cesion correcta!");
+				} else {
+					alert("Correo o contraseña incorrecta intente de nuevo");
+
+					setLogin(false);
+				}
+
 				// let token = sessionStorage.getItem("my_token")
 			})
 			.catch(err => console.log(err));
@@ -67,7 +92,7 @@ export const Login1 = () => {
 						</div>
 					</div>
 					<div className="card-body">
-						<form onChange={logearUsuario()}>
+						<form onSubmit={handleSubmit}>
 							<div className="input-group form-group">
 								<div className="input-group-prepend">
 									<span className="input-group-text">
@@ -78,7 +103,14 @@ export const Login1 = () => {
 									type="text"
 									className="form-control"
 									placeholder="Email"
+<<<<<<< HEAD
 									onChange={getEmail}
+=======
+									onChange={e => {
+										setEmail(e.target.value);
+										setmensaje("");
+									}}
+>>>>>>> f4f9a3f563668b46fa6ce6f3ff2f9a8f508295de
 									required
 								/>
 							</div>
@@ -92,7 +124,11 @@ export const Login1 = () => {
 									type="password"
 									className="form-control"
 									placeholder="Contraseña"
+<<<<<<< HEAD
 									onChange={getPassword}
+=======
+									onChange={e => setPassword(e.target.value)}
+>>>>>>> f4f9a3f563668b46fa6ce6f3ff2f9a8f508295de
 									required
 								/>
 							</div>
@@ -104,6 +140,7 @@ export const Login1 = () => {
 								<input type="Submit" value="Ingresar" className="btn float-right login_btn" />
 							</div>
 						</form>
+						{islogin ? <Redirect to="/" /> : null}
 					</div>
 					<div className="card-footer">
 						<div className="d-flex justify-content-center links">
