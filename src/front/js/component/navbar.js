@@ -2,9 +2,10 @@ import React, { useState, useContext } from "react";
 import { Context } from "../store/appContext";
 import { Link, useHistory } from "react-router-dom";
 import logo from "../../img/newAppLogo.jpeg";
-import { Link } from "react-router-dom";
 import { Search } from "./search";
 import "../../styles/navbar.scss";
+import "../pages/actualizarclienteview";
+import "../pages/actualizarvendedorview";
 
 export const Navbar = () => {
 	const { actions, store } = useContext(Context);
@@ -113,17 +114,22 @@ export const Navbar = () => {
 									Vistas
 								</a>
 								<div className="dropdown-menu" aria-labelledby="dropdown04">
-									<a className="dropdown-item" href="#">
-										Nuevo Producto
-									</a>
+									<a className="dropdown-item">Nuevo Producto</a>
 									<a className="dropdown-item" href="/checkoutview.js">
 										Comprar
 									</a>
 									<a className="dropdown-item" href="/logueado.js">
 										logueado
 									</a>
-									<a className="dropdown-item" href="#">
-										Page 4
+									<a className="dropdown-item">
+										<Link to="/actualizarvendedorview" className="nav-link">
+											Atualizar Vendedor
+										</Link>
+									</a>
+									<a className="dropdown-item">
+										<Link to="/actualizarclienteview" className="nav-link">
+											Atualizar Comprador
+										</Link>
 									</a>
 								</div>
 							</li>
