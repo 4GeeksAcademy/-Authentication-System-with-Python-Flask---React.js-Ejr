@@ -13,9 +13,11 @@ export function Modal2() {
 			<Button variant="btn btn-outline-success float-right" onClick={handleShow}>
 				Ver detalles
 			</Button>
-			<button type="button" className="btn btn-outline-success float-right">
+			<Button
+				variant="btn btn-outline-success float-right"
+				onClick={() => actions.addFavorites(props.name, "cupon")}>
 				<i className="fas fa-cart-arrow-down" />
-			</button>
+			</Button>
 
 			<Modal show={show} onHide={handleClose} backdrop="static" keyboard={false}>
 				<Modal.Header closeButton>
