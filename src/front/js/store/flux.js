@@ -12,23 +12,24 @@ const getState = ({ getStore, getActions, setStore }) => {
 		actions: {
 			// Use getActions to call a function within a fuction
 
-			setLogin: loggin => {
+			setLogin: login => {
 				const store = getStore();
-				setStore({ islogin: loggin });
+				setStore({ islogin: login });
 			},
 
 			loadProducts: async () => {
 				const url = "https://3001-moccasin-pigeon-4ixmcu8a.ws-us04.gitpod.io/api/product";
 				const response = await fetch(url);
 				const data = await response.json();
-				setStore({ products: data });
+				console.log("fluxprod", data);
+				setStore({ products: data.Results });
 			},
 
 			loadSupermarket: async () => {
 				const url = "https://3001-moccasin-pigeon-4ixmcu8a.ws-us04.gitpod.io/api/market";
 				const response = await fetch(url);
 				const data = await response.json();
-				setStore({ supermarket: data });
+				setStore({ supermarket: data.Results });
 			},
 
 			//Pendiente agregar la ruta
@@ -36,7 +37,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 				const url = "https://3001-moccasin-pigeon-4ixmcu8a.ws-us04.gitpod.io/api/coupon";
 				const response = await fetch(url);
 				const data = await response.json();
-				setStore({ cupons: data });
+				console.log("data", data);
+				setStore({ coupons: data.Results });
 			}
 			// Favorites
 
