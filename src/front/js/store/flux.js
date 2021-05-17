@@ -7,12 +7,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			products: [],
 			supermarket: [],
 			cupons: [],
-<<<<<<< HEAD
-			favorites: [],
-			token: sessionStorage.getItem("my_token") || ""
-=======
 			favorites: []
->>>>>>> d156b8add6cd0b86fc28ba2419d57529ffe053aa
 		},
 		actions: {
 			// Use getActions to call a function within a fuction

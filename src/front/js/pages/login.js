@@ -9,29 +9,6 @@ export const Login1 = () => {
 	const [password, setPassword] = useState("");
 	const { islogin } = store;
 	const { setLogin } = actions;
-<<<<<<< HEAD
-
-	const getEmail = event => {
-		setEmail(event.target.value);
-	};
-	const getPassword = event => {
-		setPassword(event.target.value);
-	};
-
-	var myHeaders = new Headers();
-	myHeaders.append("Content-Type", "application/json");
-	var raw = JSON.stringify({
-		email: email,
-		password: password
-	});
-	var requestOptions = {
-		method: "POST",
-		headers: myHeaders,
-		body: raw,
-		redirect: "follow" //Preguntar a carlos
-	};
-	const logearUsuario = () => {
-=======
 	const [mensaje, setmensaje] = useState("");
 
 	const handleSubmit = e => {
@@ -42,7 +19,6 @@ export const Login1 = () => {
 			password: password
 		};
 
->>>>>>> d156b8add6cd0b86fc28ba2419d57529ffe053aa
 		fetch("https://3001-moccasin-pigeon-4ixmcu8a.ws-us04.gitpod.io/api/login", {
 			method: "POST",
 			body: JSON.stringify(body),
@@ -104,14 +80,10 @@ export const Login1 = () => {
 									type="text"
 									className="form-control"
 									placeholder="Email"
-<<<<<<< HEAD
-									onChange={getEmail}
-=======
 									onChange={e => {
 										setEmail(e.target.value);
 										setmensaje("");
 									}}
->>>>>>> d156b8add6cd0b86fc28ba2419d57529ffe053aa
 									required
 								/>
 							</div>
@@ -125,11 +97,7 @@ export const Login1 = () => {
 									type="password"
 									className="form-control"
 									placeholder="Contraseña"
-<<<<<<< HEAD
-									onChange={getPassword}
-=======
 									onChange={e => setPassword(e.target.value)}
->>>>>>> d156b8add6cd0b86fc28ba2419d57529ffe053aa
 									required
 								/>
 							</div>
