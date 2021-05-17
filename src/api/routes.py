@@ -128,7 +128,7 @@ def get_products():
     products_schema = ProductSchema(many=True)
     output = products_schema.dump(products)
     return jsonify(
-        {"Result": output}
+        {"Results": output}
     )
 
 @api.route('/product/<int:id>', methods=['GET'])
