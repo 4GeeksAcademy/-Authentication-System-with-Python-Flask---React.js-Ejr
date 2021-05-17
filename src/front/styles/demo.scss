@@ -11,6 +11,14 @@
     margin: 10px !important;
 };
 
+//CSS de cards de cupones
+.categorias1{
+    flex-direction: column;
+    overflow-x: hidden;
+    min-height: 600px;
+    overflow-y: auto;
+    margin: 10px !important;
+};
 
 //CSS del Navbar
 .nav-item {
@@ -31,11 +39,10 @@ background-color: rgba(191, 202, 226, 0.5) !important;
 
 
 //CSS del Footer
-.ft1{
-display: flex;
+.footer{
+ flex-direction: column;
 align-items: center;
 justify-content: center;
-width: 100%;
 background-color: rgba(191, 202, 226, 0.5) !important;
 }
 .f1{

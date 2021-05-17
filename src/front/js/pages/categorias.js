@@ -21,9 +21,6 @@ export const Categorias = () => {
 						<Globalcard />
 						<Globalcard />
 						<Globalcard />
-						<Globalcard />
-						<Globalcard />
-						<Globalcard />
 					</div>
 					<br />
 
@@ -34,6 +31,10 @@ export const Categorias = () => {
 					</div>
 					<div className="col-lg-12 categorias">
 						<Globalcard />
+						<Globalcard />
+						<Globalcard />
+						<Globalcard />
+						<Globalcard />
 					</div>
 					<br />
 
@@ -43,6 +44,10 @@ export const Categorias = () => {
 						</h4>
 					</div>
 					<div className="col-lg-12 categorias">
+						<Globalcard />
+						<Globalcard />
+						<Globalcard />
+						<Globalcard />
 						<Globalcard />
 					</div>
 				</div>
