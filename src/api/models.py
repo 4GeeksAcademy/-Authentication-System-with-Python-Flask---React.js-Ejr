@@ -102,4 +102,6 @@ class MarketSchema(ma.SQLAlchemyAutoSchema):
 
 class CouponsSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
-        fields = ('id', 'coupon_name', 'coupon_info', 'product.product_name', 'supermarket.market_name')
+        product = 'product.product_name'
+        fields = ('id', 'coupon_name', 'coupon_info', 'product.product_name',
+         'supermarket.market_name', 'product.image')
