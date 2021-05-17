@@ -14,13 +14,6 @@ export const Cinta = () => {
 				</div>
 				<div className="slide">
 					<img
-						src="https://i2.wp.com/www.elpoderdelasideas.com/wp-content/uploads/logo-imperial.png?resize=600%2C339"
-						className="card-img-top"
-						alt="..."
-					/>
-				</div>
-				<div className="slide">
-					<img
 						src="https://www.esencialcostarica.com/wp-content/uploads/2020/09/manzate.jpg"
 						className="card-img-top"
 						alt="..."

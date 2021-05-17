@@ -10,11 +10,11 @@ export function Modal1(props) {
 	//Agregar a favoritos por evento---------------------------------------------------------------->//
 
 	const OnClickEvent = e => {
-		const Id_Producto = props.id;
-		if (store.favoritos.find(Dif_Id_Producto => Dif_Id_Producto === Id_Producto)) {
+		const NombreProducto = props.product_name;
+		if (store.favorites.find(Dif_NombreProducto => Dif_NombreProducto === Dif_NombreProducto)) {
 			//Al ser Dif_Id_Producto distinto de Id_Producto, find no lo retorna.
 		} else {
-			actions.AgregarFavoritos(Id_Producto);
+			actions.AgregarFavoritos(NombreProducto);
 			//De lo contrario, agregar producto.
 		}
 	};
@@ -31,7 +31,7 @@ export function Modal1(props) {
 				Ver detalles
 			</Button>
 			<button type="button" className="btn btn-outline-success float-right">
-				<i className="fas fa-cart-arrow-down" onClick={e => OnClickEvent(e)} />
+				<i className="fas fa-heart" onClick={e => OnClickEvent(e)} />
 			</button>
 
 			<Modal show={show} onHide={handleClose} backdrop="static" keyboard={false}>

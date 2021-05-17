@@ -49,11 +49,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 			}
 
 			// AgregarFavoritos: favs => {
-			//     setStore ({favoritos:getStore().favoritos.concat(favs)});
+			//     setStore ({favorites:getStore().favorites.concat(favs)});
 			// },
 
 			// RemoverFavoritos: index => {
-			//     const NuevoArrayFavoritos = getStore().favoritos.filter((item,index)=>{
+			//     const NuevoArrayFavoritos = getStore().favorites.filter((item,index)=>{
 			//         return index !== indice;
 			//     });
 
