@@ -1,8 +1,18 @@
-import React from "react";
+import React, { useContext, useEffect, Component } from "react";
 import { Globalcard } from "../component/globalcard";
-import { Link } from "react-router-dom";
+import { Link, Redirect, useHistory } from "react-router-dom";
+import { Context } from "../store/appContext";
 
 export const Categorias = () => {
+	const history = useHistory();
+	const { store, actions } = useContext(Context);
+	useEffect(() => {
+		if (!store.token) {
+			history.push("/login");
+		}
+		console.log("test");
+	}, []);
+
 	return (
 		<>
 			<div className="container-fluid">
@@ -16,11 +26,24 @@ export const Categorias = () => {
 						</h4>
 					</div>
 					<div className="col-lg-12 categorias">
-						<Globalcard />
-						<Globalcard />
-						<Globalcard />
-						<Globalcard />
-						<Globalcard />
+						{store.products
+							? store.products.map((item, index) => {
+									console.log("products", item);
+									if (item.category == "Lacteos") {
+										return (
+											<div key={index}>
+												<Globalcard
+													id={index}
+													price={item.price}
+													product_name={item.product_name}
+													market_name={item["supermarket.market_name"]}
+													image={item.image}
+												/>
+											</div>
+										);
+									}
+							  })
+							: "No prodcuts here"}
 					</div>
 					<br />
 
@@ -30,11 +53,24 @@ export const Categorias = () => {
 						</h4>
 					</div>
 					<div className="col-lg-12 categorias">
-						<Globalcard />
-						<Globalcard />
-						<Globalcard />
-						<Globalcard />
-						<Globalcard />
+						{store.products
+							? store.products.map((item, index) => {
+									console.log("prodcts", item);
+									if (item.category == "Granos") {
+										return (
+											<div key={index}>
+												<Globalcard
+													id={index}
+													price={item.price}
+													product_name={item.product_name}
+													market_name={item["supermarket.market_name"]}
+													image={item.image}
+												/>
+											</div>
+										);
+									}
+							  })
+							: "No prodcuts here"}
 					</div>
 					<br />
 
@@ -44,11 +80,24 @@ export const Categorias = () => {
 						</h4>
 					</div>
 					<div className="col-lg-12 categorias">
-						<Globalcard />
-						<Globalcard />
-						<Globalcard />
-						<Globalcard />
-						<Globalcard />
+						{store.products
+							? store.products.map((item, index) => {
+									console.log("prodcts", item);
+									if (item.category == "Cuidado Personal") {
+										return (
+											<div key={index}>
+												<Globalcard
+													id={index}
+													price={item.price}
+													product_name={item.product_name}
+													market_name={item["supermarket.market_name"]}
+													image={item.image}
+												/>
+											</div>
+										);
+									}
+							  })
+							: "No prodcuts here"}
 					</div>
 				</div>
 			</div>

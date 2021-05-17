@@ -53,19 +53,19 @@ export const Navbar1 = () => {
 									variant="in1"
 									title=""
 									text="white">
-									<Link to={"/"}>
-										<Dropdown.Item eventKey="1" style={{ backgroundColor: "rgb(255, 231, 133)" }}>
+									<Link to={"/favorites"}>
+										<Button eventKey="1" style={{ backgroundColor: "rgb(255, 231, 133)" }}>
 											Favoritos {store.favorites.length}
-										</Dropdown.Item>
+										</Button>
 									</Link>
 									<Dropdown.Divider />
 									<Link to={"/contact"}>
-										<Dropdown.Item eventKey="1" style={{ backgroundColor: "rgb(255, 231, 133)" }}>
+										<Button eventKey="1" style={{ backgroundColor: "rgb(255, 231, 133)" }}>
 											Contactenos
-										</Dropdown.Item>
+										</Button>
 									</Link>
 									<Dropdown.Divider />
-									<Dropdown.Item
+									<Button
 										eventKey="3"
 										style={{ backgroundColor: "rgb(255, 231, 133)" }}
 										onClick={() => {
@@ -73,7 +73,7 @@ export const Navbar1 = () => {
 											alert("Ha cerrado sesion correctamente");
 										}}>
 										Cerrar sesión
-									</Dropdown.Item>
+									</Button>
 								</DropdownButton>
 							))}
 						</div>
