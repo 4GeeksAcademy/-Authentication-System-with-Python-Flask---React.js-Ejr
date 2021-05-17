@@ -32,6 +32,7 @@ export const Login1 = () => {
 				//console.log(token);
 				if (token) {
 					sessionStorage.setItem("my_token", token);
+					console.log("token", token);
 					setLogin(true);
 					console.log("is login ", islogin);
 
@@ -41,7 +42,7 @@ export const Login1 = () => {
 
 					setLogin(false);
 				}
-
+				// Token para el carrito
 				// let token = sessionStorage.getItem("my_token")
 			})
 			.catch(err => console.log(err));

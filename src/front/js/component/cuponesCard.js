@@ -11,18 +11,18 @@ export const Cupones = props => {
 		<div className="card mb-3">
 			<div className="row g-0">
 				<div className="col-md-4">
-					<img src="https://grupolasser.com/wp-content/uploads/2015/04/aire-15-descuento.png" width="200px" />
+					<img src={props.image} width="200px" />
 				</div>
 				<div className="col-md-8">
 					<div className="card-body">
-						<h3 className="card-title">Ingresar props</h3>
-						<h5 className="card-text">Ingresar props</h5>
-						<p className="card-text">Ingresar props</p>
+						<h3 className="card-title">{props.coupon_name}</h3>
+						<h5 className="card-text" />
+						<p className="card-text">{props.product_name}</p>
 						<br />
-						<h6 className="card-text">Ingresar props</h6>
+						<h6 className="card-text">{props.market_name}</h6>
 						<Modal2 />
 						<p className="card-text">
-							<small className="text-muted">Valido hasta el 11/05/21</small>
+							<small className="text-muted">{props.coupon_info}</small>
 						</p>
 					</div>
 				</div>
@@ -30,11 +30,11 @@ export const Cupones = props => {
 		</div>
 	);
 };
-// CuponesCard.propTypes = {
-// 	id: PropTypes.number,
-// 	cupon_name: PropTypes.string,
-// 	information: PropTypes.string,
-// 	product_name: PropTypes.string,
-// 	category: PropTypes.string,
-// 	market_id: PropTypes.number
-// };
+Cupones.propTypes = {
+	id: PropTypes.number,
+	coupon_name: PropTypes.string,
+	coupon_info: PropTypes.string,
+	product_name: PropTypes.string,
+	market_name: PropTypes.string,
+	image: PropTypes.string
+};

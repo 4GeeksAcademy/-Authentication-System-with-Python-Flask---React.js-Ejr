@@ -5,22 +5,26 @@ import { Globalcard } from "../component/globalcard";
 export const Favoritos = () => {
 	return (
 		<>
-			<p className="h2 mx-auto py-4 font-weight-light">Tus productos favoritos</p>
+			<div className="container-fluid">
+				<div className="categoriaspage row">
+					<p className="h2 mx-auto py-4 font-weight-light">Tus productos favoritos</p>
 
-			<div className="whole_content">
-				<div className="contenedor_fav1">
-					<Globalcard />
-					<Globalcard />
-					<Globalcard />
-					<Globalcard />
-					<Globalcard />
-				</div>
-				<div className="contenedor_fav2">
-					<Globalcard />
-					<Globalcard />
-					<Globalcard />
-					<Globalcard />
-					<Globalcard />
+					<div className="whole_content">
+						<div className="contenedor_fav1">
+							<Globalcard />
+							<Globalcard />
+							<Globalcard />
+							<Globalcard />
+							<Globalcard />
+						</div>
+						<div className="contenedor_fav2">
+							<Globalcard />
+							<Globalcard />
+							<Globalcard />
+							<Globalcard />
+							<Globalcard />
+						</div>
+					</div>
 				</div>
 			</div>
 		</>

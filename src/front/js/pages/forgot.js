@@ -61,7 +61,9 @@ export const Forgot1 = () => {
 								</div>
 							</div>
 							<div className="form-group">
-								<input type="Submit" value="Enviar" className="btn float-right login_btn" />
+								<Link to={"/login"} href="#">
+									<input type="Submit" value="Enviar" className="btn float-right login_btn" />
+								</Link>
 							</div>
 						</form>
 					</div>
