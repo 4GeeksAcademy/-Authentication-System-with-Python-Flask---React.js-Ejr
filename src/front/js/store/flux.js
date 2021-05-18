@@ -42,14 +42,27 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 			// Favorites
 			loadFavorites: async () => {
+				var myHeaders = new Headers();
+				myHeaders.append(
+					"Authorization",
+					"Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTYyMTMwOTEwOCwianRpIjoiZjM1ZmE3OTItM2JhYS00Mzg5LTk1MTQtOGFkMGY4YTg5NzI0IiwibmJmIjoxNjIxMzA5MTA4LCJ0eXBlIjoiYWNjZXNzIiwic3ViIjoxMjMsImV4cCI6MTYyMTMxMDAwOH0.8DCZM72VIfAg1Chwz6ghco-WtD1RP3FlDLmYK-o4uXk"
+				);
 				const url = "https://3001-moccasin-pigeon-4ixmcu8a.ws-us04.gitpod.io/api/cart";
-				const response = await fetch(url);
-				const data = await response.json();
-				setStore({ favorites: data });
+				var requestOptions = {
+					method: "GET",
+					headers: myHeaders
+				};
+				const response = await fetch(url, requestOptions);
+				if (response.status == 200) {
+					const data = await response.json();
+					setStore({ favorites: data.Results });
+				} else {
+					console.log("Usuario no logeado" + response.status);
+				}
 			},
 
-			AgregarFavoritos: favs => {
-				setStore({ favorites: getStore().favorites.concat(favs) });
+			AgregarFavoritos: (id, product_name) => {
+				setStore({ favorites: getStore().favorites.concat([id, product_name]) });
 			},
 
 			RemoverFavoritos: index => {

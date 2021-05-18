@@ -27,13 +27,6 @@ export const Productos = () => {
 					<p className="h2 mx-auto py-4 font-weight-light">Productos disponibles</p>
 					<div className="whole_content">
 						<div className="container1">{Desplegar_Productos()}</div>
-						<div className="container2">
-							<Globalcard />
-							<Globalcard />
-							<Globalcard />
-							<Globalcard />
-							<Globalcard />
-						</div>
 					</div>
 				</div>
 			</div>

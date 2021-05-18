@@ -17,9 +17,33 @@ export function Modal1(props) {
 			//Al ser Dif_Id_Producto distinto de Id_Producto, find no lo retorna.
 			console.log("No se agrega");
 		} else {
-			actions.AgregarFavoritos(Id_Producto);
+			actions.AgregarFavoritos(Id_Producto, props.product_name);
 			//De lo contrario, agregar producto.
 			console.log("Se agrega" + props.id);
+			var myHeaders = new Headers();
+			myHeaders
+				.append
+				//"Authorization", Sacar de sesion storage
+				//"Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTYyMTMwOTEwOCwianRpIjoiZjM1ZmE3OTItM2JhYS00Mzg5LTk1MTQtOGFkMGY4YTg5NzI0IiwibmJmIjoxNjIxMzA5MTA4LCJ0eXBlIjoiYWNjZXNzIiwic3ViIjoxMjMsImV4cCI6MTYyMTMxMDAwOH0.8DCZM72VIfAg1Chwz6ghco-WtD1RP3FlDLmYK-o4uXk"
+				();
+			myHeaders.append("Content-Type", "application/json");
+
+			var raw = JSON.stringify({
+				//username: "123", tiene que salir del sesion storage
+				product: props.id
+			});
+
+			var requestOptions = {
+				method: "POST",
+				headers: myHeaders,
+				body: raw,
+				redirect: "follow"
+			};
+
+			fetch("BACKEND_URL", requestOptions)
+				.then(response => response.text())
+				.then(result => console.log(result))
+				.catch(error => console.log("error", error));
 		}
 	};
 
