@@ -7,10 +7,10 @@ export const Categorias = () => {
 	const history = useHistory();
 	const { store, actions } = useContext(Context);
 	useEffect(() => {
-		if (!store.token) {
-			console.log("test");
-			history.push("/login");
-		}
+		// if (!store.token) {
+		// 	console.log("test");
+		// 	history.push("/login");
+		// }
 	}, []);
 
 	return (

@@ -9,6 +9,16 @@ const getState = ({ getStore, getActions, setStore }) => {
 			favorites: []
 		},
 		actions: {
+			getToken: () => {
+				let my_tokenUnique = sessionStorage.getItem("my_token");
+				const store = getStore();
+				setStore({ my_token: my_tokenUnique });
+			},
+			logout: () => {
+				sessionStorage.removeItem("my_token");
+				window.location.reload(false);
+			},
+
 			loadProducts: async () => {
 				const url = "https://3001-moccasin-pigeon-4ixmcu8a.ws-us04.gitpod.io/api/product";
 				const response = await fetch(url);

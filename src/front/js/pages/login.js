@@ -7,6 +7,7 @@ export const Login1 = () => {
 	const { store, actions } = useContext(Context);
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
+	const [auth, setAuth] = useState(false);
 
 	var myHeaders = new Headers();
 	myHeaders.append("Content-Type", "application/json");
@@ -26,8 +27,20 @@ export const Login1 = () => {
 		fetch("https://3001-moccasin-pigeon-4ixmcu8a.ws-us04.gitpod.io/api/login", requestOptions)
 			.then(response => response.text())
 			.then(result => {
-				console.log("console.log", result);
-				sessionStorage.setItem("my_token", result.token);
+				console.log(result);
+				let message = result.msg;
+				console.log("msg", message);
+				if (message === "Login successfull") {
+					// añadir token a session
+					sessionStorage.setItem("my_token", result.token);
+					//da authorizacion
+					setAuth(true);
+				} else {
+					window.alert("El ingreso falló: " + message);
+				}
+
+				// console.log("console.log", result);
+				// sessionStorage.setItem("my_token", result.token);
 				let token = sessionStorage.getItem("my_token");
 			})
 			.catch(error => console.log("error", error));
