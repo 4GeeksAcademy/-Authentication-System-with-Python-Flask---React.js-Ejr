@@ -1,22 +1,14 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
-			token: [],
+			token: sessionStorage.getItem("my_token") || "",
 			login: false,
-			islogin: false,
 			products: [],
 			supermarket: [],
 			cupons: [],
 			favorites: []
 		},
 		actions: {
-			// Use getActions to call a function within a fuction
-
-			setLogin: login => {
-				const store = getStore();
-				setStore({ islogin: login });
-			},
-
 			loadProducts: async () => {
 				const url = "https://3001-moccasin-pigeon-4ixmcu8a.ws-us04.gitpod.io/api/product";
 				const response = await fetch(url);
