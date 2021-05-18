@@ -153,7 +153,7 @@ def search_products():
     )
 
 @api.route('/cart', methods=['POST', 'DELETE', 'GET'])
-@jwt_required()
+#@jwt_required()
 def cart_add():
     if request.method == 'POST':
         username = request.json.get('username')
@@ -177,7 +177,7 @@ def cart_add():
         db.session.commit()
         return jsonify({"message": "item deleted successfully"}), 200
     #Handling the GET request
-    current_user = get_jwt_identity()
+    current_user = 1 #get_jwt_identity()
     query = db.session.query(Cart, User, Product).join(User, User.id == Cart.user_id).join(Product, Product.id == Cart.product_id).all() 
     output = [(cart.id, product.product_name) for cart, user, product in query if cart.user_id == current_user]
     print(current_user)

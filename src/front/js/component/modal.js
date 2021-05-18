@@ -10,12 +10,16 @@ export function Modal1(props) {
 	//Agregar a favoritos por evento---------------------------------------------------------------->//
 
 	const OnClickEvent = e => {
-		const NombreProducto = props.product_name;
-		if (store.favorites.find(Dif_NombreProducto => Dif_NombreProducto === Dif_NombreProducto)) {
+		const Id_Producto = props.id;
+		console.log(store.favorites.filter(Dif_Id_Producto => Dif_Id_Producto === Id_Producto));
+		if (store.favorites.filter(Dif_Id_Producto => Dif_Id_Producto === Id_Producto).length > 0) {
+			//
 			//Al ser Dif_Id_Producto distinto de Id_Producto, find no lo retorna.
+			console.log("No se agrega");
 		} else {
-			actions.AgregarFavoritos(NombreProducto);
+			actions.AgregarFavoritos(Id_Producto);
 			//De lo contrario, agregar producto.
+			console.log("Se agrega" + props.id);
 		}
 	};
 
@@ -37,7 +41,7 @@ export function Modal1(props) {
 			<Modal show={show} onHide={handleClose} backdrop="static" keyboard={false}>
 				<Modal.Header closeButton>
 					<Modal.Title>
-						<img src="" className="card-img-top" alt="..." />
+						<img src={props.image} className="card-img-top" alt="..." />
 					</Modal.Title>
 				</Modal.Header>
 				<Modal.Body>
@@ -90,5 +94,6 @@ Modal1.propTypes = {
 	market_name: PropTypes.string,
 	location: PropTypes.string,
 	category: PropTypes.string,
-	price: PropTypes.number
+	price: PropTypes.number,
+	id: PropTypes.number
 };

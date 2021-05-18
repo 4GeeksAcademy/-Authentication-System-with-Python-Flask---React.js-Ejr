@@ -18,7 +18,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 
 			loadProducts: async () => {
-				const url = "https://3001-moccasin-pigeon-4ixmcu8a.ws-us04.gitpod.io/api/product";
+				const url = process.env.BACKEND_URL + "/product";
 				const response = await fetch(url);
 				const data = await response.json();
 				console.log("fluxprod", data);
@@ -46,20 +46,19 @@ const getState = ({ getStore, getActions, setStore }) => {
 				const response = await fetch(url);
 				const data = await response.json();
 				setStore({ favorites: data });
+			},
+
+			AgregarFavoritos: favs => {
+				setStore({ favorites: getStore().favorites.concat(favs) });
+			},
+
+			RemoverFavoritos: index => {
+				const NuevoArrayFavoritos = getStore().favorites.filter((item, index) => {
+					return index !== indice;
+				});
+
+				setStore({ favorites: NuevoArrayFavoritos });
 			}
-
-			// AgregarFavoritos: favs => {
-			//     setStore ({favorites:getStore().favorites.concat(favs)});
-			// },
-
-			// RemoverFavoritos: index => {
-			//     const NuevoArrayFavoritos = getStore().favorites.filter((item,index)=>{
-			//         return index !== indice;
-			//     });
-
-			//     setStore({favorites:NuevoArrayFavoritos})
-			//
-			// }
 		}
 	};
 };
