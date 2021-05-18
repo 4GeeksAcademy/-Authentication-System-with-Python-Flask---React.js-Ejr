@@ -76,14 +76,18 @@
 		]
 	},
 	"dependencies": {
+		"@react-google-maps/api": "^2.1.1",
 		"bootstrap": "^4.6.0",
+		"emailjs-com": "^2.6.4",
 		"jquery": "^3.6.0",
 		"jquery.steps": "^1.1.1",
 		"prop-types": "^15.6.1",
 		"react": "^16.8.4",
+		"react-currency-input-field": "^3.3.2",
 		"react-dom": "^16.8.4",
 		"react-facebook-login": "^4.1.1",
 		"react-google-login": "^5.2.2",
+		"react-messenger-customer-chat": "^0.8.0",
 		"react-polyfills": "0.0.1",
 		"react-router-dom": "^5.2.0",
 		"sweetalert2": "^10.16.7"

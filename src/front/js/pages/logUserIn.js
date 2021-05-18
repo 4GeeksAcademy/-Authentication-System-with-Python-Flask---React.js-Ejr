@@ -9,7 +9,7 @@ export const LogUserIn = () => {
 
 	return (
 		<div className="container fixed-content-mg">
-			{store.token && store.token != "" && store.token != undefined ? logInSuccess() : <Login />}
+			<Login />
 		</div>
 	);
 };

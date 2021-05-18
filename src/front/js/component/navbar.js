@@ -77,9 +77,9 @@ export const Navbar = () => {
 								{store.token &&
 								store.token !== "" &&
 								store.token !== undefined &&
-								store.isSeller === null ? (
+								store.isSeller === 0 ? (
 									<Link
-										to="/"
+										to="/checkoutview"
 										className="d-flex align-items-center justify-content-center"
 										data-toggle="tooltip"
 										title="Carrito de Compras">
@@ -87,13 +87,25 @@ export const Navbar = () => {
 									</Link>
 								) : null}
 								{store.token && store.token !== "" && store.token !== undefined ? (
-									<Link
-										to="/profile"
-										className="d-flex align-items-center justify-content-center"
-										data-toggle="tooltip"
-										title="Perfil">
-										<span className="fas fa-user-circle" />
-									</Link>
+									store.sellerId !== null ? (
+										<Link
+											to="/actualizarvendedorview"
+											className="d-flex align-items-center justify-content-center"
+											data-toggle="tooltip"
+											title="Perfil vendedor"
+											onClick={actions.getSellerData}>
+											<span className="fas fa-user-circle" />
+										</Link>
+									) : (
+										<Link
+											to="/actualizarclienteview"
+											className="d-flex align-items-center justify-content-center"
+											data-toggle="tooltip"
+											title="Perfil comprador"
+											onClick={actions.getClientData}>
+											<span className="fas fa-user-circle" />
+										</Link>
+									)
 								) : null}
 							</p>
 						</div>
@@ -127,19 +139,27 @@ export const Navbar = () => {
 									Inicio
 								</Link>
 							</li>
-							{store.sellerId !== null ? (
+							{sessionStorage.getItem("sellerId") !== null ? (
 								<li className="nav-item">
 									<Link to="/newProduct" className="nav-link">
-										Vender producto
+										Vender productos
 									</Link>
 								</li>
 							) : null}
 							{store.token && store.token !== "" && store.token !== undefined ? (
-								<li className="nav-item">
-									<Link to="/logueado" className="nav-link">
-										Catalogo
-									</Link>
-								</li>
+								sessionStorage.getItem("sellerId") !== null ? (
+									<li className="nav-item">
+										<Link to="/productosvendedor" className="nav-link">
+											Mis Productos
+										</Link>
+									</li>
+								) : (
+									<li className="nav-item">
+										<Link to="/logueado" className="nav-link">
+											Catalogo
+										</Link>
+									</li>
+								)
 							) : null}
 							<li className="nav-item">
 								<Link to="/contact-us" className="nav-link">

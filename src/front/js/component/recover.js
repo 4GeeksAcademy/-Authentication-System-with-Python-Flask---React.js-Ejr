@@ -1,11 +1,13 @@
 import React, { useState, useContext } from "react";
 import { Context } from "../store/appContext";
+import { useHistory } from "react-router-dom";
 import logo from "../../img/logo.jpeg";
 import Swal from "sweetalert2";
 import "../../styles/registerNew.scss";
 
 export const PassRecovery = () => {
 	const { actions } = useContext(Context);
+	const history = useHistory();
 	const [resetEmail, setResetEmail] = useState({ email: "" });
 
 	const resetAlert = () =>
@@ -30,6 +32,7 @@ export const PassRecovery = () => {
 		// ... submit to API or something
 		actions.recoverPassword(resetEmail);
 		resetAlert();
+		history.push("/");
 	};
 
 	return (

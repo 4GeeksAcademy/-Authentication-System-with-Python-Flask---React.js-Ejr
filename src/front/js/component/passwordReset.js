@@ -10,8 +10,7 @@ export const PasswordReset = () => {
 	const [userToReset, setUserToReset] = useState({
 		email: "",
 		tempPassword: "",
-		newPassword: "",
-		repeatPassword: ""
+		newPassword: ""
 	});
 
 	const resetAlert = () => {
@@ -27,7 +26,7 @@ export const PasswordReset = () => {
 
 	const handleChange = e => {
 		setUserToReset({
-			...user,
+			...userToReset,
 			// Trimming any whitespace
 			[e.target.name]: e.target.value.trim()
 		});
@@ -36,7 +35,7 @@ export const PasswordReset = () => {
 	const handleSubmit = e => {
 		e.preventDefault();
 		// ... submit to API or something
-		actions.recoverPassword(userToReset);
+		actions.resetPassword(userToReset);
 		resetAlert();
 	};
 
@@ -76,17 +75,6 @@ export const PasswordReset = () => {
 								type="text"
 								name="newPassword"
 								placeholder="Ingrese la nueva contraseña"
-								onChange={handleChange}
-							/>
-							<span className="focus-input100" />
-						</div>
-						<div className="wrap-input100  m-b-23">
-							<span className="label-input100 fas fa-envelope"> Contraseña</span>
-							<input
-								className="input100"
-								type="text"
-								name="repeatPassword"
-								placeholder="Ingrese nuevamente la nueva contraseña"
 								onChange={handleChange}
 							/>
 							<span className="focus-input100" />

@@ -12,9 +12,14 @@ import { Footer } from "./component/footer";
 import { Contactus } from "./pages/contact-us";
 import { NewProduct } from "./pages/newProduct";
 import { Logueado } from "./pages/logueado";
+import { ProductosVendedor } from "./pages/productosvendedor";
 import { ResetPassword } from "./pages/resetPassword";
 import { WazeView } from "./pages/wazeview";
-import { Profile } from "./pages/profile";
+import { Actualizarvendedorview } from "./pages/actualizarvendedorview";
+import { Actualizarclienteview } from "./pages/actualizarclienteview";
+import { Perfildelproductoview } from "./pages/perfildelproductoview";
+import { Checkoutview } from "./pages/checkoutview";
+
 //create your first component
 const Layout = () => {
 	//the basename is used when your project is published in a subdirectory and not in the root of the domain
@@ -26,6 +31,7 @@ const Layout = () => {
 			<BrowserRouter basename={basename}>
 				<ScrollToTop>
 					<Navbar />
+
 					<Switch>
 						<Route exact path="/">
 							<Home />
@@ -48,6 +54,9 @@ const Layout = () => {
 						<Route exact path="/logueado">
 							<Logueado />
 						</Route>
+						<Route exact path="/productosvendedor">
+							<ProductosVendedor />
+						</Route>
 						<Route exact path="/resetPassword">
 							<ResetPassword />
 						</Route>
@@ -57,10 +66,23 @@ const Layout = () => {
 						<Route exact path="/wazeview">
 							<WazeView />
 						</Route>
+						<Route exact path="/actualizarvendedorview">
+							<Actualizarvendedorview />
+						</Route>
+						<Route exact path="/actualizarclienteview">
+							<Actualizarclienteview />
+						</Route>
+						<Route exact path="/perfildelproductoview">
+							<Perfildelproductoview />
+						</Route>
+						<Route exact path="/checkoutview">
+							<Checkoutview />
+						</Route>
 						<Route>
 							<h1>Not found!</h1>
 						</Route>
 					</Switch>
+
 					<Footer />
 				</ScrollToTop>
 			</BrowserRouter>

@@ -10,7 +10,7 @@ from api.utils import APIException, generate_sitemap
 from api.models import db
 from api.routes import api
 from api.admin import setup_admin
-from flask_jwt_extended import JWTManager, jwt_required, get_jwt_identity, create_access_token 
+from flask_jwt_extended import JWTManager, jwt_required, get_jwt_identity, create_access_token
 #from models import Person
 
 ENV = os.getenv("FLASK_ENV")

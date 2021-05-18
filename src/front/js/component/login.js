@@ -25,7 +25,8 @@ export const Login = () => {
 			showConfirmButton: false,
 			timer: 1500
 		});
-		history.push("/logueado");
+
+		store.isSeller === 1 ? history.push("/newProduct") : history.push("/logueado");
 	};
 
 	const handleChange = e => {
@@ -90,7 +91,7 @@ export const Login = () => {
 							<span>O ingrese usando</span>
 						</div>
 
-						<div className="flex-c-m">
+						{/* <div className="flex-c-m">
 							<a href="#" className="login100-social-item bg1">
 								<i className="fa fa-facebook" />
 							</a>
@@ -98,7 +99,7 @@ export const Login = () => {
 							<a href="#" className="login100-social-item bg3">
 								<i className="fa fa-google" />
 							</a>
-						</div>
+						</div> */}
 					</form>
 				</div>
 			</section>

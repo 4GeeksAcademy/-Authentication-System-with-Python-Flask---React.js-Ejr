@@ -166,7 +166,7 @@ export const RegisterNew = () => {
 											</button>
 										</div>
 									</div>
-
+									{/* 
 									<div className="txt1 text-center p-t-40 p-b-20">
 										<span>O registrese usando</span>
 									</div>
@@ -180,7 +180,9 @@ export const RegisterNew = () => {
 													<button
 														className="fa fa-facebook"
 														style={{ color: "white" }}
-														onClick={renderProps.onClick}
+														onClick={() => {
+															console.log(store.appAuth);
+														}}
 													/>
 												)}
 											/>
@@ -203,7 +205,7 @@ export const RegisterNew = () => {
 												cookiePolicy={"single_host_origin"}
 											/>
 										</a>
-									</div>
+									</div> */}
 
 									<div className="flex-col-c p-t-30">
 										<span className="txt1 p-b-17">Ya tiene cuenta?</span>
@@ -286,7 +288,7 @@ export const RegisterNew = () => {
 										</div>
 									</div>
 
-									<div className="txt1 text-center p-t-40 p-b-20">
+									{/* <div className="txt1 text-center p-t-40 p-b-20">
 										<span>O registrese usando</span>
 									</div>
 
@@ -322,7 +324,7 @@ export const RegisterNew = () => {
 												cookiePolicy={"single_host_origin"}
 											/>
 										</a>
-									</div>
+									</div> */}
 
 									<div className="flex-col-c p-t-30">
 										<span className="txt1 p-b-17">Ya tiene cuenta?</span>
