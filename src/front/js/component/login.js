@@ -87,10 +87,6 @@ export const Login = () => {
 								<a>Olvido su contraseña?</a>
 							</Link>
 						</div>
-						<div className="txt1 text-center p-t-8 p-b-20">
-							<span>O ingrese usando</span>
-						</div>
-
 						{/* <div className="flex-c-m">
 							<a href="#" className="login100-social-item bg1">
 								<i className="fa fa-facebook" />

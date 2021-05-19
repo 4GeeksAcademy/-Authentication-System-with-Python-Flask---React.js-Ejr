@@ -90,6 +90,6 @@
 		"react-multi-carousel": "^2.6.2",
 		"react-polyfills": "0.0.1",
 		"react-router-dom": "^5.2.0",
-		"sweetalert2": "^10.16.7"
+		"sweetalert2": "^10.16.9"
 	}
 }
