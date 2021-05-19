@@ -1,7 +1,7 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
-			token: sessionStorage.getItem("my_token") || "",
+			// token: sessionStorage.getItem("my_token") || "",
 			login: false,
 			products: [],
 			supermarket: [],
@@ -9,6 +9,25 @@ const getState = ({ getStore, getActions, setStore }) => {
 			favorites: []
 		},
 		actions: {
+			logged: () => {
+				// let status = JSON.parse(sessionStorage.getItem("my_token"));
+				setStore({ login: true });
+				// status != true ? setStore({ login: false }) : setStore({ login: status });
+			},
+			logout: () => {
+				setStore({ login: false });
+			},
+
+			// getToken: () => {
+			// 	let my_tokenUnique = sessionStorage.getItem("my_token");
+			// 	const store = getStore();
+			// 	setStore({ my_token: my_tokenUnique });
+			// },
+			// logout: () => {
+			// 	sessionStorage.removeItem("my_token");
+			// 	window.location.reload(false);
+			// },
+
 			loadProducts: async () => {
 				const url = process.env.BACKEND_URL + "/product";
 				const response = await fetch(url);

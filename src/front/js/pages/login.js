@@ -7,6 +7,7 @@ export const Login1 = () => {
 	const { store, actions } = useContext(Context);
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
+	const [auth, setAuth] = useState(false);
 
 	var myHeaders = new Headers();
 	myHeaders.append("Content-Type", "application/json");
@@ -24,11 +25,20 @@ export const Login1 = () => {
 	const handleLogin = e => {
 		e.preventDefault();
 		fetch("https://3001-moccasin-pigeon-4ixmcu8a.ws-us04.gitpod.io/api/login", requestOptions)
-			.then(response => response.text())
+			.then(response => {
+				if (!response.ok) {
+					alert("Contraseña o Email es incorrecto");
+					// throw Error(response.statusText);
+				} else {
+					setAuth(true);
+					alert("Inicio seción correcto");
+				}
+				return response.json();
+			})
 			.then(result => {
-				console.log("console.log", result);
 				sessionStorage.setItem("my_token", result.token);
-				let token = sessionStorage.getItem("my_token");
+				actions.logged();
+				console.log("login es?", store, login);
 			})
 			.catch(error => console.log("error", error));
 	};
@@ -93,7 +103,7 @@ export const Login1 = () => {
 								<input type="submit" value="Ingresar" className="btn float-right login_btn" />
 							</div>
 						</form>
-						{/* {store.login ? <Redirect to="/" /> : null} */}
+						{auth ? <Redirect to="/" /> : ""}
 					</div>
 					<div className="card-footer">
 						<div className="d-flex justify-content-center links">
