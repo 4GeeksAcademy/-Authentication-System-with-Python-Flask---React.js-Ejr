@@ -294,7 +294,7 @@ def ActualizaDatos():
 
     if pyme is not None:
 
-        data = {
+        data = [{
             "exists": "Si",
             "nombrePyme": pyme.nombre,
             "provincia": pyme.id_provincia,
@@ -305,9 +305,9 @@ def ActualizaDatos():
             "facebook": pyme.facebook,
             "instagram": pyme.instagram,
             "imagen": pyme.Imagen
-        }
+        }]
     else:
-        data = {
+        data = [{
             "exists": "No",
             "nombrePyme": "",
             "provincia": "",
@@ -318,7 +318,7 @@ def ActualizaDatos():
             "facebook": "",
             "instagram": "",
             "imagen": ""
-        }
+        }]
 
     return jsonify(data), 200
 
