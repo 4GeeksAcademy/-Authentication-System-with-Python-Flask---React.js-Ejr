@@ -16,7 +16,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				recoverEmail: "template_8ynr9ye",
 				changedEmail: "template_2piuwtk"
 			},
-			endPoint: "https://3001-coffee-haddock-7k62zdl7.ws-us04.gitpod.io" + "/api/", //process.env.BACKEND_URL
+			endPoint: process.env.BACKEND_URL + "/api/", //
 			uriOrigin: window.location.origin,
 			appAuth: [],
 			dataMart: [],
