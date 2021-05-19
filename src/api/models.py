@@ -38,7 +38,6 @@ class Product(db.Model):
     market_id = db.Column(db.Integer, db.ForeignKey('supermarket.id'))
 
     supermarket = db.relationship('Supermarket')  
-    carts = db.relationship('Cart', backref='product', lazy=True)
 
     def __init__(self, product_name, price, category, market_id, image):
         self.product_name = product_name
@@ -52,6 +51,7 @@ class Cart(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     product_id = db.Column(db.Integer, db.ForeignKey('product.id'))
     user = db.relationship('User')
+    product = db.relationship('Product')
 
     def __init__(self, user_id, product_id):
         self.user_id = user_id
@@ -102,6 +102,9 @@ class MarketSchema(ma.SQLAlchemyAutoSchema):
 
 class CouponsSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
-        product = 'product.product_name'
         fields = ('id', 'coupon_name', 'coupon_info', 'product.product_name',
          'supermarket.market_name', 'product.image')
+
+class CartSchema(ma.SQLAlchemyAutoSchema):
+    class Meta:
+        fields = ('id', 'user.name', 'product.product_name')

@@ -2,7 +2,7 @@ from flask import Flask, request, jsonify, url_for, Blueprint, json, render_temp
 from api.models import db, ma
 from api.models import User, Supermarket, Product, Cart, Coupons
 from api.utils import generate_sitemap, APIException
-from api.models import UserSchema, ProductSchema, MarketSchema, CouponsSchema
+from api.models import UserSchema, ProductSchema, MarketSchema, CouponsSchema, CartSchema
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity, JWTManager
 from werkzeug.security import generate_password_hash, check_password_hash
 import smtplib
@@ -178,9 +178,13 @@ def cart_add():
         return jsonify({"message": "item deleted successfully"}), 200
     #Handling the GET request
     current_user = get_jwt_identity()
+    """
     query = db.session.query(Cart, User, Product).join(User, User.id == Cart.user_id).join(Product, Product.id == Cart.product_id).all() 
     output = [(cart.id, product.product_name) for cart, user, product in query if cart.user_id == current_user]
-    print(current_user)
+    """
+    test = Cart.query.filter_by(user_id = current_user)
+    test_schema = CartSchema(many=True)
+    output = test_schema.dump(test)
     return jsonify({
         "Result": output    
     })
