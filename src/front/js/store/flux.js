@@ -1,22 +1,14 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
-			token: [],
+			token: sessionStorage.getItem("my_token") || "",
 			login: false,
-			islogin: false,
 			products: [],
 			supermarket: [],
 			cupons: [],
 			favorites: []
 		},
 		actions: {
-			// Use getActions to call a function within a fuction
-
-			setLogin: login => {
-				const store = getStore();
-				setStore({ islogin: login });
-			},
-
 			loadProducts: async () => {
 				const url = process.env.BACKEND_URL + "/product";
 				const response = await fetch(url);

@@ -8,9 +8,9 @@ export const Categorias = () => {
 	const { store, actions } = useContext(Context);
 	useEffect(() => {
 		if (!store.token) {
+			console.log("test");
 			history.push("/login");
 		}
-		console.log("test");
 	}, []);
 
 	return (
