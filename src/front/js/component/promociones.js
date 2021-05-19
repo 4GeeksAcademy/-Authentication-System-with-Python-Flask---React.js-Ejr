@@ -8,18 +8,14 @@ export const Promociones = props => {
 	return (
 		<>
 			<div className="tarjeta">
-				<div className="card" style={{ width: "18rem" }}>
-					<img
-						src="https://express.dospinos.com/media/catalog/product/1/5/15002977_1.jpg"
-						className="card-img-top"
-						alt="..."
-					/>
+				<div className="card" style={{ width: "16rem" }}>
+					<img src={props.image} className="card-img-top" alt="..." />
 					<ul className="list-group list-group-flush">
-						<li className="list-group-item font-weight-bold">Leche Dos Pinos</li>
-						<li className="list-group-item"> 760.00 colones (-30%)</li>
+						<li className="list-group-item font-weight-bold">{props.product_name}</li>
+						<li className="list-group-item"> Precio: ₡{props.price} (-10%)</li>
 					</ul>
 					<p className="card-text">
-						<small className=" update text-muted">Actualizado hace 3 min</small>
+						<small className=" update text-muted">Actualizado hace 45 min</small>
 					</p>
 				</div>
 			</div>
@@ -27,9 +23,9 @@ export const Promociones = props => {
 	);
 };
 
-/*Promociones.propTypes = {
-	name: PropTypes.string,
+Promociones.propTypes = {
+	image: PropTypes.string,
+	product_name: PropTypes.string,
 	price: PropTypes.number,
-	category: PropTypes.string,
-	supermarket: PropTypes.string
-};*/
+	id: PropTypes.number
+};

@@ -47,7 +47,12 @@ export const Contac1 = () => {
 							</div>
 							<div className="card-footer">
 								<Link to={"/"} href="#">
-									<button type="button" className="btn float-right login_btn">
+									<button
+										type="button"
+										className="btn float-right login_btn"
+										onClick={() => {
+											alert("Enviado");
+										}}>
 										<i className="fa fa-paper-plane" /> Enviar
 									</button>
 								</Link>

@@ -12,9 +12,9 @@ export const Productos = () => {
 					key={index}
 					id={item.id}
 					price={item.price}
-					supermarket_market_name={item["supermarket.location"]}
+					market_name={item["supermarket.location"]}
 					product_name={item.product_name}
-					supermarket_location={item["supermarket.market_name"]}
+					location={item["supermarket.market_name"]}
 					image={item.image}
 					category={item.category}
 				/>

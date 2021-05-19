@@ -26,11 +26,13 @@ export const Categorias = () => {
 										return (
 											<div key={index}>
 												<Globalcard
-													id={index}
+													id={item.id}
 													price={item.price}
+													market_name={item["supermarket.location"]}
 													product_name={item.product_name}
-													market_name={item["supermarket.market_name"]}
+													location={item["supermarket.market_name"]}
 													image={item.image}
+													category={item.category}
 												/>
 											</div>
 										);
@@ -53,11 +55,13 @@ export const Categorias = () => {
 										return (
 											<div key={index}>
 												<Globalcard
-													id={index}
+													id={item.id}
 													price={item.price}
+													market_name={item["supermarket.location"]}
 													product_name={item.product_name}
-													market_name={item["supermarket.market_name"]}
+													location={item["supermarket.market_name"]}
 													image={item.image}
+													category={item.category}
 												/>
 											</div>
 										);
@@ -80,11 +84,13 @@ export const Categorias = () => {
 										return (
 											<div key={index}>
 												<Globalcard
-													id={index}
+													id={item.id}
 													price={item.price}
+													market_name={item["supermarket.location"]}
 													product_name={item.product_name}
-													market_name={item["supermarket.market_name"]}
+													location={item["supermarket.market_name"]}
 													image={item.image}
+													category={item.category}
 												/>
 											</div>
 										);

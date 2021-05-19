@@ -52,7 +52,7 @@ export function Modal1(props) {
 
 	return (
 		<>
-			<Button variant="btn btn-outline-success float-right" onClick={handleShow}>
+			<Button variant="btn btn-outline-success float-right" onClick={handleShow} style={{ marginInline: "10px" }}>
 				Ver detalles
 			</Button>
 			<button type="button" className="btn btn-outline-success float-right">
@@ -75,11 +75,11 @@ export function Modal1(props) {
 						<tbody>
 							<tr>
 								<td>Supermercado:</td>
-								<td>{props.supermarket_market_name}</td>
+								<td>{props.market_name}</td>
 							</tr>
 							<tr>
 								<td>Localización:</td>
-								<td>{props.supermarket_location}</td>
+								<td>{props.location}</td>
 							</tr>
 							<tr>
 								<td>Unidades:</td>
@@ -100,9 +100,6 @@ export function Modal1(props) {
 					<Button variant="secondary" onClick={handleClose}>
 						Cerrar
 					</Button>
-					<Link to={"/products"}>
-						<Button variant="warning">Regresar a listado de productos</Button>
-					</Link>
 				</Modal.Footer>
 			</Modal>
 		</>
@@ -112,8 +109,8 @@ export function Modal1(props) {
 Modal1.propTypes = {
 	image: PropTypes.string,
 	product_name: PropTypes.string,
-	supermarket_market_name: PropTypes.string,
-	supermarket_location: PropTypes.string,
+	market_name: PropTypes.string,
+	location: PropTypes.string,
 	category: PropTypes.string,
 	price: PropTypes.number,
 	id: PropTypes.number

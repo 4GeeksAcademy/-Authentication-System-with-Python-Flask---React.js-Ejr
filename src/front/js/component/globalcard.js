@@ -15,15 +15,15 @@ export const Globalcard = props => {
 					<h5 className="card-title">{props.product_name}</h5>
 					<ul>
 						<p className="Precio"> Precio: ₡{props.price}</p>
-						<p className="Precio"> Supermercado: {props.supermarket_market_name}</p>
+						<p className="Precio"> Supermercado: {props.market_name}</p>
 					</ul>
 					<div className="modal_mov">
 						<Modal1
-							supermarket_location={props.supermarket_location}
+							location={props.location}
 							id={props.id}
 							image={props.image}
 							product_name={props.product_name}
-							supermarket_market_name={props.supermarket_market_name}
+							market_name={props.market_name}
 							category={props.category}
 							price={props.price}
 						/>
@@ -36,9 +36,9 @@ export const Globalcard = props => {
 Globalcard.propTypes = {
 	id: PropTypes.number,
 	price: PropTypes.number,
-	supermarket_location: PropTypes.string,
+	location: PropTypes.string,
 	product_name: PropTypes.string,
-	supermarket_market_name: PropTypes.string,
+	market_name: PropTypes.string,
 	image: PropTypes.string,
 	category: PropTypes.string
 };
