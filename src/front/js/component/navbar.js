@@ -44,7 +44,7 @@ export const Navbar1 = () => {
 						{store.login && (
 							<Link to={"/categorias"}>
 								<Button variant="in1" href="#home" color="white">
-									Categorias
+									Categorías
 								</Button>
 							</Link>
 						)}
@@ -71,14 +71,14 @@ export const Navbar1 = () => {
 								onClick={() => {
 									actions.logout();
 									console.log("cierro secion", store.login);
-									alert("Ha cerrado sesion correctamente");
+									alert("Ha cerrado sesión correctamente");
 								}}>
 								Cerrar sesión
 							</Button>
 						)}
 						<Link to={"/contact"}>
 							<Button variant="in1" href="#home" color="white">
-								Contactenos
+								Contáctenos
 							</Button>
 						</Link>
 					</Nav>
