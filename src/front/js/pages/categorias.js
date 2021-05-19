@@ -55,7 +55,7 @@ export const Categorias = () => {
 					<div className="col-lg-12 categorias">
 						{store.products
 							? store.products.map((item, index) => {
-									console.log("prodcts", item);
+									console.log("products", item);
 									if (item.category == "Granos") {
 										return (
 											<div key={index}>
@@ -97,7 +97,7 @@ export const Categorias = () => {
 										);
 									}
 							  })
-							: "No prodcuts here"}
+							: "No products here"}
 					</div>
 				</div>
 			</div>

@@ -26,7 +26,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 
 			loadSupermarket: async () => {
-				const url = "https://3001-moccasin-pigeon-4ixmcu8a.ws-us04.gitpod.io/api/market";
+				const url = process.env.BACKEND_URL + "/market";
 				const response = await fetch(url);
 				const data = await response.json();
 				setStore({ supermarket: data.Results });
@@ -34,7 +34,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			//Pendiente agregar la ruta
 			loadCupons: async () => {
-				const url = "https://3001-moccasin-pigeon-4ixmcu8a.ws-us04.gitpod.io/api/coupon";
+				const url = process.env.BACKEND_URL + "/coupon";
 				const response = await fetch(url);
 				const data = await response.json();
 				console.log("data", data);
@@ -47,7 +47,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					"Authorization",
 					"Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTYyMTMwOTEwOCwianRpIjoiZjM1ZmE3OTItM2JhYS00Mzg5LTk1MTQtOGFkMGY4YTg5NzI0IiwibmJmIjoxNjIxMzA5MTA4LCJ0eXBlIjoiYWNjZXNzIiwic3ViIjoxMjMsImV4cCI6MTYyMTMxMDAwOH0.8DCZM72VIfAg1Chwz6ghco-WtD1RP3FlDLmYK-o4uXk"
 				);
-				const url = "https://3001-moccasin-pigeon-4ixmcu8a.ws-us04.gitpod.io/api/cart";
+				const url = process.env.BACKEND_URL + "/cart";
 				var requestOptions = {
 					method: "GET",
 					headers: myHeaders
@@ -64,7 +64,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			AgregarFavoritos: (id, product_name) => {
 				setStore({ favorites: getStore().favorites.concat([id, product_name]) });
 			},
-
+			//Probar remover favoritos.
 			RemoverFavoritos: index => {
 				const NuevoArrayFavoritos = getStore().favorites.filter((item, index) => {
 					return index !== indice;
