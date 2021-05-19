@@ -1,7 +1,7 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
-			token: sessionStorage.getItem("my_token") || "",
+			// token: sessionStorage.getItem("my_token") || "",
 			login: false,
 			products: [],
 			supermarket: [],
@@ -9,15 +9,24 @@ const getState = ({ getStore, getActions, setStore }) => {
 			favorites: []
 		},
 		actions: {
-			getToken: () => {
-				let my_tokenUnique = sessionStorage.getItem("my_token");
-				const store = getStore();
-				setStore({ my_token: my_tokenUnique });
+			logged: () => {
+				// let status = JSON.parse(sessionStorage.getItem("my_token"));
+				setStore({ login: true });
+				// status != true ? setStore({ login: false }) : setStore({ login: status });
 			},
 			logout: () => {
-				sessionStorage.removeItem("my_token");
-				window.location.reload(false);
+				setStore({ login: false });
 			},
+
+			// getToken: () => {
+			// 	let my_tokenUnique = sessionStorage.getItem("my_token");
+			// 	const store = getStore();
+			// 	setStore({ my_token: my_tokenUnique });
+			// },
+			// logout: () => {
+			// 	sessionStorage.removeItem("my_token");
+			// 	window.location.reload(false);
+			// },
 
 			loadProducts: async () => {
 				const url = "https://3001-moccasin-pigeon-4ixmcu8a.ws-us04.gitpod.io/api/product";

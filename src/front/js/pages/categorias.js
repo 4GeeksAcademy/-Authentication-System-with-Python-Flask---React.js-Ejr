@@ -1,17 +1,10 @@
 import React, { useContext, useEffect, Component } from "react";
 import { Globalcard } from "../component/globalcard";
-import { Link, Redirect, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
 
 export const Categorias = () => {
-	const history = useHistory();
 	const { store, actions } = useContext(Context);
-	useEffect(() => {
-		// if (!store.token) {
-		// 	console.log("test");
-		// 	history.push("/login");
-		// }
-	}, []);
 
 	return (
 		<>

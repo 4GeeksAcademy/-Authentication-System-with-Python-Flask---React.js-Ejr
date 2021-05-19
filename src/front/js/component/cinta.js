@@ -13,11 +13,7 @@ export const Cinta = () => {
 					/>
 				</div>
 				<div className="slide">
-					<img
-						src="https://lh3.googleusercontent.com/proxy/jTwjlxTH_K0MRVWnUsPdo2IFJdqV8T1EugASyOkFjzB8sC1z-KuK7xDmWI8As4zgo-Ne1yIjGMawk_5jaP6qCF9Pk1cf9BnaUG0eIiOi6ZRJ6Qvey8lKTVR9xs1VCe3S0phdrIAAq9ElPA"
-						className="card-img-top"
-						alt="..."
-					/>
+					<img src="" className="card-img-top" alt="..." />
 				</div>
 				<div className="slide">
 					<img
