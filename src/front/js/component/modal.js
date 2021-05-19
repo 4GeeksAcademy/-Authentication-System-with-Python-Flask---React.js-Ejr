@@ -22,12 +22,8 @@ export function Modal1(props) {
 			console.log("Se agrega" + props.id);
 
 			var myHeaders = new Headers();
-			myHeaders
-				.append
-				//"Authorization", Sacar de sesion storage
-				//"Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTYyMTMwOTEwOCwianRpIjoiZjM1ZmE3OTItM2JhYS00Mzg5LTk1MTQtOGFkMGY4YTg5NzI0IiwibmJmIjoxNjIxMzA5MTA4LCJ0eXBlIjoiYWNjZXNzIiwic3ViIjoxMjMsImV4cCI6MTYyMTMxMDAwOH0.8DCZM72VIfAg1Chwz6ghco-WtD1RP3FlDLmYK-o4uXk"
-				();
-			myHeaders.append("Content-Type", "application/json");
+			myHeaders.append("Authorization", sessionStorage.getItem("my_token"));
+			//myHeaders.append("Content-Type", "application/json");
 
 			var raw = JSON.stringify({
 				username: "123",
@@ -95,7 +91,7 @@ export function Modal1(props) {
 							</tr>
 							<tr>
 								<td>Precio:</td>
-								<td>{props.price}</td>
+								<td>₡{props.price}</td>
 							</tr>
 						</tbody>
 					</Table>

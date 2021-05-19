@@ -29,7 +29,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			// },
 
 			loadProducts: async () => {
-				const url = process.env.BACKEND_URL + "/product";
+				const url = "https://3001-moccasin-pigeon-4ixmcu8a.ws-us04.gitpod.io/api/product";
 				const response = await fetch(url);
 				const data = await response.json();
 				console.log("fluxprod", data);
@@ -37,7 +37,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 
 			loadSupermarket: async () => {
-				const url = process.env.BACKEND_URL + "/market";
+				const url = "https://3001-moccasin-pigeon-4ixmcu8a.ws-us04.gitpod.io/api/market";
 				const response = await fetch(url);
 				const data = await response.json();
 				setStore({ supermarket: data.Results });
@@ -45,7 +45,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			//Pendiente agregar la ruta
 			loadCupons: async () => {
-				const url = process.env.BACKEND_URL + "/coupon";
+				const url = "https://3001-moccasin-pigeon-4ixmcu8a.ws-us04.gitpod.io/api/coupon";
 				const response = await fetch(url);
 				const data = await response.json();
 				console.log("data", data);
@@ -54,11 +54,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 			// Favorites
 			loadFavorites: async () => {
 				var myHeaders = new Headers();
-				myHeaders.append(
-					"Authorization",
-					"Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTYyMTMwOTEwOCwianRpIjoiZjM1ZmE3OTItM2JhYS00Mzg5LTk1MTQtOGFkMGY4YTg5NzI0IiwibmJmIjoxNjIxMzA5MTA4LCJ0eXBlIjoiYWNjZXNzIiwic3ViIjoxMjMsImV4cCI6MTYyMTMxMDAwOH0.8DCZM72VIfAg1Chwz6ghco-WtD1RP3FlDLmYK-o4uXk"
-				);
-				const url = process.env.BACKEND_URL + "/cart";
+				myHeaders.append("Authorization", sessionStorage.getItem("my_token"));
+				const url = "https://3001-moccasin-pigeon-4ixmcu8a.ws-us04.gitpod.io/api/cart";
 				var requestOptions = {
 					method: "GET",
 					headers: myHeaders
