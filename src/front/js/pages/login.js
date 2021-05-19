@@ -31,7 +31,7 @@ export const Login1 = () => {
 					// throw Error(response.statusText);
 				} else {
 					setAuth(true);
-					alert("Inicio seción correcto");
+					alert("Inicio sesión correcto");
 				}
 				return response.json();
 			})
