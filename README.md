@@ -5,6 +5,8 @@ Librerias utilizadas:
 * React Currency Input: npm install react-currency-input-field
 * emailjs: npm install emailjs-com --save
 * react-multi-carousel: npm i react-multi-carousel
+* jwt: pipenv install flask_jwt_extended
+* Modificar endPoint en flux: endPoint: "link del API HOST cuando se inicia" + "/api/" (en el link no poner el / del final)
 
 # WebApp boilerplate with React JS
 [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io#https://github.com/4GeeksAcademy/react-flask-hello.git)
