@@ -24,6 +24,7 @@ flask-jwt-extended = "*"
 sentry-sdk = {extras = ["flask"], version = "*"}
 bcrypt = "*"
 flask-mail = "*"
+flask-jwt = "*"
 
 [requires]
 python_version = "3.8"

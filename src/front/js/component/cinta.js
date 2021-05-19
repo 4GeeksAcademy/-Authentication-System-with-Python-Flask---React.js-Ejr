@@ -14,13 +14,6 @@ export const Cinta = () => {
 				</div>
 				<div className="slide">
 					<img
-						src="https://lh3.googleusercontent.com/proxy/jTwjlxTH_K0MRVWnUsPdo2IFJdqV8T1EugASyOkFjzB8sC1z-KuK7xDmWI8As4zgo-Ne1yIjGMawk_5jaP6qCF9Pk1cf9BnaUG0eIiOi6ZRJ6Qvey8lKTVR9xs1VCe3S0phdrIAAq9ElPA"
-						className="card-img-top"
-						alt="..."
-					/>
-				</div>
-				<div className="slide">
-					<img
 						src="https://www.esencialcostarica.com/wp-content/uploads/2020/09/manzate.jpg"
 						className="card-img-top"
 						alt="..."
@@ -56,7 +49,7 @@ export const Cinta = () => {
 				</div>
 				<div className="slide">
 					<img
-						src="https://d1yjjnpx0p53s8.cloudfront.net/styles/logo-thumbnail/s3/0017/7200/brand.gif?itok=H9WETUB8"
+						src="https://www.kani.cr/quimo/userfiles/FCKE/image/site/Logo_Don_Pedro.png"
 						className="card-img-top"
 						alt="..."
 					/>
