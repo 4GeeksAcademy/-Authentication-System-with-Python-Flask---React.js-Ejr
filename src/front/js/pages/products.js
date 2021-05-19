@@ -12,9 +12,11 @@ export const Productos = () => {
 					key={index}
 					id={item.id}
 					price={item.price}
-					location={item.location}
+					supermarket_market_name={item["supermarket.location"]}
 					product_name={item.product_name}
-					supermarket_name={item.supermarket_name}
+					supermarket_location={item["supermarket.market_name"]}
+					image={item.image}
+					category={item.category}
 				/>
 			);
 		});
