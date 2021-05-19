@@ -111,14 +111,20 @@ export const Product = () => {
 							</div>
 						</div>
 						<div className="form-group">
-							<label htmlFor="name" className="col-sm-3 control-label">
-								Fotografía
+							<label htmlFor="name" className="col-sm-9 control-label">
+								Fotografía{" "}
+								<small>
+									<i style={{ color: "#e12626" }}>*</i> Recomendamos Formatos (.jpg y .png) y que se
+									carguen en forma de url
+								</small>
 							</label>
-							<div className="col-sm-3">
-								<label className="control-label small" htmlFor="file_img">
-									Formato de imagen (jpg/png):
-								</label>{" "}
-								<input type="file" name="uploadedfile" />
+							<div className="col-sm-9">
+								<textarea
+									className="form-control"
+									placeholder="URL de la imagen del articulo"
+									name="image"
+									onChange={handleChange}
+								/>
 							</div>
 						</div>
 						<div className="form-group">

@@ -144,31 +144,23 @@ def resetPassword():
 @jwt_required()
 def addNewProduct():
     current_id = get_jwt_identity()
-    #img = request.files['uploadedfile']
-    sellerid = request.form.get("sellerid")
-    productName = request.form.get("productname")
-    description = request.form.get("description")
-    category = request.form.get("category")
-    price = request.form.get("price")
-    item_status = request.form.get("itemstatus")
+    img = request.json.get("image", None)
+    sellerid = request.json.get("sellerid", None)
+    productName = request.json.get("productname", None)
+    description = request.json.get("description", None)
+    category = request.json.get("category", None)
+    price = request.json.get("price", None)
+    item_status = request.json.get("image", None)
     
-    # if not img:
-    #     return jsonify({"msg": "No image was uploaded!."}), 400
-
-    # filename = secure_filename(img.filename)
-    # mimetype = img.mimetype    
-
-    # if not filename or not mimetype:
-    #     return jsonify({"msg": "Bad image upload."}), 400
-    # if not productName :
-    #     return jsonify({"msg": "Please provide a valid Product Name."}), 400
-    if not description:
+    if img is None:
+        return jsonify({"msg": "No image was uploaded!."}), 400
+    if description is None:
         return jsonify({"msg": "Please enter a valid description"}), 400
-    if not category:
+    if category is None:
         return jsonify({"msg": "Please enter a valid category"}), 400
-    if not price:
+    if price is None:
         return jsonify({"msg": "Please enter a valid price"}), 400
-    if not item_status:
+    if item_status is None:
         return jsonify({"msg": "Please enter a valid item status"}), 400
     else:
         new_product = Product()
@@ -178,9 +170,7 @@ def addNewProduct():
         new_product.category = category
         new_product.price = price
         new_product.item_status = item_status
-        # new_product.img = img.read()
-        # new_product.imgname = filename
-        # new_product.mimetype = mimetype
+        new_product.img = img
 
         db.session.add(new_product)
         db.session.commit()
@@ -209,6 +199,7 @@ def updateProduct(id):
     category = request.json.get("category", None)
     price = request.json.get("price", None)
     item_status = request.json.get("item_status", None)
+    image = request.json.get("image", None)
 
     if productName is None:
         return jsonify({"msg": "Please provide a valid Product Name."}), 400
@@ -231,7 +222,7 @@ def updateProduct(id):
     db.session.commit()
     return jsonify({"msg": "The product has being successfully updated."}), 200
 
-    # update product
+# update product
 @api.route("/user/<id>", methods=["GET"])
 def getUserData(id):
 
@@ -239,15 +230,6 @@ def getUserData(id):
     client = list(map(lambda c : c.serialize(), client))  
     
     return jsonify({"results": client}), 200
-
-# get images
-# @api.route('/getimage', methods=['GET'])
-# def getImg():
-#     img = Product.query
-#     if not img:
-#         return 'Img Not Found!', 404
-
-#     return Response(img.img, mimetype=img.mimetype)
 
 # get all products
 @api.route('/getproducts', methods=['GET'])

@@ -50,9 +50,7 @@ class Product(db.Model):
     category = db.Column(db.String(255),  nullable=False)
     price = db.Column(db.Integer, nullable=False)
     item_status = db.Column(db.String(20), nullable=False)
-    # img = db.Column(db.LargeBinary)
-    # imgname = db.Column(db.String())
-    # mimetype = db.Column(db.String(), nullable=False)
+    img = db.Column(db.Text)
     client = db.relationship("Client", lazy="subquery")
 
     def __repr__(self):
@@ -68,7 +66,6 @@ class Product(db.Model):
             "p_productName": self.productName,
             "p_description": self.description,
             "p_price": self.price,
-            "p_category": self.category
-            #"p_image": self.img,
-            # "p_mimetype": self.mimetype
+            "p_category": self.category,
+            "p_image": self.img
         }

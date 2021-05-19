@@ -37,3 +37,11 @@ h1 {
 background-color: #202040 !important;
 color:white !important;
 }
+
+.modal-backdrop {
+    z-index: 100000 !important;
+  }
+
+  .modal {
+    z-index: 100001 !important;
+  }
