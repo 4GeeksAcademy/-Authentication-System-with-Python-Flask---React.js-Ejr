@@ -6,8 +6,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 			token: null,
 			sellerId: null,
 			userId: null,
-			isSeller: null,
-			isClient: null,
+			isSeller: 0,
+			isClient: 0,
 			isLoggedIn: null,
 			updateProduct: [],
 			emailServiceID: "service_69zpagb",
@@ -211,7 +211,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 									from_name: "Pura Vida Mart",
 									message: resetURL,
 									temp_password: res,
-									to_email: email
+									useremail: email.email
 								},
 								store.emailUserID
 							);
