@@ -132,7 +132,7 @@ def login():
     user = User.query.filter_by(email=usuario).first()
 
     if not check_password_hash(user.contrasena,contrasena) or user is None:
-        return jsonify({"msg": "Bad username or password"}), 401
+        return jsonify({"msg": "Nombre de usuario o contraseña invalidos"}), 401
 
     access_token = create_access_token(identity=user.id)
 
@@ -192,7 +192,7 @@ def UsuarioNuevo():
 
         return jsonify("Registro correcto"), 200
     else:
-        return jsonify("Token invalid or expired"), 401
+        return jsonify("Token invalido o expiró"), 401
 
 @api.route('/actualizapyme', methods=['POST'])
 @jwt_required()
@@ -249,7 +249,7 @@ def ActualizaPyme():
 
         return jsonify({"msg": "Pyme creada"}), 200
     else:
-        return jsonify({"msg": "Token invalid or expired"}), 401
+        return jsonify({"msg": "Token invalido o expiró"}), 401
     
 @api.route('/CambioContrasena', methods=['POST'])
 @jwt_required()
@@ -279,7 +279,7 @@ def CambioContrasena():
     msg.body = "Su contrasena ha sido cambiada"
     mail.send(msg)
 
-    return jsonify({"msg": "Comtrasena cambiada correctamente"}), 200
+    return jsonify({"msg": "Contraseña cambió correctamente"}), 200
 
 @api.route('/actualizadatos', methods=['GET'])
 @jwt_required()
