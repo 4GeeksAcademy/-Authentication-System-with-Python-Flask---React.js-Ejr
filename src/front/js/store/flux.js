@@ -29,7 +29,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			// },
 
 			loadProducts: async () => {
-				const url = "https://3001-moccasin-pigeon-4ixmcu8a.ws-us04.gitpod.io/api/product";
+				const url = process.env.BACKEND_URL + "/product";
 				const response = await fetch(url);
 				const data = await response.json();
 				console.log("fluxprod", data);
@@ -37,7 +37,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 
 			loadSupermarket: async () => {
-				const url = "https://3001-moccasin-pigeon-4ixmcu8a.ws-us04.gitpod.io/api/market";
+				const url = process.env.BACKEND_URL + "/market";
 				const response = await fetch(url);
 				const data = await response.json();
 				setStore({ supermarket: data.Results });
@@ -45,25 +45,44 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			//Pendiente agregar la ruta
 			loadCupons: async () => {
-				const url = "https://3001-moccasin-pigeon-4ixmcu8a.ws-us04.gitpod.io/api/coupon";
+				const url = process.env.BACKEND_URL + "/coupon";
 				const response = await fetch(url);
 				const data = await response.json();
 				console.log("data", data);
 				setStore({ coupons: data.Results });
-			}
+			},
 			// Favorites
+			loadFavorites: async () => {
+				var myHeaders = new Headers();
+				myHeaders.append(
+					"Authorization",
+					"Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTYyMTMwOTEwOCwianRpIjoiZjM1ZmE3OTItM2JhYS00Mzg5LTk1MTQtOGFkMGY4YTg5NzI0IiwibmJmIjoxNjIxMzA5MTA4LCJ0eXBlIjoiYWNjZXNzIiwic3ViIjoxMjMsImV4cCI6MTYyMTMxMDAwOH0.8DCZM72VIfAg1Chwz6ghco-WtD1RP3FlDLmYK-o4uXk"
+				);
+				const url = process.env.BACKEND_URL + "/cart";
+				var requestOptions = {
+					method: "GET",
+					headers: myHeaders
+				};
+				const response = await fetch(url, requestOptions);
+				if (response.status == 200) {
+					const data = await response.json();
+					setStore({ favorites: data.Results });
+				} else {
+					console.log("Usuario no logeado" + response.status);
+				}
+			},
 
-			// addFavorites: favs => {
-			//     setStore ({favorites:getStore().favorites.concat(favs)});
-			// },
+			AgregarFavoritos: (id, product_name) => {
+				setStore({ favorites: getStore().favorites.concat([id, product_name]) });
+			},
+			//Probar remover favoritos.
+			RemoverFavoritos: index => {
+				const NuevoArrayFavoritos = getStore().favorites.filter((item, index) => {
+					return index !== indice;
+				});
 
-			// removeFavorites: index => {
-			//     const NewArrayFavs = getStore().favorites.filter((item,index)=>{
-			//         return index !== indice;
-			//     });
-
-			//     setStore({favorites:NewArrayFavs})
-			// }
+				setStore({ favorites: NuevoArrayFavoritos });
+			}
 		}
 	};
 };

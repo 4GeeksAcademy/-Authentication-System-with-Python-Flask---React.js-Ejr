@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 27dac42dd4c8
+Revision ID: ad7fcb57aa24
 Revises: 
-Create Date: 2021-05-13 14:19:38.470395
+Create Date: 2021-05-18 01:52:39.995642
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '27dac42dd4c8'
+revision = 'ad7fcb57aa24'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -23,7 +23,6 @@ def upgrade():
     sa.Column('market_name', sa.String(length=60), nullable=False),
     sa.Column('location', sa.String(length=60), nullable=False),
     sa.Column('information', sa.String(length=255), nullable=True),
-    sa.Column('image', sa.String(length=255), nullable=True),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('user',
@@ -34,6 +33,7 @@ def upgrade():
     sa.Column('location', sa.String(length=50), nullable=False),
     sa.Column('is_active', sa.Boolean(), nullable=True),
     sa.PrimaryKeyConstraint('id'),
+    sa.UniqueConstraint('email'),
     sa.UniqueConstraint('email')
     )
     op.create_table('product',
@@ -41,10 +41,10 @@ def upgrade():
     sa.Column('product_name', sa.String(length=60), nullable=False),
     sa.Column('price', sa.Integer(), nullable=False),
     sa.Column('category', sa.String(length=50), nullable=False),
+    sa.Column('image', sa.String(length=255), nullable=True),
     sa.Column('market_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['market_id'], ['supermarket.id'], ),
-    sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('product_name')
+    sa.PrimaryKeyConstraint('id')
     )
     op.create_table('cart',
     sa.Column('id', sa.Integer(), nullable=False),

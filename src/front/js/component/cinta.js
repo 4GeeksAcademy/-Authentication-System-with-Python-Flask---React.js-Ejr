@@ -13,9 +13,6 @@ export const Cinta = () => {
 					/>
 				</div>
 				<div className="slide">
-					<img src="" className="card-img-top" alt="..." />
-				</div>
-				<div className="slide">
 					<img
 						src="https://www.esencialcostarica.com/wp-content/uploads/2020/09/manzate.jpg"
 						className="card-img-top"
@@ -52,7 +49,7 @@ export const Cinta = () => {
 				</div>
 				<div className="slide">
 					<img
-						src="https://d1yjjnpx0p53s8.cloudfront.net/styles/logo-thumbnail/s3/0017/7200/brand.gif?itok=H9WETUB8"
+						src="https://www.kani.cr/quimo/userfiles/FCKE/image/site/Logo_Don_Pedro.png"
 						className="card-img-top"
 						alt="..."
 					/>
