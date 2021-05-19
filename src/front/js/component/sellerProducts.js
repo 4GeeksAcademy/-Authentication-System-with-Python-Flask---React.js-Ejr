@@ -1,10 +1,11 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Context } from "../store/appContext";
 import { Link } from "react-router-dom";
 import "../../styles/card.scss";
 
-export const Card = () => {
+export const SellerProducts = () => {
 	const { actions, store } = useContext(Context);
+
 	return (
 		<div className="container my-3">
 			{store.dataMart.map((p, index) => {
@@ -20,8 +21,10 @@ export const Card = () => {
 							<p className="card-text">{p.description}</p>
 							<p className="item Price">{p.category}</p>
 							<p className="item Price">${p.price}</p>
-							<Link to={"/checkoutview"}>
-								<button className="btn btn-card">Agregar al carrito</button>
+							<Link to={"/perfildelproductoview"}>
+								<button className="btn btn-card" onClick={() => actions.currentProduct(index)}>
+									Actualizar Productos
+								</button>
 							</Link>
 						</div>
 					</div>

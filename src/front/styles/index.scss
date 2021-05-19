@@ -9,6 +9,7 @@
 
 body {
   font-family: 'Poppins', Arial, sans-serif;
+  margin-top: 500px;
 }
 .carousel {
   max-height: 600px;
@@ -27,3 +28,20 @@ body {
 h1 {
     font-family: 'Poppins', Arial, sans-serif;
 }
+
+.fixed-content-mg{
+    margin-top: 12rem !important;
+}
+
+.btn-custom{    
+background-color: #202040 !important;
+color:white !important;
+}
+
+.modal-backdrop {
+    z-index: 100000 !important;
+  }
+
+  .modal {
+    z-index: 100001 !important;
+  }

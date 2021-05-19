@@ -3,7 +3,7 @@ import { Checkout } from "../component/checkout";
 
 export const Checkoutview = () => {
 	return (
-		<div>
+		<div className="container container fixed-content-mg">
 			<Checkout />
 		</div>
 	);

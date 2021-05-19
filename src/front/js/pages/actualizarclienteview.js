@@ -3,7 +3,7 @@ import { Actualizarcliente } from "../component/actualizarcliente";
 
 export const Actualizarclienteview = () => {
 	return (
-		<div>
+		<div className="h-75 container fixed-content-mg">
 			<Actualizarcliente />
 		</div>
 	);

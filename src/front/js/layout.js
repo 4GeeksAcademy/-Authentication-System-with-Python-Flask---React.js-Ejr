@@ -12,12 +12,13 @@ import { Footer } from "./component/footer";
 import { Contactus } from "./pages/contact-us";
 import { NewProduct } from "./pages/newProduct";
 import { Logueado } from "./pages/logueado";
+import { ProductosVendedor } from "./pages/productosvendedor";
 import { ResetPassword } from "./pages/resetPassword";
 import { WazeView } from "./pages/wazeview";
-import { Checkoutview } from "./pages/checkoutview";
 import { Actualizarvendedorview } from "./pages/actualizarvendedorview";
 import { Actualizarclienteview } from "./pages/actualizarclienteview";
 import { Perfildelproductoview } from "./pages/perfildelproductoview";
+import { Checkoutview } from "./pages/checkoutview";
 
 //create your first component
 const Layout = () => {
@@ -30,6 +31,7 @@ const Layout = () => {
 			<BrowserRouter basename={basename}>
 				<ScrollToTop>
 					<Navbar />
+
 					<Switch>
 						<Route exact path="/">
 							<Home />
@@ -52,6 +54,9 @@ const Layout = () => {
 						<Route exact path="/logueado">
 							<Logueado />
 						</Route>
+						<Route exact path="/productosvendedor">
+							<ProductosVendedor />
+						</Route>
 						<Route exact path="/resetPassword">
 							<ResetPassword />
 						</Route>
@@ -60,9 +65,6 @@ const Layout = () => {
 						</Route>
 						<Route exact path="/wazeview">
 							<WazeView />
-						</Route>
-						<Route exact path="/checkoutview">
-							<Checkoutview />
 						</Route>
 						<Route exact path="/actualizarvendedorview">
 							<Actualizarvendedorview />
@@ -73,10 +75,14 @@ const Layout = () => {
 						<Route exact path="/perfildelproductoview">
 							<Perfildelproductoview />
 						</Route>
+						<Route exact path="/checkoutview">
+							<Checkoutview />
+						</Route>
 						<Route>
 							<h1>Not found!</h1>
 						</Route>
 					</Switch>
+
 					<Footer />
 				</ScrollToTop>
 			</BrowserRouter>

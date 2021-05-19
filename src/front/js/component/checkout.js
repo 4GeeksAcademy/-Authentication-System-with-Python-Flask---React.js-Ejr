@@ -230,8 +230,8 @@ export const Checkout = () => {
 								</span>
 							</li>
 						</ul>
-						<button type="button" className="btn btn-primary btn-block">
-							go to checkout
+						<button type="button" className="btn btn-card">
+							Pagar
 						</button>
 					</div>
 				</div>

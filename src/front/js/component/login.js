@@ -1,4 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
+import PropTypes from "prop-types";
 import { Context } from "../store/appContext";
 import { Link, useHistory } from "react-router-dom";
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
@@ -12,18 +13,20 @@ export const Login = () => {
 	const history = useHistory();
 	const [user, setUser] = useState({
 		username: "",
-		password: ""
+		password: "",
+		usertype: null
 	});
 
 	const logInSuccess = () => {
 		Swal.fire({
 			icon: "success",
 			title: "Ingreso exitoso",
-			text: "Redirigiendo a pagina principal",
+			text: "Cargando Catalogo",
 			showConfirmButton: false,
-			timer: 3500
+			timer: 1500
 		});
-		history.push("/logueado");
+
+		store.isSeller === 1 ? history.push("/newProduct") : history.push("/logueado");
 	};
 
 	const handleChange = e => {
@@ -37,22 +40,25 @@ export const Login = () => {
 	const handleSubmit = e => {
 		e.preventDefault();
 		// ... submit to API or something
+		user.usertype = store.isSeller;
 		actions.userLogIn(user);
 		logInSuccess();
 	};
 	return (
-		<div className="container my-5">
+		<div className="container my-4">
 			<section>
 				<div className="wrap-login100 p-l-55 p-r-55 p-t-35 p-b-54 mx-auto d-block">
 					<form onSubmit={handleChange} className="login100-form">
-						<span className="login100-form-title p-b-30">Iniciar sesión</span>
+						<span className="login100-form-title p-b-30">
+							{store.isSeller === 1 ? "Iniciar sesión Vendedor" : "Iniciar sesión Comprador"}{" "}
+						</span>
 						<div className="wrap-input100  m-b-23">
 							<span className="label-input100 fas fa-envelope"> Usuario</span>
 							<input
 								className="input100"
 								type="text"
 								name="username"
-								placeholder="Ingrese su Correo electronico"
+								placeholder="Ingrese su usuario"
 								onChange={handleChange}
 							/>
 							<span className="focus-input100" />
@@ -63,7 +69,7 @@ export const Login = () => {
 								className="input100"
 								type="text"
 								name="password"
-								placeholder="Ingrese su Correo electronico"
+								placeholder="Ingrese su Contraseña"
 								onChange={handleChange}
 							/>
 							<span className="focus-input100" />
@@ -85,7 +91,7 @@ export const Login = () => {
 							<span>O ingrese usando</span>
 						</div>
 
-						<div className="flex-c-m">
+						{/* <div className="flex-c-m">
 							<a href="#" className="login100-social-item bg1">
 								<i className="fa fa-facebook" />
 							</a>
@@ -93,7 +99,7 @@ export const Login = () => {
 							<a href="#" className="login100-social-item bg3">
 								<i className="fa fa-google" />
 							</a>
-						</div>
+						</div> */}
 					</form>
 				</div>
 			</section>

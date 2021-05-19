@@ -1,110 +1,95 @@
 import React, { useState, useContext } from "react";
 import { Context } from "../store/appContext";
-import logo from "../../img/logo.png";
+import { useHistory } from "react-router-dom";
+import logo from "../../img/logo.jpeg";
 import Swal from "sweetalert2";
 
 export const PasswordReset = () => {
 	const { actions } = useContext(Context);
+	const history = useHistory();
 	const [userToReset, setUserToReset] = useState({
 		email: "",
 		tempPassword: "",
-		newPassword: "",
-		repeatPassword: ""
+		newPassword: ""
 	});
 
-	const resetAlert = () =>
+	const resetAlert = () => {
 		Swal.fire({
 			icon: "success",
 			title: "Cambio de contraseña",
 			text: "Su contraseña ha sido modificada con existo",
-			showConfirmButton: true
-		}).then(() => {
-			window.location = "/logUserIn";
+			showConfirmButton: false,
+			timer: 2500
 		});
-
-	const passAlert = () =>
-		Swal.fire({
-			icon: "error",
-			title: "Error en nueva contraseña.",
-			text: "Las campos de nueva contraseña y repetir contraseña no coinciden.",
-			showConfirmButton: true
-		});
-
-	const handleChange = e => {
-		const { name, value } = e.target;
-		setUserToReset(userToReset => ({
-			...userToReset,
-			[name]: value
-		}));
+		history.push("/logUserIn");
 	};
 
-	const submitPassChange = () => {
-		handleChange();
+	const handleChange = e => {
+		setUserToReset({
+			...userToReset,
+			// Trimming any whitespace
+			[e.target.name]: e.target.value.trim()
+		});
+	};
+
+	const handleSubmit = e => {
+		e.preventDefault();
+		// ... submit to API or something
 		actions.resetPassword(userToReset);
+		resetAlert();
 	};
 
 	// reset api
 	return (
-		<div className="container">
-			<div className="login-form">
-				<form onSubmit={submitPassChange}>
-					<h2 className="text-center">Re-establecer Contraseña</h2>
-					<img src={logo} alt="logo" className="img-thumbnail mx-auto d-block rounded my-3" />
-					<div className="form-group">
-						<div className="input-group">
+		<div className="container my-5">
+			<section>
+				<div className="wrap-login100 p-l-55 p-r-55 p-t-35 p-b-54 mx-auto d-block">
+					<form onSubmit={handleChange} className="login100-form">
+						<span className="login100-form-title p-b-30">Cambio de Contraseña</span>
+						<div className="wrap-input100  m-b-23">
+							<span className="label-input100 fas fa-envelope"> Email</span>
 							<input
-								type="email"
-								className="form-control"
+								className="input100"
+								type="text"
 								name="email"
-								placeholder="Email"
-								required="required"
+								placeholder="Ingrese su Correo electronico"
 								onChange={handleChange}
 							/>
+							<span className="focus-input100" />
 						</div>
-					</div>
-					<div className="form-group">
-						<div className="input-group">
+						<div className="wrap-input100  m-b-23">
+							<span className="label-input100 fas fa-envelope"> Contraseña Temporal</span>
 							<input
+								className="input100"
 								type="text"
-								className="form-control"
 								name="tempPassword"
-								placeholder="Password Temporal"
-								required="required"
+								placeholder="Ingrese su Contraseña temporal"
 								onChange={handleChange}
 							/>
+							<span className="focus-input100" />
 						</div>
-					</div>
-					<div className="form-group">
-						<div className="input-group">
+						<div className="wrap-input100  m-b-23">
+							<span className="label-input100 fas fa-envelope"> Nueva Contraseña</span>
 							<input
+								className="input100"
 								type="text"
-								className="form-control"
 								name="newPassword"
-								placeholder="Nuevo Password"
-								required="required"
+								placeholder="Ingrese la nueva contraseña"
 								onChange={handleChange}
 							/>
+							<span className="focus-input100" />
 						</div>
-					</div>
-					<div className="form-group">
-						<div className="input-group">
-							<input
-								type="text"
-								className="form-control"
-								name="repeatPassword"
-								placeholder="Repetir Password"
-								required="required"
-								onChange={handleChange}
-							/>
+						<div className="container-login100-form-btn">
+							<div className="wrap-login100-form-btn">
+								<div className="login100-form-bgbtn" />
+								<button type="submit" onClick={handleSubmit} className="login100-form-btn">
+									Cambiar Contraseña
+								</button>
+							</div>
 						</div>
-					</div>
-					<div className="form-group">
-						<button type="submit" onClick={resetAlert} className="btn btn-login login-btn btn-block">
-							Re-establecer contraseña
-						</button>
-					</div>
-				</form>
-			</div>
+					</form>
+				</div>
+			</section>
 		</div>
 	);
 };

@@ -17,17 +17,17 @@ class User(db.Model):
         return {
             "id": self.id,
             "email": self.email
-            # do not serialize the password, its a security breach
         }
 
 
 class Client(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(80), unique=False, nullable=False)
-    fullName = db.Column(db.String(255), unique=True, nullable=False)
+    id = db.Column(db.Integer, primary_key=True, unique=True)
+    username = db.Column(db.String(80), unique=True, nullable=False)
+    fullName = db.Column(db.String(255), unique=False, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     phoneNumber = db.Column(db.String(11), unique=True, nullable=False)
     password = db.Column(db.String(80), unique=False, nullable=False)
+    isSeller = db.Column(db.Integer, unique=False)
 
     def __repr__(self):
         return '<Client %r>' % self.username
@@ -39,49 +39,33 @@ class Client(db.Model):
             "fullName": self.fullName,
             "email": self.email,
             "phonenumber": self.phoneNumber
-            # do not serialize the password, its a security breach
-        }
-
-
-class Seller(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(80), unique=False, nullable=False)
-    fullName = db.Column(db.String(255), unique=True, nullable=False)
-    phoneNumber = db.Column(db.String(11), unique=True, nullable=False)
-    email = db.Column(db.String(120), unique=True, nullable=False)
-    password = db.Column(db.String(80), unique=False, nullable=False)
-
-    def __repr__(self):
-        return '<Seller %r>' % self.username
-
-    def serialize(self):
-        return {
-            "id": self.id,
-            "username": self.username,
-            "fullName": self.fullName,
-            "phonenumber": self.phoneNumber,
-            "email": self.email
-            # do not serialize the password, its a security breach
         }
 
 class Product(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    fk_id = db.Column(db.Integer, db.ForeignKey('seller.id'), unique=True, nullable=False)
+    fk_id = db.Column(db.Integer, db.ForeignKey(
+        'client.id'), unique=False, nullable=False)
     productName = db.Column(db.String(255),  nullable=False)
-    description = db.Column(db.String(255),  nullable=False),
-    categiry = db.Column(db.String(255),  nullable=False)
+    description = db.Column(db.String(255),  nullable=False)
+    category = db.Column(db.String(255),  nullable=False)
     price = db.Column(db.Integer, nullable=False)
-    image = db.Column(db.Integer, unique=False, nullable=False)
+    item_status = db.Column(db.String(20), nullable=False)
+    img = db.Column(db.Text)
+    client = db.relationship("Client", lazy="subquery")
 
     def __repr__(self):
         return '<Product %r>' % self.productName
 
     def serialize(self):
         return {
-            "id": self.id,
-            "productName": self.productName,
-            "description": self.description,
-            "price": self.price,
-            "image": self.image
-            # do not serialize the password, its a security breach
+            "s_id": self.client.id,
+            "s_name": self.client.fullName,
+            "s_email": self.client.email,
+            "s_phonenumber": self.client.phoneNumber,
+            "p_id": self.id,
+            "p_productName": self.productName,
+            "p_description": self.description,
+            "p_price": self.price,
+            "p_category": self.category,
+            "p_image": self.img
         }

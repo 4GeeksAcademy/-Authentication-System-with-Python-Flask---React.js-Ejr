@@ -1,4 +1,12 @@
 # WebApp boilerplate with React JS
+
+Librerias utilizadas:
+* SweetAlerts:  2 npm install sweetalert2
+* React Currency Input: npm install react-currency-input-field
+* emailjs: npm install emailjs-com --save
+* react-multi-carousel: npm i react-multi-carousel
+
+# WebApp boilerplate with React JS
 [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io#https://github.com/4GeeksAcademy/react-flask-hello.git)
 
 <p align="center">

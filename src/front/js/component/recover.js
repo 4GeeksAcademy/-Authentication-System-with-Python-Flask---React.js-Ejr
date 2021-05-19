@@ -1,11 +1,13 @@
 import React, { useState, useContext } from "react";
 import { Context } from "../store/appContext";
-import logo from "../../img/logo.png";
+import { useHistory } from "react-router-dom";
+import logo from "../../img/logo.jpeg";
 import Swal from "sweetalert2";
 import "../../styles/registerNew.scss";
 
 export const PassRecovery = () => {
 	const { actions } = useContext(Context);
+	const history = useHistory();
 	const [resetEmail, setResetEmail] = useState({ email: "" });
 
 	const resetAlert = () =>
@@ -17,9 +19,20 @@ export const PassRecovery = () => {
 			showConfirmButton: true
 		});
 
-	const handleChange = event => {
-		event.preventDefault();
+	const handleChange = e => {
+		setResetEmail({
+			...resetEmail,
+			// Trimming any whitespace
+			[e.target.name]: e.target.value.trim()
+		});
+	};
+
+	const handleSubmit = e => {
+		e.preventDefault();
+		// ... submit to API or something
 		actions.recoverPassword(resetEmail);
+		resetAlert();
+		history.push("/");
 	};
 
 	return (
@@ -35,16 +48,16 @@ export const PassRecovery = () => {
 								type="text"
 								name="email"
 								placeholder="Ingrese su Correo electronico"
-								onChange={event => {
-									setResetEmail({ email: event.target.value });
-								}}
+								onChange={handleChange}
 							/>
 							<span className="focus-input100" />
 						</div>
 						<div className="container-login100-form-btn">
 							<div className="wrap-login100-form-btn">
 								<div className="login100-form-bgbtn" />
-								<button className="login100-form-btn">Recuperar Contraseña</button>
+								<button className="login100-form-btn" onClick={handleSubmit}>
+									Recuperar Contraseña
+								</button>
 							</div>
 						</div>
 					</form>

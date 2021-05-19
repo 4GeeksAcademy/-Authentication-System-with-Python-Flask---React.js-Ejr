@@ -3,7 +3,7 @@ import { Perfildelproducto } from "../component/perfildelproducto";
 
 export const Perfildelproductoview = () => {
 	return (
-		<div>
+		<div className="fixed-content-mg">
 			<Perfildelproducto />
 		</div>
 	);

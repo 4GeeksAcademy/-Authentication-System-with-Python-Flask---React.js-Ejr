@@ -1,11 +1,13 @@
-import React from "react";
-import logo from "../../img/logo.png";
+import React, { useContext } from "react";
+import { Context } from "../store/appContext";
+import logo from "../../img/newAppLogo.jpeg";
 
 export const Actualizarvendedor = () => {
+	const { store } = useContext(Context);
 	return (
 		<div className="container">
 			<form>
-				<h2 className="text-center">Actualizar Cuenta</h2>
+				<h2 className="text-center">Actualizar Datos</h2>
 				<img src={logo} alt="logo" className="img-thumbnail mx-auto d-block rounded my-3" />
 				<div className="form-group">
 					<div className="input-group">
@@ -15,6 +17,19 @@ export const Actualizarvendedor = () => {
 							name="name"
 							placeholder="Nombre Completo"
 							required="required"
+							value={store.appAuth.fullName}
+						/>
+					</div>
+				</div>
+				<div className="form-group">
+					<div className="input-group">
+						<input
+							type="text"
+							className="form-control"
+							name="phonenumber"
+							placeholder="Numero telefonico"
+							required="required"
+							value={store.appAuth.phonenumber}
 						/>
 					</div>
 				</div>
@@ -26,6 +41,7 @@ export const Actualizarvendedor = () => {
 							name="username"
 							placeholder="Usuario"
 							required="required"
+							value={store.appAuth.username}
 						/>
 					</div>
 				</div>
@@ -37,36 +53,18 @@ export const Actualizarvendedor = () => {
 							name="email"
 							placeholder="Email"
 							required="required"
-						/>
-					</div>
-				</div>
-				<div className="form-group">
-					<div className="input-group">
-						<input
-							type="password"
-							className="form-control"
-							name="password"
-							placeholder="Contraseña"
-							required="required"
+							value={store.appAuth.email}
 						/>
 					</div>
 				</div>
 				<div className="form-group">
 					<button
-						className="btn btn-login login-btn btn-block"
+						className="btn btn-custom"
 						onClick={() => {
 							createNewUser;
 							regAlert();
 						}}>
 						Actualizar Cuenta
-					</button>
-					<button
-						className="btn btn-login login-btn btn-block"
-						onClick={() => {
-							createNewUser;
-							regAlert();
-						}}>
-						Registrar Producto
 					</button>
 				</div>
 

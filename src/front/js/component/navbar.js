@@ -2,35 +2,31 @@ import React, { useState, useContext } from "react";
 import { Context } from "../store/appContext";
 import { Link, useHistory } from "react-router-dom";
 import logo from "../../img/newAppLogo.jpeg";
-import { Search } from "./search";
+//import { Search } from "./search";
 import "../../styles/navbar.scss";
-import "../pages/actualizarclienteview";
-import "../pages/actualizarvendedorview";
-import "../pages/perfildelproductoview";
 
 export const Navbar = () => {
 	const { actions, store } = useContext(Context);
 	const history = useHistory();
+
 	return (
-		<section className="ftco-section">
+		<section className="ftco-section bg-light">
 			<div className="container">
 				<div className="row justify-content-between">
 					<div className="col">
-						<span>
-							<Link to="/" className="navbar-brand">
-								<img
-									className="rounded float-left"
-									src={logo}
-									style={{ height: "100px", width: "200px" }}
-								/>
-							</Link>
-						</span>
-						{/* <Link to="/" className="navbar-brand">
+						{/* <span>
+							<img
+								className="rounded float-left"
+								src={logo}
+								style={{ height: "100px", width: "200px" }}
+							/>
+						</span> */}
+						<Link to="/" className="navbar-brand mt-3">
 							Pura Vida <span>Mart</span>
-						</Link> */}
+						</Link>
 					</div>
 					<div className="col d-flex justify-content-end">
-						<div className="social-media">
+						<div className="social-media mt-4">
 							<p className="mb-0 d-flex">
 								{store.token && store.token !== "" && store.token !== undefined ? null : (
 									<Link
@@ -46,8 +42,23 @@ export const Navbar = () => {
 										to="/logUserIn"
 										className="d-flex align-items-center justify-content-center"
 										data-toggle="tooltip"
-										title="Ingresar">
+										title="Ingresar como Cliente"
+										onClick={() => {
+											actions.isSellerOrClient(0);
+										}}>
 										<span className="fas fa-sign-in-alt" />
+									</Link>
+								)}
+								{store.token && store.token !== "" && store.token !== undefined ? null : (
+									<Link
+										to="/logUserIn"
+										className="d-flex align-items-center justify-content-center"
+										data-toggle="tooltip"
+										title="Ingresar como Vendedor"
+										onClick={() => {
+											actions.isSellerOrClient(1);
+										}}>
+										<span className="fas fa-money-bill" />
 									</Link>
 								)}
 								{store.token && store.token !== "" && store.token !== undefined ? (
@@ -63,14 +74,38 @@ export const Navbar = () => {
 										<span className="fas fa-sign-out-alt" />
 									</Link>
 								) : null}
-								{store.token && store.token !== "" && store.token !== undefined ? (
+								{store.token &&
+								store.token !== "" &&
+								store.token !== undefined &&
+								store.isSeller === 0 ? (
 									<Link
-										to="/"
+										to="/checkoutview"
 										className="d-flex align-items-center justify-content-center"
 										data-toggle="tooltip"
 										title="Carrito de Compras">
 										<span className="fas fa-shopping-cart" />
 									</Link>
+								) : null}
+								{store.token && store.token !== "" && store.token !== undefined ? (
+									store.sellerId !== null ? (
+										<Link
+											to="/actualizarvendedorview"
+											className="d-flex align-items-center justify-content-center"
+											data-toggle="tooltip"
+											title="Perfil vendedor"
+											onClick={actions.getSellerData}>
+											<span className="fas fa-user-circle" />
+										</Link>
+									) : (
+										<Link
+											to="/actualizarclienteview"
+											className="d-flex align-items-center justify-content-center"
+											data-toggle="tooltip"
+											title="Perfil comprador"
+											onClick={actions.getClientData}>
+											<span className="fas fa-user-circle" />
+										</Link>
+									)
 								) : null}
 							</p>
 						</div>
@@ -104,46 +139,28 @@ export const Navbar = () => {
 									Inicio
 								</Link>
 							</li>
-							<li className="nav-item dropdown">
-								<a
-									className="nav-link dropdown-toggle"
-									href="#"
-									id="dropdown04"
-									data-toggle="dropdown"
-									aria-haspopup="true"
-									aria-expanded="false">
-									Vistas
-								</a>
-								<div className="dropdown-menu" aria-labelledby="dropdown04">
-									<a className="dropdown-item">Nuevo Producto</a>
-									<a className="dropdown-item" href="/checkoutview.js">
-										Comprar
-									</a>
-									<a className="dropdown-item" href="/logueado.js">
-										logueado
-									</a>
-									<a className="dropdown-item">
-										<Link to="/actualizarvendedorview" className="nav-link">
-											Actualizar Vendedor
+							{sessionStorage.getItem("sellerId") !== null ? (
+								<li className="nav-item">
+									<Link to="/newProduct" className="nav-link">
+										Vender productos
+									</Link>
+								</li>
+							) : null}
+							{store.token && store.token !== "" && store.token !== undefined ? (
+								sessionStorage.getItem("sellerId") !== null ? (
+									<li className="nav-item">
+										<Link to="/productosvendedor" className="nav-link">
+											Mis Productos
 										</Link>
-									</a>
-									<a className="dropdown-item">
-										<Link to="/actualizarclienteview" className="nav-link">
-											Actualizar Comprador
+									</li>
+								) : (
+									<li className="nav-item">
+										<Link to="/logueado" className="nav-link">
+											Catalogo
 										</Link>
-									</a>
-									<a className="dropdown-item">
-										<Link to="/perfildelproductoview" className="nav-link">
-											Perfil del Producto
-										</Link>
-									</a>
-								</div>
-							</li>
-							<li className="nav-item">
-								<a href="#" className="nav-link">
-									Catalogo
-								</a>
-							</li>
+									</li>
+								)
+							) : null}
 							<li className="nav-item">
 								<Link to="/contact-us" className="nav-link">
 									Contacto

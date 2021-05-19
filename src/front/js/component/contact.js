@@ -2,7 +2,7 @@ import React from "react";
 
 export const Contact = () => {
 	return (
-		<div className="container mb-5">
+		<div className="container">
 			<section className="mb-5">
 				<h2 className="h1-responsive text-center my-4">Contáctenos</h2>
 
@@ -13,7 +13,7 @@ export const Contact = () => {
 
 				<div className="row">
 					<div className="col-md-9 mb-md-0 mb-5">
-						<form id="contact-form" name="contact-form" action="mail.php" method="POST">
+						<form id="contact-form" name="contact-form">
 							<div className="row">
 								<div className="col-md-6">
 									<div className="md-form mb-5">
@@ -51,7 +51,7 @@ export const Contact = () => {
 						</form>
 
 						<div className="text-center text-md-left">
-							<a className="btn btn-primary" onClick="document.getElementById('contact-form').submit();">
+							<a className="btn btn-custom" onClick="document.getElementById('contact-form').submit();">
 								Enviar
 							</a>
 						</div>

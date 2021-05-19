@@ -8,8 +8,8 @@ export const LogUserIn = () => {
 	const { store } = useContext(Context);
 
 	return (
-		<div className="container">
-			{store.token && store.token != "" && store.token != undefined ? logInSuccess() : <Login />}
+		<div className="container fixed-content-mg">
+			<Login />
 		</div>
 	);
 };

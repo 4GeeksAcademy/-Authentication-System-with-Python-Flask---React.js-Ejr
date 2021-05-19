@@ -1,34 +1,103 @@
+import emailjs from "emailjs-com";
+
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
 			token: null,
-			isLoggedIn: false,
+			sellerId: null,
+			userId: null,
+			isSeller: null,
+			isClient: null,
+			isLoggedIn: null,
+			updateProduct: [],
 			emailServiceID: "service_69zpagb",
 			emailUserID: "user_z7x4Z98eeKRtg2hNKJyJC",
 			emailTemplate: {
 				recoverEmail: "template_8ynr9ye",
 				changedEmail: "template_2piuwtk"
 			},
-			endPoint: "https://3001-apricot-squid-508x052a.ws-us04.gitpod.io" + "/api/", //process.env.BACKEND_URL
+			endPoint: "https://3001-coffee-haddock-7k62zdl7.ws-us04.gitpod.io" + "/api/", //process.env.BACKEND_URL
 			uriOrigin: window.location.origin,
 			appAuth: [],
-			dataMart: []
+			dataMart: [],
+			storeProducts: []
 		},
 		actions: {
-			// get login/registration information
-			responseGoogle: response => {
-				return response;
+			// identify seller or client logging
+			isSellerOrClient: whoIs => {
+				const store = getStore();
+				setStore({ isSeller: whoIs });
+				console.log(store.isSeller);
 			},
 
-			responseFacebook: response => {
-				return response;
+			// identify seller or client register
+			whosIsRegistering: whoIs => {
+				setStore({ isClient: whoIs });
 			},
+
+			// identify seller or client register
+			getClientData: async () => {
+				const store = getStore();
+				const apiEndPoint = store.endPoint + "user/" + store.userId;
+
+				let response = await fetch(apiEndPoint);
+				let data = await response.json();
+				setStore({ appAuth: [...data.results] });
+				console.log(store.appAuth);
+			},
+
+			getSellerData: async () => {
+				const store = getStore();
+				const apiEndPoint = store.endPoint + "user/" + store.sellerId;
+
+				let response = await fetch(apiEndPoint);
+				let data = await response.json();
+				setStore({ appAuth: [...data.results] });
+				console.log(store.appAuth);
+			},
+
+			currentProduct: obj => {
+				const store = getStore();
+				let extracted = store.dataMart.filter((item, index) => index == obj);
+				setStore({ updateProduct: extracted });
+			},
+			// get login/registration information
+			// responseGoogle: response => {
+			// 	console.log(response);
+			// 	return response;
+			// },
+
+			// responseFacebook: response => {
+			// 	store = getStore();
+			// 	setStore(appAuth.push(response));
+			// 	console.log(store.appAuth);
+			// 	return response;
+			//},
 
 			// function to fetch data from the api fake store
 			loadImageProduct: async () => {
 				let response = await fetch("https://fakestoreapi.com/products");
 				let data = await response.json();
 				setStore({ dataMart: [...data] });
+			},
+
+			getStoreProducts: async () => {
+				const token = sessionStorage.getItem("userToken");
+				let myHeaders = new Headers();
+				myHeaders.append("Authorization", "Bearer " + token);
+				const store = getStore();
+
+				const requestOptions = {
+					method: "GET",
+					headers: myHeaders,
+					body: raw,
+					redirect: "follow"
+				};
+
+				const apiEndPoint = store.endPoint + "getproducts";
+				let response = await fetch(apiEndPoint, requestOptions);
+				let data = await response.json();
+				setStore({ storeProducts: [...data.results] });
 			},
 
 			// function for user registration
@@ -70,9 +139,22 @@ const getState = ({ getStore, getActions, setStore }) => {
 				try {
 					const resp = await fetch(apiEndPoint, requestOptions);
 					const data = await resp.json();
-					if (data.token) {
+					if (data.token && data.sellerid) {
+						sessionStorage.setItem("isLoggedin", true);
 						sessionStorage.setItem("userToken", data.token);
+						sessionStorage.setItem("sellerId", data.sellerid);
 						setStore({ token: data.token });
+						setStore({ sellerId: data.sellerid });
+						setStore({ isLoggedIn: true });
+					} else if (data.token && data.userid) {
+						sessionStorage.setItem("userToken", data.token);
+						sessionStorage.setItem("isLoggedin", true);
+						sessionStorage.setItem("userId", data.userid);
+						setStore({ token: data.token });
+						setStore({ userId: data.userid });
+						setStore({ isLoggedIn: true });
+					} else {
+						sessionStorage.setItem("isLoggedin", false);
 					}
 				} catch (error) {
 					console.log(error);
@@ -80,6 +162,18 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 			syncTokenOnRefresh: () => {
 				setStore({ token: sessionStorage.getItem("userToken") });
+			},
+
+			syncSellerIdOnRefresh: () => {
+				setStore({ sellerId: sessionStorage.getItem("sellerId") });
+			},
+
+			syncUserIdOnRefresh: () => {
+				setStore({ userId: sessionStorage.getItem("userId") });
+			},
+
+			syncLoggedInOnReresh: () => {
+				setStore({ isLoggedIn: sessionStorage.getItem("isLoggedin") });
 			},
 
 			// function to log user out and clear token and log state
@@ -92,7 +186,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			// function to request a password change through the api
 			recoverPassword: email => {
 				const store = getStore();
-				const apiEndPoint = store.endPoint + "forgotPassword";
+				const apiEndPoint = store.endPoint + "forgotpassword";
 				const resetURL = store.uriOrigin + "/resetPassword";
 
 				let myHeaders = new Headers();
@@ -129,7 +223,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			// function to change the password after email confirmation
 			resetPassword: resetDetails => {
 				const store = getStore();
-				const apiEndPoint = store.endPoint + "reset";
+				const apiEndPoint = store.endPoint + "resetpassword";
 				let myHeaders = new Headers();
 				myHeaders.append("Content-Type", "application/json");
 				let raw = JSON.stringify(resetDetails);
@@ -167,31 +261,74 @@ const getState = ({ getStore, getActions, setStore }) => {
 				//push data to store
 				store.appAuth.push(getActions().responseGoogle());
 				store.appAuth.push(getActions().responseFacebook());
-			}
-			// fillStore: () => {
-			// 	fetch("https://fakestoreapi.com/products")
-			// 		.then(res => res.json())
-			// 		.then(json => setStore({ dataMart: json }));
-			// },
-			// fillDataBase: () => {
-			// 	let myHeaders = new Headers();
-			// 	myHeaders.append("Content-Type", "application/json");
-			// 	let raw = JSON.stringify(newuser);
+			},
+			createNewProduct: prd => {
+				const store = getStore();
+				const token = sessionStorage.getItem("userToken");
+				const apiEndPoint = store.endPoint + "createproduct";
+				let myHeaders = new Headers();
+				myHeaders.append("Authorization", "Bearer " + token);
 
-			// 	const requestOptions = {
-			// 		method: "POST",
-			// 		headers: myHeaders,
-			// 		body: raw,
-			// 		redirect: "follow"
-			// 	};
+				var formdata = new FormData();
+				formdata.append("productname", prd.productName);
+				formdata.append("description", prd.description);
+				formdata.append("category", prd.category);
+				formdata.append("price", prd.price);
+				formdata.append("itemstatus", prd.itemstatus);
+				formdata.append("sellerid", prd.sellerId);
 
-			// 	const apiEndPoint = "https://3001-chocolate-ox-jjqxr0q2.ws-us03.gitpod.io/api/userregistration";
+				const requestOptions = {
+					method: "POST",
+					headers: myHeaders,
+					body: formdata,
+					redirect: "follow"
+				};
 
-			// 	fetch(apiEndPoint, requestOptions)
-			// 		.then(response => response.json())
-			// 		.then(result => console.log(result))
-			// 		.catch(error => console.log("error", error));
-			// }
+				fetch(apiEndPoint, requestOptions)
+					.then(response => response.json())
+					.then(result => console.log(result))
+					.catch(error => console.log("error", error));
+			},
+			updateProduct: prdId => {
+				const store = getStore();
+				const apiEndPoint = store.endPoint + "userregistration";
+				let myHeaders = new Headers();
+				myHeaders.append("Content-Type", "application/json");
+				let raw = JSON.stringify(newuser);
+
+				const requestOptions = {
+					method: "POST",
+					headers: myHeaders,
+					body: raw,
+					redirect: "follow"
+				};
+
+				fetch(apiEndPoint, requestOptions)
+					.then(response => response.json())
+					.then(result => console.log(result))
+					.catch(error => console.log("error", error));
+			},
+			deleteProduct: prdId => {
+				const store = getStore();
+				const apiEndPoint = store.endPoint + "userregistration";
+				let myHeaders = new Headers();
+				myHeaders.append("Content-Type", "application/json");
+				let raw = JSON.stringify(newuser);
+
+				const requestOptions = {
+					method: "POST",
+					headers: myHeaders,
+					body: raw,
+					redirect: "follow"
+				};
+
+				fetch(apiEndPoint, requestOptions)
+					.then(response => response.json())
+					.then(result => console.log(result))
+					.catch(error => console.log("error", error));
+			},
+
+			uploadProductImage: () => {}
 		}
 	};
 };

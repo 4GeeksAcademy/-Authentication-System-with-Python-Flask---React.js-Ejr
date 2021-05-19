@@ -1,7 +1,9 @@
-import React from "react";
-import logo from "../../img/logo.png";
+import React, { useContext } from "react";
+import { Context } from "../store/appContext";
+import logo from "../../img/newAppLogo.jpeg";
 
 export const Actualizarcliente = () => {
+	const { store } = useContext(Context);
 	return (
 		<div className="container">
 			<form>
@@ -15,6 +17,19 @@ export const Actualizarcliente = () => {
 							name="name"
 							placeholder="Nombre Completo"
 							required="required"
+							value={store.appAuth.fullName}
+						/>
+					</div>
+				</div>
+				<div className="form-group">
+					<div className="input-group">
+						<input
+							type="text"
+							className="form-control"
+							name="phonenumber"
+							placeholder="Numero telefonico"
+							required="required"
+							value={store.appAuth.phonenumber}
 						/>
 					</div>
 				</div>
@@ -26,6 +41,7 @@ export const Actualizarcliente = () => {
 							name="username"
 							placeholder="Usuario"
 							required="required"
+							value={store.appAuth.username}
 						/>
 					</div>
 				</div>
@@ -37,23 +53,13 @@ export const Actualizarcliente = () => {
 							name="email"
 							placeholder="Email"
 							required="required"
-						/>
-					</div>
-				</div>
-				<div className="form-group">
-					<div className="input-group">
-						<input
-							type="password"
-							className="form-control"
-							name="password"
-							placeholder="Contraseña"
-							required="required"
+							value={store.appAuth.email}
 						/>
 					</div>
 				</div>
 				<div className="form-group">
 					<button
-						className="btn btn-login login-btn btn-block"
+						className="btn btn-custom"
 						onClick={() => {
 							createNewUser;
 							regAlert();

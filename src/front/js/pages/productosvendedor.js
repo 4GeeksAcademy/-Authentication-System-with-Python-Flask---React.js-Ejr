@@ -1,11 +1,11 @@
 import React, { useContext } from "react";
 import { Context } from "../store/appContext";
-import { Card } from "../component/card";
+import { SellerProducts } from "../component/sellerProducts";
 import { useHistory } from "react-router-dom";
 //import { Search } from "../component/search";]
 import Swal from "sweetalert2";
 
-export const Logueado = () => {
+export const ProductosVendedor = () => {
 	const { store } = useContext(Context);
 	const history = useHistory();
 	const logAlert = () => {
@@ -23,7 +23,7 @@ export const Logueado = () => {
 		return (
 			<div className="container fixed-content-mg">
 				{/*<h1 className="text-center">Pura Vida Mart</h1>*/}
-				<Card />
+				<SellerProducts />
 				<div className="text-center my-4" />
 			</div>
 		);
