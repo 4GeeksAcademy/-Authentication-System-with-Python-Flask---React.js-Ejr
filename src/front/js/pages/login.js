@@ -7,46 +7,30 @@ export const Login1 = () => {
 	const { store, actions } = useContext(Context);
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
-	const { islogin } = store;
-	const { setLogin } = actions;
-	const [mensaje, setmensaje] = useState("");
 
-	const handleSubmit = e => {
+	var myHeaders = new Headers();
+	myHeaders.append("Content-Type", "application/json");
+	var raw = JSON.stringify({
+		email: email,
+		password: password
+	});
+	var requestOptions = {
+		method: "POST",
+		headers: myHeaders,
+		body: raw,
+		redirect: "follow"
+	};
+
+	const handleLogin = e => {
 		e.preventDefault();
-
-		const body = {
-			email: email,
-			password: password
-		};
-
-		fetch("https://3001-moccasin-pigeon-4ixmcu8a.ws-us04.gitpod.io/api/login", {
-			method: "POST",
-			body: JSON.stringify(body),
-			headers: {
-				"Content-Type": "application/json"
-			}
-		})
-			.then(res => res.json())
-			.then(data => {
-				console.log(data);
-				let token = data.token;
-				//console.log(token);
-				if (token) {
-					sessionStorage.setItem("my_token", token);
-					console.log("token", token);
-					setLogin(true);
-					console.log("is login ", islogin);
-
-					alert("Inicio de cesion correcta!");
-				} else {
-					alert("Correo o contraseña incorrecta intente de nuevo");
-
-					setLogin(false);
-				}
-				// Token para el carrito
-				// let token = sessionStorage.getItem("my_token")
+		fetch("https://3001-moccasin-pigeon-4ixmcu8a.ws-us04.gitpod.io/api/login", requestOptions)
+			.then(response => response.text())
+			.then(result => {
+				console.log("console.log", result);
+				sessionStorage.setItem("my_token", result.token);
+				let token = sessionStorage.getItem("my_token");
 			})
-			.catch(err => console.log(err));
+			.catch(error => console.log("error", error));
 	};
 
 	return (
@@ -70,7 +54,7 @@ export const Login1 = () => {
 						</div>
 					</div>
 					<div className="card-body">
-						<form onSubmit={handleSubmit}>
+						<form onSubmit={e => handleLogin(e)}>
 							<div className="input-group form-group">
 								<div className="input-group-prepend">
 									<span className="input-group-text">
@@ -83,7 +67,6 @@ export const Login1 = () => {
 									placeholder="Email"
 									onChange={e => {
 										setEmail(e.target.value);
-										setmensaje("");
 									}}
 									required
 								/>
@@ -107,10 +90,10 @@ export const Login1 = () => {
 								Recordar
 							</div>
 							<div className="form-group">
-								<input type="Submit" value="Ingresar" className="btn float-right login_btn" />
+								<input type="submit" value="Ingresar" className="btn float-right login_btn" />
 							</div>
 						</form>
-						{islogin ? <Redirect to="/" /> : null}
+						{/* {store.login ? <Redirect to="/" /> : null} */}
 					</div>
 					<div className="card-footer">
 						<div className="d-flex justify-content-center links">
