@@ -42,21 +42,21 @@ export const Navbar1 = () => {
 							</Link>
 						)}
 
-						{!store.login && (
+						{store.login && (
 							<Link to={"/categorias"}>
 								<Button variant="in1" href="#home" color="white">
 									Categorías
 								</Button>
 							</Link>
 						)}
-						{!store.login && (
+						{store.login && (
 							<Link to={"/cupones"}>
 								<Button variant="in1" href="#home" color="white">
 									Cupones
 								</Button>
 							</Link>
 						)}
-						{!store.login && (
+						{store.login && (
 							<Link to={"/favorites"}>
 								<Button variant="in1" href="#home" color="white">
 									Favoritos {store.favorites.length}

@@ -124,7 +124,16 @@ export const Register1 = () => {
 								/>
 							</div>
 							<div className="form-group">
-								<input type="submit" value="Registrar" className="btn float-right login_btn" />
+								<Link to={"/login"} href="#">
+									<input
+										type="submit"
+										value="Registrar"
+										className="btn float-right login_btn"
+										onClick={() => {
+											alert("Registro completo!!!");
+										}}
+									/>
+								</Link>
 							</div>
 							<div className="card-footer">
 								<div className="d-flex justify-content-center links">
