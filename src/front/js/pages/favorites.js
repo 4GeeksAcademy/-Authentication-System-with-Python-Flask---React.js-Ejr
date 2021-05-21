@@ -12,16 +12,8 @@ export const Favoritos = () => {
 					<div className="whole_content">
 						<div className="contenedor_fav1">
 							<Globalcard />
-							<Globalcard />
-							<Globalcard />
-							<Globalcard />
-							<Globalcard />
 						</div>
 						<div className="contenedor_fav2">
-							<Globalcard />
-							<Globalcard />
-							<Globalcard />
-							<Globalcard />
 							<Globalcard />
 						</div>
 					</div>

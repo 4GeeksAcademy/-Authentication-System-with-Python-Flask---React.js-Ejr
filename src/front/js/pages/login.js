@@ -53,13 +53,28 @@ export const Login1 = () => {
 						<h3>Acceder</h3>
 						<div className="d-flex justify-content-end social_icon">
 							<span>
-								<i className="fab fa-facebook-square" />
+								<i
+									className="fab fa-facebook-square"
+									onClick={() => {
+										alert("Funcionalidad en construcción");
+									}}
+								/>
 							</span>
 							<span>
-								<i className="fab fa-google-plus-square" />
+								<i
+									className="fab fa-google-plus-square"
+									onClick={() => {
+										alert("Funcionalidad en construcción");
+									}}
+								/>
 							</span>
 							<span>
-								<i className="fab fa-twitter-square" />
+								<i
+									className="fab fa-twitter-square"
+									onClick={() => {
+										alert("Funcionalidad en construcción");
+									}}
+								/>
 							</span>
 						</div>
 					</div>

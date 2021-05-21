@@ -5,6 +5,7 @@ import { Navbar, Nav, Dropdown, DropdownButton, Button } from "react-bootstrap";
 
 export const Navbar1 = () => {
 	const { store, actions } = useContext(Context);
+
 	console.log("estoy en login", store.login);
 	return (
 		<>
@@ -64,17 +65,19 @@ export const Navbar1 = () => {
 						)}
 
 						{store.login && (
-							<Button
-								variant="in1"
-								href="#home"
-								color="white"
-								onClick={() => {
-									actions.logout();
-									console.log("cierro secion", store.login);
-									alert("Ha cerrado sesión correctamente");
-								}}>
-								Cerrar sesión
-							</Button>
+							<Link to={"/"}>
+								<Button
+									variant="in1"
+									href="#home"
+									color="white"
+									onClick={() => {
+										actions.logout();
+										console.log("cierro secion", store.login);
+										alert("Ha cerrado sesión correctamente");
+									}}>
+									Cerrar sesión
+								</Button>
+							</Link>
 						)}
 						<Link to={"/contact"}>
 							<Button variant="in1" href="#home" color="white">

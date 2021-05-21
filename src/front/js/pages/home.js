@@ -1,10 +1,12 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, Component } from "react";
 import "../../styles/home.scss";
 import { Promociones } from "../component/promociones";
 import { Cinta } from "../component/cinta";
 import { Link } from "react-router-dom";
+import { Context } from "../store/appContext";
 
 export const Home = () => {
+	const { store, actions } = useContext(Context);
 	return (
 		<>
 			<div className="contenedor container-fluid imagen-fondo">
@@ -54,14 +56,27 @@ export const Home = () => {
 			</div>
 
 			<h1 className="Promociones text-center py-4 font-weight-light">Promociones</h1>
-			<div className="promos cards d-flex justify-content-center">
-				<Promociones />
-				<Promociones />
-				<Promociones />
-				<Promociones />
-				<Promociones />
-				<Promociones />
-				<Promociones />
+			<div className="col-lg-12 categorias">
+				{store.products
+					? store.products.map((item, index) => {
+							console.log("products", item);
+							if (item.category == "Promo") {
+								return (
+									<div key={index}>
+										<Promociones
+											id={item.id}
+											price={item.price}
+											location={item["supermarket.location"]}
+											product_name={item.product_name}
+											market_name={item["supermarket.market_name"]}
+											image={item.image}
+											category={item.category}
+										/>
+									</div>
+								);
+							}
+					  })
+					: "No prodcuts here"}
 			</div>
 		</>
 	);
