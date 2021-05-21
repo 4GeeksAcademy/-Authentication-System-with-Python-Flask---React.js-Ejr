@@ -1,3 +1,5 @@
+import { data } from "jquery";
+
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
@@ -7,7 +9,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			supermarket: [],
 			cupons: [],
 			favorites: [],
-			products_home: []
+			search: []
 		},
 		actions: {
 			logged: () => {
@@ -30,7 +32,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			// },
 
 			loadProducts: async () => {
-				const url = "https://3001-moccasin-pigeon-4ixmcu8a.ws-us04.gitpod.io/api/product";
+				const url = "https://3001-moccasin-pigeon-4ixmcu8a.ws-us07.gitpod.io/api/product";
 				const response = await fetch(url);
 				const data = await response.json();
 				console.log("fluxprod", data);
@@ -38,7 +40,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 
 			loadSupermarket: async () => {
-				const url = "https://3001-moccasin-pigeon-4ixmcu8a.ws-us04.gitpod.io/api/market";
+				const url = "https://3001-moccasin-pigeon-4ixmcu8a.ws-us07.gitpod.io/api/market";
 				const response = await fetch(url);
 				const data = await response.json();
 				setStore({ supermarket: data.Results });
@@ -60,15 +62,17 @@ const getState = ({ getStore, getActions, setStore }) => {
 					redirect: "follow"
 				};
 
-				fetch("https://3001-moccasin-pigeon-4ixmcu8a.ws-us04.gitpod.io/api/product", requestOptions)
-					.then(response => response.text())
-					.then(result => console.log(result))
-					.catch(error => console.log("error", error));
-				setStore({ products_home: result.Results });
+				const fetchData = await fetch(
+					"https://3001-moccasin-pigeon-4ixmcu8a.ws-us07.gitpod.io/api/product",
+					requestOptions
+				);
+				const data = await fetchData.json();
+				console.log("data", data);
+				setStore({ search: data.Result });
 			},
 
 			loadCupons: async () => {
-				const url = "https://3001-moccasin-pigeon-4ixmcu8a.ws-us04.gitpod.io/api/coupon";
+				const url = "https://3001-moccasin-pigeon-4ixmcu8a.ws-us07.gitpod.io/api/coupon";
 				const response = await fetch(url);
 				const data = await response.json();
 				console.log("data", data);
@@ -81,7 +85,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					redirect: "follow"
 				};
 
-				fetch("https://3001-moccasin-pigeon-4ixmcu8a.ws-us04.gitpod.io/api/cart", requestOptions)
+				fetch("https://3001-moccasin-pigeon-4ixmcu8a.ws-us07.gitpod.io/api/cart", requestOptions)
 					.then(response => response.text())
 					.then(result => console.log(result))
 					.catch(error => console.log("error", error));

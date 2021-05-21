@@ -14,9 +14,9 @@ export const Productos = () => {
 						<strong>Productos disponibles</strong>
 					</h1>
 					<div className="col-lg-12 productos">
-						{store.products
-							? store.products.map((item, index) => {
-									console.log("products", item);
+						{store.search
+							? store.search.map((item, index) => {
+									console.log("productoos", item);
 
 									return (
 										<div key={index}>

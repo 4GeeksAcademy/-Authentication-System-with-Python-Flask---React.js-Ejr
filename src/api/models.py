@@ -52,7 +52,7 @@ class Cart(db.Model):
     product_id = db.Column(db.Integer, db.ForeignKey('product.id'))
     user = db.relationship('User')
     product = db.relationship('Product')
-
+    
     def __init__(self, user_id, product_id):
         self.user_id = user_id
         self.product_id = product_id
@@ -107,4 +107,5 @@ class CouponsSchema(ma.SQLAlchemyAutoSchema):
 
 class CartSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
-        fields = ('id', 'user.name', 'product.product_name')
+        fields = ('id', 'user.name', 'product.product_name', 'product.price',
+        'product.category', 'product.image')
