@@ -56,7 +56,7 @@ export const Login1 = () => {
 								<i
 									className="fab fa-facebook-square"
 									onClick={() => {
-										alert("Funcionalidad en construccion");
+										alert("Funcionalidad en construcción");
 									}}
 								/>
 							</span>
@@ -64,7 +64,7 @@ export const Login1 = () => {
 								<i
 									className="fab fa-google-plus-square"
 									onClick={() => {
-										alert("Funcionalidad en construccion");
+										alert("Funcionalidad en construcción");
 									}}
 								/>
 							</span>
@@ -72,7 +72,7 @@ export const Login1 = () => {
 								<i
 									className="fab fa-twitter-square"
 									onClick={() => {
-										alert("Funcionalidad en construccion");
+										alert("Funcionalidad en construcción");
 									}}
 								/>
 							</span>

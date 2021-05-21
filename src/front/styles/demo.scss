@@ -11,6 +11,15 @@
     margin: 10px !important;
 };
 
+.productos{
+    display: flex;
+    flex-wrap:wrap;
+    overflow-x: auto;
+    min-height: 600px;
+    overflow-y: hidden;
+    margin: 10px !important;
+};
+
 //CSS de cards de cupones
 .categorias1{
     flex-direction: column;
@@ -82,17 +91,8 @@ color: #60b626;
     box-sizing: border-box;   
 }
 
-/*.body {
-    background-color: #e3e3e3;
-    width: 100%;
-    height:100vh;
-    display:flex;
-    justify-content: center;
-    align-items: center;
-}*/
 .slider {
     background-color: white;
-    //width: 1000px;
     height: 100px;
     overflow: hidden;
     position: relative;

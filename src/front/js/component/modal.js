@@ -52,9 +52,14 @@ export function Modal1(props) {
 
 	return (
 		<>
-			<Button variant="btn btn-outline-success float-right" onClick={handleShow} style={{ marginInline: "10px" }}>
-				Ver detalles
-			</Button>
+			{store.login && (
+				<Button
+					variant="btn btn-outline-success float-right"
+					onClick={handleShow}
+					style={{ marginInline: "10px" }}>
+					Ver detalles
+				</Button>
+			)}
 			{store.login && (
 				<button type="button" className="btn btn-outline-success float-right">
 					<i className="fas fa-heart" onClick={e => OnClickEvent(e)} />
