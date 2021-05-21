@@ -6,7 +6,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 			products: [],
 			supermarket: [],
 			cupons: [],
-			favorites: []
+			favorites: [],
+			products_home: []
 		},
 		actions: {
 			logged: () => {
@@ -43,7 +44,29 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({ supermarket: data.Results });
 			},
 
-			//Pendiente agregar la ruta
+			loadHome: async () => {
+				var myHeaders = new Headers();
+				myHeaders.append("Content-Type", "application/json");
+
+				var raw = JSON.stringify({
+					product: "Arroz",
+					location: "San Jose"
+				});
+
+				var requestOptions = {
+					method: "POST",
+					headers: myHeaders,
+					body: raw,
+					redirect: "follow"
+				};
+
+				fetch("https://3001-moccasin-pigeon-4ixmcu8a.ws-us04.gitpod.io/api/product", requestOptions)
+					.then(response => response.text())
+					.then(result => console.log(result))
+					.catch(error => console.log("error", error));
+				setStore({ products_home: result.Results });
+			},
+
 			loadCupons: async () => {
 				const url = "https://3001-moccasin-pigeon-4ixmcu8a.ws-us04.gitpod.io/api/coupon";
 				const response = await fetch(url);
