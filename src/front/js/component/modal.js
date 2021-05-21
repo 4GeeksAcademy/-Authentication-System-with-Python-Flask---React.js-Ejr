@@ -11,7 +11,7 @@ export function Modal1(props) {
 
 	const OnClickEvent = e => {
 		const Id_Producto = props.id;
-		console.log(store.favorites.filter(Dif_Id_Producto => Dif_Id_Producto === Id_Producto));
+		//console.log(store.favorites.filter(Dif_Id_Producto => Dif_Id_Producto === Id_Producto));
 		if (store.favorites.filter(Dif_Id_Producto => Dif_Id_Producto === Id_Producto).length > 0) {
 			//
 			//Al ser Dif_Id_Producto distinto de Id_Producto, filter no lo retorna.
@@ -20,10 +20,10 @@ export function Modal1(props) {
 			actions.AgregarFavoritos(Id_Producto, props.product_name);
 			//De lo contrario, agregar producto.
 			console.log("Se agrega" + props.id);
+			//store.actions.loadFavorites();
 
 			var myHeaders = new Headers();
-			myHeaders.append("Authorization", sessionStorage.getItem("my_token"));
-			//myHeaders.append("Content-Type", "application/json");
+			myHeaders.append("Content-Type", "application/json");
 
 			var raw = JSON.stringify({
 				username: "123",
@@ -37,7 +37,7 @@ export function Modal1(props) {
 				redirect: "follow"
 			};
 
-			fetch("BACKEND_URL", requestOptions)
+			fetch("https://3001-moccasin-pigeon-4ixmcu8a.ws-us04.gitpod.io/api/cart", requestOptions)
 				.then(response => response.text())
 				.then(result => console.log(result))
 				.catch(error => console.log("error", error));

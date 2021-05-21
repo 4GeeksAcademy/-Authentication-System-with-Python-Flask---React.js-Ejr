@@ -51,22 +51,18 @@ const getState = ({ getStore, getActions, setStore }) => {
 				console.log("data", data);
 				setStore({ coupons: data.Results });
 			},
-			// Favorites
+			// Obtener Favoritos
 			loadFavorites: async () => {
-				var myHeaders = new Headers();
-				myHeaders.append("Authorization", sessionStorage.getItem("my_token"));
-				const url = "https://3001-moccasin-pigeon-4ixmcu8a.ws-us04.gitpod.io/api/cart";
 				var requestOptions = {
 					method: "GET",
-					headers: myHeaders
+					redirect: "follow"
 				};
-				const response = await fetch(url, requestOptions);
-				if (response.status == 200) {
-					const data = await response.json();
-					setStore({ favorites: data.Results });
-				} else {
-					console.log("Usuario no logeado" + response.status);
-				}
+
+				fetch("https://3001-moccasin-pigeon-4ixmcu8a.ws-us04.gitpod.io/api/cart", requestOptions)
+					.then(response => response.text())
+					.then(result => console.log(result))
+					.catch(error => console.log("error", error));
+				setStore({ favorites: data.Results });
 			},
 
 			AgregarFavoritos: (id, product_name) => {

@@ -56,7 +56,7 @@ export const Home = () => {
 			</div>
 
 			<h1 className="Promociones text-center py-4 font-weight-light">Promociones</h1>
-			<div className="col-lg-12 categorias">
+			<div className="col-lg-12 productos">
 				{store.products
 					? store.products.map((item, index) => {
 							console.log("products", item);

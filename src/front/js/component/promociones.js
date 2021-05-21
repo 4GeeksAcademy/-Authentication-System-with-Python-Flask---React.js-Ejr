@@ -8,7 +8,7 @@ export const Promociones = props => {
 	return (
 		<>
 			<div className="tarjeta">
-				<div className="card" style={{ width: "16rem" }}>
+				<div className="card" style={{ width: "16rem", marginInline: "20px" }}>
 					<img src={props.image} className="card-img-top" alt="..." />
 					<ul className="list-group list-group-flush">
 						<li className="list-group-item font-weight-bold">{props.product_name}</li>
