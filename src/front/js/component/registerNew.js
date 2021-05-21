@@ -1,15 +1,10 @@
 import React, { useContext, useState } from "react";
 import PropTypes from "prop-types";
 import { Context } from "../store/appContext";
-import { Link, useHistory } from "react-router-dom";
-import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
-import GoogleLogin from "react-google-login";
 import "../../styles/registerNew.scss";
-import Swal from "sweetalert2";
 
 export const RegisterNew = () => {
 	const { actions, store } = useContext(Context);
-	const history = useHistory();
 	const [user, setUser] = useState({
 		name: "",
 		username: "",
@@ -18,17 +13,6 @@ export const RegisterNew = () => {
 		phonenumber: "",
 		usertype: null
 	});
-
-	const registerSuccess = () => {
-		Swal.fire({
-			icon: "success",
-			title: "Registro exitoso",
-			text: "Redirigiendo a pagina de ingreso",
-			showConfirmButton: false,
-			timer: 2500
-		});
-		history.push("/logUserIn");
-	};
 
 	const handleChange = e => {
 		setUser({
@@ -44,7 +28,6 @@ export const RegisterNew = () => {
 		user.usertype = store.isClient;
 		actions.userRegistration(user);
 		store.isClient === 1 ? actions.isSellerOrClient(1) : actions.isSellerOrClient(0);
-		registerSuccess();
 	};
 
 	return (
@@ -103,6 +86,7 @@ export const RegisterNew = () => {
 											type="text"
 											name="name"
 											placeholder="Ingrese su Nombre Completo"
+											required
 											onChange={handleChange}
 										/>
 										<span className="focus-input100" />
@@ -114,6 +98,7 @@ export const RegisterNew = () => {
 											type="text"
 											name="username"
 											placeholder="Ingrese su Usuario"
+											required
 											onChange={handleChange}
 										/>
 										<span className="focus-input100" />
@@ -125,6 +110,7 @@ export const RegisterNew = () => {
 											type="text"
 											name="email"
 											placeholder="Ingrese su Correo electronico"
+											required
 											onChange={handleChange}
 										/>
 										<span className="focus-input100" />
@@ -136,6 +122,7 @@ export const RegisterNew = () => {
 											type="password"
 											name="password"
 											placeholder="Ingrese su contraseña"
+											required
 											onChange={handleChange}
 										/>
 										<span className="focus-input100" />
@@ -147,6 +134,7 @@ export const RegisterNew = () => {
 											type="text"
 											name="phonenumber"
 											placeholder="Ingrese su numero telefonico"
+											required
 											onChange={handleChange}
 										/>
 										<span className="focus-input100" />
@@ -155,57 +143,11 @@ export const RegisterNew = () => {
 									<div className="container-login100-form-btn  mt-4">
 										<div className="wrap-login100-form-btn">
 											<div className="login100-form-bgbtn" />
-											<button
-												type="submit"
-												className="login100-form-btn"
-												onClick={
-													//setUserType("True");
-													handleSubmit
-												}>
+											<button type="submit" className="login100-form-btn" onClick={handleSubmit}>
 												Registrarse
 											</button>
 										</div>
 									</div>
-									{/* 
-									<div className="txt1 text-center p-t-40 p-b-20">
-										<span>O registrese usando</span>
-									</div>
-
-									<div className="flex-c-m">
-										<a className="login100-social-item bg1">
-											<FacebookLogin
-												appId="1167779733658455"
-												callback={actions.responseFacebook}
-												render={renderProps => (
-													<button
-														className="fa fa-facebook"
-														style={{ color: "white" }}
-														onClick={() => {
-															console.log(store.appAuth);
-														}}
-													/>
-												)}
-											/>
-										</a>
-
-										<a className="login100-social-item bg3">
-											<GoogleLogin
-												clientId="253456588353-u3j0pe2o5mhoj8s93og3o2tt0qfhai7k.apps.googleusercontent.com"
-												render={renderProps => (
-													<button
-														className="fa fa-google"
-														style={{ color: "white" }}
-														onClick={renderProps.onClick}
-														//disabled={renderProps.disabled}
-													/>
-												)}
-												buttonText="Login"
-												onSuccess={actions.responseGoogle}
-												onFailure={actions.responseGoogle}
-												cookiePolicy={"single_host_origin"}
-											/>
-										</a>
-									</div> */}
 
 									<div className="flex-col-c p-t-30">
 										<span className="txt1 p-b-17">Ya tiene cuenta?</span>
@@ -230,6 +172,7 @@ export const RegisterNew = () => {
 											type="text"
 											name="name"
 											placeholder="Ingrese su Nombre Completo"
+											required
 											onChange={handleChange}
 										/>
 										<span className="focus-input100" />
@@ -241,6 +184,7 @@ export const RegisterNew = () => {
 											type="text"
 											name="username"
 											placeholder="Ingrese su Usuario"
+											required
 											onChange={handleChange}
 										/>
 										<span className="focus-input100" />
@@ -252,6 +196,7 @@ export const RegisterNew = () => {
 											type="text"
 											name="email"
 											placeholder="Ingrese su Correo electronico"
+											required
 											onChange={handleChange}
 										/>
 										<span className="focus-input100" />
@@ -263,6 +208,7 @@ export const RegisterNew = () => {
 											type="password"
 											name="password"
 											placeholder="Ingrese su contraseña"
+											required
 											onChange={handleChange}
 										/>
 										<span className="focus-input100" />
@@ -274,6 +220,7 @@ export const RegisterNew = () => {
 											type="text"
 											name="phonenumber"
 											placeholder="Ingrese su numero telefonico"
+											required
 											onChange={handleChange}
 										/>
 										<span className="focus-input100" />
@@ -282,49 +229,11 @@ export const RegisterNew = () => {
 									<div className="container-login100-form-btn  mt-4">
 										<div className="wrap-login100-form-btn">
 											<div className="login100-form-bgbtn" />
-											<button className="login100-form-btn" onClick={handleSubmit}>
+											<button type="submit" className="login100-form-btn" onClick={handleSubmit}>
 												Registrarse
 											</button>
 										</div>
 									</div>
-
-									{/* <div className="txt1 text-center p-t-40 p-b-20">
-										<span>O registrese usando</span>
-									</div>
-
-									<div className="flex-c-m">
-										<a className="login100-social-item bg1">
-											<FacebookLogin
-												appId="1167779733658455"
-												callback={actions.responseFacebook}
-												render={renderProps => (
-													<button
-														className="fa fa-facebook"
-														style={{ color: "white" }}
-														onClick={renderProps.onClick}
-													/>
-												)}
-											/>
-										</a>
-
-										<a className="login100-social-item bg3">
-											<GoogleLogin
-												clientId="253456588353-u3j0pe2o5mhoj8s93og3o2tt0qfhai7k.apps.googleusercontent.com"
-												render={renderProps => (
-													<button
-														className="fa fa-google"
-														style={{ color: "white" }}
-														onClick={renderProps.onClick}
-														//disabled={renderProps.disabled}
-													/>
-												)}
-												buttonText="Login"
-												onSuccess={actions.responseGoogle}
-												onFailure={actions.responseGoogle}
-												cookiePolicy={"single_host_origin"}
-											/>
-										</a>
-									</div> */}
 
 									<div className="flex-col-c p-t-30">
 										<span className="txt1 p-b-17">Ya tiene cuenta?</span>

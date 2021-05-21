@@ -1,33 +1,17 @@
 import React, { useContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Context } from "../store/appContext";
-import { Link, useHistory } from "react-router-dom";
-import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
-import GoogleLogin from "react-google-login";
+import { Link } from "react-router-dom";
 import logo from "../../img/logo.jpeg";
 import "../../styles/registerNew.scss";
-import Swal from "sweetalert2";
-
 export const Login = () => {
 	const { actions, store } = useContext(Context);
-	const history = useHistory();
+
 	const [user, setUser] = useState({
 		username: "",
 		password: "",
 		usertype: null
 	});
-
-	const logInSuccess = () => {
-		Swal.fire({
-			icon: "success",
-			title: "Ingreso exitoso",
-			text: "Cargando Catalogo",
-			showConfirmButton: false,
-			timer: 1500
-		});
-
-		store.isSeller === 1 ? history.push("/newProduct") : history.push("/logueado");
-	};
 
 	const handleChange = e => {
 		setUser({
@@ -40,9 +24,8 @@ export const Login = () => {
 	const handleSubmit = e => {
 		e.preventDefault();
 		// ... submit to API or something
-		user.usertype = store.isSeller;
+		user.usertype = parseInt(store.isSeller);
 		actions.userLogIn(user);
-		logInSuccess();
 	};
 	return (
 		<div className="container my-4">
@@ -59,6 +42,7 @@ export const Login = () => {
 								type="text"
 								name="username"
 								placeholder="Ingrese su usuario"
+								required
 								onChange={handleChange}
 							/>
 							<span className="focus-input100" />
@@ -70,6 +54,7 @@ export const Login = () => {
 								type="text"
 								name="password"
 								placeholder="Ingrese su Contraseña"
+								required
 								onChange={handleChange}
 							/>
 							<span className="focus-input100" />
@@ -87,15 +72,6 @@ export const Login = () => {
 								<a>Olvido su contraseña?</a>
 							</Link>
 						</div>
-						{/* <div className="flex-c-m">
-							<a href="#" className="login100-social-item bg1">
-								<i className="fa fa-facebook" />
-							</a>
-
-							<a href="#" className="login100-social-item bg3">
-								<i className="fa fa-google" />
-							</a>
-						</div> */}
 					</form>
 				</div>
 			</section>

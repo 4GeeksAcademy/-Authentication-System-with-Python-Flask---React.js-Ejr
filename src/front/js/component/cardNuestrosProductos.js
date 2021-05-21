@@ -25,7 +25,12 @@ export const CardNuestrosProductos = () => {
 		}
 	};
 	return (
-		<Carousel responsive={responsive}>
+		<Carousel
+			responsive={responsive}
+			autoPlay={true}
+			autoPlaySpeed={1000}
+			customTransition="all .5"
+			transitionDuration={1000}>
 			{store.dataMart.map((p, index) => {
 				return (
 					<div

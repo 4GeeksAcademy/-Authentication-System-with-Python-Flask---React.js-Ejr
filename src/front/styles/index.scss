@@ -1,6 +1,7 @@
 /* 
     General Styles
 */
+$font-primary: 'Poppins',Arial, sans-serif;
 .verdeoscuro {color: #142107;}
 .verdeclaro {color: #105c02;}
 .naranja {color: #ff7b2d;}
@@ -8,7 +9,7 @@
 .cremita {color: #fffbd8;}
 
 body {
-  font-family: 'Poppins', Arial, sans-serif;
+  font-family: $font-primary !important;
   margin-top: 500px;
 }
 .carousel {
