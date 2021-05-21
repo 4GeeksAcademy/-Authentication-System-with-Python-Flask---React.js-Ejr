@@ -7,17 +7,7 @@ import "../../styles/registerNew.scss";
 
 export const PassRecovery = () => {
 	const { actions } = useContext(Context);
-	const history = useHistory();
 	const [resetEmail, setResetEmail] = useState({ email: "" });
-
-	const resetAlert = () =>
-		Swal.fire({
-			icon: "success",
-			title: "Recuperacion de Contraseña",
-			text:
-				"Si el email o usuario existe en nuestra base de datos, recibira un correo con el link para re-establecer su contaseña.",
-			showConfirmButton: true
-		});
 
 	const handleChange = e => {
 		setResetEmail({
@@ -31,8 +21,6 @@ export const PassRecovery = () => {
 		e.preventDefault();
 		// ... submit to API or something
 		actions.recoverPassword(resetEmail);
-		resetAlert();
-		history.push("/");
 	};
 
 	return (
@@ -48,6 +36,7 @@ export const PassRecovery = () => {
 								type="text"
 								name="email"
 								placeholder="Ingrese su Correo electronico"
+								required
 								onChange={handleChange}
 							/>
 							<span className="focus-input100" />

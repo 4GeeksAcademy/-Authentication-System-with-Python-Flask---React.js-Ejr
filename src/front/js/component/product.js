@@ -7,26 +7,14 @@ export const Product = () => {
 	const { actions, store } = useContext(Context);
 	const [price, setPrice] = useState(null);
 	const [product, setProduct] = useState({
-		productName: "",
+		productname: "",
 		description: "",
 		category: "",
 		price: null,
+		image: "",
 		itemstatus: "",
-		sellerId: null
+		sellerid: null
 	});
-	const [prdImage, setPrdImage] = useState({
-		image: null
-	});
-
-	const prdSuccess = () => {
-		Swal.fire({
-			icon: "success",
-			title: "Producto Creado exitosamente",
-			text: "Abrir catalogo para ver el producto ingresado recientemente",
-			showConfirmButton: false,
-			timer: 1500
-		});
-	};
 
 	const handleChange = e => {
 		setProduct({
@@ -39,11 +27,9 @@ export const Product = () => {
 	const handleSubmit = e => {
 		e.preventDefault();
 		// ... submit to API or something
-		product.sellerId = store.sellerId;
+		product.sellerid = parseInt(sessionStorage.getItem("sellerId"));
 		product.price = price;
-		console.log(product);
 		actions.createNewProduct(product);
-		prdSuccess();
 	};
 	return (
 		<div className="container">
@@ -62,7 +48,6 @@ export const Product = () => {
 									type="text"
 									className="form-control"
 									name="productName"
-									id="name"
 									placeholder="Ingrese aquí"
 									onChange={handleChange}
 								/>
@@ -120,6 +105,7 @@ export const Product = () => {
 							</label>
 							<div className="col-sm-9">
 								<textarea
+									type="text"
 									className="form-control"
 									placeholder="URL de la imagen del articulo"
 									name="image"

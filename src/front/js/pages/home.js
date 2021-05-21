@@ -9,7 +9,7 @@ export const Home = () => {
 	const { store, actions } = useContext(Context);
 
 	return (
-		<div className="h-100 text-center fixed-content-mg" style={{ fontFamily: "Zen Dots" }}>
+		<div className="h-100 text-center fixed-content-mg">
 			<h2>Productos de nuestros emprendedores.</h2>
 			<CardNuestrosProductos />
 		</div>

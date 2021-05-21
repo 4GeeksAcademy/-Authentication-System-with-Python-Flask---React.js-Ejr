@@ -14,13 +14,6 @@ export const Navbar = () => {
 			<div className="container">
 				<div className="row justify-content-between">
 					<div className="col">
-						{/* <span>
-							<img
-								className="rounded float-left"
-								src={logo}
-								style={{ height: "100px", width: "200px" }}
-							/>
-						</span> */}
 						<Link to="/" className="navbar-brand mt-3">
 							Pura Vida <span>Mart</span>
 						</Link>
@@ -77,7 +70,7 @@ export const Navbar = () => {
 								{store.token &&
 								store.token !== "" &&
 								store.token !== undefined &&
-								store.isSeller === 0 ? (
+								sessionStorage.getItem("whoIsLoggedIn") === "0" ? (
 									<Link
 										to="/checkoutview"
 										className="d-flex align-items-center justify-content-center"

@@ -13,17 +13,6 @@ export const PasswordReset = () => {
 		newPassword: ""
 	});
 
-	const resetAlert = () => {
-		Swal.fire({
-			icon: "success",
-			title: "Cambio de contraseña",
-			text: "Su contraseña ha sido modificada con existo",
-			showConfirmButton: false,
-			timer: 2500
-		});
-		history.push("/logUserIn");
-	};
-
 	const handleChange = e => {
 		setUserToReset({
 			...userToReset,
@@ -36,7 +25,6 @@ export const PasswordReset = () => {
 		e.preventDefault();
 		// ... submit to API or something
 		actions.resetPassword(userToReset);
-		resetAlert();
 	};
 
 	// reset api

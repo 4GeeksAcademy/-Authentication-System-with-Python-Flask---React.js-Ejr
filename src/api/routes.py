@@ -24,11 +24,17 @@ def register_user():
     phonenumber = request.json.get("phonenumber", None)
     usertype = request.json.get("usertype", None)
 
-    if email is None:
+    if not username:
+        return jsonify({"msg": "Please provide a valid username."}), 400
+    if not fullname:
+        return jsonify({"msg": "Please provide a valid full name."}), 400
+    if not email:
         return jsonify({"msg": "Please provide a valid email."}), 400
-    if password is None:
+    if not password:
         return jsonify({"msg": "Please provide a valid password."}), 400
-    
+    if not phonenumber:
+        return jsonify({"msg": "Please provide a valid phone number."}), 400
+
     if usertype == 1:
 
         client = Client.query.filter_by(username=username, password=password, isSeller=usertype).first()
@@ -73,9 +79,9 @@ def login_user():
     usertype = request.json.get("usertype", None)
 
     # valida si estan vacios los ingresos
-    if username is None:
+    if not username:
         return jsonify({"msg": "Please provide a valid username."}), 400
-    if password is None:
+    if not password:
         return jsonify({"msg": "Please provide a valid password."}), 400
 
     if usertype == 1:
@@ -102,7 +108,7 @@ def login_user():
 def returnPassword():
     email = request.json.get("email", None)
 
-    if email is None:
+    if not email:
         return jsonify({"msg": "Please provide a valid email."}), 400
 
     user = Client.query.filter_by(email=email).first()
@@ -124,11 +130,11 @@ def resetPassword():
     tempPassword = request.json.get("tempPassword", None)
     newPassword = request.json.get("newPassword", None)
 
-    if email is None:
+    if not email:
         return jsonify({"msg": "Please provide a valid email."}), 400
-    if tempPassword is None:
+    if not tempPassword:
         return jsonify({"msg": "Invalid temporary password"}), 400
-    if newPassword is None:
+    if not newPassword:
         return jsonify({"msg": "Please provide a new password"}), 400
 
     user = Client.query.filter_by(email=email, password=tempPassword).first()
@@ -150,17 +156,17 @@ def addNewProduct():
     description = request.json.get("description", None)
     category = request.json.get("category", None)
     price = request.json.get("price", None)
-    item_status = request.json.get("image", None)
+    item_status = request.json.get("itemstatus", None)
     
-    if img is None:
+    if not img :
         return jsonify({"msg": "No image was uploaded!."}), 400
-    if description is None:
+    if not description:
         return jsonify({"msg": "Please enter a valid description"}), 400
-    if category is None:
+    if not category:
         return jsonify({"msg": "Please enter a valid category"}), 400
-    if price is None:
+    if not price:
         return jsonify({"msg": "Please enter a valid price"}), 400
-    if item_status is None:
+    if not item_status:
         return jsonify({"msg": "Please enter a valid item status"}), 400
     else:
         new_product = Product()
