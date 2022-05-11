@@ -17,13 +17,26 @@ export const Home = () => {
           >
             <div className="carousel-inner">
               <div className="carousel-item active">
-                <img   src="https://cdn.pixabay.com/photo/2018/07/27/00/32/apartment-3564955_960_720.jpg" className="d-block w-100 carouselImg" alt="..." />
+                <img
+                  src="https://cdn.pixabay.com/photo/2018/07/27/00/32/apartment-3564955_960_720.jpg"
+                  className="d-block w-100 carouselImg"
+                  alt="..."
+                />
               </div>
               <div className="carousel-item">
-                <img c src="https://cdn.pixabay.com/photo/2016/08/23/22/11/building-1615676_960_720.jpg" className="d-block w-100 carouselImg" alt="..." />
+                <img
+                  c
+                  src="https://cdn.pixabay.com/photo/2016/08/23/22/11/building-1615676_960_720.jpg"
+                  className="d-block w-100 carouselImg"
+                  alt="..."
+                />
               </div>
-              <div  className="carousel-item">
-                <img  src="https://cdn.pixabay.com/photo/2017/10/06/04/33/new-housing-development-2821969_960_720.jpg" className="d-block w-100 carouselImg" alt="..." />
+              <div className="carousel-item">
+                <img
+                  src="https://cdn.pixabay.com/photo/2017/10/06/04/33/new-housing-development-2821969_960_720.jpg"
+                  className="d-block w-100 carouselImg"
+                  alt="..."
+                />
               </div>
             </div>
             <button
@@ -51,6 +64,9 @@ export const Home = () => {
               <span className="visually-hidden">Next</span>
             </button>
           </div>
+        </div>
+        <div className="row text-center my-5">
+          <h1>Atrevete a invertir!</h1>
         </div>
       </div>
     </>
