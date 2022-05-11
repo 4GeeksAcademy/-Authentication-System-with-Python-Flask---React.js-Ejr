@@ -66,7 +66,7 @@ export const Home = () => {
           </div>
         </div>
         <div className="row text-center my-5">
-          <h1>Atrevete a invertir!</h1>
+          <h1>¡Atrevete a invertir!</h1>
         </div>
       </div>
     </>
