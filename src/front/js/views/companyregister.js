@@ -6,50 +6,76 @@ export const CompanyRegister = () => {
   return (
     <>
       <h1>*empresa*, ingresa tus datos </h1>
-      <form class="row g-3">
-        <div class="col-md-6">
-            <label for="inputEmail4" class="form-label">Email</label>
-            <input type="email" class="form-control" id="inputEmail4">
-        </div>
-        <div class="col-md-6">
-            <label for="inputPassword4" class="form-label">Password</label>
-            <input type="password" class="form-control" id="inputPassword4">
-        </div>
-        <div class="col-12">
-            <label for="inputAddress" class="form-label">Address</label>
-            <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
-        </div>
-        <div class="col-12">
-            <label for="inputRutcompany" class="form-label">Rut Company</label>
-            <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
-        </div>
-        <div class="col-md-6">
-            <label for="inputCity" class="form-label">City</label>
-            <input type="text" class="form-control" id="inputCity">
-        </div>
-        <div class="col-md-4">
-            <label for="inputState" class="form-label">State</label>
-            <select id="inputState" class="form-select">
-            <option selected>Choose...</option>
-            <option>...</option>
-            </select>
-        </div>
-        <div class="col-md-2">
-            <label for="inputContact" class="form-label">Contact</label>
-            <input type="text" class="form-control" id="inputZip">
-        </div>
-        <div class="col-12">
-            <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="gridCheck">
-            <label class="form-check-label" for="gridCheck">
-                Check me out
-            </label>
-            </div>
-        </div>
-        <div class="col-12">
-            <button type="submit" class="btn btn-primary">Sign in</button>
-        </div>
-        </form>
+      <form className="row g-3">
+    <div className="col-md-6">
+      <label htmlFor="inputEmail4" className="form-label">
+        Email
+      </label>
+      <input type="email" className="form-control" id="inputEmail4" />
+    </div>
+    <div className="col-md-6">
+      <label htmlFor="inputPassword4" className="form-label">
+        Password
+      </label>
+      <input type="password" className="form-control" id="inputPassword4" />
+    </div>
+    <div className="col-12">
+      <label htmlFor="inputAddress" className="form-label">
+        Address
+      </label>
+      <input
+        type="text"
+        className="form-control"
+        id="inputAddress"
+        placeholder="1234 Main St"
+      />
+    </div>
+    <div className="col-12">
+      <label htmlFor="inputRutcompany" className="form-label">
+        Rut Company
+      </label>
+      <input
+        type="text"
+        className="form-control"
+        id="inputAddress2"
+        placeholder="Apartment, studio, or floor"
+      />
+    </div>
+    <div className="col-md-6">
+      <label htmlFor="inputCity" className="form-label">
+        City
+      </label>
+      <input type="text" className="form-control" id="inputCity" />
+    </div>
+    <div className="col-md-4">
+      <label htmlFor="inputState" className="form-label">
+        State
+      </label>
+      <select id="inputState" className="form-select">
+        <option selected="">Choose...</option>
+        <option>...</option>
+      </select>
+    </div>
+    <div className="col-md-2">
+      <label htmlFor="inputContact" className="form-label">
+        Contact
+      </label>
+      <input type="text" className="form-control" id="inputZip" />
+    </div>
+    <div className="col-12">
+      <div className="form-check">
+        <input className="form-check-input" type="checkbox" id="gridCheck" />
+        <label className="form-check-label" htmlFor="gridCheck">
+          Check me out
+        </label>
+      </div>
+    </div>
+    <div className="col-12">
+      <button type="submit" className="btn btn-primary">
+        Sign in
+      </button>
+    </div>
+  </form>
       
 </>
   );
