@@ -14,6 +14,7 @@ import { UserProfile } from "./views/userProfile";
 import { UserProfileSetup } from "./views/userprofilesetup";
 import { CompanyRegisterSuccess } from "./views/companyregistersuccess";
 import { CompanyRegister } from "./views/companyregister";
+import { UserRegister } from "./views/userRegister";
 
 //create your first component
 const Layout = () => {
@@ -33,6 +34,9 @@ const Layout = () => {
             <Route exact path="/login">
               <LoginScreen />
             </Route>
+			<Route exact path="/register">
+              <UserRegister />
+            </Route>
             <Route exact path="/user_profile_setup">
               <UserProfileSetup />
             </Route>
@@ -42,10 +46,10 @@ const Layout = () => {
             <Route exact path="/proyect">
               <Proyect />
             </Route>
-            <Route exact path="/userHome">
+            <Route exact path="/userhome">
               <UserHome />
             </Route>
-            <Route exact path="/userProfile">
+            <Route exact path="/userprofile">
               <UserProfile />
             </Route>
             <Route>
