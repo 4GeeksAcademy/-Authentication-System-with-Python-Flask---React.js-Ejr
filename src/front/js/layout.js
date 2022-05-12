@@ -13,6 +13,7 @@ import { UserHome } from "./views/userHome";
 import { UserProfile } from "./views/userProfile";
 import { UserProfileSetup } from "./views/userprofilesetup";
 import { CompanyRegisterSuccess } from "./views/companyregistersuccess";
+import { CompanyRegister } from "./views/companyregister";
 
 //create your first component
 const Layout = () => {
@@ -25,6 +26,7 @@ const Layout = () => {
       <BrowserRouter basename={basename}>
         <Navbar />
         <Switch>
+
             <Route exact path="/">
               <Home />
             </Route>
@@ -37,7 +39,7 @@ const Layout = () => {
             <Route exact path="/company_register_success">
               <CompanyRegisterSuccess />
             </Route>
-            <Route exact path="/Proyect">
+            <Route exact path="/proyect">
               <Proyect />
             </Route>
             <Route exact path="/userHome">
@@ -49,6 +51,7 @@ const Layout = () => {
             <Route>
               <h1>Not found!</h1>
             </Route>
+
         </Switch>
         <Footer />
       </BrowserRouter>

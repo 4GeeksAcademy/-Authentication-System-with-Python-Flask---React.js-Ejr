@@ -8,15 +8,15 @@ export const Navbar = () => {
         <Link to="/">
           <span className="navbar-brand mb-0 h1">Investor</span>
         </Link>
-        <Link to="/empresas_register">
+        <Link to="/company_register">
           <button className="btn btn-success">Empresas</button>
         </Link>
         <div className="ml-auto">
           <Link to="/register">
-            <button className="btn btn-success mx-5">Registrate!</button>
+            <button className="btn btn-success mx-5">Registrate</button>
           </Link>
           <Link to="/login">
-            <button className="btn btn-success">Ingresa!</button>
+            <button className="btn btn-success">Ingresa</button>
           </Link>
         </div>
       </div>
