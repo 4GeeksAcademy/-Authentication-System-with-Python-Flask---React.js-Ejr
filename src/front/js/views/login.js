@@ -4,8 +4,8 @@ import "../../styles/login.css";
 
 export const LoginScreen = () => {
   return (
-    <div id="login">
-      <div class="container">
+    <div id="login my-5">
+      <div class="container my-5">
         <div
           id="login-row"
           class="row justify-content-center align-items-center"
