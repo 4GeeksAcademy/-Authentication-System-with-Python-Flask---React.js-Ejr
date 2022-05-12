@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 export const UserProfileSetup = () => {
   return (
-    <>
+    <div className="container">
       <h1>*Usuario*, dejanos conocerte...</h1>
       <form>
         <div className="mb-3">
@@ -33,6 +33,6 @@ export const UserProfileSetup = () => {
           <button>Registrate!</button>
         </Link>
       </form>
-    </>
+    </div>
   );
 };
