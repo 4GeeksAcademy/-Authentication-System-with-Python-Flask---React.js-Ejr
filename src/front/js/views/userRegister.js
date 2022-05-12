@@ -3,7 +3,7 @@ import "../../styles/login.css";
 
 export const userRegister = () => {
 	return (
-		<div>
+		<div className="my-5">
 			<h3 className="auth__title">Registro</h3>
 			<form>
 				<input

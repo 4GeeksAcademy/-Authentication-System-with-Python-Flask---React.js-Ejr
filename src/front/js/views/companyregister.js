@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 export const CompanyRegister = () => {
   return (
-    <div className="container">
+    <div className="container my-5">
       <h1>*empresa*, ingresa tus datos </h1>
       <form className="row g-3">
         <div className="col-md-6">
