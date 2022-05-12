@@ -75,12 +75,11 @@ export const CompanyRegister = () => {
           </div>
         </div>
         <div className="col-12">
-        <Link to="company_register_success">
+          <Link to="company_register_success">
             <button type="submit" className="btn btn-primary">
-            Sign in
-          </button>
-        </Link>
-          
+              Sign in
+            </button>
+          </Link>
         </div>
       </form>
     </div>
