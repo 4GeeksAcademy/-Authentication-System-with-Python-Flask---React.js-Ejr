@@ -72,4 +72,4 @@ export const Home = () => {
     </>
   );
 };
-<img src="https://cdn.pixabay.com/photo/2018/07/27/00/32/apartment-3564955_960_720.jpg" />;
+
