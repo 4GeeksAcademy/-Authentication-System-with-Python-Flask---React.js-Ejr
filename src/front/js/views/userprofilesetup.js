@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 export const UserProfileSetup = () => {
   return (
     <>
-      <h1>*Usuario*, dejanos conocerte...</h1>
+      <h1>*suario*, dejanos conocerte...</h1>
       <form>
         <div className="mb-3">
           <label htmlFor="formGroupExampleInput" className="form-label">
