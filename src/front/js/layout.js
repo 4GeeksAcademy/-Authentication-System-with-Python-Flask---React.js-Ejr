@@ -8,6 +8,9 @@ import injectContext from "./store/appContext";
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 import { LoginScreen } from "./views/login";
+import { Proyect } from "./views/proyect";
+import { UserHome } from "./views/userHome";
+import { UserProfile } from "./views/userProfile";
 import { UserProfileSetup } from "./views/userprofilesetup";
 import { CompanyRegisterSuccess } from "./views/companyregistersuccess";
 import { CompanyRegister } from "./views/companyregister";
@@ -23,24 +26,32 @@ const Layout = () => {
       <BrowserRouter basename={basename}>
         <Navbar />
         <Switch>
-          <Route exact path="/">
-            <Home />
-          </Route>
-          <Route exact path="/login">
-            <LoginScreen />
-          </Route>
-		  <Route exact path="/user_profile_setup">
-            <UserProfileSetup />
-          </Route>
-		  <Route exact path="/company_register">
-            <CompanyRegister />
-          </Route>
-		  <Route exact path="/company_register_success">
-            <CompanyRegisterSuccess />
-          </Route>
-          <Route>
-            <h1>Not found!</h1>
-          </Route>
+
+            <Route exact path="/">
+              <Home />
+            </Route>
+            <Route exact path="/login">
+              <LoginScreen />
+            </Route>
+            <Route exact path="/user_profile_setup">
+              <UserProfileSetup />
+            </Route>
+            <Route exact path="/company_register_success">
+              <CompanyRegisterSuccess />
+            </Route>
+            <Route exact path="/proyect">
+              <Proyect />
+            </Route>
+            <Route exact path="/userHome">
+              <UserHome />
+            </Route>
+            <Route exact path="/userProfile">
+              <UserProfile />
+            </Route>
+            <Route>
+              <h1>Not found!</h1>
+            </Route>
+
         </Switch>
         <Footer />
       </BrowserRouter>
