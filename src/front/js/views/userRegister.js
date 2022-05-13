@@ -1,11 +1,11 @@
 import React from "react";
 import "../../styles/login.css";
-
+import { Link } from "react-router-dom";
 export const UserRegister = () => {
   return (
     <>
         <div className="container my-5">
-      <h1>*empresa*, ingresa tus datos </h1>
+      <h1>Hola, ingresa tus datos </h1>
       <form className="row g-3">
         <div className="col-md-6">
           <label htmlFor="inputEmail4" className="form-label">
@@ -75,7 +75,7 @@ export const UserRegister = () => {
           </div>
         </div>
         <div className="col-12">
-        <Link to="company_register_success">
+        <Link to="/user_profile_setup">
             <button type="submit" className="btn btn-primary">
             Sign in
           </button>
