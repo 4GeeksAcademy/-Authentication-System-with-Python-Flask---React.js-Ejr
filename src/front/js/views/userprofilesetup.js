@@ -11,7 +11,7 @@ export const UserProfileSetup = () => {
           <label htmlFor="formGroupExampleInput" className="form-label">
             ¿Cual es tu ingreso fijo?
           </label>
-          <select class="form-select" aria-label="Default select example">
+          <select className="form-select" aria-label="Default select example">
             <option selected>Selecciona una opcion:</option>
             <option value="1">$0 - $1.199.000</option>
             <option value="2">$1.200.000 - $1.499.000</option>
@@ -35,7 +35,7 @@ export const UserProfileSetup = () => {
           <label htmlFor="formGroupExampleInput" className="form-label">
             ¿Si aplica, de cuanto es tu ingreso complementario mensualmente?
           </label>
-          <select class="form-select" aria-label="Default select example">
+          <select className="form-select" aria-label="Default select example">
             <option selected>Selecciona una opcion:</option>
             <option value="1">One</option>
             <option value="2">Two</option>
@@ -46,7 +46,7 @@ export const UserProfileSetup = () => {
           <label htmlFor="formGroupExampleInput" className="form-label">
             ¿Cual es tu capacidad de ahorro mensual?
           </label>
-          <select class="form-select" aria-label="Default select example">
+          <select className="form-select" aria-label="Default select example">
             <option selected>Selecciona una opcion:</option>
             <option value="1">$0 - $199.000</option>
             <option value="2">$200.000 - $499.000</option>
@@ -67,7 +67,7 @@ export const UserProfileSetup = () => {
           <label htmlFor="formGroupExampleInput" className="form-label">
             ¿Tiene alguna pre aprobacion bancaria?
           </label>
-          <select class="form-select" aria-label="Default select example">
+          <select className="form-select" aria-label="Default select example">
             <option selected>Selecciona una opcion:</option>
             <option value="1">Si</option>
             <option value="2">No</option>

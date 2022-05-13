@@ -40,16 +40,19 @@ const Layout = () => {
             <Route exact path="/user_profile_setup">
               <UserProfileSetup />
             </Route>
+            <Route exact path="/company_register">
+              <CompanyRegister />
+            </Route>
             <Route exact path="/company_register_success">
               <CompanyRegisterSuccess />
             </Route>
             <Route exact path="/proyect">
               <Proyect />
             </Route>
-            <Route exact path="/userhome">
+            <Route exact path="/user_home">
               <UserHome />
             </Route>
-            <Route exact path="/userprofile">
+            <Route exact path="/user_profile">
               <UserProfile />
             </Route>
             <Route>
