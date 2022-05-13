@@ -40,7 +40,7 @@ export const LoginScreen = () => {
                 </div>
                 <br />
                 <div class="form-group">
-                  <Link to="/userhome">
+                  <Link to="/user_home">
                     <button
                       type="submit"
                       name="submit"
