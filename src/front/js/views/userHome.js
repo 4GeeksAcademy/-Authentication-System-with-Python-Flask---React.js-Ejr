@@ -4,6 +4,6 @@ import { Link } from "react-router-dom";
 
 export const UserHome = () => {
   return (
-    <h1>Santiago te amo</h1>
+    <h1>Hola</h1>
   );
 };
