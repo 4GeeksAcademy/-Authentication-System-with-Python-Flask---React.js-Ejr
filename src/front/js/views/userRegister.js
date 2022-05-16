@@ -6,35 +6,35 @@ export const UserRegister = () => {
 		<div className="container my-5">
 			<form>
 				<div class="form-group">
-					<label for="exampleInputEmail1">Nombre completo</label>
-					<input
-						type="email"
-						class="form-control"
-						id="exampleInputEmail1"
-						aria-describedby="emailHelp"
-						placeholder="Ingresa tu nombre"
-					/>
-					<label for="exampleInputEmail1">Rut</label>
+					<label>Nombre completo</label>
 					<input
 						type="text"
 						class="form-control"
-						id="exampleInputEmail1"
+						id="InputNombre"
+						aria-describedby="emailHelp"
+						placeholder="Ingresa tu nombre"
+					/>
+					<label>Rut</label>
+					<input
+						type="text"
+						class="form-control"
+						id="Rut"
 						aria-describedby="emailHelp"
 						placeholder="Ingresa tu rut"
 					/>
-					<label for="exampleInputEmail1">Telefono</label>
+					<label>Telefono</label>
 					<input
 						type="telephone"
 						class="form-control"
-						id="exampleInputEmail1"
+						id="InputTelefono"
 						aria-describedby="emailHelp"
 						placeholder="Ingresa tu telefono"
 					/>
-					<label for="exampleInputEmail1">Email</label>
+					<label>Email</label>
 					<input
 						type="email"
 						class="form-control"
-						id="exampleInputEmail1"
+						id="InputEmail1"
 						aria-describedby="emailHelp"
 						placeholder="Ingresa tu email"
 					/>
@@ -43,18 +43,18 @@ export const UserRegister = () => {
 					</small>
 				</div>
 				<div class="form-group">
-					<label for="exampleInputPassword1">Contraseña</label>
+					<label>Contraseña</label>
 					<input
 						type="password"
 						class="form-control"
-						id="exampleInputPassword1"
+						id="InputPassword1"
 						placeholder="Ingresa tu contraseña"
 					/>
-					<label for="exampleInputPassword1">Confirma tu Contraseña</label>
+					<label>Confirma tu Contraseña</label>
 					<input
 						type="password"
 						class="form-control"
-						id="exampleInputPassword1"
+						id="InputPassword2"
 						placeholder="Reingresa tu contraseña"
 					/>
 				</div>
