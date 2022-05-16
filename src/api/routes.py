@@ -16,3 +16,18 @@ def handle_hello():
     }
 
     return jsonify(response_body), 200
+
+@api.route("/users", methods=['GET'])
+def get_users():
+    users = User.query.all()
+    users = list(map(lambda user: user.serialize(), users))
+    return jsonify(users), 200
+
+@api.route('/users', methods=['POST'])
+def create_user():
+    user = User()
+    user.email = request.json.get('email')
+    user.password = request.json.get('password')
+    user.role_id = request.json.get('role_id')
+
+    return jsonify(user.serialize()), 201
