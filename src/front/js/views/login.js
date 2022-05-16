@@ -5,17 +5,17 @@ import "../../styles/login.css";
 export const LoginScreen = () => {
   return (
     <div id="login my-5">
-      <div class="container my-5">
+      <div className="container my-5">
         <div
           id="login-row"
-          class="row justify-content-center align-items-center"
+          className="row justify-content-center align-items-center"
         >
-          <div id="login-column" class="col-md-6">
-            <div id="login-box" class="col-md-12">
-              <form id="login-form" class="form">
-                <h3 class="text-center text-info">Login</h3>
-                <div class="form-group">
-                  <label for="username" class="text-info">
+          <div id="login-column" className="col-md-6">
+            <div id="login-box" className="col-md-12">
+              <form id="login-form" className="form">
+                <h3 className="text-center text-info">Login</h3>
+                <div className="form-group">
+                  <label for="username" className="text-info">
                     Nombre:
                   </label>
                   <br />
@@ -23,11 +23,11 @@ export const LoginScreen = () => {
                     type="text"
                     name="username"
                     id="username"
-                    class="form-control"
+                    className="form-control"
                   />
                 </div>
-                <div class="form-group">
-                  <label for="password" class="text-info">
+                <div className="form-group">
+                  <label for="password" className="text-info">
                     Contraseña:
                   </label>
                   <br />
@@ -35,16 +35,16 @@ export const LoginScreen = () => {
                     type="text"
                     name="password"
                     id="password"
-                    class="form-control"
+                    className="form-control"
                   />
                 </div>
                 <br />
-                <div class="form-group">
+                <div className="form-group">
                   <Link to="/user_home">
                     <button
                       type="submit"
                       name="submit"
-                      class="btn btn-info btn-md"
+                      className="btn btn-info btn-md"
                       value="submit"
                     >
                       Entrar
