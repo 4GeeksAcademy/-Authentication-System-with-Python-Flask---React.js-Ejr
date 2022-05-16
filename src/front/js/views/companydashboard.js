@@ -2,9 +2,9 @@ import React, { useContext } from "react";
 import { Context } from "../store/appContext";
 import { Link } from "react-router-dom";
 
-export const UserProfileSetup = () => {
+export const CompanyDashboard = () => {
   return (
-    <>
+    <div className="container my-5">
       <form>
         <div className="card-group">
           <div className="card">
@@ -168,6 +168,6 @@ export const UserProfileSetup = () => {
           </div>
         </div>
       </form>
-    </>
+    </div>
   );
 };

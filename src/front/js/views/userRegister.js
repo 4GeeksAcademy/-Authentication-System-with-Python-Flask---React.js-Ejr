@@ -3,7 +3,7 @@ import "../../styles/login.css";
 import { Link } from "react-router-dom";
 export const UserRegister = () => {
 	return (
-		<>
+		<div className="container my-5">
 			<form>
 				<div class="form-group">
 					<label for="exampleInputEmail1">Nombre completo</label>
@@ -65,6 +65,6 @@ export const UserRegister = () => {
 					</button>
 				</Link>
 			</form>
-		</>
+		</div>
 	);
 };
