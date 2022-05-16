@@ -2,88 +2,69 @@ import React from "react";
 import "../../styles/login.css";
 import { Link } from "react-router-dom";
 export const UserRegister = () => {
-  return (
-    <>
-        <div className="container my-5">
-      <h1>Hola, ingresa tus datos </h1>
-      <form className="row g-3">
-        <div className="col-md-6">
-          <label htmlFor="inputEmail4" className="form-label">
-            Email
-          </label>
-          <input type="email" className="form-control" id="inputEmail4" />
-        </div>
-        <div className="col-md-6">
-          <label htmlFor="inputPassword4" className="form-label">
-            Password
-          </label>
-          <input type="password" className="form-control" id="inputPassword4" />
-        </div>
-        <div className="col-12">
-          <label htmlFor="inputAddress" className="form-label">
-            Address
-          </label>
-          <input
-            type="text"
-            className="form-control"
-            id="inputAddress"
-            placeholder="1234 Main St"
-          />
-        </div>
-        <div className="col-12">
-          <label htmlFor="inputRutcompany" className="form-label">
-            Rut Company
-          </label>
-          <input
-            type="text"
-            className="form-control"
-            id="inputAddress2"
-            placeholder="Apartment, studio, or floor"
-          />
-        </div>
-        <div className="col-md-6">
-          <label htmlFor="inputCity" className="form-label">
-            City
-          </label>
-          <input type="text" className="form-control" id="inputCity" />
-        </div>
-        <div className="col-md-4">
-          <label htmlFor="inputState" className="form-label">
-            State
-          </label>
-          <select id="inputState" className="form-select">
-            <option selected="">Choose...</option>
-            <option>...</option>
-          </select>
-        </div>
-        <div className="col-md-2">
-          <label htmlFor="inputContact" className="form-label">
-            Contact
-          </label>
-          <input type="text" className="form-control" id="inputZip" />
-        </div>
-        <div className="col-12">
-          <div className="form-check">
-            <input
-              className="form-check-input"
-              type="checkbox"
-              id="gridCheck"
-            />
-            <label className="form-check-label" htmlFor="gridCheck">
-              Check me out
-            </label>
-          </div>
-        </div>
-        <div className="col-12">
-        <Link to="/user_profile_setup">
-            <button type="submit" className="btn btn-primary">
-            Sign in
-          </button>
-        </Link>
-          
-        </div>
-      </form>
-    </div>
-    </>
-  );
+	return (
+		<>
+			<form>
+				<div class="form-group">
+					<label for="exampleInputEmail1">Nombre completo</label>
+					<input
+						type="email"
+						class="form-control"
+						id="exampleInputEmail1"
+						aria-describedby="emailHelp"
+						placeholder="Ingresa tu nombre"
+					/>
+					<label for="exampleInputEmail1">Rut</label>
+					<input
+						type="text"
+						class="form-control"
+						id="exampleInputEmail1"
+						aria-describedby="emailHelp"
+						placeholder="Ingresa tu rut"
+					/>
+					<label for="exampleInputEmail1">Telefono</label>
+					<input
+						type="telephone"
+						class="form-control"
+						id="exampleInputEmail1"
+						aria-describedby="emailHelp"
+						placeholder="Ingresa tu telefono"
+					/>
+					<label for="exampleInputEmail1">Email</label>
+					<input
+						type="email"
+						class="form-control"
+						id="exampleInputEmail1"
+						aria-describedby="emailHelp"
+						placeholder="Ingresa tu email"
+					/>
+					<small id="emailHelp" class="form-text text-muted">
+						Nunca compartiremos tu Email con nadie.
+					</small>
+				</div>
+				<div class="form-group">
+					<label for="exampleInputPassword1">Contraseña</label>
+					<input
+						type="password"
+						class="form-control"
+						id="exampleInputPassword1"
+						placeholder="Ingresa tu contraseña"
+					/>
+					<label for="exampleInputPassword1">Confirma tu Contraseña</label>
+					<input
+						type="password"
+						class="form-control"
+						id="exampleInputPassword1"
+						placeholder="Reingresa tu contraseña"
+					/>
+				</div>
+
+				<Link to="/user_profile_setup">
+					<button type="submit" className="btn btn-primary">
+						Sign in
+					</button>
+				</Link>
+			</form>
+		</>
+	);
 };
