@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { Context } from "../store/appContext";
 import { Link } from "react-router-dom";
 
-export const UserProfileSetup = () => {
+export const CompanyDashboard = () => {
   return (
     <>
   {/* Hello world */}
