@@ -15,6 +15,7 @@ import { UserProfileSetup } from "./views/userprofilesetup";
 import { CompanyRegisterSuccess } from "./views/companyregistersuccess";
 import { CompanyRegister } from "./views/companyregister";
 import { UserRegister } from "./views/userRegister";
+import { CompanyDashboard } from "./views/companydashboard";
 
 //create your first component
 const Layout = () => {
@@ -27,38 +28,39 @@ const Layout = () => {
       <BrowserRouter basename={basename}>
         <Navbar />
         <Switch>
-
-            <Route exact path="/">
-              <Home />
-            </Route>
-            <Route exact path="/login">
-              <LoginScreen />
-            </Route>
-			<Route exact path="/register">
-              <UserRegister />
-            </Route>
-            <Route exact path="/user_profile_setup">
-              <UserProfileSetup />
-            </Route>
-            <Route exact path="/company_register">
-              <CompanyRegister />
-            </Route>
-            <Route exact path="/company_register_success">
-              <CompanyRegisterSuccess />
-            </Route>
-            <Route exact path="/proyect">
-              <Proyect />
-            </Route>
-            <Route exact path="/user_home">
-              <UserHome />
-            </Route>
-            <Route exact path="/user_profile">
-              <UserProfile />
-            </Route>
-            <Route>
-              <h1>Not found!</h1>
-            </Route>
-
+          <Route exact path="/">
+            <Home />
+          </Route>
+          <Route exact path="/login">
+            <LoginScreen />
+          </Route>
+          <Route exact path="/register">
+            <UserRegister />
+          </Route>
+          <Route exact path="/user_profile_setup">
+            <UserProfileSetup />
+          </Route>
+          <Route exact path="/company_register">
+            <CompanyRegister />
+          </Route>
+          <Route exact path="/company_register_success">
+            <CompanyRegisterSuccess />
+          </Route>
+          <Route exact path="/proyect">
+            <Proyect />
+          </Route>
+          <Route exact path="/user_home">
+            <UserHome />
+          </Route>
+          <Route exact path="/user_profile">
+            <UserProfile />
+          </Route>
+          <Route exact patch="/company_dashboard">
+            <CompanyDashboard />
+          </Route>
+          <Route>
+            <h1 className="text-center">No pudimos encontrar lo que necesitas!</h1>
+          </Route>
         </Switch>
         <Footer />
       </BrowserRouter>
