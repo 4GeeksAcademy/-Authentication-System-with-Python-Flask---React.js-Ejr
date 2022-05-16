@@ -43,13 +43,13 @@ export const CompanyRegister = () => {
         </div>
         <div className="col-md-6">
           <label htmlFor="inputCity" className="form-label">
-            City
+            Ciudad
           </label>
           <input type="text" className="form-control" id="inputCity" />
         </div>
         <div className="col-md-4">
           <label htmlFor="inputState" className="form-label">
-            State
+            País
           </label>
           <select id="inputState" className="form-select">
             <option selected="">Choose...</option>
@@ -58,7 +58,7 @@ export const CompanyRegister = () => {
         </div>
         <div className="col-md-2">
           <label htmlFor="inputContact" className="form-label">
-            Contact
+            Contacto
           </label>
           <input type="text" className="form-control" id="inputZip" />
         </div>
@@ -77,7 +77,7 @@ export const CompanyRegister = () => {
         <div className="col-12">
           <Link to="company_register_success">
             <button type="submit" className="btn btn-primary">
-              Sign in
+              Iniciar Sesión
             </button>
           </Link>
         </div>

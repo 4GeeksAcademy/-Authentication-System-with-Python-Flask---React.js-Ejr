@@ -2,11 +2,9 @@ import React, { useContext } from "react";
 import { Context } from "../store/appContext";
 import { Link } from "react-router-dom";
 
-
-export const CompanyDashboard = () => {
+export const UserProfileSetup = () => {
   return (
-
-<>
+    <>
   {/* Hello world */}
   <div className="awesome" style={{ border: "1px solid red" }}>
     <label htmlFor="name">Enter your name: </label>
@@ -91,5 +89,6 @@ export const CompanyDashboard = () => {
   </div>
   <p />
 </>
+
   );
 };
