@@ -15,13 +15,13 @@ export const CompanyRegister = () => {
         </div>
         <div className="col-md-6">
           <label htmlFor="inputPassword4" className="form-label">
-            Password
+            Contraseña
           </label>
           <input type="password" className="form-control" id="inputPassword4" />
         </div>
         <div className="col-12">
           <label htmlFor="inputAddress" className="form-label">
-            Address
+            Dirección
           </label>
           <input
             type="text"
@@ -32,7 +32,7 @@ export const CompanyRegister = () => {
         </div>
         <div className="col-12">
           <label htmlFor="inputRutcompany" className="form-label">
-            Rut Company
+            Rut Empresa
           </label>
           <input
             type="text"
