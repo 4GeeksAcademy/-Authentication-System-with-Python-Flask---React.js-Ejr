@@ -59,7 +59,7 @@ class Profile(db.Model):
         db.session.delete(self)
         db.session.commit()
 
-class Companies(db.Model):
+class Company(db.Model):
     __tablename__ = 'companies'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
@@ -87,7 +87,7 @@ class Companies(db.Model):
         db.session.delete(self)
         db.session.commit()
 
-class Projects(db.Model):
+class Project(db.Model):
     __tablename__ = 'projects'
     id = db.Column(db.Integer, primary_key=True)
     company_id = db.Column(db.Integer, db.ForeignKey('companies.id'), nullable=False)
@@ -124,7 +124,7 @@ class Projects(db.Model):
         db.session.delete(self)
         db.session.commit()
 
-class Roles(db.Model):
+class Rol(db.Model):
     __tablename__ = 'roles'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
@@ -147,7 +147,7 @@ class Roles(db.Model):
 
 
 
-class Postulaciones(db.Model):
+class Postulacion(db.Model):
     __tablename__ = 'postulaciones'
     id = db.Column(db.Integer, primary_key=True)
     project_id = db.Column(db.Integer, db.ForeignKey('projects.id'))
