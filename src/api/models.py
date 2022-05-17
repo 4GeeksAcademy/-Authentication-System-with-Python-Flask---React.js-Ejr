@@ -63,7 +63,7 @@ class Company(db.Model):
     __tablename__ = 'companies'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
-    rut = db.Column(db.Integer, nullable=False)
+    rut = db.Column(db.String, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(80), unique=False, nullable=False)
 
@@ -99,6 +99,7 @@ class Project(db.Model):
     parking_spots = db.Column(db.Integer, nullable=False)
     bodega = db.Column(db.Integer, nullable=False)
     total_price = db.Column(db.Integer, nullable=False)
+    pictures = db.Column(db.String, nullable=False)
 
     def serialize(self):
         return {
@@ -110,7 +111,8 @@ class Project(db.Model):
             'bono_pie': self.bono_pie,
             'parking_spots': self.parking_spots,
             'bodega': self.bodega,
-            'total_price': self.total_price
+            'total_price': self.total_price,
+            'pictures': self.pictures
         }
     
     def save(self):
