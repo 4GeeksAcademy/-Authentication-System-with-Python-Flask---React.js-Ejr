@@ -23,6 +23,7 @@ def create_user():
     user.password = request.json.get('password')
     user.role_id = request.json.get('role_id')
     user.save()
+
     return jsonify(user.serialize()), 201
 
 @api.route("/users/<int:user_id>", methods=['PUT'])
@@ -109,6 +110,7 @@ def get_companies():
 def create_company():
     company = Company()
     company.name = request.json.get('name')
+    company.password = request.json.get('password')
     company.rut = request.json.get('rut')
     company.email = request.json.get('email')
     company.save()
@@ -159,6 +161,7 @@ def create_project():
     project.parking_spots = request.json.get('parking_spots')
     project.bodega = request.json.get('bodega')
     project.total_price = request.json.get('total_price')
+    project.pictures = request.json.get('pictures')
     project.save()
 
     return jsonify(project.serialize()), 201
