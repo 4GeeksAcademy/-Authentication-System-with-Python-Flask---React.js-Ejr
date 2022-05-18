@@ -96,7 +96,7 @@ export const Home = () => {
                   Empresa
                 </p>
                 <p className="card-text">
-                  Xm2
+                  m2
                 </p>
                 <p className="card-text">
                   Precio
