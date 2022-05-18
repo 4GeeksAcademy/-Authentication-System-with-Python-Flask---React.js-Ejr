@@ -92,6 +92,8 @@ class Project(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     company_id = db.Column(db.Integer, db.ForeignKey('companies.id'), nullable=False)
     address = db.Column(db.String, nullable=False)
+    comuna = db.Column(db.String, nullable=False)
+    ciudad = db.Column(db.String, nullable=False)
     size = db.Column(db.Integer, nullable=False)
     typology = db.Column(db.String, nullable=False)
     monto_reserva = db.Column(db.Integer, nullable=False)
@@ -104,6 +106,7 @@ class Project(db.Model):
     def serialize(self):
         return {
             "id": self.id,
+            "company_id": self.company_id,
             "address": self.address,
             "size": self.size,
             "typology": self.typology,  

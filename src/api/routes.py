@@ -154,6 +154,8 @@ def create_project():
     project = Project()
     project.company_id = request.json.get('company_id')
     project.address = request.json.get('address')
+    project.comuna = request.json.get('comuna')
+    project.ciudad = request.json.get('ciudad')
     project.size = request.json.get('size')
     project.typology = request.json.get('typology')
     project.monto_reserva = request.json.get('monto_reserva')
@@ -171,6 +173,8 @@ def update_project(project_id):
     project = Project.query.get(project_id)
     project.company_id = request.json.get('company_id')
     project.address = request.json.get('address')
+    project.comuna = request.json.get('comuna')
+    project.ciudad = request.json.get('ciudad')
     project.size = request.json.get('size')
     project.typology = request.json.get('typology')
     project.monto_reserva = request.json.get('monto_reserva')
@@ -178,6 +182,7 @@ def update_project(project_id):
     project.parking_spots = request.json.get('parking_spots')
     project.bodega = request.json.get('bodega')
     project.total_price = request.json.get('total_price')
+    project.pictures = request.json.get('pictures')
     project.update()
 
     data = {
