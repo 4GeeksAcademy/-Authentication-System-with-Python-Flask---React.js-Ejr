@@ -108,6 +108,8 @@ class Project(db.Model):
             "id": self.id,
             "company_id": self.company_id,
             "address": self.address,
+            "comuna": self.comuna,
+            "ciudad": self.ciudad,
             "size": self.size,
             "typology": self.typology,  
             'monto_reserva': self.monto_reserva,
