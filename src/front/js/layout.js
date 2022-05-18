@@ -11,6 +11,8 @@ import { LoginScreen } from "./views/login";
 import { Proyect } from "./views/proyect";
 import { UserHome } from "./views/userHome";
 import { UserProfile } from "./views/userProfile";
+import { UserProyects } from "./views/userProyects";
+import { CompanyProyects } from "./views/companyProyects";
 import { UserProfileSetup } from "./views/userprofilesetup";
 import { CompanyRegisterSuccess } from "./views/companyregistersuccess";
 import { CompanyRegister } from "./views/companyregister";
@@ -52,8 +54,14 @@ const Layout = () => {
           <Route exact path="/user_home">
             <UserHome />
           </Route>
+          <Route exact path="/user_proyects">
+            <UserProyects />
+          </Route>
           <Route exact path="/user_profile">
             <UserProfile />
+          </Route>
+          <Route exact path="/company_proyects">
+            <CompanyProyects />
           </Route>
           <Route exact patch="/company_dashboard">
             <CompanyDashboard />
