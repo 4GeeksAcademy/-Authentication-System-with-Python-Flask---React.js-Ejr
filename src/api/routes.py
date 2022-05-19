@@ -60,7 +60,8 @@ def get_user(user_id):
 def create_user():
     user = User()
     user.email = request.json.get('email')
-    user.password = request.json.get('password')
+    password = request.json.get("password", None)
+    user.password = generate_password_hash(password)
     user.role_id = request.json.get('role_id')
     user.save()
 
@@ -70,7 +71,8 @@ def create_user():
 def update_user(user_id):
     user = User.query.get(user_id)
     user.email = request.json.get('email')
-    user.password = request.json.get('password')
+    password = request.json.get("password", None)
+    user.password = generate_password_hash(password)
     user.role_id = request.json.get('role_id')
     user.update()
 
@@ -159,7 +161,8 @@ def create_company():
     company = Company()
     company.role_id = request.json.get('role_id')
     company.name = request.json.get('name')
-    company.password = request.json.get('password')
+    password = request.json.get("password", None)
+    company.password = generate_password_hash(password)
     company.rut = request.json.get('rut')
     company.email = request.json.get('email')
     company.save()
@@ -171,6 +174,8 @@ def update_company(company_id):
     company = Company.query.get(company_id)
     company.role_id = request.json.get('role_id')
     company.name = request.json.get('name')
+    password = request.json.get("password", None)
+    company.password = generate_password_hash(password)
     company.rut = request.json.get('rut')
     company.email = request.json.get('email')
     company.update()
@@ -208,6 +213,7 @@ def get_project(project_id):
 def create_project():
     project = Project()
     project.company_id = request.json.get('company_id')
+    project.title = request.json.get('title')
     project.address = request.json.get('address')
     project.comuna = request.json.get('comuna')
     project.ciudad = request.json.get('ciudad')
@@ -219,8 +225,11 @@ def create_project():
     project.bodega = request.json.get('bodega')
     project.total_price = request.json.get('total_price')
     project.pictures = request.json.get('pictures')
-    # project.body = request.json.get('body')
-    # project.perks = request.json.get('perks')
+    project.body = request.json.get('body')
+    project.perks = request.json.get('perks')
+    project.bathrooms = request.json.get('bathrooms')
+    project.rooms = request.json.get('rooms')
+    project.sale_type = request.json.get('sale_type')
     project.save()
 
     return jsonify(project.serialize()), 201
@@ -229,6 +238,7 @@ def create_project():
 def update_project(project_id):
     project = Project.query.get(project_id)
     project.company_id = request.json.get('company_id')
+    project.title = request.json.get('title')
     project.address = request.json.get('address')
     project.comuna = request.json.get('comuna')
     project.ciudad = request.json.get('ciudad')
@@ -240,8 +250,11 @@ def update_project(project_id):
     project.bodega = request.json.get('bodega')
     project.total_price = request.json.get('total_price')
     project.pictures = request.json.get('pictures')
-    # project.body = request.json.get('body')
-    # project.perks = request.json.get('perks')
+    project.body = request.json.get('body')
+    project.perks = request.json.get('perks')
+    project.bathrooms = request.json.get('bathrooms')
+    project.rooms = request.json.get('rooms')
+    project.sale_type = request.json.get('sale_type')
     project.update()
 
     data = {
