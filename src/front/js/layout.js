@@ -26,60 +26,55 @@ const Layout = () => {
 	// you can set the basename on the .env file located at the root of this project, E.g: BASENAME=/react-hello-webapp/
 	const basename = process.env.BASENAME || "";
 
-	return (
-		<div>
-			<BrowserRouter basename={basename}>
-				<Navbar />
-				<Switch>
-					<Route exact path="/">
-						<Home />
-					</Route>
-					<Route exact path="/login">
-						<LoginScreen />
-					</Route>
-					<Route exact path="/register">
-						<UserRegister />
-					</Route>
-					<Route exact path="/user_profile_setup">
-						<UserProfileSetup />
-					</Route>
-					<Route exact path="/company_register">
-						<CompanyRegister />
-					</Route>
-					<Route exact path="/company_register_success">
-						<CompanyRegisterSuccess />
-					</Route>
-					<Route exact path="/proyect">
-						<Proyect />
-					</Route>
-					<Route exact path="/user_home">
-						<UserHome />
-					</Route>
-					<Route exact path="/user_proyects">
-						<UserProyects />
-					</Route>
-					<Route exact path="/user_profile">
-						<UserProfile />
-					</Route>
-					<Route exact path="/company_proyects">
-						<CompanyProyects />
-					</Route>
-					<Route exact path="/company_dashboard">
-						<CompanyDashboard />
-					</Route>
-					<Route exact path="/company_login">
-						<LoginEmpresa />
-					</Route>
-					<Route>
-						<h1 className="text-center">
-							No pudimos encontrar lo que necesitas!
-						</h1>
-					</Route>
-				</Switch>
-				<Footer />
-			</BrowserRouter>
-		</div>
-	);
+  return (
+    <div>
+      <BrowserRouter basename={basename}>
+        <Navbar />
+        <Switch>
+          <Route exact path="/">
+            <Home />
+          </Route>
+          <Route exact path="/login">
+            <LoginScreen />
+          </Route>
+          <Route exact path="/register">
+            <UserRegister />
+          </Route>
+          <Route exact path="/user_profile_setup">
+            <UserProfileSetup />
+          </Route>
+          <Route exact path="/company_register">
+            <CompanyRegister />
+          </Route>
+          <Route exact path="/company_register_success">
+            <CompanyRegisterSuccess />
+          </Route>
+          <Route exact path="/proyect">
+            <Proyect />
+          </Route>
+          <Route exact path="/user_home">
+            <UserHome />
+          </Route>
+          <Route exact path="/user_proyects">
+            <UserProyects />
+          </Route>
+          <Route exact path="/user_profile">
+            <UserProfile />
+          </Route>
+          <Route exact path="/company_proyects">
+            <CompanyProyects />
+          </Route>
+          <Route exact path="/company_dashboard">
+            <CompanyDashboard />
+          </Route>
+          <Route>
+            <h1 className="text-center">No pudimos encontrar lo que necesitas!</h1>
+          </Route>
+        </Switch>
+        <Footer />
+      </BrowserRouter>
+    </div>
+  );
 };
 
 export default injectContext(Layout);
