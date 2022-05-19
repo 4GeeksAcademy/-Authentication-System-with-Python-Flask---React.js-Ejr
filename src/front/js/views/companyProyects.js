@@ -91,7 +91,7 @@ export const CompanyProyects = () => {
                       <p className="card-text m-0 fw-bold">Email:</p>
                       <p className="card-text">juanitoperez@email.com</p>
                       <p className="card-text m-0 fw-bold">Email:</p>
-                      <p className="card-text">juanitoperez@email.com</p>
+                      <p className="card-text">juanitoperez@email.co</p>
                     </div>
                   </div>
                 </div>
