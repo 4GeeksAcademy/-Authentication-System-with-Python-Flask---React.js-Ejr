@@ -9,11 +9,13 @@ class User(db.Model):
     password = db.Column(db.String(80), unique=False, nullable=False)
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
 
+
     def serialize(self):
         return {
             "id": self.id,
             "email": self.email,
-            "role_id": self.role_id
+            "role_id": self.role_id,
+            "rol": self.rol.name
             
         }
     def save(self):
@@ -62,6 +64,7 @@ class Profile(db.Model):
 class Company(db.Model):
     __tablename__ = 'companies'
     id = db.Column(db.Integer, primary_key=True)
+    role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
     name = db.Column(db.String, nullable=False)
     rut = db.Column(db.String, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
@@ -70,9 +73,11 @@ class Company(db.Model):
     def serialize(self):
         return {
             "id": self.id,
+            "role_id": self.role_id,
             "name": self.name,
             "rut": self.rut,
-            "email": self.email,       
+            "email": self.email,
+            "rol": self.rol.name       
         }
 
 
@@ -102,6 +107,8 @@ class Project(db.Model):
     bodega = db.Column(db.Integer, nullable=False)
     total_price = db.Column(db.Integer, nullable=False)
     pictures = db.Column(db.String, nullable=False)
+    # body = db.Column(db.String, nullable=False)
+    # perks = db.Column(db.String, nullable=False)
 
     def serialize(self):
         return {
@@ -117,7 +124,9 @@ class Project(db.Model):
             'parking_spots': self.parking_spots,
             'bodega': self.bodega,
             'total_price': self.total_price,
-            'pictures': self.pictures
+            'pictures': self.pictures,
+            # 'body': self.body,
+            # 'perks': self.perks
         }
     
     def save(self):
@@ -135,6 +144,8 @@ class Rol(db.Model):
     __tablename__ = 'roles'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
+    users = db.relationship("User", backref="rol")
+    companies = db.relationship("Company", backref="rol")
     
     def serialize(self):
         return {

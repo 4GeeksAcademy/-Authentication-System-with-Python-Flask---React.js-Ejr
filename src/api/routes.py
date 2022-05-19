@@ -4,8 +4,43 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, User, Profile, Company, Project, Rol, Postulacion
 from api.utils import generate_sitemap, APIException
+from flask_jwt_extended import create_access_token
+from flask_jwt_extended import get_jwt_identity
+from flask_jwt_extended import jwt_required
+from flask_jwt_extended import JWTManager
+from werkzeug.security import generate_password_hash, check_password_hash
 
 api = Blueprint('api', __name__)
+
+
+@api.route("/token", methods=["POST"])
+def create_token():
+    email = request.json.get("email", None)
+    password = request.json.get("password", None)
+    
+    user = User.query.filter_by(email=email).first()
+
+    if not user: return jsonify({"status": "fail", "message": "email/password incorrect!"} ), 401
+
+    if not check_password_hash(user.password, password): return jsonify({"status": "fail", "message": "email/password incorrect!" }), 401
+
+    access_token = create_access_token(identity=email)
+    return jsonify(access_token=access_token)
+
+@api.route("/register", methods=["POST"])
+def register():
+    email = request.json.get("email", None)
+    password = request.json.get("password", None)
+    
+    user = User()
+    user.email = email
+    user.password = generate_password_hash(password)
+    user.save()
+
+    return jsonify({"status": "success", "message": "Register successfull!. Please login."}), 200
+
+
+
 
 
 
@@ -15,6 +50,11 @@ def get_users():
     users = User.query.all()
     users = list(map(lambda user: user.serialize(), users))
     return jsonify(users), 200
+
+@api.route("/users/<int:user_id>", methods=['GET'])
+def get_user(user_id):
+    user = User.query.get(user_id)
+    return jsonify(user.serialize()), 200
 
 @api.route('/users', methods=['POST'])
 def create_user():
@@ -57,6 +97,11 @@ def get_profiles():
     profiles = list(map(lambda profile: profile.serialize(), profiles))
     return jsonify(profiles), 200
 
+@api.route("/profiles/<int:profile_id>", methods=['GET'])
+def get_profile(project_id):
+    profile = Profile.query.get(profile_id)
+    return jsonify(profile.serialize()), 200
+
 @api.route('/profiles', methods=['POST'])
 def create_profile():
     profile = Profile()
@@ -97,8 +142,6 @@ def delete_profile(profile_id):
     return jsonify({"mensaje": "El perfil ha sido eliminado"} ), 200
 
 
-
-
 #COMPANY ENDPOINTS
 @api.route("/companies", methods=['GET'])
 def get_companies():
@@ -106,9 +149,15 @@ def get_companies():
     companies = list(map(lambda company: company.serialize(), companies))
     return jsonify(companies), 200
 
+@api.route("/companies/<int:company_id>", methods=['GET'])
+def get_company(company_id):
+    company = Company.query.get(company_id)
+    return jsonify(company.serialize()), 200
+
 @api.route("/companies", methods=['POST'])
 def create_company():
     company = Company()
+    company.role_id = request.json.get('role_id')
     company.name = request.json.get('name')
     company.password = request.json.get('password')
     company.rut = request.json.get('rut')
@@ -120,6 +169,7 @@ def create_company():
 @api.route("/companies/<int:company_id>", methods=['PUT'])
 def update_company(company_id):
     company = Company.query.get(company_id)
+    company.role_id = request.json.get('role_id')
     company.name = request.json.get('name')
     company.rut = request.json.get('rut')
     company.email = request.json.get('email')
@@ -148,6 +198,11 @@ def get_projects():
     projects = list(map(lambda project: project.serialize(), projects))
     return jsonify(projects), 200
 
+@api.route("/projects/<int:project_id>", methods=['GET'])
+def get_project(project_id):
+    project = Project.query.get(project_id)
+    return jsonify(project.serialize()), 200
+
 
 @api.route("/projects", methods=['POST'])
 def create_project():
@@ -164,6 +219,8 @@ def create_project():
     project.bodega = request.json.get('bodega')
     project.total_price = request.json.get('total_price')
     project.pictures = request.json.get('pictures')
+    # project.body = request.json.get('body')
+    # project.perks = request.json.get('perks')
     project.save()
 
     return jsonify(project.serialize()), 201
@@ -183,6 +240,8 @@ def update_project(project_id):
     project.bodega = request.json.get('bodega')
     project.total_price = request.json.get('total_price')
     project.pictures = request.json.get('pictures')
+    # project.body = request.json.get('body')
+    # project.perks = request.json.get('perks')
     project.update()
 
     data = {
@@ -207,6 +266,11 @@ def get_roles():
     roles = Rol.query.all()
     roles = list(map(lambda rol: rol.serialize(), roles))
     return jsonify(roles), 200
+
+@api.route("/roles/<int:rol_id>", methods=['GET'])
+def get_rol(rol_id):
+    rol = Rol.query.get(rol_id)
+    return jsonify(rol.serialize()), 200
 
 @api.route('/roles', methods=['POST'])
 def create_rol():
@@ -243,6 +307,11 @@ def get_postulaciones():
     postulaciones = Postulacion.query.all()
     postulaciones = list(map(lambda postulacion: postulacion.serialize(), postulaciones))
     return jsonify(postulaciones), 200
+
+@api.route("/postulaciones/<int:postulacion_id>", methods=['GET'])
+def get_postulacion(postulacion_id):
+    postulacion = Postulacion.query.get(postulacion_id)
+    return jsonify(postulacion.serialize()), 200
 
 @api.route('/postulaciones', methods=['POST'])
 def create_postulacion():
