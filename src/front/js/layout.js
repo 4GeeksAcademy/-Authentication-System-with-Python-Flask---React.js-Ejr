@@ -63,7 +63,7 @@ const Layout = () => {
           <Route exact path="/company_proyects">
             <CompanyProyects />
           </Route>
-          <Route exact patch="/company_dashboard">
+          <Route exact path="/company_dashboard">
             <CompanyDashboard />
           </Route>
           <Route>
