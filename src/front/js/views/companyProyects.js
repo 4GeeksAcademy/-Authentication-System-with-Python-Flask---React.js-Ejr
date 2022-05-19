@@ -11,7 +11,7 @@ export const CompanyProyects = () => {
               <div className="card-body">
                 <div className="row">
                   <div className="col-12">
-                    <p className="card-text m-0 fw-bold">Email:</p>
+                    <p className="card-text m-0 fw-bold">Email: </p>
                     <p className="card-text">juanitoperez@email.com</p>
                     <p className="card-text m-0 fw-bold">Email:</p>
                     <p className="card-text">juanitoperez@email.com</p>
