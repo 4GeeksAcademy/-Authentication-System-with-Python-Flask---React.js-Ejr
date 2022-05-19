@@ -6,7 +6,7 @@ class User(db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(120), unique=True, nullable=False)
-    password = db.Column(db.String(80), unique=False, nullable=False)
+    password = db.Column(db.String(120), unique=False, nullable=False)
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
 
 
@@ -68,7 +68,7 @@ class Company(db.Model):
     name = db.Column(db.String, nullable=False)
     rut = db.Column(db.String, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
-    password = db.Column(db.String(80), unique=False, nullable=False)
+    password = db.Column(db.String(120), unique=False, nullable=False)
 
     def serialize(self):
         return {
@@ -100,33 +100,39 @@ class Project(db.Model):
     comuna = db.Column(db.String, nullable=False)
     ciudad = db.Column(db.String, nullable=False)
     size = db.Column(db.Integer, nullable=False)
-    typology = db.Column(db.String, nullable=False)
+    sale_type = db.Column(db.String, nullable=False)
+    bathrooms = db.Column(db.Integer, nullable=False)
+    rooms = db.Column(db.Integer, nullable=False)
     monto_reserva = db.Column(db.Integer, nullable=False)
     bono_pie = db.Column(db.Integer, nullable=False)
     parking_spots = db.Column(db.Integer, nullable=False)
     bodega = db.Column(db.Integer, nullable=False)
     total_price = db.Column(db.Integer, nullable=False)
     pictures = db.Column(db.String, nullable=False)
-    # body = db.Column(db.String, nullable=False)
-    # perks = db.Column(db.String, nullable=False)
+    body = db.Column(db.String, nullable=False)
+    perks = db.Column(db.String, nullable=False)
+    title = db.Column(db.String, nullable=False)
 
     def serialize(self):
         return {
             "id": self.id,
             "company_id": self.company_id,
+            "title": self.title,
             "address": self.address,
             "comuna": self.comuna,
             "ciudad": self.ciudad,
             "size": self.size,
-            "typology": self.typology,  
+            "sale_type": self.sale_type,
+            "bathrooms": self.bathrooms, 
+            'rooms': self.rooms,
             'monto_reserva': self.monto_reserva,
             'bono_pie': self.bono_pie,
             'parking_spots': self.parking_spots,
             'bodega': self.bodega,
             'total_price': self.total_price,
             'pictures': self.pictures,
-            # 'body': self.body,
-            # 'perks': self.perks
+            'body': self.body,
+            'perks': self.perks
         }
     
     def save(self):
