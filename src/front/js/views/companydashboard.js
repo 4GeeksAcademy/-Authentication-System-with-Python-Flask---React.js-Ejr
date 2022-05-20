@@ -17,7 +17,6 @@ export const CompanyDashboard = () => {
 	const [bono_pie, setBono_pie] = useState(0);
 	const [parking_spot, setParking_spot] = useState(0);
 	const [bodega, setBodega] = useState("");
-	const [typology, setTypology] = useState("");
 	const [total_price, setTotal_price] = useState(0);
 	const [pictures, setPictures] = useState("sin-foto.png");
 	//agregar las siguientes
@@ -43,7 +42,6 @@ export const CompanyDashboard = () => {
 		formData.append("bono_pie", bono_pie);
 		formData.append("parking_spot", parking_spot);
 		formData.append("bodega", bodega);
-		formData.append("typology", typology);
 		formData.append("total_price", total_price);
 		formData.append("pictures", pictures);
 
@@ -70,34 +68,32 @@ export const CompanyDashboard = () => {
 			<h1>Formulario para subir un proyecto:</h1>
 			<RegisterProyectForm
 				handleSubmit={handleSubmit}
-				nombre={title}
-				setNombre={setTitle}
-				direccion={address}
-				setDireccion={setAdress}
-				tamaño={size}
-				setTamaño={setSize}
-				tipoVenta={sale_type}
-				setTipoVenta={setSale_type}
-				numeroBaños={bathrooms}
-				setNumeroBaños={setBathrooms}
-				ventajas={perks}
-				setVentajas={setPerks}
-				habitaciones={rooms}
-				setHabitaciones={setRooms}
-				reserva={monto_reserva}
-				setReserva={setMonto_reserva}
-				pie={bono_pie}
-				setPie={setBono_pie}
-				estacionamiento={parking_spot}
-				setEstacionamiento={setParking_spot}
+				title={title}
+				setTitle={setTitle}
+				address={address}
+				setAddress={setAdress}
+				size={size}
+				setSize={setSize}
+				sale_type={sale_type}
+				setSale_type={setSale_type}
+				bathrooms={bathrooms}
+				setBathrooms={setBathrooms}
+				perks={perks}
+				setPerks={setPerks}
+				rooms={rooms}
+				setRooms={setRooms}
+				monto_reserva={monto_reserva}
+				setMonto_reserva={setMonto_reserva}
+				bono_pie={bono_pie}
+				setBono_pie={setBono_pie}
+				parking_spots={parking_spot}
+				setParking_spots={setParking_spot}
 				bodega={bodega}
 				setBodega={setBodega}
-				descripcion={typology}
-				setDescripcion={setTypology}
-				precio={total_price}
-				setPrecio={setTotal_price}
-				imagen={pictures}
-				setImagen={setPictures}
+				total_price={total_price}
+				setTotal_price={setTotal_price}
+				pictures={pictures}
+				setPictures={setPictures}
 				comuna={comuna}
 				setComuna={setComuna}
 				ciudad={ciudad}
