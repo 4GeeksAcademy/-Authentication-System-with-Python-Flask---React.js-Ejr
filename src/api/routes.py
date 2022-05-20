@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Profile, Company, Project, Rol, Postulacion
+from api.models import db, User, Company, Project, Rol, Postulacion
 from api.utils import generate_sitemap, APIException
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity
@@ -14,6 +14,28 @@ import datetime
 
 
 api = Blueprint('api', __name__)
+
+
+@api.route("/company_token")
+def create_company_token():
+    email = request.json.get("email")
+    password = request.json.get("password")
+    print(email)
+    company = Company.query.filter_by(email=email).first()
+
+    if not company: return jsonify({"status": "fail", "message": "email/password incorrect!"} ), 401
+
+    if not check_password_hash(company.password, password): return jsonify({"status": "fail", "message": "email/password incorrect!" }), 401
+
+    expires = datetime.timedelta(minutes=30)
+    access_token = create_access_token(identity=email, expires_delta=expires)
+
+    data = {
+        "status": "Success!",
+        "message": "Logged in succesfully!",
+        "access_token": access_token,
+        "company": company.serialize()
+    }
 
 
 @api.route("/token", methods=["POST"])
@@ -75,6 +97,12 @@ def create_user():
     password = request.json.get("password", None)
     user.password = generate_password_hash(password)
     user.role_id = request.json.get('role_id')
+    user.name = request.json.get('name')
+    user.lastname = request.json.get('lastname')
+    user.salary = request.json.get('salary')
+    user.side_income = request.json.get('side_income')
+    user.deudas = request.json.get('deudas')
+
     user.save()
 
     return jsonify(user.serialize()), 201
@@ -86,6 +114,11 @@ def update_user(user_id):
     password = request.json.get("password", None)
     user.password = generate_password_hash(password)
     user.role_id = request.json.get('role_id')
+    user.name = request.json.get('name')
+    user.lastname = request.json.get('lastname')
+    user.salary = request.json.get('salary')
+    user.side_income = request.json.get('side_income')
+    user.deudas = request.json.get('deudas')
     user.update()
 
     data = {
@@ -104,56 +137,7 @@ def delete_user(user_id):
 
     return jsonify({"mensaje": "El usuario ha sido eliminado"} ), 200
 
-#USER PROFILE ENDPOINTS
-@api.route("/profiles", methods=['GET'])
-def get_profiles():
-    profiles = Profile.query.all()
-    profiles = list(map(lambda profile: profile.serialize(), profiles))
-    return jsonify(profiles), 200
 
-@api.route("/profiles/<int:profile_id>", methods=['GET'])
-def get_profile(project_id):
-    profile = Profile.query.get(profile_id)
-    return jsonify(profile.serialize()), 200
-
-@api.route('/profiles', methods=['POST'])
-def create_profile():
-    profile = Profile()
-    profile.user_id = request.json.get('user_id')
-    profile.name = request.json.get('name')
-    profile.lastname = request.json.get('lastname')
-    profile.salary = request.json.get('salary')
-    profile.side_income = request.json.get('side_income')
-    profile.deudas = request.json.get('deudas')
-    profile.save()
-
-    return jsonify(profile.serialize()), 201
-
-@api.route("/profiles/<int:profile_id>", methods=['PUT'])
-def update_profile(profile_id):
-    profile = Profile.query.get(profile_id)
-    profile.user_id = request.json.get('user_id')
-    profile.name = request.json.get('name')
-    profile.lastname = request.json.get('lastname')
-    profile.salary = request.json.get('salary')
-    profile.side_income = request.json.get('side_income')
-    profile.deudas = request.json.get('deudas')
-    profile.update()
-    
-    data = {
-        "code": 200,
-        "message": "Profile updated successfully!",
-        "status": "ok",
-        "role": profile.serialize()
-    }
-    return jsonify(data), 200
-
-@api.route("/profiles/<int:profile_id>", methods=['DELETE'])
-def delete_profile(profile_id):
-    deleted_profile = Profile.query.get(profile_id)
-    deleted_profile.delete()
-
-    return jsonify({"mensaje": "El perfil ha sido eliminado"} ), 200
 
 
 #COMPANY ENDPOINTS

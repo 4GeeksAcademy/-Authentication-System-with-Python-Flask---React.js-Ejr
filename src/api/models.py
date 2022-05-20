@@ -8,31 +8,6 @@ class User(db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(120), unique=False, nullable=False)
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
-
-
-    def serialize(self):
-        return {
-            "id": self.id,
-            "email": self.email,
-            "role_id": self.role_id,
-            "rol": self.rol.name
-            
-        }
-    def save(self):
-        db.session.add(self)
-        db.session.commit()
-
-    def update(self):
-        db.session.commit()
-
-    def delete(self):
-        db.session.delete(self)
-        db.session.commit()
-
-class Profile(db.Model):
-    __tablename__ = 'profiles'
-    id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     name = db.Column(db.String, nullable=False)
     lastname = db.Column(db.String, nullable=False)
     salary = db.Column(db.Integer, nullable=False)
@@ -42,7 +17,9 @@ class Profile(db.Model):
     def serialize(self):
         return {
             "id": self.id,
-            "user_id": self.user_id,
+            "email": self.email,
+            "role_id": self.role_id,
+            "rol": self.rol.name,
             "name": self.name,
             "lastname": self.lastname,
             "salary": self.salary,
@@ -61,6 +38,8 @@ class Profile(db.Model):
         db.session.delete(self)
         db.session.commit()
 
+
+
 class Company(db.Model):
     __tablename__ = 'companies'
     id = db.Column(db.Integer, primary_key=True)
@@ -73,7 +52,7 @@ class Company(db.Model):
     def serialize(self):
         return {
             "id": self.id,
-            "role_id": self.role_id,
+            
             "name": self.name,
             "rut": self.rut,
             "email": self.email,
