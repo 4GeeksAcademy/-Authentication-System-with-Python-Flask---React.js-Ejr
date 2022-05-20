@@ -9,6 +9,9 @@ from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required
 from flask_jwt_extended import JWTManager
 from werkzeug.security import generate_password_hash, check_password_hash
+import datetime
+
+
 
 api = Blueprint('api', __name__)
 
@@ -24,8 +27,17 @@ def create_token():
 
     if not check_password_hash(user.password, password): return jsonify({"status": "fail", "message": "email/password incorrect!" }), 401
 
-    access_token = create_access_token(identity=email)
-    return jsonify(access_token=access_token)
+    expires = datetime.timedelta(minutes=30)
+    access_token = create_access_token(identity=email, expires_delta=expires)
+
+    data = {
+        "status": "Success!",
+        "message": "Logged in succesfully!",
+        "access_token": access_token,
+        "user": user.serialize()
+    }
+
+    return jsonify(data), 200
 
 @api.route("/register", methods=["POST"])
 def register():
