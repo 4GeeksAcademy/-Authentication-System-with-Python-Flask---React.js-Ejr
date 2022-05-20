@@ -1,52 +1,45 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useContext } from "../store/appContext"
-
+import { useContext } from "react";
+import { useHistory } from "react-router-dom"
 import "../../styles/login.css";
 import { useState } from "react";
+import { UserHome } from "./userHome";
+import { Context } from "../store/appContext";
+
 
 export const LoginScreen = () => {
+  const { store, actions} = useContext(Context)
+  const [email, setEmail] = useState("") ;
+  const [password, setPassword] = useState("") ;
+  const token = sessionStorage.getItem('token');
+  const history = useHistory();
 
-  const [email, setEmail] = useState("") 
-  const [password, setPassword] = useState("") 
   const handleClick = () => {
-    console.log({
-      email: email,
-      password: password
-    })
-    const opts = {
-      method: "POST",
-      headers:{
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(
-        {
-          email: email,
-          password: password
-        }
-      )
-    }
-    fetch("https://3001-xetnal-finalproject-rjwnejuo77t.ws-us45.gitpod.io/api/token", opts)
-        .then(resp => {
-          console.log(resp)
-          if(resp.status === 200) return resp.json();
-          else alert("There was an error")
-        })
-        .then(data => {
-          console.log("this came from the backend", data)
-          sessionStorage.setItem('token', data.access_token)
-        })
-        .catch(error => {
-          console.error("There was an error!!!", error);
-        })
 
-
-
+     actions.login(email, password).then(() =>{
+       history.push("/user_home")
+     })
+       
+  
 
   }
 
   return (
     <div id="login my-5">
+
+    {(store.token && store.token !== "" && store.token !== undefined) ? <div><h3 className="text-center">Ya ingresaste!</h3> 
+    <h4 className="text-center my-5">
+    Por favor, anda a Home!
+    </h4>
+    <Link to="/user_home" className="d-flex justify-content-center">
+      <button className="mx-auto my-5">Ir a Home!</button>
+    </Link>
+    </div>
+     : 
+    
+    
+    
       <div className="container my-5">
         <div
           id="login-row"
@@ -107,6 +100,9 @@ export const LoginScreen = () => {
           </div>
         </div>
       </div>
+    }
+
+
     </div>
   );
 };
