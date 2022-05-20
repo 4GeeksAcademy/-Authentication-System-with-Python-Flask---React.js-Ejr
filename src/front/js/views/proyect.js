@@ -1,17 +1,15 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { UserHomeList } from "../component/userHomeList";
 
 export const Proyect = () => {
   return (
-
-
     <div className="container mt-4 p-0">
       <h2>Siena Parque Quillayes</h2>
       <div className="row">
         <div className="col-12 col-lg-8 p-0">
         <div className="card">
         <div id="demo" className="carousel slide" data-bs-ride="carousel">
-          {/* Indicators/dots */}
           <div className="carousel-indicators">
             <button
               type="button"
@@ -34,7 +32,6 @@ export const Proyect = () => {
               <img src="https://exxacon.cl/content/uploads/2019/06/p-proyectos-inmobiliarios.jpg-1.jpeg" alt="New York" className="d-block w-100" />
             </div>
           </div>
-          {/* Left and right controls/icons */}
           <button className="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev"><span className="carousel-control-prev-icon" /></button>
           <button className="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next"><span className="carousel-control-next-icon" /></button>
         </div>
@@ -75,6 +72,9 @@ export const Proyect = () => {
       </div>
 
     </div>
+
+
+
 
   );
 };
