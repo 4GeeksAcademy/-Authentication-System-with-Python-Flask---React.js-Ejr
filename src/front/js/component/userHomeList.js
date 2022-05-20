@@ -30,8 +30,8 @@ export const UserHomeList = () => {
                   </div>
                 </div>
                 <div class="alert alert-secondary" role="alert">Desde UF {project.total_price} - $76.736.480</div>
-                <Link to="/proyect">
-                  <button type="button" class="btn btn-primary">Ir al Proyecto</button>
+                <Link to={`/proyect/${project.id}`}>
+                  <button type="button" class="btn btn-primary" >Ir al Proyecto</button>
                 </Link> 
               </div>
             </div>
