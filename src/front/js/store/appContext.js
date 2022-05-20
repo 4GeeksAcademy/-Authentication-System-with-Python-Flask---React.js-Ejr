@@ -23,7 +23,7 @@ const injectContext = PassedComponent => {
 
 		useEffect(() => {
 
-			state.actions.getProjects(); 
+			state.actions.getProjects();   
 
 		}, []);
 

@@ -37,6 +37,9 @@ const Layout = () => {
           <Route exact path="/login">
             <LoginScreen />
           </Route>
+          <Route exact path="/company_login">
+            <LoginEmpresa />
+          </Route>
           <Route exact path="/register">
             <UserRegister />
           </Route>

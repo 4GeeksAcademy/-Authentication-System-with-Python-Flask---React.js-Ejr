@@ -1,10 +1,49 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useContext } from "../store/appContext"
+
 import "../../styles/login.css";
+import { useState } from "react";
 
 export const LoginScreen = () => {
 
+  const [email, setEmail] = useState("") 
+  const [password, setPassword] = useState("") 
+  const handleClick = () => {
+    console.log({
+      email: email,
+      password: password
+    })
+    const opts = {
+      method: "POST",
+      headers:{
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(
+        {
+          email: email,
+          password: password
+        }
+      )
+    }
+    fetch("https://3001-xetnal-finalproject-rjwnejuo77t.ws-us45.gitpod.io/api/token", opts)
+        .then(resp => {
+          console.log(resp)
+          if(resp.status === 200) return resp.json();
+          else alert("There was an error")
+        })
+        .then(data => {
+          console.log("this came from the backend", data)
+          sessionStorage.setItem('token', data.access_token)
+        })
+        .catch(error => {
+          console.error("There was an error!!!", error);
+        })
 
+
+
+
+  }
 
   return (
     <div id="login my-5">
@@ -27,6 +66,10 @@ export const LoginScreen = () => {
                     name="email"
                     id="email"
                     className="form-control"
+                    value={email}
+                    onChange={
+                      (e) => setEmail(e.target.value)
+                    }
                   />
                 </div>
                 <div className="form-group">
@@ -35,24 +78,29 @@ export const LoginScreen = () => {
                   </label>
                   <br />
                   <input
-                    type="text"
+                    type="password"
                     name="password"
                     id="password"
                     className="form-control"
+                    value={password}
+                    onChange={
+                      (e) => setPassword(e.target.value)
+                    }
                   />
                 </div>
                 <br />
                 <div className="form-group">
-                  <Link to="/user_home">
+                  
                     <button
-                      type="submit"
+                      type="button"
                       name="submit"
                       className="btn btn-info btn-md"
                       value="submit"
+                      onClick={handleClick}
                     >
                       Entrar
                     </button>
-                  </Link>
+                  
                 </div>
               </form>
             </div>
