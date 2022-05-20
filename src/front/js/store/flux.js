@@ -21,7 +21,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 		actions: {
 
 			getProjects: () => {
-				fetch("https://3001-xetnal-finalproject-rjwnejuo77t.ws-us45.gitpod.io/api/projects")
+				fetch("https://3001-xetnal-finalproject-s0srryejroy.ws-us45.gitpod.io/api/projects")
 				  .then((response) => response.json())
 				  .then((data) => {console.log(data); 
 					setStore({ projects: data })
@@ -67,7 +67,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 
 				try{
-					const resp = await fetch("https://3001-xetnal-finalproject-rjwnejuo77t.ws-us45.gitpod.io/api/token", opts)  
+					const resp = await fetch("https://3001-xetnal-finalproject-s0srryejroy.ws-us45.gitpod.io/api/token", opts)  
 					console.log(resp)
 					if(resp.status !== 200){
 						alert("There was an error");
