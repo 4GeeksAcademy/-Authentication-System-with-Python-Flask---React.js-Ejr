@@ -67,6 +67,7 @@ def register():
     password = request.json.get("password", None)
     
     user = User()
+    user.role_id = 1
     user.email = email
     user.password = generate_password_hash(password)
     user.save()
