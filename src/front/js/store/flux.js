@@ -1,7 +1,9 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
+			
 			token: null,
+			currentUser: null,
 			message: null,
 			demo: [
 				{
@@ -16,7 +18,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			]
 		},
-		actions: {<<<<<<< soloProyect
+		actions: {
 
 			getProjects: () => {
 				fetch("https://3001-xetnal-finalproject-rjwnejuo77t.ws-us45.gitpod.io/api/projects")
@@ -40,8 +42,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 
 			syncTokenFromSessionStore: () => {
+				const currentUser = JSON.parse(sessionStorage.getItem('user'))
 				const token = sessionStorage.getItem("token")
-				if(token && token != "" && token != undefined) setStore({token: token})
+				if(token && token != "" && token != undefined) setStore({ token, currentUser})
 			},
 
 			login: async (email, password) => {
@@ -73,8 +76,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 						} 
 					const data = await resp.json();
 					console.log("this came from the backend", data)
-					sessionStorage.setItem('token', data.access_token)	
-					setStore({ token: data.access_token })
+					sessionStorage.setItem('token', data.access_token, )	
+					sessionStorage.setItem('user', JSON.stringify(data.user) )
+					setStore({ token: data.access_token, currentUser: data.user })
 					return true				  		
 
 				}
