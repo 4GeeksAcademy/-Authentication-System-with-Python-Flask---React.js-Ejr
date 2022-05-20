@@ -3,6 +3,9 @@ import { Link } from "react-router-dom";
 import "../../styles/login.css";
 
 export const LoginScreen = () => {
+
+
+
   return (
     <div id="login my-5">
       <div className="container my-5">
@@ -15,14 +18,14 @@ export const LoginScreen = () => {
               <form id="login-form" className="form">
                 <h3 className="text-center text-info">Login</h3>
                 <div className="form-group">
-                  <label for="username" className="text-info">
-                    Nombre:
+                  <label for="email" className="text-info">
+                   Email:
                   </label>
                   <br />
                   <input
                     type="text"
-                    name="username"
-                    id="username"
+                    name="email"
+                    id="email"
                     className="form-control"
                   />
                 </div>
