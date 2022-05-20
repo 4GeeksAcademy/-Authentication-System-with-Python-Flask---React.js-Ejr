@@ -129,7 +129,7 @@ export const RegisterProyectForm = ({
 							{/* </Link> */}
 						</div>
 					</div>
-					{/* de aqui para abajo, la columna derecha del fromulairo */}
+					{/* de aqui para abajo, la columna derecha del fromulairo centrado */}
 					<div className="col-6">
 						<div className="form-group">
 							<label>Monto de Reserva</label>
