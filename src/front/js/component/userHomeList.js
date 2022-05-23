@@ -6,9 +6,11 @@ export const UserHomeList = () => {
 
     const { store, actions } = useContext(Context); 
 
+    
+
     let lista = store.projects?.map((project, index)=>{
         return (
-            <div className="col">
+            <div className="col" key={project.id}>
             <div className="card">
               <img src={project.pictures} className="card-img-top" alt="..."/>
               <div className="card-body">
@@ -29,9 +31,9 @@ export const UserHomeList = () => {
                     </div>
                   </div>
                 </div>
-                <div class="alert alert-secondary" role="alert">Desde UF {project.total_price} - $76.736.480</div>
+                <div className="alert alert-secondary" role="alert">Desde UF {project.total_price} - $76.736.480</div>
                 <Link to={`/proyect/${project.id}`}>
-                  <button type="button" class="btn btn-primary" >Ir al Proyecto</button>
+                  <button type="button" className="btn btn-primary" >Ir al Proyecto</button>
                 </Link> 
               </div>
             </div>
