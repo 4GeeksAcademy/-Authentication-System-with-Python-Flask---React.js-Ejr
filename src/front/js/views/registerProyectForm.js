@@ -24,11 +24,9 @@ export const RegisterProyectForm = ({
 	setParking_spots,
 	bodega,
 	setBodega,
-	typology,
-	setTypology,
 	total_price,
 	setTotal_price,
-	pictures,
+	/* pictures, */
 	setPictures,
 	comuna,
 	setComuna,
@@ -131,7 +129,7 @@ export const RegisterProyectForm = ({
 							{/* </Link> */}
 						</div>
 					</div>
-					{/* de aqui para abajo, la columna derecha del fromulairo */}
+					{/* de aqui para abajo, la columna derecha del fromulairo centrado */}
 					<div className="col-6">
 						<div className="form-group">
 							<label>Monto de Reserva</label>
@@ -170,18 +168,9 @@ export const RegisterProyectForm = ({
 								onChange={(e) => setBodega(e.target.value)}
 								placeholder="Cuenta con Bodega?"
 							/>
-							<label>Descripcion</label>
-							<input
-								type="text"
-								className="form-control"
-								name="typology"
-								value={typology}
-								onChange={(e) => setTypology(e.target.value)}
-								placeholder="Ingrese una descripcion"
-							/>
 							<label>Precio</label>
 							<input
-								type="email"
+								type="number"
 								className="form-control"
 								name="total_price"
 								value={total_price}
