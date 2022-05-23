@@ -1,6 +1,8 @@
 """
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
+from logging import root
+from turtle import title
 from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, User, Company, Project, Rol, Postulacion
 from api.utils import generate_sitemap, APIException
@@ -10,6 +12,9 @@ from flask_jwt_extended import jwt_required
 from flask_jwt_extended import JWTManager
 from werkzeug.security import generate_password_hash, check_password_hash
 import datetime
+import cloudinary
+import cloudinary.uploader
+from models import Project
 
 
 
@@ -226,6 +231,45 @@ def create_project():
     project.rooms = request.json.get('rooms')
     project.sale_type = request.json.get('sale_type')
     project.save()
+    """ title=request.form['title']
+    address=request.form['address']
+    comuna=request.form['comuna']
+    ciudad=request.form['ciudad']
+    size=request.form['size']
+    monto_reserva=request.form['monto_reserva']
+    bono_pie=request.form['bono_pie']
+    parking_spots=request.form['parking_spots']
+    bodega=request.form['bodega']
+    total_price=request.form['total_price']
+    pictures=request.files['pictures']
+    body=request.form['body']
+    perks=request.form['perks']
+    bathrooms=request.form['bathrooms']
+    rooms=request.form['rooms']
+    sale_type=request.form['sale_type']
+
+    respuesta = cloudinary.uploader.upload(pictures, folder= 'inmobiliariaapp')
+
+    if not respuesta: return jsonify({'msg':'error al subir la imagen'})
+
+    project = Project()
+    project.title = title
+    project.address=address
+    project.comuna=comuna
+    project.ciudad=ciudad
+    project.size=size
+    project.monto_reserva=monto_reserva
+    project.bono_pie=bono_pie
+    project.parking_spots=parking_spots
+    project.bodega=bodega
+    project.total_price=total_price
+    project.pictures=respuesta['secure_url']
+    project.body=body
+    project.perks=perks
+    project.bathrooms=bathrooms
+    project.rooms=rooms
+    project.sale_type=sale_type
+    project.save() """
 
     return jsonify(project.serialize()), 201
 
