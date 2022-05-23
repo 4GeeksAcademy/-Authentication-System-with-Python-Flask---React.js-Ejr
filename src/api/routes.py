@@ -63,13 +63,21 @@ def create_token():
 
 @api.route("/register", methods=["POST"])
 def register():
+
+    # userFound = 
+
     email = request.json.get("email", None)
     password = request.json.get("password", None)
-    
     user = User()
     user.role_id = 1
     user.email = email
+    password = request.json.get("password", None)
     user.password = generate_password_hash(password)
+    user.name = request.json.get('name')
+    user.lastname = request.json.get('lastname')
+    user.salary = request.json.get('salary')
+    user.side_income = request.json.get('side_income')
+    user.deudas = request.json.get('deudas')
     user.save()
 
     return jsonify({"status": "success", "message": "Register successfull!. Please login."}), 200
