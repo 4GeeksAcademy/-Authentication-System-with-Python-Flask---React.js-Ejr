@@ -7,8 +7,8 @@ export const UserHome = () => {
     <div className="container mt-2">
       <div className="row">
         <div className="col-12 col-sm-6">
-          <select className="form-select mb-2" aria-label="Default select example">
-            <option selected="">Ordenar por</option>
+          <select className="form-select mb-2" aria-label="Default select example" defaultValue={""}>
+            <option selected value="">Ordenar por</option>
             <option value={1}>Valor Mayor</option>
             <option value={2}>Valor Menor</option>
             <option value={3}>Fecha de publicacion</option>
@@ -16,7 +16,7 @@ export const UserHome = () => {
         </div>
         <div className="col-12 col-sm-6">
           <Link to="/user_proyects">
-            <button type="button" class="btn btn-primary">Ver Postulaciones</button> 
+            <button type="button" className="btn btn-primary">Ver Postulaciones</button> 
           </Link>
         </div>
       </div>
