@@ -24,7 +24,7 @@ export const Proyect = () => {
   return (
 
     <div className="container mt-4 p-0">
-      <h2>{proyecto.address}</h2>
+      <h2>{proyecto.title}</h2>
       <div className="row">
         <div className="col-12 col-lg-8 p-0">
         <div className="card">

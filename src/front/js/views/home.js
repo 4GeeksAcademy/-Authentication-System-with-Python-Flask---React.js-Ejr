@@ -6,6 +6,14 @@ import "../../styles/home.css";
 export const Home = () => {
   const { store, actions } = useContext(Context);
 
+  getProjects: () => {
+    fetch("https://3001-xetnal-finalproject-s0srryejroy.ws-us45.gitpod.io/api/projects")
+      .then((response) => response.json())
+      .then((data) => {console.log(data); 
+      setStore({ projects: data })
+    })
+  }
+
   return (
     <>
       <div className="container my-3">
