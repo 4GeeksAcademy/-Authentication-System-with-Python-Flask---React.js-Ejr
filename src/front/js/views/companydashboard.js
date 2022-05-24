@@ -45,7 +45,9 @@ export const CompanyDashboard = () => {
 			rooms: rooms,
 			monto_reserva: monto_reserva,
 			bono_pie: bono_pie,
+
 			parking_spots: parking_spots,
+
 			bodega: bodega,
 			total_price: total_price,
 			pictures: pictures,
@@ -67,7 +69,9 @@ export const CompanyDashboard = () => {
 		formData.append("rooms", rooms);
 		formData.append("monto_reserva", monto_reserva);
 		formData.append("bono_pie", bono_pie);
+
 		formData.append("parking_spots", parking_spots);
+
 		formData.append("bodega", bodega);
 		formData.append("total_price", total_price);
 		formData.append("pictures", pictures);
