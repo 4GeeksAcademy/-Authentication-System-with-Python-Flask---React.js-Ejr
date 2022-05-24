@@ -1,13 +1,13 @@
-import React, { useContext, useState } from "react";
-import { useEffect } from "react/cjs/react.development";
-/* import { Context } from "../store/appContext";
-import { Link } from "react-router-dom";
+import React, { useContext, useState, useEffect } from "react";
+import { Context } from "../store/appContext";
+/*import { Link } from "react-router-dom";
 import { Proyect } from "./proyect"; */
 import { CompanyProyects } from "./companyProyects";
 import { RegisterProyectForm } from "./registerProyectForm";
 import "../../styles/login.css";
 
 export const CompanyDashboard = () => {
+	const { store } = useContext(Context);
 	const [proyectos, setProyectos] = useState([]);
 	const [title, setTitle] = useState("");
 	const [address, setAdress] = useState("");
@@ -52,6 +52,7 @@ export const CompanyDashboard = () => {
 		setProyectos([...proyectos, objetoProyecto]);
 
 		const formData = new FormData();
+		formData.append("company_id", store.currentUser?.company?.id);
 		formData.append("tittle", title);
 		formData.append("comuna", comuna);
 		formData.append("ciudad", ciudad);
@@ -78,7 +79,10 @@ export const CompanyDashboard = () => {
 	const registerFetch = async (data) => {
 		const respuesta = await fetch(
 			"https://3001-xetnal-finalproject-s0srryejroy.ws-us45.gitpod.io/api/projects",
-			{ method: "POST", body: data }
+			{
+				method: "POST",
+				body: data,
+			}
 		);
 		const info = await respuesta.json();
 		return info;
