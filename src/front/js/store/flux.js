@@ -114,7 +114,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 
 				try{
-					const resp = await fetch("https://3001-xetnal-finalproject-s0srryejroy.ws-us45.gitpod.io/api/token", opts)  
+					const resp = await fetch("https://3001-xetnal-finalproject-s0srryejroy.ws-us45.gitpod.io/api/company_token", opts)  
 					console.log(resp)
 					if(resp.status !== 200){
 						alert("There was an error");
