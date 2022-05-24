@@ -22,9 +22,9 @@ import { LoginEmpresa } from "./views/loginEmpresa";
 
 //create your first component
 const Layout = () => {
-	//the basename is used when your project is published in a subdirectory and not in the root of the domain
-	// you can set the basename on the .env file located at the root of this project, E.g: BASENAME=/react-hello-webapp/
-	const basename = process.env.BASENAME || "";
+  //the basename is used when your project is published in a subdirectory and not in the root of the domain
+  // you can set the basename on the .env file located at the root of this project, E.g: BASENAME=/react-hello-webapp/
+  const basename = process.env.BASENAME || "";
 
   return (
     <div>
@@ -43,9 +43,9 @@ const Layout = () => {
           <Route exact path="/register">
             <UserRegister />
           </Route>
-          <Route exact path="/user_profile_setup">
+          {/* <Route exact path="/user_profile_setup">
             <UserProfileSetup />
-          </Route>
+          </Route> */}
           <Route exact path="/company_register">
             <CompanyRegister />
           </Route>
@@ -56,7 +56,9 @@ const Layout = () => {
             <Proyect />
           </Route>
           <Route exact path="/user_home">
-            <UserHome />
+            
+              <UserHome />
+            
           </Route>
           <Route exact path="/user_proyects">
             <UserProyects />
@@ -71,7 +73,9 @@ const Layout = () => {
             <CompanyDashboard />
           </Route>
           <Route>
-            <h1 className="text-center">No pudimos encontrar lo que necesitas!</h1>
+            <h1 className="text-center">
+              No pudimos encontrar lo que necesitas!
+            </h1>
           </Route>
         </Switch>
         <Footer />
