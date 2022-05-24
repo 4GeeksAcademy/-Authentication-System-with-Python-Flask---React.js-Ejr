@@ -133,7 +133,7 @@ export const CompanyDashboard = () => {
 				<div className="row row-cols-1 row-cols-md-3 g-4">
 					{proyectos.map((proyecto) => {
 						return (
-							<div className="col">
+							<div className="col" >
 								<div
 									className="card text-bg-light mb-3"
 									style={{ maxWidth: "30rem" }}
