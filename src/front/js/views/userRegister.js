@@ -11,41 +11,41 @@ export const UserRegister = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = async e => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const data = {};
     data.name = name;
-	data.lastname = lastName;
-	data.salary = salary;
-	data.side_income = side_income;
-	data.deudas = deudas;
-	data.email = email;
-	data.password = password;
+    data.lastname = lastName;
+    data.salary = salary;
+    data.side_income = side_income;
+    data.deudas = deudas;
+    data.email = email;
+    data.password = password;
 
-
-
-	const info = await registerFetch(data)
-	console.log(info)
-	setName("")
-	setLastName("")
-	setSalary(0)
-	setSideIncome(0)
-	setDeudas(0)
-	setEmail("")
-	setPassword("")
-
-
+    const info = await registerFetch(data);
+    console.log(info);
+    setName("");
+    setLastName("");
+    setSalary(0);
+    setSideIncome(0);
+    setDeudas(0);
+    setEmail("");
+    setPassword("");
   };
 
-  const registerFetch = async data => {
-	const resp = await fetch('https://3001-xetnal-finalproject-s0srryejroy.ws-us45.gitpod.io/api/register', {method: 'POST', body: JSON.stringify(data), headers: {"Content-Type": "application/JSON"}});
-	const info = await resp.json();
-	return info
-
-
-  }
-
+  const registerFetch = async (data) => {
+    const resp = await fetch(
+      "https://3001-xetnal-finalproject-s0srryejroy.ws-us45.gitpod.io/api/register",
+      {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: { "Content-Type": "application/JSON" },
+      }
+    );
+    const info = await resp.json();
+    return info;
+  };
 
   return (
     <div className="container my-5">

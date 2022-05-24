@@ -1,8 +1,8 @@
 """
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
-from logging import root
-from turtle import title
+
+
 from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, User, Company, Project, Rol, Postulacion
 from api.utils import generate_sitemap, APIException
@@ -14,14 +14,14 @@ from werkzeug.security import generate_password_hash, check_password_hash
 import datetime
 import cloudinary
 import cloudinary.uploader
-from models import Project
+
 
 
 
 api = Blueprint('api', __name__)
 
 
-@api.route("/company_token")
+@api.route("/company_token", methods=["POST"])
 def create_company_token():
     email = request.json.get("email")
     password = request.json.get("password")
@@ -41,7 +41,7 @@ def create_company_token():
         "access_token": access_token,
         "company": company.serialize()
     }
-
+    return jsonify(data), 200
 
 @api.route("/token", methods=["POST"])
 def create_token():

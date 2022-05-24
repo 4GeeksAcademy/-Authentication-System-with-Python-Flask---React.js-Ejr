@@ -51,12 +51,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 				if(token && token != "" && token != undefined) setStore({ token, currentUser})
 
 			},
-			// syncCompanyTokenFromSessionStore: () => {
+			syncCompanyTokenFromSessionStore: () => {
 				
-			// 	const currentCompany = JSON.parse(sessionStorage.getItem('company'))
-			// 	const token = sessionStorage.getItem("token")
-			// 	if(token && token != "" && token != undefined) setStore({ token, currentCompany})
-			// },
+				const currentCompany = JSON.parse(sessionStorage.getItem('company'))
+				const token = sessionStorage.getItem("token")
+				if(token && token != "" && token != undefined) setStore({ token, currentCompany})
+			},
 
 			login: async (email, password) => {
 				console.log({
@@ -114,7 +114,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 
 				try{
-					const resp = await fetch("https://3001-xetnal-finalproject-s0srryejroy.ws-us45.gitpod.io/api/token", opts)  
+					const resp = await fetch("https://3001-xetnal-finalproject-s0srryejroy.ws-us45.gitpod.io/api/company_token", opts)  
 					console.log(resp)
 					if(resp.status !== 200){
 						alert("There was an error");

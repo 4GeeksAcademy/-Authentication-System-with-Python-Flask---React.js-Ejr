@@ -71,7 +71,9 @@ const Layout = () => {
             <CompanyDashboard />
           </Route>
           <Route>
-            <h1 className="text-center">No pudimos encontrar lo que necesitas!</h1>
+            <h1 className="text-center">
+              No pudimos encontrar lo que necesitas!
+            </h1>
           </Route>
         </Switch>
         <Footer />
