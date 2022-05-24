@@ -1,8 +1,8 @@
 """
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
-from logging import root
-from turtle import title
+
+
 from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, User, Company, Project, Rol, Postulacion
 from api.utils import generate_sitemap, APIException
@@ -14,7 +14,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 import datetime
 import cloudinary
 import cloudinary.uploader
-from models import Project
+
 
 
 

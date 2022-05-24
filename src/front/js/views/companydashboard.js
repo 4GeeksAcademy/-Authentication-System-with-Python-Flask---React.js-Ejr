@@ -78,7 +78,7 @@ export const CompanyDashboard = () => {
 	const registerFetch = async (data) => {
 		const respuesta = await fetch(
 			"https://3001-xetnal-finalproject-s0srryejroy.ws-us45.gitpod.io/api/projects",
-			{ method: "POST", body: data }
+			{ method: "POST", body: JSON.stringify(data), headers: { "Content-Type": "application/JSON" } }
 		);
 		const info = await respuesta.json();
 		return info;

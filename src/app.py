@@ -48,6 +48,15 @@ setup_admin(app)
 # add the admin
 setup_commands(app)
 
+#configuracion de cloudinary
+# 
+cloudinary.config( 
+  cloud_name = "dzv2kgwmo", 
+  api_key = "248939756661688", 
+  api_secret = "LwMY13_FMfx5M-j2iWLBIlcFxpc" ,
+  secure = True
+)    
+
 
 # Add all endpoints form the API with a "api" prefix
 app.register_blueprint(api, url_prefix='/api')
@@ -79,11 +88,3 @@ if __name__ == '__main__':
     PORT = int(os.environ.get('PORT', 3001))
     app.run(host='0.0.0.0', port=PORT, debug=True)
 
-#configuracion de cloudinary
-# 
-cloudinary.config( 
-  cloud_name = "dzv2kgwmo", 
-  api_key = "248939756661688", 
-  api_secret = "LwMY13_FMfx5M-j2iWLBIlcFxpc" ,
-  secure = True
-)    
