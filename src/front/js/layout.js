@@ -43,9 +43,9 @@ const Layout = () => {
           <Route exact path="/register">
             <UserRegister />
           </Route>
-          <Route exact path="/user_profile_setup">
+          {/* <Route exact path="/user_profile_setup">
             <UserProfileSetup />
-          </Route>
+          </Route> */}
           <Route exact path="/company_register">
             <CompanyRegister />
           </Route>
@@ -71,7 +71,9 @@ const Layout = () => {
             <CompanyDashboard />
           </Route>
           <Route>
-            <h1 className="text-center">No pudimos encontrar lo que necesitas!</h1>
+            <h1 className="text-center">
+              No pudimos encontrar lo que necesitas!
+            </h1>
           </Route>
         </Switch>
         <Footer />

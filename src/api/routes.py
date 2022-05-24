@@ -1,6 +1,8 @@
 """
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
+
+
 from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, User, Company, Project, Rol, Postulacion
 from api.utils import generate_sitemap, APIException
@@ -10,13 +12,16 @@ from flask_jwt_extended import jwt_required
 from flask_jwt_extended import JWTManager
 from werkzeug.security import generate_password_hash, check_password_hash
 import datetime
+import cloudinary
+import cloudinary.uploader
+
 
 
 
 api = Blueprint('api', __name__)
 
 
-@api.route("/company_token")
+@api.route("/company_token", methods=["POST"])
 def create_company_token():
     email = request.json.get("email")
     password = request.json.get("password")
@@ -36,7 +41,7 @@ def create_company_token():
         "access_token": access_token,
         "company": company.serialize()
     }
-
+    return jsonify(data), 200
 
 @api.route("/token", methods=["POST"])
 def create_token():
@@ -63,13 +68,21 @@ def create_token():
 
 @api.route("/register", methods=["POST"])
 def register():
+
+    # userFound = 
+
     email = request.json.get("email", None)
     password = request.json.get("password", None)
-    
     user = User()
     user.role_id = 1
     user.email = email
+    password = request.json.get("password", None)
     user.password = generate_password_hash(password)
+    user.name = request.json.get('name')
+    user.lastname = request.json.get('lastname')
+    user.salary = request.json.get('salary')
+    user.side_income = request.json.get('side_income')
+    user.deudas = request.json.get('deudas')
     user.save()
 
     return jsonify({"status": "success", "message": "Register successfull!. Please login."}), 200
@@ -209,7 +222,7 @@ def get_project(project_id):
 @api.route("/projects", methods=['POST'])
 def create_project():
     project = Project()
-    project.company_id = request.json.get('company_id')
+    """ project.company_id = request.json.get('company_id')
     project.title = request.json.get('title')
     project.address = request.json.get('address')
     project.comuna = request.json.get('comuna')
@@ -226,6 +239,47 @@ def create_project():
     project.bathrooms = request.json.get('bathrooms')
     project.rooms = request.json.get('rooms')
     project.sale_type = request.json.get('sale_type')
+    project.save() """
+    company_id=request.form['company_id']
+    title=request.form['title']
+    address=request.form['address']
+    comuna=request.form['comuna']
+    ciudad=request.form['ciudad']
+    size=request.form['size']
+    monto_reserva=request.form['monto_reserva']
+    bono_pie=request.form['bono_pie']
+    parking_spots=request.form['parking_spots']
+    bodega=request.form['bodega']
+    total_price=request.form['total_price']
+    pictures=request.files['pictures']
+    body=request.form['body']
+    perks=request.form['perks']
+    bathrooms=request.form['bathrooms']
+    rooms=request.form['rooms']
+    sale_type=request.form['sale_type']
+
+    respuesta = cloudinary.uploader.upload(pictures, folder= 'inmobiliariaapp')
+
+    if not respuesta: return jsonify({'msg':'error al subir la imagen'})
+
+    
+    project.company_id = company_id
+    project.title = title
+    project.address=address
+    project.comuna=comuna
+    project.ciudad=ciudad
+    project.size=size
+    project.monto_reserva=monto_reserva
+    project.bono_pie=bono_pie
+    project.parking_spots=parking_spots
+    project.bodega=bodega
+    project.total_price=total_price
+    project.pictures=respuesta['secure_url']
+    project.body=body
+    project.perks=perks
+    project.bathrooms=bathrooms
+    project.rooms=rooms
+    project.sale_type=sale_type
     project.save()
 
     return jsonify(project.serialize()), 201
