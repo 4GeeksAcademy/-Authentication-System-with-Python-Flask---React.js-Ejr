@@ -21,7 +21,7 @@ import cloudinary.uploader
 api = Blueprint('api', __name__)
 
 
-@api.route("/company_token")
+@api.route("/company_token", methods=["POST"])
 def create_company_token():
     email = request.json.get("email")
     password = request.json.get("password")
@@ -41,7 +41,7 @@ def create_company_token():
         "access_token": access_token,
         "company": company.serialize()
     }
-
+    return jsonify(data), 200
 
 @api.route("/token", methods=["POST"])
 def create_token():

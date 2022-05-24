@@ -33,8 +33,7 @@ export const Navbar = () => {
 					<Link to="/">
 					<button onClick={() => actions.logout()} className="btn btn-success">Salir</button>
 					</Link>
-					
-					
+								
 				}
 					<Link to="/company_login">
 						<button className="btn btn-success">Ingreso Empresa</button>
