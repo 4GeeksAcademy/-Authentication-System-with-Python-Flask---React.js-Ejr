@@ -12,6 +12,7 @@ import {
 import Input from "./Input";
 
 export const CompanyRegister = () => {
+
   const [usuario, cambiarUsuario] = useState({ campo: "", valido: null });
   const [nombreempresa, cambiarNombreempresa] = useState({ campo: "", valido: null });
   const [rutempresa, cambiarRutempresa] = useState({ campo: "", valido: null });
@@ -207,4 +208,5 @@ export const CompanyRegister = () => {
       </Formulario>
     </main>
   );
+
 };

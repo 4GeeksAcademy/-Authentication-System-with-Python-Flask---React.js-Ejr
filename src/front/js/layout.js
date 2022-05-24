@@ -18,12 +18,13 @@ import { CompanyRegisterSuccess } from "./views/companyregistersuccess";
 import { CompanyRegister } from "./views/companyregister";
 import { UserRegister } from "./views/userRegister";
 import { CompanyDashboard } from "./views/companydashboard";
+import { LoginEmpresa } from "./views/loginEmpresa";
 
 //create your first component
 const Layout = () => {
-  //the basename is used when your project is published in a subdirectory and not in the root of the domain
-  // you can set the basename on the .env file located at the root of this project, E.g: BASENAME=/react-hello-webapp/
-  const basename = process.env.BASENAME || "";
+	//the basename is used when your project is published in a subdirectory and not in the root of the domain
+	// you can set the basename on the .env file located at the root of this project, E.g: BASENAME=/react-hello-webapp/
+	const basename = process.env.BASENAME || "";
 
   return (
     <div>
@@ -36,19 +37,22 @@ const Layout = () => {
           <Route exact path="/login">
             <LoginScreen />
           </Route>
+          <Route exact path="/company_login">
+            <LoginEmpresa />
+          </Route>
           <Route exact path="/register">
             <UserRegister />
           </Route>
-          <Route exact path="/user_profile_setup">
+          {/* <Route exact path="/user_profile_setup">
             <UserProfileSetup />
-          </Route>
+          </Route> */}
           <Route exact path="/company_register">
             <CompanyRegister />
           </Route>
           <Route exact path="/company_register_success">
             <CompanyRegisterSuccess />
           </Route>
-          <Route exact path="/proyect">
+          <Route exact path="/proyect/:id">
             <Proyect />
           </Route>
           <Route exact path="/user_home">
@@ -63,7 +67,7 @@ const Layout = () => {
           <Route exact path="/company_proyects">
             <CompanyProyects />
           </Route>
-          <Route exact patch="/company_dashboard">
+          <Route exact path="/company_dashboard">
             <CompanyDashboard />
           </Route>
           <Route>
