@@ -42,7 +42,7 @@ const Layout = () => {
           <Route exact path="/user_profile_setup">
             <UserProfileSetup />
           </Route>
-          <Route exact path="/companyregister">
+          <Route exact path="/company_register">
             <CompanyRegister />
           </Route>
           <Route exact path="/company_register_success">
