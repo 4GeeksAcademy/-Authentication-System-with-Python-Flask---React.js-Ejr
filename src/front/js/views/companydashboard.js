@@ -1,13 +1,13 @@
-import React, { useContext, useState } from "react";
-import { useEffect } from "react/cjs/react.development";
-/* import { Context } from "../store/appContext";
-import { Link } from "react-router-dom";
+import React, { useContext, useState, useEffect } from "react";
+import { Context } from "../store/appContext";
+/*import { Link } from "react-router-dom";
 import { Proyect } from "./proyect"; */
 import { CompanyProyects } from "./companyProyects";
 import { RegisterProyectForm } from "./registerProyectForm";
 import "../../styles/login.css";
 
 export const CompanyDashboard = () => {
+	const { store } = useContext(Context);
 	const [proyectos, setProyectos] = useState([]);
 	const [title, setTitle] = useState("");
 	const [address, setAdress] = useState("");
@@ -21,7 +21,9 @@ export const CompanyDashboard = () => {
 	const [parking_spots, setParking_spots] = useState(0);
 	const [bodega, setBodega] = useState("");
 	const [total_price, setTotal_price] = useState(0);
-	const [pictures, setPictures] = useState("sin-foto.png");
+	const [pictures, setPictures] = useState(
+		"https://imgclasificados3.emol.com/Proyectos/imagenes/proyecto/PR_FOTO_5116_LivingDepto%20304V2.jpg"
+	);
 	//agregar las siguientes
 	const [comuna, setComuna] = useState("");
 	const [ciudad, setCiudad] = useState("");
@@ -43,7 +45,9 @@ export const CompanyDashboard = () => {
 			rooms: rooms,
 			monto_reserva: monto_reserva,
 			bono_pie: bono_pie,
-			parking_spots: parking_spot,
+
+			parking_spots: parking_spots,
+
 			bodega: bodega,
 			total_price: total_price,
 			pictures: pictures,
@@ -52,6 +56,7 @@ export const CompanyDashboard = () => {
 		setProyectos([...proyectos, objetoProyecto]);
 
 		const formData = new FormData();
+		formData.append("company_id", store.currentUser?.company?.id);
 		formData.append("tittle", title);
 		formData.append("comuna", comuna);
 		formData.append("ciudad", ciudad);
@@ -64,7 +69,9 @@ export const CompanyDashboard = () => {
 		formData.append("rooms", rooms);
 		formData.append("monto_reserva", monto_reserva);
 		formData.append("bono_pie", bono_pie);
-		formData.append("parking_spot", parking_spots);
+
+		formData.append("parking_spots", parking_spots);
+
 		formData.append("bodega", bodega);
 		formData.append("total_price", total_price);
 		formData.append("pictures", pictures);
@@ -78,7 +85,10 @@ export const CompanyDashboard = () => {
 	const registerFetch = async (data) => {
 		const respuesta = await fetch(
 			"https://3001-xetnal-finalproject-s0srryejroy.ws-us45.gitpod.io/api/projects",
-			{ method: "POST", body: JSON.stringify(data), headers: { "Content-Type": "application/JSON" } }
+			{
+				method: "POST",
+				body: data,
+			}
 		);
 		const info = await respuesta.json();
 		return info;
@@ -166,7 +176,7 @@ export const CompanyDashboard = () => {
 												<p className="card-text">{proyecto.sale_type}</p>
 												<img
 													className="imagen-dashboard"
-													src="https://imgclasificados3.emol.com/Proyectos/imagenes/proyecto/PR_FOTO_5116_LivingDepto%20304V2.jpg"
+													src={proyecto.pictures}
 												></img>
 												<button className="btn btn-danger">Eliminar</button>
 											</div>

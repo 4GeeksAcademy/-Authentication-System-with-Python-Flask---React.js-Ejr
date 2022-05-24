@@ -222,7 +222,7 @@ def get_project(project_id):
 @api.route("/projects", methods=['POST'])
 def create_project():
     project = Project()
-    project.company_id = request.json.get('company_id')
+    """ project.company_id = request.json.get('company_id')
     project.title = request.json.get('title')
     project.address = request.json.get('address')
     project.comuna = request.json.get('comuna')
@@ -239,8 +239,9 @@ def create_project():
     project.bathrooms = request.json.get('bathrooms')
     project.rooms = request.json.get('rooms')
     project.sale_type = request.json.get('sale_type')
-    project.save()
-    """ title=request.form['title']
+    project.save() """
+    company_id=request.form['company_id']
+    title=request.form['title']
     address=request.form['address']
     comuna=request.form['comuna']
     ciudad=request.form['ciudad']
@@ -261,7 +262,8 @@ def create_project():
 
     if not respuesta: return jsonify({'msg':'error al subir la imagen'})
 
-    project = Project()
+    
+    project.company_id = company_id
     project.title = title
     project.address=address
     project.comuna=comuna
@@ -278,7 +280,7 @@ def create_project():
     project.bathrooms=bathrooms
     project.rooms=rooms
     project.sale_type=sale_type
-    project.save() """
+    project.save()
 
     return jsonify(project.serialize()), 201
 
