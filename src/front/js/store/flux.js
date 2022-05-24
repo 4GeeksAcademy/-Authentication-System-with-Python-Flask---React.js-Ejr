@@ -51,12 +51,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 				if(token && token != "" && token != undefined) setStore({ token, currentUser})
 
 			},
-			// syncCompanyTokenFromSessionStore: () => {
+			syncCompanyTokenFromSessionStore: () => {
 				
-			// 	const currentCompany = JSON.parse(sessionStorage.getItem('company'))
-			// 	const token = sessionStorage.getItem("token")
-			// 	if(token && token != "" && token != undefined) setStore({ token, currentCompany})
-			// },
+				const currentCompany = JSON.parse(sessionStorage.getItem('company'))
+				const token = sessionStorage.getItem("token")
+				if(token && token != "" && token != undefined) setStore({ token, currentCompany})
+			},
 
 			login: async (email, password) => {
 				console.log({
