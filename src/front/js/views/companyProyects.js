@@ -82,10 +82,10 @@ export const CompanyProyects = (
 						<p className="card-text" value={total_price}>
 							{setTotal_price}
 						</p>
-						{/* <p className="card-text m-0 fw-bold">Foto:</p>
+						<p className="card-text m-0 fw-bold">Foto:</p>
 						<p className="card-text" value={pictures}>
 							{setPictures}
-						</p> */}
+						</p>
 						<p className="card-text m-0 fw-bold">Descripcion:</p>
 						<p className="card-text" value={body}>
 							{setBody}

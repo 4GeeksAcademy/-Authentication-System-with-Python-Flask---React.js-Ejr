@@ -18,10 +18,12 @@ export const CompanyDashboard = () => {
 	const [rooms, setRooms] = useState("");
 	const [monto_reserva, setMonto_reserva] = useState(0);
 	const [bono_pie, setBono_pie] = useState(0);
-	const [parking_spot, setParking_spot] = useState(0);
+	const [parking_spots, setParking_spots] = useState(0);
 	const [bodega, setBodega] = useState("");
 	const [total_price, setTotal_price] = useState(0);
-	const [pictures, setPictures] = useState("sin-foto.png");
+	const [pictures, setPictures] = useState(
+		"https://imgclasificados3.emol.com/Proyectos/imagenes/proyecto/PR_FOTO_5116_LivingDepto%20304V2.jpg"
+	);
 	//agregar las siguientes
 	const [comuna, setComuna] = useState("");
 	const [ciudad, setCiudad] = useState("");
@@ -43,7 +45,7 @@ export const CompanyDashboard = () => {
 			rooms: rooms,
 			monto_reserva: monto_reserva,
 			bono_pie: bono_pie,
-			parking_spot: parking_spot,
+			parking_spots: parking_spots,
 			bodega: bodega,
 			total_price: total_price,
 			pictures: pictures,
@@ -65,7 +67,7 @@ export const CompanyDashboard = () => {
 		formData.append("rooms", rooms);
 		formData.append("monto_reserva", monto_reserva);
 		formData.append("bono_pie", bono_pie);
-		formData.append("parking_spot", parking_spot);
+		formData.append("parking_spots", parking_spots);
 		formData.append("bodega", bodega);
 		formData.append("total_price", total_price);
 		formData.append("pictures", pictures);
@@ -147,13 +149,13 @@ export const CompanyDashboard = () => {
 												<p className="card-text m-0 fw-bold">Tamaño:</p>
 												<p className="card-text">{proyecto.size}</p>
 												<p className="card-text m-0 fw-bold">Reserva:</p>
-												<p className="card-text">{proyecto.reserva}</p>
+												<p className="card-text">{proyecto.monto_reserva}</p>
 												<p className="card-text m-0 fw-bold">Bono Pie:</p>
 												<p className="card-text">{proyecto.bono_pie}</p>
 												<p className="card-text m-0 fw-bold">
 													Estacionamientos:
 												</p>
-												<p className="card-text">{proyecto.parking_spot}</p>
+												<p className="card-text">{proyecto.parking_spots}</p>
 												<p className="card-text m-0 fw-bold">Bodega:</p>
 												<p className="card-text">{proyecto.bodega}</p>
 												<p className="card-text m-0 fw-bold">Precio Total:</p>
@@ -170,7 +172,7 @@ export const CompanyDashboard = () => {
 												<p className="card-text">{proyecto.sale_type}</p>
 												<img
 													className="imagen-dashboard"
-													src="https://imgclasificados3.emol.com/Proyectos/imagenes/proyecto/PR_FOTO_5116_LivingDepto%20304V2.jpg"
+													src={proyecto.pictures}
 												></img>
 												<button className="btn btn-danger">Eliminar</button>
 											</div>
@@ -204,8 +206,8 @@ export const CompanyDashboard = () => {
 				setMonto_reserva={setMonto_reserva}
 				bono_pie={bono_pie}
 				setBono_pie={setBono_pie}
-				parking_spots={parking_spot}
-				setParking_spots={setParking_spot}
+				parking_spots={parking_spots}
+				setParking_spots={setParking_spots}
 				bodega={bodega}
 				setBodega={setBodega}
 				total_price={total_price}

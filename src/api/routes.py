@@ -240,6 +240,7 @@ def create_project():
     project.rooms = request.json.get('rooms')
     project.sale_type = request.json.get('sale_type')
     project.save() """
+    company_id=request.form['company_id']
     title=request.form['title']
     address=request.form['address']
     comuna=request.form['comuna']
@@ -261,7 +262,8 @@ def create_project():
 
     if not respuesta: return jsonify({'msg':'error al subir la imagen'})
 
-    """ project = Project() """
+    
+    project.company_id = company_id
     project.title = title
     project.address=address
     project.comuna=comuna
