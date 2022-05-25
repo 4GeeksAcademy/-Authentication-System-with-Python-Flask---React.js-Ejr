@@ -91,6 +91,7 @@ class Project(db.Model):
     body = db.Column(db.String, nullable=False)
     perks = db.Column(db.String, nullable=False)
     title = db.Column(db.String, nullable=False)
+    minimum_value = db.Column(db.Integer, nullable=False)
 
     def serialize(self):
         return {
@@ -111,7 +112,8 @@ class Project(db.Model):
             'total_price': self.total_price,
             'pictures': self.pictures,
             'body': self.body,
-            'perks': self.perks
+            'perks': self.perks,
+            'minimum_value': self.minimum_value
         }
     
     def save(self):
