@@ -1,17 +1,16 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { UserHomeList } from "../component/userHomeList";
 import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react/cjs/react.development";
 
-export const Proyect = () => {
+export const Project = () => {
 	// console.log(useParams());
 	const { id } = useParams();
 	console.log(id);
 
 	const [proyecto, setProject] = React.useState([]);
 
-	React.useEffect(() => {
+	useEffect(() => {
 		const obtenerProyecto = async () => {
 			const data = await fetch(
 				`https://3001-xetnal-finalproject-s0srryejroy.ws-us45.gitpod.io/api/projects/${id}`
@@ -41,40 +40,7 @@ export const Proyect = () => {
 		setUfs(pesos);
 		console.log(typeof ufs);
 	};
-	console.log(ufs + "hola");
 
-	//desde aqui
-	/* const getUf = async () => {
-		const url =
-			"https://api.cmfchile.cl/api-sbifv3/recursos_api/uf?apikey=a8423be05204c1cb12e2d950d772c7018d0947ee&formato=json";
-		const respuesta = await fetch(url);
-		const { UFs } = await respuesta.json();
-		//console.log(UFs[0]);
-
-		const numero = UFs.map((uf) => {
-			return {
-				valor: uf.Valor,
-			};
-		});
-		console.log(numero);
-    setUfs([...ufs, numero]);
-	}; */
-	//hasta aqui
-	/* const numeroBueno = numero[0];
-		console.log(typeof numeroBueno);
-		console.log(numeroBueno.replace(".", ""));
-		toString(numeroBueno);
-		return numeroBueno; */
-	//console.log(numeroBueno.replace(",", ""));
-
-	//const valorUfHoy = getUf();
-	//console.log(typeof valorUfHoy);
-
-	/* 	const pesosAUf = (precio, valoruf) => {
-		return precio * valoruf;
-	};
-
-	const precioEnPesos = pesosAUf(proyecto.total_price, numero); */
 	return (
 		<div className="container mt-4 p-0">
 			<h2>{proyecto.address}</h2>

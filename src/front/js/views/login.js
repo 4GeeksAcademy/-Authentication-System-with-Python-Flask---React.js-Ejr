@@ -6,7 +6,7 @@ import "../../styles/login.css";
 import { useState } from "react";
 import { UserHome } from "./userHome";
 import { Context } from "../store/appContext";
-
+import 'animate.css';
 
 export const LoginScreen = () => {
   const { store, actions} = useContext(Context)
@@ -26,7 +26,7 @@ export const LoginScreen = () => {
   }
 
   return (
-    <div id="login my-5">
+    <div id="login ">
 
     {(store.token && store.token !== "" && store.token !== undefined) ? <div><h3 className="text-center">Ya ingresaste!</h3> 
     <h4 className="text-center my-5">
@@ -43,14 +43,14 @@ export const LoginScreen = () => {
       <div className="container my-5">
         <div
           id="login-row"
-          className="row justify-content-center align-items-center"
+          className="row justify-content-center align-items-center animate_animated animate__fadeInRightBig "
         >
           <div id="login-column" className="col-md-6">
             <div id="login-box" className="col-md-12">
               <form id="login-form" className="form">
-                <h3 className="text-center text-info">Login</h3>
+                <h3 className="text-center ">Login</h3>
                 <div className="form-group">
-                  <label for="email" className="text-info">
+                  <label for="email" >
                    Email:
                   </label>
                   <br />
@@ -66,7 +66,7 @@ export const LoginScreen = () => {
                   />
                 </div>
                 <div className="form-group">
-                  <label for="password" className="text-info">
+                  <label for="password" className="">
                     Contraseña:
                   </label>
                   <br />
@@ -87,7 +87,7 @@ export const LoginScreen = () => {
                     <button
                       type="button"
                       name="submit"
-                      className="btn btn-info btn-md"
+                      className="btn btn-dark btn-md"
                       value="submit"
                       onClick={handleClick}
                     >

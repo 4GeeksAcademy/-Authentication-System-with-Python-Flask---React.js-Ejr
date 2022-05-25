@@ -1,6 +1,8 @@
 import React from "react";
 
 export const RegisterProyectForm = ({
+	minimum_value,
+	setMinimumValue,
 	handleSubmit,
 	title,
 	setTitle,
@@ -185,6 +187,15 @@ export const RegisterProyectForm = ({
 								value={body}
 								onChange={(e) => setBody(e.target.value)}
 								placeholder="Ingrese una descripcion"
+							/>
+							<label>Renta minima</label>
+							<input
+								type="number"
+								className="form-control"
+								name="minimum_value"
+								value={minimum_value}
+								onChange={(e) => setMinimumValue(e.target.value)}
+								placeholder="Ingrese la renta minima requerida"
 							/>
 							<label>Foto</label>
 							<input
