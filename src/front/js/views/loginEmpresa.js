@@ -39,9 +39,9 @@ export const LoginEmpresa = () => {
             <div id="login-column" className="col-md-6">
               <div id="login-box" className="col-md-12">
                 <form id="login-form" className="form">
-                  <h3 className="text-center text-info">Login Empresa</h3>
+                  <h3 className="text-center ">Login Empresa</h3>
                   <div className="form-group">
-                    <label className="text-info">Email:</label>
+                    <label className="">Email:</label>
                     <br />
                     <input
                       type="text"
@@ -53,7 +53,7 @@ export const LoginEmpresa = () => {
                     />
                   </div>
                   <div className="form-group">
-                    <label htmlFor="password" className="text-info">
+                    <label htmlFor="password" className="">
                       Contraseña:
                     </label>
                     <br />
@@ -71,7 +71,7 @@ export const LoginEmpresa = () => {
                     <button
                       type="button"
                       name="submit"
-                      className="btn btn-info btn-md"
+                      className="btn btn-dark btn-md"
                       value="submit"
 					  onClick={handleClick}
                     >
