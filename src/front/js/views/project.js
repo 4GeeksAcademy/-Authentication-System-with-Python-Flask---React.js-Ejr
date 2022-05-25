@@ -115,7 +115,7 @@ export const Project = () => {
 						<div className="col-6 ">
 							<p>Venta: </p>
 							<p>Precio desde: </p>
-							<p>Valor en pesos (actualizado a la Uf de hoy) :</p>
+							<p>Valor Uf de hoy :</p>
 							<p>Dormitorios desde: </p>
 							<p>Baños desde: </p>
 							<p>Superficie desde:</p>

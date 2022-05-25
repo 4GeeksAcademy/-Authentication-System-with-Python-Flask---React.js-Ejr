@@ -21,9 +21,7 @@ export const CompanyDashboard = () => {
 	const [parking_spots, setParking_spots] = useState(0);
 	const [bodega, setBodega] = useState("");
 	const [total_price, setTotal_price] = useState(0);
-	const [pictures, setPictures] = useState(
-		"https://imgclasificados3.emol.com/Proyectos/imagenes/proyecto/PR_FOTO_5116_LivingDepto%20304V2.jpg"
-	);
+	const [pictures, setPictures] = useState("");
 	//agregar las siguientes
 	const [comuna, setComuna] = useState("");
 	const [ciudad, setCiudad] = useState("");
@@ -94,25 +92,6 @@ export const CompanyDashboard = () => {
 		const info = await respuesta.json();
 		return info;
 	};
-
-	/* const registerFetch = async () => {
-		try {
-			let config = {
-				method: "POST",
-				headers: {
-					Accept: "application/json",
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify(info),
-			};
-			let res = await fetch(
-				"https://3001-xetnal-finalproject-s0srryejroy.ws-us45.gitpod.io/api/projects",
-				config
-			);
-			let json = await res.json();
-			console.log(json);
-		} catch (error) {}
-	}; */
 
 	const listProyectos = async () => {
 		const respuesta = await fetch(
