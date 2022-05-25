@@ -21,9 +21,20 @@ export const Project = () => {
 		obtenerProyecto();
 	}, [id]);
 
+
+  React.useEffect(()=>{
+    const obtenerProyecto = async () => {
+      const data = await fetch(`https://3001-xetnal-finalproject-kainuymmez4.ws-us45.gitpod.io/api/projects/${id}`)
+      const project = await data.json()
+      setProject(project)
+    }
+    obtenerProyecto()
+  }, [id])
+
 	useEffect(() => {
 		getUf();
 	}, []);
+
 
 	const [ufs, setUfs] = useState("");
 
