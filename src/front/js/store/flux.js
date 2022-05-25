@@ -5,18 +5,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			currentUser: null,
 			currentCompany: null,
 			message: null,
-			demo: [
-				{
-					title: "FIRST",
-					background: "white",
-					initial: "white",
-				},
-				{
-					title: "SECOND",
-					background: "white",
-					initial: "white",
-				},
-			],
+			
 		},
 		actions: {
 			getProjects: () => {
@@ -41,6 +30,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 			logout: () => {
 				sessionStorage.removeItem("token");
 				setStore({ token: null });
+				sessionStorage.removeItem("user")
+				setStore({currentUser: null})
+				sessionStorage.removeItem("company")
+				setStore({currentCompany: null})
 			},
 
 			syncTokenFromSessionStore: () => {
