@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import { Context } from "../store/appContext";
 /*import { Link } from "react-router-dom";
 import { Proyect } from "./proyect"; */
-import { CompanyProyects } from "./companyProyects";
+import { CompanyProjects } from "./companyProjects";
 import { RegisterProyectForm } from "./registerProyectForm";
 import "../../styles/login.css";
 

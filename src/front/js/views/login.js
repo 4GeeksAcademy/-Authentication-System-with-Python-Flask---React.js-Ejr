@@ -6,7 +6,7 @@ import "../../styles/login.css";
 import { useState } from "react";
 import { UserHome } from "./userHome";
 import { Context } from "../store/appContext";
-
+import 'animate.css';
 
 export const LoginScreen = () => {
   const { store, actions} = useContext(Context)
@@ -26,7 +26,7 @@ export const LoginScreen = () => {
   }
 
   return (
-    <div id="login my-5">
+    <div id="login ">
 
     {(store.token && store.token !== "" && store.token !== undefined) ? <div><h3 className="text-center">Ya ingresaste!</h3> 
     <h4 className="text-center my-5">
@@ -43,7 +43,7 @@ export const LoginScreen = () => {
       <div className="container my-5">
         <div
           id="login-row"
-          className="row justify-content-center align-items-center"
+          className="row justify-content-center align-items-center animate_animated animate__fadeInRightBig "
         >
           <div id="login-column" className="col-md-6">
             <div id="login-box" className="col-md-12">
