@@ -222,7 +222,7 @@ def get_project(project_id):
 @api.route("/projects", methods=['POST'])
 def create_project():
     project = Project()
-    
+   
     company_id=request.form['company_id']
     title=request.form['title']
     address=request.form['address']
@@ -240,6 +240,7 @@ def create_project():
     bathrooms=request.form['bathrooms']
     rooms=request.form['rooms']
     sale_type=request.form['sale_type']
+    minimum_value=request.form['minimum_value']
 
     respuesta = cloudinary.uploader.upload(pictures, folder= 'inmobiliariaapp')
 
@@ -263,6 +264,7 @@ def create_project():
     project.bathrooms=bathrooms
     project.rooms=rooms
     project.sale_type=sale_type
+    project.minimum_value=minimum_value
     project.save()
 
     return jsonify(project.serialize()), 201
@@ -287,6 +289,7 @@ def update_project(project_id):
     project.bathrooms = request.json.get('bathrooms')
     project.rooms = request.json.get('rooms')
     project.sale_type = request.json.get('sale_type')
+    project.minimum_value=minimum_value
     project.update()
 
     data = {
