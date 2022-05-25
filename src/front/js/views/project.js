@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { UserHomeList } from "../component/userHomeList";
 import { useParams } from "react-router-dom";
 
-export const Proyect = () => {
+export const Project = () => {
 
   // console.log(useParams()); 
   const {id} = useParams(); 
