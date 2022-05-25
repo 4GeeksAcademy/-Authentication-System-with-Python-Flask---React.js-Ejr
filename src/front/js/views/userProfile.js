@@ -1,8 +1,12 @@
-import React from "react";
+import React, {useContext, useState} from "react";
 import "../../styles/login.css";
 import { Link } from "react-router-dom";
+import { Context } from "../store/appContext";
 
 export const UserProfile = () => {
+
+  
+
   return (
 
     <div className="container mt-4">
@@ -21,7 +25,7 @@ export const UserProfile = () => {
           <p className="card-text">Programador Full Stack Developer</p>
           <h5 className="card-title">Tipo de Contrato</h5>
           <p className="card-text">Indefinido</p>
-          <a href="#" class="btn btn-primary">Editar Perfil</a>
+          <a href="#" className="btn btn-primary">Editar Perfil</a>
 
         </div>
       </div>

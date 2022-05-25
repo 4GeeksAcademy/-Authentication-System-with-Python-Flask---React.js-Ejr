@@ -8,16 +8,17 @@ import injectContext from "./store/appContext";
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 import { LoginScreen } from "./views/login";
-import { Proyect } from "./views/proyect";
+import { Project } from "./views/project";
 import { UserHome } from "./views/userHome";
 import { UserProfile } from "./views/userProfile";
-import { UserProyects } from "./views/userProyects";
-import { CompanyProyects } from "./views/companyProyects";
+import { UserProjects } from "./views/userProjects";
+import { CompanyProjects } from "./views/companyProjects";
 import { UserProfileSetup } from "./views/userprofilesetup";
 import { CompanyRegisterSuccess } from "./views/companyregistersuccess";
 import { CompanyRegister } from "./views/companyregister";
 import { UserRegister } from "./views/userRegister";
 import { CompanyDashboard } from "./views/companydashboard";
+import { LoginEmpresa } from "./views/loginEmpresa";
 
 //create your first component
 const Layout = () => {
@@ -36,34 +37,40 @@ const Layout = () => {
           <Route exact path="/login">
             <LoginScreen />
           </Route>
+          <Route exact path="/company_login">
+            <LoginEmpresa />
+          </Route>
           <Route exact path="/register">
             <UserRegister />
           </Route>
-          <Route exact path="/user_profile_setup">
+          {/* <Route exact path="/user_profile_setup">
             <UserProfileSetup />
-          </Route>
+          </Route> */}
           <Route exact path="/company_register">
             <CompanyRegister />
           </Route>
           <Route exact path="/company_register_success">
             <CompanyRegisterSuccess />
           </Route>
-          <Route exact path="/proyect">
-            <Proyect />
+          <Route exact path="/project/:id">
+            <Project />
           </Route>
-          <Route exact path="/user_home">
-            <UserHome />
+          <Route exact path="/user_home">           
+              <UserHome />           
           </Route>
-          <Route exact path="/user_proyects">
-            <UserProyects />
+          <Route exact path="/user_projects">
+            <UserProjects />
           </Route>
+          {/* <Route exact path="/project">
+            <Project />
+          </Route> */}
           <Route exact path="/user_profile">
             <UserProfile />
           </Route>
-          <Route exact path="/company_proyects">
-            <CompanyProyects />
+          <Route exact path="/company_projects">
+            <CompanyProjects />
           </Route>
-          <Route exact patch="/company_dashboard">
+          <Route exact path="/company_dashboard">
             <CompanyDashboard />
           </Route>
           <Route>
@@ -72,7 +79,7 @@ const Layout = () => {
             </h1>
           </Route>
         </Switch>
-        <Footer />
+        {/* <Footer /> */}
       </BrowserRouter>
     </div>
   );

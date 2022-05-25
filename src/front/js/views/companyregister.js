@@ -12,10 +12,16 @@ import {
 import Input from "./Input";
 
 export const CompanyRegister = () => {
+<<<<<<< HEAD
   const [nombreempresa, cambiarNombreempresa] = useState({
     campo: "",
     valido: null,
   });
+=======
+
+  const [usuario, cambiarUsuario] = useState({ campo: "", valido: null });
+  const [nombreempresa, cambiarNombreempresa] = useState({ campo: "", valido: null });
+>>>>>>> ea075b7181e9c97afcfff963366b7055e6a86950
   const [rutempresa, cambiarRutempresa] = useState({ campo: "", valido: null });
   const [nombrecontacto, cambiarNombrecontacto] = useState({
     campo: "",
@@ -34,7 +40,7 @@ export const CompanyRegister = () => {
     nombreempresa: /^[a-zA-Z0-9_-]{4,16}$/,
     rutempresa: /^.{4,12}$/, // 4 a 12 digitos.
     nombrecontacto: /^[a-zA-ZÀ-ÿ\s]{1,40}$/,
-    password: /^.{4,12}$/, // 4 a 12 digitos.
+    password: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,15}/, // 4 a 12 digitos.
     correo: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
     telefono: /^\d{7,14}$/, // 7 a 14 numeros.
     direccion: /^[a-zA-Z0-9_-]{4,16}$/, // Letras, numeros, guion y guion_bajo
@@ -214,4 +220,5 @@ export const CompanyRegister = () => {
       </Formulario>
     </main>
   );
+
 };
