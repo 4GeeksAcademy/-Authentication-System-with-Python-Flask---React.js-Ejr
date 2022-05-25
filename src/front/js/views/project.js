@@ -21,20 +21,20 @@ export const Project = () => {
 		obtenerProyecto();
 	}, [id]);
 
-
-  React.useEffect(()=>{
-    const obtenerProyecto = async () => {
-      const data = await fetch(`https://3001-xetnal-finalproject-kainuymmez4.ws-us45.gitpod.io/api/projects/${id}`)
-      const project = await data.json()
-      setProject(project)
-    }
-    obtenerProyecto()
-  }, [id])
+	React.useEffect(() => {
+		const obtenerProyecto = async () => {
+			const data = await fetch(
+				`https://3001-xetnal-finalproject-kainuymmez4.ws-us45.gitpod.io/api/projects/${id}`
+			);
+			const project = await data.json();
+			setProject(project);
+		};
+		obtenerProyecto();
+	}, [id]);
 
 	useEffect(() => {
 		getUf();
 	}, []);
-
 
 	const [ufs, setUfs] = useState("");
 
@@ -126,7 +126,7 @@ export const Project = () => {
 						<div className="col-6 ">
 							<p>Venta: </p>
 							<p>Precio desde: </p>
-							<p>Valor en pesos (actualizado a la Uf de hoy) :</p>
+							<p>Valor Uf de hoy :</p>
 							<p>Dormitorios desde: </p>
 							<p>Baños desde: </p>
 							<p>Superficie desde:</p>
@@ -167,13 +167,3 @@ export const Project = () => {
 		</div>
 	);
 };
-
-/* const ufs = UFs.map((uf) => {
-			return uf.Valor;
-		}); */
-/* const valorFinal = ufs;
-		console.log(valorFinal);
-		return valorFinal; */
-//console.log(typeof valorFinal);
-/* const resultadoFinal = ufs[0].valor;
-		return resultadoFinal; */
