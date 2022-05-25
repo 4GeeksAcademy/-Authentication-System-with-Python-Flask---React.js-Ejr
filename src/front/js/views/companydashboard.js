@@ -28,7 +28,7 @@ export const CompanyDashboard = () => {
 	const [comuna, setComuna] = useState("");
 	const [ciudad, setCiudad] = useState("");
 	const [body, setBody] = useState("");
-	const [minimum_value, setMinimumValue] = useState("")
+	const [minimum_value, setMinimumValue] = useState("");
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
@@ -70,7 +70,7 @@ export const CompanyDashboard = () => {
 		formData.append("rooms", rooms);
 		formData.append("monto_reserva", monto_reserva);
 		formData.append("bono_pie", bono_pie);
-		formData.append("minimum_value", minimum_value)
+		formData.append("minimum_value", minimum_value);
 		formData.append("parking_spots", parking_spots);
 
 		formData.append("bodega", bodega);
@@ -134,7 +134,7 @@ export const CompanyDashboard = () => {
 				<div className="row row-cols-1 row-cols-md-3 g-4">
 					{proyectos.map((proyecto) => {
 						return (
-							<div className="col" >
+							<div className="col">
 								<div
 									className="card text-bg-light mb-3"
 									style={{ maxWidth: "30rem" }}
