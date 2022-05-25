@@ -36,7 +36,7 @@ export const UserRegister = () => {
 
   const registerFetch = async (data) => {
     const resp = await fetch(
-      "https://3001-xetnal-finalproject-s0srryejroy.ws-us45.gitpod.io/api/register",
+      "https://3001-xetnal-finalproject-kainuymmez4.ws-us45.gitpod.io/api/register",
       {
         method: "POST",
         body: JSON.stringify(data),
