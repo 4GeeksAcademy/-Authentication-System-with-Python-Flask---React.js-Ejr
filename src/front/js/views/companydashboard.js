@@ -5,6 +5,7 @@ import { Proyect } from "./proyect"; */
 import { CompanyProyects } from "./companyProyects";
 import { RegisterProyectForm } from "./registerProyectForm";
 import "../../styles/login.css";
+import { useParams } from "react-router-dom";
 
 export const CompanyDashboard = () => {
 	const { store } = useContext(Context);
@@ -21,10 +22,7 @@ export const CompanyDashboard = () => {
 	const [parking_spots, setParking_spots] = useState(0);
 	const [bodega, setBodega] = useState("");
 	const [total_price, setTotal_price] = useState(0);
-	const [pictures, setPictures] = useState(
-		"https://imgclasificados3.emol.com/Proyectos/imagenes/proyecto/PR_FOTO_5116_LivingDepto%20304V2.jpg"
-	);
-	//agregar las siguientes
+	const [pictures, setPictures] = useState(null);
 	const [comuna, setComuna] = useState("");
 	const [ciudad, setCiudad] = useState("");
 	const [body, setBody] = useState("");
@@ -45,9 +43,7 @@ export const CompanyDashboard = () => {
 			rooms: rooms,
 			monto_reserva: monto_reserva,
 			bono_pie: bono_pie,
-
 			parking_spots: parking_spots,
-
 			bodega: bodega,
 			total_price: total_price,
 			pictures: pictures,
@@ -56,8 +52,8 @@ export const CompanyDashboard = () => {
 		setProyectos([...proyectos, objetoProyecto]);
 
 		const formData = new FormData();
-		formData.append("company_id", store.currentUser?.company?.id);
-		formData.append("tittle", title);
+		formData.append("company_id", store.currentCompany?.id);
+		formData.append("title", title);
 		formData.append("comuna", comuna);
 		formData.append("ciudad", ciudad);
 		formData.append("body", body);
@@ -81,6 +77,14 @@ export const CompanyDashboard = () => {
 			listProyectos();
 		}
 	};
+	const { id } = useParams();
+	//funcion para manejar el eliminado de proyectos
+	const handleDelete = (e) => {
+		e.preventDefault();
+		deleteProject(proyecto.id);
+	};
+
+	//subir los proyectos a la api/projects
 
 	const registerFetch = async (data) => {
 		const respuesta = await fetch(
@@ -90,28 +94,11 @@ export const CompanyDashboard = () => {
 				body: data,
 			}
 		);
+
 		const info = await respuesta.json();
 		return info;
 	};
-
-	/* const registerFetch = async () => {
-		try {
-			let config = {
-				method: "POST",
-				headers: {
-					Accept: "application/json",
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify(info),
-			};
-			let res = await fetch(
-				"https://3001-xetnal-finalproject-s0srryejroy.ws-us45.gitpod.io/api/projects",
-				config
-			);
-			let json = await res.json();
-			console.log(json);
-		} catch (error) {}
-	}; */
+	//Traerse los proyectos de la api
 
 	const listProyectos = async () => {
 		const respuesta = await fetch(
@@ -119,6 +106,18 @@ export const CompanyDashboard = () => {
 		);
 		const info = await respuesta.json();
 		setProyectos(info);
+	};
+
+	//fetch para eliminar algun proyecto
+	const deleteProject = (id) => {
+		fetch(
+			`https://3001-xetnal-finalproject-s0srryejroy.ws-us45.gitpod.io/api/projects/${id}`,
+			{ method: "DELETE" }
+		).then((results) => {
+			results.json().then((resp) => {
+				console.warn(resp);
+			});
+		});
 	};
 
 	useEffect(() => {
@@ -133,7 +132,7 @@ export const CompanyDashboard = () => {
 				<div className="row row-cols-1 row-cols-md-3 g-4">
 					{proyectos.map((proyecto) => {
 						return (
-							<div className="col">
+							<div className="col" key={proyecto.id}>
 								<div
 									className="card text-bg-light mb-3"
 									style={{ maxWidth: "30rem" }}
@@ -178,7 +177,12 @@ export const CompanyDashboard = () => {
 													className="imagen-dashboard"
 													src={proyecto.pictures}
 												></img>
-												<button className="btn btn-danger">Eliminar</button>
+												<button
+													className="btn btn-danger"
+													onClick={handleDelete}
+												>
+													Eliminar
+												</button>
 											</div>
 										</div>
 									</div>
