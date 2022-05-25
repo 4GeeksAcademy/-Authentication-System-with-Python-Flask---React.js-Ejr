@@ -55,13 +55,14 @@ const Layout = () => {
           <Route exact path="/proyect/:id">
             <Proyect />
           </Route>
-          <Route exact path="/user_home">
-            
-              <UserHome />
-            
+          <Route exact path="/user_home">           
+              <UserHome />           
           </Route>
           <Route exact path="/user_proyects">
             <UserProyects />
+          </Route>
+          <Route exact path="/proyect">
+            <Proyect />
           </Route>
           <Route exact path="/user_profile">
             <UserProfile />
@@ -78,7 +79,7 @@ const Layout = () => {
             </h1>
           </Route>
         </Switch>
-        <Footer />
+        {/* <Footer /> */}
       </BrowserRouter>
     </div>
   );

@@ -5,3 +5,19 @@
     one more css for each page that will contain the selected used 
     on that page only (the ones not reused in other pages).
 */
+a{
+    text-decoration: none;
+}
+/* .carousel, .carouselImg{
+    height: 350px;
+} */
+.card-img-top{
+    height: 200px;
+}
+.cardContainer {
+    flex-wrap: wrap;
+
+}
+.card{
+    margin: 10px;
+}
