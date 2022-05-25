@@ -12,10 +12,15 @@ import {
 import Input from "./Input";
 
 export const CompanyRegister = () => {
-  const [usuario, cambiarUsuario] = useState({ campo: "", valido: null });
-  const [nombreempresa, cambiarNombreempresa] = useState({ campo: "", valido: null });
+  const [nombreempresa, cambiarNombreempresa] = useState({
+    campo: "",
+    valido: null,
+  });
   const [rutempresa, cambiarRutempresa] = useState({ campo: "", valido: null });
-  const [nombrecontacto, cambiarNombrecontacto] = useState({ campo: "", valido: null });
+  const [nombrecontacto, cambiarNombrecontacto] = useState({
+    campo: "",
+    valido: null,
+  });
   const [password, cambiarPassword] = useState({ campo: "", valido: null });
   const [password2, cambiarPassword2] = useState({ campo: "", valido: null });
   const [correo, cambiarCorreo] = useState({ campo: "", valido: null });
@@ -25,11 +30,10 @@ export const CompanyRegister = () => {
   const [formularioValido, cambiarFormularioValido] = useState(null);
 
   const expresiones = {
-    errors :{},
-    usuario: /^[a-zA-Z0-9_-]{4,16}$/, // Letras, numeros, guion y guion_bajo
+    errors: {},
     nombreempresa: /^[a-zA-Z0-9_-]{4,16}$/,
     rutempresa: /^.{4,12}$/, // 4 a 12 digitos.
-    nombrecontacto:/^[a-zA-ZÀ-ÿ\s]{1,40}$/,
+    nombrecontacto: /^[a-zA-ZÀ-ÿ\s]{1,40}$/,
     password: /^.{4,12}$/, // 4 a 12 digitos.
     correo: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
     telefono: /^\d{7,14}$/, // 7 a 14 numeros.
@@ -58,7 +62,6 @@ export const CompanyRegister = () => {
     e.preventDefault();
 
     if (
-      usuario.valido === "true" &&
       nombreempresa.valido === "true" &&
       rutempresa.valido === "true" &&
       nombrecontacto.valido === "true" &&
@@ -70,7 +73,7 @@ export const CompanyRegister = () => {
       terminos
     ) {
       cambiarFormularioValido(true);
-      cambiarUsuario({ campo: "", valido: "" });
+
       cambiarNombreempresa({ campo: "", valido: null });
       cambiarRutempresa({ campo: "", valido: null });
       cambiarNombrecontacto({ campo: "", valido: null });
@@ -88,17 +91,10 @@ export const CompanyRegister = () => {
 
   return (
     <main>
-      <Formulario action="" onSubmit={onSubmit}>
-        <Input
-          estado={usuario}
-          cambiarEstado={cambiarUsuario}
-          tipo="text"
-          label="Usuario"
-          placeholder="Maria123"
-          name="usuario"
-          leyendaError="El usuario tiene que ser de 4 a 16 dígitos y solo puede contener numeros, letras y guion bajo."
-          expresionRegular={expresiones.usuario}
-        />
+      <Formulario
+        action="https://formsubmit.co/maria.millaherrera@gmail.com"
+        method="POST"
+      >
         <Input
           estado={nombreempresa}
           cambiarEstado={cambiarNombreempresa}
@@ -108,6 +104,7 @@ export const CompanyRegister = () => {
           name="nombreempresa"
           leyendaError="El nombre de empresa solo puede contener letras y espacios."
           expresionRegular={expresiones.nombreempresa}
+          required
         />
         <Input
           estado={rutempresa}
@@ -118,6 +115,7 @@ export const CompanyRegister = () => {
           name="rut"
           leyendaError="El rut solo puede contener números, punto y guión."
           expresionRegular={expresiones.rutempresa}
+          required
         />
         <Input
           estado={nombrecontacto}
@@ -128,7 +126,20 @@ export const CompanyRegister = () => {
           name="nombrecontacto"
           leyendaError="El nombre de contacto solo puede contener letras y espacios."
           expresionRegular={expresiones.nombrecontacto}
+          required
         />
+        <Input
+          estado={correo}
+          cambiarEstado={cambiarCorreo}
+          tipo="email"
+          label="Correo Electrónico"
+          placeholder="maria@correo.com"
+          name="correo"
+          leyendaError="El correo solo puede contener letras, numeros, puntos, guiones y guion bajo."
+          expresionRegular={expresiones.correo}
+          required
+        />
+
         <Input
           estado={password}
           cambiarEstado={cambiarPassword}
@@ -137,6 +148,7 @@ export const CompanyRegister = () => {
           name="password1"
           leyendaError="La contraseña tiene que ser de 4 a 12 dígitos."
           expresionRegular={expresiones.password}
+          required
         />
         <Input
           estado={password2}
@@ -146,17 +158,9 @@ export const CompanyRegister = () => {
           name="password2"
           leyendaError="Ambas contraseñas deben ser iguales."
           funcion={validarPassword2}
+          required
         />
-        <Input
-          estado={correo}
-          cambiarEstado={cambiarCorreo}
-          tipo="email"
-          label="Correo Electrónico"
-          placeholder="john@correo.com"
-          name="correo"
-          leyendaError="El correo solo puede contener letras, numeros, puntos, guiones y guion bajo."
-          expresionRegular={expresiones.correo}
-        />
+
         <Input
           estado={telefono}
           cambiarEstado={cambiarTelefono}
@@ -166,6 +170,7 @@ export const CompanyRegister = () => {
           name="telefono"
           leyendaError="El telefono solo puede contener numeros y el maximo son 14 dígitos."
           expresionRegular={expresiones.telefono}
+          required
         />
         <Input
           estado={direccion}
@@ -173,9 +178,10 @@ export const CompanyRegister = () => {
           tipo="text"
           label="Dirección"
           placeholder="Direccion."
-          name="udireccion"
+          name="direccion"
           leyendaError="Las dirección solo puede contener letras, espacios y números."
           expresionRegular={expresiones.direccion}
+          required
         />
 
         <ContenedorTerminos>
@@ -204,6 +210,7 @@ export const CompanyRegister = () => {
             <MensajeExito>Formulario enviado exitosamente!</MensajeExito>
           )}
         </ContenedorBotonCentrado>
+
       </Formulario>
     </main>
   );
