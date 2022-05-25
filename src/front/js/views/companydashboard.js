@@ -28,7 +28,7 @@ export const CompanyDashboard = () => {
 	const [comuna, setComuna] = useState("");
 	const [ciudad, setCiudad] = useState("");
 	const [body, setBody] = useState("");
-	const [minimum_value, setMinimumValue] = useState("")
+	const [minimum_value, setMinimumValue] = useState(0)
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
