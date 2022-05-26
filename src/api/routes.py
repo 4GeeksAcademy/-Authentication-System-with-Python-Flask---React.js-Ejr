@@ -69,10 +69,9 @@ def create_token():
 
 @api.route("/register", methods=["POST"])
 def register():
-
-    # userFound = 
-
     email = request.json.get("email", None)
+    user = User.query.filter_by(email=email).first()
+    if user: return jsonify({"status": "fail", "message": "email already exists"} ), 401
     password = request.json.get("password", None)
     user = User()
     user.role_id = 1
