@@ -53,22 +53,25 @@ export const Navbar = () => {
                 </Link>
               </>
             )}
-            {store.currentUser != null ?
-            
-              (<Link to="/user_home">
-                <a className="nav-link">Proyectos</a>
-              </Link>)
-            :
-              (<></>)
-            }
-            {store.currentCompany != null ?
-            
-            (<Link to="company_dashboard">
-              <a className="nav-link">Tus Proyectos</a>
-            </Link>)
-          :
-            (<></>)
-          }
+            {store.currentUser != null ? (
+              <>
+                <Link to="/user_home">
+                  <a className="nav-link">Proyectos</a>
+                </Link>
+                <Link to="/user_profile">
+                  <a className="nav-link">Perfil</a>
+                </Link>
+              </>
+            ) : (
+              <></>
+            )}
+            {store.currentCompany != null ? (
+              <Link to="company_dashboard">
+                <a className="nav-link">Tus Proyectos</a>
+              </Link>
+            ) : (
+              <></>
+            )}
           </ul>
         </div>
       </div>

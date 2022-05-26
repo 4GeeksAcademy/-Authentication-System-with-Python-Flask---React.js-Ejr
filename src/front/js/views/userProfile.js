@@ -22,10 +22,10 @@ export const UserProfile = () => {
           <p className="card-text">{store.currentUser?.email}</p>
           <h5 className="card-title">Sueldo Liquido</h5>
           <p className="card-text">$ {store.currentUser?.salary}</p>
-          <h5 className="card-title">Profesion</h5>
-          <p className="card-text">Programador Full Stack Developer</p>
           <h5 className="card-title">Ingreso Extra</h5>
           <p className="card-text">$ {store.currentUser?.side_income}</p>
+          <h5 className="card-title">Deudas mensuales</h5>
+          <p className="card-text">$ {store.currentUser?.deudas}</p>
           <a href="#" className="btn btn-primary">Editar Perfil</a>
         </div>
       </div>
