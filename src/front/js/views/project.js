@@ -6,14 +6,16 @@ import { useParams } from "react-router-dom";
 export const Project = () => {
 	// console.log(useParams());
 	const { id } = useParams();
-	console.log(id);
+	
 
 	const [proyecto, setProject] = React.useState([]);
 
 	useEffect(() => {
 		const obtenerProyecto = async () => {
 			const data = await fetch(
-				`https://3001-xetnal-finalproject-kainuymmez4.ws-us46.gitpod.io//api/projects/${id}`
+
+				`https://3001-xetnal-finalproject-kainuymmez4.ws-us46.gitpod.io/api/projects/${id}`
+
 			);
 			const project = await data.json();
 			setProject(project);
