@@ -105,6 +105,12 @@ def get_user(user_id):
     user = User.query.get(user_id)
     return jsonify(user.serialize()), 200
 
+
+
+
+
+
+
 @api.route('/users', methods=['POST'])
 def create_user():
     user = User()
@@ -218,6 +224,13 @@ def get_projects():
 def get_project(project_id):
     project = Project.query.get(project_id)
     return jsonify(project.serialize()), 200
+
+@api.route('/companies/<int:company_id>/projects', methods=['GET'])
+def all_projects_by_company(company_id):
+    projects = Project.query.filter_by(company_id=company_id)
+    projects = list(map(lambda project: project.serialize(), projects))  
+    
+    return jsonify(projects), 200
 
 
 @api.route("/projects", methods=['POST'])
