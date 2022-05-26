@@ -128,6 +128,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				catch(error){
 					console.error("There was an error!")
 				}
+				
 
 			},
 			getMinimumValue : (minimum_value) => {

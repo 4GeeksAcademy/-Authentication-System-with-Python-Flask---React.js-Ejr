@@ -25,11 +25,7 @@ export const UserRegister = () => {
     data.password = password;
 
     const info = await registerFetch(data);
-    Swal.fire(
-      'Bienvenido!',
-      'El registro ha sido exitoso!',
-      'success'
-    )
+    
     setName("");
     setLastName("");
     setSalary(0);
@@ -40,29 +36,54 @@ export const UserRegister = () => {
   };
 
   const registerFetch = async (data) => {
-    const resp = await fetch(
-      "https://3001-xetnal-finalproject-kainuymmez4.ws-us46.gitpod.io/api/register",
-      {
-        method: "POST",
-        body: JSON.stringify(data),
-        headers: { "Content-Type": "application/JSON" },
-      }
-    );
-    const info = await resp.json();
-    return info;
-  };
+    try{
+
+      const resp = await fetch(
+        "https://3001-xetnal-finalproject-kainuymmez4.ws-us46.gitpod.io/api/register",
+        {
+          method: "POST",
+          body: JSON.stringify(data),
+          headers: { "Content-Type": "application/JSON" },
+        }
+        );
+        Swal.fire(
+          'Bienvenido!',
+          'El registro ha sido exitoso!',
+          'success'
+        )
+        if (resp !== 201) {
+          Swal.fire(
+        'Hemos detectado un problema!',
+        'El email ya esta en uso!',
+        'error'
+      )
+        }
+        
+        const info = await resp.json();
+        return info;
+    }
+    
+    catch(error){
+      Swal.fire(
+        'Hemos detectado un problema en el servidor!',
+        'Por favor intentalo mas tarde',
+        'error'
+      )
+    }
+  }
+    
 
   return (
     <div className="container my-5">
       <form onSubmit={handleSubmit}>
-        <div class="form-group">
+        <div className="form-group">
           <label>Nombre</label>
           <input
             name="name"
             value={name}
             onChange={(e) => setName(e.target.value)}
             type="text"
-            class="form-control"
+            className="form-control"
             id="InputNombre"
             aria-describedby="emailHelp"
             placeholder="Ingresa tu nombre"
@@ -73,7 +94,7 @@ export const UserRegister = () => {
             value={lastName}
             onChange={(e) => setLastName(e.target.value)}
             type="text"
-            class="form-control"
+            className="form-control"
             id="apellido"
             aria-describedby="emailHelp"
             placeholder="Ingresa tu apellido"
@@ -84,7 +105,7 @@ export const UserRegister = () => {
             value={salary}
             onChange={(e) => setSalary(e.target.value)}
             type="number"
-            class="form-control"
+            className="form-control"
             id="InputSueldo"
             aria-describedby="emailHelp"
             placeholder="Ingresa tu Sueldo"
@@ -95,7 +116,7 @@ export const UserRegister = () => {
             value={side_income}
             onChange={(e) => setSideIncome(e.target.value)}
             type="number"
-            class="form-control"
+            className="form-control"
             id="InputSueldoComplementario"
             aria-describedby="emailHelp"
             placeholder="Ingresa tu Sueldo complementario"
@@ -106,7 +127,7 @@ export const UserRegister = () => {
             value={deudas}
             onChange={(e) => setDeudas(e.target.value)}
             type="number"
-            class="form-control"
+            className="form-control"
             id="InputDeudas"
             aria-describedby="emailHelp"
             placeholder="Ingresa el monto total de tus deudas"
@@ -117,12 +138,12 @@ export const UserRegister = () => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             type="email"
-            class="form-control"
+            className="form-control"
             id="InputEmail1"
             aria-describedby="emailHelp"
             placeholder="Ingresa tu email"
           />
-          <small id="emailHelp" class="form-text text-muted">
+          <small id="emailHelp" className="form-text text-muted">
             Nunca compartiremos tu Email con nadie.
           </small>
         </div>
@@ -133,7 +154,7 @@ export const UserRegister = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             type="password"
-            class="form-control"
+            className="form-control"
             id="InputPassword1"
             placeholder="Ingresa tu contraseña"
           />
