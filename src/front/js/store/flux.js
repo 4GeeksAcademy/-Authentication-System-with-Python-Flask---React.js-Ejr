@@ -130,7 +130,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 
 			},
-
+			getMinimumValue : (minimum_value) => {
+				const {currentUser} = getStore()
+				let userValue = currentUser?.salary + currentUser?.side_income - currentUser?.deudas
+				return userValue >= minimum_value
+			},
 			
 		},
 	};

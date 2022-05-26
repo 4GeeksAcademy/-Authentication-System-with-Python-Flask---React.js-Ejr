@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { UserHomeList } from "../component/userHomeList";
 import { useParams } from "react-router-dom";
-
+import { Context } from "../store/appContext";
 export const Project = () => {
 	// console.log(useParams());
 	const { id } = useParams();
-	
+	const { store, actions} = useContext(Context)
 
 	const [proyecto, setProject] = React.useState([]);
 
@@ -150,9 +150,15 @@ export const Project = () => {
 			</div>
 
 			<div className="container-fluid p-0 d-flex justify-content-center mt-4">
-				<button type="button mx-auto" className="btn btn-primary">
+				{
+					actions.getMinimumValue (proyecto.minimum_value) ?
+					(<button type="button mx-auto" className="btn btn-primary">
 					Postula Acá
-				</button>
+				</button>)	
+				:
+				(<p className="text-danger">Proyecto no disponible </p>)
+				}
+				
 			</div>
 
 			<div className="container-fluid p-0">
