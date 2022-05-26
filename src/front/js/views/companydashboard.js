@@ -85,7 +85,7 @@ export const CompanyDashboard = () => {
 
 	const registerFetch = async (data) => {
 		const respuesta = await fetch(
-			"https://3001-xetnal-finalproject-kainuymmez4.ws-us45.gitpod.io/api/projects",
+			"https://3001-xetnal-finalproject-kainuymmez4.ws-us46.gitpod.io/api/projects",
 			{
 				method: "POST",
 				body: data,
@@ -97,7 +97,7 @@ export const CompanyDashboard = () => {
 
 	const listProyectos = async () => {
 		const respuesta = await fetch(
-			"https://3001-xetnal-finalproject-kainuymmez4.ws-us45.gitpod.io/api/projects"
+			"https://3001-xetnal-finalproject-kainuymmez4.ws-us46.gitpod.io/api/projects"
 		);
 		const info = await respuesta.json();
 		setProyectos(info);

@@ -79,7 +79,7 @@ export const Home = () => {
         <h2 className="my-5 text-center">Oportunidades mas recientes:</h2>
         <div className="row text-center my-5">
           <div className="cardContainer d-flex justify-content-around my-5">
-            <div className="card  col-sm-12" style={{ width: "18rem" }}>
+            <div className="card text-white bg-dark col-sm-12" style={{ width: "18rem" }}>
               <img
                 src="https://wp.zillowstatic.com/1/LA-5977f6.jpg"
                 className="card-img-top"
@@ -91,12 +91,12 @@ export const Home = () => {
                 <p className="card-text">Xm2</p>
                 <p className="card-text">Precio</p>
 
-                <a href="#" className="btn btn-dark">
+                <a href="#" className="btn btn-light">
                   Ver mas!
                 </a>
               </div>
             </div>
-            <div className="card  col-sm-12" style={{ width: "18rem" }}>
+            <div className="card text-white bg-dark col-sm-12" style={{ width: "18rem" }}>
               <img
                 src="https://fazewp-fazemediainc.netdna-ssl.com/cms/wp-content/uploads/2021/08/new-apartment-2.jpg"
                 className="card-img-top"
@@ -108,7 +108,7 @@ export const Home = () => {
                 <p className="card-text">m2</p>
                 <p className="card-text">Precio</p>
 
-                <a href="#" className="btn btn-dark">
+                <a href="#" className="btn btn-light">
                   Ver mas!
                 </a>
               </div>
