@@ -11,7 +11,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 			getProjects: () => {
 				const {API_URL} = getStore()
 				fetch(
+
 					`${API_URL}/api/projects`
+
 				)
 					.then((response) => response.json())
 					.then((data) => {

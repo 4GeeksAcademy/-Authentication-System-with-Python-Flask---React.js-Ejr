@@ -13,7 +13,9 @@ export const Project = () => {
 	useEffect(() => {
 		const obtenerProyecto = async () => {
 			const data = await fetch(
+
 				`https://3001-xetnal-finalproject-kainuymmez4.ws-us46.gitpod.io/api/projects/${id}`
+
 			);
 			const project = await data.json();
 			setProject(project);
