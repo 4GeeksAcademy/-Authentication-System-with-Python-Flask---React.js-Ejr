@@ -52,11 +52,11 @@ const Layout = () => {
           <Route exact path="/company_register_success">
             <CompanyRegisterSuccess />
           </Route>
-          <Route exact path="/project/:id">
-            <Project />
-          </Route>
           <Route exact path="/user_home">           
               <UserHome />           
+          </Route>
+          <Route exact path="/project/:id">
+            <Project />
           </Route>
           <Route exact path="/user_projects">
             <UserProjects />

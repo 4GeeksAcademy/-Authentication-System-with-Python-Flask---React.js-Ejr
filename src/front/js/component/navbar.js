@@ -55,7 +55,7 @@ export const Navbar = () => {
             )}
             {store.currentUser != null ?
             
-              (<Link to="user_home">
+              (<Link to="/user_home">
                 <a className="nav-link">Proyectos</a>
               </Link>)
             :
