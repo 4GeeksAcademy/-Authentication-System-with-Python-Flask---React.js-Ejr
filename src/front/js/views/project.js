@@ -157,7 +157,7 @@ export const Project = () => {
 					Postula Acá
 				</button>)	
 				:
-				(<p className="text-danger">Proyecto no disponible </p>)
+				(<p className="text-danger">Lo sentimos, tu perfil no coincide con los requisitos de este proyecto. </p>)
 				}
 				
 			</div>
