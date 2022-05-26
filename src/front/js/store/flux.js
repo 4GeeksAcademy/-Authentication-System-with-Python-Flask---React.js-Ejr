@@ -1,6 +1,7 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
+			companyProjects: null,
 			token: null,
 			currentUser: null,
 			currentCompany: null,
@@ -22,6 +23,16 @@ const getState = ({ getStore, getActions, setStore }) => {
 					});
 			},
 
+			getCompanyProjects: (id) => {
+				const {API_URL} = getStore()
+				fetch(`${API_URL}/api/companies/${id}/projects`)
+				.then((response) => response.json())
+					.then((data) => {
+						console.log(data);
+						setStore({ companyProjects: data });
+					});
+			},
+				
 			// getProject: (id) => {
 			// 	fetch("https://3001-xetnal-finalproject-v6ua4tu6zkd.ws-us45.gitpod.io/api/projects/"+id)
 			// 	  .then((response) => response.json())
