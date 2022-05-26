@@ -11,13 +11,13 @@ export const Navbar = () => {
   };
 
   return (
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <div class="container">
+    <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div className="container">
         <Link to="/">
           <span className="navbar-brand mb-0 h1">Investor</span>
         </Link>
         <button
-          class="navbar-toggler"
+          className="navbar-toggler"
           type="button"
           data-bs-toggle="collapse"
           data-bs-target="#navbarNavDropdown"
@@ -25,10 +25,10 @@ export const Navbar = () => {
           aria-expanded="false"
           aria-label="Toggle navigation"
         >
-          <span class="navbar-toggler-icon"></span>
+          <span className="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNavDropdown">
-          <ul class="navbar-nav">
+        <div className="collapse navbar-collapse" id="navbarNavDropdown">
+          <ul className="navbar-nav">
             <Link to="/company_register">
               <a className="nav-link">Empresas</a>
             </Link>

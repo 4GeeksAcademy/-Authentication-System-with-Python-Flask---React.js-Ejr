@@ -12,16 +12,10 @@ import {
 import Input from "./Input";
 
 export const CompanyRegister = () => {
-<<<<<<< HEAD
   const [nombreempresa, cambiarNombreempresa] = useState({
     campo: "",
     valido: null,
   });
-=======
-
-  const [usuario, cambiarUsuario] = useState({ campo: "", valido: null });
-  const [nombreempresa, cambiarNombreempresa] = useState({ campo: "", valido: null });
->>>>>>> ea075b7181e9c97afcfff963366b7055e6a86950
   const [rutempresa, cambiarRutempresa] = useState({ campo: "", valido: null });
   const [nombrecontacto, cambiarNombrecontacto] = useState({
     campo: "",

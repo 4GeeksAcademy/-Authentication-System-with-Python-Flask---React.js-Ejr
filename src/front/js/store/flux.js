@@ -10,7 +10,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 		actions: {
 			getProjects: () => {
 				fetch(
-					"https://3001-xetnal-finalproject-kainuymmez4.ws-us45.gitpod.io/api/projects"
+					"https://3001-xetnal-finalproject-kainuymmez4.ws-us46.gitpod.io/api/projects"
 				)
 					.then((response) => response.json())
 					.then((data) => {

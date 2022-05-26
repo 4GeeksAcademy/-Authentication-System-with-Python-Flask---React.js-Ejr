@@ -6,7 +6,7 @@ export const UserHome = () => {
   return (
     <div className="container mt-2">
       <div className="row">
-        <div className="col-12 col-sm-6">
+        <div className="col-12">
 
           <Link to="/user_projects">
             <button type="button" className="btn btn-primary">Ver Postulaciones</button> 
