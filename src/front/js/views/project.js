@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { UserHomeList } from "../component/userHomeList";
 import { useParams } from "react-router-dom";
 import { Context } from "../store/appContext";
+import "../../styles/project.css";
 export const Project = () => {
 	// console.log(useParams());
 	const { id } = useParams();

@@ -12,7 +12,7 @@ export const UserHomeList = () => {
         return (
             <div className="col" key={project.id}>
             <div className="card">
-              <img src={project.pictures} className="card-img-top" alt="..."/>   
+              <img src={project.pictures} className="card-img-top card-project" alt="..."/>   
               <div className="card-body">
                 <h5 className="card-title">{project.title}</h5>
                 <p className="card-text mb-0"><small className="text-muted">Departamentos en {project.ciudad}</small></p>
@@ -22,16 +22,16 @@ export const UserHomeList = () => {
                     <div className="col-6">
                       <p className="mb-0">Dormitorios: </p>
                       <p className="mb-0">Baños: </p>
-                      <p>Superficie desde: </p>
+                      <p>Superficie: </p>
                     </div>
                     <div className="col-6">
-                      <p className="mb-0">{project.rooms}</p>
-                      <p className="mb-0">{project.bathrooms}</p>
-                      <p>{project.size} m<sup>2</sup></p>
+                      <p className="mb-0"> Desde {project.rooms}</p>
+                      <p className="mb-0">Desde {project.bathrooms}</p>
+                      <p>Desde {project.size} m<sup>2</sup></p>
                     </div>
                   </div>
                 </div>
-                <div className="alert alert-secondary" role="alert">Desde UF {project.total_price} - $76.736.480</div>
+                <div className="alert alert-secondary" role="alert">Desde UF {project.total_price}</div>
                 <Link to={`/project/${project.id}`}>
                   <button type="button" className="btn btn-primary" >Ir al Proyecto</button>
                 </Link> 
