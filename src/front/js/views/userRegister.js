@@ -2,6 +2,7 @@ import React from "react";
 import "../../styles/login.css";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import Swal from 'sweetalert2'
 export const UserRegister = () => {
   const [name, setName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -24,7 +25,11 @@ export const UserRegister = () => {
     data.password = password;
 
     const info = await registerFetch(data);
-    console.log(info);
+    Swal.fire(
+      'Bienvenido!',
+      'El registro ha sido exitoso!',
+      'success'
+    )
     setName("");
     setLastName("");
     setSalary(0);

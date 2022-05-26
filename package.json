@@ -83,6 +83,7 @@
 		"react-polyfills": "0.0.1",
 		"react-router-dom": "^5.2.0",
 		"sass": "^1.51.0",
-		"styled-components": "^5.3.5"
+		"styled-components": "^5.3.5",
+		"sweetalert2": "^11.4.17"
 	}
 }

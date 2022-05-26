@@ -29,46 +29,62 @@ export const Navbar = () => {
         </button>
         <div className="collapse navbar-collapse" id="navbarNavDropdown">
           <ul className="navbar-nav">
-            <Link to="/company_register">
-              <a className="nav-link">Empresas</a>
-            </Link>
+            <li>
+              <Link to="/company_register">
+                <a className="nav-link">Empresas</a>
+              </Link>
+            </li>
             {!store.token ? (
               <>
-                <Link to="/register">
-                  <a className="nav-link ">Registrate</a>
-                </Link>
-                <Link to="/login">
-                  <a className="nav-link">Ingresar</a>
-                </Link>
-                <Link to="/company_login">
-                  <a className="nav-link ">Ingreso Empresa</a>
-                </Link>
+                <li>
+                  <Link to="/register">
+                    <a className="nav-link ">Registrate</a>
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/login">
+                    <a className="nav-link">Ingresar</a>
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/company_login">
+                    <a className="nav-link ">Ingreso Empresa</a>
+                  </Link>
+                </li>
               </>
             ) : (
               <>
-                <Link to="/">
-                  <a onClick={() => actions.logout()} className="nav-link ">
-                    Salir
-                  </a>
-                </Link>
+                <li>
+                  <Link to="/">
+                    <a onClick={() => actions.logout()} className="nav-link ">
+                      Salir
+                    </a>
+                  </Link>
+                </li>
               </>
             )}
             {store.currentUser != null ? (
               <>
-                <Link to="/user_home">
-                  <a className="nav-link">Proyectos</a>
-                </Link>
-                <Link to="/user_profile">
-                  <a className="nav-link">Perfil</a>
-                </Link>
+                <li>
+                  <Link to="/user_home">
+                    <a className="nav-link">Proyectos</a>
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/user_profile">
+                    <a className="nav-link">Perfil</a>
+                  </Link>
+                </li>
               </>
             ) : (
               <></>
             )}
             {store.currentCompany != null ? (
-              <Link to="company_dashboard">
-                <a className="nav-link">Tus Proyectos</a>
-              </Link>
+              <li>
+                <Link to="company_dashboard">
+                  <a className="nav-link">Tus Proyectos</a>
+                </Link>
+              </li>
             ) : (
               <></>
             )}
