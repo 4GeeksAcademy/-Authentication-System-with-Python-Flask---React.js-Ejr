@@ -7,7 +7,7 @@ import { RegisterProyectForm } from "./registerProyectForm";
 import "../../styles/login.css";
 
 export const CompanyDashboard = () => {
-	const { store } = useContext(Context);
+	const { store, actions } = useContext(Context);
 	const [proyectos, setProyectos] = useState([]);
 	const [title, setTitle] = useState("");
 	const [address, setAdress] = useState("");
@@ -104,8 +104,13 @@ export const CompanyDashboard = () => {
 	};
 
 	useEffect(() => {
-		listProyectos();
-	}, []);
+		actions.getCompanyProjects(store.currentCompany?.id)
+		console.log(store.companyProjects)
+	}, [store.currentCompany])
+
+	useEffect(() =>{
+		// actions.getCompanyProjects(store.currentCompany?.id)
+	}, [])
 
 	return (
 		<>
@@ -113,7 +118,7 @@ export const CompanyDashboard = () => {
 			<br />
 			<div className="container">
 				<div className="row row-cols-1 row-cols-md-3 g-4">
-					{proyectos.map((proyecto) => {
+					{store.companyProjects?.map((proyecto) => {
 						return (
 							<div className="col">
 								<div
@@ -133,11 +138,11 @@ export const CompanyDashboard = () => {
 												<p className="card-text m-0 fw-bold">Ciudad:</p>
 												<p className="card-text">{proyecto.ciudad}</p>
 												<p className="card-text m-0 fw-bold">Tamaño:</p>
-												<p className="card-text">{proyecto.size}</p>
+												<p className="card-text">Desde {proyecto.size}m2</p>
 												<p className="card-text m-0 fw-bold">Reserva:</p>
-												<p className="card-text">{proyecto.monto_reserva}</p>
+												<p className="card-text">${proyecto.monto_reserva}</p>
 												<p className="card-text m-0 fw-bold">Bono Pie:</p>
-												<p className="card-text">{proyecto.bono_pie}</p>
+												<p className="card-text">{proyecto.bono_pie}%</p>
 												<p className="card-text m-0 fw-bold">
 													Estacionamientos:
 												</p>
@@ -145,7 +150,7 @@ export const CompanyDashboard = () => {
 												<p className="card-text m-0 fw-bold">Bodega:</p>
 												<p className="card-text">{proyecto.bodega}</p>
 												<p className="card-text m-0 fw-bold">Precio Total:</p>
-												<p className="card-text">{proyecto.total_price}</p>
+												<p className="card-text">{proyecto.total_price} UF</p>
 												<p className="card-text m-0 fw-bold">Descripcion:</p>
 												<p className="card-text">{proyecto.body}</p>
 												<p className="card-text m-0 fw-bold">Ventajas:</p>
@@ -157,7 +162,7 @@ export const CompanyDashboard = () => {
 												<p className="card-text m-0 fw-bold">Tipo de Venta:</p>
 												<p className="card-text">{proyecto.sale_type}</p>
 												<p className="card-text m-0 fw-bold">Renta minima:</p>
-												<p className="card-text">{proyecto.minimum_value}</p>
+												<p className="card-text">${proyecto.minimum_value}</p>
 												<img
 													className="imagen-dashboard"
 													src={proyecto.pictures}

@@ -22,10 +22,10 @@ const injectContext = PassedComponent => {
 		);
 
 		useEffect(() => {
-
-
+			
+			// getStore()
 			state.actions.getProjects();   
-
+			
 
 			state.actions.syncCompanyTokenFromSessionStore();
 			state.actions.syncTokenFromSessionStore();
