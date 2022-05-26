@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Context } from "../store/appContext";
-
+import 'animate.css';
 import "../../styles/home.css";
 
 export const Home = () => {
@@ -16,13 +16,13 @@ export const Home = () => {
 
   return (
     <>
-      <div className="container my-3">
-        <h1 className="text-center">¡Atrevete a invertir ahora!</h1>
-        <div className="row">
-          <div className="col-md-12">
+      <div className="container my-3 animate_animated animate__fadeInRightBig">
+        <h1 className="text-center animate_animated animate__fadeInRightBig">¡Atrevete a invertir ahora!</h1>
+        <div className="row animate_animated animate__fadeInRightBig">
+          <div className="col-md-12 ">
             <div
               id="carouselExampleFade"
-              className="carousel slide carousel-fade"
+              className="carousel slide carousel-fade "
               data-bs-ride="carousel"
             >
               <div className="carousel-inner">

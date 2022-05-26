@@ -8,7 +8,7 @@ export const UserHome = () => {
       <div className="row">
         <div className="col-12 col-sm-6">
 
-          <Link to="/user_proyects">
+          <Link to="/user_projects">
             <button type="button" className="btn btn-primary">Ver Postulaciones</button> 
           </Link>
         </div>

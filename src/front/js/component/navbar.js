@@ -45,14 +45,30 @@ export const Navbar = () => {
                 </Link>
               </>
             ) : (
-              
-                <Link to="/" >
+              <>
+                <Link to="/">
                   <a onClick={() => actions.logout()} className="nav-link ">
                     Salir
                   </a>
                 </Link>
-              
+              </>
             )}
+            {store.currentUser != null ?
+            
+              (<Link to="user_home">
+                <a className="nav-link">Proyectos</a>
+              </Link>)
+            :
+              (<></>)
+            }
+            {store.currentCompany != null ?
+            
+            (<Link to="company_dashboard">
+              <a className="nav-link">Tus Proyectos</a>
+            </Link>)
+          :
+            (<></>)
+          }
           </ul>
         </div>
       </div>

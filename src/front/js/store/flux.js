@@ -5,23 +5,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 			currentUser: null,
 			currentCompany: null,
 			message: null,
-			demo: [
-				{
-					title: "FIRST",
-					background: "white",
-					initial: "white",
-				},
-				{
-					title: "SECOND",
-					background: "white",
-					initial: "white",
-				},
-			],
+			
 		},
 		actions: {
 			getProjects: () => {
 				fetch(
-					"https://3001-xetnal-finalproject-s0srryejroy.ws-us45.gitpod.io/api/projects"
+					"https://3001-xetnal-finalproject-kainuymmez4.ws-us45.gitpod.io/api/projects"
 				)
 					.then((response) => response.json())
 					.then((data) => {
@@ -41,6 +30,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 			logout: () => {
 				sessionStorage.removeItem("token");
 				setStore({ token: null });
+				sessionStorage.removeItem("user")
+				setStore({currentUser: null})
+				sessionStorage.removeItem("company")
+				setStore({currentCompany: null})
 			},
 
 			syncTokenFromSessionStore: () => {
@@ -76,7 +69,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				try {
 					const resp = await fetch(
-						"https://3001-xetnal-finalproject-s0srryejroy.ws-us45.gitpod.io/api/token",
+						"https://3001-xetnal-finalproject-kainuymmez4.ws-us45.gitpod.io/api/token",
 						opts
 					);
 					console.log(resp);
@@ -114,7 +107,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 
 				try{
-					const resp = await fetch("https://3001-xetnal-finalproject-s0srryejroy.ws-us45.gitpod.io/api/company_token", opts)  
+					const resp = await fetch("https://3001-xetnal-finalproject-kainuymmez4.ws-us45.gitpod.io/api/company_token", opts)  
 					console.log(resp)
 					if(resp.status !== 200){
 						alert("There was an error");
@@ -135,32 +128,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			},
 
-			// Use getActions to call a function within a fuction
-			// exampleFunction: () => {
-			// 	getActions().changeColor(0, "green");
-			// },
-
-			// getMessage: () => {
-			// 	// fetching data from the backend
-			// 	fetch(process.env.BACKEND_URL + "/api/hello")
-			// 		.then(resp => resp.json())
-			// 		.then(data => setStore({ message: data.message }))
-			// 		.catch(error => console.log("Error loading message from backend", error));
-			// },
-			// changeColor: (index, color) => {
-			// 	//get the store
-			// 	const store = getStore();
-
-			// 	//we have to loop the entire demo array to look for the respective index
-			// 	//and change its color
-			// 	const demo = store.demo.map((elm, i) => {
-			// 		if (i === index) elm.background = color;
-			// 		return elm;
-			// 	});
-
-			// 	//reset the global store
-			// 	setStore({ demo: demo });
-			// }
+			
 		},
 	};
 };

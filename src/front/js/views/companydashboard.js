@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import { Context } from "../store/appContext";
 /*import { Link } from "react-router-dom";
 import { Proyect } from "./proyect"; */
-import { CompanyProyects } from "./companyProyects";
+import { CompanyProjects } from "./companyProjects";
 import { RegisterProyectForm } from "./registerProyectForm";
 import "../../styles/login.css";
 
@@ -21,13 +21,14 @@ export const CompanyDashboard = () => {
 	const [parking_spots, setParking_spots] = useState(0);
 	const [bodega, setBodega] = useState("");
 	const [total_price, setTotal_price] = useState(0);
-	const [pictures, setPictures] = useState(
-		"https://imgclasificados3.emol.com/Proyectos/imagenes/proyecto/PR_FOTO_5116_LivingDepto%20304V2.jpg"
-	);
+	const [pictures, setPictures] = useState("");
 	//agregar las siguientes
 	const [comuna, setComuna] = useState("");
 	const [ciudad, setCiudad] = useState("");
 	const [body, setBody] = useState("");
+
+	const [minimum_value, setMinimumValue] = useState(0)
+
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
@@ -45,7 +46,7 @@ export const CompanyDashboard = () => {
 			rooms: rooms,
 			monto_reserva: monto_reserva,
 			bono_pie: bono_pie,
-
+			minimum_value: minimum_value,
 			parking_spots: parking_spots,
 
 			bodega: bodega,
@@ -56,8 +57,8 @@ export const CompanyDashboard = () => {
 		setProyectos([...proyectos, objetoProyecto]);
 
 		const formData = new FormData();
-		formData.append("company_id", store.currentUser?.company?.id);
-		formData.append("tittle", title);
+		formData.append("company_id", store.currentCompany?.id);
+		formData.append("title", title);
 		formData.append("comuna", comuna);
 		formData.append("ciudad", ciudad);
 		formData.append("body", body);
@@ -69,7 +70,7 @@ export const CompanyDashboard = () => {
 		formData.append("rooms", rooms);
 		formData.append("monto_reserva", monto_reserva);
 		formData.append("bono_pie", bono_pie);
-
+		formData.append("minimum_value", minimum_value);
 		formData.append("parking_spots", parking_spots);
 
 		formData.append("bodega", bodega);
@@ -84,7 +85,7 @@ export const CompanyDashboard = () => {
 
 	const registerFetch = async (data) => {
 		const respuesta = await fetch(
-			"https://3001-xetnal-finalproject-s0srryejroy.ws-us45.gitpod.io/api/projects",
+			"https://3001-xetnal-finalproject-kainuymmez4.ws-us45.gitpod.io/api/projects",
 			{
 				method: "POST",
 				body: data,
@@ -94,28 +95,9 @@ export const CompanyDashboard = () => {
 		return info;
 	};
 
-	/* const registerFetch = async () => {
-		try {
-			let config = {
-				method: "POST",
-				headers: {
-					Accept: "application/json",
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify(info),
-			};
-			let res = await fetch(
-				"https://3001-xetnal-finalproject-s0srryejroy.ws-us45.gitpod.io/api/projects",
-				config
-			);
-			let json = await res.json();
-			console.log(json);
-		} catch (error) {}
-	}; */
-
 	const listProyectos = async () => {
 		const respuesta = await fetch(
-			"https://3001-xetnal-finalproject-s0srryejroy.ws-us45.gitpod.io/api/projects"
+			"https://3001-xetnal-finalproject-kainuymmez4.ws-us45.gitpod.io/api/projects"
 		);
 		const info = await respuesta.json();
 		setProyectos(info);
@@ -133,7 +115,7 @@ export const CompanyDashboard = () => {
 				<div className="row row-cols-1 row-cols-md-3 g-4">
 					{proyectos.map((proyecto) => {
 						return (
-							<div className="col" >
+							<div className="col">
 								<div
 									className="card text-bg-light mb-3"
 									style={{ maxWidth: "30rem" }}
@@ -174,6 +156,8 @@ export const CompanyDashboard = () => {
 												<p className="card-text">{proyecto.rooms}</p>
 												<p className="card-text m-0 fw-bold">Tipo de Venta:</p>
 												<p className="card-text">{proyecto.sale_type}</p>
+												<p className="card-text m-0 fw-bold">Renta minima:</p>
+												<p className="card-text">{proyecto.minimum_value}</p>
 												<img
 													className="imagen-dashboard"
 													src={proyecto.pictures}
@@ -224,6 +208,8 @@ export const CompanyDashboard = () => {
 				setCiudad={setCiudad}
 				body={body}
 				setBody={setBody}
+				minimum_value={minimum_value}
+				setMinimumValue={setMinimumValue}
 			/>
 		</>
 	);

@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-export const UserProyects = () => {
+export const UserProjects = () => {
   return (
 
     <div className="container mt-2">
@@ -30,7 +30,7 @@ export const UserProyects = () => {
               </div>
               <div class="alert alert-secondary" role="alert">Desde UF 2.364 - $76.736.480</div>
               <div class="alert alert-primary" role="alert">Estado del proyecto: <span>La empresa te contactará</span></div>
-              <Link to="/proyect">
+              <Link to="/project">
                 <a href="#" class="btn btn-primary">Ir al Proyecto</a>
               </Link>
             </div>
