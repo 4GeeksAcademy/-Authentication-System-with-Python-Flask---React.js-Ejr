@@ -93,7 +93,7 @@ class Project(db.Model):
     perks = db.Column(db.String, nullable=False)
     title = db.Column(db.String, nullable=False)
     minimum_value = db.Column(db.Integer, nullable=False)
-
+    postulaciones = db.relationship("Postulacion", backref="project", lazy=True)
     def serialize(self):
         return {
             "id": self.id,
@@ -168,7 +168,8 @@ class Postulacion(db.Model):
             "user_id": self.user_id,
             "date": self.date,
             "status": self.status,
-            "user": self.user.serialize() 
+            "user": self.user.serialize() ,
+            "projects": self.project.serialize()
                   
         }
     def save(self):
