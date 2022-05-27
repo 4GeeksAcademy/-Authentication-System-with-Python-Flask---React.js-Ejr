@@ -159,14 +159,15 @@ class Postulacion(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     date = db.Column(db.String, nullable=False)
     status = db.Column(db.String, nullable=False)
-
+    
     def serialize(self):
         return {
             "id": self.id,
             "project_id": self.project_id,  
             "user_id": self.user_id,
             "date": self.date,
-            "status": self.status        
+            "status": self.status  
+                  
         }
     def save(self):
         db.session.add(self)

@@ -40,7 +40,7 @@ export const RegisterProyectForm = ({
 	return (
 		<>
 			<div className="container my-5">
-				<form className="row " onSubmit={handleSubmit}>
+				<form className="animate__animated animate__fadeInRightBig row" onSubmit={handleSubmit}>
 					<div className="col-6">
 						<div className="form-group">
 							<label>Nombre del Proyecto</label>
