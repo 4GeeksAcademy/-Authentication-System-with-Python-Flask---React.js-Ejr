@@ -25,7 +25,7 @@ export const ProjectVerMas = () => {
 	useEffect(() => {
 		console.log(proyecto.id);
 		actions.getPostulacionesByProject(proyecto.id);
-		console.log(store.projectPostulaciones);
+		console.log(store.projectPostulaciones); //.user.name
 	}, [proyecto]);
 
 	return (

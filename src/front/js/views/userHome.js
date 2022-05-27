@@ -3,17 +3,18 @@ import { Link } from "react-router-dom";
 import { UserHomeList } from "../component/userHomeList";
 
 export const UserHome = () => {
-  return (
-    <div className="container mt-2">
-      <div className="row">
-        <div className="col-12">
-
-          <Link to="/user_projects">
-            <button type="button" className="btn btn-primary">Ver Postulaciones</button> 
-          </Link>
-        </div>
-      </div>
-        <UserHomeList />
-  </div>
-  );
+	return (
+		<div className="container mt-2">
+			<div className="row">
+				<div className="col-12">
+					<Link to="/user_projects">
+						<button type="button" className="btn btn-primary">
+							Ver Postulaciones
+						</button>
+					</Link>
+				</div>
+			</div>
+			<UserHomeList />
+		</div>
+	);
 };
