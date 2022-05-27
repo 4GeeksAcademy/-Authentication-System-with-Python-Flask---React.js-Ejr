@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Context } from "../store/appContext";
 import 'animate.css';
 
@@ -13,6 +13,10 @@ export const Home = () => {
   //     setStore({ projects: data })
   //   })
   // }
+  useEffect(() => {
+    actions.getLatestProjects();
+    console.log(store.latestProjects);
+  }, []);
 
   return (
     <>
@@ -79,57 +83,34 @@ export const Home = () => {
         <h2 className="my-5 text-center">Oportunidades mas recientes:</h2>
         <div className="row text-center my-5">
           <div className="cardContainer d-flex justify-content-around my-5">
-            <div className="card text-white bg-dark col-sm-12" style={{ width: "18rem" }}>
-              <img
-                src="https://wp.zillowstatic.com/1/LA-5977f6.jpg"
-                className="card-img-top"
-                alt="..."
-              />
-              <div className="card-body">
-                <h5 className="card-title">Direccion</h5>
-                <p className="card-text">Empresa</p>
-                <p className="card-text">Xm2</p>
-                <p className="card-text">Precio</p>
+          {store.latestProjects?.map((proyecto) => {
+            return (
+              <>
+                <div className="animate__animated animate__fadeInRightBig col">
+                  <div
+                    className="card text-white bg-dark col-sm-12"
+                    style={{ width: "18rem" }}
+                  >
+                    <img
+                      src={proyecto.pictures}
+                      className="card-img-top proyecto-picture"
+                      alt="..."
+                    />
+                    <div className="card-body">
+                      <h5 className="card-title">{proyecto.title}</h5>
+                      <p className="card-text">{proyecto.address}</p>
+                      <p className="card-text">Desde {proyecto.size}m2</p>
+                      <p className="card-text">
+                        Desde {proyecto.total_price} UF
+                      </p>
 
-                <a href="#" className="btn btn-light">
-                  Ver mas!
-                </a>
-              </div>
-            </div>
-            <div className="card text-white bg-dark col-sm-12" style={{ width: "18rem" }}>
-              <img
-                src="https://fazewp-fazemediainc.netdna-ssl.com/cms/wp-content/uploads/2021/08/new-apartment-2.jpg"
-                className="card-img-top"
-                alt="..."
-              />
-              <div className="card-body">
-                <h5 className="card-title">Direccion</h5>
-                <p className="card-text">Empresa</p>
-                <p className="card-text">m2</p>
-                <p className="card-text">Precio</p>
-
-                <a href="#" className="btn btn-light">
-                  Ver mas!
-                </a>
-              </div>
-            </div>
-            <div className="card text-white bg-dark col-sm-12" style={{ width: "18rem" }}>
-              <img
-                src="https://res.akamaized.net/domain/image/upload/t_web/c_fill,w_1200,h_630/v1543188978/Dom-oct27m-ModernHomes-04_jpg_ia23ii.jpg"
-                className="card-img-top"
-                alt="..."
-              />
-              <div className="card-body">
-                <h5 className="card-title">Direccion</h5>
-                <p className="card-text">Empresa</p>
-                <p className="card-text">Xm2</p>
-                <p className="card-text">Precio</p>
-
-                <a href="#" className="btn btn-light">
-                  Ver mas!
-                </a>
-              </div>
-            </div>
+                      
+                    </div>
+                  </div>
+                </div>
+              </>
+            );
+          })}
           </div>
         </div>
       </div>

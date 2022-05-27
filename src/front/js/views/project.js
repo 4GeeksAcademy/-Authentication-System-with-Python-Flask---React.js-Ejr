@@ -55,6 +55,10 @@ export const Project = () => {
 		console.log(typeof ufs);
 	};
 
+	const createPostulacion = ()=>{
+		actions.createPostulation(proyecto.id)
+	} 
+
 	return (
 		<div className="container mt-4 p-0">
 			<h2>{proyecto.address}</h2>
@@ -153,7 +157,8 @@ export const Project = () => {
 			<div className="container-fluid p-0 d-flex justify-content-center mt-4">
 				{
 					actions.getMinimumValue (proyecto.minimum_value) ?
-					(<button type="button mx-auto" className="btn btn-primary">
+					(
+					<button type="button mx-auto" className="btn btn-primary" onClick={createPostulacion}>
 					Postula Acá
 				</button>)	
 				:
