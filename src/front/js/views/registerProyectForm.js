@@ -39,8 +39,8 @@ export const RegisterProyectForm = ({
 }) => {
 	return (
 		<>
-			<div className="container">
-				<form className="row" onSubmit={handleSubmit}>
+			<div className="container my-5">
+				<form className="row " onSubmit={handleSubmit}>
 					<div className="col-6">
 						<div className="form-group">
 							<label>Nombre del Proyecto</label>
