@@ -385,7 +385,7 @@ def create_postulacion():
 
     return jsonify(postulacion.serialize()), 201
 
-@api.rout("/project/<int:project_id>/apply", methods=['POST'])
+@api.route("/project/<int:project_id>/apply", methods=['POST'])
 def create_postulacion_by_user(project_id):
     postulacion = Postulacion()
     postulacion.project_id = request.json.get('project_id') 
