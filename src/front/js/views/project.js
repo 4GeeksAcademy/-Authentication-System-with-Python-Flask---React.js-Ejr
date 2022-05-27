@@ -4,6 +4,7 @@ import { UserHomeList } from "../component/userHomeList";
 import { useParams } from "react-router-dom";
 import { Context } from "../store/appContext";
 import "../../styles/project.css";
+import Swal from 'sweetalert2'
 export const Project = () => {
 	// console.log(useParams());
 	const { id } = useParams();
@@ -57,6 +58,12 @@ export const Project = () => {
 
 	const createPostulacion = ()=>{
 		actions.createPostulation(proyecto.id)
+		Swal.fire(
+			'Felicidades!',
+			'La postulacion se realizo con exito!',
+			'success'
+		  )
+
 	} 
 
 	return (
