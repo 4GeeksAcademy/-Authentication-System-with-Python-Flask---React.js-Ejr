@@ -32,16 +32,21 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 
 
-			getPostulacionesByProject: (id) => {
-				console.log("hola");
-				const { API_URL } = getStore();
-				fetch(`${API_URL}/api/projects/${id}/postulaciones`)
-					.then((response) => response.json())
-					.then((data) => {
-						console.log(data);
-						setStore({ projectPostulaciones: data });
+
+			createPostulation: (id) =>{
+
+				const {API_URL, currentUser} = getStore()
+				fetch(`${API_URL}/api/project/${id}/apply`, {method:"POST", headers: {
+					'Content-Type': 'application/json',
+				  }, body: JSON.stringify({user_id:currentUser?.id})})
+				  .then(response => response.json())
+				  .then(data => {console.log('Success:', data);})
+				  .catch((error) => {
+					  console.error('Error:', error);
 					});
-			},
+
+			}, 
+				
 
 			getLatestProjects: () => {
 				const {API_URL} = getStore()
@@ -52,7 +57,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 						setStore({ latestProjects: data });
 					});
 			}	,
-	
 
 			logout: () => {
 				sessionStorage.removeItem("token");
