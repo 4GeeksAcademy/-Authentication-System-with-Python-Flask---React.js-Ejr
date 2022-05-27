@@ -231,6 +231,11 @@ def all_projects_by_company(company_id):
     
     return jsonify(projects), 200
 
+@api.route('/projects/latest', methods=['GET'])
+def get_latest_projects():
+    projects = Project.query.order_by(Project.id.desc()).limit(3)
+    projects = list(map(lambda project: project.serialize(), projects))
+    return jsonify(projects), 200
 
 @api.route("/projects", methods=['POST'])
 def create_project():
@@ -374,11 +379,13 @@ def get_postulacion(postulacion_id):
     postulacion = Postulacion.query.get(postulacion_id)
     return jsonify(postulacion.serialize()), 200
 
+
 @api.route("/projects/<int:project_id>/postulaciones", methods=['GET'])
 def get_postulaciones_project(project_id):
     postulaciones = Postulacion.query.filter_by(project_id=project_id)
     postulaciones = list(map(lambda postulacion: postulacion.serialize(), postulaciones))
     return jsonify(postulaciones),200    
+
 
 @api.route('/postulaciones', methods=['POST'])
 def create_postulacion():

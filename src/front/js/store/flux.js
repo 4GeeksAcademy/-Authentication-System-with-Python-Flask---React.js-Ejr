@@ -1,6 +1,7 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
+			latestProjects:null,
 			companyProjects: null,
 			token: null,
 			currentUser: null,
@@ -30,6 +31,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					});
 			},
 
+
 			getPostulacionesByProject: (id) => {
 				console.log("hola");
 				const { API_URL } = getStore();
@@ -40,6 +42,17 @@ const getState = ({ getStore, getActions, setStore }) => {
 						setStore({ projectPostulaciones: data });
 					});
 			},
+
+			getLatestProjects: () => {
+				const {API_URL} = getStore()
+				fetch(`${API_URL}/api/projects/latest`)
+				.then((response) => response.json())
+				.then((data) => {
+						console.log(data);
+						setStore({ latestProjects: data });
+					});
+			}	,
+	
 
 			logout: () => {
 				sessionStorage.removeItem("token");
