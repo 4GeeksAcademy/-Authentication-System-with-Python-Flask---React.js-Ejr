@@ -380,6 +380,12 @@ def get_postulacion(postulacion_id):
     return jsonify(postulacion.serialize()), 200
 
 
+@api.route("/projects/<int:project_id>/postulaciones", methods=['GET'])
+def get_postulaciones_project(project_id):
+    postulaciones = Postulacion.query.filter_by(project_id=project_id)
+    postulaciones = list(map(lambda postulacion: postulacion.serialize(), postulaciones))
+    return jsonify(postulaciones),200    
+
 
 @api.route('/postulaciones', methods=['POST'])
 def create_postulacion():

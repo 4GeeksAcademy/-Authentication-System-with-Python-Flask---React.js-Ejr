@@ -22,36 +22,11 @@ export const ProjectVerMas = () => {
 		obtenerProyecto();
 	}, [id]);
 
-	React.useEffect(() => {
-		const obtenerProyecto = async () => {
-			const data = await fetch(
-				`https://3001-xetnal-finalproject-kainuymmez4.ws-us46.gitpod.io/api/projects/${id}`
-			);
-			const project = await data.json();
-			setProject(project);
-		};
-		obtenerProyecto();
-	}, [id]);
-
 	useEffect(() => {
-		getUf();
-	}, []);
-
-	const [ufs, setUfs] = useState("");
-
-	const getUf = async () => {
-		const url =
-			"https://api.cmfchile.cl/api-sbifv3/recursos_api/uf?apikey=a8423be05204c1cb12e2d950d772c7018d0947ee&formato=json";
-		const respuesta = await fetch(url);
-		const info = await respuesta.json();
-		const objetoUf = info.UFs;
-		const valor = objetoUf[0];
-		console.log(valor);
-		const pesos = valor.Valor;
-		console.log(pesos);
-		setUfs(pesos);
-		console.log(typeof ufs);
-	};
+		console.log(proyecto.id);
+		actions.getPostulacionesByProject(proyecto.id);
+		console.log(store.projectPostulaciones);
+	}, [proyecto]);
 
 	return (
 		<div className="container mt-4 p-0">
