@@ -23,9 +23,10 @@ export const ProjectVerMas = () => {
 	}, [id]);
 
 	useEffect(() => {
-		console.log(proyecto.id);
+		//console.log(proyecto.id);
 		actions.getPostulacionesByProject(proyecto.id);
-		console.log(store.projectPostulaciones);
+		const postulacion = store.projectPostulaciones;
+		console.log(postulacion); //.user.name
 	}, [proyecto]);
 
 	return (
@@ -135,22 +136,30 @@ export const ProjectVerMas = () => {
 				<h4>Equipamiento</h4>
 				<p>{proyecto.perks}</p>
 			</div>
+			<div>
+				<h4>Postulaciones: </h4>
+				{store.projectPostulaciones?.map((postulacion) => {
+					return (
+						<div className="card" key={postulacion.id}>
+							<div className="card-body">
+								<h5 className="card-title">
+									{postulacion.user.name} {postulacion.user.lastname}
+									{postulacion.user.email}
+								</h5>
+								<p className="card-text">{postulacion.body}</p>
+							</div>
+						</div>
+					);
+				})}
+			</div>
 
 			<div className="container-fluid p-0 d-flex justify-content-center mt-4">
 				<Link to="/company_dashboard">
 					<button type="button" className="btn btn-primary">
-						volver
+						Volver
 					</button>
 				</Link>
 			</div>
 		</div>
 	);
 };
-
-{
-	/* <Link to="/company_dashboard">
-				<button type="button" className="btn btn-primary">
-					volver
-				</button>
-			</Link> */
-}
