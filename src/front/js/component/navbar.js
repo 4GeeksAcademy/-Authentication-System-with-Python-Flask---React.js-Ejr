@@ -81,7 +81,7 @@ export const Navbar = () => {
             )}
             {store.currentCompany != null ? (
               <li>
-                <Link to="company_dashboard">
+                <Link to="/company_dashboard">
                   <a className="nav-link">Tus Proyectos</a>
                 </Link>
               </li>

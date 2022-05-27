@@ -386,6 +386,11 @@ def get_postulaciones_project(project_id):
     postulaciones = list(map(lambda postulacion: postulacion.serialize(), postulaciones))
     return jsonify(postulaciones),200    
 
+@api.route("/projects/<int:user_id>/postulaciones_user", methods=['GET'])
+def get_postulaciones_user(user_id):
+    postulaciones = Postulacion.query.filter_by(user_id=user_id)
+    postulaciones = list(map(lambda postulacion: postulacion.serialize(), postulaciones))
+    return jsonify(postulaciones),200 
 
 @api.route('/postulaciones', methods=['POST'])
 def create_postulacion():
