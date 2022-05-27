@@ -32,6 +32,20 @@ const getState = ({ getStore, getActions, setStore }) => {
 						setStore({ companyProjects: data });
 					});
 			},
+
+			createPostulation: (id) =>{
+
+				const {API_URL} = getStore()
+				fetch(`${API_URL}/api/project/${id}/apply`, {method:"POST", headers: {
+					'Content-Type': 'application/json',
+				  }, body: JSON.stringify(data)})
+				  .then(response => response.json())
+				  .then(data => {console.log('Success:', data);})
+				  .catch((error) => {
+					  console.error('Error:', error);
+					});
+
+			}, 
 				
 			// getProject: (id) => {
 			// 	fetch("https://3001-xetnal-finalproject-v6ua4tu6zkd.ws-us45.gitpod.io/api/projects/"+id)
