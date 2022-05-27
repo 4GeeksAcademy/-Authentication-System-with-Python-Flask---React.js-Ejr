@@ -19,8 +19,9 @@ export const UserProjects = () => {
       <h3 className="mt-3">Mis Postulaciones</h3>
       <div className="row row-cols-1 row-cols-md-2 g-4">
         <div className="col">
-          {!!store.userPostulaciones && store.userPostulaciones.map(() => {
+          {!!store.userPostulaciones && store.userPostulaciones.map((project, index) => {
             return <div
+            key={index}
             className="card text-white bg-dark col-sm-12"
             style={{ width: "18rem" }}
           >
@@ -32,7 +33,7 @@ export const UserProjects = () => {
             <div className="card-body">
               <h5 className="card-title"></h5>
               <p className="card-text"></p>
-              <p className="card-text">Desde m2</p>
+              <p className="card-text">Desde {store.userPostulaciones[index].projects?.size} m2</p>
               <p className="card-text">Desde  UF</p>
 
               <Link to={`/company_dashboard/project/`}>
