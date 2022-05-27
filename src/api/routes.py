@@ -401,7 +401,7 @@ def create_postulacion():
 @api.route("/project/<int:project_id>/apply", methods=['POST'])
 def create_postulacion_by_user(project_id):
     postulacion = Postulacion()
-    postulacion.project_id = request.json.get('project_id') 
+    postulacion.project_id = project_id 
     postulacion.user_id = request.json.get('user_id') 
     postulacion.date = datetime.datetime.now()
     postulacion.status = "En Revisión" 
