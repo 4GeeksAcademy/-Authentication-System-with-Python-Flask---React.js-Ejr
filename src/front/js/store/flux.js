@@ -21,6 +21,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					});
 			},
 
+
 			getCompanyProjects: (id) => {
 				const { API_URL } = getStore();
 				fetch(`${API_URL}/api/companies/${id}/projects`)
@@ -30,6 +31,16 @@ const getState = ({ getStore, getActions, setStore }) => {
 						setStore({ companyProjects: data });
 					});
 			},
+			getPostulacionesByProject: (id) => {
+				console.log("hola");
+				const { API_URL } = getStore();
+				fetch(`${API_URL}/api/projects/${id}/postulaciones`)
+				.then((response) => response.json())
+				.then((data) => {
+				console.log(data);
+				setStore({ projectPostulaciones: data });
+				});
+				},
 
 
 
@@ -57,6 +68,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						setStore({ latestProjects: data });
 					});
 			}	,
+			
 
 			logout: () => {
 				sessionStorage.removeItem("token");
