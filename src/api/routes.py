@@ -379,6 +379,8 @@ def get_postulacion(postulacion_id):
     postulacion = Postulacion.query.get(postulacion_id)
     return jsonify(postulacion.serialize()), 200
 
+
+
 @api.route('/postulaciones', methods=['POST'])
 def create_postulacion():
     postulacion = Postulacion()

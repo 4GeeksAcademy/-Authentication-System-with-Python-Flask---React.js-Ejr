@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import { Context } from "../store/appContext";
-/*import { Link } from "react-router-dom";
-import { Proyect } from "./proyect"; */
+import { Link } from "react-router-dom";
+/*import { Proyect } from "./proyect"; */
 import { CompanyProjects } from "./companyProjects";
 import { RegisterProyectForm } from "./registerProyectForm";
 import "../../styles/login.css";
@@ -102,7 +102,10 @@ export const CompanyDashboard = () => {
     setProyectos(info);
   };
 
-  
+  useEffect(() => {
+    actions.getCompanyProjects(store.currentCompany?.id);
+    console.log(store.companyProjects);
+  }, [store.currentCompany]);
 
   useEffect(() => {
     // actions.getCompanyProjects(store.currentCompany?.id)
@@ -110,44 +113,42 @@ export const CompanyDashboard = () => {
 
   return (
     <div className="container">
-      <h1>Estos son tus proyectos ya publicados:</h1>
+      <h1>Tus proyectos publicados:</h1>
       <br />
       <div className="container">
         <div className="row row-cols-1 row-cols-md-3 g-4">
           {store.companyProjects?.map((proyecto) => {
             return (
-              <>
-                <div className="animate__animated animate__fadeInRightBig col">
-                  <div
-                    className="card text-white bg-dark col-sm-12"
-                    style={{ width: "18rem" }}
-                  >
-                    <img
-                      src={proyecto.pictures}
-                      className="card-img-top proyecto-picture"
-                      alt="..."
-                    />
-                    <div className="card-body">
-                      <h5 className="card-title">{proyecto.title}</h5>
-                      <p className="card-text">{proyecto.address}</p>
-                      <p className="card-text">Desde {proyecto.size}m2</p>
-                      <p className="card-text">
-                        Desde {proyecto.total_price} UF
-                      </p>
+              <div className="animate__animated animate__fadeInRightBig col">
+                <div
+                  className="card text-white bg-dark col-sm-12"
+                  style={{ width: "18rem" }}
+                >
+                  <img
+                    src={proyecto.pictures}
+                    className="card-img-top proyecto-picture"
+                    alt="..."
+                  />
+                  <div className="card-body">
+                    <h5 className="card-title">{proyecto.title}</h5>
+                    <p className="card-text">{proyecto.address}</p>
+                    <p className="card-text">Desde {proyecto.size}m2</p>
+                    <p className="card-text">Desde {proyecto.total_price} UF</p>
 
-                      <a href="#" className="btn btn-light ">
-                        Ver mas!
-                      </a>
-                    </div>
+                    <Link to={`/company_dashboard/project/${proyecto.id}`}>
+                      <button type="button" className="btn btn-primary">
+                        Ver Mas
+                      </button>
+                    </Link>
                   </div>
                 </div>
-              </>
+              </div>
             );
           })}
         </div>
       </div>
 
-      <h1>Formulario para subir un proyecto:</h1>
+      <h1 className="my-5">Registra un nuevo proyecto:</h1>
       <RegisterProyectForm
         handleSubmit={handleSubmit}
         title={title}
