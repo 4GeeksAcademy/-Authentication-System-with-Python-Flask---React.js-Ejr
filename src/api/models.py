@@ -13,6 +13,7 @@ class User(db.Model):
     salary = db.Column(db.Integer, nullable=False)
     side_income = db.Column(db.Integer, nullable=False)
     deudas = db.Column(db.Integer, nullable=False)
+    postulaciones = db.relationship("Postulacion", backref="user", lazy=True)
 
     def serialize(self):
         return {
@@ -166,7 +167,8 @@ class Postulacion(db.Model):
             "project_id": self.project_id,  
             "user_id": self.user_id,
             "date": self.date,
-            "status": self.status  
+            "status": self.status,
+            "user": self.user.serialize() 
                   
         }
     def save(self):
