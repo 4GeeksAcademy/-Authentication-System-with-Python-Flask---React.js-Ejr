@@ -49,7 +49,7 @@ export const Project = () => {
 		const info = await respuesta.json();
 		const objetoUf = info.UFs;
 		const valor = objetoUf[0]; 
-		console.log(valor);
+		console.log(valor);   
 		const pesos = valor.Valor;
 		console.log(pesos);
 		setUfs(pesos);
