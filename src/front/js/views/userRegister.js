@@ -51,13 +51,13 @@ export const UserRegister = () => {
           'El registro ha sido exitoso!',
           'success'
         )
-        if (resp !== 201) {
-          Swal.fire(
-        'Hemos detectado un problema!',
-        'El email ya esta en uso!',
-        'error'
-      )
-        }
+      //   if (resp !== 200) {
+      //     Swal.fire(
+      //   'Hemos detectado un problema!',
+      //   'El email ya esta en uso!',
+      //   'error'
+      // )
+      //   }
         
         const info = await resp.json();
         return info;
