@@ -1,3 +1,11 @@
-.card-project{
-    height: 450px;
+.card-project {
+	height: 450px;
+}
+
+.boton-publicar {
+	margin-bottom: 20px;
+}
+
+.card-postulaciones {
+	margin-bottom: 10px;
 }

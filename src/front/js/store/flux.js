@@ -42,6 +42,22 @@ const getState = ({ getStore, getActions, setStore }) => {
 					});
 			},
 
+			deleteProject: (id) => {
+				const { API_URL } = getStore();
+				fetch(`${API_URL}/api/projects/${id}`, {
+					method: "DELETE",
+					headers: {
+						"Content-Type": "application/json",
+						Authorization: `Bearer ${getStore().token}`,
+					},
+				})
+					.then((response) => response.json())
+					.then((data) => {
+						console.log(data);
+						setStore({ message: data.message });
+					});
+			},
+
 			getPostulacionesByUser: (id) => {
 				//console.log(id)
 				//console.log("hola");
