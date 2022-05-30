@@ -72,66 +72,11 @@ export const Project = () => {
 			<div className="row">
 				<div className="col-12 col-lg-8 p-0">
 					<div className="card">
-						<div id="demo" className="carousel slide" data-bs-ride="carousel">
-							<div className="carousel-indicators">
-								<button
-									type="button"
-									data-bs-target="#demo"
-									data-bs-slide-to={0}
-									className="active"
-								/>
-								<button
-									type="button"
-									data-bs-target="#demo"
-									data-bs-slide-to={1}
-								/>
-								<button
-									type="button"
-									data-bs-target="#demo"
-									data-bs-slide-to={2}
-								/>
-							</div>
-							{/* The slideshow/carousel */}
-							<div className="carousel-inner">
-								<div className="carousel-item active">
-									<img
+					<img
 										src={proyecto.pictures}
 										alt="Los Angeles"
 										className="d-block w-100"
 									/>
-								</div>
-								<div className="carousel-item">
-									<img
-										src={proyecto.pictures}
-										alt="Chicago"
-										className="d-block w-100"
-									/>
-								</div>
-								<div className="carousel-item">
-									<img
-										src={proyecto.pictures}
-										alt="New York"
-										className="d-block w-100"
-									/>
-								</div>
-							</div>
-							<button
-								className="carousel-control-prev"
-								type="button"
-								data-bs-target="#demo"
-								data-bs-slide="prev"
-							>
-								<span className="carousel-control-prev-icon" />
-							</button>
-							<button
-								className="carousel-control-next"
-								type="button"
-								data-bs-target="#demo"
-								data-bs-slide="next"
-							>
-								<span className="carousel-control-next-icon" />
-							</button>
-						</div>
 					</div>
 				</div>
 				<div className="col-12 col-lg-4">
