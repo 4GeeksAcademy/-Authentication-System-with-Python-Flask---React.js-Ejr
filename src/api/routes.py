@@ -440,4 +440,6 @@ def delete_postulacion(postulacion_id):
 
     return jsonify({"mensaje": "La postulacion ha sido eliminada"} ), 200
 
+ 
+
 

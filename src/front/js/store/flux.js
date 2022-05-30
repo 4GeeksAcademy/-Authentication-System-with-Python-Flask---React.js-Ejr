@@ -10,6 +10,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			API_URL: "https://3001-xetnal-finalproject-kainuymmez4.ws-us46.gitpod.io",
 			projectPostulaciones: null,
 			userPostulaciones: null,
+			postulacion: null,
 		},
 		actions: {
 			getProjects: () => {
@@ -55,6 +56,20 @@ const getState = ({ getStore, getActions, setStore }) => {
 					.then((data) => {
 						console.log(data);
 						setStore({ message: data.message });
+					});
+			},
+
+			deletePostulacion: (id) => {
+				const { API_URL } = getStore();
+				fetch(`${API_URL}/api/postulaciones/${id}`, {
+					method: "DELETE",
+					headers: {
+						"Content-Type": "application/json",
+					},
+				})
+					.then((response) => response.json())
+					.then((data) => {
+						console.log(data);
 					});
 			},
 
