@@ -33,7 +33,7 @@ export const ProjectVerMas = () => {
 			console.log(data);
 			setPostulacion(postulacion);
 		};
-		obtenerPostulacion();
+		obtenerPostulacion(); 
 	}, [id]);
 
 	useEffect(() => {
