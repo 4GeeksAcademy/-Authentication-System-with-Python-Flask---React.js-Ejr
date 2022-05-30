@@ -48,7 +48,7 @@ export const Project = () => {
 		const respuesta = await fetch(url);
 		const info = await respuesta.json();
 		const objetoUf = info.UFs;
-		const valor = objetoUf[0];
+		const valor = objetoUf[0]; 
 		console.log(valor);
 		const pesos = valor.Valor;
 		console.log(pesos);
