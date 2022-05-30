@@ -137,16 +137,23 @@ export const ProjectVerMas = () => {
 				<p>{proyecto.perks}</p>
 			</div>
 			<div>
-				<h4>Postulaciones: </h4>
+				<h4>Postulaciones Realizadas: </h4>
 				{store.projectPostulaciones?.map((postulacion) => {
 					return (
-						<div className="card" key={postulacion.id}>
-							<div className="card-body">
-								<h5 className="card-title">
-									{postulacion.user.name} {postulacion.user.lastname}
-									{postulacion.user.email}
-								</h5>
-								<p className="card-text">{postulacion.body}</p>
+						<div key={postulacion.id}>
+							<div
+								className="card text-white bg-dark col-sm-12"
+								style={{ width: "18rem" }}
+							>
+								<div className="card-body">
+									<p className="card-title">Nombre: {postulacion.user.name}</p>
+									<p className="card-text">
+										Apellido: {postulacion.user.lastname}
+									</p>
+									<p className="card-text">Email: {postulacion.user.email}</p>
+
+									<input type="checkbox"></input>
+								</div>
 							</div>
 						</div>
 					);
@@ -163,3 +170,14 @@ export const ProjectVerMas = () => {
 		</div>
 	);
 };
+
+/* 
+<div className="card" key={postulacion.id}>
+							<div className="card-body">
+								<h5 className="card-title">
+									{postulacion.user.name} {postulacion.user.lastname}
+									{postulacion.user.email}
+								</h5>
+								<p className="card-text">{postulacion.body}</p>
+							</div>
+						</div> */
