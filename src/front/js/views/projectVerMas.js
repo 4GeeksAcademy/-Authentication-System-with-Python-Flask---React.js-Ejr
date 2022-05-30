@@ -29,6 +29,10 @@ export const ProjectVerMas = () => {
 		console.log(postulacion); //.user.name
 	}, [proyecto]);
 
+	const handleDelete = () => {
+		actions.deleteProject(proyecto.id);
+	};
+
 	return (
 		<div className="container mt-4 p-0">
 			<h2>{proyecto.address}</h2>
@@ -140,19 +144,17 @@ export const ProjectVerMas = () => {
 				<h4>Postulaciones Realizadas: </h4>
 				{store.projectPostulaciones?.map((postulacion) => {
 					return (
-						<div key={postulacion.id}>
+						<div className="d-flex" key={postulacion.id}>
 							<div
-								className="card text-white bg-dark col-sm-12"
+								className="card text-white bg-dark col-sm-12 d-flex-row"
 								style={{ width: "18rem" }}
 							>
-								<div className="card-body">
+								<div className="card-body card-postulaciones">
 									<p className="card-title">Nombre: {postulacion.user.name}</p>
 									<p className="card-text">
 										Apellido: {postulacion.user.lastname}
 									</p>
 									<p className="card-text">Email: {postulacion.user.email}</p>
-
-									<input type="checkbox"></input>
 								</div>
 							</div>
 						</div>
@@ -162,10 +164,16 @@ export const ProjectVerMas = () => {
 
 			<div className="container-fluid p-0 d-flex justify-content-center mt-4">
 				<Link to="/company_dashboard">
-					<button type="button" className="btn btn-primary">
+					<button type="button" className="btn btn-primary boton-publicar">
 						Volver
 					</button>
 				</Link>
+				<button
+					className="btn btn-danger boton-publicar boton-eliminar-vermas"
+					onClick={handleDelete}
+				>
+					Eliminar Proyecto
+				</button>
 			</div>
 		</div>
 	);

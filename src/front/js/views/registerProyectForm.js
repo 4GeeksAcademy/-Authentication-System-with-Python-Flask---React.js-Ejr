@@ -1,4 +1,5 @@
 import React from "react";
+import "../../styles/login.css";
 
 export const RegisterProyectForm = ({
 	minimum_value,
@@ -40,7 +41,10 @@ export const RegisterProyectForm = ({
 	return (
 		<>
 			<div className="container my-5">
-				<form className="animate__animated animate__fadeInRightBig row" onSubmit={handleSubmit}>
+				<form
+					className="animate__animated animate__fadeInRightBig row"
+					onSubmit={handleSubmit}
+				>
 					<div className="col-6">
 						<div className="form-group">
 							<label>Nombre del Proyecto</label>
@@ -125,7 +129,10 @@ export const RegisterProyectForm = ({
 								placeholder="Ingrese cantidad de habitaciones"
 							/>
 							{/* <Link to="/user_profile_setup"> */}
-							<button type="submit" className="btn btn-primary mt-3">
+							<button
+								type="submit"
+								className="btn btn-primary mt-3 boton-publicar"
+							>
 								Publicar
 							</button>
 							{/* </Link> */}

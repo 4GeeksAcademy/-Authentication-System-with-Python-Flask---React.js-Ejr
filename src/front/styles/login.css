@@ -29,6 +29,18 @@
 	margin-bottom: 10px;
 }
 
-.proyecto-picture{
+.proyecto-picture {
 	height: 250px;
+}
+
+.boton-eliminar {
+	margin-left: 10px;
+}
+
+.boton-publicar {
+	margin-bottom: 20px;
+}
+
+.boton-eliminar-vermas {
+	margin-left: 10px;
 }
