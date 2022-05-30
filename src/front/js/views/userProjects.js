@@ -1,9 +1,15 @@
-import React, {useEffect, useContext} from "react";
+import React, {useEffect, useContext, useState} from "react";
 import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
+import { useParams } from "react-router-dom";
+import Swal from 'sweetalert2'
 
 export const UserProjects = () => {
+
+  const { id } = useParams();
   const {store, actions} = useContext(Context)
+  const [postulacion, setPostulacion] = useState([]);
+
   useEffect(() =>{
     console.log(store.currentUser)
   }, [])
@@ -13,46 +19,39 @@ export const UserProjects = () => {
     console.log(store.userPostulaciones)
   }, [store.currentUser])
 
+	useEffect(() => {
+		const obtenerPostulacion = async () => {
+			const data = await fetch(
+				`https://3001-xetnal-finalproject-kainuymmez4.ws-us46.gitpod.io/api/postulaciones/${id}`
+			);
+			const postulacion = await data.json();
+			console.log(data);
+			setPostulacion(postulacion);
+		};
+		obtenerPostulacion(); 
+	}, [id]);
+
+  useEffect(()=>{
+
+  }, [postulacion])
+
+  const deletePostulacion = (postulacion)=>{
+		actions.deletePostulacion(postulacion.id)
+		Swal.fire(
+			'Postulacion Eliminada!',
+			'success'
+		  )
+
+      
+	} 
+
+
   return (
-
-  //   <div className="container mt-2">
-  //     <h3 className="mt-3">Mis Postulaciones</h3>
-  //     <div className="row row-cols-1 row-cols-md-2 g-4">
-  //       <div className="col">
-  //         {!!store.userPostulaciones && store.userPostulaciones.map((project, index) => {
-  //           return <div
-  //           key={index}
-  //           className="card text-white bg-dark col-sm-12"
-  //           style={{ width: "18rem" }}
-  //         >
-  //           <img
-              
-  //             className="card-img-top proyecto-picture"
-  //             alt={store.userPostulaciones[index].projects?.pictures}
-  //           />
-  //           <div className="card-body">
-  //             <h5 className="card-title"></h5>
-  //             <p className="card-text"></p>
-  //             <p className="card-text">Desde {store.userPostulaciones[index].projects?.size} m2</p>
-  //             <p className="card-text">Desde {store.userPostulaciones[index].projects?.minimum_value} UF</p>
-
-  //             <Link to={`/project/${store.userPostulaciones[index].projects?.id}`}>
-	// 						<button type="button" className="btn btn-primary">
-	// 							Ir al Proyecto
-	// 						</button>
-	// 					</Link>
-  //           </div>
-  //         </div>
-  //         })}
-  //       </div>
-        
-  //     </div>
-  // </div>
 
   <div className="container">
     <h2 className="mt-4 mb-4">Mis Postulaciones</h2>
     <div className="row row-cols-1 row-cols-md-3 g-4">
-    {!!store.userPostulaciones && store.userPostulaciones.map((project, index) => {
+    {!!store.userPostulaciones && store.userPostulaciones.map((postulacion, index) => {
       return <div className="col" key={index}>
         <div className="card">
           <img src={store.userPostulaciones[index].projects?.pictures} className="card-img-top" alt="..." />
@@ -67,6 +66,9 @@ export const UserProjects = () => {
                     Ir al Proyecto
                 </button>
             </Link>
+            <button type="button mx-auto" className="btn btn-primary" onClick={()=>deletePostulacion(postulacion)}>
+					    Eliminar
+				    </button>
           </div>
         </div>
       </div>
