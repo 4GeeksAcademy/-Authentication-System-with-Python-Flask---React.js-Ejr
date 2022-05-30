@@ -25,6 +25,7 @@ const injectContext = PassedComponent => {
 			
 			// getStore()
 			state.actions.getProjects();   
+			// state.actions.obtenerPostulacion(); 
 			
 
 			state.actions.syncCompanyTokenFromSessionStore();
