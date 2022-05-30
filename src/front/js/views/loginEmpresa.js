@@ -41,7 +41,7 @@ export const LoginEmpresa = () => {
                 <form id="login-form" className="form">
                   <h3 className="text-center ">Login Empresa</h3>
                   <div className="form-group">
-                    <label className="">Email:</label>
+                    <label className="fw-bold">Email:</label>
                     <br />
                     <input
                       type="text"
@@ -53,7 +53,7 @@ export const LoginEmpresa = () => {
                     />
                   </div>
                   <div className="form-group">
-                    <label htmlFor="password" className="">
+                    <label htmlFor="password" className="fw-bold">
                       Contraseña:
                     </label>
                     <br />

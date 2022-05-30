@@ -50,11 +50,11 @@ export const UserProjects = () => {
   // </div>
 
   <div className="container">
-    <h2 className="mt-4 mb-4">Mis Postulaciones</h2>
+    <h2 className="mt-4 mb-4 animate__animated animate__fadeIn">Mis Postulaciones</h2>
     <div className="row row-cols-1 row-cols-md-3 g-4">
     {!!store.userPostulaciones && store.userPostulaciones.map((project, index) => {
       return <div className="col" key={index}>
-        <div className="card">
+        <div className="card text-white bg-dark animate__animated animate__fadeInRightBig">
           <img src={store.userPostulaciones[index].projects?.pictures} className="card-img-top" alt="..." />
           <div className="card-body">
             <h5 className="card-title">{store.userPostulaciones[index].projects?.title}</h5>
@@ -74,7 +74,7 @@ export const UserProjects = () => {
     </div>
     <div className="container p-0 mt-4 d-flex justify-content-center">
     <Link to={"/user_home"}>
-        <button type="button" className="btn btn-primary">
+        <button type="button" className="btn btn-primary animate__animated animate__fadeIn animate__delay-2s">
             Volver
         </button>
     </Link>

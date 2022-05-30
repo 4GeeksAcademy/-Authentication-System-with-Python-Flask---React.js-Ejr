@@ -77,7 +77,7 @@ export const UserRegister = () => {
     <div className="container my-5">
       <form onSubmit={handleSubmit}>
         <div className="form-group">
-          <label>Nombre</label>
+          <label className="fw-bold">Nombre</label>
           <input
             name="name"
             value={name}
@@ -88,7 +88,7 @@ export const UserRegister = () => {
             aria-describedby="emailHelp"
             placeholder="Ingresa tu nombre"
           />
-          <label>Apellido</label>
+          <label className="fw-bold">Apellido</label>
           <input
             name="lastName"
             value={lastName}
@@ -99,7 +99,7 @@ export const UserRegister = () => {
             aria-describedby="emailHelp"
             placeholder="Ingresa tu apellido"
           />
-          <label>Sueldo</label>
+          <label className="fw-bold">Sueldo</label>
           <input
             name="salary"
             value={salary}
@@ -110,7 +110,7 @@ export const UserRegister = () => {
             aria-describedby="emailHelp"
             placeholder="Ingresa tu Sueldo"
           />
-          <label>Sueldo complementario</label>
+          <label className="fw-bold">Sueldo complementario</label>
           <input
             name="sideIncome"
             value={side_income}
@@ -121,7 +121,7 @@ export const UserRegister = () => {
             aria-describedby="emailHelp"
             placeholder="Ingresa tu Sueldo complementario"
           />
-          <label>Deudas</label>
+          <label className="fw-bold">Deudas</label>
           <input
             name="deudas"
             value={deudas}
@@ -132,7 +132,7 @@ export const UserRegister = () => {
             aria-describedby="emailHelp"
             placeholder="Ingresa el monto total de tus deudas"
           />
-          <label>Email</label>
+          <label className="fw-bold">Email</label>
           <input
             name="email"
             value={email}
@@ -147,8 +147,8 @@ export const UserRegister = () => {
             Nunca compartiremos tu Email con nadie.
           </small>
         </div>
-        <div class="form-group">
-          <label>Contraseña</label>
+        <div className="form-group ">
+          <label className="fw-bold">Contraseña</label>
           <input
             name="password"
             value={password}
