@@ -85,8 +85,8 @@ export const Home = () => {
           <div className="cardContainer d-flex justify-content-around my-5">
           {store.latestProjects?.map((proyecto) => {
             return (
-              <>
-                <div className="animate__animated animate__fadeInRightBig col">
+              <div className="d-flex cardContainer">
+                <div className=" animate__animated animate__fadeInRightBig col">
                   <div
                     className="card text-white bg-dark col-sm-12"
                     style={{ width: "18rem" }}
@@ -108,7 +108,7 @@ export const Home = () => {
                     </div>
                   </div>
                 </div>
-              </>
+              </div>
             );
           })}
           </div>
