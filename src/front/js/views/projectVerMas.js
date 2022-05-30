@@ -9,7 +9,9 @@ export const ProjectVerMas = () => {
 	const { id } = useParams();
 	const { store, actions } = useContext(Context);
 
-	const [proyecto, setProject] = React.useState([]);
+	const [proyecto, setProject] = useState([]);
+
+	const [postulacion, setPostulacion] = useState([]);
 
 	useEffect(() => {
 		const obtenerProyecto = async () => {
@@ -23,6 +25,18 @@ export const ProjectVerMas = () => {
 	}, [id]);
 
 	useEffect(() => {
+		const obtenerPostulacion = async () => {
+			const data = await fetch(
+				`https://3001-xetnal-finalproject-kainuymmez4.ws-us46.gitpod.io/api/postulaciones/${id}`
+			);
+			const postulacion = await data.json();
+			console.log(data);
+			setPostulacion(postulacion);
+		};
+		obtenerPostulacion();
+	}, [id]);
+
+	useEffect(() => {
 		//console.log(proyecto.id);
 		actions.getPostulacionesByProject(proyecto.id);
 		const postulacion = store.projectPostulaciones;
@@ -31,6 +45,10 @@ export const ProjectVerMas = () => {
 
 	const handleDelete = () => {
 		actions.deleteProject(proyecto.id);
+	};
+
+	const handlePostulacion = (postulacion) => {
+		actions.deletePostulacion(postulacion.id);
 	};
 
 	return (
@@ -155,6 +173,12 @@ export const ProjectVerMas = () => {
 										Apellido: {postulacion.user.lastname}
 									</p>
 									<p className="card-text">Email: {postulacion.user.email}</p>
+									<button
+										className="btn btn-danger"
+										onClick={() => handlePostulacion(postulacion)}
+									>
+										Eliminar Postulacion
+									</button>
 								</div>
 							</div>
 						</div>
