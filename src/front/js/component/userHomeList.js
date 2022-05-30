@@ -7,8 +7,8 @@ export const UserHomeList = () => {
 
 	let lista = store.projects?.map((project, index) => {
 		return (
-			<div className="col" key={project.id}>
-				<div className="card">
+			<div className="col animate__animated animate__fadeInRightBig" key={project.id}>
+				<div className="card text-white bg-dark">
 					<img
 						src={project.pictures}
 						className="card-img-top card-project"

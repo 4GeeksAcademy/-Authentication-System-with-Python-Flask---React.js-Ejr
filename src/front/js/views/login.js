@@ -50,7 +50,7 @@ export const LoginScreen = () => {
               <form id="login-form" className="form">
                 <h3 className="text-center ">Login</h3>
                 <div className="form-group">
-                  <label htmlFor="email" >
+                  <label htmlFor="email" className="fw-bold" >
                    Email:
                   </label>
                   <br />
@@ -66,7 +66,7 @@ export const LoginScreen = () => {
                   />
                 </div>
                 <div className="form-group">
-                  <label htmlFor="password" className="">
+                  <label htmlFor="password" className="fw-bold">
                     Contraseña:
                   </label>
                   <br />

@@ -47,7 +47,7 @@ export const RegisterProyectForm = ({
 				>
 					<div className="col-6">
 						<div className="form-group">
-							<label>Nombre del Proyecto</label>
+							<label className="fw-bold">Nombre del Proyecto</label>
 							<input
 								type="text"
 								className="form-control"
@@ -56,7 +56,7 @@ export const RegisterProyectForm = ({
 								onChange={(e) => setTitle(e.target.value)}
 								placeholder="Ingresa tu nombre"
 							/>
-							<label>Comuna</label>
+							<label className="fw-bold">Comuna</label>
 							<input
 								type="text"
 								className="form-control"
@@ -65,7 +65,7 @@ export const RegisterProyectForm = ({
 								onChange={(e) => setComuna(e.target.value)}
 								placeholder="Ingresa la comuna"
 							/>
-							<label>Ciudad </label>
+							<label className="fw-bold">Ciudad </label>
 							<input
 								type="text"
 								className="form-control"
@@ -74,7 +74,7 @@ export const RegisterProyectForm = ({
 								onChange={(e) => setCiudad(e.target.value)}
 								placeholder="Ingresa tu nombre"
 							/>
-							<label>Direccion</label>
+							<label className="fw-bold">Direccion</label>
 							<input
 								type="text"
 								className="form-control"
@@ -83,7 +83,7 @@ export const RegisterProyectForm = ({
 								onChange={(e) => setAddress(e.target.value)}
 								placeholder="Ingresa tu rut"
 							/>
-							<label>Tamaño Mt2</label>
+							<label className="fw-bold">Tamaño Mt2</label>
 							<input
 								type="number"
 								className="form-control"
@@ -92,7 +92,7 @@ export const RegisterProyectForm = ({
 								onChange={(e) => setSize(e.target.value)}
 								placeholder="Ingrese los Mt2"
 							/>
-							<label>Tipo de Venta</label>
+							<label className="fw-bold">Tipo de Venta</label>
 							<input
 								type="text"
 								className="form-control"
@@ -101,7 +101,7 @@ export const RegisterProyectForm = ({
 								onChange={(e) => setSale_type(e.target.value)}
 								placeholder="Ingresa el tipo de venta"
 							/>
-							<label>Numero de Baños:</label>
+							<label className="fw-bold">Numero de Baños:</label>
 							<input
 								type="number"
 								className="form-control"
@@ -110,7 +110,7 @@ export const RegisterProyectForm = ({
 								onChange={(e) => setBathrooms(e.target.value)}
 								placeholder="Cantidad de Baños"
 							/>
-							<label>Ventajas</label>
+							<label className="fw-bold">Ventajas</label>
 							<input
 								type="text"
 								className="form-control"
@@ -119,7 +119,7 @@ export const RegisterProyectForm = ({
 								onChange={(e) => setPerks(e.target.value)}
 								placeholder="Que Ventajas ofrece?"
 							/>
-							<label>Numero de Habitaciones</label>
+							<label className="fw-bold">Numero de Habitaciones</label>
 							<input
 								type="number"
 								className="form-control"
@@ -141,7 +141,7 @@ export const RegisterProyectForm = ({
 					{/* de aqui para abajo, la columna derecha del fromulairo centrado */}
 					<div className="col-6">
 						<div className="form-group">
-							<label>Monto de Reserva</label>
+							<label className="fw-bold">Monto de Reserva</label>
 							<input
 								type="number"
 								className="form-control"
@@ -150,7 +150,7 @@ export const RegisterProyectForm = ({
 								onChange={(e) => setMonto_reserva(e.target.value)}
 								placeholder="Ingresa el Monto"
 							/>
-							<label>Bono Pie</label>
+							<label className="fw-bold">Bono Pie</label>
 							<input
 								type="number"
 								className="form-control"
@@ -159,7 +159,7 @@ export const RegisterProyectForm = ({
 								onChange={(e) => setBono_pie(e.target.value)}
 								placeholder="Ingrese si cuenta con un bono"
 							/>
-							<label>Numero de Estacionamientos</label>
+							<label className="fw-bold">Numero de Estacionamientos</label>
 							<input
 								type="number"
 								className="form-control"
@@ -168,7 +168,7 @@ export const RegisterProyectForm = ({
 								onChange={(e) => setParking_spots(e.target.value)}
 								placeholder="Ingrese el numero de estacionamientos"
 							/>
-							<label>Bodega</label>
+							<label className="fw-bold">Bodega</label>
 							<input
 								type="text"
 								className="form-control"
@@ -177,7 +177,7 @@ export const RegisterProyectForm = ({
 								onChange={(e) => setBodega(e.target.value)}
 								placeholder="Cuenta con Bodega?"
 							/>
-							<label>Precio</label>
+							<label className="fw-bold">Precio</label>
 							<input
 								type="number"
 								className="form-control"
@@ -186,7 +186,7 @@ export const RegisterProyectForm = ({
 								onChange={(e) => setTotal_price(e.target.value)}
 								placeholder="Ingresa tu email"
 							/>
-							<label>Descripcion</label>
+							<label className="fw-bold">Descripcion</label>
 							<input
 								type="text"
 								className="form-control"
@@ -195,7 +195,7 @@ export const RegisterProyectForm = ({
 								onChange={(e) => setBody(e.target.value)}
 								placeholder="Ingrese una descripcion"
 							/>
-							<label>Renta minima</label>
+							<label className="fw-bold">Renta minima</label>
 							<input
 								type="number"
 								className="form-control"
@@ -204,7 +204,7 @@ export const RegisterProyectForm = ({
 								onChange={(e) => setMinimumValue(e.target.value)}
 								placeholder="Ingrese la renta minima requerida"
 							/>
-							<label>Foto</label>
+							<label className="fw-bold">Foto</label>
 							<input
 								type="file"
 								onChange={(e) => setPictures(e.target.files[0])}
