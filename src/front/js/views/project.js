@@ -185,6 +185,14 @@ export const Project = () => {
 				<h4>Equipamiento</h4>
 				<p>{proyecto.perks}</p>
 			</div>
+
+			<div className="container p-0 mt-4 d-flex justify-content-center">
+				<Link to={"/user_home"}>
+					<button type="button" className="btn btn-primary mb-4">
+						Volver
+					</button>
+				</Link>
+    		</div>
 		</div>
 	);
 };

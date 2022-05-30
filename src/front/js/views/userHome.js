@@ -8,13 +8,14 @@ export const UserHome = () => {
 			<div className="row">
 				<div className="col-12">
 					<Link to="/user_projects">
-						<button type="button" className="btn btn-primary">
+						<button type="button" className="btn btn-primary mb-3 mt-3">
 							Ver Postulaciones
 						</button>
 					</Link>
 				</div>
 			</div>
 			<UserHomeList />
+			
 		</div>
 	);
 };
