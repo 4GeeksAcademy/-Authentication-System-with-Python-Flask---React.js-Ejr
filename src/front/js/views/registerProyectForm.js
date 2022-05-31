@@ -92,7 +92,7 @@ export const RegisterProyectForm = ({
 								onChange={(e) => setSize(e.target.value)}
 								placeholder="Ingrese los Mt2"
 							/>
-							<label className="fw-bold">Tipo de Venta</label>
+							<label className="fw-bold">Tipo de Venta (Verde o Blanco)</label>
 							<input
 								type="text"
 								className="form-control"
@@ -141,7 +141,7 @@ export const RegisterProyectForm = ({
 					{/* de aqui para abajo, la columna derecha del fromulairo centrado */}
 					<div className="col-6">
 						<div className="form-group">
-							<label className="fw-bold">Monto de Reserva</label>
+							<label className="fw-bold">Monto de Reserva </label>
 							<input
 								type="number"
 								className="form-control"
@@ -150,7 +150,7 @@ export const RegisterProyectForm = ({
 								onChange={(e) => setMonto_reserva(e.target.value)}
 								placeholder="Ingresa el Monto"
 							/>
-							<label className="fw-bold">Bono Pie</label>
+							<label className="fw-bold">Bono Pie (%)</label>
 							<input
 								type="number"
 								className="form-control"
@@ -177,7 +177,7 @@ export const RegisterProyectForm = ({
 								onChange={(e) => setBodega(e.target.value)}
 								placeholder="Cuenta con Bodega?"
 							/>
-							<label className="fw-bold">Precio</label>
+							<label className="fw-bold">Precio (en UF)</label>
 							<input
 								type="number"
 								className="form-control"

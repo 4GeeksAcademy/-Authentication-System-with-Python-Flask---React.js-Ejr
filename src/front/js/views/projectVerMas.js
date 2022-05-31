@@ -49,6 +49,10 @@ export const ProjectVerMas = () => {
 
 	const handlePostulacion = (postulacion) => {
 		actions.deletePostulacion(postulacion.id);
+		Swal.fire(
+			'¡Bien Hecho!',
+			'¡La postulacion ha sido borrada!',
+			'success')
 	};
 
 	return (

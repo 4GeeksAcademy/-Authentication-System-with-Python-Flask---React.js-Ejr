@@ -67,7 +67,7 @@ export const Project = () => {
 	} 
 
 	return (
-		<div className="container mt-4 p-0">
+		<div className="animate__animated animate__fadeIn container mt-4 p-0 ">
 			<h2>{proyecto.address}</h2>
 			<div className="row">
 				<div className="col-12 col-lg-8 p-0">

@@ -59,16 +59,16 @@ export const UserProjects = () => {
             <h5 className="card-title">{store.userPostulaciones[index].projects?.title}</h5>
             <p className="card-text">Desde {store.userPostulaciones[index].projects?.size} m2</p>
             <p className="card-text">Desde {store.userPostulaciones[index].projects?.minimum_value} UF</p>
-            <p className="card-text">Habitaciones desde: {store.userPostulaciones[index].projects?.rooms}</p>
-            <p className="card-text">Baños desde {store.userPostulaciones[index].projects?.bathrooms}</p>
+            
+            <p className="card-text text-warning">Estado: {store.userPostulaciones[index].status}</p>
             <Link to={`/project/${store.userPostulaciones[index].projects?.id}`}>
                 <button type="button" className="btn btn-primary">
                     Ir al Proyecto
                 </button>
             </Link>
-            <button type="button mx-auto" className="btn btn-primary" onClick={()=>deletePostulacion(postulacion)}>
+            {/* <button type="button mx-auto" className="btn btn-primary" onClick={()=>deletePostulacion(postulacion)}>
 					    Eliminar
-				    </button>
+				    </button> */}
           </div>
         </div>
       </div>

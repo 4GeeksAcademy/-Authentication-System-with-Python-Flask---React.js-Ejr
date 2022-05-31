@@ -1,5 +1,6 @@
-body {
+body{
     background-image: url("https://static.vecteezy.com/system/resources/previews/005/178/927/original/abstract-white-and-light-gray-wave-modern-soft-luxury-texture-with-smooth-and-clean-subtle-background-illustration-eps-10-free-vector.jpg");
+    background-color: black;
 }
 
 
@@ -17,4 +18,7 @@ nav{
 }
 .card{
     margin: 10px;
+}
+.card-img-top{
+    height: 300px;
 }
