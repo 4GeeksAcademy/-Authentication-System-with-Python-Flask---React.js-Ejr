@@ -1,7 +1,29 @@
-/*
-    home.css: This website contains selectors only used in home.css
+.mb-3 {
+  font-weight: 900;
+  margin-top: 45px;
+}
 
-    All pages share the styles on index.css but you should create 
-    one more css for each page that will contain the selected used 
-    on that page only (the ones not reused in other pages).
-*/
+.p-5 {
+  color: #ffffff;
+  height: 800px;
+}
+
+.footer {
+  text-align: center;
+}
+
+img {
+  border-radius: 15%;
+}
+
+.card {
+  border-color: #ffffff;
+}
+
+.sectores {
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 400;
+  text-align: center;
+  font-size: 18px;
+  margin-top: 10px;
+}
