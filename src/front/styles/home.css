@@ -5,3 +5,97 @@
     one more css for each page that will contain the selected used 
     on that page only (the ones not reused in other pages).
 */
+body{
+  max-width: 1440px;
+  max-height: 500px;
+}
+.img-home1 {
+    max-height: 350px;
+    border-radius: 5px 65px;
+    box-sizing: border-box;
+    margin: 0px 12% 15px 12%;
+  
+  }
+  .card1{
+    border-color: white;
+    text-align: center;
+  }
+  
+  .img-home2 {
+    max-height: 350px;
+    border-radius: 65px 5px;
+    box-sizing: border-box;
+    float: left;
+    margin: 0px 12% 15px 12%;
+  
+  
+  }
+  
+  
+  .col-sm-3{
+    text-align: center;
+  }
+  
+  
+  .img-title1 {
+    font-size: 100%;
+    
+    
+  }
+  .img-title2{
+    font-size: 100%;
+  
+    
+  }
+  
+  
+  #Login-us {
+    padding-left: 50px;
+    border-color: lightgrey;
+    border-radius: 10px;
+    max-width: 650px;
+    
+  }
+  #modal-login{
+    min-width: 700px;
+    border-radius: 10px;
+    
+  }
+  
+  
+  
+  .modal-header{
+    background-size: 100%;
+    min-height: 100px;
+    justify-content: center;
+    align-content: center;
+  }
+  
+  #box1 {
+    margin: 0;
+    padding: 20px;
+  }
+  #Title-h4 {
+    padding-bottom: 10px;
+    text-align: center;
+  }
+  
+  
+  #Reg{
+    margin-top: 50px;
+    max-width: 1000px;
+    
+    
+  }
+  /* ---------Vista del influencer privado style: ------------- */
+  .img-V-I{
+    width: 1000px;
+    height: 350px;
+    left: 0px;
+    top: 70px;
+
+    background: url("https://media.istockphoto.com/photos/social-media-concept-picture-id1205703732?k=20&m=1205703732&s=612x612&w=0&h=RjnvKZW_InJ73SoPzQVA8qj5bcg6_0yBgPx_JUtrn2k=");
+  }
+  
+  
+  
