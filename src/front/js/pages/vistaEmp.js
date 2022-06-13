@@ -12,16 +12,16 @@ export const VistaEmp = () =>{
                 style={{
                 display: "flex",
                 justifyContent: "center",
-                alignContent: "center",
+                alignItems: "center",
                 borderRadius: "10px 80px",
                 minHeight: "500px",
                 }}
             >
                 <img
                 className="img2 rounded-circle"
-                style={{ maxWidth: "250px", height:"250px" }}
+                style={{ maxWidth: "300px", height:"300px" }}
                 src={
-                    "https://images.pexels.com/photos/3184430/pexels-photo-3184430.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                    "https://images.pexels.com/photos/6476587/pexels-photo-6476587.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
                 }
                
                 />

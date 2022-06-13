@@ -6,8 +6,8 @@
     on that page only (the ones not reused in other pages).
 */
 body{
-  max-width: 1440px;
-  max-height: 500px;
+  max-width: 100%;
+  max-height: 100%;
 }
 .img-home1 {
     max-height: 350px;
@@ -88,11 +88,11 @@ body{
     
     
   }
-  #imgPerfil{
+  /* #imgPerfil{
    
     background: url("https://media.istockphoto.com/photos/social-media-concept-picture-id1205703732?k=20&m=1205703732&s=612x612&w=0&h=RjnvKZW_InJ73SoPzQVA8qj5bcg6_0yBgPx_JUtrn2k=") ;
     background-size: cover;
-  }
+  } */
   #imgPerfil2{
    
     background: url("https://images.pexels.com/photos/1269968/pexels-photo-1269968.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1") ;
