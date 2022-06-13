@@ -9,6 +9,8 @@ import injectContext from "./store/appContext";
 
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
+import { FormInfluencers } from "./component/formulario-influencers";
+import { FormEmpresas } from "./component/formulario-empresas";
 
 //create your first component
 const Layout = () => {
@@ -24,6 +26,12 @@ const Layout = () => {
 					<Switch>
 						<Route exact path="/">
 							<Home />
+						</Route>
+						<Route exact path="/formulario-influencers">
+							<FormInfluencers />
+						</Route>
+						<Route exact path="/formulario-empresas">
+							<FormEmpresas />
 						</Route>
 						<Route exact path="/demo">
 							<Demo />
