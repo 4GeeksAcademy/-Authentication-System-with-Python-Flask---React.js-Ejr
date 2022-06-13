@@ -2,8 +2,8 @@ import React from "react";
 
 export const Search = () => {
   return (
-    <div className="mask d-flex align-items-center h-100">
-      <div className="container">
+    <div className="mask d-flex align-items-center">
+      <div className="container-fluid">
         <div className="row">
           <div className="col-md-10 col-lg-8 col-xl-7 mx-auto">
             <div className="card mb-2">
@@ -24,7 +24,7 @@ export const Search = () => {
             </div>
             <div className="card bg-black">
               <div className="card-body p-4">
-                <h6 className="text-white mt-3 mb-4">Busqueda Avanzada</h6>
+                <h6 className="text-white">Busqueda Avanzada</h6>
                 <div className="row">
                   <div className="col-md-4 mb-3">
                     <div class="dropdown">
@@ -35,7 +35,7 @@ export const Search = () => {
                         data-bs-toggle="dropdown"
                         aria-expanded="false"
                       >
-                        Dropdown button
+                        Sectores
                       </button>
                       <ul
                         class="dropdown-menu"
@@ -43,17 +43,22 @@ export const Search = () => {
                       >
                         <li>
                           <a class="dropdown-item" href="#">
-                            Action
+                            Moda
                           </a>
                         </li>
                         <li>
                           <a class="dropdown-item" href="#">
-                            Another action
+                            Mamá y Premamá
                           </a>
                         </li>
                         <li>
                           <a class="dropdown-item" href="#">
-                            Something else here
+                            Fitness y Salud
+                          </a>
+                        </li>
+                        <li>
+                          <a class="dropdown-item" href="#">
+                            Automoción
                           </a>
                         </li>
                       </ul>
@@ -61,16 +66,15 @@ export const Search = () => {
                   </div>
                   <div className="col-md-4 mb-3">
                     <div className="dropdown">
-                      <a
-                        className="btn btn-outline-light btn-lg btn-block dropdown-toggle"
-                        href="#"
-                        role="button"
-                        id="dropdownMenuLink1"
-                        data-mdb-toggle="dropdown"
+                    <button
+                        class="btn btn-secondary dropdown-toggle"
+                        type="button"
+                        id="dropdownMenuButton1"
+                        data-bs-toggle="dropdown"
                         aria-expanded="false"
                       >
                         Seguidores
-                      </a>
+                      </button>
                       <ul
                         className="dropdown-menu"
                         aria-labelledby="dropdownMenuLink1"
@@ -100,16 +104,15 @@ export const Search = () => {
                   </div>
                   <div className="col-md-4 mb-3">
                     <div className="dropdown">
-                      <a
-                        className="btn btn-outline-light btn-lg btn-block dropdown-toggle"
-                        href="#"
-                        role="button"
-                        id="dropdownMenuLink2"
-                        data-mdb-toggle="dropdown"
+                    <button
+                        class="btn btn-secondary dropdown-toggle"
+                        type="button"
+                        id="dropdownMenuButton1"
+                        data-bs-toggle="dropdown"
                         aria-expanded="false"
                       >
                         Ubicación
-                      </a>
+                      </button>
                       <ul
                         className="dropdown-menu"
                         aria-labelledby="dropdownMenuLink2"
