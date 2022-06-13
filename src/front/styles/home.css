@@ -78,6 +78,7 @@ body{
   #Title-h4 {
     padding-bottom: 10px;
     text-align: center;
+    
   }
   
   
@@ -87,15 +88,18 @@ body{
     
     
   }
-  /* ---------Vista del influencer privado style: ------------- */
-  .img-V-I{
-    width: 1000px;
-    height: 350px;
-    left: 0px;
-    top: 70px;
-
-    background: url("https://media.istockphoto.com/photos/social-media-concept-picture-id1205703732?k=20&m=1205703732&s=612x612&w=0&h=RjnvKZW_InJ73SoPzQVA8qj5bcg6_0yBgPx_JUtrn2k=");
+  #imgPerfil{
+   
+    background: url("https://media.istockphoto.com/photos/social-media-concept-picture-id1205703732?k=20&m=1205703732&s=612x612&w=0&h=RjnvKZW_InJ73SoPzQVA8qj5bcg6_0yBgPx_JUtrn2k=") ;
+    background-size: cover;
   }
+  #imgPerfil2{
+   
+    background: url("https://images.pexels.com/photos/1269968/pexels-photo-1269968.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1") ;
+    background-size: cover;
+  }
+  /* ---------Vista del influencer privado style: ------------- */
+ 
   
   
   
