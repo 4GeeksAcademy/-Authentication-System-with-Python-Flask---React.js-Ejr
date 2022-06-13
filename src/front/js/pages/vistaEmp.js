@@ -26,6 +26,42 @@ export const VistaEmp = () =>{
                
                 />
             </div>
+            <br></br>
+            <br></br>
+
+            <div className="headerVI" style={{ position: "relative" }}>
+                <h1
+                className="title1 text-center"
+                style={{ color: "rgba(59, 102, 197, 0.952)" }}
+                >
+                Nombre de Empresa
+                </h1>
+                <h3 className="title2 text-center">SECTOR AL QUE PERTENECE</h3>
+                <h5 className="textoBreve1 text-center" style={{ opacity: "40%" }}>
+                Eslogan
+                </h5>
+                <br></br>
+                <h5 className="textobreve2 text-center " style={{ opacity: "40%" }}>
+                Breve descripción sobre el influencer, escrito por él mismo, puede
+                introducir actitudes, aptitudes y logros.
+                </h5>
+                <h5 className="textobreve2 text-center " style={{ opacity: "40%" }}>
+                Ubicación .... Provincia, ciudad             </h5>
+            </div>
+            <br></br>
+            <br></br>
+            <div
+                className="publicaciones"
+                style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                }}
+            >
+                <h2>INFLUENCERS FAVORITOS</h2>
+            </div>
+            <br></br>
+            <br></br>
 
 
 
