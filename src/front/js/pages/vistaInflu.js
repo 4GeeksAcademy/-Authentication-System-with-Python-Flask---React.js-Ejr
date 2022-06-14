@@ -3,6 +3,7 @@ import { Context } from "../store/appContext";
 import rigoImageUrl from "../../img/rigo-baby.jpg";
 import "../../styles/home.css";
 import InstagramEmbed from "react-instagram-embed";
+import { ImgInflu } from "../component/imgInflu";
 
 export const VistaInflu = () => {
     return (
@@ -56,7 +57,7 @@ export const VistaInflu = () => {
                         Seguir
                     </button>
                 </div>
-                {/* ------------------------ */}
+                {/* --------DOBLE ESPACIO----------------- */}
                 <br></br>
                 <br></br>
                 {/* ------------------------ */}
@@ -64,111 +65,122 @@ export const VistaInflu = () => {
                     <h5 className="title2 text-center">PUBLICACIONES</h5>
 
                 </div>
-                {/* ------------------------ */}
+                {/* ---------DOBLE ESPACIO---------------- */}
                 <br></br>
                 <br></br>
                 {/* ------------------------ */}
-                <div className="row container">
+                <div className="row container" >
+                    <ImgInflu/>
 
                     AGREGAR LISTA O IMÁGENES DE PERFIL DE USUARIOS INFLUENCERS
 
                 </div>
+                {/* ------DOBLE ESPACIO------------------ */}
+                <br></br>
+                <br></br>
+                {/* ------------------------ */}
+                <div className="row container " style={{ background: "#708fda", borderRadius: "10px 80px", paddingTop: "5px", color: "white", maxWidth: "1000px" }}>
+                    <h5 className="title2 text-center">ÚLTIMAS COLABORACIONES</h5>
 
-
-
-            </div>
-            {/* ------------------------ */}
-            <br></br>
-            <br></br>
-            {/* ------------------------ */}
-
-
-            {/* --------------------------Primer POST------------------------------------------------------ */}
-            {/* <img src="..." className="d-block w-100" alt="..." /> */}
-            <div className="row" style={{ maxHeight: "850px" }}>
-                <div
-                    className="card"
-                // style={{ width: "18rem", margin: "10px 40px 10px 10px" }}
-                >
-                    <InstagramEmbed
-                        url="https://www.instagram.com/p/CelMWgKNM-T/?utm_source=ig_embed&amp%3Butm_campaign=loading"
-                        clientAccessToken="123|456"
-                        maxWidth={450}
-                        hideCaption={false}
-                        containerTagName="div"
-                        protocol=""
-                        injectScript
-                        onLoading={() => { }}
-                        onSuccess={() => { }}
-                        onAfterRender={() => { }}
-                        onFailure={() => { }}
-                    />
                 </div>
-                {/* ------------------------SEGUNDO POST DE LA PRIMERA CARA DEL CARRUSEL---------------------------- */}
-                <div
-                    className=""
-                // style={{ width: "18rem", margin: "10px 40px 10px 10px" }}
-                >
-                    <InstagramEmbed
-                        url="https://www.instagram.com/p/Cd21f4tgO_u/"
-                        clientAccessToken="123|456"
-                        maxWidth={450}
-                        hideCaption={false}
-                        containerTagName="div"
-                        protocol=""
-                        injectScript
-                        onLoading={() => { }}
-                        onSuccess={() => { }}
-                        onAfterRender={() => { }}
-                        onFailure={() => { }}
-                    />
-                </div>
-                {/* ------------tercer post del 1º cara del carrusel--------------------------------------------------------------------------- */}
-                <div
-                    className=""
-                // style={{ width: "18rem", margin: "10px 40px 10px 10px" }}
-                >
-                    <InstagramEmbed
-                        url="https://www.instagram.com/p/CeilXtetxx2/"
-                        clientAccessToken="123|456"
-                        maxWidth={450}
-                        hideCaption={false}
-                        containerTagName="div"
-                        protocol=""
-                        injectScript
-                        onLoading={() => { }}
-                        onSuccess={() => { }}
-                        onAfterRender={() => { }}
-                        onFailure={() => { }}
-                    />
+                {/* --------------------------Primer POST------------------------------------------------------ */}
+                {/* <img src="..." className="d-block w-100" alt="..." /> */}
+                <div className="row" style={{ maxHeight: "850px" }}>
+                    <div
+                        className="card"
+                    // style={{ width: "18rem", margin: "10px 40px 10px 10px" }}
+                    >
+                        <InstagramEmbed
+                            url="https://www.instagram.com/p/CelMWgKNM-T/?utm_source=ig_embed&amp%3Butm_campaign=loading"
+                            clientAccessToken="123|456"
+                            maxWidth={450}
+                            hideCaption={false}
+                            containerTagName="div"
+                            protocol=""
+                            injectScript
+                            onLoading={() => { }}
+                            onSuccess={() => { }}
+                            onAfterRender={() => { }}
+                            onFailure={() => { }}
+                        />
+                    </div>
+                    {/* ------------------------SEGUNDO POST DE LA PRIMERA CARA DEL CARRUSEL---------------------------- */}
+                    <div
+                        className=""
+                    // style={{ width: "18rem", margin: "10px 40px 10px 10px" }}
+                    >
+                        <InstagramEmbed
+                            url="https://www.instagram.com/p/Cd21f4tgO_u/"
+                            clientAccessToken="123|456"
+                            maxWidth={450}
+                            hideCaption={false}
+                            containerTagName="div"
+                            protocol=""
+                            injectScript
+                            onLoading={() => { }}
+                            onSuccess={() => { }}
+                            onAfterRender={() => { }}
+                            onFailure={() => { }}
+                        />
+                    </div>
+                    {/* ------------tercer post del 1º cara del carrusel--------------------------------------------------------------------------- */}
+                    <div
+                        className=""
+                    // style={{ width: "18rem", margin: "10px 40px 10px 10px" }}
+                    >
+                        <InstagramEmbed
+                            url="https://www.instagram.com/p/CeilXtetxx2/"
+                            clientAccessToken="123|456"
+                            maxWidth={450}
+                            hideCaption={false}
+                            containerTagName="div"
+                            protocol=""
+                            injectScript
+                            onLoading={() => { }}
+                            onSuccess={() => { }}
+                            onAfterRender={() => { }}
+                            onFailure={() => { }}
+                        />
+                    </div>
+
+                    {/* ------------------------------------------------------------------------------------ */}
+                    {/* ----------------cuarto post ---------------------------------------------------------- */}
+                    <div
+                        className=""
+                    // style={{ width: "18rem", margin: "10px 40px 10px 10px" }}
+                    >
+                        <InstagramEmbed
+                            url="https://www.instagram.com/p/CeilXtetxx2/"
+                            clientAccessToken="123|456"
+                            maxWidth={450}
+                            hideCaption={false}
+                            containerTagName="div"
+                            protocol=""
+                            injectScript
+                            onLoading={() => { }}
+                            onSuccess={() => { }}
+                            onAfterRender={() => { }}
+                            onFailure={() => { }}
+                        />
+
+
+
+                    </div>
                 </div>
 
                 {/* ------------------------------------------------------------------------------------ */}
-                {/* ----------------cuarto post ---------------------------------------------------------- */}
-                <div
-                    className=""
-                // style={{ width: "18rem", margin: "10px 40px 10px 10px" }}
-                >
-                    <InstagramEmbed
-                        url="https://www.instagram.com/p/CeilXtetxx2/"
-                        clientAccessToken="123|456"
-                        maxWidth={450}
-                        hideCaption={false}
-                        containerTagName="div"
-                        protocol=""
-                        injectScript
-                        onLoading={() => { }}
-                        onSuccess={() => { }}
-                        onAfterRender={() => { }}
-                        onFailure={() => { }}
-                    />
 
 
 
-                </div>
-            </div>
 
-            {/* ------------------------------------------------------------------------------------ */}
+
+
+
+            </div>     {/* -------------------DIV DEL CONTAINER-------------------------------------------- */}
+
+
+
+
 
         </div>
     );
