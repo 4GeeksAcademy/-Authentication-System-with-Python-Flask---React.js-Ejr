@@ -6,7 +6,7 @@ import "../../styles/home.css";
 export const VistaEmp = () => {
     return <>
         <div className="container- fluid">
-            <div className="headerEmp container border" id="imgPerfil" style={{ display: "flex", justifyContent: "center", alignItems: "center", borderRadius: "10px 80px" }}>
+            <div className="headerEmp container border" id="imgPerfil" style={{ display: "flex", justifyContent: "center", alignItems: "center", borderRadius: "10px 80px"}}>
             </div>
             {/* ------------------------ */}
             <br></br>
@@ -14,7 +14,7 @@ export const VistaEmp = () => {
             {/* ------------------------ */}
             <div className="container" style={{ maxWidth: "1000px" }}>
                 <div className="row container">
-                    <div className="col-md-6" style = {{paddingLeft: "15px",  textAlign: "right"}}>
+                    <div className="col-md-7" style={{ paddingLeft: "15px", textAlign: "right" }}>
                         <h2
                             className="title1"
                             style={{ color: "rgba(59, 102, 197, 0.952)" }}
@@ -30,54 +30,38 @@ export const VistaEmp = () => {
                         </h7>
                         <br></br>
                         <br></br>
-                        <h5 className="textobreve2 " style={{ opacity: "40%", maxWidth: "100%",  }}>
+                        <h6 className="textobreve2 " style={{ opacity: "40%", maxWidth: "100%", }}>
                             Breve descripción sobre la empresa, escrito por ella misma, puede
                             introducir actitudes, aptitudes y logros.
-                        </h5>
+                        </h6>
 
                     </div>
-                    <div className="col-md-6" style={{ display: "flex", justifyContent: "center", alignContent: "center" }}>
+                    <div className="col-md-5" style={{ display: "flex", justifyContent: "center", alignContent: "center" }}>
                         <img src={"https://cdn-icons-png.flaticon.com/512/1087/1087815.png"} style={{ maxWidth: "180px", opacity: "80%", transform: "revert" }} />
                     </div>
 
-
                 </div>
+                {/* ------------------------ */}
                 <br></br>
                 <br></br>
-                <div className="row container " style={{background: "#708fda", borderRadius: "10px 80px", paddingTop: "5px", color: "white"}}>
+                {/* ------------------------ */}
+                <div className="row container " style={{ background: "#708fda", borderRadius: "10px 80px", paddingTop: "5px", color: "white" }}>
                     <h5 className="title2 text-center">INFLUENCERS FAVORITOS</h5>
 
                 </div>
+                {/* ------------------------ */}
                 <br></br>
                 <br></br>
+                {/* ------------------------ */}
                 <div className="row container">
 
-                        AGREGAR LISTA O IMÁGENES DE PERFIL DE USUARIOS INFLUENCERS
+                    AGREGAR LISTA O IMÁGENES DE PERFIL DE USUARIOS INFLUENCERS
 
                 </div>
 
 
 
             </div>
-
-
-
-
-            {/* <div className="headerEmp" style={{ maxWidth: "1440px", border: "1px solid lightgrey", borderRadius: "10px 80px" }}>
-
-             
-                <div className="col-8" >
-                    <div className="headerVI" style={{ position: "relative", marginTop: "100px" }}>
-                       
-                        
-                    </div>
-                    <br></br>
-                    <br></br>
-
-
-
-                </div>
-            </div> */}
 
         </div>
 
