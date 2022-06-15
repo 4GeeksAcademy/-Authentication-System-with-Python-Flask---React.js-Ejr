@@ -119,3 +119,13 @@ img {
 .hover:hover {
   color: #156fd0;
 }
+
+.text-white {
+  text-decoration: none;
+  color: white;
+}
+
+.text-white:hover {
+  color: #ffffff;
+  text-decoration: none;
+}
