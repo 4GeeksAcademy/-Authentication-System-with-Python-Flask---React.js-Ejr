@@ -13,7 +13,7 @@ export const Home = () => {
   const { store, actions } = useContext(Context);
 
   return (
-    <div className="mt-5">
+    <div>
       <Header />
       <Howitworks />
       <Sectores />

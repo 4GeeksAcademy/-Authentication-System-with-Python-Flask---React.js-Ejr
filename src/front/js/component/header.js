@@ -9,7 +9,7 @@ export const Header = () => {
         backgroundImage: `url("https://i.ibb.co/7Gn7ZNs/Disen-o-sin-ti-tulo-1.png")`,
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
-        height: "auto",
+        height: "500px",
         width: "100%",
       }}
     >

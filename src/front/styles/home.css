@@ -1,8 +1,92 @@
 .titulo1 {
   font-weight: 900;
+  font-size: 70px;
+  margin-top: 100px;
 }
 
-.header {
+body {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.img-home1 {
+  max-height: 350px;
+  border-radius: 5px 65px;
+  box-sizing: border-box;
+  margin: 0px 12% 15px 12%;
+}
+.card1 {
+  border-color: white;
+  text-align: center;
+}
+
+.img-home2 {
+  max-height: 350px;
+  border-radius: 65px 5px;
+  box-sizing: border-box;
+  float: left;
+  margin: 0px 12% 15px 12%;
+}
+
+.col-sm-3 {
+  text-align: center;
+}
+
+.img-title1 {
+  font-size: 100%;
+}
+.img-title2 {
+  font-size: 100%;
+}
+
+#Login-us {
+  padding-left: 50px;
+  border-color: lightgrey;
+  border-radius: 10px;
+  max-width: 650px;
+}
+#modal-login {
+  min-width: 700px;
+  border-radius: 10px;
+}
+
+.modal-header {
+  background-size: 100%;
+  min-height: 100px;
+  justify-content: center;
+  align-content: center;
+}
+
+#box1 {
+  margin: 0;
+  padding: 20px;
+}
+#Title-h4 {
+  padding-bottom: 10px;
+  text-align: center;
+}
+
+#Reg {
+  margin-top: 50px;
+  max-width: 1000px;
+}
+#imgPerfil {
+  background: url("https://images.pexels.com/photos/3184292/pexels-photo-3184292.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  height: 300px;
+  width: 1000px;
+  opacity: 80%;
+}
+#imgPerfil2 {
+  background: url("https://media.istockphoto.com/photos/social-media-concept-picture-id1205703732?k=20&m=1205703732&s=612x612&w=0&h=RjnvKZW_InJ73SoPzQVA8qj5bcg6_0yBgPx_JUtrn2k=");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  height: 300px;
+  width: 1000px;
+  opacity: 80%;
+}
+.p-5 {
   color: #ffffff;
   height: 800px;
 }
@@ -25,4 +109,13 @@ img {
   text-align: center;
   font-size: 18px;
   margin-top: 10px;
+}
+
+.hover {
+  text-decoration: none;
+  color: black;
+}
+
+.hover:hover {
+  color: #156fd0;
 }
