@@ -14,21 +14,6 @@ export const Navbar = () => {
             />
           </span>
         </Link>
-
-        <div className="ml-auto">
-          <span className="navbar-item mx-2 text-white">Influencers</span>
-          <span className="navbar-item mx-3 text-white">Registrate</span>
-          <button className="btn btn-primary">Iniciar Sesión</button>
-        </div>
-      </div>
-    </nav>
-  );
-  return (
-    <nav className="navbar navbar-light bg-dark">
-      <div className="container-fluid mx-5">
-        <Link to="/">
-          <span className="navbar-brand mb-0 h1 text-white">Influĕre</span>
-        </Link>
         <div className="ml-auto">
           <Link to="/Directorio">
             <span className="navbar-item mx-2 text-white">Influencers</span>
