@@ -2,6 +2,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
 			message: null,
+			posts: [],
 			demo: [
 				{
 					title: "FIRST",
@@ -17,6 +18,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
+			agregar: (url)=>{
+				const store = getStore();
+				setStore({ posts: [...store.posts, url] });
+			},
+
+
 			exampleFunction: () => {
 				getActions().changeColor(0, "green");
 			},

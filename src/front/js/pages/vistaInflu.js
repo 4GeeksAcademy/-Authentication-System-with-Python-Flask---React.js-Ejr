@@ -1,23 +1,25 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Context } from "../store/appContext";
 import rigoImageUrl from "../../img/rigo-baby.jpg";
 import "../../styles/home.css";
-import InstagramEmbed from "react-instagram-embed";
-import { ImgInflu } from "../component/imgInflu";
+import { IframeInstagram } from "../component/iFrameInsta";
 
 export const VistaInflu = () => {
+    const { store, actions } = useContext(Context);
+    const [url, setUrl] = useState("");
+
     return (
         <div className="container" >
-            <div className="headerInflu container " id="imgPerfil2" style={{ display: "flex", justifyContent: "center", alignItems: "center", borderRadius: "10px 80px" }}></div>
+            <div className="headerInflu container-fluid " id="imgPerfil2" style={{ display: "flex", justifyContent: "center", alignItems: "center", borderRadius: "10px 80px" }}></div>
             {/* ------------------------ */}
             <br></br>
             {/* ------------------------ */}
-            <div className="container" style={{ maxWidth: "1000px" }}>
+            <div className="container" style={{ maxWidth: "100%" }}>
                 <div className="row container">
                     <div className="col-md-7" style={{ paddingLeft: "15px", textAlign: "right" }}>
                         <h2
                             className="title1"
-                            style={{ color: "rgba(59, 102, 197, 0.952)" }}
+                            style={{ color: "#458fff" }}
                         >
                             Nombre del Usuario
                         </h2>
@@ -39,10 +41,7 @@ export const VistaInflu = () => {
                     <div className="col-md-5 rounded-circle " style={{ display: "flex", justifyContent: "center", alignContent: "center" }}>
                         <img src={"https://modernadepueblo.com/wp-content/uploads/2019/05/Protas-01-1024x1024.png"} style={{ maxWidth: "300px", opacity: "80%", transform: "revert" }} />
                     </div>
-
-
                 </div>
-
                 <div
                     style={{
                         display: "flex",
@@ -61,122 +60,43 @@ export const VistaInflu = () => {
                 <br></br>
                 <br></br>
                 {/* ------------------------ */}
-                <div className="row container " style={{ background: "#708fda", borderRadius: "10px 80px", paddingTop: "5px", color: "white" }}>
+                <div className="row container " style={{ background: "#458fff", borderRadius: "10px 80px", paddingTop: "5px", color: "white" }}>
                     <h5 className="title2 text-center">PUBLICACIONES</h5>
 
                 </div>
-                {/* ---------DOBLE ESPACIO---------------- */}
-                <br></br>
-                <br></br>
-                {/* ------------------------ */}
-                <div className="row container" >
-                    <ImgInflu/>
+                {/* ---------------AGREGAR UN POST NUEVO-------------------------------------------------------------------------- */}
 
-                    AGREGAR LISTA O IMÁGENES DE PERFIL DE USUARIOS INFLUENCERS
+                <div className="text-center mt-5">
+                    <h6 style={{ color: "#458fff" }}>Agrega un nuevo post:</h6>
+                    <input
+                        type={"text"}
+                        onChange={(e) => setUrl(e.target.value)}
+                        value={url}
+                    />
+                    <button type="button" class="btn-light" style={{ color: "#458fff" }}
+                        onClick={() => {
+                            actions.agregar(url);
+                            setUrl("");
+                        }}
+                    >
+                        Ok
+                    </button>
 
                 </div>
-                {/* ------DOBLE ESPACIO------------------ */}
-                <br></br>
-                <br></br>
-                {/* ------------------------ */}
-                <div className="row container " style={{ background: "#708fda", borderRadius: "10px 80px", paddingTop: "5px", color: "white", maxWidth: "1000px" }}>
-                    <h5 className="title2 text-center">ÚLTIMAS COLABORACIONES</h5>
+                {/* --------------------ESPACIO DONDE SE AGREGARÁN LOS POST --------------------------------------------------------*/}
 
-                </div>
-                {/* --------------------------Primer POST------------------------------------------------------ */}
-                {/* <img src="..." className="d-block w-100" alt="..." /> */}
-                <div className="row" style={{ maxHeight: "850px" }}>
-                    <div
-                        className="card"
-                    // style={{ width: "18rem", margin: "10px 40px 10px 10px" }}
-                    >
-                        <InstagramEmbed
-                            url="https://www.instagram.com/p/CelMWgKNM-T/?utm_source=ig_embed&amp%3Butm_campaign=loading"
-                            clientAccessToken="123|456"
-                            maxWidth={450}
-                            hideCaption={false}
-                            containerTagName="div"
-                            protocol=""
-                            injectScript
-                            onLoading={() => { }}
-                            onSuccess={() => { }}
-                            onAfterRender={() => { }}
-                            onFailure={() => { }}
-                        />
-                    </div>
-                    {/* ------------------------SEGUNDO POST DE LA PRIMERA CARA DEL CARRUSEL---------------------------- */}
-                    <div
-                        className=""
-                    // style={{ width: "18rem", margin: "10px 40px 10px 10px" }}
-                    >
-                        <InstagramEmbed
-                            url="https://www.instagram.com/p/Cd21f4tgO_u/"
-                            clientAccessToken="123|456"
-                            maxWidth={450}
-                            hideCaption={false}
-                            containerTagName="div"
-                            protocol=""
-                            injectScript
-                            onLoading={() => { }}
-                            onSuccess={() => { }}
-                            onAfterRender={() => { }}
-                            onFailure={() => { }}
-                        />
-                    </div>
-                    {/* ------------tercer post del 1º cara del carrusel--------------------------------------------------------------------------- */}
-                    <div
-                        className=""
-                    // style={{ width: "18rem", margin: "10px 40px 10px 10px" }}
-                    >
-                        <InstagramEmbed
-                            url="https://www.instagram.com/p/CeilXtetxx2/"
-                            clientAccessToken="123|456"
-                            maxWidth={450}
-                            hideCaption={false}
-                            containerTagName="div"
-                            protocol=""
-                            injectScript
-                            onLoading={() => { }}
-                            onSuccess={() => { }}
-                            onAfterRender={() => { }}
-                            onFailure={() => { }}
-                        />
-                    </div>
-
-                    {/* ------------------------------------------------------------------------------------ */}
-                    {/* ----------------cuarto post ---------------------------------------------------------- */}
-                    <div
-                        className=""
-                    // style={{ width: "18rem", margin: "10px 40px 10px 10px" }}
-                    >
-                        <InstagramEmbed
-                            url="https://www.instagram.com/p/CeilXtetxx2/"
-                            clientAccessToken="123|456"
-                            maxWidth={450}
-                            hideCaption={false}
-                            containerTagName="div"
-                            protocol=""
-                            injectScript
-                            onLoading={() => { }}
-                            onSuccess={() => { }}
-                            onAfterRender={() => { }}
-                            onFailure={() => { }}
-                        />
-
-
-
-                    </div>
+                <div className="row ">
+                    {store.posts?.map((e, i) => {
+                        return (
+                            <div key={i} className="col-4">
+                                <IframeInstagram url={e} />
+                            </div>
+                        );
+                    })}
                 </div>
 
-                {/* ------------------------------------------------------------------------------------ */}
 
-
-
-
-
-
-
-            </div>     {/* -------------------DIV DEL CONTAINER-------------------------------------------- */}
+            </div>
 
 
 
