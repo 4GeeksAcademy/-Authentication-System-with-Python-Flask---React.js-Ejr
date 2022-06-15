@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { Context } from "../store/appContext";
 import rigoImageUrl from "../../img/rigo-baby.jpg";
 import "../../styles/home.css";
-import InstagramEmbed from "react-instagram-embed";
+/*import InstagramEmbed from "react-instagram-embed";*/
 
 export const ImgInflu = (props) => {
     const {store, actions} = useContext(Context);

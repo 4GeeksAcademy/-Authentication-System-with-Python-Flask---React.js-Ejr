@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 export const Login = () => {
 
-  return <>
+  return <div>
 
 
     <div className="ml-auto">
@@ -88,11 +88,8 @@ export const Login = () => {
         </div>
       </div>
     </div>
+    </div>
 
-
-
-
-  </>
 
 
 }
