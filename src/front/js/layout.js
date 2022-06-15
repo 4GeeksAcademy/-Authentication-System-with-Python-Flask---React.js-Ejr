@@ -5,10 +5,15 @@ import ScrollToTop from "./component/scrollToTop";
 import { Home } from "./pages/home";
 import { Demo } from "./pages/demo";
 import { Single } from "./pages/single";
+import { VistaInflu } from "./pages/vistaInflu";
+import { ImgInflu } from "./component/imgInflu";
+import { VistaEmp } from "./pages/vistaEmp";
 import injectContext from "./store/appContext";
 
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
+import { FormInfluencers } from "./component/formulario-influencers";
+import { FormEmpresas } from "./component/formulario-empresas";
 import { Directorio } from "./pages/directorio";
 
 //create your first component
@@ -26,6 +31,12 @@ const Layout = () => {
 						<Route exact path="/">
 							<Home />
 						</Route>
+						<Route exact path="/formulario-influencers">
+							<FormInfluencers />
+						</Route>
+						<Route exact path="/formulario-empresas">
+							<FormEmpresas />
+						</Route>
 						<Route exact path="/demo">
 							<Demo />
 						</Route>
@@ -34,6 +45,16 @@ const Layout = () => {
 						</Route>
 						<Route exact path="/single/:theid">
 							<Single />
+						</Route>
+						<Route exact path="/vistaInflu">
+							<VistaInflu />
+						</Route>
+						<Route exact path="/imgInflu">
+							<ImgInflu />
+						</Route>
+
+						<Route exact path="/vistaEmp">
+							<VistaEmp />
 						</Route>
 						<Route>
 							<h1>Not found!</h1>
