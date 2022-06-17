@@ -3,6 +3,7 @@ import { Context } from "../store/appContext";
 import rigoImageUrl from "../../img/rigo-baby.jpg";
 import "../../styles/home.css";
 import { IframeInstagram } from "../component/iFrameInsta";
+import { ImgInflu } from "../component/imgInflu";
 
 export const VistaInflu = () => {
     const { store, actions } = useContext(Context);

@@ -21,7 +21,7 @@ export const Calltoaction = () => {
 
             <p className="lead text-white-50 px-lg-8 mb-6">
               Tú eliges el proyecto entre los más de 50.000 empresas registradas
-              en Influenciate. <br></br>Soporte continuo de nuestra comunidad de
+              en Influĕre. <br></br>Soporte continuo de nuestra comunidad de
               expertos
             </p>
             <br></br>
