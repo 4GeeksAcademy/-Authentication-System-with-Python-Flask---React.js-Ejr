@@ -1,12 +1,85 @@
+import { string } from "prop-types";
 import React, { Component, useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 
 
-
-export const FormInfluencers = () => {
-
+export const EditarInfluencer = () => {
+    const parametro = useParams()
     var allData = {}
     var finalData = {}
     const [igLinks, addLinks] = useState([]);
+    var getInfo = {}
+    useEffect(() => {
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+
+
+        fetch(`https://3001-jaygosling-influere-s5lmjehtutj.ws-eu47.gitpod.io/api/influencers/${parametro.id}`)
+            .then(function (response) {
+                return response.json()
+            })
+            .then(function (result) {
+
+                document.getElementById('email').value = result["email"];
+                document.getElementById('password').value = "";
+                document.getElementById('rep-password').value = "";
+                document.getElementById('apellidos').value = result["apellidos"];
+                document.getElementById('nombre').value = result["nombre"];
+                document.getElementById('pais').value = result["pais"];
+                document.getElementById('categoria').value = result["categoria"];
+                document.getElementById('ig-user').value = result["ig_user"];
+                document.getElementById('ciudad').value = result["ciudad"];
+                document.getElementById('bio').value = result["bio"];
+                document.getElementById('precio-reel').value = result["precio_reel"];
+                document.getElementById('precio-story').value = result["precio_story"];
+                document.getElementById('precio-post').value = result["precio_post"];
+
+                var links = []
+                if (result["post1"]) { links.push(result["post1"]) }
+                if (result["post2"]) { links.push(result["post2"]) }
+                if (result["post3"]) { links.push(result["post3"]) }
+                if (result["post4"]) { links.push(result["post4"]) }
+                if (result["post5"]) { links.push(result["post5"]) }
+                if (result["post6"]) { links.push(result["post6"]) }
+                addLinks(links)
+
+
+                return console.log(result)
+            })
+            .catch(error => console.log('error', error));
+
+
+
+
+
+    }, [])
+
+    function updateData() {
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+
+        var raw = JSON.stringify(finalData);
+
+        var requestOptions = {
+            method: 'PUT',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+        };
+
+        fetch(`https://3001-jaygosling-influere-s5lmjehtutj.ws-eu47.gitpod.io/api/influencers/${parametro.id}`, requestOptions)
+        .then(function (response) {
+            if (response.ok == true) {
+                alert("Usuario actualizado con éxito")
+            } else {
+
+                alert("Lo sentimos, no se ha podido crear el usuario. Por favor, contacta con nosotros.")
+            }
+            return response.text()
+        })
+        .then(result => console.log(result))
+        .catch(error => console.log('error', error));
+    }
 
     function sendData() {
         var myHeaders = new Headers();
@@ -74,7 +147,7 @@ export const FormInfluencers = () => {
                 allData.precio_story) {
                 finalData = allData
                 console.log(finalData)
-                sendData()
+                updateData()
             } else {
                 alert("Todos los campos son obligatorios")
             }
@@ -114,12 +187,8 @@ export const FormInfluencers = () => {
 
     return (
         <div className="container-fluid m-0 p-0">
-            <div className="container-fluid m-auto row" id="influencer-bg">
-                <div className="col-6"></div>
-                <div className="col-6 m-auto "><p className="h2 text-end">¡Enhorabuena!<br />Estás a un paso de que<br />empresas afines a tí<br />te encuentren</p></div>
-            </div>
             <div className="container-fluid pt-5">
-                <p className="h1 text-center my-5">Tus datos</p>
+                <p className="h1 text-center my-5">Editar datos</p>
                 <div className="container row d-flex justify-content-center text-end mx-auto mb-3">
                     <div className="col">
                         <div className="mb-3 row">
@@ -135,7 +204,7 @@ export const FormInfluencers = () => {
                             </div>
                         </div>
                         <div className="mb-3 row">
-                        <label for="categoria" className="col-sm-3 col-form-label">País</label>
+                            <label for="categoria" className="col-sm-3 col-form-label">Categoría</label>
                             <div className="col-sm-9">
                                 <select className="form-select" aria-label="Default select example" id="categoria" defaultValue="Selecciona">
                                     <option value="Moda y belleza">Moda y belleza</option>
@@ -153,7 +222,7 @@ export const FormInfluencers = () => {
                                     <option value="Actores y cantantes">Actores y cantantes</option>
                                     <option value="Mascotas">Mascotas</option>
                                     <option value="Family friendly">Family friendly</option>
-                                    <option value="Otro">Otro</option>                                  
+                                    <option value="Otro">Otro</option>
                                 </select>
                             </div>
                         </div>
@@ -433,9 +502,9 @@ export const FormInfluencers = () => {
                         <textarea className="form-control" id="bio" rows="3"></textarea>
                     </div>
                 </div>
-                    <p className="h1 text-center my-5">Tus precios</p>
+                <p className="h1 text-center my-5">Tus precios</p>
                 <div className="container-fluid row d-flex justify-content-center mx-auto">
-                                    <div className="col-3 d-flex ">
+                    <div className="col-3 d-flex ">
                         <label for="precio-post" className="col-sm-3 col-form-label text-end me-3">Post</label>
                         <div className="col-sm-3">
                             <input type="text" className="form-control" id="precio-post" />
