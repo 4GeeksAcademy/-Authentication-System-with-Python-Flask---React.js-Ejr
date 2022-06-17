@@ -5,9 +5,19 @@ import "../../styles/home.css";
 import { IframeInstagram } from "../component/iFrameInsta";
 
 
-export const VistaInflu = () => {
+export const VistaInflu = ({imagen, nombre, username, seguidores, sector}) => {
     const { store, actions } = useContext(Context);
     const [url, setUrl] = useState("");
+
+    // var requestOptions = {
+    //     method: 'GET',
+    //     redirect: 'follow'
+    //   };
+      
+    //   fetch("https://3001-jaygosling-influere-s5lmjehtutj.ws-eu47.gitpod.io/api/empresas", requestOptions)
+    //     .then(response => response.text())
+    //     .then(result => console.log(result))
+    //     .catch(error => console.log('error', error));
          
 
         return (
@@ -20,13 +30,14 @@ export const VistaInflu = () => {
                 <div className="container" style={{ maxWidth: "100%" }}>
                     <div className="row container">
                         <div className="col-md-7" style={{ paddingLeft: "15px", textAlign: "right" }}>
-                            <h1
+                            <h1 
+                            action= "/influencers" method = "GET"
                                 className="title1"
                                 style={{ color: "#458fff" }}
                             >
-                                Nombre
+                                Nombre: {nombre}
                             </h1>
-                            <h2 className="title2 ">Sector al que pertenece</h2>
+                            <h2 className="title2 ">Sector: {sector}</h2>
                             <h4 className="textoBreve1 " style={{ opacity: "40%" }}>
                                 Eslogan
                             </h4>
