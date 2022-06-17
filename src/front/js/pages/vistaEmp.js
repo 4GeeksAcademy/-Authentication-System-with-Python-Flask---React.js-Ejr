@@ -17,7 +17,7 @@ export const VistaEmp = () => {
                     <div className="col-md-7" style={{ paddingLeft: "15px", textAlign: "right" }}>
                         <h2
                             className="title1"
-                            style={{ color: "rgba(59, 102, 197, 0.952)" }}
+                            style={{ color: "#458fff"}}
                         >
                             Nombre de la Empresa
                         </h2>
@@ -45,7 +45,7 @@ export const VistaEmp = () => {
                 <br></br>
                 <br></br>
                 {/* ------------------------ */}
-                <div className="row container " style={{ background: "#708fda", borderRadius: "10px 80px", paddingTop: "5px", color: "white" }}>
+                <div className="row container " style={{ background: "#458fff", borderRadius: "10px 80px", paddingTop: "5px", color: "white" }}>
                     <h5 className="title2 text-center">INFLUENCERS FAVORITOS</h5>
 
                 </div>

@@ -14,24 +14,25 @@ export const VistaInflu = () => {
             <div className="container" >
                 <div className="headerInflu container-fluid " id="imgPerfil2" style={{ display: "flex", justifyContent: "center", alignItems: "center", borderRadius: "10px 80px" }}></div>
                 {/* ------------------------ */}
+                
                 <br></br>
                 {/* ------------------------ */}
                 <div className="container" style={{ maxWidth: "100%" }}>
                     <div className="row container">
                         <div className="col-md-7" style={{ paddingLeft: "15px", textAlign: "right" }}>
-                            <h2
+                            <h1
                                 className="title1"
                                 style={{ color: "#458fff" }}
                             >
-                                {}
-                            </h2>
-                            <h5 className="title2 ">Sector al que pertenece</h5>
-                            <h6 className="textoBreve1 " style={{ opacity: "40%" }}>
+                                Nombre
+                            </h1>
+                            <h2 className="title2 ">Sector al que pertenece</h2>
+                            <h4 className="textoBreve1 " style={{ opacity: "40%" }}>
                                 Eslogan
-                            </h6>
-                            <h7 className="textoBreve1 " style={{ opacity: "40%" }}>
+                            </h4>
+                            <h5 className="textoBreve1 " style={{ opacity: "40%" }}>
                                 Provincia (Ciudad)
-                            </h7>
+                            </h5>
                             <br></br>
                             <br></br>
                             <h6 className="textobreve2 " style={{ opacity: "40%", maxWidth: "100%" }}>
@@ -59,7 +60,7 @@ export const VistaInflu = () => {
                         <h6 style={{ color: "#458fff" }}>Agrega un nuevo post:</h6>
                         {/* <ContainerLista/> */}
 
-                        <form onSubmit={handleSubmit}>
+                        <form >
                             <div className="todo-list">
                                 <div className="file-input">
                                     <input

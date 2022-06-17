@@ -19,19 +19,19 @@ export const VistaInfluPb = () => {
             <div className="container" style={{ maxWidth: "100%" }}>
                 <div className="row container">
                     <div className="col-md-7" style={{ paddingLeft: "15px", textAlign: "right" }}>
-                        <h2
+                        <h1
                             className="title1"
                             style={{ color: "#458fff" }}
                         >
                             Nombre del Usuario
-                        </h2>
-                        <h5 className="title2 ">Sector al que pertenece</h5>
-                        <h6 className="textoBreve1 " style={{ opacity: "40%" }}>
+                        </h1>
+                        <h2 className="title2 ">Sector al que pertenece</h2>
+                        <h4 className="textoBreve1 " style={{ opacity: "40%" }}>
                             Eslogan
-                        </h6>
-                        <h7 className="textoBreve1 " style={{ opacity: "40%" }}>
+                        </h4>
+                        <h5 className="textoBreve1 " style={{ opacity: "40%" }}>
                             Provincia (Ciudad)
-                        </h7>
+                        </h5>
                         <br></br>
                         <br></br>
                         <h6 className="textobreve2 " style={{ opacity: "40%", maxWidth: "100%" }}>
