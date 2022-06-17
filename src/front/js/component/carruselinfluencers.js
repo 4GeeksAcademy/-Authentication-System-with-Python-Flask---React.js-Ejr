@@ -1,5 +1,6 @@
 import React from "react";
 import "../../styles/home.css";
+import { CardsInflu } from "./cardsInfluencers";
 
 export const Carruselinfluencers = () => {
   return (
@@ -13,8 +14,22 @@ export const Carruselinfluencers = () => {
           <b>Directorio de Influencers</b>
         </a>
       </h2>
-      <br></br>
-      <br></br>
+      <div className="container">
+        <div className="row my-5">
+          <div className="col-3">
+            <CardsInflu />
+          </div>
+          <div className="col-3">
+            <CardsInflu />
+          </div>
+          <div className="col-3">
+            <CardsInflu />
+          </div>
+          <div className="col-3">
+            <CardsInflu />
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
