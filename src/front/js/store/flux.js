@@ -2,6 +2,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
 			message: null,
+			favInf: [],
 			posts: [],
 			demo: [
 				{
@@ -21,6 +22,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 			agregar: (url)=>{
 				const store = getStore();
 				setStore({ posts: [...store.posts, url] });
+			},
+
+			addFavInf: (name)=>{
+				setStore({favInf:[...getStore().favInf, name]})		
+
+
 			},
 
 

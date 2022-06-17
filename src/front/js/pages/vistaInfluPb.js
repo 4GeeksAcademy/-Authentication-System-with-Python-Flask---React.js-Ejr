@@ -5,7 +5,7 @@ import "../../styles/home.css";
 import { IframeInstagram } from "../component/iFrameInsta";
 import { ImgInflu } from "../component/imgInflu";
 
-export const VistaInflu = () => {
+export const VistaInfluPb = () => {
     const { store, actions } = useContext(Context);
     const [url, setUrl] = useState("");
     const [lista, setLista] = useState([]);
@@ -48,7 +48,20 @@ export const VistaInflu = () => {
                         <img src={"https://modernadepueblo.com/wp-content/uploads/2019/05/Protas-01-1024x1024.png"} style={{ maxWidth: "300px", opacity: "80%", transform: "revert" }} />
                     </div>
                 </div>
-               
+                <div
+                    style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                    }}
+                >
+                    <button type="button" className="btn btn-light" style={{ marginRight: "50px" }}>
+                        Enviar mensaje
+                    </button>
+                    <button type="button" className="btn btn-primary">
+                        Seguir
+                    </button>
+                </div>
                 {/* --------DOBLE ESPACIO----------------- */}
                 <br></br>
                 <br></br>
@@ -57,39 +70,13 @@ export const VistaInflu = () => {
                     <h5 className="title2 text-center">PUBLICACIONES</h5>
 
                 </div>
-                {/* ---------------AGREGAR UN POST NUEVO-------------------------------------------------------------------------- */}
-
-                <div className="text-center mt-5">
-                    <h6 style={{ color: "#458fff" }}>Agrega un nuevo post:</h6>
-                    <input
-                        type={"text"}
-                        onChange={(e) => setUrl(e.target.value)}
-                        value={url}
-                    />
-                    <button type="button" class="btn-light" style={{ color: "#458fff" }}
-                        onClick={() => {
-                            actions.agregar(url);
-                            setUrl("");
-
-                            // // ??????????
-                            // setLista([...lista, url]); 
-                            // // ¿?¿?¿?¿?¿?
-
-                        }}
-                    >
-                        Ok
-                    </button>
-
-                </div>
                 {/* --------------------ESPACIO DONDE SE AGREGARÁN LOS POST --------------------------------------------------------*/}
 
                 <div className="row ">
                     {store.posts?.map((e, i) => {
                         return (
                             <div key={i} className="col-4">
-                                <IframeInstagram url={e} 
-                                // Lista ={Lista} setLista= {setLista}
-                                />
+                                <IframeInstagram url={e} />
                             </div>
                         );
                     })}
