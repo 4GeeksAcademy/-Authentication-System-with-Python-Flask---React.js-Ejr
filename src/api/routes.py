@@ -8,14 +8,79 @@ from api.utils import generate_sitemap, APIException
 api = Blueprint('api', __name__)
 
 
-@api.route('/hello', methods=['POST', 'GET'])
-def handle_hello():
+@api.route('/influencers/<int:id>', methods=['GET'])
+def conseguir_influencers(id):
+    influencer = Influencers.query.get(id)
+    if influencer:
+        return influencer.serialize()
+    else:
+        return jsonify({"mensaje":"usuario no existente"})
 
-    response_body = {
-        "message": "Hello! I'm a message that came from the backend, check the network tab on the google inspector and you will see the GET request"
-    }
+@api.route('/influencers/<int:id>', methods=['PUT'])
+def modificar_influencers(id):
+    influencer = Influencers.query.get(id)
+    body = request.get_json()
+    influencer.nombre = body["nombre"]
+    influencer.email = body["email"]
+    influencer.password = body["password"]
+    influencer.apellidos = body["apellidos"]
+    influencer.ig_user = body["ig_user"]
+    influencer.categoria = body["categoria"]
+    influencer.pais = body["pais"]
+    influencer.ciudad = body["ciudad"]
+    influencer.bio = body["bio"]
+    if "post1" in body:
+        influencer.post1 = body["post1"]
+    if "post2" in body:
+        influencer.post2 = body["post2"]
+    if "post3" in body:
+        influencer.post3 = body["post3"]
+    if "post4" in body:
+        influencer.post4 = body["post4"]
+    if "post5" in body:
+        influencer.post5 = body["post5"]
+    if "post6" in body:
+        influencer.post6 = body["post6"]
+    db.session.commit()
 
-    return jsonify(response_body), 200
+    return jsonify({"message":"Informacion actualizada"})
+
+@api.route('/empresas/<int:id>', methods=['GET'])
+def conseguir_empresas(id):
+    empresas = Empresas.query.get(id)
+    if empresas:
+        return empresas.serialize()
+    else:
+        return jsonify({"mensaje":"usuario no existente"})
+
+@api.route('/empresas/<int:id>', methods=['PUT'])
+def modificar_empresas(id):
+    empresas = Empresas.query.get(id)
+    body = request.get_json()
+    empresas.nombre = body["nombre"]
+    empresas.email = body["email"]
+    empresas.password = body["password"]
+    empresas.apellidos = body["apellidos"]
+    empresas.razon_social = body["razon_social"]
+    empresas.sector = body["sector"]
+    empresas.pais = body["pais"]
+    empresas.ciudad = body["ciudad"]
+    empresas.bio = body["bio"]
+    if "post1" in body:
+        empresas.post1 = body["post1"]
+    if "post2" in body:
+        empresas.post2 = body["post2"]
+    if "post3" in body:
+        empresas.post3 = body["post3"]
+    if "post4" in body:
+        empresas.post4 = body["post4"]
+    if "post5" in body:
+        empresas.post5 = body["post5"]
+    if "post6" in body:
+        empresas.post6 = body["post6"]
+    db.session.commit()
+
+    return jsonify({"message":"Informacion actualizada"})
 
 @api.route('/registro-empresas', methods=['POST'])
 def registro_empresas():
@@ -48,7 +113,7 @@ def registro_influencers():
     if email_exists:
         print("This user already exists")
     else:
-        influencers = Influencers(email=body["email"], password=body["password"], apellidos=body["apellidos"], nombre=body["nombre"], ig_user=body["ig_user"], categoria=body["categoria"], pais = body["pais"], ciudad = body["ciudad"], bio = body["bio"])    
+        influencers = Influencers(email=body["email"], password=body["password"], apellidos=body["apellidos"], nombre=body["nombre"], ig_user=body["ig_user"], categoria=body["categoria"], pais = body["pais"], ciudad = body["ciudad"], bio = body["bio"],post1=body["post1"],post2=body["post2"],post3=body["post3"],post4=body["post4"],post5=body["post5"],post6=body["post6"])    
         db.session.add(influencers)
         db.session.commit()
     
