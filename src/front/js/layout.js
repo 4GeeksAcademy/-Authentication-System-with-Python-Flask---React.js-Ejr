@@ -15,6 +15,8 @@ import { Footer } from "./component/footer";
 import { FormInfluencers } from "./component/formulario-influencers";
 import { FormEmpresas } from "./component/formulario-empresas";
 import { Directorio } from "./pages/directorio";
+import { EditarEmpresa } from "./component/editar-empresa";
+import { EditarInfluencer } from "./component/editar-influencer";
 
 //create your first component
 const Layout = () => {
@@ -37,6 +39,12 @@ const Layout = () => {
             <Route exact path="/formulario-empresas">
               <FormEmpresas />
             </Route>
+            <Route exact path="/editar-empresa/:id">
+              <EditarEmpresa />
+            </Route>
+            <Route exact path="/editar-influencer/:id">
+              <EditarInfluencer />
+            </Route>            
             <Route exact path="/demo">
               <Demo />
             </Route>
