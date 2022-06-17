@@ -7,7 +7,6 @@ import { Demo } from "./pages/demo";
 import { Single } from "./pages/single";
 import { VistaInflu } from "./pages/vistaInflu";
 import {VistaInfluPb} from "./pages/vistaInfluPb";
-import { ImgInflu } from "./component/imgInflu";
 import { VistaEmp } from "./pages/vistaEmp";
 import injectContext from "./store/appContext";
 
@@ -53,9 +52,7 @@ const Layout = () => {
             <Route exact path="/vistaInfluPb">
               <VistaInfluPb />
             </Route>
-            <Route exact path="/imgInflu">
-              <ImgInflu />
-            </Route>
+            
 
             <Route exact path="/vistaEmp">
               <VistaEmp />
