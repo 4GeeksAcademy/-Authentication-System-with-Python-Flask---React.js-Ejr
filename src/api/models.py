@@ -16,6 +16,9 @@ class Influencers(db.Model):
     post1 = db.Column(db.String(120), unique=False, nullable=True)
     post2 = db.Column(db.String(120), unique=False, nullable=True)
     post3 = db.Column(db.String(120), unique=False, nullable=True)
+    post4 = db.Column(db.String(120), unique=False, nullable=True)
+    post5 = db.Column(db.String(120), unique=False, nullable=True)
+    post6 = db.Column(db.String(120), unique=False, nullable=True)
 
     def __repr__(self):
         return f'<Influencers {self.email}>'
