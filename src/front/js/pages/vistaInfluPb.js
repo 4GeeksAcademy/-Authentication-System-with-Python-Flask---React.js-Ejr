@@ -8,11 +8,7 @@ import { VistaInflu } from "./vistaInflu";
 export const VistaInfluPb = () => {
     const { store, actions } = useContext(Context);
     const [url, setUrl] = useState("");
-    // const [lista, setLista] = useState([]);
    
-    // useEffect(() => {
-	// 	console.log(lista);
-	// }, [lista]);
 
     return (
         <div className="container" >

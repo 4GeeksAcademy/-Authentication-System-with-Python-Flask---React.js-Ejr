@@ -16,6 +16,7 @@ import { FormInfluencers } from "./component/formulario-influencers";
 import { FormEmpresas } from "./component/formulario-empresas";
 import { Directorio } from "./pages/directorio";
 
+
 //create your first component
 const Layout = () => {
   //the basename is used when your project is published in a subdirectory and not in the root of the domain
@@ -49,11 +50,11 @@ const Layout = () => {
             <Route exact path="/vistaInflu">
               <VistaInflu />
             </Route>
-            <Route exact path="/vistaInfluPb">
+            <Route exact path="/vistaInfluPb/">
               <VistaInfluPb />
             </Route>
+           
             
-
             <Route exact path="/vistaEmp">
               <VistaEmp />
             </Route>

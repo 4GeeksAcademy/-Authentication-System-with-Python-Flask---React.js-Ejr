@@ -3,6 +3,9 @@ import { Context } from "../store/appContext";
 import rigoImageUrl from "../../img/rigo-baby.jpg";
 import "../../styles/home.css";
 import { IframeInstagram } from "../component/iFrameInsta";
+// import { ContainerLista } from "../component/containerLista";
+// import { TaskList } from "../component/taskList";
+// import { FormToDo } from "../component/formToDo";
 
 export const VistaInflu = () => {
     const { store, actions } = useContext(Context);
@@ -13,11 +16,11 @@ export const VistaInflu = () => {
         conbsole.log(description);
         setDescription("");
     };
-        // const [lista, setLista] = useState([]);
 
-        // useEffect(() => {
-        // 	console.log(lista);
-        // }, [lista]);
+
+
+
+        
 
         return (
             <div className="container" >
@@ -32,7 +35,7 @@ export const VistaInflu = () => {
                                 className="title1"
                                 style={{ color: "#458fff" }}
                             >
-                                Nombre del Usuario
+                                {}
                             </h2>
                             <h5 className="title2 ">Sector al que pertenece</h5>
                             <h6 className="textoBreve1 " style={{ opacity: "40%" }}>
@@ -66,10 +69,11 @@ export const VistaInflu = () => {
 
                     <div className="text-center mt-5">
                         <h6 style={{ color: "#458fff" }}>Agrega un nuevo post:</h6>
+                        {/* <ContainerLista/> */}
 
-                        {/* <form onSubmit={handleSubmit}>
+                        <form onSubmit={handleSubmit}>
                             <div className="todo-list">
-                                <div className="file-input"> */}
+                                <div className="file-input">
                                     <input
                                         type={"text"}
                                         onChange={(e) => setUrl(e.target.value)}
@@ -77,32 +81,27 @@ export const VistaInflu = () => {
                                     />
 
                                     <button type="button" class="btn-light" style={{ color: "#458fff" }}
-                                        disabled={description ? "" : "disabled"}
+                                        // disabled={description ? "" : "disabled"}
                                         onClick={() => {
                                             actions.agregar(url);
                                             setUrl("");
-
-                                            // // ??????????
-                                            // setLista([...lista, url]); 
-                                            // // ¿?¿?¿?¿?¿?
 
                                         }}
                                     >
                                         Ok
                                     </button>
-                                {/* </div>
+                                </div>
                             </div>
-                        </form> */}
+                        </form>
 
                     </div>
                     {/* --------------------ESPACIO DONDE SE AGREGARÁN LOS POST --------------------------------------------------------*/}
-
+                    
                     <div className="row ">
                         {store.posts?.map((e, i) => {
                             return (
                                 <div key={i} className="col-4">
                                     <IframeInstagram url={e}
-                                    // Lista ={Lista} setLista= {setLista}
                                     />
                                 </div>
                             );
