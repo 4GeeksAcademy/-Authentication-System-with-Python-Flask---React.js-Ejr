@@ -3,24 +3,12 @@ import { Context } from "../store/appContext";
 import rigoImageUrl from "../../img/rigo-baby.jpg";
 import "../../styles/home.css";
 import { IframeInstagram } from "../component/iFrameInsta";
-// import { ContainerLista } from "../component/containerLista";
-// import { TaskList } from "../component/taskList";
-// import { FormToDo } from "../component/formToDo";
+
 
 export const VistaInflu = () => {
     const { store, actions } = useContext(Context);
     const [url, setUrl] = useState("");
-    const [description, setDescription] = useState("");
-    const handleSubmit = e => {
-        e.preventDefault();
-        conbsole.log(description);
-        setDescription("");
-    };
-
-
-
-
-        
+         
 
         return (
             <div className="container" >
