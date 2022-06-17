@@ -48,7 +48,7 @@ def registro_influencers():
     if email_exists:
         print("This user already exists")
     else:
-        influencers = Influencers(email=body["email"], password=body["password"], apellidos=body["apellidos"], nombre=body["nombre"], ig_user=body["ig_user"], categoria=body["categoria"], pais = body["pais"], ciudad = body["ciudad"], bio = body["bio"])    
+        influencers = Influencers(email=body["email"], password=body["password"], apellidos=body["apellidos"], nombre=body["nombre"], ig_user=body["ig_user"], categoria=body["categoria"], pais = body["pais"], ciudad = body["ciudad"], bio = body["bio"],post1=body["post1"],post2=body["post2"],post3=body["post3"],post4=body["post4"],post5=body["post5"],post6=body["post6"])    
         db.session.add(influencers)
         db.session.commit()
     
