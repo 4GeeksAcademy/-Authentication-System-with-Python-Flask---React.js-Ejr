@@ -18,7 +18,35 @@ export const Navbar = () => {
           <Link to="/Directorio">
             <span className="navbar-item mx-2 text-white">Influencers</span>
           </Link>
-          <span className="navbar-item mx-3 text-white">Registrate</span>
+          {/* --------------------------------------------- */}
+          {/* <span className="navbar-item mx-3 text-white">Registrate</span> */}
+          <div className="btn-group dropstart">
+              <button
+                type="button"
+                className="btn btn-primary dropdown-toggle dropdown-toggle-split"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+                style={{margin: "0px 5px 0px 5px"}}
+                
+              > Registrarse
+
+              
+                <span className="visually-hidden">Toggle Dropstart</span>
+              </button>
+              <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                <li>
+                  <a className="dropdown-item" href={"/formulario-influencers"}>
+                    Influencer
+                  </a>
+                </li>
+                <li>
+                  <a className="dropdown-item" href={"/formulario-empresas"}>
+                    Empresa
+                  </a>
+                </li>
+              </ul>
+          </div>
+          {/* ----------------------------------------------- */}
           <button
             type="button"
             className="btn btn-primary"
@@ -111,7 +139,7 @@ export const Navbar = () => {
                           class="btn btn-outline-warning"
                           style={{ fontSize: "85%" }}
                         >
-                          <a href={"/registrarEmp"}>Registrar Empresa</a>
+                          <a href={"/formulario-empresas"}>Registrar Empresa</a>
                         </button>
                       </div>
                       <div className="col-5">
@@ -120,7 +148,7 @@ export const Navbar = () => {
                           class="btn btn-outline-warning "
                           style={{ fontSize: "85%" }}
                         >
-                          <a href={"/registrarUs"}>Registrar Influencer</a>
+                          <a href={"/formulario-influencers"}>Registrar Influencer</a>
                         </button>
                       </div>
                       <br></br>
