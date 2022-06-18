@@ -8,14 +8,14 @@ import { CardsInflu } from "../component/cardsInfluencers";
 export const VistaEmp = () => {
     return <>
         <div className="container">
-            <div className="headerEmp container border" id="imgPerfil" style={{ display: "flex", justifyContent: "center", alignItems: "center", borderRadius: "5px 5px 80px 80px"}}>
+            <div className="headerEmp container border" id="imgPerfil" style={{ display: "flex", justifyContent: "center", alignItems: "center", borderRadius: "5px 5px 80px 80px" }}>
             </div>
             {/* ------------------------ */}
             <br></br>
             {/* ------------------------ */}
-            <div className="row container" style={{ display: "flex", justifyContent: "right", alignItems:"right", marginTop: "5px" }}>
-                
-                <div class="btn-group" style={{height: "40px", width: "40px",  marginRight:"100px" }}>
+            <div className="row container" style={{ display: "flex", justifyContent: "right", alignItems: "right", marginTop: "5px" }}>
+
+                <div class="btn-group" style={{ height: "40px", width: "40px", marginRight: "100px" }}>
                     {/* <button type="button" class="btn btn-light"><i class="fas fa-home"><a class="dropdown-item" href={"/vistaInflu"}></a></i></button> */}
                     <button type="button" class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" >
                         <i class="fas fa-user-edit"></i>
@@ -24,7 +24,7 @@ export const VistaEmp = () => {
                         <li><a class="dropdown-item" href={"/formulario-empresas"}>Editar Perfil</a></li>
                         {/* <li><a class="dropdown-item" href="/">Another action</a></li>
                         <li><a class="dropdown-item" href="#">Something else here</a></li> */}
-                        <li><hr class="dropdown-divider"/></li>
+                        <li><hr class="dropdown-divider" /></li>
                         <li><a class="dropdown-item" href="#">Cerrar Sesión</a></li>
                     </ul>
                 </div>
@@ -35,7 +35,7 @@ export const VistaEmp = () => {
                     <div className="col-md-7" style={{ paddingLeft: "15px", textAlign: "right" }}>
                         <h1
                             className="title1"
-                            style={{ color: "#458fff"}}
+                            style={{ color: "#458fff" }}
                         >
                             Nombre de la Empresa
                         </h1>
@@ -63,7 +63,7 @@ export const VistaEmp = () => {
                 <br></br>
                 <br></br>
                 {/* ------------------------ */}
-                <div className="row container " style={{ background: "#458fff", borderRadius: "10px 80px", paddingTop: "5px", color: "white", maxWidth:"100%" }}>
+                <div className="row container " style={{ background: "#458fff", borderRadius: "10px 80px", paddingTop: "5px", color: "white", maxWidth: "100%" }}>
                     <h5 className="title2 text-center">INFLUENCERS FAVORITOS</h5>
 
                 </div>
@@ -72,9 +72,9 @@ export const VistaEmp = () => {
                 <br></br>
                 {/* ------------------------ */}
                 <div className="row container">
-                   
-                <div className="row ">
-                    {/* {store.favInf?.map((e, i) => {
+
+                    <div className="row ">
+                        {/* {store.favInf?.map((e, i) => {
                         return (
                             <div key={i} className="col-4">
                                 <CardsInflu name={e}
@@ -82,10 +82,20 @@ export const VistaEmp = () => {
                             </div>
                         );
                     })} */}
-                </div>
-                        Aún no tienes influencers favoritos
+                        <di className="col-md-4">
+                            <CardsInflu />
+                        </di>
+                        <di className="col-md-4" >
+                            <CardsInflu />
+                        </di>
+                        <di className="col-md-4" >
+                            <CardsInflu />
+                        </di>
 
-                  
+
+                    </div>
+
+
 
                 </div>
 

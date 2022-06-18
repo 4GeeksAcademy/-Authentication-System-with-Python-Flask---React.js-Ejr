@@ -1,4 +1,4 @@
-import React from "react";
+import React, {Component} from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
 
@@ -17,6 +17,7 @@ import { FormEmpresas } from "./component/formulario-empresas";
 import { Directorio } from "./pages/directorio";
 import { EditarEmpresa } from "./component/editar-empresa";
 import { EditarInfluencer } from "./component/editar-influencer";
+import {EnviarEmail} from ".component/enviarEmail";
 
 //create your first component
 const Layout = () => {
@@ -60,6 +61,10 @@ const Layout = () => {
             <Route exact path="/vistaInfluPb/">
               <VistaInfluPb />
             </Route>
+            <Route exact path="/enviarEmail/">
+              <EnviarEmail />
+            </Route>
+
                              
             
             <Route exact path="/vistaEmp">

@@ -8,6 +8,7 @@ import { VistaInflu } from "./vistaInflu";
 export const VistaInfluPb = () => {
     const { store, actions } = useContext(Context);
     const [url, setUrl] = useState("");
+   
 
     return (
         <div className="container">
@@ -32,9 +33,11 @@ export const VistaInfluPb = () => {
                         type="button"
                         className="btn btn-outline-primary"
                         style={{ marginRight: "5px", maxWidth: "200px" }}
-                    >
-                        Enviar mensaje
+
+                    ><a href={"/enviarEmail"}>Enviar mensaje</a>
+                        
                     </button>
+                    
                     <button type="button" className="btn btn-outline-primary" style = {{maxWidth: "40px"}}
                     onClick={(name)=> {
                         actions.addFavInf(name);
