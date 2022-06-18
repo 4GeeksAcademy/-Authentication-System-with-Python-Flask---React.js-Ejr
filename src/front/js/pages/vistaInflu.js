@@ -3,24 +3,17 @@ import { Context } from "../store/appContext";
 import rigoImageUrl from "../../img/rigo-baby.jpg";
 import "../../styles/home.css";
 import { IframeInstagram } from "../component/iFrameInsta";
+import { useParams } from "react-router-dom";
+
 
 
 export const VistaInflu = ({ imagen, nombre, username, seguidores, provincia, ciudad, sector }) => {
     const { store, actions } = useContext(Context);
     const [url, setUrl] = useState("");
-
-    // var requestOptions = {
-    //     method: 'GET',
-    //     redirect: 'follow'
-    //   };
-
-    //   fetch("https://3001-jaygosling-influere-s5lmjehtutj.ws-eu47.gitpod.io/api/empresas", requestOptions)
-    //     .then(response => response.text())
-    //     .then(result => console.log(result))
-    //     .catch(error => console.log('error', error));
+    // const parametro = useParams (); 
 
 
-    return (
+       return (
         <div className="container" >
             <div className="headerInflu container " id="imgPerfil2" style={{ display: "flex", justifyContent: "center", alignItems: "center", borderRadius: "5px 5px 80px 80px"}}></div>
 
@@ -29,11 +22,9 @@ export const VistaInflu = ({ imagen, nombre, username, seguidores, provincia, ci
                 
                 <div class="btn-group" style={{height: "40px", width: "40px",  marginRight:"100px" }}>
                     <button type="button" class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" style={{}}><i class="fas fa-at"></i></button>
-                        <ul class="dropdown-menu">
-                            <li type= "button"><a  href={"https://www.instagram.com/"} ><img src={"https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Instagram_logo_2022.svg/1200px-Instagram_logo_2022.svg.png"}style = {{maxWidth: "30px", maxHeight: "30px", marginTop: "5px"}}/></a></li>
-                            <li type= "button"><a class="dropdown-item" href={"https://www.tiktok.com/login?redirect_url=https%3A%2F%2Fwww.tiktok.com%2Fupload%3Flang%3Des&lang=es"}><img src={"https://w7.pngwing.com/pngs/829/574/png-transparent-tiktok-hd-logo.png"}style = {{maxWidth: "30px", maxHeight: "30px", marginTop: "2px"}}/></a></li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
-                            <li><hr class="dropdown-divider"/></li>
+                        <ul class="dropdown-menu" >
+                            <li type= "button" style = {{float: "left"}}><a  href={"https://www.instagram.com/"} ><img src={"https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Instagram_logo_2022.svg/1200px-Instagram_logo_2022.svg.png"}style = {{maxWidth: "30px", maxHeight: "30px", marginTop: "5px", marginLeft:"10px"}}/></a></li>
+                            <li type= "button" style = {{float: "left"}}><a class="dropdown-item" href={"https://www.tiktok.com/login?redirect_url=https%3A%2F%2Fwww.tiktok.com%2Fupload%3Flang%3Des&lang=es"}><img src={"https://w7.pngwing.com/pngs/829/574/png-transparent-tiktok-hd-logo.png"}style = {{maxWidth: "30px", maxHeight: "30px", marginTop: "2px"}}/></a></li>
                         </ul>
                     <button type="button" class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" >
                         <i class="fas fa-user-edit" ></i>
@@ -57,6 +48,7 @@ export const VistaInflu = ({ imagen, nombre, username, seguidores, provincia, ci
                             style={{ color: "#458fff" }}
                         >
                             Nombre: {nombre}
+                            {/* {store.people[parametro.i]?.height +" "+"cm"} */}
                         </h1>
                         <h2 className="title2 ">Sector: {sector}</h2>
                         <h4 className="textoBreve1 " style={{ opacity: "40%" }}>

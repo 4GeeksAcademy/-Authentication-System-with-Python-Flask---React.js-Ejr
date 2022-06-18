@@ -18,7 +18,7 @@ export const VistaInfluPb = () => {
                     display: "flex",
                     justifyContent: "center",
                     alignItems: "center",
-                    borderRadius: "10px 80px",
+                    borderRadius: "5px 5px 80px 80px"
                 }}
             ></div>
             {/* ------------------------ */}
@@ -30,12 +30,18 @@ export const VistaInfluPb = () => {
                     {/* <button type="button" class="btn btn-light"><i class="fas fa-home"><a class="dropdown-item" href={"/vistaInflu"}></a></i></button> */}
                     <button
                         type="button"
-                        className="btn btn-light"
+                        className="btn btn-outline-primary"
                         style={{ marginRight: "5px", maxWidth: "200px" }}
                     >
                         Enviar mensaje
                     </button>
-                    <button type="button" className="btn btn-light" style = {{maxWidth: "40px"}}>
+                    <button type="button" className="btn btn-outline-primary" style = {{maxWidth: "40px"}}
+                    onClick={(name)=> {
+                        actions.addFavInf(name);
+
+
+                    }}
+                    >
                         <i class="far fa-heart"></i>
                     </button>
                    

@@ -18,7 +18,6 @@ import { Directorio } from "./pages/directorio";
 import { EditarEmpresa } from "./component/editar-empresa";
 import { EditarInfluencer } from "./component/editar-influencer";
 
-
 //create your first component
 const Layout = () => {
   //the basename is used when your project is published in a subdirectory and not in the root of the domain
@@ -61,7 +60,7 @@ const Layout = () => {
             <Route exact path="/vistaInfluPb/">
               <VistaInfluPb />
             </Route>
-           
+                             
             
             <Route exact path="/vistaEmp">
               <VistaEmp />

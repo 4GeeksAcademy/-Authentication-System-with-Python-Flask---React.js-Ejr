@@ -2,6 +2,8 @@ import React, { useContext } from "react";
 import { Context } from "../store/appContext";
 import rigoImageUrl from "../../img/rigo-baby.jpg";
 import "../../styles/home.css";
+import { CardsInflu } from "../component/cardsInfluencers";
+
 
 export const VistaEmp = () => {
     return <>
@@ -70,8 +72,20 @@ export const VistaEmp = () => {
                 <br></br>
                 {/* ------------------------ */}
                 <div className="row container">
+                   
+                <div className="row ">
+                    {/* {store.favInf?.map((e, i) => {
+                        return (
+                            <div key={i} className="col-4">
+                                <CardsInflu name={e}
+                                />
+                            </div>
+                        );
+                    })} */}
+                </div>
+                        Aún no tienes influencers favoritos
 
-                    AGREGAR LISTA O IMÁGENES DE PERFIL DE USUARIOS INFLUENCERS
+                  
 
                 </div>
 
