@@ -6,14 +6,14 @@ import "../../styles/home.css";
 export const VistaEmp = () => {
     return <>
         <div className="container">
-            <div className="headerEmp container border" id="imgPerfil" style={{ display: "flex", justifyContent: "center", alignItems: "center", borderRadius: "10px 80px"}}>
+            <div className="headerEmp container border" id="imgPerfil" style={{ display: "flex", justifyContent: "center", alignItems: "center", borderRadius: "5px 5px 80px 80px"}}>
             </div>
             {/* ------------------------ */}
             <br></br>
             {/* ------------------------ */}
             <div className="row container" style={{ display: "flex", justifyContent: "right", alignItems:"right", marginTop: "5px" }}>
                 
-                <div class="btn-group" style={{height: "40px", width: "40px"}}>
+                <div class="btn-group" style={{height: "40px", width: "40px",  marginRight:"100px" }}>
                     {/* <button type="button" class="btn btn-light"><i class="fas fa-home"><a class="dropdown-item" href={"/vistaInflu"}></a></i></button> */}
                     <button type="button" class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" >
                         <i class="fas fa-user-edit"></i>
@@ -61,7 +61,7 @@ export const VistaEmp = () => {
                 <br></br>
                 <br></br>
                 {/* ------------------------ */}
-                <div className="row container " style={{ background: "#458fff", borderRadius: "10px 80px", paddingTop: "5px", color: "white" }}>
+                <div className="row container " style={{ background: "#458fff", borderRadius: "10px 80px", paddingTop: "5px", color: "white", maxWidth:"100%" }}>
                     <h5 className="title2 text-center">INFLUENCERS FAVORITOS</h5>
 
                 </div>

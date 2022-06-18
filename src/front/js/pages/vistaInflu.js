@@ -22,23 +22,29 @@ export const VistaInflu = ({ imagen, nombre, username, seguidores, provincia, ci
 
     return (
         <div className="container" >
-            <div className="headerInflu container-fluid " id="imgPerfil2" style={{ display: "flex", justifyContent: "center", alignItems: "center", borderRadius: "10px 80px" }}></div>
+            <div className="headerInflu container " id="imgPerfil2" style={{ display: "flex", justifyContent: "center", alignItems: "center", borderRadius: "5px 5px 80px 80px"}}></div>
 
             {/* --------------------------------------------------- */}
-            <div className="row container" style={{ display: "flex", justifyContent: "right", alignItems:"center", marginTop: "5px" }}>
+            <div className="row container" style={{ display: "flex", justifyContent: "right", alignItems:"center", marginTop: "5px"}}>
                 
-                <div class="btn-group" style={{height: "40px", width: "40px"}}>
-                    {/* <button type="button" class="btn btn-light"><i class="fas fa-home"><a class="dropdown-item" href={"/vistaInflu"}></a></i></button> */}
+                <div class="btn-group" style={{height: "40px", width: "40px",  marginRight:"100px" }}>
+                    <button type="button" class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" style={{}}><i class="fas fa-at"></i></button>
+                        <ul class="dropdown-menu">
+                            <li type= "button"><a  href={"https://www.instagram.com/"} ><img src={"https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Instagram_logo_2022.svg/1200px-Instagram_logo_2022.svg.png"}style = {{maxWidth: "30px", maxHeight: "30px", marginTop: "5px"}}/></a></li>
+                            <li type= "button"><a class="dropdown-item" href={"https://www.tiktok.com/login?redirect_url=https%3A%2F%2Fwww.tiktok.com%2Fupload%3Flang%3Des&lang=es"}><img src={"https://w7.pngwing.com/pngs/829/574/png-transparent-tiktok-hd-logo.png"}style = {{maxWidth: "30px", maxHeight: "30px", marginTop: "2px"}}/></a></li>
+                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                            <li><hr class="dropdown-divider"/></li>
+                        </ul>
                     <button type="button" class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" >
-                        <i class="fas fa-user-edit"></i>
+                        <i class="fas fa-user-edit" ></i>
                     </button>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href={"/formulario-influencers"}>Editar Perfil</a></li>
-                        {/* <li><a class="dropdown-item" href="/">Another action</a></li>
-                        <li><a class="dropdown-item" href="#">Something else here</a></li> */}
-                        <li><hr class="dropdown-divider"/></li>
-                        <li><a class="dropdown-item" href="#">Cerrar Sesión</a></li>
-                    </ul>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href={"/formulario-influencers"}>Editar Perfil</a></li>
+                            {/* <li><a class="dropdown-item" href="/">Another action</a></li>
+                            <li><a class="dropdown-item" href="#">Something else here</a></li> */}
+                            <li><hr class="dropdown-divider"/></li>
+                            <li><a class="dropdown-item" href="#">Cerrar Sesión</a></li>
+                        </ul>
                 </div>
             </div>
             {/* ------------------------------------------------- */}
@@ -77,7 +83,7 @@ export const VistaInflu = ({ imagen, nombre, username, seguidores, provincia, ci
 
                     <table class="table">
                         <thead>
-                            <tr style={{ textAlign: "center" }}>
+                            <tr style={{ textAlign: "center"}}>
                                 <th scope="col">1,221</th>
                                 <th scope="col">1,7M</th>
                                 <th scope="col">1,082</th>
