@@ -5,29 +5,45 @@ import "../../styles/home.css";
 
 export const VistaEmp = () => {
     return <>
-        <div className="container- fluid">
+        <div className="container">
             <div className="headerEmp container border" id="imgPerfil" style={{ display: "flex", justifyContent: "center", alignItems: "center", borderRadius: "10px 80px"}}>
             </div>
             {/* ------------------------ */}
             <br></br>
-            <br></br>
             {/* ------------------------ */}
+            <div className="row container" style={{ display: "flex", justifyContent: "right", alignItems:"right", marginTop: "5px" }}>
+                
+                <div class="btn-group" style={{height: "40px", width: "40px"}}>
+                    {/* <button type="button" class="btn btn-light"><i class="fas fa-home"><a class="dropdown-item" href={"/vistaInflu"}></a></i></button> */}
+                    <button type="button" class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" >
+                        <i class="fas fa-user-edit"></i>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href={"/formulario-empresas"}>Editar Perfil</a></li>
+                        {/* <li><a class="dropdown-item" href="/">Another action</a></li>
+                        <li><a class="dropdown-item" href="#">Something else here</a></li> */}
+                        <li><hr class="dropdown-divider"/></li>
+                        <li><a class="dropdown-item" href="#">Cerrar Sesión</a></li>
+                    </ul>
+                </div>
+            </div>
+            {/* ----------------------------------------------------------------------------------- */}
             <div className="container" style={{ maxWidth: "1000px" }}>
                 <div className="row container">
                     <div className="col-md-7" style={{ paddingLeft: "15px", textAlign: "right" }}>
-                        <h2
+                        <h1
                             className="title1"
                             style={{ color: "#458fff"}}
                         >
                             Nombre de la Empresa
-                        </h2>
-                        <h5 className="title2 ">Sector al que pertenece</h5>
+                        </h1>
+                        <h4 className="title2 ">Sector al que pertenece</h4>
                         <h6 className="textoBreve1 " style={{ opacity: "40%" }}>
                             Eslogan
                         </h6>
-                        <h7 className="textoBreve1 " style={{ opacity: "40%" }}>
+                        <h5 className="textoBreve1 " style={{ opacity: "40%" }}>
                             Provincia (Ciudad)
-                        </h7>
+                        </h5>
                         <br></br>
                         <br></br>
                         <h6 className="textobreve2 " style={{ opacity: "40%", maxWidth: "100%", }}>
