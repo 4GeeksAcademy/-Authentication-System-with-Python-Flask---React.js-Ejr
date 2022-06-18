@@ -17,7 +17,7 @@ import { FormEmpresas } from "./component/formulario-empresas";
 import { Directorio } from "./pages/directorio";
 import { EditarEmpresa } from "./component/editar-empresa";
 import { EditarInfluencer } from "./component/editar-influencer";
-import {EnviarEmail} from ".component/enviarEmail";
+import EnviarEmail from "./component/enviarEmail";
 
 //create your first component
 const Layout = () => {
