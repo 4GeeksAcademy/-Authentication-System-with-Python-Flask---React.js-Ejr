@@ -1,28 +1,28 @@
-import React,{ useContext, useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
-import {Context} from '../store/appContext' 
+import { Context } from "../store/appContext";
+import "../../styles/home.css";
 
 export const Navbar = () => {
-  const {store, actions } = useContext(Context);
+  const { store, actions } = useContext(Context);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const token = sessionStorage.getItem("token")
+  const token = sessionStorage.getItem("token");
   const history = useHistory();
-  console.log ("Token", store.token)
+  console.log("Token", store.token);
   const handleClick = () => {
     actions.login(email, password);
-};
+  };
 
   if (store.token && store.token != "" && store.token != undefined) {
     history.push("/Directorio");
-    
   }
-  
+
   return (
-    <nav className="navbar navbar-light bg-dark">
+    <nav className="navbar navbar-light bg-white">
       <div className="container-fluid mx-5">
         <Link to="/">
-          <span className="navbar-brand mb-0 h1 text-white">
+          <span className="navbar-brand mb-0 h1 text-black">
             <img
               src="https://i.ibb.co/Kh1cTp0/Disen-o-sin-ti-tulo.png"
               className="img-fluid shadow-4"
@@ -32,13 +32,17 @@ export const Navbar = () => {
         </Link>
         <div className="ml-auto">
           <Link to="/Directorio">
-            <span className="navbar-item mx-2 text-white">Influencers</span>
+            <span className="navbar-item mx-2 text-black">Influencers</span>
           </Link>
           <Link to="/formulario-empresas">
-          <span className="navbar-item mx-3 text-white">Registrarse como Empresa</span>
+            <span className="navbar-item mx-3 text-black">
+              Registrarse como Empresa
+            </span>
           </Link>
           <Link to="/formulario-influencers">
-          <span className="navbar-item mx-3 text-white">Registrate como Influencer</span>
+            <span className="navbar-item mx-3 text-black">
+              Registrate como Influencer
+            </span>
           </Link>
           <button
             type="button"
@@ -46,9 +50,9 @@ export const Navbar = () => {
             data-bs-toggle="modal"
             data-bs-target="#exampleModal"
           >
-            <i className="far fa-user-circle " id="icono">
+            <i className="far fa-user-circle" id="icono">
               {" "}
-              Iniciar Sesión
+              <span className="sesion">Iniciar Sesión</span>
             </i>
           </button>
 
@@ -115,11 +119,15 @@ export const Navbar = () => {
                       </label>
                     </div>
                     <div style={{ display: "flex", justifyContent: "center" }}>
-                      <button type="submit" className="btn btn-primary" onClick={handleClick} data-bs-dismiss="modal">
+                      <button
+                        type="submit"
+                        className="btn btn-primary"
+                        onClick={handleClick}
+                        data-bs-dismiss="modal"
+                      >
                         Iniciar Sesión
                       </button>
                     </div>
-                  
                   </div>
                   <br></br>
                   <br></br>
@@ -133,26 +141,26 @@ export const Navbar = () => {
                   >
                     <div className="col-5">
                       <Link to="/formulario-influencers">
-                      <button
-                        type="button"
-                        class="btn btn-outline-warning"
-                        style={{ fontSize: "85%" }}
-                        data-bs-dismiss="modal"
-                      >
-                        Registrar Empresa
-                      </button>
+                        <button
+                          type="button"
+                          class="btn btn-outline-warning"
+                          style={{ fontSize: "85%" }}
+                          data-bs-dismiss="modal"
+                        >
+                          Registrar Empresa
+                        </button>
                       </Link>
                     </div>
                     <div className="col-5">
                       <Link to="/formulario-empresas">
-                      <button
-                        type="button"
-                        class="btn btn-outline-warning "
-                        style={{ fontSize: "85%" }}
-                        data-bs-dismiss="modal"
-                      >
-                        Registrar Influencer
-                      </button>
+                        <button
+                          type="button"
+                          class="btn btn-outline-warning "
+                          style={{ fontSize: "85%" }}
+                          data-bs-dismiss="modal"
+                        >
+                          Registrar Influencer
+                        </button>
                       </Link>
                     </div>
                     <br></br>

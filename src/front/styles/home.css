@@ -1,8 +1,6 @@
-
 .titulo1 {
-  font-weight: 900;
-  font-size: 70px;
-  margin-top: 100px;
+  font-weight: 855;
+  font-size: 85px;
 }
 
 body {
@@ -110,7 +108,6 @@ img {
   text-align: center;
   font-size: 18px;
   margin-top: 10px;
-
 }
 
 .hover {
@@ -130,4 +127,47 @@ img {
 .text-white:hover {
   color: #ffffff;
   text-decoration: none;
+}
+
+.navbar-item mx-3 text-black {
+  text-decoration: none !important;
+}
+
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap");
+
+.subtitulo {
+  font-family: "Poppins", sans-serif;
+  font-size: 20px;
+  line-height: 30px;
+}
+
+@import url("https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap");
+.antetitulo {
+  font-family: "Permanent Marker", cursive;
+  color: #fbd63d;
+  font-size: 24px;
+  margin-top: 160px;
+}
+
+.sesion {
+  color: white;
+  font-family: Arial, Helvetica, sans-serif;
+  text-decoration: none;
+}
+
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap");
+.btn-danger,
+.btn-danger:hover,
+.btn-danger:active,
+.btn-danger:visited,
+.btn-danger:focus {
+  background-color: #fbd63d;
+  border-color: #8064a2;
+  font-family: "Montserrat", sans-serif;
+  letter-spacing: 1.5px;
+  font-size: medium;
+}
+
+.columna derecha {
+  text-align: center;
 }
