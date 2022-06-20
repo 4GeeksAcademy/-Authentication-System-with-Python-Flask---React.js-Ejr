@@ -29,7 +29,6 @@ function sendData() {
         .then(result => console.log(result))
         .catch(error => console.log('error', error));
 
-
 }
 function addData() {
     if (document.getElementById('password').value == document.getElementById('rep-password').value) {
