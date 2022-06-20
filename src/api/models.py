@@ -19,6 +19,10 @@ class Influencers(db.Model):
     post4 = db.Column(db.String(120), unique=False, nullable=True)
     post5 = db.Column(db.String(120), unique=False, nullable=True)
     post6 = db.Column(db.String(120), unique=False, nullable=True)
+    precio_post = db.Column(db.Integer, unique=False, nullable=True)
+    precio_reel = db.Column(db.Integer, unique=False, nullable=True)
+    precio_story = db.Column(db.Integer, unique=False, nullable=True)
+
 
     def __repr__(self):
         return f'<Influencers {self.email}>'
@@ -27,6 +31,23 @@ class Influencers(db.Model):
         return {
             "id": self.id,
             "email": self.email,
+            "nombre": self.nombre,
+            "apellidos": self.apellidos,
+            "ig_user": self.ig_user,
+            "categoria": self.categoria,
+            "pais": self.pais,
+            "ciudad": self.ciudad,
+            "bio": self.bio,
+            "post1": self.post1,
+            "post2": self.post2,
+            "post3": self.post3,
+            "post4": self.post4,
+            "post5": self.post5,
+            "post6": self.post6,
+            "precio_post": self.precio_post,
+            "precio_reel": self.precio_reel,
+            "precio_story": self.precio_story,
+
             # do not serialize the password, its a security breach
         }
 
@@ -49,7 +70,14 @@ class Empresas(db.Model):
         return {
             "id": self.id,
             "email": self.email,
-            # do not serialize the password, its a security breach
+            "nombre": self.nombre,
+            "apellidos": self.apellidos,
+            "razon_social": self.razon_social,
+            "sector": self.sector,
+            "pais": self.pais,
+            "ciudad": self.ciudad,
+            "bio": self.bio,
+           # do not serialize the password, its a security breach
         }
 
 class Favoritos(db.Model):
