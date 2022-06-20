@@ -37,6 +37,7 @@ export const FormInfluencers = () => {
 
     }
     function addData() {
+        console.log(document.getElementById('password').value)
         if (document.getElementById('password').value == document.getElementById('rep-password').value) {
 
             allData.email = document.getElementById('email').value;

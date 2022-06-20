@@ -1,7 +1,23 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React,{ useContext, useState } from "react";
+import { Link, useHistory } from "react-router-dom";
+import {Context} from '../store/appContext' 
 
 export const Navbar = () => {
+  const {store, actions } = useContext(Context);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const token = sessionStorage.getItem("token")
+  const history = useHistory();
+  console.log ("Token", store.token)
+  const handleClick = () => {
+    actions.login(email, password);
+};
+
+  if (store.token && store.token != "" && store.token != undefined) {
+    history.push("/Directorio");
+    
+  }
+  
   return (
     <nav className="navbar navbar-light bg-dark">
       <div className="container-fluid mx-5">
@@ -18,35 +34,12 @@ export const Navbar = () => {
           <Link to="/Directorio">
             <span className="navbar-item mx-2 text-white">Influencers</span>
           </Link>
-          {/* --------------------------------------------- */}
-          {/* <span className="navbar-item mx-3 text-white">Registrate</span> */}
-          <div className="btn-group dropstart">
-              <button
-                type="button"
-                className="btn btn-primary dropdown-toggle dropdown-toggle-split"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-                style={{margin: "0px 5px 0px 5px"}}
-                
-              > Registrarse
-
-              
-                <span className="visually-hidden">Toggle Dropstart</span>
-              </button>
-              <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                <li>
-                  <a className="dropdown-item" href={"/formulario-influencers"}>
-                    Influencer
-                  </a>
-                </li>
-                <li>
-                  <a className="dropdown-item" href={"/formulario-empresas"}>
-                    Empresa
-                  </a>
-                </li>
-              </ul>
-          </div>
-          {/* ----------------------------------------------- */}
+          <Link to="/formulario-empresas">
+          <span className="navbar-item mx-3 text-white">Registrarse como Empresa</span>
+          </Link>
+          <Link to="/formulario-influencers">
+          <span className="navbar-item mx-3 text-white">Registrate como Influencer</span>
+          </Link>
           <button
             type="button"
             className="btn btn-primary"
@@ -82,15 +75,17 @@ export const Navbar = () => {
                   ></button>
                 </div>
                 <div className="modal-body" id="Login-us">
-                  <form>
+                  <div>
                     <div className="mb-3">
-                      <label for="exampleInputEmail1" className="form-label">
+                      <label for="email" className="form-label">
                         Email:
                       </label>
                       <input
                         type="email"
                         className="form-control"
-                        id="exampleInputEmail1"
+                        id="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                         aria-describedby="emailHelp"
                       />
                       <div id="emailHelp" className="form-text">
@@ -98,13 +93,15 @@ export const Navbar = () => {
                       </div>
                     </div>
                     <div className="mb-3">
-                      <label for="exampleInputPassword1" className="form-label">
+                      <label for="password" className="form-label">
                         Contraseña:
                       </label>
                       <input
                         type="password"
                         className="form-control"
-                        id="exampleInputPassword1"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        id="password"
                       />
                     </div>
                     <div className="mb-3 form-check">
@@ -118,43 +115,49 @@ export const Navbar = () => {
                       </label>
                     </div>
                     <div style={{ display: "flex", justifyContent: "center" }}>
-                      <button type="submit" className="btn btn-primary">
+                      <button type="submit" className="btn btn-primary" onClick={handleClick} data-bs-dismiss="modal">
                         Iniciar Sesión
                       </button>
                     </div>
-
-                    <br></br>
-                    <br></br>
-                    <div
-                      className="row"
-                      style={{
-                        display: "flex",
-                        flexDirection: "row",
-                        justifyContent: "end",
-                      }}
-                    >
-                      <div className="col-5">
-                        <button
-                          type="button"
-                          class="btn btn-outline-warning"
-                          style={{ fontSize: "85%" }}
-                        >
-                          <a href={"/formulario-empresas"}>Registrar Empresa</a>
-                        </button>
-                      </div>
-                      <div className="col-5">
-                        <button
-                          type="button"
-                          class="btn btn-outline-warning "
-                          style={{ fontSize: "85%" }}
-                        >
-                          <a href={"/formulario-influencers"}>Registrar Influencer</a>
-                        </button>
-                      </div>
-                      <br></br>
-                      <br></br>
+                  
+                  </div>
+                  <br></br>
+                  <br></br>
+                  <div
+                    className="row"
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      justifyContent: "end",
+                    }}
+                  >
+                    <div className="col-5">
+                      <Link to="/formulario-influencers">
+                      <button
+                        type="button"
+                        class="btn btn-outline-warning"
+                        style={{ fontSize: "85%" }}
+                        data-bs-dismiss="modal"
+                      >
+                        Registrar Empresa
+                      </button>
+                      </Link>
                     </div>
-                  </form>
+                    <div className="col-5">
+                      <Link to="/formulario-empresas">
+                      <button
+                        type="button"
+                        class="btn btn-outline-warning "
+                        style={{ fontSize: "85%" }}
+                        data-bs-dismiss="modal"
+                      >
+                        Registrar Influencer
+                      </button>
+                      </Link>
+                    </div>
+                    <br></br>
+                    <br></br>
+                  </div>
                 </div>
               </div>
             </div>

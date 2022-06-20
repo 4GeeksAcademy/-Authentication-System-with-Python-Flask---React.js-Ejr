@@ -1,8 +1,14 @@
 """empty message
 
-Revision ID: ca4971c3c36f
+<<<<<<< HEAD:migrations/versions/060abd15dca2_.py
+Revision ID: 060abd15dca2
 Revises: 
-Create Date: 2022-06-17 17:10:12.013034
+Create Date: 2022-06-20 10:09:57.702423
+=======
+Revision ID: 2ec6e3ba25f1
+Revises: 
+Create Date: 2022-06-18 18:43:40.241885
+>>>>>>> 491ee097d88aa67c32d4f1f360459fda73eff5ad:migrations/versions/2ec6e3ba25f1_.py
 
 """
 from alembic import op
@@ -10,7 +16,11 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'ca4971c3c36f'
+<<<<<<< HEAD:migrations/versions/060abd15dca2_.py
+revision = '060abd15dca2'
+=======
+revision = '2ec6e3ba25f1'
+>>>>>>> 491ee097d88aa67c32d4f1f360459fda73eff5ad:migrations/versions/2ec6e3ba25f1_.py
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -49,6 +59,9 @@ def upgrade():
     sa.Column('post4', sa.String(length=120), nullable=True),
     sa.Column('post5', sa.String(length=120), nullable=True),
     sa.Column('post6', sa.String(length=120), nullable=True),
+    sa.Column('precio_post', sa.Integer(), nullable=True),
+    sa.Column('precio_reel', sa.Integer(), nullable=True),
+    sa.Column('precio_story', sa.Integer(), nullable=True),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('email'),
     sa.UniqueConstraint('ig_user')
