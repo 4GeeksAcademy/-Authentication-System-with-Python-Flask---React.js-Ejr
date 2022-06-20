@@ -75,16 +75,16 @@ body {
   background: url("https://images.pexels.com/photos/3184292/pexels-photo-3184292.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1");
   background-size: 100% 100%;
   background-repeat: no-repeat;
-  height: 300px;
-  width: 1000px;
+  height: 500px;
+  width: 100%;
   opacity: 80%;
 }
 #imgPerfil2 {
   background: url("https://media.istockphoto.com/photos/social-media-concept-picture-id1205703732?k=20&m=1205703732&s=612x612&w=0&h=RjnvKZW_InJ73SoPzQVA8qj5bcg6_0yBgPx_JUtrn2k=");
-  background-size: 100% 100%;
+  background-size: 100% 120%;
   background-repeat: no-repeat;
-  height: 300px;
-  width: 1000px;
+  height: 500px;
+  width: 100%;
   opacity: 80%;
 }
 .p-5 {
