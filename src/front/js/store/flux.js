@@ -2,6 +2,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
 			message: null,
+			favInf: [],
+			posts: [],
 			demo: [
 				{
 					title: "FIRST",
@@ -17,6 +19,25 @@ const getState = ({ getStore, getActions, setStore }) => {
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
+			agregar: (url)=>{
+				const store = getStore();
+				setStore({ posts: [...store.posts, url] });
+			},
+
+			addFavInf: (name)=>{
+				setStore({favInf:[...getStore().favInf, name]})		
+
+
+			},
+			deleteFavInf: (name)=>{
+				let newArray = getStore().favInf.filter((valor)=> {
+					return valor != name;
+
+				})
+				setStore({favInf:newArray})
+			},
+
+
 			exampleFunction: () => {
 				getActions().changeColor(0, "green");
 			},

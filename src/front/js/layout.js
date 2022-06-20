@@ -1,4 +1,4 @@
-import React from "react";
+import React, {Component} from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
 
@@ -6,7 +6,7 @@ import { Home } from "./pages/home";
 import { Demo } from "./pages/demo";
 import { Single } from "./pages/single";
 import { VistaInflu } from "./pages/vistaInflu";
-import { ImgInflu } from "./component/imgInflu";
+import {VistaInfluPb} from "./pages/vistaInfluPb";
 import { VistaEmp } from "./pages/vistaEmp";
 import injectContext from "./store/appContext";
 
@@ -17,6 +17,7 @@ import { FormEmpresas } from "./component/formulario-empresas";
 import { Directorio } from "./pages/directorio";
 import { EditarEmpresa } from "./component/editar-empresa";
 import { EditarInfluencer } from "./component/editar-influencer";
+import EnviarEmail from "./component/enviarEmail";
 
 //create your first component
 const Layout = () => {
@@ -57,10 +58,15 @@ const Layout = () => {
             <Route exact path="/vistaInflu">
               <VistaInflu />
             </Route>
-            <Route exact path="/imgInflu">
-              <ImgInflu />
+            <Route exact path="/vistaInfluPb/">
+              <VistaInfluPb />
+            </Route>
+            <Route exact path="/enviarEmail/">
+              <EnviarEmail />
             </Route>
 
+                             
+            
             <Route exact path="/vistaEmp">
               <VistaEmp />
             </Route>
