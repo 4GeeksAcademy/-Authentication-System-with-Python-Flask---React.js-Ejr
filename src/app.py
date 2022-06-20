@@ -66,16 +66,19 @@ def iniciar_sesion():
     if user:
         if user.password == request_body['password']:
             tiempo = datetime.timedelta(minutes=60)
-            acceso = create_access_token(identity = request_body['email'], expires_delta= tiempo)
+            access_token = create_access_token(identity = request_body['email'], expires_delta= tiempo)
             return jsonify({
-                "mensaje": "inicio de sesión correcto",
-                "duración": tiempo.total_seconds(),
-                "token": acceso
+                "mensaje": "inicio de sesion correcto",
+                "duracion": tiempo.total_seconds(),
+                "access_token": access_token,
+                "error": None
             })
         else:
-            return "Clave Incorrecta"
+            return jsonify({"error": "Clave Incorrecta"}), 400
     else:
-        return "user no existe", 400
+        return jsonify({"error": "user no existe"}), 400
+    
+    a
 
 @app.route('/privada', methods=['GET'])
 @jwt_required()
