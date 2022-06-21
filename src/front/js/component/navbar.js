@@ -24,7 +24,7 @@ export const Navbar = () => {
         <Link to="/">
           <span className="navbar-brand mb-0 h1 text-black">
             <img
-              src="https://i.ibb.co/Kh1cTp0/Disen-o-sin-ti-tulo.png"
+              src="https://i.ibb.co/X8KB9ZY/Influe-re.png"
               className="img-fluid shadow-4"
               alt="..."
             />
@@ -32,18 +32,21 @@ export const Navbar = () => {
         </Link>
         <div className="ml-auto">
           <Link to="/Directorio">
-            <span className="navbar-item mx-2 text-black">Influencers</span>
+            <span className="navbar-item mx-2 text-black menu">
+              Influencers
+            </span>
           </Link>
           <Link to="/formulario-empresas">
             <span className="navbar-item mx-3 text-black">
-              Registrarse como Empresa
+              Regístrate como Empresa
             </span>
           </Link>
           <Link to="/formulario-influencers">
             <span className="navbar-item mx-3 text-black">
-              Registrate como Influencer
+              Regístrate como Influencer
             </span>
           </Link>
+
           <button
             type="button"
             className="btn btn-primary"

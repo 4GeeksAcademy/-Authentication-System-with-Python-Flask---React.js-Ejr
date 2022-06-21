@@ -5,15 +5,18 @@ import { CardsInflu } from "./cardsInfluencers";
 export const Carruselinfluencers = () => {
   return (
     <div class="container">
-      <h2 className="text-center pb-2 border-bottom">
-        {" "}
-        <a
-          className="hover"
-          href="https://3000-jaygosling-influere-ai7nxhchf88.ws-eu47.gitpod.io/Directorio"
-        >
-          <b>Directorio de Influencers</b>
-        </a>
-      </h2>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+      <h4 className="antetitulo4">¿READY PARA DAR EL SALTO?</h4>
+      <h1
+        className="text-center pb-2 tituloabout"
+        href="https://3000-jaygosling-influere-ai7nxhchf88.ws-eu47.gitpod.io/Directorio"
+      >
+        DIRECTORIO DE INFLUENCERS
+      </h1>
+
       <div className="container">
         <div className="row my-5">
           <div className="col-3">
@@ -29,6 +32,10 @@ export const Carruselinfluencers = () => {
             <CardsInflu />
           </div>
         </div>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
       </div>
     </div>
   );

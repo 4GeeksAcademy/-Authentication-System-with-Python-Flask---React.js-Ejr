@@ -21,21 +21,10 @@ export const Header = () => {
         tu público objetivo.
       </h4>
       <br></br>
-      <div className="container">
-        <div className="row">
-          <div className="col">
-            <a
-              className="btn btn-danger rounded-pill btn-lg"
-              href=""
-              role="button"
-            >
-              REGÍSTRATE
-            </a>
-          </div>
 
-          <div className="col">VER DIRECTORIO</div>
-        </div>
-      </div>
+      <a className="btn btn-danger rounded-pill btn-lg" href="" role="button">
+        REGÍSTRATE
+      </a>
     </div>
   );
 };
