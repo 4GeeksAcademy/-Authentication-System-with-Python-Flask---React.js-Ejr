@@ -15,6 +15,7 @@ export const Header = () => {
     >
       <h4 className="antetitulo">TE DAMOS LA BIENVENIDA A</h4>
       <h1 className="mb-3 titulo1">Influĕre</h1>
+
       <h4 className="subtitulo">
         La web donde empresas e influencers se unen para generar contenido de
         calidad.<br></br> Accede a nuestro directorio de colaboradores y llega a

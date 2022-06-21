@@ -3,6 +3,12 @@
   font-size: 85px;
 }
 
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@500&display=swap");
+.title1 {
+  font-size: 25px;
+  font-family: "DM Sans", sans-serif;
+}
+
 .titulo1 {
   font-weight: 855;
   font-size: 70px;
@@ -26,6 +32,13 @@ body {
   font-family: "Raleway", sans-serif;
   color: white;
 }
+
+.tituloabout3 {
+  font-family: "Raleway", sans-serif;
+  color: white;
+  margin-top: 70px;
+}
+
 .texto1 {
   font-family: "Poppins", sans-serif;
   font-size: 16px;
@@ -36,7 +49,8 @@ body {
   max-height: 350px;
   border-radius: 15px;
   box-sizing: border-box;
-  margin: 100px 12% 15px 12%;
+  margin: 100px;
+  margin-right: 100px;
 }
 
 .aboutus2 {
@@ -184,6 +198,7 @@ img {
   font-size: 20px;
   line-height: 30px;
   color: white !important;
+  margin-top: 5px;
 }
 
 @import url("https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap");
@@ -255,4 +270,29 @@ img {
   font-family: "Poppins", sans-serif;
   font-size: 16px;
   line-height: 20px;
+}
+
+.card-body {
+  font-family: "Poppins", sans-serif;
+  font-size: 16px;
+}
+
+.busqueda {
+  font-family: "Raleway", sans-serif;
+  color: white;
+  font-size: 30px;
+  margin-left: 43px;
+}
+
+.card bg-primary cuadro {
+  background-color: #302880;
+}
+
+.redessociales {
+  margin-top: 20px;
+}
+
+.table {
+  font-size: 25px;
+  font-family: "DM Sans", sans-serif;
 }
