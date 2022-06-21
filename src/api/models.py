@@ -10,7 +10,7 @@ class Influencers(db.Model):
     apellidos = db.Column(db.String(80), unique=False, nullable=False)
     ig_user = db.Column(db.String(80), unique=True, nullable=False)
     categoria = db.Column(db.String(80), unique=False, nullable=False)
-    pais = db.Column(db.String(80), unique=False, nullable=False)
+    autonomia = db.Column(db.String(80), unique=False, nullable=False)
     ciudad = db.Column(db.String(80), unique=False, nullable=False)
     bio = db.Column(db.String(360), unique=False, nullable=False)
     post1 = db.Column(db.String(120), unique=False, nullable=True)
@@ -35,7 +35,7 @@ class Influencers(db.Model):
             "apellidos": self.apellidos,
             "ig_user": self.ig_user,
             "categoria": self.categoria,
-            "pais": self.pais,
+            "autonomia": self.autonomia,
             "ciudad": self.ciudad,
             "bio": self.bio,
             "post1": self.post1,
@@ -59,7 +59,7 @@ class Empresas(db.Model):
     apellidos = db.Column(db.String(80), unique=False, nullable=False)
     razon_social = db.Column(db.String(80), unique=False, nullable=False)
     sector = db.Column(db.String(80), unique=False, nullable=False)
-    pais = db.Column(db.String(80), unique=False, nullable=False)
+    autonomia = db.Column(db.String(80), unique=False, nullable=False)
     ciudad = db.Column(db.String(80), unique=False, nullable=False)
     bio = db.Column(db.String(360), unique=False, nullable=False)
 
@@ -74,7 +74,7 @@ class Empresas(db.Model):
             "apellidos": self.apellidos,
             "razon_social": self.razon_social,
             "sector": self.sector,
-            "pais": self.pais,
+            "autonomia": self.autonomia,
             "ciudad": self.ciudad,
             "bio": self.bio,
            # do not serialize the password, its a security breach

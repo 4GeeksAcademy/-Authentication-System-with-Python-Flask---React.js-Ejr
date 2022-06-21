@@ -26,7 +26,7 @@ def modificar_influencers(id):
     influencer.apellidos = body["apellidos"]
     influencer.ig_user = body["ig_user"]
     influencer.categoria = body["categoria"]
-    influencer.pais = body["pais"]
+    influencer.autonomia = body["autonomia"]
     influencer.ciudad = body["ciudad"]
     influencer.bio = body["bio"]
     if "post1" in body:
@@ -63,21 +63,9 @@ def modificar_empresas(id):
     empresas.apellidos = body["apellidos"]
     empresas.razon_social = body["razon_social"]
     empresas.sector = body["sector"]
-    empresas.pais = body["pais"]
+    empresas.autonomia = body["autonomia"]
     empresas.ciudad = body["ciudad"]
     empresas.bio = body["bio"]
-    if "post1" in body:
-        empresas.post1 = body["post1"]
-    if "post2" in body:
-        empresas.post2 = body["post2"]
-    if "post3" in body:
-        empresas.post3 = body["post3"]
-    if "post4" in body:
-        empresas.post4 = body["post4"]
-    if "post5" in body:
-        empresas.post5 = body["post5"]
-    if "post6" in body:
-        empresas.post6 = body["post6"]
     db.session.commit()
 
     return jsonify({"message":"Informacion actualizada"})
@@ -92,7 +80,7 @@ def registro_empresas():
     if email_exists:
         print("This user already exists")
     else:
-        empresas = Empresas(email=body["email"], password=body["password"], apellidos=body["apellidos"], nombre=body["nombre"], razon_social=body["razon_social"], sector=body["sector"], pais = body["pais"], ciudad = body["ciudad"], bio = body["bio"])    
+        empresas = Empresas(email=body["email"], password=body["password"], apellidos=body["apellidos"], nombre=body["nombre"], razon_social=body["razon_social"], sector=body["sector"], autonomia = body["autonomia"], ciudad = body["ciudad"], bio = body["bio"])    
         db.session.add(empresas)
         db.session.commit()
     
@@ -113,7 +101,17 @@ def registro_influencers():
     if email_exists:
         print("This user already exists")
     else:
-        influencers = Influencers(email=body["email"], password=body["password"], apellidos=body["apellidos"], nombre=body["nombre"], ig_user=body["ig_user"], categoria=body["categoria"], pais = body["pais"], ciudad = body["ciudad"], bio = body["bio"],post1=body["post1"],post2=body["post2"],post3=body["post3"],post4=body["post4"],post5=body["post5"],post6=body["post6"])    
+        influencers = Influencers(email=body["email"], password=body["password"], apellidos=body["apellidos"], nombre=body["nombre"], ig_user=body["ig_user"], categoria=body["categoria"], autonomia = body["autonomia"], ciudad = body["ciudad"], bio = body["bio"],post1=body["post1"])
+        if "post2" in body:
+            influencers.post2 = body["post2"]
+        if "post3" in body:
+            influencers.post3 = body["post3"]
+        if "post4" in body:
+            influencers.post4 = body["post4"]
+        if "post5" in body:
+            influencers.post5 = body["post5"]
+        if "post6" in body:
+            influencers.post6 = body["post6"]
         db.session.add(influencers)
         db.session.commit()
     
