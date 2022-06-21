@@ -1,14 +1,8 @@
 """empty message
 
-<<<<<<< HEAD:migrations/versions/060abd15dca2_.py
-Revision ID: 060abd15dca2
+Revision ID: 246fa0897993
 Revises: 
-Create Date: 2022-06-20 10:09:57.702423
-=======
-Revision ID: 2ec6e3ba25f1
-Revises: 
-Create Date: 2022-06-18 18:43:40.241885
->>>>>>> 491ee097d88aa67c32d4f1f360459fda73eff5ad:migrations/versions/2ec6e3ba25f1_.py
+Create Date: 2022-06-21 13:26:33.479811
 
 """
 from alembic import op
@@ -16,11 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-<<<<<<< HEAD:migrations/versions/060abd15dca2_.py
-revision = '060abd15dca2'
-=======
-revision = '2ec6e3ba25f1'
->>>>>>> 491ee097d88aa67c32d4f1f360459fda73eff5ad:migrations/versions/2ec6e3ba25f1_.py
+revision = '246fa0897993'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -36,7 +26,7 @@ def upgrade():
     sa.Column('apellidos', sa.String(length=80), nullable=False),
     sa.Column('razon_social', sa.String(length=80), nullable=False),
     sa.Column('sector', sa.String(length=80), nullable=False),
-    sa.Column('pais', sa.String(length=80), nullable=False),
+    sa.Column('autonomia', sa.String(length=80), nullable=False),
     sa.Column('ciudad', sa.String(length=80), nullable=False),
     sa.Column('bio', sa.String(length=360), nullable=False),
     sa.PrimaryKeyConstraint('id'),
@@ -50,7 +40,7 @@ def upgrade():
     sa.Column('apellidos', sa.String(length=80), nullable=False),
     sa.Column('ig_user', sa.String(length=80), nullable=False),
     sa.Column('categoria', sa.String(length=80), nullable=False),
-    sa.Column('pais', sa.String(length=80), nullable=False),
+    sa.Column('autonomia', sa.String(length=80), nullable=False),
     sa.Column('ciudad', sa.String(length=80), nullable=False),
     sa.Column('bio', sa.String(length=360), nullable=False),
     sa.Column('post1', sa.String(length=120), nullable=True),
