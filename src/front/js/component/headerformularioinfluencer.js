@@ -1,7 +1,7 @@
 import React from "react";
 import "../../styles/home.css";
 
-export const Headerformularioempresa = () => {
+export const Headerformularioinfluencer = () => {
   return (
     <div
       className="p-5 text-center header"
@@ -15,7 +15,7 @@ export const Headerformularioempresa = () => {
     >
       <h1 className="mb-3 tituloabout3">¡ENHORABUENA!</h1>
       <h4 className="subtitulo">
-        Estás a un paso de encontrar el embajador perfecto para tu marca
+        Estás a un paso de que empresas afines a tí te encuentren
       </h4>
     </div>
   );

@@ -13,7 +13,7 @@ export const Headervistaempresa = () => {
         width: "100%",
       }}
     >
-      <h1 className="mb-3 tituloabout3">VISTA PRIVADA DE EMPRESA</h1>
+      <h1 className="mb-3 tituloabout3">¡Enhorabuena!</h1>
     </div>
   );
 };

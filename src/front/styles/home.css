@@ -9,6 +9,10 @@
   font-family: "DM Sans", sans-serif;
 }
 
+.camposform {
+  font-size: 20px;
+  font-family: "DM Sans", sans-serif;
+}
 .titulo1 {
   font-weight: 855;
   font-size: 70px;
@@ -254,6 +258,23 @@ img {
   font-family: "Montserrat", sans-serif;
   letter-spacing: 1.5px;
   font-size: medium;
+}
+
+.btn-primary,
+.btn-primary:hover,
+.btn-primary:active,
+.btn-primary:visited,
+.btn-primary:focus {
+  background-color: #302880;
+  border-color: #302880;
+  font-family: "Montserrat", sans-serif;
+  letter-spacing: 1.5px;
+  font-size: medium;
+}
+
+.bg-dark {
+  background-color: #302880;
+  border-color: #302880;
 }
 
 .py-14 {
