@@ -1,18 +1,69 @@
-
 .titulo1 {
-  font-weight: 900;
-  font-size: 70px;
-  margin-top: 100px;
+  font-weight: 855;
+  font-size: 85px;
 }
 
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@500&display=swap");
+.title1 {
+  font-size: 25px;
+  font-family: "DM Sans", sans-serif;
+}
+
+.titulo1 {
+  font-weight: 855;
+  font-size: 70px;
+}
 body {
   max-width: 100%;
   max-height: 100%;
 }
 
+.card {
+  border-radius: 15px;
+}
+
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@800&display=swap");
+
+.tituloabout {
+  font-family: "Raleway", sans-serif;
+}
+
+.tituloabout2 {
+  font-family: "Raleway", sans-serif;
+  color: white;
+}
+
+.tituloabout3 {
+  font-family: "Raleway", sans-serif;
+  color: white;
+  margin-top: 70px;
+}
+
+.texto1 {
+  font-family: "Poppins", sans-serif;
+  font-size: 16px;
+  line-height: 20px;
+}
+
+.aboutus {
+  max-height: 350px;
+  border-radius: 15px;
+  box-sizing: border-box;
+  margin: 100px;
+  margin-right: 100px;
+}
+
+.aboutus2 {
+  max-height: 350px;
+  border-radius: 15px;
+  box-sizing: border-box;
+  margin-right: 40px;
+  margin-top: 100px;
+}
+
 .img-home1 {
   max-height: 350px;
-  border-radius: 5px 65px;
+  border-radius: 5px;
   box-sizing: border-box;
   margin: 0px 12% 15px 12%;
 }
@@ -97,20 +148,15 @@ body {
 }
 
 img {
-  border-radius: 15%;
-}
-
-.card {
-  border-color: #ffffff;
+  border-radius: 15px;
 }
 
 .sectores {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Poppins", sans-serif;
   font-weight: 400;
   text-align: center;
   font-size: 18px;
   margin-top: 10px;
-
 }
 
 .hover {
@@ -130,4 +176,123 @@ img {
 .text-white:hover {
   color: #ffffff;
   text-decoration: none;
+}
+
+.navbar-item mx-3 text-black {
+  text-decoration: none !important;
+  font-family: "Poppins", sans-serif;
+  font-size: 16px;
+  line-height: 20px;
+}
+
+.navbar-item {
+  text-decoration: none !important;
+  font-family: "Poppins", sans-serif;
+  font-size: 16px;
+}
+
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap");
+
+.subtitulo {
+  font-family: "Poppins", sans-serif;
+  font-size: 20px;
+  line-height: 30px;
+  color: white !important;
+  margin-top: 5px;
+}
+
+@import url("https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap");
+.antetitulo {
+  font-family: "Permanent Marker", cursive;
+  color: #fbd63d;
+  font-size: 24px;
+  margin-top: 160px;
+}
+
+.antetitulo2 {
+  font-family: "Permanent Marker", cursive;
+  color: #302880;
+  font-size: 24px;
+  margin-top: 100px;
+}
+
+.antetitulo3 {
+  font-family: "Permanent Marker", cursive;
+  color: #fbd63d;
+  font-size: 24px;
+  margin-top: 100px;
+}
+
+.antetitulo4 {
+  font-family: "Permanent Marker", cursive;
+  color: #302880;
+  font-size: 24px;
+  text-align: center;
+}
+.sesion {
+  color: white;
+  text-decoration: none;
+  font-family: "Poppins", sans-serif;
+  font-size: 16px;
+}
+
+.menu {
+  color: black;
+  text-decoration: none;
+  font-family: "Poppins", sans-serif;
+  font-size: 16px;
+}
+
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap");
+.btn-danger,
+.btn-danger:hover,
+.btn-danger:active,
+.btn-danger:visited,
+.btn-danger:focus {
+  background-color: #fbd63d;
+  border-color: #fbd63d;
+  font-family: "Montserrat", sans-serif;
+  letter-spacing: 1.5px;
+  font-size: medium;
+}
+
+.py-14 {
+  background-color: #302880;
+}
+
+.accordion-header {
+  font-family: "Poppins", sans-serif;
+  font-size: 16px;
+  line-height: 20px;
+}
+
+.accordion-body {
+  font-family: "Poppins", sans-serif;
+  font-size: 16px;
+  line-height: 20px;
+}
+
+.card-body {
+  font-family: "Poppins", sans-serif;
+  font-size: 16px;
+}
+
+.busqueda {
+  font-family: "Raleway", sans-serif;
+  color: white;
+  font-size: 30px;
+  margin-left: 43px;
+}
+
+.card bg-primary cuadro {
+  background-color: #302880;
+}
+
+.redessociales {
+  margin-top: 20px;
+}
+
+.table {
+  font-size: 25px;
+  font-family: "DM Sans", sans-serif;
 }

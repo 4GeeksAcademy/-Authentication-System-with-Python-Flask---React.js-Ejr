@@ -6,21 +6,25 @@ export const Header = () => {
     <div
       className="p-5 text-center header"
       style={{
-        backgroundImage: `url("https://i.ibb.co/7Gn7ZNs/Disen-o-sin-ti-tulo-1.png")`,
+        backgroundImage: `url("https://i.ibb.co/FDKVdF9/header-1.png")`,
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
-        height: "500px",
+        height: "700px",
         width: "100%",
       }}
     >
+      <h4 className="antetitulo">TE DAMOS LA BIENVENIDA A</h4>
       <h1 className="mb-3 titulo1">Influĕre</h1>
+
       <h4 className="subtitulo">
         La web donde empresas e influencers se unen para generar contenido de
-        calidad.
+        calidad.<br></br> Accede a nuestro directorio de colaboradores y llega a
+        tu público objetivo.
       </h4>
       <br></br>
-      <a className="btn btn-primary" href="" role="button">
-        ¡Regístrate!
+
+      <a className="btn btn-danger rounded-pill btn-lg" href="" role="button">
+        REGÍSTRATE
       </a>
     </div>
   );

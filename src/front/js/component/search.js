@@ -2,14 +2,23 @@ import React from "react";
 
 export const Search = () => {
   return (
-    <div className="mask d-flex align-items-center my-5">
+    <div
+      className="mask d-flex align-items-center my-5"
+      style={{ backgroundColor: "#f5f5f5" }}
+    >
       <div className="container-fluid">
         <div className="row">
           <div className="col-md-10 col-lg-8 col-xl-12 mx-auto rounded">
             <div className="card mb-2 mb-5">
               <div className="card-body p-2">
                 <div className="input-group input-group-lg">
-                  <input type="text" className="form-control form-control-lg rounded" placeholder="Busca a tu Influencer" aria-label="Type Keywords" aria-describedby="basic-addon2"/>
+                  <input
+                    type="text"
+                    className="form-control form-control-lg rounded"
+                    placeholder="Busca a tu Influencer"
+                    aria-label="Type Keywords"
+                    aria-describedby="basic-addon2"
+                  />
                   <span className="input-group-text border-0" id="basic-addon2">
                     <i className="fas fa-search"></i>
                   </span>
@@ -18,12 +27,24 @@ export const Search = () => {
             </div>
             <div className="card bg-dark">
               <div className="card-body p-3">
-                <h6 className="text-white">Busqueda Avanzada</h6>
+                <h6 className="busqueda">BÚSQUEDA AVANZADA</h6>
+
                 <div className="row">
                   <div className="col-md-2 mb-2 ms-5">
                     <div class="dropdown">
-                      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">Sectores</button>
-                      <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                      <button
+                        class="btn btn-secondary dropdown-toggle"
+                        type="button"
+                        id="dropdownMenuButton1"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                      >
+                        Sectores
+                      </button>
+                      <ul
+                        class="dropdown-menu"
+                        aria-labelledby="dropdownMenuButton1"
+                      >
                         <li>
                           <a class="dropdown-item" href="#">
                             Moda
@@ -49,8 +70,20 @@ export const Search = () => {
                   </div>
                   <div className="col-md-2 mb-2">
                     <div className="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"> Seguidores </button>
-                      <ul className="dropdown-menu" aria-labelledby="dropdownMenuLink1">
+                      <button
+                        class="btn btn-secondary dropdown-toggle"
+                        type="button"
+                        id="dropdownMenuButton1"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                      >
+                        {" "}
+                        Seguidores{" "}
+                      </button>
+                      <ul
+                        className="dropdown-menu"
+                        aria-labelledby="dropdownMenuLink1"
+                      >
                         <li>
                           <a className="dropdown-item" href="#">
                             Menos de 100.000
@@ -76,8 +109,20 @@ export const Search = () => {
                   </div>
                   <div className="col-md-3 mb-2">
                     <div className="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"> Precio por Publicación </button>
-                      <ul className="dropdown-menu" aria-labelledby="dropdownMenuLink1">
+                      <button
+                        class="btn btn-secondary dropdown-toggle"
+                        type="button"
+                        id="dropdownMenuButton1"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                      >
+                        {" "}
+                        Precio por Publicación{" "}
+                      </button>
+                      <ul
+                        className="dropdown-menu"
+                        aria-labelledby="dropdownMenuLink1"
+                      >
                         <li>
                           <a className="dropdown-item" href="#">
                             0€ - 100€
@@ -103,8 +148,20 @@ export const Search = () => {
                   </div>
                   <div className="col-md-2 mb-2">
                     <div className="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"> Ubicación </button>
-                      <ul className="dropdown-menu" aria-labelledby="dropdownMenuLink2">
+                      <button
+                        class="btn btn-secondary dropdown-toggle"
+                        type="button"
+                        id="dropdownMenuButton1"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                      >
+                        {" "}
+                        Ubicación{" "}
+                      </button>
+                      <ul
+                        className="dropdown-menu"
+                        aria-labelledby="dropdownMenuLink2"
+                      >
                         <li>
                           <a className="dropdown-item" href="#">
                             Andalucía
@@ -204,8 +261,18 @@ export const Search = () => {
                     </div>
                   </div>
                   <div className="col-md-2 pe-1 ms-5">
-                    <button type="button" className="btn btn-link text-white" data-mdb-ripple-color="dark"> Reiniciar </button>
-                    <button type="button" className="btn btn-warning fw-bold"> Buscar </button>
+                    <button
+                      type="button"
+                      className="btn btn-link text-white"
+                      data-mdb-ripple-color="dark"
+                    >
+                      {" "}
+                      Reiniciar{" "}
+                    </button>
+                    <button type="button" className="btn btn-warning fw-bold">
+                      {" "}
+                      Buscar{" "}
+                    </button>
                   </div>
                 </div>
               </div>

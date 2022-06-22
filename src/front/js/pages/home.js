@@ -8,6 +8,8 @@ import { Header } from "../component/header";
 import { Sectores } from "../component/sectores";
 import { Navbar } from "../component/navbar";
 import { Carruselinfluencers } from "../component/carruselinfluencers";
+import { Aboutus } from "../component/aboutus";
+import { Negociofranja } from "../component/negociofranja";
 
 export const Home = () => {
   const { store, actions } = useContext(Context);
@@ -15,6 +17,8 @@ export const Home = () => {
   return (
     <div>
       <Header />
+      <Aboutus />
+      <Negociofranja />
       <Howitworks />
       <Sectores />
       <Carruselinfluencers />

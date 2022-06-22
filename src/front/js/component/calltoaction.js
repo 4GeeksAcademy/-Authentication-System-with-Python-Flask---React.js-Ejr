@@ -3,12 +3,12 @@ import "../../styles/home.css";
 
 export const Calltoaction = () => {
   return (
-    <div className="py-14 bg-dark">
+    <div className="py-14">
       <div className="container">
         <div className="row">
           <div className="offset-lg-2 col-lg-8 col-md-12 col-12 text-center">
             <span
-              className="fs-4 text-warning ls-md text-uppercase
+              className="antetitulo fs-4 ls-md text-uppercase
          fw-semi-bold"
             >
               <br></br>
@@ -19,14 +19,18 @@ export const Calltoaction = () => {
               Los mejores proyectos te esperan aquí.
             </h2>
 
-            <p className="lead text-white-50 px-lg-8 mb-6">
+            <p className="lead text-white-50 px-lg-8 mb-6 subtitulo">
               Tú eliges el proyecto entre los más de 50.000 empresas registradas
               en Influĕre. <br></br>Soporte continuo de nuestra comunidad de
               expertos
             </p>
             <br></br>
-            <a href="#" className="btn btn-primary">
-              ¡Da el salto!
+            <a
+              className="btn btn-danger rounded-pill btn-lg"
+              href=""
+              role="button"
+            >
+              DA EL SALTO
             </a>
             <br></br>
             <br></br>
