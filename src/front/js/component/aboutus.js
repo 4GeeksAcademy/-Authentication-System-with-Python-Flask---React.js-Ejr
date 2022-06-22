@@ -34,7 +34,7 @@ export const Aboutus = () => {
         <div class="col-6">
           <img
             className="aboutus"
-            src="https://columnadigital.com/wp-content/uploads/2022/02/pasos-para-encontrar-y-elegir-a-influencers.jpg"
+            src="https://static.elcorreo.com/www/multimedia/201910/28/media/cortadas/1500x844_influencers_jose_lopez-kOdB-U90526013027ArE-1248x770@El%20Correo.jpg"
           />
           <br></br>
           <br></br>

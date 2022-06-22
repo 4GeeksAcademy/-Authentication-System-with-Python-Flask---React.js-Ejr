@@ -8,7 +8,7 @@ export const Howitworks = () => {
         <div class="col-6">
           <img
             className="aboutus2"
-            src="https://columnadigital.com/wp-content/uploads/2022/02/pasos-para-encontrar-y-elegir-a-influencers.jpg"
+            src="https://chet.com.ar/blog/wp-content/uploads/2019/09/Influencers.jpg"
           />
         </div>
         <div class="col-6">
