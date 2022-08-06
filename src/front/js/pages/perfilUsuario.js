@@ -106,7 +106,7 @@ const PerfilUsuario = () => {
                                 </div>
                             </div>
                         </div> 
-                        <div className="gap-3 d-md-flex justify-content-md-end text-center">
+                        <div className="gap-3 d-md-flex justify-content-md-end text-center mb-5">
                             <button type="button" className="btn btn-danger btn-lg">Eliminar Perfil</button>
                             <button type="button" className="btn btn-primary btn-lg">Actualizar Perfil</button>
                         </div>

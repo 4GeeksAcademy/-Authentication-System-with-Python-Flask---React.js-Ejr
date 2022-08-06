@@ -14,10 +14,10 @@ function Footer() {
       <p>
         ¡Síguenos en nuestras redes sociales! <FaHandPointDown />
       </p>
-      <button className="btn btn-secondary me-3 text-dark border-warning bg-warning rounded-circle mb-4">
+      <button className="btn btn-secondary me-3 text-dark border-warning bg-warning rounded-circle">
         <AiFillFacebook />{" "}
       </button>
-      <button className="btn btn-secondary text-dark border-warning bg-warning rounded-circle mb-4">
+      <button className="btn btn-secondary text-dark border-warning bg-warning rounded-circle">
         {" "}
         <AiOutlineInstagram />{" "}
       </button>

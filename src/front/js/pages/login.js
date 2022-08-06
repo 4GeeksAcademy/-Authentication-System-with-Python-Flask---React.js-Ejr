@@ -6,7 +6,7 @@ const Login = () => {
   return (
     <div className="container w-25 mt-5">
       <div className="row">
-        <img src={Logo} />
+        <img className="mt-5" src={Logo} />
       </div>
       <div className="container shadow-lg p-3 mb-5 bg-white rounded  mt-5">
         <div className="row ">
