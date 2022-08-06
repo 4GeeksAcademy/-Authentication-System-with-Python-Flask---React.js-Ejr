@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
 
-import { Home } from "./pages/home";
+import Home from "./pages/home";
 import injectContext from "./store/appContext";
 
 import Navbar from "./component/navbar";
@@ -19,6 +19,7 @@ import PerfilCasino from "./pages/perfilCasino";
 import Menu from "./pages/menu";
 import DireccionesUsuario from "./pages/infoDelivery";
 import AdminEmpresa from "./pages/adminEmpresa";
+import Contact from "./pages/contact";
 
 //create your first component
 const Layout = () => {
@@ -32,6 +33,7 @@ const Layout = () => {
         <ScrollToTop>
           <Navbar />
           <Routes>
+            <Route element={<Contact />} path="/contact"></Route>
             <Route element={<AdminEmpresa />} path="/admin-empresa"></Route>
             <Route element={<DireccionesUsuario />} path="/informacion-delivery"></Route>
             <Route element={<Menu />} path="/user-menu"></Route>
