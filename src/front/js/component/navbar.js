@@ -17,11 +17,7 @@ function Navbar() {
             data-bs-toggle="dropdown"
             aria-expanded="false"
           >
-            <img
-              src={Logo}
-              className="w-25 border border-success rounded"
-              alt="logo"
-            />
+           
           </a>
           <ul className="dropdown-menu bg-success">
             <li>
