@@ -10,15 +10,19 @@ function Navbar() {
     <nav className="navbar bg-success fixed-top">
       <div className="container-fluid">
         <div className="nav-item dropdown">
-          <a
-            className="nav-link dropdown-toggle"
-            href="/"
-            role="button"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-          >
-           
-          </a>
+          <div className="row">
+            <div className="col d-flex justify-content-betweenn">
+              <h6 className="mt-2 text-light"> Casino Carporativo</h6>
+              <a
+                className="nav-link dropdown-toggle text-light"
+                href="/"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              ></a>
+            </div>
+          </div>
+
           <ul className="dropdown-menu bg-success">
             <li>
               <a className="dropdown-item text-light bg-success" href="/">
