@@ -34,16 +34,16 @@ const Layout = () => {
           <Navbar />
           <Routes>
             <Route element={<Contact />} path="/contact"></Route>
-            <Route element={<AdminEmpresa />} path="/admin-empresa"></Route>
             <Route element={<DireccionesUsuario />} path="/informacion-delivery"></Route>
             <Route element={<Menu />} path="/user-menu"></Route>
+            <Route element={<MenuCasino />} path="/menu-casino"></Route>
             <Route element={<PerfilCasino />} path="/casino"></Route>
             <Route element={<PerfilEmpresa />} path="/empresa"></Route>
             <Route element={<PerfilUsuario />} path="/user"></Route>
-            <Route element={<PasswordRecoveryEmail />} path="/recovery"></Route>
             <Route element={<ResumenPanelAdmin />} path="/admin"></Route>
-            <Route element={<MenuCasino />} path="/menu-casino"></Route>
+            <Route element={<AdminEmpresa />} path="/admin-empresa"></Route>
             <Route element={<AdminCasino />} path="/admin-casino"></Route>
+            <Route element={<PasswordRecoveryEmail />} path="/recovery"></Route>
             <Route element={<Login />} path="/login"></Route>
             <Route element={<Home />} path="/" />
             <Route element={<h1>Not found!</h1>} />
