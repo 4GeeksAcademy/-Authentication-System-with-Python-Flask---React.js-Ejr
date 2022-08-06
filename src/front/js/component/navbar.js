@@ -20,21 +20,22 @@ function Navbar() {
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
               ></a>
+                <ul className="dropdown-menu bg-success">
+                <li>
+                <a className="dropdown-item text-light bg-success" href="/">
+                    Ver menú esta semana
+                </a>
+                </li>
+                <li>
+                <a className="dropdown-item text-light bg-success" href="/">
+                    Ver menú próxima semana
+                </a>
+                </li>
+            </ul>
+                </div>
             </div>
-          </div>
 
-          <ul className="dropdown-menu bg-success">
-            <li>
-              <a className="dropdown-item text-light bg-success" href="/">
-                Ver menú esta semana
-              </a>
-            </li>
-            <li>
-              <a className="dropdown-item text-light bg-success" href="/">
-                Ver menú próxima semana
-              </a>
-            </li>
-          </ul>
+        
         </div>
         <button
           className="navbar-toggler"
