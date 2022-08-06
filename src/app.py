@@ -7,10 +7,17 @@ from flask_migrate import Migrate
 from flask_swagger import swagger
 from flask_cors import CORS
 from api.utils import APIException, generate_sitemap
-from api.models import db
+from api.models import db, Walker, Owner
 from api.routes import api
 from api.admin import setup_admin
 from api.commands import setup_commands
+
+from flask_jwt_extended import create_access_token
+from flask_jwt_extended import get_jwt_identity
+from flask_jwt_extended import jwt_required
+from flask_jwt_extended import JWTManager
+
+from flask_bcrypt import Bcrypt
 
 #from models import Person
 
@@ -18,6 +25,10 @@ ENV = os.getenv("FLASK_ENV")
 static_file_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), '../public/')
 app = Flask(__name__)
 app.url_map.strict_slashes = False
+
+bcrypt = Bcrypt(app)
+app.config["JWT_SECRET_KEY"] = "dogger_dogger"
+jwt = JWTManager(app)
 
 # database condiguration
 db_url = os.getenv("DATABASE_URL")
@@ -42,6 +53,7 @@ setup_commands(app)
 # Add all endpoints form the API with a "api" prefix
 app.register_blueprint(api, url_prefix='/api')
 
+
 # Handle/serialize errors like a JSON object
 @app.errorhandler(APIException)
 def handle_invalid_usage(error):
@@ -62,6 +74,70 @@ def serve_any_other_file(path):
     response = send_from_directory(static_file_dir, path)
     response.cache_control.max_age = 0 # avoid cache memory
     return response
+
+@app.route('/walkers', methods=['POST'])
+def create_walker():
+    body = request.get_json()
+
+    if body is None:
+        raise APIException('You need to specify the request body as a json object',\
+                                                                    status_code=400)
+    if 'first_name' not in body:
+        raise APIException('Campo requerido', status_code=400)
+    if 'last_name' not in body:
+        raise APIException('Campo reqerido', status_code=400)
+    if 'email' not in body:
+        raise APIException('Campo requerido', status_code=400)
+    if 'password' not in body:
+        raise APIException('Campo requerido', status_code=400)
+
+    walker_email = Walker.query.filter_by(email= body['email']).first()
+    if walker_email != None:
+        raise APIException('Ya existe una cuenta con ese correo', status_code=400)
+
+    pw_hash = bcrypt.generate_password_hash(body['password'])
+
+    new_walker = Walker(first_name = body['first_name'], last_name = body['last_name'],\
+                        email = body['email'], password = pw_hash, is_active = True)
+    db.session.add(new_walker)
+    db.session.commit()
+
+    response_body = {
+        'results': new_walker.serialize()
+    }
+    return jsonify(response_body), 200
+
+@app.route('/owners', methods=['POST'])
+def create_owner():
+    body = request.get_json()
+
+    if body is None:
+        raise APIException('You need to specify the request body as a json object',\
+                                                                    status_code=400)
+    if 'first_name' not in body:
+        raise APIException('Campo requerido', status_code=400)
+    if 'last_name' not in body:
+        raise APIException('Campo reqerido', status_code=400)
+    if 'email' not in body:
+        raise APIException('Campo requerido', status_code=400)
+    if 'password' not in body:
+        raise APIException('Campo requerido', status_code=400)
+
+    owner_email = Owner.query.filter_by(email= body['email']).first()
+    if owner_email != None:
+        raise APIException('Ya existe una cuenta con ese correo', status_code=400)
+
+    pw_hash = bcrypt.generate_password_hash(body['password'])
+
+    new_owner = Owner(first_name = body['first_name'], last_name = body['last_name'],\
+                        email = body['email'], password = pw_hash, is_active = True)
+    db.session.add(new_owner)
+    db.session.commit()
+
+    response_body = {
+        'results': new_owner.serialize()
+    }
+    return jsonify(response_body), 200
 
 
 # this only runs if `$ python src/main.py` is executed
