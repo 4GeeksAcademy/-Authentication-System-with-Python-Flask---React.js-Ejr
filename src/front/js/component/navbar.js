@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSeedling } from "@fortawesome/free-solid-svg-icons";
 import { faAddressCard } from "@fortawesome/free-solid-svg-icons";
 import { faCircleExclamation } from "@fortawesome/free-solid-svg-icons";
-//import Logo from "../../img/logo.png";
+import Logo from "../../img/logo_nav.png";
 
 function Navbar() {
   return (
@@ -12,7 +12,7 @@ function Navbar() {
         <div className="nav-item dropdown">
           <div className="row">
             <div className="col d-flex justify-content-betweenn">
-              <h6 className="mt-2 text-light"> Casino Carporativo</h6>
+              <img src={Logo} className='w-25 border border-success rounded' alt='logo' />
               <a
                 className="nav-link dropdown-toggle text-light"
                 href="/"
