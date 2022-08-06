@@ -6,7 +6,7 @@ import { Home } from "./pages/home";
 import injectContext from "./store/appContext";
 
 import Navbar from "./component/navbar";
-import { Footer } from "./component/footer";
+import Footer from "./component/footer";
 
 import Login from "./pages/login";
 import AdminCasino from "./pages/adminCasino";
@@ -16,6 +16,9 @@ import PasswordRecoveryEmail from "./pages/passwordRecovery";
 import PerfilUsuario from "./pages/perfilUsuario";
 import PerfilEmpresa from "./pages/perfilEmpresa";
 import PerfilCasino from "./pages/perfilCasino";
+import Menu from "./pages/menu";
+import DireccionesUsuario from "./pages/infoDelivery";
+import AdminEmpresa from "./pages/adminEmpresa";
 
 //create your first component
 const Layout = () => {
@@ -29,6 +32,9 @@ const Layout = () => {
         <ScrollToTop>
           <Navbar />
           <Routes>
+            <Route element={<AdminEmpresa />} path="/admin-empresa"></Route>
+            <Route element={<DireccionesUsuario />} path="/informacion-delivery"></Route>
+            <Route element={<Menu />} path="/user-menu"></Route>
             <Route element={<PerfilCasino />} path="/casino"></Route>
             <Route element={<PerfilEmpresa />} path="/empresa"></Route>
             <Route element={<PerfilUsuario />} path="/user"></Route>
