@@ -4,7 +4,7 @@ import "../../styles/login.css";
 
 const Login = () => {
   return (
-    <div className="container w-25 mt-5 ">
+    <div className="container w-25 mt-5">
       <div className="row">
         <img src={Logo} />
       </div>
