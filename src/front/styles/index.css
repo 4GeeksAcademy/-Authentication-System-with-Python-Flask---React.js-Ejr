@@ -1,4 +1,3 @@
-
 /* 
     General Styles used on every website (Don't Repeat Yourself)
 */
@@ -7,4 +6,50 @@ body {
   background-color: #ddd5d0;
   font-family: Poppins, "Times New Roman", Times, serif;
   font-weight: 100px;
+}
+
+.custom-shape-divider-bottom-1659915776 {
+  position: fixed;
+  bottom: 0;
+  z-index: -1;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+  transform: rotate(180deg);
+}
+
+.custom-shape-divider-bottom-1659915776 svg {
+  position: relative;
+  display: block;
+  width: calc(229% + 1.3px);
+  height: 314px;
+  transform: rotateY(180deg);
+}
+
+.custom-shape-divider-bottom-1659915776 .shape-fill {
+  fill: #7f9183;
+}
+
+.custom-shape-divider-bottom-1659915273 {
+  position: fixed;
+  bottom: 0;
+  z-index: -1;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+  transform: rotate(180deg);
+}
+
+.custom-shape-divider-bottom-1659915273 svg {
+  position: relative;
+  display: block;
+  width: calc(197% + 1.3px);
+  height: 251px;
+  transform: rotateY(180deg);
+}
+
+.custom-shape-divider-bottom-1659915273 .shape-fill {
+  fill: #455855;
 }
