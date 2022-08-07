@@ -8,19 +8,8 @@ export const Single = (props) => {
   const params = useParams();
 
   return (
-    <div className="container">
-      <div className="row">
-        <div className="col"></div>
-        <div className="col"></div>
-      </div>
-
-      <div className="row"></div>
-      <div className="row">
-        <div className="col"></div>
-        <div className="col"></div>
-        <div className="col"></div>
-      </div>
-      <div className="row">
+    <div>
+      <div>
         <Link to="/pages/registrodueno">
           <span className="btn btn-primary btn-lg" href="#" role="button">
             Comenzemos!
