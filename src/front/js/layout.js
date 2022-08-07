@@ -8,6 +8,9 @@ import { RegistroCaminador } from "./pages/registrocaminador";
 import { HomeCaminador } from "./pages/homecaminador";
 import { HomeDueno } from "./pages/homedueno";
 import { Login } from "./pages/login";
+import Contact from "./pages/contact";
+import Questions from "./pages/questions";
+import Terms from "./pages/terms";
 import injectContext from "./store/appContext";
 
 import { Navbar } from "./component/navbar";
@@ -31,6 +34,9 @@ const Layout = () => {
             <Route path="/registrocaminador" element={<RegistroCaminador />} />
             <Route path="/homedueno/:uid" element={<HomeDueno />} />
             <Route path="/homecaminador/:uid" element={<HomeCaminador />} />
+            <Route path="/contacto" element={<Contact />} />
+            <Route path="/preguntas" element={<Questions />} />
+            <Route path="/terminosycondiciones" element={<Terms />} />
 
             <Route element={<h1>Not found!</h1>} />
           </Routes>
