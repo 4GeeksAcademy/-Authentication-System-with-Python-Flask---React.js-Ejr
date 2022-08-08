@@ -3,11 +3,11 @@
   background-color: #455855;
 }
 
-.btn {
+#btn_footer {
   background-color: #c88b7d;
   color: white;
-  height: 50px;
-  width: 20rem;
+  min-height: 50px;
+  width: 15rem;
 }
 p {
   color: white;
