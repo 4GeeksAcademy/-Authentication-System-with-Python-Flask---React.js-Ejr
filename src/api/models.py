@@ -101,8 +101,9 @@ class Pedidos(db.Model):
     def serialize(self):
         return {
             "id": self.id,
-            "menu_id": self.menu_id,
+            "colacion_id": self.colacion_id,
             "usuario_id":self.usuario_id,
+            "entregado":self.entregado,
             # do not serialize the password, its a security breach
         }
 
@@ -115,8 +116,7 @@ class Principal(db.Model):
     def serialize(self):
         return {
             "id": self.id,
-            "menu_id": self.menu_id,
-            "usuario_id":self.usuario_id,
+            "descripcion_principal": self.descripcion_principal,
             # do not serialize the password, its a security breach
         }
 
@@ -127,8 +127,7 @@ class Ensalada(db.Model):
     def serialize(self):
         return {
             "id": self.id,
-            "menu_id": self.menu_id,
-            "usuario_id":self.usuario_id,
+            "escripcion_ensalada": self.escripcion_ensalada,
             # do not serialize the password, its a security breach
         }
 
@@ -139,8 +138,7 @@ class Postre(db.Model):
     def serialize(self):
         return {
             "id": self.id,
-            "menu_id": self.menu_id,
-            "usuario_id":self.usuario_id,
+            "descripcion_postre": self.descripcion_postre,
             # do not serialize the password, its a security breach
         }
 
@@ -151,8 +149,7 @@ class Bebida(db.Model):
     def serialize(self):
         return {
             "id": self.id,
-            "menu_id": self.menu_id,
-            "usuario_id":self.usuario_id,
+            "descripcion_bebida": self.descripcion_bebida,
             # do not serialize the password, its a security breach
         }
 
@@ -170,8 +167,10 @@ class Casino(db.Model):
     def serialize(self):
         return {
             "id": self.id,
-            "menu_id": self.menu_id,
-            "usuario_id":self.usuario_id,
+            "principal_id": self.principal_id,
+            "ensalda_id": self.ensalada_id,
+            "postre_id": self.postre_id,
+            "bebida_id": self.bebida_id,
             # do not serialize the password, its a security breach
         }
 
