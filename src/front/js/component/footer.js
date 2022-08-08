@@ -16,26 +16,8 @@ export const Footer = () => {
             <Link style={{ textDecoration: "none" }} to={"/preguntas"}>
               <p>Preguntas frecuentes</p>
             </Link>
-            <Link to={"/preguntas"}>
-              <p>Preguntas frecuentes</p>
-            </Link>
           </div>
 
-          <div className="col-4 mt-4 align-items-center">
-            <h5>Países donde estamos</h5>
-            <hr className="light" />
-            <p>Costa Rica</p>
-          </div>
-
-          <div className="d-grid col-4 my-auto align-items-center">
-            <div className="mx-auto">
-              <Link to={"/registrocaminador"}>
-                <button className="btn rounded-pill">
-                  Convierte en caminador
-                </button>
-              </Link>
-            </div>
-          </div>
           <div className="col-sm-12 col-md-6 col-lg-4 mt-3 align-items-center">
             <h5>Países donde estamos</h5>
             <hr className="light" />
