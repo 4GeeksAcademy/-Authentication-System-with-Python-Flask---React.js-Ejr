@@ -20,7 +20,9 @@ import Menu from "./pages/menu";
 import DireccionesUsuario from "./pages/infoDelivery";
 import AdminEmpresa from "./pages/adminEmpresa";
 import Contact from "./pages/contact";
-
+import Reporte from "./pages/reporteProblemas";
+import FormReporte from "./pages/formularioReporte";
+import ConfirmReporte from "./pages/confirmReporte";
 //create your first component
 const Layout = () => {
   //the basename is used when your project is published in a subdirectory and not in the root of the domain
@@ -33,6 +35,9 @@ const Layout = () => {
         <ScrollToTop>
           <Navbar />
           <Routes>
+            <Route element={<ConfirmReporte />} path="/confirmacion-problema"></Route>
+            <Route element={<FormReporte />} path="/formulario-problema"></Route>
+            <Route element={<Reporte />} path="/reporte-problema"></Route>
             <Route element={<Contact />} path="/contact"></Route>
             <Route element={<DireccionesUsuario />} path="/informacion-delivery"></Route>
             <Route element={<Menu />} path="/user-menu"></Route>

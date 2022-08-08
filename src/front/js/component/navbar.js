@@ -38,7 +38,7 @@ function Navbar() {
         
         </div>
         <button
-          className="navbar-toggler"
+          className="navbar-toggler btn btn-dark"
           type="button"
           data-bs-toggle="offcanvas"
           data-bs-target="#offcanvasNavbar"

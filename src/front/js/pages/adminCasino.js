@@ -49,7 +49,10 @@ const AdminCasino = () => {
         </div>
       </div>
       <div className="d-flex justify-content-end">
-        <button type="button" className="btn btn-success btn-lg">
+        <button type="button" className="btn btn-success btn-lg m-2">
+          Editar
+        </button>
+        <button type="button" className="btn btn-success btn-lg m-2">
           Confirmar
         </button>
       </div>
