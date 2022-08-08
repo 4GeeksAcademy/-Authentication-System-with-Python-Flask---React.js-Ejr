@@ -60,6 +60,14 @@ class Usuario(db.Model):
     def serialize(self):
         return {
             "id": self.id,
+            "nombre_usuario": self.nombre_usuario,
+            "apellido_usuario": self.apellido_usuario,
+            "telefono": self.telefono,
+            "skype": self.skype,
+            "facebook": self.facebook,
+            "twitter": self.twitter,
+            "instagram": self.instagram,
+            "linkedin": self.linkedin,
             "email": self.email,
             "empresa_id": self.empresa_id,
             "direccion_id": self.direccion_id,
@@ -187,3 +195,10 @@ class Menu(db.Model):
     telefono = db.Column(db.Integer, unique=True,nullable=False)
     mail_casino = db.Column(db.String(80), unique=True, nullable=False)
     contraseña_casino = db.Column(db.String(80), unique=True, nullable=False)
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "pedidos_id": self.pedidos_id,
+            # do not serialize the password, its a security breach
+        }
