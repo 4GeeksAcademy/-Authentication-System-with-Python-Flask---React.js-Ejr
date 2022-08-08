@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import "../../styles/footer.css";
 
@@ -25,7 +25,7 @@ export const Footer = () => {
           <div className="col-sm-12 col-md-12 col-lg-4 my-auto align-items-center">
             <div className="text-center">
               <Link to={"/registrocaminador"}>
-                <button className="btn rounded-pill">
+                <button id="btn_footer" className="btn rounded-pill">
                   Convierte en caminador
                 </button>
               </Link>
