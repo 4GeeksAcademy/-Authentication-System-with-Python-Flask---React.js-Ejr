@@ -104,20 +104,49 @@ class Principal(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     descripcion_principal = db.Column(db.String(150), unique = True, nullable = False)
 
+    def serialize(self):
+        return {
+            "id": self.id,
+            "menu_id": self.menu_id,
+            "usuario_id":self.usuario_id,
+            # do not serialize the password, its a security breach
+        }
 
 class Ensalada(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     descripcion_ensalada = db.Column(db.String(150), unique = True, nullable = False)
 
+    def serialize(self):
+        return {
+            "id": self.id,
+            "menu_id": self.menu_id,
+            "usuario_id":self.usuario_id,
+            # do not serialize the password, its a security breach
+        }
 
 class Postre(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     descripcion_postre = db.Column(db.String(150), unique = True, nullable = False)
 
+    def serialize(self):
+        return {
+            "id": self.id,
+            "menu_id": self.menu_id,
+            "usuario_id":self.usuario_id,
+            # do not serialize the password, its a security breach
+        }
+
 class Bebida(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     descripcion_bebida = db.Column(db.String(150), unique = True, nullable = False)
 
+    def serialize(self):
+        return {
+            "id": self.id,
+            "menu_id": self.menu_id,
+            "usuario_id":self.usuario_id,
+            # do not serialize the password, its a security breach
+        }
 
 class Casino(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -130,18 +159,31 @@ class Casino(db.Model):
     postre = db.relationship('Postre')
     bebida = db.relationship('Bebida')
 
+    def serialize(self):
+        return {
+            "id": self.id,
+            "menu_id": self.menu_id,
+            "usuario_id":self.usuario_id,
+            # do not serialize the password, its a security breach
+        }
 
 class Colacion(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     casino_id = db.Column(db.Integer, db.ForeignKey('casino.id'), unique = False, nullable = False)
     casino = db.relationship('Casino')
-
     
-    
-
     def serialize(self):
         return {
             "id": self.id,
             "pedidos_id": self.pedidos_id,
             # do not serialize the password, its a security breach
         }
+
+class Menu(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    nombre_casino = db.Column(db.String(80), unique=True, nullable=False)
+    razon_social = db.Column(db.String(80), unique=True, nullable=False)
+    rut = db.Column(db.Integer, unique=True, nullable=False)
+    telefono = db.Column(db.Integer, unique=True,nullable=False)
+    mail_casino = db.Column(db.String(80), unique=True, nullable=False)
+    contraseña_casino = db.Column(db.String(80), unique=True, nullable=False)
