@@ -14,6 +14,7 @@ class Direccion(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nombre_calle = db.Column(db.String(120), unique=False, nullable=False)
     numero_calle = db.Column(db.Integer, unique=True, nullable=False)
+    usuario = db.relationship('Usuario', backref='usuario', lazy=True)
 
     def __repr__(self):
         return f'<User {self.numero_calle},{self.nombre_calle}>'
@@ -53,8 +54,7 @@ class Usuario(db.Model):
     password = db.Column(db.String(80), unique=False, nullable=False)
     empresa_id = db.Column(db.Integer, db.ForeignKey('empresa.id'), unique = False, nullable = False)
     direccion_id = db.Column(db.Integer, db.ForeignKey('direccion.id'), unique = False, nullable = False)
-    empresa = db.relationship('Empresa')
-    direccion = db.relationship('Direccion')
+    empresa = db.relationship('Empresa', backref='empresa', lazy=True)
     
 
     def serialize(self):
