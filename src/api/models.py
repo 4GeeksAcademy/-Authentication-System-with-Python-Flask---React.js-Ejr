@@ -199,5 +199,12 @@ class Menu(db.Model):
         return {
             "id": self.id,
             "pedidos_id": self.pedidos_id,
+            "nombre_casino": self.nombre_casino,
+            "razon_social": self.razon_social,
+            "rut": self.rut,
+            "telefono": self.telefono,
+            "mail_casino": self.mail_casino,
+            "contraseña_casino": self.contraseña_casino,
+
             # do not serialize the password, its a security breach
         }
