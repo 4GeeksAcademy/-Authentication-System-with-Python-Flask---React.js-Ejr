@@ -52,6 +52,7 @@ class Usuario(db.Model):
     linkedin = db.Column(db.String(80), unique=True, nullable=True)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(80), unique=False, nullable=False)
+    administrador = db.Column(db.Boolean, server_default=u'false')
     empresa_id = db.Column(db.Integer, db.ForeignKey('empresa.id'), unique = False, nullable = False)
     direccion_id = db.Column(db.Integer, db.ForeignKey('direccion.id'), unique = False, nullable = False)
     empresa = db.relationship('Empresa', backref='empresa', lazy=True)
@@ -186,25 +187,3 @@ class Colacion(db.Model):
             # do not serialize the password, its a security breach
         }
 
-class Casino(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    nombre_casino = db.Column(db.String(80), unique=True, nullable=False)
-    razon_social = db.Column(db.String(80), unique=True, nullable=False)
-    rut = db.Column(db.Integer, unique=True, nullable=False)
-    telefono = db.Column(db.Integer, unique=True,nullable=False)
-    mail_casino = db.Column(db.String(80), unique=True, nullable=False)
-    contraseña_casino = db.Column(db.String(80), unique=True, nullable=False)
-
-    def serialize(self):
-        return {
-            "id": self.id,
-            "pedidos_id": self.pedidos_id,
-            "nombre_casino": self.nombre_casino,
-            "razon_social": self.razon_social,
-            "rut": self.rut,
-            "telefono": self.telefono,
-            "mail_casino": self.mail_casino,
-            "contraseña_casino": self.contraseña_casino,
-
-            # do not serialize the password, its a security breach
-        }
