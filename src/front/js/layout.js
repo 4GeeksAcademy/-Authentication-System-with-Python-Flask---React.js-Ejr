@@ -6,7 +6,7 @@ import Home from "./pages/home";
 import injectContext from "./store/appContext";
 
 import Navbar from "./component/navbar";
-import NavbarHome from "./component/navbarHome";
+
 import Footer from "./component/footer";
 
 import Login from "./pages/login";

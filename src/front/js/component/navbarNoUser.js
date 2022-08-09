@@ -5,7 +5,7 @@ import { faMobileScreen } from '@fortawesome/free-solid-svg-icons';
 import Logo from '../../img/logo_nav.png'
 
 
-function NavHome() {
+function NavNoUser() {
 
 
   return (
@@ -35,4 +35,4 @@ function NavHome() {
 }
 
 
-export default NavHome;
+export default NavNoUser;
