@@ -153,7 +153,7 @@ class Bebida(db.Model):
             # do not serialize the password, its a security breach
         }
 
-class Casino(db.Model):
+class Menu(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     principal_id = db.Column(db.Integer, db.ForeignKey('principal.id'), unique = False, nullable = False)
     ensalada_id = db.Column(db.Integer, db.ForeignKey('ensalada.id'), unique = False, nullable = False)
@@ -176,8 +176,8 @@ class Casino(db.Model):
 
 class Colacion(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    casino_id = db.Column(db.Integer, db.ForeignKey('casino.id'), unique = False, nullable = False)
-    casino = db.relationship('Casino')
+    menu_id = db.Column(db.Integer, db.ForeignKey('menu.id'), unique = False, nullable = False)
+    menu = db.relationship('Menu')
     
     def serialize(self):
         return {
@@ -186,7 +186,7 @@ class Colacion(db.Model):
             # do not serialize the password, its a security breach
         }
 
-class Menu(db.Model):
+class Casino(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nombre_casino = db.Column(db.String(80), unique=True, nullable=False)
     razon_social = db.Column(db.String(80), unique=True, nullable=False)
