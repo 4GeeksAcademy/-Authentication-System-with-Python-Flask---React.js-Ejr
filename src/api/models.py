@@ -4,7 +4,7 @@ import datetime
 db = SQLAlchemy()
 
 class Walker(db.Model):
-    __tablename__ = "Walker"
+    __tablename__ = "walker"
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(120), unique=True, nullable=False)
     first_name = db.Column(db.String(200), unique=False, nullable=False)
@@ -27,7 +27,7 @@ class Walker(db.Model):
         }
 
 class Owner(db.Model):
-    __tablename__ = "Owner"
+    __tablename__ = "owner"
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(120), unique=True, nullable=False)
     first_name = db.Column(db.String(200), unique=False, nullable=False)
@@ -50,13 +50,13 @@ class Owner(db.Model):
         }
 
 class Dog(db.Model):
-    __tablename__ = "Dog"
+    __tablename__ = "dog"
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(200), unique=False, nullable=False)
     breed = db.Column(db.String(200), unique=False, nullable=False)
-    age = db.Column(db.Integer(200), unique=False, nullable=False)
+    age = db.Column(db.Integer(), unique=False, nullable=False)
     owner_id = db.Column(db.Integer, db.ForeignKey('owner.id', ondelete='CASCADE'))
-    Owner = db.relationship('Owner', primaryjoin=owner_id == User.id)
+    Owner = db.relationship('Owner', primaryjoin=owner_id == Owner.id)
 
     def __repr__(self):
         return f'<Dog {self.name}>'
