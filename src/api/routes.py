@@ -106,7 +106,7 @@ def put_owner_id(dog_id):
 
 
 
-@api.route('/owner/<int:owner_id>/dogs', methods=['GET'])
+@api.route('/dogs', methods=['GET'])
 def get_dogs():
 
     dogs = Dog.query.all()
@@ -118,7 +118,7 @@ def get_dogs():
 
     return jsonify(response_body), 200
 
-@api.route('/owner/<int:owner_id>/<int:dog_id>', methods=['GET'])
+@api.route('/dogs/<int:dog_id>', methods=['GET'])
 def get_dog_id(dog_id):
 
     dog = Dog.query.get(dog_id)
@@ -135,7 +135,7 @@ def get_dog_id(dog_id):
 
     return jsonify(response_body), 200
 
-@api.route('/owner/<int:owner_id>/<int:dog_id>', methods=['PUT'])
+@api.route('/dogs/<int:dog_id>', methods=['PUT'])
 def put_dog_id(dog_id):
     body = request.get_json()
 

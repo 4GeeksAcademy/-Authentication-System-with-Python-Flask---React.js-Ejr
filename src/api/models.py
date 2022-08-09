@@ -38,7 +38,7 @@ class Owner(db.Model):
     date_start= db.Column(db.DateTime(timezone=True), default=datetime.datetime.utcnow() )
 
     def __repr__(self):
-        return f'<Owner {self.name}>'
+        return f'<Owner {self.first_name}>'
 
     def serialize(self):
         return {
