@@ -6,6 +6,7 @@ import Home from "./pages/home";
 import injectContext from "./store/appContext";
 
 import Navbar from "./component/navbar";
+import NavbarHome from "./component/navbarHome";
 import Footer from "./component/footer";
 
 import Login from "./pages/login";
@@ -23,6 +24,8 @@ import Contact from "./pages/contact";
 import Reporte from "./pages/reporteProblemas";
 import FormReporte from "./pages/formularioReporte";
 import ConfirmReporte from "./pages/confirmReporte";
+import InfoEmpresa from "./pages/infoEmpresa";
+import DatosProblemas from "./pages/infoProblemas";
 //create your first component
 const Layout = () => {
   //the basename is used when your project is published in a subdirectory and not in the root of the domain
@@ -33,8 +36,10 @@ const Layout = () => {
     <div>
       <BrowserRouter basename={basename}>
         <ScrollToTop>
-          <Navbar />
+          <NavbarHome />
           <Routes>
+            <Route element={<DatosProblemas />} path="/detalle-problema"></Route>
+            <Route element={<InfoEmpresa />} path="/informacion-empresa"></Route>
             <Route element={<ConfirmReporte />} path="/confirmacion-problema"></Route>
             <Route element={<FormReporte />} path="/formulario-problema"></Route>
             <Route element={<Reporte />} path="/reporte-problema"></Route>

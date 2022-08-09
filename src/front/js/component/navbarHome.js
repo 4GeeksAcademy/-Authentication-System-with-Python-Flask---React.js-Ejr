@@ -2,7 +2,7 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRightToBracket } from '@fortawesome/free-solid-svg-icons';
 import { faMobileScreen } from '@fortawesome/free-solid-svg-icons';
-import Logo from '../img/logo_nav.png'
+import Logo from '../../img/logo_nav.png'
 
 
 function NavHome() {
