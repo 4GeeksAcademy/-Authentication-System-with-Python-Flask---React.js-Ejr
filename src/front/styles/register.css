@@ -1,0 +1,18 @@
+.register {
+  background-color: #eee;
+  border-radius: 15px;
+}
+#register_img {
+  border-top-left-radius: 0.25rem;
+  border-bottom-left-radius: 0.25rem;
+}
+#btn_register {
+  background-color: #7f9183;
+}
+.profile_img {
+  width: 200px;
+  height: 200px;
+}
+#btn_profile {
+  background-color: #7f9183;
+}
