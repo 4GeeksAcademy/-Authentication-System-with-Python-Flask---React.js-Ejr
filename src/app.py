@@ -80,8 +80,7 @@ def create_walker():
     body = request.get_json()
 
     if body is None:
-        raise APIException('You need to specify the request body as a json object',\
-                                                                    status_code=400)
+        raise APIException('You need to specify the request body as a json object', status_code=400)
     if 'first_name' not in body:
         raise APIException('Campo requerido', status_code=400)
     if 'last_name' not in body:
@@ -90,15 +89,26 @@ def create_walker():
         raise APIException('Campo requerido', status_code=400)
     if 'password' not in body:
         raise APIException('Campo requerido', status_code=400)
+    if 'username' not in body:
+        raise APIException('Campo requerido', status_code=400)
 
     walker_email = Walker.query.filter_by(email= body['email']).first()
     if walker_email != None:
         raise APIException('Ya existe una cuenta con ese correo', status_code=400)
 
+    walker_username = Walker.query.filter_.by(username = body['username']). first()
+
+    if walker_username != None:
+        raise APIException('Ese usuario ya existe', status_code=400)
+    
+    owner_username = Owner.query.filter_.by(username = body['username']). first()
+
+    if owner_username != None:
+        raise APIException('Ese usuario ya existe', status_code=400)
+
     pw_hash = bcrypt.generate_password_hash(body['password'])
 
-    new_walker = Walker(first_name = body['first_name'], last_name = body['last_name'],\
-                        email = body['email'], password = pw_hash, is_active = True)
+    new_walker = Walker(first_name = body['first_name'], last_name = body['last_name'], username = body['username'], email = body['email'], password = pw_hash, is_active = True)
     db.session.add(new_walker)
     db.session.commit()
 
@@ -112,8 +122,7 @@ def create_owner():
     body = request.get_json()
 
     if body is None:
-        raise APIException('You need to specify the request body as a json object',\
-                                                                    status_code=400)
+        raise APIException('You need to specify the request body as a json object', status_code=400)
     if 'first_name' not in body:
         raise APIException('Campo requerido', status_code=400)
     if 'last_name' not in body:
@@ -122,20 +131,53 @@ def create_owner():
         raise APIException('Campo requerido', status_code=400)
     if 'password' not in body:
         raise APIException('Campo requerido', status_code=400)
+    if 'username' not in body:
+        raise APIException('Campo requerido', status_code=400)
 
     owner_email = Owner.query.filter_by(email= body['email']).first()
     if owner_email != None:
         raise APIException('Ya existe una cuenta con ese correo', status_code=400)
 
+    owner_username = Owner.query.filter_.by(username = body['username']). first()
+
+    if owner_username != None:
+        raise APIException('Ese usuario ha sido tomado', status_code=400)
+    
+    walker_username = Walker.query.filter_.by(username = body['username']). first()
+    
+    if walker_username != None:
+        raise APIException('Ese usuario ha sido tomado', status_code=400)
+
     pw_hash = bcrypt.generate_password_hash(body['password'])
 
-    new_owner = Owner(first_name = body['first_name'], last_name = body['last_name'],\
-                        email = body['email'], password = pw_hash, is_active = True)
+    new_owner = Owner(first_name = body['first_name'], last_name = body['last_name'], email = body['email'], username = body['username'], password = pw_hash, is_active = True)
     db.session.add(new_owner)
     db.session.commit()
 
     response_body = {
         'results': new_owner.serialize()
+    }
+    return jsonify(response_body), 200
+
+@app.route('/owner/<int:owner_id>/dogs', methods=['POST'])
+def create_dog():
+    body = request.get_json()
+
+    if body is None:
+        raise APIException('You need to specify the request body as a json object', status_code=400)
+    if 'name' not in body:
+        raise APIException('Campo requerido', status_code=400)
+    if 'breed' not in body:
+        raise APIException('Campo reqerido', status_code=400)
+    if 'age' not in body:
+        raise APIException('Campo requerido', status_code=400)  
+
+    new_dog = Dog(name = body['name'], breed = body['breed'], age = body['age'])
+    db.session.add(new_dog)
+    db.session.commit()
+
+    response_body = {
+        'results': new_dog.serialize()
     }
     return jsonify(response_body), 200
 
