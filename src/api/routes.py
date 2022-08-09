@@ -7,14 +7,11 @@ from api.utils import generate_sitemap, APIException
 
 api = Blueprint('api', __name__)
 
-@api.route('/hello', methods=['POST', 'GET'])
-def handle_hello():
 
-    response_body = {
-        "message": "Hello! I'm a message that came from the backend, check the network tab on the google inspector and you will see the GET request"
-    }
+###------------------------------------------------Walker Crud------------------------------------------------#
 
-    return jsonify(response_body), 200
+
+
 
 @api.route('/walkers', methods=['GET'])
 def get_walkers():
@@ -43,6 +40,14 @@ def get_walker(walker_id):
     }
     return jsonify(response_body), 200
 
+
+
+
+###------------------------------------------------Owner Crud------------------------------------------------#
+
+
+
+
 @api.route('/owners', methods=['GET'])
 def get_owners():
 
@@ -70,3 +75,84 @@ def get_owner(owner_id):
     }
     return jsonify(response_body), 200
 
+@api.route('/owner/<int:owner_id>', methods=['PUT'])
+def put_owner_id(dog_id):
+    body = request.get_json()
+
+    updateowner = Owner.query.get(body['owner_id'])
+
+    if "first_name" in body:
+        updatedog.name = body['first_name']
+    if 'last_name' in body:
+        updatedog.diameter = body['last_name']
+    if 'username' in body:
+        updatedog.diameter = body['username']
+
+    db.session.commit()
+
+    response_body = {
+        "message": "ok",
+        "updateMsg": "Dog Updated."
+    }
+
+    return jsonify(response_body), 200
+
+
+
+
+###------------------------------------------------Dog Crud------------------------------------------------#
+
+
+
+
+
+@api.route('/owner/<int:owner_id>/dogs', methods=['GET'])
+def get_dogs():
+
+    dogs = Dog.query.all()
+    dogs_serialized = list(map(lambda x: x.serialize(), dogs))
+
+    response_body = {
+        'all_dogs': dogs_serialized
+    }
+
+    return jsonify(response_body), 200
+
+@api.route('/owner/<int:owner_id>/<int:dog_id>', methods=['GET'])
+def get_dog_id(dog_id):
+
+    dog = Dog.query.get(dog_id)
+
+    if dog_id < 1:
+        raise APIException('El id no es válido', status_code=400)
+
+    if dog is None:
+        raise APIException('El perro con ese ID no existe', status_code=400)
+
+    response_body = {
+        "result": dog.serialize()
+    }
+
+    return jsonify(response_body), 200
+
+@api.route('/owner/<int:owner_id>/<int:dog_id>', methods=['PUT'])
+def put_dog_id(dog_id):
+    body = request.get_json()
+
+    updatedog = Dog.query.get(body['dog_id'])
+
+    if "name" in body:
+        updatedog.name = body['name']
+    if 'breed' in body:
+        updatedog.diameter = body['breed']
+    if 'age' in body:
+        updatedog.population = body['age']
+
+    db.session.commit()
+
+    response_body = {
+        "message": "ok",
+        "updateMsg": "Dog Updated."
+    }
+
+    return jsonify(response_body), 200
