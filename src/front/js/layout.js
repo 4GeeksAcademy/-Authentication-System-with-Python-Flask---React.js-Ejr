@@ -37,7 +37,7 @@ const Layout = () => {
     <div>
       <BrowserRouter basename={basename}>
         <ScrollToTop>
-          <NavbarHome />
+          <Navbar />
           <Routes>
             <Route element={<DatosProblemas />} path="/detalle-problema"></Route>
             <Route element={<InfoEmpresa />} path="/informacion-empresa"></Route>

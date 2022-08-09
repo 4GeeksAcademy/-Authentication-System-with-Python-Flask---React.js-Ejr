@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSeedling } from "@fortawesome/free-solid-svg-icons";
 import { faAddressCard } from "@fortawesome/free-solid-svg-icons";
 import { faCircleExclamation } from "@fortawesome/free-solid-svg-icons";
+import { faArrowRightToBracket } from "@fortawesome/free-solid-svg-icons";
 import Logo from "../../img/logo_nav.png";
 
 function Navbar() {
@@ -78,6 +79,9 @@ function Navbar() {
                   Reportar un problema{" "}
                   <FontAwesomeIcon icon={faCircleExclamation} />
                 </a>
+              </li>
+              <li className="nav-item">
+                <a className='nav-link text-light' href='/'>Logout <FontAwesomeIcon icon={faArrowRightToBracket} /></a>
               </li>
             </ul>
           </div>
