@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, Walker, Owner
+from api.models import db, Walker, Owner, Dog
 from api.utils import generate_sitemap, APIException
 
 api = Blueprint('api', __name__)
@@ -27,10 +27,10 @@ def get_walkers():
 @api.route('/walkers/<int:walker_id>', methods=['GET'])
 def get_walker(walker_id):
 
+    walker = Walker.query.get(walker_id)
+
     if walker_id < 1:
         raise APIException('El id no es válido', status_code=400)
-
-    walker = Walker.query.get(walker_id)
 
     if walker == None:
         raise APIException('Este caminador no existe', status_code=400)
