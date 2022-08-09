@@ -14,7 +14,7 @@ class Direccion(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nombre_calle = db.Column(db.String(120), unique=False, nullable=False)
     numero_calle = db.Column(db.Integer, unique=True, nullable=False)
-    usuario = db.relationship('Usuario', backref='usuario', lazy=True)
+    
 
     def __repr__(self):
         return f'<User {self.numero_calle},{self.nombre_calle}>'
@@ -55,7 +55,7 @@ class Usuario(db.Model):
     empresa_id = db.Column(db.Integer, db.ForeignKey('empresa.id'), unique = False, nullable = False)
     direccion_id = db.Column(db.Integer, db.ForeignKey('direccion.id'), unique = False, nullable = False)
     empresa = db.relationship('Empresa', backref='empresa', lazy=True)
-    
+    direccion = db.relationship('Direccion', backref='direccion', lazy=True)
 
     def serialize(self):
         return {
@@ -79,7 +79,7 @@ class Reporte(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     contenido = db.Column(db.String(120), unique=False, nullable=False)
     usuario_id = db.Column(db.Integer, db.ForeignKey('usuario.id'), unique = False, nullable = False)
-    usuario = db.relationship('Usuario')
+    
     
     def serialize(self):
         return {
