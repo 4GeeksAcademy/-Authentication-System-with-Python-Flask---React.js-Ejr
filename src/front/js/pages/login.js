@@ -4,6 +4,7 @@ import "../../styles/login.css";
 import { Context } from "../store/appContext";
 import { useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
+import NavbarUser from "../component/navbarUser";
 
 const Login = () => {
   const { store, actions } = useContext(Context);
