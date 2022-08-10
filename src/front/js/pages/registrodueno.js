@@ -1,15 +1,103 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
-import logo from "../../img/dogger_logo.png";
 import "../../styles/register.css";
 
 export const RegistroDueno = () => {
+  // States for regristration
+  const [fname, setFname] = useState("");
+  const [lname, setLname] = useState("");
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  // BackEnd url
+  const apiUrl =
+    "https://3001-ramsescode-doggerapp-k2okksf28g3.ws-us59.gitpod.io/owners";
+
+  const createOwner = () => {
+    fetch(apiUrl, {
+      method: "POST",
+      body: JSON.stringify([]),
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((result) => result.json())
+      .then((data) => data)
+      .catch((error) => error);
+  };
+
+  // Handling the values change
+  const handleFname = (e) => {
+    setFname(e.target.value);
+    setSubmitted(false);
+  };
+  const handleLname = (e) => {
+    setLname(e.target.value);
+    setSubmitted(false);
+  };
+  const handleUsername = (e) => {
+    setUsername(e.target.value);
+    setSubmitted(false);
+  };
+  const handleEmail = (e) => {
+    setEmail(e.target.value);
+    setSubmitted(false);
+  };
+  const handlePassword = (e) => {
+    setPassword(e.target.value);
+    setSubmitted(false);
+  };
+
+  // States for checking the errors
+  const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState(false);
+
+  // Handling the form submission
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (fname === "" || lname === "" || email === "" || password === "") {
+      setError(true);
+    } else {
+      setSubmitted(true);
+      setError(false);
+    }
+  };
+
+  const successMessage = () => {
+    return (
+      <div
+        className="success"
+        style={{
+          display: submitted ? "" : "none",
+        }}
+      >
+        <h1>User {fname} successfully registered!!</h1>
+      </div>
+    );
+  };
+
+  const errorMessage = () => {
+    return (
+      <div
+        className="error"
+        style={{
+          display: error ? "" : "none",
+        }}
+      >
+        <h1>Please enter all the fields</h1>
+      </div>
+    );
+  };
+
   return (
     <div className="container-fluid">
       <div className="container align-items-center ">
         <div className="row d-flex justify-content-center align-items-center h-100 w-50 mx-auto">
           <div className="col">
-            <div className="card card-registration my-4 register">
+            <div className="messages">
+              {errorMessage()}
+              {successMessage()}
+            </div>
+            <form className="card card-registration my-4 register">
               <div className="row g-0">
                 <div className="col-xl-12">
                   <div className="card-body p-md-5 text-black">
@@ -19,15 +107,22 @@ export const RegistroDueno = () => {
                       <div className="col-md-6 mb-4">
                         <div className="form-outline">
                           <input
+                            onChange={handleFname}
+                            value={fname}
                             type="text"
                             className="form-control form-control-lg"
+                            id="first_name"
                           />
-                          <label className="form-label">Nombre</label>
+                          <label className="form-label" htmlFor="first_name">
+                            Nombre
+                          </label>
                         </div>
                       </div>
                       <div className="col-md-6 mb-4">
                         <div className="form-outline">
                           <input
+                            onChange={handleLname}
+                            value={lname}
                             type="text"
                             className="form-control form-control-lg"
                           />
@@ -38,6 +133,8 @@ export const RegistroDueno = () => {
 
                     <div className="form-outline mb-4">
                       <input
+                        onChange={handleEmail}
+                        value={email}
                         type="email"
                         className="form-control form-control-lg"
                       />
@@ -48,6 +145,8 @@ export const RegistroDueno = () => {
                       <div className="col-md-6 mb-4">
                         <div className="form-outline">
                           <input
+                            onChange={handlePassword}
+                            value={password}
                             type="password"
                             className="form-control form-control-lg"
                           />
@@ -94,7 +193,7 @@ export const RegistroDueno = () => {
                       <div className="col-md-6 mb-4">
                         <div className="form-check mb-5">
                           <input
-                            class="form-check-input me-2"
+                            className="form-check-input me-2"
                             type="checkbox"
                           />
                           <label className="form-check-label">
@@ -107,6 +206,7 @@ export const RegistroDueno = () => {
                       </div>
                       <div className="col-md-6 mb-4 ">
                         <button
+                          onClick={handleSubmit}
                           type="submit"
                           className="btn btn-lg ms-2 rounded-pill"
                           id="btn_register"
@@ -118,7 +218,7 @@ export const RegistroDueno = () => {
                   </div>
                 </div>
               </div>
-            </div>
+            </form>
           </div>
         </div>
 
