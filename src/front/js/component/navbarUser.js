@@ -80,9 +80,9 @@ function NavbarUser() {
                   <FontAwesomeIcon icon={faCircleExclamation} />
                 </a>
               </li>
-              <li className="nav-item">
+              {/* <li className="nav-item">
                 <a className='nav-link text-light' href='/'>Logout <FontAwesomeIcon icon={faArrowRightToBracket} /></a>
-              </li>
+              </li> */}
             </ul>
           </div>
         </div>

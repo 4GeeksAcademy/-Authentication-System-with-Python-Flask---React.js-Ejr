@@ -27,6 +27,7 @@ import ConfirmReporte from "./pages/confirmReporte";
 import InfoEmpresa from "./pages/infoEmpresa";
 import DatosProblemas from "./pages/infoProblemas";
 import Register from "./pages/register";
+
 //create your first component
 const Layout = () => {
   //the basename is used when your project is published in a subdirectory and not in the root of the domain
@@ -58,6 +59,7 @@ const Layout = () => {
             <Route element={<Register />} path="/register"></Route>
             <Route element={<Login />} path="/login"></Route>
             <Route element={<Home />} path="/" />
+
             <Route element={<h1>Not found!</h1>} />
           </Routes>
           <Footer />
