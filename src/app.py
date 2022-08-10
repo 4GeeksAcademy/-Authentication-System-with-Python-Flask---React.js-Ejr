@@ -159,7 +159,7 @@ def create_owner():
     }
     return jsonify(response_body), 200
 
-@app.route('/owner/<int:owner_id>/dogs', methods=['POST'])
+@app.route('/dogs', methods=['POST'])
 def create_dog():
     body = request.get_json()
 
