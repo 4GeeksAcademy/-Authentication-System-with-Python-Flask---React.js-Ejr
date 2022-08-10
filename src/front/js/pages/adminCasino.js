@@ -1,9 +1,35 @@
-import React from "react";
+import React, { useState } from "react";
 
 const AdminCasino = () => {
+
+  const [menu, setMenu] = useState({
+    dia: '',
+    ensalada: '',
+    entrada: '',
+    postre: '',
+    bebida: ''
+  })
+
+  const handleInputChange = (event) => {
+    //console.log(event.target.value)
+    setMenu({
+      [event.target.value] : event.target.value
+    })
+  }
+
+  const enviarDatos = (event) => {
+    event.preventDefault();
+    
+  }
+
   return (
-    <div className="container border border-5 border-success mt-5 shadow-lg p-3 mb-5 bg-white rounded">
-      <h3 className="mt-3">Lunes</h3>
+    <form onSubmit={enviarDatos} className="container border border-5 border-success mt-5 shadow-lg p-3 mb-5 bg-white rounded" >
+      <input 
+      placeholder="Día"
+      className="mt-3"
+      type="text"
+      name="dia"
+      onChange={handleInputChange}/>
       <div className="row">
         <div className="col-xs-12 col-6">
           <div className="form-group mt-4 w-100">
@@ -12,6 +38,8 @@ const AdminCasino = () => {
               className="form-control"
               id="exampleFormControlTextarea1"
               rows="3"
+              value={menu.ensalada}
+              onChange={handleInputChange}
             ></textarea>
           </div>
         </div>
@@ -22,6 +50,8 @@ const AdminCasino = () => {
               className="form-control"
               id="exampleFormControlTextarea1"
               rows="3"
+              value={menu.entrada}
+              onChange={handleInputChange}
             ></textarea>
           </div>
         </div>
@@ -34,6 +64,8 @@ const AdminCasino = () => {
               className="form-control"
               id="exampleFormControlTextarea1"
               rows="3"
+              value={menu.postre}
+              onChange={handleInputChange}
             ></textarea>
           </div>
         </div>
@@ -44,6 +76,8 @@ const AdminCasino = () => {
               className="form-control"
               id="exampleFormControlTextarea1"
               rows="3"
+              value={menu.bebida}
+              onChange={handleInputChange}
             ></textarea>
           </div>
         </div>
@@ -56,7 +90,7 @@ const AdminCasino = () => {
           Confirmar
         </button>
       </div>
-    </div>
+    </form>
   );
 };
 
