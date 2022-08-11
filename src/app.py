@@ -124,15 +124,15 @@ def create_owner():
     if body is None:
         raise APIException('You need to specify the request body as a json object', status_code=400)
     if 'first_name' not in body:
-        raise APIException('Campo requerido', status_code=400)
+        raise APIException('Nombre requerido', status_code=400)
     if 'last_name' not in body:
-        raise APIException('Campo reqerido', status_code=400)
+        raise APIException('Apellido reqerido', status_code=400)
     if 'email' not in body:
-        raise APIException('Campo requerido', status_code=400)
+        raise APIException('Correo requerido', status_code=400)
     if 'password' not in body:
-        raise APIException('Campo requerido', status_code=400)
+        raise APIException('Contraseña requerida', status_code=400)
     if 'username' not in body:
-        raise APIException('Campo requerido', status_code=400)
+        raise APIException('Nombre de usuario requerido', status_code=400)
 
     owner_email = Owner.query.filter_by(email= body['email']).first()
     if owner_email != None:

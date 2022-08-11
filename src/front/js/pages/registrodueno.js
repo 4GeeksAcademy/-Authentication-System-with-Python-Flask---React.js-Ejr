@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 import "../../styles/register.css";
 
 export const RegistroDueno = () => {
@@ -54,8 +55,16 @@ export const RegistroDueno = () => {
       .then((result) => {
         return result.json().then((data) => ({ status: result.status, data }));
       })
-      .then((status, data) => {
-        console.log(status, data); //if status === 400 data.message alert else navigate()
+      .then((data) => {
+        if (data.status === 400) {
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: data.data.message,
+          });
+        } else {
+          navigate(owner_route);
+        }
       })
       .catch((error) => error);
   };
