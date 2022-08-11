@@ -96,12 +96,12 @@ def create_walker():
     if walker_email != None:
         raise APIException('Ya existe una cuenta con ese correo', status_code=400)
 
-    walker_username = Walker.query.filter_.by(username = body['username']). first()
+    walker_username = Walker.query.filter_by(username = body['username']). first()
 
     if walker_username != None:
         raise APIException('Ese usuario ya existe', status_code=400)
     
-    owner_username = Owner.query.filter_.by(username = body['username']). first()
+    owner_username = Owner.query.filter_by(username = body['username']). first()
 
     if owner_username != None:
         raise APIException('Ese usuario ya existe', status_code=400)
@@ -124,15 +124,15 @@ def create_owner():
     if body is None:
         raise APIException('You need to specify the request body as a json object', status_code=400)
     if 'first_name' not in body:
-        raise APIException('Campo requerido', status_code=400)
+        raise APIException('Nombre requerido', status_code=400)
     if 'last_name' not in body:
-        raise APIException('Campo reqerido', status_code=400)
+        raise APIException('Apellido reqerido', status_code=400)
     if 'email' not in body:
-        raise APIException('Campo requerido', status_code=400)
+        raise APIException('Correo requerido', status_code=400)
     if 'password' not in body:
-        raise APIException('Campo requerido', status_code=400)
+        raise APIException('Contraseña requerida', status_code=400)
     if 'username' not in body:
-        raise APIException('Campo requerido', status_code=400)
+        raise APIException('Nombre de usuario requerido', status_code=400)
 
     owner_email = Owner.query.filter_by(email= body['email']).first()
     if owner_email != None:
