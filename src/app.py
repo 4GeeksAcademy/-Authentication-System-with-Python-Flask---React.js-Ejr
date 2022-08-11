@@ -96,12 +96,12 @@ def create_walker():
     if walker_email != None:
         raise APIException('Ya existe una cuenta con ese correo', status_code=400)
 
-    walker_username = Walker.query.filter_.by(username = body['username']). first()
+    walker_username = Walker.query.filter_by(username = body['username']). first()
 
     if walker_username != None:
         raise APIException('Ese usuario ya existe', status_code=400)
     
-    owner_username = Owner.query.filter_.by(username = body['username']). first()
+    owner_username = Owner.query.filter_by(username = body['username']). first()
 
     if owner_username != None:
         raise APIException('Ese usuario ya existe', status_code=400)
@@ -138,12 +138,12 @@ def create_owner():
     if owner_email != None:
         raise APIException('Ya existe una cuenta con ese correo', status_code=400)
 
-    owner_username = Owner.query.filter_.by(username = body['username']). first()
+    owner_username = Owner.query.filter_by(username = body['username']). first()
 
     if owner_username != None:
         raise APIException('Ese usuario ha sido tomado', status_code=400)
     
-    walker_username = Walker.query.filter_.by(username = body['username']). first()
+    walker_username = Walker.query.filter_by(username = body['username']). first()
     
     if walker_username != None:
         raise APIException('Ese usuario ha sido tomado', status_code=400)

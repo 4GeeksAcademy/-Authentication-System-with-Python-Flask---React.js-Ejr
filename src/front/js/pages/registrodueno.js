@@ -1,91 +1,63 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
+import { useNavigate } from "react-router-dom";
 import "../../styles/register.css";
 
 export const RegistroDueno = () => {
+  const owner_route = "/homedueno";
+  let navigate = useNavigate();
+
   // States for regristration
-  const [fname, setFname] = useState("");
-  const [lname, setLname] = useState("");
+  const [first_name, setFname] = useState("");
+  const [last_name, setLname] = useState("");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   // BackEnd url
   const apiUrl =
-    "https://3001-ramsescode-doggerapp-k2okksf28g3.ws-us59.gitpod.io/owners";
-
-  const createOwner = () => {
-    fetch(apiUrl, {
-      method: "POST",
-      body: JSON.stringify([]),
-      headers: { "Content-Type": "application/json" },
-    })
-      .then((result) => result.json())
-      .then((data) => data)
-      .catch((error) => error);
-  };
+    "https://3001-ramsescode-doggerapp-jt9wwbqhvue.ws-us60.gitpod.io/owners";
 
   // Handling the values change
   const handleFname = (e) => {
     setFname(e.target.value);
-    setSubmitted(false);
   };
   const handleLname = (e) => {
     setLname(e.target.value);
-    setSubmitted(false);
   };
   const handleUsername = (e) => {
     setUsername(e.target.value);
-    setSubmitted(false);
   };
   const handleEmail = (e) => {
     setEmail(e.target.value);
-    setSubmitted(false);
   };
   const handlePassword = (e) => {
     setPassword(e.target.value);
-    setSubmitted(false);
   };
-
-  // States for checking the errors
-  const [submitted, setSubmitted] = useState(false);
-  const [error, setError] = useState(false);
 
   // Handling the form submission
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (fname === "" || lname === "" || email === "" || password === "") {
-      setError(true);
-    } else {
-      setSubmitted(true);
-      setError(false);
-    }
-  };
 
-  const successMessage = () => {
-    return (
-      <div
-        className="success"
-        style={{
-          display: submitted ? "" : "none",
-        }}
-      >
-        <h1>User {fname} successfully registered!!</h1>
-      </div>
-    );
-  };
-
-  const errorMessage = () => {
-    return (
-      <div
-        className="error"
-        style={{
-          display: error ? "" : "none",
-        }}
-      >
-        <h1>Please enter all the fields</h1>
-      </div>
-    );
+    let body_content = JSON.stringify({
+      first_name: first_name,
+      last_name: last_name,
+      username: username,
+      email: email,
+      password: password,
+    });
+    fetch(apiUrl, {
+      method: "POST",
+      body: body_content,
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((result) => {
+        return result.json().then((data) => ({ status: result.status, data }));
+      })
+      .then((status, data) => {
+        console.log(status, data); //if status === 400 data.message alert else navigate()
+      })
+      .catch((error) => error);
   };
 
   return (
@@ -93,10 +65,6 @@ export const RegistroDueno = () => {
       <div className="container align-items-center ">
         <div className="row d-flex justify-content-center align-items-center h-100 w-50 mx-auto">
           <div className="col">
-            <div className="messages">
-              {errorMessage()}
-              {successMessage()}
-            </div>
             <form className="card card-registration my-4 register">
               <div className="row g-0">
                 <div className="col-xl-12">
@@ -108,7 +76,7 @@ export const RegistroDueno = () => {
                         <div className="form-outline">
                           <input
                             onChange={handleFname}
-                            value={fname}
+                            value={first_name}
                             type="text"
                             className="form-control form-control-lg"
                             id="first_name"
@@ -122,7 +90,7 @@ export const RegistroDueno = () => {
                         <div className="form-outline">
                           <input
                             onChange={handleLname}
-                            value={lname}
+                            value={last_name}
                             type="text"
                             className="form-control form-control-lg"
                           />
@@ -151,6 +119,19 @@ export const RegistroDueno = () => {
                             className="form-control form-control-lg"
                           />
                           <label className="form-label">Contraseña</label>
+                        </div>
+                      </div>
+                      <div className="col-md-6 mb-4">
+                        <div className="form-outline">
+                          <input
+                            onChange={handleUsername}
+                            value={username}
+                            type="text"
+                            className="form-control form-control-lg"
+                          />
+                          <label className="form-label">
+                            Nombre de Usuario
+                          </label>
                         </div>
                       </div>
                     </div>
