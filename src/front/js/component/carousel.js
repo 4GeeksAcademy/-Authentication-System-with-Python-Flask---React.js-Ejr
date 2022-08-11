@@ -7,7 +7,7 @@ const Carousel = () => {
     overflowY: "white",
     alignItems: "center",
     backgroundColor: "rgba(224, 224, 224, 0.3)",
-    height: "30rem",
+    height: "25rem",
     paddingLeft: "20px",
     paddingRight: "5px",
     borderRadius: "5px",
@@ -18,6 +18,9 @@ const Carousel = () => {
   return (
     <div className="container-fluid">
       <div className="d-flex flex-row rounded" style={style1}>
+        <Card />
+        <Card />
+        <Card />
         <Card />
       </div>
     </div>
