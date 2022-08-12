@@ -50,7 +50,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				  };
 			      try
 				  {const resp = await fetch(
-					"https://3001-4geeksacade-reactflaskh-ixnxyujag9b.ws-us59.gitpod.io/api/token",
+					"https://3001-marellanore-casinocorpo-w17bapgr3r5.ws-us60.gitpod.io/api/token",
 					ops
 				  )
 					

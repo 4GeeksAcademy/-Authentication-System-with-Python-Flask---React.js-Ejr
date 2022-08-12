@@ -28,6 +28,9 @@ import InfoEmpresa from "./pages/infoEmpresa";
 import DatosProblemas from "./pages/infoProblemas";
 import Register from "./pages/register";
 
+//rutaprivada
+import PrivateRoutes from "./component/PrivateRoutes";
+
 //create your first component
 const Layout = () => {
   //the basename is used when your project is published in a subdirectory and not in the root of the domain
@@ -40,27 +43,31 @@ const Layout = () => {
         <ScrollToTop>
           <Navbar />
           <Routes>
+             <Route element={<PrivateRoutes/>}>
+             <Route element={<ResumenPanelAdmin />} path="/admin"></Route>
+             <Route element={<InfoEmpresa />} path="/informacion-empresa"></Route>
+            <Route element={<DireccionesUsuario />} path="/informacion-delivery"></Route>
             <Route element={<DatosProblemas />} path="/detalle-problema"></Route>
-            <Route element={<InfoEmpresa />} path="/informacion-empresa"></Route>
+             </Route>
+
             <Route element={<ConfirmReporte />} path="/confirmacion-problema"></Route>
             <Route element={<FormReporte />} path="/formulario-problema"></Route>
             <Route element={<Reporte />} path="/reporte-problema"></Route>
             <Route element={<Contact />} path="/contact"></Route>
-            <Route element={<DireccionesUsuario />} path="/informacion-delivery"></Route>
             <Route element={<Menu />} path="/user-menu"></Route>
             <Route element={<MenuCasino />} path="/menu-casino"></Route>
             <Route element={<PerfilCasino />} path="/casino"></Route>
             <Route element={<PerfilEmpresa />} path="/empresa"></Route>
             <Route element={<PerfilUsuario />} path="/usuario"></Route>
-            <Route element={<ResumenPanelAdmin />} path="/admin"></Route>
             <Route element={<AdminEmpresa />} path="/admin-empresa"></Route>
             <Route element={<AdminCasino />} path="/admin-casino"></Route>
             <Route element={<PasswordRecoveryEmail />} path="/recovery"></Route>
+            <Route element={<AdminEmpresa />} path="/admin-empresa"></Route>
             <Route element={<Register />} path="/register"></Route>
             <Route element={<Login />} path="/login"></Route>
             <Route element={<Home />} path="/" />
-
             <Route element={<h1>Not found!</h1>} />
+
           </Routes>
           <Footer />
         </ScrollToTop>
