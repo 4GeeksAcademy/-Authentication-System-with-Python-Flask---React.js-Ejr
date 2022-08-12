@@ -1,6 +1,7 @@
 import React from "react";
 import dogpic from "../../img/dog1.jpg";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const Card = () => {
   const [flip, setFlip] = useState(true);
@@ -53,9 +54,11 @@ const Card = () => {
                 <div className="card-body">
                   <h4 className="card-title">Nombre del dueno</h4>
                   <h5 className="card-text">Direccion: Casa color marron</h5>
-                  <a href="#" className="btn btn-info btn-md">
-                    Ver info de Mocho
-                  </a>
+                  <Link to={"/singleDog"}>
+                    <button className="btn btn-info btn-md">
+                      Ver info de Mocho
+                    </button>
+                  </Link>
                 </div>
               </div>
             </div>

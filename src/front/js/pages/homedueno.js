@@ -7,7 +7,7 @@ import mapImage from "../../img/imagen_mapa.jpg";
 
 export const HomeDueno = () => {
   return (
-    <div className="container-fluid">
+    <div className="container-fluid" id="homedueno">
       <div className="container m-auto">
         <div className="row text-center text-light pt-4">
           <h1>¡Bienvenido de vuelta, Roberto!</h1>

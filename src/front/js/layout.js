@@ -8,6 +8,8 @@ import { RegistroCaminador } from "./pages/registrocaminador";
 import { HomeCaminador } from "./pages/homecaminador";
 import { HomeDueno } from "./pages/homedueno";
 import { Login } from "./pages/login";
+import { SingleDog } from "./pages/singleDog";
+
 import Contact from "./pages/contact";
 import Questions from "./pages/questions";
 import Terms from "./pages/terms";
@@ -34,6 +36,7 @@ const Layout = () => {
             <Route path="/registrocaminador" element={<RegistroCaminador />} />
             <Route path="/homedueno" element={<HomeDueno />} />
             <Route path="/homecaminador" element={<HomeCaminador />} />
+            <Route path="/singleDog" element={<SingleDog />} />
             <Route path="/contacto" element={<Contact />} />
             <Route path="/preguntas" element={<Questions />} />
             <Route path="/terminosycondiciones" element={<Terms />} />
