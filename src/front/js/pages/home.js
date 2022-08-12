@@ -50,7 +50,7 @@ export const Home = () => {
             </div>
           </div>
           <div className="col-lg-6 col-sm-12">
-            <div class="col" style={{ borderRadius: "50px" }}>
+            <div className="col" style={{ borderRadius: "50px" }}>
               <div className="card" id="mapStyle" style={cardStyle}>
                 <img src={mapImage} />
               </div>
@@ -73,8 +73,8 @@ export const Home = () => {
                 alt="..."
                 style={images}
               ></img>
-              <div class="card-body">
-                <p class="card-text" style={{ color: "black" }}>
+              <div className="card-body">
+                <p className="card-text" style={{ color: "black" }}>
                   Registras a tu perro
                 </p>
               </div>
@@ -88,8 +88,8 @@ export const Home = () => {
                 alt="..."
                 style={images}
               ></img>
-              <div class="card-body">
-                <p class="card-text" style={{ color: "black" }}>
+              <div className="card-body">
+                <p className="card-text" style={{ color: "black" }}>
                   Selecciona el caminador disponible mas cercano
                 </p>
               </div>
@@ -103,8 +103,8 @@ export const Home = () => {
                 alt="..."
                 style={images}
               ></img>
-              <div class="card-body">
-                <p class="card-text" style={{ color: "black" }}>
+              <div className="card-body">
+                <p className="card-text" style={{ color: "black" }}>
                   Alista a tu perro para el camino.
                 </p>
               </div>
