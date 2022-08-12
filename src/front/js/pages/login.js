@@ -1,10 +1,59 @@
 import React from "react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 import PropTypes from "prop-types";
 import Shape from "../component/shape";
 
 export const Login = () => {
   const [isShown, setIsShown] = useState(true);
+  const ownerRoute = "/homedueno";
+  let navigate = useNavigate();
+
+  // States for login
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  // BackEnd url
+  const apiUrl =
+    "https://3001-ramsescode-doggerapp-ljswk9gyb4w.ws-us60.gitpod.io/login";
+
+  // Handling the values change
+  const handleEmail = (e) => {
+    setEmail(e.target.value);
+  };
+  const handlePassword = (e) => {
+    setPassword(e.target.value);
+  };
+
+  // Handle login
+  const handleLogin = (e) => {
+    e.preventDefault();
+
+    let body_content = JSON.stringify({
+      email: email,
+      password: password,
+    });
+    fetch(apiUrl, {
+      method: "POST",
+      body: body_content,
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((result) => {
+        return result.json().then((data) => ({ status: result.status, data }));
+      })
+      .then((data) => {
+        console.log(data.status, data.data.message);
+        if (data.status === 400) {
+          Swal.fire(data.data.message);
+        } else if (data.status === 401) {
+          Swal.fire("Correo o contraseña incorrectos");
+        } else {
+          navigate(ownerRoute);
+        }
+      })
+      .catch((error) => error);
+  };
 
   return (
     <div className="container-fluid">
@@ -20,10 +69,12 @@ export const Login = () => {
                       <div className="col-md-12 mb-6">
                         <div className="form-outline">
                           <input
+                            onChange={handleEmail}
+                            value={email}
                             type="text"
                             className="form-control form-control-lg"
                           />
-                          <label className="form-label mt-2">Usuario</label>
+                          <label className="form-label mt-2">Email</label>
                         </div>
                       </div>
                     </div>
@@ -32,6 +83,8 @@ export const Login = () => {
                       <div className="col-md-12 mb-2 mt-3">
                         <div className="form-outline">
                           <input
+                            onChange={handlePassword}
+                            value={password}
                             type="password"
                             className="form-control form-control-lg"
                           />
@@ -42,6 +95,7 @@ export const Login = () => {
                     {isShown == true ? (
                       <div className="row mt-3">
                         <button
+                          onClick={handleLogin}
                           type="submit"
                           className="btn btn-lg rounded-pill text-light "
                           id="btn_register"
@@ -53,6 +107,7 @@ export const Login = () => {
                     ) : (
                       <div className="row mt-3">
                         <button
+                          onClick={handleLogin}
                           type="submit"
                           className="btn btn-lg rounded-pill text-light "
                           id="btn_register2"
