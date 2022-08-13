@@ -134,19 +134,21 @@ def create_owner():
     if 'username' not in body:
         raise APIException('Nombre de usuario requerido', status_code=400)
 
-    owner_email = Owner.query.filter_by(email= body['email']).first()
-    if owner_email != None:
-        raise APIException('Ya existe una cuenta con ese correo', status_code=400)
+    owner = Owner.query.filter_by(email= body['email']).first()
+    if owner != None:
+        raise APIException('Ya existe el usuario, puedes iniciar sesión', status_code=400)
 
-    owner_username = Owner.query.filter_by(username = body['username']). first()
-
+    owner_username = Owner.query.filter_by(username = body['username']).first()
     if owner_username != None:
         raise APIException('Ese usuario ha sido tomado', status_code=400)
     
-    walker_username = Walker.query.filter_by(username = body['username']). first()
-    
+    walker_username = Walker.query.filter_by(username = body['username']).first()
     if walker_username != None:
         raise APIException('Ese usuario ha sido tomado', status_code=400)
+
+    walker_email = Walker.query.filter_by(email=body['email']).first()
+    if walker_email != None:
+        raise APIException('Ya existe una cuenta con ese correo', status_code=400)
 
     pw_hash = bcrypt.generate_password_hash(body['password']).decode('utf-8')
 
@@ -154,8 +156,13 @@ def create_owner():
     db.session.add(new_owner)
     db.session.commit()
 
+    new_dog = Dog(name= body['name'], breed= body['breed'], age= body['age'], owner_id= new_owner.id)
+    db.session.add(new_dog)
+    db.session.commit()
+
     response_body = {
-        'results': new_owner.serialize()
+        'results': new_owner.serialize(),
+        'result':  new_dog.serialize()
     }
     return jsonify(response_body), 200
 
