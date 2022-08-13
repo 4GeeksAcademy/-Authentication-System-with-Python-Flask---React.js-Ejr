@@ -15,10 +15,13 @@ export const RegistroDueno = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
+  const [breed, setBreed] = useState("");
+  const [age, setAge] = useState(0);
 
   // BackEnd url
   const apiUrl =
-    "https://3001-ramsescode-doggerapp-ljswk9gyb4w.ws-us60.gitpod.io/owners";
+    "https://3001-ramsescode-doggerapp-1f2oeyrbs0q.ws-us60.gitpod.io/owners";
 
   // Handling the values change
   const handleFname = (e) => {
@@ -36,7 +39,15 @@ export const RegistroDueno = () => {
   const handlePassword = (e) => {
     setPassword(e.target.value);
   };
-
+  const handleName = (e) => {
+    setName(e.target.value);
+  };
+  const handleBreed = (e) => {
+    setBreed(e.target.value);
+  };
+  const handleAge = (e) => {
+    setAge(e.target.value);
+  };
   // Handling the form submission
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -47,6 +58,9 @@ export const RegistroDueno = () => {
       username: username,
       email: email,
       password: password,
+      name: name,
+      breed: breed,
+      age: age,
     });
     fetch(apiUrl, {
       method: "POST",
@@ -149,6 +163,8 @@ export const RegistroDueno = () => {
                       <div className="col-md-6 mb-4">
                         <div className="form-outline">
                           <input
+                            onChange={handleName}
+                            value={name}
                             type="text"
                             className="form-control form-control-lg"
                           />
@@ -158,6 +174,8 @@ export const RegistroDueno = () => {
                       <div className="col-md-6 mb-4">
                         <div className="form-outline">
                           <input
+                            onChange={handleBreed}
+                            value={breed}
                             type="text"
                             className="form-control form-control-lg"
                           />
@@ -169,6 +187,8 @@ export const RegistroDueno = () => {
                       <div className="col-md-6 mb-4">
                         <div className="form-outline">
                           <input
+                            onChange={handleAge}
+                            value={age}
                             type="text"
                             className="form-control form-control-lg"
                           />
