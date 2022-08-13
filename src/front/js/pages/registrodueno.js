@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { Context } from "../store/appContext";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
@@ -8,6 +9,7 @@ import Shape from "../component/shape";
 export const RegistroDueno = () => {
   const owner_route = "/homedueno";
   let navigate = useNavigate();
+  const { store, actions } = useContext(Context);
 
   // States for regristration
   const [first_name, setFname] = useState("");
@@ -21,7 +23,7 @@ export const RegistroDueno = () => {
 
   // BackEnd url
   const apiUrl =
-    "https://3001-ramsescode-doggerapp-1f2oeyrbs0q.ws-us60.gitpod.io/owners";
+    "https://3001-ramsescode-doggerapp-7ynxwuummvv.ws-us60.gitpod.io/owners";
 
   // Handling the values change
   const handleFname = (e) => {
@@ -79,6 +81,7 @@ export const RegistroDueno = () => {
           });
         } else {
           navigate(owner_route);
+          actions.getInfo(data.data.results.id);
         }
       })
       .catch((error) => error);

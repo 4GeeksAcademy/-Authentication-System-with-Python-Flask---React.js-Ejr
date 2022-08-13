@@ -162,7 +162,8 @@ def create_owner():
 
     response_body = {
         'results': new_owner.serialize(),
-        'result':  new_dog.serialize()
+        'result':  new_dog.serialize(),
+        'owner_id': new_owner.id
     }
     return jsonify(response_body), 200
 
