@@ -106,7 +106,7 @@ def create_walker():
     if owner_username != None:
         raise APIException('Ese usuario ya existe', status_code=400)
 
-    pw_hash = bcrypt.generate_password_hash(body['password'])
+    pw_hash = bcrypt.generate_password_hash(body['password']).decode('utf-8')
 
     new_walker = Walker(first_name = body['first_name'], last_name = body['last_name'], username = body['username'], email = body['email'], password = pw_hash, is_active = True)
     db.session.add(new_walker)
@@ -192,21 +192,39 @@ def create_dog():
 def login():
     email = request.json.get('email', None)
     password = request.json.get('password', None)
-    print(email, password)
 
+    walker = Walker.query.filter_by(email=email).first()
     owner = Owner.query.filter_by(email=email).first()
-    if owner is None:
+
+    if walker is None and owner is None:
         raise APIException('El usuario no existe', status_code=400)
     if password is None:
         raise APIException('Se requiere la contraseña', status_code=400)
 
-    is_correct = bcrypt.check_password_hash(owner.password, password)
-    
+    if walker is None:
+        userFound = owner
+        usertype = "owner"
+    else: 
+        userFound = walker
+        usertype = "walker"
+
+    is_correct = bcrypt.check_password_hash(userFound.password, password)
     if is_correct == False:
         return jsonify({'msg': 'Correo o contraseña incorrectos'}), 401
 
+
+
     access_token = create_access_token(identity=email)
-    return jsonify(access_token=access_token)
+
+    body_response = {
+
+        "access_token": access_token,
+        "usertype": usertype
+
+        }
+
+
+    return jsonify(body_response)
 
 
 # this only runs if `$ python src/main.py` is executed
