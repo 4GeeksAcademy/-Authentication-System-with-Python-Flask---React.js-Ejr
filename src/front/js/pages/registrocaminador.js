@@ -72,7 +72,7 @@ export const RegistroCaminador = () => {
             text: data.data.message,
           });
         } else {
-          navigate(owner_route);
+          navigate(walker_route);
         }
       })
       .catch((error) => error);
@@ -86,7 +86,7 @@ export const RegistroCaminador = () => {
               <div className="row g-0">
                 <div className="col-xl-12">
                   <div className="card-body p-md-5 text-black">
-                    <h3 className="mb-5">CREA TU CUENTA</h3>
+                    <h3 className="mb-5">CREA TU CUENTA COMO DOGGER</h3>
                     <div className="row">
                       <div className="col-md-6 mb-4">
                         <div className="form-outline">
