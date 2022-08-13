@@ -8,15 +8,16 @@ import Shape from "../component/shape";
 export const Login = () => {
   const [isShown, setIsShown] = useState(true);
   const ownerRoute = "/homedueno";
+  const walkerRoute = "/homecaminador";
   let navigate = useNavigate();
 
   // States for login
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  // BackEnd url
-  const apiUrl =
-    "https://3001-ramsescode-doggerapp-7ynxwuummvv.ws-us60.gitpod.io/login";
+ 
+  const apiUrlLogin =
+    "https://3001-ramsescode-doggerapp-hio855z23de.ws-us60.gitpod.io/login";
 
   // Handling the values change
   const handleEmail = (e) => {
@@ -26,7 +27,8 @@ export const Login = () => {
     setPassword(e.target.value);
   };
 
-  // Handle login
+  // Handle login Owner --------------------------------------------------
+
   const handleLogin = (e) => {
     e.preventDefault();
 
@@ -34,7 +36,8 @@ export const Login = () => {
       email: email,
       password: password,
     });
-    fetch(apiUrl, {
+
+    fetch(apiUrlLogin, {
       method: "POST",
       body: body_content,
       headers: { "Content-Type": "application/json" },
@@ -48,8 +51,9 @@ export const Login = () => {
           Swal.fire(data.data.message);
         } else if (data.status === 401) {
           Swal.fire("Correo o contraseña incorrectos");
-        } else {
-          navigate(ownerRoute);
+        } else if (data.data.usertype == "owner") navigate(ownerRoute);
+        else {
+          navigate(walkerRoute);
         }
       })
       .catch((error) => error);

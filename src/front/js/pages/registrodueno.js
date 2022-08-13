@@ -23,7 +23,8 @@ export const RegistroDueno = () => {
 
   // BackEnd url
   const apiUrl =
-    "https://3001-ramsescode-doggerapp-7ynxwuummvv.ws-us60.gitpod.io/owners";
+  
+    "https://3001-ramsescode-doggerapp-hio855z23de.ws-us60.gitpod.io/owners";
 
   // Handling the values change
   const handleFname = (e) => {
