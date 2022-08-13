@@ -20,8 +20,6 @@ const CarouselOwner = () => {
       <div className="d-flex flex-row rounded" style={style1}>
         <CardOwner />
         <CardOwner />
-        <CardOwner />
-        <CardOwner />
       </div>
     </div>
   );
