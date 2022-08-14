@@ -15,9 +15,8 @@ export const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
- 
   const apiUrlLogin =
-    "https://3001-ramsescode-doggerapp-hio855z23de.ws-us60.gitpod.io/login";
+    "https://3001-ramsescode-doggerapp-cemlmmgdovn.ws-us60.gitpod.io/login";
 
   // Handling the values change
   const handleEmail = (e) => {
@@ -46,7 +45,6 @@ export const Login = () => {
         return result.json().then((data) => ({ status: result.status, data }));
       })
       .then((data) => {
-        console.log(data.status, data.data.message);
         if (data.status === 400) {
           Swal.fire(data.data.message);
         } else if (data.status === 401) {

@@ -7,7 +7,7 @@ const getState = ({ getStore, getActions, setStore }) => {
     actions: {
       getInfo: (id) => {
         fetch(
-          "https://3001-ramsescode-doggerapp-7ynxwuummvv.ws-us60.gitpod.io/api/owners/" +
+          "https://3001-ramsescode-doggerapp-cemlmmgdovn.ws-us60.gitpod.io/api/owners/" +
             id
         )
           .then((res) => res.json())
