@@ -220,7 +220,8 @@ def login():
     body_response = {
 
         "access_token": access_token,
-        "user_type": usertype
+        "user_type": usertype,
+        "user_id": userFound.id
         }
 
 

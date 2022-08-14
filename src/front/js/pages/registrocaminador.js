@@ -18,7 +18,7 @@ export const RegistroCaminador = () => {
 
   // BackEnd url
   const apiUrl =
-    "https://3001-ramsescode-doggerapp-hio855z23de.ws-us60.gitpod.io/walkers";
+    "https://3001-ramsescode-doggerapp-cemlmmgdovn.ws-us60.gitpod.io/walkers";
 
   // Handling the values change
   const handleFname = (e) => {

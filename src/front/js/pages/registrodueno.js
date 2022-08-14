@@ -24,6 +24,8 @@ export const RegistroDueno = () => {
   // BackEnd url
   const apiUrl =
     "https://3001-ramsescode-doggerapp-cemlmmgdovn.ws-us60.gitpod.io/owners";
+  const ownerUrl =
+    "https://3001-ramsescode-doggerapp-cemlmmgdovn.ws-us60.gitpod.io/api/owners/";
 
   // Handling the values change
   const handleFname = (e) => {
@@ -81,7 +83,7 @@ export const RegistroDueno = () => {
           });
         } else {
           navigate(owner_route);
-          actions.getInfo(data.data.results.id);
+          actions.getInfo(ownerUrl, data.data.results.id);
         }
       })
       .catch((error) => error);
