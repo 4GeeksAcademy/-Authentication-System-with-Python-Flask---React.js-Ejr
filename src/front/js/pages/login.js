@@ -1,12 +1,14 @@
 import React, { useContext } from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Context } from "../store/appContext";
 import Swal from "sweetalert2";
 import PropTypes from "prop-types";
 import Shape from "../component/shape";
 
 export const Login = () => {
   const [isShown, setIsShown] = useState(true);
+  const { store, actions } = useContext(Context);
   const ownerRoute = "/homedueno";
   const walkerRoute = "/homecaminador";
   let navigate = useNavigate();
@@ -17,6 +19,10 @@ export const Login = () => {
 
   const apiUrlLogin =
     "https://3001-ramsescode-doggerapp-cemlmmgdovn.ws-us60.gitpod.io/login";
+  const ownerUrl =
+    "https://3001-ramsescode-doggerapp-cemlmmgdovn.ws-us60.gitpod.io/api/owners/";
+  const walkerUrl =
+    "https://3001-ramsescode-doggerapp-cemlmmgdovn.ws-us60.gitpod.io/api/walkers/";
 
   // Handling the values change
   const handleEmail = (e) => {
@@ -49,9 +55,12 @@ export const Login = () => {
           Swal.fire(data.data.message);
         } else if (data.status === 401) {
           Swal.fire("Correo o contraseña incorrectos");
-        } else if (data.data.usertype == "owner") navigate(ownerRoute);
-        else {
+        } else if (data.data.user_type == "owner") {
+          navigate(ownerRoute);
+          actions.getInfo(ownerUrl, data.data.user_id);
+        } else {
           navigate(walkerRoute);
+          actions.getInfo(walkerUrl, data.data.user_id);
         }
       })
       .catch((error) => error);
