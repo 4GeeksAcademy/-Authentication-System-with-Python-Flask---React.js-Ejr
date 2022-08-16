@@ -5,24 +5,30 @@ import Shape from "../component/shape";
 import "../../styles/innerhomes.css";
 import mapImage from "../../img/imagen_mapa.jpg";
 import { Context } from "../store/appContext";
+import Temperatura from "../component/temperatura";
 
 export const HomeDueno = () => {
   const { store, actions } = useContext(Context);
   return (
     <div className="container-fluid" id="homedueno">
       <div className="container m-auto">
-        <div className="row text-center text-light pt-4">
+        <div className="row text-center pt-4">
           <h1>¡Bienvenido de vuelta, {store.user.first_name}! Dueno</h1>
         </div>
         <div className="row text-center pb-5">
-          <p>Hoy es un buen dia para tener un buen dia!</p>
+          <p className="text-dark">
+            Hoy es un buen dia para tener un buen dia!
+          </p>
         </div>
-        <div className="row text-light pb-3">
+
+        <Temperatura />
+
+        <div className="row  pb-3">
           <h2>Tus perros:</h2>
         </div>
         <CarouselOwner />
 
-        <div className="row text-light pt-5">
+        <div className="row  pt-5">
           <h1>Caminadores disponibles cerca de ti:</h1>
         </div>
 
