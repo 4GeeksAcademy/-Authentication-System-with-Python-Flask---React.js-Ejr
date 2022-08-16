@@ -17,7 +17,7 @@ export const RegistroCaminador = () => {
   const [password, setPassword] = useState("");
 
   // BackEnd url
-  const apiUrl = "https://git.heroku.com/dogger-web-app.git/walkers";
+  const apiUrl = "https://dogger-web-app.herokuapp.com/walkers";
 
   // Handling the values change
   const handleFname = (e) => {

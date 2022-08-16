@@ -22,8 +22,8 @@ export const RegistroDueno = () => {
   const [age, setAge] = useState(0);
 
   // BackEnd url
-  const apiUrl = "https://git.heroku.com/dogger-web-app.git/owners";
-  const ownerUrl = "https://git.heroku.com/dogger-web-app.git/api/owners/";
+  const apiUrl = "https://dogger-web-app.herokuapp.com/owners";
+  const ownerUrl = "https://dogger-web-app.herokuapp.com/api/owners/";
 
   // Handling the values change
   const handleFname = (e) => {
