@@ -6,7 +6,7 @@ import "../../styles/register.css";
 import Shape from "../component/shape";
 
 export const RegistroCaminador = () => {
-  const walker_route = "/homecaminador";
+  const login = "/login";
   let navigate = useNavigate();
 
   // States for regristration
@@ -18,7 +18,7 @@ export const RegistroCaminador = () => {
 
   // BackEnd url
   const apiUrl =
-    "https://3001-ramsescode-doggerapp-cemlmmgdovn.ws-us60.gitpod.io/walkers";
+    "https://3001-ramsescode-doggerapp-5wnce8fu2jg.ws-us61.gitpod.io/walkers";
 
   // Handling the values change
   const handleFname = (e) => {
@@ -36,15 +36,7 @@ export const RegistroCaminador = () => {
   const handlePassword = (e) => {
     setPassword(e.target.value);
   };
-  const handleName = (e) => {
-    setName(e.target.value);
-  };
-  const handleBreed = (e) => {
-    setBreed(e.target.value);
-  };
-  const handleAge = (e) => {
-    setAge(e.target.value);
-  };
+
   // Handling the form submission
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -72,7 +64,8 @@ export const RegistroCaminador = () => {
             text: data.data.message,
           });
         } else {
-          navigate(walker_route);
+          navigate(login);
+          Swal.fire("Tu cuenta ha sido creada!", "Inicia sesión!", "success");
         }
       })
       .catch((error) => error);

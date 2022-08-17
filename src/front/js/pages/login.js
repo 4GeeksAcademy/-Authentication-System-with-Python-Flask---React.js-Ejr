@@ -8,6 +8,7 @@ import Shape from "../component/shape";
 
 export const Login = () => {
   const [isShown, setIsShown] = useState(true);
+
   const { store, actions } = useContext(Context);
   const ownerRoute = "/homedueno";
   const walkerRoute = "/homecaminador";
@@ -18,11 +19,11 @@ export const Login = () => {
   const [password, setPassword] = useState("");
 
   const apiUrlLogin =
-    "https://3001-ramsescode-doggerapp-cemlmmgdovn.ws-us60.gitpod.io/login";
+    "https://3001-ramsescode-doggerapp-5wnce8fu2jg.ws-us61.gitpod.io/login";
   const ownerUrl =
-    "https://3001-ramsescode-doggerapp-cemlmmgdovn.ws-us60.gitpod.io/api/owners/";
+    "https://3001-ramsescode-doggerapp-5wnce8fu2jg.ws-us61.gitpod.io/api/owners/";
   const walkerUrl =
-    "https://3001-ramsescode-doggerapp-cemlmmgdovn.ws-us60.gitpod.io/api/walkers/";
+    "https://3001-ramsescode-doggerapp-5wnce8fu2jg.ws-us61.gitpod.io/api/walkers/";
 
   // Handling the values change
   const handleEmail = (e) => {
@@ -56,11 +57,17 @@ export const Login = () => {
         } else if (data.status === 401) {
           Swal.fire("Correo o contraseña incorrectos");
         } else if (data.data.user_type == "owner") {
-          navigate(ownerRoute);
+          localStorage.setItem("token", data.data.access_token);
+
           actions.getInfo(ownerUrl, data.data.user_id);
+          navigate(ownerRoute);
+          actions.handleLog();
         } else {
-          navigate(walkerRoute);
+          localStorage.setItem("token", data.data.access_token);
+
           actions.getInfo(walkerUrl, data.data.user_id);
+          navigate(walkerRoute);
+          actions.handleLog();
         }
       })
       .catch((error) => error);
