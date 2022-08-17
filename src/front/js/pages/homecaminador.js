@@ -53,7 +53,7 @@ export const HomeCaminador = () => {
 
         <div className="row pt-5 pb-5">
           <div className="col-12">
-            <div className="rounded">
+            <div className="mapBox" id="mapBox">
               <MapApi />
             </div>
           </div>
