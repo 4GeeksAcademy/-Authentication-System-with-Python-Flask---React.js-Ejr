@@ -8,6 +8,7 @@ import Shape from "../component/shape";
 
 export const Login = () => {
   const [isShown, setIsShown] = useState(true);
+
   const { store, actions } = useContext(Context);
   const ownerRoute = "/homedueno";
   const walkerRoute = "/homecaminador";
@@ -17,9 +18,13 @@ export const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+
+
+
   const apiUrlLogin = "https://dogger-web-app.herokuapp.com/login";
   const ownerUrl = "https://dogger-web-app.herokuapp.com/api/owners/";
   const walkerUrl = "https://dogger-web-app.herokuapp.com/api/walkers/";
+
 
   // Handling the values change
   const handleEmail = (e) => {
@@ -53,11 +58,17 @@ export const Login = () => {
         } else if (data.status === 401) {
           Swal.fire("Correo o contraseña incorrectos");
         } else if (data.data.user_type == "owner") {
-          navigate(ownerRoute);
+          localStorage.setItem("token", data.data.access_token);
+
           actions.getInfo(ownerUrl, data.data.user_id);
+          navigate(ownerRoute);
+          actions.handleLog();
         } else {
-          navigate(walkerRoute);
+          localStorage.setItem("token", data.data.access_token);
+
           actions.getInfo(walkerUrl, data.data.user_id);
+          navigate(walkerRoute);
+          actions.handleLog();
         }
       })
       .catch((error) => error);

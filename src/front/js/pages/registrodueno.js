@@ -1,5 +1,4 @@
-import React, { useState, useContext } from "react";
-import { Context } from "../store/appContext";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
@@ -7,9 +6,8 @@ import "../../styles/register.css";
 import Shape from "../component/shape";
 
 export const RegistroDueno = () => {
-  const owner_route = "/homedueno";
+  const login = "/login";
   let navigate = useNavigate();
-  const { store, actions } = useContext(Context);
 
   // States for regristration
   const [first_name, setFname] = useState("");
@@ -22,8 +20,10 @@ export const RegistroDueno = () => {
   const [age, setAge] = useState(0);
 
   // BackEnd url
+
   const apiUrl = "https://dogger-web-app.herokuapp.com/owners";
   const ownerUrl = "https://dogger-web-app.herokuapp.com/api/owners/";
+
 
   // Handling the values change
   const handleFname = (e) => {
@@ -80,8 +80,8 @@ export const RegistroDueno = () => {
             text: data.data.message,
           });
         } else {
-          navigate(owner_route);
-          actions.getInfo(ownerUrl, data.data.results.id);
+          navigate(login);
+          Swal.fire("Tu cuenta ha sido creada!", "Inicia sesión!", "success");
         }
       })
       .catch((error) => error);

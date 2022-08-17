@@ -6,7 +6,7 @@ import "../../styles/register.css";
 import Shape from "../component/shape";
 
 export const RegistroCaminador = () => {
-  const walker_route = "/homecaminador";
+  const login = "/login";
   let navigate = useNavigate();
 
   // States for regristration
@@ -17,7 +17,9 @@ export const RegistroCaminador = () => {
   const [password, setPassword] = useState("");
 
   // BackEnd url
-  const apiUrl = "https://dogger-web-app.herokuapp.com/walkers";
+
+ const apiUrl = "https://dogger-web-app.herokuapp.com/walkers";
+
 
   // Handling the values change
   const handleFname = (e) => {
@@ -35,15 +37,7 @@ export const RegistroCaminador = () => {
   const handlePassword = (e) => {
     setPassword(e.target.value);
   };
-  const handleName = (e) => {
-    setName(e.target.value);
-  };
-  const handleBreed = (e) => {
-    setBreed(e.target.value);
-  };
-  const handleAge = (e) => {
-    setAge(e.target.value);
-  };
+
   // Handling the form submission
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -71,7 +65,8 @@ export const RegistroCaminador = () => {
             text: data.data.message,
           });
         } else {
-          navigate(walker_route);
+          navigate(login);
+          Swal.fire("Tu cuenta ha sido creada!", "Inicia sesión!", "success");
         }
       })
       .catch((error) => error);
