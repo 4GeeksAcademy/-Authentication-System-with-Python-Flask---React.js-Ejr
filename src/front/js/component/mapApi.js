@@ -1,24 +1,63 @@
 import React from "react";
-import { GoogleMap, useLoadScript, MarkerF } from "@react-google-maps/api";
-import { Loader } from "@googlemaps/js-api-loader";
+import "mapbox-gl/dist/mapbox-gl.css";
+import MapboxDraw from "@mapbox/mapbox-gl-draw";
+import Map, {
+  FullscreenControl,
+  GeolocateControl,
+  Marker,
+  NavigationControl,
+  Source,
+  Layer,
+} from "react-map-gl";
 
 const MapApi = () => {
-  const { isLoaded } = useLoadScript({
-    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,
-  });
+  const mapstyle = {
+    width: "100%",
+    height: "500px",
+    borderRadius: "15px",
+  };
 
-  if (!isLoaded) return <div>Loading...</div>;
-  return <Map />;
-};
+  const geojson = {
+    type: "FeatureCollection",
+    features: [
+      {
+        type: "Feature",
+        geometry: { type: "Point", coordinates: [275.3, 10] },
+      },
+    ],
+  };
 
-const center = { lat: 44, lng: -80 };
+  const layerStyle = {
+    id: "point",
+    type: "circle",
+    paint: {
+      "circle-radius": 10,
+      "circle-color": "#007cbf",
+    },
+  };
 
-function Map() {
+  const accessToken =
+    "pk.eyJ1IjoiZXRvbG9wZXoiLCJhIjoiY2w2d3g4M2cwMGM4NTNkcGJkNnNjZHRoNSJ9.SSJeRcj-upXlkWgXBtzWAw";
+
   return (
-    <GoogleMap zoom={10} center={center} mapContainerClassName="map-container">
-      <MarkerF position={center} />
-    </GoogleMap>
+    <div>
+      <Map
+        mapboxAccessToken={accessToken}
+        style={mapstyle}
+        initialViewState={{ longitude: 275.3, latitude: 10, zoom: 7 }}
+        mapStyle="mapbox://styles/mapbox/streets-v11"
+      >
+        <Marker longitude={276} latitude={10} />
+
+        <NavigationControl />
+        <FullscreenControl />
+        <GeolocateControl />
+        <Source id="my-data" type="geojson" data={geojson}>
+          <Layer {...layerStyle} />
+        </Source>
+      </Map>
+    </div>
   );
-}
+};
 
 export default MapApi;
