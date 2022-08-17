@@ -18,12 +18,13 @@ export const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const apiUrlLogin =
-    "https://3001-ramsescode-doggerapp-5wnce8fu2jg.ws-us61.gitpod.io/login";
-  const ownerUrl =
-    "https://3001-ramsescode-doggerapp-5wnce8fu2jg.ws-us61.gitpod.io/api/owners/";
-  const walkerUrl =
-    "https://3001-ramsescode-doggerapp-5wnce8fu2jg.ws-us61.gitpod.io/api/walkers/";
+
+
+
+  const apiUrlLogin = "https://dogger-web-app.herokuapp.com/login";
+  const ownerUrl = "https://dogger-web-app.herokuapp.com/api/owners/";
+  const walkerUrl = "https://dogger-web-app.herokuapp.com/api/walkers/";
+
 
   // Handling the values change
   const handleEmail = (e) => {
