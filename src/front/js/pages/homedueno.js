@@ -6,6 +6,7 @@ import "../../styles/innerhomes.css";
 import mapImage from "../../img/imagen_mapa.jpg";
 import { Context } from "../store/appContext";
 import Temperatura from "../component/temperatura";
+import MapApi from "../component/mapApi";
 
 export const HomeDueno = () => {
   const { store, actions } = useContext(Context);
@@ -34,13 +35,8 @@ export const HomeDueno = () => {
 
         <div className="row pt-5 pb-5">
           <div className="col-12">
-            <div className="rounded">
-              <img
-                src={mapImage}
-                className="card-img-top"
-                alt="..."
-                style={{ borderRadius: "15px" }}
-              />
+            <div className="mapBox" id="mapBox">
+              <MapApi />
             </div>
           </div>
         </div>
