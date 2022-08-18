@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import "../../styles/register.css";
 import Shape from "../component/shape";
+import UploadImage from "../component/uploadimage";
 
 export const RegistroCaminador = () => {
   const login = "/login";
@@ -18,8 +19,7 @@ export const RegistroCaminador = () => {
 
   // BackEnd url
 
- const apiUrl = "https://dogger-web-app.herokuapp.com/walkers";
-
+  const apiUrl = "https://dogger-web-app.herokuapp.com/walkers";
 
   // Handling the values change
   const handleFname = (e) => {
@@ -146,6 +146,7 @@ export const RegistroCaminador = () => {
                       </div>
                     </div>
 
+                    <UploadImage />
                     <div className="row">
                       <div className="col-md-6 mb-4">
                         <div className="form-check mb-5">

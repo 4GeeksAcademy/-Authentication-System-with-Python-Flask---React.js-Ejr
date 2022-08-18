@@ -17,12 +17,7 @@ const Carousel = () => {
 
   return (
     <div className="container-fluid">
-      <div className="d-flex flex-row rounded" style={style1}>
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-      </div>
+      <div className="d-flex flex-row rounded" style={style1}></div>
     </div>
   );
 };

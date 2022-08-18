@@ -1,17 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
+import { Context } from "../store/appContext";
 import dogpic from "../../img/dog1.jpg";
 import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 
 const CardOwner = () => {
   const [flip, setFlip] = useState(true);
-
-  let style1 = {
-    width: "20rem",
-    boxShadow:
-      "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
-    border: "none",
-  };
+  const { store, actions } = useContext(Context);
 
   let imageStyle = {
     backgroundSize: "contain",
@@ -55,11 +50,11 @@ const CardOwner = () => {
               >
                 <div className="card-header"></div>
                 <div className="card-body">
-                  <h4 className="card-title">Mocho</h4>
-                  <h5 className="card-text">Border-Collie</h5>
-                  <a href="#" className="btn btn-info btn-md">
-                    Editar informacion.
-                  </a>
+                  <h4 className="card-title">{store.dogs.name}</h4>
+                  <h5 className="card-text">{store.dogs.breed}</h5>
+                  <button className="btn btn-info btn-md">
+                    Editar informacion de {store.dogs.name}
+                  </button>
                 </div>
               </div>
             </div>

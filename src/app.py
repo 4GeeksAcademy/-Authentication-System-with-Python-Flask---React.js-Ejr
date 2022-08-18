@@ -1,8 +1,13 @@
 """
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
+
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
+import logging
 import os
-from flask import Flask, request, jsonify, url_for, send_from_directory
+from flask import Flask, request, jsonify, url_for, send_from_directory, render_template
 from flask_migrate import Migrate
 from flask_swagger import swagger
 from flask_cors import CORS
@@ -11,11 +16,14 @@ from api.models import db, Walker, Owner, Dog
 from api.routes import api
 from api.admin import setup_admin
 from api.commands import setup_commands
+from dotenv import load_dotenv
+from cloudinary.utils import cloudinary_url
 
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required
 from flask_jwt_extended import JWTManager
+
 
 from flask_bcrypt import Bcrypt
 
@@ -226,6 +234,23 @@ def login():
 
 
     return jsonify(body_response)
+
+#####------------------------------------------------------------Cloudinary (image uploads)
+
+@app.route("/upload", methods=['POST'])
+def upload_file():
+  app.logger.info('in upload route')
+
+  cloudinary.config(cloud_name = os.getenv(process.env.cloud_name), api_key=os.getenv(process.env.api_key), 
+    api_secret=os.getenv(process.env.api_secret))
+  upload_result = None
+  if request.method == 'POST':
+    file_to_upload = request.files['file']
+    app.logger.info('%s file_to_upload', file_to_upload)
+    if file_to_upload:
+      upload_result = cloudinary.uploader.upload(file_to_upload)
+      app.logger.info(upload_result)
+      return jsonify(upload_result)
 
 
 # this only runs if `$ python src/main.py` is executed

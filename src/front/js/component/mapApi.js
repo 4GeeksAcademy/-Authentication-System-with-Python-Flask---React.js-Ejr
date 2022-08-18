@@ -1,6 +1,6 @@
 import React from "react";
 import "mapbox-gl/dist/mapbox-gl.css";
-import MapboxDraw from "@mapbox/mapbox-gl-draw";
+
 import Map, {
   FullscreenControl,
   GeolocateControl,
@@ -22,7 +22,7 @@ const MapApi = () => {
     features: [
       {
         type: "Feature",
-        geometry: { type: "Point", coordinates: [275.3, 10] },
+        geometry: { type: "Point", coordinates: [277, 38] },
       },
     ],
   };
@@ -33,6 +33,7 @@ const MapApi = () => {
     paint: {
       "circle-radius": 10,
       "circle-color": "#007cbf",
+      coordinates: [-77, 38],
     },
   };
 
