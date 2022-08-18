@@ -19,7 +19,6 @@ const CarouselOwner = () => {
     <div className="container-fluid">
       <div className="d-flex flex-row rounded" style={style1}>
         <CardOwner />
-        <CardOwner />
       </div>
     </div>
   );

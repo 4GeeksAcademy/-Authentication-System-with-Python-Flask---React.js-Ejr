@@ -6,6 +6,7 @@ import dogswalker from "../../img/dogger.png";
 import dogleash from "../../img/dog_leash.png";
 import "../../styles/home.css";
 import Shape from "../component/shape";
+import { Link } from "react-router-dom";
 
 const cardStyle = {
   width: "auto",
@@ -73,6 +74,7 @@ export const Home = () => {
                 alt="..."
                 style={images}
               ></img>
+
               <div className="card-body">
                 <p className="card-text" style={{ color: "black" }}>
                   Registras a tu perro
@@ -114,9 +116,11 @@ export const Home = () => {
         <br></br>
         <div className="row">
           <div className="col-12 text-center pb-3 pt-5">
-            <button className="btn rounded-pill pt-2" style={btns}>
-              <h5>Comenzemos!</h5>
-            </button>
+            <Link to={"/registrodueno"}>
+              <button className="btn rounded-pill pt-2" style={btns}>
+                <h5>Comenzemos!</h5>
+              </button>
+            </Link>
           </div>
         </div>
         <br></br>

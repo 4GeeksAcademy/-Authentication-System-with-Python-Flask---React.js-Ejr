@@ -53,3 +53,16 @@ body {
 .custom-shape-divider-bottom-1659915273 .shape-fill {
   fill: #455855;
 }
+
+.circle1 {
+  z-index: -1;
+  width: 100px;
+  height: 100px;
+  background: #afbdb4;
+  border: 1px solid #000;
+}
+
+.circleBase {
+  border-radius: 50%;
+  border: none;
+}
