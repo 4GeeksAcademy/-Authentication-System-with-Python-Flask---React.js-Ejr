@@ -17,3 +17,21 @@ body {
 #mapStyle {
   border-radius: 50px;
 }
+
+.image-preview {
+  position: relative;
+  width: 300px;
+  height: 300px;
+  margin: 20px;
+}
+
+.image-preview img {
+  width: 300px;
+  height: 300px;
+  object-fit: cover;
+}
+
+.images-preview-container {
+  display: flex;
+  justify-content: right;
+}
