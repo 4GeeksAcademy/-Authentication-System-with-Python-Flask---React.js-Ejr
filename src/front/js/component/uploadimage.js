@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { image } from "@cloudinary/url-gen/qualifiers/source";
 
-cloud_name = "wbpza7rq";
-api_key = "366651217213899";
-api_secret = "cAhOpTg6lEjCcUE1rcs0vcLeiSI";
+const cloud_name = "wbpza7rq";
+const api_key = "366651217213899";
+const api_secret = "cAhOpTg6lEjCcUE1rcs0vcLeiSI";
 
 const UploadImage = () => {
   const { images, setImages } = useState([]);
@@ -22,7 +23,8 @@ const UploadImage = () => {
       .catch((e) => console.log(e));
   };
 
-  const handleOpenWidget = () => {
+  const handleOpenWidget = (e) => {
+    e.preventDefault();
     var myWidget = window.cloudinary.createUploadWidget(
       {
         cloudName: "etolopez",
@@ -30,12 +32,7 @@ const UploadImage = () => {
       },
       (error, result) => {
         if (!error && result && result.event === "success") {
-          setImages[
-            (prev) => [
-              ...prev,
-              { url: result.info.url, public_id: result.info.public_id },
-            ]
-          ];
+          setImages(result.info.url);
         }
       }
     );
@@ -45,12 +42,11 @@ const UploadImage = () => {
   return (
     <div className="row">
       <div className="col">
-        <button className=" btn btn-primary cloudinary-button rounded-pill">
-          <input
-            type="file"
-            id="upload-widget"
-            onClick={() => handleOpenWidget()}
-          />
+        <button
+          className=" btn btn-primary cloudinary-button rounded-pill"
+          onClick={(e) => handleOpenWidget(e)}
+        >
+          Sube una foto de tu perrito!
         </button>
       </div>
     </div>
