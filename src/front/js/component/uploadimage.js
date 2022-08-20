@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-cloud_name = "wbpza7rq";
-api_key = "366651217213899";
-api_secret = "cAhOpTg6lEjCcUE1rcs0vcLeiSI";
+const cloud_name = "wbpza7rq";
+const api_key = "366651217213899";
+const api_secret = "cAhOpTg6lEjCcUE1rcs0vcLeiSI";
 
 const UploadImage = () => {
   const { images, setImages } = useState([]);
