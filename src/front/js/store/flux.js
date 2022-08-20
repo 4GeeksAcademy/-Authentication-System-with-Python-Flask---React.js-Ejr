@@ -2,7 +2,7 @@ const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
       user: {},
-      dogs: {},
+      dogs: [],
       log: "Iniciar sesión",
       isLogedIn: false,
     },
@@ -13,6 +13,13 @@ const getState = ({ getStore, getActions, setStore }) => {
           .then((data) => {
             setStore({ user: data.results });
           })
+          .catch();
+      },
+
+      getDog: (url, userId) => {
+        fetch(url + userId)
+          .then((res) => res.json())
+          .then((data) => setStore({ dogs: [data.result] }))
           .catch();
       },
 

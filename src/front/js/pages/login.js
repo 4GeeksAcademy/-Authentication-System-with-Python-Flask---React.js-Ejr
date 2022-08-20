@@ -18,13 +18,10 @@ export const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-
-
-
   const apiUrlLogin = "https://dogger-web-app.herokuapp.com/login";
-  const ownerUrl = "https://dogger-web-app.herokuapp.com/api/owners/";
+  const ownerUrl = "https://dogger-web-app.herokuapp.com/owners/";
   const walkerUrl = "https://dogger-web-app.herokuapp.com/api/walkers/";
-
+  const dogUrl = "https://dogger-web-app.herokuapp.com/api/dogs/";
 
   // Handling the values change
   const handleEmail = (e) => {
@@ -61,6 +58,7 @@ export const Login = () => {
           localStorage.setItem("token", data.data.access_token);
 
           actions.getInfo(ownerUrl, data.data.user_id);
+          actions.getDog(dogUrl, data.data.user_id);
           navigate(ownerRoute);
           actions.handleLog();
         } else {

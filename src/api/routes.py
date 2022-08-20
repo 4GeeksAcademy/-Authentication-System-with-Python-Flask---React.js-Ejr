@@ -118,19 +118,21 @@ def get_dogs():
 
     return jsonify(response_body), 200
 
-@api.route('/dogs/<int:dog_id>', methods=['GET'])
-def get_dog_id(dog_id):
+@api.route('/dogs/<int:owner_id>', methods=['GET'])
+def get_dog_id(owner_id):
 
-    dog = Dog.query.get(dog_id)
-
-    if dog_id < 1:
+    if owner_id < 1:
         raise APIException('El id no es válido', status_code=400)
 
-    if dog is None:
-        raise APIException('El perro con ese ID no existe', status_code=400)
+    owner_dogs = Dog.query.filter_by(owner_id = owner_id)
+
+    if owner_dogs is None:
+        raise APIException('El dueño con ese id no tiene perros', status_code=400)
+
+    dogs = list(map(lambda x: x.serialize(), owner_dogs))
 
     response_body = {
-        "result": dog.serialize()
+        "result": dogs
     }
 
     return jsonify(response_body), 200
