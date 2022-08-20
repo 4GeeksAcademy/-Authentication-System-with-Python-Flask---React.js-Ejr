@@ -54,7 +54,7 @@ class Dog(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(200), unique=False, nullable=False)
     breed = db.Column(db.String(200), unique=False, nullable=False)
-    age = db.Column(db.Integer(), unique=False, nullable=False)
+    age = db.Column(db.Integer, unique=False, nullable=False)
     owner_id = db.Column(db.Integer, db.ForeignKey('owner.id', ondelete='CASCADE'))
     Owner = db.relationship('Owner', primaryjoin=owner_id == Owner.id)
 
@@ -66,5 +66,6 @@ class Dog(db.Model):
             "id": self.id,
             "name": self.name,
             "breed": self.breed,
+            "age": self.age,
             'owner_id': self.owner_id,
         }

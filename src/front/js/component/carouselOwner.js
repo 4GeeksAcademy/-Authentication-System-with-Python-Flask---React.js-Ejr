@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
+import { Context } from "../store/appContext";
 import CardOwner from "../component/cardOwner";
 
 const CarouselOwner = () => {
+  const { store, actions } = useContext(Context);
+
   let style1 = {
     overflowX: "scroll",
     overflowY: "white",
@@ -17,8 +20,12 @@ const CarouselOwner = () => {
 
   return (
     <div className="container-fluid">
-      <div className="d-flex flex-row rounded" style={style1}>
-        <CardOwner />
+      <div className="row" style={style1}>
+        {store.dogs.map((item) => {
+          return item.map((obj, index) => {
+            return <CardOwner name={obj.name} breed={obj.breed} age={2} />;
+          });
+        })}
       </div>
     </div>
   );
