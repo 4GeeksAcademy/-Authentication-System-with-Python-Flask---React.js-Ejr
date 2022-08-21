@@ -9,6 +9,7 @@ import { HomeCaminador } from "./pages/homecaminador";
 import { HomeDueno } from "./pages/homedueno";
 import { Login } from "./pages/login";
 import { SingleDog } from "./pages/singleDog";
+import ErrorPage from "./pages/ErrorPage";
 
 import Contact from "./pages/contact";
 import Questions from "./pages/questions";
@@ -41,7 +42,7 @@ const Layout = () => {
             <Route path="/preguntas" element={<Questions />} />
             <Route path="/terminosycondiciones" element={<Terms />} />
 
-            <Route element={<h1>Not found!</h1>} />
+            <Route path="*" element={<ErrorPage />} />
           </Routes>
           <Footer />
         </ScrollToTop>
