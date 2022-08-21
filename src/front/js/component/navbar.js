@@ -27,7 +27,7 @@ export const Navbar = () => {
 
   return (
     <div className="container">
-      <nav className="navbar navbar-expand-lg navbar-light">
+      <nav className="navbar navbar-expand-xlg navbar-light">
         <div className="container">
           <Link to={"/"} id="logoText">
             <img id="logo" src={logo} />
@@ -46,17 +46,16 @@ export const Navbar = () => {
           </button>
 
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul className="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
+            <ul className="navbar-nav ms-auto mb-lg-0 align-items-end">
               <li className="nav-item">
                 <button
                   onClick={store.isLogedIn === false ? login : logout}
                   id="btn1"
-                  className="btn rounded-pill m-1 btn-lg"
+                  className="btn rounded-pill m-1 btn-lg p-5s"
                 >
                   {store.log}
                 </button>
-              </li>
-              <li className="nav-item">
+
                 <Link to={"/registrodueno"}>
                   <button
                     id="btn2"
