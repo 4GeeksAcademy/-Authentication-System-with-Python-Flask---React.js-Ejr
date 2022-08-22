@@ -9,6 +9,7 @@ import { HomeCaminador } from "./pages/homecaminador";
 import { HomeDueno } from "./pages/homedueno";
 import { Login } from "./pages/login";
 import { SingleDog } from "./pages/singleDog";
+import Profile from "./pages/Profile";
 import ErrorPage from "./pages/ErrorPage";
 
 import Contact from "./pages/contact";
@@ -41,6 +42,7 @@ const Layout = () => {
             <Route path="/contacto" element={<Contact />} />
             <Route path="/preguntas" element={<Questions />} />
             <Route path="/terminosycondiciones" element={<Terms />} />
+            <Route path="/profile" element={<Profile />} />
 
             <Route path="*" element={<ErrorPage />} />
           </Routes>

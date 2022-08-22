@@ -14,7 +14,7 @@ const cardStyle = {
   height: "auto",
 };
 
-const images = {
+const imagesStyles = {
   height: "200px",
   width: "auto",
   color: "black",
@@ -30,7 +30,7 @@ const btns = {
   width: "20rem",
 };
 
-export const Home = () => {
+export const Home = ({ images }) => {
   const { store, actions } = useContext(Context);
 
   return (
@@ -72,7 +72,7 @@ export const Home = () => {
                 src={dog1}
                 className="card-img-top"
                 alt="..."
-                style={images}
+                style={imagesStyles}
               ></img>
 
               <div className="card-body">
@@ -88,7 +88,7 @@ export const Home = () => {
                 src={dogswalker}
                 className="card-img-top"
                 alt="..."
-                style={images}
+                style={imagesStyles}
               ></img>
               <div className="card-body">
                 <p className="card-text" style={{ color: "black" }}>
@@ -103,7 +103,7 @@ export const Home = () => {
                 src={dogleash}
                 className="card-img-top"
                 alt="..."
-                style={images}
+                style={imagesStyles}
               ></img>
               <div className="card-body">
                 <p className="card-text" style={{ color: "black" }}>
