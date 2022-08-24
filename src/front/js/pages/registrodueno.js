@@ -22,8 +22,8 @@ export const RegistroDueno = () => {
 
   // BackEnd url
 
-  const apiUrl = "https://dogger-web-app.herokuapp.com/owners";
-  const ownerUrl = "https://dogger-web-app.herokuapp.com/api/owners/";
+  const apiUrl = process.env.HEROKU_URL + "/owners";
+  const ownerUrl = process.env.HEROKU_URL + "/api/owners/";
 
   // Handling the values change
   const handleFname = (e) => {

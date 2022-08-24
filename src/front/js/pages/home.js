@@ -1,6 +1,4 @@
-import React, { useContext } from "react";
-import { Context } from "../store/appContext";
-import mapImage from "../../img/imagen_mapa.jpg";
+import React from "react";
 import dog1 from "../../img/Dog_line.png";
 import dogswalker from "../../img/dogger.png";
 import dogleash from "../../img/dog_leash.png";
@@ -8,20 +6,10 @@ import "../../styles/home.css";
 import Shape from "../component/shape";
 import { Link } from "react-router-dom";
 
-const cardStyle = {
-  width: "auto",
-  justifyContent: "center",
-  height: "auto",
-};
-
 const images = {
   height: "200px",
   width: "auto",
   color: "black",
-};
-
-const centeredRow = {
-  alignItems: "center",
 };
 
 const btns = {
@@ -31,8 +19,6 @@ const btns = {
 };
 
 export const Home = () => {
-  const { store, actions } = useContext(Context);
-
   return (
     <div className="container-fluid">
       <div className="container m-auto">
@@ -50,12 +36,15 @@ export const Home = () => {
               </div>
             </div>
           </div>
-          <div className="col-lg-6 col-sm-12">
-            <div className="col" style={{ borderRadius: "50px" }}>
-              <div className="card" id="mapStyle" style={cardStyle}>
-                <img src={mapImage} />
-              </div>
-            </div>
+          <div className="col-sm-12 col-lg-6">
+            <iframe
+              className="w-100"
+              height="332"
+              src="https://www.youtube.com/embed/FO1K41xJNIM"
+              title="YouTube video player"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            ></iframe>
           </div>
         </div>
 

@@ -5,24 +5,30 @@ import { useNavigate } from "react-router-dom";
 import "../../styles/navbar.css";
 import logo from "../../img/dogger_logo.png";
 
+import { auth } from "../pages/fire";
+
 export const Navbar = () => {
   const { store, actions } = useContext(Context);
   const home = "/";
   const login_page = "/login";
+  const chatRoute = "/chat";
   let navigate = useNavigate();
 
   const logout = () => {
     let token = localStorage.getItem("token");
+    localStorage.removeItem("token");
 
-    console.log(Storage.length, token);
-    localStorage.removeItem(token);
-    console.log(Storage.length, token, "ya no deberia estar el token");
-    navigate(home);
+    auth.signOut();
+
     actions.handleLogOut();
+    navigate(home);
   };
 
   const login = () => {
     navigate(login_page);
+  };
+  const chat = () => {
+    navigate(chatRoute);
   };
 
   return (
@@ -56,16 +62,53 @@ export const Navbar = () => {
                   {store.log}
                 </button>
               </li>
-              <li className="nav-item">
-                <Link to={"/registrodueno"}>
-                  <button
-                    id="btn2"
-                    className="btn rounded-pill m-1 btn-lg pr-1 pl-1"
+              {store.isLogedIn ? (
+                <li className="nav-item dropdown">
+                  <a
+                    className="nav-link dropdown-toggle"
+                    href="#"
+                    id="navbarDropdown"
+                    role="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
                   >
-                    Registrarse
-                  </button>
-                </Link>
-              </li>
+                    Perfil
+                  </a>
+                  <ul
+                    className="dropdown-menu"
+                    aria-labelledby="navbarDropdown"
+                  >
+                    <li>
+                      <a className="dropdown-item" href="#">
+                        Edita tu perfil
+                      </a>
+                    </li>
+                    <li>
+                      <hr className="dropdown-divider" />
+                    </li>
+                    <li>
+                      <button
+                        type="button"
+                        className="btn btn-primary"
+                        onClick={chat}
+                      >
+                        mensajes <span className="badge bg-secondary">4</span>
+                      </button>
+                    </li>
+                  </ul>
+                </li>
+              ) : (
+                <li className="nav-item">
+                  <Link to={"/registrodueno"}>
+                    <button
+                      id="btn2"
+                      className="btn rounded-pill m-1 btn-lg pr-1 pl-1"
+                    >
+                      Registrarse
+                    </button>
+                  </Link>
+                </li>
+              )}
             </ul>
           </div>
         </div>

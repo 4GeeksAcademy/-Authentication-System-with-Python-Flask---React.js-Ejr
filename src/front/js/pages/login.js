@@ -5,6 +5,7 @@ import { Context } from "../store/appContext";
 import Swal from "sweetalert2";
 import PropTypes from "prop-types";
 import Shape from "../component/shape";
+import Signin from "../component/Signin";
 
 export const Login = () => {
   const [isShown, setIsShown] = useState(true);
@@ -18,10 +19,10 @@ export const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const apiUrlLogin = "https://dogger-web-app.herokuapp.com/login";
-  const ownerUrl = "https://dogger-web-app.herokuapp.com/owners/";
-  const walkerUrl = "https://dogger-web-app.herokuapp.com/api/walkers/";
-  const dogUrl = "https://dogger-web-app.herokuapp.com/api/dogs/";
+  const apiUrlLogin = process.env.HEROKU_URL + "/login";
+  const ownerUrl = process.env.HEROKU_URL + "/api/owners/";
+  const walkerUrl = process.env.HEROKU_URL + "/api/walkers/";
+  const dogUrl = process.env.HEROKU_URL + "/api/dogs/";
 
   // Handling the values change
   const handleEmail = (e) => {
@@ -80,7 +81,14 @@ export const Login = () => {
             <div className="card card-registration my-4 register mb-5">
               <div className="col-xl-12 mb-3">
                 <div className="card-body p-md-5 text-black">
-                  <h3 className="mb-5 ">Login</h3>
+                  <div className="row">
+                    <div className="col">
+                      <h3 className="mb-5 ">Iniciar sesión</h3>
+                    </div>
+                    <div className="col">
+                      <Signin />
+                    </div>
+                  </div>
                   <form>
                     <div className="row">
                       <div className="col-md-12 mb-6">

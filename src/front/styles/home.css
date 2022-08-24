@@ -14,10 +14,6 @@ body {
   border: none;
 }
 
-#mapStyle {
-  border-radius: 50px;
-}
-
 .image-preview {
   position: relative;
   width: 300px;
