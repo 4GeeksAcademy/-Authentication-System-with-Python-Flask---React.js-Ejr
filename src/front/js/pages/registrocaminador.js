@@ -22,7 +22,7 @@ export const RegistroCaminador = () => {
 
   // BackEnd url
 
-  const apiUrl = "https://dogger-web-app.herokuapp.com/walkers";
+  const apiUrl = process.env.HEROKU_URL + "/walkers";
 
   // Handling the values change
   const handleFname = (e) => {

@@ -1,0 +1,33 @@
+section {
+  background-color: #eee;
+  border-radius: 15px;
+}
+#chat3 {
+  border-radius: 15px;
+}
+#cards {
+  position: relative;
+  height: 400px;
+}
+.user-img {
+  width: 45px;
+  height: 100%;
+  border-radius: 50%;
+}
+
+.box-chat {
+  background-color: #f5f6f7;
+}
+
+#chat3 .form-control {
+  border-color: transparent;
+}
+
+#chat3 .form-control:focus {
+  border-color: transparent;
+  box-shadow: inset 0px 0px 0px 1px transparent;
+}
+
+.fa-paper-plane {
+  color: #0b5ed7;
+}

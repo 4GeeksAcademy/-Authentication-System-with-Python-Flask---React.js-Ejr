@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import dogpic from "../../img/dog1.jpg";
 import { Link } from "react-router-dom";
