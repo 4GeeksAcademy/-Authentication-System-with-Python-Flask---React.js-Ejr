@@ -3,7 +3,7 @@ import avatar from "../../img/avatar.jpg";
 import CalendarComp from "../component/CalendarComp";
 import Imgee from "../component/imgee";
 import Recomnendations from "../component/recomendations";
-import Shape from "../component/shape";
+import Shape2 from "../component/shape2";
 
 const imgStlye = {
   width: "100px",
@@ -51,7 +51,7 @@ const Profile = () => {
           <div className="col">Sobre mi</div>
         </div>
 
-        <Shape />
+        <Shape2 />
       </div>
     </div>
   );

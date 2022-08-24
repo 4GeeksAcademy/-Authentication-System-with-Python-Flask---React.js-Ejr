@@ -7,17 +7,21 @@ import cloudinary.uploader
 import cloudinary.api
 import logging
 import os
+import uuid
+
+from os.path import exists
 from flask import Flask, request, jsonify, url_for, send_from_directory, render_template
 from flask_migrate import Migrate
 from flask_swagger import swagger
 from flask_cors import CORS
 from api.utils import APIException, generate_sitemap
-from api.models import db, Walker, Owner, Dog
+from api.models import db, Walker, Owner, Dog, Img
 from api.routes import api
 from api.admin import setup_admin
 from api.commands import setup_commands
 from dotenv import load_dotenv
 from cloudinary.utils import cloudinary_url
+from werkzeug.utils import secure_filename
 
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity
@@ -61,6 +65,9 @@ setup_commands(app)
 # Add all endpoints form the API with a "api" prefix
 app.register_blueprint(api, url_prefix='/api')
 
+ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
+app.config['UPLOAD_FOLDER_OWNER'] = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'public/owner')
+app.config['UPLOAD_FOLDER_WALKER'] = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'public/walker')
 
 # Handle/serialize errors like a JSON object
 @app.errorhandler(APIException)
@@ -83,6 +90,7 @@ def serve_any_other_file(path):
     response.cache_control.max_age = 0 # avoid cache memory
     return response
 
+
 @app.route('/walkers', methods=['POST'])
 def create_walker():
     body = request.get_json()
@@ -99,6 +107,21 @@ def create_walker():
         raise APIException('Campo requerido', status_code=400)
     if 'username' not in body:
         raise APIException('Campo requerido', status_code=400)
+    if 'file' not in request.files:
+        raise APIException("no has enviado un archivo", status_code=400)
+        
+    file = request.files['file']
+
+    if file.filename == '':
+        raise APIException("Archivo sin nombre", status_code=400)
+        
+    if file and allowed_file(file.filename):
+        filename = str(uuid.uuid4()) + '.' + file.filename.rsplit('.', 1)[1].lower()
+
+        file.save(os.path.join(app.config['UPLOAD_FOLDER_WALKER'], filename))
+        img = Img(img=filename)
+        db.session.add(img)
+        db.session.commit()
 
     walker_email = Walker.query.filter_by(email= body['email']).first()
     if walker_email != None:
@@ -116,14 +139,18 @@ def create_walker():
 
     pw_hash = bcrypt.generate_password_hash(body['password']).decode('utf-8')
 
-    new_walker = Walker(first_name = body['first_name'], last_name = body['last_name'], username = body['username'], email = body['email'], password = pw_hash, is_active = True)
+
+    new_walker = Walker(first_name = body['first_name'], last_name = body['last_name'], username = body['username'], email = body['email'], password = pw_hash, is_active = True, file = filename)
     db.session.add(new_walker)
     db.session.commit()
 
     response_body = {
-        'results': new_walker.serialize()
+        'results': new_walker.serialize(),
     }
     return jsonify(response_body), 200
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 @app.route('/owners', methods=['POST'])
 def create_owner():
@@ -221,8 +248,6 @@ def login():
     if is_correct == False:
         return jsonify({'msg': 'Correo o contraseña incorrectos'}), 401
 
-
-
     access_token = create_access_token(identity=email)
 
     body_response = {
@@ -234,23 +259,6 @@ def login():
 
 
     return jsonify(body_response)
-
-#####------------------------------------------------------------Cloudinary (image uploads)
-
-@app.route("/upload", methods=['POST'])
-def upload_file():
-  app.logger.info('in upload route')
-
-  cloudinary.config(cloud_name = os.getenv(process.env.cloud_name), api_key=os.getenv(process.env.api_key), 
-    api_secret=os.getenv(process.env.api_secret))
-  upload_result = None
-  if request.method == 'POST':
-    file_to_upload = request.files['file']
-    app.logger.info('%s file_to_upload', file_to_upload)
-    if file_to_upload:
-      upload_result = cloudinary.uploader.upload(file_to_upload)
-      app.logger.info(upload_result)
-      return jsonify(upload_result)
 
 
 # this only runs if `$ python src/main.py` is executed
