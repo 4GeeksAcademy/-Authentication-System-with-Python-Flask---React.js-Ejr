@@ -2,14 +2,22 @@ import firebase from "firebase/compat/app";
 import "firebase/compat/firestore";
 import "firebase/compat/auth";
 
+const key = process.env.FB_APIKEY;
+const dom = process.env.FB_AUTHDOMAIN;
+const project = process.env.FB_PROJECTID;
+const storage = process.env.FB_STORAGE;
+const msg = process.env.FB_MESSAGING;
+const appi = process.env.FB_APPID;
+const measure = process.env.FB_MEASURE;
+
 const firebaseApp = firebase.initializeApp({
-  apiKey: "AIzaSyCfCOmyVo1g9pll2w7w3obyKiY6D3punus",
-  authDomain: "dogger-chat.firebaseapp.com",
-  projectId: "dogger-chat",
-  storageBucket: "dogger-chat.appspot.com",
-  messagingSenderId: "547875966415",
-  appId: "1:547875966415:web:ff84c352a48ac1938016ba",
-  measurementId: "G-0V30B7DSY2",
+  apiKey: key,
+  authDomain: dom,
+  projectId: project,
+  storageBucket: storage,
+  messagingSenderId: msg,
+  appId: appi,
+  measurementId: measure,
 });
 
 const db = firebaseApp.firestore();
