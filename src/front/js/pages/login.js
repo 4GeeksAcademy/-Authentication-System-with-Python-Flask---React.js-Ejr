@@ -20,8 +20,8 @@ export const Login = () => {
 
   const apiUrlLogin = "https://dogger-web-app.herokuapp.com/login";
   const ownerUrl = "https://dogger-web-app.herokuapp.com/owners/";
-  const walkerUrl = "https://dogger-web-app.herokuapp.com/api/walkers/";
-  const dogUrl = "https://dogger-web-app.herokuapp.com/api/dogs/";
+  const walkerUrl = "https://dogger-web-app.herokuapp.com/walkers/";
+  const dogUrl = "https://dogger-web-app.herokuapp.com/dogs/";
 
   // Handling the values change
   const handleEmail = (e) => {

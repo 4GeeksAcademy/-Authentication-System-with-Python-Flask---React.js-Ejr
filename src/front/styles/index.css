@@ -155,3 +155,50 @@ abbr[title] {
   background: #6f48eb;
   color: white;
 }
+
+/* SHAPE 2 */
+
+.custom-shape-divider-bottom-1 {
+  position: fixed;
+  z-index: -1;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+  transform: rotate(180deg);
+}
+
+.custom-shape-divider-bottom-1 svg {
+  position: relative;
+  display: block;
+  width: calc(182% + 1.3px);
+  height: 458px;
+}
+
+.custom-shape-divider-bottom-1 .shape-fill {
+  fill: #c9e3eb;
+}
+
+.custom-shape-divider-bottom-2 {
+  position: fixed;
+  bottom: 0;
+  z-index: -1;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+  transform: rotate(180deg);
+}
+
+.custom-shape-divider-bottom-2 svg {
+  position: relative;
+  display: block;
+  width: calc(197% + 1.3px);
+  height: 251px;
+  transform: rotateY(180deg);
+}
+
+.custom-shape-divider-bottom-2 .shape-fill {
+  fill: #455855;
+}

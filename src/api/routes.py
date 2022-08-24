@@ -1,9 +1,10 @@
 """
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
-from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, Walker, Owner, Dog
+from flask import Flask, request, jsonify, url_for, Blueprint, send_from_directory
+from api.models import db, Walker, Owner, Dog, Img
 from api.utils import generate_sitemap, APIException
+
 
 api = Blueprint('api', __name__)
 
@@ -24,6 +25,10 @@ def get_walkers():
     }
     return jsonify(response_body), 200
 
+def download_file(id):
+    img = Img.query.get(id)
+    return send_from_directory(app.config["UPLOAD_FOLDER_WALKER"], img.img)
+
 @api.route('/walkers/<int:walker_id>', methods=['GET'])
 def get_walker(walker_id):
 
@@ -39,6 +44,8 @@ def get_walker(walker_id):
         'results': walker.serialize()
     }
     return jsonify(response_body), 200
+
+
 
 
 
