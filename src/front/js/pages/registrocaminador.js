@@ -5,6 +5,8 @@ import Swal from "sweetalert2";
 import "../../styles/register.css";
 import Shape from "../component/shape";
 import UploadImage from "../component/uploadimage";
+import axios from "axios";
+import ImgUploader from "../component/imgUploaderWalk";
 
 export const RegistroCaminador = () => {
   const login = "/login";
@@ -16,6 +18,7 @@ export const RegistroCaminador = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [file, setFile] = useState();
 
   // BackEnd url
 
@@ -38,16 +41,23 @@ export const RegistroCaminador = () => {
     setPassword(e.target.value);
   };
 
+  const handleImage = (e) => {
+    setFile(e.target.files[0]);
+  };
+
   // Handling the form submission
   const handleSubmit = (e) => {
     e.preventDefault();
-
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("file", file.name);
     let body_content = JSON.stringify({
       first_name: first_name,
       last_name: last_name,
       username: username,
       email: email,
       password: password,
+      file: file,
     });
     fetch(apiUrl, {
       method: "POST",
@@ -76,7 +86,10 @@ export const RegistroCaminador = () => {
       <div className="container align-items-center">
         <div className="row d-flex justify-content-center align-items-center h-100 w-75 mx-auto">
           <div className="col">
-            <form className="card card-registration my-4 register">
+            <form
+              className="card card-registration my-4 register"
+              encType="multipart/form-data"
+            >
               <div className="row g-0">
                 <div className="col-xl-12">
                   <div className="card-body p-md-5 text-black">
@@ -145,14 +158,14 @@ export const RegistroCaminador = () => {
                         </div>
                       </div>
                     </div>
-
-                    <UploadImage />
+                    <input type="file" name="file" onChange={handleImage} />
                     <div className="row">
                       <div className="col-md-6 mb-4">
                         <div className="form-check mb-5">
                           <input
                             className="form-check-input me-2"
                             type="checkbox"
+                            required
                           />
                           <label className="form-check-label">
                             Acepto{" "}

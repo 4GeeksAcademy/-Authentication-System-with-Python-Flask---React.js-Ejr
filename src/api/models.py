@@ -49,6 +49,19 @@ class Owner(db.Model):
             "email": self.email,
         }
 
+class Img(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    file = db.Column(db.Text, unique=True, nullable=False)
+
+    def __repr__(self):
+        return f'<Img {self.id} con nombre {self.file}>'
+
+    def serialize(self):
+        return{
+            'id': self.id,
+            'file': self.file
+        }
+
 class Dog(db.Model):
     __tablename__ = "dog"
     id = db.Column(db.Integer, primary_key=True)

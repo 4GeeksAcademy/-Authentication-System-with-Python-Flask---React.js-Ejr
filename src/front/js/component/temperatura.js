@@ -14,7 +14,7 @@ const Temperatura = () => {
   }, []);
 
   const hightemp = () => {
-    if (Math.trunc(weather.main.temp - 273) >= 20) {
+    if (Math.trunc(weather.main.temp - 273) >= 73) {
       return "row text-center text-light bg-danger bg-gradient rounded align-items-center pt-4 mb-3";
     } else {
       return "row text-center text-light bg-secondary bg-gradient rounded align-items-center pt-4 pb-4 mb-3";
@@ -22,7 +22,7 @@ const Temperatura = () => {
   };
 
   const highAlert = () => {
-    if (Math.trunc(weather.main.temp - 273) >= 20) {
+    if (Math.trunc(weather.main.temp - 273) >= 73) {
       return (
         <div className="row">
           <div className="col"></div>
