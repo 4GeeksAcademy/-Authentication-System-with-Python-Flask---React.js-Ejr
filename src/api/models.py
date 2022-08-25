@@ -6,6 +6,7 @@ db = SQLAlchemy()
 class Walker(db.Model):
     __tablename__ = "walker"
     id = db.Column(db.Integer, primary_key=True)
+    file = db.Column(db.Text, unique=True, nullable=False)
     username = db.Column(db.String(120), unique=True, nullable=False)
     first_name = db.Column(db.String(200), unique=False, nullable=False)
     last_name = db.Column(db.String(200), unique=False, nullable=False)
@@ -21,6 +22,7 @@ class Walker(db.Model):
         return {
             "id": self.id,
             "username": self.username,
+            'file': self.file,
             "first_name": self.first_name,
             "last_name": self.last_name,
             "email": self.email,
@@ -29,6 +31,7 @@ class Walker(db.Model):
 class Owner(db.Model):
     __tablename__ = "owner"
     id = db.Column(db.Integer, primary_key=True)
+    file = db.Column(db.Text, unique=True, nullable=False)
     username = db.Column(db.String(120), unique=True, nullable=False)
     first_name = db.Column(db.String(200), unique=False, nullable=False)
     last_name = db.Column(db.String(200), unique=False, nullable=False)
@@ -44,6 +47,7 @@ class Owner(db.Model):
         return {
             "id": self.id,
             "username": self.username,
+            'file': self.file,
             "first_name": self.first_name,
             "last_name": self.last_name,
             "email": self.email,
@@ -52,6 +56,10 @@ class Owner(db.Model):
 class Img(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     file = db.Column(db.Text, unique=True, nullable=False)
+    owner_id = db.Column(db.Integer, db.ForeignKey('owner.id', ondelete='CASCADE'))
+    Owner = db.relationship('Owner', primaryjoin=owner_id == Owner.id)
+    walker_id = db.Column(db.Integer, db.ForeignKey('walker.id', ondelete='CASCADE'))
+    Walker = db.relationship('Walker', primaryjoin=walker_id == Walker.id)
 
     def __repr__(self):
         return f'<Img {self.id} con nombre {self.file}>'
@@ -59,7 +67,9 @@ class Img(db.Model):
     def serialize(self):
         return{
             'id': self.id,
-            'file': self.file
+            'file': self.file,
+            'owner_id': self.owner_id,
+            'walker_id': self.owner_id,
         }
 
 class Dog(db.Model):
@@ -68,6 +78,7 @@ class Dog(db.Model):
     name = db.Column(db.String(200), unique=False, nullable=False)
     breed = db.Column(db.String(200), unique=False, nullable=False)
     age = db.Column(db.Integer, unique=False, nullable=False)
+    file = db.Column(db.Text, unique=True, nullable=False)
     owner_id = db.Column(db.Integer, db.ForeignKey('owner.id', ondelete='CASCADE'))
     Owner = db.relationship('Owner', primaryjoin=owner_id == Owner.id)
 
@@ -81,4 +92,5 @@ class Dog(db.Model):
             "breed": self.breed,
             "age": self.age,
             'owner_id': self.owner_id,
+            'file': self.file,
         }

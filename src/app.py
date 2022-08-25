@@ -93,7 +93,7 @@ def serve_any_other_file(path):
 
 @app.route('/walkers', methods=['POST'])
 def create_walker():
-    body = request.get_json()
+    body = request.form
 
     if body is None:
         raise APIException('You need to specify the request body as a json object', status_code=400)
@@ -108,7 +108,7 @@ def create_walker():
     if 'username' not in body:
         raise APIException('Campo requerido', status_code=400)
     if 'file' not in request.files:
-        raise APIException("no has enviado un archivo", status_code=400)
+        raise APIException("No has enviado un archivo", status_code=400)
         
     file = request.files['file']
 
@@ -118,10 +118,9 @@ def create_walker():
     if file and allowed_file(file.filename):
         filename = str(uuid.uuid4()) + '.' + file.filename.rsplit('.', 1)[1].lower()
 
-        file.save(os.path.join(app.config['UPLOAD_FOLDER_WALKER'], filename))
-        img = Img(img=filename)
-        db.session.add(img)
-        db.session.commit()
+        file.save(os.path.join(app.config['UPLOAD_FOLDER_WALKER'], filename)) 
+
+    
 
     walker_email = Walker.query.filter_by(email= body['email']).first()
     if walker_email != None:
@@ -148,6 +147,11 @@ def create_walker():
         'results': new_walker.serialize(),
     }
     return jsonify(response_body), 200
+
+@app.route('/walker/download/<filename>', methods=['GET'])
+def download_file(filename):
+    return send_from_directory(app.config["UPLOAD_FOLDER_WALKER"], filename)
+
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS

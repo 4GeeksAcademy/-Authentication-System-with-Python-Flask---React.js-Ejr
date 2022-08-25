@@ -19,12 +19,10 @@ export const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-
-  const apiUrlLogin = process.env.HEROKU_URL + "/login";
-  const ownerUrl = process.env.HEROKU_URL + "/api/owners/";
-  const walkerUrl = process.env.HEROKU_URL + "/api/walkers/";
-  const dogUrl = process.env.HEROKU_URL + "/api/dogs/";
-
+  const apiUrlLogin = process.env.BACKEND_URL + "/login";
+  const ownerUrl = process.env.BACKEND_URL + "/api/owners/";
+  const walkerUrl = process.env.BACKEND_URL + "/api/walkers/";
+  const dogUrl = process.env.BACKEND_URL + "/api/dogs/";
 
   // Handling the values change
   const handleEmail = (e) => {

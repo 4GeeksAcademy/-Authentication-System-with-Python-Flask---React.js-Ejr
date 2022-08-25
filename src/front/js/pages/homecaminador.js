@@ -24,6 +24,11 @@ export const HomeCaminador = () => {
   return (
     <div className="container-fluid">
       <div className="container m-auto">
+        <div className="">
+          <img
+            src={`${process.env.BACKEND_URL}/walker/download/${store.user.file}`}
+          ></img>
+        </div>
         <div className="row text-center pt-4">
           <h1>¡Bienvenido de vuelta, {store.user.first_name}!</h1>
         </div>
