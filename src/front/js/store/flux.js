@@ -1,7 +1,7 @@
 const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
-      token: "",
+      token: null,
     },
     actions: {
       // Use getActions to call a function within a fuction
@@ -37,8 +37,8 @@ const getState = ({ getStore, getActions, setStore }) => {
             process.env.BACKEND_URL + "/api/login",
             opts
           );
-          if (resp !== 200) {
-            const error = new Error("Error signing up");
+          if (resp.status !== 200) {
+            new Error("Error signing up");
             return false;
           }
           const data = await resp.json();
@@ -48,6 +48,17 @@ const getState = ({ getStore, getActions, setStore }) => {
         } catch (error) {
           console.log(error);
         }
+      },
+      getTokenFromStorage: () => {
+        const token = localStorage.getItem("token");
+        if (token && token !== "" && token !== undefined)
+          setStore({ token: token });
+        console.log("getting token from local storage");
+      },
+      logout: () => {
+        localStorage.removeItem("token");
+        setStore({ token: null });
+        console.log("logging out");
       },
     },
   };
