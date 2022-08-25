@@ -25,10 +25,6 @@ def get_walkers():
     }
     return jsonify(response_body), 200
 
-def download_file(id):
-    img = Img.query.get(id)
-    return send_from_directory(app.config["UPLOAD_FOLDER_WALKER"], img.img)
-
 @api.route('/walkers/<int:walker_id>', methods=['GET'])
 def get_walker(walker_id):
 

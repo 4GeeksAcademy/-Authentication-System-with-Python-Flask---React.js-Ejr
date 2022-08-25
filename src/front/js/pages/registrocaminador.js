@@ -4,9 +4,6 @@ import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import "../../styles/register.css";
 import Shape from "../component/shape";
-import UploadImage from "../component/uploadimage";
-import axios from "axios";
-import ImgUploader from "../component/imgUploaderWalk";
 
 export const RegistroCaminador = () => {
   const login = "/login";
@@ -22,7 +19,7 @@ export const RegistroCaminador = () => {
 
   // BackEnd url
 
-  const apiUrl = process.env.HEROKU_URL + "/walkers";
+  const apiUrl = process.env.BACKEND_URL + "/walkers";
 
   // Handling the values change
   const handleFname = (e) => {
@@ -50,7 +47,11 @@ export const RegistroCaminador = () => {
     e.preventDefault();
     const formData = new FormData();
     formData.append("file", file);
-    formData.append("file", file.name);
+    formData.append("first_name", first_name);
+    formData.append("last_name", last_name);
+    formData.append("username", username);
+    formData.append("email", email);
+    formData.append("password", password);
     let body_content = JSON.stringify({
       first_name: first_name,
       last_name: last_name,
@@ -61,8 +62,7 @@ export const RegistroCaminador = () => {
     });
     fetch(apiUrl, {
       method: "POST",
-      body: body_content,
-      headers: { "Content-Type": "application/json" },
+      body: formData,
     })
       .then((result) => {
         return result.json().then((data) => ({ status: result.status, data }));
