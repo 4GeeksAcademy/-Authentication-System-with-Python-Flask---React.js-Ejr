@@ -5,29 +5,54 @@ import { Context } from "../store/appContext";
 
 export const Login = (props) => {
   const { store, actions } = useContext(Context);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
 
+  const handleSubmit = async () => {
+    actions.login(username, password);
+  };
   return (
-    <div className="card" style={{ width: "18rem;" }}>
-      <img src="..." className="card-img-top" alt="..." />
-      <div className="card-body">
-        <h5 className="card-title">Signup</h5>
-        <p className="card-text">
-          Some quick example text to build on the card title and make up the
-          bulk of the card's content.
-        </p>
-      </div>
-      <ul className="list-group list-group-flush">
-        <li className="list-group-item">An item</li>
-        <li className="list-group-item">A second item</li>
-        <li className="list-group-item">A third item</li>
-      </ul>
-      <div className="card-body">
-        <a href="#" className="card-link">
-          Card link
-        </a>
-        <a href="#" className="card-link">
-          Another link
-        </a>
+    <div className="container text-center">
+      <div className="row justify-content-center mt-5">
+        <div className="col-6 mt-5">
+          <div className="card" style={{ width: "18rem;" }}>
+            <div className="card-body">
+              <h5 className="card-title">Signup</h5>
+              <p className="card-text pt-2">
+                Join us now and start exploring our listings
+              </p>
+            </div>
+            <ul className="list-group list-group-flush">
+              <input
+                className="list-group-item"
+                value={username}
+                required
+                onChange={(e) => setUsername(e.target.value)}
+                placeholder="Username"
+              />
+              <input
+                className="list-group-item"
+                required
+                value={password}
+                type="password"
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Password"
+              />
+            </ul>
+            <div className="card-body">
+              <a href="#" className="btn btn-success" onClick={handleSubmit}>
+                Login
+              </a>
+              <Link to={"/"}>
+                {" "}
+                <a href="#" className="btn btn-danger">
+                  {" "}
+                  Home{" "}
+                </a>{" "}
+              </Link>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
