@@ -84,7 +84,7 @@ export const Home = () => {
                 <option className="text-center" disabled>
                   {"<precio>"}
                 </option>
-                <option className="text-center">todos los precios</option>
+                <option className="">todos los precios</option>
                 <option className="">de 0 a 1000</option>
                 <option className="">de 1001 a 2500</option>
                 <option className="">de 2501 a 5000</option>

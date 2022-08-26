@@ -16,21 +16,6 @@ export const Dashboard = () => {
             <h2>Criterios de Búsqueda</h2>
           </div>
           <div className="filtros container py-4">
-            {/* tipo de operacion */}
-            <div className="row align-items-center pb-5">
-              <select
-                onChange={actions.updateOperacion}
-                className="form-select"
-                aria-label="Default select example"
-                defaultValue={"<tipo de operación>"}
-              >
-                <option className="text-center" disabled>
-                  {"<tipo de operación>"}
-                </option>
-                <option className="">alquiler</option>
-                <option className="">compra</option>
-              </select>
-            </div>
             {/* comunidad */}
             <div className="row align-items-center pb-5">
               <select
@@ -88,6 +73,78 @@ export const Dashboard = () => {
                 <option className="">de 5001 a más</option>
               </select>
             </div>
+            {/* filtro A */}
+            <div className="row align-items-center pb-5">
+              <select
+                // onChange={actions.updatePrecio}
+                className="form-select"
+                aria-label="Default select example"
+                defaultValue={"<filtro A>"}
+              >
+                <option className="text-center" disabled>
+                  {"<filtro A>"}
+                </option>
+                <option className="text-center">filtro A</option>
+                <option className="">filtro A</option>
+                <option className="">filtro A</option>
+                <option className="">filtro A</option>
+                <option className="">filtro A</option>
+              </select>
+            </div>
+            {/* filtro A */}
+            <div className="row align-items-center pb-5">
+              <select
+                // onChange={actions.updatePrecio}
+                className="form-select"
+                aria-label="Default select example"
+                defaultValue={"<filtro A>"}
+              >
+                <option className="text-center" disabled>
+                  {"<filtro A>"}
+                </option>
+                <option className="text-center">filtro A</option>
+                <option className="">filtro A</option>
+                <option className="">filtro A</option>
+                <option className="">filtro A</option>
+                <option className="">filtro A</option>
+              </select>
+            </div>
+            {/* filtro A */}
+            <div className="row align-items-center pb-5">
+              <select
+                // onChange={actions.updatePrecio}
+                className="form-select"
+                aria-label="Default select example"
+                defaultValue={"<filtro A>"}
+              >
+                <option className="text-center" disabled>
+                  {"<filtro A>"}
+                </option>
+                <option className="text-center">filtro A</option>
+                <option className="">filtro A</option>
+                <option className="">filtro A</option>
+                <option className="">filtro A</option>
+                <option className="">filtro A</option>
+              </select>
+            </div>
+            {/* filtro A */}
+            <div className="row align-items-center pb-5">
+              <select
+                // onChange={actions.updatePrecio}
+                className="form-select"
+                aria-label="Default select example"
+                defaultValue={"<filtro A>"}
+              >
+                <option className="text-center" disabled>
+                  {"<filtro A>"}
+                </option>
+                <option className="text-center">filtro A</option>
+                <option className="">filtro A</option>
+                <option className="">filtro A</option>
+                <option className="">filtro A</option>
+                <option className="">filtro A</option>
+              </select>
+            </div>
           </div>
         </div>
       </div>
@@ -96,103 +153,94 @@ export const Dashboard = () => {
       {/* ----------------------------------------- */}
       <div className="col-9">
         <nav className="d-flex justify-content-between">
-          <div className="nav nav-tabs" id="nav-tab" role="tablist">
-            <button
-              className="nav-link active"
-              id="nav-alquiler-tab"
-              data-bs-toggle="tab"
-              data-bs-target="#nav-alquiler"
-              type="button"
-              role="tab"
-              aria-controls="nav-alquiler"
-              aria-selected="false"
-            >
-              Alquiler
-            </button>
-            <button
-              className="nav-link"
-              id="nav-compra-tab"
-              data-bs-toggle="tab"
-              data-bs-target="#nav-compra"
-              type="button"
-              role="tab"
-              aria-controls="nav-compra"
-              aria-selected="false"
-            >
-              Compra
-            </button>
-          </div>
-          <div className="nav nav-tabs" id="nav-tab" role="tablist">
-            <button
-              className="nav-link active"
-              id="nav-alquiler-tab"
-              data-bs-toggle="tab"
-              type="button"
-              role="tab"
-              aria-controls="nav-listado"
-              aria-selected="false"
-              onClick={actions.updateListado}
-            >
-              Listado
-            </button>
-            <button
-              className="nav-link"
-              id="nav-compra-tab"
-              data-bs-toggle="tab"
-              data-bs-target="#nav-compra"
-              type="button"
-              role="tab"
-              aria-controls="nav-compra"
-              aria-selected="false"
-              onClick={actions.updateMapa}
-            >
-              Mapa
-            </button>
-          </div>
+          {/* Botones Alquiler y Compra */}
+          {store.operacion == "alquiler" || store.operacion == "" ? (
+            <div className="nav nav-tabs" id="nav-tab" role="tablist">
+              <button
+                className="nav-link active"
+                type="button"
+                onClick={actions.updateAlquiler}
+              >
+                Alquiler
+              </button>
+              <button
+                className="nav-link"
+                type="button"
+                onClick={actions.updateCompra}
+              >
+                Compra
+              </button>
+            </div>
+          ) : (
+            <div className="nav nav-tabs" id="nav-tab" role="tablist">
+              <button
+                className="nav-link"
+                type="button"
+                onClick={actions.updateAlquiler}
+              >
+                Alquiler
+              </button>
+              <button
+                className="nav-link active"
+                type="button"
+                onClick={actions.updateCompra}
+              >
+                Compra
+              </button>
+            </div>
+          )}
+          {/* Botones Listado y Mapa */}
+          {store.vista == "listado" ? (
+            <div className="nav nav-tabs" id="nav-tab" role="tablist">
+              <button
+                className="nav-link active"
+                type="button"
+                onClick={actions.updateListado}
+              >
+                Listado
+              </button>
+              <button
+                className="nav-link"
+                type="button"
+                onClick={actions.updateMapa}
+              >
+                Mapa
+              </button>
+            </div>
+          ) : (
+            <div className="nav nav-tabs" id="nav-tab" role="tablist">
+              <button
+                className="nav-link"
+                type="button"
+                onClick={actions.updateListado}
+              >
+                Listado
+              </button>
+              <button
+                className="nav-link active"
+                type="button"
+                onClick={actions.updateMapa}
+              >
+                Mapa
+              </button>
+            </div>
+          )}
         </nav>
-        {store.vista == "listado" ? (
-          <div className="tab-content" id="nav-tabContent">
-            <div
-              className="tab-pane fade show active p-5 h1"
-              id="nav-alquiler"
-              role="tabpanel"
-              aria-labelledby="nav-alquiler-tab"
-              tabIndex="0"
-            >
-              contenido 1 Listado
-            </div>
-            <div
-              className="tab-pane fade p-5 h1"
-              id="nav-compra"
-              role="tabpanel"
-              aria-labelledby="nav-compra-tab"
-              tabIndex="0"
-            >
-              contenido 2 Listado
-            </div>
-          </div>
-        ) : (
-          <div className="tab-content" id="nav-tabContent">
-            <div
-              className="tab-pane fade show active p-5 h1"
-              id="nav-alquiler"
-              role="tabpanel"
-              aria-labelledby="nav-alquiler-tab"
-              tabIndex="0"
-            >
-              contenido 1 Mapa
-            </div>
-            <div
-              className="tab-pane fade p-5 h1"
-              id="nav-compra"
-              role="tabpanel"
-              aria-labelledby="nav-compra-tab"
-              tabIndex="0"
-            >
-              contenido 2 Mapa
-            </div>
-          </div>
-        )}
+        {/* Renderizacion de contenido de páginas */}
+        <div className="tab-content" id="nav-tabContent">
+          {store.vista == "listado" &&
+          (store.operacion == "alquiler" || store.operacion == "") ? (
+            <div className="p-5 h1">Alquiler en Listado</div>
+          ) : store.vista == "listado" && store.operacion == "compra" ? (
+            <div className="p-5 h1">Compra en Listado</div>
+          ) : store.vista == "mapa" && store.operacion == "compra" ? (
+            <div className="p-5 h1">Compra en Mapa</div>
+          ) : store.vista == "mapa" && store.operacion == "alquiler" ? (
+            <div className="p-5 h1">Alquiler en Mapa</div>
+          ) : (
+            <div className="p-5 h1">"Elija la operacion"</div>
+          )}
+        </div>
       </div>
     </div>
   );

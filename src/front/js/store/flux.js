@@ -149,6 +149,14 @@ const getState = ({ getStore, getActions, setStore }) => {
         const store = getStore();
         setStore({ operacion: e.target.value });
       },
+      updateAlquiler: () => {
+        const store = getStore();
+        setStore({ operacion: "alquiler" });
+      },
+      updateCompra: () => {
+        const store = getStore();
+        setStore({ operacion: "compra" });
+      },
       updateComunidad: (e) => {
         const store = getStore();
         setStore({ comunidad: "" });
@@ -191,6 +199,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         setStore({ comunidad: "" });
         setStore({ provincia: "" });
         setStore({ operacion: "" });
+        setStore({ vista: "listado" });
       },
       updateListado: () => {
         const store = getStore();
