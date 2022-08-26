@@ -15,7 +15,7 @@ from flask_migrate import Migrate
 from flask_swagger import swagger
 from flask_cors import CORS
 from api.utils import APIException, generate_sitemap
-from api.models import db, Walker, Owner, Dog, Img
+from api.models import db, Walker, Owner, Dog
 from api.routes import api
 from api.admin import setup_admin
 from api.commands import setup_commands
@@ -120,8 +120,6 @@ def create_walker():
 
         file.save(os.path.join(app.config['UPLOAD_FOLDER_WALKER'], filename)) 
 
-    
-
     walker_email = Walker.query.filter_by(email= body['email']).first()
     if walker_email != None:
         raise APIException('Ya existe una cuenta con ese correo', status_code=400)
@@ -158,7 +156,7 @@ def allowed_file(filename):
 
 @app.route('/owners', methods=['POST'])
 def create_owner():
-    body = request.get_json()
+    body = request.form
 
     if body is None:
         raise APIException('You need to specify the request body as a json object', status_code=400)
@@ -172,7 +170,19 @@ def create_owner():
         raise APIException('Contraseña requerida', status_code=400)
     if 'username' not in body:
         raise APIException('Nombre de usuario requerido', status_code=400)
+    if 'file' not in request.files:
+        raise APIException("No has enviado un archivo", status_code=400)
+        
+    file = request.files['file']
 
+    if file.filename == '':
+        raise APIException("Archivo sin nombre", status_code=400)
+        
+    if file and allowed_file(file.filename):
+        filename = str(uuid.uuid4()) + '.' + file.filename.rsplit('.', 1)[1].lower()
+
+        file.save(os.path.join(app.config['UPLOAD_FOLDER_OWNER'], filename)) 
+    
     owner = Owner.query.filter_by(email= body['email']).first()
     if owner != None:
         raise APIException('Ya existe el usuario, puedes iniciar sesión', status_code=400)
@@ -191,7 +201,7 @@ def create_owner():
 
     pw_hash = bcrypt.generate_password_hash(body['password']).decode('utf-8')
 
-    new_owner = Owner(first_name = body['first_name'], last_name = body['last_name'], email = body['email'], username = body['username'], password = pw_hash, is_active = True)
+    new_owner = Owner(first_name = body['first_name'], last_name = body['last_name'], email = body['email'], username = body['username'], password = pw_hash, is_active = True, file = filename)
     db.session.add(new_owner)
     db.session.commit()
 
@@ -205,6 +215,11 @@ def create_owner():
         'owner_id': new_owner.id
     }
     return jsonify(response_body), 200
+
+@app.route('/owner/download/<filename>', methods=['GET'])
+def download_owner_file(filename):
+    return send_from_directory(app.config["UPLOAD_FOLDER_OWNER"], filename)
+
 
 @app.route('/dogs', methods=['POST'])
 def create_dog():

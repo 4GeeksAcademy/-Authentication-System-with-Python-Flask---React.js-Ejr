@@ -1,5 +1,6 @@
-import React from "react";
-import avatar from "../../img/avatar.jpg";
+import React, { useContext } from "react";
+import { Context } from "../store/appContext";
+
 import CalendarComp from "../component/CalendarComp";
 import Imgee from "../component/imgee";
 import Recomnendations from "../component/recomendations";
@@ -11,15 +12,21 @@ const imgStlye = {
 };
 
 const Profile = () => {
+  const { store, actions } = useContext(Context);
+
   return (
     <div className="container-fluid">
       <div className="container mb-5 mt-5">
         <div className="row">
           <div className="col-1">
-            <img className="rounded-circle" src={avatar} style={imgStlye} />
+            <img
+              className="rounded-circle"
+              src={`${process.env.BACKEND_URL}/walker/download/${store.user.file}`}
+              style={imgStlye}
+            />
           </div>
           <div className="col-lg-7 mt-3">
-            <h2 className="">Nombre</h2>
+            <h2 className="">{store.user.first_name}</h2>
             <h5 className="">
               Contrary to popular belief, Lorem Ipsum is not simply random text.
               It has roots in a piece of classical Latin literature from 45 BC,
