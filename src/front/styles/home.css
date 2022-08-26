@@ -4,9 +4,16 @@
   background-size: cover;
   background-repeat: no-repeat;
   background-position-y: center;
+  background-position-x: center;
 }
 
 .contenedor-filtros {
-  height: 100px;
   margin-top: 15%;
+  height: fit-content;
+}
+.titulo {
+  height: fit-content;
+}
+.filtros {
+  height: fit-content;
 }

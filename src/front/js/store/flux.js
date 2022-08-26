@@ -2,11 +2,11 @@ const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
       operacion: "",
+      vista: "listado",
       comunidad: "",
       provincia: "",
       preciomin: 0,
       preciomax: 999999999,
-      // listaoperaciones: ["alquiler", "compra"],
       listaprovincias: [],
       listacomunidades: [
         { todas: ["todas"] },
@@ -82,7 +82,8 @@ const getState = ({ getStore, getActions, setStore }) => {
           comunidad: "Madrid",
           provincia: "Madrid",
           municipio: "Madrid",
-          direccion: "Calle las Malvas, 4",
+          direccion: "Calle las Malvas",
+          numcalle: 4,
           latitud: null,
           longitud: null,
           img: "https://wtwp.com/wp-content/uploads/2015/06/placeholder-image.png",
@@ -94,7 +95,8 @@ const getState = ({ getStore, getActions, setStore }) => {
           comunidad: "Comunidad Valenciana",
           provincia: "Alicante",
           municipio: "Santa Pola",
-          direccion: "Calle los geranios, 12",
+          direccion: "Calle los geranios",
+          numcalle: 12,
           latitud: null,
           longitud: null,
           img: "https://wtwp.com/wp-content/uploads/2015/06/placeholder-image.png",
@@ -106,7 +108,34 @@ const getState = ({ getStore, getActions, setStore }) => {
           comunidad: "Cataluña",
           provincia: "Tarragona",
           municipio: "Esmeralda",
-          direccion: "Calle los abedules, 2",
+          direccion: "Calle los abedules",
+          numcalle: 2,
+          latitud: null,
+          longitud: null,
+          img: "https://wtwp.com/wp-content/uploads/2015/06/placeholder-image.png",
+        },
+        {
+          id: 4,
+          operacion: "alquiler",
+          precio: 4500,
+          comunidad: "Extremadura",
+          provincia: "Badajoz",
+          municipio: "Esmeraldina",
+          direccion: "Calle los gansos",
+          numcalle: 23,
+          latitud: null,
+          longitud: null,
+          img: "https://wtwp.com/wp-content/uploads/2015/06/placeholder-image.png",
+        },
+        {
+          id: 5,
+          operacion: "alquiler",
+          precio: 900,
+          comunidad: "Extremadura",
+          provincia: "Badajoz",
+          municipio: "Las Heras",
+          direccion: "Calle los faisanes",
+          numcalle: 52,
           latitud: null,
           longitud: null,
           img: "https://wtwp.com/wp-content/uploads/2015/06/placeholder-image.png",
@@ -152,7 +181,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         } else if (e.target.value == "de 5001 a más") {
           setStore({ preciomin: 5001 });
           setStore({ preciomax: 999999999 });
-        } else if (e.target.value == "todos") {
+        } else if (e.target.value == "todos los precios") {
           setStore({ preciomin: 0 });
           setStore({ preciomax: 999999999 });
         }
@@ -162,6 +191,14 @@ const getState = ({ getStore, getActions, setStore }) => {
         setStore({ comunidad: "" });
         setStore({ provincia: "" });
         setStore({ operacion: "" });
+      },
+      updateListado: () => {
+        const store = getStore();
+        setStore({ vista: "listado" });
+      },
+      updateMapa: () => {
+        const store = getStore();
+        setStore({ vista: "mapa" });
       },
 
       // Use getActions to call a function within a fuction
