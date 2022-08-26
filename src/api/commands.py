@@ -1,6 +1,6 @@
 
 import click
-from api.models import db, Walker, Owner, Dog, Img
+from api.models import db, Walker, Owner, Dog
 
 """
 In this file, you can add as many commands as you want using the @app.cli.command decorator

@@ -53,25 +53,6 @@ class Owner(db.Model):
             "email": self.email,
         }
 
-class Img(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    file = db.Column(db.Text, unique=True, nullable=False)
-    owner_id = db.Column(db.Integer, db.ForeignKey('owner.id', ondelete='CASCADE'))
-    Owner = db.relationship('Owner', primaryjoin=owner_id == Owner.id)
-    walker_id = db.Column(db.Integer, db.ForeignKey('walker.id', ondelete='CASCADE'))
-    Walker = db.relationship('Walker', primaryjoin=walker_id == Walker.id)
-
-    def __repr__(self):
-        return f'<Img {self.id} con nombre {self.file}>'
-
-    def serialize(self):
-        return{
-            'id': self.id,
-            'file': self.file,
-            'owner_id': self.owner_id,
-            'walker_id': self.owner_id,
-        }
-
 class Dog(db.Model):
     __tablename__ = "dog"
     id = db.Column(db.Integer, primary_key=True)

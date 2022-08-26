@@ -31,6 +31,11 @@ export const Navbar = () => {
     navigate(chatRoute);
   };
 
+  const pfpstyle = {
+    width: "75px",
+    height: "auto",
+  };
+
   return (
     <div className="container">
       <nav className="navbar navbar-expand-xlg navbar-light">
@@ -61,45 +66,53 @@ export const Navbar = () => {
                 >
                   {store.log}
                 </button>
-
               </li>
               {store.isLogedIn ? (
-                <li className="nav-item dropdown">
-                  <a
-                    className="nav-link dropdown-toggle"
-                    href="#"
-                    id="navbarDropdown"
-                    role="button"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-
-                
-                  >
-                    Perfil
-                  </a>
-                  <ul
-                    className="dropdown-menu"
-                    aria-labelledby="navbarDropdown"
-                  >
-                    <li>
-                      <a className="dropdown-item" href="#">
-                        Edita tu perfil
-                      </a>
-                    </li>
-                    <li>
-                      <hr className="dropdown-divider" />
-                    </li>
-                    <li>
-                      <button
-                        type="button"
-                        className="btn btn-primary"
-                        onClick={chat}
-                      >
-                        mensajes <span className="badge bg-secondary">4</span>
-                      </button>
-                    </li>
-                  </ul>
-                </li>
+                <div>
+                  <div className="col rounded-circle">
+                    <Link to={"/profile"}>
+                      <img
+                        className="col rounded-circle"
+                        src={`${process.env.BACKEND_URL}/walker/download/${store.user.file}`}
+                        style={pfpstyle}
+                      ></img>
+                    </Link>
+                  </div>
+                  <li className="nav-item dropdown">
+                    <a
+                      className="nav-link dropdown-toggle"
+                      href="#"
+                      id="navbarDropdown"
+                      role="button"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
+                    >
+                      Perfil
+                    </a>
+                    <ul
+                      className="dropdown-menu"
+                      aria-labelledby="navbarDropdown"
+                    >
+                      <li>
+                        <a className="dropdown-item" href="#">
+                          Edita tu perfil
+                        </a>
+                      </li>
+                      <li>
+                        <hr className="dropdown-divider" />
+                      </li>
+                      <li>
+                        <button
+                          type="button"
+                          className="btn btn-primary"
+                          onClick={chat}
+                        >
+                          mensajes <span className="badge bg-secondary">4</span>
+                        </button>
+                      </li>
+                    </ul>
+                  </li>
+                </div>
               ) : (
                 <li className="nav-item">
                   <Link to={"/registrodueno"}>

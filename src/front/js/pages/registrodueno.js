@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import "../../styles/register.css";
 import Shape from "../component/shape";
-import UploadImage from "../component/uploadimage";
 
 export const RegistroDueno = () => {
   const login = "/login";
@@ -19,11 +18,12 @@ export const RegistroDueno = () => {
   const [name, setName] = useState("");
   const [breed, setBreed] = useState("");
   const [age, setAge] = useState(0);
+  const [file, setFile] = useState();
 
   // BackEnd url
 
-  const apiUrl = process.env.HEROKU_URL + "/owners";
-  const ownerUrl = process.env.HEROKU_URL + "/api/owners/";
+  const apiUrl = process.env.BACKEND_URL + "/owners";
+  const ownerUrl = process.env.BACKEND_URL + "/api/owners/";
 
   // Handling the values change
   const handleFname = (e) => {
@@ -50,10 +50,24 @@ export const RegistroDueno = () => {
   const handleAge = (e) => {
     setAge(e.target.value);
   };
+
+  const handleImage = (e) => {
+    setFile(e.target.files[0]);
+  };
+
   // Handling the form submission
   const handleSubmit = (e) => {
     e.preventDefault();
-
+    const formData = new FormData();
+    formData.append("first_name", first_name);
+    formData.append("last_name", last_name);
+    formData.append("username", username);
+    formData.append("email", email);
+    formData.append("password", password);
+    formData.append("breed", breed);
+    formData.append("name", name);
+    formData.append("file", file);
+    formData.append("age", age);
     let body_content = JSON.stringify({
       first_name: first_name,
       last_name: last_name,
@@ -63,11 +77,11 @@ export const RegistroDueno = () => {
       name: name,
       breed: breed,
       age: age,
+      file: file,
     });
     fetch(apiUrl, {
       method: "POST",
-      body: body_content,
-      headers: { "Content-Type": "application/json" },
+      body: formData,
     })
       .then((result) => {
         return result.json().then((data) => ({ status: result.status, data }));
@@ -92,7 +106,10 @@ export const RegistroDueno = () => {
       <div className="container align-items-center">
         <div className="row d-flex justify-content-center align-items-center h-100 w-75 mx-auto">
           <div className="col">
-            <form className="card card-registration my-4 register">
+            <form
+              className="card card-registration my-4 register"
+              encType="multipart/form-data"
+            >
               <div className="row g-0">
                 <div className="col-xl-12">
                   <div className="card-body p-md-5 text-black">
@@ -161,7 +178,13 @@ export const RegistroDueno = () => {
                         </div>
                       </div>
                     </div>
-                    <h3 className="mb-5">REGISTRA A TU MASCOTA</h3>
+                    <label className="form-label">
+                      Sube una foto de perfil:
+                    </label>
+                    <br></br>
+                    <input type="file" name="file" onChange={handleImage} />
+
+                    <h3 className="mb-5 mt-5">REGISTRA A TU MASCOTA</h3>
                     <div className="row">
                       <div className="col-md-6 mb-4">
                         <div className="form-outline">
@@ -199,7 +222,7 @@ export const RegistroDueno = () => {
                         </div>
                       </div>
                     </div>
-                    <UploadImage />
+
                     <div className="row">
                       <div className="col-md-6 mb-4">
                         <div className="form-check mb-5">
