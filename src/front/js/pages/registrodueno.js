@@ -1,29 +1,28 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { Context } from "../store/appContext";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import "../../styles/register.css";
 import Shape from "../component/shape";
+import { Actions } from "@cloudinary/url-gen";
 
 export const RegistroDueno = () => {
-  const login = "/login";
+  const dogRegister = "/registroperro";
   let navigate = useNavigate();
 
   // States for regristration
+  const { store, actions } = useContext(Context);
   const [first_name, setFname] = useState("");
   const [last_name, setLname] = useState("");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [name, setName] = useState("");
-  const [breed, setBreed] = useState("");
-  const [age, setAge] = useState(0);
   const [file, setFile] = useState();
 
   // BackEnd url
 
   const apiUrl = process.env.BACKEND_URL + "/owners";
-  const ownerUrl = process.env.BACKEND_URL + "/api/owners/";
 
   // Handling the values change
   const handleFname = (e) => {
@@ -41,15 +40,6 @@ export const RegistroDueno = () => {
   const handlePassword = (e) => {
     setPassword(e.target.value);
   };
-  const handleName = (e) => {
-    setName(e.target.value);
-  };
-  const handleBreed = (e) => {
-    setBreed(e.target.value);
-  };
-  const handleAge = (e) => {
-    setAge(e.target.value);
-  };
 
   const handleImage = (e) => {
     setFile(e.target.files[0]);
@@ -57,6 +47,7 @@ export const RegistroDueno = () => {
 
   // Handling the form submission
   const handleSubmit = (e) => {
+    console.log(apiUrl);
     e.preventDefault();
     const formData = new FormData();
     formData.append("first_name", first_name);
@@ -64,21 +55,8 @@ export const RegistroDueno = () => {
     formData.append("username", username);
     formData.append("email", email);
     formData.append("password", password);
-    formData.append("breed", breed);
-    formData.append("name", name);
     formData.append("file", file);
-    formData.append("age", age);
-    let body_content = JSON.stringify({
-      first_name: first_name,
-      last_name: last_name,
-      username: username,
-      email: email,
-      password: password,
-      name: name,
-      breed: breed,
-      age: age,
-      file: file,
-    });
+
     fetch(apiUrl, {
       method: "POST",
       body: formData,
@@ -94,7 +72,9 @@ export const RegistroDueno = () => {
             text: data.data.message,
           });
         } else {
-          navigate(login);
+          actions.setUserId(data.data.owner_id);
+
+          navigate(dogRegister);
           Swal.fire("Tu cuenta ha sido creada!", "Inicia sesión!", "success");
         }
       })
@@ -104,7 +84,7 @@ export const RegistroDueno = () => {
   return (
     <div className="container-fluid">
       <div className="container align-items-center">
-        <div className="row d-flex justify-content-center align-items-center h-100 w-75 mx-auto">
+        <div className="row d-flex justify-content-center align-items-center h-100 w-75 mx-auto mb-5">
           <div className="col">
             <form
               className="card card-registration my-4 register"
@@ -183,45 +163,6 @@ export const RegistroDueno = () => {
                     </label>
                     <br></br>
                     <input type="file" name="file" onChange={handleImage} />
-
-                    <h3 className="mb-5 mt-5">REGISTRA A TU MASCOTA</h3>
-                    <div className="row">
-                      <div className="col-md-6 mb-4">
-                        <div className="form-outline">
-                          <input
-                            onChange={handleName}
-                            value={name}
-                            type="text"
-                            className="form-control form-control-lg"
-                          />
-                          <label className="form-label">Nombre</label>
-                        </div>
-                      </div>
-                      <div className="col-md-6 mb-4">
-                        <div className="form-outline">
-                          <input
-                            onChange={handleBreed}
-                            value={breed}
-                            type="text"
-                            className="form-control form-control-lg"
-                          />
-                          <label className="form-label">Raza</label>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="row">
-                      <div className="col-md-6 mb-4">
-                        <div className="form-outline">
-                          <input
-                            onChange={handleAge}
-                            value={age}
-                            type="text"
-                            className="form-control form-control-lg"
-                          />
-                          <label className="form-label">Edad</label>
-                        </div>
-                      </div>
-                    </div>
 
                     <div className="row">
                       <div className="col-md-6 mb-4">
