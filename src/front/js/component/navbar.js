@@ -8,10 +8,7 @@ export const Navbar = () => {
     <nav className="navbar navbar-light bg-light">
       <div className="container">
         <Link to="/">
-          <span
-            onClick={actions.updateFilters}
-            className="navbar-brand mb-0 h1"
-          >
+          <span onClick={actions.backHome} className="navbar-brand mb-0 h1">
             React Boilerplate
           </span>
         </Link>

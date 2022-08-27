@@ -1,19 +1,23 @@
 .contenedor-foto {
   width: auto;
-  height: 600px;
+  height: 650px;
   background-size: cover;
   background-repeat: no-repeat;
   background-position-y: center;
   background-position-x: center;
 }
 
-.contenedor-filtros {
+.formulario {
   margin-top: 15%;
   height: fit-content;
+  width: fit-content;
 }
 .titulo {
   height: fit-content;
 }
 .filtros {
+  height: fit-content;
+}
+.selector {
   height: fit-content;
 }

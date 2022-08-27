@@ -1,157 +1,142 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Context } from "../store/appContext";
-// import "../../styles/home.css";
+import { Link, useNavigate } from "react-router-dom";
+import "../../styles/dashboard.css";
 
 export const Dashboard = () => {
   const { store, actions } = useContext(Context);
 
+  useEffect(() => {
+    actions.syncLocalStorageToStore();
+    console.log("los datos del store han sido restituidos");
+  }, []);
+
   return (
-    <div className="container d-flex">
+    <div className="container d-flex px-0">
       {/* ----------------------------------------- */}
       {/* A partir de aqui el lateral de filtros    */}
       {/* ----------------------------------------- */}
-      <div className="col-3">
-        <div className="contenedor-filtros container rounded-3 col-10 bg-light">
-          <div className="titulo container ps-4 py-3">
-            <h2>Criterios de Búsqueda</h2>
+      <div className="col-4 col-lg-3">
+        <div className="formulario container rounded-3 px-0 mt-0">
+          <div className="titulo container ps-4 pt-3 pb-2">
+            <h3>Tus Preferencias</h3>
           </div>
-          <div className="filtros container py-4">
+          {/**/}
+          <div className="filtros container pt-3 pb-4">
+            {/* tipo de operacion */}
+            {/* <div className="selector mx-3">
+              <div className="pb-2">
+                <span className="">Tipo de Operación</span>
+              </div>
+              <select
+                onChange={actions.updateOperacion}
+                className="form-select mb-5"
+                aria-label="Default select example"
+                value={store.operacion}
+              >
+                <option className="">{"<elegir>"}</option>
+                <option className="">alquiler</option>
+                <option className="">compra</option>
+              </select>
+            </div> */}
             {/* comunidad */}
-            <div className="row align-items-center pb-5">
+            <div className="selector mx-3">
+              <div className="pb-2">
+                <span className="">Comunidad Autónoma</span>
+              </div>
               <select
                 onChange={actions.updateComunidad}
-                className="form-select"
+                className="form-select mb-5"
                 aria-label="Default select example"
-                defaultValue={"<comunidad autónoma>"}
+                value={store.comunidad}
               >
-                <option className="text-center" disabled>
-                  {"<comunidad autónoma>"}
-                </option>
+                <option className="">todas</option>
                 {store.listacomunidades.map((item) => {
                   let comunidad = Object.keys(item);
-                  return <option className="">{comunidad}</option>;
+                  return (
+                    <option key={comunidad} className="">
+                      {comunidad}
+                    </option>
+                  );
                 })}
               </select>
             </div>
             {/* provincia */}
-            <div className="row align-items-center pb-5">
+            <div className="selector mx-3">
+              <div className="pb-2">
+                <span className="">Provincia</span>
+              </div>
               <select
                 onChange={actions.updateProvincia}
-                className="form-select"
+                className="form-select mb-5"
                 aria-label="Default select example"
-                defaultValue={"<provincia>"}
+                value={store.provincia}
               >
-                <option className="text-center" disabled>
-                  {"<provincia>"}
-                </option>
-                {store.comunidad == "" ? (
-                  <option className="" disabled>
-                    {"elija comunidad"}
+                <option className="">todas</option>
+                {store.listaprovincias.map((elem) => (
+                  <option key={elem} className="">
+                    {elem}
                   </option>
-                ) : (
-                  store.listaprovincias.map((elem) => (
-                    <option className="">{elem}</option>
-                  ))
-                )}
+                ))}
               </select>
             </div>
             {/* rango de precio */}
-            <div className="row align-items-center pb-5">
-              <select
-                onChange={actions.updatePrecio}
-                className="form-select"
-                aria-label="Default select example"
-                defaultValue={"<precio>"}
-              >
-                <option className="text-center" disabled>
-                  {"<precio>"}
-                </option>
-                <option className="text-center">todos los precios</option>
-                <option className="">de 0 a 1000</option>
-                <option className="">de 1001 a 2500</option>
-                <option className="">de 2501 a 5000</option>
-                <option className="">de 5001 a más</option>
-              </select>
+            <div className="selector mx-3">
+              <div className="pb-2">
+                <span className="">Rango de Precio</span>
+              </div>
+              <div className="d-flex">
+                <select
+                  onChange={actions.updatePreciomin}
+                  className="form-select me-1 mb-5"
+                  aria-label="Default select example"
+                  value={store.preciomin}
+                >
+                  <option className="">Mín</option>
+                  <option className="">1000</option>
+                  <option className="">2000</option>
+                  <option className="">3000</option>
+                  <option className="">5000</option>
+                </select>
+                <select
+                  onChange={actions.updatePreciomax}
+                  className="form-select ms-1 mb-5"
+                  aria-label="Default select example"
+                  value={store.preciomax}
+                >
+                  <option className="">Máx</option>
+                  {/* <option className="">Sin límite</option> */}
+                  {store.preciomin >= 1000 ? (
+                    ""
+                  ) : (
+                    <option className="">1000</option>
+                  )}
+                  {store.preciomin >= 2000 ? (
+                    ""
+                  ) : (
+                    <option className="">2000</option>
+                  )}
+                  {store.preciomin >= 3000 ? (
+                    ""
+                  ) : (
+                    <option className="">3000</option>
+                  )}
+                  {store.preciomin >= 5000 ? (
+                    ""
+                  ) : (
+                    <option className="">5000</option>
+                  )}
+                </select>
+              </div>
             </div>
-            {/* filtro A */}
-            <div className="row align-items-center pb-5">
-              <select
-                // onChange={actions.updatePrecio}
-                className="form-select"
-                aria-label="Default select example"
-                defaultValue={"<filtro A>"}
-              >
-                <option className="text-center" disabled>
-                  {"<filtro A>"}
-                </option>
-                <option className="text-center">filtro A</option>
-                <option className="">filtro A</option>
-                <option className="">filtro A</option>
-                <option className="">filtro A</option>
-                <option className="">filtro A</option>
-              </select>
-            </div>
-            {/* filtro A */}
-            <div className="row align-items-center pb-5">
-              <select
-                // onChange={actions.updatePrecio}
-                className="form-select"
-                aria-label="Default select example"
-                defaultValue={"<filtro A>"}
-              >
-                <option className="text-center" disabled>
-                  {"<filtro A>"}
-                </option>
-                <option className="text-center">filtro A</option>
-                <option className="">filtro A</option>
-                <option className="">filtro A</option>
-                <option className="">filtro A</option>
-                <option className="">filtro A</option>
-              </select>
-            </div>
-            {/* filtro A */}
-            <div className="row align-items-center pb-5">
-              <select
-                // onChange={actions.updatePrecio}
-                className="form-select"
-                aria-label="Default select example"
-                defaultValue={"<filtro A>"}
-              >
-                <option className="text-center" disabled>
-                  {"<filtro A>"}
-                </option>
-                <option className="text-center">filtro A</option>
-                <option className="">filtro A</option>
-                <option className="">filtro A</option>
-                <option className="">filtro A</option>
-                <option className="">filtro A</option>
-              </select>
-            </div>
-            {/* filtro A */}
-            <div className="row align-items-center pb-5">
-              <select
-                // onChange={actions.updatePrecio}
-                className="form-select"
-                aria-label="Default select example"
-                defaultValue={"<filtro A>"}
-              >
-                <option className="text-center" disabled>
-                  {"<filtro A>"}
-                </option>
-                <option className="text-center">filtro A</option>
-                <option className="">filtro A</option>
-                <option className="">filtro A</option>
-                <option className="">filtro A</option>
-                <option className="">filtro A</option>
-              </select>
-            </div>
+            <div className="row align-items-end"></div>
           </div>
         </div>
       </div>
       {/* ----------------------------------------- */}
       {/* A partir de aqui el tablero de resultados */}
       {/* ----------------------------------------- */}
-      <div className="col-9">
+      <div className="col-8 col-lg-9">
         <nav className="d-flex justify-content-between">
           {/* Botones Alquiler y Compra */}
           {store.operacion == "alquiler" || store.operacion == "" ? (
@@ -159,14 +144,14 @@ export const Dashboard = () => {
               <button
                 className="nav-link active"
                 type="button"
-                onClick={actions.updateAlquiler}
+                onClick={actions.updateOperacionAlquiler}
               >
                 Alquiler
               </button>
               <button
                 className="nav-link"
                 type="button"
-                onClick={actions.updateCompra}
+                onClick={actions.updateOperacionCompra}
               >
                 Compra
               </button>
@@ -176,14 +161,14 @@ export const Dashboard = () => {
               <button
                 className="nav-link"
                 type="button"
-                onClick={actions.updateAlquiler}
+                onClick={actions.updateOperacionAlquiler}
               >
                 Alquiler
               </button>
               <button
                 className="nav-link active"
                 type="button"
-                onClick={actions.updateCompra}
+                onClick={actions.updateOperacionCompra}
               >
                 Compra
               </button>
@@ -195,14 +180,14 @@ export const Dashboard = () => {
               <button
                 className="nav-link active"
                 type="button"
-                onClick={actions.updateListado}
+                onClick={actions.updateVistaListado}
               >
                 Listado
               </button>
               <button
                 className="nav-link"
                 type="button"
-                onClick={actions.updateMapa}
+                onClick={actions.updateVistaMapa}
               >
                 Mapa
               </button>
@@ -212,14 +197,14 @@ export const Dashboard = () => {
               <button
                 className="nav-link"
                 type="button"
-                onClick={actions.updateListado}
+                onClick={actions.updateVistaListado}
               >
                 Listado
               </button>
               <button
                 className="nav-link active"
                 type="button"
-                onClick={actions.updateMapa}
+                onClick={actions.updateVistaMapa}
               >
                 Mapa
               </button>

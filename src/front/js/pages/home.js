@@ -1,12 +1,17 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Context } from "../store/appContext";
 import "../../styles/home.css";
 import casa from "../../img/casa-lujo-playa_98.webp";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 // import { useRoutes } from "react-router-dom";
 
 export const Home = () => {
   const { store, actions } = useContext(Context);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    actions.backhome;
+  }, []);
 
   return (
     <>
@@ -14,106 +19,143 @@ export const Home = () => {
         className="contenedor-foto container d-flex justify-content-center"
         style={{ backgroundImage: `url(${casa})` }}
       >
-        <div className="contenedor-filtros container rounded-3 col-10 bg-light">
-          <div className="titulo container ps-4 py-3">
+        <div className="formulario container rounded-3 bg-light">
+          <div className="titulo container ps-4 pt-3 pb-2">
             <h3>Elige tu propiedad</h3>
           </div>
-          <div className="filtros container d-xl-flex justify-content-evenly py-4">
+
+          {/*--------------------------------------------- INICIO DE LOS FILTROS SELECT ----------------------------------------------*/}
+          <div className="filtros container d-xl-flex justify-content-evenly pt-3 pb-4">
             {/* tipo de operacion */}
-            <div className="row align-items-center">
+            <div className="selector mx-3">
+              <div className="pb-2 text-center">
+                <span className="">Tipo de Operación</span>
+              </div>
               <select
                 onChange={actions.updateOperacion}
-                className="form-select"
+                className="form-select mb-3"
                 aria-label="Default select example"
-                defaultValue={"<tipo de operación>"}
+                value={store.operacion}
               >
-                <option className="text-center" disabled>
-                  {"<tipo de operación>"}
-                </option>
+                <option className="">{"<elegir>"}</option>
                 <option className="">alquiler</option>
                 <option className="">compra</option>
               </select>
             </div>
             {/* comunidad */}
-            <div className="row align-items-center">
+            <div className="selector mx-3">
+              <div className="pb-2 text-center">
+                <span className="">Comunidad Autónoma</span>
+              </div>
               <select
                 onChange={actions.updateComunidad}
-                className="form-select"
+                className="form-select mb-3"
                 aria-label="Default select example"
-                defaultValue={"<comunidad autónoma>"}
+                value={store.comunidad}
               >
-                <option className="text-center" disabled>
-                  {"<comunidad autónoma>"}
-                </option>
+                <option className="">todas</option>
                 {store.listacomunidades.map((item) => {
                   let comunidad = Object.keys(item);
-                  return <option className="">{comunidad}</option>;
+                  return (
+                    <option key={comunidad} className="">
+                      {comunidad}
+                    </option>
+                  );
                 })}
               </select>
             </div>
             {/* provincia */}
-            <div className="row align-items-center">
+            <div className="selector mx-3">
+              <div className="pb-2 text-center">
+                <span className="">Provincia</span>
+              </div>
               <select
                 onChange={actions.updateProvincia}
-                className="form-select"
+                className="form-select mb-3"
                 aria-label="Default select example"
-                defaultValue={"<provincia>"}
+                value={store.provincia}
               >
-                <option className="text-center" disabled>
-                  {"<provincia>"}
-                </option>
-                {store.comunidad == "" ? (
-                  <option className="" disabled>
-                    {"elija comunidad"}
+                <option className="">todas</option>
+                {store.listaprovincias.map((elem) => (
+                  <option key={elem} className="">
+                    {elem}
                   </option>
-                ) : (
-                  store.listaprovincias.map((elem) => (
-                    <option className="">{elem}</option>
-                  ))
-                )}
+                ))}
               </select>
             </div>
             {/* rango de precio */}
-            <div className="row align-items-center">
-              <select
-                onChange={actions.updatePrecio}
-                className="form-select"
-                aria-label="Default select example"
-                defaultValue={"<precio>"}
-              >
-                <option className="text-center" disabled>
-                  {"<precio>"}
-                </option>
-                <option className="">todos los precios</option>
-                <option className="">de 0 a 1000</option>
-                <option className="">de 1001 a 2500</option>
-                <option className="">de 2501 a 5000</option>
-                <option className="">de 5001 a más</option>
-              </select>
+            <div className="selector mx-3">
+              <div className="pb-2 text-center">
+                <span className="">Rango de Precio</span>
+              </div>
+              <div className="d-flex">
+                <select
+                  onChange={actions.updatePreciomin}
+                  className="form-select me-1 mb-3"
+                  aria-label="Default select example"
+                  value={store.preciomin}
+                >
+                  <option className="">Mín</option>
+                  <option className="">1000</option>
+                  <option className="">2000</option>
+                  <option className="">3000</option>
+                  <option className="">5000</option>
+                </select>
+                <select
+                  onChange={actions.updatePreciomax}
+                  className="form-select ms-1 mb-3"
+                  aria-label="Default select example"
+                  value={store.preciomax}
+                >
+                  <option className="">Máx</option>
+                  {/* <option className="">Sin límite</option> */}
+                  {store.preciomin >= 1000 ? (
+                    ""
+                  ) : (
+                    <option className="">1000</option>
+                  )}
+                  {store.preciomin >= 2000 ? (
+                    ""
+                  ) : (
+                    <option className="">2000</option>
+                  )}
+                  {store.preciomin >= 3000 ? (
+                    ""
+                  ) : (
+                    <option className="">3000</option>
+                  )}
+                  {store.preciomin >= 5000 ? (
+                    ""
+                  ) : (
+                    <option className="">5000</option>
+                  )}
+                </select>
+              </div>
             </div>
-            <div className="row align-items-center">
-              <Link
-                to={
-                  store.operacion != "" &&
-                  store.comunidad != "" &&
-                  store.provincia != ""
-                    ? "/dashboard"
-                    : ""
-                }
-              >
+            {/*--------------------------------------------- FIN DE LOS FILTROS SELECT ----------------------------------------------*/}
+
+            {/*--------------------------------------------- BOTON DE PASE AL DASHBOARD----------------------------------------------*/}
+            <div className="row align-items-end text-center">
+              <Link to={store.operacion != "todas" ? "/dashboard" : ""}>
                 {/* <!-- Button trigger modal --> */}
                 <button
+                  // onClick={() => {
+                  //   if (store.operacion != "todas") {
+                  //     actions.fillLocalStorage;
+                  //     // Navigate("/dashboard");
+                  //   }
+                  // }}
                   type="button"
-                  className="btn btn-primary"
+                  className="btn btn-primary mb-3"
                   data-bs-toggle="modal"
                   data-bs-target="#exampleModal"
                 >
                   Ver propiedades
                 </button>
                 {/* <!-- Modal --> */}
-                {store.operacion != "" &&
-                store.comunidad != "" &&
-                store.provincia != "" ? (
+                {/*-------------------------------------ALERTA DEL BOTON DE PASE AL DASHBOARD-----------------------------------------*/}
+
+                {store.operacion != "todas" ? (
                   ""
                 ) : (
                   <div
@@ -140,7 +182,7 @@ export const Home = () => {
                           ></button>
                         </div>
                         <div className="modal-body text-secondary">
-                          verifica si has seleccionado datos los filtros
+                          debes seleccionar al menos el tipo de operación
                         </div>
                         <div className="modal-footer">
                           <button

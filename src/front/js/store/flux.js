@@ -1,18 +1,11 @@
 const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
-      operacion: "",
-      vista: "listado",
-      comunidad: "",
-      provincia: "",
-      preciomin: 0,
-      preciomax: 999999999,
+      /*-------------------------------  INICIO DE LOS LISTADOS (CASI) ESTATICOS PARA OPCTIONS DE LOS SELECT --------------------------------*/
       listaprovincias: [],
       listacomunidades: [
-        { todas: ["todas"] },
         {
           Andalucía: [
-            "<todas>",
             "Almería",
             "Cádiz",
             "Córdoba",
@@ -23,20 +16,15 @@ const getState = ({ getStore, getActions, setStore }) => {
             "Sevilla",
           ],
         },
-        { Aragón: ["<todas>", "Huesca", "Teruel", "Zaragoza"] },
+        { Aragón: ["Huesca", "Teruel", "Zaragoza"] },
         { Asturias: ["Oviedo"] },
         { Baleares: ["Palma de Mallorca"] },
         {
-          Canarias: [
-            "<todas>",
-            "Santa Cruz de Tenerife",
-            "Las Palmas de Gran Canaria",
-          ],
+          Canarias: ["Santa Cruz de Tenerife", "Las Palmas de Gran Canaria"],
         },
         { Cantabria: ["Santander"] },
         {
           "Castilla-La Mancha": [
-            "<todas>",
             "Albacete",
             "Ciudad Real",
             "Cuenca",
@@ -46,7 +34,6 @@ const getState = ({ getStore, getActions, setStore }) => {
         },
         {
           "Castilla y León": [
-            "<todas>",
             "Ávila",
             "Burgos",
             "León",
@@ -57,23 +44,25 @@ const getState = ({ getStore, getActions, setStore }) => {
             "Zamora",
           ],
         },
-        { Cataluña: ["<todas>", "Barcelona", "Gerona", "Lérida", "Tarragona"] },
+        { Cataluña: ["Barcelona", "Gerona", "Lérida", "Tarragona"] },
         {
           "Comunidad Valenciana": [
-            "<todas>",
             "Alicante",
             "Castellón de la Plana",
             "Valencia",
           ],
         },
-        { Extremadura: ["<todas>", "Badajoz", "Cáceres"] },
-        { Galicia: ["<todas>", "La Coruña", "Lugo", "Orense", "Pontevedra"] },
+        { Extremadura: ["Badajoz", "Cáceres"] },
+        { Galicia: ["La Coruña", "Lugo", "Orense", "Pontevedra"] },
         { "La Rioja": ["Logroño"] },
         { Madrid: ["Madrid"] },
         { Murcia: ["Murcia"] },
         { Navarra: ["Pamplona"] },
-        { "País Vasco": ["<todas>", "Bilbao", "San Sebastián", "Vitoria"] },
+        { "País Vasco": ["Bilbao", "San Sebastián", "Vitoria"] },
       ],
+      /*----------------------------------  FIN DE LOS LISTADOS (CASI) ESTATICOS PARA OPCTIONS DE LOS SELECT --------------------------------*/
+
+      /*---------------------------- INICIO DE LA DATA SIMULADA DE API PARA PRUEBAS ANTES DE IMPLEMENTAR FETCH ------------------------------*/
       demoProperties: [
         {
           id: 1,
@@ -141,27 +130,39 @@ const getState = ({ getStore, getActions, setStore }) => {
           img: "https://wtwp.com/wp-content/uploads/2015/06/placeholder-image.png",
         },
       ],
-      message: null,
+      /*---------------------------- FIN DE LA DATA SIMULADA DE API PARA PRUEBAS ANTES DE IMPLEMENTAR FETCH ---------------------------*/
+
+      /*--------------------------------------- INICIO DE LAS VARIABLES DEL STORE (HOOKS)----------------------------------------------*/
+      operacion: "todas",
+      comunidad: "todas",
+      provincia: "todas",
+      preciomin: 0,
+      preciomax: 999999999,
+      vista: "listado",
+      /*------------------------------------------ FIN DE LAS VARIABLES DEL STORE -----------------------------------------------------*/
     },
     //
     actions: {
+      //
+      /*------------------------------- INICIO DE LAS FUNCIONES DE EVENTOS PARA LOS FILTROS --------------------------------------------*/
       updateOperacion: (e) => {
+        // funcion de input controlado de evento
         const store = getStore();
         setStore({ operacion: e.target.value });
-      },
-      updateAlquiler: () => {
-        const store = getStore();
-        setStore({ operacion: "alquiler" });
-      },
-      updateCompra: () => {
-        const store = getStore();
-        setStore({ operacion: "compra" });
+        localStorage.setItem("operacion", store.operacion);
+        localStorage.setItem("comunidad", store.comunidad);
+        localStorage.setItem("provincia", store.provincia);
+        localStorage.setItem("preciomin", store.preciomin);
+        localStorage.setItem("preciomax", store.preciomax);
+        localStorage.setItem("vista", "listado");
       },
       updateComunidad: (e) => {
+        // funcion de input controlado de evento
         const store = getStore();
-        setStore({ comunidad: "" });
-        setStore({ provincia: "" });
+        setStore({ comunidad: "todas" });
+        setStore({ provincia: "todas" });
         setStore({ comunidad: e.target.value });
+
         let comunidad = store.comunidad;
         let provincias = [];
         for (let x of store.listacomunidades) {
@@ -170,44 +171,111 @@ const getState = ({ getStore, getActions, setStore }) => {
           }
         }
         setStore({ listaprovincias: provincias });
+        localStorage.setItem("operacion", store.operacion);
+        localStorage.setItem("comunidad", store.comunidad);
+        localStorage.setItem("provincia", store.provincia);
+        localStorage.setItem("preciomin", store.preciomin);
+        localStorage.setItem("preciomax", store.preciomax);
+        localStorage.setItem("vista", "listado");
       },
       updateProvincia: (e) => {
+        // funcion de input controlado de evento
         const store = getStore();
         setStore({ provincia: e.target.value });
+        localStorage.setItem("operacion", store.operacion);
+        localStorage.setItem("comunidad", store.comunidad);
+        localStorage.setItem("provincia", store.provincia);
+        localStorage.setItem("preciomin", store.preciomin);
+        localStorage.setItem("preciomax", store.preciomax);
+        localStorage.setItem("vista", "listado");
       },
-      updatePrecio: (e) => {
+      updatePreciomin: (e) => {
+        // funcion de input controlado de evento
         const store = getStore();
-        if (e.target.value == "de 0 a 1000") {
+        if (e.target.value == "Mín") {
           setStore({ preciomin: 0 });
-          setStore({ preciomax: 1000 });
-        } else if (e.target.value == "de 1001 a 2500") {
-          setStore({ preciomin: 1001 });
-          setStore({ preciomax: 2500 });
-        } else if (e.target.value == "de 2501 a 5000") {
-          setStore({ preciomin: 2501 });
-          setStore({ preciomax: 5000 });
-        } else if (e.target.value == "de 5001 a más") {
-          setStore({ preciomin: 5001 });
-          setStore({ preciomax: 999999999 });
-        } else if (e.target.value == "todos los precios") {
-          setStore({ preciomin: 0 });
-          setStore({ preciomax: 999999999 });
+        } else {
+          setStore({ preciomin: e.target.value });
         }
+        localStorage.setItem("operacion", store.operacion);
+        localStorage.setItem("comunidad", store.comunidad);
+        localStorage.setItem("provincia", store.provincia);
+        localStorage.setItem("preciomin", store.preciomin);
+        localStorage.setItem("preciomax", store.preciomax);
+        localStorage.setItem("vista", "listado");
       },
-      updateFilters: () => {
+      updatePreciomax: (e) => {
+        // funcion de input controlado de evento
         const store = getStore();
-        setStore({ comunidad: "" });
-        setStore({ provincia: "" });
-        setStore({ operacion: "" });
+        if (e.target.value == "Sin límite" || e.target.value == "Máx") {
+          setStore({ preciomax: 999999999 });
+        } else {
+          setStore({ preciomax: e.target.value });
+        }
+        localStorage.setItem("operacion", store.operacion);
+        localStorage.setItem("comunidad", store.comunidad);
+        localStorage.setItem("provincia", store.provincia);
+        localStorage.setItem("preciomin", store.preciomin);
+        localStorage.setItem("preciomax", store.preciomax);
+        localStorage.setItem("vista", "listado");
+      },
+      /*--------------------------------------------- FIN DE LAS FUNCIONES DE LOS FILTROS --------------------------------------------*/
+
+      /*----------------------------------- INICIO DE LAS FUNCIONES DEL TABLERO DE RESULTADOS -------------------------------------*/
+      updateOperacionAlquiler: () => {
+        // funcion especial para los pills del dashboard
+        const store = getStore();
+        setStore({ operacion: "alquiler" });
+      },
+      updateOperacionCompra: () => {
+        // funcion especial para los pills del dashboard
+        const store = getStore();
+        setStore({ operacion: "compra" });
+      },
+      updateVistaListado: () => {
+        // funcion especial para los pills del dashboard
+        const store = getStore();
         setStore({ vista: "listado" });
       },
-      updateListado: () => {
-        const store = getStore();
-        setStore({ vista: "listado" });
-      },
-      updateMapa: () => {
+      updateVistaMapa: () => {
+        // funcion especial para los pills del dashboard
         const store = getStore();
         setStore({ vista: "mapa" });
+      },
+      /*------------------------------------ FIN DE LAS FUNCIONES DEL TABLERO DE RESULTADOS -----------------------------------------*/
+
+      /*------------------------------------- FUNCIONES DE ENTREGA Y RECUPERACION DE DATA------------------------------------------- */
+
+      fillLocalStorage: () => {
+        const store = getStore();
+        // funcion vuelca datos del store en LocalStorage al pasar a otra página. Se debe usar al actualizar cada filtro
+        localStorage.setItem("operacion", store.operacion);
+        localStorage.setItem("comunidad", store.comunidad);
+        localStorage.setItem("provincia", store.provincia);
+        localStorage.setItem("preciomin", store.preciomin);
+        localStorage.setItem("preciomax", store.preciomax);
+        localStorage.setItem("vista", "listado");
+      },
+      syncLocalStorageToStore: () => {
+        // funcion recupera datos de LocalStorage y los guarda en el store nuevamente al cargar nueva página
+        const store = getStore();
+        setStore({ operacion: localStorage.getItem("operacion") });
+        setStore({ comunidad: localStorage.getItem("comunidad") });
+        setStore({ provincia: localStorage.getItem("provincia") });
+        setStore({ preciomin: localStorage.getItem("preciomin") });
+        setStore({ preciomax: localStorage.getItem("preciomax") });
+        setStore({ vista: localStorage.getItem("vista") });
+      },
+      backHome: () => {
+        // esta funcion resetea los filtros al volver al home desde el nav o al refrescar el home
+        const store = getStore();
+        localStorage.clear();
+        setStore({ comunidad: "todas" });
+        setStore({ provincia: "todas" });
+        setStore({ operacion: "todas" });
+        setStore({ preciomin: 0 });
+        setStore({ preciomax: 999999999 });
+        setStore({ vista: "listado" });
       },
 
       // Use getActions to call a function within a fuction

@@ -1,0 +1,14 @@
+.formulario {
+  height: fit-content;
+  width: auto;
+  background: rgb(172, 255, 255);
+}
+.titulo {
+  height: fit-content;
+}
+.filtros {
+  height: fit-content;
+}
+.selector {
+  height: fit-content;
+}
