@@ -95,7 +95,7 @@ def put_owner_id(dog_id):
 
     response_body = {
         "message": "ok",
-        "updateMsg": "Dog Updated."
+        "updateMsg": "User Updated."
     }
 
     return jsonify(response_body), 200

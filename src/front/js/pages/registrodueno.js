@@ -6,7 +6,7 @@ import "../../styles/register.css";
 import Shape from "../component/shape";
 
 export const RegistroDueno = () => {
-  const login = "/login";
+  const dogRegister = "/registroperro";
   let navigate = useNavigate();
 
   // States for regristration
@@ -40,15 +40,6 @@ export const RegistroDueno = () => {
   };
   const handlePassword = (e) => {
     setPassword(e.target.value);
-  };
-  const handleName = (e) => {
-    setName(e.target.value);
-  };
-  const handleBreed = (e) => {
-    setBreed(e.target.value);
-  };
-  const handleAge = (e) => {
-    setAge(e.target.value);
   };
 
   const handleImage = (e) => {
@@ -94,7 +85,7 @@ export const RegistroDueno = () => {
             text: data.data.message,
           });
         } else {
-          navigate(login);
+          navigate(dogRegister);
           Swal.fire("Tu cuenta ha sido creada!", "Inicia sesión!", "success");
         }
       })
@@ -104,7 +95,7 @@ export const RegistroDueno = () => {
   return (
     <div className="container-fluid">
       <div className="container align-items-center">
-        <div className="row d-flex justify-content-center align-items-center h-100 w-75 mx-auto">
+        <div className="row d-flex justify-content-center align-items-center h-100 w-75 mx-auto mb-5">
           <div className="col">
             <form
               className="card card-registration my-4 register"
@@ -183,45 +174,6 @@ export const RegistroDueno = () => {
                     </label>
                     <br></br>
                     <input type="file" name="file" onChange={handleImage} />
-
-                    <h3 className="mb-5 mt-5">REGISTRA A TU MASCOTA</h3>
-                    <div className="row">
-                      <div className="col-md-6 mb-4">
-                        <div className="form-outline">
-                          <input
-                            onChange={handleName}
-                            value={name}
-                            type="text"
-                            className="form-control form-control-lg"
-                          />
-                          <label className="form-label">Nombre</label>
-                        </div>
-                      </div>
-                      <div className="col-md-6 mb-4">
-                        <div className="form-outline">
-                          <input
-                            onChange={handleBreed}
-                            value={breed}
-                            type="text"
-                            className="form-control form-control-lg"
-                          />
-                          <label className="form-label">Raza</label>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="row">
-                      <div className="col-md-6 mb-4">
-                        <div className="form-outline">
-                          <input
-                            onChange={handleAge}
-                            value={age}
-                            type="text"
-                            className="form-control form-control-lg"
-                          />
-                          <label className="form-label">Edad</label>
-                        </div>
-                      </div>
-                    </div>
 
                     <div className="row">
                       <div className="col-md-6 mb-4">
