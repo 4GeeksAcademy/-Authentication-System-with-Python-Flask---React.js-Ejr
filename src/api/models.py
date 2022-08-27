@@ -12,6 +12,7 @@ class Walker(db.Model):
     last_name = db.Column(db.String(200), unique=False, nullable=False)
     email = db.Column(db.String(200), unique=True, nullable=False)
     password = db.Column(db.String(200), unique=False, nullable=False)
+    verify_password = db.Column(db.String(200), unique=False, nullable=False)
     is_active = db.Column(db.Boolean(), unique=False, nullable=False)
     date_start = db.Column(db.DateTime(timezone=True), default=datetime.datetime.utcnow())
 
@@ -37,6 +38,7 @@ class Owner(db.Model):
     last_name = db.Column(db.String(200), unique=False, nullable=False)
     email = db.Column(db.String(200), unique=True, nullable=False)
     password = db.Column(db.String(200), unique=False, nullable=False)
+    verify_password = db.Column(db.String(200), unique=False, nullable=False)
     is_active = db.Column(db.Boolean(), unique=False, nullable=False)
     date_start= db.Column(db.DateTime(timezone=True), default=datetime.datetime.utcnow() )
 

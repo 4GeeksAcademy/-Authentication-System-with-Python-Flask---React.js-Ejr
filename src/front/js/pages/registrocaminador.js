@@ -15,6 +15,7 @@ export const RegistroCaminador = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [verify_password, setVPassword] = useState("");
   const [file, setFile] = useState();
 
   // BackEnd url
@@ -38,6 +39,10 @@ export const RegistroCaminador = () => {
     setPassword(e.target.value);
   };
 
+  const handleVPassword = (e) => {
+    setVPassword(e.target.value);
+  };
+
   const handleImage = (e) => {
     setFile(e.target.files[0]);
   };
@@ -52,14 +57,8 @@ export const RegistroCaminador = () => {
     formData.append("username", username);
     formData.append("email", email);
     formData.append("password", password);
-    let body_content = JSON.stringify({
-      first_name: first_name,
-      last_name: last_name,
-      username: username,
-      email: email,
-      password: password,
-      file: file,
-    });
+    formData.append("verify_password", verify_password);
+
     fetch(apiUrl, {
       method: "POST",
       body: formData,
@@ -143,6 +142,17 @@ export const RegistroCaminador = () => {
                           />
                           <label className="form-label">Contraseña</label>
                         </div>
+                      </div>
+                      <div className="form-outline">
+                        <input
+                          onChange={handleVPassword}
+                          value={verify_password}
+                          type="password"
+                          className="form-control form-control-lg"
+                        />
+                        <label className="form-label">
+                          Verificar Contraseña
+                        </label>
                       </div>
                       <div className="col-md-6 mb-4">
                         <div className="form-outline">

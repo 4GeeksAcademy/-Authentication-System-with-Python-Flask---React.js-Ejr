@@ -16,6 +16,7 @@ export const RegistroDueno = () => {
   const [first_name, setFname] = useState("");
   const [last_name, setLname] = useState("");
   const [username, setUsername] = useState("");
+  const [verify_password, setVPassword] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [file, setFile] = useState();
@@ -40,6 +41,9 @@ export const RegistroDueno = () => {
   const handlePassword = (e) => {
     setPassword(e.target.value);
   };
+  const handleVPassword = (e) => {
+    setVPassword(e.target.value);
+  };
 
   const handleImage = (e) => {
     setFile(e.target.files[0]);
@@ -56,6 +60,7 @@ export const RegistroDueno = () => {
     formData.append("email", email);
     formData.append("password", password);
     formData.append("file", file);
+    formData.append("verify_password", verify_password);
 
     fetch(apiUrl, {
       method: "POST",
@@ -75,7 +80,11 @@ export const RegistroDueno = () => {
           actions.setUserId(data.data.owner_id);
 
           navigate(dogRegister);
-          Swal.fire("Tu cuenta ha sido creada!", "Inicia sesión!", "success");
+          Swal.fire(
+            "Tu cuenta ha sido creada!",
+            "Registra un perro!",
+            "success"
+          );
         }
       })
       .catch((error) => error);
@@ -142,6 +151,17 @@ export const RegistroDueno = () => {
                             className="form-control form-control-lg"
                           />
                           <label className="form-label">Contraseña</label>
+                        </div>
+                        <div className="form-outline">
+                          <input
+                            onChange={handleVPassword}
+                            value={verify_password}
+                            type="password"
+                            className="form-control form-control-lg"
+                          />
+                          <label className="form-label">
+                            Verificar Contraseña
+                          </label>
                         </div>
                       </div>
                       <div className="col-md-6 mb-4">
