@@ -60,12 +60,14 @@ export const Login = () => {
 
           actions.getInfo(ownerUrl, data.data.user_id);
           actions.getDog(dogUrl, data.data.user_id);
+          actions.getUserType(data.data.user_type);
           navigate(ownerRoute);
           actions.handleLog();
         } else {
           localStorage.setItem("token", data.data.access_token);
 
           actions.getInfo(walkerUrl, data.data.user_id);
+          actions.getUserType(data.data.user_type);
           navigate(walkerRoute);
           actions.handleLog();
         }
@@ -84,9 +86,6 @@ export const Login = () => {
                   <div className="row">
                     <div className="col">
                       <h3 className="mb-5 ">Iniciar sesión</h3>
-                    </div>
-                    <div className="col">
-                      <Signin />
                     </div>
                   </div>
                   <form>

@@ -6,6 +6,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       dogs: [],
       log: "Iniciar sesión",
       isLogedIn: false,
+      user_type: "",
     },
     actions: {
       getInfo: (url, id) => {
@@ -43,6 +44,10 @@ const getState = ({ getStore, getActions, setStore }) => {
           setStore({ log: "Iniciar sesión" });
           setStore({ isLogedIn: false });
         }
+      },
+
+      getUserType: (user_type) => {
+        setStore({ user_type: user_type });
       },
     },
   };

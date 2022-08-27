@@ -73,7 +73,7 @@ export const Navbar = () => {
                     <Link to={"/profile"}>
                       <img
                         className="col rounded-circle"
-                        src={`${process.env.BACKEND_URL}/walker/download/${store.user.file}`}
+                        src={`${process.env.BACKEND_URL}/${store.user_type}/download/${store.user.file}`}
                         style={pfpstyle}
                       ></img>
                     </Link>
