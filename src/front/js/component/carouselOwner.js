@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { Context } from "../store/appContext";
 import CardOwner from "../component/cardOwner";
+import { Link } from "react-router-dom";
 
 const CarouselOwner = () => {
   const { store, actions } = useContext(Context);
@@ -29,6 +30,9 @@ const CarouselOwner = () => {
           });
         })}
       </div>
+      <Link to={"/adddog"} id="logoText">
+        <div className="btn btn-primary mt-3">Agregar Perro</div>
+      </Link>
     </div>
   );
 };
