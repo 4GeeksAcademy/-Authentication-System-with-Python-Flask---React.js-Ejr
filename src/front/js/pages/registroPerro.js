@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { Context } from "../store/appContext";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
@@ -10,6 +11,7 @@ export const RegistroPerro = () => {
   let navigate = useNavigate();
 
   // States for regristration
+  const { store, actions } = useContext(Context);
   const [name, setName] = useState("");
   const [breed, setBreed] = useState("");
   const [age, setAge] = useState(0);
@@ -18,7 +20,6 @@ export const RegistroPerro = () => {
   // BackEnd url
 
   const apiUrl = process.env.BACKEND_URL + "/dogs";
-  const ownerUrl = process.env.BACKEND_URL + "/api/dogs/";
 
   // Handling the values change
   const handleName = (e) => {
@@ -35,20 +36,17 @@ export const RegistroPerro = () => {
     setFile(e.target.files[0]);
   };
 
+  const owner_id = `${store.user_id}`;
+
   // Handling the form submission
   const handleSubmit = (e) => {
     e.preventDefault();
     const formData = new FormData();
+    formData.append("owner_id", owner_id);
     formData.append("breed", breed);
     formData.append("name", name);
     formData.append("file", file);
     formData.append("age", age);
-    let body_content = JSON.stringify({
-      name: name,
-      breed: breed,
-      age: age,
-      file: file,
-    });
     fetch(apiUrl, {
       method: "POST",
       body: formData,

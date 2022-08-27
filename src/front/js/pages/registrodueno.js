@@ -1,29 +1,28 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { Context } from "../store/appContext";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import "../../styles/register.css";
 import Shape from "../component/shape";
+import { Actions } from "@cloudinary/url-gen";
 
 export const RegistroDueno = () => {
   const dogRegister = "/registroperro";
   let navigate = useNavigate();
 
   // States for regristration
+  const { store, actions } = useContext(Context);
   const [first_name, setFname] = useState("");
   const [last_name, setLname] = useState("");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [name, setName] = useState("");
-  const [breed, setBreed] = useState("");
-  const [age, setAge] = useState(0);
   const [file, setFile] = useState();
 
   // BackEnd url
 
   const apiUrl = process.env.BACKEND_URL + "/owners";
-  const ownerUrl = process.env.BACKEND_URL + "/api/owners/";
 
   // Handling the values change
   const handleFname = (e) => {
@@ -48,6 +47,7 @@ export const RegistroDueno = () => {
 
   // Handling the form submission
   const handleSubmit = (e) => {
+    console.log(apiUrl);
     e.preventDefault();
     const formData = new FormData();
     formData.append("first_name", first_name);
@@ -55,21 +55,8 @@ export const RegistroDueno = () => {
     formData.append("username", username);
     formData.append("email", email);
     formData.append("password", password);
-    formData.append("breed", breed);
-    formData.append("name", name);
     formData.append("file", file);
-    formData.append("age", age);
-    let body_content = JSON.stringify({
-      first_name: first_name,
-      last_name: last_name,
-      username: username,
-      email: email,
-      password: password,
-      name: name,
-      breed: breed,
-      age: age,
-      file: file,
-    });
+
     fetch(apiUrl, {
       method: "POST",
       body: formData,
@@ -85,6 +72,8 @@ export const RegistroDueno = () => {
             text: data.data.message,
           });
         } else {
+          actions.setUserId(data.data.owner_id);
+
           navigate(dogRegister);
           Swal.fire("Tu cuenta ha sido creada!", "Inicia sesión!", "success");
         }

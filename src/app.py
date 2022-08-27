@@ -208,7 +208,6 @@ def create_owner():
 
     response_body = {
         'results': new_owner.serialize(),
-        'result':  new_dog.serialize(),
         'owner_id': new_owner.id
     }
     return jsonify(response_body), 200
@@ -220,7 +219,7 @@ def download_owner_file(filename):
 
 @app.route('/dogs', methods=['POST'])
 def create_dog():
-    body = request.get_json()
+    body = request.form
 
     if body is None:
         raise APIException('You need to specify the request body as a json object', status_code=400)
@@ -232,7 +231,9 @@ def create_dog():
         raise APIException('Campo requerido', status_code=400)
     if 'file' not in request.files:
         raise APIException("No has enviado un archivo", status_code=400)
-        
+    if 'owner_id' not in body:
+        raise APIException("Este perro no tiene dueno", status_code=400)
+
     file = request.files['file']
 
     if file.filename == '':
@@ -243,7 +244,7 @@ def create_dog():
 
         file.save(os.path.join(app.config['UPLOAD_FOLDER_DOG'], filename)) 
     
-    new_dog = Dog(name = body['name'], breed = body['breed'], age = body['age'], file = filename)
+    new_dog = Dog(name = body['name'], breed = body['breed'], age = body['age'], file = filename, owner_id = body['owner_id'])
     db.session.add(new_dog)
     db.session.commit()
 
@@ -253,7 +254,7 @@ def create_dog():
     return jsonify(response_body), 200
 
 @app.route('/dogs/download/<filename>', methods=['GET'])
-def download_owner_file(filename):
+def download_dog_file(filename):
     return send_from_directory(app.config["UPLOAD_FOLDER_DOG"], filename)
 
 
