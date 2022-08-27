@@ -33,7 +33,7 @@ export const Navbar = () => {
 
   const pfpstyle = {
     width: "75px",
-    height: "auto",
+    height: "75px",
   };
 
   return (
