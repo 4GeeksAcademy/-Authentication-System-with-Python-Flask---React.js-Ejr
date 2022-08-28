@@ -25,7 +25,12 @@ const CarouselOwner = () => {
         {store.dogs.map((item) => {
           return item.map((obj, index) => {
             return (
-              <CardOwner name={obj.name} breed={obj.breed} age={obj.age} />
+              <CardOwner
+                name={obj.name}
+                breed={obj.breed}
+                age={obj.age}
+                file={obj.file}
+              />
             );
           });
         })}
