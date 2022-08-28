@@ -19,6 +19,7 @@ import Contact from "./pages/contact";
 import Questions from "./pages/questions";
 import Terms from "./pages/terms";
 import injectContext from "./store/appContext";
+import AddDog from "./component/addDog";
 
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
@@ -46,6 +47,7 @@ const Layout = () => {
             <Route path="/preguntas" element={<Questions />} />
             <Route path="/registroperro" element={<RegistroPerro />} />
             <Route path="/terminosycondiciones" element={<Terms />} />
+            <Route path="/adddog" element={<AddDog />} />
 
             <Route path="/chat" element={<ChatPage />} />
 
