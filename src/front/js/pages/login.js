@@ -5,7 +5,6 @@ import { Context } from "../store/appContext";
 import Swal from "sweetalert2";
 import PropTypes from "prop-types";
 import Shape from "../component/shape";
-import Signin from "../component/Signin";
 
 export const Login = () => {
   const [isShown, setIsShown] = useState(true);

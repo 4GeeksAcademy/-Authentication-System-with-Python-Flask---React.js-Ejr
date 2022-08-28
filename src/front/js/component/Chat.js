@@ -18,9 +18,13 @@ const Chat = () => {
       {messages.map((user, index) => {
         return (
           <div key={index}>
-            {user.uid == auth.currentUser.uid ? (
+            {user.uid != auth.currentUser.uid ? (
               <div className="d-flex flex-row justify-content-start">
-                <img src={user.imgUrl} alt="avatar 1" className="user-img" />
+                <img
+                  src={user.imgUrl}
+                  alt="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
+                  className="user-img"
+                />
                 <div>
                   <p className="small p-2 ms-3 mb-1 text-muted rounded-3 box-chat">
                     {user.text}
@@ -41,8 +45,8 @@ const Chat = () => {
                   </p>
                 </div>
                 <img
-                  src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
-                  alt="avatar 1"
+                  src={user.imgUrl}
+                  alt="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
                   className="user-img"
                 />
               </div>
