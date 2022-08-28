@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import dogpic from "../../img/dog1.jpg";
 import { useState } from "react";
+import { Context } from "../store/appContext";
 
 const CardOwner = (props) => {
   const [flip, setFlip] = useState(true);
+  const { store, actions } = useContext(Context);
 
   let imageStyle = {
     backgroundSize: "contain",
@@ -29,7 +31,7 @@ const CardOwner = (props) => {
               >
                 <img
                   className="card-img-top img-fluid"
-                  src={dogpic}
+                  src={`${process.env.BACKEND_URL}/dogs/download/${props.file}`}
                   alt="card image"
                   style={imageStyle}
                 />
