@@ -18,8 +18,6 @@ export const Navbar = () => {
     let token = localStorage.getItem("token");
     localStorage.removeItem("token");
 
-    auth.signOut();
-
     actions.handleLogOut();
     navigate(home);
   };
@@ -104,7 +102,7 @@ export const Navbar = () => {
                       <li>
                         <button
                           type="button"
-                          className="btn btn-primary"
+                          className="btn btn-primary ms-3"
                           onClick={chat}
                         >
                           mensajes <span className="badge bg-secondary">4</span>

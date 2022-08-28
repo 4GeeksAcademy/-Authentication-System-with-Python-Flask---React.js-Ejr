@@ -31,3 +31,8 @@ section {
 .fa-paper-plane {
   color: #0b5ed7;
 }
+
+#col {
+  margin: 5px;
+  text-align: center;
+}
