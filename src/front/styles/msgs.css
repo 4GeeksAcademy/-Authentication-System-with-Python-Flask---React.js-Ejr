@@ -8,6 +8,7 @@ section {
 #cards {
   position: relative;
   height: 400px;
+  overflow: auto;
 }
 .user-img {
   width: 45px;
