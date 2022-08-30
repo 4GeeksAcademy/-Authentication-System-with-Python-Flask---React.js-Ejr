@@ -2,6 +2,7 @@ const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
       user: {},
+      walkerProfile: {},
       user_id: 0,
       dogs: [],
       log: "Iniciar sesión",
@@ -15,6 +16,15 @@ const getState = ({ getStore, getActions, setStore }) => {
           .then((res) => res.json())
           .then((data) => {
             setStore({ user: data.results });
+          })
+          .catch();
+      },
+
+      getInfoProfile: (url, id) => {
+        fetch(url + id)
+          .then((res) => res.json())
+          .then((data) => {
+            setStore({ walkerProfile: data.results });
           })
           .catch();
       },
