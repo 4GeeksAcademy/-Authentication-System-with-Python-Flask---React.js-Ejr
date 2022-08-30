@@ -7,6 +7,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       log: "Iniciar sesión",
       isLogedIn: false,
       user_type: "",
+      walkers: [],
     },
     actions: {
       getInfo: (url, id) => {
@@ -18,6 +19,14 @@ const getState = ({ getStore, getActions, setStore }) => {
           .catch();
       },
 
+      getWalkers: () => {
+        fetch(process.env.BACKEND_URL + "/api/walkers")
+          .then((res) => res.json())
+          .then((data) => {
+            setStore({ walkers: data.results });
+          })
+          .catch();
+      },
       setUserId: (user_id) => {
         console.log(user_id);
         setStore({ user_id: user_id });
