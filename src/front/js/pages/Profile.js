@@ -23,17 +23,13 @@ const Profile = () => {
           <div className="col-1">
             <img
               className="rounded-circle"
-
               src={`${process.env.BACKEND_URL}/${store.user_type}/download/${store.user.file}`}
-
               style={imgStlye}
             />
           </div>
           <div className="col-lg-7 mt-3">
             <h2 className="">{store.user.first_name}</h2>
             <h5>{store.user.description}</h5>
-
-
             <h5 className="">Ubicacion</h5>
           </div>
           <div className="col-lg-4 mt-3">

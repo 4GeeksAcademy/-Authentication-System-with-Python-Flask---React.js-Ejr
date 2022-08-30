@@ -8,7 +8,7 @@ import Shape2 from "../component/shape2";
 
 const imgStlye = {
   width: "100px",
-  height: "auto",
+  height: "100px",
 };
 
 const ProfileUser = () => {
@@ -26,13 +26,10 @@ const ProfileUser = () => {
             />
           </div>
           <div className="col-lg-7 mt-3">
-            <h2 className="">{store.user.first_name}</h2>
-            <h5 className="">
-              Contrary to popular belief, Lorem Ipsum is not simply random text.
-              It has roots in a piece of classical Latin literature from 45 BC,
-              making it over 2000 years old. Richard McClintock, a Latin
-              professor at Hampden-Sydney College in Virginia.
-            </h5>
+            <h2 className="">
+              {store.user.first_name} {store.user.last_name}
+            </h2>
+            <h5 className="">{store.user.description}</h5>
             <h5 className="">Ubicacion</h5>
           </div>
           {store.user_type == "walker" ? (
