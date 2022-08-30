@@ -2,11 +2,13 @@ const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
       user: {},
+      walkerProfile: {},
       user_id: 0,
       dogs: [],
       log: "Iniciar sesión",
       isLogedIn: false,
       user_type: "",
+      walkers: [],
     },
     actions: {
       getInfo: (url, id) => {
@@ -18,6 +20,23 @@ const getState = ({ getStore, getActions, setStore }) => {
           .catch();
       },
 
+      getInfoProfile: (url, id) => {
+        fetch(url + id)
+          .then((res) => res.json())
+          .then((data) => {
+            setStore({ walkerProfile: data.results });
+          })
+          .catch();
+      },
+
+      getWalkers: () => {
+        fetch(process.env.BACKEND_URL + "/api/walkers")
+          .then((res) => res.json())
+          .then((data) => {
+            setStore({ walkers: data.results });
+          })
+          .catch();
+      },
       setUserId: (user_id) => {
         console.log(user_id);
         setStore({ user_id: user_id });

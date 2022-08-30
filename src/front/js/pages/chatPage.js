@@ -36,7 +36,7 @@ const ChatPage = () => {
                         </span>
                       </div>
 
-                      <div data-mdb-perfect-scrollbar="true" id="cards">
+                      <div id="cards">
                         <ul className="list-unstyled mb-0">
                           <li className="p-2 border-bottom">
                             <div className="d-flex justify-content-between">
@@ -74,11 +74,7 @@ const ChatPage = () => {
                   </div>
 
                   <div className="col-md-6 col-lg-7 col-xl-7">
-                    <div
-                      className="pt-3 pe-3"
-                      data-mdb-perfect-scrollbar="true"
-                      id="cards"
-                    >
+                    <div className="pt-3 pe-3" id="cards">
                       {user ? <Chat /> : ""}
                     </div>
                     <SendMessage />

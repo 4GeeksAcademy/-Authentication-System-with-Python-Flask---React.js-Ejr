@@ -6,9 +6,17 @@ import "../../styles/innerhomes.css";
 import { Context } from "../store/appContext";
 import Temperatura from "../component/temperatura";
 import MapApi from "../component/mapApi";
+import { useNavigate } from "react-router-dom";
 
 export const HomeDueno = () => {
   const { store, actions } = useContext(Context);
+  let navigate = useNavigate();
+  const walkersView = "/caminadores";
+
+  const handleRoute = () => {
+    navigate(walkersView);
+  };
+
   return (
     <div className="container-fluid" id="homedueno">
       <div className="container m-auto">
@@ -41,7 +49,12 @@ export const HomeDueno = () => {
         </div>
 
         <div className="row pb-5">
-          <div className="btn btn-primary btn-lg rounded-pill">Comenzemos!</div>
+          <button
+            className="btn btn-primary btn-lg rounded-pill"
+            onClick={handleRoute}
+          >
+            Buscar caminadores
+          </button>
         </div>
       </div>
       <Shape />

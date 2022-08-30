@@ -5,13 +5,13 @@ import { useNavigate } from "react-router-dom";
 import "../../styles/navbar.css";
 import logo from "../../img/dogger_logo.png";
 
-import { auth } from "../pages/fire";
-
 export const Navbar = () => {
   const { store, actions } = useContext(Context);
   const home = "/";
   const login_page = "/login";
   const chatRoute = "/chat";
+  const homeO = "/homedueno";
+  const homeW = "/homecaminador";
   let navigate = useNavigate();
 
   const logout = () => {
@@ -42,6 +42,11 @@ export const Navbar = () => {
             <img id="logo" src={logo} />
             ogger
           </Link>
+          <Link to={store.user_type == "owner" ? homeO : homeW}>
+            <button type="button" class="btn btn-light">
+              home
+            </button>
+          </Link>
           <button
             className="navbar-toggler"
             type="button"
@@ -68,7 +73,7 @@ export const Navbar = () => {
               {store.isLogedIn ? (
                 <div>
                   <div className="col rounded-circle">
-                    <Link to={"/profile"}>
+                    <Link to={"/profileUser"}>
                       <img
                         className="col rounded-circle"
                         src={`${process.env.BACKEND_URL}/${store.user_type}/download/${store.user.file}`}

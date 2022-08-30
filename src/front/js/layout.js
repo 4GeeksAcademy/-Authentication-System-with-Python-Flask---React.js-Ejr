@@ -13,6 +13,7 @@ import { RegistroPerro } from "./pages/registroPerro";
 
 import ChatPage from "./pages/chatPage";
 import Profile from "./pages/Profile";
+import ProfileUser from "./pages/profileUser";
 import ErrorPage from "./pages/ErrorPage";
 
 import Contact from "./pages/contact";
@@ -20,6 +21,7 @@ import Questions from "./pages/questions";
 import Terms from "./pages/terms";
 import injectContext from "./store/appContext";
 import AddDog from "./component/addDog";
+import ViewWalkers from "./component/ViewWalkers";
 
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
@@ -49,11 +51,12 @@ const Layout = () => {
             <Route path="/registroperro" element={<RegistroPerro />} />
             <Route path="/terminosycondiciones" element={<Terms />} />
             <Route path="/adddog" element={<AddDog />} />
-
             <Route path="/chat" element={<ChatPage />} />
-
             <Route path="/profile" element={<Profile />} />
             <Route path="/userinfo" element={<UserInfo />} />
+            <Route path="/profileUser" element={<ProfileUser />} />
+            <Route path="/caminadores" element={<ViewWalkers />} />
+
 
             <Route path="*" element={<ErrorPage />} />
           </Routes>

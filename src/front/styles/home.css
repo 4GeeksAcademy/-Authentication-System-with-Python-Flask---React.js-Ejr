@@ -31,3 +31,9 @@ body {
   display: flex;
   justify-content: right;
 }
+.card-text {
+  color: black;
+}
+.card-img-top {
+  height: 300px;
+}
