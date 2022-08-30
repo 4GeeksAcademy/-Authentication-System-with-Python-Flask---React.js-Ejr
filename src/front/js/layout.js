@@ -25,6 +25,7 @@ import ViewWalkers from "./component/ViewWalkers";
 
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
+import UserInfo from "./component/userInfo";
 
 //create your first component
 const Layout = () => {
@@ -52,8 +53,10 @@ const Layout = () => {
             <Route path="/adddog" element={<AddDog />} />
             <Route path="/chat" element={<ChatPage />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/userinfo" element={<UserInfo />} />
             <Route path="/profileUser" element={<ProfileUser />} />
             <Route path="/caminadores" element={<ViewWalkers />} />
+
 
             <Route path="*" element={<ErrorPage />} />
           </Routes>

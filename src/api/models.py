@@ -10,6 +10,7 @@ class Walker(db.Model):
     username = db.Column(db.String(120), unique=True, nullable=False)
     first_name = db.Column(db.String(200), unique=False, nullable=False)
     last_name = db.Column(db.String(200), unique=False, nullable=False)
+    description = db.Column(db.String(400), unique=False, nullable=True)
     email = db.Column(db.String(200), unique=True, nullable=False)
     password = db.Column(db.String(200), unique=False, nullable=False)
     verify_password = db.Column(db.String(200), unique=False, nullable=False)
@@ -27,6 +28,7 @@ class Walker(db.Model):
             "first_name": self.first_name,
             "last_name": self.last_name,
             "email": self.email,
+            "description": self.description
         }
 
 class Owner(db.Model):
@@ -36,6 +38,7 @@ class Owner(db.Model):
     username = db.Column(db.String(120), unique=True, nullable=False)
     first_name = db.Column(db.String(200), unique=False, nullable=False)
     last_name = db.Column(db.String(200), unique=False, nullable=False)
+    description = db.Column(db.String(400), unique=False, nullable=True)
     email = db.Column(db.String(200), unique=True, nullable=False)
     password = db.Column(db.String(200), unique=False, nullable=False)
     verify_password = db.Column(db.String(200), unique=False, nullable=False)
@@ -52,6 +55,7 @@ class Owner(db.Model):
             'file': self.file,
             "first_name": self.first_name,
             "last_name": self.last_name,
+            "description": self.description,
             "email": self.email,
         }
 
@@ -61,6 +65,7 @@ class Dog(db.Model):
     name = db.Column(db.String(200), unique=False, nullable=False)
     breed = db.Column(db.String(200), unique=False, nullable=False)
     age = db.Column(db.Integer, unique=False, nullable=False)
+    description = db.Column(db.String(400), unique=False, nullable=True)
     file = db.Column(db.Text, unique=True, nullable=False)
     owner_id = db.Column(db.Integer, db.ForeignKey('owner.id', ondelete='CASCADE'))
     Owner = db.relationship('Owner', primaryjoin=owner_id == Owner.id)
@@ -76,4 +81,5 @@ class Dog(db.Model):
             "age": self.age,
             'owner_id': self.owner_id,
             'file': self.file,
+            "description": self.description,
         }

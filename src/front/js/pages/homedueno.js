@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import CarouselOwner from "../component/carouselOwner";
 import Shape from "../component/shape";
 import "../../styles/innerhomes.css";
-import mapImage from "../../img/imagen_mapa.jpg";
 import { Context } from "../store/appContext";
 import Temperatura from "../component/temperatura";
 import MapApi from "../component/mapApi";

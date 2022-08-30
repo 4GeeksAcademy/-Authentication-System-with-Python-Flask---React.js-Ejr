@@ -107,7 +107,7 @@ def create_walker():
     if 'password' not in body:
         raise APIException('Campo requerido', status_code=400)
     if body['verify_password'] != body['password']:
-        raise APIException('Las contrasñas no coinciden', status_code=400)
+        raise APIException('Las contraseñas no coinciden', status_code=400)
 #    if len(body['password']) < 6:
 #        raise APIException('El password tiene que tener al menos 6 caracteres', status_code=400)
     if 'username' not in body:
@@ -176,7 +176,7 @@ def create_owner():
     if 'password' not in body:
         raise APIException('Contraseña requerida', status_code=400)
     if body['verify_password'] != body['password']:
-        raise APIException('Las contrasñas no coinciden', status_code=400)
+        raise APIException('Las contraseñas no coinciden', status_code=400)
     if 'username' not in body:
         raise APIException('Nombre de usuario requerido', status_code=400)
     if 'file' not in request.files:
