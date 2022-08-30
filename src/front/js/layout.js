@@ -13,6 +13,7 @@ import { RegistroPerro } from "./pages/registroPerro";
 
 import ChatPage from "./pages/chatPage";
 import Profile from "./pages/Profile";
+import ProfileUser from "./pages/profileUser";
 import ErrorPage from "./pages/ErrorPage";
 
 import Contact from "./pages/contact";
@@ -51,6 +52,7 @@ const Layout = () => {
             <Route path="/adddog" element={<AddDog />} />
             <Route path="/chat" element={<ChatPage />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/profileUser" element={<ProfileUser />} />
             <Route path="/caminadores" element={<ViewWalkers />} />
 
             <Route path="*" element={<ErrorPage />} />

@@ -1,18 +1,13 @@
 import React, { useContext } from "react";
 import { Context } from "../store/appContext";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "../../styles/home.css";
 
 const ViewWalkers = () => {
   const { store, actions } = useContext(Context);
 
-  let navigate = useNavigate();
   const profile = "/profile";
   const walkerUrl = process.env.BACKEND_URL + "/api/walkers/";
-
-  const handleRoute = () => {
-    navigate(profile);
-  };
 
   return (
     <div className="container">
@@ -39,15 +34,14 @@ const ViewWalkers = () => {
                   <i className="far fa-star"></i>
                   <strong className="m-2">12</strong>
                 </p>
-
-                <button
-                  className="btn btn-primary"
-                  onClick={() => (
-                    actions.getInfo(walkerUrl, walker.id), navigate(profile)
-                  )}
-                >
-                  Ver perfil
-                </button>
+                <Link to={profile}>
+                  <button
+                    className="btn btn-primary"
+                    onClick={() => actions.getInfoProfile(walkerUrl, walker.id)}
+                  >
+                    Ver perfil
+                  </button>
+                </Link>
               </div>
             </div>
           );

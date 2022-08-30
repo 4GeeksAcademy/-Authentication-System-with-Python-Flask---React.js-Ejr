@@ -11,7 +11,7 @@ const imgStlye = {
   height: "auto",
 };
 
-const Profile = () => {
+const ProfileUser = () => {
   const { store, actions } = useContext(Context);
 
   return (
@@ -21,12 +21,12 @@ const Profile = () => {
           <div className="col-1">
             <img
               className="rounded-circle"
-              src={`${process.env.BACKEND_URL}/walker/download/${store.walkerProfile.file}`}
+              src={`${process.env.BACKEND_URL}/${store.user_type}/download/${store.user.file}`}
               style={imgStlye}
             />
           </div>
           <div className="col-lg-7 mt-3">
-            <h2 className="">{store.walkerProfile.first_name}</h2>
+            <h2 className="">{store.user.first_name}</h2>
             <h5 className="">
               Contrary to popular belief, Lorem Ipsum is not simply random text.
               It has roots in a piece of classical Latin literature from 45 BC,
@@ -35,12 +35,28 @@ const Profile = () => {
             </h5>
             <h5 className="">Ubicacion</h5>
           </div>
-          <div className="col-lg-4 mt-3">
-            <h2 className="col">Calendario</h2>
-            <CalendarComp />
-          </div>
+          {store.user_type == "walker" ? (
+            <div className="col-lg-4 mt-3">
+              <h2 className="col">Calendario</h2>
+              <CalendarComp />
+            </div>
+          ) : (
+            ""
+          )}
         </div>
-
+        {store.user_type == "owner" ? (
+          <div>
+            <h3>Fotos</h3>
+            <div className="row ml-2 mr-2">
+              <Imgee />
+              <Imgee />
+              <Imgee />
+              <Imgee />
+            </div>
+          </div>
+        ) : (
+          ""
+        )}
         <h3 className="mt-4">Recomendaciones</h3>
         <div className="row">
           <Recomnendations />
@@ -58,4 +74,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default ProfileUser;
