@@ -26,13 +26,13 @@ export const Signup = (props) => {
     try {
       const resp = await fetch(process.env.BACKEND_URL + "/api/signup", opts);
       if (resp !== 200) {
-        const error = new Error("Error signin up");
+        throw new Error("Error signin up");
         return false;
       }
       const data = await resp.json();
       return true;
     } catch (error) {
-      console.log(error);
+      console.error(`${error.name} : ${error.message}`);
     }
   };
   return (

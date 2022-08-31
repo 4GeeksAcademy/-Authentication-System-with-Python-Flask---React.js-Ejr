@@ -2,6 +2,7 @@ const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
       token: null,
+      userInfo: {},
     },
     actions: {
       // Use getActions to call a function within a fuction
@@ -9,16 +10,35 @@ const getState = ({ getStore, getActions, setStore }) => {
         getActions().changeColor(0, "green");
       },
 
-      getMessage: async () => {
+      getMessages: async () => {
+        const opts = {
+          method: "GET",
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+        };
         try {
           // fetching data from the backend
-          const resp = await fetch(process.env.BACKEND_URL + "/api/hello");
+          const resp = await fetch(
+            process.env.BACKEND_URL + "/api/getmessages",
+            opts
+          );
+          if (resp.status !== 200) {
+            throw new Error("Something went wrong");
+          }
           const data = await resp.json();
-          setStore({ message: data.message });
-          // don't forget to return something, that is how the async resolves
-          return data;
-        } catch (error) {
-          console.log("Error loading message from backend", error);
+          const result = [...data];
+          if (result.length > 9) {
+            for (let i = 0; i < result.length; i += 10) {
+              const page = arr.slice(i, i + 10);
+              result.push(page);
+            }
+          }
+          setStore({ messages: result });
+          localStorage.setItem("messages", JSON.stringify(data));
+          return true;
+        } catch (e) {
+          console.log(`${e.name}: ${e.message}`);
         }
       },
       login: async (username, password) => {
@@ -43,7 +63,12 @@ const getState = ({ getStore, getActions, setStore }) => {
           }
           const data = await resp.json();
           localStorage.setItem("token", data.access_token);
-          setStore({ token: data.access_token });
+          localStorage.setItem("username", data.user.username);
+          localStorage.setItem("email", data.user.email);
+          localStorage.setItem("full_name", data.user.full_name);
+          localStorage.setItem("id", data.user.id);
+          setStore({ token: data.access_token, userInfo: data.user });
+          console.log(data.user);
           return true;
         } catch (error) {
           console.log(error);
@@ -56,7 +81,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         console.log("getting token from local storage");
       },
       logout: () => {
-        localStorage.removeItem("token");
+        localStorage.clear();
         setStore({ token: null });
         console.log("logging out");
       },

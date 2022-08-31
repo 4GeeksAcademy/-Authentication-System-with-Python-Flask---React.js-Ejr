@@ -1,22 +1,26 @@
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { Context } from "../store/appContext";
 import { Logout } from "./logout";
 export const Navbar = () => {
   const { store, actions } = useContext(Context);
+
   return (
-    <nav className="navbar navbar-light bg-light">
+    <nav className="navbar navbar-dark bg-dark">
       <div className="container">
         <Link to="/">
-          <span className="navbar-brand mb-0 h1">React Boilerplate</span>
+          <span className="navbar-brand mb-0 h1">Luxury Estate</span>
         </Link>
 
         {store.token ? (
-          <div className="ml-auto">
+          <div className="d-flex align-items-center">
+            <Link to={`/user/${store.userInfo.id}`}>
+              <i className="fa-solid fa-user me-3 fs-2 "></i>
+            </Link>
             <Logout />
           </div>
         ) : (
-          <div className="ml-auto">
+          <div className="ms-auto">
             <Link to="/login">
               <a href="#" className="btn btn-success">
                 Login
