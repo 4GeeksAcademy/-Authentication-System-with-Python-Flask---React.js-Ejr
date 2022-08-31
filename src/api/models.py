@@ -17,6 +17,8 @@ class Empresa(db.Model):
     email = db.Column(db.String(80), unique=True, nullable=False)
     direccion = db.Column(db.String(80), unique=True, nullable=False)
     password = db.Column(db.String(80), unique=False, nullable=False)
+    usuarios = db.relationship('Usuario')
+
 
     def serialize(self):
         return {
@@ -42,6 +44,7 @@ class Empresa(db.Model):
         db.session.commit()
 
 class Usuario(db.Model):
+    __tablename__ = 'usuarios'
     id = db.Column(db.Integer, primary_key=True)
     nombre = db.Column(db.String(80), unique=False, nullable=False)
     apellido = db.Column(db.String(80), unique=False, nullable=False)
@@ -83,6 +86,7 @@ class Casino(db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False)
     direccion = db.Column(db.String(80), unique=True, nullable=False)
     password = db.Column(db.String(80), unique=False, nullable=False)
+    usuarios = db.relationship('Usuario')
   
 
     def serialize(self):
