@@ -9,8 +9,8 @@ class User(db.Model):
     password = db.Column(db.String(80), unique=False, nullable=False)
     full_name = db.Column(db.String(80), unique=False, default=None, nullable=True)
     email = db.Column(db.String(120), unique=True, nullable=False)
-    inmuebles = db.relationship('Inmueble', backref='Propietario', cascade="all, delete")
-    messages = db.relationship('Message', backref='Propietario', cascade="all, delete")
+    inmuebles = db.relationship('Inmueble', backref='Propietario') #, lazy=True
+    # messages = db.relationship('Message', backref='Propietario') #, lazy=True
 
     def __repr__(self):
         return f'<Propietario {self.username}>'
@@ -31,6 +31,8 @@ class Inmueble(db.Model):
     provincia = db.Column(db.String(80), unique=False, nullable=False)
     municipio = db.Column(db.String(80), unique=False, nullable=False)
     direccion = db.Column(db.String(80), unique=False, nullable=False)
+    latitud = db.Column(db.String(80), unique=False, nullable=False)
+    longitud = db.Column(db.String(80), unique=False, nullable=False)
     precio = db.Column(db.Integer, unique=False, nullable=False)
     tipo_vivienda = db.Column(db.String(80), unique=False, nullable=False)
     habitaciones = db.Column(db.Integer, unique=False, nullable=False)
@@ -40,9 +42,8 @@ class Inmueble(db.Model):
     terraza = db.Column(db.Boolean, unique=False, nullable=False)
     garage = db.Column(db.Boolean, unique=False, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    # inmueble = db.relationship('User', backref='Inmueble' ) #, lazy=True
-    imagenes = db.relationship('Imagen', backref='Inmueble', cascade="all, delete") #, lazy=True
-    messages = db.relationship('Message', backref='Inmueble', cascade="all, delete") #, lazy=True
+    imagenes = db.relationship('Imagen', backref='Inmueble') #, lazy=True
+    messages = db.relationship('Message', backref='Inmueble') #, lazy=True
 
     def __repr__(self):
         return f'<Inmueble {self.direccion}>'
@@ -55,6 +56,8 @@ class Inmueble(db.Model):
             "provincia": self.provincia,
             "municipio": self.municipio,
             "direccion": self.direccion,
+            "latitud": self.latitud,
+            "longitud": self.longitud,
             "precio": self.precio,
             "tipo_vivienda": self.tipo_vivienda,
             "habitaciones": self.habitaciones,
@@ -88,7 +91,7 @@ class Message(db.Model):
     sender_phone = db.Column(db.Integer, unique=False, nullable=False)
     body = db.Column(db.String(300), unique=False, nullable=False)
     recipient_id = db.Column(db.Integer, db.ForeignKey('user.id')) 
-    # recipient = db.relationship('User', backref='received_messages') #, cascade="all, delete"
+    recipient = db.relationship('User', backref='received_messages')
     inmueble_id = db.Column(db.Integer, db.ForeignKey('inmueble.id')) 
 
     def __repr__(self):

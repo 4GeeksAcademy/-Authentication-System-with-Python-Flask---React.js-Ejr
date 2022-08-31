@@ -3,14 +3,14 @@ import { Context } from "../store/appContext";
 import "../../styles/home.css";
 import casa from "../../img/casa-lujo-playa_98.webp";
 import { Link, Navigate, useNavigate } from "react-router-dom";
-// import { useRoutes } from "react-router-dom";
+import swal from "sweetalert";
 
 export const Home = () => {
   const { store, actions } = useContext(Context);
   const navigate = useNavigate();
 
   useEffect(() => {
-    actions.backhome;
+    actions.backHome;
   }, []);
 
   return (
@@ -83,120 +83,92 @@ export const Home = () => {
                 ))}
               </select>
             </div>
+
             {/* rango de precio */}
             <div className="selector mx-3">
-              <div className="pb-2 text-center">
+              <div className="pb-2">
                 <span className="">Rango de Precio</span>
               </div>
-              <div className="d-flex">
-                <select
-                  onChange={actions.updatePreciomin}
-                  className="form-select me-1 mb-3"
-                  aria-label="Default select example"
-                  value={store.preciomin}
-                >
-                  <option className="">Mín</option>
-                  <option className="">1000</option>
-                  <option className="">2000</option>
-                  <option className="">3000</option>
-                  <option className="">5000</option>
-                </select>
-                <select
-                  onChange={actions.updatePreciomax}
-                  className="form-select ms-1 mb-3"
-                  aria-label="Default select example"
-                  value={store.preciomax}
-                >
-                  <option className="">Máx</option>
-                  {/* <option className="">Sin límite</option> */}
-                  {store.preciomin >= 1000 ? (
-                    ""
-                  ) : (
+              {store.operacion == "todas" || store.operacion == "alquiler" ? (
+                <div className="d-flex">
+                  <select
+                    onChange={actions.updatePreciomin}
+                    className="form-select me-1 mb-3"
+                    aria-label="Default select example"
+                    value={store.preciomin == 0 ? "Mín" : store.preciomin}
+                  >
+                    <option className="">Mín</option>
                     <option className="">1000</option>
-                  )}
-                  {store.preciomin >= 2000 ? (
-                    ""
-                  ) : (
                     <option className="">2000</option>
-                  )}
-                  {store.preciomin >= 3000 ? (
-                    ""
-                  ) : (
                     <option className="">3000</option>
-                  )}
-                  {store.preciomin >= 5000 ? (
-                    ""
-                  ) : (
+                    <option className="">4000</option>
                     <option className="">5000</option>
-                  )}
-                </select>
-              </div>
+                  </select>
+                  <select
+                    onChange={actions.updatePreciomax}
+                    className="form-select ms-1 mb-3"
+                    aria-label="Default select example"
+                    value={
+                      store.preciomax == 999999999 ? "Máx" : store.preciomax
+                    }
+                  >
+                    <option className="">Máx</option>
+                    <option className="">1000</option>
+                    <option className="">2000</option>
+                    <option className="">3000</option>
+                    <option className="">4000</option>
+                    <option className="">5000</option>
+                  </select>
+                </div>
+              ) : (
+                <div className="d-flex">
+                  <select
+                    onChange={actions.updatePreciomin}
+                    className="form-select me-1 mb-3"
+                    aria-label="Default select example"
+                    value={store.preciomin == 0 ? "Mín" : store.preciomin}
+                  >
+                    <option className="">Mín</option>
+                    <option className="">100000</option>
+                    <option className="">200000</option>
+                    <option className="">500000</option>
+                    <option className="">750000</option>
+                    <option className="">1000000</option>
+                  </select>
+                  <select
+                    onChange={actions.updatePreciomax}
+                    className="form-select ms-1 mb-3"
+                    aria-label="Default select example"
+                    value={
+                      store.preciomax == 999999999 ? "Máx" : store.preciomax
+                    }
+                  >
+                    <option className="">Máx</option>
+                    <option className="">100000</option>
+                    <option className="">200000</option>
+                    <option className="">500000</option>
+                    <option className="">750000</option>
+                    <option className="">1000000</option>
+                  </select>
+                </div>
+              )}
             </div>
             {/*--------------------------------------------- FIN DE LOS FILTROS SELECT ----------------------------------------------*/}
 
             {/*--------------------------------------------- BOTON DE PASE AL DASHBOARD----------------------------------------------*/}
             <div className="row align-items-end text-center">
               <Link to={store.operacion != "todas" ? "/dashboard" : ""}>
-                {/* <!-- Button trigger modal --> */}
                 <button
-                  // onClick={() => {
-                  //   if (store.operacion != "todas") {
-                  //     actions.fillLocalStorage;
-                  //     // Navigate("/dashboard");
-                  //   }
-                  // }}
+                  onClick={() =>
+                    store.operacion != "todas"
+                      ? ""
+                      : swal("Debe seleccionar al menos la operación")
+                  }
                   type="button"
                   className="btn btn-primary mb-3"
-                  data-bs-toggle="modal"
-                  data-bs-target="#exampleModal"
                 >
                   Ver propiedades
                 </button>
-                {/* <!-- Modal --> */}
-                {/*-------------------------------------ALERTA DEL BOTON DE PASE AL DASHBOARD-----------------------------------------*/}
-
-                {store.operacion != "todas" ? (
-                  ""
-                ) : (
-                  <div
-                    className="modal fade"
-                    id="exampleModal"
-                    tabIndex="-1"
-                    aria-labelledby="exampleModalLabel"
-                    aria-hidden="true"
-                  >
-                    <div className="modal-dialog">
-                      <div className="modal-content">
-                        <div className="modal-header">
-                          <h5
-                            className="modal-title text-secondary"
-                            id="exampleModalLabel"
-                          >
-                            Datos incompletos
-                          </h5>
-                          <button
-                            type="button"
-                            className="btn-close"
-                            data-bs-dismiss="modal"
-                            aria-label="Close"
-                          ></button>
-                        </div>
-                        <div className="modal-body text-secondary">
-                          debes seleccionar al menos el tipo de operación
-                        </div>
-                        <div className="modal-footer">
-                          <button
-                            type="button"
-                            className="btn btn-secondary"
-                            data-bs-dismiss="modal"
-                          >
-                            Close
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                )}
               </Link>
             </div>
           </div>
