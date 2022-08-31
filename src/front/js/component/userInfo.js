@@ -40,7 +40,7 @@ const UserInfo = () => {
   };
 
   const handleDescription = (descr) => {
-    setUsername(description);
+    setDescription(descr);
     store.user.description = description;
   };
 
@@ -50,6 +50,7 @@ const UserInfo = () => {
       first_name: first_name,
       last_name: last_name,
       username: username,
+      description: description,
     };
 
     fetch(`${apiUser()}/${store.user.id}`, {

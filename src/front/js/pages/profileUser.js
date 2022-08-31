@@ -11,6 +11,10 @@ const imgStlye = {
   height: "100px",
 };
 
+const usernameStyle = {
+  fontStyle: "italic",
+};
+
 const ProfileUser = () => {
   const { store, actions } = useContext(Context);
 
@@ -30,6 +34,9 @@ const ProfileUser = () => {
               {store.user.first_name} {store.user.last_name}
             </h2>
             <h5 className="">{store.user.description}</h5>
+            <h6 className="" style={usernameStyle}>
+              {store.user.username}
+            </h6>
             <h5 className="">Ubicacion</h5>
           </div>
           {store.user_type == "walker" ? (
