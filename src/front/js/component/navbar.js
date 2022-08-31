@@ -9,9 +9,10 @@ export const Navbar = () => {
   const { store, actions } = useContext(Context);
   const home = "/";
   const login_page = "/login";
-  const chatRoute = "/chat";
   const homeO = "/homedueno";
   const homeW = "/homecaminador";
+  const chat = "/chat";
+  const profile = "/userinfo";
   let navigate = useNavigate();
 
   const logout = () => {
@@ -21,12 +22,14 @@ export const Navbar = () => {
     actions.handleLogOut();
     navigate(home);
   };
-
   const login = () => {
     navigate(login_page);
   };
-  const chat = () => {
-    navigate(chatRoute);
+  const msg = () => {
+    navigate(chat);
+  };
+  const info = () => {
+    navigate(profile);
   };
 
   const pfpstyle = {
@@ -38,15 +41,22 @@ export const Navbar = () => {
     <div className="container">
       <nav className="navbar navbar-expand-xlg navbar-light">
         <div className="container">
-          <Link to={"/"} id="logoText">
-            <img id="logo" src={logo} />
-            ogger
-          </Link>
-          <Link to={store.user_type == "owner" ? homeO : homeW}>
-            <button type="button" class="btn btn-light">
-              home
-            </button>
-          </Link>
+          <div className="w-50">
+            <Link to={"/"} id="logoText">
+              <img id="logo" src={logo} />
+              ogger
+            </Link>
+            <Link to={store.user_type == "owner" ? homeO : homeW}>
+              <button
+                type="button"
+                className={
+                  store.isLogedIn ? "btn btn-outline-secondary ms-3" : "d-none"
+                }
+              >
+                Inicio
+              </button>
+            </Link>
+          </div>
           <button
             className="navbar-toggler"
             type="button"
@@ -63,11 +73,15 @@ export const Navbar = () => {
             <ul className="navbar-nav ms-auto mb-lg-0 align-items-end">
               <li className="nav-item">
                 <button
-                  onClick={store.isLogedIn === false ? login : logout}
+                  onClick={login}
                   id="btn1"
-                  className="btn rounded-pill m-1 btn-lg p-5s"
+                  className={
+                    store.isLogedIn == true
+                      ? "d-none"
+                      : "btn rounded-pill m-1 btn-lg p-5s"
+                  }
                 >
-                  {store.log}
+                  Iniciar sesión
                 </button>
               </li>
               {store.isLogedIn ? (
@@ -97,22 +111,31 @@ export const Navbar = () => {
                       aria-labelledby="navbarDropdown"
                     >
                       <li>
-                        <Link to={"/userinfo"}>
-                          <a className="dropdown-item" href="#">
-                            Edita tu perfil
-                          </a>
-                        </Link>
+                        <button
+                          className="dropdown-item text-muted"
+                          onClick={info}
+                        >
+                          Edita tu perfil
+                        </button>
                       </li>
+                      <li>
+                        <button
+                          className="dropdown-item text-muted"
+                          onClick={msg}
+                        >
+                          Mensajes
+                        </button>
+                      </li>
+
                       <li>
                         <hr className="dropdown-divider" />
                       </li>
                       <li>
                         <button
-                          type="button"
-                          className="btn btn-primary ms-3"
-                          onClick={chat}
+                          className="dropdown-item text-muted"
+                          onClick={logout}
                         >
-                          mensajes <span className="badge bg-secondary">4</span>
+                          cerrar sesión
                         </button>
                       </li>
                     </ul>

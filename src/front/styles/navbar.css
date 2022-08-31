@@ -16,3 +16,7 @@
   background-color: #586f6b;
   color: white;
 }
+
+.dropdown-item {
+  font-weight: bold;
+}
