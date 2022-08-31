@@ -144,7 +144,7 @@ def create_walker():
     pw_hash = bcrypt.generate_password_hash(body['password']).decode('utf-8')
 
 
-    new_walker = Walker(first_name = body['first_name'], last_name = body['last_name'], username = body['username'], email = body['email'], password = pw_hash, verify_password = body['verify_password'], is_active = True, file = filename)
+    new_walker = Walker(first_name = body['first_name'], last_name = body['last_name'], username = body['username'], email = body['email'], password = pw_hash, verify_password = body['verify_password'], description=body['description'], is_active = True, file = filename)
     db.session.add(new_walker)
     db.session.commit()
 
@@ -210,7 +210,7 @@ def create_owner():
 
     pw_hash = bcrypt.generate_password_hash(body['password']).decode('utf-8')
 
-    new_owner = Owner(first_name = body['first_name'], last_name = body['last_name'], email = body['email'], username = body['username'], password = pw_hash, verify_password = body['verify_password'], is_active = True, file = filename)
+    new_owner = Owner(first_name = body['first_name'], last_name = body['last_name'], email = body['email'], username = body['username'], description=body['description'], password = pw_hash, verify_password = body['verify_password'], is_active = True, file = filename)
     db.session.add(new_owner)
     db.session.commit()
 

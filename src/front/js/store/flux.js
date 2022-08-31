@@ -29,6 +29,10 @@ const getState = ({ getStore, getActions, setStore }) => {
           .catch();
       },
 
+      putUpdateUser: () => {
+        setStore({ user: data });
+      },
+
       getWalkers: () => {
         fetch(process.env.BACKEND_URL + "/api/walkers")
           .then((res) => res.json())

@@ -57,13 +57,15 @@ def update_walker(walker_id):
         walker.last_name = body["last_name"]
     if "username" in body:
         walker.username = body["username"]
+    if "description" in body:
+        walker.description = body["description"]
 
     db.session.commit()
 
     response_body ={
         "message": "ok",
         "updateMsg": "User Updated.",
-        "upadateowner": updatewalker.serialize()
+        "updatewalker": updatewalker.serialize()
     }
     return jsonify(response_body), 200
 
@@ -115,13 +117,15 @@ def put_owner_id(owner_id):
         updateowner.last_name = body["last_name"]
     if "username" in body:
         updateowner.username = body["username"]
+    if "description" in body:
+        updateowner.description = body["description"]
 
     db.session.commit()
 
     response_body = {
         "message": "ok",
         "updateMsg": "User Updated.",
-        "upadateowner": updateowner.serialize()
+        "updateowner": updateowner.serialize()
     }
 
     return jsonify(response_body), 200
@@ -178,6 +182,8 @@ def put_dog_id(dog_id):
         updatedog.breed = body['breed']
     if 'age' in body:
         updatedog.age = body['age']
+    if "description" in body:
+        walker.description = body["description"]
 
     db.session.commit()
 
