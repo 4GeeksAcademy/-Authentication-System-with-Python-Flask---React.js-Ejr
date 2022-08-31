@@ -202,3 +202,7 @@ abbr[title] {
 .custom-shape-divider-bottom-2 .shape-fill {
   fill: #455855;
 }
+
+#imgprofile{
+  height: 200px;
+}
