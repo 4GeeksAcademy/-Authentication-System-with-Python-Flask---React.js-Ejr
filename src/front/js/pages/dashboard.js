@@ -14,7 +14,7 @@ export const Dashboard = () => {
   }, []);
 
   return (
-    <div className="container d-flex px-0">
+    <div className="dashboard-contenedor container d-flex px-0">
       {/* lateral de filtros */}
       <Aside />
       {/* tablero de resultados */}

@@ -1,24 +1,37 @@
 import React from "react";
+import "../../styles/card.css";
 
 export const Card = (props) => {
   return (
-    <div class="card mb-3" style="max-width: 540px;">
-      <div class="row g-0">
-        <div class="col-md-4">
-          <img
-            src={props.imgurl}
-            class="img-fluid rounded-start"
+    <div className="tarjeta card rounded-0 mt-4">
+      <div className="row g-0">
+        <div
+          className="main-imagen col-md-4"
+          style={{ backgroundImage: `url(${props.foto})` }}
+        >
+          {/* <img
+            src={props.foto}
+            className="img-fluid rounded-0"
             alt="main image"
-          />
+          /> */}
         </div>
-        <div class="col-md-8">
-          <div class="card-body">
-            <h5 class="card-title">{`Piso en ${props.direccion}, ${props.numcalle}`}</h5>
-            <p class="card-text">{`${props.provincia}, ${props.comunidad}`}</p>
-            <p class="card-text">{props.descripcion}</p>
-            <p class="card-text">
-              <small class="text-muted">Actualizado hace 1 día</small>
-            </p>
+        <div className="col-md-8">
+          <div className="card-body">
+            <h5 className="card-title">{`${props.tipovivienda} en ${props.direccion}, ${props.provincia}`}</h5>
+            <h2 className="card-title">{`${props.precio} Euros`}</h2>
+            <div className="características d-flex justify-content-between">
+              <span>{`Habitaciones: ${props.habitaciones}`}</span>
+              <span>{`Baños: ${props.baños}`}</span>
+              {props.piscina ? <span>Piscina</span> : ""}
+              {props.terraza ? <span>Terraza</span> : ""}
+            </div>
+            <div>
+              <p className="card-text">{props.descripcion}</p>
+            </div>
+            <div className="características d-flex justify-content-between">
+              {/* <span>{`Teléfono: ${props.telefono}`}</span> */}
+              <span>Contactar</span>
+            </div>
           </div>
         </div>
       </div>

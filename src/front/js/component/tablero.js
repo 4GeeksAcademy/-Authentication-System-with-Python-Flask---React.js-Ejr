@@ -2,12 +2,13 @@ import React, { useContext, useEffect } from "react";
 import { Context } from "../store/appContext";
 import { Link, useNavigate } from "react-router-dom";
 import "../../styles/dashboard.css";
+import { Feed } from "./feed";
 
 export const Tablero = () => {
   const { store, actions } = useContext(Context);
 
   return (
-    <div className="col-8 col-lg-9">
+    <div className="container col-8 col-lg-9">
       <nav className="d-flex justify-content-between">
         {/* Botones Alquiler y Compra */}
         {store.operacion == "alquiler" || store.operacion == "" ? (
@@ -84,11 +85,8 @@ export const Tablero = () => {
       </nav>
       {/* Renderizacion de contenido de páginas */}
       <div className="tab-content" id="nav-tabContent">
-        {store.vista == "listado" &&
-        (store.operacion == "alquiler" || store.operacion == "") ? (
-          <div className="p-5 h1">Alquiler en Listado</div>
-        ) : store.vista == "listado" && store.operacion == "compra" ? (
-          <div className="p-5 h1">Compra en Listado</div>
+        {store.vista == "listado" ? (
+          <Feed className="p-5 h1" />
         ) : store.vista == "mapa" && store.operacion == "compra" ? (
           <div className="p-5 h1">Compra en Mapa</div>
         ) : store.vista == "mapa" && store.operacion == "alquiler" ? (

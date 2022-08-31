@@ -63,11 +63,112 @@ const getState = ({ getStore, getActions, setStore }) => {
       /*----------------------------------  FIN DE LOS LISTADOS (CASI) ESTATICOS PARA OPCTIONS DE LOS SELECT --------------------------------*/
 
       /*---------------------------- INICIO DE LA DATA SIMULADA DE API PARA PRUEBAS ANTES DE IMPLEMENTAR FETCH ------------------------------*/
-      propertiesApi: [{}, {}, {}, {}, {}],
-      propertiesFront: [],
+
+      body_response: [
+        {
+          id: 1,
+          tipo_operacion: "alquiler",
+          comunidad: "Madrid",
+          provincia: "Madrid",
+          municipio: "Madrid",
+          direccion: "Las Moras 1",
+          precio: "800",
+          tipo_vivienda: "Piso",
+          habitaciones: "2",
+          baños: "1",
+          pet: true,
+          piscina: true,
+          terraza: false,
+          garage: false,
+          descripcion: "hermoso predio con sol todo el año",
+          imagenes: [
+            "https://media-cdn.tripadvisor.com/media/vr-splice-j/05/dc/2c/dd.jpg",
+          ],
+        },
+        {
+          id: 2,
+          tipo_operacion: "alquiler",
+          comunidad: "Madrid",
+          provincia: "Madrid",
+          municipio: "Madrid",
+          direccion: "Las Moras 2",
+          precio: "1500",
+          tipo_vivienda: "Chalet",
+          habitaciones: "1",
+          baños: "2",
+          pet: false,
+          piscina: true,
+          terraza: false,
+          garage: true,
+          descripcion: "lujoso condominio para veranear",
+          imagenes: [
+            "https://media.vrbo.com/lodging/22000000/21730000/21726900/21726891/796ac4ff.f6.jpg",
+          ],
+        },
+        {
+          id: 3,
+          tipo_operacion: "alquiler",
+          comunidad: "Madrid",
+          provincia: "Madrid",
+          municipio: "Madrid",
+          direccion: "Las Moras 3",
+          precio: "3500",
+          tipo_vivienda: "Piso",
+          habitaciones: "4",
+          baños: "3",
+          pet: true,
+          piscina: false,
+          terraza: false,
+          garage: false,
+          descripcion: "relájese en este lujoso piso en las montañas",
+          imagenes: [
+            "https://media-cdn.tripadvisor.com/media/photo-s/07/ef/9e/b8/casa-bonita-hotel-boutique.jpg",
+          ],
+        },
+        {
+          id: 4,
+          tipo_operacion: "compra",
+          comunidad: "Madrid",
+          provincia: "Madrid",
+          municipio: "Madrid",
+          direccion: "Las Moras 4",
+          precio: "150000",
+          tipo_vivienda: "Chalet",
+          habitaciones: "3",
+          baños: "2",
+          pet: false,
+          piscina: true,
+          terraza: true,
+          garage: true,
+          descripcion: "disfrute de una escapada de lujo",
+          imagenes: [
+            "https://ak-d.tripcdn.com/images/22071e000001gamro1BDC_Z_1100_824_R5_Q70_D.jpg",
+          ],
+        },
+        {
+          id: 5,
+          tipo_operacion: "compra",
+          comunidad: "Madrid",
+          provincia: "Madrid",
+          municipio: "Madrid",
+          direccion: "Las Moras 5",
+          precio: "690000",
+          tipo_vivienda: "Piso",
+          habitaciones: "1",
+          baños: "4",
+          pet: true,
+          piscina: true,
+          terraza: true,
+          garage: true,
+          descripcion: "cozy apartment with ocean view",
+          imagenes: [
+            "https://www.isoladiminorca.com/wp-content/uploads/2021/06/0.-Casa-Bonita-Menorca-784x400.jpg",
+          ],
+        },
+      ],
       /*---------------------------- FIN DE LA DATA SIMULADA DE API PARA PRUEBAS ANTES DE IMPLEMENTAR FETCH ---------------------------*/
 
-      /*--------------------------------------- INICIO DE LAS VARIABLES DEL STORE (HOOKS)----------------------------------------------*/
+      /*--------------------------------------- INICIO DE LAS VARIABLES DEL STORE ------------------------------------------------------*/
       operacion: "todas", // este dato va si o si en el fetch get
       comunidad: "todas",
       provincia: "todas",
@@ -81,9 +182,8 @@ const getState = ({ getStore, getActions, setStore }) => {
       caracteristica_garage: false,
       caracteristica_piscina: false,
       caracteristica_terraza: false,
-      habitaciones: 1,
-      baños: 1,
-      imagenUrl: [],
+      habitaciones: "1",
+      baños: "1",
       /*------------------------------------------ FIN DE LAS VARIABLES DEL STORE -----------------------------------------------------*/
     },
     //
@@ -322,23 +422,72 @@ const getState = ({ getStore, getActions, setStore }) => {
         // funcion especial para los pills del dashboard
         const store = getStore();
         setStore({ operacion: "alquiler" });
+        setStore({ preciomin: 0 });
+        setStore({ preciomax: 999999999 });
+        getActions().fillLocalStorage();
       },
       updateOperacionCompra: () => {
         // funcion especial para los pills del dashboard
         const store = getStore();
         setStore({ operacion: "compra" });
+        setStore({ preciomin: 0 });
+        setStore({ preciomax: 999999999 });
+        getActions().fillLocalStorage();
       },
       updateVistaListado: () => {
         // funcion especial para los pills del dashboard
         const store = getStore();
         setStore({ vista: "listado" });
+        getActions().fillLocalStorage();
       },
       updateVistaMapa: () => {
         // funcion especial para los pills del dashboard
         const store = getStore();
         setStore({ vista: "mapa" });
+        getActions().fillLocalStorage();
       },
       /*------------------------------------ FIN DE LAS FUNCIONES DEL TABLERO DE RESULTADOS -----------------------------------------*/
+
+      /*----------------------------------------- INICIO DE LAS FUNCIONES FETCH API -------------------------------------------------*/
+
+      getProperties: async () => {
+        let opts = {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            operacion: store.operacion,
+            comunidad: store.comunidad,
+            provincia: store.provincia,
+            preciomin: store.preciomin,
+            preciomax: store.preciomax,
+            vista: store.vista,
+            vivienda_piso: store.vivienda_piso,
+            vivienda_chalet: store.vivienda_chalet,
+            vivienda_villa: store.vivienda_villa,
+            caracteristica_pet: store.caracteristica_pet,
+            caracteristica_garage: store.caracteristica_garage,
+            caracteristica_piscina: store.caracteristica_piscina,
+            caracteristica_terraza: store.caracteristica_terraza,
+            habitaciones: store.habitaciones,
+            baños: store.baños,
+          }),
+        };
+        try {
+          // fetching data from the backend
+          const resp = await fetch(
+            process.env.BACKEND_URL + "/api/properties",
+            opts
+          );
+          const data = await resp.json();
+          setStore({ body_response: data.body_response });
+          // don't forget to return something, that is how the async resolves
+          return data;
+        } catch (error) {
+          console.log("Error loading message from backend", error);
+        }
+      },
 
       // Use getActions to call a function within a fuction
       // exampleFunction: () => {

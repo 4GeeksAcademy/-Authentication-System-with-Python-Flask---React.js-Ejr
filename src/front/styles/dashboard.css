@@ -1,5 +1,5 @@
 .formulario {
-  height: fit-content;
+  height: 100%;
   width: auto;
   background: rgb(172, 255, 255);
 }
@@ -10,5 +10,8 @@
   height: fit-content;
 }
 .selector {
+  height: fit-content;
+}
+.dashboard-contenedor {
   height: fit-content;
 }

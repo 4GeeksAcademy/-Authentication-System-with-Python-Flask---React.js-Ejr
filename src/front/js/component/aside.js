@@ -7,7 +7,7 @@ export const Aside = () => {
   const { store, actions } = useContext(Context);
 
   return (
-    <div className="col-4 col-lg-3">
+    <div className="container col-4 col-lg-3 mb-2">
       <div className="formulario container rounded-3 px-0 mt-0">
         <div className="titulo container ps-4 pt-3 pb-2">
           <h3>Tus Preferencias</h3>
