@@ -63,73 +63,8 @@ const getState = ({ getStore, getActions, setStore }) => {
       /*----------------------------------  FIN DE LOS LISTADOS (CASI) ESTATICOS PARA OPCTIONS DE LOS SELECT --------------------------------*/
 
       /*---------------------------- INICIO DE LA DATA SIMULADA DE API PARA PRUEBAS ANTES DE IMPLEMENTAR FETCH ------------------------------*/
-      demoProperties: [
-        {
-          id: 1,
-          operacion: "alquiler",
-          precio: 1300,
-          comunidad: "Madrid",
-          provincia: "Madrid",
-          municipio: "Madrid",
-          direccion: "Calle las Malvas",
-          numcalle: 4,
-          latitud: null,
-          longitud: null,
-          img: "https://wtwp.com/wp-content/uploads/2015/06/placeholder-image.png",
-        },
-        {
-          id: 2,
-          operacion: "alquiler",
-          precio: 2700,
-          comunidad: "Comunidad Valenciana",
-          provincia: "Alicante",
-          municipio: "Santa Pola",
-          direccion: "Calle los geranios",
-          numcalle: 12,
-          latitud: null,
-          longitud: null,
-          img: "https://wtwp.com/wp-content/uploads/2015/06/placeholder-image.png",
-        },
-        {
-          id: 3,
-          operacion: "alquiler",
-          precio: 4500,
-          comunidad: "Cataluña",
-          provincia: "Tarragona",
-          municipio: "Esmeralda",
-          direccion: "Calle los abedules",
-          numcalle: 2,
-          latitud: null,
-          longitud: null,
-          img: "https://wtwp.com/wp-content/uploads/2015/06/placeholder-image.png",
-        },
-        {
-          id: 4,
-          operacion: "alquiler",
-          precio: 4500,
-          comunidad: "Extremadura",
-          provincia: "Badajoz",
-          municipio: "Esmeraldina",
-          direccion: "Calle los gansos",
-          numcalle: 23,
-          latitud: null,
-          longitud: null,
-          img: "https://wtwp.com/wp-content/uploads/2015/06/placeholder-image.png",
-        },
-        {
-          id: 5,
-          operacion: "alquiler",
-          precio: 900,
-          comunidad: "Extremadura",
-          provincia: "Badajoz",
-          municipio: "Las Heras",
-          direccion: "Calle los faisanes",
-          numcalle: 52,
-          latitud: null,
-          longitud: null,
-          img: "https://wtwp.com/wp-content/uploads/2015/06/placeholder-image.png",
-        },
-      ],
+      propertiesApi: [{}, {}, {}, {}, {}],
+      propertiesFront: [],
       /*---------------------------- FIN DE LA DATA SIMULADA DE API PARA PRUEBAS ANTES DE IMPLEMENTAR FETCH ---------------------------*/
 
       /*--------------------------------------- INICIO DE LAS VARIABLES DEL STORE (HOOKS)----------------------------------------------*/
@@ -148,6 +83,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       caracteristica_terraza: false,
       habitaciones: 1,
       baños: 1,
+      imagenUrl: [],
       /*------------------------------------------ FIN DE LAS VARIABLES DEL STORE -----------------------------------------------------*/
     },
     //
@@ -158,6 +94,8 @@ const getState = ({ getStore, getActions, setStore }) => {
         // funcion de input controlado de evento
         const store = getStore();
         setStore({ operacion: e.target.value });
+        setStore({ preciomin: 0 });
+        setStore({ preciomax: 999999999 });
         getActions().fillLocalStorage();
       },
       updateComunidad: (e) => {
@@ -199,9 +137,8 @@ const getState = ({ getStore, getActions, setStore }) => {
       updatePreciomax: (e) => {
         // funcion de input controlado de evento
         const store = getStore();
-
         if (e.target.value == "Máx") {
-          setStore({ preciomin: 999999999 });
+          setStore({ preciomax: 999999999 });
         } else if (e.target.value <= store.preciomin) {
           setStore({ preciomax: e.target.value });
           setStore({ preciomin: 0 });

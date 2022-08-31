@@ -25,7 +25,7 @@ export const Home = () => {
           </div>
 
           {/*--------------------------------------------- INICIO DE LOS FILTROS SELECT ----------------------------------------------*/}
-          <div className="filtros container d-xl-flex justify-content-evenly pt-3 pb-4">
+          <div className="filtros container d-xl-flex justify-content-evenly pt-3 pb-2">
             {/* tipo de operacion */}
             <div className="selector mx-3">
               <div className="pb-2 text-center">
@@ -85,8 +85,8 @@ export const Home = () => {
             </div>
 
             {/* rango de precio */}
-            <div className="selector mx-3">
-              <div className="pb-2">
+            <div className="selector mx-3 mb-3">
+              <div className="pb-2 text-center">
                 <span className="">Rango de Precio</span>
               </div>
               {store.operacion == "todas" || store.operacion == "alquiler" ? (
@@ -157,7 +157,10 @@ export const Home = () => {
 
             {/*--------------------------------------------- BOTON DE PASE AL DASHBOARD----------------------------------------------*/}
             <div className="row align-items-end text-center">
-              <Link to={store.operacion != "todas" ? "/dashboard" : ""}>
+              <Link
+                className="mb-3"
+                to={store.operacion != "todas" ? "/dashboard" : ""}
+              >
                 <button
                   onClick={() =>
                     store.operacion != "todas"
