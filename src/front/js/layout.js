@@ -22,6 +22,7 @@ import Terms from "./pages/terms";
 import injectContext from "./store/appContext";
 import AddDog from "./component/addDog";
 import ViewWalkers from "./component/ViewWalkers";
+import EditDogInfo from "./pages/editdoginfo";
 
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
@@ -56,7 +57,7 @@ const Layout = () => {
             <Route path="/userinfo" element={<UserInfo />} />
             <Route path="/profileUser" element={<ProfileUser />} />
             <Route path="/caminadores" element={<ViewWalkers />} />
-
+            <Route path="/editarperro" element={<EditDogInfo />} />
 
             <Route path="*" element={<ErrorPage />} />
           </Routes>
