@@ -5,7 +5,6 @@ const getState = ({ getStore, getActions, setStore }) => {
       walkerProfile: {},
       user_id: 0,
       dogs: [],
-      log: "Iniciar sesión",
       isLogedIn: false,
       user_type: "",
       walkers: [],
@@ -54,19 +53,11 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
 
       handleLog: () => {
-        const store = getStore();
-        if (store.log === "Iniciar sesión") {
-          setStore({ log: "Cerrar sesión" });
-          setStore({ isLogedIn: true });
-        }
+        setStore({ isLogedIn: true });
       },
 
       handleLogOut: () => {
-        const store = getStore();
-        if (store.log === "Cerrar sesión") {
-          setStore({ log: "Iniciar sesión" });
-          setStore({ isLogedIn: false });
-        }
+        setStore({ isLogedIn: false });
       },
 
       getUserType: (user_type) => {
