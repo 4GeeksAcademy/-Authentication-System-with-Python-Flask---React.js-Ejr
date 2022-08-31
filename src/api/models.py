@@ -54,6 +54,7 @@ class Usuario(db.Model):
     password = db.Column(db.String(80), unique=False, nullable=False)
     empresa_id = db.Column(db.Integer, db.ForeignKey('empresa.id'), nullable=False)
     casino_id = db.Column(db.Integer, db.ForeignKey('casino.id'), nullable=False)
+    
   
 
     def serialize(self):
@@ -116,8 +117,6 @@ class Pedidos(db.Model):
     colacion_id = db.Column(db.Integer, db.ForeignKey('colacion.id'), unique = False, nullable = False)
     usuario_id = db.Column(db.Integer, db.ForeignKey('usuario.id'), unique = False, nullable = False)
     entregado = db.Column(db.Boolean, server_default=u'false')
-    colacion = db.relationship('Colacion', backref='colacion', lazy=True)
-    usuario = db.relationship('Usuario', backref='usuario', lazy=True)
 
     def serialize(self):
         return {
@@ -193,10 +192,6 @@ class Menu(db.Model):
     ensalada_id = db.Column(db.Integer, db.ForeignKey('ensalada.id'), unique = False, nullable = False)
     postre_id = db.Column(db.Integer, db.ForeignKey('postre.id'), unique = False, nullable = False)
     bebida_id = db.Column(db.Integer, db.ForeignKey('bebida.id'), unique = False, nullable = False)
-    principal = db.relationship('Principal', backref='principal', lazy=True)
-    ensalada = db.relationship('Ensalada', backref='ensalada', lazy=True)
-    postre = db.relationship('Postre', backref='postre', lazy=True)
-    bebida = db.relationship('Bebida', backref='bebida', lazy=True)
 
     def serialize(self):
         return {
