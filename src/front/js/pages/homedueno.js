@@ -15,6 +15,7 @@ export const HomeDueno = () => {
 
   const handleRoute = () => {
     navigate(walkersView);
+    actions.getWalkers();
   };
 
   return (

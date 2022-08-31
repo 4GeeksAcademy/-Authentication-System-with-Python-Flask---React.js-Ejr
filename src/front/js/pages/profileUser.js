@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { Context } from "../store/appContext";
+import "../../styles/home.css";
 
 import CalendarComp from "../component/CalendarComp";
 import Imgee from "../component/imgee";
@@ -10,9 +11,12 @@ const imgStlye = {
   width: "100px",
   height: "100px",
 };
-
 const usernameStyle = {
   fontStyle: "italic",
+};
+const bgColor = {
+  background: "#DDD5D0",
+  border: "none",
 };
 
 const ProfileUser = () => {
@@ -21,56 +25,57 @@ const ProfileUser = () => {
   return (
     <div className="container-fluid">
       <div className="container mb-5 mt-5">
-        <div className="row">
-          <div className="col-1">
-            <img
-              className="rounded-circle"
-              src={`${process.env.BACKEND_URL}/${store.user_type}/download/${store.user.file}`}
-              style={imgStlye}
-            />
-          </div>
-          <div className="col-lg-7 mt-3">
-            <h2 className="">
-              {store.user.first_name} {store.user.last_name}
-            </h2>
-            <h5 className="">{store.user.description}</h5>
-            <h6 className="" style={usernameStyle}>
-              {store.user.username}
-            </h6>
-            <h5 className="">Ubicacion</h5>
-          </div>
-          {store.user_type == "walker" ? (
-            <div className="col-lg-4 mt-3">
-              <h2 className="col">Calendario</h2>
-              <CalendarComp />
+        <div className="card mb-3" style={bgColor}>
+          <div className="row g-0">
+            <div className="col-1">
+              <img
+                className="rounded-circle"
+                src={`${process.env.BACKEND_URL}/${store.user_type}/download/${store.user.file}`}
+                style={imgStlye}
+              />
             </div>
-          ) : (
-            ""
-          )}
+            <div className="col-lg-7 mt-3">
+              <div className="card-body">
+                <h5 className="card-title" style={usernameStyle}>
+                  {store.user.first_name + " " + store.user.last_name}
+                </h5>
+                <p className="card-text">
+                  {store.user.description == "null"
+                    ? ""
+                    : store.user.description}
+                </p>
+              </div>
+            </div>
+            {store.user_type == "walker" ? (
+              <div className="col-lg-4 mt-3">
+                <h2 className="col">Calendario</h2>
+                <CalendarComp />
+              </div>
+            ) : (
+              ""
+            )}
+          </div>
         </div>
         {store.user_type == "owner" ? (
-          <div>
-            <h3>Fotos</h3>
-            <div className="row ml-2 mr-2">
-              <Imgee />
-              <Imgee />
-              <Imgee />
-              <Imgee />
+          <div className="row">
+            <h4 className="separator text-muted">Mis mascotas</h4>
+            <div className="col-lg-4 mt-3">
+              <div className="row ml-2 mr-2">
+                <Imgee />
+                <Imgee />
+                <Imgee />
+                <Imgee />
+              </div>
             </div>
           </div>
         ) : (
-          ""
+          <div className="row">
+            <h4 className="separator text-muted">Recomendaciones</h4>
+            <Recomnendations />
+            <Recomnendations />
+            <Recomnendations />
+          </div>
         )}
-        <h3 className="mt-4">Recomendaciones</h3>
-        <div className="row">
-          <Recomnendations />
-          <Recomnendations />
-          <Recomnendations />
-        </div>
-        <div className="row">
-          <div className="col">Horarios</div>
-          <div className="col">Sobre mi</div>
-        </div>
 
         <Shape2 />
       </div>
