@@ -209,7 +209,11 @@ const UserInfo = () => {
                       <div className="row">
                         {editDesc ? (
                           <div className="row">
-                            <h4 className="col-10">{description}</h4>
+                            <h4 className="col-10">
+                              {description == "null"
+                                ? "Descripcion"
+                                : description}
+                            </h4>
                             <div
                               className="btn btn-secondary rounded-pill col-lg-2 col-sm-6"
                               onClick={() => setEditDesc(false)}
@@ -224,8 +228,16 @@ const UserInfo = () => {
                                 <input
                                   className="col-lg-6 col-sm-6"
                                   type="text"
-                                  value={description}
-                                  placeholder={store.user.description}
+                                  value={
+                                    description == "null"
+                                      ? "Descripcion"
+                                      : description
+                                  }
+                                  placeholder={
+                                    store.user.description == "null"
+                                      ? "Agrega una descripcion"
+                                      : store.user.description
+                                  }
                                   onChange={(e) =>
                                     setDescription(e.target.value)
                                   }
