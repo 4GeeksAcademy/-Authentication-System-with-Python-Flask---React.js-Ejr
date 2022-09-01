@@ -11,11 +11,12 @@ const ViewWalkers = () => {
 
   return (
     <div className="container">
-      <div className="row d-flex justify-content-between mb-3">
+      <h4 className="separator text-muted">Caminadores disponibles</h4>
+      <div className="row d-flex justify-content-sm-center">
         {store.walkers.map((walker, index) => {
           return (
             <div
-              className="card p-0 col-sm-12 col-md-6 col-lg-4 my-2"
+              className="card p-0 col-sm-12 col-md-6 col-lg-3 m-3"
               key={index}
               style={{ width: "18rem" }}
             >

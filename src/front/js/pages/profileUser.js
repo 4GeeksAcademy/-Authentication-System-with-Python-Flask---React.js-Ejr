@@ -34,7 +34,7 @@ const ProfileUser = () => {
                 style={imgStlye}
               />
             </div>
-            <div className="col-lg-7 mt-3">
+            <div className="col-lg-7 mt-2 ps-3">
               <div className="card-body">
                 <h5 className="card-title" style={usernameStyle}>
                   {store.user.first_name + " " + store.user.last_name}
@@ -57,15 +57,14 @@ const ProfileUser = () => {
           </div>
         </div>
         {store.user_type == "owner" ? (
-          <div className="row">
-            <h4 className="separator text-muted">Mis mascotas</h4>
-            <div className="col-lg-4 mt-3">
-              <div className="row ml-2 mr-2">
-                <Imgee />
-                <Imgee />
-                <Imgee />
-                <Imgee />
-              </div>
+          <div className="container">
+            <h4 className="separator text-muted">Galería</h4>
+            <div className="row justify-content-center">
+              <Imgee />
+              <Imgee />
+              <Imgee />
+              <Imgee />
+              <Imgee />
             </div>
           </div>
         ) : (
