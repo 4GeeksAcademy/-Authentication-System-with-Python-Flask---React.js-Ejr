@@ -8,6 +8,7 @@ import cloudinary.api
 import logging
 import os
 import uuid
+import re
 
 from os.path import exists
 from flask import Flask, request, jsonify, url_for, send_from_directory, render_template
@@ -96,6 +97,10 @@ def serve_any_other_file(path):
 def create_walker():
     body = request.form
 
+
+    specialCharacter = re.search("\W+", body['password'])
+    validEmail = re.search(r"^\w+(\w+\.)?@(\w+\.)?\w+\.com$", body['email'], re.IGNORECASE)
+
     if body is None:
         raise APIException('You need to specify the request body as a json object', status_code=400)
     if 'first_name' not in body:
@@ -104,16 +109,22 @@ def create_walker():
         raise APIException('Campo reqerido', status_code=400)
     if 'email' not in body:
         raise APIException('Campo requerido', status_code=400)
+    if not validEmail:
+        raise APIException('Por favor usa un correo valido', status_code=400)
+
     if 'password' not in body:
         raise APIException('Campo requerido', status_code=400)
     if body['verify_password'] != body['password']:
         raise APIException('Las contraseñas no coinciden', status_code=400)
-#    if len(body['password']) < 6:
-#        raise APIException('El password tiene que tener al menos 6 caracteres', status_code=400)
+    if len(body['password']) < 6:
+        raise APIException('El password tiene que tener al menos 6 caracteres', status_code=400)
+    if not specialCharacter:
+        raise APIException('La contraseña debe tener al menos un caracter especial', status_code=400)
+
     if 'username' not in body:
         raise APIException('Campo requerido', status_code=400)
-#    if len(body['username']) < 6:
-#        raise APIException('El usuario tiene que tener al menos 6 caracteres', status_code=400)
+    if len(body['username']) < 6:
+        raise APIException('El usuario tiene que tener al menos 6 caracteres', status_code=400)
     if 'file' not in request.files:
         raise APIException("No has enviado un archivo", status_code=400)
         
@@ -164,6 +175,8 @@ def allowed_file(filename):
 @app.route('/owners', methods=['POST'])
 def create_owner():
     body = request.form
+    specialCharacter = re.search("\W+", body['password'])
+    validEmail = re.search(r"^\w+(\w+\.)?@(\w+\.)?\w+\.com$", body['email'], re.IGNORECASE)
 
     if body is None:
         raise APIException('You need to specify the request body as a json object', status_code=400)
@@ -173,12 +186,22 @@ def create_owner():
         raise APIException('Apellido reqerido', status_code=400)
     if 'email' not in body:
         raise APIException('Correo requerido', status_code=400)
+    if not validEmail:
+        raise APIException('Por favor usa un correo valido', status_code=400)
+
     if 'password' not in body:
         raise APIException('Contraseña requerida', status_code=400)
     if body['verify_password'] != body['password']:
         raise APIException('Las contraseñas no coinciden', status_code=400)
+    if not specialCharacter:
+        raise APIException('La contraseña debe tener al menos un caracter especial', status_code=400)    
+    if len(body['password']) < 6:
+        raise APIException('El password tiene que tener al menos 6 caracteres', status_code=400)
+
     if 'username' not in body:
         raise APIException('Nombre de usuario requerido', status_code=400)
+    if len(body['username']) < 6:
+        raise APIException('El usuario tiene que tener al menos 6 caracteres', status_code=400)    
     if 'file' not in request.files:
         raise APIException("No has enviado un archivo", status_code=400)
         
