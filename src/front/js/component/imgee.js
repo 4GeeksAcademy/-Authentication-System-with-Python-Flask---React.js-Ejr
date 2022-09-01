@@ -7,7 +7,7 @@ export default function Imgee() {
 
   const imgStyle = {
     width: "300px",
-    height: "auto",
+    height: "300px",
   };
 
   const fetchImage = async () => {
@@ -22,8 +22,8 @@ export default function Imgee() {
   }, []);
 
   return (
-    <>
+    <div className="col-sm-7 col-md-6 col-lg-4 mb-3 mt-3">
       <img src={img} alt="icons" style={imgStyle} />
-    </>
+    </div>
   );
 }
