@@ -39,6 +39,7 @@ const AddDog = () => {
 
   // Handling the form submission
   const handleSubmit = (e) => {
+    console.log(owner_id);
     e.preventDefault();
     const formData = new FormData();
     formData.append("owner_id", owner_id);
@@ -61,6 +62,7 @@ const AddDog = () => {
             text: data.data.message,
           });
         } else {
+          actions.getDog(`${process.env.BACKEND_URL}/api/dogs/`, owner_id);
           navigate(homedueno);
           Swal.fire("Tu perro ha sido registrado!", "Exito!", "success");
         }

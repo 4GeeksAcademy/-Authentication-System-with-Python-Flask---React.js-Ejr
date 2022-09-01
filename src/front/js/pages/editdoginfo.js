@@ -1,71 +1,49 @@
-import React from "react";
+import React, { useContext, useState } from "react";
+import { Context } from "../store/appContext";
+import { useParams } from "react-router-dom";
 
 const EditDogInfo = () => {
+  const params = useParams();
+  const id_dog = params.id_dog;
   const { store, actions } = useContext(Context);
-  const [edit, setEdit] = useState(true);
-  const [editLName, setEditLName] = useState(true);
-  const [editUName, setEditUName] = useState(true);
+  const [editAge, setEditAge] = useState(true);
+  const [editBreed, seteditBreed] = useState(true);
+  const [editName, setEditName] = useState(true);
   const [editDesc, setEditDesc] = useState(true);
 
-  const [first_name, setFname] = useState(`${store.user.first_name}`);
-  const [last_name, setLname] = useState(`${store.user.last_name}`);
-  const [username, setUsername] = useState(`${store.user.username}`);
-  const [description, setDescription] = useState(`${store.user.description}`);
+  const [name, setName] = useState(`${store.dogs[0][id_dog].name}`);
 
-  const ownerUrl = process.env.BACKEND_URL + "/api/owners";
-  const walkerUrl = process.env.BACKEND_URL + "/api/dogs";
+  const [breed, setBreed] = useState(`${store.dogs[0][id_dog].breed}`);
+  const [age, setAge] = useState(`${store.dogs[0][id_dog].age}`);
+  const [description, setDescription] = useState(
+    `${store.dogs[0][id_dog].description}`
+  );
 
-  const handleFname = (name) => {
-    setFname(name);
-    store.user.first_name = first_name;
-  };
-
-  const handleLname = (lname) => {
-    setLname(lname);
-    store.user.last_name = last_name;
-  };
-
-  const handleUsername = (uName) => {
-    setUsername(uName);
-    store.user.username = username;
-  };
-
-  const handleDescription = (descr) => {
-    setDescription(descr);
-    store.user.description = description;
-  };
+  const owner_id = `${store.user_id}`;
+  const dogUrl = process.env.BACKEND_URL + "/api/dogs";
 
   const handleSubmitNew = (e) => {
     e.preventDefault();
-    let userInfo = {
-      first_name: first_name,
-      last_name: last_name,
-      username: username,
+
+    const dbDog_id = store.dogs[0][id_dog].id;
+    let dogInfo = {
+      name: name,
+      breed: breed,
+      age: age,
       description: description,
     };
 
-    fetch(`${apiUser()}/${store.user.id}`, {
+    fetch(`${dogUrl}/${dbDog_id}`, {
       method: "PUT",
-      body: JSON.stringify(userInfo),
+      body: JSON.stringify(dogInfo),
       headers: { "Content-type": "application/json" },
     })
       .then((result) => result.json())
       .then((data) => {
-        if (store.user_type == "owner") {
-          handleFname(data.updateowner.first_name);
-          handleLname(data.updateowner.last_name);
-          handleUsername(data.updateowner.username);
-          handleDescription(data.updateowner.description);
-        } else {
-          handleFname(data.updatewalker.first_name);
-          handleLname(data.updatewalker.last_name);
-          handleUsername(data.updatewalker.username);
-          handleDescription(data.updatewalker.description);
-        }
+        actions.getDog(`${process.env.BACKEND_URL}/api/dogs/`, owner_id);
       })
       .catch((err) => err);
   };
-
   return (
     <div className="container">
       <div className="container-fluid">
@@ -76,13 +54,13 @@ const EditDogInfo = () => {
                 <div className="card-body p-md-5 text-black">
                   <div className="row">
                     <div className="col">
-                      <h3>Nombre: </h3>
-                      {edit ? (
+                      <h3>Edad: </h3>
+                      {editAge ? (
                         <div className="row">
-                          <h4 className="col-10">{first_name}</h4>
+                          <h4 className="col-10">{age}</h4>
                           <div
                             className="btn btn-secondary rounded-pill col-lg-2 col-sm-6"
-                            onClick={() => setEdit(false)}
+                            onClick={() => setEditAge(false)}
                           >
                             Editar Info
                           </div>
@@ -94,9 +72,9 @@ const EditDogInfo = () => {
                               <input
                                 className="col-lg-6 col-sm-6"
                                 type="text"
-                                value={first_name}
-                                placeholder={store.user.first_name}
-                                onChange={(e) => setFname(e.target.value)}
+                                value={age}
+                                placeholder={store.dogs.age}
+                                onChange={(e) => setAge(e.target.value)}
                               ></input>
                               <div className="col-lg-4 col-sm-0"></div>
                               <div
@@ -104,7 +82,7 @@ const EditDogInfo = () => {
                                 className="btn btn-secondary col-lg-2 col-sm-6"
                                 onClick={(e) => {
                                   handleSubmitNew(e);
-                                  setEdit(true);
+                                  setEditAge(true);
                                 }}
                               >
                                 Editar
@@ -114,13 +92,13 @@ const EditDogInfo = () => {
                         </div>
                       )}
                       <hr className="light" />
-                      <h3>Apellido: </h3>
-                      {editLName ? (
+                      <h3>Raza: </h3>
+                      {editBreed ? (
                         <div className="row">
-                          <h4 className="col-10">{last_name}</h4>
+                          <h4 className="col-10">{breed}</h4>
                           <div
                             className="btn btn-secondary rounded-pill col-lg-2 col-sm-6"
-                            onClick={() => setEditLName(false)}
+                            onClick={() => seteditBreed(false)}
                           >
                             Editar Info
                           </div>
@@ -132,9 +110,9 @@ const EditDogInfo = () => {
                               <input
                                 className="col-lg-6 col-sm-6"
                                 type="text"
-                                value={last_name}
-                                placeholder={store.user.last_name}
-                                onChange={(e) => setLname(e.target.value)}
+                                value={breed}
+                                placeholder={store.dogs.breed}
+                                onChange={(e) => setBreed(e.target.value)}
                               ></input>
 
                               <div className="col-lg-4 col-sm-0"></div>
@@ -144,7 +122,7 @@ const EditDogInfo = () => {
                                 className="btn btn-secondary col-lg-2 col-sm-6"
                                 onClick={(e) => {
                                   handleSubmitNew(e);
-                                  setEditLName(true);
+                                  seteditBreed(true);
                                 }}
                               >
                                 Editar
@@ -154,14 +132,14 @@ const EditDogInfo = () => {
                         </div>
                       )}
                       <hr className="light" />
-                      <h3>Nombre de usuario: </h3>
+                      <h3>Nombre del perro: </h3>
                       <div className="row">
-                        {editUName ? (
+                        {editName ? (
                           <div className="row">
-                            <h4 className="col-10">{username}</h4>
+                            <h4 className="col-10">{name}</h4>
                             <div
                               className="btn btn-secondary rounded-pill col-lg-2 col-sm-6"
-                              onClick={() => setEditUName(false)}
+                              onClick={() => setEditName(false)}
                             >
                               Editar Info
                             </div>
@@ -173,9 +151,9 @@ const EditDogInfo = () => {
                                 <input
                                   className="col-lg-6 col-sm-6"
                                   type="text"
-                                  value={username}
-                                  placeholder={store.user.username}
-                                  onChange={(e) => setUsername(e.target.value)}
+                                  value={name}
+                                  placeholder={store.dogs.name}
+                                  onChange={(e) => setName(e.target.value)}
                                 ></input>
 
                                 <div className="col-lg-4 col-sm-0"></div>
@@ -185,7 +163,7 @@ const EditDogInfo = () => {
                                   className="btn btn-secondary col-lg-2 col-sm-6"
                                   onClick={(e) => {
                                     handleSubmitNew(e);
-                                    setEditUName(true);
+                                    setEditName(true);
                                   }}
                                 >
                                   Editar
@@ -196,11 +174,15 @@ const EditDogInfo = () => {
                         )}
                       </div>
                       <hr className="light" />
-                      <h3>Agrega una descripcion sobre ti: </h3>
+                      <h3>Agrega una descripcion sobre tu perro: </h3>
                       <div className="row">
                         {editDesc ? (
                           <div className="row">
-                            <h4 className="col-10">{description}</h4>
+                            <h4 className="col-10">
+                              {description == "null"
+                                ? "Agrega una descripcion"
+                                : description}
+                            </h4>
                             <div
                               className="btn btn-secondary rounded-pill col-lg-2 col-sm-6"
                               onClick={() => setEditDesc(false)}
@@ -215,8 +197,16 @@ const EditDogInfo = () => {
                                 <input
                                   className="col-lg-6 col-sm-6"
                                   type="text"
-                                  value={description}
-                                  placeholder={store.user.description}
+                                  value={
+                                    description == "null"
+                                      ? "Agrega una descripcion"
+                                      : description
+                                  }
+                                  placeholder={
+                                    store.dogs.description == "null"
+                                      ? "Agrega una descripcion"
+                                      : store.dogs.description
+                                  }
                                   onChange={(e) =>
                                     setDescription(e.target.value)
                                   }

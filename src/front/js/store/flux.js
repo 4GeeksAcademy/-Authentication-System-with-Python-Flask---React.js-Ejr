@@ -11,6 +11,7 @@ const getState = ({ getStore, getActions, setStore }) => {
     },
     actions: {
       getInfo: (url, id) => {
+        setStore({ user_id: id });
         fetch(url + id)
           .then((res) => res.json())
           .then((data) => {
