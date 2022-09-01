@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import paw from "../../img/paw.png";
 
 const Temperatura = () => {
   const [weather, setWeather] = useState(null);
@@ -21,19 +22,25 @@ const Temperatura = () => {
     }
   };
 
+  const image = {
+    height: "100px",
+    width: "auto",
+  };
+
   const highAlert = () => {
     if (Math.trunc(weather.main.temp - 273) >= 73) {
       return (
         <div className="row">
-          <div className="col"></div>
-          <div className="col align-items-center bg-alert bg-gradient rounded">
-            <p className="text-dark mt-2">
-              Por favor ten en cuenta que la temperatura está por encima de los
-              30 grados, los perritos podrian quemarse sus patitas. ¡Dales mucha
-              agua porque se pueden dehidratar!
-            </p>
+          <div className="col align-items-center bg-alert bg-gradient rounded text-dark mt-2 mb-4 pb-3">
+            Por favor ten en cuenta que la temperatura está por encima de los 30
+            grados, los perritos podrian quemarse sus patitas. ¡Dales mucha agua
+            porque se pueden dehidratar!
           </div>
-          <div className="col"></div>
+          <img
+            className="mt-1 align-middle justify-content-center"
+            src={paw}
+            style={image}
+          />
         </div>
       );
     } else {
