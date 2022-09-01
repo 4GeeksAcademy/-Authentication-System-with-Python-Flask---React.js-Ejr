@@ -9,6 +9,7 @@ import Shape2 from "../component/shape2";
 const imgStlye = {
   width: "100px",
   height: "100px",
+  objectFit: "cover",
 };
 const usernameStyle = {
   fontStyle: "italic",
