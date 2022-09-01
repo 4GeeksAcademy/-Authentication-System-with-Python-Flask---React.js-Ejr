@@ -57,7 +57,7 @@ const Layout = () => {
             <Route path="/userinfo" element={<UserInfo />} />
             <Route path="/profileUser" element={<ProfileUser />} />
             <Route path="/caminadores" element={<ViewWalkers />} />
-            <Route path="/editarperro" element={<EditDogInfo />} />
+            <Route path="/editarperro/:id_dog" element={<EditDogInfo />} />
 
             <Route path="*" element={<ErrorPage />} />
           </Routes>

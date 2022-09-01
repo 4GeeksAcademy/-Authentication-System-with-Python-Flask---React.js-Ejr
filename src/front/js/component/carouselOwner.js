@@ -22,11 +22,13 @@ const CarouselOwner = () => {
   return (
     <div className="container-fluid">
       <div className="d-flex flex-row rounded" style={style1}>
-        {store.dogs.map((item) => {
+        {store.dogs.map((item, index) => {
           return item.map((obj, index) => {
             return (
               <CardOwner
                 name={obj.name}
+                id={obj.id}
+                posStore={index}
                 breed={obj.breed}
                 age={obj.age}
                 file={obj.file}

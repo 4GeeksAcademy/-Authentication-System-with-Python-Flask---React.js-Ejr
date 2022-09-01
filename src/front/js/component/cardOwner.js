@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
-import dogpic from "../../img/dog1.jpg";
+
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
 
 const CardOwner = (props) => {
@@ -52,9 +53,12 @@ const CardOwner = (props) => {
                   <h4 className="card-title">Nombre: {props.name}</h4>
                   <h5 className="card-text">Raza: {props.breed}</h5>
                   <h5 className="card-text">Edad: {props.age}</h5>
-                  <button className="btn btn-info btn-md">
-                    Editar informacion de {props.name}
-                  </button>
+
+                  <Link to={`/editarperro/${props.posStore}`}>
+                    <button className="btn btn-info btn-md">
+                      Editar informacion de {props.name}
+                    </button>
+                  </Link>
                 </div>
               </div>
             </div>

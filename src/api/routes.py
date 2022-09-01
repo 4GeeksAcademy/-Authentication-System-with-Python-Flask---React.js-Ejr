@@ -183,7 +183,7 @@ def put_dog_id(dog_id):
     if 'age' in body:
         updatedog.age = body['age']
     if "description" in body:
-        walker.description = body["description"]
+        updatedog.description = body["description"]
 
     db.session.commit()
 
