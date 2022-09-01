@@ -1,7 +1,7 @@
   
 import os
 from flask_admin import Admin
-from .models import db, Usuario, Empresa, Reporte, Colacion, Principal, Pedidos, Postre, Bebida, Ensalada, Menu, Casino
+from .models import db, Usuario
 from flask_admin.contrib.sqla import ModelView
 
 def setup_admin(app):
@@ -12,16 +12,16 @@ def setup_admin(app):
     
     # Add your models here, for example this is how we add a the User model to the admin
     admin.add_view(ModelView(Usuario, db.session))
-    admin.add_view(ModelView(Casino, db.session))
-    admin.add_view(ModelView(Empresa, db.session))
-    admin.add_view(ModelView(Pedidos, db.session))
-    admin.add_view(ModelView(Colacion, db.session))
-    admin.add_view(ModelView(Principal, db.session))
-    admin.add_view(ModelView(Ensalada, db.session))
-    admin.add_view(ModelView(Postre, db.session))
-    admin.add_view(ModelView(Bebida, db.session))
-    admin.add_view(ModelView(Reporte, db.session))
-    admin.add_view(ModelView(Menu, db.session))
+    # admin.add_view(ModelView(Casino, db.session))
+    # admin.add_view(ModelView(Empresa, db.session))
+    # admin.add_view(ModelView(Pedidos, db.session))
+    # admin.add_view(ModelView(Colacion, db.session))
+    # admin.add_view(ModelView(Principal, db.session))
+    # admin.add_view(ModelView(Ensalada, db.session))
+    # admin.add_view(ModelView(Postre, db.session))
+    # admin.add_view(ModelView(Bebida, db.session))
+    # admin.add_view(ModelView(Reporte, db.session))
+    # admin.add_view(ModelView(Menu, db.session))
 
     # You can duplicate that line to add mew models
     # admin.add_view(ModelView(YourModelName, db.session))

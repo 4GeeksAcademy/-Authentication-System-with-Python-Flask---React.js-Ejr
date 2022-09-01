@@ -3,6 +3,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 		store: {
 			token: null,
 			message: null,
+			user: {
+				'nombre': '',
+				'apellido': '',
+				'telefono': '',
+				'direccion': '',
+				'email': '',
+				'token': ''
+			},
 			demo: [
 				{
 					title: "FIRST",
@@ -28,7 +36,30 @@ const getState = ({ getStore, getActions, setStore }) => {
 				if (token && token !="" && token !=undefined) setStore({token: token})
 
 			},
-
+			register: async (nombre, apellido, telefono, direccion, email, password) => {
+				const opts = {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify({
+						'nombre': nombre,
+						'apellido': apellido,
+						'telefono': telefono,
+						'direccion': direccion,
+						'email': email,
+						'password': password
+					})
+				};
+				await fetch(process.env.BACKEND_URL + '/api/register', opts)
+					.then(response => response.json())
+					.then((data) => {
+						console.log(data);
+					})
+					.catch((error) => {
+						console.error(error);
+					})
+			},
 			logout: () =>{
 				sessionStorage.removeItem("token");
 				console.log("Login Out")
