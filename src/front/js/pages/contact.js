@@ -5,7 +5,7 @@ import roberto from "../../img/robertoprofile.jpg";
 const Contact = () => {
   return (
     <div className="container">
-    <div className="card mb-3 w-100" id="card-one"> 
+    <div className="card mb-3 w-90" id="card-one"> 
       <div className="row g-0">
         <div className="col-md-4">
           <img src={ramses} className="img-fluid rounded-start" alt="..." id="imgprofile" />
@@ -27,7 +27,7 @@ const Contact = () => {
       </div>
     </div>
 
-    <div className="card mb-3 w-100" id="card-one"> 
+    <div className="card mb-3 w-90" id="card-one"> 
       <div className="row g-0">
         <div className="col-md-8">
           <div className="card-body">
@@ -49,7 +49,7 @@ const Contact = () => {
       </div>
     </div>
 
-    <div className="card mb-3 w-100" id="card-three"> 
+    <div className="card mb-3 w-90" id="card-three"> 
       <div className="row g-0">
         <div className="col-md-4">
           <img src={roberto} className="img-fluid rounded-start" alt="..." id="imgprofile" />
