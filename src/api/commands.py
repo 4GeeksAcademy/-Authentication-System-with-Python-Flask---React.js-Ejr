@@ -1,6 +1,6 @@
 
 import click
-from api.models import db, Usuario, Empresa, Reporte, Colacion, Principal, Pedidos, Postre, Bebida, Ensalada, Menu
+from api.models import db, Usuario
 """
 In this file, you can add as many commands as you want using the @app.cli.command decorator
 Flask commands are usefull to run cronjobs or tasks outside of the API but sill in integration 
