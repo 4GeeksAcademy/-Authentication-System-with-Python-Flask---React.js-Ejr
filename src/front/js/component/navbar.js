@@ -35,6 +35,8 @@ export const Navbar = () => {
   const pfpstyle = {
     width: "75px",
     height: "75px",
+    borderRadius: "50%",
+    objectFit: "cover",
   };
 
   return (
@@ -86,10 +88,10 @@ export const Navbar = () => {
               </li>
               {store.isLogedIn ? (
                 <div>
-                  <div className="col rounded-circle">
+                  <div className="col">
                     <Link to={"/profileUser"}>
                       <img
-                        className="col rounded-circle"
+                        className="col"
                         src={`${process.env.BACKEND_URL}/${store.user_type}/download/${store.user.file}`}
                         style={pfpstyle}
                       ></img>
