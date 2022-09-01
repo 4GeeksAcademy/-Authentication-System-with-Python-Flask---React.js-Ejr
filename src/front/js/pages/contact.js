@@ -5,7 +5,7 @@ import roberto from "../../img/robertoprofile.jpg";
 const Contact = () => {
   return (
     <div className="container">
-    <div className="card mb-3 w-75" id="card-one"> 
+    <div className="card mb-3 w-100" id="card-one"> 
       <div className="row g-0">
         <div className="col-md-4">
           <img src={ramses} className="img-fluid rounded-start" alt="..." id="imgprofile" />
@@ -27,7 +27,7 @@ const Contact = () => {
       </div>
     </div>
 
-    <div className="card mb-3 w-75" id="card-one"> 
+    <div className="card mb-3 w-100" id="card-one"> 
       <div className="row g-0">
         <div className="col-md-8">
           <div className="card-body">
@@ -39,17 +39,17 @@ const Contact = () => {
               <small className="text-muted">Alejandro@dogger.com</small>
             </p>
             <p className="card-text">
-              <small className="text-muted">México</small>
+              <small className="text-muted">Venezuela</small>
             </p>
           </div>
         </div>
-        <div className="col-md-4">
+        <div className="col-md-4 d-md-flex justify-content-md-end">
           <img src={alejandro} className="img-fluid rounded-start" alt="..." id="imgprofile" />
         </div>
       </div>
     </div>
 
-    <div className="card mb-3 w-75" id="card-three"> 
+    <div className="card mb-3 w-100" id="card-three"> 
       <div className="row g-0">
         <div className="col-md-4">
           <img src={roberto} className="img-fluid rounded-start" alt="..." id="imgprofile" />
