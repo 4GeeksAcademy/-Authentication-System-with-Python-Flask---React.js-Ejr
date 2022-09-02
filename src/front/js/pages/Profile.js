@@ -1,9 +1,10 @@
 import React, { useContext } from "react";
 import { Context } from "../store/appContext";
 import "../../styles/home.css";
+import resena from "../../img/resena.png";
 
 import CalendarComp from "../component/CalendarComp";
-import Recomnendations from "../component/recomendations";
+import Reviews from "../component/reviews";
 import Shape2 from "../component/shape2";
 
 const imgStlye = {
@@ -56,12 +57,79 @@ const Profile = () => {
             </div>
           </div>
         </div>
-        <h4 className="separator text-muted">Recomendaciones</h4>
+        <h4 className="separator text-muted">Reseñas</h4>
+
+        <button
+          type="button"
+          className="btn btn-success float-end"
+          data-bs-toggle="modal"
+          data-bs-target="#recomendation"
+        >
+          Hacer recomendación
+        </button>
+
+        <div
+          className="modal fade"
+          id="recomendation"
+          tabIndex="-1"
+          aria-labelledby="recomendation"
+          aria-hidden="true"
+        >
+          <div className="modal-dialog">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title" id="recomendation">
+                  Nueva recomendación
+                </h5>
+                <button
+                  type="button"
+                  className="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                >
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div className="modal-body">
+                <div className="input-group">
+                  <textarea className="form-control"></textarea>
+                </div>
+              </div>
+              <div className="modal-footer">
+                <button
+                  type="button"
+                  className="btn btn-danger"
+                  data-bs-dismiss="modal"
+                >
+                  Cancelar
+                </button>
+                <button type="button" className="btn btn-success">
+                  Publicar
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
 
         <div className="row">
-          <Recomnendations />
-          <Recomnendations />
-          <Recomnendations />
+          {store.reviews.length == 0 ? (
+            <img src={resena} />
+          ) : (
+            store.reviews.map((review, index) => {
+              return store.owners.map((owner) => {
+                return review.owner_id == owner.id ? (
+                  <Reviews
+                    key={index}
+                    comment={review.comment}
+                    img={`${process.env.BACKEND_URL}/owner/download/${owner.file}`}
+                    name={owner.first_name}
+                  />
+                ) : (
+                  ""
+                );
+              });
+            })
+          )}
         </div>
         <Shape2 />
       </div>

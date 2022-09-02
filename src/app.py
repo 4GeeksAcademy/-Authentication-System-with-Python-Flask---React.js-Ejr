@@ -16,7 +16,7 @@ from flask_migrate import Migrate
 from flask_swagger import swagger
 from flask_cors import CORS
 from api.utils import APIException, generate_sitemap
-from api.models import db, Walker, Owner, Dog
+from api.models import db, Walker, Owner, Dog, Reviews
 from api.routes import api
 from api.admin import setup_admin
 from api.commands import setup_commands
@@ -325,6 +325,22 @@ def login():
 
 
     return jsonify(body_response)
+
+@app.route('/reviews/<int:walker_id>', methods=['POST'])
+def create_review():
+    body = request.get_json()
+
+    if body is None:
+        raise APIException('No se puede enviar el campo vacio', status_code=400)
+    
+    new_review = Review(comment = body['comment'])
+    db.session.add(new_review)
+    db.session.commit()
+
+    response_body = {
+        'results': new_review.serialize()
+    }
+    return jsonify(response_body), 200
 
 
 # this only runs if `$ python src/main.py` is executed

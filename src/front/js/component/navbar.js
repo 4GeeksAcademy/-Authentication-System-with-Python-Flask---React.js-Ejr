@@ -13,6 +13,7 @@ export const Navbar = () => {
   const homeW = "/homecaminador";
   const chat = "/chat";
   const profile = "/userinfo";
+  const reviewUrl = process.env.BACKEND_URL + "/api/reviews/";
   let navigate = useNavigate();
 
   const logout = () => {
@@ -91,7 +92,15 @@ export const Navbar = () => {
                   <div className="col">
                     <Link to={"/profileUser"}>
                       <img
-                        className="col"
+
+                        onClick={
+                          store.user_type == "walker"
+                            ? (actions.getReviews(reviewUrl, store.user.id),
+                              actions.getUsers())
+                            : ""
+                        }
+                        className="col rounded-circle"
+                      
                         src={`${process.env.BACKEND_URL}/${store.user_type}/download/${store.user.file}`}
                         style={pfpstyle}
                       ></img>

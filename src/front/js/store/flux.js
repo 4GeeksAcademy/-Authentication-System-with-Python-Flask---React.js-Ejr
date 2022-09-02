@@ -8,6 +8,8 @@ const getState = ({ getStore, getActions, setStore }) => {
       isLogedIn: false,
       user_type: "",
       walkers: [],
+      owners: [],
+      reviews: [],
     },
     actions: {
       getInfo: (url, id) => {
@@ -29,6 +31,15 @@ const getState = ({ getStore, getActions, setStore }) => {
           .catch();
       },
 
+      getReviews: (url, walker_id) => {
+        fetch(url + walker_id)
+          .then((res) => res.json())
+          .then((data) => {
+            setStore({ reviews: data.results });
+          })
+          .catch();
+      },
+
       putUpdateUser: () => {
         setStore({ user: data });
       },
@@ -41,8 +52,17 @@ const getState = ({ getStore, getActions, setStore }) => {
           })
           .catch();
       },
+
+      getUsers: () => {
+        fetch(process.env.BACKEND_URL + "/api/owners")
+          .then((res) => res.json())
+          .then((data) => {
+            setStore({ owners: data.results });
+          })
+          .catch();
+      },
+
       setUserId: (user_id) => {
-        console.log(user_id);
         setStore({ user_id: user_id });
       },
 

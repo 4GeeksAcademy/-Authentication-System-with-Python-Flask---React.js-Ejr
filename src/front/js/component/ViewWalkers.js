@@ -9,6 +9,7 @@ const ViewWalkers = () => {
 
   const profile = "/profile";
   const walkerUrl = process.env.BACKEND_URL + "/api/walkers/";
+  const reviewUrl = process.env.BACKEND_URL + "/api/reviews/";
 
   const imageStyle = {
     objectFit: "cover",
@@ -36,25 +37,28 @@ const ViewWalkers = () => {
                 <div className="card-body">
                   <h5 className="card-title">{walker.username}</h5>
 
-                  <p className="card-text ">
-                    <i className="far fa-star"></i>
-                    <i className="far fa-star"></i>
-                    <i className="far fa-star"></i>
-                    <i className="far fa-star"></i>
-                    <i className="far fa-star"></i>
-                    <strong className="m-2">12</strong>
-                  </p>
-                  <Link to={profile}>
-                    <button
-                      className="btn btn-primary"
-                      onClick={() =>
-                        actions.getInfoProfile(walkerUrl, walker.id)
-                      }
-                    >
-                      Ver perfil
-                    </button>
-                  </Link>
-                </div>
+
+                <p className="card-text ">
+                  <i className="far fa-star"></i>
+                  <i className="far fa-star"></i>
+                  <i className="far fa-star"></i>
+                  <i className="far fa-star"></i>
+                  <i className="far fa-star"></i>
+                  <strong className="m-2">12</strong>
+                </p>
+                <Link to={profile}>
+                  <button
+                    className="btn btn-primary"
+                    onClick={() => (
+                      actions.getInfoProfile(walkerUrl, walker.id),
+                      actions.getReviews(reviewUrl, walker.id),
+                      actions.getUsers()
+                    )}
+                  >
+                    Ver perfil
+                  </button>
+                </Link>
+
               </div>
             );
           })
