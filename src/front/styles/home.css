@@ -5,3 +5,56 @@
     one more css for each page that will contain the selected used 
     on that page only (the ones not reused in other pages).
 */
+body {
+  color: black !important;
+}
+
+#dogCard {
+  background: none;
+  border: none;
+}
+
+.image-preview {
+  position: relative;
+  width: 300px;
+  height: 300px;
+  margin: 20px;
+}
+
+.image-preview img {
+  width: 300px;
+  height: 300px;
+  object-fit: cover;
+}
+
+.images-preview-container {
+  display: flex;
+  justify-content: right;
+}
+.card-text {
+  color: black;
+}
+.card-img-top {
+  height: 300px;
+}
+
+.separator {
+  display: flex;
+  align-items: center;
+  text-align: center;
+}
+
+.separator::before,
+.separator::after {
+  content: "";
+  flex: 1;
+  border-bottom: 1px solid gray;
+}
+
+.separator:not(:empty)::before {
+  margin-right: 0.25em;
+}
+
+.separator:not(:empty)::after {
+  margin-left: 0.25em;
+}

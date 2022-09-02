@@ -1,0 +1,22 @@
+#logo {
+  width: 70px;
+  height: 70px;
+}
+#logoText {
+  color: black;
+  font-size: 30px;
+  font-family: Poppins, "Times New Roman", Times, serif;
+  text-decoration: none;
+}
+#btn1 {
+  background-color: #7f9183;
+  color: white;
+}
+#btn2 {
+  background-color: #586f6b;
+  color: white;
+}
+
+.dropdown-item {
+  font-weight: bold;
+}

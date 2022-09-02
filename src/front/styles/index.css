@@ -1,3 +1,208 @@
 /* 
     General Styles used on every website (Don't Repeat Yourself)
 */
+
+body {
+  background-color: #ddd5d0;
+  font-family: Poppins, "Times New Roman", Times, serif;
+  font-weight: 100px;
+}
+
+.custom-shape-divider-bottom-1659915776 {
+  position: fixed;
+  bottom: 0;
+  z-index: -1;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+  transform: rotate(180deg);
+}
+
+.custom-shape-divider-bottom-1659915776 svg {
+  position: relative;
+  display: block;
+  width: calc(229% + 1.3px);
+  height: 314px;
+  transform: rotateY(180deg);
+}
+
+.custom-shape-divider-bottom-1659915776 .shape-fill {
+  fill: #7f9183;
+}
+
+.custom-shape-divider-bottom-1659915273 {
+  position: fixed;
+  bottom: 0;
+  z-index: -1;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+  transform: rotate(180deg);
+}
+
+.custom-shape-divider-bottom-1659915273 svg {
+  position: relative;
+  display: block;
+  width: calc(197% + 1.3px);
+  height: 251px;
+  transform: rotateY(180deg);
+}
+
+.custom-shape-divider-bottom-1659915273 .shape-fill {
+  fill: #455855;
+}
+
+.circle1 {
+  z-index: -1;
+  width: 100px;
+  height: 100px;
+  background: #afbdb4;
+  border: 1px solid #000;
+}
+
+.circleBase {
+  border-radius: 50%;
+  border: none;
+}
+
+.react-calendar {
+  width: 400px;
+  max-width: 100%;
+  background-color: #fff;
+  color: #222;
+  border-radius: 8px;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.125em;
+}
+.react-calendar__navigation button {
+  color: #6f48eb;
+  min-width: 44px;
+  background: none;
+  font-size: 16px;
+  margin-top: 8px;
+}
+.react-calendar__navigation button:enabled:hover,
+.react-calendar__navigation button:enabled:focus {
+  background-color: #f8f8fa;
+}
+.react-calendar__navigation button[disabled] {
+  background-color: #f0f0f0;
+}
+abbr[title] {
+  text-decoration: none;
+}
+/* .react-calendar__month-view__days__day--weekend {
+  color: #d10000;
+ } */
+.react-calendar__tile:enabled:hover,
+.react-calendar__tile:enabled:focus {
+  background: #f8f8fa;
+  color: #6f48eb;
+  border-radius: 6px;
+}
+.react-calendar__tile--now {
+  background: #6f48eb33;
+  border-radius: 6px;
+  font-weight: bold;
+  color: #6f48eb;
+}
+.react-calendar__tile--now:enabled:hover,
+.react-calendar__tile--now:enabled:focus {
+  background: #6f48eb33;
+  border-radius: 6px;
+  font-weight: bold;
+  color: #6f48eb;
+}
+.react-calendar__tile--hasActive:enabled:hover,
+.react-calendar__tile--hasActive:enabled:focus {
+  background: #f8f8fa;
+}
+.react-calendar__tile--active {
+  background: #6f48eb;
+  border-radius: 6px;
+  font-weight: bold;
+  color: white;
+}
+.react-calendar__tile--active:enabled:hover,
+.react-calendar__tile--active:enabled:focus {
+  background: #6f48eb;
+  color: white;
+}
+.react-calendar--selectRange .react-calendar__tile--hover {
+  background-color: #f8f8fa;
+}
+.react-calendar__tile--range {
+  background: #f8f8fa;
+  color: #6f48eb;
+  border-radius: 0;
+}
+.react-calendar__tile--rangeStart {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border-top-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+  background: #6f48eb;
+  color: white;
+}
+.react-calendar__tile--rangeEnd {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+  background: #6f48eb;
+  color: white;
+}
+
+/* SHAPE 2 */
+
+.custom-shape-divider-bottom-1 {
+  position: fixed;
+  z-index: -1;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+  transform: rotate(180deg);
+}
+
+.custom-shape-divider-bottom-1 svg {
+  position: relative;
+  display: block;
+  width: calc(182% + 1.3px);
+  height: 458px;
+}
+
+.custom-shape-divider-bottom-1 .shape-fill {
+  fill: #c9e3eb;
+}
+
+.custom-shape-divider-bottom-2 {
+  position: fixed;
+  bottom: 0;
+  z-index: -1;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+  transform: rotate(180deg);
+}
+
+.custom-shape-divider-bottom-2 svg {
+  position: relative;
+  display: block;
+  width: calc(197% + 1.3px);
+  height: 251px;
+  transform: rotateY(180deg);
+}
+
+.custom-shape-divider-bottom-2 .shape-fill {
+  fill: #455855;
+}
+
+#imgprofile{
+  height: 200px;
+}

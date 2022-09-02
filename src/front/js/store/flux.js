@@ -1,54 +1,91 @@
 const getState = ({ getStore, getActions, setStore }) => {
-	return {
-		store: {
-			message: null,
-			demo: [
-				{
-					title: "FIRST",
-					background: "white",
-					initial: "white"
-				},
-				{
-					title: "SECOND",
-					background: "white",
-					initial: "white"
-				}
-			]
-		},
-		actions: {
-			// Use getActions to call a function within a fuction
-			exampleFunction: () => {
-				getActions().changeColor(0, "green");
-			},
+  return {
+    store: {
+      user: {},
+      walkerProfile: {},
+      user_id: 0,
+      dogs: [],
+      isLogedIn: false,
+      user_type: "",
+      walkers: [],
+      owners: [],
+      reviews: [],
+    },
+    actions: {
+      getInfo: (url, id) => {
+        setStore({ user_id: id });
+        fetch(url + id)
+          .then((res) => res.json())
+          .then((data) => {
+            setStore({ user: data.results });
+          })
+          .catch();
+      },
 
-			getMessage: async () => {
-				try{
-					// fetching data from the backend
-					const resp = await fetch(process.env.BACKEND_URL + "/api/hello")
-					const data = await resp.json()
-					setStore({ message: data.message })
-					// don't forget to return something, that is how the async resolves
-					return data;
-				}catch(error){
-					console.log("Error loading message from backend", error)
-				}
-			},
-			changeColor: (index, color) => {
-				//get the store
-				const store = getStore();
+      getInfoProfile: (url, id) => {
+        fetch(url + id)
+          .then((res) => res.json())
+          .then((data) => {
+            setStore({ walkerProfile: data.results });
+          })
+          .catch();
+      },
 
-				//we have to loop the entire demo array to look for the respective index
-				//and change its color
-				const demo = store.demo.map((elm, i) => {
-					if (i === index) elm.background = color;
-					return elm;
-				});
+      getReviews: (url, walker_id) => {
+        fetch(url + walker_id)
+          .then((res) => res.json())
+          .then((data) => {
+            setStore({ reviews: data.results });
+          })
+          .catch();
+      },
 
-				//reset the global store
-				setStore({ demo: demo });
-			}
-		}
-	};
+      putUpdateUser: () => {
+        setStore({ user: data });
+      },
+
+      getWalkers: () => {
+        fetch(process.env.BACKEND_URL + "/api/walkers")
+          .then((res) => res.json())
+          .then((data) => {
+            setStore({ walkers: data.results });
+          })
+          .catch();
+      },
+
+      getUsers: () => {
+        fetch(process.env.BACKEND_URL + "/api/owners")
+          .then((res) => res.json())
+          .then((data) => {
+            setStore({ owners: data.results });
+          })
+          .catch();
+      },
+
+      setUserId: (user_id) => {
+        setStore({ user_id: user_id });
+      },
+
+      getDog: (url, userId) => {
+        fetch(url + userId)
+          .then((res) => res.json())
+          .then((data) => setStore({ dogs: [data.result] }))
+          .catch();
+      },
+
+      handleLog: () => {
+        setStore({ isLogedIn: true });
+      },
+
+      handleLogOut: () => {
+        setStore({ isLogedIn: false });
+      },
+
+      getUserType: (user_type) => {
+        setStore({ user_type: user_type });
+      },
+    },
+  };
 };
 
 export default getState;

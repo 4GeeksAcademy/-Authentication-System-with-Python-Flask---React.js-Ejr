@@ -1,0 +1,14 @@
+#footer {
+  color: white;
+  background-color: #455855;
+}
+
+#btn_footer {
+  background-color: #c88b7d;
+  color: white;
+  min-height: 50px;
+  width: 15rem;
+}
+p {
+  color: white;
+}
