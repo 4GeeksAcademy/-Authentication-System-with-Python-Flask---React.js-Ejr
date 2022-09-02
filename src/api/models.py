@@ -88,7 +88,7 @@ class Reviews(db.Model):
     __tablename__ = "reviews"
     id = db.Column(db.Integer, primary_key=True)
     comment = db.Column(db.String(500), unique=False, nullable=True)
-    review = db.Column(db.Integer, unique=False, nullable=True)
+#    review = db.Column(db.Integer, unique=False, nullable=True)
     walker_id = db.Column(db.Integer, db.ForeignKey('walker.id', ondelete='CASCADE'))
     Walker = db.relationship('Walker', primaryjoin=walker_id == Walker.id)
     owner_id = db.Column(db.Integer, db.ForeignKey('owner.id', ondelete='CASCADE'))
@@ -101,7 +101,7 @@ class Reviews(db.Model):
         return {
             "id": self.id,
             "comment": self.comment,
-            "review": self.review,
+  #          "review": self.review,
             'walker_id': self.walker_id,
             "owner_id": self.owner_id,
         }
