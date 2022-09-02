@@ -5,110 +5,96 @@
     one more css for each page that will contain the selected used 
     on that page only (the ones not reused in other pages).
 */
-body {
-  font-family: "Lato", sans-serif;
-  position: relative;
-  width: 1440px;
-  height: 1024px;
-  background: linear-gradient(354deg, #070606 0%, rgba(185, 178, 178, 0) 100%);
-}
-
-.main-head {
-  height: 150px;
-  background: #fff;
-}
-
-.sidenav {
-  background-image: url(https://images.pexels.com/photos/3184195/pexels-photo-3184195.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1);
- 
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
   
-  height: 1043px;
+}
+body{
+  background-image: url("https://images.pexels.com/photos/9986228/pexels-photo-9986228.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1");
+  background-repeat: no-repeat;
+  background-size: cover;
+
   
-  margin-top: 55px;
+  
+}
+.container{
+font-family: 'Lora';
+font-style: normal;
+font-weight: 400;
+font-size: 32px;
+line-height: 41px;
+color: #1e1b1b;
+}
+.row{
+  margin: 20px;
+  padding-top: 20px;
 }
 
-.main {
-  padding: 0px 10px;
+p{
+
+  margin-top: revert;
+}
+#footer{
+  position: absolute;
+  width: 100%;
+  /* height: 221px; */
   display: flex;
-  flex-direction: row-reverse;
+  justify-content: center;
+  left: -215px;
+  top: 673px;
+  background: linear-gradient(180deg, rgba(81, 68, 68, 0) 0%, #514444 70.62%);
+}
+#navbar{
+  background: rgba(255, 255, 255, 0.3);
+box-shadow: 0px 1px 8px rgba(0, 0, 0, 0.2);
+}
+.btn{
+  margin: 2px;
+  background-color: #ede6e663;
 }
 
-@media screen and (max-height: 450px) {
-  .sidenav {
-    padding-top: 15px;
-  }
+.fa-solid{
+  margin: 6px;
 }
-
-@media screen and (max-width: 450px) {
-  .login-form {
-    margin-top: 10%;
-  }
-
-  .register-form {
-    margin-top: 10%;
-  }
+.btn-primary {
+  color: #fff;
+  background-color: #d9e1e9;
+  border-color: #e0e6ef;
 }
-
-@media screen and (min-width: 768px) {
-  .main {
-    margin-left: 40%;
-  }
-
-  .sidenav {
-    width: 46%;
-    position: fixed;
-    z-index: 1;
-    top: -55px;
-    left: 0;
-  }
-
-  .login-form {
-    margin-top: 80%;
-  }
-
-  .register-form {
-    margin-top: 20%;
-  }
-}
-
-.login-main-text {
+#loginicon{
  
-  padding: 60px;
-  color: #fff;
-}
+  background: #686b6a;
+  color: #ffffff;
+  font-size: 30px;
+  padding: 5px;
+  width: 60px;
+  height: 60px;
+  text-align: center;
+  line-height: 50px;
+  border-radius: 50%;
 
-.login-main-text h2 {
-  font-weight: 300;
-}
-/* button */
-.btn-black {
-  background-color: rgb(29, 27, 27) !important;
+ 
+ 
 
-  color: #fff;
 }
-.btn-secondary{
-    margin-left: 28px;
-}
-.footer{
-    margin-left: 214px;
-    margin-top: 131px;
-}
-.form{
-    box-sizing: border-box;
+#cart{
+  
+  color: #ffffff;
+  
+ 
+ 
 
-/* Auto layout */
+ 
+ 
 
-box-sizing: border-box;
-    /* display: flex; */
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 24px;
-    /* gap: 24px; */
-    position: absolute; 
-    width: 414px;
-    /* height: 309px; */
-    /* left: calc(50% - 414px/2 + 421px); */
-    /* top: 456px; */
-    background: linear-gradient(180deg, #6E7770 0%, rgba(110, 119, 112, 0) 100%);
-    border-radius: 4px;
+  
+}
+#iconos{
+  margin-left: 2px;
+}
+.row{
+  display: flex;
+    flex-direction: row-reverse;
 }
