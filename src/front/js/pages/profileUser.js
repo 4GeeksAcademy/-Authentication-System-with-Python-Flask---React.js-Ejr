@@ -4,7 +4,8 @@ import "../../styles/home.css";
 
 import CalendarComp from "../component/CalendarComp";
 import Imgee from "../component/imgee";
-import Recomnendations from "../component/recomendations";
+import resena from "../../img/resena.png";
+import Reviews from "../component/reviews";
 import Shape2 from "../component/shape2";
 
 const imgStlye = {
@@ -69,10 +70,27 @@ const ProfileUser = () => {
           </div>
         ) : (
           <div className="row">
-            <h4 className="separator text-muted">Recomendaciones</h4>
-            <Recomnendations />
-            <Recomnendations />
-            <Recomnendations />
+            <h4 className="separator text-muted">Reseñas</h4>
+            <div className="row">
+              {store.reviews.length == 0 ? (
+                <img src={resena} />
+              ) : (
+                store.reviews.map((review, index) => {
+                  return store.owners.map((owner) => {
+                    return review.owner_id == owner.id ? (
+                      <Reviews
+                        key={index}
+                        comment={review.comment}
+                        img={`${process.env.BACKEND_URL}/owner/download/${owner.file}`}
+                        name={owner.first_name}
+                      />
+                    ) : (
+                      ""
+                    );
+                  });
+                })
+              )}
+            </div>
           </div>
         )}
 

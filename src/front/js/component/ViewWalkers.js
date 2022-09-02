@@ -8,6 +8,7 @@ const ViewWalkers = () => {
 
   const profile = "/profile";
   const walkerUrl = process.env.BACKEND_URL + "/api/walkers/";
+  const reviewUrl = process.env.BACKEND_URL + "/api/reviews/";
 
   return (
     <div className="container">
@@ -38,7 +39,11 @@ const ViewWalkers = () => {
                 <Link to={profile}>
                   <button
                     className="btn btn-primary"
-                    onClick={() => actions.getInfoProfile(walkerUrl, walker.id)}
+                    onClick={() => (
+                      actions.getInfoProfile(walkerUrl, walker.id),
+                      actions.getReviews(reviewUrl, walker.id),
+                      actions.getUsers()
+                    )}
                   >
                     Ver perfil
                   </button>

@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint, send_from_directory
-from api.models import db, Walker, Owner, Dog
+from api.models import db, Walker, Owner, Dog, Reviews
 from api.utils import generate_sitemap, APIException
 
 
@@ -39,7 +39,7 @@ def get_walker(walker_id):
         raise APIException('Este caminador no existe', status_code=400)
 
     response_body = {
-        'results': walker.serialize()
+        'results': walker.serialize(),
     }
     return jsonify(response_body), 200
 
@@ -50,6 +50,7 @@ def update_walker(walker_id):
     body = request.get_json()
 
     updatewalker = Walker.query.get(walker_id)
+    review - Reviews.query.get(walker_id)
 
     if "first_name" in body:
         walker.first_name = body["first_name"]
@@ -65,7 +66,7 @@ def update_walker(walker_id):
     response_body ={
         "message": "ok",
         "updateMsg": "User Updated.",
-        "updatewalker": updatewalker.serialize()
+        "updatewalker": updatewalker.serialize(),
     }
     return jsonify(response_body), 200
 
@@ -191,6 +192,25 @@ def put_dog_id(dog_id):
         "message": "ok",
         "updateMsg": "Dog Updated.",
         "updatedog": updatedog.serialize()
+    }
+
+    return jsonify(response_body), 200
+
+
+#---------------------------------------Review CRUD --------------------------------------
+
+@api.route('/reviews/<int:walker_id>', methods=['GET'])
+def get_reviews(walker_id):
+
+    walker_reviews = Reviews.query.filter_by(walker_id = walker_id)
+
+    if walker_reviews is None:
+        raise APIException('No tienes reviews todavia', status_code=400)
+
+    reviews = list(map(lambda x: x.serialize(), walker_reviews))
+
+    response_body = {
+        "results": reviews
     }
 
     return jsonify(response_body), 200

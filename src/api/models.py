@@ -18,7 +18,7 @@ class Walker(db.Model):
     date_start = db.Column(db.DateTime(timezone=True), default=datetime.datetime.utcnow())
 
     def __repr__(self):
-        return f'<Walker {self.name}>'
+        return f'<Walker {self.first_name}>'
 
     def serialize(self):
         return {
@@ -28,7 +28,7 @@ class Walker(db.Model):
             "first_name": self.first_name,
             "last_name": self.last_name,
             "email": self.email,
-            "description": self.description
+            "description": self.description,
         }
 
 class Owner(db.Model):
@@ -82,4 +82,26 @@ class Dog(db.Model):
             'owner_id': self.owner_id,
             'file': self.file,
             "description": self.description,
+        }
+
+class Reviews(db.Model):
+    __tablename__ = "reviews"
+    id = db.Column(db.Integer, primary_key=True)
+    comment = db.Column(db.String(500), unique=False, nullable=True)
+    review = db.Column(db.Integer, unique=False, nullable=True)
+    walker_id = db.Column(db.Integer, db.ForeignKey('walker.id', ondelete='CASCADE'))
+    Walker = db.relationship('Walker', primaryjoin=walker_id == Walker.id)
+    owner_id = db.Column(db.Integer, db.ForeignKey('owner.id', ondelete='CASCADE'))
+    Owner = db.relationship('Owner', primaryjoin=owner_id == Owner.id)
+
+    def __repr__(self):
+        return f'<Comentario: {self.comment} , y le pusieron un {self.review}, {self.owner_id} hizo el comentario.>'
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "comment": self.comment,
+            "review": self.review,
+            'walker_id': self.walker_id,
+            "owner_id": self.owner_id,
         }
