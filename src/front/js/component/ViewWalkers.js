@@ -10,6 +10,10 @@ const ViewWalkers = () => {
   const walkerUrl = process.env.BACKEND_URL + "/api/walkers/";
   const reviewUrl = process.env.BACKEND_URL + "/api/reviews/";
 
+  const imageStyle = {
+    objectFit: "cover",
+  };
+
   return (
     <div className="container">
       <h4 className="separator text-muted">Caminadores disponibles</h4>
@@ -24,6 +28,7 @@ const ViewWalkers = () => {
               <img
                 src={`${process.env.BACKEND_URL}/walker/download/${walker.file}`}
                 className="card-img-top"
+                style={imageStyle}
               />
               <div className="card-body">
                 <h5 className="card-title">{walker.username}</h5>
