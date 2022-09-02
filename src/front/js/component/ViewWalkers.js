@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { Context } from "../store/appContext";
 import { Link } from "react-router-dom";
+import disponibles from "../../img/disponibles.png";
 import "../../styles/home.css";
 
 const ViewWalkers = () => {
@@ -10,23 +11,32 @@ const ViewWalkers = () => {
   const walkerUrl = process.env.BACKEND_URL + "/api/walkers/";
   const reviewUrl = process.env.BACKEND_URL + "/api/reviews/";
 
+  const imageStyle = {
+    objectFit: "cover",
+  };
+
   return (
     <div className="container">
       <h4 className="separator text-muted">Caminadores disponibles</h4>
       <div className="row d-flex justify-content-sm-center">
-        {store.walkers.map((walker, index) => {
-          return (
-            <div
-              className="card p-0 col-sm-12 col-md-6 col-lg-3 m-3"
-              key={index}
-              style={{ width: "18rem" }}
-            >
-              <img
-                src={`${process.env.BACKEND_URL}/walker/download/${walker.file}`}
-                className="card-img-top"
-              />
-              <div className="card-body">
-                <h5 className="card-title">{walker.username}</h5>
+        {store.walkers.length == 0 ? (
+          <img src={disponibles} />
+        ) : (
+          store.walkers.map((walker, index) => {
+            return (
+              <div
+                className="card p-0 col-sm-12 col-md-6 col-lg-3 m-3"
+                key={index}
+                style={{ width: "18rem" }}
+              >
+                <img
+                  src={`${process.env.BACKEND_URL}/walker/download/${walker.file}`}
+                  className="card-img-top"
+                  style={imageStyle}
+                />
+                <div className="card-body">
+                  <h5 className="card-title">{walker.username}</h5>
+
 
                 <p className="card-text ">
                   <i className="far fa-star"></i>
@@ -48,10 +58,11 @@ const ViewWalkers = () => {
                     Ver perfil
                   </button>
                 </Link>
+
               </div>
-            </div>
-          );
-        })}
+            );
+          })
+        )}
       </div>
     </div>
   );

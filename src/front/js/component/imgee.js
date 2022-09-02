@@ -7,7 +7,7 @@ export default function Imgee() {
 
   const imgStyle = {
     width: "300px",
-    height: "300px",
+    height: "auto",
   };
 
   const fetchImage = async () => {
