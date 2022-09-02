@@ -73,6 +73,7 @@
 		]
 	},
 	"dependencies": {
+		"@chakra-ui/react": "1.8",
 		"prop-types": "^15.6.1",
 		"react": "^16.8.4",
 		"react-dom": "^16.8.4",
