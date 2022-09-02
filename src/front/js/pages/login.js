@@ -7,11 +7,9 @@ export const Login = (props) => {
   const { store, actions } = useContext(Context);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const navigate = useNavigate();
 
   const handleSubmit = async () => {
     actions.login(username, password);
-    navigate("/");
   };
   return (
     <>
@@ -44,13 +42,15 @@ export const Login = (props) => {
                   />
                 </ul>
                 <div className="card-body">
-                  <a
-                    href="#"
-                    className="btn btn-success"
-                    onClick={handleSubmit}
-                  >
-                    Login
-                  </a>
+                  <Link to={`/user/${localStorage.getItem("id")}`}>
+                    <a
+                      href="#"
+                      className="btn btn-success"
+                      onClick={handleSubmit}
+                    >
+                      Login
+                    </a>
+                  </Link>
                   <Link to={"/"}>
                     {" "}
                     <a href="#" className="btn btn-danger">

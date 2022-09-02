@@ -27,7 +27,6 @@ export const Signup = (props) => {
       const resp = await fetch(process.env.BACKEND_URL + "/api/signup", opts);
       if (resp !== 200) {
         throw new Error("Error signin up");
-        return false;
       }
       const data = await resp.json();
       return true;

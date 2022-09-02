@@ -3,6 +3,8 @@ const getState = ({ getStore, getActions, setStore }) => {
     store: {
       token: null,
       userInfo: {},
+      messages: [],
+      properties: [],
     },
     actions: {
       // Use getActions to call a function within a fuction
@@ -28,7 +30,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           }
           const data = await resp.json();
           const result = [...data];
-          if (result.length > 9) {
+          if (result.length > 10) {
             for (let i = 0; i < result.length; i += 10) {
               const page = arr.slice(i, i + 10);
               result.push(page);
@@ -36,6 +38,37 @@ const getState = ({ getStore, getActions, setStore }) => {
           }
           setStore({ messages: result });
           localStorage.setItem("messages", JSON.stringify(data));
+          return true;
+        } catch (e) {
+          console.log(`${e.name}: ${e.message}`);
+        }
+      },
+      getProperties: async () => {
+        const opts = {
+          method: "GET",
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+        };
+        try {
+          // fetching data from the backend
+          const resp = await fetch(
+            process.env.BACKEND_URL + "/api/getlistings",
+            opts
+          );
+          if (resp.status !== 200) {
+            throw new Error("Something went wrong");
+          }
+          const data = await resp.json();
+          const result = [...data];
+          if (result.length > 10) {
+            for (let i = 0; i < result.length; i += 10) {
+              const page = arr.slice(i, i + 10);
+              result.push(page);
+            }
+          }
+          setStore({ properties: result });
+          localStorage.setItem("properties", JSON.stringify(data));
           return true;
         } catch (e) {
           console.log(`${e.name}: ${e.message}`);

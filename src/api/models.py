@@ -11,6 +11,7 @@ class User(db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False)
     inmuebles = db.relationship('Inmueble', backref='Propietario', cascade="all, delete")
     messages = db.relationship('Message', backref='Propietario', cascade="all, delete")
+    imagen_perfil = db.relationship('Imagen', backref='User', cascade="all, delete")
 
     def __repr__(self):
         return f'<Propietario {self.id}>'
@@ -21,6 +22,7 @@ class User(db.Model):
             "username": self.username,
             "full_name": self.full_name,
             "email": self.email,
+            "imagen_perfil": self.imagen_perfil
             # do not serialize the password, its a security breach
         }
 
@@ -70,7 +72,8 @@ class Inmueble(db.Model):
 class Imagen(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     imagen_url = db.Column(db.String(80), unique=False, nullable=False)
-    inmueble_id = db.Column(db.Integer, db.ForeignKey('inmueble.id'), nullable=False)
+    inmueble_id = db.Column(db.Integer, db.ForeignKey('inmueble.id'), nullable=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
 
     def __repr__(self):
         return f'<Imagen {self.imagen_url}>'

@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
 import { Logout } from "./logout";
 export const Navbar = () => {
@@ -14,7 +14,7 @@ export const Navbar = () => {
 
         {store.token ? (
           <div className="d-flex align-items-center">
-            <Link to={`/user/${store.userInfo.id}`}>
+            <Link to={`/user/${localStorage.getItem("id")}`}>
               <i className="fa-solid fa-user me-3 fs-2 "></i>
             </Link>
             <Logout />
