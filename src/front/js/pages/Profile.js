@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Context } from "../store/appContext";
 import "../../styles/home.css";
 import resena from "../../img/resena.png";
@@ -22,6 +22,36 @@ const bgColor = {
 
 const Profile = () => {
   const { store, actions } = useContext(Context);
+  const [comment, setComment] = useState("");
+
+  const handleComment = (e) => {
+    setComment(e.target.value);
+  };
+
+  const reviewUrl = `${process.env.BACKEND_URL}/reviews`;
+  const walkerid = `${store.walkerProfile.id}`;
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    let userInfo = JSON.stringify({
+      comment: comment,
+      walker_id: store.walkerProfile.id,
+      owner_id: store.user_id,
+    });
+
+    fetch(reviewUrl, {
+      method: "POST",
+      body: userInfo,
+      headers: { "Content-type": "application/json" },
+    })
+      .then((result) => result.json())
+      .then((data) => {
+        console.log(data);
+        console.log(store.walkerProfile.id);
+        actions.getReviews(`${process.env.BACKEND_URL}/api/reviews/`, walkerid);
+      })
+      .catch((err) => err);
+  };
 
   return (
     <div className="container-fluid">
@@ -36,18 +66,13 @@ const Profile = () => {
               />
             </div>
             <div className="col-lg-7 mt-3">
-              <div className="card-body">
+              <div className="card-body ms-3">
                 <h5 className="card-title" style={usernameStyle}>
                   {store.walkerProfile.first_name +
                     " " +
                     store.walkerProfile.last_name}
                 </h5>
-                <p className="card-text">
-                  Contrary to popular belief, Lorem Ipsum is not simply random
-                  text. It has roots in a piece of classical Latin literature
-                  from 45 BC, making it over 2000 years old. Richard McClintock,
-                  a Latin professor at Hampden-Sydney College in Virginia.
-                </p>
+                <p className="card-text">{store.user.description}</p>
               </div>
             </div>
 
@@ -79,7 +104,7 @@ const Profile = () => {
             <div className="modal-content">
               <div className="modal-header">
                 <h5 className="modal-title" id="recomendation">
-                  Nueva recomendación
+                  Nueva reseña
                 </h5>
                 <button
                   type="button"
@@ -92,7 +117,11 @@ const Profile = () => {
               </div>
               <div className="modal-body">
                 <div className="input-group">
-                  <textarea className="form-control"></textarea>
+                  <textarea
+                    className="form-control"
+                    onChange={handleComment}
+                    value={comment}
+                  ></textarea>
                 </div>
               </div>
               <div className="modal-footer">
@@ -103,7 +132,12 @@ const Profile = () => {
                 >
                   Cancelar
                 </button>
-                <button type="button" className="btn btn-success">
+                <button
+                  onClick={handleSubmit}
+                  type="button"
+                  className="btn btn-success"
+                  data-bs-dismiss="modal"
+                >
                   Publicar
                 </button>
               </div>

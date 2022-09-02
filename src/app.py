@@ -326,14 +326,14 @@ def login():
 
     return jsonify(body_response)
 
-@app.route('/reviews/<int:walker_id>', methods=['POST'])
+@app.route('/reviews', methods=['POST'])
 def create_review():
     body = request.get_json()
 
     if body is None:
         raise APIException('No se puede enviar el campo vacio', status_code=400)
     
-    new_review = Review(comment = body['comment'])
+    new_review = Reviews(comment = body['comment'], walker_id = body["walker_id"], owner_id = body["owner_id"])
     db.session.add(new_review)
     db.session.commit()
 

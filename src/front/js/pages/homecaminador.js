@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import { Context } from "../store/appContext";
 import PropTypes from "prop-types";
 import Carousel from "../component/carousel";
@@ -9,17 +9,6 @@ import Temperatura from "../component/temperatura";
 
 export const HomeCaminador = () => {
   const { store, actions } = useContext(Context);
-  const [weather, setWeather] = useState(null);
-
-  const weatherApi =
-    "https://api.openweathermap.org/data/2.5/weather?lat=9.9199094&lon=-84.1403284&appid=96fe99c4f31628147b370103832da32a";
-
-  useEffect(() => {
-    fetch(weatherApi)
-      .then((data) => data.json())
-      .then((data) => setWeather(data))
-      .catch((err) => err);
-  }, []);
 
   return (
     <div className="container-fluid">

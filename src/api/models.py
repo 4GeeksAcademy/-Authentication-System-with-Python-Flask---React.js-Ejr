@@ -95,7 +95,7 @@ class Reviews(db.Model):
     Owner = db.relationship('Owner', primaryjoin=owner_id == Owner.id)
 
     def __repr__(self):
-        return f'<Comentario: {self.comment} , y le pusieron un {self.review}, {self.owner_id} hizo el comentario.>'
+        return f'<Comentario: {self.comment}>'
 
     def serialize(self):
         return {
