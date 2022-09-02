@@ -9,33 +9,57 @@ export const Demo = () => {
 	return (
 		<div className="container">
 			<ul className="list-group">
-				{store.demo.map((item, index) => {
-					return (
-						<li
-							key={index}
-							className="list-group-item d-flex justify-content-between"
-							style={{ background: item.background }}>
-							<Link to={"/single/" + index}>
-								<span>Link to: {item.title}</span>
-							</Link>
-							{// Conditional render example
-							// Check to see if the background is orange, if so, display the message
-							item.background === "orange" ? (
-								<p style={{ color: item.initial }}>
-									Check store/flux.js scroll to the actions to see the code
-								</p>
-							) : null}
-							<button className="btn btn-success" onClick={() => actions.changeColor(index, "orange")}>
-								Change Color
-							</button>
+				
+					
+						<li>
+
+
+							<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css" />
+							<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+							<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+
+
+							<div class="sidenav">
+								
+								
+							</div>
+							<div class="main">
+								
+								<div class="login-main-text">
+									<h2>Application<br /> Login Page</h2>
+									<p>Login or register from here to access.</p>
+								<div>
+									<div class="login-form">
+										
+										<form className="form">
+											<div class="form-group">
+												<label>User Name</label>
+												<input type="text" class="form-control" placeholder="User Name" />
+											</div>
+											<div class="form-group">
+												<label>Password</label>
+												<input type="password" class="form-control" placeholder="Password" />
+											</div>
+											<button type="submit" class="btn btn-black">Login</button>
+											<button type="submit" class="btn btn-secondary">Register</button>
+										</form>
+									</div>
+								</div>
+								</div>
+							</div>
 						</li>
-					);
-				})}
+
+				
+				
 			</ul>
 			<br />
-			<Link to="/">
-				<button className="btn btn-primary">Back home</button>
-			</Link>
+
 		</div>
 	);
 };
+{/* <Link to={"/single/" + index}>
+								<span>Link to: {item.title}</span>
+							</Link> */}
+{/* <Link to="/">
+				<button className="btn btn-primary">Back home</button>
+			</Link> */}
