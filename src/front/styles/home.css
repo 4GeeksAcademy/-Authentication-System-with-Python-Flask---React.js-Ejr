@@ -12,7 +12,7 @@
   
 }
 body{
-  background-image: url("https://images.pexels.com/photos/9986228/pexels-photo-9986228.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1");
+  background-image: url("https://images.unsplash.com/photo-1490818387583-1baba5e638af?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1032&q=80");
   background-repeat: no-repeat;
   background-size: cover;
 
@@ -39,33 +39,32 @@ p{
 #footer{
   position: absolute;
   width: 100%;
-  /* height: 221px; */
+  height: 171px;
   display: flex;
-  justify-content: center;
+  justify-content:space-around;
   left: -215px;
   top: 673px;
   background: linear-gradient(180deg, rgba(81, 68, 68, 0) 0%, #514444 70.62%);
 }
 #navbar{
-  background: rgba(255, 255, 255, 0.3);
-box-shadow: 0px 1px 8px rgba(0, 0, 0, 0.2);
+  margin: 2;
 }
 .btn{
   margin: 2px;
-  background-color: #ede6e663;
+ color: #e10b76;
 }
 
 .fa-solid{
   margin: 6px;
 }
-.btn-primary {
+.btn-secondary {
   color: #fff;
-  background-color: #d9e1e9;
-  border-color: #e0e6ef;
+  background-color: #e10b76;
+  border-color: #6c757d;
 }
 #loginicon{
  
-  background: #686b6a;
+  background: #e10b76;
   color: #ffffff;
   font-size: 30px;
   padding: 5px;
@@ -97,4 +96,11 @@ box-shadow: 0px 1px 8px rgba(0, 0, 0, 0.2);
 .row{
   display: flex;
     flex-direction: row-reverse;
+}
+.footer{
+  margin: 58px;
+}
+.fa-brands{
+  width: 30px;
+  padding-top: 40px;
 }
