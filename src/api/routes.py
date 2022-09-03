@@ -223,12 +223,12 @@ def get_users_company():
             return jsonify(empresas), 200
 
 #El usuario necesita un post para el login | un put para actualizar 
-@api.route('/api/login/user', methods=['POST'])
+@api.route('/login/user', methods=['POST'])
 def login():
     email = request.json.get('email')
     password = request.json.get('password')
 
-    usuario = Usuario.query.filter_by(email=email, isActive=True).first()
+    usuario = Usuario.query.filter_by(email=email).first()
     if not usuario:
         return jsonify({"msg":"Usuario/Contraseña no coinciden"}), 400
 

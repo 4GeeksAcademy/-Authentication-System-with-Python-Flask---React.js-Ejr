@@ -81,7 +81,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				  };
 			      try
 				  {const resp = await fetch(
-					"https://3001-marellanore-casinocorpo-w17bapgr3r5.ws-us60.gitpod.io/api/token",
+					'https://3001-marellanore-casinocorpo-gkyhs8gqlox.ws-us63.gitpod.io/api/login/user',
 					ops
 				  )
 					
