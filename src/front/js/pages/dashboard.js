@@ -7,7 +7,6 @@ import { Tablero } from "../component/tablero";
 
 export const Dashboard = () => {
   const { store, actions } = useContext(Context);
-
   useEffect(() => {
     actions.syncLocalStorageToStore();
     console.log("los datos del store han sido restituidos");

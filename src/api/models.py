@@ -34,7 +34,7 @@ class Inmueble(db.Model):
     precio = db.Column(db.Integer, unique=False, nullable=False)
     tipo_vivienda = db.Column(db.String(80), unique=False, nullable=False)
     habitaciones = db.Column(db.Integer, unique=False, nullable=False)
-    baños = db.Column(db.Integer, unique=False, nullable=False)
+    aseos = db.Column(db.Integer, unique=False, nullable=False)
     pet = db.Column(db.Boolean, unique=False, nullable=False)
     piscina = db.Column(db.Boolean, unique=False, nullable=False)
     terraza = db.Column(db.Boolean, unique=False, nullable=False)
@@ -58,7 +58,7 @@ class Inmueble(db.Model):
             "precio": self.precio,
             "tipo_vivienda": self.tipo_vivienda,
             "habitaciones": self.habitaciones,
-            "baños": self.baños,
+            "aseos": self.aseos,
             "pet": self.pet,
             "piscina": self.piscina,
             "terraza": self.terraza,

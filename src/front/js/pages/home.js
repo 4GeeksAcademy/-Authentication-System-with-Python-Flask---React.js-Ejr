@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import { Context } from "../store/appContext";
 import "../../styles/home.css";
 import casa from "../../img/casa-lujo-playa_98.webp";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import swal from "sweetalert";
 
 export const Home = () => {
@@ -10,8 +10,19 @@ export const Home = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    actions.backHome;
+    actions.backHome();
   }, []);
+
+  const handleClick = async () => {
+    if (store.operacion != "todas") {
+      await actions.fillLocalStorage();
+      await actions.createRequest();
+      await actions.getProperties();
+      navigate("/dashboard");
+    } else {
+      swal("Debe seleccionar al menos el tipo de operación");
+    }
+  };
 
   return (
     <>
@@ -19,7 +30,7 @@ export const Home = () => {
         className="contenedor-foto container d-flex justify-content-center"
         style={{ backgroundImage: `url(${casa})` }}
       >
-        <div className="formulario container rounded-3 bg-light">
+        <div className="plantilla container rounded-3 bg-light">
           <div className="titulo container ps-4 pt-3 pb-2">
             <h3>Elige tu propiedad</h3>
           </div>
@@ -157,22 +168,15 @@ export const Home = () => {
 
             {/*--------------------------------------------- BOTON DE PASE AL DASHBOARD----------------------------------------------*/}
             <div className="row align-items-end text-center">
-              <Link
-                className="mb-3"
-                to={store.operacion != "todas" ? "/dashboard" : ""}
-              >
+              <div className="mb-3">
                 <button
-                  onClick={() =>
-                    store.operacion != "todas"
-                      ? ""
-                      : swal("Debe seleccionar al menos la operación")
-                  }
+                  onClick={handleClick}
                   type="button"
                   className="btn btn-primary mb-3"
                 >
                   Ver propiedades
                 </button>
-              </Link>
+              </div>
             </div>
           </div>
         </div>

@@ -7,6 +7,17 @@ import { Feed } from "./feed";
 export const Tablero = () => {
   const { store, actions } = useContext(Context);
 
+  useEffect(() => {
+    actions.syncLocalStorageToStore();
+    console.log("los datos del store han sido restituidos");
+  }, []);
+
+  useEffect(() => {
+    actions.fillLocalStorage();
+    actions.createRequest();
+    actions.getProperties();
+  }, [store.operacion]);
+
   return (
     <div className="container col-8 col-lg-9">
       <nav className="d-flex justify-content-between">

@@ -6,29 +6,39 @@ import { Card } from "./card.js";
 
 export const Feed = () => {
   const { store, actions } = useContext(Context);
-  const properties = store.body_response;
 
   return (
     <div className="container-fluid feed-properties px-0 mb-2">
-      {properties.map((item) => (
-        <Card
-          key={item.id}
-          foto={item.imagenes[0]}
-          tipovivienda={item.tipo_vivienda}
-          direccion={item.direccion}
-          provincia={item.provincia}
-          precio={item.precio}
-          habitaciones={item.habitaciones}
-          baños={item.baños}
-          piscina={item.piscina}
-          terraza={item.terraza}
-          descripcion={item.descripcion}
-        />
-      ))}
+      {typeof store.body_response === "string" ? (
+        <div className="m-5 p-5">
+          <h3>{store.body_response}</h3>
+        </div>
+      ) : Array.isArray(store.body_response) &&
+        store.body_response.length == 0 ? (
+        <div className="m-5 p-5">
+          <h3>No se encontró propiedades, intente una búsqueda distinta</h3>
+        </div>
+      ) : Array.isArray(store.body_response) &&
+        store.body_response.length != 0 ? (
+        store.body_response.map((item) => (
+          <Card
+            key={item.id}
+            foto={item.main_image}
+            tipovivienda={item.tipo_vivienda}
+            direccion={item.direccion}
+            provincia={item.provincia}
+            precio={item.precio}
+            habitaciones={item.habitaciones}
+            baños={item.aseos}
+            piscina={item.piscina}
+            terraza={item.terraza}
+            descripcion={item.descripcion}
+            periodo={item.tipo_operacion == "alquiler" ? "/mes" : ""}
+          />
+        ))
+      ) : (
+        ""
+      )}
     </div>
   );
 };
-
-{
-  /* <div className="p-5 h1">{`${store.operacion} en ${store.vista}`}</div>; */
-}

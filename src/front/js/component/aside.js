@@ -6,18 +6,39 @@ import "../../styles/dashboard.css";
 export const Aside = () => {
   const { store, actions } = useContext(Context);
 
+  useEffect(() => {
+    actions.createRequest();
+  }, []);
+
+  const handleClick = async () => {
+    await actions.fillLocalStorage();
+    await actions.clearResponse();
+    await actions.createRequest();
+    await actions.getProperties();
+  };
+
   return (
     <div className="container col-4 col-lg-3 mb-2">
       <div className="formulario container rounded-3 px-0 mt-0">
-        <div className="titulo container ps-4 pt-3 pb-2">
-          <h3>Tus Preferencias</h3>
+        <div className="titulo container px-3 pt-3 pb-2 text-center">
+          <h4>Tus Preferencias</h4>
         </div>
         {/*contenedor aside*/}
-        <div className="filtros container pt-3 pb-4">
+        <div className="filtros container pt-0 pb-4">
+          {/* boton */}
+          <div className="mx-3 my-3 text-center">
+            <button
+              onClick={handleClick}
+              type="button"
+              className="btn btn-primary mb-3"
+            >
+              Filtrar Resultados
+            </button>
+          </div>
           {/* comunidad */}
           <div className="selector mx-3 mb-4">
             <div className="pb-2">
-              <span className="">Comunidad Autónoma</span>
+              <span className="">Comun. Autónoma</span>
             </div>
             <select
               onChange={actions.updateComunidad}
@@ -199,9 +220,12 @@ export const Aside = () => {
               aria-label="Default select example"
               value={store.habitaciones}
             >
-              <option className="">1</option>
-              <option className="">2</option>
-              <option className="">3 a más</option>
+              <option className="">cualquiera</option>
+              {["1", "2", "3 a más"].map((item) => (
+                <option key={item} className="">
+                  {item}
+                </option>
+              ))}
             </select>
           </div>
           {/* baños */}
@@ -215,10 +239,23 @@ export const Aside = () => {
               aria-label="Default select example"
               value={store.baños}
             >
-              <option className="">1</option>
-              <option className="">2</option>
-              <option className="">3 a más</option>
+              <option className="">cualquiera</option>
+              {["1", "2", "3 a más"].map((item) => (
+                <option key={item} className="">
+                  {item}
+                </option>
+              ))}
             </select>
+          </div>
+          {/* boton */}
+          <div className="selector mx-3 my-4 pt-4 text-center">
+            <button
+              onClick={handleClick}
+              type="button"
+              className="btn btn-primary mb-3"
+            >
+              Filtrar Resultados
+            </button>
           </div>
         </div>
       </div>

@@ -1,4 +1,5 @@
 .contenedor-foto {
+  padding-top: 12%;
   width: auto;
   height: 650px;
   background-size: cover;
@@ -7,8 +8,7 @@
   background-position-x: center;
 }
 
-.formulario {
-  margin-top: 12%;
+.plantilla {
   height: fit-content;
   width: fit-content;
 }
