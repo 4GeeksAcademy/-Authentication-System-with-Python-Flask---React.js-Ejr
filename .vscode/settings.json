@@ -1,5 +1,5 @@
 {
   "editor.formatOnSave": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "cSpell.words": ["Chakra"]
+  "cSpell.words": ["Chakra", "Favourites", "mobilenav"]
 }
