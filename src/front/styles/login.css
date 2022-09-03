@@ -1,95 +1,54 @@
-.main-head {
-  height: 150px;
-  background: rgb(255, 0, 0);
+.login-container{
+  margin-top: 5%;
+  margin-bottom: 5%;
 }
-
-.sidenav {
-  background-image: url(https://images.pexels.com/photos/3184195/pexels-photo-3184195.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1);
-
-  height: 1043px;
-
-  margin-top: 55px;
+.login-logo{
+  position: relative;
+  margin-left: -41.5%;
 }
-
-.main {
-  padding: 0px 10px;
-  display: flex;
-  flex-direction: row-reverse;
-}
-
-@media screen and (max-height: 450px) {
-  .sidenav {
-    padding-top: 15px;
-  }
-}
-
-@media screen and (max-width: 450px) {
-  .login-form {
-    margin-top: 10%;
-  }
-
-  .register-form {
-    margin-top: 10%;
-  }
-}
-
-@media screen and (min-width: 768px) {
-  .main {
-    margin-left: 40%;
-  }
-
-  .sidenav {
-    width: 46%;
-    position: fixed;
-    z-index: 1;
-    top: -55px;
-    left: 0;
-  }
-
-  .login-form {
-    margin-top: 80%;
-  }
-
-  .register-form {
-    margin-top: 20%;
-  }
-}
-
-.login-main-text {
-  padding: 60px;
-  color: #030303;
-}
-
-.login-main-text h2 {
-  font-weight: 300;
-}
-/* button */
-.btn-black {
-  background-color: rgb(71, 71, 71) !important;
-
-  color: rgb(255, 249, 249);
-}
-.btn-secondary {
-  margin-left: 28px;
-}
-.footer {
-  margin-left: 214px;
-  margin-top: 131px;
-}
-.form {
-  margin-top: -132px;
-  box-sizing: border-box;
-  box-sizing: border-box;
-  /* display: flex; */
-  flex-direction: column;
-  align-items: flex-start;
-  padding: 24px;
-  gap: 24px;
+.login-logo img{
   position: absolute;
-  width: 414px;
-  height: 309px;
-  left: calc(50% - 414px / 2 + 421px);
-  top: 456px;
-  background: linear-gradient(180deg, #6e7770 0%, rgba(110, 119, 112, 0) 100%);
-  border-radius: 4px;
+  width: 20%;
+  margin-top: 19%;
+  background: #282726;
+  border-radius: 4.5rem;
+  padding: 5%;
+}
+.login-form-1{
+  padding: 9%;
+  background:#d9a3b0f0;
+  box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0 rgba(0, 0, 0, 0.19);
+}
+.login-form-1 h3{
+  text-align: center;
+  margin-bottom:12%;
+  color:white;
+}
+.login-form-2{
+  padding: 9%;
+  background-image: url("https://images.pexels.com/photos/4871119/pexels-photo-4871119.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1");
+  box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0 rgba(0, 0, 0, 0.19);
+}
+.login-form-2 h3{
+  text-align: center;
+  margin-bottom:12%;
+  color: #fff;
+}
+.btnSubmit{
+  font-weight: 600;
+  width: 50%;
+  color: #282726;
+  background-color: #fff;
+  border: none;
+  border-radius: 1.5rem;
+  padding:2%;
+}
+.btnForgetPwd{
+  color: #fff;
+  font-weight: 600;
+  text-decoration: none;
+}
+.btnForgetPwd:hover{
+  text-decoration:none;
+  color:#fff;
 }

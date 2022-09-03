@@ -3,12 +3,54 @@ import { Link } from "react-router-dom";
 import "../../styles/login.css"
 import { Context } from "../store/appContext";
 
+
 export const Demo = () => {
 	const { store, actions } = useContext(Context);
 
 	return (
-		<div className="container">
-			<ul className="list-group">
+		<div class="container login-container">
+            <div class="row">
+                <div class="col-md-6 login-form-1">
+                    <h3>Login Form 1</h3>
+                    
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Your Email *" value="" />
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-control" placeholder="Your Password *" value="" />
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" class="btnSubmit" value="Login" />
+                        </div>
+                        <div class="form-group">
+                            <a href="#" class="btnForgetPwd">Forget Password?</a>
+                        </div>
+                    
+                </div>
+                <div class="col-md-6 login-form-2">
+                    <div class="login-logo">
+                        <img src="https://image.ibb.co/n7oTvU/logo_white.png" alt=""/>
+                    </div>
+                    
+                    
+                </div>
+            </div>
+        </div>
+		
+					);
+};
+					{/* <Link to={"/single/" + index}>
+								<span>Link to: {item.title}</span>
+							</Link> */}
+					{/* <Link to="/">
+				<button className="btn btn-primary">Back home</button>
+			</Link> */}
+
+
+
+
+
+					{/* <ul className="list-group">
 				
 					
 						<li>
@@ -19,29 +61,29 @@ export const Demo = () => {
 							<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 
 
-							<div class="sidenav">
+							<div className="sidenav">
 								
 								
 							</div>
-							<div class="main">
+							<div className="main">
 								
-								<div class="login-main-text">
+								<div className="login-main-text">
 									<h2>Application<br /> Login Page</h2>
 									<p>Login or register from here to access.</p>
 								<div>
-									<div class="login-form">
+									<div className="login-form">
 										
 										<form className="form">
-											<div class="form-group">
+											<div className="form-group">
 												<label>User Name</label>
-												<input type="text" class="form-control" placeholder="User Name" />
+												<input type="text" className="form-control" placeholder="User Name" />
 											</div>
-											<div class="form-group">
+											<div className="form-group">
 												<label>Password</label>
-												<input type="password" class="form-control" placeholder="Password" />
+												<input type="password" className="form-control" placeholder="Password" />
 											</div>
-											<button type="submit" class="btn btn-black">Login</button>
-											<button type="submit" class="btn btn-secondary">Register</button>
+											<button type="submit" className="btn btn-black">Login</button>
+											<button type="submit" className="btn btn-secondary">Register</button>
 										</form>
 									</div>
 								</div>
@@ -52,14 +94,4 @@ export const Demo = () => {
 				
 				
 			</ul>
-			<br />
-
-		</div>
-	);
-};
-{/* <Link to={"/single/" + index}>
-								<span>Link to: {item.title}</span>
-							</Link> */}
-{/* <Link to="/">
-				<button className="btn btn-primary">Back home</button>
-			</Link> */}
+			<br /> */}
