@@ -3,13 +3,15 @@ import { Context } from "../store/appContext";
 
 import { Link } from "react-router-dom";
 import "../../styles/home.css";
-
+import { Navbar } from "../component/navbar";
+import { Footer } from "../component/footer";
 export const Home = () => {
 	const { store, actions } = useContext(Context);
 
 	return (
 
-		<div class="row">
+		<div class="row imghome">
+			<Navbar/>
 			<div class="col-sm-6">
 				
 					<div class="card-body">
@@ -23,6 +25,7 @@ export const Home = () => {
 					</div>
 				
 			</div>
+			<Footer/>
 		</div>
 
 	);
