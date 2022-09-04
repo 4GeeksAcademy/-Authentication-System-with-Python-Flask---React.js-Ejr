@@ -39,11 +39,16 @@ function Navbar() {
         >
           <div className="navbar-nav">
             {!store.token ? (
-              <Link to="/login">
-                <a className="nav-link text-light" href="/">
-                  Login <FontAwesomeIcon icon={faArrowRightToBracket} />
-                </a>
-              </Link>
+              <li className="nav-item dropdown">
+              <a className="nav-link dropdown-toggle text-light" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Login <FontAwesomeIcon icon={faArrowRightToBracket} />
+              </a>
+              <ul className="dropdown-menu">
+                <Link to="/login" className="link-dark"><li className="dropdown-item">Login como usuario</li></Link>
+                <Link to="/login-empresa" className="link-dark"><li className="dropdown-item">Login como empresa</li></Link>
+                <Link to="/login-casino" className="link-dark"><li className="dropdown-item">Login como casino</li></Link>
+              </ul>
+            </li>
             ) : (
               <a
                 onClick={() => actions.logout()}
@@ -56,10 +61,11 @@ function Navbar() {
 
             <div className="offcanvas-body">
               <ul className="navbar-nav justify-content-end flex-grow-1 pe-3">
+                <li>
                 <a className="nav-link text-light" href="/">
                   Contacto <FontAwesomeIcon icon={faMobileScreen} />
                 </a>
-
+                </li>
                 <li className="nav-item">
                   <a className="nav-link text-light" href="/">
                     Perfil <FontAwesomeIcon icon={faAddressCard} />
