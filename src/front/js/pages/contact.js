@@ -24,7 +24,7 @@ function Contact() {
               Llámanos al +xx x xxxx xxxx WhatsApp +xx x xxxx xxxx
             </p>
             <h6 className="card-text text-center mt-5">
-              Horario de Atención: lunes a viernes 9am - 14pm 15pm - 19pm
+              Horario de Atención: lunes a viernes 9am - 14pm, 15pm - 19pm
             </h6>
             <p className="card-text text-center mt-5">
               ¡No dudes en contactarnos! <FontAwesomeIcon icon={faSmileBeam} />

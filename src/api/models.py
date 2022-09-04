@@ -8,40 +8,42 @@ from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 
-#falta backref en relationships y lazy=true
-# class Empresa(db.Model):
-#     id = db.Column(db.Integer, primary_key=True)
-#     nombre = db.Column(db.String(80), unique=True, nullable=False)
-#     cantidad_trabajadores = db.Column(db.Integer, unique=False, nullable=False)
-#     telefono = db.Column(db.Integer, unique=True, nullable=False)
-#     email = db.Column(db.String(80), unique=True, nullable=False)
-#     direccion = db.Column(db.String(80), unique=True, nullable=False)
-#     password = db.Column(db.String(80), unique=False, nullable=False)
-#     usuarios = db.relationship('Usuario')
+# falta backref en relationships y lazy=true
+class Empresa(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    nombre_empresa = db.Column(db.String(80), unique=True, nullable=False)
+    cantidad_trabajadores = db.Column(db.Integer, unique=False, nullable=False)
+    telefono = db.Column(db.Integer, unique=True, nullable=False)
+    email_empresa = db.Column(db.String(80), unique=True, nullable=False)
+    encargado_empresa = db.Column(db.String(80), unique=True, nullable=False)
+    direccion_empresa = db.Column(db.String(80), unique=True, nullable=False)
+    password = db.Column(db.String(80), unique=False, nullable=False)
+    # usuarios = db.relationship('Usuario')
 
 
-#     def serialize(self):
-#         return {
-#             "id": self.id,
-#             "nombre_empresa": self.nombre_empresa,
-#             "encargado_empresa": self.encargado_empresa,
-#             "cantidad_trabajadores":self.cantidad_trabajadores,
-#             "telefono_empresa":self.telefono_empresa,
-#             "email_empresa":self.email_empresa,
-#             "direccion_empresa": self.direccion_empresa,
-#             # do not serialize the password, its a security breach
-#         }
+    def serialize(self):
+        return {
+            "id": self.id,
+            "nombre_empresa": self.nombre_empresa,
+            "encargado_empresa": self.encargado_empresa,
+            "cantidad_trabajadores":self.cantidad_trabajadores,
+            "telefono":self.telefono,
+            "email_empresa":self.email_empresa,
+            "direccion_empresa": self.direccion_empresa,
+            # do not serialize the password, its a security breach
+        }
     
-#     def save(self):
-#         db.session.add(self)
-#         db.session.commit()
+    def save(self):
+        db.session.add(self)
+        db.session.commit()
     
-#     def update(self):
-#         db.session.commit()
+    def update(self):
+        db.session.commit()
     
-#     def delete(self):
-#         db.session.delete(self)
-#         db.session.commit()
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()
+
 
 class Usuario(db.Model):
     __tablename__ = 'usuarios'
@@ -79,38 +81,36 @@ class Usuario(db.Model):
         db.session.delete(self)
         db.session.commit()
 
-# class Casino(db.Model):
-#     id = db.Column(db.Integer, primary_key=True)
-#     nombre = db.Column(db.String(80), unique=False, nullable=False)
-#     encargado = db.Column(db.String(80), unique=False, nullable=False)
-#     telefono = db.Column(db.Integer, unique=True, nullable=False)
-#     email = db.Column(db.String(120), unique=True, nullable=False)
-#     direccion = db.Column(db.String(80), unique=True, nullable=False)
-#     password = db.Column(db.String(80), unique=False, nullable=False)
-#     usuarios = db.relationship('Usuario')
-  
 
-#     def serialize(self):
-#         return {
-#             "id": self.id,
-#             "nombre_casino": self.nombre,
-#             "apellido_casino":self.apellido,
-#             "telefono_casino":self.telefono,
-#             "email_casino":self.email,
-#             "direccion_casino": self.direccion
-#             # do not serialize the password, its a security breach
-#         }
+class Casino(db.Model):
+     id = db.Column(db.Integer, primary_key=True)
+     nombre = db.Column(db.String(80), unique=False, nullable=False)
+     telefono = db.Column(db.String(80), unique=True, nullable=False)
+     email = db.Column(db.String(120), unique=True, nullable=False)
+     direccion = db.Column(db.String(80), unique=True, nullable=False)
+     password = db.Column(db.String(80), unique=False, nullable=False)
+    #  empresas = db.relationship('Empresa', backref='empresa', uselist=False)
+
+     def serialize(self):
+         return {
+             "id": self.id,
+             "nombre": self.nombre,
+             "telefono":self.telefono,
+             "email":self.email,
+             "direccion": self.direccion,
+             # do not serialize the password, its a security breach
+         }
     
-#     def save(self):
-#         db.session.add(self)
-#         db.session.commit()
+     def save(self):
+        db.session.add(self)
+        db.session.commit()
     
-#     def update(self):
-#         db.session.commit()
+     def update(self):
+        db.session.commit()
     
-#     def delete(self):
-#         db.session.delete(self)
-#         db.session.commit()
+     def delete(self):
+        db.session.delete(self)
+        db.session.commit()
 
 # class Pedidos(db.Model):
 #     id = db.Column(db.Integer, primary_key=True)

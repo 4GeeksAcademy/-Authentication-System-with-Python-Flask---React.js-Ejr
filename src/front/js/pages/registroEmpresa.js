@@ -3,46 +3,57 @@ import { useNavigate } from 'react-router-dom';
 import { Context } from '../store/appContext';
 
 
-function Register() {
+function RegistroEmpresa() {
 
     const { store, actions } = useContext(Context);
     const [nombre, setNombre] = useState('');
-    const [apellido, setApellido] = useState('');
+    const [cantidad, setCantidad] = useState('');
     const [telefono, setTelefono] = useState('');
     const [direccion, setDireccion] = useState('');
+    const [encargado, setEncargado] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
 
 
-    const register = (event) => {
+    const registroEmpresa = (event) => {
         event.preventDefault();
-        actions.register(nombre, apellido, telefono, direccion, email, password);
-        navigate('/login');
+        actions.registroEmpresa(nombre, cantidad, telefono, direccion, encargado, email, password);
+        navigate('/loginEmpresa');
     };
 
 
     return (
         <div className='container mt-5 border border-5 border-success mt-5 mb-5 shadow-lg p-3 mb-5 bg-white rounded'>
-            <h1 className='text-success'>Registrarse</h1>
-            <form onSubmit={register} className='row g-3 needs-validation'>
+            <h1 className='text-success'>Registro de empresa</h1>
+            <form onSubmit={registroEmpresa} className='row g-3 needs-validation'>
             <div className='form-group col-md-5 mt-5'>
                     <input
                         value={nombre}
                         type='nombre'
                         className='form-control'
-                        placeholder='Nombre'
+                        placeholder='Nombre empresa'
                         onChange={event => setNombre(event.target.value)}
                         required
                     />
                 </div>
                 <div className='form-group col-md-5 mt-5'>
                     <input
-                        value={apellido}
-                        type='apellido'
+                        value={encargado}
+                        type='encargado'
                         className='form-control'
-                        placeholder='Apellido'
-                        onChange={event => setApellido(event.target.value)}
+                        placeholder='Encargado de empresa'
+                        onChange={event => setEncargado(event.target.value)}
+                        required
+                    />
+                </div>
+                <div className='form-group col-md-5 mt-5'>
+                    <input
+                        value={cantidad}
+                        type='cantidad'
+                        className='form-control'
+                        placeholder='Cantidad de trabajadores'
+                        onChange={event => setCantidad(event.target.value)}
                         required
                     />
                 </div>
@@ -61,7 +72,7 @@ function Register() {
                         value={direccion}
                         type='direccion'
                         className='form-control'
-                        placeholder='Dirección'
+                        placeholder='Dirección de empresa'
                         onChange={event => setDireccion(event.target.value)}
                         required
                     />
@@ -96,4 +107,4 @@ function Register() {
     );
 }
 
-export default Register
+export default RegistroEmpresa;

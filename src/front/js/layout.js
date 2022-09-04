@@ -10,6 +10,8 @@ import Navbar from "./component/navbar";
 import Footer from "./component/footer";
 
 import Login from "./pages/login";
+import LoginEmpresa from "./pages/loginEmpresa";
+import LoginCasino from "./pages/loginCasino";
 import AdminCasino from "./pages/adminCasino";
 import MenuCasino from "./pages/menuCasino";
 import ResumenPanelAdmin from "./pages/adminAdmin";
@@ -27,6 +29,9 @@ import ConfirmReporte from "./pages/confirmReporte";
 import InfoEmpresa from "./pages/infoEmpresa";
 import DatosProblemas from "./pages/infoProblemas";
 import Register from "./pages/register";
+import RegistroEmpresa from "./pages/registroEmpresa";
+import RegistroCasino from "./pages/registroCasino";
+
 
 //rutaprivada
 import PrivateRoutes from "./component/PrivateRoutes";
@@ -43,12 +48,12 @@ const Layout = () => {
         <ScrollToTop>
           <Navbar />
           <Routes>
-             <Route element={<PrivateRoutes/>}>
+             <Route element={<PrivateRoutes />} path="/protected"></Route>
              <Route element={<ResumenPanelAdmin />} path="/admin"></Route>
              <Route element={<InfoEmpresa />} path="/informacion-empresa"></Route>
             <Route element={<DireccionesUsuario />} path="/informacion-delivery"></Route>
             <Route element={<DatosProblemas />} path="/detalle-problema"></Route>
-             </Route>
+             
 
             <Route element={<ConfirmReporte />} path="/confirmacion-problema"></Route>
             <Route element={<FormReporte />} path="/formulario-problema"></Route>
@@ -64,7 +69,11 @@ const Layout = () => {
             <Route element={<PasswordRecoveryEmail />} path="/recovery"></Route>
             <Route element={<AdminEmpresa />} path="/admin-empresa"></Route>
             <Route element={<Register />} path="/register"></Route>
+            <Route element={<RegistroEmpresa />} path="/registro-empresa"></Route>
+            <Route element={<RegistroCasino />} path="/registro-casino"></Route>
             <Route element={<Login />} path="/login"></Route>
+            <Route element={<LoginEmpresa />} path="/login-empresa"></Route>
+            <Route element={<LoginCasino />} path="/login-casino"></Route>
             <Route element={<Home />} path="/" />
             <Route element={<h1>Not found!</h1>} />
 

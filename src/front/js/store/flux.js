@@ -8,8 +8,21 @@ const getState = ({ getStore, getActions, setStore }) => {
 				'apellido': '',
 				'telefono': '',
 				'direccion': '',
-				'email': '',
-				'token': ''
+				'email': ''
+			},
+			empresa: {
+				'nombre': '',
+				'cantidad': '',
+				'telefono': '',
+				'encargadp': '',
+				'direccion': '',
+				'email': ''
+			},
+			casino: {
+				'nombre': '',
+				'telefono': '',
+				'direccion': '',
+				'email': ''
 			},
 			demo: [
 				{
@@ -60,47 +73,132 @@ const getState = ({ getStore, getActions, setStore }) => {
 						console.error(error);
 					})
 			},
+			registroEmpresa: async (nombre, cantidad, telefono, direccion, encargado, email, password) => {
+				const opts = {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify({
+						'nombre_empresa': nombre,
+						'cantidad_trabajadores': cantidad,
+						'telefono': telefono,
+						'direccion_empresa': direccion,
+						'encargado_empresa': encargado,
+						'email_empresa': email,
+						'password': password
+					})
+				};
+				await fetch(process.env.BACKEND_URL + '/api/registro', opts)
+					.then(response => response.json())
+					.then((data) => {
+						console.log(data);
+					})
+					.catch((error) => {
+						console.error(error);
+					})
+			},
+			registroCasino: async (nombre, telefono, direccion, email, password) => {
+				const opts = {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify({
+						'nombre': nombre,
+						'telefono': telefono,
+						'direccion': direccion,
+						'email': email,
+						'password': password
+					})
+				};
+				await fetch(process.env.BACKEND_URL + '/api/registro-casino', opts)
+					.then(response => response.json())
+					.then((data) => {
+						console.log(data);
+					})
+					.catch((error) => {
+						console.error(error);
+					})
+			},
+			login: async (email, password) => {
+				const opts = {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify({
+						'email': email,
+						'password': password
+					})
+				};
+				await fetch(process.env.BACKEND_URL + '/api/login/user', opts)
+					.then(response => response.json())
+					.then((data) => {
+						console.log("This came from the backend", data);
+						sessionStorage.setItem("token", data.access_token);
+						setStore({token: data.access_token})
+						return true
+
+					})
+					.catch((error) => {
+						console.error(error);
+					})
+			},
+			loginEmpresa: async (email, password) => {
+				const opts = {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify({
+						'email_empresa': email,
+						'password': password
+					})
+				};
+				await fetch(process.env.BACKEND_URL + '/api/login/empresa', opts)
+					.then(response => response.json())
+					.then((data) => {
+						console.log("This came from the backend", data);
+						sessionStorage.setItem("token", data.access_token);
+						setStore({token: data.access_token})
+						return true
+
+					})
+					.catch((error) => {
+						console.error(error);
+					})
+			},
+			loginCasino: async (email, password) => {
+				const opts = {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify({
+						'email': email,
+						'password': password
+					})
+				};
+				await fetch(process.env.BACKEND_URL + '/api/login/casino', opts)
+					.then(response => response.json())
+					.then((data) => {
+						console.log("This came from the backend", data);
+						sessionStorage.setItem("token", data.access_token);
+						setStore({token: data.access_token})
+						return true
+
+					})
+					.catch((error) => {
+						console.error(error);
+					})
+			},
 			logout: () =>{
 				sessionStorage.removeItem("token");
 				console.log("Login Out")
 				 setStore({token: null})
-
 			},
-
-			login:async (email,password)=>{
-
-				const ops = {
-					method: "POST",
-					headers: {
-					  "Content-Type": "application/json",
-					},
-					body: JSON.stringify({
-					  email: email,
-					  password: password,
-					}),
-				  };
-			      try
-				  {const resp = await fetch(
-					"https://3001-marellanore-casinocorpo-w17bapgr3r5.ws-us60.gitpod.io/api/token",
-					ops
-				  )
-					
-					  if (resp.status !== 200){
-					  alert("There has been some error");
-					  return false
-
-					  }
-					  const data = await resp.json()
-					  console.log("This came from the backend", data);
-					  sessionStorage.setItem("token", data.access_token);
-					  setStore({token: data.access_token})
-					  return true;
-					}
-					  catch(error){
-						console.error("There has been an error login in")
-					  }
-			},
-			 getMessage: async () => {
+			getMessage: async () => {
 				try{
 			 		// fetching data from the backend
 					const resp = await fetch(process.env.BACKEND_URL + "/api/hello")
