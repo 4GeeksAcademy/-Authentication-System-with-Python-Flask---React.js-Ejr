@@ -19,7 +19,7 @@ export const Tablero = () => {
   }, [store.operacion]);
 
   return (
-    <div className="container col-8 col-lg-9">
+    <div className="container col-12 col-lg-9">
       <nav className="d-flex justify-content-between">
         {/* Botones Alquiler y Compra */}
         {store.operacion == "alquiler" || store.operacion == "" ? (

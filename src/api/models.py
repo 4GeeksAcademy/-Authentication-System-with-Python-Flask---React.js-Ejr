@@ -31,6 +31,7 @@ class Inmueble(db.Model):
     provincia = db.Column(db.String(80), unique=False, nullable=False)
     municipio = db.Column(db.String(80), unique=False, nullable=False)
     direccion = db.Column(db.String(80), unique=False, nullable=False)
+    descripcion = db.Column(db.String(300), unique=False, nullable=True)
     precio = db.Column(db.Integer, unique=False, nullable=False)
     tipo_vivienda = db.Column(db.String(80), unique=False, nullable=False)
     habitaciones = db.Column(db.Integer, unique=False, nullable=False)
@@ -40,9 +41,8 @@ class Inmueble(db.Model):
     terraza = db.Column(db.Boolean, unique=False, nullable=False)
     garage = db.Column(db.Boolean, unique=False, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    # inmueble = db.relationship('User', backref='Inmueble' ) #, lazy=True
-    imagenes = db.relationship('Imagen', backref='Inmueble', cascade="all, delete") #, lazy=True
-    messages = db.relationship('Message', backref='Inmueble', cascade="all, delete") #, lazy=True
+    imagenes = db.relationship('Imagen', backref='Inmueble', cascade="all, delete") 
+    messages = db.relationship('Message', backref='Inmueble', cascade="all, delete") 
 
     def __repr__(self):
         return f'<Inmueble {self.direccion}>'
@@ -55,6 +55,7 @@ class Inmueble(db.Model):
             "provincia": self.provincia,
             "municipio": self.municipio,
             "direccion": self.direccion,
+            "descripcion": self.descripcion,
             "precio": self.precio,
             "tipo_vivienda": self.tipo_vivienda,
             "habitaciones": self.habitaciones,
@@ -68,7 +69,7 @@ class Inmueble(db.Model):
 
 class Imagen(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    imagen_url = db.Column(db.String(80), unique=False, nullable=False)
+    imagen_url = db.Column(db.String(300), unique=False, nullable=False)
     inmueble_id = db.Column(db.Integer, db.ForeignKey('inmueble.id'), nullable=False)
 
     def __repr__(self):

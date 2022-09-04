@@ -17,14 +17,6 @@ def handle_hello():
 
     return jsonify(response_body), 200
 
-# @api.route('/inmueble', methods=['GET'])
-# def getInmuebles():
-
-#     body_inmo = request.get_json()
-#     if body_inmo is None:
-#         inmuebles = Inmueble.query.all()
-#         inmuebles_ser = list(map(lambda x: x.serialize(),inmuebles))
-#         return jsonify(inmuebles_ser), 200
 
 @api.route('/properties', methods=['POST'])
 def filterInmuebles():
@@ -84,11 +76,11 @@ def filterInmuebles():
     tipos = []
 
     if body_inmo["vivienda_chalet"]==True:
-        tipos.append("chalet")
+        tipos.append("Chalet")
     if body_inmo["vivienda_piso"]==True:
-        tipos.append("piso")
+        tipos.append("Piso")
     if body_inmo["vivienda_villa"]==True:
-        tipos.append("villa")
+        tipos.append("Villa")
         
     if len(tipos)!=0 and len(tipos)!=3: 
         inmuebles = list(filter(lambda item: item.tipo_vivienda in tipos, inmuebles))

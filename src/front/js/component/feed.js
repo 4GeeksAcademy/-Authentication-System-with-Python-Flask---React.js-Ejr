@@ -8,7 +8,7 @@ export const Feed = () => {
   const { store, actions } = useContext(Context);
 
   return (
-    <div className="container-fluid feed-properties px-0 mb-2">
+    <div className="container-fluid feed-properties ps-0 pe-2 mb-2">
       {typeof store.body_response === "string" ? (
         <div className="m-5 p-5">
           <h3>{store.body_response}</h3>
@@ -22,18 +22,22 @@ export const Feed = () => {
         store.body_response.length != 0 ? (
         store.body_response.map((item) => (
           <Card
+            loading="lazy"
             key={item.id}
             foto={item.main_image}
             tipovivienda={item.tipo_vivienda}
             direccion={item.direccion}
             provincia={item.provincia}
+            comunidad={item.comunidad}
             precio={item.precio}
             habitaciones={item.habitaciones}
             baños={item.aseos}
             piscina={item.piscina}
             terraza={item.terraza}
             descripcion={item.descripcion}
-            periodo={item.tipo_operacion == "alquiler" ? "/mes" : ""}
+            periodo={
+              item.tipo_operacion == "alquiler" ? " Euros/mes" : " Euros"
+            }
           />
         ))
       ) : (

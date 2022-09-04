@@ -18,25 +18,25 @@ export const Aside = () => {
   };
 
   return (
-    <div className="container col-4 col-lg-3 mb-2">
+    <div className="container col-12 col-lg-3 mb-2">
       <div className="formulario container rounded-3 px-0 mt-0">
         <div className="titulo container px-3 pt-3 pb-2 text-center">
           <h4>Tus Preferencias</h4>
         </div>
+        {/* boton */}
+        <div className="mx-3 my-2 text-center">
+          <button
+            onClick={handleClick}
+            type="button"
+            className="btn btn-primary mb-3"
+          >
+            Actualizar Búsqueda
+          </button>
+        </div>
         {/*contenedor aside*/}
-        <div className="filtros container pt-0 pb-4">
-          {/* boton */}
-          <div className="mx-3 my-3 text-center">
-            <button
-              onClick={handleClick}
-              type="button"
-              className="btn btn-primary mb-3"
-            >
-              Filtrar Resultados
-            </button>
-          </div>
+        <div className="filtros-aside container pt-0 pb-4">
           {/* comunidad */}
-          <div className="selector mx-3 mb-4">
+          <div className="selector mx-3 mb-3">
             <div className="pb-2">
               <span className="">Comun. Autónoma</span>
             </div>
@@ -58,7 +58,7 @@ export const Aside = () => {
             </select>
           </div>
           {/* provincia */}
-          <div className="selector mx-3 mb-4">
+          <div className="selector mx-3 mb-3">
             <div className="pb-2">
               <span className="">Provincia</span>
             </div>
@@ -77,7 +77,7 @@ export const Aside = () => {
             </select>
           </div>
           {/* rango de precio */}
-          <div className="selector mx-3 mb-4">
+          <div className="selector mx-3 mb-3">
             <div className="pb-2">
               <span className="">Rango de Precio</span>
             </div>
@@ -142,7 +142,7 @@ export const Aside = () => {
             )}
           </div>
           {/* tipo de vivienda */}
-          <div className="selector mx-3 mb-4">
+          <div className="selector mx-3 mb-3">
             <div className="pb-2">
               <span className="">Tipo de Vivienda</span>
             </div>
@@ -172,7 +172,7 @@ export const Aside = () => {
             </div>
           </div>
           {/* caracteristicas */}
-          <div className="selector mx-3 mb-4">
+          <div className="selector mx-3 mb-3">
             <div className="pb-2">
               <span className="">Características</span>
             </div>
@@ -210,7 +210,7 @@ export const Aside = () => {
             </div>
           </div>
           {/* habitaciones */}
-          <div className="selector mx-3 mb-4">
+          <div className="selector mx-3 mb-3">
             <div className="pb-2">
               <span className="">Habitaciones</span>
             </div>
@@ -229,7 +229,7 @@ export const Aside = () => {
             </select>
           </div>
           {/* baños */}
-          <div className="selector mx-3 mb-4">
+          <div className="selector mx-3 mb-3">
             <div className="pb-2">
               <span className="">Baños</span>
             </div>
@@ -248,7 +248,7 @@ export const Aside = () => {
             </select>
           </div>
           {/* boton */}
-          <div className="selector mx-3 my-4 pt-4 text-center">
+          {/* <div className="selector mx-3 my-0 pt-2 text-center">
             <button
               onClick={handleClick}
               type="button"
@@ -256,7 +256,7 @@ export const Aside = () => {
             >
               Filtrar Resultados
             </button>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>
