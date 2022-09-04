@@ -7,7 +7,7 @@ import { useContext, useState } from "react";
 import { FaHandPointDown } from "react-icons/fa";
 
 
-const Login = () => {
+const LoginEmpresa = () => {
   const { store, actions } = useContext(Context);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -15,7 +15,7 @@ const Login = () => {
 
 
   const handleClick = () => {
-    actions.login(email, password);
+    actions.loginEmpresa(email, password);
   };
 
   if (store.token &&store.token !="" && store.token != undefined ) 
@@ -29,7 +29,7 @@ const Login = () => {
       </div>
       <div className="container shadow-lg p-3 mb-5 bg-white rounded  mt-5">
         <div className="row ">
-          <h5 className="text-center">Si estás registrado como usuario <FaHandPointDown /> </h5>
+          <h5 className="text-center">Si estás registrado como empresa <FaHandPointDown /> </h5>
           <div className="col mt-4">
             <input
               className="input w-100"
@@ -72,4 +72,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default LoginEmpresa;
