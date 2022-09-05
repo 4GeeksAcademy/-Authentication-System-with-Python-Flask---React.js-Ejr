@@ -13,7 +13,7 @@
   height: fit-content;
 }
 .feed-properties {
-  height: 85vh;
+  height: 87vh;
   overflow-y: scroll;
 }
 .feed-properties::-webkit-scrollbar {

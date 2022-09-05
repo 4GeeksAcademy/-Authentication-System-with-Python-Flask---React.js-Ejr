@@ -65,6 +65,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       /*---------------------------- INICIO DE LA DATA SIMULADA DE API PARA PRUEBAS ANTES DE IMPLEMENTAR FETCH ------------------------------*/
       body_request: {},
       body_response: "buscando coincidencias...",
+
       /*---------------------------- FIN DE LA DATA SIMULADA DE API PARA PRUEBAS ANTES DE IMPLEMENTAR FETCH ---------------------------*/
 
       /*--------------------------------------- INICIO DE LAS VARIABLES DE FILTROS ------------------------------------------------------*/
@@ -377,6 +378,21 @@ const getState = ({ getStore, getActions, setStore }) => {
       /*------------------------------------- FIN DE LAS FUNCIONES DE ENTREGA Y RECUPERACION DE DATA ------------------------------ */
 
       /*----------------------------------------- INICIO DE LAS FUNCIONES FETCH API -------------------------------------------------*/
+      joinBodies: (arreglo1, arreglo2) => {
+        const store = getStore();
+        const arr1 = arreglo1;
+        const arr2 = arreglo2;
+        arr1.forEach((item) => (item["fotos"] = []));
+
+        for (let i of arr1) {
+          for (let j of arr2) {
+            if (j["inmueble_id"] == i["id"]) {
+              i["fotos"].push(j["imagen_url"]);
+            }
+          }
+        }
+        return arr1;
+      },
 
       getProperties: async () => {
         const store = getStore();
@@ -397,9 +413,11 @@ const getState = ({ getStore, getActions, setStore }) => {
             throw new Error("The fetch has failed");
           }
           const data = await resp.json();
-          setStore({ body_response: data });
-          console.log("this came from the backend", data);
-          return data;
+          const aux1 = data["inmuebles"];
+          const aux2 = data["imagenes"];
+          const aux3 = getActions().joinBodies(aux1, aux2);
+          setStore({ body_response: aux3 });
+          console.log("this came from the backend", aux3);
         } catch (error) {
           console.log("The fetch has failed: ", error);
         }

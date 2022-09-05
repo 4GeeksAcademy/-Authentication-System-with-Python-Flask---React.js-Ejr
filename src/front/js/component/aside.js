@@ -18,8 +18,8 @@ export const Aside = () => {
   };
 
   return (
-    <div className="container col-12 col-lg-3 mb-2">
-      <div className="formulario container rounded-3 px-0 mt-0">
+    <div className="container col-12 col-lg-3 pb-3 mb-2 px-0">
+      <div className="formulario container rounded-3 px-0 mt-0 pb-3">
         <div className="titulo container px-3 pt-3 pb-2 text-center">
           <h4>Tus Preferencias</h4>
         </div>
@@ -30,7 +30,7 @@ export const Aside = () => {
             type="button"
             className="btn btn-primary mb-3"
           >
-            Actualizar Búsqueda
+            Actualizar
           </button>
         </div>
         {/*contenedor aside*/}

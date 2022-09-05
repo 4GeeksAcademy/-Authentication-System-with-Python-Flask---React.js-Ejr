@@ -48,6 +48,12 @@ class Inmueble(db.Model):
         return f'<Inmueble {self.direccion}>'
 
     def serialize(self):
+        # fotos = 
+        # for x in self.imagenes:
+        #     "id" = db.Column(db.Integer, primary_key=True),
+        #     "imagen_url" = db.Column(db.String(300), unique=False, nullable=False),
+        #     "inmueble_id" = db.Column(db.Integer, db.ForeignKey('inmueble.id'), nullable=False),
+
         return {
             "id": self.id,
             "tipo_operacion": self.tipo_operacion,
@@ -63,7 +69,8 @@ class Inmueble(db.Model):
             "pet": self.pet,
             "piscina": self.piscina,
             "terraza": self.terraza,
-            "garage": self.garage,
+            "garage": self.garage
+            # "imagenes":
             # do not serialize the password, its a security breach
         }
 
@@ -89,7 +96,6 @@ class Message(db.Model):
     sender_phone = db.Column(db.Integer, unique=False, nullable=False)
     body = db.Column(db.String(300), unique=False, nullable=False)
     recipient_id = db.Column(db.Integer, db.ForeignKey('user.id')) 
-    # recipient = db.relationship('User', backref='received_messages') #, cascade="all, delete"
     inmueble_id = db.Column(db.Integer, db.ForeignKey('inmueble.id')) 
 
     def __repr__(self):

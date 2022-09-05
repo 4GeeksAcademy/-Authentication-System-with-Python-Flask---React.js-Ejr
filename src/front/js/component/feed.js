@@ -22,9 +22,8 @@ export const Feed = () => {
         store.body_response.length != 0 ? (
         store.body_response.map((item) => (
           <Card
-            loading="lazy"
             key={item.id}
-            foto={item.main_image}
+            foto={item.fotos[0]}
             tipovivienda={item.tipo_vivienda}
             direccion={item.direccion}
             provincia={item.provincia}

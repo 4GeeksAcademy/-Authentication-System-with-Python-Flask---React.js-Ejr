@@ -1,3 +1,13 @@
 /* 
     General Styles used on every website (Don't Repeat Yourself)
 */
+body::-webkit-scrollbar {
+  width: 8px;
+  background: rgb(237, 237, 237);
+  border-radius: 8px;
+}
+body::-webkit-scrollbar-thumb {
+  width: 8px;
+  background: rgb(196, 196, 196);
+  border-radius: 8px;
+}
