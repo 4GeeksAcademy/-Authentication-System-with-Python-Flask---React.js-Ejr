@@ -13,7 +13,7 @@ export const Navbar = () => {
 				</Link>
 				<div className="ml-auto">
 					<Link to="/demo">
-						<button className="btn btn-primary">Salir/ Este boton lleva al landing page </button>
+						<button className="btn btn-primary">Salir - Este boton lleva al landing page </button>
 					</Link>
 				</div>
 			</div>
