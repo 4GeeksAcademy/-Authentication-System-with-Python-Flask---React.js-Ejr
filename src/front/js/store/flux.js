@@ -91,8 +91,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             opts
           );
           if (resp.status !== 200) {
-            new Error("Error signing up");
-            return false;
+            throw new Error("Error signing up");
           }
           const data = await resp.json();
           localStorage.setItem("token", data.access_token);
@@ -117,6 +116,30 @@ const getState = ({ getStore, getActions, setStore }) => {
         localStorage.clear();
         setStore({ token: null });
         console.log("logging out");
+      },
+      updateUser: async (full_name, email, password) => {
+        const opts = {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            full_name: full_name,
+            email: email,
+            password: password,
+          }),
+        };
+        try {
+          const resp = await fetch(process.env.BACKEND_URL + "/update", opts);
+          if (resp.status !== 200) {
+            throw new Error("Something went wrong updating the user");
+          }
+          const data = await resp.json();
+          return data;
+        } catch (e) {
+          console.log(`${e.name}: ${e.message}`);
+        }
       },
     },
   };

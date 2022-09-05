@@ -1,15 +1,17 @@
 import React, { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
 
 export const Login = (props) => {
   const { store, actions } = useContext(Context);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = async () => {
-    actions.login(username, password);
+    await actions.login(username, password);
+    navigate(`/user/${localStorage.getItem("id")}`);
   };
   return (
     <>
@@ -42,15 +44,13 @@ export const Login = (props) => {
                   />
                 </ul>
                 <div className="card-body">
-                  <Link to={`/user/${localStorage.getItem("id")}`}>
-                    <a
-                      href="#"
-                      className="btn btn-success"
-                      onClick={handleSubmit}
-                    >
-                      Login
-                    </a>
-                  </Link>
+                  <a
+                    href="#"
+                    className="btn btn-success"
+                    onClick={handleSubmit}
+                  >
+                    Login
+                  </a>
                   <Link to={"/"}>
                     {" "}
                     <a href="#" className="btn btn-danger">
