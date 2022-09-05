@@ -1,7 +1,23 @@
-/*
-    home.css: This website contains selectors only used in home.css
+.contenedor-foto {
+  padding-top: 12%;
+  width: auto;
+  height: 650px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position-y: center;
+  background-position-x: center;
+}
 
-    All pages share the styles on index.css but you should create 
-    one more css for each page that will contain the selected used 
-    on that page only (the ones not reused in other pages).
-*/
+.plantilla {
+  height: fit-content;
+  width: fit-content;
+}
+.titulo {
+  height: fit-content;
+}
+.filtros {
+  height: fit-content;
+}
+.selector {
+  height: fit-content;
+}
