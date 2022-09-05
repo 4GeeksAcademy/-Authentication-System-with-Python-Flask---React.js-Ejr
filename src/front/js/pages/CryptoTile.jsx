@@ -1,12 +1,13 @@
 import React from "react";
-
-const CryptoTile = ({title, rate}) => {
-
+import "../../styles/cryptotile.css";
+const CryptoTile = ({data, selected, onClick}) => {
+    const{name, rate, icon}= data;
+    const handleClick = () => onClick(data);
     return(
-        <div className="card">
+        <div className={`card ${selected && 'selected'}`} onClick={handleClick}>
            <div className="card-body">
-            <img src="" alt="icon"/>
-            <div>{title}</div>
+            <img className="iconos" src={icon} alt="icon"/>
+            <div>{name}</div>
             <div>{rate}</div>
             </div> 
         </div>
