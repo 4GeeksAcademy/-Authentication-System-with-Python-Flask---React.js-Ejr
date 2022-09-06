@@ -78,7 +78,7 @@ var contenido =""
           <p>Hola, lamentamos mucho los problemas ocasionados</p>
           <p>Cuéntanos, ¿Cuál es tu problema?</p>
           <br />
-          <p>Por favor selecciona tu numero de empresa y selecciona solo uno de los campos</p>
+          <p>Por favor ingresa tu numero de usuario y selecciona solo uno de los campos</p>
           <input 
           
       placeholder="UserId"
