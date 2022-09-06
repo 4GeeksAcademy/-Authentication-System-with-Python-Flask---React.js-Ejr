@@ -26,7 +26,7 @@ export const Productos = () => {
                    
                     <Link to="/">
 
-							<button type="button" class="btn btn-outline-dark">Comprar</button>
+							<button type="button" class="btn btn-outline-dark boton">Comprar</button>
 						</Link>
 							<button  type="button" class="btn btn-outline-dark m-2"> <i class="far fa-heart"></i></button>
                 </div>

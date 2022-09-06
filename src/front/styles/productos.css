@@ -14,7 +14,7 @@
 }
 .container figure{
     position: relative;
-    height: 250px;
+    height: 270px;
     width: 350px;
     overflow: hidden;
     border-radius: 6px;
@@ -84,6 +84,11 @@ figure{
     display: flex;
     flex-direction: row-reverse;
 }
-
-
+.boton{
+    background: rgb(255, 255, 255);
+    
+}
+.boton:hover{
+    background: rgb(255, 0, 208);
+}
 
