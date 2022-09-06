@@ -1,19 +1,27 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
+import rigoImageUr from "../../img/LogoSample_ByTailorBrands.jpg";
 export const Navbar = () => {
 	return (
-		<nav className="navbar navbar-light bg-light">
+		<nav className="navbar" id="navbar">
 			<div className="container">
 				<Link to="/">
-					<span className="navbar-brand mb-0 h1">React Boilerplate</span>
+				
+					
 				</Link>
-				<div className="ml-auto">
+				
+			<div className="fle">
+			<button type="button" class="btn ">HOME</button>
+				<button type="button" class="btn ">PRODUCTOS</button>
+				<button type="button" class="btn ">CONTACTO</button>
+			</div>
+				<div className="ml-auto" id="iconos">
 					<Link to="/demo">
-						<button className="btn btn-primary">Check the Context in action</button>
-					</Link>
+				<i class="fa-solid fa-1x fa-user" id="loginicon"></i>
+				</Link>
 				</div>
 			</div>
+			
 		</nav>
 	);
 };
