@@ -3,7 +3,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 		store: {
 			token: null,
 			message: null,
-			user: {
+						user: {
 				'nombre': '',
 				'apellido': '',
 				'telefono': '',
@@ -206,6 +206,47 @@ const getState = ({ getStore, getActions, setStore }) => {
 			 		console.log("Error loading message from backend", error)
 				}
 			 },
+
+
+//reporteproblema
+
+reporteProblema: async (contenido,userid) => {
+	const opts = {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify({
+			'usuario_id':userid,
+			'contenido':contenido,
+		
+
+		})
+	};
+	await fetch("https://3001-marellanore-casinocorpo-hp46zzc1nqx.ws-us63.gitpod.io/api/problema-usuario", opts)
+		.then(response => response.json())
+		.then((data) => {
+			console.log("This came from the backend", data);
+			sessionStorage.setItem("token", data.access_token);
+			setStore({token: data.access_token})
+			return true
+
+		})
+		.catch((error) => {
+			console.error(error);
+		})
+	},
+
+
+
+
+
+
+
+
+
+
+
 
 
 			changeColor: (index, color) => {
