@@ -18,7 +18,7 @@
   margin: 0;
   height: 100vh;
 }
-.container{
+.coco{
 font-family: 'Lora';
 font-style: normal;
 font-weight: 400;
@@ -35,7 +35,7 @@ p{
   height: 105px;
   display: flex;
   justify-content:space-around;
-  left: -215px;
+ 
   bottom: 0;
   background: linear-gradient(180deg, rgba(81, 68, 68, 0) 0%, #514444 70.62%);
 }
@@ -76,10 +76,7 @@ p{
 #iconos{
   margin-left: 2px;
 }
-.row{
-  display: flex;
-    flex-direction: row-reverse;
-}
+
 .footer{
   margin: 58px;
 }

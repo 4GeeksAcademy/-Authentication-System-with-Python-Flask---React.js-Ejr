@@ -4,7 +4,7 @@ import rigoImageUr from "../../img/LogoSample_ByTailorBrands.jpg";
 export const Navbar = () => {
 	return (
 		<nav className="navbar" id="navbar">
-			<div className="container">
+			<div className="container coco">
 				<Link to="/">
 				
 					

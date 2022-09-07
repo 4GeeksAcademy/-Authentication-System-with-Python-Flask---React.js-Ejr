@@ -2,6 +2,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
 			message: null,
+			favorites: [],
+			comida: [],
 			demo: [
 				{
 					title: "FIRST",
@@ -16,6 +18,28 @@ const getState = ({ getStore, getActions, setStore }) => {
 			]
 		},
 		actions: {
+			getBorrar:(id)=>{
+				const store= getStore();
+				const borrar= store.favorites.filter((e,i)=> i !==id);
+				setStore({favorites: borrar});
+			},
+
+
+			//funcion agregar
+			getAddTask: (i) => {
+				const store = getStore();
+				let guardar = 0;
+				store.favorites.map(each => {
+					if(each.i === i){
+						guardar =1;
+					}
+				});
+				if (guardar == 0) {
+				setStore({favorites: [...store.favorites,{name:i}]
+				});
+				}
+
+			},
 			// Use getActions to call a function within a fuction
 			exampleFunction: () => {
 				getActions().changeColor(0, "green");
