@@ -5,6 +5,7 @@ import os
 from flask import Flask, request, jsonify, url_for, Blueprint, render_template
 from api.models import db, User, Message, Inmueble, Imagen
 from api.utils import generate_sitemap, APIException
+from api.inmuebles_handler import Inmuebles_Handler
 import cloudinary
 from cloudinary import uploader
 from flask_jwt_extended import create_access_token
@@ -13,6 +14,8 @@ from flask_jwt_extended import jwt_required
 
 api = Blueprint('api', __name__)
 
+# create the object
+consulta_inmuebles = Inmuebles_Handler()
 
 #register new user
 @api.route('/signup', methods=['POST'])
@@ -107,3 +110,19 @@ def edit_user():
     else:
         response = {"message":"Nothing to update"}
         return jsonify(response), 200
+
+@api.route('/properties', methods=['POST'])
+def getInmuebles():
+
+    # -------------- VALIDACION DEL BODY --------------------------------------------------------
+    body_inmo = request.get_json()
+    if body_inmo is None:
+        raise APIException('error: body is empty', status_code=403)
+    if body_inmo["operacion"]== "todas":
+        raise APIException('error: operation was not selected', status_code=405)
+
+    # # ------------- PROCESAMIENTO DEL REQUEST CON EXTRACCION DE LA BD--------------------------
+    response = consulta_inmuebles.filterInmuebles(body_inmo)
+
+    return response, 200
+

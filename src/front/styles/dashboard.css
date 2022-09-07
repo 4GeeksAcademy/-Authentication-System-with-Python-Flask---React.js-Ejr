@@ -1,0 +1,42 @@
+.formulario {
+  width: auto;
+  background: rgb(172, 255, 255);
+  height: fit-content;
+}
+.titulo {
+  height: fit-content;
+}
+.selector {
+  height: fit-content;
+}
+.dashboard-contenedor {
+  height: fit-content;
+}
+.feed-properties {
+  height: 87vh;
+  overflow-y: scroll;
+}
+.feed-properties::-webkit-scrollbar {
+  width: 7px;
+  background: rgb(237, 237, 237);
+  border-radius: 7px;
+}
+.feed-properties::-webkit-scrollbar-thumb {
+  width: 7px;
+  background: rgb(196, 196, 196);
+  border-radius: 7px;
+}
+.filtros-aside {
+  height: 73vh;
+  overflow-y: scroll;
+}
+.filtros-aside::-webkit-scrollbar {
+  width: 7px;
+  background: rgb(237, 237, 237);
+  border-radius: 7px;
+}
+.filtros-aside::-webkit-scrollbar-thumb {
+  width: 7px;
+  background: rgb(147, 220, 244);
+  border-radius: 7px;
+}
