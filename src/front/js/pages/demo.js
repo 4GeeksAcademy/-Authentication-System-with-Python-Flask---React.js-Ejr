@@ -20,7 +20,12 @@ export const Demo = () => {
                             <input type="password" class="form-control" placeholder="Your Password *" />
                         </div>
                         <div class="form-group">
-                            <input type="submit" class="btnSubmit" value="Login" />
+                            <Link to="/productos">
+							<input type="submit" class="btnSubmit" value="Login" />
+							</Link>
+							<Link to="/register">
+                            <input type="submit" class="btnSubmit" value="Register" />
+							</Link>
                         </div>
                         <div class="form-group">
                             <a href="#" class="btnForgetPwd">Forget Password?</a>

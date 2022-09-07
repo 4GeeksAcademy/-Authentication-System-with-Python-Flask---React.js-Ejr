@@ -11,8 +11,6 @@ export const Productos = () => {
 
     return (
 
-
-
         <div className="row imghome">
             <Navbar />
             <div className=" container-productos ">
