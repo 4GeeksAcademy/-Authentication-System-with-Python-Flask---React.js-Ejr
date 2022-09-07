@@ -2,10 +2,15 @@ import React, { useContext, useEffect } from "react";
 import { Context } from "../store/appContext";
 import { Link, useNavigate } from "react-router-dom";
 import "../../styles/dashboard.css";
-import { Card } from "./card.js";
 
 export const Feed = () => {
   const { store, actions } = useContext(Context);
+  const navigate = useNavigate();
+
+  const handleClick = (valor) => {
+    actions.saveParamSingle(valor);
+    navigate("/single");
+  };
 
   return (
     <div className="container-fluid feed-properties ps-0 pe-2 mb-2">
@@ -20,24 +25,34 @@ export const Feed = () => {
         </div>
       ) : Array.isArray(store.body_response) &&
         store.body_response.length != 0 ? (
-        store.body_response.map((item) => (
-          <Card
-            key={item.id}
-            foto={item.fotos[0]}
-            tipovivienda={item.tipo_vivienda}
-            direccion={item.direccion}
-            provincia={item.provincia}
-            comunidad={item.comunidad}
-            precio={item.precio}
-            habitaciones={item.habitaciones}
-            baños={item.aseos}
-            piscina={item.piscina}
-            terraza={item.terraza}
-            descripcion={item.descripcion}
-            periodo={
-              item.tipo_operacion == "alquiler" ? " Euros/mes" : " Euros"
-            }
-          />
+        store.body_response.map((item, index) => (
+          <div key={index} className="tarjeta card rounded-0 mt-2">
+            <div className="row g-0">
+              <div
+                className="main-imagen col-md-5"
+                style={{ backgroundImage: `url(${item.fotos[0]})` }}
+              ></div>
+              <div className="col-md-7 p-3">
+                <div className="card-body">
+                  <div onClick={() => handleClick(index)}>
+                    <h4 className="card-title">{`${item.tipo_vivienda} en ${item.direccion}, ${item.provincia}, ${item.comunidad}`}</h4>
+                  </div>
+                  <h2 className="card-title">{`${item.precio} ${
+                    item.tipo_operacion == "alquiler" ? " Euros/mes" : " Euros"
+                  }`}</h2>
+                  <div className="características d-lg-flex wrap justify-content-start pt-4">
+                    <div className="pe-4">{`Habitaciones: ${item.habitaciones}`}</div>
+                    <div className="pe-4">{`Baños: ${item.aseos}`}</div>
+                    {item.piscina ? <div className="pe-4">Piscina</div> : ""}
+                    {item.terraza ? <div className="pe-4">Terraza</div> : ""}
+                  </div>
+                  <div className="pt-4">
+                    <p className="card-text">{item.descripcion}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         ))
       ) : (
         ""

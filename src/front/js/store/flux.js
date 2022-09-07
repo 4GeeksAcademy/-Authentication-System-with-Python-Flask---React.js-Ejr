@@ -85,10 +85,26 @@ const getState = ({ getStore, getActions, setStore }) => {
       habitaciones: "cualquiera",
       baños: "cualquiera",
       /*------------------------------------------ FIN DE LAS VARIABLES DE FILTROS -----------------------------------------------------*/
+      paramSingle: null,
     },
     //
     actions: {
       //
+      saveParamSingle: (dato) => {
+        const store = getStore();
+        setStore({ paramSingle: dato });
+        localStorage.setItem("paramSingle", store.paramSingle);
+      },
+      restoreParamSingle: () => {
+        const param = localStorage.getItem("paramSingle");
+        setStore({ paramSingle: param });
+        getActions().syncLocalStorageToStore();
+      },
+      deleteParamSingle: () => {
+        localStorage.removeItem("paramSingle");
+        setStore({ paramSingle: null });
+      },
+
       createRequest: () => {
         const store = getStore();
         let aux = {};
@@ -373,6 +389,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         setStore({ caracteristica_terraza: false });
         setStore({ habitaciones: "cualquiera" });
         setStore({ baños: "cualquiera" });
+        setStore({ paramSingle: null });
       },
 
       /*------------------------------------- FIN DE LAS FUNCIONES DE ENTREGA Y RECUPERACION DE DATA ------------------------------ */
