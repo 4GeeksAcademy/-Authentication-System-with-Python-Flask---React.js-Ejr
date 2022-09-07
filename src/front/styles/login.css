@@ -52,3 +52,7 @@
   text-decoration:none;
   color:#fff;
 }
+.login-row{
+  display: flex;
+  flex-direction: row-reverse;
+}

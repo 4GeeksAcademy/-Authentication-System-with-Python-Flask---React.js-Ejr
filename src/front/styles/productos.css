@@ -89,3 +89,7 @@ figure{
     background: rgb(255, 0, 208);
 }
 
+.vista-login{
+    display: flex;
+    justify-content: left;
+}

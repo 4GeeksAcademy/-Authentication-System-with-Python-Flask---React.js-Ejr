@@ -9,15 +9,15 @@ export const Demo = () => {
 
 	return (
 		<div class="container login-container">
-            <div class="row">
+            <div class="row login-row">
                 <div class="col-md-6 login-form-1">
                     <h3>Login Form 1</h3>
                     
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Your Email *" value="" />
+                            <input type="text" class="form-control" placeholder="Your Email *"  />
                         </div>
                         <div class="form-group">
-                            <input type="password" class="form-control" placeholder="Your Password *" value="" />
+                            <input type="password" class="form-control" placeholder="Your Password *" />
                         </div>
                         <div class="form-group">
                             <input type="submit" class="btnSubmit" value="Login" />
