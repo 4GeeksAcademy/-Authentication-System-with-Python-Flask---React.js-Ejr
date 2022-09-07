@@ -9,14 +9,17 @@ body {
   margin: 0;
 }
 .page-body {
-  height: 100vh;
   background: lightcoral;
 }
 .banner-test {
-  height: 25vh;
+  height: 25%;
   background-color: #e7e7e7;
 }
 
-.sidebar {
-  height: 70vh;
+.profile-pic {
+  height: auto;
+}
+
+.nav-button {
+  width: 7rem;
 }

@@ -4,12 +4,14 @@ import { Context } from "../../store/appContext";
 export const Properties = () => {
   const { store, actions } = useContext(Context);
   const [properties, setProperties] = useState([]);
+  const [images, setImages] = useState([]);
   const [isloading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchProperties = async () => {
-      await actions.getProperties();
-      setProperties(JSON.parse(localStorage.getItem("properties")));
+      await actions.getUserProperties();
+      setProperties(JSON.parse(localStorage.getItem("userProperties")));
+      setImages(JSON.parse(localStorage.getItem("userImages")));
       setIsLoading(false);
     };
     fetchProperties();
@@ -20,13 +22,13 @@ export const Properties = () => {
       {!isloading ? (
         <div
           className="d-flex justify-content-center"
-          style={{ height: "90vh", width: "1200px" }}
+          style={{ height: "90vh", width: "100vh" }}
         >
           <div
             style={{
               background: "lightgreen",
-              height: "60%",
-              width: "60%",
+              height: "80%",
+              width: "100%",
               overflowX: "auto",
               overflowY: "auto",
               textAlign: "center",
@@ -38,13 +40,27 @@ export const Properties = () => {
                 style={{ maxWidth: "100%" }}
                 key={i}
               >
-                <div className="card-header">{property.direccion}</div>
+                <div className="card-header">
+                  <h3>{property.comunidad}</h3>
+                  {property.direccion}
+                </div>
                 <div className="card-body">
-                  <h5 className="card-title">{property.tipo_operacion}</h5>
-                  <h5 className="card-title text-muted">
-                    {property.tipo_vivienda}
-                  </h5>
-                  <p className="card-text">{property.pet}</p>
+                  <img
+                    src={images[0].imagen_url}
+                    className="img-thumbnail rounded float-start"
+                    style={{ width: "200px", height: "200px" }}
+                  />
+                  <div className="d-flex justify-content-evenly">
+                    <h5 className="card-title">{property.tipo_operacion}</h5>
+                    <h5 className="card-title">{property.tipo_vivienda}</h5>
+                    <h5 className="card-title">{property.habitaciones} hab.</h5>
+                    <h5 className="card-title ">{property.baños} baños</h5>
+                  </div>
+                  <div className="d-flex justify-content-center">
+                    <h5 className="text-muted">
+                      <br /> {property.descripcion}
+                    </h5>
+                  </div>
                 </div>
               </div>
             ))}

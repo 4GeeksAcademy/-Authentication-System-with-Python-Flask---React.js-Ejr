@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
 import { Link, useParams } from "react-router-dom";
 import { Context } from "../store/appContext";
+import swal from "sweetalert";
 
 export const Signup = (props) => {
   const { store, actions } = useContext(Context);
@@ -11,6 +12,11 @@ export const Signup = (props) => {
   const [email, setEmail] = useState("");
 
   const handleSubmit = async () => {
+    if (password.length < 8) {
+      swal("La contraseña debe tener al menos 8 caracteres");
+    } else if (!username || !email || !fullName) {
+      swal("Debe rellenar todos los campos");
+    }
     const opts = {
       method: "POST",
       headers: {

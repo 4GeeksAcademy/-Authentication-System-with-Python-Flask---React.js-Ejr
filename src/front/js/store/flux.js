@@ -4,7 +4,9 @@ const getState = ({ getStore, getActions, setStore }) => {
       token: null,
       userInfo: {},
       messages: [],
-      properties: [],
+      userProperties: [],
+      userPropertiesImages: [],
+      full_name: "",
     },
     actions: {
       // Use getActions to call a function within a fuction
@@ -29,21 +31,21 @@ const getState = ({ getStore, getActions, setStore }) => {
             throw new Error("Something went wrong");
           }
           const data = await resp.json();
-          const result = [...data];
-          if (result.length > 10) {
-            for (let i = 0; i < result.length; i += 10) {
-              const page = arr.slice(i, i + 10);
-              result.push(page);
-            }
-          }
-          setStore({ messages: result });
+          // const result = [...data];
+          // if (result.length > 10) {
+          //   for (let i = 0; i < result.length; i += 10) {
+          //     const page = arr.slice(i, i + 10);                 Para el NICE TO HAVE (pagination)
+          //     result.push(page);
+          //   }
+          // }
+          setStore({ messages: data });
           localStorage.setItem("messages", JSON.stringify(data));
           return true;
         } catch (e) {
           console.log(`${e.name}: ${e.message}`);
         }
       },
-      getProperties: async () => {
+      getUserProperties: async () => {
         const opts = {
           method: "GET",
           headers: {
@@ -60,15 +62,22 @@ const getState = ({ getStore, getActions, setStore }) => {
             throw new Error("Something went wrong");
           }
           const data = await resp.json();
-          const result = [...data];
-          if (result.length > 10) {
-            for (let i = 0; i < result.length; i += 10) {
-              const page = arr.slice(i, i + 10);
-              result.push(page);
-            }
-          }
-          setStore({ properties: result });
-          localStorage.setItem("properties", JSON.stringify(data));
+          // const result = [...data];
+          // if (result.length > 10) {
+          //   for (let i = 0; i < result.length; i += 10) {
+          //     const page = arr.slice(i, i + 10);                 Para el NICE TO HAVE (pagination)
+          //     result.push(page);
+          //   }
+          // }
+          setStore({
+            userProperties: data.inmuebles,
+            userPropertiesImages: data.imagenes,
+          });
+          localStorage.setItem(
+            "userProperties",
+            JSON.stringify(data.inmuebles)
+          );
+          localStorage.setItem("userImages", JSON.stringify(data.imagenes));
           return true;
         } catch (e) {
           console.log(`${e.name}: ${e.message}`);
@@ -131,11 +140,19 @@ const getState = ({ getStore, getActions, setStore }) => {
           }),
         };
         try {
-          const resp = await fetch(process.env.BACKEND_URL + "/update", opts);
+          const resp = await fetch(
+            process.env.BACKEND_URL + "/api/update",
+            opts
+          );
           if (resp.status !== 200) {
             throw new Error("Something went wrong updating the user");
           }
           const data = await resp.json();
+          if (data.message == "Updated user succesfully") {
+            localStorage.setItem("full_name", data.user_info.full_name);
+            localStorage.setItem("email", data.user_info.email);
+            setStore({ full_name: data.user_info.full_name });
+          }
           return data;
         } catch (e) {
           console.log(`${e.name}: ${e.message}`);

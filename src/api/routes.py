@@ -49,7 +49,7 @@ def get_messages():
     for message in messages:
         list_item = message.serialize()
         response.append(list_item)
-    return jsonify(response)
+    return jsonify(response), 200
 
 
 
@@ -58,11 +58,17 @@ def get_messages():
 def get_listings():
     current_user_id = get_jwt_identity()
     listings = list(Inmueble.query.filter_by(user_id = current_user_id))
-    response = []
+    all_listings = []
+    all_images = []
     for listing in listings:
         list_item = listing.serialize()
-        response.append(list_item)
-    return jsonify(response)
+        images = list(Imagen.query.filter_by(inmueble_id = list_item["id"]))
+        for image in images:
+            item = image.serialize()
+            all_images.append(item) 
+        all_listings.append(list_item)
+    response = {"inmuebles": all_listings, "imagenes": all_images}
+    return jsonify(response), 200
 
 
 @api.route("/upload", methods=['POST'])
@@ -84,16 +90,20 @@ def edit_user():
     request_body = request.get_json()
     user = User.query.filter_by(id = current_user_id).first()
     updated = False
-    if len(request_body["full_name"].strip()) != 0 and user.username != request_body["full_name"]:
+    if len(request_body["full_name"].strip()) != 0 and user.full_name != request_body["full_name"]:
         user.full_name = request_body["full_name"]
         updated = True
-    if len(request_body["email"].strip()) != 0 and user.username != request_body["email"]:
+    if len(request_body["email"].strip()) != 0 and user.email != request_body["email"]:
         user.email = request_body["email"]
         updated = True
-    if len(request_body["password"].strip()) != 0 and user.username != request_body["password"]:
+    if len(request_body["password"].strip()) != 0 and user.password != request_body["password"]:
         user.password = request_body["password"]
         updated = True
     if updated:
         db.session.commit()
-        return jsonify("Updated user succesfully"), 200
-    return jsonify("Nothing to update"), 200
+        user_info = {"full_name": user.full_name, "email": user.email}
+        response = {"message": "Updated user succesfully", "user_info": user_info}
+        return jsonify(response), 200
+    else:
+        response = {"message":"Nothing to update"}
+        return jsonify(response), 200

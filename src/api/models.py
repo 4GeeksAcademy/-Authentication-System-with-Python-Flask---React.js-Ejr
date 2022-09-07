@@ -9,9 +9,9 @@ class User(db.Model):
     password = db.Column(db.String(80), unique=False, nullable=False)
     full_name = db.Column(db.String(80), unique=False, default=None, nullable=True)
     email = db.Column(db.String(120), unique=True, nullable=False)
+    imagen_perfil = db.Column(db.String(120), unique=False, nullable=True)
     inmuebles = db.relationship('Inmueble', backref='Propietario', cascade="all, delete")
     messages = db.relationship('Message', backref='Propietario', cascade="all, delete")
-    imagen_perfil = db.relationship('Imagen', backref='User', cascade="all, delete")
 
     def __repr__(self):
         return f'<Propietario {self.id}>'
@@ -33,6 +33,7 @@ class Inmueble(db.Model):
     provincia = db.Column(db.String(80), unique=False, nullable=False)
     municipio = db.Column(db.String(80), unique=False, nullable=False)
     direccion = db.Column(db.String(80), unique=False, nullable=False)
+    descripcion = db.Column(db.String(300), unique=False, nullable=True)
     precio = db.Column(db.Integer, unique=False, nullable=False)
     tipo_vivienda = db.Column(db.String(80), unique=False, nullable=False)
     habitaciones = db.Column(db.Integer, unique=False, nullable=False)
@@ -57,6 +58,7 @@ class Inmueble(db.Model):
             "provincia": self.provincia,
             "municipio": self.municipio,
             "direccion": self.direccion,
+            "descripcion": self.descripcion,
             "precio": self.precio,
             "tipo_vivienda": self.tipo_vivienda,
             "habitaciones": self.habitaciones,
@@ -71,12 +73,12 @@ class Inmueble(db.Model):
 
 class Imagen(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    imagen_url = db.Column(db.String(80), unique=False, nullable=False)
+    imagen_url = db.Column(db.String(180), unique=False, nullable=True)
     inmueble_id = db.Column(db.Integer, db.ForeignKey('inmueble.id'), nullable=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
+    
 
     def __repr__(self):
-        return f'<Imagen {self.imagen_url}>'
+        return f'<Imagen {self.id}>'
 
     def serialize(self):
         return {

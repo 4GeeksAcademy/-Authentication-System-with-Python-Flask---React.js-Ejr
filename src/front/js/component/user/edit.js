@@ -1,61 +1,87 @@
 import React, { useEffect, useContext, useState } from "react";
 import { Context } from "../../store/appContext";
+import swal from "sweetalert";
+import { useNavigate } from "react-router-dom";
 
 export const Edit = () => {
   const { store, actions } = useContext(Context);
-  const [messages, setMessages] = useState([]);
-  const [isloading, setIsLoading] = useState(true);
+  const navigate = useNavigate();
+  const [password, setPassword] = useState("");
+  const [fullName, setFullName] = useState(localStorage.getItem("full_name"));
+  const [email, setEmail] = useState(localStorage.getItem("email"));
 
-  useEffect(() => {
-    const fetchMessages = async () => {
-      await actions.getMessages();
-      setMessages(JSON.parse(localStorage.getItem("messages")));
-      setIsLoading(false);
-    };
-    fetchMessages();
-  }, []);
-
+  const handleSubmit = async () => {
+    if (password.length < 8) {
+      swal("La contraseña debe tener al menos 8 caracteres");
+    } else if (!email || !fullName) {
+      swal("Debe rellenar todos los campos");
+    }
+    if (
+      fullName !== localStorage.getItem("full_name") ||
+      email !== localStorage.getItem("email") ||
+      password
+    ) {
+      const resp = await actions.updateUser(fullName, email, password);
+      if (resp.message == "Nothing to update") {
+        swal("nada que actualizar");
+      } else if (resp.message == "Updated user succesfully") {
+        swal("Datos actualizados");
+      }
+    }
+  };
   return (
     <>
-      {!isloading ? (
+      {localStorage.getItem("token") ? (
         <div
           className="d-flex justify-content-center"
-          style={{ height: "90vh", width: "1200px" }}
+          style={{ height: "90vh", width: "100vh" }}
         >
-          <div
-            style={{
-              background: "lightgreen",
-              height: "60%",
-              width: "60%",
-              overflowX: "auto",
-              overflowY: "auto",
-              textAlign: "center",
-            }}
-          >
-            {messages.map((message, i) => (
-              <div
-                className="card text-bg-dark mb-3"
-                style={{ maxWidth: "100%" }}
-                key={i}
-              >
-                <div className="card-header">{message.sender_name}</div>
-                <div className="card-body">
-                  <h5 className="card-title">{message.sender_email}</h5>
-                  <h5 className="card-title text-muted">
-                    {message.sender_phone}
-                  </h5>
-                  <p className="card-text">{message.body}</p>
-                </div>
+          <div className="col-6 mt-5">
+            <div className="card" style={{ width: "18rem;" }}>
+              <div className="card-body text-center">
+                <h5 className="card-title">Cambia tus datos</h5>
               </div>
-            ))}
+              <ul className="list-group list-group-flush">
+                <input
+                  className="list-group-item"
+                  value={fullName}
+                  required
+                  onChange={(e) => setFullName(e.target.value)}
+                  placeholder="Full Name"
+                />
+                <input
+                  className="list-group-item"
+                  value={email}
+                  required
+                  type="email"
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="Email"
+                />
+              </ul>
+              <ul className="list-group list-group-flush">
+                <input
+                  className="list-group-item"
+                  value={password}
+                  required
+                  type="password"
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="Password"
+                />
+              </ul>
+              <div className="card-body text-center">
+                <a href="#" className="btn btn-success" onClick={handleSubmit}>
+                  Save
+                </a>
+              </div>
+            </div>
           </div>
         </div>
       ) : (
         <div
           className="d-flex justify-content-center"
-          style={{ height: "90vh", width: "1200px" }}
+          style={{ height: "90vh", width: "100vh" }}
         >
-          <h5>Loading...</h5>
+          <h5>Unauthorized...</h5>
         </div>
       )}
     </>

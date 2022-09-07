@@ -13,9 +13,18 @@ export const Navbar = () => {
         </Link>
 
         {store.token ? (
-          <div className="d-flex align-items-center">
+          <div>
             <Link to={`/user/${localStorage.getItem("id")}`}>
-              <i className="fa-solid fa-user me-3 fs-2 "></i>
+              <img
+                src={process.env.DEFAULT_PROFILE_PIC}
+                className="mt-5 img-fluid"
+                style={{
+                  height: "50px",
+                  top: "3rem",
+                  border: "solid 5px gray",
+                  borderRadius: "50%",
+                }}
+              />
             </Link>
             <Logout />
           </div>

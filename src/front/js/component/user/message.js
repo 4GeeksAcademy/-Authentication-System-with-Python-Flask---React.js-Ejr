@@ -20,13 +20,13 @@ export const Message = () => {
       {!isloading ? (
         <div
           className="d-flex justify-content-center"
-          style={{ height: "90vh", width: "1200px" }}
+          style={{ height: "90vh", width: "100vh" }}
         >
           <div
             style={{
               background: "lightgreen",
-              height: "60%",
-              width: "60%",
+              height: "80%",
+              width: "100%",
               overflowX: "auto",
               overflowY: "auto",
               textAlign: "center",
