@@ -39,7 +39,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 				});
 				}
 
-			},
+},
+			
 			// Use getActions to call a function within a fuction
 			exampleFunction: () => {
 				getActions().changeColor(0, "green");

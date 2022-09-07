@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import "../../styles/home.css";
 import { Navbar } from "../component/navbar";
 import { Footer } from "../component/footer";
+import { Razones } from "./razones";
 export const Home = () => {
 	const { store, actions } = useContext(Context);
 
@@ -14,13 +15,13 @@ export const Home = () => {
 			<Navbar/>
 			<div class="col-sm-6">
 				
-					<div class="card-body">
-						<h1 class="card-title">Special title treatment</h1>
+					<div class="card-body home">
+						<h1 class="card-title">Comer y cocinar en el hogar es mejor</h1>
 						
-						<p class="card-text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged</p>
-						<Link to="/demo">
+						<p class="card-text">comer fuera de casa no permite planificar la comida, y éste es un aspecto crucial para cuidar nuestra dieta, pues como ya hemos dicho muchas veces, la falta de orden puede ser la causa de una alimentación desequilibrada y poco sana.</p>
+						<Link to="/razones">
 							
-							<button className="btn btn-secondary">Check tjhe Context in action</button>
+							<button className="btn btn-secondary">Learn More</button>
 						</Link>
 					</div>
 				

@@ -5,13 +5,13 @@ export const Navbar = () => {
 	return (
 		<nav className="navbar" id="navbar">
 			<div className="container coco">
-				<Link to="/">
 				
-					
-				</Link>
 				
 			<div className="fle">
+			<Link to="/">
 			<button type="button" class="btn ">HOME</button>
+					
+				</Link>
 				<button type="button" class="btn ">PRODUCTOS</button>
 				<button type="button" class="btn ">CONTACTO</button>
 			</div>
