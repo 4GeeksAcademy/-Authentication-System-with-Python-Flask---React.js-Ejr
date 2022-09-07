@@ -3,16 +3,16 @@ import { Context } from "../store/appContext";
 import rigoImageUrl from "../../img/rigo-baby.jpg";
 import "../../styles/productos.css";
 import { Link } from "react-router-dom";
-import { Navbar } from "../component/navbar";
+import { NavbarL } from "../component/navbarl";
 import { Footer } from "../component/footer";
 
-export const Productos = () => {
+export const ProductosL = () => {
 
 
     return (
 
         <div className="row imghome">
-            <Navbar />
+            <NavbarL />
             <div className=" container-productos ">
                 <div className="row cajas">
                     <div className="col-md-4">

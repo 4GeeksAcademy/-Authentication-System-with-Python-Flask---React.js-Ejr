@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import rigoImageUr from "../../img/LogoSample_ByTailorBrands.jpg";
-export const Navbar = () => {
+export const NavbarL = () => {
 	return (
 		<nav className="navbar" id="navbar">
 			<div className="container coco">
@@ -24,6 +24,7 @@ export const Navbar = () => {
 				<i class="fa-solid fa-1x fa-user" id="loginicon"></i>
 				</Link>
 				</div>
+                <i class="fal fa-shopping-cart"></i>
 			</div>
 			
 		</nav>

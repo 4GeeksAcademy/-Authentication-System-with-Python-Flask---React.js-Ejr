@@ -93,3 +93,9 @@ figure{
     display: flex;
     justify-content: left;
 }
+.cajax{
+    margin-top: 20px;
+}
+.cajas{
+   margin-left: 30px;
+}
