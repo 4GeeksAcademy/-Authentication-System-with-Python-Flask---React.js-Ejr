@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 export const Navbar = () => {
 	return (
-		<nav className="navbar navbar-light bg-warning">
+		<nav className="navbar navbar-light bg-warning  d-flex justify-content-between p-2">
 			<div className="container">
 				<Link to="/">
 				<a class="navbar-brand" href="#">
@@ -13,7 +13,7 @@ export const Navbar = () => {
 				</Link>
 				<div className="ml-auto">
 					<Link to="/demo">
-						<button className="btn btn-primary">Salir - Este boton lleva al landing page </button>
+						<button className="btn btn-primary">Salir</button>
 					</Link>
 				</div>
 			</div>
