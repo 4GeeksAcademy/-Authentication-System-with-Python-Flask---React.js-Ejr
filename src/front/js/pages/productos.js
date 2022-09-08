@@ -13,6 +13,20 @@ export const Productos = () => {
 
         <div className="row imghome">
             <Navbar />
+            
+            <div className="container iconoscaja">
+            <Link to="/razones">
+           <i class="fa-solid fa-2x fa-cookie icn"></i>
+            </Link>
+            
+                <i class="fa-solid fa-2x fa-burger icn "></i>
+            
+                <i class="fa-solid fa-2x fa-leaf icn "></i>
+               
+            </div>
+           
+           
+          
             <div className=" container-productos ">
                 <div className="row cajas">
                     <div className="col-md-4">
