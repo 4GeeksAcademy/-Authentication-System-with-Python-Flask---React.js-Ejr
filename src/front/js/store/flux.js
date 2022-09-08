@@ -89,6 +89,7 @@ const getState = ({ getStore, getActions, setStore }) => {
     //
     actions: {
       //
+
       createRequest: () => {
         const store = getStore();
         let aux = {};
@@ -297,7 +298,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       fillLocalStorage: () => {
         const store = getStore();
         // funcion vuelca datos del store en LocalStorage al pasar a otra página. Se debe usar al actualizar cada filtro
-        localStorage.clear();
+        localStorage.clear(); // esto elimina tambien el objeto stringify de single en localstorage
         localStorage.setItem("operacion", store.operacion);
         localStorage.setItem("comunidad", store.comunidad);
         localStorage.setItem("provincia", store.provincia);
