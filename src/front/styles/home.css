@@ -1,7 +1,50 @@
-/*
-    home.css: This website contains selectors only used in home.css
+body {
+    background-color: #2B3E84;
+}
 
-    All pages share the styles on index.css but you should create 
-    one more css for each page that will contain the selected used 
-    on that page only (the ones not reused in other pages).
-*/
+#globo-info{
+    background-color: rgba(192, 192, 192, 0.5);
+    border-radius: 15px 15px 15px 15px;
+    margin-top: 20px;
+}
+
+#logo-casa {
+    width: 200px;
+    height: 200px;
+    background-color:rgba(217,217,217,0.8);
+    margin: 15px 15px 15px 10px;
+    margin-left: 3%;
+    border-radius: 10%;
+    display:flex;
+    justify-content: center;
+}
+
+#info-casa{
+    width: 450px;
+    height: 200px;
+    background-color:rgba(217,217,217,0.8);
+    margin: 15px 15px 15px 20px; 
+    margin-right:3%;
+    border-radius: 15px 15px 15px 15px;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#maps {
+    display:flex;
+    align-self: center;
+}
+
+#boton-casa {
+    background-color: #2B3E84;
+    border-radius: 20px 20px 20px 20px;
+    color: white; 
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    width: 35%;
+    height: 35px;
+    
+}
