@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { NavbarL } from "../component/navbarl";
 import { Footer } from "../component/footer";
 
-export const ProductosL = () => {
+export const Productos2 = () => {
 
 
     return (
@@ -17,7 +17,7 @@ export const ProductosL = () => {
                 <div className="row cajas">
                     <div className="col-md-4">
                     <figure  > 
-                        <img src="https://images.pexels.com/photos/4871119/pexels-photo-4871119.jpeg"></img>
+                        <img src="https://images.pexels.com/photos/1640769/pexels-photo-1640769.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"></img>
                         <div className="capa">
                             {<h3> Portobello y Camarones</h3>}
                             <p>Ingredientes</p>
@@ -36,7 +36,7 @@ export const ProductosL = () => {
                     
                     <div className="col-md-4">
                     <figure >
-                        <img src="https://images.pexels.com/photos/3738730/pexels-photo-3738730.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"></img>
+                        <img src="https://images.pexels.com/photos/4220141/pexels-photo-4220141.jpeg"></img>
                         <div className="capa">
                             <h3> Hamburguesa</h3>
                             <p>Ingredientes</p>
@@ -52,7 +52,7 @@ export const ProductosL = () => {
                     </div>
                     <div className="col-md-4">
                     <figure >
-                        <img src="https://images.pexels.com/photos/2456435/pexels-photo-2456435.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"></img>
+                        <img src="https://images.pexels.com/photos/4099236/pexels-photo-4099236.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"></img>
                         <div className="capa">
                             <h3> Pasta Vegetal</h3>
                             <p>Ingredientes</p>
@@ -68,7 +68,7 @@ export const ProductosL = () => {
                     </div>
                     <div className="col-md-4 cajax">
                     <figure >
-                        <img src="https://images.pexels.com/photos/2456435/pexels-photo-2456435.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"></img>
+                        <img src="https://images.pexels.com/photos/6327626/pexels-photo-6327626.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"></img>
                         <div className="capa">
                             <h3> Pasta Vegetal</h3>
                             <p>Ingredientes</p>
@@ -84,7 +84,7 @@ export const ProductosL = () => {
                     </div>
                     <div className="col-md-4 cajax">
                     <figure >
-                        <img src="https://images.pexels.com/photos/2456435/pexels-photo-2456435.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"></img>
+                        <img src="https://images.pexels.com/photos/6740849/pexels-photo-6740849.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"></img>
                         <div className="capa">
                             <h3> Pasta Vegetal</h3>
                             <p>Ingredientes</p>
@@ -100,7 +100,7 @@ export const ProductosL = () => {
                     </div>
                     <div className="col-md-4 cajax">
                     <figure >
-                        <img src="https://images.pexels.com/photos/2456435/pexels-photo-2456435.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"></img>
+                        <img src="https://images.pexels.com/photos/4940832/pexels-photo-4940832.jpeg?auto=compress&cs=tinysrgb&w=400&lazy=load"></img>
                         <div className="capa">
                             <h3> Pasta Vegetal</h3>
                             <p>Ingredientes</p>
