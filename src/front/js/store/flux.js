@@ -85,25 +85,10 @@ const getState = ({ getStore, getActions, setStore }) => {
       habitaciones: "cualquiera",
       baños: "cualquiera",
       /*------------------------------------------ FIN DE LAS VARIABLES DE FILTROS -----------------------------------------------------*/
-      paramSingle: null,
     },
     //
     actions: {
       //
-      saveParamSingle: (dato) => {
-        const store = getStore();
-        setStore({ paramSingle: dato });
-        localStorage.setItem("paramSingle", store.paramSingle);
-      },
-      restoreParamSingle: () => {
-        const param = localStorage.getItem("paramSingle");
-        setStore({ paramSingle: param });
-        getActions().syncLocalStorageToStore();
-      },
-      deleteParamSingle: () => {
-        localStorage.removeItem("paramSingle");
-        setStore({ paramSingle: null });
-      },
 
       createRequest: () => {
         const store = getStore();
@@ -313,7 +298,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       fillLocalStorage: () => {
         const store = getStore();
         // funcion vuelca datos del store en LocalStorage al pasar a otra página. Se debe usar al actualizar cada filtro
-        localStorage.clear();
+        localStorage.clear(); // esto elimina tambien el objeto stringify de single en localstorage
         localStorage.setItem("operacion", store.operacion);
         localStorage.setItem("comunidad", store.comunidad);
         localStorage.setItem("provincia", store.provincia);
@@ -389,7 +374,6 @@ const getState = ({ getStore, getActions, setStore }) => {
         setStore({ caracteristica_terraza: false });
         setStore({ habitaciones: "cualquiera" });
         setStore({ baños: "cualquiera" });
-        setStore({ paramSingle: null });
       },
 
       /*------------------------------------- FIN DE LAS FUNCIONES DE ENTREGA Y RECUPERACION DE DATA ------------------------------ */

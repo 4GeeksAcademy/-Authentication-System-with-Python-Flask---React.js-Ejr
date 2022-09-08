@@ -13,7 +13,7 @@
   height: fit-content;
 }
 .filtros-aside {
-  height: 73vh;
+  height: 74vh;
   overflow-y: scroll;
 }
 .filtros-aside::-webkit-scrollbar {
@@ -59,4 +59,5 @@
   background-position-x: center;
   background-position-y: center;
   background-repeat: no-repeat;
+  height: 40vh;
 }

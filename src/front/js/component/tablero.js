@@ -9,7 +9,6 @@ export const Tablero = () => {
 
   useEffect(() => {
     actions.syncLocalStorageToStore();
-    console.log("los datos del store han sido restituidos");
   }, []);
 
   useEffect(() => {
@@ -19,7 +18,7 @@ export const Tablero = () => {
   }, [store.operacion]);
 
   return (
-    <div className="contenedor-tablero container col-12 col-lg-9 pb-0 pe-0">
+    <div className="contenedor-tablero container col-12 col-lg-9 pb-0 pe-2">
       <nav className="d-flex justify-content-between">
         {/* Botones Alquiler y Compra */}
         {store.operacion == "alquiler" || store.operacion == "" ? (
