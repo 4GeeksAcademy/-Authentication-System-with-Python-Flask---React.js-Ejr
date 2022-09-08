@@ -1,11 +1,15 @@
-<<<<<<< HEAD
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
-import { Logout } from "./logout";
+
 export const Navbar = () => {
   const { store, actions } = useContext(Context);
+  const navigate = useNavigate();
 
+  const handleLogout = () => {
+    actions.logout();
+    navigate("/");
+  };
   return (
     <nav className="navbar navbar-dark bg-dark">
       <div className="container">
@@ -14,11 +18,11 @@ export const Navbar = () => {
         </Link>
 
         {store.token ? (
-          <div>
+          <div className="d-flex">
             <Link to={`/user/${localStorage.getItem("id")}`}>
               <img
                 src={process.env.DEFAULT_PROFILE_PIC}
-                className="mt-5 img-fluid"
+                className="img-fluid"
                 style={{
                   height: "50px",
                   top: "3rem",
@@ -27,7 +31,22 @@ export const Navbar = () => {
                 }}
               />
             </Link>
-            <Logout />
+            <ul className="dropdown ps-0">
+              <a
+                className="nav-link dropdown-toggle text-decoration-none"
+                href="#"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              ></a>
+              <ul className="dropdown-menu">
+                <li>
+                  <a class="dropdown-item" href="#" onClick={handleLogout}>
+                    Logout
+                  </a>
+                </li>
+              </ul>
+            </ul>
           </div>
         ) : (
           <div className="ms-auto">
@@ -43,7 +62,6 @@ export const Navbar = () => {
             </Link>
           </div>
         )}
-
       </div>
     </nav>
   );

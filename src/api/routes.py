@@ -1,6 +1,4 @@
-"""
-This module takes care of starting the API Server, Loading the DB and Adding the endpoints
-"""
+
 import os
 from flask import Flask, request, jsonify, url_for, Blueprint, render_template
 from api.models import db, User, Message, Inmueble, Imagen
@@ -104,7 +102,7 @@ def edit_user():
         updated = True
     if updated:
         db.session.commit()
-        user_info = {"full_name": user.full_name, "email": user.email}
+        user_info = user.serialize()
         response = {"message": "Updated user succesfully", "user_info": user_info}
         return jsonify(response), 200
     else:

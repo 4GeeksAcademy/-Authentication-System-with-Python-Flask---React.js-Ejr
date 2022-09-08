@@ -1,20 +1,21 @@
 import React, { useEffect, useContext, useState } from "react";
 import { Context } from "../../store/appContext";
 import swal from "sweetalert";
-import { useNavigate } from "react-router-dom";
 
 export const Edit = () => {
   const { store, actions } = useContext(Context);
-  const navigate = useNavigate();
   const [password, setPassword] = useState("");
   const [fullName, setFullName] = useState(localStorage.getItem("full_name"));
   const [email, setEmail] = useState(localStorage.getItem("email"));
+  const [changePassword, setChangePassword] = useState(false);
 
   const handleSubmit = async () => {
-    if (password.length < 8) {
+    if (changePassword && password.length < 8) {
       swal("La contraseña debe tener al menos 8 caracteres");
+      return false;
     } else if (!email || !fullName) {
       swal("Debe rellenar todos los campos");
+      return false;
     }
     if (
       fullName !== localStorage.getItem("full_name") ||
@@ -24,9 +25,15 @@ export const Edit = () => {
       const resp = await actions.updateUser(fullName, email, password);
       if (resp.message == "Nothing to update") {
         swal("nada que actualizar");
+        setPassword("");
       } else if (resp.message == "Updated user succesfully") {
         swal("Datos actualizados");
+        setChangePassword(false);
+        setPassword("");
       }
+    } else {
+      swal("nada que actualizar");
+      setPassword("");
     }
   };
   return (
@@ -57,16 +64,24 @@ export const Edit = () => {
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Email"
                 />
-              </ul>
-              <ul className="list-group list-group-flush">
-                <input
-                  className="list-group-item"
-                  value={password}
-                  required
-                  type="password"
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder="Password"
-                />
+                {changePassword ? (
+                  <input
+                    className="list-group-item"
+                    value={password}
+                    required
+                    type="password"
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="New Password"
+                  />
+                ) : (
+                  <a
+                    href="#"
+                    className="card-link btn btn-outline-success"
+                    onClick={() => setChangePassword(true)}
+                  >
+                    Change Password
+                  </a>
+                )}
               </ul>
               <div className="card-body text-center">
                 <a href="#" className="btn btn-success" onClick={handleSubmit}>

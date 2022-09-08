@@ -9,6 +9,9 @@ import { Edit } from "../component/user/edit";
 export const Profile = () => {
   const { store, actions } = useContext(Context);
 
+  useEffect(() => {
+    actions.syncUserInfo();
+  }, []);
   return (
     <>
       {localStorage.getItem("token") ? (
@@ -28,7 +31,7 @@ export const Profile = () => {
                 />
               </div>
               <div className="d-flex col col-sm-6 justify-content-center align-items-center">
-                <h1>{store.full_name}</h1>
+                <h1>{store.userInfo.full_name}</h1>
               </div>
             </div>
           </div>

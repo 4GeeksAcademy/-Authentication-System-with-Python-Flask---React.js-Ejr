@@ -6,7 +6,6 @@ const getState = ({ getStore, getActions, setStore }) => {
       messages: [],
       userProperties: [],
       userPropertiesImages: [],
-      full_name: "",
       listaprovincias: [],
       listacomunidades: [
         {
@@ -92,11 +91,6 @@ const getState = ({ getStore, getActions, setStore }) => {
       /*------------------------------------------ FIN DE LAS VARIABLES DE FILTROS -----------------------------------------------------*/
     },
     actions: {
-      // Use getActions to call a function within a fuction
-      exampleFunction: () => {
-        getActions().changeColor(0, "green");
-      },
-
       getMessages: async () => {
         const opts = {
           method: "GET",
@@ -187,6 +181,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           }
           const data = await resp.json();
           localStorage.setItem("token", data.access_token);
+          localStorage.setItem("user_info", JSON.stringify(data.user));
           localStorage.setItem("username", data.user.username);
           localStorage.setItem("email", data.user.email);
           localStorage.setItem("full_name", data.user.full_name);
@@ -232,14 +227,19 @@ const getState = ({ getStore, getActions, setStore }) => {
           }
           const data = await resp.json();
           if (data.message == "Updated user succesfully") {
-            localStorage.setItem("full_name", data.user_info.full_name);
-            localStorage.setItem("email", data.user_info.email);
-            setStore({ full_name: data.user_info.full_name });
+            const updatedUser = data.user_info;
+            localStorage.setItem("user_info", JSON.stringify(updatedUser));
+            setStore({ userInfo: data.user_info });
           }
           return data;
         } catch (e) {
           console.log(`${e.name}: ${e.message}`);
         }
+      },
+      //sincroniza la informacion de usuario entre localStorage y store
+      syncUserInfo: () => {
+        const userInfo = JSON.parse(localStorage.getItem("user_info"));
+        setStore({ userInfo: userInfo });
       },
       createRequest: () => {
         const store = getStore();
@@ -384,7 +384,6 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
       // funcion de checkbox (IMPORTANTE: una caracteristica en valor True NO excluirá a las otras caracteristicas en el filtrado en API)
       updateCaracteristicaPiscina: () => {
-        const store = getStore();
         if (store.caracteristica_piscina == true) {
           setStore({ caracteristica_piscina: false });
         } else {
@@ -394,7 +393,6 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
       // funcion de checkbox (IMPORTANTE: una caracteristica en valor True NO excluirá a las otras caracteristicas en el filtrado en API)
       updateCaracteristicaTerraza: () => {
-        const store = getStore();
         if (store.caracteristica_terraza == true) {
           setStore({ caracteristica_terraza: false });
         } else {
@@ -404,13 +402,11 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
       // funcion de checkbox  (IMPORTANTE: una option excluirá a las otras options en el filtrado en API)
       updateHabitacion: (e) => {
-        const store = getStore();
         setStore({ habitaciones: e.target.value });
         getActions().fillLocalStorage();
       },
       // funcion de checkbox  (IMPORTANTE: una option excluirá a las otras options en el filtrado en API)
       updateBaño: (e) => {
-        const store = getStore();
         setStore({ baños: e.target.value });
         getActions().fillLocalStorage();
       },
@@ -420,26 +416,22 @@ const getState = ({ getStore, getActions, setStore }) => {
       /*----------------------------------- INICIO DE LAS FUNCIONES DE PESTAÑA EN EL TABLERO DE RESULTADOS ---------------------------*/
       updateOperacionAlquiler: () => {
         // funcion especial para los pills del dashboard
-        const store = getStore();
         setStore({ operacion: "alquiler" });
         setStore({ preciomin: 0 });
         setStore({ preciomax: 999999999 });
       },
       updateOperacionCompra: () => {
         // funcion especial para los pills del dashboard
-        const store = getStore();
         setStore({ operacion: "compra" });
         setStore({ preciomin: 0 });
         setStore({ preciomax: 999999999 });
       },
       updateVistaListado: () => {
         // funcion especial para los pills del dashboard
-        const store = getStore();
         setStore({ vista: "listado" });
       },
       updateVistaMapa: () => {
         // funcion especial para los pills del dashboard
-        const store = getStore();
         setStore({ vista: "mapa" });
       },
       /*------------------------------------ FIN DE LAS FUNCIONES DE PESTAÑA EN EL TABLERO DE RESULTADOS -------------------------------*/
@@ -447,7 +439,6 @@ const getState = ({ getStore, getActions, setStore }) => {
       /*------------------------------------- INICIO DE LAS FUNCIONES DE ENTREGA Y RECUPERACION DE DATA ------------------------------ */
 
       fillLocalStorage: () => {
-        const store = getStore();
         // funcion vuelca datos del store en LocalStorage al pasar a otra página. Se debe usar al actualizar cada filtro
         localStorage.clear();
         localStorage.setItem("operacion", store.operacion);
@@ -477,7 +468,6 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
       syncLocalStorageToStore: () => {
         // funcion recupera datos de LocalStorage y los guarda en el store nuevamente al cargar la página
-        const store = getStore();
         setStore({ operacion: localStorage.getItem("operacion") });
         setStore({ comunidad: localStorage.getItem("comunidad") });
         setStore({ provincia: localStorage.getItem("provincia") });
