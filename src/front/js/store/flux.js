@@ -374,6 +374,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         setStore({ caracteristica_terraza: false });
         setStore({ habitaciones: "cualquiera" });
         setStore({ baños: "cualquiera" });
+        setStore({ body_response: "buscando coincidencias..." });
       },
 
       /*------------------------------------- FIN DE LAS FUNCIONES DE ENTREGA Y RECUPERACION DE DATA ------------------------------ */
