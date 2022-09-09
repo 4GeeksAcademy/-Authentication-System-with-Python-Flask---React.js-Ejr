@@ -5,6 +5,7 @@ import "../../styles/home.css";
 
 export const Home = () => {
 	const { store, actions } = useContext(Context);
+	const seleccion = "";
 
 	return (
 		<div className="d-flex justify-content-around">
@@ -14,7 +15,7 @@ export const Home = () => {
 						imagen
 					</div>
 					<div id="info-casa">
-					<p>texto, información</p>
+						<p>texto, información</p>
 						<button id="boton-casa">Ir a casa</button>
 					</div>
 				</div>
@@ -22,7 +23,7 @@ export const Home = () => {
 					<div id="logo-casa">
 						imagen
 					</div>
-					<div  id="info-casa">
+					<div id="info-casa">
 						<p>texto, información</p>
 						<button id="boton-casa">Ir a casa</button>
 
@@ -33,13 +34,21 @@ export const Home = () => {
 						imagen
 					</div>
 					<div id="info-casa">
-					<p>texto, información</p>
+						<p>texto, información</p>
 						<button id="boton-casa">Ir a casa</button>
 					</div>
 				</div>
 			</div>
 			<div id="maps">
-				<iframe src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d75352.4489663738!2d-70.66174117923224!3d-33.419614353711644!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1safex!5e0!3m2!1ses-419!2scl!4v1662669729294!5m2!1ses-419!2scl" width="500" height="600" allowFullScreen="" loading="lazy" referrerPolicy="no-referrer-when-downgrade"/>
+				<div id="dropdown">
+					<select name="casas" id="casas-cambio">
+						<option value="cambios-suiza">Cambios Suiza</option>
+						<option value="more-exchange">More Exchange</option>
+						<option value="cambios-santiago">Cambios Santiago</option>
+						<option value="cambio-costero">Cambio Costero</option>
+					</select>
+				</div>
+				<iframe src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d75352.4489663738!2d-70.66174117923224!3d-33.419614353711644!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1safex!5e0!3m2!1ses-419!2scl!4v1662669729294!5m2!1ses-419!2scl" width="500" height="600" allowFullScreen="" loading="lazy" referrerPolicy="no-referrer-when-downgrade" />
 			</div>
 		</div>
 

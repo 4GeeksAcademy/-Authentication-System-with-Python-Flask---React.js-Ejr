@@ -1,5 +1,5 @@
 body {
-    background-color: #2B3E84;
+    background: radial-gradient(ellipse at bottom, #2B3E84 50%, #000 100%);
 }
 
 #globo-info{
@@ -32,9 +32,23 @@ body {
     align-items: center;
 }
 
+#dropdown {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    
+
+}
+
 #maps {
     display:flex;
+    flex-direction: column;
+    justify-content:center;
     align-self: center;
+    padding: 10px;
+    border-radius: 15px 15px 15px 15px;
+    background-color:rgba(217,217,217,0.8);
 }
 
 #boton-casa {
@@ -46,5 +60,9 @@ body {
     align-self: center;
     width: 35%;
     height: 35px;
-    
+    transition: background-color .8s;
+}
+
+#boton-casa:hover {
+    background-color:rgb(16, 192, 112);
 }
