@@ -41,3 +41,19 @@ def token():
         return jsonify({"mensaje": 'user no existe'})
     access_token = create_access_token(identity=email)
     return jsonify(access_token=access_token)
+
+@api.route('/registro', methods=['POST'])
+def set_user():
+    datos = request.get_json()
+    if (datos is None):
+        return 'Falta información'
+    if ('email' not in datos):
+        return 'Falta email'
+    if ('password' not in datos):
+        return 'Falta Password'
+    new_user = User.query.filter_by(email = datos['email']).first()
+    if (new_user is None):
+        new_user = User(name = datos['name'], email = datos['email'], password = datos['password'], is_active = True)
+    db.session.add(new_user)
+    db.session.commit()
+    return 'Usuario Registrado'
