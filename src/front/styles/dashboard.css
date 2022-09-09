@@ -13,7 +13,7 @@
   height: fit-content;
 }
 .filtros-aside {
-  height: 74vh;
+  height: 77vh;
   overflow-y: scroll;
 }
 .filtros-aside::-webkit-scrollbar {
@@ -33,7 +33,7 @@
 /* --------------- FEED ----------------------- */
 
 .feed-properties {
-  height: 91vh;
+  height: 92vh;
   overflow-y: scroll;
 }
 .feed-properties::-webkit-scrollbar {

@@ -3,38 +3,23 @@ import { Context } from "../store/appContext";
 import { Link, useNavigate } from "react-router-dom";
 import "../../styles/dashboard.css";
 
-export const Aside = () => {
+export const Publicar = () => {
   const { store, actions } = useContext(Context);
 
   useEffect(() => {
-    actions.createRequest();
+    actions.backHome();
   }, []);
 
-  const handleClick = async () => {
-    await actions.fillLocalStorage();
-    await actions.clearResponse();
-    await actions.createRequest();
-    await actions.getProperties();
-  };
+  const handleClick = () => {};
 
   return (
-    <div className="container col-12 col-lg-3 px-0">
-      <div className="formulario container rounded-3 px-0 mt-0 pb-3">
-        <div className="titulo container px-3 pt-3 pb-2 text-center">
-          <h4>Tus Preferencias</h4>
+    <div className="container pb-0 mb-0 px-0">
+      <div className="container col-8 rounded-3 px-0 mt-0 pb-3">
+        <div className="container px-3 pt-3 pb-2 text-center">
+          <h4>Tu Publicación</h4>
         </div>
-        {/* boton */}
-        <div className="mx-3 my-2 text-center">
-          <button
-            onClick={handleClick}
-            type="button"
-            className="btn btn-primary mb-3"
-          >
-            Actualizar
-          </button>
-        </div>
-        {/*contenedor aside*/}
-        <div className="filtros-aside container pt-0">
+        {/*contenedor filtros*/}
+        <div className="container pt-0 pb-4">
           {/* comunidad */}
           <div className="selector mx-3 mb-3">
             <div className="pb-2">
@@ -76,70 +61,12 @@ export const Aside = () => {
               ))}
             </select>
           </div>
-          {/* rango de precio */}
+          {/* precio */}
           <div className="selector mx-3 mb-3">
             <div className="pb-2">
-              <span className="">Rango de Precio</span>
+              <span className="">Precio</span>
             </div>
-            {store.operacion == "todas" || store.operacion == "alquiler" ? (
-              <div className="d-flex">
-                <select
-                  onChange={actions.updatePreciomin}
-                  className="form-select me-1"
-                  aria-label="Default select example"
-                  value={store.preciomin == 0 ? "Mín" : store.preciomin}
-                >
-                  <option className="">Mín</option>
-                  <option className="">1000</option>
-                  <option className="">2000</option>
-                  <option className="">3000</option>
-                  <option className="">4000</option>
-                  <option className="">5000</option>
-                </select>
-                <select
-                  onChange={actions.updatePreciomax}
-                  className="form-select ms-1"
-                  aria-label="Default select example"
-                  value={store.preciomax == 999999999 ? "Máx" : store.preciomax}
-                >
-                  <option className="">Máx</option>
-                  <option className="">1000</option>
-                  <option className="">2000</option>
-                  <option className="">3000</option>
-                  <option className="">4000</option>
-                  <option className="">5000</option>
-                </select>
-              </div>
-            ) : (
-              <div className="d-flex">
-                <select
-                  onChange={actions.updatePreciomin}
-                  className="form-select me-1"
-                  aria-label="Default select example"
-                  value={store.preciomin == 0 ? "Mín" : store.preciomin}
-                >
-                  <option className="">Mín</option>
-                  <option className="">100000</option>
-                  <option className="">200000</option>
-                  <option className="">500000</option>
-                  <option className="">750000</option>
-                  <option className="">1000000</option>
-                </select>
-                <select
-                  onChange={actions.updatePreciomax}
-                  className="form-select ms-1"
-                  aria-label="Default select example"
-                  value={store.preciomax == 999999999 ? "Máx" : store.preciomax}
-                >
-                  <option className="">Máx</option>
-                  <option className="">100000</option>
-                  <option className="">200000</option>
-                  <option className="">500000</option>
-                  <option className="">750000</option>
-                  <option className="">1000000</option>
-                </select>
-              </div>
-            )}
+            <div className="form-text">{/*input para el precio*/}</div>
           </div>
           {/* tipo de vivienda */}
           <div className="selector mx-3 mb-3">
@@ -248,15 +175,15 @@ export const Aside = () => {
             </select>
           </div>
           {/* boton */}
-          {/* <div className="selector mx-3 my-0 pt-2 text-center">
+          <div className="mx-3 my-2 text-center">
             <button
               onClick={handleClick}
               type="button"
               className="btn btn-primary mb-3"
             >
-              Filtrar Resultados
+              Publicar
             </button>
-          </div> */}
+          </div>
         </div>
       </div>
     </div>

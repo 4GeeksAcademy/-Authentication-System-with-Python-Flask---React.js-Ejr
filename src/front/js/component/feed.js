@@ -17,7 +17,7 @@ export const Feed = () => {
   };
 
   return (
-    <div className="container-fluid feed-properties ps-0 pe-2 my-2">
+    <div className="container-fluid feed-properties ps-0 pe-2 mt-2 mb-0">
       {typeof store.body_response === "string" ? (
         <div className="m-5 p-5">
           <h3>{store.body_response}</h3>

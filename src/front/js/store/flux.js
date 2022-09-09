@@ -485,6 +485,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       /*------------------------------------- INICIO DE LAS FUNCIONES DE ENTREGA Y RECUPERACION DE DATA ------------------------------ */
 
       fillLocalStorage: () => {
+        const store = getStore();
         // funcion vuelca datos del store en LocalStorage al pasar a otra página. Se debe usar al actualizar cada filtro
         localStorage.clear(); // esto elimina tambien el objeto stringify de single en localstorage
         localStorage.setItem("operacion", store.operacion);
@@ -561,6 +562,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         setStore({ caracteristica_terraza: false });
         setStore({ habitaciones: "cualquiera" });
         setStore({ baños: "cualquiera" });
+        setStore({ body_response: "buscando coincidencias..." });
       },
 
       /*------------------------------------- FIN DE LAS FUNCIONES DE ENTREGA Y RECUPERACION DE DATA ------------------------------ */
