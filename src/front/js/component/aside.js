@@ -18,7 +18,7 @@ export const Aside = () => {
   };
 
   return (
-    <div className="container col-12 col-lg-3 pb-0 mb-0 px-0">
+    <div className="container col-12 col-lg-3 px-0">
       <div className="formulario container rounded-3 px-0 mt-0 pb-3">
         <div className="titulo container px-3 pt-3 pb-2 text-center">
           <h4>Tus Preferencias</h4>
@@ -34,7 +34,7 @@ export const Aside = () => {
           </button>
         </div>
         {/*contenedor aside*/}
-        <div className="filtros-aside container pt-0 pb-4">
+        <div className="filtros-aside container pt-0">
           {/* comunidad */}
           <div className="selector mx-3 mb-3">
             <div className="pb-2">

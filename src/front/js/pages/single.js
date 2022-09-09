@@ -53,7 +53,7 @@ export const Single = () => {
               }}
             ></div>
             <div className="container leyenda-fotos mt-2 d-flex px-5">
-              <div className="col-4 d-flex justify-content-start">
+              <div className="col-4 d-flex justify-content-end">
                 {elemento.fotos.length > 1 ? (
                   <button
                     onClick={bajaFoto}
@@ -74,7 +74,7 @@ export const Single = () => {
                   ""
                 )}
               </div>
-              <div className="col-4 d-flex justify-content-end">
+              <div className="col-4 d-flex justify-content-start">
                 {elemento.fotos.length > 1 ? (
                   <button
                     onClick={subeFoto}

@@ -16,7 +16,7 @@ export const Navbar = () => {
     actions.fillLocalStorage();
   };
   return (
-    <nav className="navbar navbar-dark bg-dark">
+    <nav className="navbar navbar-dark bg-dark mb-2">
       <div className="container">
         <Link to="/" className="text-decoration-none">
           <span onClick={handleClick} className="mb-0 display-6 text-white ">
