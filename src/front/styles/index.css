@@ -1,6 +1,11 @@
 /* 
     General Styles used on every website (Don't Repeat Yourself)
 */
+* {
+  font-family: "Poiret One", serif;
+  font-weight: 700;
+  font-size: large;
+}
 body::-webkit-scrollbar {
   width: 8px;
   background: rgb(237, 237, 237);

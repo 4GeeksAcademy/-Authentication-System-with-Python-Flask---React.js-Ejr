@@ -10,11 +10,18 @@ export const Navbar = () => {
     actions.logout();
     navigate("/");
   };
+
+  const handleClick = async () => {
+    await actions.backHome();
+    actions.fillLocalStorage();
+  };
   return (
     <nav className="navbar navbar-dark bg-dark">
       <div className="container">
-        <Link to="/">
-          <span className="navbar-brand mb-0 h1">Luxury Estate</span>
+        <Link to="/" className="text-decoration-none">
+          <span onClick={handleClick} className="mb-0 display-6 text-white ">
+            LUXURY ESTATE
+          </span>
         </Link>
 
         {store.token ? (
