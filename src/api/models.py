@@ -9,11 +9,12 @@ class User(db.Model):
     password = db.Column(db.String(80), unique=False, nullable=False)
     full_name = db.Column(db.String(80), unique=False, default=None, nullable=True)
     email = db.Column(db.String(120), unique=True, nullable=False)
+    imagen_perfil = db.Column(db.String(120), unique=False, nullable=True)
     inmuebles = db.relationship('Inmueble', backref='Propietario', cascade="all, delete")
     messages = db.relationship('Message', backref='Propietario', cascade="all, delete")
 
     def __repr__(self):
-        return f'<Propietario {self.username}>'
+       return f'<Propietario {self.username}>'
 
     def serialize(self):
         return {
@@ -21,6 +22,7 @@ class User(db.Model):
             "username": self.username,
             "full_name": self.full_name,
             "email": self.email,
+            "imagen_perfil": self.imagen_perfil
             # do not serialize the password, its a security breach
         }
 
@@ -35,25 +37,19 @@ class Inmueble(db.Model):
     precio = db.Column(db.Integer, unique=False, nullable=False)
     tipo_vivienda = db.Column(db.String(80), unique=False, nullable=False)
     habitaciones = db.Column(db.Integer, unique=False, nullable=False)
-    aseos = db.Column(db.Integer, unique=False, nullable=False)
+    baños = db.Column(db.Integer, unique=False, nullable=False)
     pet = db.Column(db.Boolean, unique=False, nullable=False)
     piscina = db.Column(db.Boolean, unique=False, nullable=False)
     terraza = db.Column(db.Boolean, unique=False, nullable=False)
     garage = db.Column(db.Boolean, unique=False, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    imagenes = db.relationship('Imagen', backref='Inmueble', cascade="all, delete") 
-    messages = db.relationship('Message', backref='Inmueble', cascade="all, delete") 
+    imagenes = db.relationship('Imagen', backref='Inmueble', cascade="all, delete") #, lazy=True
+    messages = db.relationship('Message', backref='Inmueble', cascade="all, delete") #, lazy=True
 
     def __repr__(self):
         return f'<Inmueble {self.direccion}>'
 
     def serialize(self):
-        # fotos = 
-        # for x in self.imagenes:
-        #     "id" = db.Column(db.Integer, primary_key=True),
-        #     "imagen_url" = db.Column(db.String(300), unique=False, nullable=False),
-        #     "inmueble_id" = db.Column(db.Integer, db.ForeignKey('inmueble.id'), nullable=False),
-
         return {
             "id": self.id,
             "tipo_operacion": self.tipo_operacion,
@@ -65,22 +61,22 @@ class Inmueble(db.Model):
             "precio": self.precio,
             "tipo_vivienda": self.tipo_vivienda,
             "habitaciones": self.habitaciones,
-            "aseos": self.aseos,
+            "baños": self.baños,
             "pet": self.pet,
             "piscina": self.piscina,
             "terraza": self.terraza,
-            "garage": self.garage
-            # "imagenes":
-            # do not serialize the password, its a security breach
+            "garage": self.garage,
+            "user_id": self.user_id
         }
 
 class Imagen(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    imagen_url = db.Column(db.String(300), unique=False, nullable=False)
-    inmueble_id = db.Column(db.Integer, db.ForeignKey('inmueble.id'), nullable=False)
+    imagen_url = db.Column(db.String(180), unique=False, nullable=True)
+    inmueble_id = db.Column(db.Integer, db.ForeignKey('inmueble.id'), nullable=True)
+    
 
     def __repr__(self):
-        return f'<Imagen {self.imagen_url}>'
+        return f'<Imagen {self.id}>'
 
     def serialize(self):
         return {
@@ -95,7 +91,7 @@ class Message(db.Model):
     sender_name = db.Column(db.String(30), unique=False, nullable=False)
     sender_phone = db.Column(db.Integer, unique=False, nullable=False)
     body = db.Column(db.String(300), unique=False, nullable=False)
-    recipient_id = db.Column(db.Integer, db.ForeignKey('user.id')) 
+    recipient_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     inmueble_id = db.Column(db.Integer, db.ForeignKey('inmueble.id')) 
 
     def __repr__(self):
@@ -110,5 +106,4 @@ class Message(db.Model):
             "body": self.body,
             "recipient_id": self.recipient_id,
             "inmueble_id": self.inmueble_id
-            # do not serialize the password, its a security breach
         }
