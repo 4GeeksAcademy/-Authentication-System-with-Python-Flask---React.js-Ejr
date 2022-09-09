@@ -11,7 +11,6 @@ export const Properties = () => {
     const fetchProperties = async () => {
       await actions.getUserProperties();
       setProperties(JSON.parse(localStorage.getItem("userProperties")));
-      setImages(JSON.parse(localStorage.getItem("userImages")));
       setIsLoading(false);
     };
     fetchProperties();
@@ -46,7 +45,7 @@ export const Properties = () => {
                 </div>
                 <div className="card-body">
                   <img
-                    src={images[0].imagen_url}
+                    src={property.fotos[0]}
                     className="img-thumbnail rounded float-start"
                     style={{ width: "200px", height: "200px" }}
                   />

@@ -8,21 +8,25 @@ export const Signup = (props) => {
   const { store, actions } = useContext(Context);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const navigate = useNavigate();
   const handleSubmit = async () => {
     if (password.length < 8) {
       swal("La contraseña debe tener al menos 8 caracteres");
+      return false;
+    } else if (password !== confirmPassword) {
+      swal("Las contraseñas no coinciden");
+      return false;
     } else if (!username || !email || !fullName) {
       swal("Debe rellenar todos los campos");
+      return false;
     }
-    const isSignedUp = await actions.signup();
-    if (isSignedUp) {
-      await actions.login(username, password);
-      const user = JSON.parse(localStorage.getItem("user_info"));
-      navigate(`/user/${user.id}`);
-    }
+    await actions.signup(username, password, fullName, email);
+    await actions.login(username, password);
+    const user = JSON.parse(localStorage.getItem("user_info"));
+    navigate(`/user/${user.id}`);
   };
   return (
     <div className="container text-center">
@@ -67,6 +71,14 @@ export const Signup = (props) => {
                 type="password"
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Password"
+              />
+              <input
+                className="list-group-item"
+                value={confirmPassword}
+                required
+                type="password"
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                placeholder="Confirm Password"
               />
             </ul>
             <div className="card-body">
