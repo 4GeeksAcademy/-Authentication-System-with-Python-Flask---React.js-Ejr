@@ -13,7 +13,7 @@ export const Home = () => {
 
 		<div class="row imghome">
 			<Navbar />
-			<div class="row">
+			<div class="col-sm-10">
 
 				<div class="card-body home">
 					<h1 class="card-title">Comer y cocinar en el hogar es mejor</h1>
@@ -24,14 +24,15 @@ export const Home = () => {
 						<button className="btn btn-secondary">Learn More</button>
 					</Link>
 				</div>
+				
 				<div class="row destacados">
 					<div class="box">
 						<div class="imgBx">
-							<img src="https://www.mckinsey.com/~/media/mckinsey/industries/public%20and%20social%20sector/our%20insights/how%20to%20make%20a%20city%20great/citiesnew_largefeature_1536x1152.jpg" />
+							<img src="https://images.pexels.com/photos/376464/pexels-photo-376464.jpeg?auto=compress&cs=tinysrgb&w=1600" />
 						</div>
 						<div class="content">
 							<div>
-								<h2>Image Title</h2>
+								<h2>Waffles</h2>
 								<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi accusamus molestias quidem iusto.
 								</p>
 							</div>
@@ -39,11 +40,11 @@ export const Home = () => {
 					</div>
 					<div class="box">
 						<div class="imgBx">
-							<img src="https://iso.500px.com/wp-content/uploads/2014/07/big-one.jpg" />
+							<img src="https://images.pexels.com/photos/410648/pexels-photo-410648.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" />
 						</div>
 						<div class="content">
 							<div>
-								<h2>Image Title</h2>
+								<h2>Costillar BBQ</h2>
 								<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi accusamus molestias quidem iusto.
 								</p>
 							</div>
@@ -51,17 +52,18 @@ export const Home = () => {
 					</div>
 					<div class="box">
 						<div class="imgBx">
-							<img src="https://images.immediate.co.uk/production/volatile/sites/25/2020/04/Things-never-knew-astronomy-e454e5d.jpg" />
+							<img src="https://images.pexels.com/photos/4220141/pexels-photo-4220141.jpeg" />
 						</div>
 						<div class="content">
 							<div>
-								<h2>Image Title</h2>
+								<h2>Ceral De Frutos Rojos</h2>
 								<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi accusamus molestias quidem iusto.
 								</p>
 							</div>
 						</div>
 					</div>
 				</div>
+				
 			</div>
 			<Footer />
 		</div>
