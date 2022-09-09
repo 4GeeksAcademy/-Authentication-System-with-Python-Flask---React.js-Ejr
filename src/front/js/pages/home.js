@@ -20,7 +20,7 @@ export const Home = () => {
     <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
     <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
   </div>
-  <div className="carousel-inner">
+  <div className="carrusel carousel-inner">
     <div className="carousel-item active">
 	  <h1>Encuentra la mejor tasa.</h1>
       <img src={carrusel1} className="d-block w-100" alt="..."/>
@@ -43,23 +43,29 @@ export const Home = () => {
     <span className="visually-hidden">Next</span>
   </button>
 </div>
-<div className="card-group">
-  <div className="card">
-    <img src={card1} className="card-img-top" alt="..."/>
+<div className="tarjetas card-group">
+  <div className="tarjeta1 card">
+    <div className="imagencarta">
+    <img src={card1} className="cardimage card-img-top" alt="..."/>
+    </div>
     <div className="card-body">
       <h5 className="card-title">Envía de forma segura.</h5>
       <p className="card-text">Nuestros afiliados ofrecen la mayor seguridad para el envío de tu dinero, son empresas confiables y reconocidas a nivel nacional.</p>
     </div>
   </div>
-  <div className="card">
-    <img src={card2} className="card-img-top" alt="..."/>
+  <div className="tarjeta1 card">
+    <div className="imagencarta">
+    <img src={card2} className="cardimage card-img-top" alt="..."/>
+    </div>
     <div className="card-body">
       <h5 className="card-title">Ahorra dinero y consígue la mejor tasa.</h5>
       <p className="card-text">Compara las tasas de forma rápida y fácil, elije el mejor y no pagues de más.</p>
     </div>
   </div>
-  <div className="card">
-    <img src={card3} className="card-img-top" alt="..."/>
+  <div className="tarjeta1 card">
+  <div className="imagencarta">
+    <img src={card3} className="cardimage card-img-top" alt="..."/>
+    </div>
     <div className="card-body">
       <h5 className="card-title">Revisa la cotización en timpo real.</h5>
       <p className="card-text">Obtén la cotización de tu divisa actualizada, para que puedas tomar la mejore decisión.</p>
