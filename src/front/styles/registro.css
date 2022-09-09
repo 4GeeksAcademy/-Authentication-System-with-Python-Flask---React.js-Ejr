@@ -7,8 +7,47 @@
 */
 
 body {
-    background-color : #2B3E84;
+    background: radial-gradient(ellipse at bottom, #2B3E84 50%, #000 100%);
+
 }
+
+p {
+    font-size:1rem;
+    transform: rotate(2.3deg) translate(.35em, -.15em);
+    color:  #2B3E84;
+}
+
+#speech-bubble {
+    position: relative;
+    width: 15em; height: 7em;
+    border-radius: .25em;
+    transform: rotate(-4deg) rotateY(15deg);
+    background: rgb(241,214,71) ;
+    font: 2em/4 Boogaloo, Verdana, sans-serif;
+    text-align: center;
+  }
+  #speech-bubble:before, #speech-bubble:after {
+    position: absolute;
+    z-index: -1;
+    content: '';
+  }
+  #speech-bubble:after {
+    top: 0; right: 0; bottom: 0; left: 0;
+    border-radius: inherit;
+    display:flex;
+    justify-content: center;
+    transform: rotate(2deg) translate(.35em, -.15em) scale(1.02);
+    background: #ededed;
+  }
+  #speech-bubble:before {
+    border: solid 0 transparent;
+    border-right: solid 3.5em  rgb(241,214,71) ;
+    border-bottom: solid .25em #629bdd;
+    bottom: .25em; left: 1.25em;
+    width: 0; height: 1em;
+    transform: rotate(0deg) skewX(75deg);
+  }
+
 
 #formulario {
     width: 400px;
@@ -17,7 +56,6 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-
 }
 
 #title, #info-name, #info-number, #email, #password, #c-password {
@@ -29,8 +67,7 @@ body {
     background-color: rgb(241,214,71) ;
     display: flex;
     align-items: center;
-    width: 350px;
-    
+    width: 20px;
 }
 
 #boton {
@@ -38,7 +75,6 @@ body {
     border-radius: 15px 15px 15px 15px;
     color: white;
     margin-top: 15px;
-    margin-bottom: 35px; 
     display: flex;
     margin-left: 50%;
     width: 35%;
