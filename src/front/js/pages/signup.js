@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { Context } from "../store/appContext";
 import swal from "sweetalert";
 
@@ -8,37 +8,25 @@ export const Signup = (props) => {
   const { store, actions } = useContext(Context);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
-
+  const navigate = useNavigate();
   const handleSubmit = async () => {
     if (password.length < 8) {
       swal("La contraseña debe tener al menos 8 caracteres");
+      return false;
+    } else if (password !== confirmPassword) {
+      swal("Las contraseñas no coinciden");
+      return false;
     } else if (!username || !email || !fullName) {
       swal("Debe rellenar todos los campos");
+      return false;
     }
-    const opts = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        fullName: fullName,
-        email: email,
-        username: username,
-        password: password,
-      }),
-    };
-    try {
-      const resp = await fetch(process.env.BACKEND_URL + "/api/signup", opts);
-      if (resp !== 200) {
-        throw new Error("Error signin up");
-      }
-      const data = await resp.json();
-      return true;
-    } catch (error) {
-      console.error(`${error.name} : ${error.message}`);
-    }
+    await actions.signup(username, password, fullName, email);
+    await actions.login(username, password);
+    const user = JSON.parse(localStorage.getItem("user_info"));
+    navigate(`/user/${user.id}`);
   };
   return (
     <div className="container text-center">
@@ -83,6 +71,14 @@ export const Signup = (props) => {
                 type="password"
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Password"
+              />
+              <input
+                className="list-group-item"
+                value={confirmPassword}
+                required
+                type="password"
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                placeholder="Confirm Password"
               />
             </ul>
             <div className="card-body">

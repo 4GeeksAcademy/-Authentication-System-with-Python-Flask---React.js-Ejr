@@ -109,6 +109,15 @@ def edit_user():
         response = {"message":"Nothing to update"}
         return jsonify(response), 200
 
+@api.route('/delete', methods=['DELETE'])
+@jwt_required()
+def delete_user():
+    current_user_id = get_jwt_identity()
+    user = User.query.filter_by(id = current_user_id).first()
+    db.session.delete(user)
+    db.session.commit()
+    return jsonify("user deleted"), 200
+
 @api.route('/properties', methods=['POST'])
 def getInmuebles():
 

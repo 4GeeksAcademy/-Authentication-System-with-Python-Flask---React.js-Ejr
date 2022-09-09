@@ -1,6 +1,7 @@
 import React, { useEffect, useContext, useState } from "react";
 import { Context } from "../../store/appContext";
 import swal from "sweetalert";
+import { useNavigate } from "react-router-dom";
 
 export const Edit = () => {
   const { store, actions } = useContext(Context);
@@ -8,6 +9,8 @@ export const Edit = () => {
   const [fullName, setFullName] = useState(localStorage.getItem("full_name"));
   const [email, setEmail] = useState(localStorage.getItem("email"));
   const [changePassword, setChangePassword] = useState(false);
+  const [deleteUser, setDeleteUser] = useState(false);
+  const navigate = useNavigate();
 
   const handleSubmit = async () => {
     if (changePassword && password.length < 8) {
@@ -36,11 +39,12 @@ export const Edit = () => {
       setPassword("");
     }
   };
+
   return (
     <>
       {localStorage.getItem("token") ? (
         <div
-          className="d-flex justify-content-center"
+          className="d-flex justify-content-center col-6"
           style={{ height: "90vh", width: "100vh" }}
         >
           <div className="col-6 mt-5">
@@ -80,6 +84,23 @@ export const Edit = () => {
                     onClick={() => setChangePassword(true)}
                   >
                     Change Password
+                  </a>
+                )}
+                {deleteUser ? (
+                  <a
+                    href="#"
+                    className="card-link btn btn-outline-danger"
+                    onClick={actions.deleteUser}
+                  >
+                    Confirmar
+                  </a>
+                ) : (
+                  <a
+                    href="#"
+                    className="card-link btn btn-outline-danger"
+                    onClick={() => setDeleteUser(true)}
+                  >
+                    Eliminar cuenta
                   </a>
                 )}
               </ul>

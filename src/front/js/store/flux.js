@@ -146,15 +146,12 @@ const getState = ({ getStore, getActions, setStore }) => {
           //     result.push(page);
           //   }
           // }
-          setStore({
-            userProperties: data.inmuebles,
-            userPropertiesImages: data.imagenes,
-          });
-          localStorage.setItem(
-            "userProperties",
-            JSON.stringify(data.inmuebles)
-          );
-          localStorage.setItem("userImages", JSON.stringify(data.imagenes));
+
+          const aux1 = data["inmuebles"];
+          const aux2 = data["imagenes"];
+          const aux3 = getActions().joinBodies(aux1, aux2);
+          setStore({ userProperties: aux3 });
+          localStorage.setItem("userProperties", JSON.stringify(aux3));
           return true;
         } catch (e) {
           console.log(`${e.name}: ${e.message}`);
@@ -182,15 +179,38 @@ const getState = ({ getStore, getActions, setStore }) => {
           const data = await resp.json();
           localStorage.setItem("token", data.access_token);
           localStorage.setItem("user_info", JSON.stringify(data.user));
-          localStorage.setItem("username", data.user.username);
-          localStorage.setItem("email", data.user.email);
-          localStorage.setItem("full_name", data.user.full_name);
-          localStorage.setItem("id", data.user.id);
           setStore({ token: data.access_token, userInfo: data.user });
           console.log(data.user);
           return true;
         } catch (error) {
           console.log(error);
+        }
+      },
+      signup: async (username, password, full_name, email) => {
+        const opts = {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            fullName: full_name,
+            email: email,
+            username: username,
+            password: password,
+          }),
+        };
+        try {
+          const resp = await fetch(
+            process.env.BACKEND_URL + "/api/signup",
+            opts
+          );
+          if (resp !== 200) {
+            throw new Error("Error signin up");
+          }
+          const data = await resp.json();
+          return true;
+        } catch (error) {
+          console.error(`${error.name} : ${error.message}`);
         }
       },
       getTokenFromStorage: () => {
@@ -232,6 +252,31 @@ const getState = ({ getStore, getActions, setStore }) => {
             setStore({ userInfo: data.user_info });
           }
           return data;
+        } catch (e) {
+          console.log(`${e.name}: ${e.message}`);
+        }
+      },
+      deleteUser: async () => {
+        const opts = {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            "Content-Type": "application/json",
+          },
+        };
+        try {
+          const resp = await fetch(
+            process.env.BACKEND_URL + "/api/delete",
+            opts
+          );
+          if (resp.status !== 200) {
+            throw new Error("Something went wrong updating the user");
+          }
+          const data = await resp.json();
+          if (data == "user deleted") {
+            getActions().logout();
+          }
+          return true;
         } catch (e) {
           console.log(`${e.name}: ${e.message}`);
         }
