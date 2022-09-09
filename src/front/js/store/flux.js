@@ -146,15 +146,12 @@ const getState = ({ getStore, getActions, setStore }) => {
           //     result.push(page);
           //   }
           // }
-          setStore({
-            userProperties: data.inmuebles,
-            userPropertiesImages: data.imagenes,
-          });
-          localStorage.setItem(
-            "userProperties",
-            JSON.stringify(data.inmuebles)
-          );
-          localStorage.setItem("userImages", JSON.stringify(data.imagenes));
+
+          const aux1 = data["inmuebles"];
+          const aux2 = data["imagenes"];
+          const aux3 = getActions().joinBodies(aux1, aux2);
+          setStore({ userProperties: aux3 });
+          localStorage.setItem("userProperties", JSON.stringify(aux3));
           return true;
         } catch (e) {
           console.log(`${e.name}: ${e.message}`);
@@ -189,14 +186,14 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.log(error);
         }
       },
-      signup: async () => {
+      signup: async (username, password, full_name, email) => {
         const opts = {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            fullName: fullName,
+            fullName: full_name,
             email: email,
             username: username,
             password: password,
@@ -255,6 +252,31 @@ const getState = ({ getStore, getActions, setStore }) => {
             setStore({ userInfo: data.user_info });
           }
           return data;
+        } catch (e) {
+          console.log(`${e.name}: ${e.message}`);
+        }
+      },
+      deleteUser: async () => {
+        const opts = {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            "Content-Type": "application/json",
+          },
+        };
+        try {
+          const resp = await fetch(
+            process.env.BACKEND_URL + "/api/delete",
+            opts
+          );
+          if (resp.status !== 200) {
+            throw new Error("Something went wrong updating the user");
+          }
+          const data = await resp.json();
+          if (data == "user deleted") {
+            getActions().logout();
+          }
+          return true;
         } catch (e) {
           console.log(`${e.name}: ${e.message}`);
         }
