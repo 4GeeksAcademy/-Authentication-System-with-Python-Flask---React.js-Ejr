@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { Context } from "../store/appContext";
 import swal from "sweetalert";
 
@@ -10,34 +10,18 @@ export const Signup = (props) => {
   const [password, setPassword] = useState("");
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
-
+  const navigate = useNavigate();
   const handleSubmit = async () => {
     if (password.length < 8) {
       swal("La contraseña debe tener al menos 8 caracteres");
     } else if (!username || !email || !fullName) {
       swal("Debe rellenar todos los campos");
     }
-    const opts = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        fullName: fullName,
-        email: email,
-        username: username,
-        password: password,
-      }),
-    };
-    try {
-      const resp = await fetch(process.env.BACKEND_URL + "/api/signup", opts);
-      if (resp !== 200) {
-        throw new Error("Error signin up");
-      }
-      const data = await resp.json();
-      return true;
-    } catch (error) {
-      console.error(`${error.name} : ${error.message}`);
+    const isSignedUp = await actions.signup();
+    if (isSignedUp) {
+      await actions.login(username, password);
+      const user = JSON.parse(localStorage.getItem("user_info"));
+      navigate(`/user/${user.id}`);
     }
   };
   return (

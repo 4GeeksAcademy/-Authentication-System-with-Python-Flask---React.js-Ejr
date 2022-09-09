@@ -182,15 +182,38 @@ const getState = ({ getStore, getActions, setStore }) => {
           const data = await resp.json();
           localStorage.setItem("token", data.access_token);
           localStorage.setItem("user_info", JSON.stringify(data.user));
-          localStorage.setItem("username", data.user.username);
-          localStorage.setItem("email", data.user.email);
-          localStorage.setItem("full_name", data.user.full_name);
-          localStorage.setItem("id", data.user.id);
           setStore({ token: data.access_token, userInfo: data.user });
           console.log(data.user);
           return true;
         } catch (error) {
           console.log(error);
+        }
+      },
+      signup: async () => {
+        const opts = {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            fullName: fullName,
+            email: email,
+            username: username,
+            password: password,
+          }),
+        };
+        try {
+          const resp = await fetch(
+            process.env.BACKEND_URL + "/api/signup",
+            opts
+          );
+          if (resp !== 200) {
+            throw new Error("Error signin up");
+          }
+          const data = await resp.json();
+          return true;
+        } catch (error) {
+          console.error(`${error.name} : ${error.message}`);
         }
       },
       getTokenFromStorage: () => {

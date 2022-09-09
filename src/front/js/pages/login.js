@@ -11,7 +11,8 @@ export const Login = (props) => {
 
   const handleSubmit = async () => {
     await actions.login(username, password);
-    navigate(`/user/${localStorage.getItem("id")}`);
+    const user = JSON.parse(localStorage.getItem("user_info"));
+    navigate(`/user/${user.id}`);
   };
   return (
     <>
