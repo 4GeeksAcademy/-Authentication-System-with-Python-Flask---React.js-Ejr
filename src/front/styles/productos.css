@@ -84,10 +84,14 @@ figure{
 .boton{
     background: rgb(255, 255, 255);
     
+    
+    
 }
-.boton:hover{
-    background: rgb(255, 0, 208);
+.corazon{
+    background-color:white ;
+    
 }
+
 
 .vista-login{
     display: flex;
@@ -108,6 +112,12 @@ figure{
 
 }
 .fa-cookie:before {
-    content: "\f563";
+    
+    color: #101010;
+}
+.fa-leaf:before{
+    color: #101010;
+}
+.fa-burger:before{
     color: #101010;
 }
