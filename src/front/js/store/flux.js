@@ -1,7 +1,11 @@
 const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
-      /*-------------------------------  INICIO DE LOS LISTADOS (CASI) ESTATICOS PARA OPCTIONS DE LOS SELECT --------------------------------*/
+      token: null,
+      userInfo: {},
+      messages: [],
+      userProperties: [],
+      userPropertiesImages: [],
       listaprovincias: [],
       listacomunidades: [
         {
@@ -86,10 +90,158 @@ const getState = ({ getStore, getActions, setStore }) => {
       baños: "cualquiera",
       /*------------------------------------------ FIN DE LAS VARIABLES DE FILTROS -----------------------------------------------------*/
     },
-    //
     actions: {
+      getMessages: async () => {
+        const opts = {
+          method: "GET",
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+        };
+        try {
+          // fetching data from the backend
+          const resp = await fetch(
+            process.env.BACKEND_URL + "/api/getmessages",
+            opts
+          );
+          if (resp.status !== 200) {
+            throw new Error("Something went wrong");
+          }
+          const data = await resp.json();
+          // const result = [...data];
+          // if (result.length > 10) {
+          //   for (let i = 0; i < result.length; i += 10) {
+          //     const page = arr.slice(i, i + 10);                 Para el NICE TO HAVE (pagination)
+          //     result.push(page);
+          //   }
+          // }
+          setStore({ messages: data });
+          localStorage.setItem("messages", JSON.stringify(data));
+          return true;
+        } catch (e) {
+          console.log(`${e.name}: ${e.message}`);
+        }
+      },
+      getUserProperties: async () => {
+        const opts = {
+          method: "GET",
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+        };
+        try {
+          // fetching data from the backend
+          const resp = await fetch(
+            process.env.BACKEND_URL + "/api/getlistings",
+            opts
+          );
+          if (resp.status !== 200) {
+            throw new Error("Something went wrong");
+          }
+          const data = await resp.json();
+          // const result = [...data];
+          // if (result.length > 10) {
+          //   for (let i = 0; i < result.length; i += 10) {
+          //     const page = arr.slice(i, i + 10);                 Para el NICE TO HAVE (pagination)
+          //     result.push(page);
+          //   }
+          // }
+          setStore({
+            userProperties: data.inmuebles,
+            userPropertiesImages: data.imagenes,
+          });
+          localStorage.setItem(
+            "userProperties",
+            JSON.stringify(data.inmuebles)
+          );
+          localStorage.setItem("userImages", JSON.stringify(data.imagenes));
+          return true;
+        } catch (e) {
+          console.log(`${e.name}: ${e.message}`);
+        }
+      },
+      login: async (username, password) => {
+        const opts = {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            username: username,
+            password: password,
+          }),
+        };
+        try {
+          const resp = await fetch(
+            process.env.BACKEND_URL + "/api/login",
+            opts
+          );
+          if (resp.status !== 200) {
+            throw new Error("Error signing up");
+          }
+          const data = await resp.json();
+          localStorage.setItem("token", data.access_token);
+          localStorage.setItem("user_info", JSON.stringify(data.user));
+          localStorage.setItem("username", data.user.username);
+          localStorage.setItem("email", data.user.email);
+          localStorage.setItem("full_name", data.user.full_name);
+          localStorage.setItem("id", data.user.id);
+          setStore({ token: data.access_token, userInfo: data.user });
+          console.log(data.user);
+          return true;
+        } catch (error) {
+          console.log(error);
+        }
+      },
+      getTokenFromStorage: () => {
+        const token = localStorage.getItem("token");
+        if (token && token !== "" && token !== undefined)
+          setStore({ token: token });
+        console.log("getting token from local storage");
+      },
+      logout: () => {
+        localStorage.clear();
+        setStore({ token: null });
+        console.log("logging out");
+      },
+      updateUser: async (full_name, email, password) => {
+        const opts = {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            full_name: full_name,
+            email: email,
+            password: password,
+          }),
+        };
+        try {
+          const resp = await fetch(
+            process.env.BACKEND_URL + "/api/update",
+            opts
+          );
+          if (resp.status !== 200) {
+            throw new Error("Something went wrong updating the user");
+          }
+          const data = await resp.json();
+          if (data.message == "Updated user succesfully") {
+            const updatedUser = data.user_info;
+            localStorage.setItem("user_info", JSON.stringify(updatedUser));
+            setStore({ userInfo: data.user_info });
+          }
+          return data;
+        } catch (e) {
+          console.log(`${e.name}: ${e.message}`);
+        }
+      },
+      //sincroniza la informacion de usuario entre localStorage y store
+      syncUserInfo: () => {
+        const userInfo = JSON.parse(localStorage.getItem("user_info"));
+        setStore({ userInfo: userInfo });
+      },
       //
-
       createRequest: () => {
         const store = getStore();
         let aux = {};
@@ -233,7 +385,6 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
       // funcion de checkbox (IMPORTANTE: una caracteristica en valor True NO excluirá a las otras caracteristicas en el filtrado en API)
       updateCaracteristicaPiscina: () => {
-        const store = getStore();
         if (store.caracteristica_piscina == true) {
           setStore({ caracteristica_piscina: false });
         } else {
@@ -243,7 +394,6 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
       // funcion de checkbox (IMPORTANTE: una caracteristica en valor True NO excluirá a las otras caracteristicas en el filtrado en API)
       updateCaracteristicaTerraza: () => {
-        const store = getStore();
         if (store.caracteristica_terraza == true) {
           setStore({ caracteristica_terraza: false });
         } else {
@@ -253,13 +403,11 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
       // funcion de checkbox  (IMPORTANTE: una option excluirá a las otras options en el filtrado en API)
       updateHabitacion: (e) => {
-        const store = getStore();
         setStore({ habitaciones: e.target.value });
         getActions().fillLocalStorage();
       },
       // funcion de checkbox  (IMPORTANTE: una option excluirá a las otras options en el filtrado en API)
       updateBaño: (e) => {
-        const store = getStore();
         setStore({ baños: e.target.value });
         getActions().fillLocalStorage();
       },
@@ -269,26 +417,22 @@ const getState = ({ getStore, getActions, setStore }) => {
       /*----------------------------------- INICIO DE LAS FUNCIONES DE PESTAÑA EN EL TABLERO DE RESULTADOS ---------------------------*/
       updateOperacionAlquiler: () => {
         // funcion especial para los pills del dashboard
-        const store = getStore();
         setStore({ operacion: "alquiler" });
         setStore({ preciomin: 0 });
         setStore({ preciomax: 999999999 });
       },
       updateOperacionCompra: () => {
         // funcion especial para los pills del dashboard
-        const store = getStore();
         setStore({ operacion: "compra" });
         setStore({ preciomin: 0 });
         setStore({ preciomax: 999999999 });
       },
       updateVistaListado: () => {
         // funcion especial para los pills del dashboard
-        const store = getStore();
         setStore({ vista: "listado" });
       },
       updateVistaMapa: () => {
         // funcion especial para los pills del dashboard
-        const store = getStore();
         setStore({ vista: "mapa" });
       },
       /*------------------------------------ FIN DE LAS FUNCIONES DE PESTAÑA EN EL TABLERO DE RESULTADOS -------------------------------*/
@@ -296,7 +440,6 @@ const getState = ({ getStore, getActions, setStore }) => {
       /*------------------------------------- INICIO DE LAS FUNCIONES DE ENTREGA Y RECUPERACION DE DATA ------------------------------ */
 
       fillLocalStorage: () => {
-        const store = getStore();
         // funcion vuelca datos del store en LocalStorage al pasar a otra página. Se debe usar al actualizar cada filtro
         localStorage.clear(); // esto elimina tambien el objeto stringify de single en localstorage
         localStorage.setItem("operacion", store.operacion);
@@ -326,7 +469,6 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
       syncLocalStorageToStore: () => {
         // funcion recupera datos de LocalStorage y los guarda en el store nuevamente al cargar la página
-        const store = getStore();
         setStore({ operacion: localStorage.getItem("operacion") });
         setStore({ comunidad: localStorage.getItem("comunidad") });
         setStore({ provincia: localStorage.getItem("provincia") });
@@ -423,24 +565,6 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.log("The fetch has failed: ", error);
         }
       },
-
-      // Use getActions to call a function within a fuction
-      // exampleFunction: () => {
-      //   getActions().changeColor(0, "green");
-      // },
-
-      // getMessage: async () => {
-      //   try {
-      //     // fetching data from the backend
-      //     const resp = await fetch(process.env.BACKEND_URL + "/api/hello");
-      //     const data = await resp.json();
-      //     setStore({ message: data.message });
-      //     // don't forget to return something, that is how the async resolves
-      //     return data;
-      //   } catch (error) {
-      //     console.log("Error loading message from backend", error);
-      //   }
-      // },
     },
   };
 };
