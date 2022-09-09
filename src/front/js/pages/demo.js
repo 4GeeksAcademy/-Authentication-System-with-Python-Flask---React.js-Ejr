@@ -6,6 +6,13 @@ import { Context } from "../store/appContext";
 
 export const Demo = () => {
 	const { store, actions } = useContext(Context);
+	const [email, setEmail] = useState("");
+	const [password, setPassword] = useState("");
+	//const [token, setToken] = useState(localStorage.getItem("token"));
+	
+	const handleClick = () => {
+		actions.Login(email, password)
+	  };
 
 	return (
 		<div class="container login-container">
@@ -14,14 +21,14 @@ export const Demo = () => {
                     <h3>Login Form 1</h3>
                     
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Your Email *"  />
+                            <input type="text" class="form-control" placeholder="Your Email *" value={email} onChange={(e) => setEmail(e.target.value)}/>
                         </div>
                         <div class="form-group">
-                            <input type="password" class="form-control" placeholder="Your Password *" />
+                            <input type="password" class="form-control" placeholder="Your Password *" value={password} onChange={(e) => setPassword(e.target.value)}/>
                         </div>
                         <div class="form-group">
                             <Link to="/productos">
-							<input type="submit" class="btnSubmit" value="Login" />
+							<input onClick={handleClick} type="submit" class="btnSubmit" value="Login" />
 							</Link>
 							<Link to="/register">
                             <input type="submit" class="btnSubmit" value="Register" />

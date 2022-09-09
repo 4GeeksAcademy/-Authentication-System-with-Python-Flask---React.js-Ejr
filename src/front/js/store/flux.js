@@ -24,6 +24,32 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({favorites: borrar});
 			},
 
+			Login: (email, password) => {
+				const opts = {
+				  method: "POST",
+				  headers: {
+					"Content-Type": "application/json",
+				  },
+				  body: JSON.stringify({
+					email: email,
+					password: password,
+				  }),
+				};
+		
+				fetch(
+				  "https://3001-alexanderwe-proyectofin-82koi9qqu4a.ws-us64.gitpod.io/api/token",opts)
+				  .then((resp) => {
+					if (resp.status === 200) return resp.json();
+					else alert("hubo un problema");
+				  })
+				  .then((data) => {
+					localStorage.setItem("token", data.token);
+					window.location.href="/home"
+				  })
+				  .catch((error) => {
+					console.error("error!!", error);
+				  });
+				},
 
 			//funcion agregar
 			getAddTask: (i) => {
