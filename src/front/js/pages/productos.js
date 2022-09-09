@@ -11,7 +11,8 @@ export const Productos = () => {
 
     return (
 
-        <div className="row imghome">
+        <div className="row "   >
+            <img className="imglc" src="https://images.unsplash.com/photo-1490818387583-1baba5e638af?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1032&q=80" />
             <Navbar />
 
             <div className="container iconoscaja">
@@ -34,7 +35,7 @@ export const Productos = () => {
                 <div className="row cajas">
                     <div className="col-md-4">
                         <figure  >
-                            <img src="https://images.pexels.com/photos/4871119/pexels-photo-4871119.jpeg"></img>
+                            <img src="https://images.pexels.com/photos/4871119/pexels-photo-4871119.jpeg" ></img>
                             <div className="capa">
                                 <h3> Portobello y Camarones</h3>
                                 <p>Ingredientes</p>

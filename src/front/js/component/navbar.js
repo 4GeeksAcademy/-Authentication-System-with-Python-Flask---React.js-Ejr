@@ -23,6 +23,7 @@ export const Navbar = () => {
 					<Link to="/demo">
 				<i class="fa-solid fa-1x fa-user" id="loginicon"></i>
 				</Link>
+				<i class="fa-solid fa-cart-shopping cart"></i>
 				</div>
 			</div>
 			
