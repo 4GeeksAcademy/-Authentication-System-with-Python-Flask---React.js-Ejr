@@ -1,6 +1,7 @@
 import React from "react";
 import "../../styles/ExchangeRate.css";
 import { Text } from '@chakra-ui/react'
+import { Center, Square, Circle } from '@chakra-ui/react'
 
 export const ExchangeRate = ({cambioMoneda, primeraMoneda, segundaMoneda}) => {
     
@@ -9,9 +10,10 @@ export const ExchangeRate = ({cambioMoneda, primeraMoneda, segundaMoneda}) => {
       <div >
       <Text fontSize='3xl'>Cambio Monto:</Text>
           
-      <Text fontSize='4xl'>{cambioMoneda}</Text>
+      <Center><Text fontSize='4xl'>{cambioMoneda}</Text></Center>
           
-      <Text fontSize='xl' as='i'>{primeraMoneda} <Text as='b'>Hacia</Text> {segundaMoneda}</Text>
+      <Center><Text as='i' fontSize='4xl'>{primeraMoneda} <Text as='b' fontSize='xl'>Hacia</Text> {segundaMoneda}</Text></Center>
+      
         </div>
   
 

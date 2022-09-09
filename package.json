@@ -75,11 +75,14 @@
 	"dependencies": {
 		"@chakra-ui/react": "1.8",
 		"axios": "^0.27.2",
+		"plotly.js-dist-min": "^2.14.0",
 		"prop-types": "^15.6.1",
 		"react": "^16.8.4",
 		"react-dom": "^16.8.4",
 		"react-icons": "^4.4.0",
 		"react-polyfills": "0.0.1",
-		"react-router-dom": "^6.3.0"
+		"react-responsive-carousel": "^3.2.23",
+		"react-router-dom": "^6.3.0",
+		"react-slick": "^0.29.0"
 	}
 }
