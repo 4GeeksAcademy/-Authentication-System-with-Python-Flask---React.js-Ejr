@@ -32,11 +32,21 @@ export const Feed = () => {
         store.body_response.map((item, index) => (
           <div key={index} className="tarjeta card rounded-0 mt-2">
             <div className="row g-0 align-items-center">
-              <div
-                onClick={() => pasarAlSingle(index)}
-                className="main-imagen col-md-5"
-                style={{ backgroundImage: `url(${item.fotos[0]})` }}
-              ></div>
+              {item.fotos.length == 0 ? (
+                <div
+                  onClick={() => pasarAlSingle(index)}
+                  className="main-image col-md-5 py-5"
+                  style={{ background: "rgb(233,238,241)", height: "40vh" }}
+                >
+                  <h3 className="text-center py-5">Aviso no tiene fotos</h3>
+                </div>
+              ) : (
+                <div
+                  onClick={() => pasarAlSingle(index)}
+                  className="main-imagen col-md-5"
+                  style={{ backgroundImage: `url(${item.fotos[0]})` }}
+                ></div>
+              )}
               <div className="col-md-7 p-3">
                 <div className="card-body p-0">
                   <div onClick={() => pasarAlSingle(index)}>
