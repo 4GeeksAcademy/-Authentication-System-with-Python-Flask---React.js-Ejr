@@ -354,12 +354,12 @@ const getState = ({ getStore, getActions, setStore }) => {
         // funcion onChange de Select
         const store = getStore();
         if (e.target.value == "Mín") {
-          setStore({ preciomin: 0 });
-        } else if (e.target.value >= store.preciomax) {
-          setStore({ preciomin: e.target.value });
-          setStore({ preciomax: 999999999 });
+          setStore({ preciomin: Number(0) });
+        } else if (Number(e.target.value) >= Number(store.preciomax)) {
+          setStore({ preciomin: Number(e.target.value) });
+          setStore({ preciomax: Number(999999999) });
         } else {
-          setStore({ preciomin: e.target.value });
+          setStore({ preciomin: Number(e.target.value) });
         }
         getActions().fillLocalStorage();
       },
@@ -367,12 +367,12 @@ const getState = ({ getStore, getActions, setStore }) => {
         // funcion onChange de Select
         const store = getStore();
         if (e.target.value == "Máx") {
-          setStore({ preciomax: 999999999 });
-        } else if (e.target.value <= store.preciomin) {
-          setStore({ preciomax: e.target.value });
-          setStore({ preciomin: 0 });
+          setStore({ preciomax: Number(999999999) });
+        } else if (Number(e.target.value) <= Number(store.preciomin)) {
+          setStore({ preciomax: Number(e.target.value) });
+          setStore({ preciomin: Number(0) });
         } else {
-          setStore({ preciomax: e.target.value });
+          setStore({ preciomax: Number(e.target.value) });
         }
         getActions().fillLocalStorage();
       },
@@ -620,10 +620,14 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
       bulletMonth: (e) => {
         setStore({ periodo_alquiler: "por meses" });
+        setStore({ preciomin: 0 });
+        setStore({ preciomax: 999999999 });
         getActions().fillLocalStorage();
       },
       bulletDay: (e) => {
         setStore({ periodo_alquiler: "por días" });
+        setStore({ preciomin: 0 });
+        setStore({ preciomax: 999999999 });
         getActions().fillLocalStorage();
       },
     },
