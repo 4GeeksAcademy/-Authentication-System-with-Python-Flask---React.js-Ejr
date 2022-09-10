@@ -78,6 +78,7 @@
 		"react": "^16.8.4",
 		"react-bootstrap": "^2.5.0",
 		"react-dom": "^16.8.4",
+		"react-iframe": "^1.8.0",
 		"react-polyfills": "0.0.1",
 		"react-router-dom": "^6.3.0"
 	}
