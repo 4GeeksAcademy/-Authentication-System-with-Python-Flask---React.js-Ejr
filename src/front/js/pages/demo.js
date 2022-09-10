@@ -1,68 +1,82 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
-import "../../styles/login.css"
+import "../../styles/login.css";
 import { Context } from "../store/appContext";
 
-
 export const Demo = () => {
-	const { store, actions } = useContext(Context);
-	const [email, setEmail] = useState("");
-	const [password, setPassword] = useState("");
-	//const [token, setToken] = useState(localStorage.getItem("token"));
-	
-	const handleClick = () => {
-		actions.Login(email, password)
-	  };
+  const { store, actions } = useContext(Context);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  //const [token, setToken] = useState(localStorage.getItem("token"));
 
-	return (
-		<div class="container login-container">
-            <div class="row login-row">
-                <div class="col-md-6 login-form-1">
-                    <h3>Login Form 1</h3>
-                    
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Your Email *" value={email} onChange={(e) => setEmail(e.target.value)}/>
-                        </div>
-                        <div class="form-group">
-                            <input type="password" class="form-control" placeholder="Your Password *" value={password} onChange={(e) => setPassword(e.target.value)}/>
-                        </div>
-                        <div class="form-group">
-                            <Link to="/productos">
-							<input onClick={handleClick} type="submit" class="btnSubmit" value="Login" />
-							</Link>
-							<Link to="/register">
-                            <input type="submit" class="btnSubmit" value="Register" />
-							</Link>
-                        </div>
-                        <div class="form-group">
-                            <a href="#" class="btnForgetPwd">Forget Password?</a>
-                        </div>
-                    
-                </div>
-                <div class="col-md-6 login-form-2">
-                    <div class="login-logo">
-                        <img src="https://image.ibb.co/n7oTvU/logo_white.png" alt=""/>
-                    </div>
-                    
-                    
-                </div>
-            </div>
+  const handleClick = () => {
+    if (email != "" && password != "") actions.Login(email, password);
+    else alert("Completar datos");
+  };
+
+  return (
+    <div class="container login-container">
+      <div class="row login-row">
+        <div class="col-md-6 login-form-1">
+          <h3>Login Form 1</h3>
+
+          <div class="form-group">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Your Email *"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
+          <div class="form-group">
+            <input
+              type="password"
+              class="form-control"
+              placeholder="Your Password *"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
+          <div class="form-group">
+            <input
+              onClick={handleClick}
+              type="submit"
+              class="btnSubmit"
+              value="Login"
+            />
+            <Link to="/register">
+              <input type="submit" class="btnSubmit" value="Register" />
+            </Link>
+          </div>
+          <div class="form-group">
+            <a href="#" class="btnForgetPwd">
+              Forget Password?
+            </a>
+          </div>
         </div>
-		
-					);
+        <div class="col-md-6 login-form-2">
+          <div class="login-logo">
+            <img src="https://image.ibb.co/n7oTvU/logo_white.png" alt="" />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 };
-					{/* <Link to={"/single/" + index}>
+{
+  /* <Link to={"/single/" + index}>
 								<span>Link to: {item.title}</span>
-							</Link> */}
-					{/* <Link to="/">
+							</Link> */
+}
+{
+  /* <Link to="/">
 				<button className="btn btn-primary">Back home</button>
-			</Link> */}
+			</Link> */
+}
 
-
-
-
-
-					{/* <ul className="list-group">
+{
+  /* <ul className="list-group">
 				
 					
 						<li>
@@ -106,4 +120,5 @@ export const Demo = () => {
 				
 				
 			</ul>
-			<br /> */}
+			<br /> */
+}
