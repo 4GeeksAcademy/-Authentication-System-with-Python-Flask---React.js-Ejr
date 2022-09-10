@@ -48,11 +48,15 @@ export const Feed = () => {
                     </div>
                   </div>
                   <h3 className="card-title">
-                    {`${item.precio} ${
-                      item.tipo_operacion == "alquiler"
-                        ? " Euros/mes"
-                        : " Euros"
-                    }`}
+                    {item.tipo_operacion == "alquiler" &&
+                    store.periodo_alquiler == "por meses"
+                      ? `${item.precio} Euros/mes`
+                      : item.tipo_operacion == "alquiler" &&
+                        store.periodo_alquiler == "por días"
+                      ? `${Math.floor(item.precio / 25 + 1)} Euros/día`
+                      : item.tipo_operacion == "compra"
+                      ? `${item.precio} Euros`
+                      : "Información no encontrada"}
                   </h3>
                   <div className="características d-lg-flex wrap justify-content-start pt-2">
                     <div className="pe-2">{`Habitaciones: ${item.habitaciones}`}</div>

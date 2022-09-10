@@ -6,6 +6,9 @@ import "../../styles/single.css";
 export const Single = () => {
   const { store, actions } = useContext(Context);
   const [nroFoto, setNroFoto] = useState(0);
+  const [periodo, setPeriodo] = useState(
+    localStorage.getItem("periodo_alquiler")
+  );
   const [elemento, setElemento] = useState(
     JSON.parse(localStorage.getItem("resp_element"))
   );
@@ -107,9 +110,19 @@ export const Single = () => {
               }`}</h5>
               <h5 className="">{`Provincia: ${elemento.provincia}`}</h5>
               <h5 className="">{`Comunidad Autónoma: ${elemento.comunidad}`}</h5>
-              <h5 className="">{`Precio: ${elemento.precio} ${
-                elemento.tipo_operacion != "compra" ? " Euros/mes" : "Euros"
-              }`}</h5>
+              <h5 className="text-decoration-underline">
+                <b>
+                  {elemento.tipo_operacion == "alquiler" &&
+                  periodo == "por meses"
+                    ? `${elemento.precio} Euros/mes`
+                    : elemento.tipo_operacion == "alquiler" &&
+                      periodo == "por días"
+                    ? `${Math.floor(elemento.precio / 25 + 1)} Euros/día`
+                    : elemento.tipo_operacion == "compra"
+                    ? `${elemento.precio} Euros`
+                    : "Información no encontrada"}
+                </b>
+              </h5>
               <div className="características wrap pt-2">
                 <h5 className="">Características:</h5>
                 <h5 className="px-4">{`- Habitaciones: ${elemento.habitaciones}`}</h5>

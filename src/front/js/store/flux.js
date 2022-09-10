@@ -88,6 +88,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       caracteristica_terraza: false,
       habitaciones: "cualquiera",
       baños: "cualquiera",
+      periodo_alquiler: "por meses",
       /*------------------------------------------ FIN DE LAS VARIABLES DE FILTROS -----------------------------------------------------*/
     },
     actions: {
@@ -512,6 +513,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         );
         localStorage.setItem("habitaciones", store.habitaciones);
         localStorage.setItem("baños", store.baños);
+        localStorage.setItem("periodo_alquiler", store.periodo_alquiler);
       },
       syncLocalStorageToStore: () => {
         // funcion recupera datos de LocalStorage y los guarda en el store nuevamente al cargar la página
@@ -542,6 +544,9 @@ const getState = ({ getStore, getActions, setStore }) => {
         });
         setStore({ habitaciones: localStorage.getItem("habitaciones") });
         setStore({ baños: localStorage.getItem("baños") });
+        setStore({
+          periodo_alquiler: localStorage.getItem("periodo_alquiler"),
+        });
       },
       backHome: () => {
         // esta funcion resetea los filtros al volver al home desde el nav o al refrescar el home
@@ -563,6 +568,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         setStore({ habitaciones: "cualquiera" });
         setStore({ baños: "cualquiera" });
         setStore({ body_response: "buscando coincidencias..." });
+        setStore({ periodo_alquiler: "por meses" });
       },
 
       /*------------------------------------- FIN DE LAS FUNCIONES DE ENTREGA Y RECUPERACION DE DATA ------------------------------ */
@@ -611,6 +617,14 @@ const getState = ({ getStore, getActions, setStore }) => {
         } catch (error) {
           console.log("The fetch has failed: ", error);
         }
+      },
+      bulletMonth: (e) => {
+        setStore({ periodo_alquiler: "por meses" });
+        getActions().fillLocalStorage();
+      },
+      bulletDay: (e) => {
+        setStore({ periodo_alquiler: "por días" });
+        getActions().fillLocalStorage();
       },
     },
   };
