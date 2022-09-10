@@ -76,12 +76,49 @@ export const Aside = () => {
               ))}
             </select>
           </div>
+          {/* Periodo de Alquiler */}
+          {store.operacion == "alquiler" ? (
+            <div className="mx-3 mb-3">
+              <div className="pb-2">
+                <span className="">Alquiler por:</span>
+              </div>
+              <div className="form-check">
+                <input
+                  className="form-check-input"
+                  type="radio"
+                  name="exampleRadios"
+                  id="exampleRadios1"
+                  checked={store.periodo_alquiler == "por meses" ? true : false}
+                  onChange={actions.bulletMonth}
+                />
+                <label className="form-check-label" for="exampleRadios1">
+                  Meses
+                </label>
+              </div>
+              <div className="form-check">
+                <input
+                  className="form-check-input"
+                  type="radio"
+                  name="exampleRadios"
+                  id="exampleRadios2"
+                  checked={store.periodo_alquiler == "por días" ? true : false}
+                  onChange={actions.bulletDay}
+                />
+                <label className="form-check-label" for="exampleRadios2">
+                  Días
+                </label>
+              </div>
+            </div>
+          ) : (
+            ""
+          )}
           {/* rango de precio */}
           <div className="selector mx-3 mb-3">
             <div className="pb-2">
               <span className="">Rango de Precio</span>
             </div>
-            {store.operacion == "todas" || store.operacion == "alquiler" ? (
+            {(store.operacion == "todas" || store.operacion == "alquiler") &&
+            store.periodo_alquiler == "por meses" ? (
               <div className="d-flex">
                 <select
                   onChange={actions.updatePreciomin}
@@ -90,11 +127,17 @@ export const Aside = () => {
                   value={store.preciomin == 0 ? "Mín" : store.preciomin}
                 >
                   <option className="">Mín</option>
+                  <option className="">500</option>
+                  <option className="">750</option>
                   <option className="">1000</option>
+                  <option className="">1250</option>
+                  <option className="">1500</option>
+                  <option className="">1750</option>
                   <option className="">2000</option>
+                  <option className="">2500</option>
                   <option className="">3000</option>
+                  <option className="">3500</option>
                   <option className="">4000</option>
-                  <option className="">5000</option>
                 </select>
                 <select
                   onChange={actions.updatePreciomax}
@@ -103,11 +146,59 @@ export const Aside = () => {
                   value={store.preciomax == 999999999 ? "Máx" : store.preciomax}
                 >
                   <option className="">Máx</option>
+                  <option className="">500</option>
+                  <option className="">750</option>
+                  <option className="">1000</option>
+                  <option className="">1250</option>
+                  <option className="">1500</option>
+                  <option className="">1750</option>
+                  <option className="">2000</option>
+                  <option className="">2500</option>
+                  <option className="">3000</option>
+                  <option className="">3500</option>
+                  <option className="">4000</option>
+                </select>
+              </div>
+            ) : (store.operacion == "todas" || store.operacion == "alquiler") &&
+              store.periodo_alquiler == "por días" ? (
+              <div className="d-flex">
+                <select
+                  onChange={actions.updatePreciomin}
+                  className="form-select me-1"
+                  aria-label="Default select example"
+                  value={store.preciomin == 0 ? "Mín" : store.preciomin}
+                >
+                  <option className="">Mín</option>
+                  <option className="">50</option>
+                  <option className="">75</option>
+                  <option className="">100</option>
+                  <option className="">150</option>
+                  <option className="">200</option>
+                  <option className="">300</option>
+                  <option className="">400</option>
+                  <option className="">500</option>
+                  <option className="">750</option>
                   <option className="">1000</option>
                   <option className="">2000</option>
-                  <option className="">3000</option>
-                  <option className="">4000</option>
-                  <option className="">5000</option>
+                </select>
+                <select
+                  onChange={actions.updatePreciomax}
+                  className="form-select ms-1"
+                  aria-label="Default select example"
+                  value={store.preciomax == 999999999 ? "Máx" : store.preciomax}
+                >
+                  <option className="">Máx</option>
+                  <option className="">50</option>
+                  <option className="">75</option>
+                  <option className="">100</option>
+                  <option className="">150</option>
+                  <option className="">200</option>
+                  <option className="">300</option>
+                  <option className="">400</option>
+                  <option className="">500</option>
+                  <option className="">750</option>
+                  <option className="">1000</option>
+                  <option className="">2000</option>
                 </select>
               </div>
             ) : (
@@ -120,7 +211,13 @@ export const Aside = () => {
                 >
                   <option className="">Mín</option>
                   <option className="">100000</option>
+                  <option className="">150000</option>
                   <option className="">200000</option>
+                  <option className="">250000</option>
+                  <option className="">300000</option>
+                  <option className="">350000</option>
+                  <option className="">400000</option>
+                  <option className="">450000</option>
                   <option className="">500000</option>
                   <option className="">750000</option>
                   <option className="">1000000</option>
@@ -133,7 +230,13 @@ export const Aside = () => {
                 >
                   <option className="">Máx</option>
                   <option className="">100000</option>
+                  <option className="">150000</option>
                   <option className="">200000</option>
+                  <option className="">250000</option>
+                  <option className="">300000</option>
+                  <option className="">350000</option>
+                  <option className="">400000</option>
+                  <option className="">450000</option>
                   <option className="">500000</option>
                   <option className="">750000</option>
                   <option className="">1000000</option>

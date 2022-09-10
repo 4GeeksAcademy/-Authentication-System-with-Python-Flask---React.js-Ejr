@@ -109,11 +109,17 @@ export const Home = () => {
                     value={store.preciomin == 0 ? "Mín" : store.preciomin}
                   >
                     <option className="">Mín</option>
+                    <option className="">500</option>
+                    <option className="">750</option>
                     <option className="">1000</option>
+                    <option className="">1250</option>
+                    <option className="">1500</option>
+                    <option className="">1750</option>
                     <option className="">2000</option>
+                    <option className="">2500</option>
                     <option className="">3000</option>
+                    <option className="">3500</option>
                     <option className="">4000</option>
-                    <option className="">5000</option>
                   </select>
                   <select
                     onChange={actions.updatePreciomax}
@@ -124,11 +130,17 @@ export const Home = () => {
                     }
                   >
                     <option className="">Máx</option>
+                    <option className="">500</option>
+                    <option className="">750</option>
                     <option className="">1000</option>
+                    <option className="">1250</option>
+                    <option className="">1500</option>
+                    <option className="">1750</option>
                     <option className="">2000</option>
+                    <option className="">2500</option>
                     <option className="">3000</option>
+                    <option className="">3500</option>
                     <option className="">4000</option>
-                    <option className="">5000</option>
                   </select>
                 </div>
               ) : (
@@ -141,7 +153,13 @@ export const Home = () => {
                   >
                     <option className="">Mín</option>
                     <option className="">100000</option>
+                    <option className="">150000</option>
                     <option className="">200000</option>
+                    <option className="">250000</option>
+                    <option className="">300000</option>
+                    <option className="">350000</option>
+                    <option className="">400000</option>
+                    <option className="">450000</option>
                     <option className="">500000</option>
                     <option className="">750000</option>
                     <option className="">1000000</option>
@@ -156,7 +174,13 @@ export const Home = () => {
                   >
                     <option className="">Máx</option>
                     <option className="">100000</option>
+                    <option className="">150000</option>
                     <option className="">200000</option>
+                    <option className="">250000</option>
+                    <option className="">300000</option>
+                    <option className="">350000</option>
+                    <option className="">400000</option>
+                    <option className="">450000</option>
                     <option className="">500000</option>
                     <option className="">750000</option>
                     <option className="">1000000</option>
