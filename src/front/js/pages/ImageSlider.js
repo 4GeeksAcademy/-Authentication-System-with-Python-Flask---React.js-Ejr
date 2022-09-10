@@ -4,8 +4,10 @@ import React from "react";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import Grafico from "./Grafico.jsx";
+import Grafico2 from "./Grafico2.jsx";
+import Grafico3 from "./Grafico3.jsx";
 
-// If you want to use your own Selectors look up the Advancaed Story book examples
+
 const ImageSlider = ({ slides }) => {
   return (
     <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
@@ -15,26 +17,14 @@ const ImageSlider = ({ slides }) => {
     <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2" aria-label="Slide 3"></button>
   </div>
   <div class="carousel-inner">
-    <div class="carousel-item active" data-bs-interval="10000">
-      <Grafico/>
-      <div class="carousel-caption d-none d-md-block">
-        <h5>First slide label</h5>
-        <p>Some representative placeholder content for the first slide.</p>
-      </div>
+    <div class="carousel-item active" >
+      <Grafico/>    
     </div>
-    <div class="carousel-item" data-bs-interval="2000">
-      <img src="..." class="d-block w-100" alt="..."/>
-      <div class="carousel-caption d-none d-md-block">
-        <h5>Second slide label</h5>
-        <p>Some representative placeholder content for the second slide.</p>
-      </div>
+    <div class="carousel-item" >
+      <Grafico2/>
     </div>
     <div class="carousel-item">
-      <img src="..." class="d-block w-100" alt="..."/>
-      <div class="carousel-caption d-none d-md-block">
-        <h5>Third slide label</h5>
-        <p>Some representative placeholder content for the third slide.</p>
-      </div>
+      <Grafico3/>
     </div>
   </div>
   <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">

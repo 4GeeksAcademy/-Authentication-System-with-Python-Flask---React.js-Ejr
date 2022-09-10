@@ -4,9 +4,8 @@ import Plotly from 'plotly.js-dist-min'
 import { Container } from '@chakra-ui/react'
 import { Image } from '@chakra-ui/react'
 import { Center } from "@chakra-ui/react";
-import { Spinner } from '@chakra-ui/react'
 
-function Grafico() {
+function Grafico3() {
 	const [isLoading, setIsLoading] = useState(true);
 	const [latestPrice, setLatestPrice] = useState(0);
 
@@ -29,7 +28,7 @@ function Grafico() {
 
 	const fetchData = async () => {
 		let data = { index: [], price: [], volumes: [] };
-		let result = await callAPI("https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=clp&days=1&interval=1m");
+		let result = await callAPI("https://api.coingecko.com/api/v3/coins/ethereum/market_chart?vs_currency=clp&days=1&interval=1m");
 		for (const item of result.prices) {
 			data.index.push(item[0]);
 			data.price.push(item[1]);
@@ -113,11 +112,11 @@ function Grafico() {
 	return (
 		<Container maxW='1100px'>
 			{isLoading ? (
-				<h6 className='value animate__animated animate__flash animate__slow text-center text-primary'> <Spinner /></h6>
+				<h6 className='value animate__animated animate__flash animate__slow text-center text-primary'> Cargando info ...</h6>
 			) : (
 				<>
 					<h2 id='last-price' className='text-center text-primary animate__animated'>
-					BTC/CLP =	$ {latestPrice} 📊
+					GRAFICO 3$ {latestPrice}
 					</h2>
 					<div id='chart' className='p-0 m-0'></div>
                    
@@ -150,4 +149,4 @@ function Grafico() {
 	);
 }
 
-export default Grafico;
+export default Grafico3;

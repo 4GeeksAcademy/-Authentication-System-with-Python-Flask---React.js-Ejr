@@ -7,7 +7,8 @@ import { Box } from '@chakra-ui/react'
 import { Container } from '@chakra-ui/react'
 import { Text } from '@chakra-ui/react'
 import { Input } from '@chakra-ui/react'
-import { Select } from '@chakra-ui/react'
+import  {Select}  from '@chakra-ui/react'
+import btc from '../../img/imagenesConversor/btc.png'
 
 import { Button, ButtonGroup } from '@chakra-ui/react'
 import {
@@ -25,7 +26,7 @@ import { Divider } from '@chakra-ui/react'
 
 
 export const CurrrencyConverter = () => {
-  const monedas = ["BTC", " ETH", "USD", "XRP", "LTC", "CLP","ADA","DOT","MATIC","BNB","SOL","ETC"];
+  const monedas = ["BTC", " ETH", "💵 USD", "XRP", "LTC", " CLP","ADA","DOT","MATIC","BNB","SOL","ETC"];
   const [primeraMoneda, setPrimeraMoneda] = useState('BTC');
   const [segundaMoneda, setSegundaMoneda] = useState('CLP');
   const [monto, setMonto] = useState(1);
@@ -59,12 +60,14 @@ export const CurrrencyConverter = () => {
   return (
     
     <Container maxW='2xl'  centerContent> 
-      <Text fontSize='3xl'>Convertidor de criptomonedas </Text>
-     
+      <Text fontSize='5xl'>Conversor cripto</Text>
+      <Divider orientation='vertical' />
       <TableContainer>
+      
           <body>
             <tr>
-              <td>Desde divisa:</td>
+              
+              <td>💰 Desde divisa:</td>
               <td isNumeric>
                 <Input variant='flushed'
                 style={{textAlign: "center"}}
@@ -75,7 +78,7 @@ export const CurrrencyConverter = () => {
                 />
               </td>
               <td>
-                <select
+                <Select
                   value={primeraMoneda}
                   name="currency-option-1"
                   className="currency-options"
@@ -84,11 +87,11 @@ export const CurrrencyConverter = () => {
                   {monedas.map((monedas, _index) => (
                     <option key={_index}>{monedas}</option>
                   ))}
-                </select>
+                </Select>
               </td>
             </tr>
             <tr>
-              <td>A la divisa:</td>
+              <td>💰 A la divisa:</td>
               <td isNumeric>
                 <Input variant='flushed'
                   type="number"
@@ -99,7 +102,7 @@ export const CurrrencyConverter = () => {
                 />
               </td>
               <td>
-                <select
+                <Select
                   value={segundaMoneda}
                   name="currency-option-2"
                   className="currency-options"
@@ -108,7 +111,7 @@ export const CurrrencyConverter = () => {
                   {monedas.map((monedas, _index) => (
                     <option key={_index}>{monedas}</option>
                   ))}
-                </select>
+                </Select>
               </td>
             </tr>
           </body>

@@ -21,14 +21,14 @@ const Layout = () => {
     <div>
       <BrowserRouter basename={basename}>
         <ScrollToTop>
-           <SidebarWithHeader />
+           
           <Routes>
             <Route element={<Home />} path="/" />
             <Route element={<Demo />} path="/demo" />
             <Route element={<Single />} path="/single/:theid" />
             <Route element={<h1>Not found!</h1>} />
           </Routes>
-          <Footer />
+
         </ScrollToTop>
       </BrowserRouter>
     </div>
