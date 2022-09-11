@@ -1,11 +1,52 @@
 import React, { useEffect, useContext, useState } from "react";
 import { Context } from "../../store/appContext";
 import swal from "sweetalert";
-import { useNavigate } from "react-router-dom";
+import "../../../styles/publicar.css";
 
 export const Publicar = () => {
   const { store, actions } = useContext(Context);
-  const navigate = useNavigate();
+
+  const config = {
+    cloudName: "dsobw5vfl",
+    resource_type: "image",
+    upload_preset: "imagenes",
+  };
+
+  let [cloudImageUrl, setCloudImageUrl] = useState("");
+  let [imageSelected, setImageSelected] = useState("");
+
+  const uploadImage = () => {
+    const apiUrl = `https://api.cloudinary.com/v1_1/${config.cloudName}/${config.resource_type}/upload`;
+    const formData = new FormData();
+    formData.append("file", imageSelected);
+    formData.append("upload_preset", config.upload_preset);
+
+    fetch(apiUrl, {
+      method: "POST",
+      body: formData,
+    })
+      .then((response) => response.json())
+      .then((jsonResponse) => {
+        setCloudImageUrl(jsonResponse.url);
+      });
+    // .catch((error) => {
+    //   console.log("The fetch has failed: ", error);
+    // });
+
+    //   try {
+    //     const resp = await fetch(apiUrl, { method: "POST", body: "formData" });
+    //     if (resp.status != 200) {
+    //       throw new Error("file upload failed");
+    //     } else {
+    //       console.log(resp);
+    //     }
+    //     const responseAsJson = await resp.json();
+    //     setReceivedUrl(responseAsJson.url);
+    //     swal(receivedUrl);
+    //   } catch (error) {
+    //     console.log("The fetch has failed: ", error);
+    //   }
+  };
 
   useEffect(() => {
     actions.resetStoreSelectors();
@@ -72,6 +113,32 @@ export const Publicar = () => {
                     </option>
                   ))}
                 </select>
+              </div>
+
+              {/* fotos */}
+              <div className="selector mx-3 mb-3">
+                <div className="pb-2">
+                  <span className="">Fotos de la propiedad</span>
+                </div>
+                <div className="form-file d-flex">
+                  <input
+                    type="file"
+                    onChange={(e) => {
+                      setImageSelected(e.target.files[0]);
+                    }}
+                  />
+                </div>
+              </div>
+
+              <div className="mx-3 text-center">
+                <button
+                  onClick={uploadImage}
+                  type="button"
+                  className="btn btn-primary mb-3 mt-3"
+                  style={{ width: "50%" }}
+                >
+                  Publicar
+                </button>
               </div>
             </div>
           </div>
