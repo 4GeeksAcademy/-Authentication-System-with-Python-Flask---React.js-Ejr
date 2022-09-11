@@ -5,15 +5,14 @@ import "../../../styles/publicar.css";
 
 export const Publicar = () => {
   const { store, actions } = useContext(Context);
+  let [cloudImageUrl, setCloudImageUrl] = useState("");
+  let [imageSelected, setImageSelected] = useState("");
 
   const config = {
     cloudName: "dsobw5vfl",
     resource_type: "image",
     upload_preset: "imagenes",
   };
-
-  let [cloudImageUrl, setCloudImageUrl] = useState("");
-  let [imageSelected, setImageSelected] = useState("");
 
   const uploadImage = () => {
     const apiUrl = `https://api.cloudinary.com/v1_1/${config.cloudName}/${config.resource_type}/upload`;
@@ -27,32 +26,17 @@ export const Publicar = () => {
     })
       .then((response) => response.json())
       .then((jsonResponse) => {
+        console.log(jsonResponse.url);
         setCloudImageUrl(jsonResponse.url);
+      })
+      .catch((error) => {
+        console.log("The fetch has failed: ", error);
       });
-    // .catch((error) => {
-    //   console.log("The fetch has failed: ", error);
-    // });
-
-    //   try {
-    //     const resp = await fetch(apiUrl, { method: "POST", body: "formData" });
-    //     if (resp.status != 200) {
-    //       throw new Error("file upload failed");
-    //     } else {
-    //       console.log(resp);
-    //     }
-    //     const responseAsJson = await resp.json();
-    //     setReceivedUrl(responseAsJson.url);
-    //     swal(receivedUrl);
-    //   } catch (error) {
-    //     console.log("The fetch has failed: ", error);
-    //   }
   };
 
   useEffect(() => {
     actions.resetStoreSelectors();
   }, []);
-
-  const handleClick = () => {};
 
   return (
     <>
@@ -122,6 +106,7 @@ export const Publicar = () => {
                 </div>
                 <div className="form-file d-flex">
                   <input
+                    multiple
                     type="file"
                     onChange={(e) => {
                       setImageSelected(e.target.files[0]);
