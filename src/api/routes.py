@@ -58,3 +58,50 @@ def token():
         return jsonify({"mensaje": 'user no existe'})
     access_token = create_access_token(identity=email)
     return jsonify(access_token=access_token)
+
+
+
+@api.route('/people', methods=['GET'])
+def getPlatos():
+    all_platos = Platos.query.all()
+    serializados = list( map( lambda people: platos.serialize(), all_platos))
+    print(all_platos)
+
+    return jsonify({
+        "mensaje": "Todos los Platos",
+        "platos": serializados
+    }), 200
+
+
+@api.route('/platos/<int:idplatos>', methods=['GET'])
+def dinamycPlatos(idplatos):
+    one = Platos.query.filter_by(uid=idplatos).first()
+    if(one):
+        return jsonify({
+            "id": idplatos,
+            "platos": one.serialize()
+        }), 200
+
+    else:
+        return jsonify({
+                "id": idplatos,
+                "platos": "not found!"
+        }), 404
+
+
+@api.route("/favorite/planets/<int:platos_id>", methods=['POST'])
+def postPlatosFav(platos_id):
+    body = request.get_json() #recibir datos del usuario
+    #people_id = 4
+    #email = freddyloboq@gmail.com
+    newFav = FavPlatos(user=body['email'], people = platos_id)
+    db.session.add(newFav)
+    db.session.commit()
+    return "nuevo favorito agregado"
+
+
+@api.route("/favorite/platos/<int:position>", methods=['DELETE'])
+def deletePlatosFav(position):
+    FavPlatos.query.filter(FavPlatos.id == position).delete()
+    db.session.commit()
+    return "favorito Eliminado"
