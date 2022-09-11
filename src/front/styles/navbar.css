@@ -1,0 +1,9 @@
+.logo {
+  animation: blink-animation 5s steps(5, start) infinite;
+  animation-timing-function: linear;
+}
+@keyframes blink-animation {
+  to {
+    text-shadow: 25px 0px 5px white;
+  }
+}

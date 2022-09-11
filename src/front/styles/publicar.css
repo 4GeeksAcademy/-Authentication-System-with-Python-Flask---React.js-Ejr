@@ -1,0 +1,63 @@
+.formulario {
+  width: auto;
+  background: rgb(172, 255, 255);
+  height: fit-content;
+}
+.titulo {
+  height: fit-content;
+}
+.selector {
+  height: fit-content;
+}
+.dashboard-contenedor {
+  height: fit-content;
+}
+.filtros-aside {
+  height: 77vh;
+  overflow-y: scroll;
+}
+.filtros-aside::-webkit-scrollbar {
+  width: 7px;
+  background: rgb(237, 237, 237);
+  border-radius: 7px;
+}
+.filtros-aside::-webkit-scrollbar-thumb {
+  width: 7px;
+  background: rgb(147, 220, 244);
+  border-radius: 7px;
+}
+.contenedor-tablero {
+  height: fit-content;
+}
+
+/* --------------- FEED ----------------------- */
+
+.feed-properties {
+  height: 92vh;
+  overflow-y: scroll;
+}
+.feed-properties::-webkit-scrollbar {
+  width: 7px;
+  background: rgb(237, 237, 237);
+  border-radius: 7px;
+}
+.feed-properties::-webkit-scrollbar-thumb {
+  width: 7px;
+  background: rgb(196, 196, 196);
+  border-radius: 7px;
+}
+.contenedor-texto {
+  height: fit-content;
+}
+.tarjeta {
+  height: fit-content;
+  width: 100%;
+}
+
+.main-imagen {
+  background-size: cover;
+  background-position-x: center;
+  background-position-y: center;
+  background-repeat: no-repeat;
+  height: 40vh;
+}

@@ -488,7 +488,6 @@ const getState = ({ getStore, getActions, setStore }) => {
       fillLocalStorage: () => {
         const store = getStore();
         // funcion vuelca datos del store en LocalStorage al pasar a otra página. Se debe usar al actualizar cada filtro
-        localStorage.clear(); // esto elimina tambien el objeto stringify de single en localstorage
         localStorage.setItem("operacion", store.operacion);
         localStorage.setItem("comunidad", store.comunidad);
         localStorage.setItem("provincia", store.provincia);
@@ -548,10 +547,9 @@ const getState = ({ getStore, getActions, setStore }) => {
           periodo_alquiler: localStorage.getItem("periodo_alquiler"),
         });
       },
-      backHome: () => {
+      resetStoreSelectors: () => {
         // esta funcion resetea los filtros al volver al home desde el nav o al refrescar el home
         const store = getStore();
-        localStorage.clear();
         setStore({ comunidad: "todas" });
         setStore({ provincia: "todas" });
         setStore({ operacion: "todas" });
