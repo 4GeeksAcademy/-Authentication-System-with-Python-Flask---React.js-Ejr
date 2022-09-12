@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
+import "../../styles/navbar.css";
 
 export const Navbar = () => {
   const { store, actions } = useContext(Context);
@@ -11,15 +12,18 @@ export const Navbar = () => {
     navigate("/");
   };
 
-  const handleClick = async () => {
-    await actions.backHome();
-    actions.fillLocalStorage();
+  const handleClick = () => {
+    localStorage.clear();
+    actions.resetStoreSelectors();
   };
   return (
     <nav className="navbar navbar-dark bg-dark mb-2">
       <div className="container">
         <Link to="/" className="text-decoration-none">
-          <span onClick={handleClick} className="mb-0 display-6 text-white ">
+          <span
+            onClick={handleClick}
+            className="logo mb-0 display-6 text-white "
+          >
             LUXURY ESTATE
           </span>
         </Link>

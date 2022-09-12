@@ -10,7 +10,8 @@ export const Home = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    actions.backHome();
+    localStorage.clear();
+    actions.resetStoreSelectors();
   }, []);
 
   const handleClick = async () => {
