@@ -68,6 +68,8 @@ class Inmueble(db.Model):
             "piscina": self.piscina,
             "terraza": self.terraza,
             "garage": self.garage,
+            "latitud": self.latitud,
+            "longitud": self.longitud,
             "user_id": self.user_id
         }
 
