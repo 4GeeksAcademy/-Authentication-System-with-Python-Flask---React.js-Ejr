@@ -11,43 +11,38 @@ body {
 
 }
 
-p {
-    font-size:1rem;
-    transform: rotate(2.3deg) translate(.35em, -.15em);
-    color:  #2B3E84;
+.speech-bubble {
+	position: relative;
+	background: #fff;
+	border-radius: .4em;
+  width: 200px;
+  height: 200px;
+  padding:20px; 
 }
 
-#speech-bubble {
-    position: relative;
-    width: 15em; height: 7em;
-    border-radius: .25em;
-    transform: rotate(-4deg) rotateY(15deg);
-    background: rgb(241,214,71) ;
-    font: 2em/4 Boogaloo, Verdana, sans-serif;
-    text-align: center;
-  }
-  #speech-bubble:before, #speech-bubble:after {
-    position: absolute;
-    z-index: -1;
-    content: '';
-  }
-  #speech-bubble:after {
-    top: 0; right: 0; bottom: 0; left: 0;
-    border-radius: inherit;
-    display:flex;
-    justify-content: center;
-    transform: rotate(2deg) translate(.35em, -.15em) scale(1.02);
-    background: #ededed;
-  }
-  #speech-bubble:before {
-    border: solid 0 transparent;
-    border-right: solid 3.5em  rgb(241,214,71) ;
-    border-bottom: solid .25em #629bdd;
-    bottom: .25em; left: 1.25em;
-    width: 0; height: 1em;
-    transform: rotate(0deg) skewX(75deg);
-  }
+.speech-bubble:after {
+	content: '';
+	position: absolute;
+	left: 0;
+	top: 50%;
+	width: 0;
+	height: 0;
+	border: 28px solid transparent;
+	border-right-color: #fff;
+	border-left: 0;
+	border-bottom: 0;
+	margin-top: -14px;
+	margin-left: -28px;}
 
+#img-envio {
+  width:80%;
+}
+
+#avatar {
+  margin-top:50px;
+  width:150px;
+  height:150px;
+}
 
 #formulario {
     width: 400px;
