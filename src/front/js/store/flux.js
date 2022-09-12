@@ -2,8 +2,9 @@ const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
       message: null,
-      favorites: [],
-      comida: [],
+      favorites: [], // agrega al carrito las comidas
+      comida: [], //trae los detalles de las comidas
+      comidas: [], // trae los nombre de las comidas
       demo: [
         {
           title: "FIRST",
@@ -53,7 +54,20 @@ const getState = ({ getStore, getActions, setStore }) => {
           })
           .catch((error) => console.log("error", error));
       },
-
+      // trae el nombre de la comida
+      getComida: (id) => {
+        fetch("https://3001-alexanderwe-proyectofin-jjcefw3cua5.ws-us64.gitpod.io/api/platos/" + id)
+          .then(response => response.json())
+          .then(result => setStore({ comida: result.result }))
+          .catch(error => console.log("DANGER", error))
+      },
+      //funcion traer datos de la comida
+      getComidas: () => {
+        fetch("https://3001-alexanderwe-proyectofin-jjcefw3cua5.ws-us64.gitpod.io/api/platos/")
+          .then(response => response.json())
+          .then(result => setStore({ comidas: result.results }))
+          .catch(error => console.log("DANGER", error))
+      },
       //funcion agregar
       getAddTask: (i) => {
         const store = getStore();

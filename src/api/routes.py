@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User
+from api.models import db, User , Platos, FavPlatos 
 from api.utils import generate_sitemap, APIException
 from flask_jwt_extended import JWTManager, create_access_token, get_jwt_identity, jwt_required
 
@@ -61,10 +61,10 @@ def token():
 
 
 
-@api.route('/people', methods=['GET'])
+@api.route('/platos', methods=['GET'])
 def getPlatos():
     all_platos = Platos.query.all()
-    serializados = list( map( lambda people: platos.serialize(), all_platos))
+    serializados = list( map( lambda platos: platos.serialize(), all_platos))
     print(all_platos)
 
     return jsonify({
@@ -89,7 +89,7 @@ def dinamycPlatos(idplatos):
         }), 404
 
 
-@api.route("/favorite/planets/<int:platos_id>", methods=['POST'])
+@api.route("/favorite/platos/<int:platos_id>", methods=['POST'])
 def postPlatosFav(platos_id):
     body = request.get_json() #recibir datos del usuario
     #people_id = 4
