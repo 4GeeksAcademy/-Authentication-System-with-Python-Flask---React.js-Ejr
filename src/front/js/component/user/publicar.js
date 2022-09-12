@@ -6,7 +6,7 @@ import "../../../styles/publicar.css";
 export const Publicar = () => {
   const { store, actions } = useContext(Context);
   let [cloudImageUrl, setCloudImageUrl] = useState("");
-  let [imageSelected, setImageSelected] = useState("");
+  let [imageSelected, setImageSelected] = useState([]);
 
   const config = {
     cloudName: "dsobw5vfl",
@@ -100,20 +100,45 @@ export const Publicar = () => {
               </div>
 
               {/* fotos */}
-              <div className="selector mx-3 mb-3">
-                <div className="pb-2">
-                  <span className="">Fotos de la propiedad</span>
-                </div>
-                <div className="form-file d-flex">
+              {imageSelected == "" ? (
+                <div className="selector mx-3 mb-3">
+                  <label for="formFileMultiple" className="form-label pb-2">
+                    Fotos de la propiedad
+                  </label>
                   <input
+                    className="form-control"
+                    id="formFileMultiple"
                     multiple
                     type="file"
                     onChange={(e) => {
-                      setImageSelected(e.target.files[0]);
+                      setImageSelected([...imageSelected, e.target.files[0]]);
                     }}
                   />
                 </div>
-              </div>
+              ) : (
+                <div className="selector mx-3 mb-3">
+                  <label for="formFileMultiple" className="form-label pb-2">
+                    Fotos de la propiedad
+                  </label>
+                  <div className="d-flex justify-content-between">
+                    <label className="form-label mb-0 ps-3">
+                      {imageSelected.length == 1
+                        ? ">> Has subido 1 foto"
+                        : `>> Has subido ${imageSelected.length} fotos`}
+                    </label>
+
+                    <button
+                      onClick={() => {
+                        setImageSelected([]);
+                      }}
+                      type="button"
+                      className="btn btn-secondary my-0 btn-sm"
+                    >
+                      Borrar fotos
+                    </button>
+                  </div>
+                </div>
+              )}
 
               <div className="mx-3 text-center">
                 <button
