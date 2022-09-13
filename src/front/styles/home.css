@@ -1,7 +1,179 @@
-/*
-    home.css: This website contains selectors only used in home.css
+body {
+    background-color : #2B3E84;
+}
+.navbar{
+    background-color: rgb(214, 236, 8);
+}
+.nombre{
+color: #2B3E84;
+font-size: 35px;
+margin-left: 20px;
+margin-top: 50px;
+}
 
-    All pages share the styles on index.css but you should create 
-    one more css for each page that will contain the selected used 
-    on that page only (the ones not reused in other pages).
-*/
+.logo{
+    width: 75px;
+    height: 75px;
+}
+.buttonNavbar{
+    border-radius: 15px;
+    background-color: #2B3E84 ;
+    color: whitesmoke;
+    margin-right: 10px;
+}
+
+
+h1 {
+    color: rgb(241,214,71) ; 
+    text-align: center;
+    
+}
+
+#formulario {
+    
+    background-color: rgba(217,217,217,0.5);
+    border-radius: 20px 20px ;    
+    position: absolute;
+    color: white;
+    width: 550px;
+    height: 300px;
+    left: 680px;
+    top: 250px;
+    bottom: 50;
+}
+
+#ingresar-monto, #monto-recibir {
+    background-color: #2B3E84;
+    border-radius: 20px 20px 20px 20px;
+    color: white;
+    display: flex;
+    width: 360px;
+    align-items: center;
+    height: 45px;
+    text-align: center;
+}
+
+#tipo-cambio{
+    background-color: #2B3E84;
+    border-radius: 20px 20px 20px 20px; 
+    width: 350px;
+    height: 30px;
+    text-align: center;
+}
+
+
+#boton {
+    background-color: #2B3E84;
+    border-radius: 20px 20px 20px 20px;
+    color: white;
+    display: flex;
+    width: 100%;
+    align-items: center;
+    height: 35px;
+}
+
+#boton2 {
+    background-color: #2B3E84;
+    border-radius: 20px 20px 20px 20px;
+    color: white;
+    width: 450px;
+    align-items: center;
+    height: 35px;
+    text-align: center;
+}
+
+#data {
+    margin-left: 5%;
+    margin-right: 5%;
+    width: 200x;
+    height: 35px;
+    align-items: center;
+  
+}
+
+
+#cartaCasa{
+
+align-items: center;
+position: relative; 
+background-color: rgba(217,217,217,0.5);
+border-radius: 20px 20px ;
+color: white;
+width: 401px;
+height: 508px;
+left: 160px;
+top: 900px;
+}
+
+
+#CambioRecibirCasa{
+background-color: rgba(217,217,217,0.5);
+border-radius: 20px 20px ;
+width: 250px;
+height: 50px;  
+}
+
+#infooRecibirCasa{
+align-items: center;    
+background-color: rgba(217,217,217,0.5);
+border-radius: 20px 20px ;
+width: 330px;
+height: 130px;
+}
+
+#cartaCasa2{
+align-items: center;
+background-color: rgba(217,217,217,0.5);
+border-radius: 20px 20px ;
+color: white;
+width: 401px;
+height: 508px;
+left: 750px;
+top: 700px;
+position: absolute; 
+}
+
+
+#cartaCasa3{
+align-items: center;
+background-color: rgba(217,217,217,0.5);
+border-radius: 20px 20px ;    
+color: white;
+width: 401px;
+height: 508px;
+left: 1300px;
+top: 700px;
+position: absolute; 
+}
+
+#fotocartacasa1{   
+position: absolute;
+width: 200px;
+height: 200px;
+left: 100px;
+top: -3px;
+}
+
+#fotocartacasa2{
+position: absolute;
+width: 200px;
+height: 200px;
+left: 100px;
+top: -3px;
+}
+
+#fotocartacasa3{
+position: absolute;
+width: 200px;
+height: 200px;
+left: 100px;
+top: -3px;
+}
+
+#botonlinkCCC{
+background-color: #2B3E84;
+border-radius: 20px 20px 20px 20px;
+color: white;    
+width: 146.73px;
+height: 48px;
+}
