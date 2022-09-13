@@ -19,6 +19,29 @@ const getState = ({ getStore, getActions, setStore }) => {
       ],
     },
     actions: {
+      Register: (name, email, password) => {
+        
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+
+        var raw = JSON.stringify({
+          name: name,
+          email: email,
+          password: password
+        });
+        var requestOptions = {
+          method: "POST",
+          headers: myHeaders,
+          body: raw,
+          redirect: "follow",
+        };
+
+        fetch(process.env.BACKEND_URL + "/api/registro", requestOptions)
+          .then((response) => response.json())
+          .then((result) => console.log(result))
+          .catch((error) => console.log("error", error));
+      },
+
       getBorrar: (id) => {
         const store = getStore();
         const borrar = store.favorites.filter((e, i) => i !== id);
