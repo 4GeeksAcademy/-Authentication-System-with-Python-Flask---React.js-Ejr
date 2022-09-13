@@ -20,7 +20,7 @@ export const Message = () => {
       {!isloading ? (
         <div
           className="d-flex justify-content-center"
-          style={{ height: "90vh", width: "100vh" }}
+          style={{ height: "90vh", width: "70vw" }}
         >
           <div
             style={{
@@ -32,28 +32,45 @@ export const Message = () => {
               textAlign: "center",
             }}
           >
-            {messages.map((message, i) => (
+            {messages ? (
+              messages.map((message, i) => (
+                <div
+                  className="card text-bg-dark mb-3"
+                  style={{ maxWidth: "100%" }}
+                  key={i}
+                >
+                  <div className="card-header">{message.sender_name}</div>
+                  <div className="card-body">
+                    <h5 className="card-title">{message.sender_email}</h5>
+                    <h5 className="card-title text-muted">
+                      {message.sender_phone}
+                    </h5>
+                    <p className="card-text">{message.body}</p>
+                  </div>
+                </div>
+              ))
+            ) : (
               <div
                 className="card text-bg-dark mb-3"
                 style={{ maxWidth: "100%" }}
-                key={i}
               >
-                <div className="card-header">{message.sender_name}</div>
                 <div className="card-body">
-                  <h5 className="card-title">{message.sender_email}</h5>
-                  <h5 className="card-title text-muted">
-                    {message.sender_phone}
-                  </h5>
-                  <p className="card-text">{message.body}</p>
+                  <h5 className="card-title">No tienes mensajes aún...</h5>
+                  <p className="card-text">
+                    Quieres darle mayor visibilidad a tu anuncio?
+                  </p>
+                  <a href="#" className="btn btn-primary">
+                    Saber más
+                  </a>
                 </div>
               </div>
-            ))}
+            )}
           </div>
         </div>
       ) : (
         <div
           className="d-flex justify-content-center"
-          style={{ height: "90vh", width: "1200px" }}
+          style={{ height: "90vh", width: "100vw" }}
         >
           <h5>Loading...</h5>
         </div>

@@ -89,6 +89,8 @@ const getState = ({ getStore, getActions, setStore }) => {
       habitaciones: "cualquiera",
       baños: "cualquiera",
       /*------------------------------------------ FIN DE LAS VARIABLES DE FILTROS -----------------------------------------------------*/
+      longitude: 0,
+      latitude: 0,
     },
     actions: {
       getMessages: async () => {
@@ -108,6 +110,11 @@ const getState = ({ getStore, getActions, setStore }) => {
             throw new Error("Something went wrong");
           }
           const data = await resp.json();
+          if (data == "The user does not have any messages") {
+            setStore({ messages: null });
+            localStorage.setItem("messages", JSON.stringify(null));
+            return true;
+          }
           // const result = [...data];
           // if (result.length > 10) {
           //   for (let i = 0; i < result.length; i += 10) {
@@ -611,6 +618,12 @@ const getState = ({ getStore, getActions, setStore }) => {
         } catch (error) {
           console.log("The fetch has failed: ", error);
         }
+      },
+      storeLongitude: (longitude) => {
+        setStore({ longitude: longitude });
+      },
+      storeLatitude: (latitude) => {
+        setStore({ latitude: latitude });
       },
     },
   };

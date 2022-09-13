@@ -4,7 +4,6 @@ import { Context } from "../../store/appContext";
 export const Properties = () => {
   const { store, actions } = useContext(Context);
   const [properties, setProperties] = useState([]);
-  const [images, setImages] = useState([]);
   const [isloading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -21,7 +20,7 @@ export const Properties = () => {
       {!isloading ? (
         <div
           className="d-flex justify-content-center"
-          style={{ height: "90vh", width: "100vh" }}
+          style={{ height: "90vh", width: "70vw" }}
         >
           <div
             style={{
