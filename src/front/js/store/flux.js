@@ -88,6 +88,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       caracteristica_terraza: false,
       habitaciones: "cualquiera",
       baños: "cualquiera",
+      periodo_alquiler: "por meses",
       /*------------------------------------------ FIN DE LAS VARIABLES DE FILTROS -----------------------------------------------------*/
       longitude: 0,
       latitude: 0,
@@ -360,12 +361,12 @@ const getState = ({ getStore, getActions, setStore }) => {
         // funcion onChange de Select
         const store = getStore();
         if (e.target.value == "Mín") {
-          setStore({ preciomin: 0 });
-        } else if (e.target.value >= store.preciomax) {
-          setStore({ preciomin: e.target.value });
-          setStore({ preciomax: 999999999 });
+          setStore({ preciomin: Number(0) });
+        } else if (Number(e.target.value) >= Number(store.preciomax)) {
+          setStore({ preciomin: Number(e.target.value) });
+          setStore({ preciomax: Number(999999999) });
         } else {
-          setStore({ preciomin: e.target.value });
+          setStore({ preciomin: Number(e.target.value) });
         }
         getActions().fillLocalStorage();
       },
@@ -373,12 +374,12 @@ const getState = ({ getStore, getActions, setStore }) => {
         // funcion onChange de Select
         const store = getStore();
         if (e.target.value == "Máx") {
-          setStore({ preciomax: 999999999 });
-        } else if (e.target.value <= store.preciomin) {
-          setStore({ preciomax: e.target.value });
-          setStore({ preciomin: 0 });
+          setStore({ preciomax: Number(999999999) });
+        } else if (Number(e.target.value) <= Number(store.preciomin)) {
+          setStore({ preciomax: Number(e.target.value) });
+          setStore({ preciomin: Number(0) });
         } else {
-          setStore({ preciomax: e.target.value });
+          setStore({ preciomax: Number(e.target.value) });
         }
         getActions().fillLocalStorage();
       },
@@ -494,7 +495,6 @@ const getState = ({ getStore, getActions, setStore }) => {
       fillLocalStorage: () => {
         const store = getStore();
         // funcion vuelca datos del store en LocalStorage al pasar a otra página. Se debe usar al actualizar cada filtro
-        localStorage.clear(); // esto elimina tambien el objeto stringify de single en localstorage
         localStorage.setItem("operacion", store.operacion);
         localStorage.setItem("comunidad", store.comunidad);
         localStorage.setItem("provincia", store.provincia);
@@ -519,6 +519,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         );
         localStorage.setItem("habitaciones", store.habitaciones);
         localStorage.setItem("baños", store.baños);
+        localStorage.setItem("periodo_alquiler", store.periodo_alquiler);
       },
       syncLocalStorageToStore: () => {
         // funcion recupera datos de LocalStorage y los guarda en el store nuevamente al cargar la página
@@ -549,11 +550,13 @@ const getState = ({ getStore, getActions, setStore }) => {
         });
         setStore({ habitaciones: localStorage.getItem("habitaciones") });
         setStore({ baños: localStorage.getItem("baños") });
+        setStore({
+          periodo_alquiler: localStorage.getItem("periodo_alquiler"),
+        });
       },
-      backHome: () => {
+      resetStoreSelectors: () => {
         // esta funcion resetea los filtros al volver al home desde el nav o al refrescar el home
         const store = getStore();
-        localStorage.clear();
         setStore({ comunidad: "todas" });
         setStore({ provincia: "todas" });
         setStore({ operacion: "todas" });
@@ -570,6 +573,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         setStore({ habitaciones: "cualquiera" });
         setStore({ baños: "cualquiera" });
         setStore({ body_response: "buscando coincidencias..." });
+        setStore({ periodo_alquiler: "por meses" });
       },
 
       /*------------------------------------- FIN DE LAS FUNCIONES DE ENTREGA Y RECUPERACION DE DATA ------------------------------ */
@@ -624,6 +628,19 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
       storeLatitude: (latitude) => {
         setStore({ latitude: latitude });
+      },
+      bulletMonth: (e) => {
+        setStore({ periodo_alquiler: "por meses" });
+        setStore({ preciomin: 0 });
+        setStore({ preciomax: 999999999 });
+        getActions().fillLocalStorage();
+      },
+      bulletDay: (e) => {
+        setStore({ periodo_alquiler: "por días" });
+        setStore({ preciomin: 0 });
+        setStore({ preciomax: 999999999 });
+        getActions().fillLocalStorage();
+
       },
     },
   };

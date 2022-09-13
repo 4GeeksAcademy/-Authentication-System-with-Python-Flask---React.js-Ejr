@@ -2,10 +2,14 @@ import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
 import "../../styles/single.css";
+import { ContactForm } from "../component/contactform";
 
 export const Single = () => {
   const { store, actions } = useContext(Context);
   const [nroFoto, setNroFoto] = useState(0);
+  const [periodo, setPeriodo] = useState(
+    localStorage.getItem("periodo_alquiler")
+  );
   const [elemento, setElemento] = useState(
     JSON.parse(localStorage.getItem("resp_element"))
   );
@@ -30,7 +34,7 @@ export const Single = () => {
       className="contenedor-single container"
       style={{ height: "fit-content" }}
     >
-      <nav className="navbar navbar-expand-lg bg-light">
+      <nav className="navbar navbar-expand-lg bg-white">
         <div className="container-fluid">
           <Link to={"/dashboard"}>
             <div className="wrap d-flex">
@@ -43,7 +47,18 @@ export const Single = () => {
         {/* ------------------------------- INICIO CARRUSEL DE FOTOS ---------------------------------- */}
 
         {elemento.fotos.length == 0 ? (
-          "Aviso no tiene fotos"
+          <div
+            className="container pt-5 text-center col-10"
+            style={{
+              height: "30vw",
+              width: "80%",
+              background: "rgb(233,238,241)",
+            }}
+          >
+            <div className="container pt-5">
+              <h3 className="">Aviso no tiene fotos</h3>
+            </div>
+          </div>
         ) : (
           <div className="text-center">
             <div
@@ -107,9 +122,19 @@ export const Single = () => {
               }`}</h5>
               <h5 className="">{`Provincia: ${elemento.provincia}`}</h5>
               <h5 className="">{`Comunidad Autónoma: ${elemento.comunidad}`}</h5>
-              <h5 className="">{`Precio: ${elemento.precio} ${
-                elemento.tipo_operacion != "compra" ? " Euros/mes" : "Euros"
-              }`}</h5>
+              <h5 className="text-decoration-underline">
+                <b>
+                  {elemento.tipo_operacion == "alquiler" &&
+                  periodo == "por meses"
+                    ? `${elemento.precio} Euros/mes`
+                    : elemento.tipo_operacion == "alquiler" &&
+                      periodo == "por días"
+                    ? `${Math.floor(elemento.precio / 25 + 1)} Euros/día`
+                    : elemento.tipo_operacion == "compra"
+                    ? `${elemento.precio} Euros`
+                    : "Información no encontrada"}
+                </b>
+              </h5>
               <div className="características wrap pt-2">
                 <h5 className="">Características:</h5>
                 <h5 className="px-4">{`- Habitaciones: ${elemento.habitaciones}`}</h5>
@@ -128,8 +153,8 @@ export const Single = () => {
                 )}
               </div>
             </div>
-            <div className="ventana-mensajes col-4 border text-center pt-5">
-              AQUI LA VENTANA DE ENVIO DE MENSAJES
+            <div className="ventana-mensajes d-flex col-4 text-center pt-0">
+              <ContactForm />
             </div>
           </div>
           <div className="datos-propiedad-abajo">

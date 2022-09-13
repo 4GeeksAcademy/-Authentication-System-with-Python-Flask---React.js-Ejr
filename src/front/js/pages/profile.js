@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { Message } from "../component/user/message";
 import { Properties } from "../component/user/properties";
 import { Edit } from "../component/user/edit";
+import { Publicar } from "../component/user/publicar";
 
 export const Profile = () => {
   const { store, actions } = useContext(Context);
@@ -82,6 +83,18 @@ export const Profile = () => {
               >
                 Editar
               </button>
+              <button
+                className="nav-link nav-button"
+                id="v-pills-publicar-tab"
+                data-bs-toggle="pill"
+                data-bs-target="#v-pills-publicar"
+                type="button"
+                role="tab"
+                aria-controls="v-pills-publicar"
+                aria-selected="false"
+              >
+                Publicar un anuncio
+              </button>
             </div>
             <div
               class="tab-content d-flex col w-100 mt-5"
@@ -116,12 +129,12 @@ export const Profile = () => {
               </div>
               <div
                 className="tab-pane fade"
-                id="v-pills-settings"
+                id="v-pills-publicar"
                 role="tabpanel"
-                aria-labelledby="v-pills-settings-tab"
+                aria-labelledby="v-pills-publicar-tab"
                 tabindex="0"
               >
-                ...
+                <Publicar />
               </div>
             </div>
           </div>

@@ -67,6 +67,7 @@ export const Tablero = () => {
               Listado
             </button>
             <button
+              disabled
               className="nav-link"
               type="button"
               onClick={actions.updateVistaMapa}
@@ -84,6 +85,7 @@ export const Tablero = () => {
               Listado
             </button>
             <button
+              disabled
               className="nav-link active"
               type="button"
               onClick={actions.updateVistaMapa}
