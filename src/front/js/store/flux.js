@@ -56,16 +56,17 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
       // trae el nombre de la comida
       getComida: (id) => {
-        fetch("https://3001-alexanderwe-proyectofin-jjcefw3cua5.ws-us64.gitpod.io/api/platos/" + id)
+        fetch("https://3001-alexanderwe-proyectofin-jjcefw3cua5.ws-us65.gitpod.io/api/platos" + id)
           .then(response => response.json())
-          .then(result => setStore({ comida: result.result }))
+          .then(result => {setStore({ comida: result.result })})
           .catch(error => console.log("DANGER", error))
       },
       //funcion traer datos de la comida
       getComidas: () => {
-        fetch("https://3001-alexanderwe-proyectofin-jjcefw3cua5.ws-us64.gitpod.io/api/platos/")
+        fetch("https://3001-alexanderwe-proyectofin-jjcefw3cua5.ws-us65.gitpod.io/api/platos")
           .then(response => response.json())
-          .then(result => setStore({ comidas: result.results }))
+          .then(result => {console.log(result)
+            setStore({ comidas: result.platos})})
           .catch(error => console.log("DANGER", error))
       },
       //funcion agregar

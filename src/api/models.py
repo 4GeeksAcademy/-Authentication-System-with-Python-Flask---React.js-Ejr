@@ -26,7 +26,6 @@ class Platos(db.Model):
 
     uid = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(120), unique=False, nullable=False)
-    tipo = db.Column(db.String(120), unique=False, nullable=True)
     ingredientes = db.Column(db.String(1000), unique=False, nullable=False)
     tiempo = db.Column(db.String(120), unique=False, nullable=True)
 
@@ -37,7 +36,42 @@ class Platos(db.Model):
         return {
             "uid": self.uid,
             "name": self.name,
-            "tipo": self.tipo,
+            "ingredientes": self.ingredientes,
+            "tiempo": self.tiempo,
+        }
+class Veget(db.Model):
+    __tablename__ = 'veget'
+
+    uid = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(120), unique=False, nullable=False)
+    ingredientes = db.Column(db.String(1000), unique=False, nullable=False)
+    tiempo = db.Column(db.String(120), unique=False, nullable=True)
+
+    def __repr__(self):
+        return '<Veget %r>' %self.name
+
+    def serialize(self):
+        return {
+            "uid": self.uid,
+            "name": self.name,
+            "ingredientes": self.ingredientes,
+            "tiempo": self.tiempo,
+        }
+class Dulce(db.Model):
+    __tablename__ = 'dulce'
+
+    uid = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(120), unique=False, nullable=False)
+    ingredientes = db.Column(db.String(1000), unique=False, nullable=False)
+    tiempo = db.Column(db.String(120), unique=False, nullable=True)
+
+    def __repr__(self):
+        return '<Dulce %r>' %self.name
+
+    def serialize(self):
+        return {
+            "uid": self.uid,
+            "name": self.name,
             "ingredientes": self.ingredientes,
             "tiempo": self.tiempo,
         }
@@ -48,12 +82,18 @@ class FavPlatos(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.String(120), db.ForeignKey('user.email'))
     platos_uid = db.Column(db.Integer, db.ForeignKey('platos.uid'))
+    dulce_uid = db.Column(db.Integer, db.ForeignKey('dulce.uid'))
+    veget_uid = db.Column(db.Integer, db.ForeignKey('veget.uid'))
     user = db.relationship(User)
     platos = db.relationship(Platos)
+    veget = db.relationship(Veget)
+    dulce = db.relationship(Dulce)
 
     def serialize(self):
         return {
             "id": self.id,
             "user_id": self.user_id,
             "plato_uid": self.plato_uid,
+            "dulce_uid" : self.dulce_uid,
+            "veget_uid": self.veget_uid,
         }

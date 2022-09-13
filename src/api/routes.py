@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User , Platos, FavPlatos 
+from api.models import db, User , Platos, FavPlatos , Veget , Dulce
 from api.utils import generate_sitemap, APIException
 from flask_jwt_extended import JWTManager, create_access_token, get_jwt_identity, jwt_required
 
@@ -71,6 +71,26 @@ def getPlatos():
         "mensaje": "Todos los Platos",
         "platos": serializados
     }), 200
+@api.route('/veget', methods=['GET'])
+def getVeget():
+    all_veget = Veget.query.all()
+    serializados = list( map( lambda veget: veget.serialize(), all_veget))
+    print(all_veget)
+
+    return jsonify({
+        "mensaje": "Todos los Veget",
+        "veget": serializados
+    }), 200
+@api.route('/dulce', methods=['GET'])
+def getDulce():
+    all_dulce = Dulce.query.all()
+    serializados = list( map( lambda dulce: dulce.serialize(), all_dulce))
+    print(all_dulce)
+
+    return jsonify({
+        "mensaje": "Todos los dulces",
+        "dulce": serializados
+    }), 200
 
 
 @api.route('/platos/<int:idplatos>', methods=['GET'])
@@ -87,6 +107,34 @@ def dinamycPlatos(idplatos):
                 "id": idplatos,
                 "platos": "not found!"
         }), 404
+@api.route('/veget/<int:idveget>', methods=['GET'])
+def dinamycVeget(idveget):
+    one = Veget.query.filter_by(uid=idveget).first()
+    if(one):
+        return jsonify({
+            "id": idveget,
+            "veget": one.serialize()
+        }), 200
+
+    else:
+        return jsonify({
+                "id": idveget,
+                "veget": "not found!"
+        }), 404
+@api.route('/dulce/<int:iddulce>', methods=['GET'])
+def dinamycDulce(iddulce):
+    one = Dulce.query.filter_by(uid=iddulce).first()
+    if(one):
+        return jsonify({
+            "id": iddulce,
+            "dulce": one.serialize()
+        }), 200
+
+    else:
+        return jsonify({
+                "id": iddulce,
+                "dulce": "not found!"
+        }), 404
 
 
 @api.route("/favorite/platos/<int:platos_id>", methods=['POST'])
@@ -102,6 +150,40 @@ def postPlatosFav(platos_id):
 
 @api.route("/favorite/platos/<int:position>", methods=['DELETE'])
 def deletePlatosFav(position):
+    FavPlatos.query.filter(FavPlatos.id == position).delete()
+    db.session.commit()
+    return "favorito Eliminado"
+
+@api.route("/favorite/veget/<int:veget_id>", methods=['POST'])
+def postVegetFav(veget_id):
+    body = request.get_json() #recibir datos del usuario
+    #people_id = 4
+    #email = freddyloboq@gmail.com
+    newFav = FavPlatos(user=body['email'], people = veget_id)
+    db.session.add(newFav)
+    db.session.commit()
+    return "nuevo favorito agregado"
+
+
+@api.route("/favorite/veget/<int:position>", methods=['DELETE'])
+def deleteVegetFav(position):
+    FavPlatos.query.filter(FavPlatos.id == position).delete()
+    db.session.commit()
+    return "favorito Eliminado"
+
+@api.route("/favorite/dulce/<int:dulce_id>", methods=['POST'])
+def postDulceFav(dulce_id):
+    body = request.get_json() #recibir datos del usuario
+    #people_id = 4
+    #email = freddyloboq@gmail.com
+    newFav = FavPlatos(user=body['email'], people = dulce_id)
+    db.session.add(newFav)
+    db.session.commit()
+    return "nuevo favorito agregado"
+
+
+@api.route("/favorite/dulce/<int:position>", methods=['DELETE'])
+def deleteDulceFav(position):
     FavPlatos.query.filter(FavPlatos.id == position).delete()
     db.session.commit()
     return "favorito Eliminado"
