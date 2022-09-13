@@ -5,39 +5,6 @@ import "../../../styles/publicar.css";
 
 export const Publicar = () => {
   const { store, actions } = useContext(Context);
-  const [cloudImageUrl, setCloudImageUrl] = useState("");
-  const [qSelectedImages, setQSelectedImages] = useState(0);
-
-  let auxiliarFotos = "";
-  // let formData = new FormData();
-
-  const config = {
-    cloudName: "dsobw5vfl",
-    resource_type: "image",
-    upload_preset: "imagenes",
-  };
-
-  const apiUrl = `https://api.cloudinary.com/v1_1/${config.cloudName}/${config.resource_type}/upload`;
-
-  // const uploadImage = () => {
-  //   const apiUrl = `https://api.cloudinary.com/v1_1/${config.cloudName}/${config.resource_type}/upload`;
-  // const formData = new FormData();
-  // formData.append("file", imageSelected);
-  // formData.append("upload_preset", config.upload_preset);
-
-  //   fetch(apiUrl, {
-  //     method: "POST",
-  //     body: formData,
-  //   })
-  //     .then((response) => response.json())
-  //     .then((jsonResponse) => {
-  //       console.log(jsonResponse.url);
-  //       setCloudImageUrl(jsonResponse.url);
-  //     })
-  //     .catch((error) => {
-  //       console.log("The fetch has failed: ", error);
-  //     });
-  // };
 
   useEffect(() => {
     actions.resetStoreSelectors();
@@ -105,47 +72,42 @@ export const Publicar = () => {
               </div>
 
               {/* fotos */}
-              <div className="selector mx-3 mb-3">
-                <label for="formFileMultiple" className="form-label pb-2">
-                  Fotos de la propiedad
-                </label>
-                <input
-                  className="form-control"
-                  id="formFileMultiple"
-                  multiple
-                  type="file"
-                  onChange={(e) => {
-                    auxiliarFotos = Object.values(e.target.files);
-                    setQSelectedImages(auxiliarFotos.length);
-
-                    for (let i in auxiliarFotos) {
-                      const formData = new FormData();
-                      formData.append("file", auxiliarFotos[i]);
-                      formData.append("upload_preset", config.upload_preset);
-
-                      fetch(apiUrl, {
-                        method: "POST",
-                        body: formData,
-                      })
-                        .then((response) => response.json())
-                        .then((jsonResponse) => {
-                          console.log(jsonResponse.url);
-                          setCloudImageUrl([
-                            ...cloudImageUrl,
-                            jsonResponse.url,
-                          ]);
-                        })
-                        .catch((error) => {
-                          console.log("The fetch has failed: ", error);
-                        });
-                    }
-                  }}
-                />
-              </div>
+              {store.selectedImages.length == 0 ? (
+                <div className="fotos_input mx-3 mb-3">
+                  <label for="formFileMultiple" className="form-label pb-2">
+                    Fotos de la propiedad
+                  </label>
+                  <input
+                    className="form-control"
+                    id="formFileMultiple"
+                    multiple
+                    type="file"
+                    onChange={actions.uploadImagesToStore}
+                  />
+                </div>
+              ) : (
+                <div className="fotos_input mx-3 mb-3">
+                  <label for="formFileMultiple" className="form-label pb-2">
+                    Fotos de la propiedad
+                  </label>
+                  <div className="caja-reemplazo d-flex justify-content-between">
+                    <div className="ps-3">{`>> Carga realizada: ${store.selectedImages.length} foto(s)`}</div>
+                    <div>
+                      <button
+                        onClick={actions.clearSelectedImages}
+                        type="button"
+                        className="btn btn-secondary btn-sm me-3"
+                      >
+                        Borrar Fotos
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
 
               <div className="mx-3 text-center">
                 <button
-                  // onClick={uploadImage}
+                  onClick={actions.uploadImagesToCloudinary}
                   type="button"
                   className="btn btn-primary mb-3 mt-3"
                   style={{ width: "50%" }}
@@ -168,3 +130,48 @@ export const Publicar = () => {
     </>
   );
 };
+
+// auxiliarFotos = Object.values(e.target.files);
+// setFotos(auxiliarFotos.length);
+// let pics = [];
+
+// for (let i in auxiliarFotos) {
+//   const formData = new FormData();
+//   formData.append("file", auxiliarFotos[i]);
+//   formData.append("upload_preset", config.upload_preset);
+
+//   fetch(apiUrl, {
+//     method: "POST",
+//     body: formData,
+//   })
+//     .then((response) => response.json())
+//     .then((jsonResponse) => {
+//       pics.push(jsonResponse.url);
+//       setCloudImageUrl(pics);
+//       console.log(cloudImageUrl);
+//     })
+//     .catch((error) => {
+//       console.log("The fetch has failed: ", error);
+//     });
+// }
+// }}
+
+// const uploadImage = () => {
+//   const apiUrl = `https://api.cloudinary.com/v1_1/${config.cloudName}/${config.resource_type}/upload`;
+// const formData = new FormData();
+// formData.append("file", imageSelected);
+// formData.append("upload_preset", config.upload_preset);
+
+//   fetch(apiUrl, {
+//     method: "POST",
+//     body: formData,
+//   })
+//     .then((response) => response.json())
+//     .then((jsonResponse) => {
+//       console.log(jsonResponse.url);
+//       setCloudImageUrl(jsonResponse.url);
+//     })
+//     .catch((error) => {
+//       console.log("The fetch has failed: ", error);
+//     });
+// };

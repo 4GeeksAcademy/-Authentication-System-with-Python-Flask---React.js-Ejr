@@ -90,6 +90,9 @@ const getState = ({ getStore, getActions, setStore }) => {
       baños: "cualquiera",
       periodo_alquiler: "por meses",
       /*------------------------------------------ FIN DE LAS VARIABLES DE FILTROS -----------------------------------------------------*/
+
+      selectedImages: [],
+      receivedUrls: [],
     },
     actions: {
       getMessages: async () => {
@@ -627,6 +630,48 @@ const getState = ({ getStore, getActions, setStore }) => {
         setStore({ preciomin: 0 });
         setStore({ preciomax: 999999999 });
         getActions().fillLocalStorage();
+      },
+
+      uploadImagesToStore: (e) => {
+        const store = getStore();
+        setStore({ selectedImages: e.target.files });
+        console.log(store.selectedImages);
+      },
+
+      uploadImagesToCloudinary: async () => {
+        const store = getStore();
+        const config = {
+          cloudName: "dsobw5vfl",
+          resource_type: "image",
+          upload_preset: "imagenes",
+        };
+        const apiUrl = `https://api.cloudinary.com/v1_1/${config.cloudName}/${config.resource_type}/upload`;
+
+        for (let i in store.selectedImages) {
+          const formData = new FormData();
+          formData.append("file", store.selectedImages[i]);
+          formData.append("upload_preset", config.upload_preset);
+          try {
+            const response = await fetch(apiUrl, {
+              method: "POST",
+              body: formData,
+            });
+            if (response.status != 200) {
+              throw new Error("The fetch has failed");
+            }
+            const jsonResponse = await response.json();
+            setStore({
+              receivedUrls: [...store.receivedUrls, jsonResponse.url],
+            });
+            console.log(store.receivedUrls);
+          } catch (error) {
+            console.log("The fetch has failed: ", error);
+          }
+        }
+      },
+
+      clearSelectedImages: () => {
+        setStore({ selectedImages: [] });
       },
     },
   };
