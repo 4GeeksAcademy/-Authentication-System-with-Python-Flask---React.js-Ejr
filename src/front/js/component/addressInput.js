@@ -9,7 +9,8 @@ export const AddressInput = () => {
   return (
     <>
       <input
-        placeholder="Address"
+        className="form-control"
+        placeholder="<Escribe la dirección>"
         {...address}
         isTyping={address.value !== ""}
       />
@@ -22,10 +23,11 @@ export const AddressInput = () => {
                 key={index}
                 onClick={() => {
                   address.setValue(suggestion.place_name);
-                  localStorage.setItem("longitude", suggestion.center[0]);
-                  localStorage.setItem("latitude", suggestion.center[1]);
-                  localStorage.setItem("direccion", suggestion.place_name);
+                  localStorage.setItem("pub_longitude", suggestion.center[0]);
+                  localStorage.setItem("pub_latitude", suggestion.center[1]);
+                  localStorage.setItem("pub_direccion", suggestion.place_name);
                   address.setSuggestions([]);
+                  actions.updatePublicarDireccion();
                 }}
               >
                 {suggestion.place_name}

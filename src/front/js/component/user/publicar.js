@@ -3,12 +3,18 @@ import { Context } from "../../store/appContext";
 import swal from "sweetalert";
 import "../../../styles/publicar.css";
 import { useNavigate } from "react-router-dom";
+import { AddressInput } from "../addressInput.js";
 
 export const Publicar = () => {
   const { store, actions } = useContext(Context);
   const navigate = useNavigate();
 
-  const handleClick = async () => {
+  const handleClick1 = () => {
+    actions.clearLocalStorageNoUser();
+    actions.resetStoreVariables();
+  };
+
+  const handleClick2 = async () => {
     await actions.uploadImagesToCloudinary();
     await actions.clearSelectedImages();
     await actions.clearPubFromLocalStorage();
@@ -18,7 +24,7 @@ export const Publicar = () => {
   };
 
   useEffect(() => {
-    actions.resetStoreSelectors();
+    actions.resetStoreVariables();
   }, []);
 
   return (
@@ -33,7 +39,7 @@ export const Publicar = () => {
               <h4>Tu Publicación</h4>
             </div>
 
-            <div className="container rounded-bottom pt-0 pb-4 bg-white">
+            <div className="caja_selectores container rounded-bottom pt-0 pb-4 bg-white">
               {/* operación */}
               <div className="selector mx-3 mb-3">
                 <div className="pb-2">
@@ -96,6 +102,160 @@ export const Publicar = () => {
                 </select>
               </div>
 
+              {/* municipio */}
+              <div className="mb-3 mx-3">
+                <label for="exampleFormControlInput1" className="form-label">
+                  Municipio
+                </label>
+                <input
+                  onChange={actions.updatePublicarMunicipio}
+                  type="text"
+                  className="form-control"
+                  id="exampleFormControlInput1"
+                  placeholder="<Escribe el municipio>"
+                  value={store.municipio}
+                />
+              </div>
+
+              {/* direccion */}
+              <div className="mb-3 mx-3">
+                <label for="exampleFormControlInput1" className="form-label">
+                  Dirección
+                </label>
+                <div>
+                  <AddressInput />
+                </div>
+                {/* <input
+                  onChange={actions.updatePublicarDireccion}
+                  type="text"
+                  className="form-control"
+                  id="exampleFormControlInput1"
+                  placeholder="<Escribe la dirección>"
+                  value={store.direccion}
+                /> */}
+              </div>
+
+              {/* descripción */}
+              <div className="mb-3  mx-3">
+                <label for="exampleFormControlTextarea1" className="form-label">
+                  Descripción de la propiedad
+                </label>
+                <textarea
+                  onChange={actions.updatePublicarDescripcion}
+                  className="form-control"
+                  id="exampleFormControlTextarea1"
+                  rows="5"
+                  placeholder="<Describe aquí las características de la propiedad>"
+                  value={store.descripcion}
+                ></textarea>
+              </div>
+
+              {/* precio */}
+              <div className="mb-3 mx-3">
+                <label for="exampleFormControlInput1" className="form-label">
+                  Precio
+                </label>
+                <input
+                  onChange={actions.updatePublicarPrecio}
+                  type="number"
+                  className="form-control"
+                  id="exampleFormControlInput1"
+                  placeholder="<Escribe el precio>"
+                  value={store.precio}
+                />
+              </div>
+
+              {/* tipo vivienda */}
+              <div className="selector mx-3 mb-3">
+                <div className="pb-2">
+                  <span className="">Tipo de Vivienda</span>
+                </div>
+                <select
+                  className="form-select"
+                  aria-label="Default select example"
+                  onChange={actions.updatePublicarTipoVivienda}
+                  value={store.tipo_vivienda}
+                >
+                  <option className="">{"<Elige el tipo de vivienda>"}</option>
+                  <option className="">Piso</option>
+                  <option className="">Chalet</option>
+                  <option className="">Villa</option>
+                </select>
+              </div>
+
+              {/* caracteristicas */}
+              <div className="selector mx-3 mb-3">
+                <div className="pb-2">
+                  <span className="">Características</span>
+                </div>
+                <div className="form-check">
+                  <input
+                    className="form-check-input"
+                    type="checkbox"
+                    onChange={actions.updatePublicarCaracteristicaPet}
+                    checked={store.caracteristica_pet}
+                  />
+                  <label className="form-check-label">Admite mascotas</label>
+                </div>
+                <div className="form-check">
+                  <input
+                    className="form-check-input"
+                    type="checkbox"
+                    onChange={actions.updatePublicarCaracteristicaGarage}
+                    checked={store.caracteristica_garage}
+                  />
+                  <label className="form-check-label">Garage</label>
+                </div>
+                <div className="form-check">
+                  <input
+                    className="form-check-input"
+                    type="checkbox"
+                    onChange={actions.updatePublicarCaracteristicaPiscina}
+                    checked={store.caracteristica_piscina}
+                  />
+                  <label className="form-check-label">Piscina</label>
+                </div>
+                <div className="form-check">
+                  <input
+                    className="form-check-input"
+                    type="checkbox"
+                    onChange={actions.updatePublicarCaracteristicaTerraza}
+                    checked={store.caracteristica_terraza}
+                  />
+                  <label className="form-check-label">Terraza</label>
+                </div>
+              </div>
+
+              {/* habitaciones */}
+              <div className="mb-3 mx-3">
+                <label for="exampleFormControlInput1" className="form-label">
+                  Cantidad de habitaciones
+                </label>
+                <input
+                  onChange={actions.updatePublicarHabitaciones}
+                  type="number"
+                  className="form-control"
+                  id="exampleFormControlInput1"
+                  placeholder="<Escribe la cantidad de habitaciones>"
+                  value={store.habitaciones}
+                />
+              </div>
+
+              {/* baños */}
+              <div className="mb-3 mx-3">
+                <label for="exampleFormControlInput1" className="form-label">
+                  Cantidad de baños
+                </label>
+                <input
+                  onChange={actions.updatePublicarBaños}
+                  type="number"
+                  className="form-control"
+                  id="exampleFormControlInput1"
+                  placeholder="<Escribe la cantidad de baños>"
+                  value={store.baños}
+                />
+              </div>
+
               {/* fotos */}
               {store.selectedImages.length == 0 ? (
                 <div className="fotos_input mx-3 mb-3">
@@ -130,15 +290,26 @@ export const Publicar = () => {
                 </div>
               )}
 
-              <div className="mx-3 text-center">
-                <button
-                  onClick={handleClick}
-                  type="button"
-                  className="btn btn-primary mb-3 mt-3"
-                  style={{ width: "50%" }}
-                >
-                  Publicar
-                </button>
+              <div className="botones-contenedor mx-3 px-0 d-flex justify-content-evenly">
+                <div className="text-center">
+                  <button
+                    onClick={handleClick1}
+                    type="button"
+                    className="btn btn-warning mb-3 mt-3"
+                  >
+                    Reiniciar
+                  </button>
+                </div>
+
+                <div className="text-center">
+                  <button
+                    onClick={handleClick2}
+                    type="button"
+                    className="btn btn-success mb-3 mt-3"
+                  >
+                    Publicar
+                  </button>
+                </div>
               </div>
             </div>
           </div>

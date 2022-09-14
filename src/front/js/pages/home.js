@@ -10,8 +10,8 @@ export const Home = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    localStorage.clear();
-    actions.resetStoreSelectors();
+    actions.clearLocalStorageNoUser();
+    actions.resetStoreVariables(); // Variables de Publicar, Home y Dashboard
   }, []);
 
   const handleClick = async () => {

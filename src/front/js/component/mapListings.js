@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import Map, { Marker } from "react-map-gl";
+// import Map, { Marker } from "react-map-gl";
 import { AddressInput } from "./addressInput";
 import { Context } from "../store/appContext";
 
