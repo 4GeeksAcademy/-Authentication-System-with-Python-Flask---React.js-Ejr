@@ -128,7 +128,7 @@ export const Profile = () => {
                 <Edit />
               </div>
               <div
-                className="tab-pane fade"
+                className="tab-pane fade pb-5"
                 id="v-pills-publicar"
                 role="tabpanel"
                 aria-labelledby="v-pills-publicar-tab"

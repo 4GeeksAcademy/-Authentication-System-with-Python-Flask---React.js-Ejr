@@ -24,7 +24,7 @@ export const AddressInput = () => {
                   address.setValue(suggestion.place_name);
                   localStorage.setItem("longitude", suggestion.center[0]);
                   localStorage.setItem("latitude", suggestion.center[1]);
-                  localStorage.setItem("direccion", suggestion.place_name);
+                  localStorage.setItem("pub_direccion", suggestion.place_name);
                   address.setSuggestions([]);
                 }}
               >

@@ -89,17 +89,23 @@ const getState = ({ getStore, getActions, setStore }) => {
       habitaciones: "cualquiera",
       baños: "cualquiera",
       periodo_alquiler: "por meses",
-      /*------------------------------------------ FIN DE LAS VARIABLES DE FILTROS -----------------------------------------------------*/
+      /*------------------------------ inicio de VARIABLES ADICIONALES DE PUBLICACION -----------------------------------------------------*/
 
       selectedImages: [],
       receivedUrls: [],
-      latitud: 0,
-      longitud: 0,
       pago: false,
       tipo_vivienda: "",
       longitude: 0,
       latitude: 0,
+      municipio: "",
+      direccion: "",
+      descripcion: "",
+      precio: 0,
+      premium: false,
+
+      /*------------------------------ fin de VARIABLES ADICIONALES DE PUBLICACION -----------------------------------------------------*/
     },
+    //
     actions: {
       getMessages: async () => {
         const opts = {
@@ -396,6 +402,31 @@ const getState = ({ getStore, getActions, setStore }) => {
         localStorage.setItem("pub_provincia", e.target.value);
       },
 
+      updatePublicarMunicipio: (e) => {
+        let muni = e.target.value;
+        let capital = muni.charAt(0).toUpperCase();
+        let resto = muni.slice(1).toLowerCase();
+        let municipio = capital + resto;
+        localStorage.setItem("pub_municipio", municipio);
+        setStore({ municipio: municipio });
+      },
+
+      updatePublicarDireccion: (e) => {
+        let direccion = e.target.value;
+        let capital = direccion.charAt(0).toUpperCase();
+        let resto = direccion.slice(1).toLowerCase();
+        localStorage.setItem("pub_direccion", capital + resto);
+        setStore({ direccion: capital + resto });
+      },
+
+      updatePublicarDescripcion: (e) => {
+        let descripcion = e.target.value;
+        let capital = descripcion.charAt(0).toUpperCase();
+        let resto = descripcion.slice(1).toLowerCase();
+        localStorage.setItem("pub_descripcion", capital + resto);
+        setStore({ descripcion: capital + resto });
+      },
+
       updatePreciomin: (e) => {
         // funcion onChange de Select
         const store = getStore();
@@ -421,6 +452,15 @@ const getState = ({ getStore, getActions, setStore }) => {
           setStore({ preciomax: Number(e.target.value) });
         }
         getActions().fillLocalStorage();
+      },
+
+      updatePublicarPrecio: (e) => {
+        if (e.target.value <= 0) {
+          swal("debe ingresar un monto válido");
+        } else {
+          localStorage.setItem("pub_precio", e.target.value);
+          setStore({ precio: e.target.value });
+        }
       },
 
       // selectores que solo estan en Aside:
@@ -455,6 +495,11 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
         getActions().fillLocalStorage();
       },
+
+      updatePublicarTipoVivienda: (e) => {
+        setStore({ tipo_vivienda: e.target.value });
+        localStorage.setItem("pub_vivienda", e.target.value);
+      },
       // funcion de checkbox (IMPORTANTE: una caracteristica en valor True NO excluirá a las otras caracteristicas en el filtrado en API)
       updateCaracteristicaPet: () => {
         const store = getStore();
@@ -465,6 +510,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
         getActions().fillLocalStorage();
       },
+
       // funcion de checkbox (IMPORTANTE: una caracteristica en valor True NO excluirá a las otras caracteristicas en el filtrado en API)
       updateCaracteristicaGarage: () => {
         const store = getStore();
@@ -493,6 +539,48 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
         getActions().fillLocalStorage();
       },
+      ///
+      updatePublicarCaracteristicaPet: () => {
+        const store = getStore();
+        if (store.caracteristica_pet == true) {
+          setStore({ caracteristica_pet: false });
+          localStorage.setItem("pub_pet", false);
+        } else {
+          setStore({ caracteristica_pet: true });
+          localStorage.setItem("pub_pet", true);
+        }
+      },
+      updatePublicarCaracteristicaGarage: () => {
+        const store = getStore();
+        if (store.caracteristica_garage == true) {
+          setStore({ caracteristica_garage: false });
+          localStorage.setItem("pub_garage", false);
+        } else {
+          setStore({ caracteristica_garage: true });
+          localStorage.setItem("pub_garage", true);
+        }
+      },
+      updatePublicarCaracteristicaPiscina: () => {
+        const store = getStore();
+        if (store.caracteristica_piscina == true) {
+          setStore({ caracteristica_piscina: false });
+          localStorage.setItem("pub_piscina", false);
+        } else {
+          setStore({ caracteristica_piscina: true });
+          localStorage.setItem("pub_piscina", true);
+        }
+      },
+      updatePublicarCaracteristicaTerraza: () => {
+        const store = getStore();
+        if (store.caracteristica_terraza == true) {
+          setStore({ caracteristica_terraza: false });
+          localStorage.setItem("pub_terraza", false);
+        } else {
+          setStore({ caracteristica_terraza: true });
+          localStorage.setItem("pub_terraza", true);
+        }
+      },
+
       // funcion de checkbox  (IMPORTANTE: una option excluirá a las otras options en el filtrado en API)
       updateHabitacion: (e) => {
         setStore({ habitaciones: e.target.value });
@@ -502,6 +590,24 @@ const getState = ({ getStore, getActions, setStore }) => {
       updateBaño: (e) => {
         setStore({ baños: e.target.value });
         getActions().fillLocalStorage();
+      },
+
+      updatePublicarHabitaciones: (e) => {
+        if (e.target.value <= 0) {
+          swal("debe ingresar un monto válido");
+        } else {
+          setStore({ habitaciones: e.target.value });
+          localStorage.setItem("pub_habitaciones", e.target.value);
+        }
+      },
+
+      updatePublicarBaños: (e) => {
+        if (e.target.value <= 0) {
+          swal("debe ingresar un monto válido");
+        } else {
+          setStore({ baños: e.target.value });
+          localStorage.setItem("pub_baños", e.target.value);
+        }
       },
 
       /*--------------------------------------------- FIN DE LAS FUNCIONES DE LOS FILTROS --------------------------------------------*/
@@ -679,7 +785,6 @@ const getState = ({ getStore, getActions, setStore }) => {
         setStore({ preciomin: 0 });
         setStore({ preciomax: 999999999 });
         getActions().fillLocalStorage();
-
       },
 
       uploadImagesToStore: (e) => {
