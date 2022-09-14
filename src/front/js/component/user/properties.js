@@ -32,36 +32,42 @@ export const Properties = () => {
               textAlign: "center",
             }}
           >
-            {properties.map((property, i) => (
-              <div
-                className="card text-bg-dark mb-3"
-                style={{ maxWidth: "100%" }}
-                key={i}
-              >
-                <div className="card-header">
-                  <h3>{property.comunidad}</h3>
-                  {property.direccion}
-                </div>
-                <div className="card-body">
-                  <img
-                    src={property.fotos[0]}
-                    className="img-thumbnail rounded float-start"
-                    style={{ width: "200px", height: "200px" }}
-                  />
-                  <div className="d-flex justify-content-evenly">
-                    <h5 className="card-title">{property.tipo_operacion}</h5>
-                    <h5 className="card-title">{property.tipo_vivienda}</h5>
-                    <h5 className="card-title">{property.habitaciones} hab.</h5>
-                    <h5 className="card-title ">{property.baños} baños</h5>
+            {properties ? (
+              properties.map((property, i) => (
+                <div
+                  className="card text-bg-dark mb-3"
+                  style={{ maxWidth: "100%" }}
+                  key={i}
+                >
+                  <div className="card-header">
+                    <h3>{property.comunidad}</h3>
+                    {property.direccion}
                   </div>
-                  <div className="d-flex justify-content-center">
-                    <h5 className="text-muted">
-                      <br /> {property.descripcion}
-                    </h5>
+                  <div className="card-body">
+                    <img
+                      src={property.fotos[0]}
+                      className="img-thumbnail rounded float-start"
+                      style={{ width: "200px", height: "200px" }}
+                    />
+                    <div className="d-flex justify-content-evenly">
+                      <h5 className="card-title">{property.tipo_operacion}</h5>
+                      <h5 className="card-title">{property.tipo_vivienda}</h5>
+                      <h5 className="card-title">
+                        {property.habitaciones} hab.
+                      </h5>
+                      <h5 className="card-title ">{property.baños} baños</h5>
+                    </div>
+                    <div className="d-flex justify-content-center">
+                      <h5 className="text-muted">
+                        <br /> {property.descripcion}
+                      </h5>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))
+            ) : (
+              <div>No hay propiedades</div>
+            )}
           </div>
         </div>
       ) : (

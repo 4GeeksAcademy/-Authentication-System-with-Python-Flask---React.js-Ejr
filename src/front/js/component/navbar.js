@@ -13,8 +13,10 @@ export const Navbar = () => {
   };
 
   const handleClick = () => {
+
     actions.clearLocalStorageNoUser();
     actions.resetStoreVariables();
+
   };
 
   return (
