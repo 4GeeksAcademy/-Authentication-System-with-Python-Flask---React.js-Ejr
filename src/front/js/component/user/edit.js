@@ -45,7 +45,7 @@ export const Edit = () => {
       {localStorage.getItem("token") ? (
         <div
           className="d-flex justify-content-center col-6"
-          style={{ height: "90vh", width: "100vh" }}
+          style={{ height: "90vh", width: "70vw" }}
         >
           <div className="col-6 mt-5">
             <div className="card" style={{ width: "18rem;" }}>
