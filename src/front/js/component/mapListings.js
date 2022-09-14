@@ -9,8 +9,8 @@ export const MapListings = () => {
 
   return (
     <>
-      <AddressInput />
-      {/* <Map
+     
+      <Map
         initialViewState={{
           latitude: store.latitude,
           longitude: store.longitude,
@@ -25,7 +25,7 @@ export const MapListings = () => {
           latitude={store.latitude}
           color="red"
         />
-      </Map> */}
+      </Map>
     </>
   );
 };
