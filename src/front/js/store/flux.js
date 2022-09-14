@@ -3,8 +3,12 @@ const getState = ({ getStore, getActions, setStore }) => {
     store: {
       message: null,
       favorites: [], // agrega al carrito las comidas
-      comida: [], //trae los detalles de las comidas
-      comidas: [], // trae los nombre de las comidas
+      comida: [], //trae los detalles de las platos
+      comidas: [], // trae los nombre de los platos
+      vgt:[], // trae los detalles de los platos vegetarianos
+      vgts:[],// trae los nombre de los platos vegetarianos
+      dulce:[], // trae los detalles de los dulces 
+      dulces:[],// trae los nombre de los dulces
       demo: [
         {
           title: "FIRST",
@@ -90,6 +94,36 @@ const getState = ({ getStore, getActions, setStore }) => {
           .then(response => response.json())
           .then(result => {console.log(result)
             setStore({ comidas: result.platos})})
+          .catch(error => console.log("DANGER", error))
+      },
+      // Vegt
+      getVegetariano: (id) => {
+        fetch("https://3001-alexanderwe-proyectofin-jjcefw3cua5.ws-us65.gitpod.io/api/veget" + id)
+          .then(response => response.json())
+          .then(result => {setStore({ vgt: result.result })})
+          .catch(error => console.log("DANGER", error))
+      },
+      //funcion traer datos de la comida
+      getVegetarianos: () => {
+        fetch("https://3001-alexanderwe-proyectofin-jjcefw3cua5.ws-us65.gitpod.io/api/veget")
+          .then(response => response.json())
+          .then(result => {console.log(result)
+            setStore({ vgts: result.veget})})
+          .catch(error => console.log("DANGER", error))
+      },
+      // dulce
+      getDulce: (id) => {
+        fetch("https://3001-alexanderwe-proyectofin-jjcefw3cua5.ws-us65.gitpod.io/api/dulce" + id)
+          .then(response => response.json())
+          .then(result => {setStore({ dulce: result.result })})
+          .catch(error => console.log("DANGER", error))
+      },
+      //funcion traer datos de la comida
+      getDulces: () => {
+        fetch("https://3001-alexanderwe-proyectofin-jjcefw3cua5.ws-us65.gitpod.io/api/dulce")
+          .then(response => response.json())
+          .then(result => {console.log(result)
+            setStore({ dulces: result.dulce})})
           .catch(error => console.log("DANGER", error))
       },
       //funcion agregar

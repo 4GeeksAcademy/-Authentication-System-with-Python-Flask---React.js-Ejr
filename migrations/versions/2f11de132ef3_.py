@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 8531565b9990
+Revision ID: 2f11de132ef3
 Revises: 
-Create Date: 2022-09-13 22:49:55.860550
+Create Date: 2022-09-14 01:21:22.432309
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '8531565b9990'
+revision = '2f11de132ef3'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -21,6 +21,7 @@ def upgrade():
     op.create_table('dulce',
     sa.Column('uid', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=120), nullable=False),
+    sa.Column('url', sa.String(length=1000), nullable=False),
     sa.Column('ingredientes', sa.String(length=1000), nullable=False),
     sa.Column('tiempo', sa.String(length=120), nullable=True),
     sa.PrimaryKeyConstraint('uid')
@@ -28,6 +29,7 @@ def upgrade():
     op.create_table('platos',
     sa.Column('uid', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=120), nullable=False),
+    sa.Column('url', sa.String(length=1000), nullable=False),
     sa.Column('ingredientes', sa.String(length=1000), nullable=False),
     sa.Column('tiempo', sa.String(length=120), nullable=True),
     sa.PrimaryKeyConstraint('uid')
@@ -44,6 +46,7 @@ def upgrade():
     op.create_table('veget',
     sa.Column('uid', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=120), nullable=False),
+    sa.Column('url', sa.String(length=1000), nullable=False),
     sa.Column('ingredientes', sa.String(length=1000), nullable=False),
     sa.Column('tiempo', sa.String(length=120), nullable=True),
     sa.PrimaryKeyConstraint('uid')

@@ -26,6 +26,7 @@ class Platos(db.Model):
 
     uid = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(120), unique=False, nullable=False)
+    url = db.Column(db.String(1000), unique=False, nullable=False)
     ingredientes = db.Column(db.String(1000), unique=False, nullable=False)
     tiempo = db.Column(db.String(120), unique=False, nullable=True)
 
@@ -36,6 +37,7 @@ class Platos(db.Model):
         return {
             "uid": self.uid,
             "name": self.name,
+            "url": self.url,
             "ingredientes": self.ingredientes,
             "tiempo": self.tiempo,
         }
@@ -44,6 +46,7 @@ class Veget(db.Model):
 
     uid = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(120), unique=False, nullable=False)
+    url = db.Column(db.String(1000), unique=False, nullable=False)
     ingredientes = db.Column(db.String(1000), unique=False, nullable=False)
     tiempo = db.Column(db.String(120), unique=False, nullable=True)
 
@@ -54,6 +57,7 @@ class Veget(db.Model):
         return {
             "uid": self.uid,
             "name": self.name,
+            "url": self.url,
             "ingredientes": self.ingredientes,
             "tiempo": self.tiempo,
         }
@@ -62,6 +66,7 @@ class Dulce(db.Model):
 
     uid = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(120), unique=False, nullable=False)
+    url = db.Column(db.String(1000), unique=False, nullable=False)
     ingredientes = db.Column(db.String(1000), unique=False, nullable=False)
     tiempo = db.Column(db.String(120), unique=False, nullable=True)
 
@@ -72,6 +77,7 @@ class Dulce(db.Model):
         return {
             "uid": self.uid,
             "name": self.name,
+            "url": self.url,
             "ingredientes": self.ingredientes,
             "tiempo": self.tiempo,
         }

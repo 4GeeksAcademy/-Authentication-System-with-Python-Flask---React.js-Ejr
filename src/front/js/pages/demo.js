@@ -18,7 +18,7 @@ export const Demo = () => {
     <div class="container login-container">
       <div class="row login-row">
         <div class="col-md-6 login-form-1">
-          <h3>Login Form 1</h3>
+          <h3>Login Here</h3>
 
           <div class="form-group">
             <input
@@ -57,7 +57,9 @@ export const Demo = () => {
         </div>
         <div class="col-md-6 login-form-2">
           <div class="login-logo">
-            <img src="https://image.ibb.co/n7oTvU/logo_white.png" alt="" />
+            <Link to="/">
+          <i className="fa-solid  fa-house holis"></i>
+            </Link>
           </div>
         </div>
       </div>

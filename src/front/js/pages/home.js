@@ -25,7 +25,7 @@ export const Home = () => {
 					</Link>
 				</div>
 				
-				<div class="row destacados">
+				{/* <div class="row destacados">
 					<div class="box">
 						<div class="imgBx">
 							<img src="https://images.pexels.com/photos/376464/pexels-photo-376464.jpeg?auto=compress&cs=tinysrgb&w=1600" />
@@ -62,7 +62,7 @@ export const Home = () => {
 							</div>
 						</div>
 					</div>
-				</div>
+				</div> */}
 				
 			</div>
 			<Footer />

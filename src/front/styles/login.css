@@ -36,13 +36,16 @@
 }
 .btnSubmit{
   font-weight: 600;
-  width: 50%;
+  width: 45%;
   color: #282726;
   background-color: #fff;
   border: none;
   border-radius: 1.5rem;
   padding:2%;
+  margin: 5px;
+  
 }
+
 .btnForgetPwd{
   color: #fff;
   font-weight: 600;

@@ -46,7 +46,7 @@ p{
   justify-content:space-around;
  
   bottom: 0;
-  background: linear-gradient(180deg, rgba(81, 68, 68, 0) 0%, #514444 70.62%);
+  background:rgba(255, 255, 255, 0.275);
 }
 .coc{
   margin: 2px;

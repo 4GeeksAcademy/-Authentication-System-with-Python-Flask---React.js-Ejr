@@ -5,18 +5,17 @@ import "../../styles/productos.css";
 import { Link } from "react-router-dom";
 import { Navbar } from "../component/navbar";
 import { Footer } from "../component/footer";
+import { NavbarL } from "../component/navbarl";
 
 export const Productos = () => {
-
-
+    const { store, actions } = useContext(Context);
+console.log(store.comidas)
     return (
 
-        <div className="row "   >
+        <div className="row row-2">
             <img className="imglc" src="https://images.unsplash.com/photo-1490818387583-1baba5e638af?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1032&q=80" />
-            <Navbar />
-
+            <NavbarL />
             <div className="container iconoscaja">
-
                 <Link to="/productos">
                     <i class="fa-solid fa-2x fa-burger icn "></i>
                 </Link>
@@ -28,108 +27,34 @@ export const Productos = () => {
                 </Link>
 
             </div>
-
-
-
+            
             <div className=" container-productos ">
                 <div className="row cajas">
-                    <div className="col-md-4">
-                        <figure  >
-                            <img src="https://images.pexels.com/photos/4871119/pexels-photo-4871119.jpeg" ></img>
-                            <div className="capa">
-                                <h3> Portobello y Camarones</h3>
-                                <p>Ingredientes</p>
-                                <p>Portobello ,Pimentones Rojos, Camarones, Brotes, Especias, Crema de Lecha <br /> <p>10<strong>.500$</strong></p>
-                                </p>
+            {store.comidas.map((e,i)=>{
+                console.log(e)
+                return(<div className="col-md-4" key={i}>
+                <figure  >
+                    <img src={e.url} ></img>
+                    <div className="capa">
+                        <h3> {e.name}</h3>
+                        <p>Ingredientes</p>
+                        <p>{e.ingredientes} <br /> <p>10<strong>.500$</strong></p>
+                        </p>
 
-                                <Link to="/">
+                        <Link to="/">
 
-                                    <button type="button" class="btn btn-outline-dark boton">Comprar</button>
-                                </Link>
-                                <button type="button" class="btn btn-outline-dark m-2 corazon"> <i class="far fa-heart"></i></button>
-                            </div>
-                        </figure>
+                            <button type="button" class="btn btn-outline-dark boton">Comprar</button>
+                        </Link>
+                        <button onClick={()=> actions.getAddTask(e.name)} type="button" className="btn btn-outline-dark m-2 boton"> <i class="fa-solid fa-plus"></i></button>
                     </div>
-
-
-                    <div className="col-md-4">
-                        <figure >
-                            <img src="https://images.pexels.com/photos/3738730/pexels-photo-3738730.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"></img>
-                            <div className="capa">
-                                <h3> Hamburguesa Angus</h3>
-                                <p>Ingredientes</p>
-                                <p>Carne ,Lechuga , Tomate , Tocino y Queso <br /> <p>7<strong>.500$</strong></p>
-                                </p>
-                                <Link to="/">
-                                    <button type="button" class="btn btn-outline-dark boton ">Comprar</button>
-                                </Link>
-                                <button type="button" class="btn btn-outline-dark m-2 corazon"> <i class="far fa-heart"></i></button>
-                            </div>
-                        </figure>
-                    </div>
-                    <div className="col-md-4">
-                        <figure >
-                            <img src="https://images.pexels.com/photos/2456435/pexels-photo-2456435.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"></img>
-                            <div className="capa">
-                                <h3> Pastas Largas</h3>
-                                <p>Ingredientes</p>
-                                <p>Pasta ,Pimentones Rojos, Pimentones Verdes , Calabacin , Sesamo y Aceite de mani <br /> <p>9<strong>.500$</strong></p>
-                                </p>
-                                <Link to="/">
-                                    <button type="button" class="btn btn-outline-dark boton">Comprar</button>
-                                </Link>
-                                <button type="button" class="btn btn-outline-dark m-2 corazon"> <i class="far fa-heart"></i></button>
-                            </div>
-                        </figure>
-                    </div>
-                    <div className="col-md-4 cajax">
-                        <figure >
-                            <img src="https://images.pexels.com/photos/410648/pexels-photo-410648.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"></img>
-                            <div className="capa">
-                                <h3> Costillas BBQ</h3>
-                                <p>Ingredientes</p>
-                                <p>Costillar de cerdo , BBQ , Mix de especies <br /> <p>9<strong>.500$</strong></p>
-                                </p>
-                                <Link to="/">
-                                    <button type="button" class="btn btn-outline-dark boton ">Comprar</button>
-                                </Link>
-                                <button type="button" class="btn btn-outline-dark m-2 corazon"> <i class="far fa-heart"></i></button>
-                            </div>
-                        </figure>
-                    </div>
-                    <div className="col-md-4 cajax">
-                        <figure >
-                            <img src="https://images.pexels.com/photos/7426867/pexels-photo-7426867.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"></img>
-                            <div className="capa">
-                                <h3> Paella Mixta</h3>
-                                <p>Ingredientes</p>
-                                <p>Arroz , Res , Mariscos ,Tomate , Limon, Especies Mixtas ,Cilantro <br /> <p>10<strong>.500$</strong></p>
-                                </p>
-                                <Link to="/">
-                                    <button type="button" class="btn btn-outline-dark boton ">Comprar</button>
-                                </Link>
-                                <button type="button" class="btn btn-outline-dark m-2 corazon"> <i class="far fa-heart"></i></button>
-                            </div>
-                        </figure>
-                    </div>
-                    <div className="col-md-4 cajax">
-                        <figure >
-                            <img src="https://images.pexels.com/photos/1256875/pexels-photo-1256875.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"></img>
-                            <div className="capa">
-                                <h3> Pasta al Pesto</h3>
-                                <p>Ingredientes</p>
-                                <p>Pasta , albahaca , almendras o nuez , Parmesano , Aceite de oliva , Sal y Pimienta <br /> <p>13<strong>.500$</strong></p>
-                                </p>
-                                <Link to="/">
-                                    <button type="button" class="btn btn-outline-dark  boton">Comprar</button>
-                                </Link>
-                                <button type="button" class="btn btn-outline-dark m-2 corazon"> <i class="far fa-heart"></i></button>
-                            </div>
-                        </figure>
-                    </div>
+                </figure>
+            </div>)
+                    
+                    })}
                 </div>
             </div>
             <Footer />
+            
         </div>
 
 
