@@ -16,9 +16,10 @@ const useInput = (initialValue) => {
         const response = await fetch(endpoint);
         const results = await response.json();
         setSuggestions(results?.features);
-        localStorage.setItem("longitude", results?.features[0].center[0]);
-        localStorage.setItem("latitude", results?.features[0].center[1]);
-        localStorage.setItem("direccion", value);
+        localStorage.setItem("pub_longitude", results?.features[0].center[0]);
+        localStorage.setItem("pub_latitude", results?.features[0].center[1]);
+        localStorage.setItem("pub_direccion", value);
+        console.log(process.env.MAPBOX_TOKEN);
       } catch (error) {
         console.log("Error fetching data, ", error);
       }

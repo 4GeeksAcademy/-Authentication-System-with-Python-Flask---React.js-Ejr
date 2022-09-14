@@ -13,8 +13,12 @@ export const Navbar = () => {
   };
 
   const handleClick = () => {
-    actions.resetStoreSelectors();
+
+    actions.clearLocalStorageNoUser();
+    actions.resetStoreVariables();
+
   };
+
   return (
     <nav className="navbar navbar-dark bg-dark mb-2">
       <div className="container">
