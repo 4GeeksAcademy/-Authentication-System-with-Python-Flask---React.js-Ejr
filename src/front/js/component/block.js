@@ -167,3 +167,29 @@
     </button>
   </div>
 </div>;
+
+getProperties: async () => {
+  const store = getStore();
+  const request = store.body_request;
+  let opts = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(request),
+  };
+  try {
+    const resp = await fetch(process.env.BACKEND_URL + "/api/properties", opts);
+    if (resp.status != 200) {
+      throw new Error("The fetch has failed");
+    }
+    const data = await resp.json();
+    const aux1 = data["inmuebles"];
+    const aux2 = data["imagenes"];
+    const aux3 = getActions().joinBodies(aux1, aux2);
+    setStore({ body_response: aux3 });
+    console.log("this came from the backend", aux3);
+  } catch (error) {
+    console.log("The fetch has failed: ", error);
+  }
+};

@@ -44,6 +44,7 @@ class Inmueble(db.Model):
     garage = db.Column(db.Boolean, unique=False, nullable=False)
     latitud = db.Column(db.Float, unique=False, nullable=True)
     longitud = db.Column(db.Float, unique=False, nullable=True)
+    premium = db.Column(db.Boolean, unique=False, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     imagenes = db.relationship('Imagen', backref='Inmueble', cascade="all, delete") #, lazy=True
     messages = db.relationship('Message', backref='Inmueble', cascade="all, delete") #, lazy=True
