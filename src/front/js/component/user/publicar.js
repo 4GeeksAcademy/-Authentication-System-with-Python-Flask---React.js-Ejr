@@ -9,7 +9,12 @@ export const Publicar = () => {
   const { store, actions } = useContext(Context);
   const navigate = useNavigate();
 
-  const handleClick = async () => {
+  const handleClick1 = () => {
+    actions.clearLocalStorageNoUser();
+    actions.resetStoreVariables();
+  };
+
+  const handleClick2 = async () => {
     await actions.uploadImagesToCloudinary();
     await actions.clearSelectedImages();
     await actions.clearPubFromLocalStorage();
@@ -19,7 +24,7 @@ export const Publicar = () => {
   };
 
   useEffect(() => {
-    actions.resetStoreSelectors();
+    actions.resetStoreVariables();
   }, []);
 
   return (
@@ -117,17 +122,17 @@ export const Publicar = () => {
                 <label for="exampleFormControlInput1" className="form-label">
                   Dirección
                 </label>
-                {/* <div>
+                <div>
                   <AddressInput />
-                </div> */}
-                <input
+                </div>
+                {/* <input
                   onChange={actions.updatePublicarDireccion}
                   type="text"
                   className="form-control"
                   id="exampleFormControlInput1"
                   placeholder="<Escribe la dirección>"
                   value={store.direccion}
-                />
+                /> */}
               </div>
 
               {/* descripción */}
@@ -140,7 +145,7 @@ export const Publicar = () => {
                   className="form-control"
                   id="exampleFormControlTextarea1"
                   rows="5"
-                  placeholder="describa aquí las características de la propiedad"
+                  placeholder="<Describe aquí las características de la propiedad>"
                   value={store.descripcion}
                 ></textarea>
               </div>
@@ -155,7 +160,7 @@ export const Publicar = () => {
                   type="number"
                   className="form-control"
                   id="exampleFormControlInput1"
-                  placeholder="escriba el precio"
+                  placeholder="<Escribe el precio>"
                   value={store.precio}
                 />
               </div>
@@ -188,6 +193,7 @@ export const Publicar = () => {
                     className="form-check-input"
                     type="checkbox"
                     onChange={actions.updatePublicarCaracteristicaPet}
+                    checked={store.caracteristica_pet}
                   />
                   <label className="form-check-label">Admite mascotas</label>
                 </div>
@@ -196,6 +202,7 @@ export const Publicar = () => {
                     className="form-check-input"
                     type="checkbox"
                     onChange={actions.updatePublicarCaracteristicaGarage}
+                    checked={store.caracteristica_garage}
                   />
                   <label className="form-check-label">Garage</label>
                 </div>
@@ -204,6 +211,7 @@ export const Publicar = () => {
                     className="form-check-input"
                     type="checkbox"
                     onChange={actions.updatePublicarCaracteristicaPiscina}
+                    checked={store.caracteristica_piscina}
                   />
                   <label className="form-check-label">Piscina</label>
                 </div>
@@ -212,6 +220,7 @@ export const Publicar = () => {
                     className="form-check-input"
                     type="checkbox"
                     onChange={actions.updatePublicarCaracteristicaTerraza}
+                    checked={store.caracteristica_terraza}
                   />
                   <label className="form-check-label">Terraza</label>
                 </div>
@@ -227,7 +236,7 @@ export const Publicar = () => {
                   type="number"
                   className="form-control"
                   id="exampleFormControlInput1"
-                  placeholder="escriba el precio"
+                  placeholder="<Escribe la cantidad de habitaciones>"
                   value={store.habitaciones}
                 />
               </div>
@@ -242,7 +251,7 @@ export const Publicar = () => {
                   type="number"
                   className="form-control"
                   id="exampleFormControlInput1"
-                  placeholder="escriba el precio"
+                  placeholder="<Escribe la cantidad de baños>"
                   value={store.baños}
                 />
               </div>
@@ -281,15 +290,26 @@ export const Publicar = () => {
                 </div>
               )}
 
-              <div className="mx-3 text-center">
-                <button
-                  onClick={handleClick}
-                  type="button"
-                  className="btn btn-primary mb-3 mt-3"
-                  style={{ width: "50%" }}
-                >
-                  Publicar
-                </button>
+              <div className="botones-contenedor mx-3 px-0 d-flex justify-content-evenly">
+                <div className="text-center">
+                  <button
+                    onClick={handleClick1}
+                    type="button"
+                    className="btn btn-warning mb-3 mt-3"
+                  >
+                    Reiniciar
+                  </button>
+                </div>
+
+                <div className="text-center">
+                  <button
+                    onClick={handleClick2}
+                    type="button"
+                    className="btn btn-success mb-3 mt-3"
+                  >
+                    Publicar
+                  </button>
+                </div>
               </div>
             </div>
           </div>

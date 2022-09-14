@@ -100,7 +100,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       municipio: "",
       direccion: "",
       descripcion: "",
-      precio: 0,
+      precio: "",
       premium: false,
 
       /*------------------------------ fin de VARIABLES ADICIONALES DE PUBLICACION -----------------------------------------------------*/
@@ -411,13 +411,17 @@ const getState = ({ getStore, getActions, setStore }) => {
         setStore({ municipio: municipio });
       },
 
-      updatePublicarDireccion: (e) => {
-        let direccion = e.target.value;
-        let capital = direccion.charAt(0).toUpperCase();
-        let resto = direccion.slice(1).toLowerCase();
-        localStorage.setItem("pub_direccion", capital + resto);
-        setStore({ direccion: capital + resto });
+      updatePublicarDireccion: () => {
+        setStore({ direccion: localStorage.getItem("pub_direccion") });
       },
+
+      // updatePublicarDireccion: (e) => {  deprecada porque ahorqa se usa el adressinput
+      //   let direccion = e.target.value;
+      //   let capital = direccion.charAt(0).toUpperCase();
+      //   let resto = direccion.slice(1).toLowerCase();
+      //   localStorage.setItem("pub_direccion", capital + resto);
+      //   setStore({ direccion: capital + resto });
+      // },
 
       updatePublicarDescripcion: (e) => {
         let descripcion = e.target.value;
@@ -699,12 +703,14 @@ const getState = ({ getStore, getActions, setStore }) => {
           periodo_alquiler: localStorage.getItem("periodo_alquiler"),
         });
       },
-      resetStoreSelectors: () => {
+      resetStoreVariables: () => {
         // esta funcion resetea los filtros al volver al home desde el nav o al refrescar el home
         const store = getStore();
+        setStore({ body_request: {} });
+        setStore({ body_response: "buscando coincidencias..." });
+        setStore({ operacion: "todas" });
         setStore({ comunidad: "todas" });
         setStore({ provincia: "todas" });
-        setStore({ operacion: "todas" });
         setStore({ preciomin: 0 });
         setStore({ preciomax: 999999999 });
         setStore({ vista: "listado" });
@@ -717,8 +723,18 @@ const getState = ({ getStore, getActions, setStore }) => {
         setStore({ caracteristica_terraza: false });
         setStore({ habitaciones: "cualquiera" });
         setStore({ baños: "cualquiera" });
-        setStore({ body_response: "buscando coincidencias..." });
         setStore({ periodo_alquiler: "por meses" });
+        setStore({ selectedImages: [] });
+        setStore({ receivedUrls: [] });
+        setStore({ pago: false });
+        setStore({ tipo_vivienda: "" });
+        setStore({ longitude: 0 });
+        setStore({ latitude: 0 });
+        setStore({ municipio: "" });
+        setStore({ direccion: "" });
+        setStore({ descripcion: "" });
+        setStore({ precio: "" });
+        setStore({ premium: false });
       },
 
       /*------------------------------------- FIN DE LAS FUNCIONES DE ENTREGA Y RECUPERACION DE DATA ------------------------------ */
@@ -829,8 +845,24 @@ const getState = ({ getStore, getActions, setStore }) => {
         setStore({ selectedImages: [] });
       },
 
-      clearPubFromLocalStorage: () => {
-        let itemsLocalStorage = [
+      clearLocalStorageNoUser: () => {
+        const itemsLocalStorage = [
+          "caracteristica_terraza",
+          "preciomin",
+          "caracteristica_garage",
+          "provincia",
+          "preciomax",
+          "vivienda_villa",
+          "caracteristica_pet",
+          "periodo_alquiler",
+          "comunidad",
+          "vivienda_piso",
+          "vivienda_chalet",
+          "baños",
+          "vista",
+          "caracteristica_piscina",
+          "habitaciones",
+          "operacion",
           "pub_operacion",
           "pub_comunidad",
           "pub_provincia",
@@ -838,22 +870,47 @@ const getState = ({ getStore, getActions, setStore }) => {
           "pub_direccion",
           "pub_descripcion",
           "pub_precio",
-          "pub_tipo_vivienda",
-          "pub_habitaciones",
-          "pub_baños",
+          "pub_vivienda",
           "pub_pet",
+          "pub_garage",
           "pub_piscina",
           "pub_terraza",
-          "pub_garage",
-          "pub_fotos",
-          "pub_latitud",
-          "pub_longitud",
-          "pub_pago",
+          "pub_habitaciones",
+          "pub_baños",
+          "resp_element",
+          "pub_longitude",
+          "pub_latitude",
         ];
         for (let x of itemsLocalStorage) {
           localStorage.removeItem(x);
         }
       },
+
+      // clearPubFromLocalStorage: () => {  DEPRECADO
+      //   let itemsLocalStorage = [
+      //     "pub_operacion",
+      //     "pub_comunidad",
+      //     "pub_provincia",
+      //     "pub_municipio",
+      //     "pub_direccion",
+      //     "pub_descripcion",
+      //     "pub_precio",
+      //     "pub_tipo_vivienda",
+      //     "pub_habitaciones",
+      //     "pub_baños",
+      //     "pub_pet",
+      //     "pub_piscina",
+      //     "pub_terraza",
+      //     "pub_garage",
+      //     "pub_fotos",
+      //     "pub_latitud",
+      //     "pub_longitud",
+      //     "pub_pago",
+      //   ];
+      //   for (let x of itemsLocalStorage) {
+      //     localStorage.removeItem(x);
+      //   }
+      // },
     },
   };
 };

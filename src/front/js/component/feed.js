@@ -70,9 +70,17 @@ export const Feed = () => {
                   </h3>
                   <div className="características d-lg-flex wrap justify-content-start pt-2">
                     <div className="pe-2">{`Habitaciones: ${item.habitaciones}`}</div>
-                    <div className="pe-2">{`Baños: ${item.aseos}`}</div>
-                    {item.piscina ? <div className="pe-2">Piscina</div> : ""}
-                    {item.terraza ? <div className="pe-2">Terraza</div> : ""}
+                    <div className="pe-2">{`, Baños: ${item.baños}`}</div>
+                    {item.piscina ? (
+                      <div className="pe-2">, con Piscina</div>
+                    ) : (
+                      ""
+                    )}
+                    {item.terraza ? (
+                      <div className="pe-2">, con Terraza</div>
+                    ) : (
+                      ""
+                    )}
                   </div>
                   <div className="pt-2">
                     <p className="card-text">{`${item.descripcion.slice(
