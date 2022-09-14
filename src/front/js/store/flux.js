@@ -92,7 +92,6 @@ const getState = ({ getStore, getActions, setStore }) => {
       /*------------------------------------------ FIN DE LAS VARIABLES DE FILTROS -----------------------------------------------------*/
 
       selectedImages: [],
-      qSelected: 0,
       receivedUrls: [],
       latitud: 0,
       longitud: 0,
@@ -672,7 +671,6 @@ const getState = ({ getStore, getActions, setStore }) => {
       uploadImagesToStore: (e) => {
         const store = getStore();
         setStore({ selectedImages: e.target.files });
-        setStore({ qSelected: store.selectedImages.length });
         console.log(store.selectedImages);
       },
 
@@ -710,10 +708,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       clearSelectedImages: () => {
         setStore({ selectedImages: [] });
-      },
-
-      clearQSelected: () => {
-        setStore({ qSelected: 0 });
       },
 
       clearPubFromLocalStorage: () => {

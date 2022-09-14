@@ -2,10 +2,20 @@ import React, { useEffect, useContext, useState } from "react";
 import { Context } from "../../store/appContext";
 import swal from "sweetalert";
 import "../../../styles/publicar.css";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export const Publicar = () => {
   const { store, actions } = useContext(Context);
+  const navigate = useNavigate();
+
+  const handleClick = async () => {
+    await actions.uploadImagesToCloudinary();
+    await actions.clearSelectedImages();
+    await actions.clearPubFromLocalStorage();
+    swal("Publicación realizada con éxito");
+    await actions.resetStoreSelectors();
+    navigate("/user/null");
+  };
 
   useEffect(() => {
     actions.resetStoreSelectors();
@@ -87,7 +97,7 @@ export const Publicar = () => {
               </div>
 
               {/* fotos */}
-              {store.qSelected == 0 ? (
+              {store.selectedImages.length == 0 ? (
                 <div className="fotos_input mx-3 mb-3">
                   <label for="formFileMultiple" className="form-label pb-2">
                     Fotos de la propiedad
@@ -109,10 +119,7 @@ export const Publicar = () => {
                     <div className="ps-3">{`>> Carga realizada: ${store.selectedImages.length} foto(s)`}</div>
                     <div>
                       <button
-                        onClick={() => {
-                          actions.clearSelectedImages();
-                          actions.clearQSelected;
-                        }}
+                        onClick={actions.clearSelectedImages}
                         type="button"
                         className="btn btn-secondary btn-sm me-3"
                       >
@@ -125,15 +132,7 @@ export const Publicar = () => {
 
               <div className="mx-3 text-center">
                 <button
-                  onClick={() => {
-                    actions.uploadImagesToCloudinary();
-                    actions.clearQSelected();
-                    // actions.clearSelectedImages();
-                    actions.clearPubFromLocalStorage();
-                    swal("Publicación realizada con éxito");
-                    actions.resetStoreSelectors();
-                    Navigate("/user");
-                  }}
+                  onClick={handleClick}
                   type="button"
                   className="btn btn-primary mb-3 mt-3"
                   style={{ width: "50%" }}
