@@ -90,6 +90,13 @@ const getState = ({ getStore, getActions, setStore }) => {
       baños: "cualquiera",
       periodo_alquiler: "por meses",
       /*------------------------------------------ FIN DE LAS VARIABLES DE FILTROS -----------------------------------------------------*/
+
+      selectedImages: [],
+      receivedUrls: [],
+      latitud: 0,
+      longitud: 0,
+      pago: false,
+      tipo_vivienda: "",
       longitude: 0,
       latitude: 0,
     },
@@ -335,6 +342,13 @@ const getState = ({ getStore, getActions, setStore }) => {
         setStore({ preciomax: 999999999 });
         getActions().fillLocalStorage();
       },
+
+      updatePublicarOperacion: (e) => {
+        // funcion onChange de Select
+        setStore({ operacion: e.target.value });
+        localStorage.setItem("pub_operacion", e.target.value);
+      },
+
       updateComunidad: (e) => {
         // funcion onChange de Select
         const store = getStore();
@@ -352,11 +366,36 @@ const getState = ({ getStore, getActions, setStore }) => {
         setStore({ listaprovincias: provincias });
         getActions().fillLocalStorage();
       },
+
+      updatePublicarComunidad: (e) => {
+        // funcion onChange de Select
+        const store = getStore();
+        setStore({ comunidad: "todas" });
+        setStore({ provincia: "todas" });
+        setStore({ comunidad: e.target.value });
+        localStorage.setItem("pub_comunidad", e.target.value);
+        let comunidad = store.comunidad;
+        let provincias = [];
+        for (let x of store.listacomunidades) {
+          if (x[comunidad]) {
+            provincias = x[comunidad];
+          }
+        }
+        setStore({ listaprovincias: provincias });
+      },
+
       updateProvincia: (e) => {
         // funcion onChange de Select
         setStore({ provincia: e.target.value });
         getActions().fillLocalStorage();
       },
+
+      updatePublicarProvincia: (e) => {
+        // funcion onChange de Select
+        setStore({ provincia: e.target.value });
+        localStorage.setItem("pub_provincia", e.target.value);
+      },
+
       updatePreciomin: (e) => {
         // funcion onChange de Select
         const store = getStore();
@@ -641,6 +680,74 @@ const getState = ({ getStore, getActions, setStore }) => {
         setStore({ preciomax: 999999999 });
         getActions().fillLocalStorage();
 
+      },
+
+      uploadImagesToStore: (e) => {
+        const store = getStore();
+        setStore({ selectedImages: e.target.files });
+        console.log(store.selectedImages);
+      },
+
+      uploadImagesToCloudinary: async () => {
+        const store = getStore();
+        const config = {
+          cloudName: "dsobw5vfl",
+          resource_type: "image",
+          upload_preset: "imagenes",
+        };
+        const apiUrl = `https://api.cloudinary.com/v1_1/${config.cloudName}/${config.resource_type}/upload`;
+
+        for (let i in store.selectedImages) {
+          const formData = new FormData();
+          formData.append("file", store.selectedImages[i]);
+          formData.append("upload_preset", config.upload_preset);
+          try {
+            const response = await fetch(apiUrl, {
+              method: "POST",
+              body: formData,
+            });
+            if (response.status != 200) {
+              throw new Error("The fetch has failed");
+            }
+            const jsonResponse = await response.json();
+            setStore({
+              receivedUrls: [...store.receivedUrls, jsonResponse.url],
+            });
+            console.log(store.receivedUrls);
+          } catch (error) {
+            console.log("The fetch has failed: ", error);
+          }
+        }
+      },
+
+      clearSelectedImages: () => {
+        setStore({ selectedImages: [] });
+      },
+
+      clearPubFromLocalStorage: () => {
+        let itemsLocalStorage = [
+          "pub_operacion",
+          "pub_comunidad",
+          "pub_provincia",
+          "pub_municipio",
+          "pub_direccion",
+          "pub_descripcion",
+          "pub_precio",
+          "pub_tipo_vivienda",
+          "pub_habitaciones",
+          "pub_baños",
+          "pub_pet",
+          "pub_piscina",
+          "pub_terraza",
+          "pub_garage",
+          "pub_fotos",
+          "pub_latitud",
+          "pub_longitud",
+          "pub_pago",
+        ];
+        for (let x of itemsLocalStorage) {
+          localStorage.removeItem(x);
+        }
       },
     },
   };

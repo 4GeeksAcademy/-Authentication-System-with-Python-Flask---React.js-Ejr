@@ -48,6 +48,16 @@ def get_messages():
     return jsonify(response), 200
 
 
+@api.route('/send-message', methods=['POST'])
+def send_message():
+    request_body = request.get_json()
+    try:
+        response = user_handler.send_message(request_body)
+        return jsonify(response),200
+    except APIException as err:
+        return jsonify(err.message), err.status_code
+
+
 
 @api.route('/getlistings', methods=['GET'])
 @jwt_required()

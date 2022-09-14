@@ -75,7 +75,6 @@
 	"dependencies": {
 		"@mapbox/mapbox-sdk": "^0.13.4",
 		"mapbox-gl": "^2.10.0",
-
 		"@cloudinary/react": "^1.4.2",
 		"@cloudinary/url-gen": "^1.8.6",
 		"cloudinary-react": "^1.8.1",

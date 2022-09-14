@@ -2,36 +2,19 @@ import React, { useEffect, useContext, useState } from "react";
 import { Context } from "../../store/appContext";
 import swal from "sweetalert";
 import "../../../styles/publicar.css";
+import { useNavigate } from "react-router-dom";
 
 export const Publicar = () => {
   const { store, actions } = useContext(Context);
-  let [cloudImageUrl, setCloudImageUrl] = useState("");
-  let [imageSelected, setImageSelected] = useState([]);
+  const navigate = useNavigate();
 
-  const config = {
-    cloudName: "dsobw5vfl",
-    resource_type: "image",
-    upload_preset: "imagenes",
-  };
-
-  const uploadImage = () => {
-    const apiUrl = `https://api.cloudinary.com/v1_1/${config.cloudName}/${config.resource_type}/upload`;
-    const formData = new FormData();
-    formData.append("file", imageSelected);
-    formData.append("upload_preset", config.upload_preset);
-
-    fetch(apiUrl, {
-      method: "POST",
-      body: formData,
-    })
-      .then((response) => response.json())
-      .then((jsonResponse) => {
-        console.log(jsonResponse.url);
-        setCloudImageUrl(jsonResponse.url);
-      })
-      .catch((error) => {
-        console.log("The fetch has failed: ", error);
-      });
+  const handleClick = async () => {
+    await actions.uploadImagesToCloudinary();
+    await actions.clearSelectedImages();
+    await actions.clearPubFromLocalStorage();
+    swal("Publicación realizada con éxito");
+    await actions.resetStoreSelectors();
+    navigate("/user/null");
   };
 
   useEffect(() => {
@@ -51,21 +34,37 @@ export const Publicar = () => {
             </div>
 
             <div className="container rounded-bottom pt-0 pb-4 bg-white">
-              {/* comunidad */}
+              {/* operación */}
+              <div className="selector mx-3 mb-3">
+                <div className="pb-2">
+                  <span className="">Operación</span>
+                </div>
+                <select
+                  className="form-select"
+                  aria-label="Default select example"
+                  onChange={actions.updatePublicarOperacion}
+                  value={store.operacion}
+                >
+                  <option className="">{"<Elige la operación>"}</option>
+                  <option className="">alquiler</option>
+                  <option className="">compra</option>
+                </select>
+              </div>
+
+              {/* comunidad autónoma */}
               <div className="selector mx-3 mb-3">
                 <div className="pb-2">
                   <span className="">Comunidad Autónoma</span>
                 </div>
                 <select
-                  onChange={(e) => {
-                    actions.updateComunidad(e);
-                    localStorage.setItem("pub_comunidad", store.comunidad);
-                  }}
                   className="form-select"
                   aria-label="Default select example"
+                  onChange={actions.updatePublicarComunidad}
                   value={store.comunidad}
                 >
-                  <option className="">todas</option>
+                  <option className="">
+                    {"<Elige la comunidad autónoma>"}
+                  </option>
                   {store.listacomunidades.map((item) => {
                     let comunidad = Object.keys(item);
                     return (
@@ -76,21 +75,19 @@ export const Publicar = () => {
                   })}
                 </select>
               </div>
+
               {/* provincia */}
               <div className="selector mx-3 mb-3">
                 <div className="pb-2">
                   <span className="">Provincia</span>
                 </div>
                 <select
-                  onChange={(e) => {
-                    actions.updateProvincia(e);
-                    localStorage.setItem("pub_provincia", store.provincia);
-                  }}
                   className="form-select"
                   aria-label="Default select example"
+                  onChange={actions.updatePublicarProvincia}
                   value={store.provincia}
                 >
-                  <option className="">todas</option>
+                  <option className="">{"<Elige la provincia>"}</option>
                   {store.listaprovincias.map((elem) => (
                     <option key={elem} className="">
                       {elem}
@@ -100,8 +97,8 @@ export const Publicar = () => {
               </div>
 
               {/* fotos */}
-              {imageSelected == "" ? (
-                <div className="selector mx-3 mb-3">
+              {store.selectedImages.length == 0 ? (
+                <div className="fotos_input mx-3 mb-3">
                   <label for="formFileMultiple" className="form-label pb-2">
                     Fotos de la propiedad
                   </label>
@@ -110,39 +107,32 @@ export const Publicar = () => {
                     id="formFileMultiple"
                     multiple
                     type="file"
-                    onChange={(e) => {
-                      setImageSelected([...imageSelected, e.target.files[0]]);
-                    }}
+                    onChange={actions.uploadImagesToStore}
                   />
                 </div>
               ) : (
-                <div className="selector mx-3 mb-3">
+                <div className="fotos_input mx-3 mb-3">
                   <label for="formFileMultiple" className="form-label pb-2">
                     Fotos de la propiedad
                   </label>
-                  <div className="d-flex justify-content-between">
-                    <label className="form-label mb-0 ps-3">
-                      {imageSelected.length == 1
-                        ? ">> Has subido 1 foto"
-                        : `>> Has subido ${imageSelected.length} fotos`}
-                    </label>
-
-                    <button
-                      onClick={() => {
-                        setImageSelected([]);
-                      }}
-                      type="button"
-                      className="btn btn-secondary my-0 btn-sm"
-                    >
-                      Borrar fotos
-                    </button>
+                  <div className="caja-reemplazo d-flex justify-content-between">
+                    <div className="ps-3">{`>> Carga realizada: ${store.selectedImages.length} foto(s)`}</div>
+                    <div>
+                      <button
+                        onClick={actions.clearSelectedImages}
+                        type="button"
+                        className="btn btn-secondary btn-sm me-3"
+                      >
+                        Borrar Fotos
+                      </button>
+                    </div>
                   </div>
                 </div>
               )}
 
               <div className="mx-3 text-center">
                 <button
-                  onClick={uploadImage}
+                  onClick={handleClick}
                   type="button"
                   className="btn btn-primary mb-3 mt-3"
                   style={{ width: "50%" }}

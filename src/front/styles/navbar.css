@@ -1,9 +1,18 @@
-.logo {
-  animation: blink-animation 5s steps(5, start) infinite;
+.logo1 {
+  animation: blink-animation1 5s steps(5, start) infinite;
   animation-timing-function: linear;
 }
-@keyframes blink-animation {
+@keyframes blink-animation1 {
   to {
-    text-shadow: 25px 0px 5px white;
+    text-shadow: -20px 0px 5px white;
+  }
+}
+.logo2 {
+  animation: blink-animation2 5s steps(5, start) infinite;
+  animation-timing-function: linear;
+}
+@keyframes blink-animation2 {
+  to {
+    text-shadow: 20px 0px 5px white;
   }
 }

@@ -11,16 +11,19 @@ export const ContactForm = () => {
   const [sent, setSent] = useState(false);
 
   const sendMessage = async () => {
+    const propertyInfo = JSON.parse(localStorage.getItem("resp_element"));
     const opts = {
       method: "POST",
-      header: {
+      headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        message: message,
+        message_body: message,
         email: email,
-        name: name,
+        full_name: name,
         phone: phone,
+        recipient_id: propertyInfo.user_id,
+        property_id: propertyInfo.id,
       }),
     };
     try {
@@ -32,7 +35,7 @@ export const ContactForm = () => {
         throw new Error("Could not send message");
       }
       const data = await resp.json();
-      if (data === "Success") {
+      if (data === "Message posted") {
         return setSent(true);
       }
     } catch (e) {
@@ -95,10 +98,6 @@ export const ContactForm = () => {
           <div className="card-body">
             <h5 className="card-title">Mensaje enviado</h5>
           </div>
-          <p className="card-text">
-            Some quick example text to build on the card title and make up the
-            bulk of the card's content.
-          </p>
         </div>
       )}
     </>
