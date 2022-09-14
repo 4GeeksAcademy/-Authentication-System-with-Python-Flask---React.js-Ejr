@@ -1,0 +1,8 @@
+.caja-mensajes {
+  background: "lightgreen";
+  height: "80%";
+  width: "100%";
+  overflow-x: "auto";
+  overflow-y: "auto";
+  text-align: "center";
+}

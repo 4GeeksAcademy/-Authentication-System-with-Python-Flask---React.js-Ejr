@@ -1,5 +1,6 @@
 import React, { useEffect, useContext, useState } from "react";
 import { Context } from "../../store/appContext";
+import "../../../styles/messages.css";
 
 export const Message = () => {
   const { store, actions } = useContext(Context);
@@ -19,19 +20,10 @@ export const Message = () => {
     <>
       {!isloading ? (
         <div
-          className="d-flex justify-content-center"
-          style={{ height: "90vh", width: "70vw" }}
+          className="caja-mensajes d-flex justify-content-center col-6"
+          style={{ height: "90vh", width: "100vh" }}
         >
-          <div
-            style={{
-              background: "lightgreen",
-              height: "80%",
-              width: "100%",
-              overflowX: "auto",
-              overflowY: "auto",
-              textAlign: "center",
-            }}
-          >
+          <div className="container col-8 rounded-3 px-0 mt-0 pb-3 text-center">
             {messages ? (
               messages.map((message, i) => (
                 <div
@@ -70,7 +62,7 @@ export const Message = () => {
       ) : (
         <div
           className="d-flex justify-content-center"
-          style={{ height: "90vh", width: "100vw" }}
+          style={{ height: "90vh", width: "70vw" }}
         >
           <h5>Loading...</h5>
         </div>

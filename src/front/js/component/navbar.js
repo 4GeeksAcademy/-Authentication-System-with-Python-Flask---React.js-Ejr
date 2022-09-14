@@ -8,7 +8,6 @@ export const Navbar = () => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    actions.logout();
     navigate("/");
   };
 
