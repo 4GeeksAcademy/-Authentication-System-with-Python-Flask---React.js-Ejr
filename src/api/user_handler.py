@@ -36,6 +36,14 @@ class User_Handler:
         if not response:
             response = "The user does not have any messages"
         return response
+    
+    def send_message(self, request_body):
+        if request_body["full_name"].strip() == '' or request_body["email"].strip() == '' or request_body["message_body"].strip() == '' or request_body["phone"].strip() == '':
+            raise APIException('Error: empty field', status_code=400)
+        new_message = Message(body = request_body["message_body"], sender_phone = request_body["phone"], sender_name = request_body["full_name"], sender_email = request_body["email"], recipient_id = request_body["recipient_id"], inmueble_id = request_body["property_id"])
+        db.session.add(new_message)
+        db.session.commit()
+        return 'Message posted'
 
     def get_listings(selg, current_user_id):
         listings = list(Inmueble.query.filter_by(user_id = current_user_id))

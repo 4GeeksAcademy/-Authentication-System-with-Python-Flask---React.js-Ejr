@@ -13,7 +13,6 @@ export const Navbar = () => {
   };
 
   const handleClick = () => {
-    localStorage.clear();
     actions.resetStoreSelectors();
   };
   return (
