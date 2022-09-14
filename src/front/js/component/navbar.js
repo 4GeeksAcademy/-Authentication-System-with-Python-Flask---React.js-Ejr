@@ -20,11 +20,9 @@ export const Navbar = () => {
     <nav className="navbar navbar-dark bg-dark mb-2">
       <div className="container">
         <Link to="/" className="text-decoration-none">
-          <span
-            onClick={handleClick}
-            className="logo mb-0 display-6 text-white "
-          >
-            LUXURY ESTATE
+          <span onClick={handleClick} className="mb-0">
+            <span className="logo1 display-6 text-white ">LUXURY</span>{" "}
+            <span className="logo2 display-6 text-white ">ESTATE</span>
           </span>
         </Link>
 

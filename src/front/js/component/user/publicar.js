@@ -2,6 +2,7 @@ import React, { useEffect, useContext, useState } from "react";
 import { Context } from "../../store/appContext";
 import swal from "sweetalert";
 import "../../../styles/publicar.css";
+import { Navigate } from "react-router-dom";
 
 export const Publicar = () => {
   const { store, actions } = useContext(Context);
@@ -23,21 +24,37 @@ export const Publicar = () => {
             </div>
 
             <div className="container rounded-bottom pt-0 pb-4 bg-white">
-              {/* comunidad */}
+              {/* operación */}
+              <div className="selector mx-3 mb-3">
+                <div className="pb-2">
+                  <span className="">Operación</span>
+                </div>
+                <select
+                  className="form-select"
+                  aria-label="Default select example"
+                  onChange={actions.updatePublicarOperacion}
+                  value={store.operacion}
+                >
+                  <option className="">{"<Elige la operación>"}</option>
+                  <option className="">alquiler</option>
+                  <option className="">compra</option>
+                </select>
+              </div>
+
+              {/* comunidad autónoma */}
               <div className="selector mx-3 mb-3">
                 <div className="pb-2">
                   <span className="">Comunidad Autónoma</span>
                 </div>
                 <select
-                  onChange={(e) => {
-                    actions.updateComunidad(e);
-                    localStorage.setItem("pub_comunidad", store.comunidad);
-                  }}
                   className="form-select"
                   aria-label="Default select example"
+                  onChange={actions.updatePublicarComunidad}
                   value={store.comunidad}
                 >
-                  <option className="">todas</option>
+                  <option className="">
+                    {"<Elige la comunidad autónoma>"}
+                  </option>
                   {store.listacomunidades.map((item) => {
                     let comunidad = Object.keys(item);
                     return (
@@ -48,21 +65,19 @@ export const Publicar = () => {
                   })}
                 </select>
               </div>
+
               {/* provincia */}
               <div className="selector mx-3 mb-3">
                 <div className="pb-2">
                   <span className="">Provincia</span>
                 </div>
                 <select
-                  onChange={(e) => {
-                    actions.updateProvincia(e);
-                    localStorage.setItem("pub_provincia", store.provincia);
-                  }}
                   className="form-select"
                   aria-label="Default select example"
+                  onChange={actions.updatePublicarProvincia}
                   value={store.provincia}
                 >
-                  <option className="">todas</option>
+                  <option className="">{"<Elige la provincia>"}</option>
                   {store.listaprovincias.map((elem) => (
                     <option key={elem} className="">
                       {elem}
@@ -72,7 +87,7 @@ export const Publicar = () => {
               </div>
 
               {/* fotos */}
-              {store.selectedImages.length == 0 ? (
+              {store.qSelected == 0 ? (
                 <div className="fotos_input mx-3 mb-3">
                   <label for="formFileMultiple" className="form-label pb-2">
                     Fotos de la propiedad
@@ -94,7 +109,10 @@ export const Publicar = () => {
                     <div className="ps-3">{`>> Carga realizada: ${store.selectedImages.length} foto(s)`}</div>
                     <div>
                       <button
-                        onClick={actions.clearSelectedImages}
+                        onClick={() => {
+                          actions.clearSelectedImages();
+                          actions.clearQSelected;
+                        }}
                         type="button"
                         className="btn btn-secondary btn-sm me-3"
                       >
@@ -107,7 +125,15 @@ export const Publicar = () => {
 
               <div className="mx-3 text-center">
                 <button
-                  onClick={actions.uploadImagesToCloudinary}
+                  onClick={() => {
+                    actions.uploadImagesToCloudinary();
+                    actions.clearQSelected();
+                    // actions.clearSelectedImages();
+                    actions.clearPubFromLocalStorage();
+                    swal("Publicación realizada con éxito");
+                    actions.resetStoreSelectors();
+                    Navigate("/user");
+                  }}
                   type="button"
                   className="btn btn-primary mb-3 mt-3"
                   style={{ width: "50%" }}
@@ -130,48 +156,3 @@ export const Publicar = () => {
     </>
   );
 };
-
-// auxiliarFotos = Object.values(e.target.files);
-// setFotos(auxiliarFotos.length);
-// let pics = [];
-
-// for (let i in auxiliarFotos) {
-//   const formData = new FormData();
-//   formData.append("file", auxiliarFotos[i]);
-//   formData.append("upload_preset", config.upload_preset);
-
-//   fetch(apiUrl, {
-//     method: "POST",
-//     body: formData,
-//   })
-//     .then((response) => response.json())
-//     .then((jsonResponse) => {
-//       pics.push(jsonResponse.url);
-//       setCloudImageUrl(pics);
-//       console.log(cloudImageUrl);
-//     })
-//     .catch((error) => {
-//       console.log("The fetch has failed: ", error);
-//     });
-// }
-// }}
-
-// const uploadImage = () => {
-//   const apiUrl = `https://api.cloudinary.com/v1_1/${config.cloudName}/${config.resource_type}/upload`;
-// const formData = new FormData();
-// formData.append("file", imageSelected);
-// formData.append("upload_preset", config.upload_preset);
-
-//   fetch(apiUrl, {
-//     method: "POST",
-//     body: formData,
-//   })
-//     .then((response) => response.json())
-//     .then((jsonResponse) => {
-//       console.log(jsonResponse.url);
-//       setCloudImageUrl(jsonResponse.url);
-//     })
-//     .catch((error) => {
-//       console.log("The fetch has failed: ", error);
-//     });
-// };

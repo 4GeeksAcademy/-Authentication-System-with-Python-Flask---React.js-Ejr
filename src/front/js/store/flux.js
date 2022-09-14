@@ -92,7 +92,12 @@ const getState = ({ getStore, getActions, setStore }) => {
       /*------------------------------------------ FIN DE LAS VARIABLES DE FILTROS -----------------------------------------------------*/
 
       selectedImages: [],
+      qSelected: 0,
       receivedUrls: [],
+      latitud: 0,
+      longitud: 0,
+      pago: false,
+      tipo_vivienda: "",
     },
     actions: {
       getMessages: async () => {
@@ -331,6 +336,13 @@ const getState = ({ getStore, getActions, setStore }) => {
         setStore({ preciomax: 999999999 });
         getActions().fillLocalStorage();
       },
+
+      updatePublicarOperacion: (e) => {
+        // funcion onChange de Select
+        setStore({ operacion: e.target.value });
+        localStorage.setItem("pub_operacion", e.target.value);
+      },
+
       updateComunidad: (e) => {
         // funcion onChange de Select
         const store = getStore();
@@ -348,11 +360,36 @@ const getState = ({ getStore, getActions, setStore }) => {
         setStore({ listaprovincias: provincias });
         getActions().fillLocalStorage();
       },
+
+      updatePublicarComunidad: (e) => {
+        // funcion onChange de Select
+        const store = getStore();
+        setStore({ comunidad: "todas" });
+        setStore({ provincia: "todas" });
+        setStore({ comunidad: e.target.value });
+        localStorage.setItem("pub_comunidad", e.target.value);
+        let comunidad = store.comunidad;
+        let provincias = [];
+        for (let x of store.listacomunidades) {
+          if (x[comunidad]) {
+            provincias = x[comunidad];
+          }
+        }
+        setStore({ listaprovincias: provincias });
+      },
+
       updateProvincia: (e) => {
         // funcion onChange de Select
         setStore({ provincia: e.target.value });
         getActions().fillLocalStorage();
       },
+
+      updatePublicarProvincia: (e) => {
+        // funcion onChange de Select
+        setStore({ provincia: e.target.value });
+        localStorage.setItem("pub_provincia", e.target.value);
+      },
+
       updatePreciomin: (e) => {
         // funcion onChange de Select
         const store = getStore();
@@ -635,6 +672,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       uploadImagesToStore: (e) => {
         const store = getStore();
         setStore({ selectedImages: e.target.files });
+        setStore({ qSelected: store.selectedImages.length });
         console.log(store.selectedImages);
       },
 
@@ -672,6 +710,36 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       clearSelectedImages: () => {
         setStore({ selectedImages: [] });
+      },
+
+      clearQSelected: () => {
+        setStore({ qSelected: 0 });
+      },
+
+      clearPubFromLocalStorage: () => {
+        let itemsLocalStorage = [
+          "pub_operacion",
+          "pub_comunidad",
+          "pub_provincia",
+          "pub_municipio",
+          "pub_direccion",
+          "pub_descripcion",
+          "pub_precio",
+          "pub_tipo_vivienda",
+          "pub_habitaciones",
+          "pub_baños",
+          "pub_pet",
+          "pub_piscina",
+          "pub_terraza",
+          "pub_garage",
+          "pub_fotos",
+          "pub_latitud",
+          "pub_longitud",
+          "pub_pago",
+        ];
+        for (let x of itemsLocalStorage) {
+          localStorage.removeItem(x);
+        }
       },
     },
   };
