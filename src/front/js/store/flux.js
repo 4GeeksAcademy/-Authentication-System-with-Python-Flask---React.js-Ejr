@@ -102,6 +102,8 @@ const getState = ({ getStore, getActions, setStore }) => {
       descripcion: "",
       precio: "",
       premium: false,
+      inmueblesBodyRequest: {},
+      charging: false,
 
       /*------------------------------ fin de VARIABLES ADICIONALES DE PUBLICACION -----------------------------------------------------*/
     },
@@ -735,6 +737,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         setStore({ descripcion: "" });
         setStore({ precio: "" });
         setStore({ premium: false });
+        setStore({ inmueblesBodyRequest: {} });
       },
 
       /*------------------------------------- FIN DE LAS FUNCIONES DE ENTREGA Y RECUPERACION DE DATA ------------------------------ */
@@ -834,6 +837,10 @@ const getState = ({ getStore, getActions, setStore }) => {
             setStore({
               receivedUrls: [...store.receivedUrls, jsonResponse.url],
             });
+            localStorage.setItem(
+              "pub_urls",
+              JSON.stringify(store.receivedUrls)
+            );
             console.log(store.receivedUrls);
           } catch (error) {
             console.log("The fetch has failed: ", error);
@@ -880,13 +887,69 @@ const getState = ({ getStore, getActions, setStore }) => {
           "resp_element",
           "pub_longitude",
           "pub_latitude",
+          "pub_urls",
         ];
         for (let x of itemsLocalStorage) {
           localStorage.removeItem(x);
         }
       },
 
-      // clearPubFromLocalStorage: () => {  DEPRECADO
+      createInmueblesBodyRequest: () => {
+        const store = getStore();
+        if (
+          localStorage.getItem("pub_direccion") == undefined ||
+          localStorage.getItem("pub_operacion") == undefined ||
+          localStorage.getItem("pub_comunidad") == undefined ||
+          localStorage.getItem("pub_provincia") == undefined ||
+          localStorage.getItem("pub_municipio") == undefined ||
+          localStorage.getItem("pub_descripcion") == undefined ||
+          localStorage.getItem("pub_precio") == undefined ||
+          localStorage.getItem("pub_vivienda") == undefined ||
+          localStorage.getItem("pub_habitaciones") == undefined ||
+          localStorage.getItem("pub_baños") == undefined
+        ) {
+          swal("Faltan datos");
+        } else {
+          let fuentesRequest = [
+            "pub_operacion",
+            "pub_comunidad",
+            "pub_provincia",
+            "pub_municipio",
+            "pub_direccion",
+            "pub_longitude",
+            "pub_latitude",
+            "pub_descripcion",
+            "pub_precio",
+            "pub_vivienda",
+            "pub_pet",
+            "pub_garage",
+            "pub_piscina",
+            "pub_terraza",
+            "pub_habitaciones",
+            "pub_baños",
+          ];
+          let aux = {};
+          let user_info = JSON.parse(localStorage.getItem("user_info"));
+          aux["user_id"] = user_info["id"];
+          for (let x of fuentesRequest) {
+            aux[x] = localStorage.getItem(x);
+          }
+          aux["fotos"] = store.receivedUrls;
+          setStore({ inmueblesBodyRequest: aux });
+          console.log(
+            "este es el request para publciar el inmueble: " +
+              store.inmueblesBodyRequest
+          );
+        }
+      },
+      switchOnCharging: () => {
+        setStore({ charging: true });
+      },
+      switchOffCharging: () => {
+        setStore({ charging: false });
+      },
+
+      // clearPubFromLocalStorage: () => {  DEPRECADO por clearLocalStorageNoUser
       //   let itemsLocalStorage = [
       //     "pub_operacion",
       //     "pub_comunidad",
