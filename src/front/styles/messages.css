@@ -1,8 +1,11 @@
-.caja-mensajes {
-  background: "lightgreen";
-  height: "80%";
-  width: "100%";
-  overflow-x: "auto";
-  overflow-y: "auto";
-  text-align: "center";
+.caja_mensajes::-webkit-scrollbar {
+  width: 7px;
+  background: rgb(237, 237, 237);
+  border-radius: 7px;
+}
+.caja_mensajes::-webkit-scrollbar-thumb {
+  width: 7px;
+  height: 100px;
+  background: rgb(196, 196, 196);
+  border-radius: 7px;
 }

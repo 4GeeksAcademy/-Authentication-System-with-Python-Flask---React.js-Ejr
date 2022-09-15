@@ -20,10 +20,10 @@ export const Message = () => {
     <>
       {!isloading ? (
         <div
-          className="caja-mensajes d-flex justify-content-center col-6"
-          style={{ height: "90vh", width: "100vh" }}
+          className="caja-mensajes d-flex justify-content-center col-md-12 mb-5"
+          style={{ height: "60vh", width: "60vw", overflowY: "auto" }}
         >
-          <div className="container col-8 rounded-3 px-0 mt-0 pb-3 text-center">
+          <div className="container col-md-12 rounded-3 px-0 mt-0 pb-3 text-center">
             {messages ? (
               messages.map((message, i) => (
                 <div
