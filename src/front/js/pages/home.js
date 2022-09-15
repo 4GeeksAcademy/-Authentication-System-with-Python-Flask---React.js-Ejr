@@ -6,7 +6,7 @@ import carrusel1 from "../../img/carrusel1.png";
 import carrusel2 from "../../img/carrusel2.png";
 import carrusel3 from "../../img/carrusel3.png";
 import card1 from "../../img/card1.png";
-import card2 from "../../img/card2.png";
+import card4 from "../../img/card4.png";
 import card3 from "../../img/card3.png";
 import CoinChange from "../../img/CoinChange.png";
 
@@ -71,7 +71,7 @@ export const Home = () => {
   </div>
   <div className="tarjeta1 card">
     <div className="imagencarta">
-    <img src={card2} className="cardimage card-img-top" alt="..."/>
+    <img src={card4} className="cardimage card-img-top" alt="..."/>
     </div>
     <div className="textocarta card-body">
       <h5 className="card-title">Ahorra dinero y consígue la mejor tasa.</h5>

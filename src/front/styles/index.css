@@ -8,7 +8,7 @@
 color: #2B3E84;
 font-size: 35px;
 margin-left: 20px;
-margin-top: 50px;
+margin-top: 100px;
 }
 a{
     text-decoration: none !important;
@@ -16,7 +16,9 @@ a{
 h1{
     margin-top: 65px;
 }
-
+.brand{
+    display: flex;
+}
 .logo{
     width: 75px;
     height: 75px;
@@ -35,7 +37,7 @@ font-size: 35px;
     height: 500px;
 }
 .textocarrusel{
-    color: rgb(245, 244, 244);
+    color: white;
 font-size: 35px;
 }
 .banner{
@@ -44,7 +46,7 @@ font-size: 35px;
     justify-content: space-between;
     align-items: center;
     padding: 30px;
-    background: radial-gradient(ellipse at bottom, #2B3E84 50%, #000 100%);
+    background: radial-gradient(ellipse at bottom, #2B3E84 50%, #37C9FC 100%);
 }
 .banner2{
     margin-left: 100px;
@@ -72,9 +74,9 @@ font-size: 35px;
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: #37C9FC;
 
 }
 .textocarta{
-    color: rgb(245, 244, 244);
-    background: radial-gradient(ellipse at bottom, #2B3E84 50%, #000 100%);
+    color:  #2B3E84 ;
 }
