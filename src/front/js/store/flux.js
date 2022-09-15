@@ -104,6 +104,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       premium: false,
       inmueblesBodyRequest: {},
       charging: false,
+      response_publicar: "",
 
       /*------------------------------ fin de VARIABLES ADICIONALES DE PUBLICACION -----------------------------------------------------*/
     },
@@ -738,6 +739,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         setStore({ precio: "" });
         setStore({ premium: false });
         setStore({ inmueblesBodyRequest: {} });
+        setStore({ response_publicar: "" });
       },
 
       /*------------------------------------- FIN DE LAS FUNCIONES DE ENTREGA Y RECUPERACION DE DATA ------------------------------ */
@@ -928,6 +930,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             "pub_terraza",
             "pub_habitaciones",
             "pub_baños",
+            "pub_premium",
           ];
           let aux = {};
           let user_info = JSON.parse(localStorage.getItem("user_info"));
@@ -949,6 +952,9 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
       switchOffCharging: () => {
         setStore({ charging: false });
+      },
+      updateResponsePublicar: (dato) => {
+        setStore({ response_publicar: dato });
       },
 
       // clearPubFromLocalStorage: () => {  DEPRECADO por clearLocalStorageNoUser
