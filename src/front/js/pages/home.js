@@ -109,19 +109,42 @@ export const Home = () => {
         </div>
       </form>
       <div id="cartaCasa" class="card">
+        <div>
         <img
           className="logo"
           class="card-img-top"
-          id="fotocartacasa1"
+          id="fotocartacasa"
           src={logo}
         />
-        <div class="card-body"></div>
-
-        <input type="usuario" className="form-control" id="CambioRecibirCasa" />
+        </div>
+        <div>
         <bl>
           <br></br>
         </bl>
-        <input type="usuario" className="form-control" id="infooRecibirCasa" />
+        <bl>
+          <br></br>
+        </bl>
+        <bl>
+          <br></br>
+        </bl>
+        <bl>
+          <br></br>
+        </bl>
+        <bl>
+          <br></br>
+        </bl>
+        <bl>
+        <br></br>
+        </bl>
+        <div class="card-body"></div>
+        </div>
+        <div>
+        <input type="usuario" className="form-control" id="CambioRecibirCasa1" />
+        </div>
+        <bl>
+          <br></br>
+        </bl>
+        <input type="usuario" className="form-control" id="infooRecibirCasa1" />
 
         <div class="card-body">
           <button type="submit" href="#" class="card-link" id="botonlinkCCC">
@@ -130,14 +153,36 @@ export const Home = () => {
         </div>
       </div>
       <div id="cartaCasa2" class="card">
-        <img className="logo" id="fotocartacasa2" src={logo} />
-        <div class="card-body"></div>
-
-        <input type="usuario" className="form-control" id="CambioRecibirCasa" />
+        <div>
+        <img className="logo" id="fotocartacasa" src={logo} />
+        </div>
+        <div>
         <bl>
           <br></br>
         </bl>
-        <input type="usuario" className="form-control" id="infooRecibirCasa" />
+        <bl>
+          <br></br>
+        </bl>
+        <bl>
+          <br></br>
+        </bl>
+        <bl>
+          <br></br>
+        </bl>
+        <bl>
+          <br></br>
+        </bl>
+        <bl>
+        <br></br>
+        </bl>
+        </div>
+        <div class="card-body"></div>
+
+        <input type="usuario" className="form-control" id="CambioRecibirCasa2" />
+        <bl>
+          <br></br>
+        </bl>
+        <input type="usuario" className="form-control" id="infooRecibirCasa2" />
 
         <div class="card-body">
           <button type="submit" href="#" class="card-link" id="botonlinkCCC">
@@ -146,14 +191,36 @@ export const Home = () => {
         </div>
       </div>
       <div id="cartaCasa3" class="card">
-        <img className="logo" id="fotocartacasa3" src={logo} />
-        <div class="card-body"></div>
-
-        <input type="usuario" className="form-control" id="CambioRecibirCasa" />
+               <div>
+        <img className="logo" id="fotocartacasa" src={logo} />
+        </div>
+        <div>
         <bl>
           <br></br>
         </bl>
-        <input type="usuario" className="form-control" id="infooRecibirCasa" />
+        <bl>
+          <br></br>
+        </bl>
+        <bl>
+          <br></br>
+        </bl>
+        <bl>
+          <br></br>
+        </bl>
+        <bl>
+        <br></br>
+        </bl>
+        <bl>
+        <br></br>
+        </bl>
+        </div>
+        <div class="card-body"></div>
+
+        <input type="usuario" className="form-control" id="CambioRecibirCasa3" />
+        <bl>
+          <br></br>
+        </bl>
+        <input type="usuario" className="form-control" id="infooRecibirCasa3" />
 
         <div class="card-body">
           <button type="submit" href="#" class="card-link" id="botonlinkCCC">

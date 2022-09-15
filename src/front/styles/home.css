@@ -4,6 +4,7 @@ body {
 .navbar{
     background-color: rgb(214, 236, 8);
 }
+
 .nombre{
 color: #2B3E84;
 font-size: 35px;
@@ -35,21 +36,18 @@ h1 {
     border-radius: 20px 20px ;    
     position: absolute;
     color: white;
-    width: 550px;
+    width: 750px;
     height: 300px;
-    left: 680px;
+    left: 500px;
     top: 250px;
-    bottom: 50;
 }
 
 #ingresar-monto, #monto-recibir {
     background-color: #2B3E84;
     border-radius: 20px 20px 20px 20px;
     color: white;
-    display: flex;
     width: 360px;
-    align-items: center;
-    height: 45px;
+    height: 40px;
     text-align: center;
 }
 
@@ -76,9 +74,9 @@ h1 {
     background-color: #2B3E84;
     border-radius: 20px 20px 20px 20px;
     color: white;
-    width: 450px;
+    width: 370px;
     align-items: center;
-    height: 35px;
+    height: 30px;
     text-align: center;
 }
 
@@ -91,34 +89,30 @@ h1 {
   
 }
 
-
 #cartaCasa{
-
 align-items: center;
-position: relative; 
 background-color: rgba(217,217,217,0.5);
 border-radius: 20px 20px ;
 color: white;
 width: 401px;
-height: 508px;
-left: 160px;
-top: 900px;
+height: 450px;
+left: 110px;
+top: 600px;
 }
 
+#CambioRecibirCasa1, #CambioRecibirCasa2, #CambioRecibirCasa3{
+  
+width: 300px;
+height: 50px;
 
-#CambioRecibirCasa{
-background-color: rgba(217,217,217,0.5);
-border-radius: 20px 20px ;
-width: 250px;
-height: 50px;  
+
 }
 
-#infooRecibirCasa{
-align-items: center;    
-background-color: rgba(217,217,217,0.5);
-border-radius: 20px 20px ;
-width: 330px;
-height: 130px;
+#infooRecibirCasa1, #infooRecibirCasa2, #infooRecibirCasa3{
+width: 300px;
+height: 150px;
+justify-content: center;
+
 }
 
 #cartaCasa2{
@@ -127,12 +121,10 @@ background-color: rgba(217,217,217,0.5);
 border-radius: 20px 20px ;
 color: white;
 width: 401px;
-height: 508px;
-left: 750px;
-top: 700px;
-position: absolute; 
+height: 450px;
+left: 660px;
+top: 150px;
 }
-
 
 #cartaCasa3{
 align-items: center;
@@ -140,40 +132,23 @@ background-color: rgba(217,217,217,0.5);
 border-radius: 20px 20px ;    
 color: white;
 width: 401px;
-height: 508px;
-left: 1300px;
-top: 700px;
-position: absolute; 
+height: 450px;
+left: 1200px;
+top: -300px;
 }
 
-#fotocartacasa1{   
+#fotocartacasa{   
 position: absolute;
-width: 200px;
-height: 200px;
-left: 100px;
-top: -3px;
-}
-
-#fotocartacasa2{
-position: absolute;
-width: 200px;
-height: 200px;
-left: 100px;
-top: -3px;
-}
-
-#fotocartacasa3{
-position: absolute;
-width: 200px;
-height: 200px;
-left: 100px;
-top: -3px;
+width: 150px;
+height: 150px;
+left: 130px;
+top: 0px;
 }
 
 #botonlinkCCC{
 background-color: #2B3E84;
 border-radius: 20px 20px 20px 20px;
 color: white;    
-width: 146.73px;
-height: 48px;
+width: 170px;
+height: 40px;
 }
