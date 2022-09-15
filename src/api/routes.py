@@ -4,6 +4,7 @@ from flask import Flask, request, jsonify, url_for, Blueprint, render_template
 from api.models import db, User, Message, Inmueble, Imagen
 from api.utils import generate_sitemap, APIException
 from api.inmuebles_handler import Inmuebles_Handler
+from api.publicar_handler import Publicar_Handler
 from api.user_handler import User_Handler
 import cloudinary
 from cloudinary import uploader
@@ -17,6 +18,7 @@ api = Blueprint('api', __name__)
 # create the object
 consulta_inmuebles = Inmuebles_Handler()
 user_handler = User_Handler()
+publicar_inmuebles = Publicar_Handler()
 
 #register new user
 @api.route('/signup', methods=['POST'])
@@ -106,6 +108,20 @@ def getInmuebles():
 
     # # ------------- PROCESAMIENTO DEL REQUEST CON EXTRACCION DE LA BD--------------------------
     response = consulta_inmuebles.filterInmuebles(body_inmo)
-
     return response, 200
 
+@api.route('/publicar', methods=['POST'])
+def pubInmuebles():
+
+    # -------------- VALIDACION DEL BODY --------------------------------------------------------
+    body_request = request.get_json()
+    fotos_request = list(body_request["fotos"])
+    if body_request is None:
+        raise APIException('error: body is empty', status_code=403)
+    if body_request["pub_operacion"]== "todas":
+        raise APIException('error: operation was not selected', status_code=405)
+
+    # # ------------- PROCESAMIENTO DEL REQUEST CON EXTRACCION DE LA BD--------------------------
+    response = publicar_inmuebles.registerInmuebles(body_request, fotos_request)
+    
+    return jsonify(response), 200

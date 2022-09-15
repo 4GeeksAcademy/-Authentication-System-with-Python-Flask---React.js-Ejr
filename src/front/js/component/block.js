@@ -1,195 +1,52 @@
-{
-  /*contenedor filtros*/
-}
-<div className="container pt-0 pb-4">
-  {/* comunidad */}
-  <div className="selector mx-3 mb-3">
-    <div className="pb-2">
-      <span className="">Comun. Autónoma</span>
-    </div>
-    <select
-      onChange={actions.updateComunidad}
-      className="form-select"
-      aria-label="Default select example"
-      value={store.comunidad}
-    >
-      <option className="">todas</option>
-      {store.listacomunidades.map((item) => {
-        let comunidad = Object.keys(item);
-        return (
-          <option key={comunidad} className="">
-            {comunidad}
-          </option>
-        );
-      })}
-    </select>
-  </div>
-  {/* provincia */}
-  <div className="selector mx-3 mb-3">
-    <div className="pb-2">
-      <span className="">Provincia</span>
-    </div>
-    <select
-      onChange={actions.updateProvincia}
-      className="form-select"
-      aria-label="Default select example"
-      value={store.provincia}
-    >
-      <option className="">todas</option>
-      {store.listaprovincias.map((elem) => (
-        <option key={elem} className="">
-          {elem}
-        </option>
-      ))}
-    </select>
-  </div>
-  {/* precio */}
-  <div className="selector mx-3 mb-3">
-    <div className="pb-2">
-      <span className="">Precio</span>
-    </div>
-    <div className="form-text">{/*input para el precio*/}</div>
-  </div>
-  {/* tipo de vivienda */}
-  <div className="selector mx-3 mb-3">
-    <div className="pb-2">
-      <span className="">Tipo de Vivienda</span>
-    </div>
-    <div className="form-check">
-      <input
-        className="form-check-input"
-        type="checkbox"
-        onChange={actions.updateViviendaPiso}
-      />
-      <label className="form-check-label">Piso</label>
-    </div>
-    <div className="form-check">
-      <input
-        className="form-check-input"
-        type="checkbox"
-        onChange={actions.updateViviendaChalet}
-      />
-      <label className="form-check-label">Chalet</label>
-    </div>
-    <div className="form-check">
-      <input
-        className="form-check-input"
-        type="checkbox"
-        onChange={actions.updateViviendaVilla}
-      />
-      <label className="form-check-label">Villa</label>
-    </div>
-  </div>
-  {/* caracteristicas */}
-  <div className="selector mx-3 mb-3">
-    <div className="pb-2">
-      <span className="">Características</span>
-    </div>
-    <div className="form-check">
-      <input
-        className="form-check-input"
-        type="checkbox"
-        onChange={actions.updateCaracteristicaPet}
-      />
-      <label className="form-check-label">Admite mascotas</label>
-    </div>
-    <div className="form-check">
-      <input
-        className="form-check-input"
-        type="checkbox"
-        onChange={actions.updateCaracteristicaGarage}
-      />
-      <label className="form-check-label">Garage</label>
-    </div>
-    <div className="form-check">
-      <input
-        className="form-check-input"
-        type="checkbox"
-        onChange={actions.updateCaracteristicaPiscina}
-      />
-      <label className="form-check-label">Piscina</label>
-    </div>
-    <div className="form-check">
-      <input
-        className="form-check-input"
-        type="checkbox"
-        onChange={actions.updateCaracteristicaTerraza}
-      />
-      <label className="form-check-label">Terraza</label>
-    </div>
-  </div>
-  {/* habitaciones */}
-  <div className="selector mx-3 mb-3">
-    <div className="pb-2">
-      <span className="">Habitaciones</span>
-    </div>
-    <select
-      onChange={actions.updateHabitacion}
-      className="form-select"
-      aria-label="Default select example"
-      value={store.habitaciones}
-    >
-      <option className="">cualquiera</option>
-      {["1", "2", "3 a más"].map((item) => (
-        <option key={item} className="">
-          {item}
-        </option>
-      ))}
-    </select>
-  </div>
-  {/* baños */}
-  <div className="selector mx-3 mb-3">
-    <div className="pb-2">
-      <span className="">Baños</span>
-    </div>
-    <select
-      onChange={actions.updateBaño}
-      className="form-select"
-      aria-label="Default select example"
-      value={store.baños}
-    >
-      <option className="">cualquiera</option>
-      {["1", "2", "3 a más"].map((item) => (
-        <option key={item} className="">
-          {item}
-        </option>
-      ))}
-    </select>
-  </div>
-  {/* boton */}
-  <div className="mx-3 my-2 text-center">
-    <button
-      onClick={handleClick}
-      type="button"
-      className="btn btn-primary mb-3"
-    >
-      Publicar
-    </button>
-  </div>
-</div>;
+// ejemplo de req uest de publicacion
 
-getProperties: async () => {
-  const store = getStore();
-  const request = store.body_request;
-  let opts = {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(request),
-  };
-  try {
-    const resp = await fetch(process.env.BACKEND_URL + "/api/properties", opts);
-    if (resp.status != 200) {
-      throw new Error("The fetch has failed");
-    }
-    const data = await resp.json();
-    const aux1 = data["inmuebles"];
-    const aux2 = data["imagenes"];
-    const aux3 = getActions().joinBodies(aux1, aux2);
-    setStore({ body_response: aux3 });
-    console.log("this came from the backend", aux3);
-  } catch (error) {
-    console.log("The fetch has failed: ", error);
-  }
+obj = {
+  user_id: 2,
+  pub_operacion: "alquiler",
+  pub_comunidad: "Madrid",
+  pub_provincia: "Madrid",
+  pub_municipio: "Matamoros",
+  pub_direccion: "Calle Cortes De Aragón, 22465 Castejón de Sos, Huesca, Spain",
+  pub_longitude: "0.4757199",
+  pub_latitude: "42.5031712",
+  pub_descripcion: "Wgrqweerwgr",
+  pub_precio: "1850",
+  pub_vivienda: "Villa",
+  pub_pet: "false",
+  pub_garage: "true",
+  pub_piscina: "false",
+  pub_terraza: "false",
+  pub_habitaciones: "3",
+  pub_baños: "2",
+  fotos: [],
+  pub_premium: false,
 };
+
+
+
+{"user_id":2,"pub_operacion":"alquiler","pub_comunidad":"Castilla y León","pub_provincia":"Burgos","pub_municipio":"Lucrecia","pub_direccion":"Avenida De Los Argentinos, 27400 La Paloma, Rocha, Uruguay","pub_longitude":"-54.1580045","pub_latitude":"-34.6460595","pub_descripcion":"Madre mia, que piso","pub_precio":"900","pub_vivienda":"Chalet","pub_pet":"true","pub_garage":"false","pub_piscina":"false","pub_terraza":"false","pub_habitaciones":"3","pub_baños":"2","fotos":["http://res.cloudinary.com/dsobw5vfl/image/upload/v1663261744/properties/hzulozufcdbmuvevcmsp.jpg","http://res.cloudinary.com/dsobw5vfl/image/upload/v1663261745/properties/liddkyccbw0oxyl0hqmv.webp"]}
+
+
+// objeto en el postman:
+
+{
+  "user_id": 2,
+  "pub_operacion": "alquiler",
+  "pub_comunidad": "Murcia",
+  "pub_provincia": "Murcia",
+  "pub_municipio": "Matamulas",
+  "pub_direccion": "Calle Cortes De Aragón, 22465 Castejón de Sos, Huesca, Spain",
+  "pub_longitude": "0.8757199",
+  "pub_latitude": "43.5031712",
+  "pub_descripcion": "piso antiguo",
+  "pub_precio": "2410",
+  "pub_vivienda": "Villa",
+  "pub_pet": false,
+  "pub_garage": true,
+  "pub_piscina": false,
+  "pub_terraza": false,
+  "pub_habitaciones": "3",
+  "pub_baños": "2",
+  "fotos": ["https://opcionis.mx/blog/wp-content/uploads/2017/09/casas-lujosas-piscinas-diseno-original-jardin.jpg","https://www.malagahoy.es/2022/08/25/malaga/casas-lujosas-caras-Malaga-fotos_1714338743_164886053_1024x574.jpg"],
+  "pub_premium": false
+}
