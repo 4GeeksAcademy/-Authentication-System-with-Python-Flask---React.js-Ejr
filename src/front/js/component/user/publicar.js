@@ -9,10 +9,10 @@ export const Publicar = () => {
   const { store, actions } = useContext(Context);
   const navigate = useNavigate();
 
-  const handleClick1 = () => {
+  const handleClick1 = async () => {
     // actions.switchOnCharging();
-    // await actions.uploadImagesToCloudinary();
-    actions.createInmueblesBodyRequest();
+    await actions.uploadImagesToCloudinary();
+    actions.createInmueblesBodyRequest(); // testeado hasta aqui
     // aqui comienza el fetch publicar:
     // const request = store.inmueblesBodyRequest;
     // let opts = {
