@@ -9,19 +9,36 @@ export const Publicar = () => {
   const { store, actions } = useContext(Context);
   const navigate = useNavigate();
 
-  const handleClick1 = async () => {
-    actions.switchOnCharging();
-    await actions.uploadImagesToCloudinary();
-    await actions.createInmueblesBodyRequest();
-    // await fetch al backend clases inmuebles e imagenes
-    // const resp = fetch();
-
-    swal("Publicación realizada con éxito");
-    actions.switchOffCharging();
-    await actions.resetStoreVariables();
-    await actions.clearLocalStorageNoUser();
-    const user = JSON.parse(localStorage.getItem("user_info"));
-    navigate(`/user/${user.id}`);
+  const handleClick1 = () => {
+    // actions.switchOnCharging();
+    // await actions.uploadImagesToCloudinary();
+    actions.createInmueblesBodyRequest();
+    // aqui comienza el fetch publicar:
+    // const request = store.inmueblesBodyRequest;
+    // let opts = {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify(request),
+    // };
+    // try {
+    //   const resp = await fetch(process.env.BACKEND_URL + "/api/publicar", opts);
+    //   if (resp.status != 200) {
+    //     throw new Error("The fetch has failed");
+    //   }
+    //   const respAsJson = await resp.json();
+    //   console.log("confirmacion de la publicación: ", respAsJson);
+    // } catch (error) {
+    //   console.log("The fetch has failed: ", error);
+    // }
+    // aqui termina el fetch publicar
+    // swal("Publicación realizada con éxito");
+    // await actions.switchOffCharging();
+    // await actions.resetStoreVariables();
+    // await actions.clearLocalStorageNoUser();
+    // const user = JSON.parse(localStorage.getItem("user_info"));
+    // navigate(`/user/${user.id}`);
   };
 
   const handleClick2 = () => {
@@ -52,7 +69,23 @@ export const Publicar = () => {
                   <select
                     className="form-select"
                     aria-label="Default select example"
-                    onChange={actions.updatePublicarOperacion}
+                    onChange={(e) => {
+                      actions.updatePublicarOperacion(e);
+                      localStorage.setItem("pub_pet", store.caracteristica_pet);
+                      localStorage.setItem(
+                        "pub_garage",
+                        store.caracteristica_garage
+                      );
+                      localStorage.setItem(
+                        "pub_piscina",
+                        store.caracteristica_piscina
+                      );
+                      localStorage.setItem(
+                        "pub_terraza",
+                        store.caracteristica_terraza
+                      );
+                      localStorage.setItem("pub_premium", false);
+                    }}
                     value={store.operacion}
                   >
                     <option className="">{"<Elige la operación>"}</option>

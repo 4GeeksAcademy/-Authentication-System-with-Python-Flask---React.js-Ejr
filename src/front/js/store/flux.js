@@ -909,6 +909,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           localStorage.getItem("pub_baños") == undefined
         ) {
           swal("Faltan datos");
+          setStore({ charging: false });
         } else {
           let fuentesRequest = [
             "pub_operacion",
@@ -930,15 +931,16 @@ const getState = ({ getStore, getActions, setStore }) => {
           ];
           let aux = {};
           let user_info = JSON.parse(localStorage.getItem("user_info"));
-          aux["user_id"] = user_info["id"];
+          let user_id = user_info.id;
+          aux["user_id"] = user_id;
           for (let x of fuentesRequest) {
             aux[x] = localStorage.getItem(x);
           }
           aux["fotos"] = store.receivedUrls;
           setStore({ inmueblesBodyRequest: aux });
           console.log(
-            "este es el request para publciar el inmueble: " +
-              store.inmueblesBodyRequest
+            "este es el request para publicar el inmueble: " +
+              JSON.stringify(store.inmueblesBodyRequest)
           );
         }
       },
