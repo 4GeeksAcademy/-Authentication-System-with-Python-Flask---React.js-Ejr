@@ -26,7 +26,7 @@ import { Divider } from '@chakra-ui/react'
 
 
 export const CurrrencyConverter = () => {
-  const monedas = ["BTC", " ETH", "💵 USD", "XRP", "LTC", " CLP","ADA","DOT","MATIC","BNB","SOL","ETC"];
+  const monedas = ["BTC", " ETH", "USD", "XRP", "LTC", " CLP","ADA","DOT","MATIC","BNB","SOL","ETC"];
   const [primeraMoneda, setPrimeraMoneda] = useState('BTC');
   const [segundaMoneda, setSegundaMoneda] = useState('CLP');
   const [monto, setMonto] = useState(1);

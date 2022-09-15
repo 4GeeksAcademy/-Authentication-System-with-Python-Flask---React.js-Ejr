@@ -5,6 +5,8 @@ import "../../styles/home.css";
 import { ExchangeRate } from "./ExchangeRate";
 import Grafico from "./Grafico.jsx";
 import ImageSlider from "./ImageSlider";
+import { Text } from '@chakra-ui/react'
+import { Box } from "@chakra-ui/react"
 
 export const Home = () => {
   const { store, actions } = useContext(Context);
@@ -12,6 +14,10 @@ export const Home = () => {
   return (
     <div className="home">
           <CurrrencyConverter />
+          <br/>
+          <br/>
+          <br/>
+          <br/>
           <ImageSlider/>
     </div>
     

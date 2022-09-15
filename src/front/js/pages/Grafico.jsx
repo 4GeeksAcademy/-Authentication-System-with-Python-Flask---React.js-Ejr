@@ -120,27 +120,6 @@ function Grafico() {
 					BTC/CLP =	$ {latestPrice} 📊
 					</h2>
 					<div id='chart' className='p-0 m-0'></div>
-                   
-					 <Container maxW='md'  color='white'>
-							 <Image
-                        borderRadius='full'
-                        boxSize='50px'
-                        src='https://s2.coinmarketcap.com/static/img/coins/200x200/1.png'
-                        alt='Btc'
-                            />
-                            <Image
-                        borderRadius='full'
-                        boxSize='90px'
-                        src='https://i.ibb.co/3kZLrQJ/Dise-o-sin-t-tulo-5.png'
-                        alt='flechaMorada'
-                            />
-                            <Image
-                        borderRadius='full'
-                        boxSize='90px'
-                        src='https://static.vecteezy.com/system/resources/thumbnails/002/431/835/small/illustration-of-the-chile-flag-free-vector.jpg'
-                        alt='CL'
-                            />
-  					</Container>
                             
 				</>
                 
