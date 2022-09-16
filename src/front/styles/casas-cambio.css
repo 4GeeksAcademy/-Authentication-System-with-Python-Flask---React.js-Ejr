@@ -9,8 +9,8 @@ body {
 }
 
 #logo-casa {
-    width: 200px;
-    height: 200px;
+    width: 150px;
+    height: 150px;
     background-color:rgba(217,217,217,0.8);
     margin: 15px 15px 15px 10px;
     margin-left: 3%;
@@ -18,18 +18,19 @@ body {
     display:flex;
     justify-content: center;
 }
-
+p{
+ margin: 2px;   
+}
 #info-casa{
-    width: 450px;
-    height: 200px;
+    width: 350px;
+    height: 150px;
     background-color:rgba(217,217,217,0.8);
     margin: 15px 15px 15px 20px; 
     margin-right:3%;
     border-radius: 15px 15px 15px 15px;
     display:flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    align-items: center;   
 }
 
 #dropdown {
@@ -46,7 +47,7 @@ body {
     flex-direction: column;
     justify-content:center;
     align-self: center;
-    padding: 10px;
+    padding: 15px;
     border-radius: 15px 15px 15px 15px;
     background-color:rgba(217,217,217,0.8);
 }
@@ -56,13 +57,37 @@ body {
     border-radius: 20px 20px 20px 20px;
     color: white; 
     display: flex;
+    align-items:center;
     justify-content: center;
     align-self: center;
     width: 35%;
     height: 35px;
-    transition: background-color .8s;
+    transition: background-color .5s;
+    margin-top: 3%;
 }
 
+a {
+    text-decoration: none;
+    color: white; 
+}
+
+
 #boton-casa:hover {
-    background-color:rgb(16, 192, 112);
+    background-color:rgba(251, 249, 234, 0.709);
+    color:#2B3E84;
+    border: none;
+    scale: 1.2;
+}
+
+a:hover{
+    color:#2B3E84;
+}
+
+
+#suiza {
+    margin-top: 10px;
+    padding: 10px;
+    width: 150px;
+    height: 125px;
+
 }
