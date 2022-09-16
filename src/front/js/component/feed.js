@@ -13,7 +13,7 @@ export const Feed = () => {
       JSON.stringify(store.body_response[index])
     );
     console.log("la data ha sido guardada en localstorage");
-    navigate("/single/" + index);
+    navigate("/single/" + store.body_response[index].id);
   };
 
   return (

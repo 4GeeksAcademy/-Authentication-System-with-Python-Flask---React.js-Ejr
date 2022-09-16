@@ -3,6 +3,7 @@ import { Context } from "../store/appContext";
 import { Link, useNavigate } from "react-router-dom";
 import "../../styles/dashboard.css";
 import { Feed } from "./feed";
+import { MapListings } from "./mapListings";
 
 export const Tablero = () => {
   const { store, actions } = useContext(Context);
@@ -67,7 +68,6 @@ export const Tablero = () => {
               Listado
             </button>
             <button
-              disabled
               className="nav-link"
               type="button"
               onClick={actions.updateVistaMapa}
@@ -102,7 +102,7 @@ export const Tablero = () => {
         ) : store.vista == "mapa" && store.operacion == "compra" ? (
           <div className="p-5 h1">Compra en Mapa</div>
         ) : store.vista == "mapa" && store.operacion == "alquiler" ? (
-          <div className="p-5 h1">Alquiler en Mapa</div>
+          <MapListings />
         ) : (
           <div className="p-5 h1">"Elija la operacion"</div>
         )}
