@@ -40,7 +40,7 @@ import { ReactText } from "react";
 const LinkItems = [
   { name: "Home", icon: FiHome, ruta: "./" },
   { name: "Conversor", icon: FiTrendingUp, ruta: "./" },
-  { name: "Educacion", icon: FiBook, ruta: "./" },
+  { name: "Educacion", icon: FiBook, ruta: "./educacion" },
   { name: "Favoritos", icon: FiStar, ruta: "./" },
   { name: "What if", icon: SiFuturelearn, ruta: "./whatif" },
 ];

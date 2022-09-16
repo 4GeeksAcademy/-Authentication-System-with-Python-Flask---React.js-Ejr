@@ -9,15 +9,17 @@ export default function Home() {
   const [coins, setCoins] = useState([]);
   const [search, setSearch] = useState("");
 
-  const getData = async () => {
-    const res = await axios.get(
-      "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false"
-    );
-    // console.log(res.data);
-    setCoins(res.data);
-  };
-  useEffect(() => {
-    getData();
+  useEffect(async () => {
+    const getData = async () => {
+      const res = await axios.get(
+        "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false"
+      );
+      // console.log(res.data);
+      setCoins(res.data);
+    };
+
+    await getData();
+    console.log(coins);
   }, []);
   return (
     <Box display="flex">

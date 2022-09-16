@@ -6,7 +6,7 @@ import Home from "./pages/home";
 import { Demo } from "./pages/demo";
 import { Single } from "./pages/single";
 import injectContext from "./store/appContext";
-
+import Educacion from "./pages/Educacion.jsx";
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 import SidebarWithHeader from "./component/sideBar.jsx";
@@ -27,6 +27,7 @@ const Layout = () => {
             <Route element={<Demo />} path="/demo" />
             <Route element={<WhatIf />} path="/whatif" />
             <Route element={<Single />} path="/single/:theid" />
+            <Route element={<Educacion />} path="/educacion" />
             <Route element={<h1>Not found!</h1>} />
           </Routes>
         </ScrollToTop>

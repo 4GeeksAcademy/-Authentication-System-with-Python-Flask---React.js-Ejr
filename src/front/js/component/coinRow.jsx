@@ -27,12 +27,11 @@ const CoinRow = ({ coin, index }) => {
     <Tr key={coin.name}>
       <Td>{coin.market_cap_rank}</Td>
       <Td>
-        <Stack spacing={2} direction="row" >
+        <Stack spacing={2} direction="row">
           <Box boxSize="30px">
             <Image src={coin.image} alt={coin.name} />
           </Box>
           <Stack direction="row" pt={1}>
-
             <Link
               href={"https://coinmarketcap.com/es/currencies/" + coin.name}
               target="_blank"
@@ -40,7 +39,6 @@ const CoinRow = ({ coin, index }) => {
               {coin.name}
             </Link>
             <Text color="gray">{coin.symbol}</Text>
-
           </Stack>
         </Stack>
       </Td>
