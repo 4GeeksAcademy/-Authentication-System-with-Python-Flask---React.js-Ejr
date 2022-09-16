@@ -241,7 +241,10 @@ const getState = ({ getStore, getActions, setStore }) => {
         console.log("getting token from local storage");
       },
       logout: () => {
-        localStorage.clear();
+        localStorage.removeItem("token");
+        localStorage.removeItem("messages");
+        localStorage.removeItem("userInfo");
+        localStorage.removeItem("userProperties");
         setStore({ token: null });
         console.log("logging out");
       },

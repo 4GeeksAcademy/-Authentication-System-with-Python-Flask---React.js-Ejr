@@ -8,14 +8,13 @@ export const Navbar = () => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
+    actions.logout();
     navigate("/");
   };
 
   const handleClick = () => {
-
     actions.clearLocalStorageNoUser();
     actions.resetStoreVariables();
-
   };
 
   return (
