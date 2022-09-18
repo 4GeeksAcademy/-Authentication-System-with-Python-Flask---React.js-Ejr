@@ -142,3 +142,8 @@ figure {
   width: 550px;
   height: 50px;
 }
+.col-md-4 {
+  flex: 0 0 auto;
+  margin-top: 15px;
+  width: 33.33333333%;
+}
