@@ -60,7 +60,7 @@ export const Demo = () => {
         <div class="col-md-6 login-form-2">
           <div class="login-logo">
             <Link to="/">
-          <i className="fa-solid  fa-house holis"></i>
+          <i className="fa-solid  fa-house icon-house"></i>
             </Link>
           </div>
         </div>
