@@ -5,8 +5,8 @@ import { Context } from "../store/appContext";
 export const Navbar = () => {
 	const { store, actions } = useContext(Context);
 	return (
-		<nav className="navbar" id="navbar">
-			<div className="container coco">
+		<nav className="navbar " id="navbar">
+			<div className="container coco d-flex justify-content-center">
 				
 				
 			<div className="fle">
@@ -21,13 +21,13 @@ export const Navbar = () => {
 				<button type="button" class="btn coc ">CONTACTO</button>
 				</Link>
 			</div>
-				<div className="ml-auto" id="iconos">
+			</div>
+				<div className="" id="iconos">
 					<Link to="/demo">
-				<i class="fa-solid fa-1x fa-user" id="loginicon"></i>
+				<i class="fa-solid fa-user" id="loginicon"></i>
 				</Link>
 				
 				</div>
-			</div>
 			
 		</nav>
 	);

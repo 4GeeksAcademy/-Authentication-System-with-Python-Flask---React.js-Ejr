@@ -100,7 +100,13 @@ figure {
   justify-content: center;
 }
 .icn {
-  padding-left: 20px;
+  
+  border: solid;
+  width:38px;
+  height: 38px;
+  border-radius: 8px;
+  color: rgb(11, 11, 11);
+  background:rgba(104, 104, 104, 0.256);
 }
 .fa-cookie:before {
   color: #101010;
@@ -125,4 +131,14 @@ figure {
      color: white;
      text-align: center;
      margin: 6px;
+}
+.faderecha{
+  background: rgba(50, 50, 51, 0.371);
+  width: 550px;
+  height: 50px;
+}
+.faizquierda{
+  background: rgba(50, 50, 51, 0.371);
+  width: 550px;
+  height: 50px;
 }

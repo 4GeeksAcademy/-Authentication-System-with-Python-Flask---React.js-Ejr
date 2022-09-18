@@ -35,6 +35,7 @@ font-size: 32px;
 line-height: 41px;
 color: #1e1b1b;
 }
+
 p{
 
   margin-top: revert;
@@ -48,10 +49,7 @@ p{
   bottom: 0;
   background:rgba(255, 255, 255, 0.275);
 }
-.coc{
-  margin: 2px;
- color: #e10b76;
-}
+
 .fa-solid{
   margin: 6px;
 }
@@ -60,27 +58,23 @@ p{
   background-color: #e10b76;
   border-color: #6c757d;
 }
-#loginicon{
+#loginicon {
   background: #e10b76;
   color: #ffffff;
-  font-size: 30px;
+  font-size: 21px;
   padding: 5px;
-  width: 60px;
-  height: 60px;
+  width: 43px;
+  height: 44px;
   text-align: center;
-  line-height: 50px;
+  line-height: 34px;
   border-radius: 50%;
 }
 #cart{
   color: #ffffff;
-  
  
- 
-
- 
- 
-
-  
+}
+#navbar{
+  height: 86px;
 }
 #iconos{
   margin-left: 2px;

@@ -20,11 +20,11 @@ export const Contacto= () => {
 						
 						<Link to="/">
 							
-							<button className="btn btn-secondary">Back Home</button>
+							<button className="btn btn-secondary" >Back Home</button>
 						</Link>
 					</div>
-				
 			</div>
+					
 			<Footer/>
 		</div>
 

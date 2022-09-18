@@ -6,7 +6,7 @@ export const NavbarL = () => {
 	const { store, actions } = useContext(Context);
 	return (
 		<nav className="navbar" id="navbar">
-			<div className="container coco">
+			<div className="container coco d-flex justify-content-center">
 				
 				
 			<div className="fle">
@@ -21,13 +21,13 @@ export const NavbarL = () => {
 				<button type="button" class="btn coc ">CONTACTO</button>
 				</Link>
 			</div>
+			</div>
 				<div className="ml-auto" id="iconos">
 					<Link to="/demo">
 				<i class="fa-solid fa-1x fa-user" id="loginicon"></i>
 				</Link>
 				
 				</div>
-			</div>
 			<div className="ml-auto">
 				<div class="dropdown dropdown-menu-end ">
 					<a class="btn  dropdown-toggle"

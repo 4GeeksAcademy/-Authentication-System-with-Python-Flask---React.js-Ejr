@@ -11,7 +11,9 @@ export const Demo = () => {
 
   const handleClick = () => {
     if (email != "" && password != "") actions.Login(email, password);
-    else alert("Completar datos");
+    else 
+      <button>HASDAS</button>
+    
   };
 
   return (
