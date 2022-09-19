@@ -1,19 +1,19 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import logo from "../../img/logo.png"
+import "../../styles/navbar-registro.css";
 
-export const Navbar = () => {
+export const NavbarRegistro = () => {
 	return (
-		<nav className="navbar navbar-light bg-warning  d-flex justify-content-between p-2">
+		<nav className="navbar navbar-light bg-light fixed-top">
 			<div className="container-fluid">
 				<Link to="/">
-				<a class="navbar-brand" href="#">
-     			 <img src="/docs/5.2/assets/brand/bootstrap-logo.svg" alt="" width="30" height="24" class="d-inline-block align-text-top"/>
-      				Cachai el cambio
-    			</a>
+					<img id="logo" src={logo} alt="Logo Casa de Cambio" style={{width:"55px"}} />
+					<span id="titulo" className="navbar-brand mx-2 my-2 h1">CACHA EL CAMBIO</span>
 				</Link>
 				<div className="ml-auto">
-					<Link to="/demo">
-						<button className="btn btn-primary">Salir</button>
+					<Link to="/landing-page">
+						<button className="boton mx-2">Salir</button>
 					</Link>
 				</div>
 			</div>
