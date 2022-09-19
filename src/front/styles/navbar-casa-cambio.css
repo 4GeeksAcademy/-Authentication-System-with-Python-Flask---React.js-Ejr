@@ -18,3 +18,9 @@
 #titulo {
     font-family: 'Black Han Sans', sans-serif;
 }
+
+.boton:hover {
+	background:linear-gradient(to bottom, #408c99 5%, #599bb3 100%);
+	background-color:#408c99;
+  scale: 1.1;
+}
