@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import logo from "../../img/logo.png"
 import "../../styles/navbar-casa-cambio.css";
 
-export const Navbar = () => {
+export const NavbarCasasCambio = () => {
 	return (
 		<nav className="navbar navbar-light bg-light fixed-top">
 			<div className="container-fluid">
