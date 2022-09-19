@@ -1,6 +1,9 @@
 import React, { useContext, useState } from "react";
 import { Context } from "../store/appContext";
 import cambioSuiza from "../../img/cambios-suiza.png";
+import moreEx from "../../img/moreExchange.png";
+import cambioStgo from "../../img/cambioSantiago.png";
+import cambioCostero from "../../img/cambioCostero.png";
 import "../../styles/casas-cambio.css";
 
 
@@ -13,10 +16,10 @@ export const CasasCambio = () => {
 
 	return (
 		<div className="d-flex justify-content-around">
-			<div>
+			<div id="body-info-casa">
 				<div id="globo-info" className="d-flex">
 					<div id="logo-casa">
-						<img id="suiza" src={cambioSuiza} alt="logo casa de cambio" />
+						<img id="suiza" src={cambioSuiza} alt="Cambios Suiza" />
 					</div>
 					<div id="info-casa">
 						<p> Agustinas 1036, SANTIAGO</p>
@@ -27,29 +30,35 @@ export const CasasCambio = () => {
 				</div>
 				<div id="globo-info" className="d-flex">
 					<div id="logo-casa">
-						imagen
+						<img id="moreExchange" src={moreEx} alt="More Exchange" />
 					</div>
 					<div id="info-casa">
-						<p>texto, información</p>
+						<p>Pedro de Valdivia 29, Providencia</p>
+						<p>Santiago de Chile+56 22 233 1865</p>
+						<p>info@moreexchange.cl</p>
+
 						<button id="boton-casa"><a href="http://www.moreexchange.cl/" target="blank">Ir a casa</a></button>
 
 					</div>
 				</div>
 				<div id="globo-info" className="d-flex">
 					<div id="logo-casa">
-						imagen
+					<img id="cambioSantiago" src={cambioStgo} alt="Cambios Santiago" />
 					</div>
 					<div id="info-casa">
-						<p>texto, información</p>
+						<p>San Sebastian 2814, Las Condes</p>
+						<p>+56 2 2233 5327 +56 9 3954 0161 /0162 </p>
+						<p>cambios@cstgo.cl</p>
 						<button id="boton-casa"><a href="https://www.cambiosantiago.cl/" target="blank">Ir a casa</a></button>
 					</div>
 				</div>
 				<div id="globo-info" className="d-flex">
 					<div id="logo-casa">
-						imagen
+					<img id="cambioCostero" src={cambioCostero} alt="Cambio Costero" />
 					</div>
 					<div id="info-casa">
-						<p>texto, información</p>
+						<p>Bandera #230</p>
+						<p>+56 2 2696 3008</p>
 						<button id="boton-casa"><a href="http://www.cambiocostero.cl/" target="blank">Ir a casa</a></button>
 					</div>
 				</div>
