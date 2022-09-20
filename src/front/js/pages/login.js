@@ -15,29 +15,34 @@ import {
   useColorModeValue,
 } from '@chakra-ui/react';
 import { Image } from '@chakra-ui/react'
+import Swal from "sweetalert2";
+import { useAuth0 } from "@auth0/auth0-react";
 
 
 
 export const Login= () => {
+
   // React States
+
+  const {loginWithRedirect} = useAuth0();
   const [errorMessages, setErrorMessages] = useState({});
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   // User Login info
   const database = [
     {
-      username: "user1",
-      password: "pass1"
+      username: "benja@cryptoschool.cl",
+      password: "benja"
     },
     {
-      username: "user2",
-      password: "pass2"
+      username: "leo@cryptoschool.cl",
+      password: "leo"
     }
   ];
 
   const errors = {
-    uname: "invalid username",
-    pass: "invalid password"
+    uname: "usuario invalido",
+    pass: "usuario invalido"
   };
 
   const handleSubmit = (event) => {
@@ -120,6 +125,16 @@ export const Login= () => {
                   }}>
                   Sign in
                 </Button>
+                <Button
+                onClick={() =>loginWithRedirect() }
+                type="submit"
+                  bg={'rgb(140,82,255)'}
+                  color={'white'}
+                  _hover={{
+                    bg: 'rgb(140,82,255)',
+                  }}>
+                  Login con Auth0
+                </Button>
               </Stack>
             </Stack>
           </Box>
@@ -134,7 +149,12 @@ export const Login= () => {
     <div className="app">
       <div className="login-form">
         
-        {isSubmitted ? alert("Ingreaste correctamente :D!") : renderForm}
+        {isSubmitted ? Swal.fire(
+          'Bien!',
+          'Ingresaste sesion correctamente',
+            'success'
+           ) : renderForm}
+      
       </div>
     </div>
   );
