@@ -23,8 +23,9 @@ export const Home = () => {
 
 						<button className="btn btn-secondary">Learn More</button>
 					</Link>
+					
 				</div>
-				
+
 				{/* <div class="row destacados">
 					<div class="box">
 						<div class="imgBx">
@@ -63,7 +64,7 @@ export const Home = () => {
 						</div>
 					</div>
 				</div> */}
-				
+
 			</div>
 			<Footer />
 		</div>
