@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
 import rigoImageUrl from "../../img/rigo-baby.jpg";
 import "../../styles/home.css";
@@ -54,7 +55,9 @@ export const Home = () => {
 <div className="banner2">
   <h3>Envía dinero de forma segura y con la mejor tasa del mercado.</h3>
   <p>Sabemos que quieres seguridad, transparencia y obtener el mejor rendieminto posible al cambiar tu dinero. En CoinChange encontrarás las mejores opciones del mercado.</p>
+  <Link to="/demo">
   <button className="buttonregister">Me interesa</button>
+  </Link>
 </div>
   <div>
   <img src= {CoinChange} className="celular"/>  
