@@ -43,7 +43,7 @@ export const CasasCambio = () => {
 				</div>
 				<div id="globo-info" className="d-flex">
 					<div id="logo-casa">
-					<img id="cambioSantiago" src={cambioStgo} alt="Cambios Santiago" />
+						<img id="cambioSantiago" src={cambioStgo} alt="Cambios Santiago" />
 					</div>
 					<div id="info-casa">
 						<p>San Sebastian 2814, Las Condes</p>
@@ -54,7 +54,7 @@ export const CasasCambio = () => {
 				</div>
 				<div id="globo-info" className="d-flex">
 					<div id="logo-casa">
-					<img id="cambioCostero" src={cambioCostero} alt="Cambio Costero" />
+						<img id="cambioCostero" src={cambioCostero} alt="Cambio Costero" />
 					</div>
 					<div id="info-casa">
 						<p>Bandera #230</p>
@@ -65,7 +65,8 @@ export const CasasCambio = () => {
 			</div>
 			<div id="maps">
 				<div id="dropdown">
-					<select name="casas" id="casas-cambio" onChange={(evento) => mapa(evento)}>
+					<select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" name="casas" id="casas-cambio" onChange={(evento) => mapa(evento)}>
+						<option selected>Busca tu casa</option>
 						<option value="cambios-suiza">Cambios Suiza</option>
 						<option value="more-exchange">More Exchange</option>
 						<option value="cambios-santiago">Cambios Santiago</option>

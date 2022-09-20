@@ -3,15 +3,13 @@ body {
 }
 
 #globo-info{
-    background-color: rgba(192, 192, 192, 0.5);
-    border-radius: 15px 15px 15px 15px;
     margin-top: 50px;
 }
 
 #logo-casa {
     width: 150px;
     height: 150px;
-    background-color:rgba(217,217,217,0.8);
+    background-color:rgba(12, 183, 231, 0.8);
     margin: 15px 15px 15px 10px;
     margin-left: 3%;
     border-radius: 10%;
@@ -30,13 +28,14 @@ p{
 #info-casa{
     width: 350px;
     height: 150px;
-    background-color:rgba(217,217,217,0.8);
+    background-color:rgba(12, 183, 231, 0.4);
     margin: 15px 15px 15px 20px; 
     margin-right:3%;
     border-radius: 15px 15px 15px 15px;
     display:flex;
     flex-direction: column;
     align-items: center;   
+    color:#fff;
     
 }
 
@@ -46,7 +45,6 @@ p{
     justify-content: center;
     margin-bottom: 20px;
     
-
 }
 
 #maps {
@@ -56,7 +54,7 @@ p{
     align-self: center;
     padding: 15px;
     border-radius: 15px 15px 15px 15px;
-    background-color:rgba(217,217,217,0.8);
+    background-color:rgba(12, 183, 231, 0.3);
 }
 
 #boton-casa {
@@ -86,7 +84,7 @@ a {
 
 #boton-casa:hover {
 	background:linear-gradient(to bottom, #408c99 5%, #599bb3 100%);
-	background-color:#408c99;
+	background-color:#494099;
     scale: 1.2;
 }
 
@@ -97,3 +95,8 @@ a {
     height: 125px;
 
 }
+
+#casas-cambio {
+    width: 50%;
+}
+
