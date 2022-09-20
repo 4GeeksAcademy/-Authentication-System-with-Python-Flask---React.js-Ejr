@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User , Platos, FavPlatos , Veget , Dulce 
+from api.models import db, User , Platos, FavPlatos , Veget , Dulce ,Vip 
 from api.utils import generate_sitemap, APIException
 from flask_jwt_extended import JWTManager, create_access_token, get_jwt_identity, jwt_required
 
@@ -135,7 +135,32 @@ def dinamycDulce(iddulce):
                 "id": iddulce,
                 "dulce": "not found!"
         }), 404
+@api.route('/vip/<int:idvip>', methods=['GET'])
+def dinamycVip(idvip):
+    one = Vip.query.filter_by(uid=idvip).first()
+    if(one):
+        return jsonify({
+            "id": idvip,
+            "vip": one.serialize()
+        }), 200
 
+    else:
+        return jsonify({
+                "id": idvip,
+                "vip": "not found!"
+        }), 404
+
+
+@api.route('/vip', methods=['GET'])
+def getVip():
+    all_vip = Vip.query.all()
+    serializados = list( map( lambda vip: vip.serialize(), all_vip))
+    print(all_vip)
+
+    return jsonify({
+        "mensaje": "suscripcion VIP",
+        "vip": serializados
+    }), 200
 
 @api.route("/favorite/platos/<int:platos_id>", methods=['POST'])
 def postPlatosFav(platos_id):

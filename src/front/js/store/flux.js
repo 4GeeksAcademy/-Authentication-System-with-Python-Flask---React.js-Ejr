@@ -9,6 +9,8 @@ const getState = ({ getStore, getActions, setStore }) => {
       vgts:[],// trae los nombre de los platos vegetarianos
       dulce:[], // trae los detalles de los dulces 
       dulces:[],// trae los nombre de los dulces
+      vip:[],
+      vipdata:[],
       demo: [
         {
           title: "FIRST",
@@ -126,6 +128,21 @@ const getState = ({ getStore, getActions, setStore }) => {
             setStore({ dulces: result.dulce})})
           .catch(error => console.log("DANGER", error))
       },
+      getVip: (id) => {
+        fetch("https://3001-alexanderwe-proyectofin-jjcefw3cua5.ws-us65.gitpod.io/api/vip" + id)
+          .then(response => response.json())
+          .then(result => {setStore({ vip: result.result })})
+          .catch(error => console.log("DANGER", error))
+      },
+      //funcion traer datos de la comida
+      getVipdata: () => {
+        fetch("https://3001-alexanderwe-proyectofin-jjcefw3cua5.ws-us65.gitpod.io/api/vip")
+          .then(response => response.json())
+          .then(result => {console.log(result)
+            setStore({ vipdata: result.vip})})
+          .catch(error => console.log("DANGER", error))
+      },
+    
       //funcion agregar
       getAddTask: (i) => {
         const store = getStore();

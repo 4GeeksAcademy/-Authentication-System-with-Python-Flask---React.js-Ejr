@@ -103,3 +103,25 @@ class FavPlatos(db.Model):
             "dulce_uid" : self.dulce_uid,
             "veget_uid": self.veget_uid,
         }
+class Vip(db.Model):
+    __tablename__ = 'vip'
+
+    uid = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(120), unique=False, nullable=False)
+    price = db.Column(db.String(1000), unique=False, nullable=False)
+    recetas = db.Column(db.String(1000), unique=False, nullable=False)
+    support = db.Column(db.String(120), unique=False, nullable=True)
+    descuento = db.Column(db.String(120), unique=False, nullable=True)
+
+    def __repr__(self):
+        return '<Vip %r>' %self.name
+
+    def serialize(self):
+        return {
+            "uid": self.uid,
+            "name": self.name,
+            "price": self.price,
+            "recetas": self.recetas,
+            "support": self.support,
+            "descuento": self.descuento,
+        }

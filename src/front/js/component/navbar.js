@@ -14,8 +14,11 @@ export const Navbar = () => {
 			<button type="button" class="btn coc ">HOME</button>
 					
 				</Link>
+				<Link to="/sub">
+				<button type="button" class="btn coc ">PLANES</button>
+				</Link>
 				<Link to="/productos">
-				<button type="button" class="btn coc ">PRODUCTOS</button>
+				<button type="button" class="btn coc ">RECETAS</button>
 				</Link>
 				<Link to="/contacto">
 				<button type="button" class="btn coc ">CONTACTO</button>

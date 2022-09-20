@@ -147,3 +147,27 @@ figure {
   margin-top: 15px;
   width: 33.33333333%;
 }
+  
+.card-sub{
+  width: 18rem;
+  margin-left: 28px;
+  text-align: center;
+  padding-top: 20px;
+    padding-bottom: 10px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      word-wrap: break-word;
+      background-color: #ffffffbe;
+      background-clip: border-box;
+      border: 1pxsolidrgba(0,0,0,.125);
+      border-radius: 0.25rem;
+      border-radius: 35px;
+  }
+.card-text{
+  margin: 0px;
+}
+.sub-body{
+  background: #6e0d1ca6;
+}
