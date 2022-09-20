@@ -30,6 +30,7 @@ h1{
     margin-right: 10px;
 }
 .carrusel{
+    margin-top: 15px;
     color: #2B3E84;
 font-size: 35px;
 }
@@ -37,8 +38,8 @@ font-size: 35px;
     height: 500px;
 }
 .textocarrusel{
-    color: white;
-font-size: 35px;
+    color: #2B3E84;
+font-size: 30px;
 }
 .banner{
     color: rgb(245, 244, 244);
@@ -49,8 +50,16 @@ font-size: 35px;
     background: radial-gradient(ellipse at bottom, #2B3E84 50%, #37C9FC 100%);
 }
 .banner2{
+    
+    
+    display: block;
     margin-left: 100px;
     width: 400px;
+}
+.buttonregister{
+    border-radius: 5px;
+    background-color: rgb(245, 244, 244);
+    color: #2B3E84;
 }
 .celular{
     margin-right: 100px;
@@ -74,9 +83,15 @@ font-size: 35px;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #37C9FC;
+    background-color:  rgb(245, 244, 244);
 
 }
 .textocarta{
     color:  #2B3E84 ;
+    background-color:  rgb(245, 244, 244);
+}
+.footer{
+    background-color: rgb(245, 244, 244);
+    color: #2B3E84;
+font-size: 15px;
 }

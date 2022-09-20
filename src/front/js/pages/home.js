@@ -30,13 +30,13 @@ export const Home = () => {
     </div>
     <div className="carousel-item">
     <div class="textocarrusel carousel-caption d-none d-md-block">
-	<h1>Podrás enviar dinero alredor del mundo.</h1>
+	<h1>Encuentra la divisa que necesites.</h1>
   </div>
       <img src={carrusel2}  className="imagencarrusel d-block w-100" alt="..."/>
     </div>
     <div className="carousel-item">
     <div class="textocarrusel carousel-caption d-none d-md-block">
-	<h1>Consígue la divisa que necesites.</h1>
+	<h1>Compara entre las mejores opciones del mercado.</h1>
   </div>
       <img src={carrusel3} className="imagencarrusel d-block w-100" alt="..."/>
     </div>
@@ -53,7 +53,8 @@ export const Home = () => {
 <div className="banner elementor-widget-container">
 <div className="banner2">
   <h3>Envía dinero de forma segura y con la mejor tasa del mercado.</h3>
-  <p>En CoinChange le damos valor a tiempo y dinero, queremos que nuestra herramienta te proporcione el mejor rendimiento al convertir tu dinero.</p>
+  <p>Sabemos que quieres seguridad, transparencia y obtener el mejor rendieminto posible al cambiar tu dinero. En CoinChange encontrarás las mejores opciones del mercado.</p>
+  <button className="buttonregister">Me interesa</button>
 </div>
   <div>
   <img src= {CoinChange} className="celular"/>  
