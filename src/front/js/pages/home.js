@@ -2,14 +2,14 @@ import React, { useContext } from "react";
 import { Context } from "../store/appContext";
 import Stark from "../../img/stark.jpg";
 import logo from "../../img/logo.png";
-import "../../styles/home.css";
+import "../../styles/pagina-home.css";
 
 export const Home = () => {
   const { store, actions } = useContext(Context);
 
   return (
     <div>
-      <form id="formulario" className="">
+      <form id="formulario_ph" className="">
         <bl>
           <br></br>
         </bl>
@@ -32,7 +32,7 @@ export const Home = () => {
               type="button"
               data-bs-toggle="dropdown"
               aria-expanded="false"
-              id="boton"
+              id="sleccionDivisa"
             >
               Selecciona divisa
             </button>
@@ -70,7 +70,7 @@ export const Home = () => {
               type="button"
               data-bs-toggle="dropdown"
               aria-expanded="false"
-              id="boton"
+              id="sleccionDivisa"
             >
               Selecciona divisa
             </button>
@@ -102,8 +102,8 @@ export const Home = () => {
           >
             Cambio
           </label>
-          <input type="password" className="form-control" id="data" />
-          <button type="submit" id="boton2">
+          <input type="text" className="form-control" id="data" />
+          <button type="submit" id="botonCambiar">
             Cambiar
           </button>
         </div>
