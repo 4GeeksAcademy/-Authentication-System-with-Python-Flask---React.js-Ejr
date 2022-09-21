@@ -4,6 +4,7 @@ import Plotly from 'plotly.js-dist-min'
 import { Container } from '@chakra-ui/react'
 import { Image } from '@chakra-ui/react'
 import { Center } from "@chakra-ui/react";
+import { Spinner } from '@chakra-ui/react'
 
 function Grafico3() {
 	const [isLoading, setIsLoading] = useState(true);
@@ -112,7 +113,7 @@ function Grafico3() {
 	return (
 		<Container maxW='1100px'>
 			{isLoading ? (
-				<h6 className='value animate__animated animate__flash animate__slow text-center text-primary'> Cargando info ...</h6>
+				<h6 className='value animate__animated animate__flash animate__slow text-center text-primary'> <Spinner /></h6>
 			) : (
 				<>
 					<h2 id='last-price' className='text-center text-primary animate__animated'>

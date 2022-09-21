@@ -89,7 +89,7 @@ export const Login= () => {
             <Image
               boxSize='250px'
               src='https://i.postimg.cc/bvRfWZr9/Logo-Definitivo-1-1.png'
-              alt='Dan Abramov'
+              alt='LogoCrypto'
                 />
           </Stack>
           <Box
@@ -133,7 +133,7 @@ export const Login= () => {
                   _hover={{
                     bg: 'rgb(140,82,255)',
                   }}>
-                  Login con Auth0
+                  Login con Auth0 o Google
                 </Button>
               </Stack>
             </Stack>
@@ -149,7 +149,8 @@ export const Login= () => {
     <div className="app">
       <div className="login-form">
         
-        {isSubmitted ? Swal.fire(
+        {isSubmitted ? 
+        Swal.fire(
           'Bien!',
           'Ingresaste sesion correctamente',
             'success'
