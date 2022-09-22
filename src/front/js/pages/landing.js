@@ -10,8 +10,10 @@ import card1 from "../../img/card1.png";
 import card4 from "../../img/card4.png";
 import card3 from "../../img/card3.png";
 import CoinChange from "../../img/CoinChange.png";
+import Stark from "../../img/stark.jpg";
+import "../../styles/index.css";
 
-export const Home = () => {
+export const Landing = () => {
 	const { store, actions } = useContext(Context);
 
 	return (
@@ -95,3 +97,6 @@ export const Home = () => {
 </div>
 	);
 };
+
+
+
