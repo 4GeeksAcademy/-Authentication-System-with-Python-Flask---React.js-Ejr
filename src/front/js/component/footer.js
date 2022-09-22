@@ -5,5 +5,6 @@ export const Footer = () => (
 		<p>
 		Copyright © 2022 Cacha el cambio by JKD 
 		</p>
+		<h5>Todos los derechos reservados</h5>
 	</footer>
 );
