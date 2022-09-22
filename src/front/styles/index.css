@@ -116,10 +116,27 @@ font-size: 30px;
     color: #2B3E84;
 font-size: 15px;
 }
-.modalinicio{
-    background: #37C9FC;
+.newslatter{
+    text-align: start;
+    color:  rgb(245, 244, 244);
+    margin-bottom: 10px;
 }
-
+.email-box{
+    display: flex;
+    justify-content: start;
+    height: 40px;
+    border-radius: 8px;
+}
+.mail{
+    font-size: 30px;
+    color: white;
+    margin-top: 5px;
+    margin-right: 5px;
+}
+.email-newsletter{
+    border-radius: 8px;
+    margin-right: 5px;
+}
 
 #favoritos, #interacciones {
     background-color: rgba(217,217,217,0.5);;
