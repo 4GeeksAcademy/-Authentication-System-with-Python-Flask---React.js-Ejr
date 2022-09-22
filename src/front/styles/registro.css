@@ -1,0 +1,48 @@
+/*
+    home.css: This website contains selectors only used in home.css
+
+    All pages share the styles on index.css but you should create 
+    one more css for each page that will contain the selected used 
+    on that page only (the ones not reused in other pages).
+*/
+
+body {
+    background-color : #2B3E84;
+}
+
+#formulario {
+    width: 400px;
+    background-color: rgba(217,217,217,0.5);
+    border-radius: 7%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+#title, #info-name, #info-number, #email, #password, #c-password {
+    color: rgb(241,214,71) ;
+    opacity: 1;
+}
+
+#frase {
+    background-color: rgb(241,214,71) ;
+    display: flex;
+    align-items: center;
+    width: 350px;
+    
+}
+
+#boton {
+    background-color: #2B3E84;
+    border-radius: 15px 15px 15px 15px;
+    color: white;
+    margin-top: 15px;
+    margin-bottom: 35px; 
+    display: flex;
+    margin-left: 50%;
+    width: 35%;
+    justify-content: center;
+    align-items: center;
+    height: 35px;
+}
