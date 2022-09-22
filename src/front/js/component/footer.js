@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
 export const Footer = () => (
-	<footer className="footer mt-auto py-3 text-center bg-light">
+	<footer className="footer mt-auto py-3 text-center bg-light align-items-end">
 		<p>
 		Copyright © 2022 CoinChange Powered by JKD
 		</p>
