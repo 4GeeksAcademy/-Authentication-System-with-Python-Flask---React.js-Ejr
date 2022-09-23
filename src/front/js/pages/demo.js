@@ -7,14 +7,19 @@ export const Demo = () => {
     const { store, actions } = useContext(Context);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    //const [token, setToken] = useState(localStorage.getItem("token"));
-
-    const handleClick = () => {
-        if (email != "" && password != "") actions.Login(email, password);
-        else return
+    const [alert, setAlert] = useState(false); // Si no contiene datos
+    const handleClick = (e) => {
+        e.preventDefault()
+        if(email == "" || password == ""){
+            setAlert(true)
+        }
+        if (email != "" && password != "") {
+            
+            actions.Login(email, password) 
+            }
 
     };
- 
+
     return (
         <div class="container login-container" >
             <div class="row login-row" >
@@ -30,32 +35,36 @@ export const Demo = () => {
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                         />
-                    <div class="form-group">
-                        <input
-                            id="pass"
-                            type="password"
-                            class="form-control"
-                            placeholder="Your Password *"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                        />
-                    </div>
-                    <div class="form-group" >
-                        <input
-                            
-                            onClick={handleClick}
-                            type="submit"
-                            class="btnSubmit"
-                            value="Login"
+                        <div class="form-group">
+                            <input
+                                id="pass"
+                                type="password"
+                                class="form-control"
+                                placeholder="Your Password *"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
                             />
-                        <Link to="/register">
-                            
-                            <input type="submit" class="btnSubmit" value="Register" />
-                        </Link>
-                         <div id="alertSI" class="alert alert-success alert-dismissible fade show" role="alert">Login ¡OK!</div>
-                         <div id="alertNO" class="alert alert-danger" role="alert">Complete los datos</div>         
-                        
-                    </div>
+                        </div>
+                        <div class="form-group" >
+
+
+                            <input
+
+                                onClick={(e) => {handleClick(e)}}
+
+                                type="submit"
+                                class="btnSubmit"
+                                value="Login"
+                            />
+                            <Link to="/register">
+
+                                <input type="submit" class="btnSubmit" value="Register" />
+                            </Link>
+                            {alert  && <div class="alert alert-danger" role="alert">
+                                Completa datos
+                            </div> }
+
+                        </div>
                     </form>
                     <div class="form-group">
                         <a href="#" class="btnForgetPwd">
