@@ -7,7 +7,7 @@ import { Demo } from "./pages/demo";
 import { Single } from "./pages/single";
 import injectContext from "./store/appContext";
 
-import { NavbarRegistro } from "./component/navbar";
+import { NavbarRegistro } from "./component/navbar-registro";
 import { Footer } from "./component/footer";
 
 //create your first component

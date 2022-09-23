@@ -1,6 +1,9 @@
 body {
   background: radial-gradient(ellipse at bottom, #2B3E84 50%, #000 100%);
-
+	font-family: 'Montserrat', sans-serif;
+	font-size: 16px;
+	line-height: 1.25;
+	letter-spacing: 1px;
 }
 
 .speech-bubble {
@@ -55,6 +58,7 @@ body {
 }
 
 #formulario {
+    position: relative;
     width: 400px;
     background-color: rgba(217,217,217,0.5);
     border-radius: 7%;
@@ -63,12 +67,18 @@ body {
     align-items: center;
     margin-top: 70px;
     height: 550px;
+    z-index:1;
+    background-repeat: no-repeat;
+    background-size: 400px 550px;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),  url(https://i.pinimg.com/originals/bb/10/06/bb1006f935d0f2aebd28f67c8c0a0e24.gif);
+    
 }
 
 #title, #info-name, #info-number, #email, #password, #c-password {
     color: rgba(240, 244, 250, 0.9);
     font: bolder;
-  }
+    z-index: 0;
+}
 
 #frase {
     background-color: rgb(241,214,71) ;
@@ -92,6 +102,7 @@ body {
 	text-decoration:none;
 	text-shadow:0px 1px 0px #3d768a;
   margin-top:5px;
+  z-index: 1;
 }
 
 #boton:hover {
