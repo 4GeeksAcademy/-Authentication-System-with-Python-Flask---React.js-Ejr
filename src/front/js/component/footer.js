@@ -5,5 +5,7 @@ export const Footer = () => (
 		<p>
 		Copyright © 2022 CoinChange Powered by JKD
 		</p>
+
+		
 	</footer>
 );

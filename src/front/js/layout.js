@@ -24,11 +24,12 @@ const Layout = () => {
                     <Navbarlanding />
                     <Routes>
                         <Route element={<Landing />} path="/" />
-                        <Route element={<Registro />} path="/" />
+                        <Route element={<Registro />} path="/registro" />
                         <Route element={<Demo />} path="/demo" />
                         <Route element={<Single />} path="/single/:theid" />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
+                    <Footer/>
                 </ScrollToTop>
             </BrowserRouter>
         </div>

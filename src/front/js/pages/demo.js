@@ -8,6 +8,7 @@ export const Demo = () => {
 
 	return (
 		<div className="container">
+			
 			<ul className="list-group">
 				{store.demo.map((item, index) => {
 					return (
@@ -28,14 +29,18 @@ export const Demo = () => {
 							<button className="btn btn-success" onClick={() => actions.changeColor(index, "orange")}>
 								Change Color
 							</button>
+
 						</li>
+						
 					);
 				})}
 			</ul>
 			<br />
 			<Link to="/">
 				<button className="btn btn-primary">Back home</button>
+				
 			</Link>
+			
 		</div>
 	);
 };

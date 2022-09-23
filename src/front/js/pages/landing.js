@@ -2,7 +2,6 @@ import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
 import rigoImageUrl from "../../img/rigo-baby.jpg";
-import "../../styles/home.css";
 import carrusel1 from "../../img/carrusel1.png";
 import carrusel2 from "../../img/carrusel2.png";
 import carrusel3 from "../../img/carrusel3.png";
@@ -112,7 +111,7 @@ export const Landing = () => {
             rendieminto posible al cambiar tu dinero. En CoinChange encontrarás
             las mejores opciones del mercado.
           </p>
-          <Link to="/demo">
+          <Link to="/registro">
             <button className="buttonregister">Me interesa</button>
           </Link>
         </div>
