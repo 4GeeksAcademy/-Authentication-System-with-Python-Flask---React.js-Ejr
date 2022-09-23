@@ -9,6 +9,7 @@ import { Single } from "./pages/single";
 import injectContext from "./store/appContext";
 
 import { Navbarlanding } from "./component/navbarlanding";
+import { NavbarRegistro } from "./component/navbar-registro";
 import { Footer } from "./component/footer";
 
 //create your first component

@@ -1,48 +1,112 @@
-/*
-    home.css: This website contains selectors only used in home.css
-
-    All pages share the styles on index.css but you should create 
-    one more css for each page that will contain the selected used 
-    on that page only (the ones not reused in other pages).
-*/
-
 body {
-    background-color : #2B3E84;
-}
-
-#formulario {
+    background: radial-gradient(ellipse at bottom, #2B3E84 50%, #000 100%);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 16px;
+      line-height: 1.25;
+      letter-spacing: 1px;
+  }
+  
+  .speech-bubble {
+    position: relative;
     width: 400px;
-    background-color: rgba(217,217,217,0.5);
-    border-radius: 7%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-}
-
-#title, #info-name, #info-number, #email, #password, #c-password {
-    color: rgb(241,214,71) ;
-    opacity: 1;
-}
-
-#frase {
-    background-color: rgb(241,214,71) ;
-    display: flex;
-    align-items: center;
-    width: 350px;
-    
-}
-
-#boton {
-    background-color: #2B3E84;
-    border-radius: 15px 15px 15px 15px;
-    color: white;
-    margin-top: 15px;
-    margin-bottom: 35px; 
-    display: flex;
-    margin-left: 50%;
-    width: 35%;
-    justify-content: center;
-    align-items: center;
-    height: 35px;
-}
+    height: 105px;
+    padding: 12px;
+    background: #FFFFFF;
+    -webkit-border-radius: 17px;
+    -moz-border-radius: 17px;
+    border-radius: 17px;
+    border: #BEBEBE solid 5px;
+    margin-top: 35px;
+  }
+  
+  .speech-bubble:after {
+    content: '';
+    position: absolute;
+    border-style: solid;
+    border-width: 9px 25px 9px 0;
+    border-color: transparent #FFFFFF;
+    display: block;
+    width: 0;
+    z-index: 1;
+    left: -25px;
+    top: 58px;}
+  
+    .speech-bubble:before {
+    position: absolute;
+    border-style: solid;
+    border-width: 15px 31px 15px 0;
+    border-color: transparent #BEBEBE;
+    display: block;
+    width: 0;
+    z-index: 0;
+    left: -38px;
+    top: 52px; }
+  
+  #imagen-comentario{
+    margin-top: 70px;
+  }
+  
+  #img-envio {
+    width:90%;
+    margin-left: 10%;
+  }
+  
+  #avatar {
+    margin-top:50px;
+    width:150px;
+    height:150px;
+  }
+  
+  #formulario {
+      position: relative;
+      width: 400px;
+      background-color: rgba(217,217,217,0.5);
+      border-radius: 7%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 120px;
+      height: 550px;
+      z-index:1;
+      background-repeat: no-repeat;
+      background-size: 400px 550px;
+      background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),  url(https://i.pinimg.com/originals/bb/10/06/bb1006f935d0f2aebd28f67c8c0a0e24.gif);
+      
+  }
+  
+  #title, #info-name, #info-number, #email, #password, #c-password {
+      color: rgba(240, 244, 250, 0.9);
+      font: bolder;
+      z-index: 0;
+  }
+  
+  #frase {
+      background-color: rgb(241,214,71) ;
+      display: flex;
+      align-items: center;
+      width: 20px;
+  }
+  
+  #boton {
+    box-shadow: 0px 10px 14px -7px #276873;
+      background:linear-gradient(to bottom, #599bb3 5%, #2B3E84 100%);
+      background-color:#599bb3;
+      border-radius:8px;
+      display:inline-block;
+      cursor:pointer;
+    border: none;
+      color:#ffffff;
+      font-family:Arial;
+      font-size: 15px;
+      padding: 7px;
+      text-decoration:none;
+      text-shadow:0px 1px 0px #3d768a;
+    margin-top:5px;
+    z-index: 1;
+  }
+  
+  #boton:hover {
+      background:linear-gradient(to bottom, #408c99 5%, #599bb3 100%);
+      background-color:#408c99;
+    scale: 1.1;
+  }

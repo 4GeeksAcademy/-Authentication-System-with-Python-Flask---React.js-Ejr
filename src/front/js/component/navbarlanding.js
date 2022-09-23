@@ -24,14 +24,7 @@ export const Navbarlanding = () => {
         </div>
 
         <div className="ml-auto">
-          {/* <button
-            type="button"
-            className="buttonNavbar"
-            data-bs-toggle="modal"
-            data-bs-target="#modalinicio"
-          >
-            Iniciar sesión
-          </button> */}
+          
       <Button variant="primary" onClick={handleShow} className="buttonNavbar">
         Iniciar sesión
       </Button>
@@ -155,7 +148,9 @@ export const Navbarlanding = () => {
                 </div></Modal.Body>
       </Modal>
           <Link to="/registro">
-            <button className="buttonNavbar">Registrarse</button>
+          <Button variant="primary" onClick={handleShow} className="buttonNavbar">
+          Registrarse
+          </Button>
           </Link>
         </div>
       </div>
