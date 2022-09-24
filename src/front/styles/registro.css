@@ -70,7 +70,7 @@ body {
       z-index:1;
       background-repeat: no-repeat;
       background-size: 400px 550px;
-      background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),  url(https://i.pinimg.com/originals/bb/10/06/bb1006f935d0f2aebd28f67c8c0a0e24.gif);
+      background-image: linear-gradient(rgba(179, 178, 178, 0.5), rgba(146, 145, 145, 0.5)),  url(https://i.pinimg.com/originals/bb/10/06/bb1006f935d0f2aebd28f67c8c0a0e24.gif);
       
   }
   

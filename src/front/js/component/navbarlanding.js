@@ -7,11 +7,31 @@ import inicio from "../../img/inicio.png";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 
+
 export const Navbarlanding = () => {
   const [show, setShow] = useState(false);
-
+  const [dato, setDato] = useState({
+    email: "",
+    contraseña:""
+  })
+  const datocliente = (event) => {
+    //console.log (event.target.value)
+    setDato({
+      ...dato,
+      [event.target.name] : event.target.value
+    })
+  }
+  const enviardatos = (event) => {
+       event.preventDefault();
+       console.log (dato.email+""+dato.contraseña)
+  } 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  
+  
+ const info = (event) => {
+  setDato(event.target.value)
+ };
 
   return (
     <nav className="navbar fixed-top">
@@ -29,7 +49,7 @@ export const Navbarlanding = () => {
         Iniciar sesión
       </Button>
 		  <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton style={{backgroundColor:"#2B3E84",width:"100%"}}>
+        <Modal.Header closeButton variant="white" style={{backgroundColor:"#2B3E84",width:"100%"}}>
           <Modal.Title ><h5
                     className="modal-title fw-bold"
                     id="modalTitle"
@@ -51,7 +71,7 @@ export const Navbarlanding = () => {
                           style={{ width: "70px", height: "70px" }}
                         />
                       </div>
-                      <form action="#">
+                      <form action="#"  onSubmit = {enviardatos}>
                         <div className="mb-4">
                           <label for="email" className="form-label">
                             Correo electrónico
@@ -60,16 +80,18 @@ export const Navbarlanding = () => {
                             type="email"
                             className="form-control"
                             name="email"
+                            onChange={datocliente}
                           ></input>
                         </div>
                         <div className="mb-4">
-                          <label for="password" className="form-label">
+                          <label for="contraseña" className="form-label">
                             Contraseña
                           </label>
                           <input
                             type="password"
                             className="form-control"
-                            name="password"
+                            name="contraseña"
+                            onChange={datocliente}
                           ></input>
                         </div>
                         <div className="mb-4 form-check">

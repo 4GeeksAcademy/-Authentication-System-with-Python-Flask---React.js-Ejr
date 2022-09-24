@@ -1,19 +1,21 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import logo from "../../img/logo.png";
 
 export const NavbarRegistro= () => {
 	return (
-		<nav className="navbar navbar-light bg-warning  d-flex justify-content-between p-2">
-			<div className="container">
+		<nav className="navbar">
+			<div className="container-fluid">
+				<div className="brand">
 				<Link to="/">
-				<a class="navbar-brand" href="#">
-     			 <img src="/docs/5.2/assets/brand/bootstrap-logo.svg" alt="" width="30" height="24" class="d-inline-block align-text-top"/>
-      				Cachai el cambio
-    			</a>
+				<a class="navbar-brand" href="#"/>
+				<img className="logo" src={logo} />
+                <span className="nombre">CoinChange</span>
 				</Link>
+				</div>
 				<div className="ml-auto">
-					<Link to="/demo">
-						<button className="btn btn-primary">Salir</button>
+					<Link to="/">
+						<button className="buttonNavbar">Salir</button>
 					</Link>
 				</div>
 			</div>

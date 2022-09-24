@@ -13,11 +13,14 @@ import Stark from "../../img/stark.jpg";
 import "../../styles/index.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
+import { Navbarlanding } from "../component/navbarlanding";
 
 export const Landing = () => {
   const { store, actions } = useContext(Context);
 
   return (
+    <>
+    <Navbarlanding/>
     <div className=" mt-5">
       <div
         id="carouselExampleIndicators"
@@ -178,5 +181,6 @@ export const Landing = () => {
         </form>
       </div>
     </div>
+    </>
   );
 };

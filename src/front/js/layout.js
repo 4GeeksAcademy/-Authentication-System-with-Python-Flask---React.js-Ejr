@@ -8,7 +8,7 @@ import { Demo } from "./pages/demo";
 import { Single } from "./pages/single";
 import injectContext from "./store/appContext";
 
-import { Navbarlanding } from "./component/navbarlanding";
+
 import { NavbarRegistro } from "./component/navbar-registro";
 import { Footer } from "./component/footer";
 
@@ -22,7 +22,6 @@ const Layout = () => {
         <div>
             <BrowserRouter basename={basename}>
                 <ScrollToTop>
-                    <Navbarlanding />
                     <Routes>
                         <Route element={<Landing />} path="/" />
                         <Route element={<Registro />} path="/registro" />
