@@ -15,11 +15,18 @@ export const Adm = () => {
           <h4 className="text-light font-weight-bold">Logo</h4>
         </div>
         <div className="menu">
-          <a href="#" className="d-block text-light mr-2 p-3" ><i class="icon ion-md-apps mr-2 lead"></i>Tablero</a>
-          <a href="#" className="d-block text-light mr-2 p-3"><i class="icon ion-md-people mr-2 lead"></i>Usuarios</a>
-          <a href="#" className="d-block text-light mr-2 p-3"><i class="icon ion-md-stats mr-2 lead"></i>Stocks</a>
-          <a href="#" className="d-block text-light mr-2 p-3"><i class="icon ion-md-person mr-2 lead"></i>Perfil</a>
-          <a href="#" className="d-block text-light mr-2 p-3"><i class="icon ion-md-settings mr-2 lead"></i>Configuracion</a>
+          <Link to="/adm">
+            <a href="#" className="d-block text-light mr-2 p-3" ><i class="icon ion-md-apps mr-2 lead"></i>Tablero</a>
+          </Link>
+          <Link to="/adm1">
+            <a href="#" className="d-block text-light mr-2 p-3"><i class="icon ion-md-people mr-2 lead"></i>Usuarios</a>
+          </Link>
+          <Link to="/stock"><a href="#" className="d-block text-light mr-2 p-3"><i class="icon ion-md-stats mr-2 lead"></i>Stocks</a></Link>
+          <Link to="/perfil"><a href="#" className="d-block text-light mr-2 p-3"><i class="icon ion-md-person mr-2 lead"></i>Perfil</a></Link>
+          <Link to="/configuracion"><a href="#" className="d-block text-light mr-2 p-3"><i class="icon ion-md-settings mr-2 lead"></i>Configuracion</a></Link>
+
+
+
         </div>
       </div>
       <div className="w-100">
@@ -36,7 +43,8 @@ export const Adm = () => {
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
               <ul class="navbar-nav ml-auto">
                 <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
+
+                  <a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-expanded="false">
                     <i class="icon ion-md-person mr-2 "></i> Usuario
                   </a>
                   <div class="dropdown-menu">
@@ -58,6 +66,41 @@ export const Adm = () => {
                   <div className="col-lg-9">
                     <h1 className="font-weight-bold-mb-0">Bienvenido al portal ADM</h1>
                     <p className="lead text-muted">Revisa tu informacion</p>
+                  </div>
+                  <div className="row row-panel">
+                    <div className="col-md-9">
+                      <div className="panel panel-default">
+                        <div className="panel-heading">
+
+                        </div>
+                        <div className="panel panel-body">
+                          <div className="col-md-3 info">
+                            <div className="well dash-box">
+                              <h2 className="name-info"><i class="icon ion-md-person"></i>&nbsp;508</h2>
+                              <h4>Usuarios</h4>
+                            </div>
+                          </div>
+                          <div className="col-md-3 info">
+                            <div className="well dash-box">
+                              <h2 className="name-info"><i class="icon ion-md-filing"></i>&nbsp;508</h2>
+                              <h4>Productos</h4>
+                            </div>
+                          </div>
+                          <div className="col-md-3 info">
+                            <div className="well dash-box">
+                              <h2 className="name-info"><i class="icon ion-md-card"></i>&nbsp;508</h2>
+                              <h4>Ventas</h4>
+                            </div>
+                          </div>
+                          <div className="col-md-3 info">
+                            <div className="well dash-box">
+                              <h2 className="name-info"><i class="icon ion-md-stats md-lead"></i>&nbsp;508</h2>
+                              <h4>Visitantes</h4>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                   <div className="col-lg-3 d-flex">
 

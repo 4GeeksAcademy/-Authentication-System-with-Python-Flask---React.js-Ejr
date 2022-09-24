@@ -34,9 +34,48 @@ a:hover{
     height: 100vh;
     padding-bottom: 5rem;
 }
-.tablero{
+/* .tablero{
     background: #d2b1b1;
     padding-top: 85px;
     padding-bottom: 85px;
+    width: 80%;
+    border-radius: 20px;
+
+} */
+.jumbotron-estilo{
+    width: 100vh;
+}
+.tablero-info{
+    display: flex;
+    justify-content: center;
+}
+hr:not([size]) {
+    height: 28px;
+    width: 114vh;
+}
+.panel-body{
+    display: flex;
+    
+    /* background: cadetblue; */
+    justify-content: space-between;
+}
+.info{
+    background: rgb(103, 103, 103);
+    text-align: center;
+    border-radius: 23px;
+    color: white;
+}
+.name-info{
+    padding-top: 11px;
+    margin: 0;
+}
+
+.col-md-3 {
+    flex: 0 0 auto;
+    width: 15%;
+}
+.row-panel{
+    display: flex;
+    justify-content: center;
 
 }
