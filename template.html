@@ -63,24 +63,7 @@
    
   
 
-      $(document).ready(function() {        
-          $("#alertSI").hide();
-          $("#alertNO").hide();
-         $("#form1").submit(function(e){
-             e.preventDefault();    
-             user = $.trim($("#user").val());
-             pass = $.trim($("#pass").val());
-             if(user.length>0 && pass.length>0){           
-                 $("#alertSI").fadeTo(2000, 500).slideUp(500, function() {
-                   $("#alertSI").slideUp(500);
-                 });        
-             }else{
-                 $("#alertNO").fadeTo(2000, 500).slideUp(500, function() {
-                   $("#alertNO").slideUp(500);
-                 });
-             }
-             });   
-     });
+    
           </script> 
   </body>
 </html>

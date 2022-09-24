@@ -17,7 +17,7 @@ export const Demo = () => {
             
             actions.Login(email, password) 
             }
-
+            
     };
 
     return (
@@ -60,7 +60,7 @@ export const Demo = () => {
 
                                 <input type="submit" class="btnSubmit" value="Register" />
                             </Link>
-                            {alert  && <div class="alert alert-danger" role="alert">
+                            {alert  && <div class="alert alert-danger" id="alertSI" role="alert">
                                 Completa datos
                             </div> }
 
