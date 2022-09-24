@@ -99,12 +99,12 @@ export const Login= () => {
             p={8}>
             <Stack spacing={4}>
               <FormControl id="email">
-                <FormLabel>Email </FormLabel>
+                <FormLabel>Email: </FormLabel>
                 <Input type="text" name='uname' required  />
                 {renderErrorMessage("uname")}
               </FormControl>
               <FormControl id="password">
-                <FormLabel>Contraseña</FormLabel>
+                <FormLabel>Contraseña:</FormLabel>
                 <Input type="password"  name="pass" required />
                 {renderErrorMessage("pass")}
               </FormControl>
@@ -114,7 +114,7 @@ export const Login= () => {
                   align={'start'}
                   justify={'space-between'}>
                   <Checkbox>Recordar</Checkbox>
-                  <Link color={'blue.400'}>Olvidaste la contraseña?</Link>
+                  <Link color={'blue.400'}>¿Olvidaste la contraseña?</Link>
                 </Stack>
                 <Button
                 type="submit"
@@ -146,8 +146,7 @@ export const Login= () => {
   
       
   return (
-    <div className="app">
-      <div className="login-form">
+    <>
         
         {isSubmitted ? 
         Swal.fire(
@@ -156,8 +155,7 @@ export const Login= () => {
             'success'
            ) : renderForm}
       
-      </div>
-    </div>
+     </>
   );
 }
 

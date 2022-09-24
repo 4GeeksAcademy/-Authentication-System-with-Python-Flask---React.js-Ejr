@@ -14,7 +14,7 @@ export const Home = () => {
 
   return (
     <div className="home">
-          <Perfil/>
+         {/* <Perfil/> */}
           <CurrrencyConverter />
           <br/>
           <br/>

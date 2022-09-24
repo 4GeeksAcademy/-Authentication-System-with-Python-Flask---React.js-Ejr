@@ -21,7 +21,7 @@ export const Perfil = () => {
         isAuthenticated &&(
             <div>
                  <WrapItem>
-                 <Avatar name='Dan Abrahmov' src={user.picture} alt={user.name}/>
+                 <Avatar name='imagenPerfil' src={user.picture} alt={user.name}/>
                  <Stack spacing={2}>
                  <Text fontSize='sm'>{user.name}</Text>
                 <Text fontSize='xs'>{user.email}</Text>

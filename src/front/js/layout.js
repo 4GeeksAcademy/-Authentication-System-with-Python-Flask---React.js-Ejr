@@ -23,11 +23,10 @@ const Layout = () => {
 
   return (
     <div>
-      <BrowserRouter basename={basename}>
-        <ScrollToTop>
+          
           {isAuthenticated ? <>
-          <Home/>
-           <BotonLogout/>
+          <SidebarWithHeader/>
+           <Home/>
           </>
           :<Login/>
           
@@ -37,8 +36,7 @@ const Layout = () => {
             <Route element={<h1>Not found!</h1>} />
           </Routes> */}
         
-        </ScrollToTop>
-      </BrowserRouter>
+       
     </div>
   );
 };
