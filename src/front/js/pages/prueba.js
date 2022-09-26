@@ -1,29 +1,76 @@
 import React, { useContext } from "react";
 import { Context } from "../store/appContext";
+import rigoImageUrl from "../../img/rigo-baby.jpg";
+import "../../styles/productos.css";
 import { Link } from "react-router-dom";
-import "../../styles/home.css";
+import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import { Navbar } from "../component/navbar";
 import { Footer } from "../component/footer";
+import { NavbarL } from "../component/navbarl";
+
 export const Prueba = () => {
     const { store, actions } = useContext(Context);
-
+    console.log(store.comidas)
     return (
 
-        <div class="row imghome">
-            <Navbar />
-            <div class="col-sm-6">
-                <div class="card-body">
-                    <h1 class="card-title razones">Razones por la cual cocinar en casa es mejor</h1>
-                    <ol>
-                        <li> Conocer los ingredientes: cuando comemos fuera de casa, es frecuente que no conozcamos en profundidad todos los ingredientes del plato elegido. </li>
-                        <li>Mayor control de las porciones: es frecuente que los comercios presenten porciones extremadamente grandes comparadas con las que deberían ser. </li>
-                        <li>Ahorro de dinero: por supuesto, no podemos dejar de lado este aspecto, ya que más allá de los beneficios sobre la salud, la comida casera permite ahorrar mucho dinero</li>
-                        <li>Mayor calidad de la comida: en los lugares de expendio de comidas, es frecuente que los ingredientes se compren a granel, escogiendo al mismo tiempo, productos de menor costo para abaratar precios e incrementar sus ganancias. Y si ésto no es así, el costo del plato que usted elige, suele ser muy elevado. En cambio, en su casa, usted puede elegir productos frescos, naturales y de mejor calidad, Cocinando en su hogar usted puede asegurarse de la calidad de los alimentos que consume</li>
-                    </ol>
+        <div className="row row-2">
+            
+            <NavbarL />
+            <div className=" container-productos sub-body">
+                <div className="row cajas">
+                    {store.vipdata.map((e,i)=>{
+                        return(
+
+                    <div class="card card-sub" >
+                        <h2>${e.price}/{e.name}</h2>
+                        <div class="card-body">
+                            
+                            <p class="card-text">{e.recetas}</p>
+                            <p class="card-text">{e.support}</p>
+                            <p class="card-text">{e.descuento}</p>
+                            <Link to="/razones">
+
+						<button className="btn btn-secondary">Learn More</button>
+					</Link>
+                            <button onClick={()=> actions.getAddTask(e.name)} type="button" className="btn btn-outline-dark m-2 boton"> <i class="fa-solid fa-plus"></i></button>
+                        </div>
+                    </div>
+                        )
+                    })}
+<PayPalScriptProvider
+            options={{
+              "client-id":
+                "AWTfwnUiraZVgePkbmwOzkhD2h0OLmv4e6UFxflq_kjhXt_3kPybYDkdH2vHxQduUvzRdwMlXKskJUyk",
+            }}
+          >
+            <PayPalButtons
+              createOrder={(data, actions) => {
+                return actions.order.create({
+                  purchase_units: [
+                    {
+                      amount: {
+                        value: "20.00",
+                      },
+                    },
+                  ],
+                });
+              }}
+              onApprove={async (data, actions) => {
+                const details = await actions.order.capture();
+                const name = details.payer.name.given_name;
+                alert("Transaction completed by " + name);
+              }}
+              
+             />
+  
+          </PayPalScriptProvider>
                 </div>
             </div>
             <Footer />
+
         </div>
+
+
 
     );
 };
