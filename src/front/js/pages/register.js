@@ -9,9 +9,11 @@ export const Register = () => {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [telefono, setTelefono] = useState("");
+    const [direccion, setDireccion] = useState("");
 
     const FuncionRegistro = () => {
-      if (name != "" && email != "" && password != "") actions.Register(name, email, password); //
+      if (name != "" && email != "" && password != "" && telefono != "" && direccion !="") actions.Register(name, email, password, direccion, telefono); //
       else alert("Completar todos los campos");
     };
 
@@ -28,7 +30,13 @@ export const Register = () => {
                         <input type="text" class="form-control" placeholder="Your Email" value={email} onChange={(e) => setEmail(e.target.value)}/>
                     </div>
                     <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Your Direccion" value={direccion} onChange={(e) => setDireccion(e.target.value)}/>
+                    </div>
+                    <div class="form-group">
                         <input type="password" class="form-control" placeholder="Your Password" value={password} onChange={(e) => setPassword(e.target.value)}/>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" class="form-control" placeholder="Your Phone" value={telefono} onChange={(e) => setTelefono(e.target.value)}/>
                     </div>
                     <div class="form-group">
                         <Link to="/demo">

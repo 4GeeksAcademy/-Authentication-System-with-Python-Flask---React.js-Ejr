@@ -9,7 +9,17 @@ import { NavbarL } from "../component/navbarl";
 
 export const Productos = () => {
     const { store, actions } = useContext(Context);
-console.log(store.comidas)
+    const handleClick = (e) => {
+        var src = $(e).find('img').attr('src');
+        e.preventDefault()
+        swal({
+            title: "Hello World",
+            imageUrl:"../../img/rigo-baby.jgp",
+            imageHeight:412
+         });
+
+    };
+    console.log(store.comidas)
     return (
 
         <div className="row row-2">
@@ -27,34 +37,30 @@ console.log(store.comidas)
                 </Link>
 
             </div>
-            
+
             <div className=" container-productos ">
                 <div className="row cajas">
-            {store.comidas.map((e,i)=>{
-                console.log(e)
-                return(<div className="col-md-4" key={i}>
-                <figure  >
-                    <img src={e.url} ></img>
-                    <div className="capa">
-                        <h3> {e.name}</h3>
-                        <p>Ingredientes</p>
-                        <p>{e.ingredientes} <br /> <p>10<strong>.500$</strong></p>
-                        </p>
+                    {store.comidas.map((e, i) => {
+                        console.log(e)
+                        return (<div className="col-md-4" key={i}>
+                            <figure  >
+                                <img src={e.url} ></img>
+                                <div className="capa" onClick={(e) => {handleClick(e)}}>
+                                    <h3 className="text-comida"> {e.name}</h3>
+                                    
+                                    
 
-                        <Link to="/">
+                                    
+                                </div>
+                            </figure>
 
-                            <button type="button" class="btn btn-outline-dark boton">Comprar</button>
-                        </Link>
-                        <button onClick={()=> actions.getAddTask(e.name)} type="button" className="btn btn-outline-dark m-2 boton"> <i class="fa-solid fa-plus"></i></button>
-                    </div>
-                </figure>
-            </div>)
-                    
+                        </div>)
+
                     })}
                 </div>
             </div>
             <Footer />
-            
+
         </div>
 
 

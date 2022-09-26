@@ -28,9 +28,13 @@ def set_user():
         return 'Falta email'
     if ('password' not in datos):
         return 'Falta Password'
+    if ('direccion' not in datos):
+        return 'Falta Direccion'
+    if ('telefono' not in datos):
+        return 'Falta Telefono'
     new_user = User.query.filter_by(email = datos['email']).first()
     if (new_user is None):
-        new_user = User(name = datos['name'], email = datos['email'], password = datos['password'], is_active = True)
+        new_user = User(name = datos['name'], email = datos['email'], password = datos['password'],direccion = datos['direccion'],telefono = datos['telefono'], is_active = True)
     db.session.add(new_user)
     db.session.commit()
     return 'Usuario Registrado'

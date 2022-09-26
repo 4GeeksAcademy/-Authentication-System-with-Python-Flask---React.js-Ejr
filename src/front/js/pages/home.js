@@ -23,6 +23,8 @@ export const Home = () => {
             muchas veces, la falta de orden puede ser la causa de una
             alimentación desequilibrada y poco sana.
           </p>
+
+
           
         </div>
       </div>

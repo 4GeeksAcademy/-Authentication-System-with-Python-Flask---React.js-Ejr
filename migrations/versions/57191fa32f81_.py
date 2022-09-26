@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 61d19da328f6
+Revision ID: 57191fa32f81
 Revises: 
-Create Date: 2022-09-20 21:21:24.910522
+Create Date: 2022-09-26 23:48:01.008337
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '61d19da328f6'
+revision = '57191fa32f81'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -24,12 +24,18 @@ def upgrade():
     sa.Column('url', sa.String(length=1000), nullable=False),
     sa.Column('ingredientes', sa.String(length=1000), nullable=False),
     sa.Column('tiempo', sa.String(length=120), nullable=True),
+    sa.Column('calorias', sa.String(length=1000), nullable=False),
+    sa.Column('porcion', sa.String(length=1000), nullable=False),
+    sa.Column('dificultad', sa.String(length=1000), nullable=False),
     sa.PrimaryKeyConstraint('uid')
     )
     op.create_table('platos',
     sa.Column('uid', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=120), nullable=False),
     sa.Column('url', sa.String(length=1000), nullable=False),
+    sa.Column('calorias', sa.String(length=1000), nullable=False),
+    sa.Column('porcion', sa.String(length=1000), nullable=False),
+    sa.Column('dificultad', sa.String(length=1000), nullable=False),
     sa.Column('ingredientes', sa.String(length=1000), nullable=False),
     sa.Column('tiempo', sa.String(length=120), nullable=True),
     sa.PrimaryKeyConstraint('uid')
@@ -39,6 +45,8 @@ def upgrade():
     sa.Column('name', sa.String(length=120), nullable=False),
     sa.Column('email', sa.String(length=120), nullable=False),
     sa.Column('password', sa.String(length=80), nullable=False),
+    sa.Column('direccion', sa.String(length=80), nullable=False),
+    sa.Column('telefono', sa.String(length=80), nullable=False),
     sa.Column('is_active', sa.Boolean(), nullable=False),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('email')
@@ -49,6 +57,9 @@ def upgrade():
     sa.Column('url', sa.String(length=1000), nullable=False),
     sa.Column('ingredientes', sa.String(length=1000), nullable=False),
     sa.Column('tiempo', sa.String(length=120), nullable=True),
+    sa.Column('calorias', sa.String(length=1000), nullable=False),
+    sa.Column('porcion', sa.String(length=1000), nullable=False),
+    sa.Column('dificultad', sa.String(length=1000), nullable=False),
     sa.PrimaryKeyConstraint('uid')
     )
     op.create_table('vip',
@@ -57,7 +68,6 @@ def upgrade():
     sa.Column('price', sa.String(length=1000), nullable=False),
     sa.Column('recetas', sa.String(length=1000), nullable=False),
     sa.Column('support', sa.String(length=120), nullable=True),
-    sa.Column('descuento', sa.String(length=120), nullable=True),
     sa.PrimaryKeyConstraint('uid')
     )
     op.create_table('favPlatos',

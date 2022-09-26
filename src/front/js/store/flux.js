@@ -25,7 +25,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       ],
     },
     actions: {
-      Register: (name, email, password) => {
+      Register: (name, email, password,direccion,telefono) => {
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
 
@@ -33,6 +33,8 @@ const getState = ({ getStore, getActions, setStore }) => {
           name: name,
           email: email,
           password: password,
+          telefono: telefono,
+          direccion: direccion,
         });
         var requestOptions = {
           method: "POST",
