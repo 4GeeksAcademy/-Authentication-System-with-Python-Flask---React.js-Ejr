@@ -23,7 +23,7 @@ export const Navbarlanding = () => {
   }
   const enviardatos = (event) => {
        event.preventDefault();
-       console.log (dato.email+""+dato.contraseña)
+       //console.log (dato.email+""+dato.contraseña)
   } 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);

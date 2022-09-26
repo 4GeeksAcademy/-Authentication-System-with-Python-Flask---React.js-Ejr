@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import {useForm} from 'react-hook-form'; 
 import { Context } from "../store/appContext";
 import dinero from "../../img/dinero.png";
@@ -10,10 +10,25 @@ import {NavbarRegistro} from "../component/navbar-registro";
 export const Registro = () => {
 	const { store, actions } = useContext(Context);
     
-    const {register,errors,handleSubmit} = useForm ();
+    const [dato2,setDato2] = useState ({
+		nombre:'',
+		mail:'',
+		contraseña:'',
+		contraseña:'',
+		telefono:''
+	})
 
-	const onSubmit = (data) => {
-		console.log(data)
+	const nuevodato = (event) => {
+		//console.log (event.target.value)
+		setDato2({
+			...dato2,
+			[event.target.name] : event.target.value
+		  })
+	}
+
+	const enviardatos2 = (event) => {
+		event.preventDefault();
+		//console.log (dato2.nombre+""+dato2.mail+""+dato2.contraseña+""+dato2.contraseña+""+dato2.telefono)
 	}
 
 	return (
@@ -28,29 +43,29 @@ export const Registro = () => {
 					</div>
 				</div>
 				<div>
-					<form id="formulario" className="" onSubmit={handleSubmit(onSubmit)}>
+					<form id="formulario" onSubmit={enviardatos2}>
 						<h3 id="title" className="my-3">Regístrate</h3>
 						<div className="mb-3">
 							<label id="info-name" for="exampleInputName" className="form-label">Ingresa tu nombre y apellido</label>
-							<input type="text" className="form-control" id="name" name="nombre" ref={register({required:true, maxLength:20,message:'Campo obligatorio'})}/>
+							<input type="text" className="form-control" id="name" name="nombre" onChange={nuevodato}/>
 						</div>
 						<div className="mb-3">
 							<label id="email" for="exampleInputEmail1" className="form-label">Correo Electronico</label>
-							<input type="email" name="mail" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" ref={register({required:true, message:'Campo obligatorio'})} />
+							<input type="email" name="mail" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"onChange={nuevodato}/>
 						</div>
 						<div className="mb-3">
 							<label id="password" for="exampleInputPassword1" className="form-label">Contraseña</label>
-							<input type="password" name="contraseña" className="form-control" id="exampleInputPassword1" ref={register({required:true, min: 8, max:12, message:'Campo obligatorio'})}/>
+							<input type="password" name="contraseña" className="form-control" id="exampleInputPassword1" onChange={nuevodato}/>
 						</div>
 						<div className="mb-3">
 							<label id="c-password" for="exampleInputPassword1" className="form-label">Confirma tu contraseña</label>
-							<input type="password" name="contraseña" className="form-control" id="exampleInputPassword1" ref={register({required:true, min: 8, max:12, message:'Campo obligatorio'})}/>
+							<input type="password" name="contraseña" className="form-control" id="exampleInputPassword1" onChange={nuevodato} />
 						</div>
 						<div className="mb-3">
 							<label id="info-number" for="exampleInputNumber" className="form-label">Número Telefónico</label>
-							<input type="number" name="telefono" className="form-control" id="number" placeholder="+56 9" ref={register({required:true, min: 9, max:12, message:'Campo obligatorio'})}/>
+							<input type="number" name="telefono" className="form-control" id="number" placeholder="+56 9" onChange={nuevodato} />
 						</div>
-						<Link to="/home"><button type="submit" id="boton">Crear Usuario</button></Link>
+						<button type="submit" id="boton">Crear Usuario</button>
 
 					</form>
 				</div>
