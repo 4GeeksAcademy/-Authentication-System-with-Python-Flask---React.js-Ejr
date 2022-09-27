@@ -71,6 +71,12 @@ export const Demo = () => {
                             Forget Password?
                         </a>
                     </div>
+               <div>
+                <Link to="/loginadm">
+                
+               <i class="fa-solid fa-arrow-right casa"></i>
+                </Link>
+               </div>
                 </div>
                 <div class="col-md-6 login-form-2">
                     <div class="login-logo">

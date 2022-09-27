@@ -48,7 +48,7 @@ export const NavbarL = () => {
 								return (
 									<div key={i} className="dropdown-item" >
 										<div className="row">
-											<div className="col">{e.name}</div>
+											<div className="col">{e.price}</div>
 											<div className="col">
 												<a className="badge badge-danger "
 													onClick={() => actions.getBorrar(i)}> {/* llamamos a la funcion borrar con el  identificador */}
@@ -66,9 +66,9 @@ export const NavbarL = () => {
 								
 							</div>
 						}
+						costo total = 0$
 						
 					</div>
-
 				</div>
 			</div>
 		</nav>
