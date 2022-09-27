@@ -9,17 +9,6 @@ import { NavbarL } from "../component/navbarl";
 
 export const Productos = () => {
     const { store, actions } = useContext(Context);
-    const handleClick = (e) => {
-        var src = $(e).find('img').attr('src');
-        e.preventDefault()
-        swal({
-            title: "Hello World",
-            imageUrl:"../../img/rigo-baby.jgp",
-            imageHeight:412
-         });
-
-    };
-    console.log(store.comidas)
     return (
 
         <div className="row row-2">
@@ -45,12 +34,25 @@ export const Productos = () => {
                         return (<div className="col-md-4" key={i}>
                             <figure  >
                                 <img src={e.url} ></img>
-                                <div className="capa" onClick={(e) => {handleClick(e)}}>
+                                <div className="capa" onClick={(e) => {
+                                    Swal.fire({
+                                        title: 'Sweet!',
+                                        text: 'Modal with a custom image.',
+                                        imageUrl: 'https://images.pexels.com/photos/4871119/pexels-photo-4871119.jpeg',
+                                        imageWidth: 400,
+                                        imageHeight: 200,
+                                        imageAlt: 'Custom image',
+                                        html:
+                                            'You can use <b>bold text{e.name}</b>, ' +
+                                            '<a href="//sweetalert2.github.io">links</a> ' +
+                                            'and other HTML tags' +'${e.name}'
+                                    })
+                                }}>
                                     <h3 className="text-comida"> {e.name}</h3>
-                                    
-                                    
 
-                                    
+
+
+
                                 </div>
                             </figure>
 

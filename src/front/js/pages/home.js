@@ -4,6 +4,7 @@ import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 
 import { Link } from "react-router-dom";
 import "../../styles/home.css";
+import "../../styles/productos.css";
 import { Navbar } from "../component/navbar";
 import { Footer } from "../component/footer";
 import { Razones } from "./razones";
@@ -24,7 +25,7 @@ export const Home = () => {
             alimentación desequilibrada y poco sana.
           </p>
 
-
+         
           
         </div>
       </div>

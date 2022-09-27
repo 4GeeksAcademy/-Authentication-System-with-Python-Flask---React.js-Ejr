@@ -112,10 +112,12 @@ class FavPlatos(db.Model):
     platos_uid = db.Column(db.Integer, db.ForeignKey('platos.uid'))
     dulce_uid = db.Column(db.Integer, db.ForeignKey('dulce.uid'))
     veget_uid = db.Column(db.Integer, db.ForeignKey('veget.uid'))
+
     user = db.relationship(User)
     platos = db.relationship(Platos)
     veget = db.relationship(Veget)
     dulce = db.relationship(Dulce)
+    
 
     def serialize(self):
         return {
@@ -124,6 +126,7 @@ class FavPlatos(db.Model):
             "plato_uid": self.plato_uid,
             "dulce_uid" : self.dulce_uid,
             "veget_uid": self.veget_uid,
+           
         }
 class Vip(db.Model):
     __tablename__ = 'vip'
