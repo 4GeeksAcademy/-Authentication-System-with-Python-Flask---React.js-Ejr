@@ -116,6 +116,7 @@ class FavPlatos(db.Model):
     platos = db.relationship(Platos)
     veget = db.relationship(Veget)
     dulce = db.relationship(Dulce)
+    
 
     def serialize(self):
         return {

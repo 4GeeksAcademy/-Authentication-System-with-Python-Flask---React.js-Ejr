@@ -53,6 +53,8 @@ export const NavbarL = () => {
 												<a className="badge badge-danger "
 													onClick={() => actions.getBorrar(i)}> {/* llamamos a la funcion borrar con el  identificador */}
 													<i className="far fa-trash-alt"></i></a></div>
+
+													
 										</div>
 									</div>
 								);
@@ -61,7 +63,7 @@ export const NavbarL = () => {
 							:
 							<div>
 
-								empty
+								
 							</div>
 						}
 						

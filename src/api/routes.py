@@ -216,3 +216,4 @@ def deleteDulceFav(position):
     FavPlatos.query.filter(FavPlatos.id == position).delete()
     db.session.commit()
     return "favorito Eliminado"
+
