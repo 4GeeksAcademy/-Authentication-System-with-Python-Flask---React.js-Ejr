@@ -4,13 +4,12 @@ import ScrollToTop from "./component/scrollToTop";
 
 import { Landing } from "./pages/landing";
 import { Registro } from "./pages/registro";
+import { Perfil } from "./pages/perfil";
 import { Demo } from "./pages/demo";
 import { Single } from "./pages/single";
 import injectContext from "./store/appContext";
-
-
-import { NavbarRegistro } from "./component/navbar-registro";
 import { Footer } from "./component/footer";
+
 
 //create your first component
 const Layout = () => {
@@ -25,6 +24,7 @@ const Layout = () => {
                     <Routes>
                         <Route element={<Landing />} path="/" />
                         <Route element={<Registro />} path="/registro" />
+                        <Route element={<Perfil />} path="/perfil" />
                         <Route element={<Demo />} path="/demo" />
                         <Route element={<Single />} path="/single/:theid" />
                         <Route element={<h1>Not found!</h1>} />

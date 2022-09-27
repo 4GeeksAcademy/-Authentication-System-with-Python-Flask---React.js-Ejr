@@ -1,0 +1,99 @@
+body {
+    background: radial-gradient(ellipse at bottom, #2B3E84 50%, #000 100%);
+}
+
+#img-perfil {
+  width: 200px;
+  height: 200px;
+  border-radius: 75%;
+  margin-top: 30px;
+}
+
+#favoritos,
+#interacciones {
+  background-color: rgba(217, 217, 217, 0.5);
+  width: 300px;
+  height: 300px;
+  display: flex;
+  justify-content: center;
+  border-radius: 20px 20px;
+  opacity: 0.8;
+}
+
+h2 {
+  color: rgba(240, 244, 250, 0.9);
+}
+
+#formulario {
+  width: 400px;
+  background-color: rgba(217, 217, 217, 0.5);
+  border-radius: 20px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  height: 500px;
+  margin-top: 30px;
+}
+
+#info-name,
+#info-number,
+#email,
+#password,
+#c-password {
+  color: rgba(240, 244, 250, 0.9);
+  opacity: 1;
+  font-size: 15px;
+}
+
+#boton {
+  box-shadow: 0px 10px 14px -7px #276873;
+  background: linear-gradient(to bottom, #599bb3 5%, #2b3e84 100%);
+  background-color: #599bb3;
+  border-radius: 8px;
+  display: inline-block;
+  cursor: pointer;
+  border: none;
+  color: #ffffff;
+  font-family: Arial;
+  font-size: 15px;
+  padding: 7px;
+  text-decoration: none;
+  text-shadow: 0px 1px 0px #3d768a;
+  margin-top: 5px;
+}
+
+#boton2 {
+  box-shadow: 0px 10px 14px -7px #276873;
+  background: linear-gradient(to bottom, #599bb3 5%, #2b3e84 100%);
+  background-color: #599bb3;
+  border-radius: 8px;
+  display: inline-block;
+  cursor: pointer;
+  border: none;
+  color: #ffffff;
+  font-family: Arial;
+  font-size: 15px;
+  padding: 5px;
+  text-decoration: none;
+  text-shadow: 0px 1px 0px #3d768a;
+}
+
+
+#boton:hover , #boton2:hover {
+    background:linear-gradient(to bottom, #408c99 5%, #599bb3 100%);
+    background-color:#408c99;
+    scale: 1.1;
+}
+
+#data {
+  height: 35px;
+  margin-left: 5%;
+  margin-right: 5%;
+}
+
+#name {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
