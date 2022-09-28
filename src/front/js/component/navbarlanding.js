@@ -174,6 +174,11 @@ export const Navbarlanding = () => {
           Registrarse
           </Button>
           </Link>
+          <Link to="/pagina-home">
+          <Button variant="primary" onClick={handleShow} className="buttonNavbar">
+          Home
+          </Button>
+          </Link>
         </div>
       </div>
     </nav>

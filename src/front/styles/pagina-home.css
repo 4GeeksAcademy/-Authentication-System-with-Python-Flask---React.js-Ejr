@@ -1,0 +1,153 @@
+body {
+    background: radial-gradient(ellipse at bottom, #2B3E84 50%, #000 100%);
+}
+
+.nombre_pagina-home{
+color: #2B3E84;
+font-size: 35px;
+margin-left: 20px;
+margin-top: 50px;
+}
+
+
+
+
+#pieDP{
+    background-color:rgb(236, 10, 10);
+    color: #2B3E84 ;
+}
+
+.logo_ph{
+    width: 75px;
+    height: 75px;
+}
+
+.buttonNavbar_ph{
+    box-shadow: 0px 10px 14px -7px #276873;
+    border-radius:8px;
+    background:linear-gradient(to bottom, #599bb3 5%, #2B3E84 100%);
+    color: whitesmoke;
+    margin-right: 10px;
+    text-decoration:none;
+    text-shadow:0px 1px 0px #3d768a;
+    font-size: 15px;
+    padding: 7px;    
+}
+
+h1 {
+    color: rgb(245, 244, 244);
+    text-align: center; 
+}
+
+.container-pagina-home{
+
+    height: 70rem;
+}
+
+#formulario_ph {
+    
+    background-color: rgba(217,217,217,0.5);
+    border-radius: 20px 20px ;    
+    position: absolute;
+    color: white;
+    width: 750px;
+    height: 350px;
+    left: 500px;
+    top: 150px;
+}
+
+#ingresar-monto, #monto-recibir {
+    box-shadow: 0px 10px 14px -7px #276873;
+    border-radius:8px;
+    background:linear-gradient(to bottom, #599bb3 5%, #2B3E84 100%);
+    color: white;
+    width: 360px;
+    height: 30px;
+    text-align: center;
+    
+}
+
+#tipo-cambio{
+    box-shadow: 0px 10px 14px -7px #276873;
+    border-radius:8px;
+    background:linear-gradient(to bottom, #599bb3 5%, #2B3E84 100%);
+    width: 360px;
+    height: 30px;
+    color: white;
+    text-align: center;
+}
+
+
+#sleccionDivisa {
+    box-shadow: 0px 10px 14px -7px #276873;
+    border-radius:8px;
+    background:linear-gradient(to bottom, #599bb3 5%, #2B3E84 100%);
+    color: white;
+    display: flex;
+    width: 100%;
+    align-items: center;
+    height: 30px;
+}
+
+#botonCambiar {
+    box-shadow: 0px 10px 14px -7px #276873;
+    border-radius:8px;
+    background:linear-gradient(to bottom, #599bb3 5%, #2B3E84 100%);
+    color: white;
+    width: 370px;
+    height: 30px;
+    text-align: center;
+}
+
+#data {
+    margin-left: 5%;
+    margin-right: 5%;
+    width: 200x;
+    height: 35px;
+    align-items: center;
+  
+}
+
+#cartaCasa, #cartaCasa2, #cartaCasa3{
+background-color: rgba(217,217,217,0.5);
+border-radius: 20px 20px ;
+color: white;
+width: 401px;
+height: 450px;
+float: left;
+top: 550px;
+left: 110px;
+margin-right: 120px;
+align-items: center;
+
+}
+
+#CambioRecibirCasa1, #CambioRecibirCasa2, #CambioRecibirCasa3{
+  
+width: 300px;
+height: 50px;
+}
+
+#infooRecibirCasa1, #infooRecibirCasa2, #infooRecibirCasa3{
+width: 300px;
+height: 150px;
+justify-content: center;
+
+}
+
+#fotocartacasa{   
+position: absolute;
+width: 150px;
+height: 150px;
+left: 130px;
+top: 0px;
+}
+
+#botonlinkCCC{
+box-shadow: 0px 10px 14px -7px #276873;
+border-radius:8px;
+background:linear-gradient(to bottom, #599bb3 5%, #2B3E84 100%);
+color: white;    
+width: 170px;
+height: 40px;
+}
