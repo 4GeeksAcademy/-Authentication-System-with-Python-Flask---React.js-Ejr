@@ -24,10 +24,10 @@ class User(db.Model):
             "telefono": self.telefono,
         }
 
-class CasasDeCambio(db.Model): #Se almacena aqui la informacion que sacamos del scraping?
+class CasasDeCambio(db.Model): 
     __tablename__ = "casasdecambio"
-    id = db.Column(db.Integer, db.ForeignKey("user.id"))
-    nombrecasa = db.Column(db.String(100), primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
+    nombrecasa = db.Column(db.String(100), unique=True, nullable=False)
     #La columna fecha es String porque puede llevar caracteres para separar los numeros? O simplemente es Integer
     fecha = db.Column(db.String(40), unique=False, nullable=False) 
     moneda = db.Column(db.String(40), unique=True, nullable=False)
@@ -48,10 +48,10 @@ class CasasDeCambio(db.Model): #Se almacena aqui la informacion que sacamos del 
 class Favoritos(db.Model):
     __tablename__ = "favoritos"
     id = db.Column(db.Integer, primary_key=True)
+    id_user = db.Column(db.Integer, db.ForeignKey("user.id"))
     nombrecasa = db.Column(db.String(100), db.ForeignKey("casasdecambio.nombrecasa"))
-    precio = db.Column(db.String(100), unique=True, nullable=False)
     rel_nombrecasa = db.relationship('CasasDeCambio')
-    rel_precio = db.relationship("CasasDeCambio")
+   
 
     def __repr__(self):
         return f'<Favoritos {self.nombrecasa}>'
@@ -59,6 +59,30 @@ class Favoritos(db.Model):
     def serialize(self):
         return {
             "id": self.id,
+            "id_user": self.id_user,
             "nombrecasa": self.nombrecasa,
-            "precio": self.precio,
+            
         }
+
+class Tasacion(db.Model): #Se almacena aqui la informacion que sacamos del scraping
+    __tablename__ = "tasacion"
+    id = db.Column(db.Integer, primary_key=True)
+    nombrecasa = db.Column(db.String(100), db.ForeignKey("casasdecambio.nombrecasa"))
+    fecha = db.Column(db.String(40), unique=False, nullable=False) 
+    moneda = db.Column(db.String(40), unique=True, nullable=False)
+    precio = db.Column(db.Float, unique=False, nullable=False)
+    rel_nombrecasa = db.relationship('CasasDeCambio')
+
+
+    def __repr__(self):
+        return f'<Tasacion {self.nombrecasa}>'
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "nombrecasa": self.nombrecasa,
+            "fecha" : self.fecha,
+            "moneda" : self.moneda,
+            "precio" : self.precio,
+        }
+            

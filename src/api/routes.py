@@ -9,16 +9,50 @@ api = Blueprint('api', __name__)
 
 #Registro
 @api.route('/registro', methods=['GET','POST'])
-def registro():
+def registro(correo):
 
-    body= request.get_json()
+    correo = request.get_json('correo')
+    nombre = request.get_json('nombre')
+    apellido = request.get_json('apellido')
+    contrasena = request.get_json('contrasena')
+    telefono = request.get_json('telefono')
+    user = User.query.filter_by(correo=correo).first()
+    
+    if(user):
+        return jsonify({
+            "mensaje": "Usuario ya registrado"
+        }),200
+    
+    else:
+        user.correo = correo
+        user.nombre = nombre
+        user.apellido = apellido
+        user.contrasena = contrasena
+        user.telefono = telefono
+        db.session.add()
+        db.session.commit()
+
+        return jsonify({
+            "Mensaje" : "El usuario ha sido registrado exitosamente"
+        })
+
+    
+
+    """info = request.get_json()
+    info_serializada = list(map( lambda user : user.serialize(), info))
+    print(info)
 
     return jsonify({
+        "mensaje" : "Informacion de usuarios",
+        "user" : info_serializada,
+    })"""
+
+    """return jsonify({
         "nombre": body['nombre'] ,
         "apellido": body['apellido'] ,
         "correo": body['correo'] ,
         "telefono": body['telefono'] ,
-    }), 200
+    }), 200"""
 
 #Inicio de Sesion
 @api.route('/login', methods=['GET', 'POST'])
@@ -61,3 +95,17 @@ def home():
     }
 
     return jsonify(response_body), 200
+
+"""@api.route('/favorito/user/<int:id_user>', methods=['POST'])
+def favorito():
+    body = reqeust.get_json() #rcibir los datos del usuario
+
+    nuevo_favorito = Favorito(user=[])
+
+
+
+    response_body = {
+        "message": "Favorito del usuario"
+    }
+
+    return jsonify(response_body), 200"""
