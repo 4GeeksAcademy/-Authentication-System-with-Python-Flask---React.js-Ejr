@@ -3,8 +3,6 @@ import { Context } from "../store/appContext";
 import logo from "../../img/logo.png";
 import "../../styles/pagina-home.css";
 import { Navbarhome } from "../component/navbarhome";
-import { Footer } from "../component/footer";
-
 
 
 export const PaginaHome = () => {
@@ -236,7 +234,6 @@ export const PaginaHome = () => {
         </div>
       </div>
     </div>
-<Footer></Footer>
     </>
   );
 };

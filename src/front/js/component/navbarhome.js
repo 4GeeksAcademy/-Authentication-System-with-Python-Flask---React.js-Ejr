@@ -16,7 +16,7 @@ export const Navbarhome = () => {
 					<Link to="/perfil">
 						<button className="buttonNavbar_ph">Perfil/Usuario</button>
 					</Link>
-					<Link to="/casas-de-cambio">
+					<Link to="/casas-cambio">
 						<button className="buttonNavbar_ph">Casa de Cambio</button>
 					</Link>
 					<Link to="/">

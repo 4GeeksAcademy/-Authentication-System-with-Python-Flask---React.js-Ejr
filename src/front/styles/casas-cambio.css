@@ -1,0 +1,102 @@
+body {
+    background: radial-gradient(ellipse at bottom, #2B3E84 50%, #000 100%);
+}
+
+#globo-info{
+    margin-top: 50px;
+}
+
+#logo-casa {
+    width: 150px;
+    height: 150px;
+    background-color:rgba(12, 183, 231, 0.8);
+    margin: 15px 15px 15px 10px;
+    margin-left: 3%;
+    border-radius: 10%;
+    display:flex;
+    justify-content: center;
+}
+
+p{
+ margin: 2px;   
+}
+
+#body-info-casa {
+    margin-top: 50px;
+}
+
+#info-casa{
+    width: 350px;
+    height: 150px;
+    background-color:rgba(12, 183, 231, 0.4);
+    margin: 15px 15px 15px 20px; 
+    margin-right:3%;
+    border-radius: 15px 15px 15px 15px;
+    display:flex;
+    flex-direction: column;
+    align-items: center;   
+    color:#fff;
+    
+}
+
+#dropdown {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    
+}
+
+#maps {
+    display:flex;
+    flex-direction: column;
+    justify-content:center;
+    align-self: center;
+    padding: 15px;
+    border-radius: 15px 15px 15px 15px;
+    background-color:rgba(12, 183, 231, 0.3);
+}
+
+#boton-casa {
+    box-shadow: 0px 10px 14px -7px #276873;
+	background:linear-gradient(to bottom, #599bb3 5%, #2B3E84 100%);
+	background-color:#599bb3;
+	border-radius:8px;
+	display:inline-block;
+	cursor:pointer;
+    border: none;
+	color:#ffffff;
+	font-family:Arial;
+	font-size: 15px;
+	padding: 7px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #3d768a;
+    margin-top:5px;
+}
+
+a {
+    text-decoration: none;
+    color: white; 
+}
+ a:hover{
+    color: #fff;
+ }
+
+#boton-casa:hover {
+	background:linear-gradient(to bottom, #408c99 5%, #599bb3 100%);
+	background-color:#494099;
+    scale: 1.2;
+}
+
+#suiza, #cambioSantiago {
+    margin-top: 10px;
+    padding: 10px;
+    width: 150px;
+    height: 125px;
+
+}
+
+#casas-cambio {
+    width: 50%;
+}
+

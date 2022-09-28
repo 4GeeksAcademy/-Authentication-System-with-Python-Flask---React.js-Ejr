@@ -2,14 +2,14 @@ import React, { useContext } from "react";
 import { Context } from "../store/appContext";
 import usuario from "../../img/usuario.png";
 import "../../styles/perfil.css";
-import {NavbarRegistro} from "../component/navbar-registro";
+import {NavbarPerfil, NavbarRegistro} from "../component/navbar-perfil";
 
 export const Perfil = () => {
 	const { store, actions } = useContext(Context);
 
 	return (
         <>
-        <NavbarRegistro/>
+        <NavbarPerfil/>
 		<div className="d-flex justify-content-around my-4">
 			<div className="d-flex flex-column align-items-center">
 				<img  id="img-perfil" src={usuario} alt="equipo stark"/>
