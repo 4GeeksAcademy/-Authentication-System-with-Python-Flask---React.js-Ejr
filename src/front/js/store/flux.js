@@ -2,8 +2,8 @@ const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
       message: null,
-      registro:[],
-      registros:[],
+      registro: [],
+      registros: [],
       favorites: [], // agrega al carrito las comidas
       comida: [], //trae los detalles de las platos
       comidas: [], // trae los nombre de los platos
@@ -46,7 +46,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         };
 
         fetch(
-          "https://3001-alexanderwe-proyectofin-f9kcmgspwhj.ws-us67.gitpod.io",
+          "https://3001-alexanderwe-proyectofin-p3hx75snj0n.ws-us67.gitpod.io",
           requestOptions
         )
           .then((response) => response.json())
@@ -77,7 +77,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         };
 
         fetch(
-          "https://3001-alexanderwe-proyectofin-f9kcmgspwhj.ws-us67.gitpod.io/api/token",
+          "https://3001-alexanderwe-proyectofin-p3hx75snj0n.ws-us67.gitpod.io/api/token",
           requestOptions
         )
           .then((response) => response.json())
@@ -95,7 +95,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       // trae el nombre de la comida
       getComida: (id) => {
         fetch(
-          "https://3001-alexanderwe-proyectofin-f9kcmgspwhj.ws-us67.gitpod.io/api/platos" +
+          "https://3001-alexanderwe-proyectofin-p3hx75snj0n.ws-us67.gitpod.io/api/platos" +
             id
         )
           .then((response) => response.json())
@@ -107,7 +107,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       //funcion traer datos de la comida
       getComidas: () => {
         fetch(
-          "https://3001-alexanderwe-proyectofin-f9kcmgspwhj.ws-us67.gitpod.io/api/platos"
+          "https://3001-alexanderwe-proyectofin-p3hx75snj0n.ws-us67.gitpod.io/api/platos"
         )
           .then((response) => response.json())
           .then((result) => {
@@ -118,7 +118,8 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
       getRegistro: (id) => {
         fetch(
-          "https://3001-alexanderwe-proyectofin-f9kcmgspwhj.ws-us67.gitpod.io/api/user"+id
+          "https://3001-alexanderwe-proyectofin-p3hx75snj0n.ws-us67.gitpod.io/api/usuarios" +
+            id
         )
           .then((response) => response.json())
           .then((result) => {
@@ -126,22 +127,22 @@ const getState = ({ getStore, getActions, setStore }) => {
           })
           .catch((error) => console.log("DANGER", error));
       },
-      
+
       getRegistros: () => {
         fetch(
-          "https://3001-alexanderwe-proyectofin-f9kcmgspwhj.ws-us67.gitpod.io/api/user"
+          "https://3001-alexanderwe-proyectofin-p3hx75snj0n.ws-us67.gitpod.io/api/usuarios"
         )
           .then((response) => response.json())
           .then((result) => {
             console.log(result);
-            setStore({ registros: result.user });
+            setStore({ registros: result.usuarios });
           })
           .catch((error) => console.log("DANGER", error));
       },
       // Vegt
       getVegetariano: (id) => {
         fetch(
-          "https://3001-alexanderwe-proyectofin-f9kcmgspwhj.ws-us67.gitpod.io/api/veget" +
+          "https://3001-alexanderwe-proyectofin-p3hx75snj0n.ws-us67.gitpod.io/api/veget" +
             id
         )
           .then((response) => response.json())
@@ -188,7 +189,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
       getVip: (id) => {
         fetch(
-          "https://3001-alexanderwe-proyectofin-f9kcmgspwhj.ws-us67.gitpod.io/api/vip" +
+          "https://3001-alexanderwe-proyectofin-p3hx75snj0n.ws-us67.gitpod.io/api/vip" +
             id
         )
           .then((response) => response.json())
@@ -200,7 +201,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       //funcion traer datos de la comida
       getVipdata: () => {
         fetch(
-          "https://3001-alexanderwe-proyectofin-f9kcmgspwhj.ws-us67.gitpod.io/api/vip"
+          "https://3001-alexanderwe-proyectofin-p3hx75snj0n.ws-us67.gitpod.io/api/vip"
         )
           .then((response) => response.json())
           .then((result) => {
@@ -220,7 +221,9 @@ const getState = ({ getStore, getActions, setStore }) => {
           }
         });
         if (guardar == 0) {
-          setStore({ favorites: [...store.favorites, { price: i } ,{name:i}] });
+          setStore({
+            favorites: [...store.favorites, { price: i }, { name: i }],
+          });
         }
       },
 

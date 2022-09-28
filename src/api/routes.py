@@ -63,7 +63,30 @@ def token():
     access_token = create_access_token(identity=email)
     return jsonify(access_token=access_token)
 
+@api.route('/usuarios', methods=['GET'])
+def getUsuarios():
+    all_usuarios = User.query.all()
+    serializados = list( map( lambda usuarios: usuarios.serialize(), all_usuarios))
+    print(all_usuarios)
 
+    return jsonify({
+        "mensaje": "Todos los Usuarios",
+        "usuarios": serializados
+    }), 200
+@api.route('/usuarios/<int:idusuarios>', methods=['GET'])
+def dinamycUsuarios(idusuarios):
+    one = User.query.filter_by(id=idusuarios).first()
+    if(one):
+        return jsonify({
+            "id": idusuarios,
+            "usuarios": one.serialize()
+        }), 200
+
+    else:
+        return jsonify({
+                "id": idusuarios,
+                "usuarios": "not found!"
+        }), 404
 
 @api.route('/platos', methods=['GET'])
 def getPlatos():
