@@ -12,6 +12,8 @@ import { Footer } from "./component/footer";
 import SidebarWithHeader from "./component/sideBar.jsx";
 import { BotonLogout } from "./pages/logout";
 import { useAuth0 } from "@auth0/auth0-react";
+import "../styles/index.css";
+import CallToActionWithIllustration from "./pages/inicio";
 
 
 //create your first component
@@ -22,20 +24,21 @@ const Layout = () => {
   const basename = process.env.BASENAME || "";
 
   return (
-    <div>
-          
-          {isAuthenticated ? <>
+    <div className="tracker">
+         {/* <CallToActionWithIllustration/>
+           {isAuthenticated ? <>
           <SidebarWithHeader/>
            <Home/>
           </>
-          :<Login/>
-          
-        /*{   <Routes>
+          :<Login/>*/}
+          <BrowserRouter basename={basename}>
+          <Routes>
+            <Route element={<CallToActionWithIllustration />} path="/" />
             <Route element={<Login />} path="/login" />
             <Route element={<Home />} path="/home" />
             <Route element={<h1>Not found!</h1>} />
-          </Routes> */}
-        
+          </Routes> 
+          </BrowserRouter>
        
     </div>
   );

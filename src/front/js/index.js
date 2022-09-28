@@ -12,10 +12,12 @@ import Layout from "./layout";
 
 //render your react application
 ReactDOM.render(
+  
 <Auth0Provider domain="dev-jn28kitn.us.auth0.com" clientId="93CbImRpAW5FYzOe2B2BsI2w7GzAJeRH" redirectUri={window.location.origin}>
   <ChakraProvider>
     <Layout />
   </ChakraProvider>
-  </Auth0Provider>,
+  </Auth0Provider>
+  ,
   document.querySelector("#app")
 );
