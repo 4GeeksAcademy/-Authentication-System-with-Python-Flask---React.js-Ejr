@@ -15,6 +15,14 @@ import "../styles/index.css";
 import CallToActionWithIllustration from "./pages/inicio";
 import {Conversor} from "./pages/conversore"
 
+import Home from "./pages/home";
+
+import Educacion from "./pages/Educacion.jsx";
+import RutaAprendizaje from "./pages/rutaAprendizaje.jsx";
+
+
+
+import WhatIf from "./pages/whatIf.jsx";
 
 //create your first component
 const Layout = () => {
@@ -31,15 +39,23 @@ const Layout = () => {
            <Home/>
           </>
           :<Login/>*/}
-          <BrowserRouter basename={basename}>
+      
+      <BrowserRouter basename={basename}>
+        <ScrollToTop>
           <Routes>
-            <Route element={<CallToActionWithIllustration />} path="/" />
+          <Route element={<CallToActionWithIllustration />} path="/" />
             <Route element={<Login />} path="/login" />
             <Route element={<Conversor />} path="/conversor" />
+            <Route element={<Home />} path="/" />
+        
+            <Route element={<WhatIf />} path="/whatif" />
+      
+            <Route element={<Educacion />} path="/educacion" />
+            <Route element={<RutaAprendizaje />} path="/ruta" />
             <Route element={<h1>Not found!</h1>} />
-          </Routes> 
-          </BrowserRouter>
-       
+          </Routes>
+        </ScrollToTop>
+      </BrowserRouter>
     </div>
   );
 };

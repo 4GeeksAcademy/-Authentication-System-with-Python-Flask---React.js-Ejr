@@ -40,11 +40,11 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { Spinner } from "@chakra-ui/react";
 
 const LinkItems = [
-  { name: "Home", icon: FiHome },
-  { name: "Conversor", icon: FiTrendingUp },
-  { name: "Educacion", icon: FiBook },
-  { name: "Favoritos", icon: FiStar },
-  { name: "What if", icon: SiFuturelearn },
+  { name: "Home", icon: FiHome, ruta: "./" },
+  { name: "Conversor", icon: FiTrendingUp, ruta: "./" },
+  { name: "Educacion", icon: FiBook, ruta: "./educacion" },
+  { name: "Favoritos", icon: FiStar, ruta: "./" },
+  { name: "What if", icon: SiFuturelearn, ruta: "./whatif" },
 ];
 
 export default function SidebarWithHeader({ children }) {
@@ -112,7 +112,7 @@ const SidebarContent = ({ onClose, ...rest }) => {
         
       </Flex>
       {LinkItems.map((link) => (
-        <NavItem key={link.name} icon={link.icon}>
+        <NavItem key={link.name} icon={link.icon} ruta={link.ruta}>
           {link.name}
         </NavItem>
         
@@ -122,10 +122,10 @@ const SidebarContent = ({ onClose, ...rest }) => {
   );
 };
 
-const NavItem = ({ icon, children, ...rest }) => {
+const NavItem = ({ icon, children, ruta, ...rest }) => {
   return (
     <Link
-      href="#"
+      href={ruta}
       style={{ textDecoration: "none" }}
       _focus={{ boxShadow: "none" }}
     >
@@ -248,4 +248,5 @@ const MobileNav = ({ onOpen, ...rest }) => {
     
     )
   );
+  return <div></div>;
 };
