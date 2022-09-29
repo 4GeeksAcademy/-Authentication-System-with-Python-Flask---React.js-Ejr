@@ -2,9 +2,8 @@ import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
 import { Perfil } from "./pages/perfil";
-import { Home } from "./pages/home";
-import { Demo } from "./pages/demo";
-import { Single } from "./pages/single";
+
+
 import injectContext from "./store/appContext";
 import {Login} from "./pages/login";
 import { Navbar } from "./component/navbar";
@@ -14,7 +13,7 @@ import { BotonLogout } from "./pages/logout";
 import { useAuth0 } from "@auth0/auth0-react";
 import "../styles/index.css";
 import CallToActionWithIllustration from "./pages/inicio";
-import {Conversor} from "./pages/conversor"
+import {Conversor} from "./pages/conversore"
 
 
 //create your first component

@@ -8,13 +8,14 @@ import ImageSlider from "./ImageSlider";
 import { Text } from '@chakra-ui/react'
 import { Box } from "@chakra-ui/react"
 import { Perfil } from "./perfil";
-
+import SidebarWithHeader from "../component/sideBar.jsx" 
 export const Conversor = () => {
   const { store, actions } = useContext(Context);
 
   return (
     <div className="home">
          {/* <Perfil/> */}
+         <SidebarWithHeader/>
           <CurrrencyConverter />
           <br/>
           <br/>

@@ -9,7 +9,7 @@ import { Text } from '@chakra-ui/react'
 import { Box } from "@chakra-ui/react"
 import { Perfil } from "./perfil";
 
-export const Home = () => {
+export const Homes = () => {
   const { store, actions } = useContext(Context);
 
   return (

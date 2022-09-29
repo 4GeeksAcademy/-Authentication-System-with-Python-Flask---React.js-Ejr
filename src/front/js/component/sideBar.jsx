@@ -48,6 +48,7 @@ const LinkItems = [
 ];
 
 export default function SidebarWithHeader({ children }) {
+  const {loginWithRedirect} = useAuth0();
   const {user, isAuthenticated, isLoading} = useAuth0();
   const { isOpen, onOpen, onClose } = useDisclosure();
   if(isLoading){
@@ -72,6 +73,7 @@ export default function SidebarWithHeader({ children }) {
         onOverlayClick={onClose}
         size="full"
       >
+        
         <DrawerContent>
           <SidebarContent onClose={onClose} />
         </DrawerContent>
@@ -107,11 +109,13 @@ const SidebarContent = ({ onClose, ...rest }) => {
           />
         </Box>
         <CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} />
+        
       </Flex>
       {LinkItems.map((link) => (
         <NavItem key={link.name} icon={link.icon}>
           {link.name}
         </NavItem>
+        
       ))}
     </Box>
     
@@ -138,6 +142,8 @@ const NavItem = ({ icon, children, ...rest }) => {
         }}
         {...rest}
       >
+        
+        
         {icon && (
           <Icon
             mr="4"
@@ -149,6 +155,7 @@ const NavItem = ({ icon, children, ...rest }) => {
           />
         )}
         {children}
+        
       </Flex>
     </Link>
   );
@@ -177,7 +184,7 @@ const MobileNav = ({ onOpen, ...rest }) => {
         aria-label="open menu"
         icon={<FiMenu />}
       />
-
+     
       <Text
         display={{ base: "flex", md: "none" }}
         fontSize="2xl"
@@ -194,6 +201,7 @@ const MobileNav = ({ onOpen, ...rest }) => {
           aria-label="open menu"
           icon={<FiStar />}
         />
+        
         <Flex alignItems={"center"}>
           <Menu>
             <MenuButton
@@ -201,6 +209,7 @@ const MobileNav = ({ onOpen, ...rest }) => {
               transition="all 0.3s"
               _focus={{ boxShadow: "none" }}
             >
+              
               <HStack>
                 <Avatar
                   size={"sm"}
@@ -236,6 +245,7 @@ const MobileNav = ({ onOpen, ...rest }) => {
         </Flex>
       </HStack>
     </Flex>
+    
     )
   );
 };
