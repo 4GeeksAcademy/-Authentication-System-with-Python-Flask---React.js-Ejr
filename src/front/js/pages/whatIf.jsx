@@ -22,7 +22,6 @@ import {
   Center,
 } from "@chakra-ui/react";
 import SidebarWithHeader from "../component/sideBar.jsx";
-import { format } from "util";
 import CountUp from "react-countup";
 
 export default function WhatIf() {
