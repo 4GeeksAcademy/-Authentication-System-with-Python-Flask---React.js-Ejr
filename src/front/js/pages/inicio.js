@@ -39,7 +39,7 @@ import {
           </Text>
           <Stack spacing={6} direction={'row'}>
  
-                <Link to="/home">
+                <Link to="/conversor">
                   <Button
                                   
                               rounded={'full'}

@@ -14,6 +14,7 @@ import { BotonLogout } from "./pages/logout";
 import { useAuth0 } from "@auth0/auth0-react";
 import "../styles/index.css";
 import CallToActionWithIllustration from "./pages/inicio";
+import {Conversor} from "./pages/conversor"
 
 
 //create your first component
@@ -35,7 +36,7 @@ const Layout = () => {
           <Routes>
             <Route element={<CallToActionWithIllustration />} path="/" />
             <Route element={<Login />} path="/login" />
-            <Route element={<Home />} path="/home" />
+            <Route element={<Conversor />} path="/conversor" />
             <Route element={<h1>Not found!</h1>} />
           </Routes> 
           </BrowserRouter>
