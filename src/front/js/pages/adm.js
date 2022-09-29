@@ -81,13 +81,13 @@ export const Adm = () => {
                         <div className="panel panel-body">
                           <div className="col-md-3 info">
                             <div className="well dash-box">
-                              <h2 className="name-info"><i class="icon ion-md-person"></i>&nbsp;508</h2>
+                              <h2 className="name-info"><i class="icon ion-md-person"></i>&nbsp;{store.registros.length}</h2>
                               <h4>Usuarios</h4>
                             </div>
                           </div>
                           <div className="col-md-3 info">
                             <div className="well dash-box">
-                              <h2 className="name-info"><i class="icon ion-md-filing"></i>&nbsp;508</h2>
+                              <h2 className="name-info"><i class="icon ion-md-filing"></i>&nbsp;{store.comidas.length}</h2>
                               <h4>Productos</h4>
                             </div>
                           </div>

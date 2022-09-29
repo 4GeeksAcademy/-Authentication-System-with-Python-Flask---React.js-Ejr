@@ -7,49 +7,55 @@ export const Adm1 = () => {
     const { store, actions } = useContext(Context);
 
 
+    useEffect(() => {
+        actions.getRegistro()
+    }, []);
+    console.log(store.registro)
+
+
 
     return (
         <div className="d-flex body-adm">
-      <div id="sidebar-container" className="bg-primary" >
-        <div className="logo">
-          <h4 className="text-light font-weight-bold">Logo</h4>
-        </div>
-        <div className="menu">
-        <div class="navbar-collapse text-light mr-2 p-3" id="navbarSupportedContent">
-              <ul class="navbar-nav ml-auto">
-                <li class="nav-item dropdown">
+            <div id="sidebar-container" className="bg-primary" >
+                <div className="logo">
+                    <h4 className="text-light font-weight-bold">Logo</h4>
+                </div>
+                <div className="menu">
+                    <div class="navbar-collapse text-light mr-2 p-3" id="navbarSupportedContent">
+                        <ul class="navbar-nav ml-auto">
+                            <li class="nav-item dropdown">
 
-                  <a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-expanded="false">
-                    <i class="icon ion-md-person mr-2 "></i> Perfil
-                  </a>
-                  <div class="dropdown-menu">
-                    <a class="dropdown-item" href="#">Mi perfil</a>
-                    <a class="dropdown-item" href="#">Configuracion</a>
-                    <div class="dropdown-divider"></div>
-                    <Link to="/demo">
-                    <a class="dropdown-item" href="#">Cerrar sesion</a>
+                                <a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-expanded="false">
+                                    <i class="icon ion-md-person mr-2 "></i> Perfil
+                                </a>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="#">Mi perfil</a>
+                                    <a class="dropdown-item" href="#">Configuracion</a>
+                                    <div class="dropdown-divider"></div>
+                                    <Link to="/demo">
+                                        <a class="dropdown-item" href="#">Cerrar sesion</a>
+                                    </Link>
+                                </div>
+                            </li>
+                        </ul>
+
+                    </div>
+                    <hr className="loco"></hr>
+                    <Link to="/adm">
+                        <a href="#" className="d-block text-light mr-2 p-3" ><i class="icon ion-md-apps mr-2 lead"></i>Tablero</a>
                     </Link>
-                  </div>
-                </li>
-              </ul>
+                    <Link to="/adm1">
+                        <a href="#" className="d-block text-light mr-2 p-3"><i class="icon ion-md-people mr-2 lead"></i>Usuarios</a>
+                    </Link>
+                    <Link to="/stock"><a href="#" className="d-block text-light mr-2 p-3"><i class="icon ion-md-stats mr-2 lead"></i>Stocks</a></Link>
+
+
+
+
+
+                </div>
 
             </div>
-            <hr className="loco"></hr>
-          <Link to="/adm">
-            <a href="#" className="d-block text-light mr-2 p-3" ><i class="icon ion-md-apps mr-2 lead"></i>Tablero</a>
-          </Link>
-          <Link to="/adm1">
-            <a href="#" className="d-block text-light mr-2 p-3"><i class="icon ion-md-people mr-2 lead"></i>Usuarios</a>
-          </Link>
-          <Link to="/stock"><a href="#" className="d-block text-light mr-2 p-3"><i class="icon ion-md-stats mr-2 lead"></i>Stocks</a></Link>
-
-
-          
-
-
-        </div>
-        
-      </div>
             <div className="w-100">
                 <div className="container">
                     <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -77,52 +83,44 @@ export const Adm1 = () => {
                                 </div>
                             </div>
                         </section>
-                        <section className="tablero-info">
+                        {store.registros.map((e, i) => {
+                            return (
+                                <section className="tablero-info">
 
-                            <div className="col-md-9">
+                            <div className="col-md-9" >
 
 
 
                                 <hr class="my-4" />
                                 <section>
-                                    <table class="table">
+                                    <table class="table" key={i}>
                                         <thead>
                                             <tr>
 
                                                 <th scope="col">Nombre</th>
                                                 <th scope="col">Email</th>
-                       
+
                                                 <th scope="col">Direccion</th>
                                                 <th scope="col">Fecha</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
+                                        <tbody >
                                             <tr>
 
-                                                <td>Mark</td>
-                                                <td>Correo@gmail.com</td>
-                                                <td>Santiago de chile</td>
-                                                <td>15/01/2022</td>
+                                                <td >{e.name}</td>
+                                                <td>{e.email}</td>
+                                                <td>{e.direccion}</td>
+                                                <td>{e.telefono}</td>
                                             </tr>
-                                            <tr>
-
-                                                <td>Jacob</td>
-                                                <td>Correo@gmail.com</td>
-                                                <td>Santiago de chile</td>
-                                                <td>15/01/2022</td>
-                                            </tr>
-                                            <tr>
-
-                                                <td>Larry</td>
-                                                <td>Correo@gmail.com</td>
-                                                <td>Santiago de chile</td>
-                                                <td>15/01/2022</td>
-                                            </tr>
+                                            
                                         </tbody>
                                     </table>
                                 </section>
                             </div>
                         </section>
+                            )
+                        })}
+                        
                     </div>
                 </div>
             </div>

@@ -25,7 +25,10 @@ export const Home = () => {
             alimentación desequilibrada y poco sana.
           </p>
 
-         
+          <Link to="/razones">
+							
+							<button className="btn btn-secondary">Learn More</button>
+						</Link>
           
         </div>
       </div>

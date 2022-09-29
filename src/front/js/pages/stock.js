@@ -5,7 +5,10 @@ import { Context } from "../store/appContext";
 
 export const Stock = () => {
     const { store, actions } = useContext(Context);
-
+    useEffect(() => {
+        actions.getComida()
+    }, []);
+    console.log(store.comida)
 
 
     return (
@@ -77,6 +80,9 @@ export const Stock = () => {
                                 </div>
                             </div>
                         </section>
+                        {store.comidas.map((e,i)=>{
+                            return(
+
                         <section className="tablero-info">
 
                             <div className="col-md-9">
@@ -99,30 +105,19 @@ export const Stock = () => {
                                         <tbody>
                                             <tr>
 
-                                                <td>Mark</td>
+                                                <td>{e.name}</td>
                                                 <td>Correo@gmail.com</td>
                                                 <td>Santiago de chile</td>
                                                 <td>15/01/2022</td>
                                             </tr>
-                                            <tr>
-
-                                                <td>Jacob</td>
-                                                <td>Correo@gmail.com</td>
-                                                <td>Santiago de chile</td>
-                                                <td>15/01/2022</td>
-                                            </tr>
-                                            <tr>
-
-                                                <td>Larry</td>
-                                                <td>Correo@gmail.com</td>
-                                                <td>Santiago de chile</td>
-                                                <td>15/01/2022</td>
-                                            </tr>
+                                          
                                         </tbody>
                                     </table>
                                 </section>
                             </div>
                         </section>
+                            )
+                        })}
                     </div>
                 </div>
             </div>

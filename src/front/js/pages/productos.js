@@ -9,6 +9,7 @@ import { NavbarL } from "../component/navbarl";
 
 export const Productos = () => {
     const { store, actions } = useContext(Context);
+  
     return (
 
         <div className="row row-2">
@@ -30,22 +31,50 @@ export const Productos = () => {
             <div className=" container-productos ">
                 <div className="row cajas">
                     {store.comidas.map((e, i) => {
-                        console.log(e)
+                       
                         return (<div className="col-md-4" key={i}>
                             <figure  >
                                 <img src={e.url} ></img>
-                                <div className="capa" onClick={(e) => {
+                                <div className="capa" onClick={() => {
                                     Swal.fire({
-                                        title: 'Sweet!',
+                                        title: 'Receta',
                                         text: 'Modal with a custom image.',
                                         imageUrl: 'https://images.pexels.com/photos/4871119/pexels-photo-4871119.jpeg',
                                         imageWidth: 400,
                                         imageHeight: 200,
                                         imageAlt: 'Custom image',
                                         html:
-                                            'You can use <b>bold text{e.name}</b>, ' +
-                                            '<a href="//sweetalert2.github.io">links</a> ' +
-                                            'and other HTML tags' +'${e.name}'
+                                        `<div class="container" style="display: flex;
+                                        justify-content: space-around;">
+                                        <div style="background: gray;
+                                        color: white;
+                                        border-radius: 14px;
+                                        width: 61px;
+                                        height: 22px;
+                                        padding-top: 2px;
+                                        text-align: center;"> ${e.dificultad}
+                                         </div>
+                                        <div style="background: gray;
+                                        color: white;
+                                        border-radius: 14px;
+                                        width: 61px;
+                                        height: 22px;
+                                        padding-top: 2px;
+                                        text-align: center;"> ${e.tiempo}
+                                         </div>
+                                        </div>
+                                        
+                                         <div>
+                                         <h2>${e.name}</h2>
+                                         <ul>
+                                         <li>${e.calorias}</li>
+                                         <li>${e.porcion}</li>
+                                         <li>${e.ingredientes}</li>
+                                         <li>${e.tiempo}</li>
+                                         </ul>
+                                         </div>
+                                        
+                                            `
                                     })
                                 }}>
                                     <h3 className="text-comida"> {e.name}</h3>
@@ -72,3 +101,4 @@ export const Productos = () => {
 
     );
 };
+

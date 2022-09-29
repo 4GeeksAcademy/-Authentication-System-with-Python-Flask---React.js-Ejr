@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User , Platos, FavPlatos , Veget , Dulce ,Vip 
+from api.models import db, User , Platos, FavPlatos , Veget , Dulce ,Vip ,Manager
 from api.utils import generate_sitemap, APIException
 from flask_jwt_extended import JWTManager, create_access_token, get_jwt_identity, jwt_required
 
@@ -43,6 +43,7 @@ def set_user():
 def token():
     body = request.get_json()
     user = User.query.filter_by(email=body['email']).first()
+    manager = Manager.query.filter_by(email=body['email']).first()
     #print(user)
     #Si no se coloca el first entrega un arreglo con 1 dato, con first entrega el dato solo
     if(user):
@@ -52,6 +53,25 @@ def token():
             #expiracion = datetime.timedelta(minutes=1)
             token = create_access_token(identity=body['email'])
             return jsonify({
+                "id":user.id,
+                "email": body['email'],
+                "password": body['password'],
+                "token": token
+            })
+        else:
+            return jsonify({"mensaje": 'usuario o contraseña erroneo'})
+    else:
+        return jsonify({"mensaje": 'user no existe'})
+    access_token = create_access_token(identity=email)
+    return jsonify(access_token=access_token)
+    if(manager):
+        #Validacion de usuario
+        if(manager.password== body['password']):
+            #Valida, otorga token
+            #expiracion = datetime.timedelta(minutes=1)
+            token = create_access_token(identity=body['email'])
+            return jsonify({
+                "id":manager.id,
                 "email": body['email'],
                 "password": body['password'],
                 "token": token
@@ -87,7 +107,24 @@ def dinamycUsuarios(idusuarios):
                 "id": idusuarios,
                 "usuarios": "not found!"
         }), 404
+@api.route('/manager', methods=['GET'])
+def getManager():
+    all_manager = Manager.query.all()
+    serializados = list( map( lambda manager: manager.serialize(), all_manager))
+    print(all_manager)
 
+    return jsonify({
+        "mensaje": "Manager",
+        "manager": serializados
+    }), 200
+@api.route('/manager/<int:idmanager>', methods=['GET'])
+def dinamycManager(idmanager):
+    one = Manager.query.filter_by(uid=idmanager).first()
+    if(one):
+        return jsonify({
+            "id": idmanager,
+            "manager": one.serialize()
+        }), 200
 @api.route('/platos', methods=['GET'])
 def getPlatos():
     all_platos = Platos.query.all()

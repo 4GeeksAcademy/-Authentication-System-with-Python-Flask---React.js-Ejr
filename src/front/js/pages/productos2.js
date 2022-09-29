@@ -37,36 +37,61 @@ export const Productos2 = () => {
               <div className="col-md-4" key={i}>
                 <figure>
                   <img src={e.url}></img>
-                  <div className="capa">
-                    <h3> {e.name}</h3>
-                    <p>Ingredientes</p>
-                    <p>
-                      {e.ingredientes} <br />{" "}
-                      <p>
-                        10<strong>.500$</strong>
-                      </p>
-                    </p>
+                  <div className="capa" onClick={() => {
+                                    Swal.fire({
+                                        title: 'Receta',
+                                        text: 'Modal with a custom image.',
+                                        imageUrl: 'https://images.pexels.com/photos/4871119/pexels-photo-4871119.jpeg',
+                                        imageWidth: 400,
+                                        imageHeight: 200,
+                                        imageAlt: 'Custom image',
+                                        html:
+                                        `<div class="container" style="display: flex;
+                                        justify-content: space-around;">
+                                        <div style="background: gray;
+                                        color: white;
+                                        border-radius: 14px;
+                                        width: 61px;
+                                        height: 22px;
+                                        padding-top: 2px;
+                                        text-align: center;"> ${e.dificultad}
+                                         </div>
+                                        <div style="background: gray;
+                                        color: white;
+                                        border-radius: 14px;
+                                        width: 61px;
+                                        height: 22px;
+                                        padding-top: 2px;
+                                        text-align: center;"> ${e.tiempo}
+                                         </div>
+                                        </div>
+                                        
+                                         <div>
+                                         <h2>${e.name}</h2>
+                                         <ul>
+                                         <li>${e.calorias}</li>
+                                         <li>${e.porcion}</li>
+                                         <li>${e.ingredientes}</li>
+                                         <li>${e.tiempo}</li>
+                                         </ul>
+                                         </div>
+                                        
+                                            `
+                                    })
+                                }}>
+                                    <h3 className="text-comida"> {e.name}</h3>
 
-                    <Link to="/">
-                      <button type="button" class="btn btn-outline-dark boton">
-                        Comprar
-                      </button>
-                    </Link>
-                    <button
-                      onClick={() => actions.getAddTask(e.name)}
-                      type="button"
-                      className="btn btn-outline-dark m-2 boton"
-                    >
-                      {" "}
-                      <i class="fa-solid fa-plus"></i>
-                    </button>
-                  </div>
-                </figure>
-              </div>
-            );
-          })}
-        </div>
-      </div>
+
+
+
+                                </div>
+                            </figure>
+
+                        </div>)
+
+                    })}
+                </div>
+            </div>
       <Footer />
     </div>
   );

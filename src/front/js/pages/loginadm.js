@@ -21,22 +21,43 @@ export const Loginadm = () => {
     };
 
     return (
-        
 
-            <div class=" jijo" onclick="onclick">
-                <div class="top"></div>
-                <div class="bottom"></div>
-                <div class="center">
-                    <h2>Please Sign In</h2>
-                    <input type="email" placeholder="email" />
-                    <input type="password" placeholder="password" />
-                    <h2>&nbsp;</h2>
-                    <Link to="/">
-                            <i className="fa-solid  fa-house"></i>
-                        </Link>
-                </div>
+
+        <div class=" jijo" onclick="onclick">
+            <div class="top"></div>
+            <div class="bottom"></div>
+            <div class="center">
+                <h2>Admin Space</h2>
+                <input
+                    type="email"
+                    placeholder="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                />
+                <input
+                    type="password"
+                    placeholder="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                />
+                <input
+
+                    onClick={(e) => { handleClick(e) }}
+
+                    type="submit"
+                    class="btnSubmit"
+                    value="Login"
+                />
+                {alert && <div class="alert alert-danger" id="alertSI" role="alert">
+                    Completa datos
+                </div>}
+                <h2>&nbsp;</h2>
+                <Link to="/">
+                    <i className="fa-solid  fa-house"></i>
+                </Link>
             </div>
-        
+        </div>
+
 
     );
 };

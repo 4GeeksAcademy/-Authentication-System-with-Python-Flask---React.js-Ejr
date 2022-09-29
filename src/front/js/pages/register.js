@@ -48,8 +48,10 @@ export const Register = () => {
 
                 </div>
                 <div class="col-md-6 login-form-2">
-                    <div class="login-logo">
-                        <img src="https://image.ibb.co/n7oTvU/logo_white.png" alt="" />
+                <div class="login-logo">
+                        <Link to="/">
+                            <i className="fa-solid  fa-house icon-house"></i>
+                        </Link>
                     </div>
 
 
