@@ -77,22 +77,6 @@ def login():
         else:
             return(jsonify({"mensaje":"Correo no se encuentra registrado"}))
 
-
-    """ correo = request.get_json('correo')
-    contrasena = request.get_json('contrasena')
-    user = User.query.filter_by(correo=correo,contrasena=contrasena).first()
-    
-    
-    if(user):
-        return jsonify({
-       "Mensaje" : "Bienvenido usuario" ,
-    }), 200     
-    
-    else:
-        return jsonify({
-            "mensaje" : "Redireccionar al formulario de registro"
-        })"""
-
 #Token y Autenticacion
 @api.route('/private', methods=['GET','POST'])
 @jwt_required()
@@ -100,7 +84,7 @@ def autenticacion():
 
    if request.method == 'GET':
         token = get_jwt_identity()
-        return jsonify({"success": "Acceso a espacio privado concedido", "usuario": token}), 200
+        return jsonify({"success": "Acceso a espacio privado concedido, Bienvenido" , "usuario": token}), 200
 
 @api.route('/recovery', methods=['GET','POST'])
 def recovery():
@@ -123,8 +107,13 @@ def home():
 """@api.route('/favorito/user/<int:id_user>', methods=['POST'])
 def favorito():
     body = reqeust.get_json() #recibir los datos del usuario
+
     nuevo_favorito = Favorito()
+
+
+
     response_body = {
         "message": "Favorito del usuario"
     }
+
     return jsonify(response_body), 200"""
