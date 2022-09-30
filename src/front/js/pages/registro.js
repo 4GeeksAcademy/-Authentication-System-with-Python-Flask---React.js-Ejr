@@ -7,6 +7,7 @@ import "../../styles/registro.css";
 import { Link } from "react-router-dom";
 import {NavbarRegistro} from "../component/navbar-registro";
 
+
 export const Registro = () => {
 	const { store, actions } = useContext(Context);
     
@@ -14,7 +15,7 @@ export const Registro = () => {
 		nombre:'',
 		mail:'',
 		contraseña:'',
-		contraseña:'',
+		repcontraseña:'',
 		telefono:''
 	})
 
@@ -28,7 +29,8 @@ export const Registro = () => {
 
 	const enviardatos2 = (event) => {
 		event.preventDefault();
-		//console.log (dato2.nombre+""+dato2.mail+""+dato2.contraseña+""+dato2.contraseña+""+dato2.telefono)
+		actions.registrocliente(dato2)
+		console.log (dato2.nombre+""+dato2.mail+""+dato2.contraseña+""+dato2.repcontraseña+""+dato2.telefono)
 	}
 
 	return (
@@ -59,15 +61,15 @@ export const Registro = () => {
 						</div>
 						<div className="mb-3">
 							<label id="c-password" for="exampleInputPassword1" className="form-label">Confirma tu contraseña</label>
-							<input type="password" name="contraseña" className="form-control" id="exampleInputPassword1" onChange={nuevodato} />
+							<input type="password" name="repcontraseña" className="form-control" id="exampleInputPassword2" onChange={nuevodato} />
 						</div>
 						<div className="mb-3">
 							<label id="info-number" for="exampleInputNumber" className="form-label">Número Telefónico</label>
 							<input type="number" name="telefono" className="form-control" id="number" placeholder="+56 9" onChange={nuevodato} />
 						</div>
-						<Link to="/pagina-home">
+						
 						<button type="submit" id="boton">Crear Usuario</button>
-						</Link>
+						
 					</form>
 				</div>
 			</div>

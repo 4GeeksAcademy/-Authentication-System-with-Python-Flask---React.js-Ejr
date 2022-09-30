@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import logo from "../../img/logo.png";
 import facebook from "../../img/facebook.png";
@@ -6,10 +6,13 @@ import google from "../../img/google.png";
 import inicio from "../../img/inicio.png";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
+import { Context } from "../store/appContext";
+
 
 
 export const Navbarlanding = () => {
   const [show, setShow] = useState(false);
+  const {store,actions} = useContext (Context)
   const [dato, setDato] = useState({
     email: "",
     contraseña:""
@@ -23,15 +26,14 @@ export const Navbarlanding = () => {
   }
   const enviardatos = (event) => {
        event.preventDefault();
+       actions.login(dato)
        //console.log (dato.email+""+dato.contraseña)
   } 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   
   
- const info = (event) => {
-  setDato(event.target.value)
- };
+ 
 
   return (
     <nav className="navbar fixed-top">

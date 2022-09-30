@@ -20,6 +20,52 @@ const getState = ({ getStore, getActions, setStore }) => {
 			exampleFunction: () => {
 				getActions().changeColor(0, "green");
 			},
+			login: (dato)=>{
+				console.log(dato)
+			
+
+			var requestOptions = {
+				method: "PUT",
+				headers: {
+				  "Content-Type": "application/json"
+				},
+				body: JSON.stringify(dato),
+				redirect: "follow"
+			  };
+			
+			  fetch(
+				"url",
+				requestOptions
+			  )
+				.then((response) => response.json())
+				.then((result) => console.log(result))
+				.catch((error) => console.log("error", error));
+			  },
+
+			registrocliente: (dato2)=>{
+				console.log(dato2)
+
+				var requestOptions2 = {
+					method: "PUT",
+					headers: {
+					  "Content-Type": "application/json"
+					},
+					body: JSON.stringify(dato2),
+					redirect: "follow"
+				  };
+				
+				  fetch(
+					"url",
+					requestOptions2
+				  )
+					.then((response) => response.json())
+					.then((result) => { 
+						console.log(result)
+					
+					})
+					.catch((error) => console.log("error", error));	
+			
+			},  
 
 			getMessage: async () => {
 				try{
