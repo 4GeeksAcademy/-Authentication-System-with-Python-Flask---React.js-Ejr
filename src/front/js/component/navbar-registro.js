@@ -10,7 +10,7 @@ export const NavbarRegistro= () => {
 				<Link to="/">
 				<a class="navbar-brand" href="#"/>
 				<img className="logo" src={logo} />
-                <span className="nombre">CoinChange</span>
+                <span className="nombre">Cacha el cambio</span>
 				</Link>
 				</div>
 				<div className="ml-auto">

@@ -41,7 +41,7 @@ export const Navbarlanding = () => {
         <div className="brand">
           <Link to="/">
             <img className="logo" src={logo} />
-            <span className="nombre">CoinChange</span>
+            <span className="nombre">Cacha el cambio</span>
           </Link>
         </div>
 
@@ -174,11 +174,6 @@ export const Navbarlanding = () => {
           <Link to="/registro">
           <Button variant="primary" onClick={handleShow} className="buttonNavbar">
           Registrarse
-          </Button>
-          </Link>
-          <Link to="/pagina-home">
-          <Button variant="primary" onClick={handleShow} className="buttonNavbar">
-          Home
           </Button>
           </Link>
         </div>

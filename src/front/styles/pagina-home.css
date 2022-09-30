@@ -6,14 +6,14 @@ body {
 color: #2B3E84;
 font-size: 35px;
 margin-left: 20px;
-margin-top: 50px;
+margin-top: 20px;
 }
 
 
 
 
 #pieDP{
-    background-color:rgb(236, 10, 10);
+    background-color: rgb(255, 255, 255);
     color: #2B3E84 ;
 }
 
@@ -34,7 +34,7 @@ margin-top: 50px;
     padding: 7px;    
 }
 
-h1 {
+.textocolor {
     color: rgb(245, 244, 244);
     text-align: center; 
 }
@@ -52,7 +52,7 @@ h1 {
     color: white;
     width: 750px;
     height: 350px;
-    left: 500px;
+    left: 620px;
     top: 150px;
 }
 
@@ -139,7 +139,7 @@ justify-content: center;
 position: absolute;
 width: 150px;
 height: 150px;
-left: 130px;
+left: 170px;
 top: 0px;
 }
 

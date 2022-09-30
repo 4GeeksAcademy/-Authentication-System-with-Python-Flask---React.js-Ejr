@@ -10,7 +10,7 @@ export const Navbarhome = () => {
 				<Link to="/">
 					<img className="logo_ph" src={logo}/>
 				</Link>
-				<span className="nombre_pagina-home">CoinChange</span>
+				<span className="nombre_pagina-home">Cacha el cambio</span>
 				</div>
 				<div className="ml-auto">
 					<Link to="/perfil">

@@ -75,7 +75,7 @@ body {
   }
   
   #title, #info-name, #info-number, #email, #password, #c-password {
-      color: rgba(240, 244, 250, 0.9);
+      color: #10205a;
       font: bolder;
       z-index: 0;
   }
@@ -87,7 +87,7 @@ body {
       width: 20px;
   }
   
-  #boton {
+  #boton1 {
     box-shadow: 0px 10px 14px -7px #276873;
       background:linear-gradient(to bottom, #599bb3 5%, #2B3E84 100%);
       background-color:#599bb3;
@@ -101,7 +101,7 @@ body {
       padding: 7px;
       text-decoration:none;
       text-shadow:0px 1px 0px #3d768a;
-    margin-top:5px;
+      margin-bottom: 10px;
     z-index: 1;
   }
   

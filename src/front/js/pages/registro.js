@@ -67,9 +67,9 @@ export const Registro = () => {
 							<label id="info-number" for="exampleInputNumber" className="form-label">Número Telefónico</label>
 							<input type="number" name="telefono" className="form-control" id="number" placeholder="+56 9" onChange={nuevodato} />
 						</div>
-						
-						<button type="submit" id="boton">Crear Usuario</button>
-						
+						<Link to="/pagina-home">
+						<button type="submit" id="boton3">Crear Usuario</button>
+						</Link>
 					</form>
 				</div>
 			</div>

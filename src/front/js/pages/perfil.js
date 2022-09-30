@@ -40,7 +40,7 @@ export const Perfil = () => {
 				<input type="text" className="form-control" id="data" placeholder="+56 9"/>
 				<button type="submit" id="boton2">Cambiar</button>
 			</div>
-			<button type="submit" id="boton">Guardar Cambios</button>
+			<button type="submit" id="boton1">Guardar Cambios</button>
 		</form>	
 		</div>
         </>

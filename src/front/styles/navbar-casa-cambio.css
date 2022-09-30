@@ -16,7 +16,9 @@
 }
 
 #titulo {
-    font-family: 'Black Han Sans', sans-serif;
+    
+	  color: #2B3E84;
+font-size: 35px;
 }
 
 .boton:hover {

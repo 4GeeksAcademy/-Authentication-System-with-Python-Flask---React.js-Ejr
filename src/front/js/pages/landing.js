@@ -174,7 +174,7 @@ export const Landing = () => {
               value=""
               placeholder="Ingrese su email"
             ></input>
-            <button className="buttonregister" type="button" name="button">
+            <button className="buttonregister2" type="button" name="button">
               Suscribirme
             </button>
           </div>
