@@ -19,7 +19,7 @@ class User(db.Model):
         return {
             "id": self.id,
             "nombre": self.nombre,
-            "apeliido": self.apellido,
+            "apellido": self.apellido,
             "correo": self.correo,
             "telefono": self.telefono,
         }

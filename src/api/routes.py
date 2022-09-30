@@ -4,18 +4,21 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, User
 from api.utils import generate_sitemap, APIException
+from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity 
+import datetime
 
 api = Blueprint('api', __name__)
 
 #Registro
-@api.route('/registro', methods=['GET','POST'])
-def registro(correo):
+@api.route('/registro', methods=['POST'])
+def registro():
 
-    correo = request.get_json('correo')
-    nombre = request.get_json('nombre')
-    apellido = request.get_json('apellido')
-    contrasena = request.get_json('contrasena')
-    telefono = request.get_json('telefono')
+    body = request.get_json()
+    correo = body['correo']
+    nombre = body['nombre']
+    apellido = body['apellido']
+    contrasena = body['contrasena']
+    telefono = body['telefono']
     user = User.query.filter_by(correo=correo).first()
     
     if(user):
@@ -24,65 +27,86 @@ def registro(correo):
         }),200
     
     else:
-        user.correo = correo
-        user.nombre = nombre
-        user.apellido = apellido
-        user.contrasena = contrasena
-        user.telefono = telefono
-        db.session.add()
+        new_user = User()
+        new_user.correo = correo
+        new_user.nombre = nombre
+        new_user.apellido = apellido
+        new_user.contrasena = contrasena
+        new_user.telefono = telefono
+        db.session.add(new_user)
         db.session.commit()
 
         return jsonify({
             "Mensaje" : "El usuario ha sido registrado exitosamente"
         })
 
-    
-
-    """info = request.get_json()
-    info_serializada = list(map( lambda user : user.serialize(), info))
-    print(info)
-
-    return jsonify({
-        "mensaje" : "Informacion de usuarios",
-        "user" : info_serializada,
-    })"""
-
-    """return jsonify({
-        "nombre": body['nombre'] ,
-        "apellido": body['apellido'] ,
-        "correo": body['correo'] ,
-        "telefono": body['telefono'] ,
-    }), 200"""
-
 #Inicio de Sesion
 @api.route('/login', methods=['GET', 'POST'])
 def login():
 
-    body = request.get_json()
-    #user = User.query.filter_by(correo=body['correo']).first()
-    #print(user)
+    if request.method =='GET':
+        all_user = User.query.all()
+        all_user = list( map( lambda x : x.serialize(), all_user))
 
-    return jsonify({
-        "correo": body['correo'] ,
-        "contrasena": body['contrasena'] ,
+        return jsonify(all_user), 200
+
+    else:
+        body = request.get_json()
+        if body is None:
+            return "Ingresa tu correo y contraseña para continuar", 400
+        if 'correo' not in body:
+            return "Ingresar correo", 400
+        if 'contrasena' not in body:
+            return 'Ingresar contraseña', 400
+    #
+        one_user = User.query.filter_by(correo=body["correo"]).first()
+        if one_user:
+            if(one_user.contrasena == body['contrasena']):
+                #validacion de contraseña para creacion de token
+                expira = datetime.timedelta(minutes=5)
+                token_acceso = create_access_token(identity=one_user.correo, expires_delta=expira)
+                info ={ 
+                    "info_user" : one_user.serialize(),
+                    "token" : token_acceso,
+                    "expiracion" : expira.total_seconds()
+                }
+
+                return(jsonify(info))
+            else:
+                return(jsonify({"mensaje": False}))
+        else:
+            return(jsonify({"mensaje":"Correo no se encuentra registrado"}))
+
+
+    """ correo = request.get_json('correo')
+    contrasena = request.get_json('contrasena')
+    user = User.query.filter_by(correo=correo,contrasena=contrasena).first()
+    
+    
+    if(user):
+        return jsonify({
+       "Mensaje" : "Bienvenido usuario" ,
     }), 200     
-   
+    
+    else:
+        return jsonify({
+            "mensaje" : "Redireccionar al formulario de registro"
+        })"""
 
 #Token y Autenticacion
 @api.route('/private', methods=['GET','POST'])
+@jwt_required()
 def autenticacion():
 
-    response_body = {
-        "message": "Autenticacion"
-    }
-
-    return jsonify(response_body), 200
+   if request.method == 'GET':
+        token = get_jwt_identity()
+        return jsonify({"success": "Acceso a espacio privado concedido", "usuario": token}), 200
 
 @api.route('/recovery', methods=['GET','POST'])
 def recovery():
 
     response_body = {
-        "message": "Se hara la recuperacion o cambio de contraseña"
+        "Mensaje": "Se hara la recuperacion o cambio de contraseña"
     }
 
     return jsonify(response_body), 200
@@ -98,9 +122,9 @@ def home():
 
 """@api.route('/favorito/user/<int:id_user>', methods=['POST'])
 def favorito():
-    body = reqeust.get_json() #rcibir los datos del usuario
+    body = reqeust.get_json() #recibir los datos del usuario
 
-    nuevo_favorito = Favorito(user=[])
+    nuevo_favorito = Favorito()
 
 
 
