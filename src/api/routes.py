@@ -5,7 +5,7 @@ from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, User , Platos, FavPlatos , Veget , Dulce ,Vip ,Manager
 from api.utils import generate_sitemap, APIException
 from flask_jwt_extended import JWTManager, create_access_token, get_jwt_identity, jwt_required
-
+import datetime
 
 api = Blueprint('api', __name__)
 
@@ -38,6 +38,13 @@ def set_user():
     db.session.add(new_user)
     db.session.commit()
     return 'Usuario Registrado'
+
+@api.route("/validartoken", methods=["GET"])
+@jwt_required()
+def validartoken():
+    identidad = get_jwt_identity()
+    return {"mensaje" : "inicio correcto"}
+
 
 @api.route("/token", methods=["POST"])
 def token():
