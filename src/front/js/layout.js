@@ -12,6 +12,8 @@ import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 import { Register } from "./pages/register";
 import { Razones } from "./pages/razones";
+import { Plan1 } from "./pages/Plan1";
+import { Plan2 } from "./pages/Plan2";
 import { Contacto } from "./pages/contacto";
 import { Productos2 } from "./pages/productos2";
 import { Productos3 } from "./pages/productos3";
@@ -25,6 +27,7 @@ import { Subprueba } from "./pages/subprueba.js";
 import { Stock } from "./pages/stock";
 import { Perfil } from "./pages/perfi";
 import { Loginadm } from "./pages/loginadm";
+import { Aprobado } from "./pages/pagoAprobado";
 
 //create your first component
 const Layout = () => {
@@ -52,7 +55,10 @@ const Layout = () => {
             <Route element={<Adm />} path="/adm" />
             <Route element={<Adm1 />} path="/adm1" />
             <Route element={<Loginadm />} path="/loginadm" />
-            <Route element={<Checkout/>} path="/checkout" />
+            <Route element={<Checkout />} path="/checkout" />
+            <Route element={<Plan1 />} path="/plan1" />
+            <Route element={<Plan2 />} path="/plan2" />
+            <Route element={<Aprobado />} path="/pagoAprobado" />
 
             <Route element={<Stock />} path="/stock" />
             <Route element={<Perfil />} path="/perfil" />

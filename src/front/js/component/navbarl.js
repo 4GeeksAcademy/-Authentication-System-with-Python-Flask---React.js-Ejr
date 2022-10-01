@@ -84,7 +84,7 @@ export const NavbarL = () => {
             ) : (
               <div></div>
             )}
-            costo total = 0$
+            
           </div>
         </div>
       </div>

@@ -26,7 +26,7 @@ export const Sub = () => {
                   <p class="card-text">{e.recetas}</p>
                   <p class="card-text">{e.support}</p>
                   <p class="card-text">{e.descuento}</p>
-                  <Link to="/razones">
+                  <Link to="/Plan1">
                     <button className="btn btn-secondary">Learn More</button>
                   </Link>
                   <button
@@ -39,32 +39,37 @@ export const Sub = () => {
                   </button>
 
                   <PayPalScriptProvider
-                    options={{
-                      "client-id":
-                        "AWTfwnUiraZVgePkbmwOzkhD2h0OLmv4e6UFxflq_kjhXt_3kPybYDkdH2vHxQduUvzRdwMlXKskJUyk",
-                    }}
-                  >
-                    <PayPalButtons
-                      createOrder={(data, actions) => {
-                        return actions.order.create({
-                          purchase_units: [
-                            {
-                              amount: {
-                                value: e.price,
+                      options={{
+                        "client-id":
+                          "AWTfwnUiraZVgePkbmwOzkhD2h0OLmv4e6UFxflq_kjhXt_3kPybYDkdH2vHxQduUvzRdwMlXKskJUyk",
+                      }}
+                    >
+                      <PayPalButtons
+                        createOrder={(data, actions) => {
+                          return actions.order.create({
+                            purchase_units: [
+                              {
+                                amount: {
+                                  value: e.price,
+                                  
+                                },
                               },
-                            },
-                          ],
-                        });
-                      }}
-                      onApprove={async (data, actions) => {
-                        const details = await actions.order.capture();
-                        const name = details.payer.name.given_name;
-                        alert("Transaction completed by " + name);
-                      }}
-                    />
-                  </PayPalScriptProvider>
+                            ],
+                          });
+                        }}
+                        onApprove={async (data, actions) => {
+                          const details = await actions.order.capture();
+                          const name = details.payer.name.given_name;
+                          window.location.href = "pagoaprobado";
+                        }}
+                      />
+                    </PayPalScriptProvider>
                 </div>
               </div>
+
+
+
+
             );
           })}
         </div>
