@@ -16,7 +16,7 @@ export const Plan1 = () => {
       <div class="col-sm-6">
         <div class="card-body">
           <h1 class="card-title razones">
-            Razones por la cual cocinar en casa es mejor
+            Plan básico
           </h1>
           <ol>
             <li>
@@ -46,15 +46,9 @@ export const Plan1 = () => {
               calidad de los alimentos que consume
             </li>
 
-            <div className="row cajas">
-              {store.vipdata.map((e, i) => {
-                return (
-                  <div class="card card-sub">
-                   
-                  </div>
-                );
-              })}
-            </div>
+            <Link to="/sub">
+                <button className="btn btn-secondary">Volver</button>
+              </Link>
           </ol>
         </div>
       </div>

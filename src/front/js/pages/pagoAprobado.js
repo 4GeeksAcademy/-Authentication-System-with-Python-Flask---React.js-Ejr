@@ -19,7 +19,7 @@ export const Aprobado = () => {
               {" "}
               "Estimado(a), En nombre de CocinaFacil, queremos agradecer
               inmensamente por la decisión de adquirir nuestro Plan. Confiamos
-              en que tendremos una eperiencia exitosa.
+              en que tendremos una experiencia exitosa.
             </li>
 
             <li>

@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Context } from "../store/appContext";
-
+import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import { Link } from "react-router-dom";
 import "../../styles/home.css";
 import { Navbar } from "../component/navbar";
@@ -13,9 +13,7 @@ export const Plan2 = () => {
       <Navbar />
       <div class="col-sm-6">
         <div class="card-body">
-          <h1 class="card-title razones">
-            Razones por la cual cocinar en casa es mejor
-          </h1>
+          <h1 class="card-title razones">Plan Full</h1>
           <ol>
             <li>
               {" "}
@@ -43,6 +41,9 @@ export const Plan2 = () => {
               calidad, Cocinando en su hogar usted puede asegurarse de la
               calidad de los alimentos que consume
             </li>
+            <Link to="/sub">
+              <button className="btn btn-secondary">Volver</button>
+            </Link>
           </ol>
         </div>
       </div>
