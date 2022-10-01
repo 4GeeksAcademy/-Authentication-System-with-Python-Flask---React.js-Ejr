@@ -79,3 +79,18 @@ hr:not([size]) {
     justify-content: center;
 
 }
+.swal2-image {
+    border-radius: 20px;
+    max-width: 100%;
+    margin: 2em auto 1em;
+}
+.swal2-title{
+    font-family: auto;
+    text-align: center;
+    background: #1d1b1c7d;
+    padding: 14px;
+    color: #ffffffed;
+    font-weight: 100;
+    width: 496px;
+    margin-left: 8px;
+}

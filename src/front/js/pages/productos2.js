@@ -39,45 +39,62 @@ export const Productos2 = () => {
                   <img src={e.url}></img>
                   <div className="capa" onClick={() => {
                                     Swal.fire({
-                                        title: 'Receta',
-                                        text: 'Modal with a custom image.',
-                                        imageUrl: 'https://images.pexels.com/photos/4871119/pexels-photo-4871119.jpeg',
-                                        imageWidth: 400,
-                                        imageHeight: 200,
-                                        imageAlt: 'Custom image',
-                                        html:
-                                        `<div class="container" style="display: flex;
-                                        justify-content: space-around;">
-                                        <div style="background: gray;
-                                        color: white;
-                                        border-radius: 14px;
-                                        width: 61px;
-                                        height: 22px;
-                                        padding-top: 2px;
-                                        text-align: center;"> ${e.dificultad}
-                                         </div>
-                                        <div style="background: gray;
-                                        color: white;
-                                        border-radius: 14px;
-                                        width: 61px;
-                                        height: 22px;
-                                        padding-top: 2px;
-                                        text-align: center;"> ${e.tiempo}
-                                         </div>
-                                        </div>
-                                        
-                                         <div>
-                                         <h2>${e.name}</h2>
-                                         <ul>
-                                         <li>${e.calorias}</li>
-                                         <li>${e.porcion}</li>
-                                         <li>${e.ingredientes}</li>
-                                         <li>${e.tiempo}</li>
-                                         </ul>
-                                         </div>
-                                        
-                                            `
-                                    })
+                                      title: 'Receta',
+                                      text: 'Modal with a custom image.',
+                                      imageUrl: e.url,
+                                      imageWidth: 400,
+                                      imageHeight: 200,
+                                      imageAlt: 'style="border-radius: 20px;"',
+                                      html:
+                                      `
+                                   
+                                      <div style="display: flex;
+                                      justify-content: space-around;">
+                                      <strong>Porcion</strong>
+                                      <div style="background: gray;
+                                      color: white;
+                                      border-radius: 14px;
+                                      width: 60px;
+                                      height: 22px;
+                                      padding-top: 2px;
+                                      text-align: center;">${e.dificultad}
+                                       </div>
+                                       <strong>Dificultad</strong>
+                                      <div style="background: gray;
+                                      color: white;
+                                      border-radius: 14px;
+                                      width: 61px;
+                                      height: 22px;
+                                      padding-top: 2px;
+                                      text-align: center;">${e.porcion}
+                                       </div>
+                                       <strong>Tiempo</strong>
+                                       <div style="background: gray;
+                                      color: white;
+                                      border-radius: 14px;
+                                      width: 60px;
+                                      height: 22px;
+                                      padding-top: 2px;
+                                      text-align: center;">  ${e.tiempo}
+                                       </div>
+                                      
+                                      </div>
+                                      
+                                       <div>
+                                       <h2 style="margin: 31px;
+                                       font-size: revert;
+                                       font-family: none;">${e.name}</h2>
+                                       <p>${e.calorias}</p>
+                                       <p>${e.ingredientes}</p>
+                                       <p>${e.tiempo}</p>
+                                       
+                                       
+                                       
+                                      
+                                       </div>
+                                      
+                                          `
+                                  })
                                 }}>
                                     <h3 className="text-comida"> {e.name}</h3>
 

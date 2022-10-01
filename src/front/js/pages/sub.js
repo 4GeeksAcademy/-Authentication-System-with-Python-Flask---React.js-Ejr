@@ -55,7 +55,22 @@ export const Sub = () => {
                   onApprove={async (data, actions) => {
                     const details = await actions.order.capture();
                     const name = details.payer.name.given_name;
-                    alert("Transaction completed by " + name);
+                    Swal.fire({
+                      title: 'Tu Compra Ha Sido Aprobada',
+                      width: 600,
+                      padding: '3em',
+                      color: '#716add',
+                      icon: 'success',
+                      background: '#fff url("")',
+                      backdrop: `
+                        rgba(0,0,123,0.4)
+                        url("https://i.giphy.com/media/WPyAmXubNrMv8BK7xx/giphy.webp")
+                        left top
+                        no-repeat
+                        
+                      `
+                      
+                    })
                   }}
                 />
               </PayPalScriptProvider>
@@ -100,7 +115,22 @@ export const Sub = () => {
                   onApprove={async (data, actions) => {
                     const details = await actions.order.capture();
                     const name = details.payer.name.given_name;
-                    alert("Transaction completed by " + name);
+                    Swal.fire({
+                      title: 'Tu Compra Ha Sido Aprobada',
+                      width: 600,
+                      padding: '3em',
+                      color: '#716add',
+                      icon: 'success',
+                      background: '#fff url("")',
+                      backdrop: `
+                        rgba(0,0,123,0.4)
+                        url("https://i.giphy.com/media/WPyAmXubNrMv8BK7xx/giphy.webp")
+                        left top
+                        no-repeat
+                        
+                      `
+                      
+                    })
                   }}
                 />
               </PayPalScriptProvider>

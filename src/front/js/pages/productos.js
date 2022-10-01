@@ -39,39 +39,56 @@ export const Productos = () => {
                                     Swal.fire({
                                         title: 'Receta',
                                         text: 'Modal with a custom image.',
-                                        imageUrl: 'https://images.pexels.com/photos/4871119/pexels-photo-4871119.jpeg',
+                                        imageUrl: e.url,
                                         imageWidth: 400,
                                         imageHeight: 200,
-                                        imageAlt: 'Custom image',
+                                        imageAlt: 'style="border-radius: 20px;"',
                                         html:
-                                        `<div class="container" style="display: flex;
+                                        `
+                                     
+                                        <div style="display: flex;
                                         justify-content: space-around;">
+                                        <strong>Porcion</strong>
+                                        <div style="background: gray;
+                                        color: white;
+                                        border-radius: 14px;
+                                        width: 60px;
+                                        height: 22px;
+                                        padding-top: 2px;
+                                        text-align: center;">${e.dificultad}
+                                         </div>
+                                         <strong>Dificultad</strong>
                                         <div style="background: gray;
                                         color: white;
                                         border-radius: 14px;
                                         width: 61px;
                                         height: 22px;
                                         padding-top: 2px;
-                                        text-align: center;"> ${e.dificultad}
+                                        text-align: center;">${e.porcion}
                                          </div>
-                                        <div style="background: gray;
+                                         <strong>Tiempo</strong>
+                                         <div style="background: gray;
                                         color: white;
                                         border-radius: 14px;
-                                        width: 61px;
+                                        width: 60px;
                                         height: 22px;
                                         padding-top: 2px;
-                                        text-align: center;"> ${e.tiempo}
+                                        text-align: center;">  ${e.tiempo}
                                          </div>
+                                        
                                         </div>
                                         
                                          <div>
-                                         <h2>${e.name}</h2>
-                                         <ul>
-                                         <li>${e.calorias}</li>
-                                         <li>${e.porcion}</li>
-                                         <li>${e.ingredientes}</li>
-                                         <li>${e.tiempo}</li>
-                                         </ul>
+                                         <h2 style="margin: 31px;
+                                         font-size: revert;
+                                         font-family: none;">${e.name}</h2>
+                                         <p>${e.calorias}</p>
+                                         <p>${e.ingredientes}</p>
+                                         <p>${e.tiempo}</p>
+                                         
+                                         
+                                         
+                                        
                                          </div>
                                         
                                             `
