@@ -4,15 +4,108 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, User
 from api.utils import generate_sitemap, APIException
+from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity 
+import datetime
 
 api = Blueprint('api', __name__)
 
+#Registro
+@api.route('/registro', methods=['PUT'])
+def registro():
 
-@api.route('/hello', methods=['POST', 'GET'])
-def handle_hello():
+    body = request.get_json()
+    correo = body['correo']
+    nombre = body['nombre']
+    contrasena = body['contrasena']
+    telefono = body['telefono']
+    user = User.query.filter_by(correo=correo).first()
+    
+    if(user):
+        return jsonify({
+            "mensaje": "Usuario ya registrado"
+        }),200
+    
+    else:
+        new_user = User()
+        new_user.correo = correo
+        new_user.nombre = nombre
+        new_user.apellido = " "
+        new_user.contrasena = contrasena
+        new_user.telefono = telefono
+        db.session.add(new_user)
+        db.session.commit()
+
+        return jsonify({
+            "Mensaje" : "El usuario ha sido registrado exitosamente"
+        })
+
+#Inicio de Sesion
+@api.route('/login', methods=['PUT'])
+def login():
+        body = request.get_json()
+        print(body)
+        # if body is None:
+        #     return "Ingresa tu correo y contraseña para continuar", 400
+        # if 'correo' not in body:
+        #     return jsonify({"response":"Ingresar correo"}), 400
+        # if 'contrasena' not in body:
+        #     return jsonify( {"response":'Ingresar contraseña'}), 400
+    #
+        one_user = User.query.filter_by(correo=body["correo"]).first()
+        if one_user:
+            if(one_user.contrasena == body['contrasena']):
+                #validacion de contraseña para creacion de token
+                expira = datetime.timedelta(minutes=5)
+                token_acceso = create_access_token(identity=one_user.correo, expires_delta=expira)
+                info ={ 
+                    "info_user" : one_user.serialize(),
+                    "token" : token_acceso,
+                    "expiracion" : expira.total_seconds()
+                }
+
+                return(jsonify(info))
+            else:
+                return(jsonify({"mensaje": False}))
+        else:
+            return(jsonify({"mensaje":"Correo no se encuentra registrado"}))
+
+#Token y Autenticacion
+@api.route('/private', methods=['GET','POST','PUT'])
+@jwt_required()
+def autenticacion():
+
+   if request.method == 'GET':
+        token = get_jwt_identity()
+        return jsonify({"success": "Acceso a espacio privado concedido, Bienvenido" , "usuario": token}), 200
+
+@api.route('/recovery', methods=['GET','POST'])
+def recovery():
 
     response_body = {
-        "message": "Hello! I'm a message that came from the backend, check the network tab on the google inspector and you will see the GET request"
+        "Mensaje": "Se hara la recuperacion o cambio de contraseña"
     }
 
     return jsonify(response_body), 200
+
+@api.route('/home', methods=['GET','POST'])
+def home():
+
+    response_body = {
+        "message": "Ruta que usuaremos para el scraping de las casas"
+    }
+
+    return jsonify(response_body), 200
+
+"""@api.route('/favorito/user/<int:id_user>', methods=['POST'])
+def favorito():
+    body = reqeust.get_json() #recibir los datos del usuario
+
+    nuevo_favorito = Favorito()
+
+
+
+    response_body = {
+        "message": "Favorito del usuario"
+    }
+
+    return jsonify(response_body), 200"""

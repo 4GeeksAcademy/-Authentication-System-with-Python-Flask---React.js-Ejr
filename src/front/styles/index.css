@@ -1,27 +1,162 @@
 body {
-    background-color : #2B3E84;
+    background : #2B3E84;
 }
 .navbar{
-    background-color: rgb(214, 236, 8);
+    background-color:  rgb(255, 255, 255);
+}
+.box-modal-navbar{
+    z-index: 999;
 }
 .nombre{
 color: #2B3E84;
 font-size: 35px;
 margin-left: 20px;
-margin-top: 50px;
+margin-top: 100px;
 }
+
 a{
     text-decoration: none !important;
+}
+h1{
+    margin-top: 65px;
+}
+.brand{
+    display: flex;
 }
 .logo{
     width: 75px;
     height: 75px;
 }
 .buttonNavbar{
-    border-radius: 15px;
-    background-color: #2B3E84 ;
-    color: whitesmoke;
+    box-shadow: 0px 10px 14px -7px #276873;
+	background:linear-gradient(to bottom, #599bb3 5%, #2B3E84 100%);
+	background-color:#599bb3;
+	border-radius:8px;
+	display:inline-block;
+	cursor:pointer;
+    border: none;
+	color:#ffffff;
+	font-family:Arial;
+	font-size: 15px;
+	padding: 7px;
+	text-decoration: none;
+	text-shadow:0px 1px 0px #3d768a;
+    margin-top:0px;
     margin-right: 10px;
+}
+.carrusel{
+    margin-top: 15px;
+    color: #2B3E84;
+font-size: 35px;
+}
+.imagencarrusel{
+    height: 500px;
+}
+.textocarrusel{
+    color:#2B3E84;
+font-size: 30px;
+}
+.banner{
+    color: rgb(245, 244, 244);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px;
+    background: radial-gradient(ellipse at bottom, #2B3E84 50%, #37C9FC 100%);
+}
+.banner2{
+    
+    color: rgb(245, 244, 244);
+    display: block;
+    margin-left: 100px;
+    width: 400px;
+}
+.buttonregister{
+    box-shadow: 0px 10px 14px -7px #ffffff;
+	background:linear-gradient(to bottom, #599bb3 5%, #2B3E84 100%);
+	background-color:#599bb3;
+	border-radius:8px;
+	display:inline-block;
+	cursor:pointer;
+    border: none;
+	color:#ffffff;
+	font-family:Arial;
+	font-size: 15px;
+	padding: 7px;
+	text-decoration: none;
+	text-shadow:0px 1px 0px #3d768a;
+    margin-top: 15px;
+}
+.buttonregister2{
+    box-shadow: 0px 10px 14px -7px #ffffff;
+	background:linear-gradient(to bottom, #599bb3 5%, #2B3E84 100%);
+	background-color:#599bb3;
+	border-radius:8px;
+	display:inline-block;
+	cursor:pointer;
+    border: none;
+	color:#ffffff;
+	font-family:Arial;
+	font-size: 15px;
+	padding: 7px;
+	text-decoration: none;
+	text-shadow:0px 1px 0px #3d768a;
+}
+.celular{
+    margin-right: 100px;
+    height: 644px;
+    width: 390px;
+}
+.tarjetas{
+    padding: 20px;
+    background-color: rgb(245, 244, 244);
+    
+}
+.tarjeta1{
+    border: none;
+    margin-inline: 15px;
+}
+.cardimage{
+     width: 250px;
+     height: 250px;
+}
+.imagencarta{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color:  rgb(245, 244, 244);
+
+}
+.textocarta{
+    text-align: center;
+    color:  #2B3E84 ;
+    background-color:  rgb(245, 244, 244);
+}
+.footer{
+    background-color:rgb(245, 244, 244);
+    color: #2B3E84 ;
+    font-size: 15px;
+}
+.newslatter{
+    margin-left: 1%;
+    color:  rgb(245, 244, 244);
+    margin-bottom: 20px;
+}
+.email-box{
+    display: flex;
+    justify-content: start;
+    height: 40px;
+    border-radius: 8px;
+}
+.mail{
+    font-size: 30px;
+    color: white;
+    margin-top: 5px;
+    margin-right: 5px;
+}
+.email-newsletter{
+    border-radius: 8px;
+    margin-right: 5px;
 }
 
 #favoritos, #interacciones {
@@ -35,12 +170,9 @@ a{
 }
 
 h2 {
-    color: rgb(241,214,71) ; 
+    color:  rgb(245, 244, 244) ; 
 }
-p {
-    margin-top: 10px;
-    color: rgb(241,214,71) ;
-}
+
 
 #formulario {
     width: 400px;
