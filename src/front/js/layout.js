@@ -23,6 +23,7 @@ import RutaAprendizaje from "./pages/rutaAprendizaje.jsx";
 
 
 import WhatIf from "./pages/whatIf.jsx";
+import ClaseCurso from "./pages/claseCurso.jsx";
 
 //create your first component
 const Layout = () => {
@@ -52,6 +53,7 @@ const Layout = () => {
       
             <Route element={<Educacion />} path="/educacion" />
             <Route element={<RutaAprendizaje />} path="/ruta" />
+            <Route element={<ClaseCurso />} path="/ruta/:theid" />
             <Route element={<h1>Not found!</h1>} />
           </Routes>
         </ScrollToTop>

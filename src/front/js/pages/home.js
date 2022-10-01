@@ -43,7 +43,7 @@ export default function Home() {
               onChange={(e) => setSearch(e.target.value)}
             />
           </Box>
-          <Box maxH="xl" overflowX="scroll" mt={21}>
+          <Box maxH="xl" overflowX="scroll" mt={21} w='700'>
             <TableCoins coins={coins} search={search} />
           </Box>
         </Box>

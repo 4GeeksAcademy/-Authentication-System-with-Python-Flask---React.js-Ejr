@@ -1,9 +1,16 @@
 import React from "react";
 import SidebarWithHeader from "../component/sideBar.jsx";
-import { Box, Input, Text, Image, Stack } from "@chakra-ui/react";
+import { Box, Input, Text, Image, Stack, Center } from "@chakra-ui/react";
 import CursoBox from "../component/cursoBox.jsx";
+import { Context } from "../store/appContext";
+import { useContext } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 
 export default function RutaAprendizaje() {
+  const { store, actions } = useContext(Context);
+  const navigate = useNavigate();
+
+ 
   return (
     <Box display="flex">
       <SidebarWithHeader />
@@ -27,18 +34,32 @@ export default function RutaAprendizaje() {
                   Ruta de aprendizaje
                 </Text>
                 <Box pt={4} maxH="xl" overflowX="scroll">
-                  <CursoBox title="Web 1.0 vs Web 2.0 vs Web 3" />
-                  <CursoBox title="¿Que es blockchain?" />
-                  <CursoBox title="Bitcoin vs Ethereum" />
-                  <CursoBox title="Creando mi primera Wallet" />
-                  <CursoBox title="Comprando cripto - Binance" />
-                  <CursoBox title="Comprando cripto - Buda" />
-                  <CursoBox title="Wallet parte 2" />
-                  <CursoBox title="Proyectos en la web 3" />
-                  <CursoBox title="Interactuando con un smart contract" />
-                  <CursoBox title="Interactuando con un smart contract - parte 2" />
-                  <CursoBox title="Interactuando con un smart contract - parte 3" />
-                  <CursoBox title="Final del curso" />
+                  {store.clases.map((e, i) => {
+                     const navigateNextVideo = () => {
+                      navigate(`./${e.id}`);
+                    };
+                    return (
+                      <Box
+                        borderRadius="sm"
+                        borderWidth="2px"
+                        h={20}
+                        width={350}
+                        pt={6}
+                        mt={4}
+                        rounded={50}
+                        _hover={{
+                          background: "#8C52FF",
+                          color: "white",
+                        }}
+                        key={e.id}
+                        onClick={navigateNextVideo}
+                      >
+                        <Center>
+                          <Text>{e.titulo}</Text>
+                        </Center>
+                      </Box>
+                    );
+                  })}
                 </Box>
               </Box>
               <Box width={500}>
@@ -58,8 +79,8 @@ export default function RutaAprendizaje() {
                   mucho más.
                 </Text>
                 <Text pt="4">
-                  Ademas al momento de finalizar nuestra introducción a la
-                  blockchain te regalaremos tu primer NFT, certificando que no
+                  Ademas, al momento de finalizar nuestra introducción a la
+                  blockchain, te regalaremos tu primer NFT, certificando que no
                   eres un novato en este mundo.
                 </Text>
               </Box>
