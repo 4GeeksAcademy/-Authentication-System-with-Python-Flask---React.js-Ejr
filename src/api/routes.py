@@ -16,7 +16,6 @@ def registro():
     body = request.get_json()
     correo = body['correo']
     nombre = body['nombre']
-    apellido = body['apellido']
     contrasena = body['contrasena']
     telefono = body['telefono']
     user = User.query.filter_by(correo=correo).first()
@@ -30,7 +29,7 @@ def registro():
         new_user = User()
         new_user.correo = correo
         new_user.nombre = nombre
-        new_user.apellido = apellido
+        new_user.apellido = " "
         new_user.contrasena = contrasena
         new_user.telefono = telefono
         db.session.add(new_user)

@@ -43,7 +43,6 @@ const getState = ({ getStore, getActions, setStore }) => {
         )
           .then((response) => response.json())
           .then((result) => {
-			
             localStorage.setItem("token", result.token);
             if (result.token) {
               window.location.href = "/pagina-home";
@@ -51,26 +50,38 @@ const getState = ({ getStore, getActions, setStore }) => {
           })
           .catch((error) => console.log("error", error));
       },
-	  /*Registro*/
+      /*Registro*/
       registrocliente: (dato2) => {
         console.log(dato2);
 
-       var requestOptions2 = {
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+
+        var raw = JSON.stringify({
+          correo: dato2.mail,
+          nombre: dato2.nombre,
+          apellido: dato2.apellido,
+          contrasena: dato2.contraseña,
+          telefono: dato2.telefono,
+        });
+
+        var requestOptions = {
           method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(dato2),
+          headers: myHeaders,
+          body: raw,
           redirect: "follow",
         };
 
         fetch(
           "https://3001-ksavir-reactflaskhello-jstspz7we7e.ws-us67.gitpod.io/api/registro",
-          requestOptions2
+          requestOptions
         )
           .then((response) => response.json())
           .then((result) => {
             console.log(result);
+            if(result.Mensaje==='El usuario ha sido registrado exitosamente'){
+              window.location.href = "/pagina-home";
+            }
           })
           .catch((error) => console.log("error", error));
       },
