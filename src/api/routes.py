@@ -10,7 +10,7 @@ import datetime
 api = Blueprint('api', __name__)
 
 #Registro
-@api.route('/registro', methods=['POST'])
+@api.route('/registro', methods=['PUT'])
 def registro():
 
     body = request.get_json()
@@ -41,23 +41,16 @@ def registro():
         })
 
 #Inicio de Sesion
-@api.route('/login', methods=['GET', 'POST'])
+@api.route('/login', methods=['PUT'])
 def login():
-
-    if request.method =='GET':
-        all_user = User.query.all()
-        all_user = list( map( lambda x : x.serialize(), all_user))
-
-        return jsonify(all_user), 200
-
-    else:
         body = request.get_json()
-        if body is None:
-            return "Ingresa tu correo y contraseña para continuar", 400
-        if 'correo' not in body:
-            return "Ingresar correo", 400
-        if 'contrasena' not in body:
-            return 'Ingresar contraseña', 400
+        print(body)
+        # if body is None:
+        #     return "Ingresa tu correo y contraseña para continuar", 400
+        # if 'correo' not in body:
+        #     return jsonify({"response":"Ingresar correo"}), 400
+        # if 'contrasena' not in body:
+        #     return jsonify( {"response":'Ingresar contraseña'}), 400
     #
         one_user = User.query.filter_by(correo=body["correo"]).first()
         if one_user:
@@ -78,7 +71,7 @@ def login():
             return(jsonify({"mensaje":"Correo no se encuentra registrado"}))
 
 #Token y Autenticacion
-@api.route('/private', methods=['GET','POST'])
+@api.route('/private', methods=['GET','POST','PUT'])
 @jwt_required()
 def autenticacion():
 
