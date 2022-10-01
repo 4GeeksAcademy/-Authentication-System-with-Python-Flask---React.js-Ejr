@@ -30,7 +30,6 @@ const TableCoins = ({ coins, search }) => {
             <Th>Price</Th>
             <Th>Price change 24h</Th>
             <Th>Market cap</Th>
-            <Th>Favorite</Th>
           </Tr>
         </Thead>
         <Tbody>

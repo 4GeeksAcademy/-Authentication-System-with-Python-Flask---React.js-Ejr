@@ -69,33 +69,7 @@ const CoinRow = ({ coin, index }) => {
           currencyDisplay: "narrowSymbol",
         }).format(coin.market_cap)}
       </Td>
-      <Td>
-        <Box px={3}>
-          <IconButton
-            aria-label="Add to friends"
-            icon={
-              <FiStar
-                style={{
-                  color: "orange",
-                }}
-                _active={{
-                  color: "red",
-                  fill: "red",
-                  transform: "scale(0.98)",
-                  borderColor: "#bec3c9",
-                }}
-              />
-            }
-            _hover={{ bg: "#ebedf0" }}
-            _active={{
-              bg: "#ff8000",
-
-              transform: "scale(0.98)",
-              borderColor: "#bec3c9",
-            }}
-          />
-        </Box>
-      </Td>
+      
     </Tr>
   );
 };
