@@ -1,5 +1,5 @@
 :root{
-    --primary : #e10b76;
+    --primary : #8b3e64;
     --light : #fff;
     --grey: #efefef;
 }
@@ -51,7 +51,7 @@ a:hover{
 }
 hr:not([size]) {
     height: 28px;
-    width: 114vh;
+    width: 39vh;
 }
 .panel-body{
     display: flex;

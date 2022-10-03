@@ -36,14 +36,6 @@ export const NavbarL = () => {
           </Link>
         </div>
       </div>
-      <div className="ml-auto" id="iconos">
-        <Link to="/demo">
-          <i class="fa-solid fa-1x fa-user" id="loginicon"></i>
-        </Link>
-      </div>
-      <div className="ml-auto">
-      
-      </div>
     </nav>
   );
 };

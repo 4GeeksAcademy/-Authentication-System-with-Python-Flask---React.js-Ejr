@@ -12,7 +12,7 @@ export const Home = () => {
   const { store, actions } = useContext(Context);
 
   return (
-    <div class="row imghome">
+    <div class="row imghome ">
       <Navbar />
       <div class="col-sm-10">
         <div class="card-body home">

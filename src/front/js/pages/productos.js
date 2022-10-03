@@ -23,7 +23,8 @@ export const Productos = () => {
                     <i class="fa-solid fa-2x fa-leaf icn "></i>
                 </Link>
                 <Link to="/productos3">
-                    <i class="fa-solid fa-2x fa-cookie icn"></i>
+                
+                <i class="fa-solid fa-2x fa-cheese icn"></i>
                 </Link>
 
             </div>

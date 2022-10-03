@@ -18,15 +18,16 @@ export const Productos2 = () => {
       />
       <NavbarL />
       <div className="container iconoscaja">
-        <Link to="/productos">
-          <i class="fa-solid fa-2x fa-burger icn "></i>
-        </Link>
-        <Link to="/productos2">
-          <i class="fa-solid fa-2x fa-leaf icn "></i>
-        </Link>
-        <Link to="/productos3">
-          <i class="fa-solid fa-2x fa-cookie icn"></i>
-        </Link>
+      <Link to="/productos">
+                    <i class="fa-solid fa-2x fa-burger icn "></i>
+                </Link>
+                <Link to="/productos2">
+                    <i class="fa-solid fa-2x fa-leaf icn "></i>
+                </Link>
+                <Link to="/productos3">
+                
+                <i class="fa-solid fa-2x fa-cheese icn"></i>
+                </Link>
       </div>
 
       <div className=" container-productos ">

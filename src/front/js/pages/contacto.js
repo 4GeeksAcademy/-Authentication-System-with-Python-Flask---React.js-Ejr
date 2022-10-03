@@ -39,7 +39,7 @@ const form = useRef();
           			<input type="email" class="form-control" placeholder="Tu correo electrónico" name="user_email" />
           			<label>Mensaje</label>
           			<textarea class="form-control" placeholder="Mensaje" name="message" />
-          			<input type="submit" value="Enviar" />
+          			<input  className =" btn btn-secondary mt-3"type="submit" value="Enviar" />
         			</form>    
 				</div>
 			</div>
