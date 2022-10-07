@@ -40,25 +40,26 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { Spinner } from "@chakra-ui/react";
 
 const LinkItems = [
-  { name: "Home", icon: FiHome, ruta: "./" },
-  { name: "Conversor", icon: FiTrendingUp, ruta: "./" },
+  { name: "Home", icon: FiHome, ruta: "/" },
+  { name: "Conversor", icon: FiTrendingUp, ruta: "/conversor" },
   // { name: "Educacion", icon: FiBook, ruta: "./educacion" },
-  { name: "blockchain 101", icon: FiStar, ruta: "./ruta" },
-  { name: "What if", icon: SiFuturelearn, ruta: "./whatif" },
+  { name: "blockchain 101", icon: FiBook, ruta: "/ruta" },
+  { name: "What if", icon: SiFuturelearn, ruta: "/whatif" },
 ];
 
 export default function SidebarWithHeader({ children }) {
-  const {loginWithRedirect} = useAuth0();
-  const {user, isAuthenticated, isLoading} = useAuth0();
+  const { loginWithRedirect } = useAuth0();
+  const { user, isAuthenticated, isLoading } = useAuth0();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  if(isLoading){
-    return <div> <Spinner /> </div>
-
-
-
-}
+  if (isLoading) {
+    return (
+      <div>
+        {" "}
+        <Spinner />{" "}
+      </div>
+    );
+  }
   return (
-    
     <Box minH="100vh" bg={useColorModeValue("gray.100", "gray.900")}>
       <SidebarContent
         onClose={() => onClose}
@@ -73,7 +74,6 @@ export default function SidebarWithHeader({ children }) {
         onOverlayClick={onClose}
         size="full"
       >
-        
         <DrawerContent>
           <SidebarContent onClose={onClose} />
         </DrawerContent>
@@ -88,8 +88,10 @@ export default function SidebarWithHeader({ children }) {
 }
 
 const SidebarContent = ({ onClose, ...rest }) => {
-  return (
+  const { logout } = useAuth0();
+  const { user, isAuthenticated, isLoading } = useAuth0();
 
+  return (
     <Box
       transition="3s ease"
       bg={useColorModeValue("white", "gray.900")}
@@ -108,17 +110,56 @@ const SidebarContent = ({ onClose, ...rest }) => {
             src="https://soft-sandwich-76b.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F9a6ea0a8-374d-4052-ab10-90adc1837057%2FLogoDefinitivosinLetra.png?table=block&id=1a09e77a-e576-48dc-8719-e84863fa4e99&spaceId=44514f37-bf45-41b8-90cd-647cbf4961f7&width=1000&userId=&cache=v2"
           />
         </Box>
+        <Box></Box>
         <CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} />
-        
       </Flex>
       {LinkItems.map((link) => (
         <NavItem key={link.name} icon={link.icon} ruta={link.ruta}>
           {link.name}
         </NavItem>
-        
       ))}
+      <Box pt={100} pl={3}>
+        <Menu>
+          <MenuButton
+            py={2}
+            transition="all 0.3s"
+            _focus={{ boxShadow: "none" }}
+          >
+            <HStack>
+              <Avatar size={"sm"} src={user.picture} alt={user.name} />
+              <VStack
+                display={{ base: "none", md: "flex" }}
+                alignItems="flex-start"
+                spacing="1px"
+                ml="2"
+              >
+                <Text fontSize="sm">{user.name}</Text>
+                <Text fontSize="xs" color="gray.600">
+                  {user.email}
+                </Text>
+              </VStack>
+              <Box display={{ base: "none", md: "flex" }}>
+                <FiChevronDown />
+              </Box>
+            </HStack>
+          </MenuButton>
+          <MenuList
+            bg={useColorModeValue("white", "gray.900")}
+            borderColor={useColorModeValue("gray.200", "gray.700")}
+          >
+            <MenuItem>Profile</MenuItem>
+            <MenuItem>Settings</MenuItem>
+            <MenuItem>Billing</MenuItem>
+            <MenuDivider />
+            <MenuItem
+              onClick={() => logout({ returnTo: window.location.origin })}
+            >
+              Desconectarse
+            </MenuItem>
+          </MenuList>
+        </Menu>
+      </Box>
     </Box>
-    
   );
 };
 
@@ -142,8 +183,6 @@ const NavItem = ({ icon, children, ruta, ...rest }) => {
         }}
         {...rest}
       >
-        
-        
         {icon && (
           <Icon
             mr="4"
@@ -155,97 +194,86 @@ const NavItem = ({ icon, children, ruta, ...rest }) => {
           />
         )}
         {children}
-        
       </Flex>
     </Link>
   );
 };
 
 const MobileNav = ({ onOpen, ...rest }) => {
-  const {user, isAuthenticated, isLoading} = useAuth0();
-  const {logout} = useAuth0();
+  const { user, isAuthenticated, isLoading } = useAuth0();
+  const { logout } = useAuth0();
   return (
     isAuthenticated && (
-    <Flex
-      ml={{ base: 0, md: 60 }}
-      px={{ base: 4, md: 4 }}
-      height="20"
-      alignItems="center"
-      bg={useColorModeValue("white", "gray.900")}
-      borderBottomWidth="1px"
-      borderBottomColor={useColorModeValue("gray.200", "gray.700")}
-      justifyContent={{ base: "space-between", md: "flex-end" }}
-      {...rest}
-    >
-      <IconButton
-        display={{ base: "flex", md: "none" }}
-        onClick={onOpen}
-        variant="outline"
-        aria-label="open menu"
-        icon={<FiMenu />}
-      />
-     
-      <Text
-        display={{ base: "flex", md: "none" }}
-        fontSize="2xl"
-        fontFamily="monospace"
-        fontWeight="bold"
+      <Flex
+        ml={{ base: 0, md: 60 }}
+        px={{ base: 4, md: 4 }}
+        height="20"
+        alignItems="center"
+        bg={useColorModeValue("white", "gray.900")}
+        borderBottomWidth="1px"
+        borderBottomColor={useColorModeValue("gray.200", "gray.700")}
+        justifyContent={{ base: "space-between", md: "flex-end" }}
+        {...rest}
       >
-        Logo
-      </Text>
-
-      <HStack spacing={{ base: "0", md: "6" }}>
         <IconButton
-          size="lg"
-          variant="ghost"
+          display={{ base: "flex", md: "none" }}
+          onClick={onOpen}
+          variant="outline"
           aria-label="open menu"
-          icon={<FiStar />}
+          icon={<FiMenu />}
         />
-        
-        <Flex alignItems={"center"}>
-          <Menu>
-            <MenuButton
-              py={2}
-              transition="all 0.3s"
-              _focus={{ boxShadow: "none" }}
-            >
-              
-              <HStack>
-                <Avatar
-                  size={"sm"}
-                 src={user.picture} alt={user.name}
-                />
-                <VStack
-                  display={{ base: "none", md: "flex" }}
-                  alignItems="flex-start"
-                  spacing="1px"
-                  ml="2"
-                >
-                  <Text fontSize="sm">{user.name}</Text>
-                  <Text fontSize="xs" color="gray.600">
+
+        <Text
+          display={{ base: "flex", md: "none" }}
+          fontSize="2xl"
+          fontFamily="monospace"
+          fontWeight="bold"
+        >
+          Logo
+        </Text>
+        {/* <Menu>
+          <MenuButton
+            py={2}
+            transition="all 0.3s"
+            _focus={{ boxShadow: "none" }}
+          >
+            <HStack>
+              <Avatar size={"sm"} src={user.picture} alt={user.name} />
+              <VStack
+                display={{ base: "none", md: "flex" }}
+                alignItems="flex-start"
+                spacing="1px"
+                ml="2"
+              >
+                <Text fontSize="sm">{user.name}</Text>
+                <Text fontSize="xs" color="gray.600">
                   {user.email}
-                  </Text>
-                </VStack>
-                <Box display={{ base: "none", md: "flex" }}>
-                  <FiChevronDown />
-                </Box>
-              </HStack>
-            </MenuButton>
-            <MenuList
-              bg={useColorModeValue("white", "gray.900")}
-              borderColor={useColorModeValue("gray.200", "gray.700")}
+                </Text>
+              </VStack>
+              <Box display={{ base: "none", md: "flex" }}>
+                <FiChevronDown />
+              </Box>
+            </HStack>
+          </MenuButton>
+          <MenuList
+            bg={useColorModeValue("white", "gray.900")}
+            borderColor={useColorModeValue("gray.200", "gray.700")}
+          >
+            <MenuItem>Profile</MenuItem>
+            <MenuItem>Settings</MenuItem>
+            <MenuItem>Billing</MenuItem>
+            <MenuDivider />
+            <MenuItem
+              onClick={() => logout({ returnTo: window.location.origin })}
             >
-              <MenuItem>Profile</MenuItem>
-              <MenuItem>Settings</MenuItem>
-              <MenuItem>Billing</MenuItem>
-              <MenuDivider />
-              <MenuItem onClick={() => logout({returnTo: window.location.origin})}>Desconectarse</MenuItem>
-            </MenuList>
-          </Menu>
-        </Flex>
-      </HStack>
-    </Flex>
-    
+              Desconectarse
+            </MenuItem>
+          </MenuList>
+        </Menu> */}
+        <HStack spacing={{ base: "0", md: "6" }}>
+          <Flex alignItems={"center"}></Flex>
+        </HStack>
+      </Flex>
     )
   );
   return <div></div>;

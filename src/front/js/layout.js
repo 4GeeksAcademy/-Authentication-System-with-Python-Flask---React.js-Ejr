@@ -43,10 +43,11 @@ const Layout = () => {
       
       <BrowserRouter basename={basename}>
         <ScrollToTop>
+          
           <Routes>
-          <Route element={<CallToActionWithIllustration />} path="/" />
+          <Route element={<CallToActionWithIllustration />} path="/landingpage" />
             <Route element={<Login />} path="/login" />
-            <Route element={<Conversor />} path="/conversor" />
+            <Route element={<Conversor />} path="/Conversor" />
             <Route element={<Home />} path="/" />
         
             <Route element={<WhatIf />} path="/whatif" />

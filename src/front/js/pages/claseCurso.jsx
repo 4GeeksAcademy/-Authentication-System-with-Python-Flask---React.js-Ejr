@@ -31,7 +31,7 @@ export default function ClaseCurso() {
       <SidebarWithHeader />
       <Stack spacing={1} direction="row">
         <Box>
-          {/* video */}
+          
           <Box>
             <AspectRatio w={1150} h={500} ratio={1}>
               <iframe

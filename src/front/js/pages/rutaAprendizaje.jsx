@@ -10,7 +10,6 @@ export default function RutaAprendizaje() {
   const { store, actions } = useContext(Context);
   const navigate = useNavigate();
 
- 
   return (
     <Box display="flex">
       <SidebarWithHeader />
@@ -35,7 +34,7 @@ export default function RutaAprendizaje() {
                 </Text>
                 <Box pt={4} maxH="xl" overflowX="scroll">
                   {store.clases.map((e, i) => {
-                     const navigateNextVideo = () => {
+                    const navigateNextVideo = () => {
                       navigate(`./${e.id}`);
                     };
                     return (
@@ -50,6 +49,7 @@ export default function RutaAprendizaje() {
                         _hover={{
                           background: "#8C52FF",
                           color: "white",
+                          cursor: "pointer",
                         }}
                         key={e.id}
                         onClick={navigateNextVideo}

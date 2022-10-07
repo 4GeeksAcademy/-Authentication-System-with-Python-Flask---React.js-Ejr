@@ -13,8 +13,9 @@ export const Conversor = () => {
   const { store, actions } = useContext(Context);
 
   return (
-    <div className="home">
+    <Box display="flex">
          {/* <Perfil/> */}
+
          <SidebarWithHeader/>
           <CurrrencyConverter />
           <br/>
@@ -22,7 +23,7 @@ export const Conversor = () => {
           <br/>
           <br/>
           <ImageSlider/>
-    </div>
+          </Box>
     
   )
 };
