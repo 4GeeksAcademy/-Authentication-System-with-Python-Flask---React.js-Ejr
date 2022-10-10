@@ -5,7 +5,7 @@ import { Context } from "../store/appContext";
 export const Navbar = () => {
 	const { store, actions } = useContext(Context);
 	return (
-		<nav className="navbar " id="navbar">
+		<nav className="navbar navb " id="navbar">
 			<div className="container coco d-flex justify-content-center">
 				
 				

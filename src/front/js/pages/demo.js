@@ -22,7 +22,7 @@ export const Demo = () => {
 
     return (
         <div class="container login-container" >
-            <div class="row login-row" >
+            <div class="row login-row login" >
                 <div class="col-md-6 login-form-1" id="form1">
                     <h3>Login Here</h3>
 

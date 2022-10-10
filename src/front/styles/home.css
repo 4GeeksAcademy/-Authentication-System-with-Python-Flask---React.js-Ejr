@@ -29,9 +29,17 @@
 }
 @media screen and (max-width: 400px) {
   .imghome {
-    width: 10%;
-    background-color: #e10b76;
+    width: 100vh;
+    display: table-cell;
   }
+}
+@media screen and (max-width: 600px){
+
+  .login-row{
+    width: 87%;
+    padding-top: 73px;
+    padding-left: 26px;
+}
 }
 .coco {
   font-family: "Lora";

@@ -9,7 +9,7 @@ import { NavbarL } from "../component/navbarl";
 
 export const Productos = () => {
     const { store, actions } = useContext(Context);
-  
+
     return (
 
         <div className="row row-2">
@@ -23,8 +23,8 @@ export const Productos = () => {
                     <i class="fa-solid fa-2x fa-leaf icn "></i>
                 </Link>
                 <Link to="/productos3">
-                
-                <i class="fa-solid fa-2x fa-cheese icn"></i>
+
+                    <i class="fa-solid fa-2x fa-cheese icn"></i>
                 </Link>
 
             </div>
@@ -32,7 +32,7 @@ export const Productos = () => {
             <div className=" container-productos ">
                 <div className="row cajas">
                     {store.comidas.map((e, i) => {
-                       
+
                         return (<div className="col-md-4" key={i}>
                             <figure  >
                                 <img src={e.url} ></img>
@@ -45,7 +45,7 @@ export const Productos = () => {
                                         imageHeight: 200,
                                         imageAlt: 'style="border-radius: 20px;"',
                                         html:
-                                        `
+                                            `
                                      
                                         <div style="display: flex;
                                         justify-content: space-around;">
@@ -110,7 +110,7 @@ export const Productos = () => {
             </div>
 
 
-            
+
             <Footer />
 
         </div>

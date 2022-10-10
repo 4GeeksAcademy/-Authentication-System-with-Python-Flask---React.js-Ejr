@@ -183,7 +183,7 @@ figure {
   justify-content: center;
 }
 
-.loco{
+.loco {
   background: white;
   height: 6px;
   width: 0px;
@@ -195,54 +195,37 @@ figure {
   box-sizing: border-box;
 }
 
-
-
-
-.popo{
- 
+.popo {
   color: var(--main-color);
   font-size: 27px;
   width: 500px;
   margin: 23px auto;
   border-right: 2px solid var(--main-color);
   overflow: hidden;
-  white-space:nowrap;
-  animation: control-width 4s steps(25) both ,blink 0.5s infinite;
-
+  white-space: nowrap;
+  animation: control-width 4s steps(25) both, blink 0.5s infinite;
 }
 @keyframes control-width {
-
   from {
-      width: 0;
-  }
-  to{
-      width: 500px;
-  }
-  
-}
-@keyframes blink {
-
-  from {
-
-      border-right-color: var(--main-color);
+    width: 0;
   }
   to {
-
-      border-right-color: transparent;
-
+    width: 500px;
   }
-  
 }
-.casa{
-  color: #101010
+@keyframes blink {
+  from {
+    border-right-color: var(--main-color);
+  }
+  to {
+    border-right-color: transparent;
+  }
 }
-
-
+.casa {
+  color: #101010;
+}
 
 @import url("https://fonts.googleapis.com/css?family=Raleway:400,700");
-
-
-
 
 .jijo {
   position: absolute;
@@ -250,17 +233,28 @@ figure {
   height: 100%;
   overflow: hidden;
 }
-.jijo:hover .top:before, .jijo:hover .top:after, .jijo:hover .bottom:before, .jijo:hover .bottom:after, .jijo:active .top:before, .jijo:active .top:after, .jijo:active .bottom:before, .jijo:active .bottom:after {
+.jijo:hover .top:before,
+.jijo:hover .top:after,
+.jijo:hover .bottom:before,
+.jijo:hover .bottom:after,
+.jijo:active .top:before,
+.jijo:active .top:after,
+.jijo:active .bottom:before,
+.jijo:active .bottom:after {
   margin-left: 200px;
   transform-origin: -200px 50%;
   transition-delay: 0s;
 }
-.jijo:hover .center, .jijo:active .center {
+.jijo:hover .center,
+.jijo:active .center {
   opacity: 1;
   transition-delay: 0.2s;
 }
 
-.top:before, .top:after, .bottom:before, .bottom:after {
+.top:before,
+.top:after,
+.bottom:before,
+.bottom:after {
   content: "";
   display: block;
   position: absolute;
@@ -319,4 +313,85 @@ figure {
   border-radius: 1px;
   border: 1px solid #ccc;
   font-family: inherit;
+}
+@media screen and (max-width: 900px) {
+  .cajas {
+    
+    display: flex;
+    flex-direction: column;
+  }
+}
+@media screen and (max-width: 900px) {
+  .imglc {
+    
+    height: 659px;
+  }
+}
+@media screen and (max-width:900px){
+  .navbar{
+    
+    margin: 0px;
+    display: flex;
+    justify-content: space-around;
+    
+  }
+}
+
+@media screen and (max-width:1500px){
+  .navbar{
+    
+    display: flex;
+   
+    flex-direction: column;
+    
+  }
+}
+@media screen and (max-width: 600px){
+  .login-row{
+    
+    
+    align-items: center;
+    width: 87%;
+    margin-right: 58px;
+    padding-top: 45px;
+
+  }
+}
+@media screen and (max-width: 600px){
+  .login{
+    
+    
+    display: flex;
+    align-content: stretch;
+    flex-wrap: nowrap;
+  }
+}
+@media screen and (max-width: 800px){
+  .login-row{
+    
+    
+    padding: 20px;
+
+  }
+}
+@media screen and (max-width: 600px){
+  .coc{
+    
+    
+    color: white;
+    border-radius: 20px;
+    background: #0000008a;
+
+  }
+}
+@media screen and (max-width: 300px){
+  .login-row{
+    
+    
+    align-items: center;
+    width: 87%;
+    margin-right: 58px;
+    padding-top: 45px;
+
+  }
 }
