@@ -112,13 +112,27 @@ p {
   box-sizing: content-box;
   width: 70%;
 }
+@media screen and (max-width: 600px) {
+  .home{
+    width: 100%;
+  }
+}
+.home {
+
+    background: #00000033;
+    color: hsl(0deg 0% 13%);
+
+}
 @media screen and (max-width: 400px) {
   .home{
     width: 100%;
   }
 }
-.cart {
-  color: gray;
+.home {
+
+    background: none;
+    color: rgb(10, 10, 10);
+
 }
 
 .destacados {
