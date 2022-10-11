@@ -96,19 +96,19 @@ export const Stock = () => {
                                             <tr>
 
                                                 <th scope="col">Nombre</th>
-                                                <th scope="col">Email</th>
+                                                <th scope="col">Porcion</th>
                        
-                                                <th scope="col">Direccion</th>
-                                                <th scope="col">Fecha</th>
+                                                <th scope="col">Calorias</th>
+                                                <th scope="col">#</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr>
 
                                                 <td>{e.name}</td>
-                                                <td>Correo@gmail.com</td>
-                                                <td>Santiago de chile</td>
-                                                <td>15/01/2022</td>
+                                                <td>{e.porcion}</td>
+                                                <td>{e.calorias}</td>
+                                                <td>{e.uid}</td>
                                             </tr>
                                           
                                         </tbody>

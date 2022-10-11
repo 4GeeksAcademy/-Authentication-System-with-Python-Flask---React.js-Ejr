@@ -30,7 +30,7 @@
 @media screen and (max-width: 600px) {
   .imghome {
     width: 100vh;
-    display: table-cell;
+    
     height: 108vh;
     width: 68vh;
   }
@@ -109,33 +109,25 @@ p {
 }
 .home {
   margin-top: 20px;
-  margin-left: 7cm;
+  margin-left: 4cm;
   margin-right: 7cm;
   box-sizing: content-box;
   width: 70%;
 }
+
+
 @media screen and (max-width: 600px) {
   .home{
-    width: 100%;
+    background: linear-gradient(180deg, rgba(120, 114, 114, 0.63) 0%, rgba(120, 114, 114, 0) 100%);
+    border-radius: 20px;
   }
 }
-.home {
-
-    background: #00000033;
-    color: hsl(0deg 0% 13%);
-
-}
-@media screen and (max-width: 400px) {
-  .home{
-    width: 100%;
+@media screen and (max-width: 600px) {
+  .card-title{
+    color:white;
   }
 }
-.home {
 
-    background: none;
-    color: rgb(10, 10, 10);
-
-}
 
 .destacados {
   margin-left: 4cm;

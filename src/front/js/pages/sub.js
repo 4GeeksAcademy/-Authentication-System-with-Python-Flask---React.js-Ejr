@@ -23,16 +23,11 @@ export const Sub = () => {
               <p class="card-text">Incluye: Lorem</p>
               <p class="card-text">Ahorras: 10% </p>
               <Link to="/Plan1">
-                <button className="btn btn-secondary">Learn More</button>
+                <button className="btn btn-secondary learn">Learn More</button>
               </Link>
-              <button
-                onClick={() => actions.getAddTask(e.name)}
-                type="button"
-                className="btn btn-outline-dark m-2 boton"
-              >
+              
                 {" "}
-                <i class="fa-solid fa-plus"></i>
-              </button>
+              
 
               <PayPalScriptProvider
                 options={{
@@ -83,16 +78,12 @@ export const Sub = () => {
               <p class="card-text">Incluye: Lorem</p>
               <p class="card-text">Ahorras: 20% </p>
               <Link to="/Plan2">
-                <button className="btn btn-secondary">Learn More</button>
+                <button className="btn btn-secondary learn">Learn More</button>
               </Link>
-              <button
-                onClick={() => actions.getAddTask(e.name)}
-                type="button"
-                className="btn btn-outline-dark m-2 boton"
-              >
+              
                 {" "}
-                <i class="fa-solid fa-plus"></i>
-              </button>
+                
+             
 
               <PayPalScriptProvider
                 options={{

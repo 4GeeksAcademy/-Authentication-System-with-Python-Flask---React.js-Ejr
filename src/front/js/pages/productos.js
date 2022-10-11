@@ -56,7 +56,7 @@ export const Productos = () => {
                                         width: 60px;
                                         height: 22px;
                                         padding-top: 2px;
-                                        text-align: center;">${e.dificultad}
+                                        text-align: center;">${e.porcion}
                                          </div>
                                          <strong>Dificultad</strong>
                                         <div style="background: gray;
@@ -65,7 +65,7 @@ export const Productos = () => {
                                         width: 61px;
                                         height: 22px;
                                         padding-top: 2px;
-                                        text-align: center;">${e.porcion}
+                                        text-align: center;">${e.dificultad}
                                          </div>
                                          <strong>Tiempo</strong>
                                          <div style="background: gray;

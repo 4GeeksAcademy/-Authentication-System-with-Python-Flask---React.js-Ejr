@@ -76,7 +76,7 @@
   border-radius: 1.5rem;
   }
 }
-@media screen and (max-width: 766px) {
+@media screen and (max-width: 900px) {
   .icon-house {
   
         
@@ -90,6 +90,31 @@
         padding-top: 10px;
         color: #f8f9fa;
         text-align: center;
+        
+  }
+}
+@media screen and (max-width: 766px) {
+  .icon-house {
+  
+        
+    background: #282726;
+    width: 72px;
+    height: 33px;
+    display: flex;
+    margin-top: -39px;
+    padding-top: 10px;
+    margin-left: -77px;
+    color: #f8f9fa;
+    text-align: center;
+        
+  }
+}
+@media screen and (max-width: 600px) {
+  .co-sm-10 {
+    direction: rtl;
+    margin-right: -222px;
+        
+    
         
   }
 }
