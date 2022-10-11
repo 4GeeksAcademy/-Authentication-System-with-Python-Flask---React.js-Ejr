@@ -59,3 +59,37 @@
   display: flex;
   flex-direction: row-reverse;
 }
+@media screen and (max-width: 766px) {
+  .login{
+    display: flex;
+    flex-direction: column-reverse;
+    
+  }
+}
+@media screen and (max-width: 766px) {
+  .login-logo {
+    margin: 93px;
+    margin-left: 297px;
+    color: #282726;
+  background-color: #fff;
+  border: none;
+  border-radius: 1.5rem;
+  }
+}
+@media screen and (max-width: 766px) {
+  .icon-house {
+  
+        
+        background: #282726;
+      
+        width: 83px;
+        height: 37px;
+        display: flex;
+        margin-top: -40px;
+       
+        padding-top: 10px;
+        color: #f8f9fa;
+        text-align: center;
+        
+  }
+}

@@ -27,7 +27,6 @@ const form = useRef();
   return (
     <div class="row imghome">
       <Navbar />
-      
 	  <div class="row login-row">
                 <div class="col-md-6 login-form-1">
                     <h3>Formulario de Contacto</h3>

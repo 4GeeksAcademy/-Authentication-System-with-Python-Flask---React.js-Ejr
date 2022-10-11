@@ -27,10 +27,12 @@
   height: 100vh;
   width: 100%;
 }
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 600px) {
   .imghome {
     width: 100vh;
     display: table-cell;
+    height: 108vh;
+    width: 68vh;
   }
 }
 @media screen and (max-width: 600px){
