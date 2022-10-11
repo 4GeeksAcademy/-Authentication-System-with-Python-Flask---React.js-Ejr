@@ -2,8 +2,6 @@ import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
 import { Perfil } from "./pages/perfil";
-
-
 import injectContext from "./store/appContext";
 import {Login} from "./pages/login";
 import { Navbar } from "./component/navbar";
@@ -14,14 +12,9 @@ import { useAuth0 } from "@auth0/auth0-react";
 import "../styles/index.css";
 import CallToActionWithIllustration from "./pages/inicio";
 import {Conversor} from "./pages/conversore"
-
 import Home from "./pages/home";
-
 import Educacion from "./pages/Educacion.jsx";
 import RutaAprendizaje from "./pages/rutaAprendizaje.jsx";
-
-
-
 import WhatIf from "./pages/whatIf.jsx";
 import ClaseCurso from "./pages/claseCurso.jsx";
 
@@ -45,17 +38,15 @@ const Layout = () => {
         <ScrollToTop>
           
           <Routes>
-          <Route element={<CallToActionWithIllustration />} path="/landingpage" />
+          <Route element={<CallToActionWithIllustration />} path="/" />
             <Route element={<Login />} path="/login" />
+            <Route element={<Home />} path="/home" />
             <Route element={<Conversor />} path="/Conversor" />
-            <Route element={<Home />} path="/" />
-        
             <Route element={<WhatIf />} path="/whatif" />
-      
             <Route element={<Educacion />} path="/educacion" />
             <Route element={<RutaAprendizaje />} path="/ruta" />
             <Route element={<ClaseCurso />} path="/ruta/:theid" />
-            <Route element={<h1>Not found!</h1>} />
+            <Route element={<h1>:( </h1>} />
           </Routes>
         </ScrollToTop>
       </BrowserRouter>

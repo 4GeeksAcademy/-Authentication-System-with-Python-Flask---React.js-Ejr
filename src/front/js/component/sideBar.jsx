@@ -40,7 +40,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { Spinner } from "@chakra-ui/react";
 
 const LinkItems = [
-  { name: "Home", icon: FiHome, ruta: "/" },
+  { name: "Home", icon: FiHome, ruta: "/home" },
   { name: "Conversor", icon: FiTrendingUp, ruta: "/conversor" },
   // { name: "Educacion", icon: FiBook, ruta: "./educacion" },
   { name: "blockchain 101", icon: FiBook, ruta: "/ruta" },
