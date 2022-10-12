@@ -18,7 +18,14 @@ def handle_hello():
     }
 
     return jsonify(response_body), 200
+#VALIDA TOKEN PARA NAVEGAR PAGINAS PROTEGIDAS
+@api.route("/validartoken", methods=["GET"])
+@jwt_required()
+def validartoken():
+    identidad = get_jwt_identity()
+    return {"mensaje" : "inicio correcto"}
 
+#REGISTRA USUARIOS (VERIFICA QUE NO EXISTA PREVIAMENTE)
 @api.route('/registro', methods=['POST'])
 def set_user():
     datos = request.get_json()
@@ -33,19 +40,15 @@ def set_user():
     if ('telefono' not in datos):
         return 'Falta Telefono'
     new_user = User.query.filter_by(email = datos['email']).first()
+    if(new_user != None):
+        return {"mensaje": 'Email ya registrado'}
     if (new_user is None):
         new_user = User(name = datos['name'], email = datos['email'], password = datos['password'],direccion = datos['direccion'],telefono = datos['telefono'], is_active = True)
     db.session.add(new_user)
     db.session.commit()
-    return 'Usuario Registrado'
+    return {"mensaje": "Usuario Registrado"}
 
-@api.route("/validartoken", methods=["GET"])
-@jwt_required()
-def validartoken():
-    identidad = get_jwt_identity()
-    return {"mensaje" : "inicio correcto"}
-
-
+#VALIDA USUARIO PARA LOGIN Y ENTREGA TOKEN PARA SESION
 @api.route("/token", methods=["POST"])
 def token():
     body = request.get_json()

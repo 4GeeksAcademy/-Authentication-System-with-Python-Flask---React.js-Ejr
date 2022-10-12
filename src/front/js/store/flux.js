@@ -1,7 +1,7 @@
 const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
-      login: false,
+      login: false, // Para chequear estado de login, validación de token
       message: null,
       user: null,
       registro: [],
@@ -29,6 +29,33 @@ const getState = ({ getStore, getActions, setStore }) => {
       ],
     },
     actions: {
+      //VALIDACIÓN DE TOKEN PARA ACCEDER A PAGINAS PROTEGIDAS
+      GetValidacion: (token_por_validar) => {
+        var myHeaders = new Headers();
+        myHeaders.append("Authorization", "Bearer " + token_por_validar);
+
+        var requestOptions = {
+          method: "GET",
+          headers: myHeaders,
+          redirect: "follow",
+        };
+
+        fetch(
+          "https://3001-alexanderwe-proyectofin-wbwxe9cw9xd.ws-us70.gitpod.io/api/validartoken",
+          requestOptions
+        )
+          .then((response) => response.json())
+          .then((result) => {
+            console.log(result);
+            if (result.mensaje === "inicio correcto") {
+              setStore({ login: true });
+            }
+          })
+          .catch((error) => {
+            console.log("error", error);
+          });
+      },
+
       Register: (name, email, password, direccion, telefono) => {
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
@@ -105,7 +132,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         };
 
         fetch(
-          "https://3001-alexanderwe-proyectofin-wbwxe9cw9xd.ws-us70.gitpod.io/api/token",
+          "https://3001-alexanderwe-proyectofin-7ie0h4ay0qj.ws-us70.gitpod.io/api/token",
           requestOptions
         )
           .then((response) => response.json())
@@ -130,6 +157,10 @@ const getState = ({ getStore, getActions, setStore }) => {
             }
           })
           .catch((error) => console.log("error", error));
+      },
+      //CERRAR SESIÓN
+      cerrarSesion:()=>{
+
       },
       // trae el nombre de la comida
       getComida: (id) => {
