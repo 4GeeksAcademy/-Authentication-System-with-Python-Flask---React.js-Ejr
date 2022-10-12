@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import "../../styles/login.css";
 import { Context } from "../store/appContext";
+import rigoImageUrl from "../../img/logoproyecto.jpg";
 
 export const Demo = () => {
   const { store, actions } = useContext(Context);
@@ -22,6 +23,7 @@ export const Demo = () => {
     <div class="container login-container">
       <div class="row login-row login">
         <div class="col-md-6 login-form-1" id="form1">
+        <img className="logoproyecto" src="/../../logoproyecto.jpg"></img>
           <h3>Inicia sesión</h3>
 
           <form class="form-group">

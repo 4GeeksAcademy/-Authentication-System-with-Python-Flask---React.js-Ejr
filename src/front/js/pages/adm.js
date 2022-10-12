@@ -12,7 +12,7 @@ export const Adm = () => {
     <div className="d-flex body-adm">
       <div id="sidebar-container" className="bg-primary" >
         <div className="logo">
-          <h4 className="text-light font-weight-bold">CocinaFacil</h4>
+          <h4 className="text-light font-weight-bold">  <img className="logoproyecto1" src="/../../logoproyecto.jpg"></img>   </h4>
         </div>
         <div className="menu">
         <div class="navbar-collapse text-light mr-2 p-3" id="navbarSupportedContent">
