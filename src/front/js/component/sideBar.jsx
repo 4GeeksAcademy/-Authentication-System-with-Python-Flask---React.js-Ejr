@@ -43,8 +43,9 @@ const LinkItems = [
   { name: "Home", icon: FiHome, ruta: "/home" },
   { name: "Conversor", icon: FiTrendingUp, ruta: "/conversor" },
   // { name: "Educacion", icon: FiBook, ruta: "./educacion" },
-  { name: "blockchain 101", icon: FiBook, ruta: "/ruta" },
+  { name: "Blockchain 101", icon: FiBook, ruta: "/ruta" },
   { name: "What if", icon: SiFuturelearn, ruta: "/whatif" },
+  {ruta:"/perfil1"},
 ];
 
 export default function SidebarWithHeader({ children }) {
@@ -92,6 +93,7 @@ const SidebarContent = ({ onClose, ...rest }) => {
   const { user, isAuthenticated, isLoading } = useAuth0();
 
   return (
+    isAuthenticated && ( 
     <Box
       transition="3s ease"
       bg={useColorModeValue("white", "gray.900")}
@@ -147,9 +149,7 @@ const SidebarContent = ({ onClose, ...rest }) => {
             bg={useColorModeValue("white", "gray.900")}
             borderColor={useColorModeValue("gray.200", "gray.700")}
           >
-            <MenuItem>Profile</MenuItem>
-            <MenuItem>Settings</MenuItem>
-            <MenuItem>Billing</MenuItem>
+            
             <MenuDivider />
             <MenuItem
               onClick={() => logout({ returnTo: window.location.origin })}
@@ -160,6 +160,7 @@ const SidebarContent = ({ onClose, ...rest }) => {
         </Menu>
       </Box>
     </Box>
+    )
   );
 };
 

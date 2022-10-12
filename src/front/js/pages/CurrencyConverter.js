@@ -125,7 +125,11 @@ export const CurrrencyConverter = () => {
   <Divider orientation='vertical' />
 </Center>
       <ExchangeRate
-        cambioMoneda={cambioMoneda}
+        cambioMoneda={new Intl.NumberFormat("en-US", {
+          style: "currency",
+          currency: "USD",
+          currencyDisplay: "narrowSymbol",
+        }).format(cambioMoneda)}
         primeraMoneda={primeraMoneda}
         segundaMoneda={segundaMoneda}
          />

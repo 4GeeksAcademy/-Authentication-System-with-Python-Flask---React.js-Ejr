@@ -24,7 +24,7 @@ export const Login= () => {
 
   // React States
 
-  const {loginWithRedirect} = useAuth0();
+  const {loginWithRedirect} = useAuth0()
   const [errorMessages, setErrorMessages] = useState({});
   const [isSubmitted, setIsSubmitted] = useState(false);
 
@@ -45,6 +45,9 @@ export const Login= () => {
     pass: "usuario invalido"
   };
 
+  const onRedirectCallback = (appState) => {
+    history.push(appState?.returnTo || window.location.home);
+  };
   const handleSubmit = (event) => {
     
     event.preventDefault();

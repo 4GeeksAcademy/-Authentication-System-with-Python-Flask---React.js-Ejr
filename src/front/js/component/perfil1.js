@@ -6,32 +6,27 @@ import { Text } from '@chakra-ui/react'
 import { Stack, HStack, VStack } from '@chakra-ui/react'
 import { Spinner } from "@chakra-ui/react";
 
-export const Perfil = () => {
+export const Perfil1 = () => {
     const {user, isAuthenticated, isLoading} = useAuth0();
 
 
     if(isLoading){
         return <div> <Spinner /> </div>
 
-
-
     }
 
     return(
-        isAuthenticated &&(
+        ( isAuthenticated &&(
             <div>
-
                  <WrapItem>
                  <Avatar name='imagenPerfil' src={user.picture} alt={user.name}/>
-                 <Stack spacing={6}>
+                 <Stack spacing={2}>
                  <Text fontSize='sm'>{user.name}</Text>
                 <Text fontSize='xs'>{user.email}</Text>
-                <Text fontSize='xs'>{user.locale}</Text>
- 
-
                 </Stack>
                 </WrapItem>
             </div>
+        )
         )
     )
 }

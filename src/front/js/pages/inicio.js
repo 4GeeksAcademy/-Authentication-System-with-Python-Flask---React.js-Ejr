@@ -9,11 +9,12 @@ import {
   Icon,
   IconProps,
 } from "@chakra-ui/react";
-
+import { useAuth0 } from "@auth0/auth0-react";
 import { Link } from "react-router-dom";
 import { Link as ReachLink } from "@reach/router";
 
 export default function CallToActionWithIllustration() {
+  const {loginWithRedirect} = useAuth0()
   return (
     <Container maxW={"5xl"}>
       <Stack
@@ -40,8 +41,8 @@ export default function CallToActionWithIllustration() {
           ojo 👁 a nuestra web !
         </Text>
         <Stack spacing={6} direction={"row"}>
-          <Link to="/login">
-            <Button
+          
+           {/*  <Button
               rounded={"full"}
               px={6}
               colorScheme={"purple"}
@@ -49,11 +50,26 @@ export default function CallToActionWithIllustration() {
               _hover={{ bg: "rgb(140,82,255)" }}
             >
               Empieza
-            </Button>
-          </Link>
-          <Link to="/login">
+            </Button> */}
+            <Button
+                onClick={() =>loginWithRedirect() }
+                type="submit"
+                  bg={'rgb(140,82,255)'}
+                  color={'white'}
+                  _hover={{
+                    bg: 'rgb(140,82,255)',
+                  }}>
+                  Empieza ahora
+                </Button>
+          
+          <Link to="/leermas">
             <Button rounded={"full"} px={6}>
               Leer mas.
+            </Button>
+          </Link>
+          <Link to="/home">
+            <Button rounded={"full"} px={6}>
+             ¡ Vamos aprender!
             </Button>
           </Link>
         </Stack>

@@ -1,10 +1,12 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
-import { Perfil } from "./pages/perfil";
+import { Perfil1 } from "./component/perfil1";
 import injectContext from "./store/appContext";
 import {Login} from "./pages/login";
 import { Navbar } from "./component/navbar";
+import GridListWithHeading from "./pages/leermas.jsx"
+
 import { Footer } from "./component/footer";
 import SidebarWithHeader from "./component/sideBar.jsx";
 import { BotonLogout } from "./pages/logout";
@@ -28,7 +30,7 @@ const Layout = () => {
   return (
     <div className="tracker">
          {/* <CallToActionWithIllustration/>
-           {isAuthenticated ? <>
+           { isAuthenticated ? <>
           <SidebarWithHeader/>
            <Home/>
           </>
@@ -46,6 +48,9 @@ const Layout = () => {
             <Route element={<Educacion />} path="/educacion" />
             <Route element={<RutaAprendizaje />} path="/ruta" />
             <Route element={<ClaseCurso />} path="/ruta/:theid" />
+            <Route element={<Perfil1/>} path="/perfil1" />
+            <Route element={<GridListWithHeading/>} path="/leermas" />
+            <Route element={<GridListWithHeading/>} path="/leermas" />
             <Route element={<h1>:( </h1>} />
           </Routes>
         </ScrollToTop>

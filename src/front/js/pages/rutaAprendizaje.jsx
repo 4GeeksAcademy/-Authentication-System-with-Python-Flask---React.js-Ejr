@@ -64,7 +64,7 @@ export default function RutaAprendizaje() {
               </Box>
               <Box width={500}>
                 <Text fontWeight={700} fontSize="3xl">
-                  Inicia tu camino hacia la web3
+                  Inicia tu camino hacia la Web3
                 </Text>
                 <Text pt={4}>
                   ¿Criptomonedas? ¿Blockchain? ¿Ethereum? Seguramente alguna vez

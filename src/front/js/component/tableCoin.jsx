@@ -26,9 +26,9 @@ const TableCoins = ({ coins, search }) => {
           <Tr>
             <Th>#</Th>
 
-            <Th>Name</Th>
-            <Th>Price</Th>
-            <Th>Price change 24h</Th>
+            <Th>Nombre</Th>
+            <Th>Precio</Th>
+            <Th>Precio cambio 24hr</Th>
             <Th>Market cap</Th>
           </Tr>
         </Thead>
