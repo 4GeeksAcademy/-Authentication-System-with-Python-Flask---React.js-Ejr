@@ -158,10 +158,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           })
           .catch((error) => console.log("error", error));
       },
-      //CERRAR SESIÓN
-      cerrarSesion:()=>{
-
-      },
+      
       // trae el nombre de la comida
       getComida: (id) => {
         fetch(
