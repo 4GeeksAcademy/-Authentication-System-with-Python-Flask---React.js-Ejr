@@ -125,9 +125,10 @@
 
 }
 
-li {
+.auth {
   margin: 3px 1;
   color: red;
   font-size: 12px;
   padding-left: 10px;
 }
+

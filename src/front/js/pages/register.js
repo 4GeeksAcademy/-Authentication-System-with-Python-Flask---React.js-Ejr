@@ -117,10 +117,10 @@ export const Register = () => {
               {errors.password?.type === "pattern" && (
                 <div className="fail">
                   <span>El formato no es válido. Debe contener, al menos:</span>
-                  <li>6 caracteres</li>
-                  <li>1 letra mayúscula</li>
-                  <li>1 letra minúscula</li>
-                  <li>1 número</li>
+                  <li className="auth">6 caracteres</li>
+                  <li className="auth">1 letra mayúscula</li>
+                  <li className="auth">1 letra minúscula</li>
+                  <li className="auth">1 número</li>
                 </div>
               )}
             </div>
