@@ -1,4 +1,4 @@
-import React, {useRef } from "react";
+import React, { useRef } from "react";
 import { useForm } from "react-hook-form";
 
 import "../../styles/home.css";
@@ -98,11 +98,7 @@ export const Contacto = () => {
               )}
             </div>
             <div>
-              <input
-                className=" btn btn-secondary mt-3"
-                type="submit"
-                value="Enviar"
-              />
+              <input className=" btnSubmit mt-3" type="submit" value="Enviar" />
             </div>
           </form>
         </div>

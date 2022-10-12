@@ -16,9 +16,9 @@ export const Sub = () => {
   useEffect(() => {
     actions.GetValidacion(localStorage.getItem("token"));
     //setTimeout(() => {
-      //if (store.login == false) {
-        //navigate("/demo");
-      //}
+    //if (store.login == false) {
+    //navigate("/demo");
+    //}
     //}, 5000);
   }, []);
   return (
@@ -92,45 +92,45 @@ export const Sub = () => {
                 <button className="btn btn-secondary learn">Learn More</button>
               </Link>{" "}
               {store.login ? (
-              <PayPalScriptProvider
-                options={{
-                  "client-id":
-                    "AWTfwnUiraZVgePkbmwOzkhD2h0OLmv4e6UFxflq_kjhXt_3kPybYDkdH2vHxQduUvzRdwMlXKskJUyk",
-                }}
-              >
-                <PayPalButtons
-                  createOrder={(data, actions) => {
-                    return actions.order.create({
-                      purchase_units: [
-                        {
-                          amount: {
-                            value: 48000,
-                          },
-                        },
-                      ],
-                    });
+                <PayPalScriptProvider
+                  options={{
+                    "client-id":
+                      "AWTfwnUiraZVgePkbmwOzkhD2h0OLmv4e6UFxflq_kjhXt_3kPybYDkdH2vHxQduUvzRdwMlXKskJUyk",
                   }}
-                  onApprove={async (data, actions) => {
-                    const details = await actions.order.capture();
-                    const name = details.payer.name.given_name;
-                    Swal.fire({
-                      title: "Tu Compra Ha Sido Aprobada",
-                      width: 600,
-                      padding: "3em",
-                      color: "#716add",
-                      icon: "success",
-                      background: '#fff url("")',
-                      backdrop: `
+                >
+                  <PayPalButtons
+                    createOrder={(data, actions) => {
+                      return actions.order.create({
+                        purchase_units: [
+                          {
+                            amount: {
+                              value: 48000,
+                            },
+                          },
+                        ],
+                      });
+                    }}
+                    onApprove={async (data, actions) => {
+                      const details = await actions.order.capture();
+                      const name = details.payer.name.given_name;
+                      Swal.fire({
+                        title: "Tu Compra Ha Sido Aprobada",
+                        width: 600,
+                        padding: "3em",
+                        color: "#716add",
+                        icon: "success",
+                        background: '#fff url("")',
+                        backdrop: `
                         rgba(0,0,123,0.4)
                         url("https://i.giphy.com/media/WPyAmXubNrMv8BK7xx/giphy.webp")
                         left top
                         no-repeat
                         
                       `,
-                    });
-                  }}
-                />
-              </PayPalScriptProvider>
+                      });
+                    }}
+                  />
+                </PayPalScriptProvider>
               ) : (
                 <div>
                   <Link to="/demo">Logeate para continuar con tu compra</Link>
