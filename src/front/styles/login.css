@@ -1,12 +1,12 @@
-.login-container{
+.login-container {
   margin-top: 5%;
   margin-bottom: 5%;
 }
-.login-logo{
+.login-logo {
   position: relative;
   margin-left: -41.5%;
 }
-.login-logo img{
+.login-logo img {
   position: absolute;
   width: 20%;
   margin-top: 19%;
@@ -14,56 +14,54 @@
   border-radius: 4.5rem;
   padding: 5%;
 }
-.login-form-1{
+.login-form-1 {
   padding: 9%;
-  background:#d9a3b0f0;
+  background: #d9a3b0f0;
   box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0 rgba(0, 0, 0, 0.19);
 }
-.login-form-1 h3{
+.login-form-1 h3 {
   text-align: center;
-  margin-bottom:12%;
-  color:white;
+  margin-bottom: 12%;
+  color: white;
 }
-.login-form-2{
+.login-form-2 {
   padding: 9%;
   background-image: url("https://images.pexels.com/photos/4871119/pexels-photo-4871119.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1");
   box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0 rgba(0, 0, 0, 0.19);
 }
-.login-form-2 h3{
+.login-form-2 h3 {
   text-align: center;
-  margin-bottom:12%;
+  margin-bottom: 12%;
   color: #fff;
 }
-.btnSubmit{
+.btnSubmit {
   font-weight: 600;
   width: 45%;
   color: #282726;
   background-color: #fff;
   border: none;
   border-radius: 1.5rem;
-  padding:2%;
+  padding: 2%;
   margin: 5px;
-  
 }
 
-.btnForgetPwd{
+.btnForgetPwd {
   color: #fff;
   font-weight: 600;
   text-decoration: none;
 }
-.btnForgetPwd:hover{
-  text-decoration:none;
-  color:#fff;
+.btnForgetPwd:hover {
+  text-decoration: none;
+  color: #fff;
 }
-.login-row{
+.login-row {
   display: flex;
   flex-direction: row-reverse;
 }
 @media screen and (max-width: 766px) {
-  .login{
+  .login {
     display: flex;
     flex-direction: column-reverse;
-    
   }
 }
 @media screen and (max-width: 766px) {
@@ -71,32 +69,27 @@
     margin: 93px;
     margin-left: 297px;
     color: #282726;
-  background-color: #fff;
-  border: none;
-  border-radius: 1.5rem;
+    background-color: #fff;
+    border: none;
+    border-radius: 1.5rem;
   }
 }
 @media screen and (max-width: 900px) {
   .icon-house {
-  
-        
-        background: #282726;
-      
-        width: 83px;
-        height: 37px;
-        display: flex;
-        margin-top: -40px;
-       
-        padding-top: 10px;
-        color: #f8f9fa;
-        text-align: center;
-        
+    background: #282726;
+
+    width: 83px;
+    height: 37px;
+    display: flex;
+    margin-top: -40px;
+
+    padding-top: 10px;
+    color: #f8f9fa;
+    text-align: center;
   }
 }
 @media screen and (max-width: 766px) {
   .icon-house {
-  
-        
     background: #282726;
     width: 72px;
     height: 33px;
@@ -106,23 +99,18 @@
     margin-left: -77px;
     color: #f8f9fa;
     text-align: center;
-        
   }
 }
 @media screen and (max-width: 600px) {
   .co-sm-10 {
     direction: rtl;
     margin-right: -222px;
-        
-    
-        
   }
 }
 .fail {
   color: red;
   font-size: 12px;
   padding-left: 5px;
-
 }
 
 .auth {
@@ -131,7 +119,7 @@
   font-size: 12px;
   padding-left: 10px;
 }
-.login-style{
+.login-style {
   border-radius: 20px;
   background: #e10b76;
   height: 35px;
@@ -145,7 +133,15 @@
   color: #f4f5f6;
   text-decoration: none;
 }
-.logeate:hover{
+.logeate:hover {
   color: #060606;
   text-decoration: none;
 }
+
+.logoproyecto {
+  border-radius: 6px;
+  margin-left: 34%;
+  margin-bottom: 7px;
+}
+
+

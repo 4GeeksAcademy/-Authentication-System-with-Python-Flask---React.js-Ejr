@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import rigoImageUr from "../../img/LogoSample_ByTailorBrands.jpg";
 import { Context } from "../store/appContext";
+import rigoImageUrl from "../../img/logoproyecto.jpg";
 export const Navbar = () => {
 	const navigate = useNavigate();
 	const FuncionCerrarSesion = () => {
@@ -14,8 +15,9 @@ export const Navbar = () => {
 	  }, []);
 	return (
 		<nav className="navbar navb " id="navbar">
+			
 			<div className="container coco d-flex justify-content-center">
-				
+			
 				
 			<div className="fle">
 			<Link to="/">

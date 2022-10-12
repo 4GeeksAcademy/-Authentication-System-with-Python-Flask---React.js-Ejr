@@ -26,7 +26,7 @@ console.log(store.comidas)
                 </Link>
                 <Link to="/productos3">
                 
-                <i class="fa-solid fa-2x fa-cheese icn"></i>
+                <i class="fa-solid fa-2x fa-ice-cream icn"></i>
                 </Link>
             
             </div>
