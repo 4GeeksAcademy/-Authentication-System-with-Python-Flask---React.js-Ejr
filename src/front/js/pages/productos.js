@@ -14,7 +14,7 @@ export const Productos = () => {
 
         <div className="row row-2">
             <img className="imglc" src="https://images.unsplash.com/photo-1490818387583-1baba5e638af?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1032&q=80" />
-            <NavbarL />
+            <Navbar />
             <div className="container iconoscaja">
                 <Link to="/productos">
                     <i class="fa-solid fa-2x fa-burger icn "></i>
@@ -49,7 +49,7 @@ export const Productos = () => {
                                      
                                         <div style="display: flex;
                                         justify-content: space-around;">
-                                        <strong>Porcion</strong>
+                                        <strong style="font-size: 14px;">Porcion</strong>
                                         <div style="background: gray;
                                         color: white;
                                         border-radius: 14px;
@@ -58,7 +58,7 @@ export const Productos = () => {
                                         padding-top: 2px;
                                         text-align: center;">${e.porcion}
                                          </div>
-                                         <strong>Dificultad</strong>
+                                         <strong style="font-size: 14px;">Dificultad</strong>
                                         <div style="background: gray;
                                         color: white;
                                         border-radius: 14px;
@@ -67,7 +67,7 @@ export const Productos = () => {
                                         padding-top: 2px;
                                         text-align: center;">${e.dificultad}
                                          </div>
-                                         <strong>Tiempo</strong>
+                                         <strong style="font-size: 14px;">Tiempo</strong>
                                          <div style="background: gray;
                                         color: white;
                                         border-radius: 14px;
@@ -82,7 +82,7 @@ export const Productos = () => {
                                          <div>
                                          <h2 style="margin: 31px;
                                          font-size: revert;
-                                         font-family: none;">${e.name}</h2>
+                                         font-family: unset;">${e.name}</h2>
                                          <p>${e.calorias}</p>
                                          <p>${e.ingredientes}</p>
                                          <p>${e.tiempo}</p>

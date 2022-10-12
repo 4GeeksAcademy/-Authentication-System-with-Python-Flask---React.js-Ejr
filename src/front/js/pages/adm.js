@@ -20,11 +20,9 @@ export const Adm = () => {
                 <li class="nav-item dropdown">
 
                   <a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-expanded="false">
-                    <i class="icon ion-md-person mr-2 "></i> Perfil
+                    <i class="icon ion-md-person mr-2 "></i> 
                   </a>
                   <div class="dropdown-menu">
-                    <a class="dropdown-item" href="#">Mi perfil</a>
-                    <a class="dropdown-item" href="#">Configuracion</a>
                     <div class="dropdown-divider"></div>
                     <Link to="/demo">
                     <a class="dropdown-item" href="#">Cerrar sesion</a>

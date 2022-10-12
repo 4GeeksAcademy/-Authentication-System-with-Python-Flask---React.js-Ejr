@@ -29,13 +29,18 @@ export const Navbar = () => {
 			</div>
 			</div>
 			{store.login ? (
-				<div className="" id="iconos">
-					<Link to="/demo">
+				<div class="btn-group">
+				<button class="btn btn-lg dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
 				<i class="fa-solid fa-user" id="loginicon"></i>
-				</Link>
-				
+				</button>
+				<div class="dropdown-menu">
+				<Link to="/demo">
+                    <a class="dropdown-item" href="#">Cerrar sesion</a>
+                    </Link>
 				</div>
-			):(<div><Link to="/demo">Haz login</Link></div>)}
+			  </div>
+			):(<div className="login-style"><Link to="/demo" className="logeate">Logeate</Link></div>)}
 		</nav>
 	);
 };
+

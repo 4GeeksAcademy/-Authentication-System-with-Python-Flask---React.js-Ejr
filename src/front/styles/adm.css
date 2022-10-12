@@ -84,8 +84,9 @@ hr:not([size]) {
     max-width: 100%;
     margin: 2em auto 1em;
 }
-.swal2-title{
-    font-family: auto;
+.swal2-title {
+    
+    font-family: unset;
     text-align: center;
     background: #1d1b1c7d;
     padding: 14px;

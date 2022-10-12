@@ -23,7 +23,7 @@ export const Sub = () => {
   }, []);
   return (
     <div className="row row-2">
-      <NavbarL />
+      <Navbar/>
       <div className=" container-productos sub-body">
         <div className="row cajas">
           <div class="card card-sub">

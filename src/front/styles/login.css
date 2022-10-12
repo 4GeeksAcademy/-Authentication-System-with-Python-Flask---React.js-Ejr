@@ -125,9 +125,27 @@
 
 }
 
-li {
+.auth {
   margin: 3px 1;
   color: red;
   font-size: 12px;
   padding-left: 10px;
+}
+.login-style{
+  border-radius: 20px;
+  background: #e10b76;
+  height: 35px;
+  padding-top: 4px;
+  width: 83px;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+}
+.logeate {
+  color: #f4f5f6;
+  text-decoration: none;
+}
+.logeate:hover{
+  color: #060606;
+  text-decoration: none;
 }

@@ -29,9 +29,10 @@
 }
 @media screen and (max-width: 600px) {
   .imghome {
-    width: 100vh;
     
-    height: 108vh;
+    height: 111vh;
+    width: 70vh;
+  
     width: 68vh;
   }
 }

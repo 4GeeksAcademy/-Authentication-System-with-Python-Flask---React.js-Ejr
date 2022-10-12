@@ -132,7 +132,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         };
 
         fetch(
-          "https://3001-alexanderwe-proyectofin-7ie0h4ay0qj.ws-us70.gitpod.io/api/token",
+          "https://3001-alexanderwe-proyectofin-wbwxe9cw9xd.ws-us70.gitpod.io/api/token",
           requestOptions
         )
           .then((response) => response.json())
