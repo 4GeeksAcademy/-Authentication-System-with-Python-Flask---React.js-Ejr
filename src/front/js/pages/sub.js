@@ -1,6 +1,6 @@
 import React, { useEffect, useContext } from "react";
 import { Context } from "../store/appContext";
-import rigoImageUrl from "../../img/rigo-baby.jpg";
+import rigoImageUrl from "../../img/200.gif";
 import "../../styles/productos.css";
 import { Link } from "react-router-dom";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
@@ -27,11 +27,11 @@ export const Sub = () => {
       <div className=" container-productos sub-body">
         <div className="row cajas">
           <div class="card card-sub">
-            <h2>Plan básico: $36.000/mes</h2>
+            <h2>Plan Vegetariano: $36.000/mes</h2>
             <div class="card-body">
               <p class="card-text">8 recetas individuales al mes</p>
-              <p class="card-text">Incluye: Lorem</p>
-              <p class="card-text">Ahorras: 10% </p>
+              <p class="card-text">Incluye: 2 Recetas Vegetariano ,2 Recetas Veganas y 2 Postres</p>
+             
               <Link to="/Plan1">
                 <button className="btn btn-secondary learn">Learn More</button>
               </Link>{" "}
@@ -83,11 +83,11 @@ export const Sub = () => {
             </div>
           </div>
           <div class="card card-sub">
-            <h2>Plan full: $48.000/mes</h2>
+            <h2>Plan Mixto: $48.000/mes</h2>
             <div class="card-body">
-              <p class="card-text">12 recetas al mes</p>
-              <p class="card-text">Incluye: Lorem</p>
-              <p class="card-text">Ahorras: 20% </p>
+              <p class="card-text">8 recetas al mes</p>
+              <p class="card-text">Incluye: 4 Recetas Carnivoras , 2 Vegetarianas , 2 Postres</p>
+              
               <Link to="/Plan2">
                 <button className="btn btn-secondary learn">Learn More</button>
               </Link>{" "}
