@@ -13,7 +13,7 @@ export const Plan2 = () => {
       <Navbar />
       <div class="col-sm-6">
         <div class="card-body">
-          <h1 class="card-title razones">Plan Full</h1>
+          <h1 class="card-title razones">Plan Vegetariano</h1>
           <ol>
             <li>
               {" "}

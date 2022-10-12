@@ -16,7 +16,7 @@ export const Plan1 = () => {
       <div class="col-sm-6">
         <div class="card-body">
           <h1 class="card-title razones">
-            Plan básico
+            Plan Mixto
           </h1>
           <ol>
             <li>

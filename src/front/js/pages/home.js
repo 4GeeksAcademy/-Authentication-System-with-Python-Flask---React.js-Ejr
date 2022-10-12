@@ -27,7 +27,7 @@ export const Home = () => {
 
           <Link to="/razones">
 							
-							<button className="btn btn-secondary">Learn More</button>
+							<button className="btn btn-secondary">Leer más</button>
 						</Link>
           
         </div>
