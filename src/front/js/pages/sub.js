@@ -29,7 +29,7 @@ export const Sub = () => {
           <div class="card card-sub">
             <h2>Plan Vegetariano: $36.000/mes</h2>
             <div class="card-body">
-              <p class="card-text">8 recetas individuales al mes</p>
+              <p class="card-text">6 recetas individuales al mes</p>
               <p class="card-text">Incluye: 2 Recetas Vegetariano ,2 Recetas Veganas y 2 Postres</p>
              
               <Link to="/Plan1">
