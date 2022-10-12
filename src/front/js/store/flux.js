@@ -3,6 +3,7 @@ const getState = ({ getStore, getActions, setStore }) => {
     store: {
       message: null,
       moreexchange: null,
+      cambiossuiza: null,
       demo: [
         {
           title: "FIRST",
@@ -34,7 +35,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         };
 
         await fetch(
-          "https://3000-mojonapower-scrapingand-3sp1jp43osy.ws-us70.gitpod.io/",
+          "https://3000-mojonapower-scrapingand-coo912ikrwm.ws-us71.gitpod.io/",
           requestOptions
         )
           .then((response) => response.json())
@@ -46,7 +47,22 @@ const getState = ({ getStore, getActions, setStore }) => {
             setStore({ moreexchange: result.moreexchange });
           })
           .catch((error) => console.log("error", error));
-      },
+      
+
+      await fetch(
+        "https://3000-mojonapower-scrapingand-coo912ikrwm.ws-us71.gitpod.io/casa2",
+        requestOptions
+      )
+        .then((response) => response.json())
+        .then((result) => {
+          console.log(result);
+          let parser = new DOMParser();
+          let doc = parser.parseFromString(result.cambiossuiza, "text/html");
+          console.log(doc.querySelectorAll("[class*=ninja_table_row]"));
+          setStore({ cambiossuiza: result.cambiossuiza });
+        })
+        .catch((error) => console.log("error", error));
+    },
 
       getMessage: async () => {
         try {

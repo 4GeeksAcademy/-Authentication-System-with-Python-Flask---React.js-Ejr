@@ -99,27 +99,38 @@ h1 {
   
 }
 
-#cartaCasa, #cartaCasa2, #cartaCasa3{
+#cartaCasa{
 background-color: rgba(217,217,217,0.5);
 border-radius: 20px 20px ;
 color: white;
 width: 401px;
-height: 450px;
+height: 1030px;
 float: left;
 top: 550px;
-left: 110px;
+left: 250px;
 margin-right: 120px;
 align-items: center;
-
+}
+#cartaCasa2{
+    background-color: rgba(217,217,217,0.5);
+    border-radius: 20px 20px ;
+    color: white;
+    width: 401px;
+    height: 1080px;
+    float: left;
+    top: 550px;
+    left: 450px;
+    margin-right: 120px;
+    align-items: center; 
 }
 
-#CambioRecibirCasa1, #CambioRecibirCasa2, #CambioRecibirCasa3{
+#CambioRecibirCasa1, #CambioRecibirCasa2{
   
 width: 300px;
 height: 50px;
 }
 
-#infooRecibirCasa1, #infooRecibirCasa2, #infooRecibirCasa3{
+#infooRecibirCasa1, #infooRecibirCasa2{
 width: 300px;
 height: 150px;
 justify-content: center;
@@ -127,18 +138,9 @@ justify-content: center;
 }
 
 #fotocartacasa{   
-position: absolute;
-width: 150px;
-height: 150px;
+width: 400px;
+border-radius: 20px 20px ;
+height: 160px;
 left: 130px;
 top: 0px;
-}
-
-#botonlinkCCC{
-box-shadow: 0px 10px 14px -7px #276873;
-border-radius:8px;
-background:linear-gradient(to bottom, #599bb3 5%, #2B3E84 100%);
-color: white;    
-width: 170px;
-height: 40px;
 }
