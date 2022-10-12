@@ -41,7 +41,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         };
 
         fetch(
-          "https://3001-alexanderwe-proyectofin-wbwxe9cw9xd.ws-us70.gitpod.io/api/validartoken",
+          "https://3001-alexanderwe-proyectofin-mlb43boppan.ws-us70.gitpod.io/api/validartoken",
           requestOptions
         )
           .then((response) => response.json())
@@ -75,7 +75,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         };
 
         fetch(
-          "https://3001-alexanderwe-proyectofin-wbwxe9cw9xd.ws-us70.gitpod.io/api/registro",
+          "https://3001-alexanderwe-proyectofin-mlb43boppan.ws-us70.gitpod.io/api/registro",
           requestOptions
         )
           .then((response) => response.json())
@@ -94,7 +94,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         };
 
         fetch(
-          "https://3001-alexanderwe-proyectofin-wbwxe9cw9xd.ws-us70.gitpod.io/api/validartoken",
+          "https://3001-alexanderwe-proyectofin-mlb43boppan.ws-us70.gitpod.io/api/validartoken",
           requestOptions
         )
           .then((response) => response.json())
@@ -132,7 +132,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         };
 
         fetch(
-          "https://3001-alexanderwe-proyectofin-wbwxe9cw9xd.ws-us70.gitpod.io/api/token",
+          "https://3001-alexanderwe-proyectofin-mlb43boppan.ws-us70.gitpod.io/api/token",
           requestOptions
         )
           .then((response) => response.json())

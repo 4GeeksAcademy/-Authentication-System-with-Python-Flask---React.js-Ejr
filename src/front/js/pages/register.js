@@ -40,7 +40,7 @@ export const Register = () => {
     };
 
     fetch(
-      "https://3001-alexanderwe-proyectofin-7ie0h4ay0qj.ws-us70.gitpod.io/api/registro",
+      "https://3001-alexanderwe-proyectofin-mlb43boppan.ws-us70.gitpod.io/api/registro",
       requestOptions
     )
       .then((response) => response.text())

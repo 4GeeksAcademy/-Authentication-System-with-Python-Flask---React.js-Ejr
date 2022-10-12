@@ -1,8 +1,13 @@
 import React, { useContext, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import rigoImageUr from "../../img/LogoSample_ByTailorBrands.jpg";
 import { Context } from "../store/appContext";
 export const Navbar = () => {
+	const navigate = useNavigate();
+	const FuncionCerrarSesion = () => {
+		localStorage.removeItem('token');
+		navigate("/demo");
+	  };
 	const { store, actions } = useContext(Context);
 	useEffect(() => {
 		actions.GetValidacion(localStorage.getItem("token"));
@@ -35,7 +40,7 @@ export const Navbar = () => {
 				</button>
 				<div class="dropdown-menu">
 				<Link to="/demo">
-                    <a class="dropdown-item" href="#">Cerrar sesion</a>
+                    <a onClick={FuncionCerrarSesion} class="dropdown-item" href="#">Cerrar sesion</a>
                     </Link>
 				</div>
 			  </div>
