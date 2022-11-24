@@ -8,10 +8,10 @@ export const Home = () => {
 
 	return (
 		<div className="text-center mt-5 col-9">
-			<h1>Hello Rigo!!</h1>
-			<p>
-				<img src={rigoImageUrl} />
-			</p>
+			<h1>Welcome to WordSword B)</h1>
+			<label for="textFile">Choose a file:</label>
+			<br></br>
+			<input type="file" id="textFile" name="textFile" accept=".txt, .pdf"></input>
 			<div className="alert alert-info">
 				{store.message || "Loading message from the backend (make sure your python backend is running)..."}
 			</div>

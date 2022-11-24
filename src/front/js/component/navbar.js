@@ -7,16 +7,16 @@ export const Navbar = () => {
 			<nav className ="navbar bg-light m-2 shadow-lg">
 				<ul className ="nav navbar-nav px-3">
 					<li className ="nav-item">
-						<a className ="nav-link" href="#"> Home </a>
+						<a className ="nav-link" href="/"> Home </a>
 					</li>
 					<li className ="nav-item">
-						<a className ="nav-link" href="#"> Services </a>
+						<a className ="nav-link" href="/login"> Login </a>
 					</li>
 					<li className ="nav-item">
-						<a className ="nav-link" href="#"> Contact </a>
+						<a className ="nav-link" href="/about"> About Us </a>
 					</li>
 					<li className ="nav-item">
-						<a className ="nav-link" href="#"> Blogs </a>
+						<a className ="nav-link" href="/donate"> Donate </a>
 					</li>
 				</ul>
 			</nav>
