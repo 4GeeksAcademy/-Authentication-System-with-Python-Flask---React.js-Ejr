@@ -1,6 +1,9 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
+			textFile: null, //creating storage for the files we will work with and return
+			textArray: null,
+			displayText: null,
 			message: null,
 			demo: [
 				{
@@ -46,6 +49,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				//reset the global store
 				setStore({ demo: demo });
+			},
+			setFile: (fileName) => {
+				setStore({ textFile: fileName })
+			},
+			handlePaste: (txt) => {
+				setStore({ textArray: txt})
 			}
 		}
 	};
