@@ -51,6 +51,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({ demo: demo });
 			},
 			setFile: (fileName) => {
+				//needs to call API to send it to backend
 				setStore({ textFile: fileName })
 			},
 			handlePaste: (txt) => {
