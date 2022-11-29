@@ -1,6 +1,8 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
+			email: "",
+			password: "",
 			textFile: null, //creating storage for the files we will work with and return
 			textArray: null,
 			displayText: null,
@@ -56,6 +58,23 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 			handlePaste: (txt) => {
 				setStore({ textArray: txt})
+			},
+			createUser: async (mail, pass) => {
+				await fetch(process.env.BACKEND_URL + "/api/user", {
+					method: "POST",
+					headers: {
+					  "Content-Type": "application/json",
+					},
+					body: JSON.stringify({
+					  email: mail,
+					  password: pass,
+					  is_active: true
+					}),
+					// /* redirect: "follow", */
+				  })
+					.then((response) => response.json())
+					.then((result) => setStore({ email: mail, password: pass }))
+					.catch((err) => console.log(err))
 			}
 		}
 	};

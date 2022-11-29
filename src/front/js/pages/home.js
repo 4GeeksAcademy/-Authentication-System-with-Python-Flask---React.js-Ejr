@@ -10,14 +10,14 @@ export const Home = () => {
 		<div className="text-center mt-5 col-9">
 			<h1>Welcome to WordSword B)</h1>
 			<form>
-				<label for="textFile">Choose a file:</label>
+				<label htmlFor="textFile">Choose a file:</label>
 				<br></br>
 				<input type="file" id="textFile" name="textFile" accept=".txt, .pdf"></input>
 				<input type="submit" value="Slice File" onClick={() => {
 					actions.setFile(textFile)
 				}}/>
 				<br></br>
-				<label for="typedInput">Or copy and paste text here:</label>
+				<label htmlFor="typedInput">Or copy and paste text here:</label>
 				<br></br>
 				<textarea name="typedInput" rows="10" cols="60"></textarea>
 				<br></br>
