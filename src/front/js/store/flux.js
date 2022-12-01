@@ -7,18 +7,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 			textArray: null,
 			displayText: null,
 			message: null,
-			demo: [
-				{
-					title: "FIRST",
-					background: "white",
-					initial: "white"
-				},
-				{
-					title: "SECOND",
-					background: "white",
-					initial: "white"
-				}
-			]
+			token: "",
+			verifiedUser: false,
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
@@ -75,7 +65,34 @@ const getState = ({ getStore, getActions, setStore }) => {
 					.then((response) => response.json())
 					.then((result) => setStore({ email: mail, password: pass }))
 					.catch((err) => console.log(err))
-			}
+			},
+			getToken: async (email, password) => {
+				await fetch(process.env.BACKEND_URL + "/api/token", {
+				  method: "POST",
+				  headers: {
+					"Content-Type": "application/json",
+				  },
+				  body: JSON.stringify({
+					email: email,
+					password: password,
+				  }),
+				  redirect: "follow",
+				})
+				  .then((response) => response.json())
+				  .then((result) => setStore({ token: result.access_token }))
+				  .catch((err) => console.log(err))
+			  },
+			  getVerified: async () => {
+				await fetch(process.env.BACKEND_URL + "/api/protected", {
+				  method: "GET",
+				  headers: {
+					Authorization: "Bearer " + getStore().token,
+				  },
+				  redirect: "follow",
+				})
+				  .then((res) => res.ok ? setStore({verifiedUser: true}): "")
+				  .catch((err) => console.log(err));
+			  }
 		}
 	};
 };
