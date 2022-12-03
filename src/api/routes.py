@@ -5,12 +5,12 @@ import os
 from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, User
 from api.utils import generate_sitemap, APIException
-from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity, JWTManager
-from argon2 import PasswordHasher
+# from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity, JWTManager
+# from argon2 import PasswordHasher
 
 api = Blueprint('api', __name__)
 # generate sitemap with all your endpoints
-ph = PasswordHasher()
+#ph = PasswordHasher()
 
 @api.route('/hello', methods=['POST', 'GET'])
 def handle_hello():
@@ -47,31 +47,31 @@ def createUser():
 
     return 'User has been created', 200
 
-@api.route('/token', methods=['POST'])
-def create_token():
-    body = request.get_json()
-    email = body["email"]
-    password = body["password"]
+# @api.route('/token', methods=['POST'])
+# def create_token():
+#     body = request.get_json()
+#     email = body["email"]
+#     password = body["password"]
 
-    user = User.query.filter(User.email == body["email"]).first()
+#     user = User.query.filter(User.email == body["email"]).first()
 
-    if user is None:
-        return jsonify({"msg": "Email or Password is incorrect"}), 401
-    try:
-        ph.verify(user.password, body["password"])
-    except:
-        return "Failed auth", 401
-    access_token = create_access_token(identity=user.id)
-    #access_token = create_access_token(identity=user.email)
-    return jsonify({"access_token": access_token}), 200
+#     if user is None:
+#         return jsonify({"msg": "Email or Password is incorrect"}), 401
+#     try:
+#         ph.verify(user.password, body["password"])
+#     except:
+#         return "Failed auth", 401
+#     access_token = create_access_token(identity=user.id)
+#     #access_token = create_access_token(identity=user.email)
+#     return jsonify({"access_token": access_token}), 200
     
 
-@api.route('/protected', methods=['GET'])
-@jwt_required()
-def protected():
+# @api.route('/protected', methods=['GET'])
+# @jwt_required()
+# def protected():
 
-    current_user_id = get_jwt_identity()
-    #user = User.query.get(current_user_id)
-    user = User.query.filter_by(email=current_user_id).first()
+#     current_user_id = get_jwt_identity()
+#     #user = User.query.get(current_user_id)
+#     user = User.query.filter_by(email=current_user_id).first()
 
-    return jsonify({"msg": "ok"}), 200
+#     return jsonify({"msg": "ok"}), 200
