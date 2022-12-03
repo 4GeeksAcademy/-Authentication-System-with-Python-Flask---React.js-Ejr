@@ -1,3 +1,8 @@
 /* 
     General Styles used on every website (Don't Repeat Yourself)
 */
+.footer {
+    float: none;
+    margin: 0 auto;
+    width: 500px;
+}

@@ -7,8 +7,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 			textArray: null,
 			displayText: null,
 			message: null,
+			verifiedUser: false
 			// token: "",
-			// verifiedUser: false,
+			
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
@@ -49,6 +50,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 			handlePaste: (txt) => {
 				setStore({ textArray: txt})
 			},
+			verifyUser: (yesno) => {
+				if(yesno='yes'){
+					setStore( { verifiedUser: true })}
+				else {
+					setStore( { verifiedUser: false})}
+			},
 			createUser: async (mail, pass) => {
 				await fetch(process.env.BACKEND_URL + "/api/user", {
 					method: "POST",
@@ -65,7 +72,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					.then((response) => response.json())
 					.then((result) => setStore({ email: mail, password: pass }))
 					.catch((err) => console.log(err))
-			}
+			},
 			// getToken: async (email, password) => {
 			// 	await fetch(process.env.BACKEND_URL + "/api/token", {
 			// 	  method: "POST",

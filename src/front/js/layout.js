@@ -7,6 +7,9 @@ import { Login } from "./pages/login";
 import { About } from "./pages/about";
 import { Donate } from "./pages/donate";
 import { Create } from "./pages/create";
+import { Demo } from "./pages/demo";
+import { User } from "./pages/user";
+import { Signout } from "./pages/signout";
 import injectContext from "./store/appContext";
 
 import { Navbar } from "./component/navbar";
@@ -25,11 +28,15 @@ const Layout = () => {
           <div className="row">
             <Navbar />
             <Routes>
-                <Route exact path="/" element={<Home/>}/>
-                <Route exact path="/login" element={<Login/>}/>
-                <Route exact path="/about" element={<About />}/>
-                <Route exact path="/donate" element={<Donate />}/>
-                <Route exact path="/create" element={<Create />}/>
+              <Route exact path="/home" element={<Home />} />
+              <Route exact path="/login" element={<Login />} />
+              <Route exact path="/about" element={<About />} />
+              <Route exact path="/donate" element={<Donate />} />
+              <Route exact path="/create" element={<Create />} />
+              <Route exact path="/demo" element={<Demo />} />
+              <Route exact path="/user" element={<User />} />
+              <Route exact path="/signout" element={<Signout />} />
+              <Route render={() => <h1>Not found!</h1>} />
             </Routes>
           </div>
           <div className="row">

@@ -1,14 +1,18 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Context } from "../store/appContext";
-import rigoImageUrl from "../../img/rigo-baby.jpg";
+import logoImageUrl from "../../img/logo.png";
+import { Link } from "react-router-dom";
 import "../../styles/home.css";
 
 export const Home = () => {
 	const { store, actions } = useContext(Context);
+	const [text, setText] = useState("");
 
 	return (
-		<div className="text-center mt-5 col-9">
-			<h1>Welcome to WordSword B)</h1>
+		<div className="text-center col-9">
+			<img src={logoImageUrl} className="homeLogo" />
+			<p>Word sword is a webapp that can take long text documents, files, or pdfs and run them through our algorithm to conver them into concise summaries</p>
+			<p><Link to="/create">Click this text to create a WordSword account to save your work</Link></p>
 			<form>
 				<label htmlFor="textFile">Choose a file:</label>
 				<br></br>
@@ -19,10 +23,14 @@ export const Home = () => {
 				<br></br>
 				<label htmlFor="typedInput">Or copy and paste text here:</label>
 				<br></br>
-				<textarea name="typedInput" rows="10" cols="60"></textarea>
+				<textarea name="typedInput" rows="10" cols="60"
+				onChange={(e) => setText(e.target.value)}
+				>
+				</textarea>
 				<br></br>
 				<input type="submit" value="Slice Text" onClick={() => {
-					actions.setFile(typedInput)
+					//actions.setFile(typedInput)
+					console.log(text)
 				}}/>
 			</form>
 			<div className="alert alert-info">
