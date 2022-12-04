@@ -8,8 +8,8 @@ export const Navbar = () => {
   const { store, actions } = useContext(Context);
 
   const handleSignout = (event) => {
-    actions.signOut()
-    navigate("/signout")
+    actions.signOut();
+    navigate("/signout");
   };
 
   return (
@@ -41,9 +41,13 @@ export const Navbar = () => {
               User Page
             </Link>
           </li>
-          <li className="nav-item nav-link" onClick={handleSignout}>
-            Sign Out
-          </li>
+          {store.token !== "" ? (
+            <li className="nav-item nav-link" onClick={handleSignout}>
+              Sign Out
+            </li>
+          ) : (
+            <></>
+          )}
         </ul>
       </nav>
     </div>
