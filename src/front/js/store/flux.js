@@ -73,22 +73,22 @@ const getState = ({ getStore, getActions, setStore }) => {
 					.then((result) => setStore({ email: mail, password: pass }))
 					.catch((err) => console.log(err))
 			},
-			// getToken: async (email, password) => {
-			// 	await fetch(process.env.BACKEND_URL + "/api/token", {
-			// 	  method: "POST",
-			// 	  headers: {
-			// 		"Content-Type": "application/json",
-			// 	  },
-			// 	  body: JSON.stringify({
-			// 		email: email,
-			// 		password: password,
-			// 	  }),
-			// 	  redirect: "follow",
-			// 	})
-			// 	  .then((response) => response.json())
-			// 	  .then((result) => setStore({ token: result.access_token }))
-			// 	  .catch((err) => console.log(err))
-			//   },
+			getToken: async (email, password) => {
+				await fetch(process.env.BACKEND_URL + "/api/token", {
+				  method: "POST",
+				  headers: {
+					"Content-Type": "application/json",
+				  },
+				  body: JSON.stringify({
+					email: email,
+					password: password,
+				  }),
+				  redirect: "follow",
+				})
+				  .then((response) => response.json())
+				  .then((result) => setStore({ token: result.access_token }))
+				  .catch((err) => console.log(err))
+			  },
 			//   getVerified: async () => {
 			// 	await fetch(process.env.BACKEND_URL + "/api/protected", {
 			// 	  method: "GET",

@@ -11,7 +11,9 @@ export const Home = () => {
 	return (
 		<div className="text-center col-9">
 			<img src={logoImageUrl} className="homeLogo" />
-			<p>Word sword is a webapp that can take long text documents, files, or pdfs and run them through our algorithm to conver them into concise summaries</p>
+			<p className="titleP">    Word sword is a webapp that can take long text documents, files, or pdfs and run them through our algorithm to conver them into concise summaries</p>
+			<br></br>
+			<br></br>
 			<p><Link to="/create">Click this text to create a WordSword account to save your work</Link></p>
 			<form>
 				<label htmlFor="textFile">Choose a file:</label>

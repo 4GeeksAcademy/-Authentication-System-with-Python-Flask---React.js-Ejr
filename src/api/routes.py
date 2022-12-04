@@ -45,23 +45,29 @@ def handle_user():
 
         return jsonify(users_list), 200
 
-# @api.route('/token', methods=['POST'])
-# def create_token():
-#     body = request.get_json()
-#     email = body["email"]
-#     password = body["password"]
+@api.route('/token', methods=['POST'])
+def create_token():
+    body = request.get_json()
+    email = body["email"]
+    password = body["password"]
 
-#     user = User.query.filter(User.email == body["email"]).first()
+    user = User.query.filter(User.email == body["email"]).first()
 
-#     if user is None:
-#         return jsonify({"msg": "Email or Password is incorrect"}), 401
-#     try:
-#         ph.verify(user.password, body["password"])
-#     except:
-#         return "Failed auth", 401
-#     access_token = create_access_token(identity=user.id)
-#     #access_token = create_access_token(identity=user.email)
-#     return jsonify({"access_token": access_token}), 200
+    if user is None:
+        return jsonify({"msg": "Email or Password is incorrect"}), 401
+    if user.password != body["password"]:
+        return "Failed auth", 401
+    else:
+        return jsonify({"access_token":"access token generated"}), 200
+
+
+    # try:
+    #     ph.verify(user.password, body["password"])
+    # except:
+    #     return "Failed auth", 401
+    # access_token = create_access_token(identity=user.id)
+    # #access_token = create_access_token(identity=user.email)
+    # return jsonify({"access_token": access_token}), 200
     
 
 # @api.route('/protected', methods=['GET'])

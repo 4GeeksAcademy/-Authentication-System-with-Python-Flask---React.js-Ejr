@@ -24,7 +24,7 @@ export const Login = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    actions.verifyUser("yes");
+    actions.getToken(userEmail, userPassword);
     console.log("form submitted");
     console.log(store.verifiedUser)
   };
