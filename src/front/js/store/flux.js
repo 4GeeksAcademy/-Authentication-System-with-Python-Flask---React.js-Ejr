@@ -7,7 +7,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 			textArray: null,
 			displayText: null,
 			message: null,
-			verifiedUser: false
+			verifiedUser: false,
+			newUser: false
 			// token: "",
 			
 		},
@@ -42,6 +43,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				//reset the global store
 				setStore({ demo: demo });
+			},
+			newUser: () => {
+				setStore( {newUser: true }  )
 			},
 			setFile: (fileName) => {
 				//needs to call API to send it to backend

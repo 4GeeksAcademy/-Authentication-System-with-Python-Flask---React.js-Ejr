@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useSyncExternalStore } from "react";
 import { Context } from "../store/appContext";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import getState from "../store/flux";
@@ -19,7 +19,10 @@ export const Create = () => {
     event.preventDefault();
     actions.createUser(email, password);
     console.log("user created");
-    console.log(store.verifiedUser)
+    console.log(store.newUser)
+    actions.newUser();
+    console.log(store.newUser)
+    navigate("/login")
   };
 
 
