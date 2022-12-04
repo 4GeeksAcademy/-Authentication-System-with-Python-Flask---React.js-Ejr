@@ -17,7 +17,7 @@ export const Create = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    actions.verifyUser("yes");
+    actions.createUser(email, password);
     console.log("form submitted");
     console.log(store.verifiedUser)
   };
