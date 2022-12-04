@@ -8,15 +8,17 @@ export const Login = () => {
   const [userPassword, setUserPassword] = useState("");
   const navigate = useNavigate();
 
-  //   useEffect(() => {
-  //     actions.getVerified();
-  //   }, [store.token]);
+  console.log(store.verifiedUser);
 
-  //   useEffect(() => {
-  //     if (store.verifiedUser) {
-  //       navigate("/single");
-  //     }
-  //   }, [store.verifiedUser]);
+  useEffect(() => {
+    actions.getVerified();
+  }, [store.token]);
+
+  useEffect(() => {
+    if (store.verifiedUser) {
+      navigate("/user");
+    }
+  }, [store.verifiedUser]);
 
   //   console.log(store.verifiedUser);
 
@@ -24,17 +26,19 @@ export const Login = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(store.token)
     actions.getToken(userEmail, userPassword);
-    console.log(store.token)
-    store.token == "" ? navigate("/login") : navigate("/user")
+    // store.token == "" ? navigate("/login") : navigate("/user")
   };
 
   return (
     <div className="col-6 my-5">
       <div className="row">
         <div className="col-11 text-center m-2 align-items-center">
-          {store.newUser ? <h1>Welcome to WordSword, try logging in for the first time</h1> : <h1>Welcome to the login page</h1>}
+          {store.newUser ? (
+            <h1>Welcome to WordSword, try logging in for the first time</h1>
+          ) : (
+            <h1>Welcome to the login page</h1>
+          )}
         </div>
       </div>
       <div className="row">
@@ -70,10 +74,7 @@ export const Login = () => {
               />
             </div>
             <br></br>
-            <button
-              type="submit"
-              className="btn btn-primary"
-            >
+            <button type="submit" className="btn btn-primary">
               Submit
             </button>
           </form>

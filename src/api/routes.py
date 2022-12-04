@@ -5,7 +5,7 @@ import os
 from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, User
 from api.utils import generate_sitemap, APIException
-# from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity, JWTManager
+from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity, JWTManager
 # from argon2 import PasswordHasher
 
 api = Blueprint('api', __name__)
@@ -28,9 +28,9 @@ def handle_user():
         if body == None:
             return "The request body is null", 400
         if 'email' not in body:
-            return "Add the user email", 400
-        if 'password' not in body:
-            return "Add user password", 400
+            return jsonify({"msg": "Add useremail"}), 401
+        if 'password' == None:
+            return jsonify({"msg": "Add user password"}), 401
         if 'is_active' not in body:
             return "Add user activity status", 400
         print(body)
@@ -54,11 +54,14 @@ def create_token():
     user = User.query.filter(User.email == body["email"]).first()
 
     if user is None:
-        return jsonify({"msg": "Email or Password is incorrect"}), 401
+        return jsonify({"msg": "Email is blank"}), 401
+    if password is None:
+        return jsonify({"msg": "Password is blank"}), 401
     if user.password != body["password"]:
         return "Failed auth", 401
     else:
-        return jsonify({"access_token":"access token generated"}), 200
+        access_token = create_access_token(user.email)
+        return jsonify({"access_token":access_token}), 200
 
 
     # try:
@@ -70,12 +73,12 @@ def create_token():
     # return jsonify({"access_token": access_token}), 200
     
 
-# @api.route('/protected', methods=['GET'])
-# @jwt_required()
-# def protected():
+@api.route('/protected', methods=['GET'])
+@jwt_required()
+def protected():
 
-#     current_user_id = get_jwt_identity()
-#     #user = User.query.get(current_user_id)
-#     user = User.query.filter_by(email=current_user_id).first()
+    current_user_id = get_jwt_identity()
+    #user = User.query.get(current_user_id)
+    user = User.query.filter_by(email=current_user_id).first()
 
-#     return jsonify({"msg": "ok"}), 200
+    return jsonify({"msg": user.serialize()}), 200

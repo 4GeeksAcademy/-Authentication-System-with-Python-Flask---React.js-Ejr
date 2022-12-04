@@ -18,7 +18,6 @@ export const Create = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     actions.createUser(email, password);
-    console.log("user created");
     actions.newUser();
     navigate("/login")
   };
