@@ -31,7 +31,7 @@ export const Login = () => {
   };
 
   return (
-    <div className="col-11">
+    <div className="col-6 my-5">
       <div className="row">
         <div className="col-11 text-center m-2 align-items-center">
           {store.newUser ? <h1>Welcome to WordSword, try logging in for the first time</h1> : <h1>Welcome to the login page</h1>}

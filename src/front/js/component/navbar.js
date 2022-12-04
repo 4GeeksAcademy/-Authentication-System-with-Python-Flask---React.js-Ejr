@@ -13,36 +13,40 @@ export const Navbar = () => {
   };
 
   return (
-    <div className="col-1">
-      <nav className="navbar bg-light m-2 shadow-lg">
-        <ul className="nav navbar-nav px-3">
-          <li className="nav-item">
+    <div className="col-2">
+      <nav className="navbar m-2">
+        <ul className="nav navbar-nav">
+          <li className="nav-item cutesiefy">
             <Link to="/" className="nav-link">
               Home
             </Link>
           </li>
-          <li className="nav-item">
-            <Link to="/login" className="nav-link">
-              Login
-            </Link>
-          </li>
-          <li className="nav-item">
+          {store.token == "" ? (
+            <li className="nav-item cutesiefy">
+              <Link to="/login" className="nav-link">
+                Login
+              </Link>
+            </li>
+          ) : (
+            <></>
+          )}
+          <li className="nav-item cutesiefy">
             <Link to="/about" className="nav-link">
               About Us
             </Link>
           </li>
-          <li className="nav-item">
+          <li className="nav-item cutesiefy">
             <Link to="/donate" className="nav-link">
               Donate
             </Link>
           </li>
-          <li className="nav-item">
+          <li className="nav-item cutesiefy">
             <Link to="/user" className="nav-link">
               User Page
             </Link>
           </li>
           {store.token !== "" ? (
-            <li className="nav-item nav-link" onClick={handleSignout}>
+            <li className="nav-item nav-link cutesiefy" onClick={handleSignout}>
               Sign Out
             </li>
           ) : (

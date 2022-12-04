@@ -25,22 +25,24 @@ const Layout = () => {
     <div>
       <BrowserRouter basename={basename}>
         <ScrollToTop>
-          <div className="row">
-            <Navbar />
-            <Routes>
-              <Route exact path="/login" element={<Login />} />
-              <Route exact path="/about" element={<About />} />
-              <Route exact path="/donate" element={<Donate />} />
-              <Route exact path="/create" element={<Create />} />
-              <Route exact path="/demo" element={<Demo />} />
-              <Route exact path="/user" element={<User />} />
-              <Route exact path="/signout" element={<Signout />} />
-              <Route exact path="/" element={<Home />} />
-              <Route render={() => <h1>Not found!</h1>} />
-            </Routes>
-          </div>
-          <div className="row">
-            <Footer />
+          <div class="container text-center">
+            <div className="row justify-content-start">
+              <Navbar />
+              <Routes>
+                <Route exact path="/login" element={<Login />} />
+                <Route exact path="/about" element={<About />} />
+                <Route exact path="/donate" element={<Donate />} />
+                <Route exact path="/create" element={<Create />} />
+                <Route exact path="/demo" element={<Demo />} />
+                <Route exact path="/user" element={<User />} />
+                <Route exact path="/signout" element={<Signout />} />
+                <Route exact path="/" element={<Home />} />
+                <Route render={() => <h1>Not found!</h1>} />
+              </Routes>
+            </div>
+            <div className="row">
+              <Footer />
+            </div>
           </div>
         </ScrollToTop>
       </BrowserRouter>

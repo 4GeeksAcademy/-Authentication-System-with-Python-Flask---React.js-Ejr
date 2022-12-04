@@ -25,7 +25,7 @@ export const Create = () => {
 
 
   return (
-      <div className="col-11">
+      <div className="col-6 my-5">
       <div className="row">
         <div className="col-11 text-center m-2 align-items-center">
           <h1>Please create an account</h1>

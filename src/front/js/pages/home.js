@@ -9,7 +9,7 @@ export const Home = () => {
 	const [text, setText] = useState("");
 
 	return (
-		<div className="text-center col-9">
+		<div className="text-center col-6">
 			<img src={logoImageUrl} className="homeLogo" />
 			<p className="titleP">    Word sword is a webapp that can take long text documents, files, or pdfs and run them through our algorithm to conver them into concise summaries</p>
 			<br></br>
