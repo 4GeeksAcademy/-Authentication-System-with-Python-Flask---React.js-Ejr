@@ -28,7 +28,6 @@ const Layout = () => {
           <div className="row">
             <Navbar />
             <Routes>
-              <Route exact path="/home" element={<Home />} />
               <Route exact path="/login" element={<Login />} />
               <Route exact path="/about" element={<About />} />
               <Route exact path="/donate" element={<Donate />} />
@@ -36,6 +35,7 @@ const Layout = () => {
               <Route exact path="/demo" element={<Demo />} />
               <Route exact path="/user" element={<User />} />
               <Route exact path="/signout" element={<Signout />} />
+              <Route exact path="/" element={<Home />} />
               <Route render={() => <h1>Not found!</h1>} />
             </Routes>
           </div>

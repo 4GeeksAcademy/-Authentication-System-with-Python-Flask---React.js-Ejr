@@ -17,7 +17,7 @@ export const Navbar = () => {
       <nav className="navbar bg-light m-2 shadow-lg">
         <ul className="nav navbar-nav px-3">
           <li className="nav-item">
-            <Link to="/home" className="nav-link">
+            <Link to="/" className="nav-link">
               Home
             </Link>
           </li>
