@@ -8,8 +8,8 @@ export const Navbar = () => {
   const { store, actions } = useContext(Context);
 
   const handleSignout = (event) => {
-    actions.verifyUser("no");
-    console.log(store.verifyUser);
+    actions.signOut()
+    navigate("/signout")
   };
 
   return (

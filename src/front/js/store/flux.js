@@ -8,8 +8,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 			displayText: null,
 			message: null,
 			verifiedUser: false,
-			newUser: false
-			// token: "",
+			newUser: false,
+			token: "",
 			
 		},
 		actions: {
@@ -59,6 +59,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 					setStore( { verifiedUser: true })}
 				else {
 					setStore( { verifiedUser: false})}
+			},
+			signOut: () => {
+				setStore( { token : "" } )
 			},
 			createUser: async (mail, pass) => {
 				await fetch(process.env.BACKEND_URL + "/api/user", {

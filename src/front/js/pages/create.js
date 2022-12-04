@@ -19,9 +19,7 @@ export const Create = () => {
     event.preventDefault();
     actions.createUser(email, password);
     console.log("user created");
-    console.log(store.newUser)
     actions.newUser();
-    console.log(store.newUser)
     navigate("/login")
   };
 

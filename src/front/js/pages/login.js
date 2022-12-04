@@ -24,9 +24,10 @@ export const Login = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    console.log(store.token)
     actions.getToken(userEmail, userPassword);
-    console.log("form submitted");
-    console.log(store.verifiedUser)
+    console.log(store.token)
+    store.token == "" ? navigate("/login") : navigate("/user")
   };
 
   return (
@@ -72,10 +73,6 @@ export const Login = () => {
             <button
               type="submit"
               className="btn btn-primary"
-              onClick={(e) => {
-                //actions.getToken(userEmail, userPassword);
-                //actions.getVerified()
-              }}
             >
               Submit
             </button>

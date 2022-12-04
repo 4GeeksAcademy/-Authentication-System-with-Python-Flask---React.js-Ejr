@@ -7,7 +7,7 @@ export const Signout = (props) => {
 
   return (
     <div className="jumbotron col-9">
-      {!store.verifiedUser ? <h1>You have successfuly signed out</h1> : <h1>Something went wrong</h1>}
+      {store.token == "" ? <h1>You have successfuly signed out</h1> : <h1>Something went wrong</h1>}
     </div>
   );
 };

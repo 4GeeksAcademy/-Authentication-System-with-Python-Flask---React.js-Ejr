@@ -6,8 +6,8 @@ export const User = (props) => {
   const { store, actions } = useContext(Context);
 
   return (
-    <div className="jumbotron col-9">
-      {store.verifiedUser ? <h1>Authenticated</h1> : <h1>Invalid User</h1>}
+    <div className="col-11">
+      {store.token !== "" ? <h1>Authenticated</h1> : <h1>Invalid User</h1>}
     </div>
   );
 };
