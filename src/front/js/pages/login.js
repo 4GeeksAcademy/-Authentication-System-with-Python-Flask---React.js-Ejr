@@ -18,9 +18,18 @@ export const Login = () => {
   //   }
   // }, [store.verifiedUser]);
 
+
+  //this function is for when the user click the submit login
   const handleSubmit = (event) => {
+
+    //preventing the form from sending 
     event.preventDefault();
+
+    //calling flux to get token - if we get token then we get
+    //jwt and verify the user
     actions.getToken(userEmail, userPassword);
+
+    //conditionally navigate user based on verified status
     store.verifiedUser ? navigate("/login") : navigate("/user");
   };
 
@@ -28,7 +37,8 @@ export const Login = () => {
     <div className="col-6 my-5">
       <div className="row">
         <div className="col-11 text-center m-2 align-items-center">
-          {store.newUser ? (
+          {//conditional rendering but isn't working right now
+          store.newUser ? (
             <h1>Welcome to WordSword, try logging in for the first time</h1>
           ) : (
             <h1>Welcome to the login page</h1>

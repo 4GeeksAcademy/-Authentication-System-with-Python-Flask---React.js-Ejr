@@ -2,13 +2,21 @@ import React, { useContext, useState } from "react";
 import { Context } from "../store/appContext";
 import { Link, useNavigate } from "react-router-dom";
 import { element } from "prop-types";
+//I imported useNavigate
+
 
 export const Navbar = () => {
+  //we have to initiate useNavigate
   const navigate = useNavigate();
   const { store, actions } = useContext(Context);
 
+  //onClick handler for the signout button
   const handleSignout = (event) => {
+    //resets store/token authentication and sends user home
     actions.signOut();
+
+    //here useNavigate is used to go back to the home page
+    //need to add pop up to confirm that user did sign out
     navigate("/");
   };
 
@@ -21,21 +29,30 @@ export const Navbar = () => {
               Home
             </Link>
           </li>
-          {!store.verifiedUser ? (
-            <li className="nav-item cutesiefy">
-              <Link to="/login" className="nav-link">
-                Login
+          {//conditionally render based on if user is verified
+          store.verifiedUser ? (
+            <li className="nav-item cutesiefy big">
+              <Link to="/user" className="nav-link">
+                Personal Portal
               </Link>
             </li>
           ) : (
             <></>
           )}
-          {!store.verifiedUser ? (
+          {//conditionally render based on if user is NOT verified
+          !store.verifiedUser ? (
+            <>
+            <li className="nav-item cutesiefy">
+              <Link to="/login" className="nav-link">
+                Login
+              </Link>
+            </li>
             <li className="nav-item cutesiefy big">
               <Link to="/create" className="nav-link">
                 Create account
               </Link>
             </li>
+            </>
           ) : (
             <></>
           )}
@@ -49,16 +66,8 @@ export const Navbar = () => {
               Donate
             </Link>
           </li>
-          {store.verifiedUser ? (
-            <li className="nav-item cutesiefy big">
-              <Link to="/user" className="nav-link">
-                Personal Portal
-              </Link>
-            </li>
-          ) : (
-            <></>
-          )}
-          {store.verifiedUser ? (
+          {//conditionally render based on if user is verified
+          store.verifiedUser ? (
             <li className="nav-item nav-link cutesiefy" onClick={handleSignout}>
               Sign Out
             </li>

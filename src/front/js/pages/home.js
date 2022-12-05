@@ -6,12 +6,15 @@ import "../../styles/home.css";
 
 export const Home = () => {
   const { store, actions } = useContext(Context);
+
+  //variable for the text box that the user pastes in for our algorithm
   const [text, setText] = useState("");
 
   return (
     <div className="text-center col-6">
       <img src={logoImageUrl} className="homeLogo" />
-      {!store.verifiedUser ? (
+      {//conditionally render if user  is verfied 
+      !store.verifiedUser ? (
         <p className="titleP">
           {" "}
           Word sword is a webapp that can take long text documents, files, or
@@ -23,7 +26,8 @@ export const Home = () => {
       )}
       <br></br>
       <br></br>
-      {!store.verifiedUser ? (
+      {//conditionally render if user  is verfied 
+      !store.verifiedUser ? (
         <p>
           <Link to="/create">
             Click this text to create a WordSword account to save your work

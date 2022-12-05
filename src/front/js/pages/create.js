@@ -13,12 +13,22 @@ export const Create = () => {
   const { store, actions } = useContext(Context);
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
+
+  //initiating navigate
   const navigate = useNavigate();
 
+
+  //this function handling the onclick event when the user submits username and password to create an account
   const handleSubmit = (event) => {
+    //need this to stop other behavior
     event.preventDefault();
+
+    //createUser function in Flux, we need to write code
+    //to double check data integretity before sending to the flux function
+    //for it to be safer
     actions.createUser(email, password);
-    actions.newUser();
+
+    //send the new user to test their login/login for the first time
     navigate("/login")
   };
 

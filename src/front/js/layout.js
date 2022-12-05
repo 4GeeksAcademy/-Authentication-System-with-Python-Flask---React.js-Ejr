@@ -9,7 +9,6 @@ import { Donate } from "./pages/donate";
 import { Create } from "./pages/create";
 import { Demo } from "./pages/demo";
 import { User } from "./pages/user";
-import { Signout } from "./pages/signout";
 import injectContext from "./store/appContext";
 
 import { Navbar } from "./component/navbar";
@@ -35,7 +34,6 @@ const Layout = () => {
                 <Route exact path="/create" element={<Create />} />
                 <Route exact path="/demo" element={<Demo />} />
                 <Route exact path="/user" element={<User />} />
-                <Route exact path="/signout" element={<Signout />} />
                 <Route exact path="/" element={<Home />} />
                 <Route render={() => <h1>Not found!</h1>} />
               </Routes>

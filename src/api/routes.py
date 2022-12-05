@@ -21,6 +21,9 @@ def handle_hello():
 
     return jsonify(response_body), 200
 
+
+#we need to add more code to check if user exists and other
+#degugging
 @api.route('/user', methods=['POST', 'GET'])
 def handle_user():
     if request.method == 'POST':
@@ -40,6 +43,7 @@ def handle_user():
 
         return 'User has been created', 200
     else:
+        ##to get the user list from insomnia with a get
         users = User.query.all()
         users_list = list(map(lambda x: x.serialize(), users))
 
