@@ -21,10 +21,19 @@ export const Navbar = () => {
               Home
             </Link>
           </li>
-          {store.token == "" ? (
+          {!store.verifiedUser ? (
             <li className="nav-item cutesiefy">
               <Link to="/login" className="nav-link">
                 Login
+              </Link>
+            </li>
+          ) : (
+            <></>
+          )}
+          {!store.verifiedUser ? (
+            <li className="nav-item cutesiefy big">
+              <Link to="/create" className="nav-link">
+                Create account
               </Link>
             </li>
           ) : (
@@ -40,12 +49,16 @@ export const Navbar = () => {
               Donate
             </Link>
           </li>
-          <li className="nav-item cutesiefy">
-            <Link to="/user" className="nav-link">
-              User Page
-            </Link>
-          </li>
-          {store.token !== "" ? (
+          {store.verifiedUser ? (
+            <li className="nav-item cutesiefy big">
+              <Link to="/user" className="nav-link">
+                Personal Portal
+              </Link>
+            </li>
+          ) : (
+            <></>
+          )}
+          {store.verifiedUser ? (
             <li className="nav-item nav-link cutesiefy" onClick={handleSignout}>
               Sign Out
             </li>

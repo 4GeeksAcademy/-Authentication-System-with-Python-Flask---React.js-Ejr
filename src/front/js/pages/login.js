@@ -8,27 +8,20 @@ export const Login = () => {
   const [userPassword, setUserPassword] = useState("");
   const navigate = useNavigate();
 
-  console.log(store.verifiedUser);
+  // useEffect(() => {
+  //   actions.getVerified();
+  // }, [store.token]);
 
-  useEffect(() => {
-    actions.getVerified();
-  }, [store.token]);
-
-  useEffect(() => {
-    if (store.verifiedUser) {
-      navigate("/user");
-    }
-  }, [store.verifiedUser]);
-
-  //   console.log(store.verifiedUser);
-
-  //   console.log(store.token);
+  // useEffect(() => {
+  //   if (store.verifiedUser) {
+  //     navigate("/user");
+  //   }
+  // }, [store.verifiedUser]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
     actions.getToken(userEmail, userPassword);
-    actions.getVerified();
-    store.verifiedUser ? navigate("/login") : navigate("/user")
+    store.verifiedUser ? navigate("/login") : navigate("/user");
   };
 
   return (

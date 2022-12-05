@@ -42,6 +42,9 @@ const getState = ({ getStore, getActions, setStore }) => {
         //reset the global store
         setStore({ demo: demo });
       },
+      checkVerifiedUser: () => {
+          const store = getStore();
+      },
       newUser: () => {
         setStore({ newUser: true });
       },
@@ -54,6 +57,8 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
       signOut: () => {
         setStore({ token: "", verifiedUser: false, email: "", newUser: false });
+        const store = getStore();
+        console.log("is this user verfied? ", store.verifiedUser);
       },
       createUser: async (mail, pass) => {
         await fetch(process.env.BACKEND_URL + "/api/user", {
@@ -70,8 +75,8 @@ const getState = ({ getStore, getActions, setStore }) => {
         })
           .then((response) => response.json())
           .then((result) => {
-            setStore({ email: mail })
-            console.log("this is the create user result", result)
+            setStore({ email: mail });
+            console.log("this is the create user result", result);
           })
           .catch((err) => console.log("this is the create user error: ", err));
       },
@@ -89,10 +94,10 @@ const getState = ({ getStore, getActions, setStore }) => {
         })
           .then((response) => response.json())
           .then((result) => {
-            console.log("this is the token response: ", result)
-            setStore({ token: result.access_token, email: email })
-            getActions().getVerified()
-      })
+            console.log("this is the token response: ", result);
+            setStore({ token: result.access_token, email: email });
+            getActions().getVerified();
+          })
           .catch((err) => console.log("this is the token error: ", err));
       },
       getVerified: async () => {
@@ -104,11 +109,13 @@ const getState = ({ getStore, getActions, setStore }) => {
           redirect: "follow",
         })
           .then((res) => {
-            console.log("this is the get verfied response: ", res)
-            setStore( {verfiedUser: true } )
+            const store = getStore()
+            console.log("this is the get verfied response: ", res);
+            setStore({ verifiedUser: true });
+            console.log("is this user verfied? ", store.verifiedUser);
           })
           .catch((err) => {
-            console.log("this is the get verified error: ", err)
+            console.log("this is the get verified error: ", err);
           });
       },
     },

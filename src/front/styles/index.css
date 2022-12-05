@@ -27,3 +27,6 @@
   height: 50px;
   font-size: large;
 }
+.big:hover {
+  height: 70px;
+}
