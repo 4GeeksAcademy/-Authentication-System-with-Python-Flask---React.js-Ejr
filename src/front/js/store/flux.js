@@ -71,9 +71,9 @@ const getState = ({ getStore, getActions, setStore }) => {
           .then((response) => response.json())
           .then((result) => {
             setStore({ email: mail })
-            console.log("this is the result", result)
+            console.log("this is the create user result", result)
           })
-          .catch((err) => console.log("this is the error: ", err));
+          .catch((err) => console.log("this is the create user error: ", err));
       },
       getToken: async (email, password) => {
         await fetch(process.env.BACKEND_URL + "/api/token", {
@@ -88,10 +88,12 @@ const getState = ({ getStore, getActions, setStore }) => {
           redirect: "follow",
         })
           .then((response) => response.json())
-          .then((result) =>
+          .then((result) => {
+            console.log("this is the token response: ", result)
             setStore({ token: result.access_token, email: email })
-          )
-          .catch((err) => console.log(err));
+            getActions().getVerified()
+      })
+          .catch((err) => console.log("this is the token error: ", err));
       },
       getVerified: async () => {
         await fetch(process.env.BACKEND_URL + "/api/protected", {
@@ -101,8 +103,13 @@ const getState = ({ getStore, getActions, setStore }) => {
           },
           redirect: "follow",
         })
-          .then((res) => console.log(res))
-          .catch((err) => console.log(err));
+          .then((res) => {
+            console.log("this is the get verfied response: ", res)
+            setStore( {verfiedUser: true } )
+          })
+          .catch((err) => {
+            console.log("this is the get verified error: ", err)
+          });
       },
     },
   };

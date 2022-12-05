@@ -27,7 +27,8 @@ export const Login = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     actions.getToken(userEmail, userPassword);
-    // store.token == "" ? navigate("/login") : navigate("/user")
+    actions.getVerified();
+    store.verifiedUser ? navigate("/login") : navigate("/user")
   };
 
   return (
