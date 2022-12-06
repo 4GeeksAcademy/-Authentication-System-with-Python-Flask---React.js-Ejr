@@ -24,7 +24,7 @@ const Layout = () => {
     <div>
       <BrowserRouter basename={basename}>
         <ScrollToTop>
-          <div className="container text-center">
+          <div className="container text-center main">
             <div className="row justify-content-start">
               <Navbar />
               <Routes>

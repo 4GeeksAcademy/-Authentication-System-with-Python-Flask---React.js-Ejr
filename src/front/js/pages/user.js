@@ -7,6 +7,10 @@ export const User = (props) => {
   const navigate = useNavigate();
   const { store, actions } = useContext(Context);
 
+  useEffect(()=>{
+    !store.verifiedUser ? navigate("/login") : <></>;
+  })
+
 
   return (
     <div className="col-10 my-5">
