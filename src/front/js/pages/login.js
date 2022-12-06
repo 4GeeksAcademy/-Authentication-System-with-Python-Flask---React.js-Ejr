@@ -30,11 +30,11 @@ export const Login = () => {
     actions.getToken(userEmail, userPassword);
 
     //conditionally navigate user based on verified status
-    store.verifiedUser ? navigate("/login") : navigate("/user");
+    !store.verifiedUser ? navigate("/login") : navigate("/user");
   };
 
   return (
-    <div className="col-6 my-5">
+    <div className="col-10 my-5">
       <div className="row">
         <div className="col-11 text-center m-2 align-items-center">
           {//conditional rendering but isn't working right now

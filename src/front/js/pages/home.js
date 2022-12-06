@@ -11,7 +11,7 @@ export const Home = () => {
   const [text, setText] = useState("");
 
   return (
-    <div className="text-center col-6">
+    <div className="text-center col-10">
       <img src={logoImageUrl} className="homeLogo" />
       {//conditionally render if user  is verfied 
       !store.verifiedUser ? (

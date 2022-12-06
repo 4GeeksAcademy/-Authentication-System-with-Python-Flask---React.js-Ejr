@@ -30,3 +30,7 @@
 .big:hover {
   height: 70px;
 }
+div {
+  border: 1px solid #FA8072;
+  border-style: dashed;
+}

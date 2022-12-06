@@ -9,7 +9,7 @@ export const User = (props) => {
 
 
   return (
-    <div className="col-6 my-5">
+    <div className="col-10 my-5">
       <h1>Welcome to your personal WordSword Page</h1>
     </div>
   );
