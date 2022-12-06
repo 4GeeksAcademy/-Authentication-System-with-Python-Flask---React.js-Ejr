@@ -116,15 +116,15 @@ export const Navbar = () => {
     // </ul>
 
     <nav
-      class="navbar navbar-expand-lg bg-success bg-opacity-25"
+      clasName="navbar navbar-expand bg-success bg-opacity-25"
       style={{ fontColor: "white" }}
     >
-      <div class="container-fluid">
-        <a class="navbar-brand" href="#">
+      <div className="container-fluid">
+        <a className="navbar-brand" to="/">
           WORDSWORD
         </a>
         <button
-          class="navbar-toggler"
+          className="navbar-toggler"
           type="button"
           data-bs-toggle="collapse"
           data-bs-target="#navbarNav"
@@ -132,35 +132,73 @@ export const Navbar = () => {
           aria-expanded="false"
           aria-label="Toggle navigation"
         >
-          <span class="navbar-toggler-icon"></span>
+          <span className="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav">
-            <li class="nav-item">
-              <Link class="nav-link active" aria-current="page" to="/">
+        <div className="collapse navbar-collapse" id="navbarNav">
+          <ul className="navbar-nav">
+            <li className="nav-item">
+              <Link className="nav-link active" aria-current="page" to="/">
                 Home
               </Link>
             </li>
-            <li class="nav-item">
-              <Link class="nav-link" to="/login">
-                Log In
-              </Link>
-            </li>
-            <li class="nav-item">
-              <Link class="nav-link" to="/create">
-                Join
-              </Link>
-            </li>
-            <li class="nav-item">
-              <Link class="nav-link" to="/about">
+            {
+              //conditionally render based on if user is verified
+              !store.verifiedUser ? (
+                <li className="nav-item">
+                  <Link className="nav-link" to="/login">
+                    Log In
+                  </Link>
+                </li>
+              ) : (
+                <></>
+              )
+            }
+            {
+              //conditionally render based on if user is verified
+              store.verifiedUser ? (
+                <li className="nav-item">
+                  <Link className="nav-link" to="/user  ">
+                    Personal Portal
+                  </Link>
+                </li>
+              ) : (
+                <></>
+              )
+            }
+            {
+              //conditionally render based on if user is verified
+              !store.verifiedUser ? (
+                <li className="nav-item">
+                  <Link class="nav-link" to="/create">
+                    Join
+                  </Link>
+                </li>
+              ) : (
+                <></>
+              )
+            }
+            <li className="nav-item">
+              <Link className="nav-link" to="/about">
                 About Us
               </Link>
             </li>
-            <li class="nav-item">
-              <Link class="nav-link" to="/donate">
+            <li className="nav-item">
+              <Link className="nav-link" to="/donate">
                 Donate
               </Link>
             </li>
+            {
+              //conditionally render based on if user is verified
+              store.verifiedUser ? (
+                <li className="nav-item">
+                  <Link className="nav-link" to="/home" onClick={handleSignout}>
+                    Signout
+                  </Link>
+                </li>
+              ) : (
+                <></>
+              )
+            }
           </ul>
         </div>
       </div>
