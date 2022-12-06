@@ -1,8 +1,9 @@
 import React, { useContext, useState } from "react";
 import { Context } from "../store/appContext";
-import logoImageUrl from "../../img/logo.png";
+import logoImageUrl from "../../img/WordSword.png";
 import { Link } from "react-router-dom";
 import "../../styles/home.css";
+import { Footer } from "../component/footer";
 
 export const Home = () => {
   const { store, actions } = useContext(Context);
@@ -11,31 +12,37 @@ export const Home = () => {
   const [text, setText] = useState("");
 
   return (
-    <div className="text-center col-10">
-      <img src={logoImageUrl} className="homeLogo" />
-      {//conditionally render if user  is verfied 
-      !store.verifiedUser ? (
-        <p className="titleP">
-          {" "}
-          Word sword is a webapp that can take long text documents, files, or
-          pdfs and run them through our algorithm to conver them into concise
-          summaries
-        </p>
-      ) : (
-        <></>
-      )}
+    <div className="text-center bg-white w-75 " style={{ marginLeft: "12%" }}>
+      <div className="logo">
+        <img src={logoImageUrl} className="homeLogo" />
+      </div>
+      {
+        //conditionally render if user  is verfied
+        !store.verifiedUser ? (
+          <p className="titleP">
+            {" "}
+            Word sword is a webapp that can take long text documents, files, or
+            pdfs and run them through our algorithm to conver them into concise
+            summaries
+          </p>
+        ) : (
+          <></>
+        )
+      }
       <br></br>
       <br></br>
-      {//conditionally render if user  is verfied 
-      !store.verifiedUser ? (
-        <p>
-          <Link to="/create">
-            Click this text to create a WordSword account to save your work
-          </Link>
-        </p>
-      ) : (
-        <></>
-      )}
+      {
+        //conditionally render if user  is verfied
+        !store.verifiedUser ? (
+          <p>
+            Still dont have a WordSword account to save your work?{" "}
+            <Link to="/create">Click here </Link>
+            to get set up!
+          </p>
+        ) : (
+          <></>
+        )
+      }
       <form>
         <label htmlFor="textFile">Choose a file:</label>
         <br></br>
@@ -71,16 +78,16 @@ export const Home = () => {
           }}
         />
       </form>
-      <div className="alert alert-info">
+      {/* <div className="alert alert-info">
         {store.message ||
           "Loading message from the backend (make sure your python backend is running)..."}
-      </div>
-      <p>
+      </div> */}
+      {/* <p>
         This boilerplate comes with lots of documentation:{" "}
         <a href="https://github.com/4GeeksAcademy/react-flask-hello/tree/95e0540bd1422249c3004f149825285118594325/docs">
           Read documentation
         </a>
-      </p>
+      </p> */}
     </div>
   );
 };

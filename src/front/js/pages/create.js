@@ -17,7 +17,6 @@ export const Create = () => {
   //initiating navigate
   const navigate = useNavigate();
 
-
   //this function handling the onclick event when the user submits username and password to create an account
   const handleSubmit = (event) => {
     //need this to stop other behavior
@@ -29,49 +28,43 @@ export const Create = () => {
     actions.createUser(email, password);
 
     //send the new user to test their login/login for the first time
-    navigate("/login")
+    navigate("/login");
   };
 
-
   return (
-      <div className="col-10 my-5">
-      <div className="row">
-        <div className="col-11 text-center m-2 align-items-center">
-          <h1>Please create an account</h1>
-        </div>
+    <div className="">
+      {/* <div className="text-center align-items-center"> */}
+      <br></br>
+      <br></br>
+      <h1>Join WordSword!</h1>
+      <br></br>
+      <div className="">
+        <form onSubmit={handleSubmit}>
+          <label htmlFor="mail">Email:</label>
+          <input
+            type="email"
+            id="mail"
+            name="mail"
+            value={email}
+            placeholder="email@email.com"
+            onChange={(event) => setEmail(event.currentTarget.value)}
+          ></input>
+          <br></br>
+          <label htmlFor="pass">Password:</label>
+          <input
+            type="password"
+            id="pass"
+            name="pass"
+            minLength="8"
+            placeholder="*********"
+            value={password}
+            onChange={(event) => setPassword(event.currentTarget.value)}
+          ></input>
+          <br></br>
+          <input type="submit" value="Submit"></input>
+        </form>
       </div>
-      <div className="row">
-        <div className="col-3"></div>
-        <div className="col-3 m-2">
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="mail">Email:</label>
-        <input
-          type="email"
-          id="mail"
-          name="mail"
-          value={email}
-          placeholder="email@email.com"
-          onChange={(event) => setEmail(event.currentTarget.value)}
-        ></input>
-        <br></br>
-        <label htmlFor="pass">Password:</label>
-        <input
-          type="password"
-          id="pass"
-          name="pass"
-          minLength="8"
-          placeholder="*********"
-          value={password}
-          onChange={(event) => setPassword(event.currentTarget.value)}
-        ></input>
-        <br></br>
-        <input
-          type="submit"
-          value="Submit"
-        ></input>
-      </form>
-      </div>
-      </div>
+      {/* </div> */}
     </div>
   );
 };

@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../store/appContext";
 import { useNavigate } from "react-router-dom";
+import { Footer } from "../component/footer";
 
 export const Login = () => {
   const { store, actions } = useContext(Context);
@@ -55,58 +56,57 @@ export const Login = () => {
   };
 
   return (
-    <div className="col-10 my-5">
-      <div className="row">
-        <div className="col-11 text-center m-2 align-items-center">
-          {
-            //conditional rendering but isn't working right now
-            store.newUser ? (
-              <h1>Welcome to WordSword, try logging in for the first time</h1>
-            ) : (
-              <h1>Welcome to the login page</h1>
-            )
-          }
+    <div className="container-fluid text-center align-items-center">
+      <br></br>
+      <h1>Welcome Back!</h1>
+      <br></br>
+      <form onSubmit={handleSubmit}>
+        <div className="form-outline w-50" style={{ margin: "auto" }}>
+          <label htmlFor="InputEmail" className="form-label">
+            Email address
+          </label>
+          <input
+            type="email"
+            className="form-control"
+            id="InputEmail"
+            aria-describedby="emailHelp"
+            onChange={(e) => setUserEmail(e.target.value)}
+            value={userEmail}
+          />
+          <div id="emailHelp" className="form-text">
+            We'll never share your email with anyone else.
+          </div>
         </div>
-      </div>
-      <div className="row">
-        <div className="col-3"></div>
-        <div className="col-3 m-2">
-          <form onSubmit={handleSubmit}>
-            <div>
-              <label htmlFor="InputEmail" className="form-label">
-                Email address
-              </label>
-              <input
-                type="email"
-                className="form-control"
-                id="InputEmail"
-                aria-describedby="emailHelp"
-                onChange={(e) => setUserEmail(e.target.value)}
-                value={userEmail}
-              />
-              <div id="emailHelp" className="form-text">
-                We'll never share your email with anyone else.
-              </div>
-            </div>
-            <div>
-              <label htmlFor="InputPassword" className="form-label">
-                Password
-              </label>
-              <input
-                type="password"
-                className="form-control"
-                id="InputPassword"
-                onChange={(e) => setUserPassword(e.target.value)}
-                value={userPassword}
-              />
-            </div>
-            <br></br>
-            <button type="submit" className="btn btn-primary">
-              Submit
-            </button>
-          </form>
+        <div className="form-outline w-50" style={{ margin: "auto" }}>
+          <label htmlFor="InputPassword" className="form-label">
+            Password
+          </label>
+          <input
+            type="password"
+            className="form-control"
+            id="InputPassword"
+            onChange={(e) => setUserPassword(e.target.value)}
+            value={userPassword}
+          />
         </div>
-      </div>
+        <br></br>
+        <button type="submit" className="btn btn-primary">
+          Submit
+        </button>
+      </form>
     </div>
   );
 };
+
+// {
+//   //conditional rendering but isn't working right now
+//   store.newUser ? (
+//     <h1>Welcome to WordSword, try logging in for the first time</h1>
+//   ) : (
+//     <h1>Welcome to the login page</h1>
+//   )
+// }
+
+{
+  /* <div className="text-center align-items-center"></div> */
+}

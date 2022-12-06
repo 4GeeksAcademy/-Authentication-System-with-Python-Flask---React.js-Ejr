@@ -3,11 +3,16 @@ import { Context } from "../store/appContext";
 import { Link } from "react-router-dom";
 
 export const Donate = () => {
-    const { store, actions } = useContext(Context);
-    return (
-        <div className="col-10 align-items-center my-5">
-            <h1>$Give us your money$</h1>
-            <p>Click this link to donate to your friendly neighborhood WordSword developers</p>
-        </div>
-    )
-}
+  const { store, actions } = useContext(Context);
+  return (
+    <div className="donate">
+      <br></br>
+      <h1>$Give us your money$</h1>
+      <br></br>
+      <p>
+        Click this link to donate to your friendly neighborhood WordSword
+        developers
+      </p>
+    </div>
+  );
+};

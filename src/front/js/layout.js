@@ -21,27 +21,30 @@ const Layout = () => {
   const basename = process.env.BASENAME || "";
 
   return (
-    <div>
+    <div className="main text-center font-family-montserrat">
       <BrowserRouter basename={basename}>
         <ScrollToTop>
-          <div className="container text-center main">
-            <div className="row justify-content-start">
-              <Navbar />
-              <Routes>
-                <Route exact path="/login" element={<Login />} />
-                <Route exact path="/about" element={<About />} />
-                <Route exact path="/donate" element={<Donate />} />
-                <Route exact path="/create" element={<Create />} />
-                <Route exact path="/demo" element={<Demo />} />
-                <Route exact path="/user" element={<User />} />
-                <Route exact path="/" element={<Home />} />
-                <Route render={() => <h1>Not found!</h1>} />
-              </Routes>
-            </div>
-            <div className="row">
-              <Footer />
-            </div>
+          {/* <div className="main text-center bg-success p-2 text-dark bg-opacity-25"> */}
+          {/* <div
+          className="row justify-content-start w-75 "
+          style={{ marginLeft: "12%" }}
+          > */}
+          <Navbar />
+          <Routes>
+            <Route exact path="/login" element={<Login />} />
+            <Route exact path="/about" element={<About />} />
+            <Route exact path="/donate" element={<Donate />} />
+            <Route exact path="/create" element={<Create />} />
+            <Route exact path="/demo" element={<Demo />} />
+            <Route exact path="/user" element={<User />} />
+            <Route exact path="/" element={<Home />} />
+            <Route render={() => <h1>Not found!</h1>} />
+          </Routes>
+          {/* </div> */}
+          <div className="footerrow">
+            <Footer />
           </div>
+          {/* </div> */}
         </ScrollToTop>
       </BrowserRouter>
     </div>

@@ -43,8 +43,8 @@ const getState = ({ getStore, getActions, setStore }) => {
         setStore({ demo: demo });
       },
       checkVerifiedUser: () => {
-          //can probably delete later use for something earlier on
-          const store = getStore();
+        //can probably delete later use for something earlier on
+        const store = getStore();
       },
       setFile: (fileName) => {
         //needs to call API to send it to backend
@@ -76,7 +76,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           .then((response) => response.json())
           .then((result) => {
             //set store value newUser to conditionally welcome first timers
-            setStore( { email: mail, newUser: true } );
+            setStore({ email: mail, newUser: true });
             console.log("this is the create user result", result);
           })
           .catch((err) => console.log("this is the create user error: ", err));
@@ -112,7 +112,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           redirect: "follow",
         })
           .then((res) => {
-            const store = getStore()
+            const store = getStore();
             //checking reponse
             console.log("this is the get verfied response: ", res);
             //setting verfifiedUser to true

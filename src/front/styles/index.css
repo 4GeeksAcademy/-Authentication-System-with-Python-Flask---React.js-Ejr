@@ -39,3 +39,13 @@ div {
   border: 1px solid #fa8072;
   border-style: dashed;
 }
+.main {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+}
+nav {
+  text-decoration-color: white;
+}
