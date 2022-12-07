@@ -21,7 +21,7 @@ const Layout = () => {
   const basename = process.env.BASENAME || "";
 
   return (
-    <div className="main text-center font-family-montserrat content">
+    <div className="main text-center font-family-montserrat bg-white container">
       <BrowserRouter basename={basename}>
         <ScrollToTop>
           {/* <div className="main text-center bg-success p-2 text-dark bg-opacity-25"> */}
@@ -41,9 +41,9 @@ const Layout = () => {
             <Route render={() => <h1>Not found!</h1>} />
           </Routes>
           {/* </div> */}
-          <div className="footerrow">
-            <Footer />
-          </div>
+          {/* <div className="footerrow"> */}
+          <Footer />
+          {/* </div> */}
           {/* </div> */}
         </ScrollToTop>
       </BrowserRouter>

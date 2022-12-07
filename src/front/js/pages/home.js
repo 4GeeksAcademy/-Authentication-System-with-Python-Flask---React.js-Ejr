@@ -12,14 +12,14 @@ export const Home = () => {
   const [text, setText] = useState("");
 
   return (
-    <div className="text-center bg-white w-75 " style={{ marginLeft: "12%" }}>
+    <div className="text-center">
       <div className="logo">
         <img src={logoImageUrl} className="homeLogo" />
       </div>
       {
         //conditionally render if user  is verfied
         !store.verifiedUser ? (
-          <p className="titleP">
+          <p className="titleP mb-5">
             {" "}
             Word sword is a webapp that can take long text documents, files, or
             pdfs and run them through our algorithm to conver them into concise
@@ -29,8 +29,6 @@ export const Home = () => {
           <></>
         )
       }
-      <br></br>
-      <br></br>
       {
         //conditionally render if user  is verfied
         !store.verifiedUser ? (
@@ -45,7 +43,6 @@ export const Home = () => {
       }
       <form>
         <label htmlFor="textFile">Choose a file:</label>
-        <br></br>
         <input
           type="file"
           id="textFile"
@@ -59,17 +56,19 @@ export const Home = () => {
             actions.setFile(textFile);
           }}
         />
-        <br></br>
+
         <label htmlFor="typedInput">Or copy and paste text here:</label>
-        <br></br>
+
         <textarea
+          className="form-control w-50 mx-auto"
           name="typedInput"
           rows="10"
           cols="60"
           onChange={(e) => setText(e.target.value)}
         ></textarea>
-        <br></br>
+
         <input
+          className="button-submit"
           type="submit"
           value="Slice Text"
           onClick={() => {

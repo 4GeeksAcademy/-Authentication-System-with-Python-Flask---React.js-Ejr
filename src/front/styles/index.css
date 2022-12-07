@@ -49,3 +49,9 @@ div {
 nav {
   text-decoration-color: white;
 }
+.button-submit {
+  margin-bottom: 2rem;
+}
+body {
+  background-color: black;
+}

@@ -32,7 +32,7 @@ export const Create = () => {
   };
 
   return (
-    <div className="">
+    <div className="create w-75" style={{ marginLeft: "12%" }}>
       {/* <div className="text-center align-items-center"> */}
       <br></br>
       <br></br>

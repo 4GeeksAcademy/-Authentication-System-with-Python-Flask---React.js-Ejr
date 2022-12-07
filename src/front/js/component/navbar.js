@@ -116,8 +116,8 @@ export const Navbar = () => {
     // </ul>
 
     <nav
-      clasName="navbar navbar-expand bg-success bg-opacity-25"
-      style={{ fontColor: "white" }}
+      className="navbar navbar-expand-lg navbar-light bg-light"
+      // style={{ textColor: "white" }}
     >
       <div className="container-fluid">
         <a className="navbar-brand" to="/">
@@ -134,7 +134,7 @@ export const Navbar = () => {
         >
           <span className="navbar-toggler-icon"></span>
         </button>
-        <div className="collapse navbar-collapse" id="navbarNav">
+        <div className="collapse navbar-collapse text-white" id="navbarNav">
           <ul className="navbar-nav">
             <li className="nav-item">
               <Link className="nav-link active" aria-current="page" to="/">
