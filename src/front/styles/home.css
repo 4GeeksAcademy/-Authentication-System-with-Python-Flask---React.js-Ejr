@@ -5,6 +5,20 @@
     one more css for each page that will contain the selected used 
     on that page only (the ones not reused in other pages).
 */
-.handBack {
-  font-size: 100px;
+.titulo {
+  margin-bottom: 50px;
 }
+.handBack,
+.hand,
+.hand-scissors {
+  font-size: 50px;
+  padding: 2rem;
+}
+
+.handBack:hover,
+.hand:hover,
+.hand-scissors:hover {
+  font-family: "Font Awesome 5 Brands";
+  content: "\f082";
+}
+
