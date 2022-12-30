@@ -18,7 +18,10 @@
 .handBack:hover,
 .hand:hover,
 .hand-scissors:hover {
-  font-family: "Font Awesome 5 Brands";
-  content: "\f082";
+  background: "red";
 }
 
+.flexCards {
+  display: "flex";
+  justify-content:  center;
+}

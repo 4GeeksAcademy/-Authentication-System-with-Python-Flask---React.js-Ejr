@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useContext } from "react";
+import { Context } from "../store/appContext";
+//importe componentes desde fontawesome
+import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
-import CardGroup from "react-bootstrap/CardGroup";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { library } from "@fortawesome/fontawesome-svg-core";
@@ -13,55 +15,32 @@ import {
 library.add(faHandBackFist, faHand, faHandScissors);
 
 export const CardsGroup = () => {
+  const { store, actions } = useContext(Context);
+
   return (
-    <CardGroup>
-      <Card>
-        <Card.Img variant="top" src="" />
-        <FontAwesomeIcon
-          icon="hand-back-fist"
-          className="handBack"
-          id="handBack"
-        />
-        <Card.Body>
-          <Card.Title>Rock</Card.Title>
-          <Card.Text>
-            This is a wider card with supporting text below as a natural lead-in
-            to additional content. This content is a little bit longer.
-          </Card.Text>
-        </Card.Body>
-        <Card.Footer>
-          <small className="text-muted">Last updated 3 mins ago</small>
-        </Card.Footer>
-      </Card>
-      <Card>
-        <Card.Img variant="top" src="" />
-        <FontAwesomeIcon icon="hand" className="hand" />
-        <Card.Body>
-          <Card.Title>Paper</Card.Title>
-          <Card.Text>
-            This card has supporting text below as a natural lead-in to
-            additional content.{" "}
-          </Card.Text>
-        </Card.Body>
-        <Card.Footer>
-          <small className="text-muted">Last updated 3 mins ago</small>
-        </Card.Footer>
-      </Card>
-      <Card>
-        <Card.Img variant="top" src="" />
-        <FontAwesomeIcon icon="hand-scissors" className="hand-scissors" />
-        <Card.Body>
-          <Card.Title>Scissors</Card.Title>
-          <Card.Text>
-            This is a wider card with supporting text below as a natural lead-in
-            to additional content. This card has even longer content than the
-            first to show that equal height action.
-          </Card.Text>
-        </Card.Body>
-        <Card.Footer>
-          <small className="text-muted">Last updated 3 mins ago</small>
-        </Card.Footer>
-      </Card>
-    </CardGroup>
+    <div className="container">
+      <div className="row flexCards">
+        {store.gameRules.map((elemento) => {
+          return (
+            <div className="col-4">
+              <Card style={{ width: "15rem" }} key={elemento.id}>
+                <Card.Img variant="top" />
+                <FontAwesomeIcon
+                  icon="fa-hand"
+                  className="hand"
+                  id="hand"
+                  onClick={actions.storePlayerValue}
+                />
+                <Card.Body>
+                  <Card.Title>{elemento.name}</Card.Title>
+                  <Card.Text>{elemento.rule}</Card.Text>
+                  <Button variant="primary">Go somewhere</Button>
+                </Card.Body>
+              </Card>
+            </div>
+          );
+        })}
+      </div>
+    </div>
   );
 };
