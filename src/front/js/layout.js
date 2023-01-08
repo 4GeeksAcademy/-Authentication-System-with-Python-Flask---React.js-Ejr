@@ -10,6 +10,7 @@ import injectContext from "./store/appContext";
 
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
+import { Appointment } from "./pages/Appointment.jsx";
 
 //create your first component
 const Layout = () => {
@@ -19,7 +20,7 @@ const Layout = () => {
 
     return (
         <>
-            <Calendar />
+            <Appointment />
         </>
     );
 };
