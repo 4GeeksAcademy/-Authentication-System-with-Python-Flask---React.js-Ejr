@@ -1,0 +1,105 @@
+button {
+    border-radius: 50px;
+    background-color: orange;
+    width: 90px;
+    height: 90px;
+}
+
+.year {
+    height: 650px;
+    width: 650px;
+    background-color: rgba(64, 182, 232, 0.519);
+    border-radius: 50%;
+    border: 3px solid black;
+    position: relative;
+    font-size: 35px;
+}
+
+.year .mes {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+}
+
+.ene {
+    padding-top: 5px;
+}
+.year .mes2 {
+    rotate: 30deg;
+}
+.feb {
+    rotate: -30deg;
+    padding-top: 5px;
+}
+.year .mes3 {
+    rotate: 60deg;
+}
+.mar {
+    rotate: -60deg;
+    padding-right: 25px;
+}
+.year .mes4 {
+    rotate: 90deg;
+}
+.abr {
+    rotate: -90deg;
+    padding-right: 25px;
+}
+.year .mes5 {
+    rotate: 120deg;
+}
+.may {
+    rotate: -120deg;
+    padding-right: 25px;
+}
+.year .mes6 {
+    rotate: 150deg;
+}
+.jun {
+    rotate: -150deg;
+    padding-bottom: 5px;
+}
+.year .mes7 {
+    rotate: 180deg;
+}
+.jul {
+    rotate: -180deg;
+    padding-bottom: 5px;
+}
+.year .mes8 {
+    rotate: 210deg;
+}
+.ago {
+    rotate: -210deg;
+    padding-bottom: 5px;
+}
+.year .mes9 {
+    rotate: 240deg;
+}
+.sep {
+    rotate: -240deg;
+    padding-left: 25px;
+}
+.year .mes10 {
+    rotate: 270deg;
+}
+.oct {
+    rotate: -270deg;
+    padding-left: 25px;
+}
+.year .mes11 {
+    rotate: 300deg;
+}
+.nov {
+    rotate: -300deg;
+    padding-left: 25px;
+}
+.year .mes12 {
+    rotate: 330deg;
+}
+.dic {
+    rotate: -330deg;
+    padding-top: 5px;
+}
+
