@@ -6,7 +6,7 @@ import { Calendar } from "./Calendar.jsx";
 
 export const MedicalCenter = () => {
   return (
-    <div className="position-absolute top-0 start-0">
+    <div className="position-absolute top-0 start-10">
       <table class="table table-dark table-striped text-center">
         <thead>
           <tr>
