@@ -6,6 +6,8 @@ import "../../styles/calendar.css";
 export const Calendar = () => {
 
 	return (
+            <>
+            <Navbar />
 		<div className="position-absolute top-50 start-50 translate-middle">
             <div className="year">
 			    <div className="mes mes1"><div className="ene"><button>ENE</button></div></div>
@@ -22,5 +24,6 @@ export const Calendar = () => {
                 <div className="mes mes12"><div className="dic"><button>DIC</button></div></div>
 		    </div>
         </div>
+        </>
 	);
 };

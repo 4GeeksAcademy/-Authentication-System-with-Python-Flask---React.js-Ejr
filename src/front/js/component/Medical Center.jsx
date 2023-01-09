@@ -2,12 +2,12 @@ import React, { useContext } from "react";
 import { Context } from "../store/appContext";
 import rigoImageUrl from "../../img/rigo-baby.jpg";
 import "../../styles/calendar.css";
-import { Calendar } from "./Calendar.jsx";
+import { Calendar } from "../pages/Calendar.jsx";
 
 export const MedicalCenter = () => {
   return (
     <div className="position-absolute top-0 start-10">
-      <table class="table table-dark table-striped text-center">
+      <table class="table table-warning table-striped text-center">
         <thead>
           <tr>
             <th scope="col">#</th>
