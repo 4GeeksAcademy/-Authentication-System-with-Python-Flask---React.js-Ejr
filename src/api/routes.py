@@ -9,23 +9,34 @@ api = Blueprint('api', __name__)
 
 usersTable = [
         {
-        "ID": "US-001",  "NAME": "Santino Cuevas", "RUT": "22.354.650-9", "PREVISION": "SD-001", "EMAIL": "santino.cuevas@gmail.com", "PASSWORD": "451cd6541w681f"
+        "ID": "US-001",  "NAME": "Santino Cuevas", "RUT": "22.354.650-9", "ID PREVISION": "SD-001", "EMAIL": "santino.cuevas@gmail.com", "PASSWORD": "451cd6541w681f"
     },
     {
-        "ID": "US-002",  "NAME": "Pablo Escovar", "RUT": "17.801.666-6", "PREVISION": "SD-002", "EMAIL": "pablo.escovar@gmail.com", "PASSWORD": "Dnfur651g81"
+        "ID": "US-002",  "NAME": "Pablo Escovar", "RUT": "17.801.666-6", "ID PREVISION": "SD-002", "EMAIL": "pablo.escovar@gmail.com", "PASSWORD": "Dnfur651g81"
     }
     ]
 
+doctorsTable = [
+        {
+        "ID": "MD-001",  "NAME": "Alberto Contreras", "RUT": "12.548.575-2", "ID ESPECIALIDAD": "SP-001", "EMAIL": "alberto.contreras@gmail.com", "PASSWORD": "zvb65168186"
+    },
+    {
+        "ID": "MD-002",  "NAME": "Dolores Fuertes", "RUT": "11.522.222-0", "ID ESPECIALIDAD": "SP-002", "EMAIL": "dolores.fuertes@gmail.com", "PASSWORD": "fwewfe54684"
+    }
+    ]
 
-@api.route('/mediGeeks/users/', methods=['POST', 'GET'])
-def first_triasl():
-    
-    return jsonify(usersTable), 200
-
-@api.route('/mediGeeks/users/trial', methods=['POST', 'GET'])
-def second_triasl():
+@api.route('/mediGeeks/users', methods=['POST', 'GET'])
+def users_trials():
     
     if (request.method == "POST"):
         request_body = request.json
-        usersTable.append(request_body)
+        usersTable.append(request_body)  
     return jsonify(usersTable), 200
+
+@api.route('/mediGeeks/doctors', methods=['POST', 'GET'])
+def doctor_trials():
+    
+    if (request.method == "POST"):
+        request_body = request.json
+        doctorsTable.append(request_body)  
+    return jsonify(doctorsTable), 200
