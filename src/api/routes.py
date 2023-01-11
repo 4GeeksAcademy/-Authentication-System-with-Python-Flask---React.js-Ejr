@@ -7,12 +7,25 @@ from api.utils import generate_sitemap, APIException
 
 api = Blueprint('api', __name__)
 
-
-@api.route('/hello', methods=['POST', 'GET'])
-def handle_hello():
-
-    response_body = {
-        "message": "Hello! I'm a message that came from the backend, check the network tab on the google inspector and you will see the GET request"
+usersTable = [
+        {
+        "ID": "US-001",  "NAME": "Santino Cuevas", "RUT": "22.354.650-9", "PREVISION": "SD-001", "EMAIL": "santino.cuevas@gmail.com", "PASSWORD": "451cd6541w681f"
+    },
+    {
+        "ID": "US-002",  "NAME": "Pablo Escovar", "RUT": "17.801.666-6", "PREVISION": "SD-002", "EMAIL": "pablo.escovar@gmail.com", "PASSWORD": "Dnfur651g81"
     }
+    ]
 
-    return jsonify(response_body), 200
+
+@api.route('/mediGeeks/users/', methods=['POST', 'GET'])
+def first_triasl():
+    
+    return jsonify(usersTable), 200
+
+@api.route('/mediGeeks/users/trial', methods=['POST', 'GET'])
+def second_triasl():
+    
+    if (request.method == "POST"):
+        request_body = request.json
+        usersTable.append(request_body)
+    return jsonify(usersTable), 200
