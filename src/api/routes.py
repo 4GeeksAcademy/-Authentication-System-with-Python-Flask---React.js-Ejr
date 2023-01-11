@@ -25,8 +25,8 @@ doctorsTable = [
     }
     ]
 
-@api.route('/mediGeeks/users', methods=['POST', 'GET'])
-def users_trials():
+@api.route('/mediGeeks/users/<int:user_id>', methods=['POST', 'GET'])
+def users_trials(user_id):
     
     if (request.method == "POST"):
         request_body = request.json
