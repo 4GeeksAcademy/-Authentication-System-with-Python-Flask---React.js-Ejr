@@ -25,13 +25,15 @@ doctorsTable = [
     }
     ]
 
-@api.route('/mediGeeks/users/<int:user_id>', methods=['POST', 'GET'])
+@api.route('/mediGeeks/users/<user_id>', methods=['GET'])
 def users_trials(user_id):
     
-    if (request.method == "POST"):
-        request_body = request.json
-        usersTable.append(request_body)  
-    return jsonify(usersTable), 200
+    print(user_id)
+    for user in usersTable: 
+        if user["ID"] == user_id:
+           return jsonify(user), 200 
+
+    return "Usuario no existe", 404
 
 @api.route('/mediGeeks/doctors', methods=['POST', 'GET'])
 def doctor_trials():
