@@ -1,3 +1,9 @@
-/* 
-    General Styles used on every website (Don't Repeat Yourself)
-*/
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-image: url(https://cdn.pixabay.com/photo/2016/09/28/18/05/frog-1701075_960_720.jpg);
+  background-size: 100% 130%;
+
+  background-repeat: no-repeat;
+}

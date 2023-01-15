@@ -2,25 +2,40 @@ import React, { useContext } from "react";
 import { Context } from "../store/appContext";
 import rigoImageUrl from "../../img/rigo-baby.jpg";
 import "../../styles/home.css";
+import { useNavigate } from "react-router-dom";
+import { Logo } from "../component/Logo";
 
 export const Home = () => {
-	const { store, actions } = useContext(Context);
+  const navigate = useNavigate();
 
-	return (
-		<div className="text-center mt-5">
-			<h1>Hello Rigo!!</h1>
-			<p>
-				<img src={rigoImageUrl} />
-			</p>
-			<div className="alert alert-info">
-				{store.message || "Loading message from the backend (make sure your python backend is running)..."}
-			</div>
-			<p>
-				This boilerplate comes with lots of documentation:{" "}
-				<a href="https://start.4geeksacademy.com/starters/react-flask">
-					Read documentation
-				</a>
-			</p>
-		</div>
-	);
+  return (
+    <form className="contenedor-login">
+      <div className="mb-3">
+        <Logo />
+      </div>
+      <div className="mb-3">
+        <div className="DATO">
+          <h1>Bienvenidos</h1>
+          <p>
+            Somos una aplicacion destinada a todos nuestros ciclistas que
+            requieran ayuda en ruta
+          </p>
+        </div>
+      </div>
+      <button
+        onClick={() => navigate("/login")}
+        type="submit"
+        className="btn btn-dark"
+      >
+        Login
+      </button>
+      <button
+        onClick={() => navigate("/registration")}
+        type="submit"
+        className="btn btn-dark"
+      >
+        Registration
+      </button>
+    </form>
+  );
 };

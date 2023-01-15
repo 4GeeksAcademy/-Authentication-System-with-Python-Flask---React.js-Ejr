@@ -1,0 +1,55 @@
+.M {
+  background-color: rgba(8, 222, 37, 0.519);
+  backdrop-filter: blur(1px);
+  color: black;
+
+  margin: 2px;
+}
+
+.Y {
+  background-color: rgb(8, 222, 37);
+  color: rgb(255, 255, 255);
+
+  margin: 2px;
+}
+
+.B {
+  background-color: rgba(8, 222, 37, 0.519);
+  backdrop-filter: blur(1px);
+  color: rgb(0, 11, 0);
+
+  margin: 2px;
+}
+
+.I {
+  background-color: rgba(8, 222, 37, 0.519);
+  backdrop-filter: blur(1px);
+  color: rgb(10, 0, 0);
+  margin: 2px;
+}
+
+.K {
+  background-color: rgb(8, 222, 37);
+  color: rgb(238, 251, 238);
+
+  margin: 2px;
+}
+
+.E {
+  color: rgb(11, 0, 0);
+  background-color: rgba(8, 222, 37, 0.519);
+  backdrop-filter: blur(1px);
+
+  margin: 2px;
+}
+
+.logo {
+  font-size: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 10px;
+
+  background-color: rgba(31, 207, 31, 0.142);
+  backdrop-filter: blur(1px);
+}

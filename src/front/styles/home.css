@@ -1,7 +1,89 @@
-/*
-    home.css: This website contains selectors only used in home.css
+.contenedor-login {
+  color: rgb(255, 255, 255);
+  font-size: 25px;
+  font-weight: bold;
+  width: 350px;
+  background-color: rgba(254, 255, 254, 0);
+  border-radius: 20px;
+  margin-top: 50px;
+  padding: 20px;
+  backdrop-filter: blur(1px);
+  box-shadow: 0 0 70px 10px rgba(24, 246, 72, 0.871);
+}
 
-    All pages share the styles on index.css but you should create 
-    one more css for each page that will contain the selected used 
-    on that page only (the ones not reused in other pages).
-*/
+.mb-3 {
+  justify-content: center;
+}
+
+.DATO {
+  text-align: center;
+}
+
+h1 {
+  color: aliceblue;
+  margin-top: 10px;
+}
+
+.butones-user {
+  justify-content: center;
+  align-items: center;
+  padding-top: 40px;
+}
+
+.btn-dark {
+  align-items: center;
+  justify-content: center;
+  width: 310px;
+  margin-bottom: 10px;
+  box-shadow: 0 0 10px 10px rgba(22, 185, 44, 0.534);
+  color: rgb(6, 235, 56);
+  background-color: rgba(0, 5, 5, 0.921);
+  backdrop-filter: blur(1px);
+}
+
+.btn-dark:hover {
+  background-color: rgb(90, 246, 0);
+  color: black;
+  box-shadow: 0 0 10px 10px rgba(122, 222, 21, 0.882);
+}
+.fa-solid fa-cart-shopping {
+  font-size: 30px;
+  color: rgb(246, 253, 253);
+}
+
+.form-select {
+  margin-bottom: 10px;
+  backdrop-filter: blur(1px);
+  background-color: rgba(7, 251, 7, 0.618);
+  color: aliceblue;
+}
+
+.form-select:hover {
+  box-shadow: 0 0 10px 10px rgb(130, 249, 12);
+}
+option {
+  color: black;
+}
+
+.form-control {
+  backdrop-filter: blur(1px);
+  background-color: rgba(5, 224, 20, 0.196);
+  color: rgb(255, 254, 254);
+}
+
+.form-control:hover {
+  backdrop-filter: blur(1px);
+  background-color: rgba(5, 224, 38, 0.159);
+  box-shadow: 0 0 10px 10px rgba(105, 220, 11, 0.849);
+  color: white;
+}
+
+.card-producto {
+  text-align: center;
+
+  backdrop-filter: blur(1px);
+  background-color: rgb(3, 1, 1);
+  box-shadow: 0 0 90px 50px rgb(8, 8, 8);
+
+  color: white;
+}
