@@ -5,3 +5,14 @@
     one more css for each page that will contain the selected used 
     on that page only (the ones not reused in other pages).
 */
+body {
+    background-color: #1b1b1b;
+  }
+  .hero-container {
+    color: white;
+  }
+  .my-5 {
+    color: white;
+  }
+  
+  
