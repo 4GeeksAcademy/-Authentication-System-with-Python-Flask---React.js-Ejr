@@ -30,6 +30,18 @@ const Characters = () =>{
 
         ])
 
+        const addFavorites = (name, index) => {
+          actions.addFavorites(name)
+          const obj = characters[index]
+          obj.selected = !obj.selected
+          const tmp = characters
+          tmp[index] = obj
+          setSelected (tmp)
+          if(!obj.selected){
+            actions.removeFavorites(name)
+          }
+        }
+
         const getInfo = async (index) => {
             const response = await fetch (`https://www.swapi.tech/api/people/${index}`)
             const people = await response.json()
