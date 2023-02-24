@@ -2,10 +2,19 @@ import React, { useContext } from "react";
 import { Context } from "../store/appContext";
 import rigoImageUrl from "../../img/rigo-baby.jpg";
 import "../../styles/home.css";
+import Characters from "../component/characters";
+import Aircrafts from "../component/aircrafts";
 
 export const Home = () => (
-	<div>
+	<div className="container">
+		<h2 className="test-ligth py-4">Personajes</h2>
+		<Characters/>
+		<h2 className="test-ligth py-4">Vehiculos</h2>
+		<Aircrafts/>
 
-		
+
+
 	</div>
+
+	
 );
