@@ -8,11 +8,11 @@ import Planets from "../component/planets";
 
 export const Home = () => (
 	<div className="container">
-		<h2 className="test-ligth py-4">Personajes</h2>
+		<h2 id="titles" className="test-ligth py-4">Personajes</h2>
 		<Characters/>
-		<h2 className="test-ligth py-4">Vehiculos</h2>
+		<h2 id="titles" className="test-ligth py-4">Vehiculos</h2>
 		<Aircrafts/>
-		<h2 className="test-ligth py-4">Planetas</h2>
+		<h2 id="titles" className="test-ligth py-4">Planetas</h2>
 		<Planets/>
 
 
