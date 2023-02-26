@@ -12,7 +12,7 @@ export const Navbar = () => {
 			</div>
 			<div className="ml-auto">
 				<div class="btn-group">
-					<button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+					<button id="favorite" type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
 						Favoritos
 					</button>
 					<ul class="dropdown-menu">
