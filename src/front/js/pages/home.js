@@ -12,7 +12,7 @@ export const Home = () => (
 		<Characters/>
 		<h2 className="test-ligth py-4">Vehiculos</h2>
 		<Aircrafts/>
-		<h2 className="test-ligth py-4">Vehiculos</h2>
+		<h2 className="test-ligth py-4">Planetas</h2>
 		<Planets/>
 
 
