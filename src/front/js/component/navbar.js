@@ -16,11 +16,11 @@ export const Navbar = () => {
 					<button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
 						Favoritos
 					</button>
-					{/*<ul class="dropdown-menu">
-                        {store.favorites.map((f,index)=>(
+					<ul class="dropdown-menu">
+                       {/*} {store.favorites.map((f,index)=>(
 							<li key={index+1000}><a class="dropdown-item" key={index+100}>{f}</a></li>
-						))}
-						</ul>*/}
+					   ))}*/}
+						</ul>
 		        </div>
 			</div>
 
