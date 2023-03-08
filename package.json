@@ -75,7 +75,9 @@
 	"dependencies": {
 		"prop-types": "^15.6.1",
 		"react": "^16.8.4",
+		"react-bootstrap": "^2.7.2",
 		"react-dom": "^16.8.4",
+		"react-hook-form": "^7.43.5",
 		"react-polyfills": "0.0.1",
 		"react-router-dom": "^6.3.0"
 	}
