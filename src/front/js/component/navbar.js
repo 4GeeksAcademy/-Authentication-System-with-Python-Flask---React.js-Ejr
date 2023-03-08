@@ -21,10 +21,10 @@ const MyNavbar = () => {
             </Nav.Link>
           </Nav>
           <Nav>
-            <Nav.Link href="#store">Store</Nav.Link>
-            <Nav.Link href="#community">Community</Nav.Link>
-            <Nav.Link href="#support">Support</Nav.Link>
-            <Nav.Link href="#account">Account</Nav.Link>
+            <Nav.Link as ={Link} to="/store">Store</Nav.Link>
+            <Nav.Link as ={Link} to="/community">Community</Nav.Link>
+            <Nav.Link as ={Link} to="/support">Support</Nav.Link>
+            <Nav.Link as ={Link} to="/account">Account</Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>
