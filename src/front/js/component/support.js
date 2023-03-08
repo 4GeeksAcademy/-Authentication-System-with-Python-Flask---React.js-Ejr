@@ -10,6 +10,7 @@ const MySupport = () =>{
         firstLast:"",
         email:"",
         contactNumber:"",
+        issue:""
     };
 
     const [initialValues, setInitialValues] = useState(initState)
@@ -66,7 +67,12 @@ const MySupport = () =>{
                     )}
                     <br/>
                     <Form.Label>Please describe the issue you are having.</Form.Label>
-                    <Form.Control type="text" placeholder=""></Form.Control>
+                    <Form.Control type="text" placeholder="" {...register("issue",{required:"Please enter the issue you are experiencing."})}></Form.Control>
+                    {errors.issue &&(
+                        <Form.Text className="text-danger">
+                            {errors.issue.message}
+                        </Form.Text>
+                    )}
                 </Form.Group>
                 <Button variant="primary" type="submit">Submit</Button>
             </Form>
