@@ -61,7 +61,7 @@ const MySupport = () =>{
                     <Form.Control type="number" placeholder="" {...register("contactNumber", {required:"Please enter a valid phone number."})}></Form.Control>
                     {errors.contactNumber &&(
                         <Form.Text className="text-danger">
-                            {errors.contactNumber.messagasd}
+                            {errors.contactNumber.message}
                         </Form.Text>
                     )}
                     <br/>
