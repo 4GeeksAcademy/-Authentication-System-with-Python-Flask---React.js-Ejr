@@ -27,7 +27,7 @@ const Logo = () => {
 		<h1 className="ms-5">eCommerce</h1>
 		</div>
 		
-		
+
 	);
 };
  
@@ -36,7 +36,7 @@ const SingupAndLogin = () => {
 		<>
 		<div>
 			
-			<button className="bg-white p-2 border border-0 text-color">Ingresa </button>
+			<button className="bg-white p-2 border border-0 text-color"><Link to="/login">Ingresa</Link></button>
 			<button className="bg-button p-2 ms-3 me-5 border border-0 text-color2 ">Registrate</button>
 		</div>
 

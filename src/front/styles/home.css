@@ -32,3 +32,8 @@ flex-direction: column;
     
     margin-bottom:6px ;
 }
+
+a{
+    text-decoration: none;
+    color: inherit;
+}
