@@ -22,7 +22,7 @@ const MyNavbar = () => {
           </Nav>
           <Nav>
             <Nav.Link as ={Link} to="/store">Store</Nav.Link>
-            <Nav.Link as ={Link} to="/community">Community</Nav.Link>
+            <Nav.Link as ={Link} to="/news">News</Nav.Link>
             <Nav.Link as ={Link} to="/support">Support</Nav.Link>
             <Nav.Link as ={Link} to="/account">Account</Nav.Link>
           </Nav>
