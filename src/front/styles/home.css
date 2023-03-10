@@ -1,7 +1,34 @@
-/*
-    home.css: This website contains selectors only used in home.css
+.bg-pink {
+    background-color: #FFE5E5;
+}
 
-    All pages share the styles on index.css but you should create 
-    one more css for each page that will contain the selected used 
-    on that page only (the ones not reused in other pages).
-*/
+.bg-white {
+background-color: #FFFFFF;
+}
+
+.bg-button {
+    background-color:#EA8597 ;
+}
+
+.text-color{
+    color: #FFB7B7;
+}
+.text-color2{
+    color:#FEEBEC;
+}
+
+.jost{
+    font-family: 'Jost', sans-serif;
+}
+
+.flex-direction-column{
+flex-direction: column;
+}
+
+.login-form{
+    
+}
+.login-form >*{
+    
+    margin-bottom:6px ;
+}
