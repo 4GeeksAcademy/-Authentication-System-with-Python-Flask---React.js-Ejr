@@ -16,3 +16,19 @@ background-color: #FFFFFF;
 .text-color2{
     color:#FEEBEC;
 }
+
+.jost{
+    font-family: 'Jost', sans-serif;
+}
+
+.flex-direction-column{
+flex-direction: column;
+}
+
+.login-form{
+    
+}
+.login-form >*{
+    
+    margin-bottom:6px ;
+}

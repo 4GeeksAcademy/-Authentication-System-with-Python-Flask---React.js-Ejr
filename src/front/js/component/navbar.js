@@ -5,7 +5,7 @@ export const Navbar = () => {
 	const [isAuthenticate,setIsAuthenticate]= useState(false)
 	return (
 		<>
-		<nav className="navbar bg-pink">
+		<nav className="navbar p-2  bg-pink jost ">
 			{/* left-side */}
 			
 				<Logo/>
@@ -24,7 +24,7 @@ export const Navbar = () => {
 const Logo = () => {
 	return (
 		<div>
-		<h1>eCommerce</h1>
+		<h1 className="ms-5">eCommerce</h1>
 		</div>
 		
 		
@@ -36,8 +36,8 @@ const SingupAndLogin = () => {
 		<>
 		<div>
 			
-			<button className="bg-white p-2 border border-0 text-color">Login</button>
-			<button className="bg-button p-2 ms-3 me-5 border border-0 text-color2 ">singup</button>
+			<button className="bg-white p-2 border border-0 text-color">Ingresa </button>
+			<button className="bg-button p-2 ms-3 me-5 border border-0 text-color2 ">Registrate</button>
 		</div>
 
 		
