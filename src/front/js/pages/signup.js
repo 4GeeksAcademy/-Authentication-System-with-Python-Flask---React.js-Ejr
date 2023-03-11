@@ -16,7 +16,7 @@ export const SignUp = () => {
                 <input name="password"placeholder="Ingresa tu codigo de invitacion" className="w-100 p-2"></input>
                 <hr/>
                 <button className="p-3 w-50 border-0 bg-pink" >Ingresar</button>
-                <h5><Link to ="/">Regresa al catalogo!</Link></h5>
+                <h5><Link to ="/catalogue">Regresa al catalogo!</Link></h5>
                 
             </form>
         </>

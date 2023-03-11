@@ -21,8 +21,9 @@ export const Navbar = () => {
 const Logo = () => {
   return (
     <div>
-      <h1 className="ms-5">eCommerce</h1>
+      <Link to= "/" className="ms-5 "><h1>eCommerce</h1></Link>
     </div>
+      
   );
 };
 
@@ -34,7 +35,7 @@ const SingupAndLogin = () => {
           <Link to="/login">Ingresar</Link>
         </button>
         <button className="bg-button p-2 ms-3 me-5 border border-0 text-color2 ">
-          Registrate
+         <Link to= "/signup">Registrate</Link>
         </button>
       </div>
     </>
