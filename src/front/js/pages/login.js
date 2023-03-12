@@ -15,7 +15,7 @@ export const Login = () => {
                 <h5>Olvidaste tu contraseña?</h5>
                 <hr/>
                 <button className="p-3 w-50 border-0 bg-pink" >Ingresa</button>
-                <h5><Link to ="/">Regresa al catalogo!</Link></h5>
+                <h5><Link to ="/Catalogue">Regresa al catalogo!</Link></h5>
                 
             </form>
         </>
