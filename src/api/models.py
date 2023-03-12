@@ -19,3 +19,120 @@ class User(db.Model):
             "email": self.email,
             # do not serialize the password, its a security breach
         }
+
+
+class Master(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(120), unique=False, nullable=False)
+    phone = db.Column(db.String(20), unique=False, nullable=True)
+
+    def __repr__(self):
+        return f'<Master {self.name}>'
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            "phone": self.phone
+        }
+
+class Shoe(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(120), unique=False, nullable=False)
+    size_from = db.Column(db.Integer)
+    size_to = db.Column(db.Integer)
+    # Check documentation for choices field
+    # category = db.Column(db.String, nullable=False, server_default='Magnolia', choices=['Magnolia', 'Taco'])
+    category = db.Column(db.String, nullable=False)
+    photo = db.Column(db.String, unique=True, nullable=False)
+
+
+    def __repr__(self):
+        return f'<Shoe {self.name}>'
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            "size_from": self.size_from,
+            "size_to": self.size_to,
+            "category": self.category,
+            "photo": self.photo
+        }
+        
+
+class Plants(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(120), unique=False, nullable=False)
+    size34 = db.Column(db.Integer, nullable=True)
+    size35 = db.Column(db.Integer, nullable=True)
+    size36 = db.Column(db.Integer, nullable=True)
+    size37 = db.Column(db.Integer, nullable=True)
+    size38 = db.Column(db.Integer, nullable=True)
+    size39 = db.Column(db.Integer, nullable=True)
+    size40 = db.Column(db.Integer, nullable=True)
+    size41 = db.Column(db.Integer, nullable=True)
+
+    def __repr__(self):
+        return f'<Plants {self.name}>'
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            "size34": self.size34,
+            "size35": self.size35,
+            "size36": self.size36,
+            "size37": self.size37,
+            "size38": self.size38,
+            "size39": self.size39,
+            "size40": self.size40,
+            "size41": self.size41,
+        }
+
+
+class Orders(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    # Check documentation for correct relationship
+    # master_id = db.Column(db.Integer, db.ForeignKey('master.id'), nullable=False)
+    plant_type = db.Column(db.String(120), nullable=False)
+    plant_size = db.Column(db.Integer, nullable=False)
+    customer_name = db.Column(db.String(120), nullable=False)
+    customer_number = db.Column(db.String(20), nullable=False)
+    delivery_date = db.Column(db.Date, nullable=False)
+    price = db.Column(db.String(10), nullable=False)
+    status = db.Column(db.String(20), nullable=False)
+
+    def __repr__(self):
+        return f'<Orders {self.id}>'
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "master_id": self.master_id,
+            "plant_type": self.plant_type,
+            "plant_size": self.plant_size,
+            "customer_name": self.customer_name,
+            "customer_number": self.customer_number,
+            "delivery_date": self.delivery_date,
+            "price": self.price,
+            "status": self.status
+        }
+
+
+class Costumer(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(120), unique=False, nullable=False)
+    phone_number = db.Column(db.String(20), unique=False, nullable=False)
+
+    # orders = db.relationship('Order', backref='costumer', lazy=True)
+
+    def __repr__(self):
+        return f'<Costumer {self.name}>'
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            "phone_number": self.phone_number
+        }
