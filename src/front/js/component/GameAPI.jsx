@@ -23,19 +23,19 @@ function GameData() {
   myHeaders.append("Content-Type", "application/json");
   myHeaders.append(
     "Cookie",
-    "__cf_bm=jr4goR0UGPiGDm9cxFcxcmDkdAwljIGrus1kFkg0qMI-1678748437-0-AfsCcgV7OayuhmM3UgpnfmPQObXDFsYRoG7HaL+cmKFrv8mK7MU7vNjWFZbFnRg8O7cYElvj+5RHLls3ITbGobo="
+    "__cf_bm=tZluSBYqhOri4tZoOzzsCQ2XhJiNqMBHBaobhq26hjU-1678751433-0-AVSt95uh0jaSKCsFQZunH/yJ+e7kF7Au9GbS/BMsQ8KJ8RpvVnJp59kskqRVNbmgLKS92oMw0n2ZYFDTtz+46zc="
   );
 
   var raw = "fields name; limit 10;";
 
   var requestOptions = {
     method: "POST",
-    headers:myHeaders,
+    headers: myHeaders,
     body: raw,
     redirect: "follow",
   };
 
-  fetch("http://localhost:8080/https://api.igdb.com/v4/games", requestOptions)
+  fetch("http://localhost:8080/api.igdb.com/v4/games/", requestOptions)
     .then((response) => response.text())
     .then((result) => console.log(result))
     .catch((error) => console.log("error", error));
