@@ -25,9 +25,16 @@ function GameData() {
       Body: "fields name; limit 10",
       Header: "Access-Control-Allow-Origin:*",
     };
-    fetch("https://api.igdb.com/v4", gameData)
+    fetch("http://localhost:8080/https://api.igdb.com/v4/games/", gameData)
       .then((response) => response.json())
       .then((data) => setPostId(data.id));
   }, []);
 }
 export default GameData;
+
+
+/*{
+  "access_token": "50ufriiai9th133z4mjy6uzrfpige2",
+  "expires_in": 5071429,
+  "token_type": "bearer"
+}*/
