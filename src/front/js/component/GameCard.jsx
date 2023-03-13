@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Card, Button } from "react-bootstrap";
 
+
 const GameCard = ({ title, imageUrl }) => {
+  
+
   return (
     <div className="col-6 col-md-4 col-lg-3 my-3">
       <Card>
