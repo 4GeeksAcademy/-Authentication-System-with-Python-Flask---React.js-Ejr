@@ -69,31 +69,33 @@ import React from "react";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import GameCard from "../component/GameCard.jsx";
 import "../../styles/home.css";
+import GameData from "../component/GameAPI.jsx";
 
 const Home = () => {
+  GameData();
   return (
-	<div className="home-container">
-	<div className="hero-container">
-	  <Container>
-	  <Row className="align-items-center">
-  <Col md={6} className="order-md-1">
-    <h1>Welcome to My Game Store</h1>
-    <p className="lead">
-      Find your favorite games and discover new ones, all in one place.
-    </p>
-    <Button variant="primary">Explore games</Button>
-  </Col>
-  <Col md={6} className="order-md-2">
-    <img
-      src="https://picsum.photos/600/400"
-      alt="hero image"
-      className="img-fluid"
-    />
-  </Col>
-</Row>
-
-	  </Container>
-	</div>
+    <div className="home-container">
+      <div className="hero-container">
+        <Container>
+          <Row className="align-items-center">
+            <Col md={6} className="order-md-1">
+              <h1>Welcome to My Game Store</h1>
+              <p className="lead">
+                Find your favorite games and discover new ones, all in one
+                place.
+              </p>
+              <Button variant="primary">Explore games</Button>
+            </Col>
+            <Col md={6} className="order-md-2">
+              <img
+                src={"https://picsum.photos/600/400"}
+                alt="hero image"
+                className="img-fluid"
+              />
+            </Col>
+          </Row>
+        </Container>
+      </div>
       <Container>
         <Row className="my-5">
           <Col>
@@ -101,7 +103,7 @@ const Home = () => {
           </Col>
           <Col className="text-end">
             <Button variant="link" className="text-decoration-none">
-              View All >
+              View All
             </Button>
           </Col>
         </Row>
