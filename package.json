@@ -10,7 +10,7 @@
     "start": "webpack-dev-server --config webpack.dev.js --port 3000",
     "build": "webpack --config webpack.prod.js"
   },
-  "proxy": "http://localhost:8080",
+  
   "author": {
     "name": "Alejandro Sanchez",
     "url": "http://alesanchezr.com/"
