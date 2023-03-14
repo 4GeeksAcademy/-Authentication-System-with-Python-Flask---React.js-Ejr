@@ -1,9 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { Card, Button } from "react-bootstrap";
-
-
-const GameCard = ({ title, imageUrl }) => {
-  
+const GameCard = ({ title, imageUrl, addToCart }) => {
+  const handleAddToCart = () => {
+    addToCart({ title });
+  };
 
   return (
     <div className="col-6 col-md-4 col-lg-3 my-3">
@@ -11,7 +9,9 @@ const GameCard = ({ title, imageUrl }) => {
         <Card.Img variant="top" src={imageUrl} />
         <Card.Body>
           <Card.Title>{title}</Card.Title>
-          <Button variant="primary">Buy Now</Button>
+          <Button variant="primary" onClick={handleAddToCart}>
+            Add to cart
+          </Button>
         </Card.Body>
       </Card>
     </div>
