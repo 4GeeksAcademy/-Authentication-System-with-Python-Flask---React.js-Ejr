@@ -22,7 +22,7 @@ export const SignUp = () => {
 
 	return (
         <>
-            <button onClick={()=> handleToggleClick()}>Change showPassword State</button>
+            {/* <button onClick={()=> handleToggleClick()}>Change showPassword State</button> */}
 		    <form className="login-form d-flex align-items-center flex-direction-column container justify-content-center  w-50">
                 <h3 className="d-block p-1">Registrate!</h3>
                 <input name="email" placeholder="Ejemplo@gmail.com" type="email" className="w-100 p-2"/>
@@ -36,7 +36,7 @@ export const SignUp = () => {
                       onClick={()=> handleToggleClick()}> 👁</span>
                 </div>
                 
-                {/* <h5>Codigo de invitacion</h5> */}
+                <h5>Codigo de invitacion</h5>
                 <input name="password"placeholder="Ingresa tu codigo de invitacion"  className="w-100 p-2"/>
                 <hr/>
                 <button className="p-3 w-50 border-0 bg-pink" >Ingresar</button>
