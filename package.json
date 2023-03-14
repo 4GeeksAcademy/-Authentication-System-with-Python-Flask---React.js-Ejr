@@ -75,6 +75,7 @@
   },
   "dependencies": {
     "cors-anywhere": "^0.4.4",
+    "node.js": "^0.0.1-security",
     "prop-types": "^15.6.1",
     "react": "^16.8.4",
     "react-bootstrap": "^2.7.2",

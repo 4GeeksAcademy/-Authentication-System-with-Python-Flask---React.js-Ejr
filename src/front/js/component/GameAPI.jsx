@@ -28,12 +28,19 @@ function GameData() {
   myHeaders.append("Access-Control-Max-Age", "86400");
   myHeaders.append(
     "Cookie",
-    "__cf_bm=Ppf.q5yFe9FpNgPweC2iHqGI2KOUMrXGT6rPrfhOJO4-1678753987-0-AacLoCfmyDGpFFLKbKy6GgDO8wmkEoqaHBKlwn/RDZujHw1Y5Gruc1bxcebNixXbYQsqToQ7pO+OziXdWFRjci0="
+
+    "__cf_bm=tZluSBYqhOri4tZoOzzsCQ2XhJiNqMBHBaobhq26hjU-1678751433-0-AVSt95uh0jaSKCsFQZunH/yJ+e7kF7Au9GbS/BMsQ8KJ8RpvVnJp59kskqRVNbmgLKS92oMw0n2ZYFDTtz+46zc="
+
+
   );
 
   var requestOptions = {
     method: "POST",
     headers: myHeaders,
+
+    body: raw,
+
+
     redirect: "follow",
   };
 
