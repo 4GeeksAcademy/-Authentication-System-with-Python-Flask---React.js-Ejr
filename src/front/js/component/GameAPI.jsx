@@ -20,18 +20,27 @@ function GameData() {
   var myHeaders = new Headers();
   myHeaders.append("Client-ID", "l9z8jtrdbnyiypji85ggptiealo4em");
   myHeaders.append("Authorization", "Bearer 50ufriiai9th133z4mjy6uzrfpige2");
-  myHeaders.append("Content-Type", "application/json");
+  myHeaders.append(
+    "Access-Control-Allow-Methods",
+    "POST, GET, OPTIONS, DELETE"
+  );
+  myHeaders.append("Access-Control-Allow-Origin", "*");
+  myHeaders.append("Access-Control-Max-Age", "86400");
   myHeaders.append(
     "Cookie",
-    "__cf_bm=tZluSBYqhOri4tZoOzzsCQ2XhJiNqMBHBaobhq26hjU-1678751433-0-AVSt95uh0jaSKCsFQZunH/yJ+e7kF7Au9GbS/BMsQ8KJ8RpvVnJp59kskqRVNbmgLKS92oMw0n2ZYFDTtz+46zc="
-  );
 
-  var raw = "fields name; limit 10;";
+    "__cf_bm=tZluSBYqhOri4tZoOzzsCQ2XhJiNqMBHBaobhq26hjU-1678751433-0-AVSt95uh0jaSKCsFQZunH/yJ+e7kF7Au9GbS/BMsQ8KJ8RpvVnJp59kskqRVNbmgLKS92oMw0n2ZYFDTtz+46zc="
+
+
+  );
 
   var requestOptions = {
     method: "POST",
     headers: myHeaders,
+
     body: raw,
+
+
     redirect: "follow",
   };
 
