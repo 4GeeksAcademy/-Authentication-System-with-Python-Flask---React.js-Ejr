@@ -18,36 +18,27 @@ export { API_Call as GameAPI };
 
 function GameData() {
   var myHeaders = new Headers();
-  myHeaders.append("Client-ID", "l9z8jtrdbnyiypji85ggptiealo4em");
-  myHeaders.append("Authorization", "Bearer 50ufriiai9th133z4mjy6uzrfpige2");
-  myHeaders.append(
-    "Access-Control-Allow-Methods",
-    "POST, GET, OPTIONS, DELETE"
-  );
-  myHeaders.append("Access-Control-Allow-Origin", "*");
-  myHeaders.append("Access-Control-Max-Age", "86400");
-  myHeaders.append(
-    "Cookie",
+myHeaders.append("Client-ID", "l9z8jtrdbnyiypji85ggptiealo4em");
+myHeaders.append("Authorization", "Bearer 50ufriiai9th133z4mjy6uzrfpige2");
+myHeaders.append("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
+myHeaders.append("Access-Control-Max-Age", "86400");
+myHeaders.append("Access-Control-Allow-Origin", "*");
+myHeaders.append("Content-Type", "application/json");
+myHeaders.append("Cookie", "__cf_bm=Ppf.q5yFe9FpNgPweC2iHqGI2KOUMrXGT6rPrfhOJO4-1678753987-0-AacLoCfmyDGpFFLKbKy6GgDO8wmkEoqaHBKlwn/RDZujHw1Y5Gruc1bxcebNixXbYQsqToQ7pO+OziXdWFRjci0=");
 
-    "__cf_bm=tZluSBYqhOri4tZoOzzsCQ2XhJiNqMBHBaobhq26hjU-1678751433-0-AVSt95uh0jaSKCsFQZunH/yJ+e7kF7Au9GbS/BMsQ8KJ8RpvVnJp59kskqRVNbmgLKS92oMw0n2ZYFDTtz+46zc="
+var raw = "fields name; limit 10;";
 
+var requestOptions = {
+  method: 'POST',
+  headers: myHeaders,
+  body: raw,
+  redirect: 'follow'
+};
 
-  );
-
-  var requestOptions = {
-    method: "POST",
-    headers: myHeaders,
-
-    body: raw,
-
-
-    redirect: "follow",
-  };
-
-  fetch("http://localhost:8080/api.igdb.com/v4/games/", requestOptions)
-    .then((response) => response.text())
-    .then((result) => console.log(result))
-    .catch((error) => console.log("error", error));
+fetch("https://api.igdb.com/v4/games/", requestOptions)
+  .then(response => response.text())
+  .then(result => console.log(result))
+  .catch(error => console.log('error', error));
 }
 export default GameData;
 
@@ -57,5 +48,5 @@ export default GameData;
   "token_type": "bearer"
 }*/
 
-/* API GatewayDNS : https://7kui6kopu9.execute-api.us-west-2.amazonaws.com/production
-API GatewayID: 7kui6kopu9*/
+//API GatewayDNS : https://7kui6kopu9.execute-api.us-west-2.amazonaws.com/production
+//API GatewayID: 7kui6kopu9

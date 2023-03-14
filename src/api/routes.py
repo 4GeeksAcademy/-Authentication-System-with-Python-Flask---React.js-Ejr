@@ -10,7 +10,7 @@ from api.utils import generate_sitemap, APIException
 api = Blueprint('api', __name__)
 
 
-@api.route('https://7kui6kopu9.execute-api.us-west-2.amazonaws.com/production', methods=['POST', 'GET'])
+@api.route('/http://localhost:8080/api.igdb.com/v4/games/', methods=['POST', 'GET'])
 def handle_hello():
 
     response_body = {
@@ -18,5 +18,7 @@ def handle_hello():
     }
 
     return jsonify(response_body), 200
+
+
 
 
