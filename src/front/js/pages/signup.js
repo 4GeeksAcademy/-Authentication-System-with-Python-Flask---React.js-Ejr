@@ -15,23 +15,13 @@ export const SignUp = () => {
     const handleToggleClick = ()=>{
         setShowPassword(!showPassword);
     }
-
-    const fetchSignup = (e)=>{
-        e.preventDefault()
-        fetch('https://3001-charlytoc-reactflasktem-3wopardumo2.ws-us90.gitpod.io/api/login', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-              email: email,
-              password: password
-            })
-          })
-            .then(response => response.json())
-            .then(data => console.log(data))
-            .catch(error => console.error(error));
+    const handleClickSignup= async(e)=>{
+      // console.log(email,password);
+      e.preventDefault();
+      console.log(store,actions);
+      actions.fetchSignup(email, password)
     }
+    
 
 	return (
         <>  
@@ -59,7 +49,7 @@ export const SignUp = () => {
                 <h5>Codigo de invitacion</h5>
                 <input name="password"placeholder="Ingresa tu codigo de invitacion"  className="w-100 p-2"/>
                 <hr/>
-                <button className="p-3 w-50 border-0 bg-pink" onClick={(e)=> fetchSignup(e)} >Ingresar</button>
+                <button className="p-3 w-50 border-0 bg-pink" onClick={(e)=> handleClickSignup(e)} >Ingresar</button>
                 <h5><Link to ="/catalogue">Regresa al catalogo!</Link></h5>
                 
             </form>
