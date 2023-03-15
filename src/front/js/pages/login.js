@@ -13,28 +13,17 @@ export const Login = () => {
     
     const handleToggleClick = ()=>{
         setShowPassword(!showPassword);
-        console.log(showPassword)
+      
+    }
+    const handleClickLogin = (e)=>{
+        e.preventDefault();
+        actions.fetchLogin(email,password)
     }
 
-    const fetchLogin = (e)=>{
-        e.preventDefault()
-        fetch(process.env.BACKEND_URL+"/api/login", {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-              email: email,
-              password: password
-            })
-          })
-            .then(response => response.json())
-            .then(data => console.log(data))
-            .catch(error => console.error(error));
-    }
 
 	return (
         <>
+            <button onClick={()=>{console.log(store.isAuthenticated);}}>isAuthenticatedE</button>
 		    <form className="login-form d-flex align-items-center flex-direction-column container justify-content-center  w-50">
                 <h3 className="d-block p-1">Unete!</h3>
                 <input name="email" placeholder="Ejemplo@gmail.com" 
@@ -48,7 +37,7 @@ export const Login = () => {
                       onClick={()=>handleToggleClick()}>👁</span>
                 </div>
                 <h5>Olvidaste tu contraseña?</h5>
-                <button className="p-3 w-50 border-0 bg-pink" onClick={(e)=>fetchLogin(e)}>Ingresa</button>
+                <button className="p-3 w-50 border-0 bg-pink" onClick={(e)=>handleClickLogin(e)}>Ingresa</button>
                 <h5><Link to ="/Catalogue">Regresa al catalogo!</Link></h5>
                     
                 
