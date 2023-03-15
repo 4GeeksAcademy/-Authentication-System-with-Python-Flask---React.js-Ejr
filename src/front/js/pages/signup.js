@@ -18,7 +18,7 @@ export const SignUp = () => {
 
     const fetchSignup = (e)=>{
         e.preventDefault()
-        fetch('https://3001-charlytoc-reactflasktem-3wopardumo2.ws-us90.gitpod.io/api/login', {
+        fetch(process.env.BACKEND_URL+"/api/signup", {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
