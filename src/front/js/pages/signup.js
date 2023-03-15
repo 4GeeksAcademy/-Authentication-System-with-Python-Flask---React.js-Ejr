@@ -53,7 +53,7 @@ export const SignUp = () => {
                         className="w-100 p-2"
                         onChange={(e)=> {setPassword(e.target.value)}}/> 
                 <span style={{position: "absolute", top: 0, right: 0, transform: "translate(-30%, 45%)"}} 
-                      onClick={()=> handleToggleClick()}>  👁 </span>
+                      onClick={()=> handleToggleClick()}>  {showPassword ? "👁": "🕶"} </span>
                 </div>
                 
                 <h5>Codigo de invitacion</h5>
