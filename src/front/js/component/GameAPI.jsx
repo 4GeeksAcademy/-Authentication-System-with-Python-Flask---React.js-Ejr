@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
 
-
-
 function GameData() {
   var axios = require("axios");
-  var data = "fields name,rating; sort rating desc;";
+  var data = "fields name;";
 
   var config = {
     method: "post",
