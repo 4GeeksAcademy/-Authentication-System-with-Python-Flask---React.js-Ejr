@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Form, Button, Card } from 'react-bootstrap';
-import { Navbar } from "./navbar";
+import axios from 'axios';
 
 const SignUp = () => {
   const [name, setName] = useState('');
@@ -19,11 +19,21 @@ const SignUp = () => {
     setPassword(event.target.value);
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
-    // Handle signup logic here
-    console.log(`Signing up with name ${name}, email ${email}, and password ${password}`);
+    try {
+      // Make HTTP request to save user data
+      const response = await axios.post('https://3000-yonatancres-steamkiller-n2csm11huke.ws-us90.gitpod.io/signup', {
+        name: name,
+        email: email,
+        password: password,
+      });
+
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
