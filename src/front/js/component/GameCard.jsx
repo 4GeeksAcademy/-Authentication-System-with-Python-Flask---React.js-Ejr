@@ -1,9 +1,9 @@
 import React from "react";
 import { Card, Button } from "react-bootstrap";
 
-const GameCard = ({ title, imageUrl, addToCart }) => {
+const GameCard = ({ title, imageUrl, onAddToCart }) => {
   const handleAddToCart = () => {
-    addToCart({ title });
+    onAddToCart({ title, price: 49.99 });
   };
 
   return (
