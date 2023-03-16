@@ -1,11 +1,15 @@
 import React from "react";
 import { Card, Button } from "react-bootstrap";
 
+
 import GameData from "./GameAPI.jsx";
 
 const GameCard = ({ title, imageUrl, addToCart }) => {
+
+
+
   const handleAddToCart = () => {
-    addToCart({ title });
+    onAddToCart({ title, price: 49.99 });
   };
 
   return (
