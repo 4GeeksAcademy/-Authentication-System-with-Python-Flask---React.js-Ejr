@@ -1,5 +1,20 @@
 import React, { useEffect, useState } from "react";
 
+import axios from "axios";
+/*function API_Call() {
+  const URL = `https://api.igdb.com/v4`;
+  useEffect(() => {
+    const fetchData = async () => {
+      const result = await fetch(URL);
+      result.json().then((json) => {
+        console.log(json);
+      });
+    };
+    fetchData();
+  }, []);
+}
+
+
 
 
 function GameData() {
