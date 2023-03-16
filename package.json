@@ -73,7 +73,11 @@
     ]
   },
   "dependencies": {
+
+    "apicalypse": "^0.2.0",
+
     "axios": "^1.3.4",
+
     "cors-anywhere": "^0.4.4",
     "node.js": "^0.0.1-security",
     "prop-types": "^15.6.1",

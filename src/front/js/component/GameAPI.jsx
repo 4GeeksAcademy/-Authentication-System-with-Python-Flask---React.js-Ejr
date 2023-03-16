@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 
+
 import axios from "axios";
 /*function API_Call() {
   const URL = `https://api.igdb.com/v4`;
@@ -13,13 +14,9 @@ import axios from "axios";
     fetchData();
   }, []);
 }
-
-
-
-
 function GameData() {
   var axios = require("axios");
-  var data = "fields name,rating; sort rating desc;";
+  var data = "fields name;";
 
   var config = {
     method: "post",
@@ -27,7 +24,7 @@ function GameData() {
     url: "https://cors-anywhere.herokuapp.com/api.igdb.com/v4/games/",
     headers: {
       "Client-ID": "l9z8jtrdbnyiypji85ggptiealo4em",
-      Authorization: "Bearer wx9uuhwrxkp5nh6jso5m7cl08t9fd0",
+      Authorization: "Bearer x50se2cz9yll43t0e9gtt52aqvx2nr",
       "Content-Type": "application/json",
     },
     data: data,
