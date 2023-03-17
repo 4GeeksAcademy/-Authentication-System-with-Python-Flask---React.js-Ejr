@@ -1,6 +1,32 @@
 import React, { useState } from 'react';
 import { Form, Button, Card } from 'react-bootstrap';
 import axios from 'axios';
+//import { db, User } from 'py-loader!../../../api/models.py';
+
+
+//src/api/models.py
+const handleSubmit = async (event) => {
+  event.preventDefault();
+
+  try {
+    // Create a new User object
+    const newUser = new User({
+      name: name,
+      email: email,
+      password: password,
+      is_active: true, // or false, depending on your application logic
+    });
+
+    // Save the new User object to the database
+    await db.session.add(newUser);
+    await db.session.commit();
+
+    console.log("User saved to database:", newUser);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 
 const SignUp = () => {
   const [name, setName] = useState('');
@@ -19,7 +45,7 @@ const SignUp = () => {
     setPassword(event.target.value);
   };
 
-  const handleSubmit = async (event) => {
+  /*const handleSubmit = async (event) => {
     event.preventDefault();
 
     try {
@@ -34,7 +60,7 @@ const SignUp = () => {
     } catch (error) {
       console.error(error);
     }
-  };
+  };*/
 
   return (
     <Card style={{ width: '20rem', margin: 'auto', marginTop: '50px' }}>
