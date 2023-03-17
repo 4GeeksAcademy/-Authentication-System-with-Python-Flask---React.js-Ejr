@@ -71,6 +71,7 @@ import GameCard from "../component/GameCard.jsx";
 import "../../styles/home.css";
 import GameData from "../component/GameAPI.jsx";
 
+
 const Home = () => {
   GameData();
   return (
