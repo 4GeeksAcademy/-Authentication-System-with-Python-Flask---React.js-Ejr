@@ -1,39 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import {Context} from "../store/appContext"
 import { Form, Button, Card } from 'react-bootstrap';
-import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+
 
 const SignUp = () => {
+
+  const {store, actions} = useContext(Context)
+  const navigate = useNavigate()
+
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleNameChange = (event) => {
-    setName(event.target.value);
-  };
-
-  const handleEmailChange = (event) => {
-    setEmail(event.target.value);
-  };
-
-  const handlePasswordChange = (event) => {
-    setPassword(event.target.value);
-  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
-    try {
-      // Make HTTP request to save user data
-      const response = await axios.post('https://3000-yonatancres-steamkiller-n2csm11huke.ws-us90.gitpod.io/signup', {
-        name: name,
-        email: email,
-        password: password,
-      });
-
-      console.log(response.data);
-    } catch (error) {
-      console.error(error);
-    }
+    actions.signUp(name,email,password)
+    navigate("/login")
   };
 
   return (
@@ -46,7 +30,7 @@ const SignUp = () => {
             <Form.Control
               type="text"
               value={name}
-              onChange={handleNameChange}
+              onChange={(e)=>setName(e.target.value)}
               placeholder="Enter name"
             />
           </Form.Group>
@@ -55,7 +39,7 @@ const SignUp = () => {
             <Form.Control
               type="email"
               value={email}
-              onChange={handleEmailChange}
+              onChange={(e)=>setEmail(e.target.value)}
               placeholder="Enter email"
             />
           </Form.Group>
@@ -64,7 +48,7 @@ const SignUp = () => {
             <Form.Control
               type="password"
               value={password}
-              onChange={handlePasswordChange}
+              onChange={(e)=>setPassword(e.target.value)}
               placeholder="Enter password"
             />
           </Form.Group>

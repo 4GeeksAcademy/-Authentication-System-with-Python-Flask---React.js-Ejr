@@ -1,54 +1,42 @@
+import axios from "axios";
+
 const getState = ({ getStore, getActions, setStore }) => {
-	return {
-		store: {
-			message: null,
-			demo: [
-				{
-					title: "FIRST",
-					background: "white",
-					initial: "white"
-				},
-				{
-					title: "SECOND",
-					background: "white",
-					initial: "white"
-				}
-			]
-		},
-		actions: {
-			// Use getActions to call a function within a fuction
-			exampleFunction: () => {
-				getActions().changeColor(0, "green");
-			},
+  let backendUrl = process.env.BACKEND_URL;
+  return {
+    store: {
+      user: {},
+    },
+    actions: {
+      signUp: async (name, email, password) => {
+        try {
+          // Make HTTP request to save user data
+          const response = await axios.post(backendUrl + "/api/signup", {
+            name: name,
+            email: email,
+            password: password,
+          });
 
-			getMessage: async () => {
-				try{
-					// fetching data from the backend
-					const resp = await fetch(process.env.BACKEND_URL + "/api/hello")
-					const data = await resp.json()
-					setStore({ message: data.message })
-					// don't forget to return something, that is how the async resolves
-					return data;
-				}catch(error){
-					console.log("Error loading message from backend", error)
-				}
-			},
-			changeColor: (index, color) => {
-				//get the store
-				const store = getStore();
+          console.log(response.data);
+        } catch (error) {
+          console.error(error);
+        }
+      },
+      login: async (email, password) => {
+        try {
+          // Make HTTP request to save user data
+          const response = await axios.post(backendUrl + "/api/login", {
+            email: email,
+            password: password,
+          });
 
-				//we have to loop the entire demo array to look for the respective index
-				//and change its color
-				const demo = store.demo.map((elm, i) => {
-					if (i === index) elm.background = color;
-					return elm;
-				});
-
-				//reset the global store
-				setStore({ demo: demo });
-			}
-		}
-	};
+          setStore({ user: response.data.user });
+          //   once we add jwt extended to the login route we will put tokeen in the local storage
+        } catch (error) {
+          console.error(error);
+        }
+      },
+    },
+  };
 };
 
 export default getState;
