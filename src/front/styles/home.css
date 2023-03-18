@@ -10,9 +10,28 @@ body {
   }
   .hero-container {
     color: white;
+    padding-top: 60px;
   }
   .my-5 {
     color: white;
   }
   
+  .slide-container {
+    width: 125%;
+    margin: 0 auto;
+  }
+  
+  .each-slide {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-size: cover;
+    height: 400px;
+  }
+  
+  .each-slide span {
+    color: #fff;
+    font-size: 20px;
+    text-shadow: 1px 1px 2px #000;
+  }
   

@@ -70,10 +70,23 @@ import { Container, Row, Col, Button } from "react-bootstrap";
 import GameCard from "../component/GameCard.jsx";
 import "../../styles/home.css";
 import GameData from "../component/GameAPI.jsx";
-
+import { Slide } from "react-slideshow-image";
+import "react-slideshow-image/dist/styles.css";
 
 const Home = () => {
   GameData();
+  const slideImages = [
+    "https://picsum.photos/800/600",
+    "https://picsum.photos/800/601",
+    "https://picsum.photos/800/602",
+  ];
+  const properties = {
+    duration: 5000,
+    transitionDuration: 500,
+    infinite: true,
+    indicators: true,
+    arrows: true,
+  };
   return (
     <div className="home-container">
       <div className="hero-container">
@@ -88,11 +101,15 @@ const Home = () => {
               <Button variant="primary">Explore games</Button>
             </Col>
             <Col md={6} className="order-md-2">
-              <img
-                src={"https://picsum.photos/600/400"}
-                alt="hero image"
-                className="img-fluid"
-              />
+              <div className="slide-container">
+                <Slide {...properties}>
+                  {slideImages.map((each, index) => (
+                    <div key={index} className="each-slide">
+                      <img src={each} alt="slide" />
+                    </div>
+                  ))}
+                </Slide>
+              </div>
             </Col>
           </Row>
         </Container>
