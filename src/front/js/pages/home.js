@@ -65,7 +65,8 @@ export const Home = () => {
     </Container>
   );
 };*/
-import React from "react";
+import React, { useContext } from "react";
+import { Context } from "../store/appContext.js";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import GameCard from "../component/GameCard.jsx";
 import "../../styles/home.css";
@@ -74,6 +75,8 @@ import { Slide } from "react-slideshow-image";
 import "react-slideshow-image/dist/styles.css";
 
 const Home = () => {
+  const { store, actions } = useContext(Context);
+  console.log(store.user, "This is the current user");
   GameData();
   const slideImages = [
     "https://picsum.photos/800/600",
