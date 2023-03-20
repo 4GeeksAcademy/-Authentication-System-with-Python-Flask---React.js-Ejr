@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
-import { Form, Button, Card } from 'react-bootstrap';
-import axios from 'axios';
-//import { db, User } from 'py-loader!../../../api/models.py';
-
+import React, { useState } from "react";
+import { Form, Button, Card } from "react-bootstrap";
+import axios from "axios";
+//import { db, User } from "py-loader!../../../api/models.py";
 
 //src/api/models.py
 const handleSubmit = async (event) => {
@@ -27,11 +26,10 @@ const handleSubmit = async (event) => {
   }
 };
 
-
 const SignUp = () => {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleNameChange = (event) => {
     setName(event.target.value);
@@ -45,25 +43,28 @@ const SignUp = () => {
     setPassword(event.target.value);
   };
 
-  /*const handleSubmit = async (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
     try {
       // Make HTTP request to save user data
-      const response = await axios.post('https://3000-yonatancres-steamkiller-n2csm11huke.ws-us90.gitpod.io/signup', {
-        name: name,
-        email: email,
-        password: password,
-      });
+      const response = await axios.post(
+        "https://3000-yonatancres-steamkiller-n2csm11huke.ws-us90.gitpod.io/signup",
+        {
+          name: name,
+          email: email,
+          password: password,
+        }
+      );
 
       console.log(response.data);
     } catch (error) {
       console.error(error);
     }
-  };*/
+  };
 
   return (
-    <Card style={{ width: '20rem', margin: 'auto', marginTop: '50px' }}>
+    <Card style={{ width: "20rem", margin: "auto", marginTop: "50px" }}>
       <Card.Body>
         <Card.Title className="text-center">Sign Up</Card.Title>
         <Form onSubmit={handleSubmit}>
