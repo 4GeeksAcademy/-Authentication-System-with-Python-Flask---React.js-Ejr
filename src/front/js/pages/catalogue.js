@@ -1,14 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Context } from "../store/appContext";
+import sandalia from "../../img/sandalias.png";
 import "../../styles/home.css";
-import { Link } from "react-router-dom";
 
-export const Catalogue = () => {
-	
+export const Catalogue= () => {
+	const { store, actions } = useContext(Context);
 
 	return (
-        <>
-		    <h1 className="container d-flex justify-content-center text-color ">Catalogo</h1>
-        </>
+		<>
+		
+		</>
 	);
 };
