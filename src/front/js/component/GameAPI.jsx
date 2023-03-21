@@ -1,29 +1,22 @@
-
 function GameData() {
-  let axios = require("axios");
-  let data = "fields name;";
+  const axios = require("axios");
 
-  let config = {
-    method: "post",
-    maxBodyLength: Infinity,
-    url: "https://cors-anywhere.herokuapp.com/api.igdb.com/v4/games/",
+  const options = {
+    method: "GET",
+    url: "https://steam-store-data.p.rapidapi.com/api/featured/",
     headers: {
-      "Client-ID": "l9z8jtrdbnyiypji85ggptiealo4em",
-      Authorization: "Bearer mthsa9u1qlrkjttq11x08x7usxps6y",
-      "Content-Type": "application/json",
-    },
-    data: {
-      data,
+      "X-RapidAPI-Key": "43a16cc10emsh7ff0e79b253cf89p197848jsnd06fbc992b41",
+      "X-RapidAPI-Host": "steam-store-data.p.rapidapi.com",
     },
   };
 
-  axios(config)
+  axios
+    .request(options)
     .then(function (response) {
-      console.log(JSON.stringify(response.data));
+      console.log(response.data);
     })
     .catch(function (error) {
-      console.log(error);
+      console.error(error);
     });
 }
 export default GameData;
-
