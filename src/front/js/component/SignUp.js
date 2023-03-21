@@ -1,19 +1,7 @@
-
 import React, { useState } from "react";
 import { Form, Button, Card } from "react-bootstrap";
 import axios from "axios";
-//import { db, User } from "py-loader!../../../api/models.py";
-
-import React, { useState, useContext } from 'react';
-import {Context} from "../store/appContext"
-import { Form, Button, Card } from 'react-bootstrap';
-
-import { useNavigate } from 'react-router-dom';
-
-import axios from 'axios';
 //import { db, User } from 'py-loader!../../../api/models.py';
-
-
 
 //src/api/models.py
 const handleSubmit = async (event) => {
@@ -38,54 +26,39 @@ const handleSubmit = async (event) => {
   }
 };
 
-
 const SignUp = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const handleNameChange = (event) => {
+    setName(event.target.value);
+  };
 
+  const handleEmailChange = (event) => {
+    setEmail(event.target.value);
+  };
 
-const SignUp = () => {
-
-  const {store, actions} = useContext(Context)
-  const navigate = useNavigate()
-
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-
-
+  const handlePasswordChange = (event) => {
+    setPassword(event.target.value);
+  };
 
   /*const handleSubmit = async (event) => {
     event.preventDefault();
 
-    actions.signUp(name,email,password)
-    navigate("/login")
-  };
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-
-
-
     try {
       // Make HTTP request to save user data
-      const response = await axios.post(
-        "https://3000-yonatancres-steamkiller-n2csm11huke.ws-us90.gitpod.io/signup",
-        {
-          name: name,
-          email: email,
-          password: password,
-        }
-      );
+      const response = await axios.post('https://3000-yonatancres-steamkiller-n2csm11huke.ws-us90.gitpod.io/signup', {
+        name: name,
+        email: email,
+        password: password,
+      });
 
       console.log(response.data);
     } catch (error) {
       console.error(error);
     }
-  };
-
+  };*/
 
   return (
     <Card style={{ width: "20rem", margin: "auto", marginTop: "50px" }}>
@@ -97,7 +70,7 @@ const SignUp = () => {
             <Form.Control
               type="text"
               value={name}
-              onChange={(e)=>setName(e.target.value)}
+              onChange={handleNameChange}
               placeholder="Enter name"
             />
           </Form.Group>
@@ -106,7 +79,7 @@ const SignUp = () => {
             <Form.Control
               type="email"
               value={email}
-              onChange={(e)=>setEmail(e.target.value)}
+              onChange={handleEmailChange}
               placeholder="Enter email"
             />
           </Form.Group>
@@ -115,7 +88,7 @@ const SignUp = () => {
             <Form.Control
               type="password"
               value={password}
-              onChange={(e)=>setPassword(e.target.value)}
+              onChange={handlePasswordChange}
               placeholder="Enter password"
             />
           </Form.Group>
