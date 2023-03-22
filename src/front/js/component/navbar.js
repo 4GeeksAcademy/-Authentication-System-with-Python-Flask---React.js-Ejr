@@ -6,7 +6,6 @@ import GameCard from "./GameCard.jsx";
 const MyNavbar = () => {
   const [cartItems, setCartItems] = useState([]);
 
-
   const clearCart = () => {
     setCartItems([]);
   };
@@ -23,9 +22,9 @@ const MyNavbar = () => {
             <Nav.Link as={Link} to="/">
               Home
             </Nav.Link>
-            <Nav.Link as={Link} to="/games">
+            {/* <Nav.Link as={Link} to="/games">
               Games
-            </Nav.Link>
+            </Nav.Link> */}
           </Nav>
           <Nav>
             <Nav.Link as={Link} to="/news">
@@ -51,7 +50,9 @@ const MyNavbar = () => {
 
               {cartItems.length > 0 && <NavDropdown.Divider />}
               {cartItems.length > 0 && (
-                <NavDropdown.Item onClick={clearCart}>Clear Cart</NavDropdown.Item>
+                <NavDropdown.Item onClick={clearCart}>
+                  Clear Cart
+                </NavDropdown.Item>
               )}
               <NavDropdown.Item>Checkout</NavDropdown.Item>
             </NavDropdown>
