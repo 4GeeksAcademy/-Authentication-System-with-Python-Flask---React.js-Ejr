@@ -1,24 +1,19 @@
-import React, { useState } from 'react';
-import { Form, Button, Container, Row, Col } from 'react-bootstrap';
-import { Navbar } from "./navbar";
-
-
+import React, { useState, useContext } from "react";
+import { Context } from "../store/appContext";
+import { Form, Button, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const { store, actions } = useContext(Context);
+  const navigate = useNavigate();
 
-  const handleEmailChange = (event) => {
-    setEmail(event.target.value);
-  };
-
-  const handlePasswordChange = (event) => {
-    setPassword(event.target.value);
-  };
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleSubmit = (event) => {
     event.preventDefault();
-
+    actions.login(email, password);
+    navigate("/");
     // Handle login logic here
     console.log(`Logging in with email ${email} and password ${password}`);
   };
@@ -34,7 +29,7 @@ const Login = () => {
               <Form.Control
                 type="email"
                 value={email}
-                onChange={handleEmailChange}
+                onChange={(e) => setEmail(e.target.value)}
                 placeholder="Enter email"
               />
             </Form.Group>
@@ -43,7 +38,7 @@ const Login = () => {
               <Form.Control
                 type="password"
                 value={password}
-                onChange={handlePasswordChange}
+                onChange={(e) => setPassword(e.target.value)}
                 placeholder="Enter password"
               />
             </Form.Group>
