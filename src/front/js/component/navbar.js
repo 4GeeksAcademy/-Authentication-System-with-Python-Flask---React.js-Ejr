@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Navbar, Nav, Container, NavDropdown } from "react-bootstrap";
 import GameCard from "./GameCard.jsx";
+//import logoImage from "./src/front/img/gameportal-removebg-preview.png"
+
 
 const MyNavbar = () => {
   const [cartItems, setCartItems] = useState([]);
@@ -56,7 +58,8 @@ const MyNavbar = () => {
               {cartItems.length > 0 && (
                 <NavDropdown.Item onClick={clearCart}>Clear Cart</NavDropdown.Item>
               )}
-              <NavDropdown.Item>Checkout</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/checkout">Checkout</NavDropdown.Item>
+
             </NavDropdown>
           </Nav>
         </Navbar.Collapse>
