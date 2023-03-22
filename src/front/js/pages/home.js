@@ -6,11 +6,11 @@ import "../../styles/home.css";
 import { Slide } from "react-slideshow-image";
 import "react-slideshow-image/dist/styles.css";
 import GameData from "../component/GameAPI.jsx";
-
 const Home = () => {
   const { store, actions } = useContext(Context);
   const [games, setGames] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("");
 
   useEffect(() => {
     GameData().then((data) => setGames(data));
@@ -28,6 +28,10 @@ const Home = () => {
 
   const handleSearch = (event) => {
     setSearchQuery(event.target.value);
+  };
+
+  const handleCategoryChange = (event) => {
+    setSelectedCategory(event.target.value);
   };
 
   return (
@@ -76,6 +80,20 @@ const Home = () => {
               onChange={handleSearch}
             />
           </Col>
+          <Col md={3}>
+            <select
+              className="form-select"
+              value={selectedCategory}
+              onChange={handleCategoryChange}
+            >
+              <option value="">All categories</option>
+              <option value="Action">Action</option>
+              <option value="Adventure">Adventure</option>
+              <option value="RPG">RPG</option>
+              <option value="Simulation">Simulation</option>
+              <option value="Strategy">Strategy</option>
+            </select>
+          </Col>
         </Row>
         <Row>
           {games
@@ -83,6 +101,10 @@ const Home = () => {
               (game) =>
                 searchQuery.trim() === "" ||
                 game.title.toLowerCase().includes(searchQuery.toLowerCase())
+            )
+            .filter(
+              (game) =>
+                selectedCategory === "" || game.category === selectedCategory
             )
             .map((game, index) => (
               <GameCard
