@@ -60,9 +60,3 @@ body {
 .hover-card:hover .card-text {
   opacity: 1;
 }
-
-.blur {
-  filter: blur(2px);
-  transition: filter 0.5s;
-}
-

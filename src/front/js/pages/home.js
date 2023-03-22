@@ -17,7 +17,11 @@ const Home = () => {
     GameData().then((data) => setGames(data));
   }, []);
 
+<<<<<<< HEAD
   const slideImages = games.map((game) => game.bigImage);
+=======
+  const slideImages = games.slice(0, 5).map((game) => game.header_image);
+>>>>>>> e7a4226 (made news page better)
 
   const properties = {
     duration: 5000,
