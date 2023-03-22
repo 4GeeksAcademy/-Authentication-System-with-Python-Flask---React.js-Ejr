@@ -17,7 +17,7 @@ const GameCard = ({ title, imageUrl }) => {
         <Card.Body>
           <Card.Title>{title}</Card.Title>
           <Button variant="secondary" onClick={handleAddToCart}>
-            Add to cart
+            Add to carts
           </Button>
         </Card.Body>
       </Card>
