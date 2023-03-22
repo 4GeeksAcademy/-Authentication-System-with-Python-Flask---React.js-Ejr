@@ -2,10 +2,11 @@ import React from "react";
 import { Card, Container, Row, Col, Stack } from "react-bootstrap";
 import "../../styles/home.css";
 import { NC } from "./news_card.jsx";
+
 const NewsCard = () => {
   return (
     <>
-      <Container>
+      <Container fluid className="d-flex justify-content-center">
         <Container style={{ color: "white" }}>
           <Row>
             <Col>
@@ -27,16 +28,11 @@ const NewsCard = () => {
           </Row>
         </Container>
       </Container>
-      <Container style={{ color: "white" }}>
-        <NC />
-        <NC />
-        <NC />
-        <NC />
-        <NC />
-        <NC />
-        <NC />
-        <NC />
-        <NC />
+      <Container
+        fluid
+        className="d-flex justify-content-center mt-5"
+        style={{ color: "white" }}
+      >
         <NC />
       </Container>
     </>
