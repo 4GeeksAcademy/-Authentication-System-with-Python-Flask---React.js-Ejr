@@ -49,3 +49,20 @@ body {
 .card {
   height: 100%;
 }
+
+.hover-card .card-title,
+.hover-card .card-text {
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.hover-card:hover .card-title,
+.hover-card:hover .card-text {
+  opacity: 1;
+}
+
+.blur {
+  filter: blur(2px);
+  transition: filter 0.5s;
+}
+
