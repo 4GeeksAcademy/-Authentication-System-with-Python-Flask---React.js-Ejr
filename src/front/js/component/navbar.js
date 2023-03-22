@@ -56,7 +56,9 @@ const MyNavbar = () => {
               {cartItems.length > 0 && (
                 <NavDropdown.Item onClick={clearCart}>Clear Cart</NavDropdown.Item>
               )}
-              <NavDropdown.Item>Checkout</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/checkout">
+                Checkout
+              </NavDropdown.Item>
             </NavDropdown>
           </Nav>
         </Navbar.Collapse>
