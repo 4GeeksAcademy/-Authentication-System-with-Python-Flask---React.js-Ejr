@@ -58,13 +58,20 @@ const NewsCard = () => {
                       className="position-absolute top-0 bottom-0 left-0 right-0"
                       style={{ backgroundColor: "#1b1b1b", opacity: 0.8 }}
                     >
-                      <Card.Body>
+                      <Card.Body style={{ color: "white" }}>
                         <Card.Title className="card-title">
                           {article.title}
                         </Card.Title>
                         <Card.Text className="card-text">
                           {article.description}
                         </Card.Text>
+                        <a
+                          className="card-text"
+                          style={{ color: "white" }}
+                          href={article.link}
+                        >
+                          Read More
+                        </a>
                       </Card.Body>
                     </div>
                   </div>
