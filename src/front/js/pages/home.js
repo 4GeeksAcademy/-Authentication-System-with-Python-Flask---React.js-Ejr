@@ -18,10 +18,17 @@ const Home = () => {
   }, []);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   const slideImages = games.map((game) => game.bigImage);
 =======
   const slideImages = games.slice(0, 5).map((game) => game.header_image);
 >>>>>>> e7a4226 (made news page better)
+=======
+  const slideImages = games.slice(0, 5).map((game) => game.header_image);
+=======
+  const slideImages = games.map((game) => game.bigImage);
+>>>>>>> 5a97bbb (big pic)
+>>>>>>> 328e988 (big pic)
 
   const properties = {
     duration: 5000,
