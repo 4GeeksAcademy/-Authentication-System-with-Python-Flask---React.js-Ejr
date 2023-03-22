@@ -1,3 +1,19 @@
 /* 
     General Styles used on every website (Don't Repeat Yourself)
 */
+tr>th{
+    font-weight: 300;
+}
+td{
+    padding: 10px;
+    
+    /* display: inline-block; */
+}
+
+.table-container{
+    background-color: lightgray;
+    padding: 20px;
+    width: 54%;
+    border-radius: 10% 10% 10% 10%;
+    box-shadow: 0 0 15px #e882cb;
+}
