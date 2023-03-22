@@ -16,7 +16,7 @@ const Home = () => {
     GameData().then((data) => setGames(data));
   }, []);
 
-  const slideImages = games.map((game) => game.imageUrl);
+  const slideImages = games.map((game) => game.bigImage);
 
   const properties = {
     duration: 5000,

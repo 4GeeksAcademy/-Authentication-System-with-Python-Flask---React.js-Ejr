@@ -21,6 +21,7 @@ function GameData() {
             id: game.id,
             title: game.name,
             imageUrl: game.header_image,
+            bigImage: game.large_capsule_image,
           })
         );
         response.data.featured_linux.forEach((game) => {
@@ -29,6 +30,7 @@ function GameData() {
               id: game.id,
               title: game.name,
               imageUrl: game.header_image,
+              bigImage: game.large_capsule_image,
             });
           }
         });
@@ -38,6 +40,7 @@ function GameData() {
               id: game.id,
               title: game.name,
               imageUrl: game.header_image,
+              bigImage: game.large_capsule_image,
             });
           }
         });
