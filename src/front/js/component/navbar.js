@@ -1,14 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { Navbar, Nav, Container, NavDropdown } from "react-bootstrap";
-import GameCard from "./GameCard.jsx";
+import { Context } from "../store/appContext.js";
 
 const MyNavbar = () => {
   const [cartItems, setCartItems] = useState([]);
-
-  const addToCart = (item) => {
-    setCartItems([...cartItems, item]);
-  };
+  const { actions } = useContext(Context);
 
   const clearCart = () => {
     setCartItems([]);
@@ -54,15 +51,9 @@ const MyNavbar = () => {
 
               {cartItems.length > 0 && <NavDropdown.Divider />}
               {cartItems.length > 0 && (
-                <NavDropdown.Item onClick={clearCart}>Clear Cart</NavDropdown.Item>
+                <NavDropdown.Item onClick={clearCart}>
+                  Clear Cart
+                </NavDropdown.Item>
               )}
               <NavDropdown.Item>Checkout</NavDropdown.Item>
             </NavDropdown>
-          </Nav>
-        </Navbar.Collapse>
-      </Container>
-    </Navbar>
-  );
-};
-
-export { MyNavbar as Navbar };
