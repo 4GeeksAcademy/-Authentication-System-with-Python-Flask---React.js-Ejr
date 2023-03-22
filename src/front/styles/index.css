@@ -17,3 +17,8 @@ td{
     border-radius: 10% 10% 10% 10%;
     box-shadow: 0 0 15px #e882cb;
 }
+
+.separador{
+  
+    border-top: 1px solid rgba(0, 0, 0, 0.353);
+}

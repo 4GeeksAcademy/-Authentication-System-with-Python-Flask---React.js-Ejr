@@ -80,3 +80,9 @@ def add_plants():
 
     response_body = "You have registered a plant"
     return jsonify(response_body), 200
+
+@api.route("/get/plants", methods=["GET"])
+def get_plants():
+    plants = Plants.query.all()
+    plants_list = [plant.serialize() for plant in plants]
+    return jsonify(plants_list), 200

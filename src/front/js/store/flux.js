@@ -3,6 +3,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 		store: {
 			isStaff: false,
 			isAuthenticated: false,
+			plants:[]
 		},
 		actions: {
 			
@@ -66,6 +67,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 					.then(data => console.log(data))
 					// .catch(error => console.log(error,"este error viene del flux"));
 			},
+
+			getPlants: async()=>{
+				const store = getStore();
+				fetch(process.env.BACKEND_URL+"/api/get/plants")
+				.then(response => response.json())
+				.then(data => {setStore({plants:data});console.log(store.plants);})
+			}
 			
 
 
