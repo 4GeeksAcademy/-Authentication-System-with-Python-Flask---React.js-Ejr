@@ -35,7 +35,7 @@ const News_Card = () => {
           style={{ maxHeight: "400px", maxWidth: "100%", overflow: "hidden" }}
         >
           <Col md={3} className="d-inline-flex" style={{ height: "100%" }}>
-            <a style={{ color: "white" }} href={item.url}>
+            <a style={{ color: "white" }} href={item.link}>
               <img
                 src={item.image}
                 alt="News"
