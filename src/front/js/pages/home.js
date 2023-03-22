@@ -1,88 +1,23 @@
-/*
-
-
-import React from "react";
-import { Container, Row, Col, Card, Button } from "react-bootstrap";
-import "../../styles/home.css";
-
-export const Home = () => {
-  return (
-    <Container fluid className="mt-3">
-      <Row className="justify-content-center">
-        <Col md={3} className="p-1">
-          <Card className="game-card">
-            <Card.Img variant="top" src="https://via.placeholder.com/400x225" />
-            <Card.Body>
-              <Card.Title>Game Title</Card.Title>
-              <Card.Text>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vitae nunc lacinia, ullamcorper arcu vel,
-                gravida massa.
-              </Card.Text>
-              <Button variant="primary">Buy Now</Button>
-            </Card.Body>
-          </Card>
-        </Col>
-        <Col md={3} className="p-1">
-          <Card className="game-card">
-            <Card.Img variant="top" src="https://via.placeholder.com/400x225" />
-            <Card.Body>
-              <Card.Title>Game Title</Card.Title>
-              <Card.Text>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vitae nunc lacinia, ullamcorper arcu vel,
-                gravida massa.
-              </Card.Text>
-              <Button variant="primary">Buy Now</Button>
-            </Card.Body>
-          </Card>
-        </Col>
-        <Col md={3} className="p-1">
-          <Card className="game-card">
-            <Card.Img variant="top" src="https://via.placeholder.com/400x225" />
-            <Card.Body>
-              <Card.Title>Game Title</Card.Title>
-              <Card.Text>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vitae nunc lacinia, ullamcorper arcu vel,
-                gravida massa.
-              </Card.Text>
-              <Button variant="primary">Buy Now</Button>
-            </Card.Body>
-          </Card>
-        </Col>
-        <Col md={3} className="p-1">
-          <Card className="game-card">
-            <Card.Img variant="top" src="https://via.placeholder.com/400x225" />
-            <Card.Body>
-              <Card.Title>Game Title</Card.Title>
-              <Card.Text>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vitae nunc lacinia, ullamcorper arcu vel,
-                gravida massa.
-              </Card.Text>
-              <Button variant="primary">Buy Now</Button>
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row>
-    </Container>
-  );
-};*/
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../store/appContext.js";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import GameCard from "../component/GameCard.jsx";
 import "../../styles/home.css";
-import GameData from "../component/GameAPI.jsx";
 import { Slide } from "react-slideshow-image";
 import "react-slideshow-image/dist/styles.css";
+import GameData from "../component/GameAPI.jsx";
 
 const Home = () => {
   const { store, actions } = useContext(Context);
-  console.log(store.user, "This is the current user");
-  GameData();
-  const slideImages = [
-    "https://picsum.photos/800/600",
-    "https://picsum.photos/800/601",
-    "https://picsum.photos/800/602",
-  ];
+  const [games, setGames] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  useEffect(() => {
+    GameData().then((data) => setGames(data));
+  }, []);
+
+  const slideImages = games.map((game) => game.imageUrl);
+
   const properties = {
     duration: 5000,
     transitionDuration: 500,
@@ -90,6 +25,11 @@ const Home = () => {
     indicators: true,
     arrows: true,
   };
+
+  const handleSearch = (event) => {
+    setSearchQuery(event.target.value);
+  };
+
   return (
     <div className="home-container">
       <div className="hero-container">
@@ -127,14 +67,30 @@ const Home = () => {
               View All
             </Button>
           </Col>
+          <Col md={4} className="ms-auto">
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Search games"
+              value={searchQuery}
+              onChange={handleSearch}
+            />
+          </Col>
         </Row>
         <Row>
-          <GameCard title="Game 1" imageUrl="https://picsum.photos/300/200" />
-          <GameCard title="Game 2" imageUrl="https://picsum.photos/300/200" />
-          <GameCard title="Game 3" imageUrl="https://picsum.photos/300/200" />
-          <GameCard title="Game 4" imageUrl="https://picsum.photos/300/200" />
-          <GameCard title="Game 5" imageUrl="https://picsum.photos/300/200" />
-          <GameCard title="Game 6" imageUrl="https://picsum.photos/300/200" />
+          {games
+            .filter(
+              (game) =>
+                searchQuery.trim() === "" ||
+                game.title.toLowerCase().includes(searchQuery.toLowerCase())
+            )
+            .map((game, index) => (
+              <GameCard
+                key={index}
+                title={game.title}
+                imageUrl={game.imageUrl}
+              />
+            ))}
         </Row>
       </Container>
     </div>

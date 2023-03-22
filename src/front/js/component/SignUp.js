@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Form, Button, Card } from "react-bootstrap";
 import axios from "axios";
-//import { db, User } from 'py-loader!../../../api/models.py';
+// import { db, User } from "py-loader!../../../api/models.py";
 
 //src/api/models.py
 const handleSubmit = async (event) => {

@@ -10,13 +10,43 @@ function GameData() {
     },
   };
 
-  axios
-    .request(options)
-    .then(function (response) {
-      console.log(response.data);
-    })
-    .catch(function (error) {
-      console.error(error);
-    });
+  return new Promise((resolve, reject) => {
+    axios
+      .request(options)
+      .then(function (response) {
+        console.log(response.data);
+        const games = new Map();
+        response.data.featured_win.forEach((game) =>
+          games.set(game.id, {
+            id: game.id,
+            title: game.name,
+            imageUrl: game.header_image,
+          })
+        );
+        response.data.featured_linux.forEach((game) => {
+          if (!games.has(game.id)) {
+            games.set(game.id, {
+              id: game.id,
+              title: game.name,
+              imageUrl: game.header_image,
+            });
+          }
+        });
+        response.data.featured_mac.forEach((game) => {
+          if (!games.has(game.id)) {
+            games.set(game.id, {
+              id: game.id,
+              title: game.name,
+              imageUrl: game.header_image,
+            });
+          }
+        });
+        resolve(Array.from(games.values()));
+      })
+      .catch(function (error) {
+        reject(error);
+      });
+  });
 }
+
 export default GameData;

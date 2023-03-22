@@ -6,32 +6,46 @@
     on that page only (the ones not reused in other pages).
 */
 body {
-    background-color: #1b1b1b;
-  }
-  .hero-container {
-    color: white;
-    padding-top: 60px;
-  }
-  .my-5 {
-    color: white;
-  }
-  
-  .slide-container {
-    width: 125%;
-    margin: 0 auto;
-  }
-  
-  .each-slide {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-size: cover;
-    height: 400px;
-  }
-  
-  .each-slide span {
-    color: #fff;
-    font-size: 20px;
-    text-shadow: 1px 1px 2px #000;
-  }
-  
+  background-color: #1b1b1b;
+}
+.hero-container {
+  color: white;
+  padding-top: 60px;
+}
+.my-5 {
+  color: white;
+}
+
+.slide-container {
+  width: 125%;
+  margin: 0 auto;
+}
+
+.each-slide {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-size: cover;
+  height: 400px;
+}
+
+.each-slide span {
+  color: #fff;
+  font-size: 20px;
+  text-shadow: 1px 1px 2px #000;
+}
+
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: stretch;
+}
+
+.card-container .col-6 {
+  max-width: 50%;
+}
+
+.card {
+  height: 100%;
+}
