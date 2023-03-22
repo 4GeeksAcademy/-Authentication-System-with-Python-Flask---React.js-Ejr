@@ -4,14 +4,10 @@ import "../../styles/GameCard.css";
 
 import GameData from "./GameAPI.jsx";
 
-const GameCard = ({ title, imageUrl }) => {
-  const { setCartItems } = useContext(Context);
-
-  const addToCart = () => {
-    const item = { title, imageUrl };
-    setCartItems((prevCartItems) => [...prevCartItems, item]);
+const GameCard = ({ title, imageUrl, onAddToCart }) => {
+  const handleAddToCart = () => {
+    onAddToCart({ title, imageUrl });
   };
-
 
   return (
     <div className="col-6 col-md-4 col-lg-3 my-3">
@@ -19,7 +15,7 @@ const GameCard = ({ title, imageUrl }) => {
         <Card.Img variant="top" src={imageUrl} />
         <Card.Body>
           <Card.Title>{title}</Card.Title>
-          <Button variant="secondary" onClick={addToCart}>
+          <Button variant="secondary" onClick={handleAddToCart}>
             Add to cart
           </Button>
         </Card.Body>

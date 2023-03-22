@@ -11,6 +11,7 @@ const Home = () => {
   const { store, actions } = useContext(Context);
   const [games, setGames] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
+  const [cartItems, setCartItems] = useState([]);
 
   useEffect(() => {
     GameData().then((data) => setGames(data));
@@ -28,6 +29,10 @@ const Home = () => {
 
   const handleSearch = (event) => {
     setSearchQuery(event.target.value);
+  };
+
+  const addToCart = (item) => {
+    setCartItems([...cartItems, item]);
   };
 
   return (
@@ -89,6 +94,7 @@ const Home = () => {
                 key={index}
                 title={game.title}
                 imageUrl={game.imageUrl}
+                onAddToCart={addToCart}
               />
             ))}
         </Row>

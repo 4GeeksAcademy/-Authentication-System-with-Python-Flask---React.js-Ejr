@@ -1,17 +1,11 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Navbar, Nav, Container, NavDropdown } from "react-bootstrap";
-<<<<<<< HEAD
 import GameCard from "./GameCard.jsx";
-//import logoImage from "./src/front/img/gameportal-removebg-preview.png"
-
-=======
-import { Context } from "../store/appContext.js";
->>>>>>> a947074375590d51d49b559444bfd778b6d48c64
 
 const MyNavbar = () => {
   const [cartItems, setCartItems] = useState([]);
-  const { actions } = useContext(Context);
+
 
   const clearCart = () => {
     setCartItems([]);
@@ -57,10 +51,15 @@ const MyNavbar = () => {
 
               {cartItems.length > 0 && <NavDropdown.Divider />}
               {cartItems.length > 0 && (
-                <NavDropdown.Item onClick={clearCart}>
-                  Clear Cart
-                </NavDropdown.Item>
+                <NavDropdown.Item onClick={clearCart}>Clear Cart</NavDropdown.Item>
               )}
-              <NavDropdown.Item as={Link} to="/checkout">Checkout</NavDropdown.Item>
-
+              <NavDropdown.Item>Checkout</NavDropdown.Item>
             </NavDropdown>
+          </Nav>
+        </Navbar.Collapse>
+      </Container>
+    </Navbar>
+  );
+};
+
+export { MyNavbar as Navbar };
