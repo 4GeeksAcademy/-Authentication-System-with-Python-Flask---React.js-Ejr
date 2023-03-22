@@ -12,9 +12,13 @@ const Home = () => {
   const [games, setGames] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
 <<<<<<< HEAD
+<<<<<<< HEAD
   const [cartItems, setCartItems] = useState([]);
 =======
 >>>>>>> 4d47136 (feat)
+=======
+  const [cartItems, setCartItems] = useState([]);
+>>>>>>> ba8ff17 (yoni lastest changes)
 
   useEffect(() => {
     GameData().then((data) => setGames(data));
@@ -46,12 +50,18 @@ const Home = () => {
   };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> ba8ff17 (yoni lastest changes)
   const addToCart = (item) => {
     setCartItems([...cartItems, item]);
   };
 
+<<<<<<< HEAD
 =======
 >>>>>>> 4d47136 (feat)
+=======
+>>>>>>> ba8ff17 (yoni lastest changes)
   return (
     <div className="home-container">
       <div className="hero-container">

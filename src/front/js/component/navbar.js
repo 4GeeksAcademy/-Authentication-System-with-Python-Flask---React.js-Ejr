@@ -1,23 +1,31 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Navbar, Nav, Container, NavDropdown } from "react-bootstrap";
-<<<<<<< HEAD
 import GameCard from "./GameCard.jsx";
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 const MyNavbar = () => {
   const [cartItems, setCartItems] = useState([]);
 =======
+=======
+>>>>>>> ba8ff17 (yoni lastest changes)
 //import logoImage from "./src/front/img/gameportal-removebg-preview.png"
 
 =======
 import { Context } from "../store/appContext.js";
 >>>>>>> a947074 (feat)
+=======
+>>>>>>> ce03ecd (yoni lastest changes)
 
 const MyNavbar = () => {
   const [cartItems, setCartItems] = useState([]);
+<<<<<<< HEAD
   const { actions } = useContext(Context);
 >>>>>>> 4d47136 (feat)
+=======
+
+>>>>>>> ba8ff17 (yoni lastest changes)
 
   const clearCart = () => {
     setCartItems([]);
@@ -63,11 +71,21 @@ const MyNavbar = () => {
 
               {cartItems.length > 0 && <NavDropdown.Divider />}
               {cartItems.length > 0 && (
-                <NavDropdown.Item onClick={clearCart}>
-                  Clear Cart
-                </NavDropdown.Item>
+                <NavDropdown.Item onClick={clearCart}>Clear Cart</NavDropdown.Item>
               )}
+<<<<<<< HEAD
               <NavDropdown.Item as={Link} to="/checkout">
                 Checkout
               </NavDropdown.Item>
+=======
+              <NavDropdown.Item>Checkout</NavDropdown.Item>
+>>>>>>> ba8ff17 (yoni lastest changes)
             </NavDropdown>
+          </Nav>
+        </Navbar.Collapse>
+      </Container>
+    </Navbar>
+  );
+};
+
+export { MyNavbar as Navbar };
