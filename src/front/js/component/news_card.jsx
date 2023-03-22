@@ -46,7 +46,7 @@ const News_Card = () => {
           <Col className="d-table-row">
             <h3 className="font-weight-bold">{item.title}</h3>
             <p>{item.description}</p>
-            <a style={{ color: "white" }} href={item.url}>
+            <a style={{ color: "white" }} href={item.link}>
               Read More
             </a>
           </Col>
