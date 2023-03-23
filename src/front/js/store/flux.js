@@ -4,7 +4,7 @@ const getState = ({ getStore, getActions, setStore }) => {
   let backendUrl = process.env.BACKEND_URL;
   return {
     store: {
-      user: {},
+      user: [],
     },
     actions: {
       signUp: async (name, email, password) => {
