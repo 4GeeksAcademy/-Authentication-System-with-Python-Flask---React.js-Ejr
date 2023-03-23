@@ -13,7 +13,8 @@ import Login from "./component/Login";
 import SignUp from "./component/SignUp";
 import { News } from "./component/News";
 import CheckoutForm from "./component/CheckoutForm";
-import ProfilePage from "./component/Profile";
+import Profile from "./component/Profile"; // Change this import to match the component name
+
 // create your first component
 const Layout = () => {
   // the basename is used when your project is published in a subdirectory and not in the root of the domain
@@ -33,7 +34,7 @@ const Layout = () => {
             <Route element={<Login />} path="/login" />
             <Route element={<SignUp />} path="/signUp" />
             <Route element={<News />} path="/news" />
-            <Route element={<ProfilePage />} path="/profilepage" />
+            <Route element={<Profile />} path="/profile" /> {/* Update this line */}
             <Route element={<CheckoutForm />} path="/checkout" />
             <Route element={<h1>Not found!</h1>} />
           </Routes>
