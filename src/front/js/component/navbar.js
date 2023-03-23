@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { Navbar, Nav, Container, NavDropdown } from "react-bootstrap";
+import { Navbar, Nav, Container } from "react-bootstrap";
 import GameCard from "./GameCard.jsx";
+import CartDropdown from "./CartDropdown.jsx";
 
 const MyNavbar = () => {
   const [cartItems, setCartItems] = useState([]);
@@ -26,9 +27,9 @@ const MyNavbar = () => {
             <Nav.Link as={Link} to="/">
               Home
             </Nav.Link>
-            <Nav.Link as={Link} to="/games">
+            {/* <Nav.Link as={Link} to="/games">
               Games
-            </Nav.Link>
+            </Nav.Link> */}
           </Nav>
           <Nav>
             <Nav.Link as={Link} to="/news">
@@ -43,21 +44,7 @@ const MyNavbar = () => {
             <Nav.Link as={Link} to="/signup">
               Sign Up
             </Nav.Link>
-            <NavDropdown title="Cart" id="basic-nav-dropdown">
-              {cartItems.length > 0 ? (
-                cartItems.map((item, index) => (
-                  <NavDropdown.Item key={index}>{item.title}</NavDropdown.Item>
-                ))
-              ) : (
-                <NavDropdown.Item>No items in cart</NavDropdown.Item>
-              )}
-
-              {cartItems.length > 0 && <NavDropdown.Divider />}
-              {cartItems.length > 0 && (
-                <NavDropdown.Item onClick={clearCart}>Clear Cart</NavDropdown.Item>
-              )}
-              <NavDropdown.Item>Checkout</NavDropdown.Item>
-            </NavDropdown>
+            <CartDropdown cartItems={cartItems} clearCart={clearCart} />
           </Nav>
         </Navbar.Collapse>
       </Container>
