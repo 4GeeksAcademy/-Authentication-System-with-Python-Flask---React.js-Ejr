@@ -1,0 +1,56 @@
+/* CheckoutForm.css */
+
+  
+.checkout-page .white-text {
+    color: #ffffff;
+  }
+  
+  .checkout-page form {
+    background-color: #444;
+    padding: 2rem;
+    border-radius: 10px;
+  }
+  
+  .checkout-page h2,
+  .checkout-page h4 {
+    font-weight: bold;
+  }
+  
+  .checkout-page form input,
+  .checkout-page form select {
+    background-color: #333;
+    border: 1px solid #555;
+    border-radius: 5px;
+    color: #fff;
+  }
+  
+  .checkout-page form input:focus,
+  .checkout-page form select:focus {
+    background-color: #333;
+    border-color: #007bff;
+    outline: none;
+  }
+  
+  .checkout-page form input::placeholder {
+    color: #777;
+  }
+  
+  .checkout-page form label {
+    font-weight: bold;
+  }
+  
+  .checkout-page button[type="submit"] {
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    font-weight: bold;
+    padding: 0.5rem 1rem;
+    transition: background-color 0.2s ease;
+  }
+  
+  .checkout-page button[type="submit"]:hover {
+    background-color: #0056b3;
+    cursor: pointer;
+  }
+  
