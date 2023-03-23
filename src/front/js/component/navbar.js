@@ -26,9 +26,6 @@ const MyNavbar = () => {
             <Nav.Link as={Link} to="/">
               Home
             </Nav.Link>
-            <Nav.Link as={Link} to="/games">
-              Games
-            </Nav.Link>
           </Nav>
           <Nav>
             <Nav.Link as={Link} to="/news">
@@ -54,7 +51,9 @@ const MyNavbar = () => {
 
               {cartItems.length > 0 && <NavDropdown.Divider />}
               {cartItems.length > 0 && (
-                <NavDropdown.Item onClick={clearCart}>Clear Cart</NavDropdown.Item>
+                <NavDropdown.Item onClick={clearCart}>
+                  Clear Cart
+                </NavDropdown.Item>
               )}
               <NavDropdown.Item as={Link} to="/checkout">
                 Checkout
