@@ -5,7 +5,7 @@ import { Form, Button, Card } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 
 import axios from 'axios';
-import { db, User } from 'py-loader!../../../api/models.py';
+//import { db, User } from 'py-loader!../../../api/models.py';
 
 
 //src/api/models.py
@@ -22,6 +22,7 @@ const SignUp = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     actions.signUp(name,email,password)
+    navigate("/login")
     try {
       // Create a new User object
       const newUser = {
@@ -36,7 +37,6 @@ const SignUp = () => {
       db.session.commit();
   
       console.log("User saved to database:", newUser);
-      navigate("/login")
     } catch (error) {
       console.error(error);
     }
