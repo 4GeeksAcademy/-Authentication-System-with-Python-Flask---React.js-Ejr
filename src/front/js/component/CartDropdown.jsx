@@ -1,5 +1,6 @@
 import React from "react";
 import { NavDropdown } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 const CartDropdown = ({ cartItems, onClearCart }) => {
   console.log("cart items: " + cartItems.length);
@@ -22,7 +23,9 @@ const CartDropdown = ({ cartItems, onClearCart }) => {
       {/* {cartItems.length > 0 && ( */}
       <NavDropdown.Item onClick={onClearCart}>Clear Cart</NavDropdown.Item>
       {/* )} */}
-      <NavDropdown.Item>Checkout</NavDropdown.Item>
+      <NavDropdown.Item as={Link} to="/checkout">
+        Checkout
+      </NavDropdown.Item>
     </NavDropdown>
   );
 };
