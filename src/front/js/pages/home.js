@@ -29,6 +29,7 @@ const Home = () => {
   };
 
   const addToCart = (item) => {
+    console.log("item title: " + item.title + ", item price: " + item.price);
     setCartItems([...cartItems, item]);
   };
 
@@ -46,7 +47,7 @@ const Home = () => {
         <Container>
           <Row className="align-items-center">
             <Col md={6} className="order-md-1">
-              <h1>Welcome to My Game Store</h1>
+              <h1>Welcome to The Game Portal</h1>
               <p className="lead">
                 Find your favorite games and discover new ones, all in one
                 place.

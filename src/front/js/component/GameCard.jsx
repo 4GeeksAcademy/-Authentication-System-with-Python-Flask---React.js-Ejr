@@ -10,7 +10,7 @@ const GameCard = ({ title, imageUrl, price, addToCart }) => {
     .replace(/(\d+)\.(\d{2})/, "$1.$2")}`;
 
     const handleAddToCart = () => {
-      addToCart({ title, imageUrl, price });
+      addToCart({ title, price });
     };
 
   return (
