@@ -7,6 +7,7 @@ import "../../styles/home.css";
 import { Slide } from "react-slideshow-image";
 import "react-slideshow-image/dist/styles.css";
 import GameData from "../component/GameAPI.jsx";
+import { NavBar } from "../component/navbar.js";
 
 const Home = () => {
   const { store, actions } = useContext(Context);
@@ -15,6 +16,8 @@ const Home = () => {
   const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    setCartItems(cart);
     GameData().then((data) => setGames(data));
   }, []);
 
@@ -29,20 +32,27 @@ const Home = () => {
   };
 
   const addToCart = (item) => {
-    console.log("item title: " + item.title + ", item price: " + item.price);
+    console.log(
+      "HOME-item title: " + item.title + ", item price: " + item.price
+    );
     setCartItems([...cartItems, item]);
   };
 
   const clearCart = () => {
+    localStorage.removeItem("cart");
     setCartItems([]);
   };
-
   const handleSearch = (event) => {
     setSearchQuery(event.target.value);
   };
 
   return (
     <div className="home-container">
+      {/* <NavBar
+        cartItems={cartItems}
+        clearCart={clearCart}
+        addToCart={addToCart}
+      /> */}
       <div className="hero-container">
         <Container>
           <Row className="align-items-center">
@@ -108,7 +118,6 @@ const Home = () => {
             ))}
         </Row>
       </Container>
-      <CartDropdown cartItems={cartItems} clearCart={clearCart} />
     </div>
   );
 };

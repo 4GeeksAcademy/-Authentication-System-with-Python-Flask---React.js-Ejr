@@ -9,9 +9,14 @@ const GameCard = ({ title, imageUrl, price, addToCart }) => {
     .toString()
     .replace(/(\d+)\.(\d{2})/, "$1.$2")}`;
 
-    const handleAddToCart = () => {
-      addToCart({ title, price });
-    };
+  const handleAddToCart = () => {
+    const item = { title, price };
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    cart.push(item);
+    localStorage.setItem("cart", JSON.stringify(cart));
+    addToCart(item);
+    console.log("cart: ", cart);
+  };
 
   return (
     <div className="col-6 col-md-4 col-lg-3 my-3">

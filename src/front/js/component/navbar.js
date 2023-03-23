@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Navbar, Nav, Container } from "react-bootstrap";
 import GameCard from "./GameCard.jsx";
 import CartDropdown from "./CartDropdown.jsx";
+import gamePortal from "../../img/gameportal-removebg.png";
 
 const MyNavbar = () => {
   const [cartItems, setCartItems] = useState([]);
@@ -19,7 +20,11 @@ const MyNavbar = () => {
     <Navbar bg="dark" variant="dark" expand="lg">
       <Container>
         <Navbar.Brand as={Link} to="/">
-          Game Portal
+          <img
+            src={gamePortal}
+            alt="Game Portal"
+            style={{ maxHeight: "150px", maxWidth: "150px" }}
+          />
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
@@ -27,9 +32,6 @@ const MyNavbar = () => {
             <Nav.Link as={Link} to="/">
               Home
             </Nav.Link>
-            {/* <Nav.Link as={Link} to="/games">
-              Games
-            </Nav.Link> */}
           </Nav>
           <Nav>
             <Nav.Link as={Link} to="/news">
