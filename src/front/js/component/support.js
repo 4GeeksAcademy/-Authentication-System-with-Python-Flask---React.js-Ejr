@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import { useForm } from "react-hook-form";
 import { Navbar } from "./navbar";
-import { Container, Button, Form, Row, Col } from "react-bootstrap";
+import { Container, Button, Form, Row, Col, Alert } from "react-bootstrap";
 
 const MySupport = () => {
   const initState = {
@@ -11,12 +11,12 @@ const MySupport = () => {
     contactNumber: "",
     issue: "",
   };
-
+  const [formSubmitted, setFormSubmitted] = useState(false);
   const [initialValues, setInitialValues] = useState(initState);
   const onSubmit = (values, e) => {
     console.log("Values:::", values);
     console.log("Values:::", JSON.stringify(values));
-    alert("Success report submitted");
+    setFormSubmitted(true);
     setInitialValues(initState); // Reset form values
     e.target.reset(); // Reset form inputs
   };
@@ -45,6 +45,11 @@ const MySupport = () => {
       >
         How can we help?
       </h1>
+      {formSubmitted && (
+        <Alert variant="success" className="mb-4">
+          Report Submitted!
+        </Alert>
+      )}
       <Form
         onSubmit={handleSubmit(onSubmit, onError)}
         style={{ color: "white" }}

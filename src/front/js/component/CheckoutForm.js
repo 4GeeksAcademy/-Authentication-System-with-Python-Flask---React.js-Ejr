@@ -34,7 +34,7 @@ const CheckoutForm = () => {
         <h2 className="mb-4 white-text">Checkout:</h2>
         {formSubmitted && (
           <Alert variant="danger" className="mb-4">
-            CANNOT TAKE PAYMENT AT THIS TIME
+            CANNOT TAKE PAYMENT AT THIS TIME!
           </Alert>
         )}
         <Form onSubmit={handleSubmit}>

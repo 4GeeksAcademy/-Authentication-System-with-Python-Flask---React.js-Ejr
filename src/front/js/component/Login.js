@@ -19,7 +19,7 @@ const Login = () => {
   };
 
   return (
-    <Container>
+    <Container style={{ color: "white" }}>
       <Row className="justify-content-md-center">
         <Col md="4">
           <Form onSubmit={handleSubmit}>
