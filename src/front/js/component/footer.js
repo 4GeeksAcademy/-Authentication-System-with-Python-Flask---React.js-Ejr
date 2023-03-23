@@ -1,9 +1,18 @@
-import React, { Component } from "react";
+import React from 'react';
+import '../../styles/Footer.css';
 
-export const Footer = () => (
-	<footer className="footer mt-auto py-3 text-center">
-		<p style={{ color: "white" }}>
-			Made By Game Portal 
-		</p>
-	</footer>
-);
+const Footer = () => {
+  const currentYear = new Date().getFullYear();
+
+  return (
+    <footer className="footer mt-auto py-3">
+      <div className="container text-center">
+        <p className="footer-text">
+          &copy; {currentYear} Game Portal. All rights reserved.
+        </p>
+      </div>
+    </footer>
+  );
+};
+
+export default Footer;

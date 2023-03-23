@@ -1,0 +1,13 @@
+/* Footer.css */
+.footer {
+    background-color: #222;
+    color: #fff;
+    font-size: 14px;
+    line-height: 1.5;
+    width: 100%;
+  }
+  
+  .footer-text {
+    margin: 0;
+  }
+  
