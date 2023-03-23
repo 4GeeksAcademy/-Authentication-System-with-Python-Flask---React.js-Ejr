@@ -46,6 +46,9 @@ const MyNavbar = () => {
             <Nav.Link as={Link} to="/signup">
               Sign Up
             </Nav.Link>
+            <Nav.Link as={Link} to="/profile"> {/* Add this line */}
+              Profile
+            </Nav.Link> {/* And this line */}
             <CartDropdown cartItems={cartItems} clearCart={clearCart} />
           </Nav>
         </Navbar.Collapse>
