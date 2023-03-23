@@ -1,27 +1,21 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Context } from "../store/appContext";
 import "../../styles/home.css";
-import { Card } from "../component/card";
-
+import Card from "../component/card";
+import AddPlants from "../component/addPlants";
+import GetPlants from "../component/getPlants";
 export const Home = () => {
 	const { store, actions } = useContext(Context);
 
+	const [component,setComponent]= useState(<AddPlants/>)
 	return (
 		<>
-		<div className="d-flex justify-content-center">
-			<Card />
-			<Card />
-			<Card />
-		</div>
-
-		
-		<div className="d-flex justify-content-center">
-			<Card />
-			<Card />
-			<Card />
-		</div>
-
-	
+		{/* <AddPlants/> */}
+		{/* <GetPlants/> */}
+		<h1 onClick={()=>{
+			setComponent(<GetPlants/>)
+		}}>show getPlants component</h1>
+		{component}
 		</>
 	);
 };

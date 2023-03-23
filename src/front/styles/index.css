@@ -1,3 +1,23 @@
 /* 
     General Styles used on every website (Don't Repeat Yourself)
 */
+tr>th{
+    font-weight: 300;
+}
+td{
+    padding: 10px;
+    
+    /* display: inline-block; */
+}
+
+.table-container{
+    background-color: lightgray;
+    padding: 20px;
+    width: 54%;
+    
+}
+
+.separador{
+  
+    border-top: 1px solid rgba(0, 0, 0, 0.353);
+}
