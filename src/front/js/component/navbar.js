@@ -40,6 +40,9 @@ const MyNavbar = () => {
             <Nav.Link as={Link} to="/signup">
               Sign Up
             </Nav.Link>
+            <Nav.Link as={Link} to="/profilepage">
+              Profile
+            </Nav.Link>
             <NavDropdown title="Cart" id="basic-nav-dropdown">
               {cartItems.length > 0 ? (
                 cartItems.map((item, index) => (
