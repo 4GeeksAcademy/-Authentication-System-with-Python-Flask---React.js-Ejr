@@ -1,20 +1,22 @@
-import React, { useState } from 'react';
-import { Container, Form, Button, Row, Col } from 'react-bootstrap';
-import '../../styles/CheckoutForm.css';
+import React, { useState } from "react";
+import { Container, Form, Button, Row, Col, Alert } from "react-bootstrap";
+import "../../styles/CheckoutForm.css";
 
 const CheckoutForm = () => {
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    address: '',
-    city: '',
-    state: '',
-    zip: '',
-    cardNumber: '',
-    expMonth: '',
-    expYear: '',
-    cvv: '',
+    name: "",
+    email: "",
+    address: "",
+    city: "",
+    state: "",
+    zip: "",
+    cardNumber: "",
+    expMonth: "",
+    expYear: "",
+    cvv: "",
   });
+
+  const [formSubmitted, setFormSubmitted] = useState(false);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -22,13 +24,19 @@ const CheckoutForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Form data submitted:', formData);
+    console.log("Form data submitted:", formData);
+    setFormSubmitted(true);
   };
 
   return (
     <div className="checkout-page">
       <Container>
         <h2 className="mb-4 white-text">Checkout:</h2>
+        {formSubmitted && (
+          <Alert variant="danger" className="mb-4">
+            CANNOT TAKE PAYMENT AT THIS TIME
+          </Alert>
+        )}
         <Form onSubmit={handleSubmit}>
           <Row>
             <Col md={6}>

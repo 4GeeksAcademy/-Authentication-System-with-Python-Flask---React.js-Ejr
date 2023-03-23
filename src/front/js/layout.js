@@ -12,8 +12,8 @@ import { Support } from "./component/support";
 import Login from "./component/Login";
 import SignUp from "./component/SignUp";
 import { News } from "./component/News";
-import CheckoutForm from './component/CheckoutForm';
-
+import CheckoutForm from "./component/CheckoutForm";
+import { Games } from "./component/games";
 // create your first component
 const Layout = () => {
   // the basename is used when your project is published in a subdirectory and not in the root of the domain
@@ -27,6 +27,7 @@ const Layout = () => {
           <Navbar />
           <Routes>
             <Route element={<Home />} path="/" />
+            <Route element={<Games />} path="/games" />
             <Route element={<Support />} path="/support" />
             <Route element={<Single />} path="/single/:theid" />
             <Route element={<Login />} path="/login" />

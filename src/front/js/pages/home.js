@@ -89,6 +89,8 @@ const Home = () => {
                 key={index}
                 title={game.title}
                 imageUrl={game.imageUrl}
+                final_price={game.final_price}
+                
               />
             ))}
         </Row>
