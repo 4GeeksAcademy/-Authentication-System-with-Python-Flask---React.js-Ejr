@@ -19,12 +19,12 @@ const NewsCard = () => {
   }, []);
 
   const handleMouseOver = (e) => {
-    e.currentTarget.querySelector(".card-img").classList.add("blur");
+    e.currentTarget.querySelector(".card-img").classList.remove("blur");
     e.currentTarget.querySelector(".card-img > div").classList.add("visible");
   };
 
   const handleMouseOut = (e) => {
-    e.currentTarget.querySelector(".card-img").classList.remove("blur");
+    e.currentTarget.querySelector(".card-img").classList.add("blur");
     e.currentTarget
       .querySelector(".card-img > div")
       .classList.remove("visible");
@@ -33,7 +33,7 @@ const NewsCard = () => {
   return (
     <>
       <Container fluid className="d-flex justify-content-center">
-        <Container style={{ color: "black" }}>
+        <Container style={{ color: "white" }}>
           <Row>
             {articles.slice(0, 2).map((article) => (
               <Col key={article.id}>

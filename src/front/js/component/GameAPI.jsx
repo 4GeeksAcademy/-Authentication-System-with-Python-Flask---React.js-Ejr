@@ -21,7 +21,8 @@ function GameData() {
             id: game.id,
             title: game.name,
             imageUrl: game.header_image,
-            final_price: game.final_price,
+            bigImage: game.large_capsule_image,
+            price: game.final_price,
           })
         );
         response.data.featured_linux.forEach((game) => {
@@ -30,7 +31,8 @@ function GameData() {
               id: game.id,
               title: game.name,
               imageUrl: game.header_image,
-              final_price: game.final_price,
+              bigImage: game.large_capsule_image,
+              price: game.final_price,
             });
           }
         });
@@ -40,7 +42,8 @@ function GameData() {
               id: game.id,
               title: game.name,
               imageUrl: game.header_image,
-              final_price: game.final_price,
+              bigImage: game.large_capsule_image,
+              price: game.final_price,
             });
           }
         });

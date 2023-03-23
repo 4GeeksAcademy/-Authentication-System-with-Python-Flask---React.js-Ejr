@@ -1,0 +1,23 @@
+.card-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1rem;
+}
+
+.card-title {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+.btn {
+  align-self: flex-end;
+  margin-top: auto;
+  position: "absolute";
+  bottom: 0;
+}
+
+.card-text {
+  font-weight: bold;
+  color: #0b5ed7;
+}
