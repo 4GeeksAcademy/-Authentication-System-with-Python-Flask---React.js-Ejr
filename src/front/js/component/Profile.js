@@ -129,7 +129,6 @@ const Profile = () => {
             <br />
             <br />
             <Button variant="primary">
-              Upload Photo
               <input type="file" onChange={handleProfilePictureChange} />
             </Button>
           </div>
