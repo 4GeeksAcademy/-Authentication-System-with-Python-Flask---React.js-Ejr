@@ -5,37 +5,26 @@ export const Navbar = () => {
   const [isAuthenticate, setIsAuthenticate] = useState(false);
   return (
     <>
-      <nav className="navbar p-2  bg-pink jost ">
-        {/* left-side */}
-
-        <Logo />
-
-        {/* right-side */}
-
+      <nav className="navbar">
+      <div>
+      <Link to= "/"><h1 className="logo">Liz Shoes <i class="fa-brands fa-shopify"></i></h1></Link>
+      </div>
         {isAuthenticate ? <AutnGadgeth /> : <SingupAndLogin />}
       </nav>
     </>
   );
 };
 
-const Logo = () => {
-  return (
-    <div>
-      <Link to= "/" className="ms-5 "><h1>eCommerce</h1></Link>
-    </div>
-      
-  );
-};
 
 const SingupAndLogin = () => {
   return (
     <>
-      <div>
-        <button className="bg-white p-2 border border-0 text-color">
+      <div className="d-flex gap-4">
+        <button className="button-light">
           <Link to="/login">Ingresar</Link>
         </button>
-        <button className="bg-button p-2 ms-3 me-5 border border-0 text-color2 ">
-         <Link to= "/signup">Registrate</Link>
+        <button className="button-dark">
+         <Link to= "/signup">Regístrate</Link>
         </button>
       </div>
     </>
