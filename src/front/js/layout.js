@@ -38,7 +38,7 @@ const Layout = () => {
                         <Route element={<Admin />} path="/admin" />
                         
                     </Routes>
-                    <Footer />
+                    {/* <Footer /> */}
                 </ScrollToTop>
             </BrowserRouter>
         </div>

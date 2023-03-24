@@ -3,7 +3,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 		store: {
 			isStaff: false,
 			isAuthenticated: false,
-			plants:[]
+			plants:[],
+			master:[]
 		},
 		actions: {
 			
@@ -73,13 +74,53 @@ const getState = ({ getStore, getActions, setStore }) => {
 				fetch(process.env.BACKEND_URL+"/api/get/plants")
 				.then(response => response.json())
 				.then(data => {setStore({plants:data});console.log(store.plants);})
-			}
-			
+			},
+
+			addMaster: async(master)=>{
+				fetch(process.env.BACKEND_URL+"/api/add/master", {
+					method: 'POST',
+					headers: {
+					  'Content-Type': 'application/json'
+					},
+					body: JSON.stringify({
+						name:master.name,
+						phone: master.phone,
+						alias: master.alias
+					})
+				  })
+					.then(response => response.json())
+					.then(data => console.log(data))
+					// .catch(error => console.log(error,"este error viene del flux"));
+			},
+
+			addOrder: async(order)=>{
+
+				fetch(process.env.BACKEND_URL+"/api/add/order", {
+					method: 'POST',
+					headers: {
+					  'Content-Type': 'application/json'
+					},
+					body: JSON.stringify({
+						plant:order.plant_type,
+						size: order.size,
+						name: order.name,
+						phone: order.phone,
+						delivery_date: order.delivery_date,
+						price: order.price,
+						
+					
+					})
+				  })
+					.then(response => response.json())
+					.then(data => console.log(data))
+					// .catch(error => console.log(error,"este error viene del 
+				}
+		}
+
+	}		
 
 
 		
-		}
-	};
 };
 
 export default getState;
