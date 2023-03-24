@@ -2,13 +2,14 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User,Plants
+from api.models import db, User,Plants,Master,Order
 from api.utils import generate_sitemap, APIException
 
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required
 from datetime import datetime
+
 
 api = Blueprint('api', __name__)
 
@@ -85,3 +86,48 @@ def get_plants():
     plants = Plants.query.all()
     plants_list = [plant.serialize() for plant in plants]
     return jsonify(plants_list), 200
+
+@api.route("/add/master", methods=["POST"])
+def add_master():
+    name = request.json.get("name", None)
+    phone = request.json.get("phone", None)
+    alias = request.json.get("alias", None)
+   
+   
+    existing_master= Master.query.filter_by(name=name).first()
+
+    if existing_master:
+        return "The master already registered", 400
+
+    new_master= Master(name=name , phone=phone, alias= alias)
+    
+    db.session.add(new_master)    
+    db.session.commit()
+
+    response_body = "You have registered a master"
+    return jsonify(response_body), 200
+
+
+@api.route("/add/order", methods=["POST"])
+def add_order():
+    plant= request.json.get("plant", None)
+    size = request.json.get("size", None)
+    name = request.json.get("name", None)
+    phone = request.json.get("phone", None)
+    delivery_date = request.json.get("delivery_date", None)
+    price = request.json.get("price", None)
+    date=datetime.now()
+   
+   
+    # existing_order= Master.query.filter_by(name=name).first()
+
+    # if existing_master:
+    #     return "The master already registered", 400
+
+    new_order= Order( plant_type=plant , plant_size =size, customer_name=name, customer_number=phone, delivery_date=delivery_date,price=price,date=date, status="pending")
+    
+    db.session.add(new_order)    
+    db.session.commit()
+
+    response_body = "You have a new order"
+    return jsonify(response_body), 200   

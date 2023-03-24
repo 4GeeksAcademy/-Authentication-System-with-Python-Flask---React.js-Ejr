@@ -25,6 +25,7 @@ class Master(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(120), unique=False, nullable=False)
     phone = db.Column(db.String(20), unique=False, nullable=True)
+    alias = db.Column(db.String(20), unique=False, nullable=True)
 
     def __repr__(self):
         return f'<Master {self.name}>'
@@ -33,7 +34,8 @@ class Master(db.Model):
         return {
             "id": self.id,
             "name": self.name,
-            "phone": self.phone
+            "phone": self.phone,
+            "alias": self.alias
         }
 
 class Shoe(db.Model):
@@ -91,7 +93,7 @@ class Plants(db.Model):
         }
 
 
-class Orders(db.Model):
+class Order(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     # Check documentation for correct relationship
     # master_id = db.Column(db.Integer, db.ForeignKey('master.id'), nullable=False)
@@ -99,8 +101,9 @@ class Orders(db.Model):
     plant_size = db.Column(db.Integer, nullable=False)
     customer_name = db.Column(db.String(120), nullable=False)
     customer_number = db.Column(db.String(20), nullable=False)
-    delivery_date = db.Column(db.Date, nullable=False)
-    price = db.Column(db.String(10), nullable=False)
+    delivery_date = db.Column(db.Date, nullable= True)
+    date = db.Column(db.Date, nullable=False)
+    price = db.Column(db.String(10), nullable=True)
     status = db.Column(db.String(20), nullable=False)
 
     def __repr__(self):
