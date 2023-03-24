@@ -4,7 +4,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 			isStaff: false,
 			isAuthenticated: false,
 			plants:[],
-			master:[]
+			master:[],
+			orders:[],
 		},
 		actions: {
 			
@@ -75,28 +76,34 @@ const getState = ({ getStore, getActions, setStore }) => {
 				.then(response => response.json())
 				.then(data => {setStore({plants:data});console.log(store.plants);})
 			},
-
+			
 			addMaster: async(master)=>{
 				fetch(process.env.BACKEND_URL+"/api/add/master", {
 					method: 'POST',
 					headers: {
-					  'Content-Type': 'application/json'
+						'Content-Type': 'application/json'
 					},
 					body: JSON.stringify({
 						name:master.name,
 						phone: master.phone,
 						alias: master.alias
 					})
-				  })
-					.then(response => response.json())
-					.then(data => console.log(data))
-					// .catch(error => console.log(error,"este error viene del flux"));
+				})
+				.then(response => response.json())
+				.then(data => console.log(data))
+				// .catch(error => console.log(error,"este error viene del flux"));
 			},
-
 			
-
-
-		
+			getOrders: async()=>{
+				const store = getStore();
+				fetch(process.env.BACKEND_URL+"/api/get/orders")
+				.then(response => response.json())
+				.then(data => {setStore({orders:data}); console.log("Fetch Success")})
+			},
+			
+			
+			
+			
 		}
 	};
 };

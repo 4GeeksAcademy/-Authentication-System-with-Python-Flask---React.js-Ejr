@@ -7,7 +7,7 @@ export const Navbar = () => {
     <>
       <nav className="navbar">
       <div>
-      <Link to= "/"><h1 className="logo">Liz Shoes <i class="fa-brands fa-shopify"></i></h1></Link>
+      <Link to= "/"><h1 className="logo">Liz Shoes <i className="fa-brands fa-shopify"></i></h1></Link>
       </div>
         {isAuthenticate ? <AutnGadgeth /> : <SingupAndLogin />}
       </nav>

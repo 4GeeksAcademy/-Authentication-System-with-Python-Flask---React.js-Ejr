@@ -86,6 +86,7 @@ def get_plants():
     plants_list = [plant.serialize() for plant in plants]
     return jsonify(plants_list), 200
 
+
 @api.route("/add/master", methods=["POST"])
 def add_master():
     name = request.json.get("name", None)
@@ -130,3 +131,9 @@ def add_order():
 
     response_body = "You have a new order"
     return jsonify(response_body), 200   
+
+@api.route("/get/orders", methods=["GET"])
+def get_orders():
+    orders = Order.query.all()
+    orders_list = [order.serialize() for order in orders]
+    return jsonify(orders_list), 200
