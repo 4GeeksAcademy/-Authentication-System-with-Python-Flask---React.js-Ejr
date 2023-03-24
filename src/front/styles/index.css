@@ -1,23 +1,53 @@
-/* 
-    General Styles used on every website (Don't Repeat Yourself)
-*/
+
 tr>th{
     font-weight: 300;
 }
 td{
     padding: 10px;
-    
-    /* display: inline-block; */
 }
 
 .table-container{
     background-color: lightgray;
     padding: 20px;
     width: 54%;
-    
 }
 
 .separador{
   
     border-top: 1px solid rgba(0, 0, 0, 0.353);
+}
+
+.options-component {
+    background-color: var(--color-two);
+    display: flex;
+    width: 20%;
+    height: 90vh;
+    justify-content: center;
+}
+.options-component > div {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: max-content;
+    color: aliceblue;
+}
+.options-component > div > h2 {
+    color: var(--color-one);
+    text-align: center;
+    border-bottom: 1px solid var(--color-one);
+    padding: 5px;
+    margin: 0;
+}
+.options-component > div > button {
+    border: 0;
+    background-color: transparent;
+    color: white;
+    border-bottom: 1px solid var(--color-three);
+    padding: 3px;
+}
+.admin-component {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
 }
