@@ -124,7 +124,7 @@ def add_order():
     # if existing_master:
     #     return "The master already registered", 400
 
-    new_order= Order( plant_type=plant , plant_size =size, customer_name=name, customer_number=phone, delivery_date=delivery_date,price=price,date=date, status="pending")
+    new_order= Order( plant_type= plant , plant_size =size, customer_name=name, customer_number=phone, delivery_date=delivery_date,price=price,date=date, status="pending")
     
     db.session.add(new_order)    
     db.session.commit()

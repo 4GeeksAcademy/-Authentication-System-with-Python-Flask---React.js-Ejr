@@ -93,12 +93,34 @@ const getState = ({ getStore, getActions, setStore }) => {
 					// .catch(error => console.log(error,"este error viene del flux"));
 			},
 
-			
+			addOrder: async(order)=>{
+
+				fetch(process.env.BACKEND_URL+"/api/add/order", {
+					method: 'POST',
+					headers: {
+					  'Content-Type': 'application/json'
+					},
+					body: JSON.stringify({
+						plant:order.plant_type,
+						size: order.size,
+						name: order.name,
+						phone: order.phone,
+						delivery_date: order.delivery_date,
+						price: order.price,
+						
+					
+					})
+				  })
+					.then(response => response.json())
+					.then(data => console.log(data))
+					// .catch(error => console.log(error,"este error viene del 
+				}
+		}
+
+	}		
 
 
 		
-		}
-	};
 };
 
 export default getState;
