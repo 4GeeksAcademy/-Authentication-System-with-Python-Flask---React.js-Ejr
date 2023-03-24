@@ -5,6 +5,7 @@ import Card from "../component/card";
 import AddPlants from "../component/addPlants";
 import GetPlants from "../component/getPlants";
 import AddMaster from "../component/addMaster";
+import AddOrder from "../component/addOrder";
 export const Home = () => {
 	// const { store, actions } = useContext(Context);
 
@@ -21,6 +22,7 @@ export const Home = () => {
 	// );
 	return(
 
-		<AddMaster/>
+		// <AddMaster/>
+		<AddOrder/>
 	)
 };
