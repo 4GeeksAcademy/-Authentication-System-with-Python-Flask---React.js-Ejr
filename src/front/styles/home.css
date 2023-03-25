@@ -39,9 +39,6 @@ nav {
 flex-direction: column;
 }
 
-.login-form{
-    
-}
 .login-form >*{
     
     margin-bottom:6px ;
@@ -69,3 +66,23 @@ button > a:hover {
     color: rgb(0, 0, 0);
     padding: 5px;
 } 
+
+.responsive-font{
+    font-size: 10px !important;
+}
+
+@media (min-width: 665px) {
+    .responsive-font {
+      font-size: 16px !important;
+    }
+  }
+
+@media (min-width: 1000px) {
+    .responsive-font {
+      font-size: 30px !important;
+    }
+  }
+
+  .color-row{
+    background-color: aquamarine;
+  }

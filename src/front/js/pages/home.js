@@ -20,8 +20,9 @@ export const Home = () => {
 	// 	{component}
 	// 	</>
 	// );
-	return(
-
-		<GetPlants/>
+	return(<>
+		{/* <GetPlants/> */}
+		<GetOrders/>
+	</>
 	)
 };
