@@ -24,8 +24,8 @@ export default function AddPlants(){
 
     return<>
     <div className="simple-form">
-        <h2>Agrega un nuevo tipo de planta</h2>
-    <input placeholder="Nombre de la planta" className="" onChange={(e)=>{handleNameChange(e)}}/>
+        <h2 className="bold">Agrega un nuevo tipo de planta</h2>
+            <input placeholder="Nombre de la planta" className="" onChange={(e)=>{handleNameChange(e)}}/>
             <input placeholder="Talla 34" onChange={(e)=>setPlant( {...plant,size34:parseInt(e.target.value)})}/>
             <input placeholder="Talla 35" onChange={(e)=>setPlant( {...plant,size35:parseInt(e.target.value)})}/>
             <input placeholder="Talla 36" onChange={(e)=>setPlant( {...plant,size36:parseInt(e.target.value)})}/>

@@ -7,6 +7,7 @@ td{
 }
 .tables {
     font-weight: 700;
+    margin-top: 30vh;
 }
 .table-container{
     display: grid;
@@ -44,6 +45,7 @@ td{
     margin: 0 auto;
     position: absolute;
 }
+
 .options-component > div {
     display: flex;
     flex-direction: column;
@@ -65,6 +67,9 @@ td{
     border-bottom: 1px solid var(--color-three);
     padding: 3px;
 }
+.admin-container {
+    height:calc(90vh - 40px);
+}
 .admin-component {
     display: flex;
     width: 100%;
@@ -77,9 +82,17 @@ td{
     display: flex;
     flex-direction: column;
     gap: 5px;
-    margin-top: 50px;
     align-items: center;
 }
+
+@media screen and (min-width: 480px) {
+    .simple-form {
+    max-width: 600px;
+    }
+    .options-component {
+        width: 25%;
+    }
+    }
 .simple-form > * {
     display: block;
     border: 0;
@@ -89,4 +102,8 @@ td{
 }
 .simple-form > *:not(:first-child, button) {
     border-bottom: 1px solid black;
+}
+
+.bold {
+    font-weight: 700 !important;
 }
