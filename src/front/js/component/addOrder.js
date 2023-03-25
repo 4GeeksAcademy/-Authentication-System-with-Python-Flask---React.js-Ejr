@@ -12,30 +12,20 @@ export default function AddOrder(){
     
     return<>
     
-        <div className="d-flex justify-content-center container">
-            <button onClick={()=>{console.log(order)}}>click</button>
-             <h1 className="text-color ">Nueva Orden</h1>
+        <div className="simple-form">
+            <h2 className="bold">Agrega un nuevo pedido</h2>
+        <input placeholder="Tipo de planta" onChange={(e)=>{setOrder({...order,plant_type:e.target.value})}}/>
+                <input placeholder="Talla" onChange={(e)=>{setOrder({...order,size:parseInt(e.target.value)})}}/>
+                <input placeholder="Nombre del cliente" onChange={(e)=>{setOrder({...order,name:e.target.value})}}/>
+                <input placeholder="Teléfono del cliente" onChange={(e)=>{setOrder({...order,phone:e.target.value})}}/>
+                <p className="border-0 bold">Fecha de entrega</p>
+                <input placeholder="Fecha de entrega" type="date" onChange={(e)=>{setOrder({...order,delivery_date:e.target.value})}}/>
+                <input placeholder="Precio" onChange={(e)=>{setOrder({...order,price:e.target.value})}}/>
+            <button className="button-dark" onClick={(e)=>{e.preventDefault(e);actions.addOrder(order)}}>Guardar</button>
         </div>
-        <div className="d-flex justify-content-center container">
-            <form className="row w-50 p-3 ">
-                <input placeholder="plant type" onChange={(e)=>{setOrder({...order,plant_type:e.target.value})}}/>
-                <input placeholder="plant size" onChange={(e)=>{setOrder({...order,size:parseInt(e.target.value)})}}/>
-                <input placeholder="customer name" onChange={(e)=>{setOrder({...order,name:e.target.value})}}/>
-                <input placeholder="customer number" onChange={(e)=>{setOrder({...order,phone:e.target.value})}}/>
-                <input placeholder="delivery date" type="date" onChange={(e)=>{setOrder({...order,delivery_date:e.target.value})}}/>
-                <input placeholder="price" onChange={(e)=>{setOrder({...order,price:e.target.value})}}/>
-                {/* <input placeholder="status" onChange={(e)=>{setOrder({...order,tatus:e.target.value})}}/> */}
-            </form>
-        </div>
-        <div className="d-flex justify-content-center container border-0">
-            <button onClick={(e)=>{e.preventDefault(e);actions.addOrder(order)}}>Guardar</button>
-        </div>
-        
-
-           
-          
-
-   
+    
+      
+    
    
     </>
 }

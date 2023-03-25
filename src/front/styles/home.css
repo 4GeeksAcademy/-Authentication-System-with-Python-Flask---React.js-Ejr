@@ -33,6 +33,7 @@ nav {
 .logo {
     color: var(--color-one);
     text-shadow: 2px 2px white;
+    font-size: 2.7vh;
 }
 
 .flex-direction-column{
