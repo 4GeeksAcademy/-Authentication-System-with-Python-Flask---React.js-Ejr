@@ -114,6 +114,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 					.then(response => response.json())
 					.then(data => console.log(data))
 					// .catch(error => console.log(error,"este error viene del 
+				},
+				authenticateUser: () => {
+					const token = localStorage.getItem('token')
+					if (token) {
+						setStore({isAuthenticated:true})
+					}
 				}
 		}
 

@@ -2,7 +2,7 @@ import React,{useContext} from "react";
 import { Context } from "./store/appContext";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
-
+import { Navigate } from "react-router-dom";
 import { Home } from "./pages/home";
 import { Demo } from "./pages/demo";
 import { Login } from "./pages/login";
@@ -32,7 +32,7 @@ const Layout = () => {
                         <Route element={<Demo />} path="/demo" />
                         <Route element={<Single />} path="/single/:theid" />
                         <Route element={<h1>Not found!</h1>} />
-                        <Route element={store.isAuthenticated ? <Admin /> : <Login />} path="/login" />
+                        <Route element={store.isAuthenticated ? <Navigate to="/admin" /> : <Login />} path="/login" />
                         <Route element={<SignUp />} path="/signup" />
                         <Route element={<Catalogue />} path="/catalogue" />
                         <Route element={<Admin />} path="/admin" />

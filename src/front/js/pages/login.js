@@ -23,9 +23,9 @@ export const Login = () => {
 
 	return (
         <>
-            <button onClick={()=>{console.log(store.isAuthenticated);}}>isAuthenticatedE</button>
-		    <form className="login-form d-flex align-items-center flex-direction-column container justify-content-center  w-50">
-                <h3 className="d-block p-1">Unete!</h3>
+		    <div className="w-100 mt-5">
+            <form className="standard-form d-flex gap-2 align-items-center flex-direction-column justify-content-center p-2">
+                <h2 className="bold">Inicia sesión en tu cuenta</h2>
                 <input name="email" placeholder="Ejemplo@gmail.com" 
                 className="w-100 p-2" 
                 onKeyUp={(e)=>setEmail(e.target.value)}/>
@@ -34,14 +34,14 @@ export const Login = () => {
                  className="w-100 p-2" type={showPassword ? "text" : "password"}
                  onChange={(e)=>setPassword(e.target.value)}/>
                 <span style = {{position: "absolute", top: 0, right: 0, transform: "translate(-30%, 45%)"}}
-                      onClick={()=>handleToggleClick()}>👁</span>
+                      onClick={()=>handleToggleClick()}>{showPassword ?<i class="fa-solid fa-eye"></i> :<i class="fa-solid fa-eye-slash"></i> }</span>
                 </div>
-                <h5>Olvidaste tu contraseña?</h5>
-                <button className="p-3 w-50 border-0 bg-pink" onClick={(e)=>handleClickLogin(e)}>Ingresa</button>
-                <h5><Link to ="/Catalogue">Regresa al catalogo!</Link></h5>
+                <button className="button-dark" onClick={(e)=>handleClickLogin(e)}>Ingresar</button>
+                <button className="button-light bg-gray"><Link to ="/Catalogue">Regresar al catálogo</Link></button>
                     
                 
             </form>
+            </div>
         </>
 	);
 };
