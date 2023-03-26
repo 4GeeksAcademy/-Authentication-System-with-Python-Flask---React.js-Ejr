@@ -6,6 +6,7 @@ import rigo from "../../img/rigo-baby.jpg"
 export default function AddPlants(){
     const {store,actions}=useContext(Context);
     const [showMessage, setShowMessage] = useState(false)
+    const [showError, setShowError] = useState(false)
     const [plant,setPlant]= useState({
        name:"",
        size34:0, 
@@ -22,6 +23,8 @@ export default function AddPlants(){
         )
     }
 
+    
+
     return<>
     <div className="simple-form">
         <h2 className="bold">Agrega un nuevo tipo de planta</h2>
@@ -33,12 +36,12 @@ export default function AddPlants(){
             <input placeholder="Talla 38" onChange={(e)=>setPlant( {...plant,size38:parseInt(e.target.value)})}/>
             <input placeholder="Talla 39" onChange={(e)=>setPlant( {...plant,size39:parseInt(e.target.value)})}/>
             <input placeholder="Talla 40" onChange={(e)=>setPlant( {...plant,size40:parseInt(e.target.value)})}/>
-            <button className="btn bg-pink" onClick={()=>actions.addPlants(plant)}>Guardar</button>
-            {showMessage && <div>Planta agregada a la base de datos</div>}
+            <button className="btn bg-pink" onClick={()=>{actions.addPlants(plant,setShowMessage,setShowError)}}>Guardar</button>
+            <div style={{position: "relative"}}>
+                {showMessage && <div className="popover">Planta agregada a la base de datos</div>}
+                {showError && <div className="popover">Ya agregaste esta planta previamente</div>}
+            </div>
+
     </div>
-    
-   
-  
-       
-    </>
+     </>
 }

@@ -70,3 +70,12 @@ button > a:hover {
     color: rgb(0, 0, 0);
     padding: 5px;
 } 
+.popover {
+    position: absolute;
+    top: calc(50% + 20px);
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 10px;
+  }
