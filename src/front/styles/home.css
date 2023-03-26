@@ -93,6 +93,9 @@ button > a:hover {
 .drop-menu > a:hover {
     background-color: var(--color-three);
 }
+
+} 
+
 .popover {
     position: absolute;
     top: calc(50% + 20px);
