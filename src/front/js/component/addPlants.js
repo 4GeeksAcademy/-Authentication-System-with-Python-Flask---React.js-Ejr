@@ -58,7 +58,7 @@ export default function AddPlants(){
             <input placeholder="Talla 40" onChange={(e)=>setPlant( {...plant,size40:parseInt(e.target.value)})} value={plant.size40}/>
             <button className="btn bg-pink" onClick={()=>{handleSave()}}>Guardar</button>
             <div style={{position: "relative"}}>
-                {showMessage && <div className="popover">Planta agregada a la base de datos</div>}
+                {showMessage && <div className="popover">Planta agregada existosamente!</div>}
                 {showError && <div className="popover">Ya agregaste esta planta previamente</div>}
             </div>
 
