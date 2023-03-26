@@ -72,10 +72,11 @@ button > a:hover {
 } 
 .popover {
     position: absolute;
-    top: calc(50% + 20px);
+    top: calc(50% + 30px);
     left: 50%;
     transform: translate(-50%, -50%);
     background-color: #fff;
     border: 1px solid #ccc;
     padding: 10px;
+    background-color: rgb(145, 228, 221);
   }
