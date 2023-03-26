@@ -7,7 +7,6 @@ td{
 }
 .tables {
     font-weight: 700;
-    margin-top: 30vh;
 }
 .table-container{
     display: grid;
@@ -40,7 +39,7 @@ td{
     background-color: var(--color-two);
     display: flex;
     width:100%;
-    height: 100%;
+    height:calc(90vh - 40px);
     justify-content: center;
     margin: 0 auto;
     position: absolute;
@@ -71,10 +70,15 @@ td{
     height:calc(90vh - 40px);
 }
 .admin-component {
-    display: flex;
+    display: block;
     width: 100%;
     justify-content: center;
     align-items: center;
+
+
+}
+.admin-component > div {
+    margin: 0 auto;
 }
 .simple-form {
 
@@ -90,7 +94,11 @@ td{
     max-width: 600px;
     }
     .options-component {
-        width: 25%;
+        width: 35%;
+    }
+    .standard-form {
+        max-width: 600px;
+        margin: 0 auto !important;
     }
     }
 .simple-form > * {
@@ -106,4 +114,15 @@ td{
 
 .bold {
     font-weight: 700 !important;
+}
+
+.standard-form {
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.164);
+    border-radius: 3px;
+    margin-top: 10px;
+}
+.standard-form input {
+    border: 0;
+    border-bottom: 1px solid black;
+    border-radius: 3px;
 }
