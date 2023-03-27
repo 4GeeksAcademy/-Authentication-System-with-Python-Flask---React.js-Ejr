@@ -6,9 +6,9 @@ import { Action } from "history";
 
 export default function AddMaster(){
     const[master,setMaster]= useState({
-        // name:"",
-        // phone: 0,
-        // alias:""
+        name:"",
+        phone: 0,
+        alias:""
     })
     const{store,actions}= useContext(Context)
     

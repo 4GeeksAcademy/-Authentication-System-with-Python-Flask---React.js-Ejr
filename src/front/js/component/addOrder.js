@@ -10,7 +10,10 @@ export default function AddOrder(){
     const{store,actions}= useContext(Context)
     
    const handleSave=()=>{
-
+    if (!order.name) {
+        alert("Por favor, inserte la informacion solicitada");
+        return;
+      }
     actions.addOrder(order,setShowMessage);
     setOrder({})
    }
