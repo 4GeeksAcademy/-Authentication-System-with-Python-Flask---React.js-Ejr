@@ -100,6 +100,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 					.then(data => console.log(data))
 					// .catch(error => console.log(error,"este error viene del flux"));
 			},
+      authenticateUser: () => {
+					const token = localStorage.getItem('token')
+					if (token) {
+						setStore({isAuthenticated:true})
+					}
+
 
 			addOrder : async (order,showMessage) => {
 				try {

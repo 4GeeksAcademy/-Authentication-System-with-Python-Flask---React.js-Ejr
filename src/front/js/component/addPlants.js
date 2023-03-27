@@ -4,6 +4,7 @@ import "../../styles/home.css";
 import rigo from "../../img/rigo-baby.jpg"
 
 export default function AddPlants(){
+    
     const {store,actions}=useContext(Context);
     const [showMessage, setShowMessage] = useState(false)
     const [showError, setShowError] = useState(false)
