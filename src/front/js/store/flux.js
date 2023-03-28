@@ -134,8 +134,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 			  },
 
 			logOut :()=>{
-
-				
+				localStorage.removeItem('token');
+				setStore({ isAuthenticated: false });	
 			}
 		}
 

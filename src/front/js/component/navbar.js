@@ -20,8 +20,10 @@ export const Navbar = () => {
 
 
 const SignupLoginComponent = () => {
+  const {store,actions}=useContext(Context);
   return (
     <>
+    {/* <button onClick={()=>{console.log(store.isAuthenticated);}}>kk</button> */}
       <div className="d-flex gap-4">
         <button className="button-light">
           <Link to="/login">Ingresar</Link>
@@ -36,21 +38,19 @@ const SignupLoginComponent = () => {
 
 const AuthWidget = () => {
   const [showDrop, setShowDrop] = useState(false)
+  const {store,actions}=useContext(Context);
   return (
     <>
+    {/* <button  onClick={()=>{console.log(store.isAuthenticated)}}>hola</button> */}
       <div className="menu-button">
       <i onClick={()=> setShowDrop(!showDrop)} className="fa-solid fa-bars button-dark"></i>
       {showDrop && <div className="drop-menu">
         <Link to="/admin" onClick={()=>setShowDrop(false)}>Ver panel de administrador</Link>
         <Link to="/" onClick={()=>setShowDrop(false)}>Ver catálogo</Link>
-        <Link to="/" onClick={()=>{}}>Logout</Link>
+        <Link to="/" onClick={()=>{actions.logOut()}}>Logout</Link>
       </div>}
       </div>
     </>
   );
 };
 
-const LogOut =()=>{
-
-
-}
