@@ -43,8 +43,14 @@ const AuthWidget = () => {
       {showDrop && <div className="drop-menu">
         <Link to="/admin" onClick={()=>setShowDrop(false)}>Ver panel de administrador</Link>
         <Link to="/" onClick={()=>setShowDrop(false)}>Ver catálogo</Link>
+        <Link to="/" onClick={()=>{}}>Logout</Link>
       </div>}
       </div>
     </>
   );
 };
+
+const LogOut =()=>{
+
+
+}
