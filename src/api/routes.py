@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User,Plants,Master,Order
+from api.models import db, User,Plants,Master,Order,Shoe
 from api.utils import generate_sitemap, APIException
 
 from flask_jwt_extended import create_access_token
@@ -151,5 +151,22 @@ def get_orders():
         'orders': orders_list
     }
 
+    return jsonify(response_body), 
+
+@api.route("/add/shoe", methods=["POST"])
+def add_model():
+    name = request.json.get("name", None)
+    size_from = request.json.get("size_from", None)
+    size_to = request.json.get("size_to", None)
+    category = request.json.get("category", None)
+    photo = request.json.get("photo", None)
+   
+
+    new_model= Shoe( name =name, size_from=size_from, size_to =size_to ,category =category,photo=photo )
+    
+    db.session.add(new_model)    
+    db.session.commit()
+
+    response_body = "You have a new model"
     return jsonify(response_body), 200
 

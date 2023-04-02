@@ -46,7 +46,7 @@ class Shoe(db.Model):
     # Check documentation for choices field
     # category = db.Column(db.String, nullable=False, server_default='Magnolia', choices=['Magnolia', 'Taco'])
     category = db.Column(db.String, nullable=False)
-    photo = db.Column(db.String, unique=True, nullable=False)
+    photo = db.Column(db.String, nullable=False)
 
 
     def __repr__(self):

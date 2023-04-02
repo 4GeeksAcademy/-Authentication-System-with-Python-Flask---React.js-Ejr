@@ -4,23 +4,15 @@ import "../../styles/home.css";
 import Card from "../component/card";
 import AddPlants from "../component/addPlants";
 import GetPlants from "../component/getPlants";
+import AddModels from "../component/addModels";
 export const Home = () => {
-	// const { store, actions } = useContext(Context);
+	const { store, actions } = useContext(Context);
 
-	// const [component,setComponent]= useState(<AddPlants/>)
-	// return (
-	// 	<>
-	// 	{/* <AddPlants/> */}
-	// 	{/* <GetPlants/> */}
-	// 	<h1 onClick={()=>{
-	// 		setComponent(<GetPlants/>)
-	// 	}}>show getPlants component</h1>
-	// 	{component}
-	// 	</>
-	// );
+	
 	return(
 
-		// <AddMaster/>
-		<AddOrder/>
+		<div>
+			<AddModels/>
+		</div>
 	)
 };

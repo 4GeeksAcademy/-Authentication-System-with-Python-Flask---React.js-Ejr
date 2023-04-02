@@ -170,7 +170,35 @@ const getState = ({ getStore, getActions, setStore }) => {
 				localStorage.removeItem('token');
 				setStore({ isAuthenticated: false });
 				console.log();	
-			}
+			},
+			addModel : async (model,showMessage) => {
+				console.log(model);
+				try {
+				  const response = await axios.post(`${process.env.BACKEND_URL}/api/add/shoe`, {
+				
+					name: model.name,
+					size_from: model.size_from,
+					size_to: model.size_to,
+					category: model.category,
+					photo:model.photo,
+				  });
+				  console.log(response);
+				  if(response.status === 200){
+					showMessage(true);
+					setTimeout(()=>{
+						showMessage(false)
+					},4000)
+				  }
+				}
+				catch (error) {
+				 console.log(error, "este error viene del flux");
+			   }
+				  
+				
+
+
+			  },
+
 		}
 
 	}		
