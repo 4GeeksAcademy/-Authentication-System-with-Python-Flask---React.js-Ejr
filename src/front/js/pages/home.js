@@ -4,8 +4,6 @@ import "../../styles/home.css";
 import Card from "../component/card";
 import AddPlants from "../component/addPlants";
 import GetPlants from "../component/getPlants";
-import AddMaster from "../component/addMaster";
-import GetOrders from "../component/getOrders";
 export const Home = () => {
 	// const { store, actions } = useContext(Context);
 
@@ -20,9 +18,9 @@ export const Home = () => {
 	// 	{component}
 	// 	</>
 	// );
-	return(<>
-		{/* <GetPlants/> */}
-		<GetOrders/>
-	</>
+	return(
+
+		// <AddMaster/>
+		<AddOrder/>
 	)
 };

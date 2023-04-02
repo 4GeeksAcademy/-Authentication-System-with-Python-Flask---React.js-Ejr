@@ -16,8 +16,8 @@ body {
     background-color: #FF6275;
 }
 
-.bg-white {
-background-color: #FFFFFF;
+.bg-gray {
+background-color: var(--color-three) !important;
 }
 
 .bg-button {
@@ -33,16 +33,14 @@ nav {
 .logo {
     color: var(--color-one);
     text-shadow: 2px 2px white;
+    font-size: 2.7vh;
 }
 
 .flex-direction-column{
 flex-direction: column;
 }
 
-.login-form >*{
-    
-    margin-bottom:6px ;
-}
+
 
 a{
     text-decoration: none;
@@ -58,6 +56,7 @@ button > a:hover {
     border-radius: 4px;
     color: white;
     padding: 5px;
+    cursor: pointer;
 }
 .button-light {
     background-color: white;
@@ -65,24 +64,44 @@ button > a:hover {
     border-radius: 4px;
     color: rgb(0, 0, 0);
     padding: 5px;
+    cursor: pointer;
 } 
-
-.responsive-font{
-    font-size: 10px !important;
+.button-light:hover, .button-dark:hover {
+    scale: 1.04;
+    transition: 0.3s;
+    color: black;
+}
+.menu-button {
+    position: relative;
 }
 
-@media (min-width: 665px) {
-    .responsive-font {
-      font-size: 16px !important;
-    }
-  }
+.drop-menu {
+   position: absolute;
+   right: 0;
+   padding: 3px;
+   background-color: var(--color-three);
+}
+.drop-menu > a {
+    background-color: white;
+    border: 0;
+    border-radius: 4px;
+    color: rgb(0, 0, 0);
+    padding: 5px;
+    cursor: pointer;
+    display: block;
+}
+.drop-menu > a:hover {
+    background-color: var(--color-three);
+}
 
-@media (min-width: 1000px) {
-    .responsive-font {
-      font-size: 30px !important;
-    }
-  }
 
-  .color-row{
-    background-color: aquamarine;
+.popover {
+    position: absolute;
+    top: calc(50% + 30px);
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 10px;
+    background-color: rgb(145, 228, 221);
   }

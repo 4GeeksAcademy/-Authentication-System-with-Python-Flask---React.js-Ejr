@@ -15,54 +15,51 @@ export default function GetPlants() {
     setPlants(store.plants);
   }, [store.plants]);
 
+
+
+  const styles = {
+    tableHeader: {
+      fontWeight: 300,
+      fontSize: '2em',
+    },
+    tableHeaderColumn: {
+      fontSize: '1em',
+      padding: '0 0.5em',
+    },
+  };
   return (
     <>
-      <div className="table-container container bg-pink mt-3 ">
-        <table className="w-100 rounded  rounded" style={{ fontWeight: 300 }}>
-          <thead>
-            <tr>
-              <th style={{ fontWeight: 300 }}>Nombre de la planta</th>
-              <th>34</th>
-              <th>35</th>
-              <th>36</th>
-              <th>37</th>
-              <th>38</th>
-              <th>39</th>
-              <th>40</th>
-            </tr>
-          </thead>
-          <tbody>
-            {plants.map((item, index) => (
-              <tr key={index} className="separador">
-                <td>
-                  <span>{item.name}</span>
-                </td>
-                <td>
-                  <span>{item.size34}</span>
-                </td>
-                <td>
-                  <span>{item.size35}</span>
-                </td>
-                <td>
-                  <span>{item.size36}</span>
-                </td>
-                <td>
-                  <span>{item.size37}</span>
-                </td>
-                <td>
-                  <span>{item.size38}</span>
-                </td>
-                <td>
-                  <span>{item.size39}</span>
-                </td>
-                <td>
-                  <span>{item.size40}</span>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+      <section className="tables">
+        <div className="text-center">Inventario de plantas</div>
+      <div className="table-container bg-pink mt-1">
+        
+        <div>34</div>
+        <div>35</div>
+        <div>36</div>
+        <div>37</div>
+        <div>38</div>
+        <div>39</div>
+        <div>40</div>
+        <div>41</div>
       </div>
+      {plants.map((item, index) => (
+        <>
+        <div className="text-center mt-2">{item.name}</div>
+        <div className="table-container border-left-dark mt-1" key={index}>
+          
+          <div>{item.size34}</div>
+          <div>{item.size35}</div>
+          <div>{item.size36}</div>
+          <div>{item.size37}</div>
+          <div>{item.size38}</div>
+          <div>{item.size39}</div>
+          <div>{item.size40}</div>
+          <div>{item.size41}</div>
+        </div>
+        </>
+))}
+
+      </section>
       
     </>
   );

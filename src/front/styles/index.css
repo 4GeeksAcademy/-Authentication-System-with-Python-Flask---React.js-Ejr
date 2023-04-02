@@ -5,16 +5,218 @@ tr>th{
 td{
     padding: 10px;
 }
-
-.table-container{
-    background-color: lightgray;
-    padding: 20px;
-    width: 54%;
+.tables {
+    font-weight: 700;
 }
+.table-container{
+    display: grid;
+    grid-template-columns: repeat(8, 1fr); 
+    gap: 0;
+    padding: 5px;
+    border-radius: 3px;
+}
+.table-container > div {
+    /* border-left: 1px solid white; */
+    font-weight: 700;
+    text-align: center;
+    padding: 9px;
+    
+}
+.border-left-dark > div:not(:first-child) {
+    border-left: 1px solid black;
+}
+.tables {
+    display: block;
+}
+
 
 .separador{
   
     border-top: 1px solid rgba(0, 0, 0, 0.353);
+}
+
+.options-component {
+    background-color: var(--color-two);
+    display: flex;
+    width:100%;
+    height:calc(90vh - 40px);
+    justify-content: center;
+    margin: 0 auto;
+    position: absolute;
+}
+
+.options-component > div {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: max-content;
+    color: aliceblue;
+}
+.options-component > div > h2 {
+    color: var(--color-one);
+    text-align: center;
+    border-bottom: 1px solid var(--color-one);
+    padding: 5px;
+    margin: 0;
+}
+.options-component > div > button {
+    border: 0;
+    background-color: transparent;
+    color: white;
+    border-bottom: 1px solid var(--color-three);
+    padding: 3px;
+}
+.admin-container {
+    height:calc(90vh - 40px);
+}
+.admin-component {
+    display: block;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+
+
+}
+.admin-component > div {
+    margin: 0 auto;
+}
+.simple-form {
+
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    align-items: center;
+}
+
+@media screen and (min-width: 480px) {
+    .simple-form {
+    max-width: 600px;
+    }
+    .options-component {
+        width: 35%;
+    }
+    .standard-form {
+        max-width: 600px;
+        margin: 0 auto !important;
+    }
+    }
+.simple-form > * {
+    display: block;
+    border: 0;
+    width: 90%;
+    margin: 0 auto;
+    text-align: center;
+}
+.simple-form > *:not(:first-child, button) {
+    border-bottom: 1px solid black;
+}
+
+.bold {
+    font-weight: 700 !important;
+}
+
+.standard-form {
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.164);
+    border-radius: 3px;
+    margin-top: 10px;
+}
+.standard-form input {
+    border: 0;
+    border-bottom: 1px solid black;
+    border-radius: 3px;
+}
+
+.options-component {
+    background-color: var(--color-two);
+    display: flex;
+    width:100%;
+    height:calc(90vh - 40px);
+    justify-content: center;
+    margin: 0 auto;
+    position: absolute;
+}
+
+.options-component > div {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: max-content;
+    color: aliceblue;
+}
+.options-component > div > h2 {
+    color: var(--color-one);
+    text-align: center;
+    border-bottom: 1px solid var(--color-one);
+    padding: 5px;
+    margin: 0;
+}
+.options-component > div > button {
+    border: 0;
+    background-color: transparent;
+    color: white;
+    border-bottom: 1px solid var(--color-three);
+    padding: 3px;
+}
+.admin-container {
+    height:calc(90vh - 40px);
+}
+.admin-component {
+    display: block;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+
+
+}
+.admin-component > div {
+    margin: 0 auto;
+}
+.simple-form {
+
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    align-items: center;
+}
+
+@media screen and (min-width: 480px) {
+    .simple-form {
+    max-width: 600px;
+    }
+    .options-component {
+        width: 35%;
+    }
+    .standard-form {
+        max-width: 600px;
+        margin: 0 auto !important;
+    }
+    }
+.simple-form > * {
+    display: block;
+    border: 0;
+    width: 90%;
+    margin: 0 auto;
+    text-align: center;
+}
+.simple-form > *:not(:first-child, button) {
+    border-bottom: 1px solid black;
+}
+
+.bold {
+    font-weight: 700 !important;
+}
+
+.standard-form {
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.164);
+    border-radius: 3px;
+    margin-top: 10px;
+}
+.standard-form input {
+    border: 0;
+    border-bottom: 1px solid black;
+    border-radius: 3px;
 }
 
 .options-component {
