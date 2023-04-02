@@ -87,6 +87,7 @@ def get_plants():
     plants_list = [plant.serialize() for plant in plants]
     return jsonify(plants_list), 200
 
+
 @api.route("/add/master", methods=["POST"])
 def add_master():
     name = request.json.get("name", None)
@@ -119,14 +120,13 @@ def add_order():
     date=datetime.now()
    
 
-    new_order= Order( plant_type= plant , plant_size =size, customer_name=name, customer_number=phone, delivery_date=delivery_date,price=price,date=date, status="pending")
+    new_order= Order( plant_type=plant , plant_size =size, customer_name=name, customer_number=phone, delivery_date=delivery_date,price=price,date=date, status="pending")
     
     db.session.add(new_order)    
     db.session.commit()
 
     response_body = "You have a new order"
     return jsonify(response_body), 200   
-
 
 @api.route("/get/orders", methods=["GET"])
 def get_orders():
@@ -152,3 +152,4 @@ def get_orders():
     }
 
     return jsonify(response_body), 200
+

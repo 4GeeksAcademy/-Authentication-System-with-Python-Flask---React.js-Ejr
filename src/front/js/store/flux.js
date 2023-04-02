@@ -6,6 +6,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			isAuthenticated: false,
 			plants:[],
 			master:[],
+			orders:[],
 		},
 		actions: {
 			
@@ -100,15 +101,43 @@ const getState = ({ getStore, getActions, setStore }) => {
 					.then(data => console.log(data))
 					// .catch(error => console.log(error,"este error viene del flux"));
 			},
+
+			getPlants: async()=>{
+				const store = getStore();
+				fetch(process.env.BACKEND_URL+"/api/get/plants")
+				.then(response => response.json())
+				.then(data => {setStore({plants:data});console.log(store.plants);})
+			},
+			
+			addMaster: async(master)=>{
+				fetch(process.env.BACKEND_URL+"/api/add/master", {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify({
+						name:master.name,
+						phone: master.phone,
+						alias: master.alias
+					})
+				})
+				.then(response => response.json())
+				.then(data => console.log(data))
+				// .catch(error => console.log(error,"este error viene del flux"));
+			},
+			
+			getOrders: async()=>{
+				const store = getStore();
+				fetch(process.env.BACKEND_URL+"/api/get/orders")
+				.then(response => response.json())
+				.then(data => {setStore({orders:data}); console.log("Fetch Success")})
+			},
       		authenticateUser: () => {
 					const token = localStorage.getItem('token')
 					if (token) {
 						setStore({isAuthenticated:true})
 					}
 			},
-
-
-				},
 			addOrder : async (order,showMessage) => {
 
 				try {
@@ -134,8 +163,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 				  console.log(error, "este error viene del flux");
 				}
 
-			  }
-		
 
 			  },
 

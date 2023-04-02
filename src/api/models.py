@@ -112,7 +112,6 @@ class Order(db.Model):
     def serialize(self):
         return {
             "id": self.id,
-            "master_id": self.master_id,
             "plant_type": self.plant_type,
             "plant_size": self.plant_size,
             "customer_name": self.customer_name,

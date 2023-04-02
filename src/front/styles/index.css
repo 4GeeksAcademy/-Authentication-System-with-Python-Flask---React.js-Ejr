@@ -126,3 +126,130 @@ td{
     border-bottom: 1px solid black;
     border-radius: 3px;
 }
+
+.options-component {
+    background-color: var(--color-two);
+    display: flex;
+    width:100%;
+    height:calc(90vh - 40px);
+    justify-content: center;
+    margin: 0 auto;
+    position: absolute;
+}
+
+.options-component > div {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: max-content;
+    color: aliceblue;
+}
+.options-component > div > h2 {
+    color: var(--color-one);
+    text-align: center;
+    border-bottom: 1px solid var(--color-one);
+    padding: 5px;
+    margin: 0;
+}
+.options-component > div > button {
+    border: 0;
+    background-color: transparent;
+    color: white;
+    border-bottom: 1px solid var(--color-three);
+    padding: 3px;
+}
+.admin-container {
+    height:calc(90vh - 40px);
+}
+.admin-component {
+    display: block;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+
+
+}
+.admin-component > div {
+    margin: 0 auto;
+}
+.simple-form {
+
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    align-items: center;
+}
+
+@media screen and (min-width: 480px) {
+    .simple-form {
+    max-width: 600px;
+    }
+    .options-component {
+        width: 35%;
+    }
+    .standard-form {
+        max-width: 600px;
+        margin: 0 auto !important;
+    }
+    }
+.simple-form > * {
+    display: block;
+    border: 0;
+    width: 90%;
+    margin: 0 auto;
+    text-align: center;
+}
+.simple-form > *:not(:first-child, button) {
+    border-bottom: 1px solid black;
+}
+
+.bold {
+    font-weight: 700 !important;
+}
+
+.standard-form {
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.164);
+    border-radius: 3px;
+    margin-top: 10px;
+}
+.standard-form input {
+    border: 0;
+    border-bottom: 1px solid black;
+    border-radius: 3px;
+}
+
+.options-component {
+    background-color: var(--color-two);
+    display: flex;
+    width: 20%;
+    height: 90vh;
+    justify-content: center;
+}
+.options-component > div {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: max-content;
+    color: aliceblue;
+}
+.options-component > div > h2 {
+    color: var(--color-one);
+    text-align: center;
+    border-bottom: 1px solid var(--color-one);
+    padding: 5px;
+    margin: 0;
+}
+.options-component > div > button {
+    border: 0;
+    background-color: transparent;
+    color: white;
+    border-bottom: 1px solid var(--color-three);
+    padding: 3px;
+}
+.admin-component {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
