@@ -119,11 +119,6 @@ def add_order():
     price = request.json.get("price", None)
     date=datetime.now()
    
-   
-    # existing_order= Master.query.filter_by(name=name).first()
-
-    # if existing_master:
-    #     return "The master already registered", 400
 
     new_order= Order( plant_type=plant , plant_size =size, customer_name=name, customer_number=phone, delivery_date=delivery_date,price=price,date=date, status="pending")
     
@@ -136,5 +131,25 @@ def add_order():
 @api.route("/get/orders", methods=["GET"])
 def get_orders():
     orders = Order.query.all()
-    orders_list = [order.serialize() for order in orders]
-    return jsonify(orders_list), 200
+    orders_list = []
+
+    for order in orders:
+        order_data = {
+            'id': order.id,
+            'plant_type': order.plant_type,
+            'plant_size': order.plant_size,
+            'customer_name': order.customer_name,
+            'customer_number': order.customer_number,
+            'delivery_date': order.delivery_date,
+            'price': order.price,
+            'date': order.date,
+            'status': order.status
+        }
+        orders_list.append(order_data)
+
+    response_body = {
+        'orders': orders_list
+    }
+
+    return jsonify(response_body), 200
+

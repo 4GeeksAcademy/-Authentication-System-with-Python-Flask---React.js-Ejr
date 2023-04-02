@@ -6,10 +6,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			isAuthenticated: false,
 			plants:[],
 			master:[],
-<<<<<<< HEAD
 			orders:[],
-=======
->>>>>>> develop
 		},
 		actions: {
 			
@@ -104,7 +101,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 					.then(data => console.log(data))
 					// .catch(error => console.log(error,"este error viene del flux"));
 			},
-<<<<<<< HEAD
 
 			getPlants: async()=>{
 				const store = getStore();
@@ -136,19 +132,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 				.then(response => response.json())
 				.then(data => {setStore({orders:data}); console.log("Fetch Success")})
 			},
-			
-			
-			
-			
-=======
-      authenticateUser: () => {
+      		authenticateUser: () => {
 					const token = localStorage.getItem('token')
 					if (token) {
 						setStore({isAuthenticated:true})
 					}
-
-
+			},
 			addOrder : async (order,showMessage) => {
+
 				try {
 				  const response = await axios.post(`${process.env.BACKEND_URL}/api/add/order`, {
 					plant: order.plant_type,
@@ -171,14 +162,21 @@ const getState = ({ getStore, getActions, setStore }) => {
 				 catch (error) {
 				  console.log(error, "este error viene del flux");
 				}
-			  }
->>>>>>> develop
+
+
+			  },
+
+			logOut :()=>{
+				localStorage.removeItem('token');
+				setStore({ isAuthenticated: false });
+				console.log();	
+			}
 		}
 
 	}		
 
 	}
 		
-};
+;
 
 export default getState;
