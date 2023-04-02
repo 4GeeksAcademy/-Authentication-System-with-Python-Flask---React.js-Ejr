@@ -105,3 +105,7 @@ button > a:hover {
     padding: 10px;
     background-color: rgb(145, 228, 221);
   }
+
+  .color-row{
+    background-color: aquamarine;
+  }

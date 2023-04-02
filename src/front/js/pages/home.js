@@ -4,6 +4,8 @@ import "../../styles/home.css";
 import Card from "../component/card";
 import AddPlants from "../component/addPlants";
 import GetPlants from "../component/getPlants";
+import AddOrder from "../component/addOrder";
+
 export const Home = () => {
 	// const { store, actions } = useContext(Context);
 

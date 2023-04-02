@@ -1,7 +1,6 @@
 import React, { useContext,useState, useEffect } from "react";
 import { Context } from "../store/appContext";
 import "../../styles/home.css";
-import rigo from "../../img/rigo-baby.jpg"
 import { Action } from "history";
 
 export default function GetOrders(){
@@ -16,23 +15,30 @@ export default function GetOrders(){
 
         // if the index already exists in the array, remove it
         if(updateRow.includes(orderId)){
-            updateRow.splice(updateRow.indexOf((orderId), 1))
+            updateRow.splice(updateRow.indexOf(orderId), 1)
         }else{
             // add the index to the array
             updateRow.push(orderId)
         }
         // set the new selectedRows state
         setSelectedRows(updateRow)
+
+        // update order status on backend
+        const status = updateRow.includes(orderId) ? "Terminado" : "Pendiente";
+        actions.updateOrderStatus(orderId, status);
     }
     
     useEffect(() => {
         actions.getOrders()
     }, [])
 
+    useEffect(() => {
+        actions.getOrders()
+    }, [store.orders])
+
     
     
     return<>
-    <button onClick={console.log(store.orders)}> Click me</button>
         <div className="table-responsive responsive-font">
             <table className="table">
                 <thead>
@@ -48,7 +54,7 @@ export default function GetOrders(){
                     </tr>
                 </thead>
                 <tbody>
-                    {store.orders.map((order,index)=>{
+                    {store.orders.sort((a, b) => new Date(a.id) - new Date(b.id)).map((order,index)=>{
                         const rowClass = selectedRows.includes(order.id) ? "color-row" : "" ;
                         return(
                         <tr className={rowClass} key={index}>
@@ -61,7 +67,7 @@ export default function GetOrders(){
                             <td>{new Date(order.delivery_date).toLocaleDateString('es', { year: 'numeric', month: 'short', day: 'numeric' })}</td>
                             <td> {order.status}
                                 <input type="checkbox" onClick={()=>handleClickRow(order.id)}/>
-                            </td>  
+                            </td> 
                         </tr>)
                         })
                     }  
