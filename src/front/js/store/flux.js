@@ -100,7 +100,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					.then(data => console.log(data))
 					// .catch(error => console.log(error,"este error viene del flux"));
 			},
-      authenticateUser: () => {
+      		authenticateUser: () => {
 					const token = localStorage.getItem('token')
 					if (token) {
 						setStore({isAuthenticated:true})
@@ -108,7 +108,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 
 
-		addOrder: async (order,showMessage) => {
+				},
+			addOrder : async (order,showMessage) => {
+
 				try {
 				  const response = await axios.post(`${process.env.BACKEND_URL}/api/add/order`, {
 					plant: order.plant_type,
@@ -131,6 +133,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 				 catch (error) {
 				  console.log(error, "este error viene del flux");
 				}
+
+			  }
+		
+
 			  },
 
 			logOut :()=>{
