@@ -105,9 +105,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 					if (token) {
 						setStore({isAuthenticated:true})
 					}
+			},
+
 
 				},
 			addOrder : async (order,showMessage) => {
+
 				try {
 				  const response = await axios.post(`${process.env.BACKEND_URL}/api/add/order`, {
 					plant: order.plant_type,
@@ -130,13 +133,23 @@ const getState = ({ getStore, getActions, setStore }) => {
 				 catch (error) {
 				  console.log(error, "este error viene del flux");
 				}
+
 			  }
 		
+
+			  },
+
+			logOut :()=>{
+				localStorage.removeItem('token');
+				setStore({ isAuthenticated: false });
+				console.log();	
+			}
+		}
 
 	}		
 
 	}
 		
-};
+;
 
 export default getState;
