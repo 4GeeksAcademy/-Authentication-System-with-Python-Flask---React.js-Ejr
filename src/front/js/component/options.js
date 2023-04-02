@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import AddPlants from "./addPlants";
 import GetPlants from "./getPlants";
 import AddOrder from "./addOrder";
+import AddModels from "./addModels";
 export default function Options({setComponent}) {
 
   return (
@@ -19,7 +20,7 @@ export default function Options({setComponent}) {
             <button>Entregar plantas a maestro</button>
             <button>Ver movimientos de plantas</button>
             <h2>Modelos</h2>
-            <button>Agregar nuevo modelo</button>
+            <button onClick={()=>{setComponent(<AddModels/>)}}>Agregar nuevo modelo</button>
             <button>Ver catálogo de clientes</button>
             <button>Ver inventario de modelos</button>
           </div>
