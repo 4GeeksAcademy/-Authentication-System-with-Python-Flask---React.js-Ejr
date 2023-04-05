@@ -15,6 +15,7 @@ export const Home = () => {
 
 		<div>
 			<AddModels/>
+			Hello
 		</div>
 	)
 };
