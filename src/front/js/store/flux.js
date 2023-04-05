@@ -130,7 +130,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				const store = getStore();
 				fetch(process.env.BACKEND_URL+"/api/get/orders")
 				.then(response => response.json())
-				.then(data => {setStore({orders:data}); console.log("Fetch Success")})
+				.then(data => setStore({orders: data.orders}))
 			},
       		authenticateUser: () => {
 					const token = localStorage.getItem('token')
@@ -199,6 +199,29 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			  },
 
+			updateOrderStatus: async (orderId, status) => {
+				try {
+				  const response = await fetch(process.env.BACKEND_URL + `/api/update/order`, {
+					method: "POST",
+					headers: {
+					  "Content-Type": "application/json",
+					},
+					body: JSON.stringify({
+						"id": orderId,
+						"status": status,
+					}),
+				  });
+			  
+				  if (response.ok) {
+					console.log(`Order ${orderId} status updated to ${status}`);
+					// You may also choose to update the store or trigger a fetch for the updated orders
+				  } else {
+					console.error(`Failed to update order ${orderId} status: ${response.statusText}`);
+				  }
+				} catch (error) {
+				  console.error(`Failed to update order ${orderId} status: ${error.message}`);
+				}
+			  },
 		}
 
 	}		

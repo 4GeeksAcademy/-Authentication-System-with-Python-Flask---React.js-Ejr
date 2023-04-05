@@ -120,7 +120,7 @@ def add_order():
     date=datetime.now()
    
 
-    new_order= Order( plant_type=plant , plant_size =size, customer_name=name, customer_number=phone, delivery_date=delivery_date,price=price,date=date, status="pending")
+    new_order= Order( plant_type=plant , plant_size =size, customer_name=name, customer_number=phone, delivery_date=delivery_date,price=price,date=date, status="Pendiente")
     
     db.session.add(new_order)    
     db.session.commit()
@@ -170,3 +170,25 @@ def add_model():
     response_body = "You have a new model"
     return jsonify(response_body), 200
 
+@api.route("/update/order", methods=["POST"])
+def update_order():
+    order_id = request.json.get("id", None)
+    new_status = request.json.get("status", None)
+
+    if not order_id or not new_status:
+        return jsonify("Invalid request"), 400
+
+    order = Order.query.filter_by(id=order_id).first()
+
+    if not order:
+        return jsonify("Order not found"), 404
+
+    order.status = new_status
+    db.session.commit()
+
+    response_body = {
+        'id': order.id,
+        'status': order.status
+    }
+
+    return jsonify(response_body), 200
