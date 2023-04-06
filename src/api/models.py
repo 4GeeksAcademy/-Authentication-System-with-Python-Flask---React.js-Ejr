@@ -27,6 +27,9 @@ class Master(db.Model):
     phone = db.Column(db.String(20), unique=False, nullable=True)
     alias = db.Column(db.String(20), unique=False, nullable=True)
 
+    transactions = db.relationship('PlantsTransactions', backref='master', lazy=True)
+    orders = db.relationship('Order', backref='master', lazy=True)
+    
     def __repr__(self):
         return f'<Master {self.name}>'
 
@@ -74,7 +77,8 @@ class Plants(db.Model):
     size39 = db.Column(db.Integer, nullable=True)
     size40 = db.Column(db.Integer, nullable=True)
     size41 = db.Column(db.Integer, nullable=True)
-
+    orders = db.relationship('Order', backref='plants', lazy=True)
+    transactions = db.relationship('PlantsTransactions', backref='plants', lazy=True)
     def __repr__(self):
         return f'<Plants {self.name}>'
 
@@ -96,8 +100,8 @@ class Plants(db.Model):
 class Order(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     # Check documentation for correct relationship
-    # master_id = db.Column(db.Integer, db.ForeignKey('master.id'), nullable=False)
-    plant_type = db.Column(db.String(120), nullable=False)
+    master_id = db.Column(db.Integer, db.ForeignKey('master.id'), nullable=True)
+    plant_id = db.Column(db.Integer, db.ForeignKey('plants.id'), nullable=True)
     plant_size = db.Column(db.Integer, nullable=False)
     customer_name = db.Column(db.String(120), nullable=False)
     customer_number = db.Column(db.String(20), nullable=False)
@@ -105,14 +109,14 @@ class Order(db.Model):
     date = db.Column(db.Date, nullable=False)
     price = db.Column(db.String(10), nullable=True)
     status = db.Column(db.String(20), nullable=False)
-
+    
     def __repr__(self):
         return f'<Orders {self.id}>'
 
     def serialize(self):
         return {
             "id": self.id,
-            "plant_type": self.plant_type,
+            "plant": Plants.query.get(self.plant_id).serialize(),
             "plant_size": self.plant_size,
             "customer_name": self.customer_name,
             "customer_number": self.customer_number,
@@ -137,4 +141,38 @@ class Costumer(db.Model):
             "id": self.id,
             "name": self.name,
             "phone_number": self.phone_number
+        }
+
+
+class PlantsTransactions(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    description = db.Column(db.String(200), unique=False, nullable=True)
+    master_id = db.Column(db.Integer, db.ForeignKey('master.id'), nullable=True)
+    plant_id = db.Column(db.Integer, db.ForeignKey('plants.id'), nullable=False)
+    size34 = db.Column(db.Integer, nullable=True)
+    size35 = db.Column(db.Integer, nullable=True)
+    size36 = db.Column(db.Integer, nullable=True)
+    size37 = db.Column(db.Integer, nullable=True)
+    size38 = db.Column(db.Integer, nullable=True)
+    size39 = db.Column(db.Integer, nullable=True)
+    size40 = db.Column(db.Integer, nullable=True)
+    size41 = db.Column(db.Integer, nullable=True)
+
+    def __repr__(self):
+        return f'<Costumer {self.name}>'
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "description": self.description,
+            "master":  Master.query.get(self.master_id).serialize(),
+            "plant": Plants.query.get(self.plant_id).serialize(),
+            "size34": self.size34,
+            "size35": self.size35,
+            "size36": self.size36,
+            "size37": self.size37,
+            "size38": self.size38,
+            "size39": self.size39,
+            "size40": self.size40,
+            "size41": self.size41,
         }

@@ -134,24 +134,14 @@ def get_orders():
     orders_list = []
 
     for order in orders:
-        order_data = {
-            'id': order.id,
-            'plant_type': order.plant_type,
-            'plant_size': order.plant_size,
-            'customer_name': order.customer_name,
-            'customer_number': order.customer_number,
-            'delivery_date': order.delivery_date,
-            'price': order.price,
-            'date': order.date,
-            'status': order.status
-        }
+        order_data = order.serialize()
         orders_list.append(order_data)
 
     response_body = {
         'orders': orders_list
     }
 
-    return jsonify(response_body), 
+    return jsonify(response_body), 200
 
 @api.route("/add/shoe", methods=["POST"])
 def add_model():
