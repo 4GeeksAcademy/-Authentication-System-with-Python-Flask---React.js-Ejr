@@ -81,7 +81,11 @@ class Plants(db.Model):
     transactions = db.relationship('PlantsTransactions', backref='plants', lazy=True)
     def __repr__(self):
         return f'<Plants {self.name}>'
-
+    def short_serializer(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+        }
     def serialize(self):
         return {
             "id": self.id,
@@ -165,7 +169,7 @@ class PlantsTransactions(db.Model):
         return {
             "id": self.id,
             "description": self.description,
-            "master":  Master.query.get(self.master_id).serialize(),
+            # "master":  Master.query.get(self.master_id).serialize(),
             "plant": Plants.query.get(self.plant_id).serialize(),
             "size34": self.size34,
             "size35": self.size35,

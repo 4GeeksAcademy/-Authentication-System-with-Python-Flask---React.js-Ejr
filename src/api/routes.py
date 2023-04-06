@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User,Plants,Master,Order,Shoe
+from api.models import db, User,Plants,Master,Order,Shoe,PlantsTransactions
 from api.utils import generate_sitemap, APIException
 
 from flask_jwt_extended import create_access_token
@@ -111,16 +111,30 @@ def add_master():
 
 @api.route("/add/order", methods=["POST"])
 def add_order():
-    plant= request.json.get("plant", None)
+    plant_id= request.json.get("plant_id", None)
     size = request.json.get("size", None)
     name = request.json.get("name", None)
     phone = request.json.get("phone", None)
     delivery_date = request.json.get("delivery_date", None)
     price = request.json.get("price", None)
     date=datetime.now()
-   
-
-    new_order= Order( plant_type=plant , plant_size =size, customer_name=name, customer_number=phone, delivery_date=delivery_date,price=price,date=date, status="Pendiente")
+    plant= Plants.query.get(plant_id)
+    if size == 34:
+        plant.size34 -= 1   
+    elif size == 35:
+        plant.size35 -= 1
+    elif size == 36:
+        plant.size36 -= 1
+    elif size == 37:
+        plant.size37 -= 1
+    elif size == 38:
+        plant.size38 -= 1
+    elif size == 39:
+        plant.size39 -= 1
+    elif size == 40:
+        plant.size40 -= 1
+    
+    new_order= Order( plant_id=plant_id , plant_size =size, customer_name=name, customer_number=phone, delivery_date=delivery_date,price=price,date=date, status="Pendiente")
     
     db.session.add(new_order)    
     db.session.commit()
@@ -182,3 +196,40 @@ def update_order():
     }
 
     return jsonify(response_body), 200
+
+@api.route("/add/transaction", methods=["POST"])
+def add_plant_transaction():
+    description = request.json.get("description", None)
+    master_id = request.json.get("master_id", None)
+    plant_id = request.json.get("plant_id", None)
+    size34 = request.json.get("size34", None)
+    size35 = request.json.get("size35", None)
+    size36 = request.json.get("size36", None)
+    size37 = request.json.get("size37", None)
+    size38 = request.json.get("size38", None)
+    size39 = request.json.get("size39", None)
+    size40 = request.json.get("size40", None)
+    size41 = request.json.get("size41", None)
+
+    new_transaction = PlantsTransactions(description=description, master_id=master_id, plant_id=plant_id, size34=size34, size35=size35, size36=size36, size37=size37, size38=size38, size39=size39, size40=size40, size41=0)
+    db.session.add(new_transaction)
+    db.session.commit()
+    plant=Plants.query.get(plant_id)
+    plant.size34 += size34
+    plant.size35 += size35
+    plant.size36 += size36
+    plant.size37 += size37
+    plant.size38 += size38
+    plant.size39 += size39
+    plant.size40 += size40
+    plant.size41 += size41
+    db.session.commit()
+
+    response_body = {"message": "Transaction created successfully", "transaction": new_transaction.serialize()}
+    return jsonify(response_body), 200
+
+@api.route("/get/plant/types", methods=["GET"])
+def get_plants_types():
+    plants = Plants.query.all()
+    plants_list = [plant.short_serializer() for plant in plants]
+    return jsonify(plants_list), 200

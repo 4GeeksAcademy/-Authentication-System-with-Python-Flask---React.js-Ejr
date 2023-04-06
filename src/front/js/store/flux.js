@@ -142,7 +142,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				try {
 				  const response = await axios.post(`${process.env.BACKEND_URL}/api/add/order`, {
-					plant: order.plant_type,
+					plant_id: order.plant_id,
 					size: order.size,
 					name: order.name,
 					phone: order.phone,
@@ -221,6 +221,39 @@ const getState = ({ getStore, getActions, setStore }) => {
 				} catch (error) {
 				  console.error(`Failed to update order ${orderId} status: ${error.message}`);
 				}
+			  },
+			  addTransaction: async (transaction,showMessage) => {
+				
+				try {
+				  const response = await axios.post(`${process.env.BACKEND_URL}/api/add/transaction`, {
+					description:transaction.description ,
+					plant_id: 1,
+					master_id: 1,
+					size34:transaction.size34 ? transaction.size34:0,
+					size35: transaction.size35 ? transaction.size35:0,
+					size36: transaction.size36 ? transaction.size36:0,
+					size37: transaction.size37 ? transaction.size37:0,
+					size38: transaction.size38 ? transaction.size38:0,
+					size39:transaction.size39 ? transaction.size39:0,
+					size40: transaction.size40 ? transaction.size40:0,
+					size41:0
+					
+				  });
+				  console.log(response.status);
+				  if(response.status === 200){
+					showMessage(true);
+					setTimeout(()=>{
+						showMessage(false)
+					},4000)
+				  }
+				 }
+				catch (error) {
+				 console.log(error, "este error viene del flux");
+			   }
+				  
+				
+
+
 			  },
 		}
 

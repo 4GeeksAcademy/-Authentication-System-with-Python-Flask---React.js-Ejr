@@ -22,7 +22,7 @@ export default function AddOrder(){
     
         <div className="simple-form">
             <h2 className="bold">Agrega un nuevo pedido</h2>
-                <input placeholder="Tipo de planta" onChange={(e)=>{setOrder({...order,plant_type:e.target.value})}} value={order.plant_type || ''}/>
+                <input placeholder="Tipo de planta" onChange={(e)=>{setOrder({...order,plant_id:1})}} value={order.plant_id || ''}/>
                 <input placeholder="Talla" onChange={(e)=>{setOrder({...order,size:parseInt(e.target.value)})}} value={order.size || ''}/>
                 <input placeholder="Nombre del cliente" onChange={(e)=>{setOrder({...order,name:e.target.value})}} value={order.name || ''}/>
                 <input placeholder="Teléfono del cliente" onChange={(e)=>{setOrder({...order,phone:e.target.value})}} value={order.phone || ''}/>
