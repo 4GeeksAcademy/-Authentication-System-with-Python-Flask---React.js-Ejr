@@ -239,13 +239,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 					size41:0
 					
 				  });
-				  console.log(response);
-				//   if(response.status === 200){
-				// 	showMessage(true);
-				// 	setTimeout(()=>{
-				// 		showMessage(false)
-				// 	},4000)
-				//   }
+				  console.log(response.status);
+				  if(response.status === 200){
+					showMessage(true);
+					setTimeout(()=>{
+						showMessage(false)
+					},4000)
+				  }
 				 }
 				catch (error) {
 				 console.log(error, "este error viene del flux");

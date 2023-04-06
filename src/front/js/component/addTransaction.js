@@ -5,6 +5,7 @@ import { Action } from "history";
 
 export default function AddTransaction(){
     const[transaction,setTransaction]= useState({})
+    const[showMessage,setShowMessage]= useState(false)
     const{store,actions}= useContext(Context)
     const subtractPlants= (e)=>{
         e.preventDefault()
@@ -38,9 +39,13 @@ export default function AddTransaction(){
             <input placeholder="Talla 40" onChange={(e)=>{setTransaction({...transaction,size40:parseInt(e.target.value)})}}/>
             <input placeholder="Talla 41" onChange={(e)=>{setTransaction({...transaction,size40:parseInt(e.target.value)})}}/>
         <div className="d-flex justify-content-center mt-3">
-            <button className="border-0 bg-pink me-3" onClick={(e)=>{e.preventDefault();actions.addTransaction(transaction)}}>Sumar Plantas Al Inventario</button>
+            <button className="border-0 bg-pink me-3" onClick={(e)=>{e.preventDefault();actions.addTransaction(transaction,setShowMessage)}}>Sumar Plantas Al Inventario</button>
             <button className="border-0 bg-pink" onClick={(e)=>{subtractPlants(e)}}>Entregar Plantas A Un Maestro</button>
         </div>
+        <div style={{}}>
+        {showMessage && <div className="popover">Transacción Exitosa</div>}
+        </div>
+
         
 
     </form>
