@@ -112,6 +112,8 @@ def add_master():
 @api.route("/add/order", methods=["POST"])
 def add_order():
     plant_id= request.json.get("plant_id", None)
+    master_id= request.json.get("master_id", None)
+    description= request.json.get("description", None)
     size = request.json.get("size", None)
     name = request.json.get("name", None)
     phone = request.json.get("phone", None)
@@ -134,7 +136,7 @@ def add_order():
     elif size == 40:
         plant.size40 -= 1
     
-    new_order= Order( plant_id=plant_id , plant_size =size, customer_name=name, customer_number=phone, delivery_date=delivery_date,price=price,date=date, status="Pendiente")
+    new_order= Order( plant_id=plant_id, master_id=master_id, description=description , plant_size =size, customer_name=name, customer_number=phone, delivery_date=delivery_date,price=price,date=date, status="Pendiente")
     
     db.session.add(new_order)    
     db.session.commit()
@@ -233,3 +235,9 @@ def get_plants_types():
     plants = Plants.query.all()
     plants_list = [plant.short_serializer() for plant in plants]
     return jsonify(plants_list), 200
+
+@api.route("/get/masters", methods=["GET"])
+def get_masters():
+    masters = Master.query.all()
+    masters_list = [master.serialize() for master in masters]
+    return jsonify(masters_list), 200

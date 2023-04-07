@@ -103,16 +103,16 @@ class Plants(db.Model):
 
 class Order(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    # Check documentation for correct relationship
     master_id = db.Column(db.Integer, db.ForeignKey('master.id'), nullable=True)
     plant_id = db.Column(db.Integer, db.ForeignKey('plants.id'), nullable=True)
     plant_size = db.Column(db.Integer, nullable=False)
     customer_name = db.Column(db.String(120), nullable=False)
     customer_number = db.Column(db.String(20), nullable=False)
-    delivery_date = db.Column(db.Date, nullable= True)
+    delivery_date = db.Column(db.Date, nullable=True)
     date = db.Column(db.Date, nullable=False)
-    price = db.Column(db.String(10), nullable=True)
+    price = db.Column(db.Integer, nullable=True)
     status = db.Column(db.String(20), nullable=False)
+    description = db.Column(db.String(600), nullable=True)
     
     def __repr__(self):
         return f'<Orders {self.id}>'
@@ -121,12 +121,14 @@ class Order(db.Model):
         return {
             "id": self.id,
             "plant": Plants.query.get(self.plant_id).serialize(),
+            "master": Master.query.get(self.master_id).serialize(),
             "plant_size": self.plant_size,
             "customer_name": self.customer_name,
             "customer_number": self.customer_number,
             "delivery_date": self.delivery_date,
             "price": self.price,
-            "status": self.status
+            "status": self.status,
+            "description": self.description
         }
 
 

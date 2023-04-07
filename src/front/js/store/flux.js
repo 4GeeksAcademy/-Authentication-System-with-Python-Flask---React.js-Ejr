@@ -132,6 +132,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 				.then(response => response.json())
 				.then(data => setStore({orders: data.orders}))
 			},
+			updateOrders: (newOrdersArr)=>{
+				const store = getStore();
+				setStore({orders: newOrdersArr})
+			},
       		authenticateUser: () => {
 					const token = localStorage.getItem('token')
 					if (token) {
@@ -148,6 +152,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 					phone: order.phone,
 					delivery_date: order.delivery_date,
 					price: order.price,
+					master_id: order.master,
+					description: order.description
 				  });
 				  console.log(response.data);
 				  if(response.status === 200){
