@@ -1,4 +1,3 @@
-
 const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
@@ -12,42 +11,44 @@ const getState = ({ getStore, getActions, setStore }) => {
         },
         {
           name: "Paper",
-          rule: "A play of paper will lose to a play of scissors (scissors cuts paper)",
+          rule: "A play of paper will win against who a play of rock but scissors cuts paper)",
         },
         {
           name: "Scissors",
-          rule: "Play of scissors (scissors cuts paper)",
+          rule: "Play of scissors (scissors cuts paper), but are destroy by rock.",
         },
       ],
+      playerValues: [],
     },
     actions: {
       // Use getActions to call a function within a fuction
 
-      storePlayerValue: () => {
-        const hand = document.getElementById("hand");
-        let cont = 0;
-        hand.onclick = function () {
-          suma();
-          jugadores();
-        };
-        function suma(cont) {
-          cont++;
-          return cont;
-        };
-        let sumaContador = suma();
-        function jugadores(sumaContador) {
-          if (sumaContador === 1) {
-            return console.log("jugador1");
-          }
-          if (sumaContador === 2) {
-            return console.log("jugador2");
-          }
-        };
-        return jugadores();
-      },
+      storePlayerValue: (playerElection) => {
+        const store = getStore();
+        var playerElect = store.playerValues;
 
-      exampleFunction: () => {
-        getActions().changeColor(0, "green");
+        if (playerElect.length === 0) {
+          playerElect[0] = playerElection;
+          setStore({ playerValues: playerElect });
+          return console.log(
+            "tiene de largo " +
+              playerElect.length +
+              " y el valor es " +
+              playerElect[0]
+          );
+        }
+        if (playerElect.length === 1) {
+          playerElect[1] = playerElection;
+          let playersArray = playerElect;
+          playerElect = [];
+          setStore({ playerValues: [] });
+          return console.log(
+            "tiene de largo " +
+              playersArray.length +
+              " y el valor es " +
+              playersArray[1]
+          );
+        }
       },
 
       getMessage: async () => {
