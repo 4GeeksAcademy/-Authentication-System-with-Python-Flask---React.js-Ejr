@@ -58,12 +58,23 @@ To update with all yours tables you can edit the file app.py and go to the line 
 1. Install the packages: `$ npm install`
 2. Start coding! start the webpack dev server `$ npm run start`
 
-## Publish your website!
 
-This boilerplate it's 100% read to deploy with Render.com and Heroku in a matter of minutes. Please read the [official documentation about it](https://start.4geeksacademy.com/deploy).
 
-### Contributors
+# Osigris
 
-This template was built as part of the 4Geeks Academy [Coding Bootcamp](https://4geeksacademy.com/us/coding-bootcamp) by [Alejandro Sanchez](https://twitter.com/alesanchezr) and many other contributors. Find out more about our [Full Stack Developer Course](https://4geeksacademy.com/us/coding-bootcamps/part-time-full-stack-developer), and [Data Science Bootcamp](https://4geeksacademy.com/us/coding-bootcamps/datascience-machine-learning).
+A brief description of what this project does and who it's for
 
-You can find other templates and resources like this at the [school github page](https://github.com/4geeksacademy/).
+
+
+Se trata de crear un directorio en línea para agricultores y técnicos agrícolas. En este directorio, se incluirá información relevante sobre los agricultores, como su nombre, apellido, teléfono, provincia y tipo de explotación. También se pedirá información sobre los técnicos, como su especialización y la empresa o cooperativa para la que trabajan.
+
+El objetivo principal es ayudar a los agricultores a encontrar técnicos agrícolas en su provincia que puedan ayudarles a cumplir con los requisitos de la PAC (Política Agrícola Común), los estándares Global Gap y otros requisitos específicos, como el sello de ecológico.
+
+
+## 💻 Instalación
+
+1. Instala las dependencias del proyecto `$ pipenv install`.
+
+2. Entra dentro del **virtual environment** `$ pipenv shell`
+
+3. Inicio al servidor flask `$ pipenv run start`
