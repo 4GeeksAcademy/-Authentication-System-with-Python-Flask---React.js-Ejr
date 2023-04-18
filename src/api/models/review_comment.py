@@ -1,0 +1,12 @@
+from api.models.db import db
+from datetime import datetime
+
+
+class Review_comment(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    id_review = db.Column(db.Integer, db.ForeignKey("review.id"))
+    review = db.relationship("Review", back_populates="review_comment")
+    id_user = db.Column(db.Integer, db.ForeignKey("user.id"))
+    user = db.relationship("User", back_populates="review_comment")
+    text = db.Column(db.Text)
+    data_create = db.Column(db.DateTime, default=datetime.utcnow)
