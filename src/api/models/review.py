@@ -12,3 +12,11 @@ class Review(db.Model):
     rating = db.Column(db.Integer(), nullable=False)
     text = db.Column(db.Text)
     data_create = db.Column(db.DateTime, default=datetime.utcnow)
+
+    def __init__(self, company, user, rating, text):
+        self.company_id = company_id
+        self.user = self.user
+        self.rating = rating
+        self.text = text
+        self.data_create = datetime.utcnow()
+

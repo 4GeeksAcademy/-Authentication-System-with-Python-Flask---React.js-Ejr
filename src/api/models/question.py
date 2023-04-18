@@ -11,3 +11,9 @@ class Question(db.Model):
     question_comment = db.relationship("Question_comment", back_populates="question")
     text = db.Column(db.Text)
     data_create = db.Column(db.DateTime, default=datetime.utcnow)
+
+    def __init__(self, lawyer_id, user_id, text):
+        self.lawyer_id = lawyer_id
+        self.user_id = user_id
+        self.text = text
+        self.data_create = datetime.utcnow()

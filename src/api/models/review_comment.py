@@ -10,3 +10,9 @@ class Review_comment(db.Model):
     user = db.relationship("User", back_populates="review_comment")
     text = db.Column(db.Text)
     data_create = db.Column(db.DateTime, default=datetime.utcnow)
+
+    def __init__(self, id_review, id_user, text):
+        self.id_review = id_review
+        self.id_user = id_user
+        self.text = text
+        self.data_create = datetime.utcnow()

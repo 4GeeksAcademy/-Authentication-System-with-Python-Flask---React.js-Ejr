@@ -18,3 +18,15 @@ class Lawyer(db.Model):
     question = db.relationship("Question", back_populates= "lawyer")
     lawyer_review = db.relationship("Lawyer_review", back_populates= "lawyer")
     data_create = db.Column(db.DateTime, default=datetime.utcnow)
+
+    def __init__(self, user_name, password, name, last_name, email, address, city, cp, col_number):
+        self.user_name = user_name
+        self.password = password
+        self.name = name
+        self.last_name = last_name
+        self.email = email
+        self.address = address
+        self.city = city
+        self.cp = cp
+        self.col_number = col_number
+        self.data_create = datetime.utcnow()

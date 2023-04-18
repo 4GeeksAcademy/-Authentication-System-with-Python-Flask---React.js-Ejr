@@ -13,3 +13,10 @@ class Lawyer_review(db.Model):
     rating = db.Column(db.Integer(), nullable=False)
     text = db.Column(db.Text)
     data_create = db.Column(db.DateTime, default=datetime.utcnow)
+
+    def __init__(self, lawyer_id, user_id, rating, text):
+        self.lawyer_id = lawyer_id
+        self.user_id = user_id
+        self.rating = rating
+        self.text = text
+        self.data_create = datetime.utcnow()
