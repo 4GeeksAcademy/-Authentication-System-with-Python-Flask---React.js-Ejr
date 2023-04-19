@@ -16,3 +16,11 @@ class Question_comment(db.Model):
         self.id_user = id_user
         self.text = text
         self.data_create = datetime.utcnow()
+
+    def serialize(self):
+        return {
+            "id_question" : self.id_question,
+            "id_user": self.id_user,
+            "text" : self.text,
+            "data_create": self.data_create
+               } 
