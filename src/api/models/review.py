@@ -15,7 +15,14 @@ class Review(db.Model):
 
     def __init__(self, company, user, rating, text):
         self.company_id = company_id
-        self.user = self.user
+        self.user_id = self.user_id
+        self.rating = rating
+        self.text = text
+        self.data_create = datetime.utcnow()
+
+    def serialize(self):
+        self.company_id = company_id
+        self.user_id = self.user_id
         self.rating = rating
         self.text = text
         self.data_create = datetime.utcnow()
