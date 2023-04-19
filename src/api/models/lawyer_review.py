@@ -20,3 +20,10 @@ class Lawyer_review(db.Model):
         self.rating = rating
         self.text = text
         self.data_create = datetime.utcnow()
+
+    def serialize(self):
+        self.lawyer_id = lawyer_id
+        self.user_id = user_id
+        self.rating = rating
+        self.text = text
+        self.data_create = datetime.utcnow()
