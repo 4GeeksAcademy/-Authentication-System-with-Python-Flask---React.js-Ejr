@@ -13,6 +13,8 @@ class User(db.Model):
     email = db.Column(db.String(250), unique=True, nullable=False)
     roles_id = db.Column(db.Integer, db.ForeignKey("roles.id"))
     roles = db.relationship("Roles", back_populates="user") 
+    lawyer = db.relationship("Lawyer", back_populates="user")
+    company = db.relationship("Company", back_populates="user")
     favs = db.relationship("Favorites", back_populates= "user")
     review = db.relationship("Review", back_populates= "user")
     review_comment= db.relationship("Review_comment", back_populates="user")
