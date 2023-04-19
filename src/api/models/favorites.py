@@ -13,3 +13,12 @@ class Favorites(db.Model):
         self.id_user = id_user
         self.id_lawyer = id_lawyer
         self.id_company = id_company
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "user" : self.user,
+            "id_user" : self.id_user,
+            "id_lawyer" : self.id_lawyer,
+            "id_company" : self.id_company
+        }
