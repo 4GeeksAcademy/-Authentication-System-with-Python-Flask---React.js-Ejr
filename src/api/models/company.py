@@ -23,3 +23,9 @@ class Company(db.Model):
         self.cp = cp
         self.cif = cif
         self.data_create = datetime.utcnow()
+
+    def serialize(self):
+        self.address = address
+        self.city = city
+        self.cp = cp
+        self.cif = cif

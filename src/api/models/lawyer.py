@@ -24,3 +24,10 @@ class Lawyer(db.Model):
         self.cp = cp
         self.col_number = col_number
         self.data_create = datetime.utcnow()
+    
+    def serialize(self):
+        self.address = address
+        self.city = city
+        self.cp = cp
+        self.col_number = col_number
+        self.data_create = datetime.utcnow()
