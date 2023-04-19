@@ -11,8 +11,8 @@ class User(db.Model):
     name = db.Column(db.String(80), nullable=False)
     last_name = db.Column(db.String(100), nullable=False)
     email = db.Column(db.String(250), unique=True, nullable=False)
-    user_type_id = db.Column(db.Integer, db.ForeignKey("user_type.id"))
-    user_type = db.relationship("User_type", back_populates="user") 
+    roles_id = db.Column(db.Integer, db.ForeignKey("roles.id"))
+    roles = db.relationship("Roles", back_populates="user") 
     favs = db.relationship("Favorites", back_populates= "user")
     review = db.relationship("Review", back_populates= "user")
     review_comment= db.relationship("Review_comment", back_populates="user")
@@ -22,13 +22,14 @@ class User(db.Model):
     question_comment= db.relationship("Question_comment", back_populates="user")
     data_create = db.Column(db.DateTime, default=datetime.utcnow)
 
-    def __init__(self, user_name, password, name, last_name, email, user_type):
+    def __init__(self, user_name, password, name, last_name, email, roles):
         self.user_name = user_name
         self.password = password
         self.name = name
         self.last_name = last_name
         self.email = email
-        self.user_type = user_type
+        self.roles = roles
+   
 
     def __repr__(self):
         return  '%r' % self.user_name #para las relaciones, en lugar de mostrar el id

@@ -1,6 +1,6 @@
 from api.models.db import db
 from api.models.user import User
-from api.models.user_type import User_type
+from api.models.roles import Roles
 from api.models.review import Review
 from api.models.review_comment import Review_comment
 from api.models.question import Question

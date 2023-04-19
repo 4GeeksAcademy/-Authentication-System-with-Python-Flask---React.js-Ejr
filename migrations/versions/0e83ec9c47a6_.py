@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 7b58618eba87
-Revises: 3b103c8ae61b
-Create Date: 2023-04-18 12:11:39.144623
+Revision ID: 0e83ec9c47a6
+Revises: 
+Create Date: 2023-04-18 19:19:00.771763
 
 """
 from alembic import op
@@ -10,8 +10,8 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '7b58618eba87'
-down_revision = '3b103c8ae61b'
+revision = '0e83ec9c47a6'
+down_revision = None
 branch_labels = None
 depends_on = None
 
@@ -26,6 +26,7 @@ def upgrade():
     sa.Column('city', sa.String(length=100), nullable=False),
     sa.Column('cp', sa.Integer(), nullable=False),
     sa.Column('cif', sa.Integer(), nullable=False),
+    sa.Column('data_create', sa.DateTime(), nullable=True),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('email')
     )
@@ -40,31 +41,28 @@ def upgrade():
     sa.Column('city', sa.String(length=100), nullable=False),
     sa.Column('cp', sa.Integer(), nullable=False),
     sa.Column('col_number', sa.Integer(), nullable=False),
+    sa.Column('data_create', sa.DateTime(), nullable=True),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('email'),
     sa.UniqueConstraint('user_name')
     )
-    op.create_table('lawyer_review',
-    sa.Column('id', sa.Integer(), nullable=False),
-    sa.PrimaryKeyConstraint('id')
-    )
-    op.create_table('lawyer_review_comment',
-    sa.Column('id', sa.Integer(), nullable=False),
-    sa.PrimaryKeyConstraint('id')
-    )
-    op.create_table('question',
-    sa.Column('id', sa.Integer(), nullable=False),
-    sa.PrimaryKeyConstraint('id')
-    )
-    op.create_table('question_comment',
-    sa.Column('id', sa.Integer(), nullable=False),
-    sa.PrimaryKeyConstraint('id')
-    )
-    op.create_table('user_type',
+    op.create_table('roles',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('description', sa.String(length=80), nullable=False),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('description')
+    )
+    op.create_table('user',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('user_name', sa.String(length=80), nullable=False),
+    sa.Column('password', sa.String(length=250), nullable=False),
+    sa.Column('name', sa.String(length=80), nullable=False),
+    sa.Column('last_name', sa.String(length=100), nullable=False),
+    sa.Column('email', sa.String(length=250), nullable=False),
+    sa.Column('data_create', sa.DateTime(), nullable=True),
+    sa.PrimaryKeyConstraint('id'),
+    sa.UniqueConstraint('email'),
+    sa.UniqueConstraint('user_name')
     )
     op.create_table('favorites',
     sa.Column('id', sa.Integer(), nullable=False),
@@ -76,69 +74,82 @@ def upgrade():
     sa.ForeignKeyConstraint(['id_user'], ['user.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
+    op.create_table('lawyer_review',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('lawyer_id', sa.Integer(), nullable=False),
+    sa.Column('user_id', sa.Integer(), nullable=False),
+    sa.Column('rating', sa.Integer(), nullable=False),
+    sa.Column('text', sa.Text(), nullable=True),
+    sa.Column('data_create', sa.DateTime(), nullable=True),
+    sa.ForeignKeyConstraint(['lawyer_id'], ['lawyer.id'], ),
+    sa.ForeignKeyConstraint(['user_id'], ['user.id'], ),
+    sa.PrimaryKeyConstraint('id')
+    )
+    op.create_table('question',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('lawyer_id', sa.Integer(), nullable=False),
+    sa.Column('user_id', sa.Integer(), nullable=False),
+    sa.Column('text', sa.Text(), nullable=True),
+    sa.Column('data_create', sa.DateTime(), nullable=True),
+    sa.ForeignKeyConstraint(['lawyer_id'], ['lawyer.id'], ),
+    sa.ForeignKeyConstraint(['user_id'], ['user.id'], ),
+    sa.PrimaryKeyConstraint('id')
+    )
     op.create_table('review',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('company_id', sa.Integer(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=False),
+    sa.Column('rating', sa.Integer(), nullable=False),
+    sa.Column('text', sa.Text(), nullable=True),
+    sa.Column('data_create', sa.DateTime(), nullable=True),
     sa.ForeignKeyConstraint(['company_id'], ['company.id'], ),
     sa.ForeignKeyConstraint(['user_id'], ['user.id'], ),
+    sa.PrimaryKeyConstraint('id')
+    )
+    op.create_table('lawyer_review_comment',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('id_lawyer_review', sa.Integer(), nullable=True),
+    sa.Column('id_user', sa.Integer(), nullable=False),
+    sa.Column('text', sa.Text(), nullable=True),
+    sa.Column('data_create', sa.DateTime(), nullable=True),
+    sa.ForeignKeyConstraint(['id_lawyer_review'], ['lawyer_review.id'], ),
+    sa.ForeignKeyConstraint(['id_user'], ['user.id'], ),
+    sa.PrimaryKeyConstraint('id')
+    )
+    op.create_table('question_comment',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('id_question', sa.Integer(), nullable=True),
+    sa.Column('id_user', sa.Integer(), nullable=True),
+    sa.Column('text', sa.Text(), nullable=True),
+    sa.Column('data_create', sa.DateTime(), nullable=True),
+    sa.ForeignKeyConstraint(['id_question'], ['question.id'], ),
+    sa.ForeignKeyConstraint(['id_user'], ['user.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('review_comment',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('id_review', sa.Integer(), nullable=True),
     sa.Column('id_user', sa.Integer(), nullable=True),
+    sa.Column('text', sa.Text(), nullable=True),
+    sa.Column('data_create', sa.DateTime(), nullable=True),
     sa.ForeignKeyConstraint(['id_review'], ['review.id'], ),
     sa.ForeignKeyConstraint(['id_user'], ['user.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
-    with op.batch_alter_table('user', schema=None) as batch_op:
-        batch_op.add_column(sa.Column('user_name', sa.String(length=80), nullable=False))
-        batch_op.add_column(sa.Column('name', sa.String(length=80), nullable=False))
-        batch_op.add_column(sa.Column('last_name', sa.String(length=100), nullable=False))
-        batch_op.add_column(sa.Column('user_type_id', sa.Integer(), nullable=True))
-        batch_op.alter_column('password',
-               existing_type=sa.VARCHAR(length=80),
-               type_=sa.String(length=250),
-               existing_nullable=False)
-        batch_op.alter_column('email',
-               existing_type=sa.VARCHAR(length=120),
-               type_=sa.String(length=250),
-               existing_nullable=False)
-        batch_op.create_unique_constraint(None, ['user_name'])
-        batch_op.create_foreign_key(None, 'user_type', ['user_type_id'], ['id'])
-        batch_op.drop_column('is_active')
-
     # ### end Alembic commands ###
 
 
 def downgrade():
     # ### commands auto generated by Alembic - please adjust! ###
-    with op.batch_alter_table('user', schema=None) as batch_op:
-        batch_op.add_column(sa.Column('is_active', sa.BOOLEAN(), autoincrement=False, nullable=False))
-        batch_op.drop_constraint(None, type_='foreignkey')
-        batch_op.drop_constraint(None, type_='unique')
-        batch_op.alter_column('email',
-               existing_type=sa.String(length=250),
-               type_=sa.VARCHAR(length=120),
-               existing_nullable=False)
-        batch_op.alter_column('password',
-               existing_type=sa.String(length=250),
-               type_=sa.VARCHAR(length=80),
-               existing_nullable=False)
-        batch_op.drop_column('user_type_id')
-        batch_op.drop_column('last_name')
-        batch_op.drop_column('name')
-        batch_op.drop_column('user_name')
-
     op.drop_table('review_comment')
-    op.drop_table('review')
-    op.drop_table('favorites')
-    op.drop_table('user_type')
     op.drop_table('question_comment')
-    op.drop_table('question')
     op.drop_table('lawyer_review_comment')
+    op.drop_table('review')
+    op.drop_table('question')
     op.drop_table('lawyer_review')
+    op.drop_table('favorites')
+    op.drop_table('user')
+    op.drop_table('roles')
     op.drop_table('lawyer')
     op.drop_table('company')
     # ### end Alembic commands ###

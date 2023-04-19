@@ -1,8 +1,8 @@
 from api.models.db import db
 
-class User_type(db.Model):
+class Roles(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    user = db.relationship("User", back_populates="user_type")
+    user = db.relationship("User", back_populates="roles")
     description = db.Column(db.String(80), unique=True, nullable=False)
 
     def __init__(self, description):

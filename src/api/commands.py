@@ -1,6 +1,6 @@
 
 import click
-from api.models.index import db, User, User_type, Review, Review_comment, Question, Question_comment, Lawyer, Lawyer_review, Lawyer_review_comment, Favorites, Company
+from api.models.index import db, User, Roles, Review, Review_comment, Question, Question_comment, Lawyer, Lawyer_review, Lawyer_review_comment, Favorites, Company
 
 """
 In this file, you can add as many commands as you want using the @app.cli.command decorator
