@@ -7,7 +7,7 @@ class Company(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(250), nullable=False)
     email = db.Column(db.String(250), unique=True, nullable=False)
-    avatar = db.Column(db.String(250), nullable=False)
+    avatar = db.Column(db.String(250), nullable=True)
     password = db.Column(db.String(250), unique=False, nullable=False)
     address = db.Column(db.String(100), nullable=False)
     city = db.Column(db.String(100), nullable=False)
@@ -17,10 +17,9 @@ class Company(db.Model):
     favs = db.relationship("Favorites", back_populates="company") 
     data_create = db.Column(db.DateTime, default=datetime.utcnow)
 
-    def __init__(self, name, email,avatar, address, city, cp, cif):
+    def __init__(self, name, email, address, city, cp, cif):
         self.name = name
         self.email = email
-        self.avatar = avatar
         self.address = address
         self.city = city
         self.cp = cp

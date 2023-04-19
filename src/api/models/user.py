@@ -7,7 +7,7 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_name = db.Column(db.String(80), unique=True, nullable=False)
     password = db.Column(db.String(250), nullable=False)
-    avatar = db.Column(db.String(250), nullable=False)
+    avatar = db.Column(db.String(250), nullable=True)
     name = db.Column(db.String(80), nullable=False)
     last_name = db.Column(db.String(100), nullable=False)
     email = db.Column(db.String(250), unique=True, nullable=False)
@@ -22,10 +22,9 @@ class User(db.Model):
     question_comment= db.relationship("Question_comment", back_populates="user")
     data_create = db.Column(db.DateTime, default=datetime.utcnow)
 
-    def __init__(self, user_name, password, avatar, name, last_name, email, user_type):
+    def __init__(self, user_name, password, name, last_name, email, user_type):
         self.user_name = user_name
         self.password = password
-        self.avatar = avatar
         self.name = name
         self.last_name = last_name
         self.email = email
