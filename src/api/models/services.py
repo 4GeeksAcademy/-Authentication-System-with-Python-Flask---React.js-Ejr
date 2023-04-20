@@ -1,5 +1,6 @@
 from api.models.db import db
 
+
 class Services(db.Model):
     id= db.Column(db.Integer, primary_key=True)
     company_id =db.Column(db.Integer, unique=False, nullable = False)
