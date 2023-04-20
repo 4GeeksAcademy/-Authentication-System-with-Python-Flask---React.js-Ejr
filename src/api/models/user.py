@@ -11,7 +11,6 @@ class User(db.Model):
     is_active = db.Column(db.Boolean(), unique=False, nullable=False)
     role_id = db.Column(db.Integer, db.ForeignKey("roles.id"))
     roles = db.relationship("Roles")
-    booking = db.relationship("Booking")
 
     def __init__(self, email, password, is_active):
         self.email = email
