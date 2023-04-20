@@ -1,24 +1,24 @@
-from flask_sqlalchemy import SQLAlchemy
+from api.models.db import db
 
-db = SQLAlchemy()
 
 class User(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String(120), unique=True, nullable=False)
-    password = db.Column(db.String(80), unique=False, nullable=False)
-    is_active = db.Column(db.Boolean(), unique=False, nullable=False)
+    __tablename__ = "users"
 
-    def __repr__(self):
-        return f'<User {self.email}>'
+    id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String(255), nullable=False, unique=True)
+    password = db.Column(db.String(255), nullable=False)
+    role = db.Column(db.String(255), nullable=False)
+
+    def __init__(self, id, email, password, role):
+        self.id = id
+        self.email = email
+        self.password = password
+        self.role = role
 
     def serialize(self):
         return {
             "id": self.id,
             "email": self.email,
-            # do not serialize the password, its a security breach
+            "password": self.password,
+            "role": self.role,
         }
-
-
-
-
-    
