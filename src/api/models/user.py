@@ -12,10 +12,12 @@ class User(db.Model):
     role_id = db.Column(db.Integer, db.ForeignKey("roles.id"))
     roles = db.relationship("Roles")
 
-    def __init__(self, email, password, is_active):
+    def __init__(self, username, firstname, lastname, email, password):
+        self.username = username
+        self.firstname = firstname
+        self.lastname = lastname
         self.email = email
         self.password = password
-        self.is_active = True
 
     def serialize(self):
         return {
