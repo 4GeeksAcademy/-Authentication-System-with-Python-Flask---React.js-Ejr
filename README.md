@@ -71,3 +71,10 @@ The main objective is to help farmers find agricultural technicians in their pro
 
 # Relationship models
 ![Models](https://i.ibb.co/LrxCns2/modelos.png)
+
+
+## 🚀 About Us
+
+- [Mario Meitín](https://github.com/MMeitin)
+- [Jorge Piqueras](https://github.com/JorgePG-L)
+- [Miquel Ortiz](https://github.com/sisasfx)
