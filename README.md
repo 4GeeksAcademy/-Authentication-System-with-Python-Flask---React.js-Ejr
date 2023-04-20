@@ -1,4 +1,5 @@
-# WebApp boilerplate with React JS and Flask API
+# GranjeroBuscaTecnico
+# Project done with React JS and Flask API
 
 Build web applications using React.js for the front end and python/flask for your backend API.
 
@@ -62,19 +63,11 @@ To update with all yours tables you can edit the file app.py and go to the line 
 
 # Osigris
 
-A brief description of what this project does and who it's for
+A brief description of what this project does and who it's for:
 
+The idea is to create an online directory for farmers and agricultural technicians. In this directory, relevant information about farmers will be included, such as their name, surname, telephone number, province and type of farm. It will also ask for information about technicians, such as their specialisation and the company or cooperative they work for.
 
+The main objective is to help farmers find agricultural technicians in their province who can help them comply with CAP (Common Agricultural Policy) requirements, Global Gap standards and other specific requirements, such as the organic label.
 
-Se trata de crear un directorio en línea para agricultores y técnicos agrícolas. En este directorio, se incluirá información relevante sobre los agricultores, como su nombre, apellido, teléfono, provincia y tipo de explotación. También se pedirá información sobre los técnicos, como su especialización y la empresa o cooperativa para la que trabajan.
-
-El objetivo principal es ayudar a los agricultores a encontrar técnicos agrícolas en su provincia que puedan ayudarles a cumplir con los requisitos de la PAC (Política Agrícola Común), los estándares Global Gap y otros requisitos específicos, como el sello de ecológico.
-
-
-## 💻 Instalación
-
-1. Instala las dependencias del proyecto `$ pipenv install`.
-
-2. Entra dentro del **virtual environment** `$ pipenv shell`
-
-3. Inicio al servidor flask `$ pipenv run start`
+# Relationship models
+![Models](https://i.ibb.co/LrxCns2/modelos.png)
