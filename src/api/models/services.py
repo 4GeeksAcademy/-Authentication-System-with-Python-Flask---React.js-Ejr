@@ -32,29 +32,3 @@ class Services(db.Model):
         "is_active":self.is_active,
         }
 
-class Booking(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
-    service_workers_id = db.Column(db.Integer, db.ForeignKey("services.id"))
-    created_at = db.Column(db.DateTime(timezone=False))
-    start_service = db.Column(db.DateTime, default=datetime.datetime.utcnow, onupdate=datetime.utcnow)
-    user = db.relationship("User", back_populates = "booking")
-    serviceworkers = db.relationship("ServiceWorkers", back_populates = "booking")
-
-    def __init__(self, user_id, service_workers_id):
-        self.user_id = user_id
-        self.service_workers_id = service_workers_id
-
-    def serialize(self):
-        return {
-            "id": self.id,
-            "user_id": self.user_id,
-            "service_workers_id": self.service_workers_id,
-            "start_service": self.start_service
-        }
-    
-    def serialize_populate(self):
-        return {
-            "service_workers_id": self.service_workers_id,
-            "start_service": self.start_service
-        }
