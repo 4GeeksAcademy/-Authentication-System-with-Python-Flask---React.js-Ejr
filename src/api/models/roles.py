@@ -3,7 +3,7 @@ from api.models.db import db
 
 class Roles(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    rolename = db.Column(db.String(80), unique=False, nullable=False)
+    type = db.Column(db.String(80), unique=False, nullable=False)
 
     def __init__(self, type):
         self.type = type
