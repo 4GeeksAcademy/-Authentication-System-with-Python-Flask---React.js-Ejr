@@ -31,4 +31,3 @@ class Services(db.Model):
         "price":self.price,
         "is_active":self.is_active,
         }
-
