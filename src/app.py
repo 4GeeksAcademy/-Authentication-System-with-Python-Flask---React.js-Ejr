@@ -9,6 +9,7 @@ from flask_cors import CORS
 from api.utils import APIException, generate_sitemap
 from api.models.index import db
 from api.routes import api
+from api.domain.company.route import company_bp
 from api.admin import setup_admin
 from api.commands import setup_commands
 
@@ -43,6 +44,8 @@ setup_commands(app)
 
 # Add all endpoints form the API with a "api" prefix
 app.register_blueprint(api, url_prefix='/api')
+app.register_blueprint(company_bp, url_prefix='/api/company')
+
 
 # Handle/serialize errors like a JSON object
 @app.errorhandler(APIException)
