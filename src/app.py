@@ -11,6 +11,9 @@ from api.models.db import db
 from api.routes import api
 from api.admin import setup_admin
 from api.commands import setup_commands
+from api.models.company import Company
+import api.domain.company.route as api_company
+
 
 #from models import Person
 
@@ -41,7 +44,7 @@ setup_commands(app)
 
 # Add all endpoints form the API with a "api" prefix
 app.register_blueprint(api, url_prefix='/api')
-
+app.register_blueprint(api_company.api, url_prefix='/api')
 # Handle/serialize errors like a JSON object
 @app.errorhandler(APIException)
 def handle_invalid_usage(error):
@@ -62,6 +65,7 @@ def serve_any_other_file(path):
     response = send_from_directory(static_file_dir, path)
     response.cache_control.max_age = 0 # avoid cache memory
     return response
+
 
 
 # this only runs if `$ python src/main.py` is executed
