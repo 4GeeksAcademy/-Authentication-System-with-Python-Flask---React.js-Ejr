@@ -1,9 +1,9 @@
 from api.models.db import db
+from api.models.user import User
 
 # POST USER - SIGNUP
-def log_in_user(user):
-    users = User(user)
-    print(users)
-    db.session.add(users)
+def sign_in_user(email, passw, role):
+    user = User(email, passw, role)
+    db.session.add(user)
     db.session.commit()
-    return users.serialize()
+    return user
