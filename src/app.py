@@ -11,6 +11,7 @@ from api.models.index import db
 import api.domain.user.route as api_user
 from api.routes import api
 from api.domain.company.route import company_bp
+from api.domain.lawyer.route import lawyer_bp
 from api.admin import setup_admin
 from api.commands import setup_commands
 
@@ -47,6 +48,8 @@ setup_commands(app)
 
 app.register_blueprint(api_user.api, url_prefix='/api/user')
 app.register_blueprint(company_bp, url_prefix='/api/company')
+app.register_blueprint(lawyer_bp, url_prefix='/api/lawyer')
+
 
 
 
