@@ -15,4 +15,6 @@ def create_user():
         if isinstance(new_user, User):   
             return Response.response_ok(new_user.serialize(), "Usuario registrado correctamente!", 201)
         return Response.response_error("Usuario no registrado!", 401)
-  
+
+
+
