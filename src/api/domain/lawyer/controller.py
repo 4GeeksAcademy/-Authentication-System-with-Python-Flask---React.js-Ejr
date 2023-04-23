@@ -1,6 +1,6 @@
 import api.domain.lawyer.repository as Repository
 import api.handle_response as Response
-from api.functions import verificar_usuario
+from api.functions import verify_user
 
 
 
@@ -10,7 +10,7 @@ def get_lawyers():
 
 def register_lawyer(data):
 
-    new_lawyer = verificar_usuario(data)
+    new_lawyer = verify_user(data)
     
     if new_lawyer.get("error") is not None:
         return new_lawyer

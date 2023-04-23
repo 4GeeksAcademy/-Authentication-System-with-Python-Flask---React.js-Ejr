@@ -1,6 +1,6 @@
 import api.domain.company.repository as Repository
 import api.handle_response as Response
-from api.functions import verificar_usuario
+from api.functions import verify_user
 
 
 def get_companies():
@@ -9,7 +9,7 @@ def get_companies():
 
 def register_company(data):
 
-    new_company = verificar_usuario(data)
+    new_company = verify_user(data)
     
     if new_company.get("error") is not None:
         return new_company

@@ -14,12 +14,15 @@ from api.domain.company.route import company_bp
 from api.domain.lawyer.route import lawyer_bp
 from api.admin import setup_admin
 from api.commands import setup_commands
+from flask_jwt_extended import  get_jwt_identity, jwt_required, JWTManager
 
 #from models import Person
 
 
 app = Flask(__name__)
 app.url_map.strict_slashes = False
+app.config["JWT_SECRET_KEY"] = os.environ["JWT_SECRET_KEY"]  # Change this!
+jwt = JWTManager(app)
 
 ENV = os.getenv("FLASK_ENV")
 static_file_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), '../public/')
