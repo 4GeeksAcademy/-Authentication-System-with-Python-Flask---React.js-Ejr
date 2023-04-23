@@ -20,4 +20,4 @@ def register_lawyer():
     if isinstance(new_lawyer, User):   
         return Response.response_ok(new_lawyer.serialize(), "Lawyer created successfully", 201)
    
-    return Response.response_error("Error, lawyer couldn't be created", 401)
+    return new_lawyer

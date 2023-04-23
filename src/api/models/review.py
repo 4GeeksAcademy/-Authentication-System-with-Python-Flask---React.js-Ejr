@@ -18,12 +18,15 @@ class Review(db.Model):
         self.user_id = self.user_id
         self.rating = rating
         self.text = text
-        self.data_create = datetime.utcnow()
+
 
     def serialize(self):
-        self.company_id = company_id
-        self.user_id = self.user_id
-        self.rating = rating
-        self.text = text
-        self.data_create = datetime.utcnow()
+        return {
+            "id" : self.id,
+            'company_id': self.company_id,
+            'user_id': self.user_id,
+            'rating': self.rating,
+            'text': self.text,
+            "data_create":self.data_create
+        }
 

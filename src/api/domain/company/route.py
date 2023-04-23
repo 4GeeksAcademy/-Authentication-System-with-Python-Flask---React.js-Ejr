@@ -19,4 +19,4 @@ def register_company():
     if isinstance(new_company, User):   
         return Response.response_ok(new_company.serialize(), "New company added successfully", 201)
    
-    return Response.response_error("Error adding the company", 401)
+    return new_company

@@ -19,7 +19,10 @@ class Question(db.Model):
         self.data_create = datetime.utcnow()
 
     def serialize(self):
-        self.lawyer_id = lawyer_id
-        self.user_id = user_id
-        self.text = text
-        self.data_create = datetime.utcnow()
+        return {
+            "id" : self.id,
+            'lawyer_id': self.lawyer_id,
+            'user_id': self.user_id,
+            'text': self.text, 
+            "data_create":self.data_create
+        }

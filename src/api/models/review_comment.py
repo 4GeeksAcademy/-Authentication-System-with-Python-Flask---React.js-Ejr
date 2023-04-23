@@ -19,9 +19,9 @@ class Review_comment(db.Model):
 
     def serialize(self):
         return {
+          "id" : self.id,
           "id_review" : self.id_review,
           "id_user": self.id_user,
           "text" : self.text,
           "data_create":self.data_create
-
         }

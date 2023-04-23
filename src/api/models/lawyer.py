@@ -25,6 +25,7 @@ class Lawyer(db.Model):
     
     def serialize(self):
         return{
+        "id" : self.id,
         "address": self.address,
         "city": self.city,
         "cp": self.cp,

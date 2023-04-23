@@ -38,12 +38,13 @@ class User(db.Model):
 
     def serialize(self):
         return {
+        "id": self.id,
         "user_name" : self.user_name,
         "name" : self.name,
         "last_name" : self.last_name,
         "email" : self.email,
         "roles_id": self.roles_id,
         "company": list(map(lambda company: company.serialize(), self.company )),
-        "lawyer": list(map(lambda lawyer: lawyer.serialize(), self.lawyer ))
-
+        "lawyer": list(map(lambda lawyer: lawyer.serialize(), self.lawyer )),
+        "data_create":self.data_create
         }

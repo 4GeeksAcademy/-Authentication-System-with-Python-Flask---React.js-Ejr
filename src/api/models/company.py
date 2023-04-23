@@ -25,6 +25,8 @@ class Company(db.Model):
 
     def serialize(self):
         return{
+        "user_id" : self.user_id,
+        "id" : self.id,
         "address" : self.address,
         "city" : self.city,
         "cp" : self.cp,

@@ -19,8 +19,9 @@ class Question_comment(db.Model):
 
     def serialize(self):
         return {
+            "id" : self.id,
             "id_question" : self.id_question,
             "id_user": self.id_user,
             "text" : self.text,
             "data_create": self.data_create
-               } 
+            } 

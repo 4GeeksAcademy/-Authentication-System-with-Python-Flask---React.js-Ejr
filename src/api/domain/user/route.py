@@ -14,7 +14,7 @@ def create_user():
         new_user = Controller.create_user(body)   
         if isinstance(new_user, User):   
             return Response.response_ok(new_user.serialize(), "Usuario registrado correctamente!", 201)
-        return Response.response_error("Usuario no registrado!", 401)
+        return new_user #para que recoja el error de la funcion validar_usuario
 
 
 

@@ -19,9 +19,9 @@ class Lawyer_review_comment(db.Model):
 
     def serialize(self):
         return{
+            "id" : self.id,
             "id_lawyer_review": self.id_lawyer_review,
             "id_user": self.id_user,
             "text": self.text,
             "data_create": self.data_create
-
         }
