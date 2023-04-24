@@ -4,7 +4,6 @@ from api.models.db import db
 class Roles(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     type = db.Column(db.String(80), unique=False, nullable=False)
-    user = db.relationship("User")
 
     def __init__(self, type):
         self.type = type
@@ -14,3 +13,5 @@ class Roles(db.Model):
             "id": self.id,
             "type": self.type
         }   
+
+    
