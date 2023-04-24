@@ -8,6 +8,11 @@ import api.handle_response as Response
 
 api = Blueprint('api/user', __name__)
 
+
+@api.route("/", methods= ["GET"])
+def get_users():
+    return Controller.get_users()
+
 @api.route('/worker', methods=['POST'])
 def create_user():
         body = request.get_json()

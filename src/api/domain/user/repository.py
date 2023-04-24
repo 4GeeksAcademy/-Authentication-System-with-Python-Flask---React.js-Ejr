@@ -3,6 +3,13 @@ from api.models.index import db, User, Roles
 from api.functions import find_role
 import bcrypt
 
+
+def get_users():
+    users = User.query.all()
+    all_users = list(map(lambda user: user.serialize(), users))
+    return all_users
+
+
 def create_user(user_name,password,name,last_name,email):
     roles = find_role("User", Roles)
     new_user = User(user_name,password,name,last_name,email,roles.id)
