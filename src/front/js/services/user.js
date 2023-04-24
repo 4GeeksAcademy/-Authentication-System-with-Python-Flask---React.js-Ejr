@@ -19,3 +19,18 @@ export const registerUser = async (user) => {
     console.log("Error al registrar el usuario", error);
   }
 };
+
+export const loginUser = async (user) => {
+  try {
+    const response = await fetch(`${URL}/user/login`, {
+      method: "POST",
+      headers: HEADERS,
+      body: JSON.stringify(user),
+    });
+    const data = await response.json();
+    console.log(data) //PROVISIONAL PARA VER QUE RETORNA EL TOKEN EN EL LOGIN--- EN TERMINAL HTTP REQUEST 200
+    localStorage.setItem("token", data.token);  // localStorage es para guardar el dato de token lo encontramos en la consola en aplication -localstorage
+  } catch (error) {
+    console.log("Error al iniciar sesión!", error);
+  }
+};
