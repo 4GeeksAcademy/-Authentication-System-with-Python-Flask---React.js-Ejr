@@ -20,7 +20,7 @@ def register_lawyer(data, address, city, cp, col_number):
 
     new_lawyer = Lawyer(address, city, cp, col_number)  
     
-    user.lawyer.append(new_lawyer)
+    user.lawyer = new_lawyer
     
     db.session.add(user)
     db.session.commit()

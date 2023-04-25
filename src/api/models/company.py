@@ -6,7 +6,6 @@ class Company(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    user = db.relationship("User", back_populates="company")    
     avatar = db.Column(db.String(250), nullable=True)
     address = db.Column(db.String(100), nullable=False)
     city = db.Column(db.String(100), nullable=False)
@@ -25,7 +24,6 @@ class Company(db.Model):
 
     def serialize(self):
         return{
-        "user_id" : self.user_id,
         "id" : self.id,
         "address" : self.address,
         "city" : self.city,

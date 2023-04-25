@@ -20,7 +20,7 @@ def register_company(data, address, city, cp, cif):
 
     new_company = Company(address, city, cp, cif)
         
-    user.company.append(new_company)
+    user.company = new_company
 
     db.session.add(user)
     db.session.commit()
