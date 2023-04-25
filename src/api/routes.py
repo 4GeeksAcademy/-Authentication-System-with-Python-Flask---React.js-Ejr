@@ -7,7 +7,6 @@ from api.utils import generate_sitemap, APIException
 
 api = Blueprint('api', __name__)
 
-
 @api.route('/hello', methods=['POST', 'GET'])
 def handle_hello():
 
