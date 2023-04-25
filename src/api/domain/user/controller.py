@@ -29,13 +29,22 @@ def login_users(user):
    correct_user = verify_login(user)
    if correct_user.get('error') is not None:
       return correct_user
-   login_user = Repository.get_user_by_email(user['email'])
+   login_user = Repository.get_user_private(user['email'])
    if login_user is None :
       return Response.response_error("El email no existe", 400)
    if bcrypt.checkpw(user['password'].encode(), login_user.password.encode()):    # si la contraseña coincide con lo que le pasamos devuelve el token 
       access_token = create_access_token(identity = login_user.serialize())
       return {"token": access_token}
    return Response.response_error("Datos de acceso incorrectos!", 404) # si la contraseña no es correcta devuelve este mensaje
+
+
+
+def get_user_private(user):
+    user = Repository.get_user_private(user['email'])
+    if user is None :
+      return Response.response_error("El usuario no existe!", 404)
+    return user
+
 
 
 
