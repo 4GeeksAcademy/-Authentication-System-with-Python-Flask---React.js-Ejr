@@ -1,10 +1,5 @@
 
 
-![api jobshood ](JobsHood Esquema API.png) 
-
-
-
-
 
 # WebApp boilerplate with React JS and Flask API
 
