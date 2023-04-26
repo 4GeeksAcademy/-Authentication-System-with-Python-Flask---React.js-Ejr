@@ -1,6 +1,5 @@
                                         
-     ![JobsHood API](https://raw.githubusercontent.com/Apacheco82/Jobs-Hood/DEVELOP/assets/JobsHood Esquema API.png)
-
+![api jobshood ](JobsHood_Esquema_API.png) 
 
 # WebApp boilerplate with React JS and Flask API
 
