@@ -1,5 +1,6 @@
 // faltará añadir navbar y footer 
 import React, { useState, useEffect, useContext } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 //import { Link } from "react-router-dom";
 //import { Navbar } from ".././component/navbar";
 import { Context } from "../store/appContext";
@@ -8,6 +9,8 @@ import { registerUser } from "../services";
 
 export const RegistroWorker = () => {
 	const { store, actions } = useContext(Context);
+
+	const navigate = useNavigate()
 
 	const [registro, setRegistro] = useState(
 		{
@@ -26,7 +29,7 @@ export const RegistroWorker = () => {
     const handleSubmit = async (event) =>{
 		event.preventDefault();
 		await registerUser(registro)
-        // una vez que te registres/login apareces en tu perfil de usuario 
+        navigate("/login") 
 	}
 
 	return (
@@ -52,11 +55,11 @@ export const RegistroWorker = () => {
                     <div className="row align-items-start my-3">
 						<div className="col">
 							<label htmlFor="form-register-worker" className="form-label">Nombre</label>
-							<input type="text" name="name" className="form-control rounded-0"  maxLength="20" required />
+							<input type="text" name="name" className="form-control rounded-0" pattern="^[a-zA-ZñÑáéíóúÁÉÍÓÚüÜ\s]*$" maxLength="20" required />
 						</div>
 						<div className="col">
 							<label htmlFor="form-register-worker" className="form-label">Apellidos</label>
-							<input type="text" name="last_name" className="form-control rounded-0"   maxLength="40"  />
+							<input type="text" name="last_name" className="form-control rounded-0"  pattern="^[a-zA-ZñÑáéíóúÁÉÍÓÚüÜ\s]*$" maxLength="40"  />
 						</div>
 					</div>
 					<div className="row align-items-end my-3">
