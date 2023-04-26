@@ -1,4 +1,5 @@
-
+                                        
+     ![JobsHood API](https://raw.githubusercontent.com/Apacheco82/Jobs-Hood/DEVELOP/assets/JobsHood Esquema API.png)
 
 
 # WebApp boilerplate with React JS and Flask API
