@@ -30,5 +30,15 @@ def login_users():
     return jsonify(token), token['status']
 
 
+@api.route('/profile', methods =['GET'])
+@jwt_required()
+def get_user_private():
+    info_token = get_jwt()
+    user = info_token['sub']
+    user_response = Controller.get_user_private(user)
+    if isinstance(user_response, User):   # si el nuevo usuario es una instancia del model USER (pertenece?) responde un serializado si no ,responde el mensaje de erro
+        return jsonify(user_response.serialize()), 200
+    return jsonify(user_response), user_response['status']
+
 
 

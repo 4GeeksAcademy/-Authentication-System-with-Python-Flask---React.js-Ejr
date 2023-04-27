@@ -1,5 +1,6 @@
-import React, { useState } from "react";
-import { loginUser } from "../services";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { loginUser} from "../services";
 
 export const Login = props => {
 
@@ -10,6 +11,8 @@ export const Login = props => {
             password: "",
         })
 
+    const navigate = useNavigate()
+
 
     const handleChange = ({ target }) => {
         setLogin({ ...login, [target.name]: target.value }) // se setean los cambios en el usestate de Login                                                   
@@ -17,13 +20,12 @@ export const Login = props => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        await loginUser(login)
-
-
+       const isLogin =  await loginUser(login)
+       if(isLogin) { navigate("/worker/profile")}
     }
 
     return (
-        <React.Fragment>
+        <React.Fragment>  
 
             <form onChange={handleChange} onSubmit={handleSubmit} id="container-login" className="container">
 

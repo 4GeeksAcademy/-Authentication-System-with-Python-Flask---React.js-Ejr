@@ -28,9 +28,32 @@ export const loginUser = async (user) => {
       body: JSON.stringify(user),
     });
     const data = await response.json();
-    console.log(data) //PROVISIONAL PARA VER QUE RETORNA EL TOKEN EN EL LOGIN--- EN TERMINAL HTTP REQUEST 200
     localStorage.setItem("token", data.token);  // localStorage es para guardar el dato de token lo encontramos en la consola en aplication -localstorage
+    return true
   } catch (error) {
     console.log("Error al iniciar sesión!", error);
+    return false
   }
 };
+
+export const getUserPrivate = async () => {
+  try {
+    const token = localStorage.getItem('token') // obtengo del localStorage mi item que lo hemos llamado como token -- linea 35 
+    const response = await fetch(`${URL}/user/profile`, {
+      method: "GET",
+      headers: {
+        'Authorization': `Bearer ${token}`,   // para poder acceder a partes privadas tengo que pasar en headers este formato el token es una interpolacion ya que ira cambiando segun el user
+        ...HEADERS,  // + tmb los headers generales se añaden 
+      }
+    })
+    const data = await response.json()
+    return data
+   
+  
+  } catch (error) {
+    console.log("Acceso denegado!", error);
+  }
+};
+
+
+
