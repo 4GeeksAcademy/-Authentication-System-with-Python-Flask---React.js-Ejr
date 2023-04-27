@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { loginUser} from "../services";
+import { loginUser, getUserPrivate} from "../services";
+import {useParams} from "react-router-dom";
+
 
 export const Login = props => {
+    const params = useParams();
 
 
     const [login, setLogin] = useState(
@@ -21,7 +24,15 @@ export const Login = props => {
     const handleSubmit = async (event) => {
         event.preventDefault();
        const isLogin =  await loginUser(login)
-       if(isLogin) { navigate("/worker/profile")}
+       if(isLogin) 
+       { 
+        const token = localStorage.getItem("token");
+        const user = await getUserPrivate(token);
+       if(user.company){
+        navigate("/company/profile")
+       }else{
+        navigate("/worker/profile")
+       }}
     }
 
     return (

@@ -53,4 +53,3 @@ class User(db.Model):
         "lawyer": self.lawyer.serialize()if self.lawyer else None,
         "data_create":self.data_create
         }
-        

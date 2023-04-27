@@ -40,5 +40,10 @@ def get_user_private():
         return jsonify(user_response.serialize()), 200
     return jsonify(user_response), user_response['status']
 
+@api.route("/<int:id>", methods= ["GET"])
+def get_single_user(id):
+    if not isinstance(id, int):
+        return Response.response_error("Not valid", 404) 
+    return Controller.get_single_user(id)
 
 

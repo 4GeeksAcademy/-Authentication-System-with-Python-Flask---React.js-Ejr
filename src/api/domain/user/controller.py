@@ -46,5 +46,11 @@ def get_user_private(user):
     return user
 
 
-
+def get_single_user(id):
+      
+    resultado = Repository.get_single_user(id)
+    if resultado is not None:
+        return Response.response_ok(resultado.serialize(), "tu usuario, gracias", 200)
+    else:
+        return Response.response_error("Not found", 404)
 
