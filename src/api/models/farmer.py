@@ -23,3 +23,4 @@ class Farmer(db.Model):
             "id" : self.id,
             "country": self.id
         }
+    
