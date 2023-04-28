@@ -11,6 +11,7 @@ import { Login } from "./pages/login-users.jsx";
 import { Profile } from "./pages/profile-worker.jsx";
 import { RegisterCompany } from "./pages/form-register-company.jsx";
 import { CompanyProfile } from "./pages/company-profile.jsx";
+import { LawyerProfile } from "./pages/lawyer-profile.jsx";
 
 
 const Layout = () => {
@@ -29,6 +30,8 @@ const Layout = () => {
                         <Route element={<Profile />} path="/worker/profile" />                      
                         <Route element={<CompanyProfile />} path="/company/:id" /> 
                         <Route element={<CompanyProfile />} path="/company/profile" />
+                        <Route element={<LawyerProfile />} path="/lawyer/:id" /> 
+                        <Route element={<LawyerProfile />} path="/lawyer/profile" />
                         <Route element={<RegistroWorker />} path="/register/worker" />
                         <Route element={<RegisterCompany />} path="/register/company" />
                         <Route element={<RegistroLawyer />} path="/register/lawyer" />

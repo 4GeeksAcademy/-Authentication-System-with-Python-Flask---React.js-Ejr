@@ -1,5 +1,6 @@
 import React, { useState, useEffect} from "react";
 import { registerLawyer } from "../services/lawyer.js";  
+import { useNavigate } from "react-router-dom";
 
 export const RegistroLawyer = () => {
 	
@@ -16,7 +17,7 @@ export const RegistroLawyer = () => {
 	}
 
 	const [form, setForm] = useState(defaultForm)
-
+	const navigate = useNavigate()
 
     // Función que actualiza el user_name basado en el campo email
     const updateUserName = (email) => {
@@ -39,6 +40,8 @@ export const RegistroLawyer = () => {
 		event.preventDefault();
 		await registerLawyer(form);
         setForm(defaultForm)
+		if (registerLawyer){navigate("/login")}
+		else {navigate("/")} //provisional, aquí se pondrán alerts de bootstrap en pantalla para controlar errores
 	}
 
     return (

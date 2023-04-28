@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from "react";
 import {companyRegister} from "../services/company";
+import { useNavigate } from "react-router-dom";
 
 
 
@@ -17,7 +18,7 @@ const initialState = {
 
 export const RegisterCompany = () => {
   const [form, setForm] = useState(initialState);
-
+	const navigate = useNavigate()
 
   // Función que actualiza el user_name basado en el campo email
   const updateUserName = (email) => {
@@ -40,6 +41,8 @@ export const RegisterCompany = () => {
     e.preventDefault();
     await companyRegister(form);
     setForm(initialState)
+    if (companyRegister){navigate("/login")}
+    else {navigate("/")} //provisional, aquí se pondrán alerts de bootstrap en pantalla para controlar errores
   };
 
   return (
