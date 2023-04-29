@@ -1,7 +1,140 @@
-/*
-    home.css: This website contains selectors only used in home.css
+* {
+    padding: 0;
+}
 
-    All pages share the styles on index.css but you should create 
-    one more css for each page that will contain the selected used 
-    on that page only (the ones not reused in other pages).
-*/
+footer {
+    background: #003A25;
+    background: -webkit-linear-gradient(59deg, #22b47e, #003A25);
+    background: linear-gradient(59deg, #22b47e, #003A25);
+    color: white;
+    margin-top:100px;
+  }
+  
+  footer a {
+    color: #fff;
+    font-size: 14px;
+    transition-duration: 0.2s;
+  }
+  
+  
+  .copy {
+    font-size: 12px;
+    padding: 10px;
+    border-top: 1px solid #FFFFFF;
+  }
+  
+  .footer-middle {
+    padding-top: 2em;
+    color: white;
+  }
+  
+  
+  /*SOCİAL İCONS CIRCLE*/
+
+  .social-network {
+    margin: 0 auto;
+  }
+
+  .social-network a {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: white;
+    place-items: center;
+    display: grid;
+  }
+
+  .social-network a:hover {
+    background-color: #2d88d2;
+  }
+
+  .social-network a:hover .ico{
+    background-color: transparent;
+    color: white;
+  }
+
+
+  /*SOCİAL ICONS*/
+  
+  /* footer social icons */
+  
+  ul.social-network {
+    list-style: none;
+    display: inline-block;
+    padding: 0;
+  }
+  
+  ul.social-network li {
+    display: inline;
+    margin: 0 5px;
+  }
+  
+  
+  /* footer social icons */
+
+  .ico {
+    color: #006943;
+    background-color: transparent;
+    font-size: 22px;
+    }
+     
+  
+  
+  .social-network a.icoLinkedin:hover {
+    background-color: #007bb7;
+  }
+  
+  
+  .social-network a.icoLinkedin:hover i {
+    color: #fff;
+  }
+  
+  .social-network a.socialIcon:hover,
+  .socialHoverClass {
+    color: #44BCDD;
+  }
+  
+  .social-circle li a {
+    display: inline-block;
+    position: relative;
+    margin: 0 auto 0 auto;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+    text-align: center;
+    width: 40px;
+    height: 40px;
+    font-size: 23px;
+  }
+  
+  .social-circle li i {
+    margin: 0;
+    line-height: 30px;
+    text-align: center;
+  }
+  
+  .social-circle li a:hover i,
+  .triggeredHover {
+    -moz-transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+    -ms--transform: rotate(360deg);
+    transform: rotate(360deg);
+    -webkit-transition: all 0.2s;
+    -moz-transition: all 0.2s;
+    -o-transition: all 0.2s;
+    -ms-transition: all 0.2s;
+    transition: all 0.2s;
+  }
+  
+  .social-circle i {
+    color: #595959;
+    -webkit-transition: all 0.8s;
+    -moz-transition: all 0.8s;
+    -o-transition: all 0.8s;
+    -ms-transition: all 0.8s;
+    transition: all 0.8s;
+  }
+  
+  .social-network a {
+    background-color: #F9F9F9;
+  }
