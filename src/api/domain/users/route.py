@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify, Blueprint
-import api.domains.users.controller as Controller
+import api.domain.users.controller as Controller
 import bcrypt
 
 api = Blueprint('api/users', __name__)

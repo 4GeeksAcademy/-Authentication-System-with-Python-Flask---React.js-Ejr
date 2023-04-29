@@ -4,12 +4,11 @@ from api.models.db import db
 class Services(db.Model):
     id= db.Column(db.Integer, primary_key=True)
     company_id =db.Column(db.Integer, db.ForeignKey("company.id"))
-    date = db.Column(db.String(250), unique=False, nullable = False) 
+    date = db.Column(db.DateTime, nullable = False) 
     name = db.Column(db.String(250), unique=False, nullable = False) 
     description = db.Column(db.String(250), unique=False, nullable = False) 
     service_duration = db.Column(db.String(250), unique=False, nullable = False) 
-    price = db.Column(db.String(250), unique=False, nullable = False) 
-    is_active = db.Column(db.Boolean(), unique=False, nullable=False, default=True)
+    price = db.Column(db.Float, unique=False, nullable = False) 
     company = db.relationship("Company")
 
     def __init__(self,company_id, date, name, description,service_duration, price):
@@ -28,7 +27,7 @@ class Services(db.Model):
         "name": self.name,
         "description": self.description,
         "service_duration": self.service_duration,
-        "price":self.price,
-        "is_active":self.is_active,
+        "price": self.price,
+        "company": self.company.serialize()
         }
     

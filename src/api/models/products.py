@@ -5,8 +5,8 @@ class Products(db.Model):
     company_id =db.Column(db.Integer, db.ForeignKey("company.id"))
     name = db.Column(db.String(250), unique=False, nullable = False) 
     description = db.Column(db.String(250), unique=False, nullable = False) 
-    price = db.Column(db.String(250), unique=False, nullable = False) 
-    stock = db.Column(db.String(250), unique=False, nullable = False) 
+    price = db.Column(db.Float, unique=False, nullable = False) 
+    stock = db.Column(db.Integer, unique=False, nullable = False) 
     company = db.relationship("Company")
     
     def __init__(self,company_id,name,description,price,stock):

@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 8e2580cae2c2
+Revision ID: 5a4cdc9168a1
 Revises: 
-Create Date: 2023-04-24 17:18:57.941714
+Create Date: 2023-04-26 08:13:25.713677
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '8e2580cae2c2'
+revision = '5a4cdc9168a1'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -25,9 +25,9 @@ def upgrade():
     )
     op.create_table('user',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('username', sa.Integer(), nullable=False),
-    sa.Column('firstname', sa.Integer(), nullable=False),
-    sa.Column('lastname', sa.Integer(), nullable=False),
+    sa.Column('username', sa.String(length=20), nullable=False),
+    sa.Column('firstname', sa.String(length=20), nullable=False),
+    sa.Column('lastname', sa.String(length=20), nullable=False),
     sa.Column('email', sa.String(length=120), nullable=False),
     sa.Column('password', sa.String(length=200), nullable=False),
     sa.Column('is_active', sa.Boolean(), nullable=False),
@@ -35,8 +35,6 @@ def upgrade():
     sa.ForeignKeyConstraint(['role_id'], ['roles.id'], ),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('email'),
-    sa.UniqueConstraint('firstname'),
-    sa.UniqueConstraint('lastname'),
     sa.UniqueConstraint('username')
     )
     op.create_table('company',
@@ -44,35 +42,32 @@ def upgrade():
     sa.Column('user_id', sa.Integer(), nullable=True),
     sa.Column('cif', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=120), nullable=False),
-    sa.Column('description', sa.String(length=300), nullable=True),
+    sa.Column('description', sa.String(length=300), nullable=False),
     sa.Column('address', sa.String(length=200), nullable=False),
     sa.Column('working_schedule', sa.String(length=120), nullable=False),
-    sa.Column('is_active', sa.Boolean(), nullable=False),
     sa.ForeignKeyConstraint(['user_id'], ['user.id'], ),
     sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('address'),
-    sa.UniqueConstraint('name'),
-    sa.UniqueConstraint('working_schedule')
+    sa.UniqueConstraint('cif'),
+    sa.UniqueConstraint('name')
     )
     op.create_table('products',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('company_id', sa.Integer(), nullable=True),
     sa.Column('name', sa.String(length=250), nullable=False),
     sa.Column('description', sa.String(length=250), nullable=False),
-    sa.Column('price', sa.String(length=250), nullable=False),
-    sa.Column('stock', sa.String(length=250), nullable=False),
+    sa.Column('price', sa.Float(), nullable=False),
+    sa.Column('stock', sa.Integer(), nullable=False),
     sa.ForeignKeyConstraint(['company_id'], ['company.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('services',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('company_id', sa.Integer(), nullable=True),
-    sa.Column('date', sa.String(length=250), nullable=False),
+    sa.Column('date', sa.DateTime(), nullable=False),
     sa.Column('name', sa.String(length=250), nullable=False),
     sa.Column('description', sa.String(length=250), nullable=False),
     sa.Column('service_duration', sa.String(length=250), nullable=False),
-    sa.Column('price', sa.String(length=250), nullable=False),
-    sa.Column('is_active', sa.Boolean(), nullable=False),
+    sa.Column('price', sa.Float(), nullable=False),
     sa.ForeignKeyConstraint(['company_id'], ['company.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
@@ -100,7 +95,7 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=True),
     sa.Column('product_id', sa.Integer(), nullable=True),
-    sa.Column('total_price', sa.String(length=250), nullable=False),
+    sa.Column('total_price', sa.Float(), nullable=False),
     sa.ForeignKeyConstraint(['product_id'], ['products.id'], ),
     sa.ForeignKeyConstraint(['user_id'], ['user.id'], ),
     sa.PrimaryKeyConstraint('id')

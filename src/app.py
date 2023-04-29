@@ -13,7 +13,8 @@ from api.admin import setup_admin
 from api.commands import setup_commands
 from flask_jwt_extended import JWTManager
 
-import api.domains.users.route as user_routes
+import api.domain.users.route as user_routes
+import api.domain.company.route as company_routes
 
 #from models import Person
 
@@ -45,9 +46,11 @@ setup_admin(app)
 # add the admin
 setup_commands(app)
 
+
 # Add all endpoints form the API with a "api" prefix
 app.register_blueprint(api, url_prefix='/api')
 app.register_blueprint(user_routes.api, url_prefix='/api/users')
+app.register_blueprint(company_routes.api, url_prefix='/api/company')
 
 # Handle/serialize errors like a JSON object
 @app.errorhandler(APIException)
