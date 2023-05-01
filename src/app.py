@@ -15,6 +15,7 @@ from flask_jwt_extended import JWTManager
 
 import api.domain.users.route as user_routes
 import api.domain.company.route as company_routes
+import api.domain.workers.route as worker_routes
 
 #from models import Person
 
@@ -51,6 +52,7 @@ setup_commands(app)
 app.register_blueprint(api, url_prefix='/api')
 app.register_blueprint(user_routes.api, url_prefix='/api/users')
 app.register_blueprint(company_routes.api, url_prefix='/api/company')
+app.register_blueprint(worker_routes.api, url_prefix='/api/workers')
 
 # Handle/serialize errors like a JSON object
 @app.errorhandler(APIException)

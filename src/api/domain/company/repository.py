@@ -14,7 +14,7 @@ def get_company_list():
 
 def get_company_by_id(id):
     company = Company.query.get(id)
-    return company.serialize()
+    return company
 
 def update_company(update_company, company_id):
     company = Company.query.get(company_id)

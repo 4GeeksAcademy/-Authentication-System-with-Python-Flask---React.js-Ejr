@@ -18,7 +18,8 @@ def get_company_list():
 
 @api.route('/<int:company_id>', methods=['GET'])
 def get_company_by_id(company_id):
-    return Controller.get_company_by_id(company_id)
+    company = Controller.get_company_by_id(company_id)
+    return company.serialize()
 
 @api.route('/<int:company_id>', methods=['PUT'])
 @jwt_required()

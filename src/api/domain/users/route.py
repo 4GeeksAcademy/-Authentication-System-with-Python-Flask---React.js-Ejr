@@ -7,7 +7,11 @@ api = Blueprint('api/users', __name__)
 @api.route("/register", methods=["POST"])
 def create_new_user():
     new_user = request.get_json()
-    return Controller.create_new_user(new_user)
+    user = Controller.create_new_user(new_user)
+    return jsonify({
+        "msg": "user has been created successfully!",
+        "data": user.serialize()
+    }), 201
 
 @api.route('/', methods=['GET'])
 def get_users_list():

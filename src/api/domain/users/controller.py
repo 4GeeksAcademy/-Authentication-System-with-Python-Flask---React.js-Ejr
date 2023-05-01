@@ -15,11 +15,7 @@ def create_new_user(user):
     hashed = bcrypt.hashpw(user['password'].encode(), bcrypt.gensalt())
     user['password'] = hashed.decode()
     new_user = Repository.create_new_user(user)
-
-    return jsonify({
-        "msg": "user has been created successfully!",
-        "data": new_user.serialize()
-    }), 201
+    return new_user
 
 
 
