@@ -10,22 +10,21 @@ def create_work(data, company_id):
         return "Company not found"
 
     new_user = UserController.create_new_user(data)
-    if new_user is None:
-        return "User not found"
-
-    return Repository.create_work(company.id, worker_id, data["working_schedule"])
+    return Repository.create_work(company.id, new_user.id, data["working_schedule"])
 
 
-def get_worker_list():
-    all_workers = Repository.get_worker_list()
-    return Response.response_ok("List of all workers", all_workers)
-
-
-def get_worker_by_id(company_id):
-    worker = Repository.get_worker_by_id(company_id)
+def get_worker_by_id(worker_id):
+    worker = Repository.get_worker_by_id(worker_id)
     if worker is None:
         return Response.response_error("Worker not found", 404)
     return worker.serialize()
+
+
+def get_list_worker_company(company_id):
+    list_worker_by_company = Repository.get_list_worker_company(company_id)
+    if list_worker_by_company == []:
+        return Response.response_error("Company list  is empty", 404)
+    return list_worker_by_company
 
 
 def delete_worker(worker_id):

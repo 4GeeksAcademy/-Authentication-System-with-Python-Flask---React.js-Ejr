@@ -9,19 +9,15 @@ def create_work(company_id, user_id, working_schedule):
     return new_work
 
 
-def get_worker_list():
-    all_workers = Company.query.all()
-    serialized_workers = list(map(lambda worker: worker.serialize(), all_workers))
-    return serialized_workers
-
-
-# def get_worker_by_id_from_repo(worker_id):
-#     return Workers.query.filter_by(id=worker_id).first()
-
-
-def get_worker_by_id(company_id):
-    worker = Workers.query.filter_by(id=company_id).first()
+def get_worker_by_id(worker_id):
+    worker = Workers.query.get(worker_id)
     return worker
+
+
+def get_list_worker_company(company_id):
+    list_worker_by_company = Workers.query.filter_by(company_id=company_id).all()
+    list_worker = list(map(lambda worker: worker.serialize(), list_worker_by_company))
+    return list_worker
 
 
 def delete_worker(id):
