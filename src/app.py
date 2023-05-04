@@ -12,9 +12,11 @@ from api.routes import api
 from api.admin import setup_admin
 from api.commands import setup_commands
 from flask_jwt_extended import JWTManager
+from datetime import timedelta
 
 import api.domain.users.route as user_routes
 import api.domain.company.route as company_routes
+import api.domain.services.route as services_routes
 import api.domain.workers.route as worker_routes
 
 #from models import Person
@@ -25,6 +27,8 @@ app = Flask(__name__)
 app.url_map.strict_slashes = False
 
 app.config['JWT_SECRET_KEY'] = os.environ['JWT_SECRET_KEY']
+app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=1)
+app.config["JWT_REFRESH_TOKEN_EXPIRES"] = timedelta(days=5)
 jwt = JWTManager(app)
 
 # database condiguration
@@ -47,11 +51,11 @@ setup_admin(app)
 # add the admin
 setup_commands(app)
 
-
 # Add all endpoints form the API with a "api" prefix
 app.register_blueprint(api, url_prefix='/api')
 app.register_blueprint(user_routes.api, url_prefix='/api/users')
 app.register_blueprint(company_routes.api, url_prefix='/api/company')
+app.register_blueprint(services_routes.api, url_prefix='/api/services')
 app.register_blueprint(worker_routes.api, url_prefix='/api/workers')
 
 # Handle/serialize errors like a JSON object
@@ -74,7 +78,6 @@ def serve_any_other_file(path):
     response = send_from_directory(static_file_dir, path)
     response.cache_control.max_age = 0 # avoid cache memory
     return response
-
 
 
 # this only runs if `$ python src/main.py` is executed

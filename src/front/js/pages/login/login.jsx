@@ -1,28 +1,27 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import logoDetail from "../../../../assets/logo_detail.png";
 import "./styles.css";
 import Input from "../../component/input/input.jsx";
-import { registerUser } from "../../service";
+import { loginUser } from "../../service";
 
 const initialState = {
-  username: "",
-  firstname: "",
-  lastname: "",
   email: "",
   password: "",
 };
 
-const RegisterPage = () => {
-  const [newUser, setNewUser] = useState(initialState);
+const LoginPage = () => {
+  const navigate = useNavigate();
+  const [newLogin, setNewLogin] = useState(initialState);
 
   const handleChange = ({ target }) => {
-    setNewUser({ ...newUser, [target.name]: target.value });
+    setNewLogin({ ...newLogin, [target.name]: target.value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await registerUser(newUser);
-    // redirects based on role...
+    await loginUser(newLogin);
+    // redirects based on role
   };
   return (
     <main className="mainContainer">
@@ -35,27 +34,9 @@ const RegisterPage = () => {
         <img src={logoDetail} alt="purple square design used as logo" />
       </header>
       <section>
-        <h2 className="title">Register</h2>
+        <h2 className="title">Login</h2>
         {/* Form */}
         <form onChange={handleChange} onSubmit={handleSubmit}>
-          <Input
-            icon={<i className="fa-solid fa-circle-user"></i>}
-            type="text"
-            placeholder="Username"
-            name="username"
-          />
-          <Input
-            icon={<i className="fa-solid fa-circle-user"></i>}
-            type="text"
-            placeholder="First Name"
-            name="firstname"
-          />
-          <Input
-            icon={<i className="fa-solid fa-circle-user"></i>}
-            type="text"
-            placeholder="Last Name"
-            name="lastname"
-          />
           <Input
             icon={<i className="fa-solid fa-envelope"></i>}
             type="email"
@@ -69,7 +50,7 @@ const RegisterPage = () => {
             name="password"
           />
           <button type="submit" className="boxShadow">
-            Register
+            Login
           </button>
         </form>
         <div className="bgImg"></div>
@@ -77,4 +58,4 @@ const RegisterPage = () => {
     </main>
   );
 };
-export default RegisterPage;
+export default LoginPage;

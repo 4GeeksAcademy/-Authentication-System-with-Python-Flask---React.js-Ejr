@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 4adc01c41a67
+Revision ID: c31270ec52a9
 Revises: 
-Create Date: 2023-04-30 09:12:48.655996
+Create Date: 2023-05-04 17:51:53.043495
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '4adc01c41a67'
+revision = 'c31270ec52a9'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -40,11 +40,12 @@ def upgrade():
     op.create_table('company',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=True),
-    sa.Column('cif', sa.Integer(), nullable=False),
+    sa.Column('cif', sa.String(length=8), nullable=False),
     sa.Column('name', sa.String(length=120), nullable=False),
     sa.Column('description', sa.String(length=300), nullable=False),
     sa.Column('address', sa.String(length=200), nullable=False),
     sa.Column('working_schedule', sa.String(length=120), nullable=False),
+    sa.Column('is_active', sa.Boolean(), nullable=False),
     sa.ForeignKeyConstraint(['user_id'], ['user.id'], ),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('cif'),
@@ -66,7 +67,7 @@ def upgrade():
     sa.Column('date', sa.DateTime(), nullable=False),
     sa.Column('name', sa.String(length=250), nullable=False),
     sa.Column('description', sa.String(length=250), nullable=False),
-    sa.Column('service_duration', sa.String(length=250), nullable=False),
+    sa.Column('service_duration', sa.Integer(), nullable=False),
     sa.Column('price', sa.Float(), nullable=False),
     sa.ForeignKeyConstraint(['company_id'], ['company.id'], ),
     sa.PrimaryKeyConstraint('id')
@@ -75,13 +76,10 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=True),
     sa.Column('company_id', sa.Integer(), nullable=True),
-    sa.Column('name', sa.String(length=120), nullable=False),
-    sa.Column('working_schedule', sa.String(length=120), nullable=False),
+    sa.Column('working_schedule', sa.String(length=60), nullable=False),
     sa.ForeignKeyConstraint(['company_id'], ['company.id'], ),
     sa.ForeignKeyConstraint(['user_id'], ['user.id'], ),
-    sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('name'),
-    sa.UniqueConstraint('working_schedule')
+    sa.PrimaryKeyConstraint('id')
     )
     op.create_table('services_workers',
     sa.Column('id', sa.Integer(), nullable=False),

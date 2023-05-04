@@ -7,7 +7,7 @@ class Services(db.Model):
     date = db.Column(db.DateTime, nullable = False) 
     name = db.Column(db.String(250), unique=False, nullable = False) 
     description = db.Column(db.String(250), unique=False, nullable = False) 
-    service_duration = db.Column(db.String(250), unique=False, nullable = False) 
+    service_duration = db.Column(db.Integer, unique=False, nullable = False) 
     price = db.Column(db.Float, unique=False, nullable = False) 
     company = db.relationship("Company")
 
@@ -28,6 +28,5 @@ class Services(db.Model):
         "description": self.description,
         "service_duration": self.service_duration,
         "price": self.price,
-        "company": self.company.serialize()
         }
     

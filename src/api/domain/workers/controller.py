@@ -9,7 +9,7 @@ def create_work(data, company_id):
     if company is None:
         return "Company not found"
 
-    new_user = UserController.create_new_user(data)
+    new_user = UserController.create_new_user(data, 'worker')
     return Repository.create_work(company.id, new_user.id, data["working_schedule"])
 
 

@@ -5,7 +5,7 @@ from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_requir
 import bcrypt
 
 
-def create_new_user(user):
+def create_new_user(user, role_type):
     if user['email'] is None or user['email'] == "":
         return Response.response_error('Email is not valid', 400)
     
@@ -14,7 +14,7 @@ def create_new_user(user):
 
     hashed = bcrypt.hashpw(user['password'].encode(), bcrypt.gensalt())
     user['password'] = hashed.decode()
-    new_user = Repository.create_new_user(user)
+    new_user = Repository.create_new_user(user, role_type)
     return new_user
 
 
@@ -61,8 +61,6 @@ def login(body):
         return user_verify
 
     user = Repository.get_user_by_email(body['email'])
-
-    print('user --> ',user)
 
     if user is None: 
         return {"msg": "User not found", "error": True, "status": 404 }

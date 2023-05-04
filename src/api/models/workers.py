@@ -22,3 +22,4 @@ class Workers(db.Model):
             "working_schedule": self.working_schedule,
             "user": self.user.serialize(),
         }
+

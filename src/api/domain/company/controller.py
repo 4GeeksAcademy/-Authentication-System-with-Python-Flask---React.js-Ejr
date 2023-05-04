@@ -1,42 +1,60 @@
 import api.domain.company.repository as Repository 
-import api.utilities.handle_response as Response
+from api.models.index import db, Company, User
+import api.domain.users.controller as UserController
 
-def create_company(data):
-    if data['user_id'] is None or data['user_id'] == '':
-        return Response.response_error('User ID not found', 400)
+def create_company(body):
+    cif = body['cif']
+    name = body['name']
 
-    if data['cif'] is None or data['cif'] == '':
-        return Response.response_error('Company CIF not found', 400)
+    company_cif = Company.query.filter_by(cif=cif).all()
+
+    company_name = Company.query.filter_by(name=name).all()
+
+    if company_cif: 
+        return {'msg': 'Company CIF already exists in database', 'status': 400}
     
-    if data['name'] is None or data['name'] == '':
-        return Response.response_error('Company name not found', 400)
+    if company_name: 
+        return {'msg': 'Company name already exists in database', 'status': 400}
     
-    return Repository.create_company(data), 201
+    new_user = UserController.create_new_user(body, 'admin')
 
-def get_company_list():
-	all_companies = Repository.get_company_list()
-	return Response.response_ok('List of all companies', all_companies)
+    return Repository.create_company(body, new_user.id)
+
+def get_companies_list():
+
+	all_companies = Repository.get_companies_list()
+	return all_companies
 
 def get_company_by_id(company_id):
+    
+    company_by_id = Repository.get_company_by_id(company_id)
+    if company_by_id is None:
+        return {'msg': f'Company with id: {company_id}, do not exists in this database.', 'status': 404}
+    
     company = Repository.get_company_by_id(company_id)
-
-    if company is None:
-        return Response.response_error('Company not found', 404)
     return company
 
-def update_company(update_company, company_id):
-    
-    update_company = Repository.update_company(update_company, company_id)
+def update_company(update_company, company_id, current_user_id):
+    company = Company.query.get(company_id)
+    print(company)
 
-    if update_company:
-        return Response.response_ok(f'Company with id: {company_id}, has been updated in database.', update_company.serialize())
-    else:
-        return Response.response_error(f'Company with id: {company_id}, not found in database.', 404)
+    company_user_id = company.user_id
+    
+    if current_user_id == company_user_id and company.user.role_id == 1:
+        updated_company = Repository.update_company(update_company, company_id, company)
+        return updated_company
+    else: 
+        return {'msg': 'You do not have rights to update this company!', 'status': 403}  
 
-def delete_company(company_id):
+
+def delete_company(company_id, current_user_id):
+    company = Company.query.get(company_id)
     
-    is_deleted_company = Repository.delete_company(company_id) 
+    company_user_id = company.user_id
+
+    if current_user_id != company_user_id:
+        return {'msg': 'You do not have rights to delete this company!', 'status': 403}
+
+    deleted_company = Repository.delete_company(company_id) 
+    return deleted_company
     
-    if is_deleted_company:
-        return Response.response_ok(f'Company with id: {company_id}, has been deleted from database', 200)
-    return Response.response_error(f'Company with id: {company_id}, has not been found in database.', 400)
