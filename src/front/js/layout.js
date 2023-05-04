@@ -4,6 +4,9 @@ import ScrollToTop from "./component/scrollToTop";
 import { BackendURL } from "./component/backendURL";
 
 import { Home } from "./pages/home.jsx";
+import {FarmerView} from "./pages/farmerView.jsx"
+import {FarmerServices} from "./pages/farmerServices.jsx"
+import { AddFarm } from "./pages/addFarm.jsx"
 import injectContext from "./store/appContext";
 import RegFarmer from "./pages/regFarm.jsx";
 import RegTech from "./pages/regTech.jsx";
@@ -24,6 +27,9 @@ const Layout = () => {
           <Routes>
             <Route element={<Home />} path="/" />
             {/* Falta la ruta de login y registro */}
+            <Route element={<FarmerView/>} path="/profile" />
+            <Route element={<FarmerServices/>} path="/profileServices" />
+            <Route element={<AddFarm/>} path="/addFarm" />
             <Route element={<RegFarmer />} path="/registerFarmer" />
             <Route element={<RegTech />} path="/registerTech" />
             <Route element={<h1>Not found!</h1>} />

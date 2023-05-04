@@ -141,3 +141,32 @@ p {
 .section3 p {
   font-size: small;
 }
+
+/* #efdab7  #d2e0d2*/
+
+
+
+/*            */
+#btnServices {
+  font-family: Roboto, sans-serif;
+  font-weight: 3;
+  font-size: 14px;
+  color: #fff;
+  background: linear-gradient(90deg, #237320 0%, #c1d230 68%);
+  padding: 10px 30px;
+  border: none;
+  box-shadow: rgb(0, 0, 0) 0px 0px 0px 0px;
+  border-radius: 50px;
+  transition: 0ms;
+  transform: translateY(0);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  cursor: pointer;
+  text-decoration: none;
+}
+#btnProfileService {
+  background: none;
+  color: green;
+  font-size: 1.25rem;
+}

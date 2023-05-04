@@ -1,5 +1,7 @@
-export const URL =
-  "https://3001-mmeitin-osigrisagropoin-li9ak5v9a8k.ws-eu96.gitpod.io/api/user";
+const URL =
+  "https://3001-mmeitin-osigrisagropoin-ud5t2tj9qb1.ws-eu95.gitpod.io/api/user";
+  const URLCROP =
+  "https://3001-mmeitin-osigrisagropoin-ud5t2tj9qb1.ws-eu96.gitpod.io/api/crop";
 
 const HEADERS = {
   "Content-Type": "application/json",
@@ -20,6 +22,21 @@ export const registerFarmer = async (newUser) => {
   }
 };
 
+export const addFarm = async (newFarm) => {
+  const raw = JSON.stringify(newFarm)
+  try{
+    console.log("Farm created on service", newFarm);
+    const resp = await fetch(`${URLCROP}/addFarm`,{
+      method : 'POST',
+      headers : {"Content-Type": "application/json"},
+      body : raw,
+      redirect: "follow"
+    });
+    return await resp.json();
+  } catch (err) {
+    console.log("Error al crear el nuevo campo", err)
+  }
+}
 export const loginUser = async (user) => {
   try{
     const res = await fetch(`${URL}/login`,{
