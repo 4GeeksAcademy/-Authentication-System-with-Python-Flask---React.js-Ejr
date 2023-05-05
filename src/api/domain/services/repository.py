@@ -14,14 +14,10 @@ def get_single_service(service_id):
     service = Services.query.get(service_id)
     return service
 
-def delete_service(service_id):
-    service = Services.query.get(service_id)
-    db.session.delete(service)
-    db.session.commit()
-    return service
-
-def delete_service(service_id):
-    service = Services.query.get(service_id)
-    db.session.delete(service)
-    db.session.commit()
+def delete_service(service):
+    if service:
+        service.is_active = False
+        db.session.commit()
+    else:
+        return None
     return service

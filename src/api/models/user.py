@@ -8,7 +8,7 @@ class User(db.Model):
     lastname = db.Column(db.String(20), nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(200), nullable=False)
-    is_active = db.Column(db.Boolean(), unique=False, nullable=False, default=True)
+    is_active = db.Column(db.Boolean(), nullable=False, default=True)
     role_id = db.Column(db.Integer, db.ForeignKey("roles.id"))
     roles = db.relationship("Roles")
 
@@ -27,6 +27,7 @@ class User(db.Model):
             "firstname": self.firstname, 
             "lastname": self.lastname, 
             "email": self.email,
-            "role_id": self.role_id
+            "role_id": self.role_id,
+            "is_active": self.is_active
         }
     

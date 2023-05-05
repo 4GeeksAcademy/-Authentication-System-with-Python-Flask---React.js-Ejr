@@ -27,7 +27,7 @@ def get_services_by_company(company_id):
 
     if isinstance(services_by_company, list):
         serialized_services = list(map(lambda service: service.serialize(), services_by_company))
-        return Response.response_ok('New service created successfully!', serialized_services)
+        return Response.response_ok(f'List of all services of the company with id: {company_id}', serialized_services)
     else:
         return Response.response_error(services_by_company['msg'], services_by_company['status'])
 
@@ -40,7 +40,7 @@ def get_single_service(service_id):
     else:
         return Response.response_error(service['msg'], service['status'])
 
-@api.route('/<int:service_id>', methods=['DELETE'])
+@api.route('/<int:service_id>', methods=['PUT'])
 @jwt_required()
 def delete_service(service_id):
     current_user = get_jwt_identity()
