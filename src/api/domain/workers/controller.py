@@ -6,11 +6,13 @@ import api.domain.company.controller as CompanyController
 
 def create_work(data, company_id):
     company = CompanyController.get_company_by_id(company_id)
+    print("comp++++++", company)
     if company is None:
         return "Company not found"
 
-    new_user = UserController.create_new_user(data, 'worker')
-    return Repository.create_work(company.id, new_user.id, data["working_schedule"])
+    new_user = UserController.create_new_user(data, "worker")
+
+    return Repository.create_worker(company.id, new_user.id, data["working_schedule"])
 
 
 def get_worker_by_id(worker_id):
@@ -28,7 +30,7 @@ def get_list_worker_company(company_id):
 
 
 def delete_worker(worker_id):
-    is_deleted_worker = Repository.delete_worker(workers_id)
+    is_deleted_worker = Repository.delete_worker(worker_id)
 
     if is_deleted_worker:
         return Response.response_ok(
