@@ -18,6 +18,7 @@ def get_users_list():
     return Controller.get_users_list()
 
 @api.route('/<int:user_id>', methods=['GET'])
+#make it a private route
 def get_single_user(user_id):
     return Controller.get_single_user(user_id)
 

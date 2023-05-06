@@ -21,8 +21,10 @@ const LoginPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     await loginUser(newLogin);
-    // redirects based on role
+    navigate("/");
+    // navigate should redirect to dashboard company, client or worker
   };
+
   return (
     <main className="mainContainer">
       <header>

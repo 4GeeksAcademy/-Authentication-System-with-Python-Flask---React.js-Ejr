@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import logoDetail from "../../../../assets/logo_detail.png";
 import "./styles.css";
 import Input from "../../component/input/input.jsx";
@@ -13,6 +14,7 @@ const initialState = {
 };
 
 const RegisterPage = () => {
+  const navigate = useNavigate();
   const [newUser, setNewUser] = useState(initialState);
 
   const handleChange = ({ target }) => {
@@ -22,8 +24,10 @@ const RegisterPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     await registerUser(newUser);
-    // redirects based on role...
+    navigate("/");
+    // redirects to dashboard
   };
+
   return (
     <main className="mainContainer">
       <header>

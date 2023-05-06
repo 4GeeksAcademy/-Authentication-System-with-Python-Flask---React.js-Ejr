@@ -17,7 +17,7 @@ const HomePage = () => {
       </header>
       <section>
         <div className="btn">
-          <Link to={"/register"}>
+          <Link to={"/login"}>
             <button type="button" className="boxShadow">
               Login
             </button>
