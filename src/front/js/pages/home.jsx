@@ -2,7 +2,7 @@ import React, { useState,useContext } from "react";
 import { Link, navigate  } from "react-router-dom";
 import { Context } from "../store/appContext";
 
-import "../../styles/home.css";
+import '../../styles/home.css';
 import { loginUser } from "../service/service";
 
 export const Home = () => {
@@ -31,7 +31,7 @@ export const Home = () => {
         <div className="col2 ms-5">
           <h2>LOGO</h2>
         </div>
-        <div className="d-flex col justify-content-end mb-3 p-4 px-5">
+        <div className="d-flex col justify-content-end p-2">
           <a className="navbar-brand mb-0 h1 p-2 px-5" href="#section1">
             Quienes somos
           </a>
@@ -108,7 +108,7 @@ export const Home = () => {
                   <div className="modal-register  px-5   text-center" >
                     <h6 className="pb-1">¿No tienes usuario todavía? Registrate</h6>
                     <div className="registerlinks d-flex justify-content-around">
-                      <Link to={"/register"}>
+                      <Link to={"/registerFarmer"}>
                         
                         <button
                           type="button"
@@ -117,10 +117,12 @@ export const Home = () => {
                         >
                           Soy Agricultor
                         </button>
-                      </Link>
-                      <button type="button" className="BotLink">
+                      </Link> 
+                      <Link to={"/registerTech"}>
+                      <button type="button" className="BotLink"data-bs-dismiss="modal">
                         Soy Técnico
                       </button>
+                      </Link> 
                     </div>
                   </div>
                 </div>
