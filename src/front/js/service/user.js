@@ -14,6 +14,7 @@ export const registerUser = async (user) => {
             body: JSON.stringify(user)
         });
         const data = await res.json();
+        return data;
     } catch (err) {
         console.log("Error Register User", err)
     }
@@ -35,7 +36,7 @@ export const loginUser = async (user) => {
 
 export const getInfoUser = async () => {
     try {
-        const token = localStorage.getItem('token')
+        const token = localStorage.getItem("token")
         const res = await fetch(`${URL}/users/`, {
             method: "GET",
             headers: {

@@ -1,10 +1,8 @@
 from api.models.index import db, User, Roles
-from flask import jsonify
 
-
-def create_new_user(user, role_type):
+def create_new_user(body, role_type):
     role = Roles.query.filter_by(type=role_type).first()
-    new_user = User(user['username'], user['firstname'], user['lastname'], user['email'], user['password'], role.id)
+    new_user = User(body['username'], body['firstname'], body['lastname'], body['email'], body['password'], role.id)
     db.session.add(new_user)
     db.session.commit()
     return new_user
@@ -18,17 +16,7 @@ def get_single_user(user_id):
     user = User.query.get(user_id)
     return user
 
-def delete_user(user_id):
-    user = User.query.get(user_id)
-    if user:
-        db.session.delete(user)
-        db.session.commit()
-        return True
-    else:
-        return False
-
-def update_user(update_user, user_id):
-    user = User.query.get(user_id)
+def update_user(update_user, user_id, user):
     if user:
         user.username = update_user['username']
         user.firstname = update_user['firstname']
@@ -38,7 +26,16 @@ def update_user(update_user, user_id):
         return user
     else:
         return None
-    
+
+def delete_user(user):
+    if user: 
+        user.is_active = False
+        db.session.commit()
+    else:
+        return None
+
+    return user
+
 def get_user_by_email(email):
     user = User.query.filter_by(email=email).first()
     return user

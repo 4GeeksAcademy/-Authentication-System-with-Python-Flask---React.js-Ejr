@@ -3,7 +3,7 @@ from api.models.db import db
 class Company(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
-    cif = db.Column(db.Integer, unique=True, nullable=False)
+    cif = db.Column(db.String(8), unique=True, nullable=False)
     name = db.Column(db.String(120), unique=True, nullable=False)
     description = db.Column(db.String(300), nullable=False)
     address = db.Column(db.String(200), nullable=False)
