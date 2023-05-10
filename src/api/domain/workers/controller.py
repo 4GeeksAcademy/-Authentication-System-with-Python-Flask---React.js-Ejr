@@ -4,9 +4,9 @@ import api.domain.users.controller as UserController
 import api.domain.company.controller as CompanyController
 
 
-def create_work(data, company_id):
+def create_worker(data, company_id):
     company = CompanyController.get_company_by_id(company_id)
-    print("comp++++++", company)
+
     if company is None:
         return "Company not found"
 

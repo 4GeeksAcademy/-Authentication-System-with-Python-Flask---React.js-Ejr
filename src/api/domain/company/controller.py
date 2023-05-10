@@ -38,6 +38,7 @@ def get_company_by_user_id(user_id):
     company_by_user_id = Repository.get_company_by_user_id(user_id)
     if company_by_user_id == []:
         return {'msg': f'The user: {user_id}, has no existing companies in this database.', 'status': 404}
+
     return company_by_user_id
 
 def update_company(update_company, company_id, current_user_id):

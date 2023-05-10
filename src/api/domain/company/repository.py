@@ -23,6 +23,7 @@ def get_company_by_user_id(user_id):
     else:
         return None 
 
+
 def update_company(update_company, company_id, company):
     if company:
         company.name = update_company['name']

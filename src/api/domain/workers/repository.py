@@ -6,8 +6,6 @@ def create_worker(company_id, user_id, working_schedule):
     new_work = Workers(user_id, company_id, working_schedule)
     db.session.add(new_work)
     db.session.commit()
-    print("ne+++", new_work)
-    print("ne,serialize+++", new_work.serialize())
     return new_work
 
 
