@@ -1,3 +1,4 @@
-export const URL = "https://3001-edu2andrade-bookingmana-rauzonio569.ws-eu96b.gitpod.io/api";
+export const URL =
+  "https://3001-edu2andrade-bookingmana-n1oxt7at5zl.ws-eu97.gitpod.io/api";
 
-export * from "./user"; 
+export * from "./user";

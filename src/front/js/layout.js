@@ -1,13 +1,17 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import ScrollToTop from "./component/scrollToTop";
-import { BackendURL } from "./component/backendURL";
-
+import ScrollToTop from "./components/scrollToTop";
+import { BackendURL } from "./components/backendURL";
 
 import injectContext from "./store/appContext";
-import HomePage from "./pages/home/home.jsx";
-import RegisterPage from "./pages/register/register.jsx";
-import LoginPage from "./pages/login/login.jsx";
+import HomePage from "./pages/home/index.jsx";
+import UserRegisterPage from "./pages/userRegister/index.jsx";
+import CompanyRegisterPage from "./pages/companyRegister/index.jsx";
+import CompanyRegisterPage2 from "./pages/companyRegisterStep2/index.jsx";
+import LoginPage from "./pages/login/index.jsx";
+import UserDashboard from "./pages/userDashboard/index.jsx";
+import AdminDashboard from "./pages/adminDashboard/index.jsx";
+import WorkerDashboard from "./pages/workerDashboard/index.jsx";
 
 //create your first component
 const Layout = () => {
@@ -24,8 +28,16 @@ const Layout = () => {
         <ScrollToTop>
           <Routes>
             <Route element={<HomePage />} path="/" />
-            <Route element={<RegisterPage />} path="/register" />
+            <Route element={<UserRegisterPage />} path="/user-register" />
+            <Route element={<CompanyRegisterPage />} path="/company-register" />
+            <Route
+              element={<CompanyRegisterPage2 />}
+              path="/company-register-2"
+            />
             <Route element={<LoginPage />} path="/login" />
+            <Route element={<AdminDashboard />} path="/admin-dashboard" />
+            <Route element={<UserDashboard />} path="/user-dashboard" />
+            <Route element={<WorkerDashboard />} path="/worker-dashboard" />
             <Route element={<h1>Not found!</h1>} />
           </Routes>
         </ScrollToTop>

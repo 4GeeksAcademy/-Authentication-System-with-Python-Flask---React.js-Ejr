@@ -13,7 +13,7 @@
   margin-block: 6px;
   width: 100%;
   border: none;
-  border-radius: var(--border-sm);
+  border-radius: var(--border-md);
 }
 
 .inputContainer input:focus {
