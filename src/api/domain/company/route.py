@@ -51,15 +51,16 @@ def update_company(company_id):
         return Response.response_error(company['msg'], company['status'])
 
 
-@api.route("/<int:company_id>", methods=["DELETE"])
+@api.route("/delete/<int:company_id>", methods=["PUT"])
 @jwt_required()
 def delete_company(company_id):
     current_user = get_jwt_identity()
     current_user_id = current_user["id"]
 
-    company = Company.query.get(company_id)
-    company_user_id = company.user_id
+    company = Controller.delete_company(company_id, current_user_id)
 
-    if current_user_id != company_user_id:
-        return Response.response_error("User is not the company admin", 400)
-    return Controller.delete_company(company_id)
+    if isinstance(company, Company):
+        return Response.response_ok(f'Company with id: {company_id}, was deleted from database.', company.serialize())
+    else:
+        return Response.response_error(company['msg'], company['status'])
+

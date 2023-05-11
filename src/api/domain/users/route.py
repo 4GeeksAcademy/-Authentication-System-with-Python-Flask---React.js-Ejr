@@ -48,7 +48,6 @@ def delete_user(user_id):
     current_user_id = current_user["id"]
 
     user = Controller.delete_user(user_id, current_user_id)
-    print(user)
     if isinstance(user, User):
         return Response.response_ok(f'User with id: {user_id}, was deleted from database.', user.serialize())
     else:

@@ -35,10 +35,12 @@ def update_company(update_company, company_id, company):
     else:
         return None
 
-def delete_company(company_id):
-    company = Company.query.get(company_id)
-    db.session.delete(company)
-    db.session.commit()
-    return company  
-    #add delete functions for services, workers and products 
+def delete_company(company):
+    if company: 
+        company.is_active = False
+        db.session.commit()
+    else: 
+        return None 
+
+    return company
      
