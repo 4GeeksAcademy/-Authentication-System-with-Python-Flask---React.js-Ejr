@@ -12,6 +12,7 @@ api = Blueprint("api/company", __name__)
 def create_company():
     body = request.get_json()
     new_company = Controller.create_company(body)
+    print('NEW COMPANY ------->', new_company)
 
     if isinstance(new_company, Company):
         return Response.response_ok('Company has been created in database.', new_company.serialize())

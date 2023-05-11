@@ -6,92 +6,6 @@
   height: 100vh;
 }
 
-header {
-  position: relative;
-  margin-top: 4rem;
-  max-width: 850px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.logoTitle {
-  margin-bottom: 8px;
-  font-size: 5rem;
-  font-weight: var(--font-extrabold);
-  text-align: center;
-  line-height: 1;
-  letter-spacing: -3px;
-  z-index: 10;
-}
-
-.logoSubtitle {
-  max-width: 700px;
-  text-align: center;
-  font-size: 1.2rem;
-  font-weight: var(--font-medium);
-  line-height: 1.2;
-  z-index: 10;
-}
-
-header img {
-  position: absolute;
-  max-width: 550px;
-  z-index: -1;
-}
-
-.btn {
-  margin-top: 1rem;
-}
-.btnregister {
-  margin-top: 0.5rem;
-  font-weight: var(--font-semibold);
-  font-size: 16px;
-  line-height: 19px;
-  letter-spacing: -0.03em;
-  text-decoration-line: underline;
-  color: #000000;
-}
-.calendar {
-  width: 600px;
-  height: 320px;
-  z-index: 10;
-}
-.imagencalendar {
-  display: flex;
-  justify-content: center;
-}
-
-@media (max-width: 678px) {
-  header {
-    max-width: 300px;
-  }
-
-  .logoTitle {
-    font-size: 3rem;
-    letter-spacing: -3px;
-    z-index: 10;
-  }
-
-  .logoSubtitle {
-    max-width: 300px;
-    font-size: 1rem;
-    line-height: 1.1;
-  }
-
-  header img {
-    max-width: 300px;
-    top: 30px;
-  }
-  .calendar {
-    width: 280px;
-    aspect-ratio: auto;
-    height: 300px;
-    z-index: 10;
-  }
-}
-
 section {
   display: flex;
   flex-direction: column;
@@ -100,21 +14,34 @@ section {
   flex: 1;
 }
 
-.title {
-  font-weight: var(--font-extrabold);
-  font-size: 2rem;
-  margin: 2rem 0;
+.btnWrapper {
+  margin: 3rem 0;
+  max-width: 18rem;
 }
 
-section .selectContainer {
+.registerLink {
+  margin-top: 0.75rem;
+  font-weight: var(--font-semibold);
+  font-size: 13px;
+  line-height: 1;
+  text-decoration: underline;
+  text-align: center;
+  color: var(--text-900);
+}
+
+.calendarWrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.calendar {
   z-index: 10;
-  width: 480px;
+  object-fit: contain;
 }
 
 .bgImg {
   position: absolute;
   bottom: 0px;
-  z-index: 0;
   width: 100vw;
   height: 300px;
   clip-path: polygon(0% 30%, 100% 0%, 100% 100%, 0% 100%);
@@ -137,19 +64,20 @@ section .selectContainer {
 }
 
 @media (max-width: 678px) {
-  section .selectContainer {
-    width: 300px;
-  }
-
   .bgImg {
     height: 220px;
     clip-path: polygon(0% 20%, 100% 0%, 100% 100%, 0% 100%);
   }
+  .calendar {
+    max-width: 22rem;
+    z-index: 10;
+    object-fit: contain;
+  }
 }
 
-button {
+.loginBtn {
   border: none;
-  border-radius: var(--border-sm);
+  border-radius: var(--border-md);
   background-color: var(--text-900);
   color: var(--text-100);
   font-weight: var(--font-semibold);
@@ -159,7 +87,7 @@ button {
   transition: 0.2s ease-in-out;
 }
 
-button:hover {
+.loginBtn:hover {
   background-color: var(--purple-500);
   color: var(--text-900);
 }
