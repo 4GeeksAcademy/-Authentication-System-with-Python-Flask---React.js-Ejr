@@ -1,6 +1,6 @@
 import os
 from flask_admin import Admin
-from api.models.index import db, Technician, Service, User, Farmer, Crop, Review
+from api.models.index import db, Technician, Service, User, Farmer, Crop, Message, Review
 from flask_admin.contrib.sqla import ModelView
 
 
@@ -15,6 +15,7 @@ def setup_admin(app):
     admin.add_view(ModelView(User, db.session))
     admin.add_view(ModelView(Farmer, db.session))
     admin.add_view(ModelView(Crop, db.session))
+    admin.add_view(ModelView(Message, db.session))
     admin.add_view(ModelView(Review, db.session))
 
     # You can duplicate that line to add mew models
