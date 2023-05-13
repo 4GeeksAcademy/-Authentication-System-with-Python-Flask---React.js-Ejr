@@ -54,12 +54,12 @@ def update_company(update_company, company_id, current_user_id):
 
 def delete_company(company_id, current_user_id):
     company = Company.query.get(company_id)
-    
+    if company is None:
+        return {'msg': f'The company with id: {company_id}, does not exists in this database.', 'status': 404}
     company_user_id = company.user_id
-
-    if current_user_id != company_user_id:
+    if current_user_id == company_user_id:
+        deleted_company = Repository.delete_company(company)
+        return deleted_company
+    else:
         return {'msg': 'You do not have rights to delete this company!', 'status': 403}
-
-    deleted_company = Repository.delete_company(company_id) 
-    return deleted_company
     

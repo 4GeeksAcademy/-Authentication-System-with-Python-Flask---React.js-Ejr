@@ -1,18 +1,16 @@
 from flask import Flask, request, jsonify, Blueprint
 import api.utilities.handle_response as Response
 import api.domain.company.controller as Controller
+import api.domain.users.controller as UserController
 from flask_jwt_extended import jwt_required, get_jwt_identity
-from api.models.index import Company
-
+from api.models.index import Company, User
 
 api = Blueprint("api/company", __name__)
-
 
 @api.route("/register", methods=["POST"])
 def create_company():
     body = request.get_json()
     new_company = Controller.create_company(body)
-    print('NEW COMPANY ------->', new_company)
 
     if isinstance(new_company, Company):
         return Response.response_ok('Company has been created in database.', new_company.serialize())
@@ -52,15 +50,17 @@ def update_company(company_id):
         return Response.response_error(company['msg'], company['status'])
 
 
-@api.route("/<int:company_id>", methods=["DELETE"])
+@api.route("/delete/<int:company_id>", methods=["PATCH"])
 @jwt_required()
 def delete_company(company_id):
     current_user = get_jwt_identity()
     current_user_id = current_user["id"]
 
-    company = Company.query.get(company_id)
-    company_user_id = company.user_id
+    company = Controller.delete_company(company_id, current_user_id)
 
-    if current_user_id != company_user_id:
-        return Response.response_error("User is not the company admin", 400)
-    return Controller.delete_company(company_id)
+    if isinstance(company, Company):
+        UserController.delete_user(current_user_id)
+        return Response.response_ok(f'Company with id: {company_id}, was deleted from database.', company.serialize())
+    else:
+        return Response.response_error(company['msg'], company['status'])
+    
