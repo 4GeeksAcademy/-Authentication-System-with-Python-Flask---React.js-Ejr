@@ -55,7 +55,7 @@ export const loginUser = async (user) => {
   }
 };
 
-export const getInfoUser = async () => {
+export const getInfoUser = async (token) => {
   try {
     const res = await fetch(`${URL}`, {
       method: "GET",
