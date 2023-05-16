@@ -30,7 +30,7 @@ export const registerCompany = async (company) => {
     console.log("Success:", data);
     return data.data;
   } catch (err) {
-    console.log("Error Register User", err);
+    console.log("Error Register Company", err);
   }
 };
 

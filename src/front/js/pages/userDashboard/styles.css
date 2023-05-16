@@ -1,0 +1,47 @@
+.services-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 854px;
+  height: 495px;
+  margin: 264px 293px 10px 293px;
+  filter: box-shadow(
+    0px 4.973333835601807px 12.433333396911621px 0px #0000001a
+  );
+  background: #e3e3fc;
+  border-radius: 12px;
+}
+
+.bg {
+  width: 298px;
+  height: 401px;
+  margin-left: 59px;
+  background: #ffffff;
+  border-radius: 12px;
+}
+
+img {
+  margin: 20px;
+  width: 44.76px;
+  height: 44.76px;
+  border-radius: 50%;
+}
+
+h1 {
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 24.08px;
+}
+
+h2 {
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 18px;
+  letter-spacing: -0.03em;
+  text-align: left;
+  margin-left: 20px;
+}
+
+.calendar {
+  padding-right: 10px;
+}

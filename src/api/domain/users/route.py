@@ -25,7 +25,11 @@ def get_users_list():
 @api.route('/<int:user_id>', methods=['GET'])
 def get_single_user(user_id):
     user = Controller.get_single_user(user_id)
-    return user.serialize()
+    
+    if isinstance(user, User):
+        return Response.response_ok(f'User with id: {user_id}, has been retrieved from database.', user.serialize())
+    else:
+        return Response.response_error(user['msg'], user['status']) 
 
 @api.route('/<int:user_id>', methods=['PUT'])
 @jwt_required()
@@ -41,15 +45,15 @@ def update_user(user_id):
     else:
         return Response.response_error(user['msg'], user['status']) 
 
-@api.route('/delete', methods=['PATCH'])
+@api.route('/delete/<int:user_id>', methods=['PATCH'])
 @jwt_required()
-def delete_user():
+def delete_user(user_id):
     current_user = get_jwt_identity()
     current_user_id = current_user["id"]
-    user = Controller.delete_user(current_user_id)
-    
+
+    user = Controller.delete_user(user_id, current_user_id)
     if isinstance(user, User):
-        return Response.response_ok('User was successfully deleted from database.', user.serialize())
+        return Response.response_ok(f'User with id: {user_id}, was deleted from database.', user.serialize())
     else:
         return Response.response_error(user['msg'], user['status'])
 
@@ -62,30 +66,4 @@ def login():
         return Response.response_ok('This is a valid token', token_and_role_type)
     return Response.response_error(token_and_role_type['msg'], token_and_role_type['status'])
 
-@api.route('/profile', methods=['PUT'])
-@jwt_required()
-def update_profile():
-    current_user = get_jwt_identity()
-    current_user_id = current_user["id"]
-
-    try:
-        avatar = request.files['avatar']
-        body = request.form.to_dict()
-        updated_profile = Controller.update_profile(body['username'], body['firstname'], body["lastname"], body['email'], avatar, current_user_id)
-        return Response.response_ok('User was successfully updated.', updated_profile.serialize())
-    except Exception as error:
-        print("error", error)
-        return Response.response_error('Internal error...', 500)
-
-@api.route('/profile', methods=['GET'])
-@jwt_required()
-def get_user_profile():
-    info_token = get_jwt()
-    current_user = info_token['sub']
-    verified_user = Controller.verify_user(current_user)
-    
-    if isinstance(verified_user, User):
-        return Response.response_ok('User exists in this database.', verified_user.serialize())
-    else:
-        return Response.response_error(verified_user['msg'], verified_user['status'])
 
