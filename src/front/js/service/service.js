@@ -1,7 +1,7 @@
 const URL =
-  "https://3001-mmeitin-osigrisagropoin-p7ylsdu04m7.ws-eu97.gitpod.io";
+  "https://3001-mmeitin-osigrisagropoin-fz3ozxs9eat.ws-eu97.gitpod.io";
 const URLCROP =
-  "https://3001-mmeitin-osigrisagropoin-p7ylsdu04m7.ws-eu97.gitpod.io/api/crop";
+  "https://3001-mmeitin-osigrisagropoin-fz3ozxs9eat.ws-eu97.gitpod.io/api/crop";
 
 const HEADERS = {
   "Content-Type": "application/json",
@@ -19,7 +19,7 @@ export const registerFarmer = async (newUser) => {
     const data = await resp.json();
     localStorage.setItem("token", data.token);
     localStorage.setItem("role", data.role);
-    
+
     return data;
   } catch (err) {
     console.log("Error al crear nuevo User_Farmer", err);
@@ -144,5 +144,23 @@ export const getInfoCrop = async () => {
     return data;
   } catch (error) {
     console.error("Error en getInfoCrop", error);
+  }
+};
+
+export const getServices = async () => {
+  try {
+    const token = localStorage.getItem("token");
+    const user = await getInfoUser(token);
+    const tech = await getInfoTech(user["id"], token);
+    const serviceData = await fetch(`${URL}/api/serv/${tech.id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const servicesJson = await serviceData.json();
+    return servicesJson;
+  } catch (error) {
+    console.error(error);
+    return null;
   }
 };
