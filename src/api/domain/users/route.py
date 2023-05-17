@@ -25,7 +25,11 @@ def get_users_list():
 @api.route('/<int:user_id>', methods=['GET'])
 def get_single_user(user_id):
     user = Controller.get_single_user(user_id)
-    return user.serialize()
+    
+    if isinstance(user, User):
+        return Response.response_ok(f'User with id: {user_id}, has been retrieved from database.', user.serialize())
+    else:
+        return Response.response_error(user['msg'], user['status']) 
 
 @api.route('/<int:user_id>', methods=['PUT'])
 @jwt_required()
@@ -41,7 +45,7 @@ def update_user(user_id):
     else:
         return Response.response_error(user['msg'], user['status']) 
 
-@api.route('/delete/<int:user_id>', methods=['PUT'])
+@api.route('/delete/<int:user_id>', methods=['PATCH'])
 @jwt_required()
 def delete_user(user_id):
     current_user = get_jwt_identity()
@@ -61,6 +65,5 @@ def login():
     if token_and_role_type.get('token'):
         return Response.response_ok('This is a valid token', token_and_role_type)
     return Response.response_error(token_and_role_type['msg'], token_and_role_type['status'])
-
 
 

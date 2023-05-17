@@ -1,53 +1,54 @@
 from flask import Flask, request, jsonify, Blueprint
 import api.domain.workers.controller as Controller
 from flask_jwt_extended import jwt_required, get_jwt_identity
-from api.models.index import db, Workers
+from api.models.index import Workers
 import api.utilities.handle_response as Response
-
 
 api = Blueprint("api/workers", __name__)
 
-
-@api.route("/add_work/<int:company_id>", methods=["POST"])
-def create_work(company_id):
+@api.route("/create_worker/<int:company_id>", methods=["POST"])
+def create_worker(company_id):
     body = request.get_json()
-    new_work = Controller.create_worker(body, company_id)
-    return jsonify(new_work.serialize()), 201
+
+    new_worker = Controller.create_worker(body, company_id)
+
+    print(new_worker)
+
+    if isinstance(new_worker, Workers):
+        return Response.response_ok('New worker created successfully!', new_worker.serialize())
+    else:
+        return Response.response_error(new_worker['msg'], new_worker['status'])
+
+@api.route("/company/<int:company_id>", methods=["GET"])
+def get_workers_by_company(company_id):
+    workers_by_company = Controller.get_workers_by_company(company_id)
+    
+    if isinstance(workers_by_company, list):
+        serialized_workers = list(map(lambda worker: worker.serialize(), workers_by_company))
+        return Response.response_ok(f'List of all workers of the company with id: {company_id}', serialized_workers)
+    else:
+        return Response.response_error(workers_by_company['msg'], workers_by_company['status'])
 
 
 @api.route("/<int:worker_id>", methods=["GET"])
-def get_worker_by_id(worker_id):
-    worker_by_id = Controller.get_worker_by_id(worker_id)
-    return worker_by_id
+def get_single_worker(worker_id):
+    
+    worker = Controller.get_single_worker(worker_id)
+    
+    if isinstance(worker, Workers):
+        return Response.response_ok(f'Worker with id: {worker_id}, has been retrieved from database.', worker.serialize())
+    else:
+        return Response.response_error(worker['msg'], worker['status']) 
 
-
-@api.route("/company/<int:company_id>", methods=["GET"])
-def list_worker_in_company(company_id):
-    list_of_worker = Controller.get_list_worker_company(company_id)
-    return list_of_worker
-
-
-@api.route("/<int:worker_id>", methods=["DELETE"])
+@api.route("/<int:worker_id>", methods=["PATCH"])
 @jwt_required()
 def delete_worker(worker_id):
     current_user = get_jwt_identity()
-    current_user_id = current_user["id"]
-    worker = Workers.query.get(worker_id)
+    current_user_id = current_user['id']
 
-    if worker is None:
-        return Response.response_error("Worker is not found", 400)
-
-    if current_user_id != worker.company.user_id:
-        return Response.response_error(
-            "You do not have permission to delete this worker", 401
-        )
-
-    eliminated = Controller.delete_worker(worker_id)
-    if eliminated:
-        return Response.response_ok(
-            f"Worker with id: {worker_id} has been deleted", 200
-        )
-    else:
-        return Response.response_error(
-            f"Error deleting worker with id: {worker_id}", 500
-        )
+    worker = Controller.delete_worker(worker_id, current_user_id)
+    
+    if isinstance(worker, Workers):
+        return Response.response_ok(f'Worker with id: {worker_id}, was deleted from database.', worker.serialize())
+    else: 
+         return Response.response_error(worker['msg'], worker['status'])
