@@ -1,7 +1,7 @@
 const URL =
-  "https://3001-mmeitin-osigrisagropoin-fz3ozxs9eat.ws-eu97.gitpod.io";
+  "https://3001-mmeitin-osigrisagropoin-bk3mq4u24l3.ws-eu97.gitpod.io";
 const URLCROP =
-  "https://3001-mmeitin-osigrisagropoin-fz3ozxs9eat.ws-eu97.gitpod.io/api/crop";
+  "https://3001-mmeitin-osigrisagropoin-bk3mq4u24l3.ws-eu97.gitpod.io/api/crop";
 
 const HEADERS = {
   "Content-Type": "application/json",
@@ -147,6 +147,25 @@ export const getInfoCrop = async () => {
   }
 };
 
+export const getMessages = async () => {
+  const token = localStorage.getItem("token");
+
+  try {
+    const res = await fetch(`${URL}/api/message/`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        ...HEADERS,
+      },
+    });
+    const data = await res.json();
+
+    return data;
+  } catch (error) {
+    console.error("Error en getMessages", error);
+    return [""];
+     }
+      }
 export const getServices = async () => {
   try {
     const token = localStorage.getItem("token");
