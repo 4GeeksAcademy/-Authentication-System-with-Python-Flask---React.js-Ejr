@@ -20,6 +20,11 @@ import api.domain.services.route as services_routes
 import api.domain.workers.route as worker_routes
 import api.domain.service_worker.route as servicesWorker_routes
 
+
+# cloudinary
+import cloudinary
+
+
 #from models import Person
 
 ENV = os.getenv("FLASK_ENV")
@@ -31,6 +36,19 @@ app.config['JWT_SECRET_KEY'] = os.environ['JWT_SECRET_KEY']
 app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=1)
 app.config["JWT_REFRESH_TOKEN_EXPIRES"] = timedelta(days=5)
 jwt = JWTManager(app)
+
+
+# cloudinary
+app.config['CLOUD_NAME'] = os.environ.get('CLOUD_NAME')
+app.config['CLOUD_API_KEY'] = os.environ.get('CLOUD_API_KEY')
+app.config['CLOUD_API_SECRET'] = os.environ.get('CLOUD_API_SECRET')
+
+cloudinary.config(
+    cloud_name = app.config['CLOUD_NAME'],
+    api_key = app.config['CLOUD_API_KEY'],
+    api_secret = app.config['CLOUD_API_SECRET'],
+    secure = True
+)
 
 # database condiguration
 db_url = os.getenv("DATABASE_URL")
