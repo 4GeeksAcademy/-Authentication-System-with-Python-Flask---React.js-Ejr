@@ -8,6 +8,7 @@ import {
   getInfoUser,
   getInfoFarmer,
   getAllTech,
+  filterTechByField,
 } from "../service/service";
 
 export const FarmerView = () => {
@@ -15,6 +16,11 @@ export const FarmerView = () => {
   const [tech, setTech] = useState([]);
   const [crops, setcrops] = useState([]);
   const [name, setName] = useState("");
+  const [filter, setFilter] = useState({
+    ccaa: "",
+    speciality: "",
+    name: "",
+  });
 
   const getInfo = async () => {
     const token = localStorage.getItem("token");
@@ -31,11 +37,13 @@ export const FarmerView = () => {
   };
 
   const getTech = async () => {
-    console.log("TECH BEFORE", tech);
     const allTech = await getAllTech();
-    console.log(allTech);
     setTech(allTech);
-    console.log("TECH AFTER", tech);
+  };
+
+  const filterTech = async () => {
+    const data = await filterTechByField(filter);
+    setTech(data);
   };
 
   const logOut = () => {
@@ -43,6 +51,14 @@ export const FarmerView = () => {
     navigate("/");
   };
 
+  const handleChangefilterTech = ({ target }) => {
+    setFilter({ ...filter, [target.name]: target.value });
+  };
+
+  const handleSubmitFilterTech = async (e) => {
+    e.preventDefault();
+    await filterTech();
+  };
   const loadAllData = async () => {
     await getCrop();
     await getInfo();
@@ -67,7 +83,7 @@ export const FarmerView = () => {
               Técnicos disponibles
             </a>
             <div className="dropdown">
-              <span className="user-label">Nombre de usuario</span>
+              <span className="user-label">{name}</span>
               <button
                 className="btn dropdown-toggle"
                 type="button"
@@ -101,14 +117,10 @@ export const FarmerView = () => {
           </div>
         </div>
       </nav>
-      {/*BODY*/}
-      <div className="pre-body">
-        <h1>{name}</h1>
-      </div>
       <div className="main-body ">
         {/*My Crops*/}
         <div className="misCultivos col-12">
-          <h1 className="titulo-miscultivos ">Mis Cultivos</h1>
+          <h1 className="titulo-miscultivos ps-5 ">Mis Cultivos</h1>
           <div className="cropCard_container justify-content-center">
             {crops.length > 0 ? (
               crops.map((todo, index) => (
@@ -125,10 +137,69 @@ export const FarmerView = () => {
             )}
           </div>
         </div>
+        {/*FILTRADO DE TECH */}
+        <div className="misTech col-12">
+          <h1 className="titulo-misTech text-center">Filtrar Técnicos</h1>
+          <form
+            className="formularioFilterTech"
+            onChange={handleChangefilterTech}
+            onSubmit={handleSubmitFilterTech}
+          >
+            <div className="oneFilter">
+              <label htmlFor="ccaa">Por CCAA</label>
+              <i>Comunidad Autónoma</i>
+              <select className="form-control" id="ccaa" name="ccaa">
+                <option>Selecciona una CCAA</option>
+                <option>Andalucía</option>
+                <option>Aragón</option>
+                <option>Asturias</option>
+                <option>Baleares</option>
+                <option>Canarias</option>
+                <option>Cantabria</option>
+                <option>Castilla-La Mancha</option>
+                <option>Castilla y León</option>
+                <option>Cataluña</option>
+                <option>Extremadura</option>
+                <option>Galicia</option>
+                <option>La Rioja</option>
+                <option>Madrid</option>
+                <option>Murcia</option>
+                <option>Navarra</option>
+                <option>País Vasco</option>
+                <option>Valencia</option>
+              </select>
+            </div>
+            <div className="twoFilter">
+              <label htmlFor="speciality">Especialidad</label>
+              <i>Filtra tu técnico según la especialidad</i>
+              <input
+                className="form-control"
+                type="text"
+                id="speciality"
+                name="speciality"
+                placeholder="Filtrar..."
+              ></input>
+            </div>
+            <div className="threeFilter">
+              <label htmlFor="name">Nombre</label>
+              <i>Filtra tu técnico por nombre</i>
+              <input
+                className="form-control"
+                type="text"
+                id="name"
+                name="name"
+                placeholder="Filtrar..."
+              ></input>
+            </div>
+            <button className="btn" type="submit">
+              Filtrar
+            </button>
+          </form>
+        </div>
       </div>
       {/*My Technician */}
       <div className="misTechnicos col-12">
-        <h1 className="titulo-miscultivos">Mis Tecnicos</h1>
+        <h1 className="titulo-miscultivos text-end pe-5">Mis Técnicos</h1>
         <div className="cropCard_container justify-content-center">
           {tech.length > 0 ? (
             tech.map((element, index) => (

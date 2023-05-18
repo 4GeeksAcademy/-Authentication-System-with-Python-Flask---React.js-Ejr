@@ -10,15 +10,14 @@ def add_tech(body, user_id):
     return new_tech
 
 ###GET ALL TECHNICIAN
-
 def get_all_tech():
    tech = Technician.query.all()
-   print(tech)
    tech_serialized = list(map(lambda x : x.serialize(), tech))
    return tech_serialized
 
-
 ### GET TECH BY USER_OWNER
-
 def get_tech_by_user_owner(user_id):
     return Technician.query.filter_by(user_owner=user_id).first()
+
+
+    

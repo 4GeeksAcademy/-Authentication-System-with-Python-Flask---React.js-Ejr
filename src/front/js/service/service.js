@@ -1,7 +1,7 @@
 const URL =
-  "https://3001-mmeitin-osigrisagropoin-e4o6gva6m7k.ws-eu97.gitpod.io";
+  "https://3001-mmeitin-osigrisagropoin-jqi46hkowwy.ws-eu97.gitpod.io";
 const URLCROP =
-  "https://3001-mmeitin-osigrisagropoin-e4o6gva6m7k.ws-eu97.gitpod.io/api/crop";
+  "https://3001-mmeitin-osigrisagropoin-jqi46hkowwy.ws-eu97.gitpod.io/api/crop";
 
 const HEADERS = {
   "Content-Type": "application/json",
@@ -202,3 +202,22 @@ export const getServices = async () => {
     return null;
   }
 };
+
+export const filterTechByField = async (body) => {
+  const token = localStorage.getItem("token")
+  const raw = JSON.stringify(body)
+  try{
+    const res = await fetch(`${URL}/api/farmer/`,{
+      method: 'POST',
+      body: raw,
+      headers: {
+        Authorization: `Bearer ${token}`,
+        ...HEADERS}
+    });
+     const data = await res.json();
+     console.log("FROM SERVICE -->", data)
+     return data;
+  }catch(err){
+    console.error("No pudimos filtrar tu tecnico -->",err)
+  }
+}
