@@ -1,0 +1,78 @@
+/* Estilos generales */
+nav {
+  background: #f5f4ff;
+}
+
+.image-container {
+  position: relative;
+  display: flex;
+}
+
+.route {
+  font-weight: var(--font-extrabold);
+  font-size: 24px;
+  line-height: 29px;
+  letter-spacing: -0.03em;
+  text-decoration: none;
+  color: #1e1e1e;
+}
+
+.ml-auto {
+  display: flex;
+}
+
+/* Estilos para pantallas pequeñas */
+
+@media (max-width: 767px) {
+  .image-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .img {
+    margin-top: 10px;
+    margin-right: 0;
+  }
+
+  .profile {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+/* Estilos para pantallas medianas y grandes */
+
+@media (min-width: 768px) {
+  .img2 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+  }
+
+  .img {
+    margin-left: 5px;
+    margin-top: 2px;
+    z-index: 10;
+    margin-right: 8px;
+  }
+
+  .iconTools {
+    margin-block: 6px;
+    padding: 12px;
+    width: 100%;
+    transition: 0.2s ease-in-out;
+    color: var(--text-900);
+  }
+  .iconTools:hover {
+    color: var(--text-100);
+  }
+
+  .profile {
+    cursor: pointer;
+    width: 56px;
+    height: 56px;
+    filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.25));
+    border-radius: 250px;
+  }
+}

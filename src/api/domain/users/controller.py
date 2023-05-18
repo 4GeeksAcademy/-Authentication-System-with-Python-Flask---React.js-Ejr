@@ -3,6 +3,9 @@ from api.models.index import User
 import api.utilities.handle_response as Response
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required, get_jwt
 import bcrypt
+from cloudinary.uploader import upload
+import json
+
 
 
 def create_new_user(body, role_type):
@@ -80,7 +83,6 @@ def login(body):
     if bcrypt.checkpw(body['password'].encode(), user.password.encode()):
         new_token = create_access_token(identity=user.serialize())
         return {"token": new_token, "role": user_role_type}
-
     return user
 
 def update_profile(username, firstname, lastname, email, avatar, current_user_id):
