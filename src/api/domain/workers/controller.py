@@ -39,6 +39,7 @@ def delete_worker(worker_id, current_user_id):
 
     worker_company_id = worker.company_id
 
+
     company = Company.query.get(worker_company_id)
     company_user_id = company.user_id
 
