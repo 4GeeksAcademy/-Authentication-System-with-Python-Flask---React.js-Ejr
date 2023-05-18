@@ -60,6 +60,7 @@ def delete_company(company_id, current_user_id):
 
     if company is None:
         return {'msg': f'The company with id: {company_id}, does not exists in this database.', 'status': 404}
+
     company_user_id = company.user_id
 
     if current_user_id == company_user_id:

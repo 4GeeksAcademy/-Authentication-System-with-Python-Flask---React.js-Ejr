@@ -21,7 +21,7 @@ def create_new_service(company_id):
     else:
         return Response.response_error(new_service['msg'], new_service['status'])
 
-@api.route('/<int:company_id>', methods=['GET'])
+@api.route('/company/<int:company_id>', methods=['GET'])
 def get_services_by_company(company_id):
     services_by_company = Controller.get_services_by_company(company_id)
 
@@ -31,7 +31,7 @@ def get_services_by_company(company_id):
     else:
         return Response.response_error(services_by_company['msg'], services_by_company['status'])
 
-@api.route('/get/<int:service_id>', methods=['GET'])
+@api.route('/<int:service_id>', methods=['GET'])
 def get_single_service(service_id):
     service = Controller.get_single_service(service_id)
 

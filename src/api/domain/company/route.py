@@ -17,23 +17,19 @@ def create_company():
     else:
         return Response.response_error(new_company['msg'], new_company['status'])
 
-
 @api.route("/all", methods=["GET"])
 def get_companies_list():
     return Controller.get_companies_list()
-
 
 @api.route("/<int:company_id>", methods=["GET"])
 def get_company_by_id(company_id):
     company = Controller.get_company_by_id(company_id)
     return company.serialize()
-  
 
 @api.route("/user/<int:user_id>", methods=["GET"])
 def get_company_by_user_id(user_id):
     company_by_user_id = Controller.get_company_by_user_id(user_id)
-    return company_by_user_id
-  
+    return company_by_user_id 
 
 @api.route("/<int:company_id>", methods=["PUT"])
 @jwt_required()
@@ -49,8 +45,7 @@ def update_company(company_id):
     else:
         return Response.response_error(company['msg'], company['status'])
 
-
-@api.route("/<int:company_id>", methods=["DELETE"])
+@api.route("/delete/<int:company_id>", methods=["PATCH"])
 @jwt_required()
 def delete_company(company_id):
     current_user = get_jwt_identity()
