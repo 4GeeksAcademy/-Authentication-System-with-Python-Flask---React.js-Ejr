@@ -1,7 +1,7 @@
 const URL =
-  "https://3001-mmeitin-osigrisagropoin-e4o6gva6m7k.ws-eu97.gitpod.io";
+  "https://3001-mmeitin-osigrisagropoin-0bofa45qnbh.ws-eu97.gitpod.io";
 const URLCROP =
-  "https://3001-mmeitin-osigrisagropoin-e4o6gva6m7k.ws-eu97.gitpod.io/api/crop";
+  "https://3001-mmeitin-osigrisagropoin-0bofa45qnbh.ws-eu97.gitpod.io/api/crop";
 
 const HEADERS = {
   "Content-Type": "application/json",
@@ -200,5 +200,28 @@ export const getServices = async () => {
   } catch (error) {
     console.error(error);
     return null;
+  }
+};
+
+export const sendMessage = async (newMessage) => {
+  const token = localStorage.getItem("token");
+  const raw = JSON.stringify(newMessage);
+  console.log(raw)
+  try {
+    const res = await fetch(`${URL}/api/message/`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        ...HEADERS,
+      },
+      body: raw,
+      redirect: "follow",
+    });
+    const data = await res.json();
+    console.log("la data del service", data)
+    return data;
+  } catch (error) {
+    console.error("Error en sendMessages", error);
+    return(error)
   }
 };

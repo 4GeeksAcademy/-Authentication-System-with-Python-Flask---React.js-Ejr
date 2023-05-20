@@ -1,14 +1,8 @@
 """empty message
 
-<<<<<<<< HEAD:migrations/versions/552a525db298_.py
-Revision ID: 552a525db298
+Revision ID: 9e0b3aa7e9e2
 Revises: 
-Create Date: 2023-05-16 18:43:42.101707
-========
-Revision ID: 36abc36e8c84
-Revises: 
-Create Date: 2023-05-16 20:25:23.501631
->>>>>>>> main:migrations/versions/36abc36e8c84_.py
+Create Date: 2023-05-19 10:03:07.960301
 
 """
 from alembic import op
@@ -16,11 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-<<<<<<<< HEAD:migrations/versions/552a525db298_.py
-revision = '552a525db298'
-========
-revision = '36abc36e8c84'
->>>>>>>> main:migrations/versions/36abc36e8c84_.py
+revision = '9e0b3aa7e9e2'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -80,8 +70,9 @@ def upgrade():
     sa.Column('technician_id', sa.Integer(), nullable=False),
     sa.Column('message', sa.String(length=250), nullable=False),
     sa.Column('date', sa.DateTime(), nullable=True),
-    sa.Column('sender', sa.Integer(), nullable=False),
+    sa.Column('sender_id', sa.Integer(), nullable=False),
     sa.ForeignKeyConstraint(['farmer_id'], ['farmer.id'], ),
+    sa.ForeignKeyConstraint(['sender_id'], ['user.id'], ),
     sa.ForeignKeyConstraint(['technician_id'], ['technician.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
