@@ -28,7 +28,7 @@ def get_workers_by_service(service_id):
     workers_by_service = Controller.get_workers_by_service(service_id)
 
     if isinstance(workers_by_service, list):
-        serialized_workers_by_service = list(map(lambda workers: workers.serialize(), workers_by_service))
+        serialized_workers_by_service = list(map(lambda workers: workers.serialize_workers(), workers_by_service))
         return Response.response_ok(f'List of all workers of the service with id: {service_id}', serialized_workers_by_service)
     else:
         return Response.response_error(workers_by_service['msg'], workers_by_service['status'])
@@ -39,7 +39,7 @@ def get_services_by_worker(worker_id):
     services_by_worker = Controller.get_services_by_worker(worker_id)
 
     if isinstance(services_by_worker, list):
-        serialized_services_by_worker = list(map(lambda services: services.serialize(), services_by_worker))
+        serialized_services_by_worker = list(map(lambda services: services.serialize_services(), services_by_worker))
         return Response.response_ok(f'List of all services of the worker with id: {worker_id}', serialized_services_by_worker)
     else:
         return Response.response_error(services_by_worker['msg'], services_by_worker['status'])

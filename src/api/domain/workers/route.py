@@ -7,12 +7,14 @@ import api.utilities.handle_response as Response
 api = Blueprint("api/workers", __name__)
 
 @api.route("/create_worker/<int:company_id>", methods=["POST"])
+@jwt_required()
 def create_worker(company_id):
+    current_user = get_jwt_identity()
+    current_user_id = current_user['id']
+
     body = request.get_json()
 
-    new_worker = Controller.create_worker(body, company_id)
-
-    print(new_worker)
+    new_worker = Controller.create_worker(body, company_id, current_user_id)
 
     if isinstance(new_worker, Workers):
         return Response.response_ok('New worker created successfully!', new_worker.serialize())

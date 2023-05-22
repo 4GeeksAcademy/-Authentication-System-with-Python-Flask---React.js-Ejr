@@ -6,16 +6,11 @@ def create_company(body):
     cif = body['cif']
     name = body['name']
 
-    company_cif = Company.query.filter_by(cif=cif).first()
+    existing_company = Company.query.filter(Company.cif == cif or Company.name == name).first()
 
-    company_name = Company.query.filter_by(name=name).first()
+    if existing_company: 
+        return {'msg': 'Company with the given CIF or name already exists', 'status': 400}
 
-    if company_cif: 
-        return {'msg': 'Company CIF already exists in database', 'status': 400}
-    
-    if company_name: 
-        return {'msg': 'Company name already exists in database', 'status': 400}
-    
     new_user = UserController.create_new_user(body, 'admin')
 
     return Repository.create_company(body, new_user.id)

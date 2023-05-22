@@ -1,7 +1,7 @@
 from api.models.index import db, Services
 
 def create_new_service(body, company_id):
-    new_service = Services(company_id, body['date'], body['name'], body['description'], body['service_duration'], body['price'])
+    new_service = Services(company_id, body['name'], body['description'], body['service_duration'], body['price'])
     db.session.add(new_service)
     db.session.commit()
     return new_service

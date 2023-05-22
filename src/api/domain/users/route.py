@@ -66,28 +66,30 @@ def login():
         return Response.response_ok('This is a valid token', token_and_role_type)
     return Response.response_error(token_and_role_type['msg'], token_and_role_type['status'])
 
+@api.route('/profile', methods=['PUT'])
+@jwt_required()
+def update_profile():
+    current_user = get_jwt_identity()
+    current_user_id = current_user["id"]
 
-# @api.route('/update', methods=['PUT'])
-# def insert_img():
-#     try:
-#         avatar = request.files['avatar']
-#         print('avatar', avatar)
-#         body = request.form.to_dict()
-#         print('bodyaaa', body)
-#         insert = Controller.insert_img(body['username'], body['email'], body["password"], body["lastname"], body['firstname'], avatar)
-#         print(insert,"insertr")
-#         return jsonify(insert.serialize()), 200
-#     except Exception as error:
-#         print("error", error)
-#         return jsonify("error  interno"), 500
+    try:
+        avatar = request.files['avatar']
+        body = request.form.to_dict()
+        updated_profile = Controller.update_profile(body['username'], body['firstname'], body["lastname"], body['email'], avatar, current_user_id)
+        return Response.response_ok('User was successfully updated.', updated_profile.serialize())
+    except Exception as error:
+        print("error", error)
+        return Response.response_error('Internal error...', 500)
 
-# @api.route('/update', methods=['GET'])
-# @jwt_required()
-# def get_user():
-#     info_token = get_jwt()
-#     user = info_token['sub']
-#     user_response = Controller.get_user(user)
-    
-#     if isinstance(user_response, User):
-#         return jsonify(user_response.serialize()), 200
-#     return jsonify(user_response), user_response['status']
+@api.route('/profile', methods=['GET'])
+@jwt_required()
+def get_user_profile():
+    info_token = get_jwt()
+    current_user = info_token['sub']
+    verified_user = Controller.verify_user(current_user)
+
+    if isinstance(verified_user, User):
+        return Response.response_ok('User exists in this database.', verified_user.serialize())
+    else:
+        return Response.response_error(verified_user['msg'], verified_user['status'])
+
