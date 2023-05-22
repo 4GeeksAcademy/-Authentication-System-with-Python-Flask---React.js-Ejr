@@ -66,10 +66,10 @@ export const Technician = () => {
   };
 
   const loadAllData = async () => {
-    await getConversations();
     await infoUser();
     await fetchData();
     await paramsSet();
+    await getConversations();
   };
 
   useEffect(() => {
@@ -86,7 +86,7 @@ export const Technician = () => {
               Mis conversaciones
             </a>
             <div className="dropdown">
-              <span className="user-label">Nombre de usuario</span>
+              <span className="user-label">{name}</span>
               <button
                 className="btn dropdown-toggle"
                 type="button"
