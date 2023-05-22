@@ -16,4 +16,20 @@ class Services_workers(db.Model):
         "id": self.id,
         "worker_id": self.worker_id,
         "service_id": self.service_id,
+        "services": self.services.serialize(),
+        "workers": self.workers.serialize(),
+        }
+
+    def serialize_workers(self):
+        return {
+        "id": self.id,
+        "worker_id": self.worker_id,
+        "workers": self.workers.serialize(),
+        }
+
+    def serialize_services(self):
+        return {
+        "id": self.id,
+        "service_id": self.service_id,
+        "services": self.services.serialize(),
         }

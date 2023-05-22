@@ -19,6 +19,7 @@ import api.domain.company.route as company_routes
 import api.domain.services.route as services_routes
 import api.domain.workers.route as worker_routes
 import api.domain.service_worker.route as servicesWorker_routes
+import api.domain.booking.route as booking_routes
 
 
 # cloudinary
@@ -77,6 +78,7 @@ app.register_blueprint(company_routes.api, url_prefix='/api/company')
 app.register_blueprint(services_routes.api, url_prefix='/api/services')
 app.register_blueprint(worker_routes.api, url_prefix='/api/workers')
 app.register_blueprint(servicesWorker_routes.api, url_prefix='/api/service_worker')
+app.register_blueprint(booking_routes.api, url_prefix='/api/booking')
 
 # Handle/serialize errors like a JSON object
 @app.errorhandler(APIException)

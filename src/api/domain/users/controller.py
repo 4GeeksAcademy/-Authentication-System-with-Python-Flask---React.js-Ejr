@@ -1,5 +1,5 @@
 import api.domain.users.repository as Repository
-from api.models.index import User
+from api.models.index import User, Company
 import api.utilities.handle_response as Response
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required, get_jwt
 import bcrypt
@@ -7,19 +7,17 @@ from cloudinary.uploader import upload
 import json
 
 
-
 def create_new_user(body, role_type):
-    email = body['email']
-    username = body['username']
+    body_email = body['email']
+    body_username = body['username']
 
-    email = User.query.filter_by(email=email).first()
+    model_email = User.query.filter_by(email=body_email).first()
+    model_username = User.query.filter_by(username=body_username).first()
 
-    username = User.query.filter_by(username=username).first()
-
-    if email:
+    if model_email:
         return {'msg': 'Email already exists in database', 'status': 400}
     
-    if username:
+    if model_username:
         return {'msg': 'Username already exists in database', 'status': 400}
 
     hashed = bcrypt.hashpw(body['password'].encode(), bcrypt.gensalt())
