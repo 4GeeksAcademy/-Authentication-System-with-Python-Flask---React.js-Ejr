@@ -61,3 +61,6 @@ const UserDashboard = () => {
       <button onClick={handleSubmit}>profile</button>
     </div>
   );
+};
+
+export default UserDashboard;
