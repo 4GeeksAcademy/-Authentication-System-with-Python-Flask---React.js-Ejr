@@ -10,24 +10,30 @@ export const ConversView = () => {
   const [uniqueparam, setUniqueparam] = useState([]);
   const [selectedTab, setSelectedTab] = useState(0);
   const [newMessageContent, setNewMessageContent] = useState("");
-  const [selectedFarmerId, setSelectedFarmerId] = useState(0);
+  const [selectedTarget, setSelectedTarget] = useState(0);
   const { targetName, role } = useParams();
-
-  
+  const [initialTabName, setInitialTabName] = useState("");
+  const [firstTime, setfirstTime] = useState(true)
   //FILTRO LAS CONVERSACIONES POR FARMER_ID
-  const getUniqueConversationsByFarmer = (conversations) => {
-    const conversationsByFarmer = {};
-
+  const getUniqueConversationsByTarget = (conversations) => {
+    const conversationsByTarget = {};
+    let targetId;
+    
     conversations.forEach((conversation) => {
-      const farmerId = conversation.farmer_id;
-      if (!conversationsByFarmer[farmerId]) {
-        conversationsByFarmer[farmerId] = conversation;
+      if (role === "tech") {
+        targetId = conversation.farmer_id;
+      } else {
+        targetId = conversation.technician_id;
+      }
+      
+      if (!conversationsByTarget[targetId]) {
+        conversationsByTarget[targetId] = conversation;
       }
     });
-
-    const uniqueConversations = Object.values(conversationsByFarmer);
+  
+    const uniqueConversations = Object.values(conversationsByTarget);
     return uniqueConversations;
-  };
+  }
 
 
 
@@ -38,11 +44,17 @@ export const ConversView = () => {
     setNewMessageContent(value);
   };
   const handleSendMessage = async () => {
+    if (role === "tech") {
     const messageData = {
-      farmer_id: selectedFarmerId,
+      farmer_id: selectedTarget,
       message: newMessageContent,
     };
-
+  }else{
+    const messageData = {
+      techcnician_id: selectedTarget,
+      message: newMessageContent,
+    };
+  }
     await sendMessage(messageData);
 
     await loadAllData();
@@ -51,12 +63,19 @@ export const ConversView = () => {
   //Cambio la pestaña seleccionada
   const handleTabSelect = (index) => {
     setSelectedTab(index);
-    setSelectedFarmerId(uniqueparam[index].farmer_id);
+    if (role === "tech"){
+    setSelectedTarget(uniqueparam[index].farmer_id);
+    }else{
+      setSelectedTarget(uniqueparam[index].technician_id);
+    }
   };
   //Cojo solo un el nombre de la persona de todos los mensajes
   const getConversations = async () => {
     const data = await getMessages();
-    const uniqueConversations = getUniqueConversationsByFarmer(data);
+    if (targetName) {
+      setInitialTabName(targetName);
+    }
+    const uniqueConversations = getUniqueConversationsByTarget(data);
     setUniqueparam(uniqueConversations);
   };
   //Cojo todas las conversaciones
@@ -65,21 +84,41 @@ export const ConversView = () => {
     setConversations(data);
     return setConversations;
   };
+  
 
   const logOut = () => {
     localStorage.clear();
     navigate("/");
   };
+  useEffect(() => {
+    
+    if (targetName && uniqueparam.length > 0 && firstTime === true) {
+      const index = uniqueparam.findIndex((item) => item.name === targetName);
+      if (index !== -1) {
+        setSelectedTab(index);
+        if (role === "tech") {
+          setSelectedTarget(uniqueparam[index].farmer_id);
+          setfirstTime(false)
+        } else {
+          setSelectedTarget(uniqueparam[index].technician_id);
+          setfirstTime(false)
+        }
+      }
+    }
+    
+  }, [targetName, role, uniqueparam]);
 
   const loadAllData = async () => {
     await getConversations();
     await getMessage();
+    
   };
 
   useEffect(() => {
     loadAllData();
+   
   }, []);
-
+ 
   return (
     <div>
       <nav className="navbar">
@@ -150,10 +189,10 @@ export const ConversView = () => {
                   (message, index) =>
                     message.name === uniqueparam[selectedTab].name && (
                       <div className="" key={index}>
-                        {message.sender_id === 1 ? (
+                        {(message.sender_id === 1 || message.sender_id === 0) ? (
                           // Renderizar mensajes para el técnico
 
-                          <div className="technician-message">
+                          <div className="own-message">
                             <div className="conver-name">{message.name}</div>
                             <div className="conver-message">
                               {message.message}
@@ -162,7 +201,7 @@ export const ConversView = () => {
                           </div>
                         ) : (
                           // Renderizar mensajes para el agricultor
-                          <div className="farmer-message">
+                          <div className="other-message">
                             <div className="conver-name">{message.name}</div>
                             <div className="conver-message">
                               {message.message}

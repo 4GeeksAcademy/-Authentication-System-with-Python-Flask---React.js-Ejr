@@ -9,10 +9,11 @@
 .convers-container {
   display: flex;
   flex-direction: column;
+  background-color: antiquewhite;
 }
 
 /* Estilos para el contenedor de los mensajes del técnico */
-.technician-message {
+.own-message {
   margin:1rem;
   text-align: right;
   justify-content: center;
@@ -20,13 +21,16 @@
   font-size: 2rem;
   color: brown;
 }
-.farmer-message {
+.other-message {
+  border-radius: 1rem;
   margin:1rem;
   text-align: left;
   justify-content: center;
   align-self: center;
   font-size: 2rem;
   color: rgb(24, 155, 122);
+  background-color: rgb(204, 204, 204);
+  width: fit-content;
 }
 .tab-name {
   margin: 2rem;
