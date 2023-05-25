@@ -11,6 +11,8 @@ api = Blueprint("api/workers", __name__)
 def create_worker(company_id):
     current_user = get_jwt_identity()
     current_user_id = current_user['id']
+    current_user = get_jwt_identity()
+    current_user_id = current_user['id']
 
     body = request.get_json()
 

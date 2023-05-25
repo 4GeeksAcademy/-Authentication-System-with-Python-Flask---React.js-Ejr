@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import navuno from "../../../../assets/navbar1.png";
 import navdos from "../../../../assets/navbar2.png";
 import "./styles.css";
+
 export const Navbar = () => {
   const navigate = useNavigate();
   const handlesubmit = () => {
@@ -31,11 +32,11 @@ export const Navbar = () => {
             </button>
           </Link>
           <Link to="/" className="iconTools me-2">
-            <i class="fa-solid fa-gear fa-2x"></i>
+            <i className="fa-solid fa-gear fa-2x"></i>
           </Link>
 
           <Link to="/" className="iconTools me-4">
-            <i class="fa-solid fa-share-from-square fa-2x"></i>
+            <i className="fa-solid fa-share-from-square fa-2x"></i>
           </Link>
 
           <img

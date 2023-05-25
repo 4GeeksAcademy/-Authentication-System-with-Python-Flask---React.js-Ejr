@@ -21,8 +21,9 @@ const LoginPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const data = await loginUser(newLogin);
+
     if (data.role === "admin") navigate("/admin-dashboard");
-    if (data.role === "client") navigate("/user-dashboard");
+    if (data.role === "client") navigate("/user-dashboard/");
     if (data.role === "worker") navigate("/worker-dashboard");
   };
 

@@ -20,7 +20,7 @@ export const ImgProfile = ({ img, handleChange }) => {
           </div>
           <h5 className="nametitle">{userData.username}</h5>
           <p className="nametitle2">{userData.email}</p>
-          <div class="file-select" id="src-file1">
+          <div className="file-select" id="src-file1">
             <input
               type="file"
               name="src-file1"

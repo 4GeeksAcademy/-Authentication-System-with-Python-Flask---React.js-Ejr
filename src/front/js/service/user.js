@@ -52,7 +52,7 @@ export const loginUser = async (user) => {
 export const getInfoUserId = async () => {
   try {
     const token = localStorage.getItem("token");
-    const res = await fetch(`${URL}/users/${id}`, {
+    const res = await fetch(`${URL}/users/profile`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -60,12 +60,13 @@ export const getInfoUserId = async () => {
       },
     });
     const data = await res.json();
-    console.log(data, "datauserid");
-    return data;
+    console.log(data.data)
+    return data.data;
   } catch (err) {
     console.log("Error to get user id");
   }
 };
+
 //don't change this petition!
 export const updateUser = async (body) => {
   try {
@@ -84,20 +85,3 @@ export const updateUser = async (body) => {
   }
 };
 
-export const getInfoUser = async () => {
-  try {
-    const token = localStorage.getItem("token");
-
-    const res = await fetch(`${URL}/users/profile`, {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        ...HEADERS,
-      },
-    });
-    const data = await res.json();
-    return data.data;
-  } catch (err) {
-    console.log("ERROR GET USER", err);
-  }
-};
