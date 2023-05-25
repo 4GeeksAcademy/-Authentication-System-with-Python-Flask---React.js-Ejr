@@ -49,10 +49,10 @@ export const loginUser = async (user) => {
   }
 };
 
-export const getInfoUser = async () => {
+export const getInfoUserId = async () => {
   try {
     const token = localStorage.getItem("token");
-    const res = await fetch(`${URL}/users/`, {
+    const res = await fetch(`${URL}/users/profile`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -60,16 +60,17 @@ export const getInfoUser = async () => {
       },
     });
     const data = await res.json();
-    return data;
+    console.log(data.data)
+    return data.data;
   } catch (err) {
-    console.log("Error Get User", err);
+    console.log("Error to get user id");
   }
 };
 
+//don't change this petition!
 export const updateUser = async (body) => {
   try {
     const token = localStorage.getItem("token");
-
     const res = await fetch(`${URL}/users/profile`, {
       method: "PUT",
       headers: {
@@ -77,27 +78,10 @@ export const updateUser = async (body) => {
       },
       body: body,
     });
-
     const data = await res.json();
+    return data;
   } catch (err) {
     console.log("Error Update User", err);
   }
 };
 
-export const obtainInfo = async () => {
-  try {
-    const token = localStorage.getItem("token");
-
-    const res = await fetch(`${URL}/users/profile`, {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        ...HEADERS,
-      },
-    });
-    const data = await res.json();
-    return data.data;
-  } catch (err) {
-    console.log("ERROR GET USER", err);
-  }
-};

@@ -1,6 +1,8 @@
 import React, { useContext } from "react";
 import { Context } from "../../store/appContext";
 import "./styles.css";
+import imgDefaul from "../../../../assets/imgDefault.png";
+
 export const ImgProfile = ({ img, handleChange }) => {
   const { store } = useContext(Context);
   const userData = store.userProfileData.userData;
@@ -10,11 +12,15 @@ export const ImgProfile = ({ img, handleChange }) => {
       <div className="parent">
         <div className="child">
           <div className="profile-image-container ">
-            <img src={userData.avatar} alt="Daenerys Targaryen" />
+            {img !== null && img !== "" ? (
+              <img src={img} alt="User Profile" />
+            ) : (
+              <img src={userData.avatar || imgDefaul} alt="Default Profile" />
+            )}
           </div>
           <h5 className="nametitle">{userData.username}</h5>
           <p className="nametitle2">{userData.email}</p>
-          <div class="file-select" id="src-file1">
+          <div className="file-select" id="src-file1">
             <input
               type="file"
               name="src-file1"

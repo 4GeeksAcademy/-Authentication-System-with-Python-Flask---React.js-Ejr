@@ -101,10 +101,10 @@ def get_bookings_by_company(company_id, current_user_id):
         
     return bookings_by_company
 
-def get_bookings_by_user_id(user_id, current_user_id):
+def get_bookings_by_user_id(current_user_id):
 
-    if user_id == current_user_id:
-        return Repository.get_bookings_by_user_id(user_id)
+    if current_user_id:
+        return Repository.get_bookings_by_user_id(current_user_id)
     else:
         return {'msg': 'You do not have rights to see this bookings!', 'status': 403}
 

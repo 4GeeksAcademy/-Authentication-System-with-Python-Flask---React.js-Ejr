@@ -19,8 +19,8 @@ def get_bookings_by_company(company_id):
     bookings_by_company = Booking.query.filter_by(company_id=company_id).all()
     return bookings_by_company
 
-def get_bookings_by_user_id(user_id):
-    return Booking.query.filter_by(user_id=user_id).all()
+def get_bookings_by_user_id(current_user_id):
+    return Booking.query.filter_by(user_id=current_user_id).all()
 
 def delete_booking(booking):
     db.session.delete(booking)

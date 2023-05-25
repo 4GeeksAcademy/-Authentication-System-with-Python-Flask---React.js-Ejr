@@ -1,64 +1,57 @@
-import React, { useContext, useEffect, useState } from "react";
-import { Context } from "../../store/appContext";
-import { obtainInfo } from "../../service/user";
-import { useNavigate } from "react-router-dom";
-// import Calendar from "../../components/calendar/calendar.jsx";
+import React, { useEffect, useState } from "react";
+import { format } from "date-fns";
 import "../../pages/userDashboard/styles.css";
-// import Time from "../../components/time/time.jsx";
+import { Navbar } from "../../components/navbar/index.jsx";
+import BookingCard from "../../components/bookingCard/index.jsx";
+import { getInfoBooking } from "../../service/booking";
+import { deleteBooking } from "../../service/booking";
+import BigContainer from "../../components/bigContainer/index.jsx";
+import { es } from "date-fns/locale";
 
 const UserDashboard = () => {
-  const [user, setUser] = useState(null);
-  const [date, setDate] = useState(new Date());
-  const [showTime, setShowTime] = useState(false);
+  const [bookingList, setBookingList] = useState([]);
+  const [deletedBooking, setDeletedBooking] = useState({});
 
-  const navigate = useNavigate();
-  const { actions } = useContext(Context);
+  const getBooking = async () => {
+    const bookingData = await getInfoBooking();
+    setBookingList(bookingData);
+  };
+
+  const deleteReservation = async (booking_id) => {
+    const deleted = await deleteBooking(booking_id);
+    setDeletedBooking(deleted);
+  };
 
   useEffect(() => {
-    const fetchUser = async () => {
-      const userData = await obtainInfo();
-      console.log(userData, "datauserdash");
-      setUser(userData);
-      actions.saveUserProfileData(userData);
-    };
+    getBooking();
+  }, [deletedBooking]);
 
-    fetchUser();
-  }, []);
-
-  if (!user) {
-    return <div>Loading...</div>;
-  }
-  const handleSubmit = () => {
-    navigate(`/profile/${user.id}`);
-  };
+  console.log(bookingList);
+  
   return (
     <div>
-      <div className="services-box">
-        <div className="bg">
-          <div className="d-flex align-items-center">
-            <img src="https://fastly.picsum.photos/id/237/200/300.jpg?hmac=TmmQSbShHz9CdQm0NkEjx1Dyh_Y984R9LpNrpvH2D_U"></img>
-            <h1>Worker</h1>
+      <Navbar />
+      <main className="main-container">
+        <BigContainer>
+          <h1>List of Reservations</h1>
+          <div className="list-container">
+            {bookingList.map((booking) => {
+              return (
+                <BookingCard
+                  key={booking.id}
+                  date={format(
+                    new Date(booking.start_service),
+                    "MMM do yyyy 'at' hh:mm"
+                  )}
+                  service={booking.services_workers.services.name}
+                  worker={booking.services_workers.workers.user.username}
+                  deleteReservation={() => deleteReservation(booking.id)}
+                />
+              );
+            })}
           </div>
-          <div>
-            <h2>Next Services:</h2>
-          </div>
-          <div></div>
-        </div>
-        <div className="calendar">
-          {/* <Calendar
-            onChange={setDate}
-            value={date}
-            onClickDay={() => setShowTime(true)}
-          /> */}
-          <div className="selected-date text-center">
-            Selected Date: {date.toDateString()}
-          </div>
-        </div>
-      </div>
-      {/* <div>
-        <Time className="selected-time" showTime={showTime} date={date} />
-      </div> */}
-      <button onClick={handleSubmit}>profile</button>
+        </BigContainer>
+      </main>
     </div>
   );
 };

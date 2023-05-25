@@ -66,17 +66,16 @@ def get_bookings_by_company(company_id):
     else:
         return Response.response_error(bookings_by_company['msg'], bookings_by_company['status'])
 
-@api.route('/user/<int:user_id>', methods=['GET'])
+@api.route('/user', methods=['GET'])
 @jwt_required()
-def get_bookings_by_user_id(user_id):
+def get_bookings_by_user_id():
     current_user = get_jwt_identity()
-    current_user_id = current_user['id']
 
-    bookings_by_user_id = Controller.get_bookings_by_user_id(user_id, current_user_id)
+    bookings_by_user_id = Controller.get_bookings_by_user_id(current_user['id'])
 
     if isinstance(bookings_by_user_id, list):
         serialized_bookings = list(map(lambda booking: booking.serialize(), bookings_by_user_id))
-        return Response.response_ok(f'List of all bookings of the user with id: {user_id}.', serialized_bookings)
+        return Response.response_ok('List of all bookings', serialized_bookings)
     else:
         return Response.response_error(bookings_by_user_id['msg'], bookings_by_user_id['status'])
 

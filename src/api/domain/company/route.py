@@ -26,9 +26,11 @@ def get_company_by_id(company_id):
     company = Controller.get_company_by_id(company_id)
     return company.serialize()
 
-@api.route("/user/<int:user_id>", methods=["GET"])
-def get_company_by_user_id(user_id):
-    company_by_user_id = Controller.get_company_by_user_id(user_id)
+@api.route("/user", methods=["GET"])
+@jwt_required()
+def get_company_by_user_id():
+    current_user = get_jwt_identity()
+    company_by_user_id = Controller.get_company_by_user_id(current_user["id"])
     return company_by_user_id 
 
 @api.route("/<int:company_id>", methods=["PUT"])
