@@ -7,7 +7,7 @@ def create_crop(body,user_id):
     crop = Crop(body["dimension_ha"], body["crop_type"], body["description"], farmer_id=farmer.id)
     db.session.add(crop)
     db.session.commit()
-    return crop
+    return crop.serialize()
 
 def delete_crop(crop):
     db.session.delete(crop)

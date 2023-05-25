@@ -25,10 +25,7 @@ def post_crop(body, user_id):
 
 
 def get_farmer_crops(farmer_id):
-    
     farmer_crops = Crop.query.filter_by(farmer_id=farmer_id).all()
-    
-    
     crops_data = []
     for crop in farmer_crops:
         crops_data.append(crop.serialize())
