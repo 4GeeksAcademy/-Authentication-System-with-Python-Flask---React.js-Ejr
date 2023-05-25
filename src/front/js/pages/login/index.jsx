@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "../../components/header/index.jsx";
-import { loginUser } from "../../service/user";
+import { loginUser } from "../../service/user.js";
 import "./styles.css";
 import LoginForm from "../../components/loginForm/index.jsx";
 

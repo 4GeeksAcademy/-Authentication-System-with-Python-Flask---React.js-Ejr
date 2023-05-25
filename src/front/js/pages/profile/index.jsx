@@ -39,8 +39,6 @@ const Profile = () => {
     form.append("firstname", user.firstname);
     form.append("lastname", user.lastname);
     updateUser(form);
-    setFile("");
-    setFileUrl("");
     setUser({
       username: "",
       firstname: "",
@@ -55,7 +53,11 @@ const Profile = () => {
       <main className="mainContainerProfile">
         <div className="background">
           <h2 className="title">Profile update</h2>
-          <ProfileForm handleChange={handleChange} handleClick={handleClick} />
+          <ProfileForm
+            handleChange={handleChange}
+            handleClick={handleClick}
+            user={user}
+          />
         </div>
       </main>
     </main>

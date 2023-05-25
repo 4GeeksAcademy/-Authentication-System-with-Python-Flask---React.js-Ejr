@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import Input from "../input/index.jsx";
-export const ProfileForm = ({ handleChange, handleClick }) => {
+export const ProfileForm = ({ handleChange, handleClick, user }) => {
   return (
     <div>
       <form onChange={handleChange} onSubmit={handleClick}>
@@ -9,28 +9,28 @@ export const ProfileForm = ({ handleChange, handleClick }) => {
           type="text"
           placeholder="Username"
           name="username"
-          value="username"
+          value={user.username}
         />
         <Input
           icon={<i className="fa-solid fa-circle-user"></i>}
           type="text"
           placeholder="First name"
           name="firstname"
-          value="firstname"
+          value={user.firstname}
         />
         <Input
           icon={<i className="fa-solid fa-circle-user"></i>}
           type="text"
           placeholder="Last name"
           name="lastname"
-          value="lastname"
+          value={user.lastname}
         />
         <Input
           icon={<i className="fa-solid fa-envelope"></i>}
           type="email"
           placeholder="Email"
           name="email"
-          value="emails"
+          value={user.email}
         />
         <button type="submit" className="submitBtn boxShadow">
           Update
