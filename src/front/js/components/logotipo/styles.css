@@ -1,0 +1,15 @@
+#logo-container {
+  display: flex;
+  align-items: center;
+}
+
+#logo-container > img {
+  width: 50px;
+}
+
+#logo-container > span {
+  color: var(--gray-900);
+  font-size: var(--text-lg);
+  font-weight: var(--font-extrabold);
+  letter-spacing: -0.5px;
+}

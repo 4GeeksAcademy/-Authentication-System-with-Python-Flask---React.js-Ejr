@@ -10,9 +10,10 @@ class User(db.Model):
     password = db.Column(db.String(200), nullable=False)
     is_active = db.Column(db.Boolean(), nullable=False, default=True)
     role_id = db.Column(db.Integer, db.ForeignKey("roles.id"))
+    avatar = db.Column(db.String(250), nullable=True)
 
     roles = db.relationship("Roles")
-    avatar = db.Column(db.String(250))
+
     def __init__(self, username, firstname, lastname, email, password, role_id):
         self.username = username
         self.firstname = firstname

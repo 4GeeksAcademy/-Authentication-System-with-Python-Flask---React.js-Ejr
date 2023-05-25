@@ -6,6 +6,22 @@
   height: 100vh;
 }
 
+.header-container {
+  width: 100%;
+  max-width: var(--max-width);
+  display: flex;
+  align-items: center;
+}
+
+.nav {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 16px;
+  background: var(--main-bg-color);
+}
+
 section {
   display: flex;
   flex-direction: column;
@@ -78,8 +94,9 @@ section {
 .loginBtn {
   border: none;
   border-radius: var(--border-md);
-  background-color: var(--text-900);
-  color: var(--text-100);
+  background-color: var(--gray-900);
+  color: var(--gray-100);
+  font-size: var(--text-sm);
   font-weight: var(--font-semibold);
   margin-block: 6px;
   padding: 12px;
@@ -89,5 +106,23 @@ section {
 
 .loginBtn:hover {
   background-color: var(--purple-500);
-  color: var(--text-900);
+  color: var(--gray-900);
+}
+
+.companyBtn {
+  border: none;
+  border-radius: var(--border-md);
+  background-color: var(--gray-900);
+  color: var(--gray-100);
+  font-weight: var(--font-semibold);
+  font-size: var(--text-md);
+  margin-block: 6px;
+  padding: 12px;
+  width: 100%;
+  transition: 0.2s ease-in-out;
+}
+
+.companyBtn:hover {
+  background-color: var(--purple-500);
+  color: var(--gray-900);
 }
