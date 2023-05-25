@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../../store/appContext";
-import { obtainInfo } from "../../service";
+import { obtainInfo } from "../../service/user";
 import { useNavigate } from "react-router-dom";
-import Calendar from "../../components/calendar/calendar.jsx";
+// import Calendar from "../../components/calendar/calendar.jsx";
 import "../../pages/userDashboard/styles.css";
-import Time from "../../components/time/time.jsx";
+// import Time from "../../components/time/time.jsx";
 
 const UserDashboard = () => {
   const [user, setUser] = useState(null);
@@ -45,19 +45,23 @@ const UserDashboard = () => {
           <div></div>
         </div>
         <div className="calendar">
-          <Calendar
+          {/* <Calendar
             onChange={setDate}
             value={date}
             onClickDay={() => setShowTime(true)}
-          />
+          /> */}
           <div className="selected-date text-center">
             Selected Date: {date.toDateString()}
           </div>
         </div>
       </div>
-      <div>
+      {/* <div>
         <Time className="selected-time" showTime={showTime} date={date} />
+<<<<<<< HEAD
       </div>
+=======
+      </div> */}
+>>>>>>> 9e02085e0982d4b8458da57ebe0f6cdb6231227f
       <button onClick={handleSubmit}>profile</button>
     </div>
   );

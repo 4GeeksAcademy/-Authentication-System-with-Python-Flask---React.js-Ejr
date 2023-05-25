@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./styles.css";
-import { updateUser } from "../../service";
+import { updateUser } from "../../service/user";
 import { ProfileForm } from "../../components/profileForm/index.jsx";
 import { Navbar } from "../../components/navbar/index.jsx";
 import { ImgProfile } from "../../components/imgProfile/index.jsx";

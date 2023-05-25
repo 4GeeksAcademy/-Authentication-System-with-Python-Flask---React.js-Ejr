@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { registerUser } from "../../service";
+import { registerUser } from "../../service/user";
 import "./styles.css";
 import UserForm from "../../components/userForm/index.jsx";
 import Header from "../../components/header/index.jsx";

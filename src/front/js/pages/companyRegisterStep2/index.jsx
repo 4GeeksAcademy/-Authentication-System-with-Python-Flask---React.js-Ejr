@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import "./styles.css";
 import UserForm from "../../components/userForm/index.jsx";
 import Header from "../../components/header/index.jsx";
-import { registerCompany } from "../../service";
+import { registerCompany } from "../../service/user";
 
 const CompanyRegister2 = () => {
   const { store } = useContext(Context);

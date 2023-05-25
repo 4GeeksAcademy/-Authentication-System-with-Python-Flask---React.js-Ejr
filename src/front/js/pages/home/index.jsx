@@ -7,18 +7,25 @@ import "./styles.css";
 const HomePage = () => {
   return (
     <main className="mainContainer">
-      <Header />
-      <section>
-        <div className="btnWrapper">
+      <div className="header-container">
+        <nav className="nav">
+          <Link to={"/user-register"}>
+            <p className="registerLink">Sign Up</p>
+          </Link>
           <Link to={"/login"}>
             <button type="button" className="loginBtn boxShadow">
               Login
             </button>
           </Link>
-          <Link to={"/user-register"}>
-            <p className="registerLink">
-              Don’t have an account yet? Register here!
-            </p>
+        </nav>
+      </div>
+      <Header />
+      <section>
+        <div className="btnWrapper">
+          <Link to={"/companies-list"}>
+            <button type="button" className="companyBtn boxShadow">
+              Companies List
+            </button>
           </Link>
           <Link to={"/company-register"}>
             <p className="registerLink">Register your company here!</p>
