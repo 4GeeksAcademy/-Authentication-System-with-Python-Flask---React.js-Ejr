@@ -57,11 +57,7 @@ const UserDashboard = () => {
       </div>
       {/* <div>
         <Time className="selected-time" showTime={showTime} date={date} />
-<<<<<<< HEAD
-      </div>
-=======
       </div> */}
->>>>>>> 9e02085e0982d4b8458da57ebe0f6cdb6231227f
       <button onClick={handleSubmit}>profile</button>
     </div>
   );
