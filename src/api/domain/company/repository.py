@@ -39,6 +39,14 @@ def delete_company(company):
     if company: 
         company.is_active = False
         db.session.commit()
+    else: 
+        return None 
+
+    return company
+def delete_company(company):
+    if company: 
+        company.is_active = False
+        db.session.commit()
     else:
         return None
 

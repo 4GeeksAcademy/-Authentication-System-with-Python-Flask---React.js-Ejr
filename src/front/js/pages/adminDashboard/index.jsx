@@ -17,6 +17,7 @@ const AdminDashboard = () => {
   const handleSubmit = () => {
     navigate(`/create-service/${user.id}`);
   };
+
   return (
     <>
       <h1>Admin Dashboard</h1>

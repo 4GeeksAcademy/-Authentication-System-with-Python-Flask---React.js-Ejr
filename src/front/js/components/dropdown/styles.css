@@ -1,0 +1,25 @@
+.dropdownContainer {
+  position: relative;
+}
+
+.dropdownContainer i {
+  position: absolute;
+  top: 18px;
+  left: 14px;
+}
+
+.dropdownContainer select {
+  padding: 8px 16px 8px 40px;
+  margin-block: 6px;
+  width: 480px;
+  border: none;
+  border-radius: var(--border-md);
+  text-align: center;
+  font-size: 1em;
+  font-weight: var(--font-semibold);
+}
+
+.dropdownContainer select:focus {
+  outline: 2px solid var(--purple-500);
+  outline-offset: -2px;
+}

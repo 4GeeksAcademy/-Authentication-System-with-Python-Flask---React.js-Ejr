@@ -31,6 +31,7 @@ export const listServiceByCompany = async (companyID) => {
     const data = await res.json();
     return data.data;
   } catch (err) {
-    console.log("Error to looking for Service List ByCompany", err);
+    console.log("Error To List Services", err);
   }
 };
+
