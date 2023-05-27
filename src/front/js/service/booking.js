@@ -1,7 +1,7 @@
 import { URL } from ".";
 
 const HEADERS = {
-    "Content-Type": "application/json",
+  "Content-Type": "application/json",
 };
 
 export const createBooking = async (company_id) => {
@@ -88,4 +88,3 @@ export const deleteBooking = async (booking_id) => {
         console.log("Error to Delete Booking", err);
     }
 };
-

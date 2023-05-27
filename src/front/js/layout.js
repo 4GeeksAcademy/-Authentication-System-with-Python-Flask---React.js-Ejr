@@ -17,6 +17,7 @@ import { UpdatePassword } from "./pages/updatePassword/index.jsx";
 import { RecoveryPassword } from "./pages/RecoveryPassword/index.jsx";
 import { CreateService } from "./pages/createService/index.jsx";
 import CompaniesList from "./pages/companiesList/index.jsx";
+import CompanyDetails from "./pages/companyDetails/index.jsx";
 import ServicesWorkers from "./pages/servicesWorkers/index.jsx";
 import { ListService } from "./pages/serviceList/index.jsx";
 
@@ -53,6 +54,10 @@ const Layout = () => {
               path="/create-service/:companyID"
             />
             <Route element={<CompaniesList />} path="/companies-list" />
+            <Route
+              element={<CompanyDetails />}
+              path="/company-details/:companyId"
+            />
             <Route element={<ServicesWorkers />} path="/assign-services/:company_id" />
             <Route element={<ListService />} path="/service-list/:companyID" />
             <Route path="*" element={<h1>Not found!</h1>} />

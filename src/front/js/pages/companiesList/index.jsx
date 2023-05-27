@@ -25,11 +25,11 @@ const CompaniesList = () => {
       <BigContainer>
         <h1>Companies repository</h1>
         <div className="list-container">
-          {companiesList.map((company) => (
+          {companiesList?.map((company) => (
             <ItemContainer
               key={company.id}
               title={company.name}
-              onClick={() => navigate(`/company/${company.id}`)}
+              onClick={() => navigate(`/company-details/${company.id}`)}
             />
           ))}
         </div>

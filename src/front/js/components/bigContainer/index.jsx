@@ -3,10 +3,10 @@ import "./styles.css";
 
 const BigContainer = ({ children }) => {
   return (
-    <div className="big-container boxShadow">
+    <section className="big-container _boxShadow">
       <span className="bg-color" />
       {children}
-    </div>
+    </section>
   );
 };
 

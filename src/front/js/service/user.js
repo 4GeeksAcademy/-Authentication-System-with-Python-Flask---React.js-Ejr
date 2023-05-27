@@ -12,7 +12,6 @@ export const registerUser = async (user) => {
       body: JSON.stringify(user),
     });
     const data = await res.json();
-    console.log("Success:", data);
     return data.data;
   } catch (err) {
     console.log("Error Register User", err);
