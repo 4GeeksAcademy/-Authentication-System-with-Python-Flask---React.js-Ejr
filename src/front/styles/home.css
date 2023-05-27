@@ -19,5 +19,6 @@
 {
     min-height: 30rem;
     background: rgb(180,122,219);
-    background: linear-gradient(90deg, rgba(180,122,219,1) 0%, rgba(135,219,115,1) 50%, rgba(69,243,252,1) 100%);
+    background: linear-gradient(90deg, #591FCE 0%, #ffff 50%, #591FCE 120%);
+    border-radius: 2rem;
 }

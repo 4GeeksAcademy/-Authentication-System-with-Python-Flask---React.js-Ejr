@@ -14,5 +14,12 @@
     -webkit-text-fill-color: transparent;
 }
 .menus{
-    
+    background-color: #c8f1f8;
+}
+body{
+    background-color: #ccfbff;
+opacity: 1;
+background-image:  radial-gradient(#88ffc6 2px, transparent 2px), radial-gradient(#88ffc6 2px, #ccfbff 2px);
+background-size: 80px 80px;
+background-position: 0 0,40px 40px;
 }
