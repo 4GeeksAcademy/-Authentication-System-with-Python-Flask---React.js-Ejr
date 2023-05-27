@@ -1,0 +1,37 @@
+.dropdownContainer {
+  position: relative;
+}
+
+.dropdownContainer select {
+  padding: 8px 16px 8px 40px;
+  margin-block: 6px;
+  width: 100%;
+  border: none;
+  border-radius: var(--border-md);
+  text-align: center;
+  font-size: 1em;
+  font-weight: var(--font-semibold);
+}
+
+.dropdownContainer select:focus {
+  outline: 2px solid var(--purple-500);
+  outline-offset: -2px;
+}
+
+.loginBtn {
+  border: none;
+  border-radius: var(--border-md);
+  background-color: var(--black);
+  color: var(--white);
+  font-size: 1em;
+  font-weight: var(--font-semibold);
+  margin-block: 6px;
+  padding: 12px;
+  width: 100%;
+  transition: 0.2s ease-in-out;
+}
+
+.loginBtn:hover {
+  background-color: var(--purple-500);
+  color: var(--text-900);
+}
