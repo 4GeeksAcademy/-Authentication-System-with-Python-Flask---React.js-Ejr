@@ -1,3 +1,25 @@
 /* 
     General Styles used on every website (Don't Repeat Yourself)
 */
+.sub-section{
+    min-height: 10rem;
+    background: rgb(180,122,219);
+    background: linear-gradient(150deg, #90ebb0 0%, #ffffff 50%, #6FE7DD 100%);
+}
+.sub-title{
+    font-size: 5rem;
+    background: -webkit-linear-gradient(#4ce661e1, #8e5bee, #65E892);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.menus{
+    background-color: #c8f1f8;
+}
+body{
+    background-color: #ccfbff;
+opacity: 1;
+background-image:  radial-gradient(#88ffc6 2px, transparent 2px), radial-gradient(#88ffc6 2px, #ccfbff 2px);
+background-size: 80px 80px;
+background-position: 0 0,40px 40px;
+}
