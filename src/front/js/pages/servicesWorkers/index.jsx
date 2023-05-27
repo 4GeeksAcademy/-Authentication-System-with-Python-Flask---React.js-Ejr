@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import "../../pages/servicesWorkers/styles.css";
 import BigContainer from "../../components/bigContainer/index.jsx";
 import { listWorkers } from "../../service/workers";
-import { listServices } from "../../service/service";
+import { listServiceByCompany } from "../../service/service.js";
 import { createServiceWorker } from "../../service/service_worker";
 import Toast from "../../components/toast/index.jsx";
 import { toast } from "react-toastify";
@@ -26,7 +26,7 @@ const ServicesWorkers = () => {
   };
 
   const getServices = async () => {
-    const services = await listServices(company_id);
+    const services = await listServiceByCompany(company_id);
     setServicesList(services);
   };
 
