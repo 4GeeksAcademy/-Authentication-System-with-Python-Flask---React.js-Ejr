@@ -1,0 +1,66 @@
+header {
+  position: relative;
+  margin-top: 4rem;
+  max-width: 850px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.link {
+  text-decoration: none;
+  color: var(--text-900);
+}
+
+.link:hover {
+  color: var(--text-900);
+}
+
+.logoTitle {
+  margin-bottom: 8px;
+  font-size: 5rem;
+  font-weight: var(--font-extrabold);
+  text-align: center;
+  line-height: 1;
+  letter-spacing: -3px;
+  z-index: 10;
+}
+
+.logoSubtitle {
+  max-width: 700px;
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: var(--font-medium);
+  line-height: 1.2;
+  z-index: 10;
+}
+
+header img {
+  position: absolute;
+  max-width: 550px;
+  z-index: -1;
+}
+
+@media (max-width: 678px) {
+  header {
+    max-width: 300px;
+  }
+
+  .logoTitle {
+    font-size: 3rem;
+    letter-spacing: -3px;
+    z-index: 10;
+  }
+
+  .logoSubtitle {
+    max-width: 300px;
+    font-size: 1rem;
+    line-height: 1.1;
+  }
+
+  header img {
+    max-width: 300px;
+    top: 30px;
+  }
+}

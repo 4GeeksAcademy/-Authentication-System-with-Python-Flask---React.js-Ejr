@@ -1,3 +1,59 @@
-/* 
-    General Styles used on every website (Don't Repeat Yourself)
-*/
+:root {
+  --main-bg-color: #f9f9f9;
+  --purple-500: #d2d1fc;
+  --purple-400: rgba(210, 209, 252, 0.7);
+  --purple-300: #f5f4ff;
+  --gray-900: #1e1e1e;
+  --gray-800: #313131;
+  --gray-600: #505050;
+  --gray-300: #8a8a8a;
+  --gray-100: #e7e7e7;
+  --white: #fff;
+  --black: #000;
+  --highlight: #f72585;
+
+  --border-sm: 8px;
+  --border-md: 12px;
+  --border-lg: 20px;
+
+  --font-light: 200;
+  --font-regular: 400;
+  --font-medium: 500;
+  --font-semibold: 600;
+  --font-extrabold: 800;
+
+  --heading-lg: 32px;
+  --heading-md: 28px;
+  --subheading-md: 24px;
+  --text-lg: 20px;
+  --text-md: 16px;
+  --text-sm: 12px;
+  --text-xs: 10px;
+
+  --max-width: 1296px;
+}
+
+*,
+*::before,
+*::after {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  overflow: hidden;
+}
+
+body {
+  font-family: "Inter", sans-serif;
+  background-color: var(--main-bg-color);
+  color: var(--text-900);
+}
+
+.boxShadow {
+  box-shadow: 2px 2px 5px 1px rgba(0, 0, 0, 0.1);
+  -webkit-box-shadow: 2px 2px 5px 1px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 2px 2px 5px 1px rgba(0, 0, 0, 0.1);
+}

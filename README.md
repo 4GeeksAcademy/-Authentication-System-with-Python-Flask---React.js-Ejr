@@ -6,6 +6,10 @@ A booking management system software solution that allows businesses to manage t
 
 ![booking system models](/src/assets/models.png)
 
+##### Figma design
+
+- To see the UI design click --> [HERE](https://www.figma.com/file/FxcPMOAP2tnDam7zqhCaDr/Booking-Manager?node-id=0%3A1&t=gzPizVXZKlI5G1EM-1)
+
 ### Documentation about this template:
 
 - Documentation can be found here: https://start.4geeksacademy.com/starters/react-flask

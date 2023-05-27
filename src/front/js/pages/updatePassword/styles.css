@@ -1,0 +1,39 @@
+.parenttwo {
+  width: 948px;
+  height: 583px;
+  position: relative;
+  margin-top: 3rem;
+  background: #f5f4ff;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 12px;
+}
+.childtwo {
+  width: 948px;
+  height: 97px;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  background: linear-gradient(90deg, #00ffff 0%, #37cfff 100%);
+  border-radius: 12px 12px 0px 0px;
+  display: flex;
+  flex-direction: column;
+}
+
+.childtwo img {
+  width: 105px;
+  height: 105px;
+  margin-top: 2.5rem;
+
+  max-width: 100%;
+  max-height: 100%;
+  cursor: pointer;
+
+  filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.25));
+  border-radius: 250px;
+}
+.form-div {
+  margin-top: 3rem;
+  text-align: center;
+}
