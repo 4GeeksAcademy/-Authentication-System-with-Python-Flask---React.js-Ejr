@@ -3,7 +3,7 @@ import { format } from "date-fns";
 import "../../pages/userDashboard/styles.css";
 import { Navbar } from "../../components/navbar/index.jsx";
 import BookingCard from "../../components/bookingCard/index.jsx";
-import { getInfoBooking } from "../../service/booking";
+import { getBookingByUser } from "../../service/booking";
 import { deleteBooking } from "../../service/booking";
 import BigContainer from "../../components/bigContainer/index.jsx";
 import { es } from "date-fns/locale";
@@ -13,7 +13,7 @@ const UserDashboard = () => {
   const [deletedBooking, setDeletedBooking] = useState({});
 
   const getBooking = async () => {
-    const bookingData = await getInfoBooking();
+    const bookingData = await getBookingByUser();
     setBookingList(bookingData);
   };
 
@@ -26,8 +26,6 @@ const UserDashboard = () => {
     getBooking();
   }, [deletedBooking]);
 
-  console.log(bookingList);
-  
   return (
     <div>
       <Navbar />

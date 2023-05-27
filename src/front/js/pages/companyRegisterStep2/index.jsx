@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import "./styles.css";
 import UserForm from "../../components/userForm/index.jsx";
 import Header from "../../components/header/index.jsx";
-import { registerCompany } from "../../service/user";
+import { createCompany } from "../../service/company.js";
 
 const CompanyRegister2 = () => {
   const { store } = useContext(Context);
@@ -17,7 +17,7 @@ const CompanyRegister2 = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const data = await registerCompany(newCompany);
+    const data = await createCompany(newCompany);
     navigate("/admin-dashboard");
   };
 

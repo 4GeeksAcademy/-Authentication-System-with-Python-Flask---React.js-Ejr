@@ -16,7 +16,6 @@ export const createServiceWorker = async (company_id, service_worker) => {
             body: JSON.stringify(service_worker),
         });
         const data = await res.json();
-        console.log("esta es mi funcion del fetch", data)
         return data;
     } catch (err) {
         console.log("Error to create service worker", err);

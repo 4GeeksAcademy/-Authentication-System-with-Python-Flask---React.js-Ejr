@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Navbar } from "../../components/navbar/index.jsx";
 import "./styles.css";
-import { listServiceByCompany } from "../../service/service.js";
+import { listServicesByCompany } from "../../service/services.js";
 import { useParams } from "react-router-dom";
 
 export const ListService = () => {
@@ -10,7 +10,7 @@ export const ListService = () => {
   const params = useParams();
   useEffect(() => {
     const getList = async () => {
-      const serviceList = await listServiceByCompany(params.companyID);
+      const serviceList = await listServicesByCompany(params.companyID);
       setList(serviceList);
     };
     getList();
