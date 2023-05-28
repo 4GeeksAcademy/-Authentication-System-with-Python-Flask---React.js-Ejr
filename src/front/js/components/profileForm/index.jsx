@@ -1,6 +1,6 @@
 import React from "react";
 import Input from "../input/index.jsx";
-export const ProfileForm = ({ handleChange, handleClick, user }) => {
+const ProfileForm = ({ handleChange, handleClick, user }) => {
   return (
     <div>
       <form onChange={handleChange} onSubmit={handleClick}>
@@ -39,3 +39,5 @@ export const ProfileForm = ({ handleChange, handleClick, user }) => {
     </div>
   );
 };
+
+export default ProfileForm;

@@ -4,7 +4,7 @@ const HEADERS = {
   "Content-Type": "application/json",
 };
 
-export const createService = async (companyID, data) => {
+export const createService = async (companyID, body) => {
   try {
     const token = localStorage.getItem("token");
     const res = await fetch(`${URL}/services/${companyID}`, {
@@ -13,10 +13,10 @@ export const createService = async (companyID, data) => {
         Authorization: `Bearer ${token}`,
         ...HEADERS,
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify(body),
     });
-    const resData = await res.json();
-    return resData;
+    const data = await res.json();
+    return data;
   } catch (err) {
     console.log("Error to create service", err);
   }
@@ -51,7 +51,7 @@ export const getSingleService = async (serviceID) => {
 export const deleteService = async (serviceID) => {
   try {
     const token = localStorage.getItem("token");
-    const res = await fetch(`${URL}/booking/delete/${serviceID}`, {
+    const res = await fetch(`${URL}/services/${serviceID}`, {
       method: "PATCH",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -65,5 +65,20 @@ export const deleteService = async (serviceID) => {
   }
 };
 
-
-
+export const updateService = async (serviceID, body) => {
+  try {
+    const token = localStorage.getItem("token");
+    const res = await fetch(`${URL}/services/${serviceID}`, {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        ...HEADERS,
+      },
+      body: JSON.stringify(body),
+    });
+    const data = await res.json();
+    return data;
+  } catch (err) {
+    console.log("Error to update this service", err);
+  }
+};

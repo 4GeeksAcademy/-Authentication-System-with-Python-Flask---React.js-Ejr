@@ -4,7 +4,7 @@ import navuno from "../../../../assets/navbar1.png";
 import navdos from "../../../../assets/navbar2.png";
 import "./styles.css";
 
-export const Navbar = () => {
+const Navbar = () => {
   const navigate = useNavigate();
   const handlesubmit = () => {
     navigate("/");
@@ -50,3 +50,5 @@ export const Navbar = () => {
     </nav>
   );
 };
+
+export default Navbar;

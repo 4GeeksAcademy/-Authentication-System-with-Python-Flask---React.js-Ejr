@@ -1,10 +1,10 @@
 import React from "react";
 import "./styles.css";
-import { Navbar } from "../../components/navbar/index.jsx";
+import Navbar from "../../components/navbar/index.jsx";
 import { useNavigate } from "react-router-dom";
 import Input from "../../components/input/index.jsx";
 
-export const RecoveryPassword = () => {
+const RecoveryPassword = () => {
   const navigate = useNavigate();
   const handlesubmit = () => {
     navigate("/");
@@ -23,24 +23,25 @@ export const RecoveryPassword = () => {
 
             <h5 className="nametitle">Danny Targaryen</h5>
             <p className="nametitle2">danny@email.com</p>
-            <div className="form-div">
-              <h2 className="title">Password recovery</h2>
-              <form action="">
-                <Input
-                  icon={<i className="fa-solid fa-envelope"></i>}
-                  type="email"
-                  placeholder="E-mail"
-                  name="meil"
-                />
 
-                <button type="button" className="loginBtn boxShadow">
-                  Send
-                </button>
-              </form>
-            </div>
+            <h2 className="title">Password recovery</h2>
+            <form action="">
+              <Input
+                icon={<i className="fa-solid fa-envelope"></i>}
+                type="email"
+                placeholder="E-mail"
+                name="meil"
+              />
+
+              <button type="button" className="loginBtn boxShadow">
+                Send
+              </button>
+            </form>
           </div>
         </div>
       </main>
     </>
   );
 };
+
+export default RecoveryPassword;

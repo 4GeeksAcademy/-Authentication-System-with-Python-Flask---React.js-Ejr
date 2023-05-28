@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { getCompanyById } from "../../service/company";
+import { getInfoCompanyById } from "../../service/company";
 import Logotipo from "../../components/logotipo/index.jsx";
 import BigContainer from "../../components/bigContainer/index.jsx";
 import Avatar from "../../components/avatar/index.jsx";
@@ -12,7 +12,7 @@ const CompanyDetails = () => {
   const { companyId } = useParams();
 
   const getCompany = async (companyId) => {
-    const data = await getCompanyById(companyId);
+    const data = await getInfoCompanyById(companyId);
     setCompany(data);
   };
 

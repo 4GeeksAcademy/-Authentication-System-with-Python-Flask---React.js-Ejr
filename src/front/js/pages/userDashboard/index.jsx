@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { format } from "date-fns";
 import "../../pages/userDashboard/styles.css";
-import { Navbar } from "../../components/navbar/index.jsx";
+import Navbar from "../../components/navbar/index.jsx";
 import BookingCard from "../../components/bookingCard/index.jsx";
 import { getBookingByUser } from "../../service/booking";
 import { deleteBooking } from "../../service/booking";
 import BigContainer from "../../components/bigContainer/index.jsx";
-import { es } from "date-fns/locale";
 
 const UserDashboard = () => {
   const [bookingList, setBookingList] = useState([]);

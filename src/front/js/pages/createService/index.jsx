@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Navbar } from "../../components/navbar/index.jsx";
+import Navbar from "../../components/navbar/index.jsx";
 import Input from "../../components/input/index.jsx";
 import "./styles.css";
 import { createService } from "../../service/services.js";

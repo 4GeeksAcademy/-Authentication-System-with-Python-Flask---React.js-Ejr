@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import "./styles.css";
 import { updateUserProfile } from "../../service/user.js";
-import { ProfileForm } from "../../components/profileForm/index.jsx";
-import { Navbar } from "../../components/navbar/index.jsx";
-import { ImgProfile } from "../../components/imgProfile/index.jsx";
+import ProfileForm from "../../components/profileForm/index.jsx";
+import Navbar from "../../components/navbar/index.jsx";
+import ImgProfile from "../../components/imgProfile/index.jsx";
 
 const Profile = () => {
   const [file, setFile] = useState("");

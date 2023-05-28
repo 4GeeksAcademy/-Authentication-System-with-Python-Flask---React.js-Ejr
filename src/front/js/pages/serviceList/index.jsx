@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Navbar } from "../../components/navbar/index.jsx";
+import Navbar from "../../components/navbar/index.jsx";
 
 import BigContainer from "../../components/bigContainer/index.jsx";
 import {
-  deleteServiceList,
-  listServiceByCompany,
-} from "../../service/service.js";
-
-import "./styles.css";
+  deleteService,
+  listServicesByCompany,
+} from "../../service/services.js";
 
 import { useParams } from "react-router-dom";
 import { ServiceCard } from "../../components/serviceCard/index.jsx";
@@ -18,7 +16,7 @@ export const ListService = () => {
   const { companyID } = useParams();
 
   const getList = async () => {
-    const serviceList = await listServiceByCompany(companyID);
+    const serviceList = await listServicesByCompany(companyID);
     setList(serviceList);
   };
 
@@ -31,7 +29,7 @@ export const ListService = () => {
       `¿Deseas eliminar el servicio con ID ${service_id}?`
     );
     if (isDelete) {
-      const deleted = await deleteServiceList(service_id);
+      const deleted = await deleteService(service_id);
       getList();
       deleted.is_active && deleted.is_active.success;
       setList((prevList) => prevList.filter((item) => item.id !== service_id));
