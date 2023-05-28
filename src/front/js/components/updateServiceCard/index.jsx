@@ -52,6 +52,7 @@ const UpdateServiceList = ({ list, handleSubmit, handleChange, isUpdated }) => {
             >
               Go Back
             </button>
+
           </div>
         </div>
       </main>
@@ -60,3 +61,4 @@ const UpdateServiceList = ({ list, handleSubmit, handleChange, isUpdated }) => {
 };
 
 export default UpdateServiceList;
+

@@ -14,7 +14,6 @@ const initialState = {
 export const UpdateService = () => {
   const { serviceID } = useParams();
   const [list, setList] = useState(initialState);
-
   const [isUpdated, setIsUpdated] = useState(false);
 
   const handleSubmit = async (e) => {
@@ -23,6 +22,7 @@ export const UpdateService = () => {
     setList(service);
     setList(initialState);
     setIsUpdated(true);
+
   };
 
   const handleChange = ({ target }) => {
@@ -32,7 +32,6 @@ export const UpdateService = () => {
   return (
     <>
       <Navbar />
-
       <UpdateServiceList
         list={list}
         handleSubmit={handleSubmit}

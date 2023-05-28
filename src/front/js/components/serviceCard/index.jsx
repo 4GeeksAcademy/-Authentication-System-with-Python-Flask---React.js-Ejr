@@ -10,7 +10,12 @@ export const ServiceCard = ({ services, handleDelete }) => {
       {services.map((service) => {
         return !service.is_active ? null : (
           <div className={`${styles._listService}`} key={service.id}>
-            <p className={styles._textService}>{service.name}</p>
+            <p
+              className={styles._textService}
+              onClick={() => navigate(`/service-detail/${service.id}`)}
+            >
+              {service.name}
+            </p>
 
             <button
               className={`${styles._btnListService} me-4 `}

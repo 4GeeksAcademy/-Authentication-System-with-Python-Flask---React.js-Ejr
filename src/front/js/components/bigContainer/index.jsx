@@ -9,5 +9,4 @@ const BigContainer = ({ children }) => {
     </section>
   );
 };
-
 export default BigContainer;
