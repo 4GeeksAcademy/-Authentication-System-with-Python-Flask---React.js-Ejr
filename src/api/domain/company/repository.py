@@ -24,7 +24,7 @@ def get_company_by_user_id(user_id):
         return None 
 
 
-def update_company(update_company, company_id, company):
+def update_company(update_company, company):
     if company:
         company.name = update_company['name']
         company.description = update_company['description']

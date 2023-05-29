@@ -1,16 +1,17 @@
 import React from "react";
-import "./styles.css";
+import styles from "./input.module.css";
 
-const Input = ({ type, placeholder, icon, name, value }) => {
+const Input = ({ type, placeholder, icon, name, defaultValue, disabled }) => {
   return (
-    <div className="inputContainer">
+    <div className={styles._inputContainer}>
       {icon}
       <input
+        className="_boxShadow"
         type={type}
         placeholder={placeholder}
         name={name}
-        value={value}
-        className="boxShadow"
+        defaultValue={defaultValue}
+        disabled={disabled}
       />
     </div>
   );

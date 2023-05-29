@@ -5,8 +5,12 @@
   margin-top: 60px;
 }
 
+._btnWrapper {
+  width: 150px;
+  margin-bottom: 40px;
+}
 ._logo {
-  margin-bottom: 60px;
+  margin-bottom: 40px;
 }
 
 ._contentContainer {

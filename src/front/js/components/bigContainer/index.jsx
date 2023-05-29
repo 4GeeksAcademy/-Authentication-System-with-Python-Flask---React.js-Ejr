@@ -1,10 +1,10 @@
 import React from "react";
-import "./styles.css";
+import styles from "./bigContainer.module.css";
 
 const BigContainer = ({ children }) => {
   return (
-    <section className="big-container _boxShadow">
-      <span className="bg-color" />
+    <section className={`${styles._bigContainer} _boxShadow`}>
+      <span className={`${styles._bgColor} _gradient1`} />
       {children}
     </section>
   );
