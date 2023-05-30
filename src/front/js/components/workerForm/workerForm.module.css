@@ -1,0 +1,52 @@
+._titleService {
+  font-weight: var(--font-extrabold);
+  font-size: 2rem;
+  margin: 6rem 0 1rem 0;
+}
+._parentTwo {
+  width: 948px;
+  height: 490px;
+  position: relative;
+  margin-top: 3rem;
+  background: #f5f4ff;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 12px;
+}
+._childTwo {
+  width: 948px;
+  height: 97px;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  background: linear-gradient(90deg, #00ffff 0%, #37cfff 100%);
+  border-radius: 12px 12px 0px 0px;
+  display: flex;
+  flex-direction: column;
+}
+
+._mainContainerImg {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+  margin-bottom: 12px;
+}
+._loginBtn {
+  border-radius: var(--border-md);
+  background-color: var(--gray-900);
+  color: var(--gray-100);
+  font-weight: var(--font-bold);
+  font-size: var(--text-md);
+  line-height: 19px;
+  margin-block: 6px;
+  padding: 12px;
+  width: 100%;
+  transition: 0.2s ease-in-out;
+}
+
+._loginBtn:hover {
+  background-color: var(--purple-500);
+  color: var(--gray-900);
+}

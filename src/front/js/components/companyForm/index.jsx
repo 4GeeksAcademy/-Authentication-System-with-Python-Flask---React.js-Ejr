@@ -1,9 +1,21 @@
 import React from "react";
 import Input from "../input/index.jsx";
+<<<<<<< HEAD
 import "./styles.css";
 
 const CompanyForm = ({ handleChange, handleSubmit, textBtn }) => (
   <form onChange={handleChange} onSubmit={handleSubmit}>
+=======
+import styles from "./companyForm.module.css";
+import Button from "../button/index.jsx";
+
+const CompanyForm = ({ handleChange, handleSubmit, textBtn }) => (
+  <form
+    className={styles._form}
+    onChange={handleChange}
+    onSubmit={handleSubmit}
+  >
+>>>>>>> dev
     <Input
       icon={<i className="fa-solid fa-circle-user"></i>}
       type="text"
@@ -34,9 +46,13 @@ const CompanyForm = ({ handleChange, handleSubmit, textBtn }) => (
       placeholder="Working Schedule"
       name="working_schedule"
     />
+<<<<<<< HEAD
     <button type="submit" className="submitBtn boxShadow">
       {textBtn}
     </button>
+=======
+    <Button type="submit" title={textBtn} />
+>>>>>>> dev
   </form>
 );
 

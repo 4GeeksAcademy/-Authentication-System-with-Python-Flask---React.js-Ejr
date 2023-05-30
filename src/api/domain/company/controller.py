@@ -42,7 +42,7 @@ def update_company(update_company, company_id, current_user_id):
     company_user_id = company.user_id
     
     if current_user_id == company_user_id and company.user.role_id == 1:
-        updated_company = Repository.update_company(update_company, company_id, company)
+        updated_company = Repository.update_company(update_company, company)
         return updated_company
     else: 
         return {'msg': 'You do not have rights to update this company!', 'status': 403}  

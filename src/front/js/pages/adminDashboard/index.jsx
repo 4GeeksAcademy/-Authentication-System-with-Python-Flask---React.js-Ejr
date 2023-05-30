@@ -17,11 +17,15 @@ const AdminDashboard = () => {
   const handleSubmit = () => {
     navigate(`/create-service/${user.id}`);
   };
+  const handleWorker = () => {
+    navigate(`/create-worker/${user.id}`);
+  };
 
   return (
     <>
       <h1>Admin Dashboard</h1>
-      <button onClick={handleSubmit}>profile</button>
+      <button onClick={handleSubmit}>CreateService</button>
+      <button onClick={handleWorker}>CreateWorker</button>
     </>
   );
 };

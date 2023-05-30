@@ -9,7 +9,10 @@ class Company(db.Model):
     address = db.Column(db.String(200), nullable=False)
     working_schedule = db.Column(db.String(120), nullable=False)
     is_active = db.Column(db.Boolean(), nullable=False, default=True)
+
     user = db.relationship("User")
+    services = db.relationship("Services", back_populates="company")
+    workers = db.relationship("Workers", back_populates="company")
 
     def __init__(self, user_id, cif, name, description, address, working_schedule):
         self.user_id = user_id
@@ -28,7 +31,9 @@ class Company(db.Model):
             "description": self.description,
             "address": self.address,
             "working_schedule": self.working_schedule, 
-            "is_active": self.is_active
+            "is_active": self.is_active,
+            "services": list(map(lambda service: service.serialize(), self.services)),
+            "workers": list(map(lambda worker: worker.serialize(), self.workers)),
         }
 
 

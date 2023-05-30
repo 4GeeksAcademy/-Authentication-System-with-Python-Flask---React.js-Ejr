@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import "./styles.css";
-import { updateUser } from "../../service/user";
-import { ProfileForm } from "../../components/profileForm/index.jsx";
-import { Navbar } from "../../components/navbar/index.jsx";
-import { ImgProfile } from "../../components/imgProfile/index.jsx";
+import { updateUserProfile } from "../../service/user.js";
+import ProfileForm from "../../components/profileForm/index.jsx";
+import Navbar from "../../components/navbar/index.jsx";
+import ImgProfile from "../../components/imgProfile/index.jsx";
 
 const Profile = () => {
   const [file, setFile] = useState("");
@@ -38,7 +38,7 @@ const Profile = () => {
     form.append("username", user.username);
     form.append("firstname", user.firstname);
     form.append("lastname", user.lastname);
-    updateUser(form);
+    updateUserProfile(form);
     setUser({
       username: "",
       firstname: "",

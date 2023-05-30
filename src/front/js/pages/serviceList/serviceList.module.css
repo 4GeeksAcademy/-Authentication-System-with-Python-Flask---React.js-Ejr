@@ -1,0 +1,36 @@
+._mainContainer {
+  margin-top: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+._title {
+  font-size: var(--subheading-md);
+  color: var(--gray-900);
+}
+
+._servicesList {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 16px;
+  border-radius: var(--border-sm);
+  background-color: var(--white);
+  width: 100%;
+}
+
+._modalContent > p {
+  margin: 0;
+}
+
+._modalFooter {
+  margin-top: 24px;
+}
+._btnWrapper {
+  width: 30%;
+  display: flex;
+  gap: 16px;
+}

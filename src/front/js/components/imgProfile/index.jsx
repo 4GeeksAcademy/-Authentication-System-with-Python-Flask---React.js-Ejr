@@ -3,7 +3,7 @@ import { Context } from "../../store/appContext";
 import "./styles.css";
 import imgDefaul from "../../../../assets/imgDefault.png";
 
-export const ImgProfile = ({ img, handleChange }) => {
+const ImgProfile = ({ img, handleChange }) => {
   const { store } = useContext(Context);
   const userData = store.userProfileData.userData;
 
@@ -33,3 +33,5 @@ export const ImgProfile = ({ img, handleChange }) => {
     </main>
   );
 };
+
+export default ImgProfile;

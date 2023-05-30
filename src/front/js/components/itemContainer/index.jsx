@@ -1,9 +1,9 @@
 import React from "react";
-import "./styles.css";
+import styles from "./itemContainer.module.css";
 
 const ItemContainer = ({ title, ...rest }) => {
   return (
-    <div className="item-container boxShadow" {...rest}>
+    <div className={`${styles._itemContainer} _boxShadow`} {...rest}>
       <span>{title}</span>
     </div>
   );

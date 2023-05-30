@@ -1,0 +1,16 @@
+._itemContainer {
+  width: 100%;
+  padding: 12px;
+  margin-block: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: var(--border-md);
+  background-color: var(--white);
+  color: var(--gray-900);
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+  text-align: center;
+  cursor: pointer;
+}

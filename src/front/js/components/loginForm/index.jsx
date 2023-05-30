@@ -1,8 +1,14 @@
 import React from "react";
 import Input from "../input/index.jsx";
+import Button from "../button/index.jsx";
+import styles from "./login.module.css";
 
 const LoginForm = ({ handleChange, handleSubmit }) => (
-  <form onChange={handleChange} onSubmit={handleSubmit}>
+  <form
+    className={styles._form}
+    onChange={handleChange}
+    onSubmit={handleSubmit}
+  >
     <Input
       icon={<i className="fa-solid fa-envelope"></i>}
       type="email"
@@ -15,9 +21,7 @@ const LoginForm = ({ handleChange, handleSubmit }) => (
       placeholder="Password"
       name="password"
     />
-    <button type="submit" className="submitBtn boxShadow">
-      Login
-    </button>
+    <Button type="submit" title="Login" />
   </form>
 );
 

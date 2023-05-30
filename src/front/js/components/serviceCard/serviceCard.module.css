@@ -1,0 +1,38 @@
+._serviceCardContainer {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+p {
+  margin: 0;
+}
+
+._serviceName {
+  width: 100%;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: var(--font-semibold);
+  font-size: var(--text-md);
+  background: var(--primary-200);
+  border-radius: var(--border-sm);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+._serviceName:hover {
+  opacity: 0.8;
+}
+
+._serviceName:active {
+  scale: 0.98;
+  background: var(--primary-50);
+}
+
+._btnWrapper {
+  display: flex;
+  gap: 12px;
+}

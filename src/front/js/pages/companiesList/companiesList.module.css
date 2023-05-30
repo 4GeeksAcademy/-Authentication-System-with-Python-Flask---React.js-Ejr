@@ -1,0 +1,22 @@
+._mainContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 60px;
+}
+
+._logotipo {
+  margin-bottom: 60px;
+}
+
+._heading {
+  margin-top: 110px;
+  margin-bottom: 16px;
+  font-size: var(--subheading-md);
+  font-weight: var(--font-extrabold);
+}
+
+._listContainer {
+  width: 90%;
+  overflow-y: auto;
+}

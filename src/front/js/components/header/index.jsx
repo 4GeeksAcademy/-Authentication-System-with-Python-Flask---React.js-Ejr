@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import "./styles.css";
 
 const Header = () => (
-  <header>
+  <div className="header">
     <Link to="/" className="link">
       <h1 className="logoTitle">Booking Manager.</h1>
     </Link>
@@ -13,7 +13,7 @@ const Header = () => (
       their bookings effectively.
     </span>
     <img src={logoDetail} alt="purple square design used as logo" />
-  </header>
+  </div>
 );
 
 export default Header;

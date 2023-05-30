@@ -6,6 +6,7 @@ class Services_workers(db.Model):
     service_id = db.Column(db.Integer, db.ForeignKey("services.id"))
     services = db.relationship("Services")
     workers = db.relationship("Workers")
+    booking = db.relationship("Booking", back_populates="services_workers")
 
     def __init__(self,worker_id, service_id):
         self.worker_id = worker_id

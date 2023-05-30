@@ -22,3 +22,16 @@ def delete_worker(worker):
         return None
 
     return worker
+
+def update_worker(update_worker, worker):
+    if worker:
+        worker.username = update_worker["username"]
+        worker.firstname = update_worker["firstname"]
+        worker.lastname = update_worker["lastname"]
+        worker.email = update_worker["email"]
+        worker.working_schedule = update_worker["working_schedule"]
+        worker.password = update_worker["password"]
+        db.session.commit()
+        return service
+    else: 
+        return None

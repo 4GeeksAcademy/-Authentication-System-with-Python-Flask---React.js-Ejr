@@ -1,0 +1,23 @@
+._btn {
+  width: 100%;
+  min-width: 80px;
+  margin-block: 6px;
+  padding: 8px 12px;
+  border: none;
+  border-radius: var(--border-sm);
+  background-color: var(--gray-900);
+  color: var(--gray-100);
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+  transition: 0.2s ease-in-out;
+}
+
+._btn:hover {
+  background-color: var(--gray-700);
+  color: var(--gray-100);
+}
+
+._btn:active {
+  scale: 0.95;
+  background-color: var(--gray-500);
+}

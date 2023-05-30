@@ -6,7 +6,7 @@ class Workers(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
     company_id = db.Column(db.Integer, db.ForeignKey("company.id"))
     user = db.relationship("User")
-    company = db.relationship("Company")
+    company = db.relationship("Company", back_populates="workers")
 
     def __init__(self, user_id, company_id):
         self.user_id = user_id

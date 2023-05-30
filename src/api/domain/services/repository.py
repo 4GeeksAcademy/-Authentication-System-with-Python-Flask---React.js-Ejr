@@ -14,6 +14,17 @@ def get_single_service(service_id):
     service = Services.query.get(service_id)
     return service
 
+def update_service( update_service, service):
+    if service:
+        service.name = update_service['name']
+        service.description = update_service['description']
+        service.service_duration = update_service['service_duration']
+        service.price = update_service['price']
+        db.session.commit()
+        return service
+    else:
+        return None
+
 def delete_service(service):
     if service:
         service.is_active = False
@@ -21,3 +32,4 @@ def delete_service(service):
     else:
         return None
     return service
+

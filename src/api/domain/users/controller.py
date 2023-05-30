@@ -4,8 +4,6 @@ import api.utilities.handle_response as Response
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required, get_jwt
 import bcrypt
 from cloudinary.uploader import upload
-import json
-
 
 def create_new_user(body, role_type):
     body_email = body['email']
@@ -25,28 +23,27 @@ def create_new_user(body, role_type):
     
     return Repository.create_new_user(body, role_type)
 
-
 def get_users_list():
 
 	all_users = Repository.get_users_list()
 	return all_users
 
-def get_single_user(user_id):
+def get_single_user(user_id, current_user_id):
+    #need to check that admin and worker belong to same company 
     user = Repository.get_single_user(user_id)
+    current_user = User.query.get(current_user_id)
+
     if user is None:
-        return {'msg': f'User with id: {user_id}, do not exists in this database.', 'status': 404}
+        return {'msg': f'User with id: {user_id}, does not exist in this database.', 'status': 404} 
+
+    if current_user.roles.type == 'client':
+        return {'msg': 'User has no rights to view this profile,', 'status': 404 }
     return user
 
-def update_user(update_user, user_id, current_user_id):
-    user = User.query.get(user_id)
-
-    user_id = user.id
-
-    if current_user_id == user_id: 
-        updated_user = Repository.update_user(update_user, user_id, user)
-        return updated_user
-    else:
-        return {'msg': 'You do not have rights to update this user!', 'status': 403}  
+def update_profile(username, firstname, lastname, email, avatar, current_user_id):
+    img = upload(avatar)
+    url_avatar = img['secure_url']
+    return Repository.update_profile(username, firstname, lastname, email, url_avatar, current_user_id)
 
 def delete_user(current_user_id):
     user = User.query.get(current_user_id)
@@ -56,7 +53,6 @@ def delete_user(current_user_id):
     else:
         deleted_user = Repository.delete_user(user)
         return deleted_user
-          
 def verify_user_email_and_pass(user):
     if user['email'] is None or user['email'] == "":
         return {"msg": "'Email is not valid'", "status": 400 }
@@ -82,11 +78,6 @@ def login(body):
         new_token = create_access_token(identity=user.serialize())
         return {"token": new_token, "role": user_role_type}
     return user
-
-def update_profile(username, firstname, lastname, email, avatar, current_user_id):
-    img = upload(avatar)
-    url_avatar = img['secure_url']
-    return Repository.update_profile(username, firstname, lastname, email, url_avatar, current_user_id)
 
 def verify_user(user):
     verified_user = Repository.get_user_by_email(user['email'])

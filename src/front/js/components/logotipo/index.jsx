@@ -1,12 +1,15 @@
 import React from "react";
 import logo from "../../../../assets/logotipo-detail.png";
-import "./styles.css";
+import { Link } from "react-router-dom";
+import styles from "./logotipo.module.css";
 
-const Logotipo = ({ ...rest }) => (
-  <div id="logo-container" {...rest}>
-    <img src={logo} alt="Double purple squares design used as logo" />
-    <span>Booking Manager.</span>
-  </div>
+const Logotipo = () => (
+  <Link to="/">
+    <div className={styles._logoContainer}>
+      <img src={logo} alt="Double blue squares design used as logo" />
+      <span className={styles._logoText}>Booking Manager.</span>
+    </div>
+  </Link>
 );
 
 export default Logotipo;

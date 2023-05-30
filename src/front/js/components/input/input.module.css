@@ -1,0 +1,32 @@
+._inputContainer {
+  position: relative;
+  font-size: var(--text-sm);
+  color: var(--gray-900);
+}
+
+._inputContainer > i {
+  position: absolute;
+  top: 18px;
+  left: 14px;
+}
+
+._inputContainer > input {
+  padding: 8px 16px 8px 40px;
+  margin-block: 6px;
+  width: 100%;
+  border: none;
+  border-radius: var(--border-sm);
+}
+
+._inputContainer input:focus {
+  outline: 1px solid var(--gray-300);
+}
+
+._inputContainer input::placeholder {
+  font-size: var(--text-sm);
+  color: var(--gray-300);
+}
+
+._inputContainer input:disabled {
+  cursor: not-allowed;
+}

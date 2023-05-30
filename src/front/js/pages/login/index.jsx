@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Header from "../../components/header/index.jsx";
 import { loginUser } from "../../service/user.js";
-import "./styles.css";
+import styles from "./login.module.css";
 import LoginForm from "../../components/loginForm/index.jsx";
+import bgImg from "../../../../assets/bgImg.jpeg";
+import Logotipo from "../../components/logotipo/index.jsx";
 
 const initialState = {
   email: "",
@@ -28,12 +29,22 @@ const LoginPage = () => {
   };
 
   return (
-    <main className="mainContainer">
-      <Header />
-      <section>
-        <h2 className="title">Login</h2>
-        <LoginForm handleSubmit={handleSubmit} handleChange={handleChange} />
-        <div className="bgImg"></div>
+    <main className={styles._mainContainer}>
+      <section className={styles._sectionContainer}>
+        <img
+          className={styles._bgImg}
+          src={bgImg}
+          alt="Woman booking a service in your computer"
+        />
+        <div className={styles._actionContainer}>
+          <Logotipo />
+          <h1 className={styles._heading}>Login</h1>
+          <LoginForm handleSubmit={handleSubmit} handleChange={handleChange} />
+          <span className={styles._credits}>
+            Photo by Andrew Neel on Unsplash
+          </span>
+          <span className={`${styles._line} _gradient1`}></span>
+        </div>
       </section>
     </main>
   );
