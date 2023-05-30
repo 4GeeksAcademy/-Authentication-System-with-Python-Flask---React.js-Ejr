@@ -33,4 +33,3 @@ def delete_service(service):
         return None
     return service
 
-

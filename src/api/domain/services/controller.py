@@ -51,4 +51,3 @@ def delete_service(service_id, current_user_id):
         return deleted_service
     else:
         return {'msg': 'You do not have rights to delete services!', 'status': 403}
-
