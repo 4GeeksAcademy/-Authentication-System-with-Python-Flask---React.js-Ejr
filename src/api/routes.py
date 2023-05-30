@@ -16,3 +16,10 @@ def handle_hello():
     }
 
     return jsonify(response_body), 200
+
+@api.route('/signup', methods=["POST"])
+def user_create():
+    data = request.get_json()
+    print(data)
+    new_user = User.query.filter_by(email=data["email"]).first()
+    

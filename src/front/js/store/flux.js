@@ -20,7 +20,19 @@ const getState = ({ getStore, getActions, setStore }) => {
 			exampleFunction: () => {
 				getActions().changeColor(0, "green");
 			},
-
+			userLogin: async (email,password, name, address, phone, city, country) => {
+				const resp = await getActions().apiFetch("/login", "POST", {email, password, name, address, phone, city, country})
+				if (resp.code >= 400) {
+					return resp
+				}
+				setStore({accessToken:resp.data.accessToken})
+				localStorage.setItem("accessToken", resp.data.accessToken)
+				return resp
+			},	
+			loadToken() {
+				let token = localStorage.getItem("accessToken")
+				setStore({accessToken:token})
+			},
 			getMessage: async () => {
 				try{
 					// fetching data from the backend
@@ -46,6 +58,21 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				//reset the global store
 				setStore({ demo: demo });
+			},
+			apiFetch: async (endpoint,method="GET",body={}) => {
+				let resp = await fetch(apiUrl + endpoint, method == "GET" ? undefined :{
+					method,
+					body: JSON.stringify(body),
+					headers:{
+						"Content-Type":"application/json"
+					}
+				})
+				if(!resp.ok){
+					console.error(`${resp.status}: ${resp.statusText}`)
+					return {code:resp.status, error:`${resp.status}: ${resp.statusText}`}
+				}
+				let data = await resp.json()
+				return {code:resp.status, data:data}
 			}
 		}
 	};
