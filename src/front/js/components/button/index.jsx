@@ -1,12 +1,4 @@
 import React from "react";
-<<<<<<< HEAD
-import "./styles.css";
-
-const Button = ({ title, type, ...rest }) => {
-  return (
-    <button type={type} className="btn boxShadow" {...rest}>
-      {title}
-=======
 import styles from "./button.module.css";
 
 const Button = ({ title, type, onClick }) => {
@@ -17,7 +9,6 @@ const Button = ({ title, type, onClick }) => {
       onClick={onClick}
     >
       {title ?? `Click Me!`}
->>>>>>> dev
     </button>
   );
 };

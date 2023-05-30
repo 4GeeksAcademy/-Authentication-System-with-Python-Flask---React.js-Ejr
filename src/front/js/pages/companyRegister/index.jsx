@@ -1,16 +1,11 @@
 import React, { useState, useContext } from "react";
 import { Context } from "../../store/appContext";
 import { useNavigate } from "react-router-dom";
-<<<<<<< HEAD
-import "./styles.css";
-import Header from "../../components/header/index.jsx";
-=======
 
 import styles from "./companyRegister.module.css";
 import bgImg from "../../../../assets/bgImg.jpeg";
 
 import Logotipo from "../../components/logotipo/index.jsx";
->>>>>>> dev
 import CompanyForm from "../../components/companyForm/index.jsx";
 
 const initialState = {
@@ -37,18 +32,6 @@ const CompanyRegister = () => {
   };
 
   return (
-<<<<<<< HEAD
-    <main className="mainContainer">
-      <Header />
-      <section>
-        <h2 className="title">Company Register</h2>
-        <CompanyForm
-          handleChange={handleChange}
-          handleSubmit={handleSubmit}
-          textBtn="Next Step"
-        />
-        <div className="bgImg"></div>
-=======
     <main className={styles._mainContainer}>
       <section className={styles._sectionContainer}>
         <img
@@ -69,7 +52,6 @@ const CompanyRegister = () => {
           </span>
           <span className={`${styles._line} _gradient1`}></span>
         </div>
->>>>>>> dev
       </section>
     </main>
   );
