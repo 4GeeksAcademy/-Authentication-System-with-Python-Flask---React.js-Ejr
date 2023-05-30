@@ -2,7 +2,7 @@
   width: 100%;
   min-width: 80px;
   margin-block: 6px;
-  padding: 12px;
+  padding: 8px 12px;
   border: none;
   border-radius: var(--border-sm);
   background-color: var(--gray-900);
@@ -13,11 +13,11 @@
 }
 
 ._btn:hover {
-  background-color: var(--gray-800);
+  background-color: var(--gray-700);
   color: var(--gray-100);
 }
 
 ._btn:active {
   scale: 0.95;
-  background-color: var(--gray-600);
+  background-color: var(--gray-500);
 }

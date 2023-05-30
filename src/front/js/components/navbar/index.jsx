@@ -1,8 +1,8 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
-import navuno from "../../../../assets/navbar1.png";
-import navdos from "../../../../assets/navbar2.png";
-import "./styles.css";
+import styles from "./navbar.module.css";
+import Logotipo from "../logotipo/index.jsx";
+import avatar from "../../../../assets/avatar.png";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -10,44 +10,29 @@ const Navbar = () => {
     navigate("/");
   };
   return (
-    <nav className="navbar ">
-      <div className="container">
-        <div className="image-container">
-          <img className="img2" src={navuno} alt="navuno" />
-          <img className="img" src={navdos} alt="navdos" />
-
-          <Link to="/" className="route">
-            Booking Manager.
+    <header className={styles._headerContainer}>
+      <div className={styles._contentContainer}>
+        <Logotipo />
+        <nav className={styles._navContainer}>
+          <Link to="/">
+            <span>Dashboard</span>
           </Link>
-        </div>
-        <div className="ml-auto">
-          <Link to="/" className="me-3">
-            <button type="submit" className="submitBtn boxShadow">
-              Home
-            </button>
+          <Link to="/">
+            <i className="fa-solid fa-gear"></i>
           </Link>
-          <Link to="/" className="me-5">
-            <button type="submit" className="submitBtn boxShadow">
-              Dashboard
-            </button>
-          </Link>
-          <Link to="/" className="iconTools me-2">
-            <i className="fa-solid fa-gear fa-2x"></i>
-          </Link>
-
-          <Link to="/" className="iconTools me-4">
-            <i className="fa-solid fa-share-from-square fa-2x"></i>
+          <Link to="/">
+            <i className="fa-solid fa-arrow-right-from-bracket" />
           </Link>
 
           <img
-            className="profile"
-            src="https://pbs.twimg.com/profile_images/1243475459125456896/e-zIQiFY_400x400.jpg"
-            alt="Daenerys Targaryen"
+            className={`${styles._userProfileImg} _boxShadow`}
+            src={avatar}
+            alt="User profile img"
             onClick={handlesubmit}
           />
-        </div>
+        </nav>
       </div>
-    </nav>
+    </header>
   );
 };
 

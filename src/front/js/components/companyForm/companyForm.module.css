@@ -1,0 +1,10 @@
+._form {
+  z-index: 10;
+  width: 480px;
+}
+
+@media (max-width: 678px) {
+  ._form {
+    width: 300px;
+  }
+}

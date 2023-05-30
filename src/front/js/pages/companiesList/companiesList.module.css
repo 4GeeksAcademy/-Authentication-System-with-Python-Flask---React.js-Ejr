@@ -1,22 +1,22 @@
-.main-container {
+._mainContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-top: 60px;
 }
 
-.logo {
+._logotipo {
   margin-bottom: 60px;
 }
 
-h1 {
+._heading {
   margin-top: 110px;
   margin-bottom: 16px;
   font-size: var(--subheading-md);
   font-weight: var(--font-extrabold);
 }
 
-.list-container {
+._listContainer {
   width: 90%;
   overflow-y: auto;
 }

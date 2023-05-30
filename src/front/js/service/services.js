@@ -59,7 +59,7 @@ export const deleteService = async (serviceID) => {
       },
     });
     const data = await res.json();
-    return data.data;
+    return data;
   } catch (err) {
     console.log("Error to Delete Service", err);
   }

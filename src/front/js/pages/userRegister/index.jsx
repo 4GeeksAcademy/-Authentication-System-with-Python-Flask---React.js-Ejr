@@ -1,9 +1,12 @@
 import React, { useState } from "react";
-import { registerUser } from "../../service/user";
-import "./styles.css";
-import UserForm from "../../components/userForm/index.jsx";
-import Header from "../../components/header/index.jsx";
 import { useNavigate } from "react-router-dom";
+import { registerUser } from "../../service/user";
+
+import styles from "./userRegister.module.css";
+import bgImg from "../../../../assets/bgImg.jpeg";
+
+import UserForm from "../../components/userForm/index.jsx";
+import Logotipo from "../../components/logotipo/index.jsx";
 
 const initialState = {
   username: "",
@@ -28,16 +31,26 @@ const UserRegister = () => {
   };
 
   return (
-    <main className="mainContainer">
-      <Header />
-      <section>
-        <h2 className="title">User Register</h2>
-        <UserForm
-          handleChange={handleChange}
-          handleSubmit={handleSubmit}
-          textBtn="Register"
+    <main className={styles._mainContainer}>
+      <section className={styles._sectionContainer}>
+        <img
+          className={styles._bgImg}
+          src={bgImg}
+          alt="Woman booking a service in your computer"
         />
-        <div className="bgImg"></div>
+        <div className={styles._actionContainer}>
+          <Logotipo />
+          <h1 className={styles._heading}>Sign Up</h1>
+          <UserForm
+            handleChange={handleChange}
+            handleSubmit={handleSubmit}
+            textBtn="Register"
+          />
+          <span className={styles._credits}>
+            Photo by Andrew Neel on Unsplash
+          </span>
+          <span className={`${styles._line} _gradient1`}></span>
+        </div>
       </section>
     </main>
   );

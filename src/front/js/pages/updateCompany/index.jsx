@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getInfoCompanyById, updateCompany } from "../../service/company";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import styles from "./updateCompany.module.css";
 
@@ -43,7 +43,6 @@ const UpdateCompany = () => {
     e.preventDefault();
     setIsLoading(true);
     const data = await updateCompany(company_id, updatedCompany);
-    console.log("updated company --->", data);
     setIsLoading(false);
     responseToast(data.msg);
   };
@@ -100,7 +99,6 @@ const UpdateCompany = () => {
           </form>
         )}
       </BigContainer>
-      <ToastContainer position="bottom-center" />
     </div>
   );
 };

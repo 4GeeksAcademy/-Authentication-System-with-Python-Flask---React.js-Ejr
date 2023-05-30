@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./styles.css";
+import styles from "./companiesList.module.css";
 import Logotipo from "../../components/logotipo/index.jsx";
 import BigContainer from "../../components/bigContainer/index.jsx";
 import ItemContainer from "../../components/itemContainer/index.jsx";
@@ -20,11 +20,13 @@ const CompaniesList = () => {
 
   const navigate = useNavigate();
   return (
-    <main className="main-container">
-      <Logotipo className="logo" />
+    <main className={styles._mainContainer}>
+      <div className={styles._logotipo}>
+        <Logotipo />
+      </div>
       <BigContainer>
-        <h1>Companies repository</h1>
-        <div className="list-container">
+        <h1 className={styles._heading}>Companies repository</h1>
+        <div className={styles._listContainer}>
           {companiesList?.map((company) => (
             <ItemContainer
               key={company.id}
