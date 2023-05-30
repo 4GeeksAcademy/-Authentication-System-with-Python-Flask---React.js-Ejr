@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 export const Navbar = () => {
 	return (
-		<nav className="navbar navbar-dark bg-success sticky-top">
+		<nav id="navbar-design" className="navbar sticky-top">
 			<div className="container">
 				<Link to="/">
 					<span className="navbar-brand fw-bold fs-2 mb-0">GitLoot</span>
