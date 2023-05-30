@@ -13,10 +13,10 @@
 /* done */
 body{
     background-color: #ccfbff;
-opacity: 1;
-background-image:  radial-gradient(#54d597 2px, transparent 2px), radial-gradient(#3ba270 2px, #9CE2F3 2px);
-background-size: 80px 80px;
-background-position: 0 0,40px 40px;
+    opacity: 1;
+    background-image:  radial-gradient(#54d597 2px, transparent 2px), radial-gradient(#3ba270 2px, #9CE2F3 2px);
+    background-size: 80px 80px;
+    background-position: 0 0,40px 40px;
 }
 /* done */
 #navbar-design{
@@ -28,14 +28,11 @@ background-position: 0 0,40px 40px;
     display: grid;
     grid-gap: 1rem;
     grid-template-columns: 33% 33% 33%;
-    background-color: #fff;
-    color: #384D48;
-    margin-left: 1rem;
+      margin-left: 1rem;
     margin-right: 1rem;
   }
 
   .box {
-    background-color: #384D48;
     color: #fff;
     border-radius: 5px;
     padding: 20px;
@@ -50,6 +47,7 @@ background-position: 0 0,40px 40px;
   .b{
     grid-row: 1/span 5;
     grid-column: 3/span 1;
+    background-color: #384D48;
   }
   .c{
     grid-row: 2/span 1;
@@ -59,7 +57,7 @@ background-position: 0 0,40px 40px;
   .d{
     grid-row: 3/span 1;
     grid-column: 1/span 1;
-
+    background-color: #384D48;
   }
   .e{
     grid-row: 3/span 1;
@@ -81,4 +79,5 @@ background-position: 0 0,40px 40px;
   .h{
     grid-row: 5/span 1;
     grid-column: 2/span 1;
+    background-color: #384D48;
   }

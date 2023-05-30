@@ -11,8 +11,7 @@ export const Navbar = () => {
 				<div className="ml-auto">
 					<div className="btn-group dropstart">
 						<button type="button" 
-							className="cart-button btn btn-outline-info btn-lg dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" 
-							style={{backgroundImage:"linear-gradient(to right, #ECE9E6 0%, #FFFFFF  51%, #ECE9E6  100%)", dataColor2:"#FFFFFF", dataColor2:"#ECE9E6"}}>
+							className="btn btn-outline-info btn-lg dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
 								Tu loot!
 						</button>
 						<ul class="dropdown-menu">
