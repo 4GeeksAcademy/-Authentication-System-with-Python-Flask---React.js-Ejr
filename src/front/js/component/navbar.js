@@ -22,7 +22,7 @@ export const Navbar = () => {
 							<li className="dropdown-item">This shalt clear thy loot</li>
 						</ul>
 					</div>
-					</div>
+				</div>
 			</div>
 		</nav>
 	);

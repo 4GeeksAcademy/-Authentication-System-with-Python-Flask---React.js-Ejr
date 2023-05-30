@@ -7,46 +7,61 @@ export const Home = () => {
 
 	return (
 		<div className="text-center">
-			
-
-			<section className="container d-block">
+			{/* <section className="container d-block">
 				
-			</section>
-			<section className="title-section align-middle">
-				{/* <button className="btn btn-info" style={{borderRadius:"50% 50% 50% 50% / 95% 95% 5% 5%", width:"50rem", height:"5rem"}}></button>
-					<h2 className="text-success" style={{fontSize:"6rem"}}>¿Sha tenés hambre?</h2>
-				<button className="btn btn-info" style={{borderRadius:"50% 50% 50% 50% / 12% 12% 88% 88% ", width:"50rem", height:"5rem"}}></button> */}
-				<h1 className="main-title my-auto align-middle">GitLoot</h1>
-			</section>
-			<section className="sub-section">
-				<h2 className="sub-title pt-5">Acá puedes tener la comida más saludable, ademas de conveniente</h2>
-				<h2 className="sub-title">¡En la puerta de tu casa!</h2>
-			</section>
-			<section className="menus py-5 my-0">
-				<div className="container-fluid d-flex justify-content-center">
-					<div className="mx-3">
-						<button className="btn btn-outline-success p-3 mx-auto fs-4 fw-bold" style={{borderRadius:"33% 67% 32% 68% / 90% 9% 91% 10% "}}>Que tiendas tienes mkis</button>
+			</section> */}
+{/* GRID */}
+			<section>
+				<div className="grid-wrapper">
+					<div className="box a">
+					<section className="title-section align-middle">
+						<h1 className="main-title my-auto align-middle">GitLoot</h1>
+					</section>
 					</div>
-					<div className="mx-3">
-						<button className="btn btn-outline-success p-3 mx-auto fs-4 fw-bold" style={{borderRadius:"33% 67% 32% 68% / 90% 9% 91% 10% "}}>Pedilo y recibilo boludo</button>
+					<div className="box b">
+						<section className="ia">
+							this is the AI box, please complete the AI task to complete this box only
+						</section>
 					</div>
-					<div className="mx-3">
-						<button className="btn btn-outline-success p-3 mx-auto fs-4 fw-bold" style={{borderRadius:"33% 67% 32% 68% / 90% 9% 91% 10% "}}>Recibe semanal, carnal</button>
+					<div className="box c">
+					<section className="sub-section">
+							<h2 className="sub-title pt-5">Acá puedes tener la comida más saludable, ademas de conveniente</h2>
+							<h2 className="sub-title">¡En la puerta de tu casa!</h2>
+						</section>
+					</div>
+					<div className="box d">
+						<section className="stores">
+							<button className="btn btn-outline-success p-3 mx-auto fs-4 fw-bold" 
+							style={{borderRadius:"33% 67% 32% 68% / 90% 9% 91% 10% "}}>
+								Que tiendas tienes mkis
+							</button>
+						</section>
+					</div>
+					<div className="box e">
+						<section className="store-ads">
+							Image placeholder for Store advertising
+						</section>
+						
+					</div>
+					<div className="box f">
+						<section className="sub-section">
+							<h2 className="sub-title pt-4 fs-1">Te respalda una inteligencia artificial, que te recomendará una excelente dieta semanal basada en nuestros platos disponibles!</h2>
+						</section>
+					</div>
+					<div className="box g">
+						<section className="subscription-ads">
+							Image placeholder for Subscription advertising
+						</section>
+					</div>
+					<div className="box h">
+						<section className="">
+							<button className="btn btn-outline-success p-3 mx-auto fs-4 fw-bold" 
+							style={{borderRadius:"33% 67% 32% 68% / 90% 9% 91% 10% "}}>
+								Pedilo y recibilo boludo
+							</button>
+						</section>
 					</div>
 				</div>
-			</section>
-			<section className="menus d-flex d-grid">
-				<div className="container-fluid d-flex justify-content-center">
-					<div className="mx-3">
-						<button className="btn btn-outline-success p-3 mx-auto fs-4 fw-bold" style={{borderRadius:"33% 67% 32% 68% / 90% 9% 91% 10% "}}>Que tiendas tienes mkis</button>
-					</div>
-					<div className="mx-3">
-						<button className="btn btn-outline-success p-3 mx-auto fs-4 fw-bold" style={{borderRadius:"33% 67% 32% 68% / 90% 9% 91% 10% "}}>Pedilo y recibilo boludo</button>
-					</div>
-				</div>
-			</section>
-			<section className="sub-section">
-				<h2 className="sub-title pt-4 fs-1">Te respalda una inteligencia artificial, que te recomendará una excelente dieta semanal basada en nuestros platos disponibles!</h2>
 			</section>
 		</div>
 	);
