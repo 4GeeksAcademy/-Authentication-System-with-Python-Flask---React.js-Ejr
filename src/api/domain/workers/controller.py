@@ -54,3 +54,13 @@ def delete_worker(worker_id, current_user_id):
         return deleted_worker
     else:
         return {'msg': 'You do not have rights to delete this worker!', 'status': 403}
+
+def update_worker(worker_id, update_worker, current_user_id):
+    worker = Workers.query.get(worker_id)
+    user_id = worker.user_id
+    
+    if current_user_id == user_id:
+        updated_worker = Repository.update_worker( update_worker, worker )
+        return updated_worker
+    else:
+        return {'msg': 'You do not have rights to update this user!', 'status': 403} 

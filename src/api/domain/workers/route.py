@@ -54,3 +54,16 @@ def delete_worker(worker_id):
         return Response.response_ok(f'Worker with id: {worker_id}, was deleted from database.', worker.serialize())
     else: 
          return Response.response_error(worker['msg'], worker['status'])
+
+@api.route("/<int:worker_id>", methods=["PUT"])
+@jwt_required()
+def update_worker(worker_id):
+    current_user= get_jwt_identity()
+    current_user_id = current_user["id"]
+    update_worker = request.get_json()
+
+    worker = Controller.update_worker(worker_id, update_worker, current_user_id )
+    if isinstance(worker, Workers):
+        return Response.response_ok(f'Worker with id: {worker_id}, has been updated in database', worker.serialize())
+    else:
+        return Response.response_error(worker["msg"], worker['status'])
