@@ -1,8 +1,6 @@
-/* in progress */
 .sub-section{
     min-height: 10rem;
 }
-/* in progress */
 .sub-title{
     font-size: 5rem;
     background: -webkit-linear-gradient(90deg,#4CB944, #4472CA, #4CB944);
@@ -28,13 +26,13 @@ body{
     display: grid;
     grid-gap: 1rem;
     grid-template-columns: 33% 33% 33%;
-      margin-left: 1rem;
+    margin-left: 1rem;
     margin-right: 1rem;
   }
 
   .box {
     color: #fff;
-    border-radius: 5px;
+    border-radius: 1rem;
     padding: 20px;
     font-size: 150%;
 
@@ -57,7 +55,10 @@ body{
   .d{
     grid-row: 3/span 1;
     grid-column: 1/span 1;
-    background-color: #384D48;
+    /* background-image: url("../img/fruitBox.png"); */
+    background-image: url("https://fastly.picsum.photos/id/607/200/200.jpg?hmac=ULikjE_L4XAS018UC9F2dCEiYIPKAFUW8oBDI2LzduY");
+    background-repeat: no-repeat;
+    background-size: cover;
   }
   .e{
     grid-row: 3/span 1;
