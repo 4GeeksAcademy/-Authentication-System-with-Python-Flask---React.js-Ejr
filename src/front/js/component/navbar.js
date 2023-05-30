@@ -14,7 +14,7 @@ export const Navbar = () => {
 							className="btn btn-outline-info btn-lg dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
 								Tu loot!
 						</button>
-						<ul class="dropdown-menu">
+						<ul className="dropdown-menu">
 							<li className="dropdown-item">Loot 1</li>
 							<li className="dropdown-item">Loot 2</li>
 							<li className="dropdown-item">Loot 3</li>
