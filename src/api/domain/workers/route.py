@@ -6,14 +6,12 @@ import api.utilities.handle_response as Response
 
 api = Blueprint("api/workers", __name__)
 
-@api.route("/create_worker/<int:company_id>", methods=["POST"])
+@api.route("/<int:company_id>", methods=["POST"])
 @jwt_required()
 def create_worker(company_id):
     current_user = get_jwt_identity()
     current_user_id = current_user['id']
-    current_user = get_jwt_identity()
-    current_user_id = current_user['id']
-
+    
     body = request.get_json()
 
     new_worker = Controller.create_worker(body, company_id, current_user_id)
