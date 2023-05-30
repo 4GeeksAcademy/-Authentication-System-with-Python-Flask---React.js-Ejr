@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { getInfoCompanyById } from "../../service/company";
 import Logotipo from "../../components/logotipo/index.jsx";
