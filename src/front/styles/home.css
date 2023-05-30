@@ -8,7 +8,7 @@
 
 .main-title{
     font-size: 20rem;
-    background: -webkit-linear-gradient(#2bc03f, #5627ac);
+    background: -webkit-linear-gradient(#4CB944, #4472CA);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -18,7 +18,5 @@
 .title-section
 {
     min-height: 30rem;
-    background: rgb(180,122,219);
-    background: linear-gradient(90deg, #591FCE 0%, #ffff 50%, #591FCE 120%);
     border-radius: 2rem;
 }
