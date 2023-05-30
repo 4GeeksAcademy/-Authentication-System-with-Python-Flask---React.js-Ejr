@@ -79,6 +79,21 @@ def get_bookings_by_user_id():
     else:
         return Response.response_error(bookings_by_user_id['msg'], bookings_by_user_id['status'])
 
+@api.route('/<int:booking_id>', methods=['PUT'])
+@jwt_required()
+def update_booking(booking_id):
+    current_user = get_jwt_identity()
+    current_user_id = current_user['id']
+
+    update_booking = request.get_json()
+
+    booking = Controller.update_booking(booking_id, current_user_id, update_booking)
+
+    if isinstance (booking, Booking):
+        return Response.response_ok(f'Booking with id: {booking_id} has been updated in database', booking.serialize())
+    else: 
+        return Response.response_error(booking['msg'], booking['status'])
+
 @api.route('/<int:booking_id>', methods=['DELETE'])
 @jwt_required()
 def delete_booking(booking_id):

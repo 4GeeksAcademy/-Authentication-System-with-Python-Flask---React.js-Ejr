@@ -11,8 +11,8 @@ class Company(db.Model):
     is_active = db.Column(db.Boolean(), nullable=False, default=True)
 
     user = db.relationship("User")
-    services = db.relationship("Services")
-    workers = db.relationship("Workers")
+    services = db.relationship("Services", back_populates="company")
+    workers = db.relationship("Workers", back_populates="company")
 
     def __init__(self, user_id, cif, name, description, address, working_schedule):
         self.user_id = user_id

@@ -11,9 +11,8 @@ class Booking(db.Model):
     created_at = db.Column(DateTime, default=datetime.datetime.utcnow())
     start_service = db.Column(DateTime, nullable=False)
     description = db.Column(db.Text)
-    
     user = db.relationship("User")
-    services_workers = db.relationship("Services_workers", lazy="joined")
+    services_workers = db.relationship("Services_workers", back_populates="booking")
 
     def __init__(self, user_id, company_id, service_workers_id, start_service, description):
         self.user_id = user_id

@@ -108,6 +108,17 @@ def get_bookings_by_user_id(current_user_id):
     else:
         return {'msg': 'You do not have rights to see this bookings!', 'status': 403}
 
+def update_booking(booking_id, current_user_id, update_booking):
+    booking = Booking.query.get(booking_id)
+
+    booking_user_id = booking.user_id
+    
+    if current_user_id == booking_user_id: 
+        updated_booking = Repository.update_booking(update_booking, booking)
+        return updated_booking
+    else: 
+        return {'msg': 'You do not have rights to update this booking!', 'status': 403}   
+
 def delete_booking(booking_id, current_user_id):
     
     booking = Booking.query.get(booking_id)

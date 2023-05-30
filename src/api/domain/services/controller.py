@@ -27,6 +27,16 @@ def get_single_service(service_id):
 
     return service
 
+def update_service(service_id, update_service,  current_user_id):
+    service = Services.query.get(service_id)
+    user_id = service.company.user_id
+    
+    if current_user_id == user_id:
+        updated_service = Repository.update_service( update_service, service )
+        return updated_service
+    else:
+        return {'msg': 'You do not have rights to update this user!', 'status': 403} 
+
 def delete_service(service_id, current_user_id):
     service = Services.query.get(service_id)
 

@@ -11,7 +11,7 @@ class Services(db.Model):
     service_duration = db.Column(db.Integer, unique=False, nullable = False) 
     price = db.Column(db.Float, unique=False, nullable = False) 
     is_active = db.Column(db.Boolean(), nullable=False, default=True)
-    company = db.relationship("Company")
+    company = db.relationship("Company", back_populates="services")
 
     def __init__(self, company_id, name, description, service_duration, price):
         self.company_id = company_id

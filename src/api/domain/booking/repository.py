@@ -22,6 +22,17 @@ def get_bookings_by_company(company_id):
 def get_bookings_by_user_id(current_user_id):
     return Booking.query.filter_by(user_id=current_user_id).all()
 
+def update_booking(update_booking, booking):
+    if booking: 
+        booking.services_workers.worker_id = update_booking['worker']
+        booking.services_workers.service_id = update_booking['service']
+        booking.start_service = update_booking['start_service']
+        booking.description = update_booking['description']
+        db.session.commit()
+        return booking 
+    else: 
+        return None
+
 def delete_booking(booking):
     db.session.delete(booking)
     db.session.commit()

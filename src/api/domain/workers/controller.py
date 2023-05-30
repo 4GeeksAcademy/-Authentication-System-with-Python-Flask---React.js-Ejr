@@ -17,8 +17,6 @@ def create_worker(body, company_id, current_user_id):
     else:
         return worker
 
-    
-
 def get_workers_by_company(company_id):
     company = Company.query.get(company_id)
     if company is None:
