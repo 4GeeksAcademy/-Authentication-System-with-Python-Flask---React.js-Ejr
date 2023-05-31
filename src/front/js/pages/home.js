@@ -31,15 +31,15 @@ export const Home = () => {
 					</div>
 					<div className="box d">
 						<section className="stores">
-							<button className="btn btn-outline-success p-3 mx-auto fs-4 fw-bold" 
+							<button className="btn btn-outline-dark p-3 mx-auto fs-4 fw-bold mt-5 blur fs-5" 
 							style={{borderRadius:"33% 67% 32% 68% / 90% 9% 91% 10% "}}>
 								Que tiendas tienes mkis
 							</button>
 						</section>
 					</div>
 					<div className="box e">
-						<section className="store-ads">
-							Image placeholder for Store advertising
+						<section className="store-ads pt-0 mt-0">
+							Nuestras tienen excelentes descuentos, le ponemos el alma para llevar los alimentos más fescos a tu hogar!
 						</section>
 						
 					</div>
@@ -50,12 +50,12 @@ export const Home = () => {
 					</div>
 					<div className="box g">
 						<section className="subscription-ads">
-							Image placeholder for Subscription advertising
+							Comidas super fancy, que preparamos para que lo puedas descongelar y disfrutar!
 						</section>
 					</div>
 					<div className="box h">
 						<section className="">
-							<button className="btn btn-outline-success p-3 mx-auto fs-4 fw-bold" 
+							<button className="btn btn-outline-light blur p-3 mx-auto fs-4 fw-bold" 
 							style={{borderRadius:"33% 67% 32% 68% / 90% 9% 91% 10% "}}>
 								Pedilo y recibilo boludo
 							</button>

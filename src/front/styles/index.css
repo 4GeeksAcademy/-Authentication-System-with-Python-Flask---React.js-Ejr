@@ -55,7 +55,7 @@ body{
   .d{
     grid-row: 3/span 1;
     grid-column: 1/span 1;
-    background-image: url("https://i.pinimg.com/564x/ea/75/bc/ea75bc607dc3d0edb07db7768afad0a2.jpg");
+    background-image: url("https://i.pinimg.com/564x/86/9b/76/869b76c2de771ad733dbae0e591fba58.jpg");
     background-repeat: no-repeat;
     background-size: cover;
     height: 20rem;
@@ -64,7 +64,10 @@ body{
     grid-row: 3/span 1;
     grid-column: 2/span 1;
     background-color: #4CB944;
-
+    background-image: url("https://i.pinimg.com/564x/2f/d6/8c/2fd68c5853e3e4d0c7e74eb9fa9d7e98.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 21rem;
   }
   .f{
     grid-row: 4/span 1;
@@ -76,12 +79,25 @@ body{
     grid-column: 1/span 1;
     background-color: #4CB944;
     height: 20rem;
-
+    background-image: url("https://i.pinimg.com/564x/04/8c/26/048c26326ae1b2a16e2ba01a4d29e043.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 21rem;
   }
   .h{
     grid-row: 5/span 1;
     grid-column: 2/span 1;
     background-color: #384D48;
-    height: 20rem;
-
+    background-image: url("https://i.pinimg.com/564x/01/d9/f8/01d9f84a2ac17fe69c5875d2624ecf4a.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 21rem;
+    background-position: center top -190px;
+  }
+  .blur{
+    backdrop-filter: blur(0.2rem);
+  }
+  button:hover{
+    color: white;
+    background-color: greenyellow;
   }
