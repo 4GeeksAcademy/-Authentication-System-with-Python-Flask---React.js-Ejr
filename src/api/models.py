@@ -27,3 +27,8 @@ class User(db.Model):
             "country" : self.country
             # do not serialize the password, its a security breach
         }
+
+class TokenBlockedList(db.Model):
+    __tablename__ = "token_blocked_list"
+    id = db.Column(db.Integer, primary_key=True)
+    jti = db.Column(db.String(50), nullable = False)
