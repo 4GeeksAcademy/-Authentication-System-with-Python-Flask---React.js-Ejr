@@ -20,8 +20,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 			exampleFunction: () => {
 				getActions().changeColor(0, "green");
 			},
-			userLogin: async (email,password, name, address, phone, city, country) => {
-				const resp = await getActions().apiFetch("/login", "POST", {email, password, name, address, phone, city, country})
+			userLogin: async (email,password, first_name, last_name, address_one, address_two, phone, city, country, zip_code) => {
+				const resp = await getActions().apiFetch("/login", "POST", {email, password, first_name, last_name, address_one, address_two, phone, city, country, zip_code})
 				if (resp.code >= 400) {
 					return resp
 				}
