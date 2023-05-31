@@ -24,6 +24,7 @@ import UpdateCompany from "./pages/updateCompany/index.jsx";
 import { UpdateService } from "./pages/updateService/index.jsx";
 import CreateWorker from "./pages/createWorker/index.jsx";
 import { ToastContainer } from "react-toastify";
+import UpdateBooking from "./pages/updateBooking/index.jsx";
 
 //create your first component
 const Layout = () => {
@@ -74,6 +75,10 @@ const Layout = () => {
             <Route
               element={<UpdateService />}
               path="/update-service/:serviceID"
+            />
+            <Route
+              element={<UpdateBooking />}
+              path="/update-booking/:bookingID"
             />
             <Route
               element={<CreateWorker />}

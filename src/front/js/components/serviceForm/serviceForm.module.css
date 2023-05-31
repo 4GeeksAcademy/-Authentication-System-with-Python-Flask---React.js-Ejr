@@ -12,7 +12,8 @@
 ._titleService {
   font-weight: var(--font-extrabold);
   font-size: 2rem;
-  margin: 10rem 0 1rem 0;
+  margin-top: 8rem;
+  margin-bottom: 2rem;
 }
 ._parentTwo {
   width: 948px;
@@ -61,20 +62,7 @@
   background-color: var(--purple-500);
   color: var(--gray-900);
 }
-
-._loginBtnGoBack {
-  border-radius: var(--border-md);
-  background-color: var(--cyan-500);
-  color: var(--gray-900);
-  font-weight: var(--font-bold);
-  font-size: var(--text-md);
-  line-height: 19px;
-  margin-block: 6px;
-  padding: 12px;
-  width: 100%;
-  transition: 0.2s ease-in-out;
-}
-
-._loginBtnGoBack:hover {
-  background-color: var(--purple-500);
+._loginBtn:active {
+  scale: 0.95;
+  background-color: var(--gray-500);
 }

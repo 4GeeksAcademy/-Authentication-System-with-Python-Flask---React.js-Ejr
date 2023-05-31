@@ -1,4 +1,4 @@
-.booking-container {
+._bookingContainer {
   position: relative;
   width: 100%;
   padding: 12px;
@@ -16,7 +16,7 @@
   cursor: pointer;
 }
 
-.button {
+._button {
   position: absolute;
   top: 0px;
   right: 0px;
@@ -29,7 +29,7 @@
   transition: color 0.2s;
 }
 
-.button:hover {
+._button:hover {
   background-color: var(--gray-900);
   color: var(--gray-100);
 }

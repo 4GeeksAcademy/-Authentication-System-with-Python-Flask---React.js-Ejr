@@ -1,13 +1,18 @@
 import React from "react";
-import "./styles.css";
-
-const BookingCard = ({ service, date, worker, deleteReservation }) => {
+import styles from "./bookingCard.module.css";
+const BookingCard = ({
+  service,
+  date,
+  worker,
+  setIsOpen,
+  deleteReservation,
+}) => {
   return (
-    <div className="booking-container boxShadow">
-      <span>
+    <div className={`${styles._bookingContainer} _boxShadow`}>
+      <span onClick={setIsOpen}>
         {date} | {service} with {worker}
       </span>
-      <button className="button" onClick={deleteReservation}>
+      <button className={styles._button} onClick={deleteReservation}>
         x
       </button>
     </div>

@@ -34,6 +34,7 @@ const CreateWorker = () => {
         newWorker={newWorker}
         handleSubmit={handleSubmit}
         handleChange={handleChange}
+        textBtn="Create"
       />
     </>
   );
