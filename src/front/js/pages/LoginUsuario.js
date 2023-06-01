@@ -28,7 +28,7 @@ export const LoginUsuario = () => {
     if (resp >= 400) {
       return
     }
-    console.log("Login exitoso")
+    //console.log("Login exitoso")
   }
 
   return (

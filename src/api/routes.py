@@ -40,7 +40,7 @@ def user_create():
     return jsonify(new_user.serialize()), 201
 
 # Para iniciar sesión
-@api.route("/api/login", methods=["POST"])
+@api.route("/login", methods=["POST"])
 def user_login():
     user_email = request.json.get("email")
     user_password = request.json.get("password")
