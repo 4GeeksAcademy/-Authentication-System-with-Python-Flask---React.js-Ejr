@@ -1,3 +1,4 @@
+const apiUrl = process.env.BACKEND_URL
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
@@ -20,15 +21,16 @@ const getState = ({ getStore, getActions, setStore }) => {
 			exampleFunction: () => {
 				getActions().changeColor(0, "green");
 			},
-			userLogin: async (email,password, first_name, last_name, address_one, address_two, phone, city, country, zip_code) => {
-				const resp = await getActions().apiFetch("/login", "POST", {email, password, first_name, last_name, address_one, address_two, phone, city, country, zip_code})
+			userLogin: async (email,password)=>{
+				const resp = await getActions().apiFetch("/api/login", "POST", {email,password})
+				console.log({email,password})
 				if (resp.code >= 400) {
 					return resp
 				}
 				setStore({accessToken:resp.data.accessToken})
 				localStorage.setItem("accessToken", resp.data.accessToken)
 				return resp
-			},	
+			},
 			loadToken() {
 				let token = localStorage.getItem("accessToken")
 				setStore({accessToken:token})

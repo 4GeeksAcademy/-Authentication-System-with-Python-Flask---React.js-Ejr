@@ -4,7 +4,7 @@ import rigoImageUrl from "../../img/rigo-baby.jpg";
 import "../../styles/home.css";
 
 
-
+// Para registrarse
 
 export const Login = () => {
   const { store, actions } = useContext(Context);
@@ -92,7 +92,7 @@ export const Login = () => {
           <label className="form-label">Confirm Password</label>
           <div className="input-group">
             <input type="password" className="form-control"/>
-            <span className="input-group-text"><i class="fa fa-eye-slash" aria-hidden="true"></i></span>
+            <span className="input-group-text"><i className="fa fa-eye-slash" aria-hidden="true"></i></span>
               
           </div>
         </div>
@@ -109,7 +109,7 @@ export const Login = () => {
         </div>
         <div className="col-12 ">
           <button className="btn btn-primary mx-1" type="submit">Save</button>
-          <button type="button" class="btn btn-secondary">Cancel</button>
+          <button type="button" className="btn btn-secondary">Cancel</button>
         </div>
       </div>
 
