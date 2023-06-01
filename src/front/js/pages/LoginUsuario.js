@@ -38,12 +38,12 @@ export const LoginUsuario = () => {
       <form onSubmit={submitForm}>
         <div className="col-md-12 position-relative">
           <label className="form-label">Email</label>
-          <input type="text" className="form-control" placeholder="Username" aria-label="Username" />
+          <input type="text" className="form-control" name="email" placeholder="Username" aria-label="Username" />
         </div>
         <div className="form-group mb-3">
           <label className="form-label">Password</label>
           <div className="input-group">
-            <input type={passwordShown ? "text" : "password"} className="form-control" />
+            <input type={passwordShown ? "text" : "password"} className="form-control" name="password"/>
             <button onClick={togglePassword} className="input-group-text">
               <i className={passwordShowneye ? "fa fa-eye" : "fa fa-eye-slash"}></i>
             </button>
@@ -58,7 +58,7 @@ export const LoginUsuario = () => {
         </div>
 
         <div className="form-check ">
-          <input className="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked />
+          <input className="form-check-input" type="checkbox" name="password" value="" id="flexCheckChecked" />
           <label className="form-check-label" htmlFor="flexCheckChecked">
             Keep me signed in
           </label>

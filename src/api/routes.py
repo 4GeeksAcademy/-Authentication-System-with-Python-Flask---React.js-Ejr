@@ -20,7 +20,7 @@ def handle_hello():
 
     return jsonify(response_body), 200
 
-# Para iniciar sesión
+# Para registrarse
 @api.route('/register', methods=["POST"])
 def user_create():
     data = request.get_json()
@@ -39,8 +39,8 @@ def user_create():
     db.session.commit()
     return jsonify(new_user.serialize()), 201
 
-# Para registrarse
-@api.route("/login", methods=["POST"])
+# Para iniciar sesión
+@api.route("/api/login", methods=["POST"])
 def user_login():
     user_email = request.json.get("email")
     user_password = request.json.get("password")
