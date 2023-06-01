@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { Context } from "../store/appContext";
 import "../../styles/home.css";
+import Modal from "./modal.js";
 
 export const Home = () => {
 	const { store, actions } = useContext(Context);
@@ -20,6 +21,7 @@ export const Home = () => {
 					</div>
 					<div className="box b">
 						<section className="ia text-center align-middle">
+
 							this is the AI box, please complete the AI task to complete this box only
 						</section>
 					</div>
@@ -31,15 +33,15 @@ export const Home = () => {
 					</div>
 					<div className="box d">
 						<section className="stores">
-							<button className="btn btn-outline-dark p-3 mx-auto fs-4 fw-bold mt-5 blur fs-5" 
+							<button className="store-ads p-4 mx-auto fs-1 fw-bold mt-5 blur fs-5" 
 							style={{borderRadius:"33% 67% 32% 68% / 90% 9% 91% 10% "}}>
-								Que tiendas tienes mkis
+								Tiendas disponibles
 							</button>
 						</section>
 					</div>
 					<div className="box e">
-						<section className="store-ads pt-0 mt-0">
-							Nuestras tienen excelentes descuentos, le ponemos el alma para llevar los alimentos más fescos a tu hogar!
+						<section className="store pt-0 mt-0">
+							<p className="store-ads">Nuestras tiendas tienen excelentes descuentos, le ponemos el alma para llevar los alimentos más fescos a tu hogar!</p>
 						</section>
 						
 					</div>
@@ -50,12 +52,12 @@ export const Home = () => {
 					</div>
 					<div className="box g">
 						<section className="subscription-ads">
-							Comidas super fancy, que preparamos para que lo puedas descongelar y disfrutar!
+							<p className="">Comidas super fancy, que preparamos para que lo puedas descongelar y disfrutar!</p>
 						</section>
 					</div>
 					<div className="box h">
 						<section className="">
-							<button className="btn btn-outline-light blur p-3 mx-auto fs-4 fw-bold" 
+							<button className="store-ads p-4 mx-auto fs-1 btn btn-outline-success blur fw-bold" 
 							style={{borderRadius:"33% 67% 32% 68% / 90% 9% 91% 10% "}}>
 								Pedilo y recibilo boludo
 							</button>
@@ -63,6 +65,7 @@ export const Home = () => {
 					</div>
 				</div>
 			</section>
+			<Modal />
 		</div>
 	);
 };
