@@ -249,7 +249,7 @@ export const Home = () => {
         </div>
         <div className="btn-container">
         <button
-            className="btn-busca" 
+            className="btn-busca"  onClick={() => navigate(`/Search`) }
           >
             BUSCAR
           </button>

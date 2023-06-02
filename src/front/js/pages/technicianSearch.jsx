@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { filterTechByField } from "../service/service";
 import "../../styles/technicianSearch.css";
 import { loginUser } from "../service/service";
-import TechCard from "../component/techCard.jsx";
+import TechCardGen from "../component/techCardGeneral.jsx";
 import { getAllTech } from "../service/service";
 
 
@@ -250,7 +250,7 @@ export const TechnicianSearch = () => {
                 key={index}
                 
               >
-              <TechCard
+              <TechCardGen
                 key={index}
                 name={element.name}
                 sur_name={element.sur_name}

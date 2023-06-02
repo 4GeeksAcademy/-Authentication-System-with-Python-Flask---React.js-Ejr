@@ -151,7 +151,7 @@ export const Technician = () => {
       <div className="misConversaciones col-12">
         <h1 className="titulo-misConversaciones">Conversaciones</h1>
         <div className="messageCard_container justify-content-center">
-          {conversations ? (
+          {conversations.length >0 ? (
             conversations.map((todo, index) => (
               <Link to={`/convers/${todo.name}/${selectRole}`}>
                 <MessageCard
