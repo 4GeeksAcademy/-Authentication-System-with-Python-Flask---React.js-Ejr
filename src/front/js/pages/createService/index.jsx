@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import Navbar from "../../components/navbar/index.jsx";
 import { createService } from "../../service/services.js";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import Header from "../../components/header/index.jsx";
+import ServiceForm from "../../components/serviceForm/index.jsx";
 
 const initialState = {
   name: "",
@@ -31,7 +32,7 @@ const CreateService = () => {
 
   return (
     <>
-      <Navbar />
+      <Header />
       <ServiceForm
         newService={newService}
         handleSubmit={handleSubmit}

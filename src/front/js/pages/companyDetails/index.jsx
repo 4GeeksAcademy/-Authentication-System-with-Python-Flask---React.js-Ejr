@@ -29,7 +29,7 @@ const CompanyDetails = () => {
         <Button
           type="button"
           title="Booking now"
-          onClick={() => navigate("/")}
+          onClick={() => navigate(`/create-booking/${companyId}`)}
         />
       </div>
       <BigContainer>
