@@ -21,7 +21,7 @@ const CompanyRegister2 = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     await createCompany(newCompany);
-    navigate("/admin-dashboard");
+    navigate("/login");
   };
 
   return (

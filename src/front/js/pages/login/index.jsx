@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { loginUser } from "../../service/user.js";
+
 import styles from "./login.module.css";
-import LoginForm from "../../components/loginForm/index.jsx";
 import bgImg from "../../../../assets/bgImg.jpeg";
+
+import LoginForm from "../../components/loginForm/index.jsx";
 import Logotipo from "../../components/logotipo/index.jsx";
 
 const initialState = {
@@ -23,9 +25,10 @@ const LoginPage = () => {
     e.preventDefault();
     const data = await loginUser(newLogin);
 
-    if (data.role === "admin") navigate("/admin-dashboard");
-    if (data.role === "client") navigate("/user-dashboard/");
-    if (data.role === "worker") navigate("/worker-dashboard");
+    if (data.role === "admin") navigate(`/admin-dashboard/${data.company_id}`);
+    if (data.role === "client") navigate("/user-dashboard");
+    if (data.role === "worker")
+      navigate(`/worker-dashboard/${data.company_id}`);
   };
 
   return (

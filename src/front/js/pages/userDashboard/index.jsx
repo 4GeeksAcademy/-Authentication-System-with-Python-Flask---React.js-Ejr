@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { format } from "date-fns";
+import { getBookingByUser, deleteBooking } from "../../service/booking";
 import "../../pages/userDashboard/styles.css";
-import Navbar from "../../components/navbar/index.jsx";
+
+import { format } from "date-fns";
+import Header from "../../components/header/index.jsx";
 import BookingCard from "../../components/bookingCard/index.jsx";
-import { getBookingByUser } from "../../service/booking";
-import { deleteBooking } from "../../service/booking";
 import BigContainer from "../../components/bigContainer/index.jsx";
 
 const UserDashboard = () => {
@@ -27,7 +27,7 @@ const UserDashboard = () => {
 
   return (
     <div>
-      <Navbar />
+      <Header />
       <main className="main-container">
         <BigContainer>
           <h1>List of Reservations</h1>

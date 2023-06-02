@@ -1,0 +1,29 @@
+._mainContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+._contentContainer {
+  width: 100%;
+  max-width: var(--max-width);
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+._heading {
+  margin: 0;
+  font-size: var(--heading-lg);
+  font-weight: var(--font-extrabold);
+  line-height: 1;
+  text-align: center;
+}
+
+._adminSettings {
+  display: flex;
+  flex-direction: column;
+}

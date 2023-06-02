@@ -1,10 +1,9 @@
 import React, { useState } from "react";
-
-import Navbar from "../../components/navbar/index.jsx";
-
-import WorkerForm from "../../components/workerForm/index.jsx";
-import { createWorker } from "../../service/workers.js";
 import { useParams } from "react-router-dom";
+import { createWorker } from "../../service/workers.js";
+
+import Header from "../../components/header/index.jsx";
+import WorkerForm from "../../components/workerForm/index.jsx";
 
 const initialState = {
   username: "",
@@ -29,7 +28,7 @@ const CreateWorker = () => {
 
   return (
     <>
-      <Navbar />
+      <Header />
       <WorkerForm
         newWorker={newWorker}
         handleSubmit={handleSubmit}

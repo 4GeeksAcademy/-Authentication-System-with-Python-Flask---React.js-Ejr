@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import Navbar from "../../components/navbar/index.jsx";
-import UpdateServiceList from "../../components/updateServiceCard/index.jsx";
-import { updateService } from "../../service/services.js";
 import { useParams } from "react-router-dom";
+import { updateService } from "../../service/services.js";
+
+import Header from "../../components/header/index.jsx";
+import UpdateServiceList from "../../components/updateServiceCard/index.jsx";
 
 const initialState = {
   name: "",
@@ -22,7 +23,6 @@ export const UpdateService = () => {
     setList(service);
     setList(initialState);
     setIsUpdated(true);
-
   };
 
   const handleChange = ({ target }) => {
@@ -31,7 +31,7 @@ export const UpdateService = () => {
 
   return (
     <>
-      <Navbar />
+      <Header />
       <UpdateServiceList
         list={list}
         handleSubmit={handleSubmit}

@@ -1,8 +1,9 @@
 import React, { useContext } from "react";
 import { Context } from "../../store/appContext";
-import "./styles.css";
-import Navbar from "../../components/navbar/index.jsx";
 import { useNavigate } from "react-router-dom";
+import "./styles.css";
+
+import Header from "../../components/header/index.jsx";
 import Input from "../../components/input/index.jsx";
 
 export const UpdatePassword = () => {
@@ -14,7 +15,7 @@ export const UpdatePassword = () => {
   };
   return (
     <>
-      <Navbar />
+      <Header />
       <main className="mainContainerimg">
         <div className="parenttwo">
           <div className="childtwo">

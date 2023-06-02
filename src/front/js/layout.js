@@ -47,9 +47,15 @@ const Layout = () => {
               path="/company-register-2"
             />
             <Route element={<LoginPage />} path="/login" />
-            <Route element={<AdminDashboard />} path="/admin-dashboard" />
+            <Route
+              element={<AdminDashboard />}
+              path="/admin-dashboard/:companyId"
+            />
             <Route element={<UserDashboard />} path="/user-dashboard" />
-            <Route element={<WorkerDashboard />} path="/worker-dashboard" />
+            <Route
+              element={<WorkerDashboard />}
+              path="/worker-dashboard/:companyId"
+            />
             <Route element={<Profile />} path="/profile/:userId" />
             <Route element={<UpdatePassword />} path="/update" />
             <Route element={<RecoveryPassword />} path="/recovery" />

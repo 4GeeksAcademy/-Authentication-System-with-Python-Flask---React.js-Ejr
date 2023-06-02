@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import "./styles.css";
 import { updateUserProfile } from "../../service/user.js";
+import "./styles.css";
+
 import ProfileForm from "../../components/profileForm/index.jsx";
-import Navbar from "../../components/navbar/index.jsx";
+import Header from "../../components/header/index.jsx";
 import ImgProfile from "../../components/imgProfile/index.jsx";
 
 const Profile = () => {
@@ -48,7 +49,7 @@ const Profile = () => {
   };
   return (
     <main className="">
-      <Navbar />
+      <Header />
       <ImgProfile img={fileUrl} handleChange={handleChange} />
       <main className="mainContainerProfile">
         <div className="background">

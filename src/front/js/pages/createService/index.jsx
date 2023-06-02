@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Navbar from "../../components/navbar/index.jsx";
+import Header from "../../components/header/index.jsx";
 import Input from "../../components/input/index.jsx";
 import "./styles.css";
 import { createService } from "../../service/services.js";
@@ -29,7 +29,7 @@ export const CreateService = () => {
 
   return (
     <>
-      <Navbar />
+      <Header />
       <main className="mainContainerimg">
         <div className="parenttwo">
           <div className="childtwo">
