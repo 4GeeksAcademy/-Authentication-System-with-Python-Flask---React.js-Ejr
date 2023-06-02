@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { createCompany } from "../../service/company.js";
 
 import styles from "./companyRegister2.module.css";
-import bgImg from "../../../../assets/bgImg.jpeg";
+import { bgImg } from "../../../../assets/assets.jsx";
 
 import Logotipo from "../../components/logotipo/index.jsx";
 import UserForm from "../../components/userForm/index.jsx";

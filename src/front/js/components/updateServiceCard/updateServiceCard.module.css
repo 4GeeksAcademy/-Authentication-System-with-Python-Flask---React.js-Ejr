@@ -70,7 +70,7 @@
   font-size: var(--text-md);
   line-height: 19px;
   margin-block: 6px;
-  padding: 12px;
+  padding: 8px 12px;
   width: 100%;
   transition: 0.2s ease-in-out;
 }

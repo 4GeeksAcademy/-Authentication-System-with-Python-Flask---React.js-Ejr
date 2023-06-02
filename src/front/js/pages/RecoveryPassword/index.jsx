@@ -30,7 +30,7 @@ const RecoveryPassword = () => {
                 icon={<i className="fa-solid fa-envelope"></i>}
                 type="email"
                 placeholder="E-mail"
-                name="meil"
+                name="email"
               />
 
               <button type="button" className="loginBtn boxShadow">

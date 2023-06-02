@@ -1,7 +1,8 @@
 import React from "react";
-import logo from "../../../../assets/logotipo-detail.png";
+// import logo from "../../../../assets/logotipo-detail.png";
 import { Link } from "react-router-dom";
 import styles from "./logotipo.module.css";
+import { logo } from "../../../../assets/assets.jsx";
 
 const Logotipo = () => (
   <Link to="/">

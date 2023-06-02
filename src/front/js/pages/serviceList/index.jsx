@@ -15,7 +15,7 @@ import Modal from "../../components/modal/index.jsx";
 import Button from "../../components/button/index.jsx";
 import DeleteToast from "../../components/deleteToast/index.jsx";
 
-export const ListService = () => {
+const ListService = () => {
   const [list, setList] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const [selectedService, setSelectedService] = useState({});
@@ -125,3 +125,5 @@ export const ListService = () => {
     </>
   );
 };
+
+export default ListService;

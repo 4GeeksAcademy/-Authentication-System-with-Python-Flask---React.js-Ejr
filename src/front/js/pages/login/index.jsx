@@ -3,7 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { loginUser } from "../../service/user.js";
 import styles from "./login.module.css";
 import LoginForm from "../../components/loginForm/index.jsx";
-import bgImg from "../../../../assets/bgImg.jpeg";
+import { bgImg } from "../../../../assets/assets.jsx";
+
 import Logotipo from "../../components/logotipo/index.jsx";
 
 const initialState = {

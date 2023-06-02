@@ -5,6 +5,7 @@ import Navbar from "../../components/navbar/index.jsx";
 import WorkerForm from "../../components/workerForm/index.jsx";
 import { createWorker } from "../../service/workers.js";
 import { useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const initialState = {
   username: "",
@@ -18,13 +19,16 @@ const initialState = {
 const CreateWorker = () => {
   const { companyID } = useParams();
   const [newWorker, setNewWorker] = useState(initialState);
-
+  const [loading, setLoading] = useState(false);
+  const responseToast = (msg) => toast(msg);
   const handleChange = ({ target }) => {
     setNewWorker({ ...newWorker, [target.name]: target.value });
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await createWorker(companyID, newWorker);
+    const data = await createWorker(companyID, newWorker);
+    setNewWorker(initialState);
+    responseToast(data.msg);
   };
 
   return (

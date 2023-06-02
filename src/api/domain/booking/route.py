@@ -102,6 +102,7 @@ def delete_booking(booking_id):
     deleted_booking = Controller.delete_booking(booking_id, current_user_id)
 
     if isinstance(deleted_booking, Booking):
-        return Response.response_ok('This booking has been deleted', deleted_booking.serialize_admin_booking())
+        return Response.response_ok(f'This booking with id: {booking_id}, was deleted from database', deleted_booking.serialize_admin_booking())
     else:
         return Response.response_error(deleted_booking['msg'], deleted_booking['status'])
+        
