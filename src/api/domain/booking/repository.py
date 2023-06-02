@@ -37,3 +37,6 @@ def delete_booking(booking):
     db.session.delete(booking)
     db.session.commit()
     return booking
+
+
+    

@@ -8,14 +8,14 @@ import {
 
 import styles from "./serviceList.module.css";
 
-import Navbar from "../../components/navbar/index.jsx";
+import Header from "../../components/header/index.jsx";
 import BigContainer from "../../components/bigContainer/index.jsx";
 import ServiceCard from "../../components/serviceCard/index.jsx";
 import Modal from "../../components/modal/index.jsx";
 import Button from "../../components/button/index.jsx";
 import DeleteToast from "../../components/deleteToast/index.jsx";
 
-export const ListService = () => {
+const ListService = () => {
   const [list, setList] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const [selectedService, setSelectedService] = useState({});
@@ -42,7 +42,7 @@ export const ListService = () => {
 
   return (
     <>
-      <Navbar />
+      <Header />
       <main className={styles._mainContainer}>
         <BigContainer>
           <h1 className={styles._title}>List Services</h1>
@@ -125,3 +125,5 @@ export const ListService = () => {
     </>
   );
 };
+
+export default ListService;

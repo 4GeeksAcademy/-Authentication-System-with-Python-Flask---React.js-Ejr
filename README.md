@@ -4,7 +4,7 @@ A booking management system software solution that allows businesses to manage t
 
 ##### Models
 
-![booking system models](/src/assets/models.png)
+![booking system models](https://res.cloudinary.com/dlxxbuhxp/image/upload/v1685705470/cloud/models_ssewt5.png)
 
 ##### Figma design
 

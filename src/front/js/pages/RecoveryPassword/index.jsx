@@ -1,7 +1,7 @@
 import React from "react";
-import "./styles.css";
-import Navbar from "../../components/navbar/index.jsx";
 import { useNavigate } from "react-router-dom";
+import "./styles.css";
+import Header from "../../components/header/index.jsx";
 import Input from "../../components/input/index.jsx";
 
 const RecoveryPassword = () => {
@@ -11,7 +11,7 @@ const RecoveryPassword = () => {
   };
   return (
     <>
-      <Navbar />
+      <Header />
       <main className="mainContainerimg">
         <div className="parenttwo">
           <div className="childtwo">
@@ -30,7 +30,7 @@ const RecoveryPassword = () => {
                 icon={<i className="fa-solid fa-envelope"></i>}
                 type="email"
                 placeholder="E-mail"
-                name="meil"
+                name="email"
               />
 
               <button type="button" className="loginBtn boxShadow">

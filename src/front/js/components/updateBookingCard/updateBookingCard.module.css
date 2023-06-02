@@ -69,11 +69,35 @@
   font-size: var(--text-md);
   line-height: 19px;
   margin-block: 6px;
-  padding: 12px;
+  padding: 8px 12px;
   width: 100%;
   transition: 0.2s ease-in-out;
 }
 
 ._loginBtnGoBack:hover {
   background-color: var(--purple-500);
+}
+
+._inputContainer {
+  position: relative;
+  font-size: var(--text-sm);
+  color: var(--gray-900);
+}
+
+._inputContainer > i {
+  position: absolute;
+  top: 18px;
+  left: 14px;
+}
+
+._inputContainer > select {
+  padding: 8px 16px 8px 40px;
+  margin-block: 6px;
+  width: 100%;
+  border: none;
+  border-radius: var(--border-sm);
+}
+
+._inputContainer select:focus {
+  outline: 1px solid var(--gray-300);
 }

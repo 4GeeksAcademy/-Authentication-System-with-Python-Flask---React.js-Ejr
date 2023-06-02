@@ -1,5 +1,5 @@
 import api.domain.users.repository as Repository
-from api.models.index import User, Company
+from api.models.index import User, Company, Workers
 import api.utilities.handle_response as Response
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required, get_jwt
 import bcrypt
@@ -74,10 +74,32 @@ def login(body):
         return {"msg": "User not found", "status": 404 }
 
     user_role_type = user.roles.type
-    
-    if bcrypt.checkpw(body['password'].encode(), user.password.encode()):
-        new_token = create_access_token(identity=user.serialize())
-        return {"token": new_token, "role": user_role_type}
+
+    if user_role_type == 'admin':
+        company = Company.query.filter_by(user_id=user.id).first()
+
+        if bcrypt.checkpw(body['password'].encode(), user.password.encode()):
+            new_identity = user.serialize()
+
+            new_token = create_access_token(identity=new_identity)
+            return {"token": new_token, "role": user_role_type, "company_id": company.id}
+
+    if user_role_type == 'worker':
+        worker = Workers.query.filter_by(user_id=user.id).first()
+        
+        if bcrypt.checkpw(body['password'].encode(), user.password.encode()):
+            new_identity = user.serialize()
+
+            new_token = create_access_token(identity=new_identity)
+            return {"token": new_token, "role": user_role_type, "company_id": worker.company_id}
+
+    if user_role_type == 'client':
+        if bcrypt.checkpw(body['password'].encode(), user.password.encode()):
+            new_identity = user.serialize()
+
+            new_token = create_access_token(identity=new_identity)
+            return {"token": new_token, "role": user_role_type, "company_id": None}
+        
     return user
 
 def verify_user(user):

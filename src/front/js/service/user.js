@@ -29,7 +29,7 @@ export const getInfoUserId = async () => {
       },
     });
     const data = await res.json();
-    console.log(data.data)
+    console.log(data.data);
     return data.data;
   } catch (err) {
     console.log("Error to get user id");
@@ -62,6 +62,7 @@ export const loginUser = async (user) => {
     });
     const data = await res.json();
     localStorage.setItem("token", data.data.token);
+    localStorage.setItem("token/role/company_id", JSON.stringify(data.data));
     return data.data;
   } catch (err) {
     console.log("Error Login User", err);
@@ -96,7 +97,7 @@ export const getUserProfile = async () => {
       },
     });
     const data = await res.json();
-    console.log(data.data)
+    console.log(data.data);
     return data.data;
   } catch (err) {
     console.log("Error to get user id");

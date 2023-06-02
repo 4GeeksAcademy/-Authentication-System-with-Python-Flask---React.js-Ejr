@@ -1,19 +1,62 @@
-import React from "react";
-import logoDetail from "../../../../assets/logo_detail.png";
-import { Link } from "react-router-dom";
-import "./styles.css";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import styles from "./header.module.css";
+import Logotipo from "../logotipo/index.jsx";
+import avatar from "../../../../assets/avatar.png";
+import Modal from "../modal/index.jsx";
 
-const Header = () => (
-  <div className="header">
-    <Link to="/" className="link">
-      <h1 className="logoTitle">Booking Manager.</h1>
-    </Link>
-    <span className="logoSubtitle">
-      A complete booking management software that allows your business to manage
-      their bookings effectively.
-    </span>
-    <img src={logoDetail} alt="purple square design used as logo" />
-  </div>
-);
+const Header = ({ settings, settingsTitle }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
+
+  const handleLogOut = () => {
+    console.log("Logout called!");
+  };
+  const handlesubmit = () => {
+    navigate("/");
+  };
+
+  const handleDashboard = () => {
+    const data = JSON.parse(localStorage.getItem("token/role/company_id"));
+
+    if (data.role === "admin") navigate(`/admin-dashboard/${data.company_id}`);
+    if (data.role === "client") navigate("/user-dashboard");
+    if (data.role === "worker")
+      navigate(`/worker-dashboard/${data.company_id}`);
+  };
+
+  return (
+    <header className={styles._headerContainer}>
+      <div className={styles._contentContainer}>
+        <Logotipo />
+        <nav className={styles._navContainer}>
+          <button onClick={() => handleDashboard()} className={styles._btn}>
+            <span>Dashboard</span>
+          </button>
+          <button onClick={() => setIsOpen(true)} className={styles._btn}>
+            <i className="fa-solid fa-gear"></i>
+          </button>
+          <button onClick={() => handleLogOut()} className={styles._btn}>
+            <i className="fa-solid fa-arrow-right-from-bracket" />
+          </button>
+
+          <img
+            className={`${styles._userProfileImg} _boxShadow`}
+            src={avatar}
+            alt="User profile img"
+            onClick={handlesubmit}
+          />
+        </nav>
+      </div>
+      <Modal
+        title={settingsTitle}
+        isOpen={isOpen}
+        close={() => setIsOpen(false)}
+      >
+        {settings}
+      </Modal>
+    </header>
+  );
+};
 
 export default Header;

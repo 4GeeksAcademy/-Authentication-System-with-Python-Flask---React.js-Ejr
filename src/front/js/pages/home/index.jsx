@@ -1,7 +1,8 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Button from "../../components/button/index.jsx";
-import bgImg from "../../../../assets/bgImg.jpeg";
+import { bgImg } from "../../../../assets/assets.jsx";
+
 import styles from "./home.module.css";
 
 const HomePage = () => {

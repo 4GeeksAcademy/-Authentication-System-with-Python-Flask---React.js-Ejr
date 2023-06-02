@@ -21,6 +21,12 @@
   text-decoration: none;
 }
 
+._btn {
+  border: none;
+  background: transparent;
+  color: var(--gray-900);
+}
+
 ._navContainer > a {
   color: var(--gray-900);
   font-size: var(--text-md);

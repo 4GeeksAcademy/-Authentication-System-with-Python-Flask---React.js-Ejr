@@ -32,13 +32,13 @@ const ReservationForm = ({
           ))}
         </select>
         <Input
-          icon={<i className="fa-solid fa-circle-user"></i>}
+          icon={<i className="fa-solid fa-clock"></i>}
           type="text"
           placeholder="Start Service"
           name="start_service"
         />
         <Input
-          icon={<i className="fa-solid fa-circle-user"></i>}
+          icon={<i className="fa-solid fa-pen-to-square"></i>}
           type="text"
           placeholder="Description"
           name="description"

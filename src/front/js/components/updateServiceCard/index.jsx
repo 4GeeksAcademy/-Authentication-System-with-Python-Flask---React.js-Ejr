@@ -1,21 +1,13 @@
 import React from "react";
 import styles from "./updateServiceCard.module.css";
 import Input from "../input/index.jsx";
-import UpdateMessage from "../updateMessage/index.jsx";
 import { useNavigate } from "react-router-dom";
 import Button from "../button/index.jsx";
 
-const UpdateServiceList = ({
-  list,
-  handleSubmit,
-  handleChange,
-  isUpdated,
-  textBtn,
-}) => {
+const UpdateServiceList = ({ list, handleSubmit, handleChange, textBtn }) => {
   const navigate = useNavigate();
   return (
     <>
-      {isUpdated && <UpdateMessage />}
       <main className={styles._mainContainerImg}>
         <div className={styles._parentTwo}>
           <div className={styles._childTwo}>
@@ -54,13 +46,13 @@ const UpdateServiceList = ({
                 value={list.price}
               />
               <Button type="submit" title={textBtn} />
+              <button
+                className={`${styles._loginBtnGoBack} boxShadow`}
+                onClick={() => navigate(-1)}
+              >
+                Go Back
+              </button>
             </form>
-            <button
-              className={`${styles._loginBtnGoBack} boxShadow`}
-              onClick={() => navigate(-1)}
-            >
-              Go Back
-            </button>
           </div>
         </div>
       </main>
