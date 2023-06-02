@@ -68,41 +68,34 @@ def serve_any_other_file(path):
     return response
 
 
-
+# en construccion :c
 
 # this only runs if `$ python src/main.py` is executed
-if __name__ == '__main__':
-    PORT = int(os.environ.get('PORT', 3001))
-    app.run(host='0.0.0.0', port=PORT, debug=True)
+# if __name__ == '__main__':
+#     PORT = int(os.environ.get('PORT', 3001))
+#     app.run(host='0.0.0.0', port=PORT, debug=True)
 
 
-#apikey and app name
-app = Flask(__name__)
-openai.api_key = os.getenv("OPENAI_API_KEY")
+# #apikey and app name
+# app = Flask(__name__)
+# openai.api_key = os.getenv("OPENAI_API_KEY")
 
-@app.route("/", methods=("GET", "POST"))
-def index():
-    if request.method == "POST":
-        animal = request.form["animal"]
-        response = openai.Completion.create(
-            model="text-davinci-003",
-            prompt=generate_prompt(animal),
-            temperature=0.6,
-        )
-        return redirect(url_for("index", result=response.choices[0].text))
+# @app.route("/", methods=("GET", "POST"))
+# def index():
+#     if request.method == "POST":
+#         response = openai.Completion.create(
+#         model="text-davinci-003",
+#         prompt="The following is a conversation with an AI assistant. The assistant is helpful, creative, clever, and very friendly.\n\nHuman: Hello, who are you?\nAI: I am an AI created by OpenAI. How can I help you today?\nHuman: I'd like to cancel my subscription.\nAI:",
+#         temperature=0.9,
+#         max_tokens=150,
+#         top_p=1,
+#         frequency_penalty=0.0,
+#         presence_penalty=0.6,
+#         stop=[" Human:", " AI:"]
+# )
+#         return redirect(url_for("index", result=response.choices[0].text))
 
-    result = request.args.get("result")
-    return render_template("index.html", result=result)
 
-openai.api_key = os.getenv("OPENAI_API_KEY")
+# openai.api_key = os.getenv("OPENAI_API_KEY")
 
-response = openai.Completion.create(
-  model="Ada",
-#   model="gpt-3.5-turbo"
-  prompt="Write a weekly diet based on these food types, ingredients and depending on the user's need:\n\nFrito Pie\n\nlasagna\n\npizza\n\nfish\n\nmeat\n\nchicken\n\npork\n\nspaghetti\n\npasta\n\ningredients:\n\npasta\n\npotatoes\n\nmeat\n\npork\n\nchicken\n\nlettuce\n\ntomatoes\n\nartisan bread\n\nveggie meat\n\nonion\n\nsuggestion:",
-  temperature=0.5,
-  max_tokens=120,
-  top_p=1.0,
-  frequency_penalty=0.0,
-  presence_penalty=0.0
-)
+
