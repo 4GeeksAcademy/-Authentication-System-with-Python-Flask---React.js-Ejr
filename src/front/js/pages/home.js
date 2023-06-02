@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
 import { Context } from "../store/appContext";
 import "../../styles/home.css";
-import Modal from "./modal.js";
 
 export const Home = () => {
 	const { store, actions } = useContext(Context);
@@ -21,9 +20,7 @@ export const Home = () => {
 					</div>
 					<div className="box b">
 						<section className="ia text-center align-middle">
-
 							this is the AI box, please complete the AI task to complete this box only
-							
 						</section>
 					</div>
 					<div className="box c">
@@ -34,15 +31,15 @@ export const Home = () => {
 					</div>
 					<div className="box d">
 						<section className="stores">
-							<button className="store-ads p-4 mx-auto fs-1 fw-bold mt-5 blur fs-5" 
+							<button className="btn btn-outline-success p-3 mx-auto fs-4 fw-bold" 
 							style={{borderRadius:"33% 67% 32% 68% / 90% 9% 91% 10% "}}>
-								Tiendas disponibles
+								Que tiendas tienes mkis
 							</button>
 						</section>
 					</div>
 					<div className="box e">
-						<section className="store pt-0 mt-0">
-							<p className="store-ads">Nuestras tiendas tienen excelentes descuentos, le ponemos el alma para llevar los alimentos más fescos a tu hogar!</p>
+						<section className="store-ads">
+							Image placeholder for Store advertising
 						</section>
 						
 					</div>
@@ -53,12 +50,12 @@ export const Home = () => {
 					</div>
 					<div className="box g">
 						<section className="subscription-ads">
-							<p className="">Comidas super fancy, que preparamos para que lo puedas descongelar y disfrutar!</p>
+							Image placeholder for Subscription advertising
 						</section>
 					</div>
 					<div className="box h">
 						<section className="">
-							<button className="store-ads p-4 mx-auto fs-1 btn btn-outline-success blur fw-bold" 
+							<button className="btn btn-outline-success p-3 mx-auto fs-4 fw-bold" 
 							style={{borderRadius:"33% 67% 32% 68% / 90% 9% 91% 10% "}}>
 								Pedilo y recibilo boludo
 							</button>
@@ -66,7 +63,6 @@ export const Home = () => {
 					</div>
 				</div>
 			</section>
-			<Modal />
 		</div>
 	);
 };

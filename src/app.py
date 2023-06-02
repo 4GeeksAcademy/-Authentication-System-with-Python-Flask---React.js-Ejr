@@ -2,9 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 import os
-import openai
-
-from flask import Flask, request, jsonify, url_for, send_from_directory, redirect, render_template, request, url_for
+from flask import Flask, request, jsonify, url_for, send_from_directory
 from flask_migrate import Migrate
 from flask_swagger import swagger
 from flask_cors import CORS
@@ -45,8 +43,6 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 MIGRATE = Migrate(app, db, compare_type = True)
 db.init_app(app)
 
-
-
 # Allow CORS requests to this API
 CORS(app)
 
@@ -81,34 +77,7 @@ def serve_any_other_file(path):
     return response
 
 
-# en construccion :c
-
 # this only runs if `$ python src/main.py` is executed
-# if __name__ == '__main__':
-#     PORT = int(os.environ.get('PORT', 3001))
-#     app.run(host='0.0.0.0', port=PORT, debug=True)
-
-
-# #apikey and app name
-# app = Flask(__name__)
-# openai.api_key = os.getenv("OPENAI_API_KEY")
-
-# @app.route("/", methods=("GET", "POST"))
-# def index():
-#     if request.method == "POST":
-#         response = openai.Completion.create(
-#         model="text-davinci-003",
-#         prompt="The following is a conversation with an AI assistant. The assistant is helpful, creative, clever, and very friendly.\n\nHuman: Hello, who are you?\nAI: I am an AI created by OpenAI. How can I help you today?\nHuman: I'd like to cancel my subscription.\nAI:",
-#         temperature=0.9,
-#         max_tokens=150,
-#         top_p=1,
-#         frequency_penalty=0.0,
-#         presence_penalty=0.6,
-#         stop=[" Human:", " AI:"]
-# )
-#         return redirect(url_for("index", result=response.choices[0].text))
-
-
-# openai.api_key = os.getenv("OPENAI_API_KEY")
-
-
+if __name__ == '__main__':
+    PORT = int(os.environ.get('PORT', 3001))
+    app.run(host='0.0.0.0', port=PORT, debug=True)
