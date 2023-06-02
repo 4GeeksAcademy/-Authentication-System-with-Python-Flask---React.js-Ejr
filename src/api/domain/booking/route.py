@@ -60,7 +60,7 @@ def get_bookings_by_company(company_id):
     bookings_by_company = Controller.get_bookings_by_company(company_id, current_user_id)
 
     if isinstance(bookings_by_company, list):
-        serialized_bookings = list(map(lambda booking: booking.serialize(), bookings_by_company))
+        serialized_bookings = list(map(lambda booking: booking.serialize_admin_booking(), bookings_by_company))
         return Response.response_ok(f'List of all bookings of the company with id: {company_id}.', serialized_bookings)
     else:
         return Response.response_error(bookings_by_company['msg'], bookings_by_company['status'])

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Navigate } from "react-router-dom";
 import styles from "./adminCreateBooking.module.css";
 import Navbar from "../../components/navbar/index.jsx";
 import BigContainer from "../../components/bigContainer/index.jsx";
@@ -8,6 +8,7 @@ import { listServicesByCompany } from "../../service/services.js";
 import { listWorkers } from "../../service/workers.js";
 import { adminCreateBooking } from "../../service/booking.js";
 import { getAllServiceWorkers } from "../../service/service_worker.js";
+import { toast } from "react-toastify";
 
 const initialState = {
   service: "",
@@ -22,6 +23,7 @@ const AdminCreateBooking = () => {
   const [newBooking, setNewBooking] = useState(initialState);
   const [serviceWorkers, setServiceWorkers] = useState([]);
 
+  const navigate = useNavigate();
   const { company_id } = useParams();
 
   const listServiceWorkers = async () => {
@@ -92,8 +94,11 @@ const AdminCreateBooking = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await adminCreateBooking(company_id, transformedData());
-    // navigate to admin dashboard / worker dashboard
+    const resMsg = await adminCreateBooking(company_id, transformedData());
+    resMsg.data ? toast.success(resMsg?.msg) : toast.error(resMsg?.msg);
+    if (resMsg.data.services_workers.workers.user.role === "worker")
+      navigate("/worker-dashboard");
+    else navigate("/admin-dashboard");
   };
 
   return (
@@ -101,7 +106,6 @@ const AdminCreateBooking = () => {
       <Navbar />
       <div className={styles._mainContainer}>
         <BigContainer>
-          <h1>Create Booking</h1>
           <AdminReservationForm
             handleChange={handleChange}
             handleSubmit={handleSubmit}
@@ -109,6 +113,7 @@ const AdminCreateBooking = () => {
             servicesList={servicesList}
             handleServiceSelect={handleServiceSelect}
             handleWorkerSelect={handleWorkerSelect}
+            textBtn="Create"
           />
         </BigContainer>
       </div>

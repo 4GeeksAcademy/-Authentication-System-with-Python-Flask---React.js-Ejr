@@ -9,6 +9,7 @@ import { listWorkers } from "../../service/workers.js";
 import { createBooking } from "../../service/booking.js";
 import { getAllServiceWorkers } from "../../service/service_worker.js";
 import Spinner from "../../components/spinner/index.jsx";
+import { toast } from "react-toastify";
 
 const initialState = {
   service: "",
@@ -24,6 +25,7 @@ const CreateNewBooking = () => {
   const [serviceWorkers, setServiceWorkers] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
+  const navigate = useNavigate();
   const { company_id } = useParams();
 
   const listServiceWorkers = async () => {
@@ -50,6 +52,8 @@ const CreateNewBooking = () => {
     listServiceWorkers();
     workersByCompany();
   }, []);
+
+  console.log(servicesByCompany);
 
   const handleServiceSelect = async (e) => {
     const service = servicesList.find(({ name }) => name === e.target.value);
@@ -96,12 +100,11 @@ const CreateNewBooking = () => {
     };
   };
 
-  console.log(transformedData());
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await createBooking(company_id, transformedData());
-    // navigate to admin dashboard / worker dashboard
+    const resMsg = await createBooking(company_id, transformedData());
+    resMsg.data ? toast.success(resMsg?.msg) : toast.error(resMsg?.msg);
+    navigate("/user-dashboard");
   };
 
   return (
