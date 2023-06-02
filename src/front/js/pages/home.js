@@ -23,6 +23,7 @@ export const Home = () => {
 						<section className="ia text-center align-middle">
 
 							this is the AI box, please complete the AI task to complete this box only
+							
 						</section>
 					</div>
 					<div className="box c">
