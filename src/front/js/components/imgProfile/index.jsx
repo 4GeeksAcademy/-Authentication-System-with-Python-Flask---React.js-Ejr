@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { Context } from "../../store/appContext";
 import "./styles.css";
-import imgDefaul from "../../../../assets/imgDefault.png";
+import { avatar } from "../../../../assets/assets.jsx";
 
 const ImgProfile = ({ img, handleChange }) => {
   const { store } = useContext(Context);
@@ -15,7 +15,7 @@ const ImgProfile = ({ img, handleChange }) => {
             {img !== null && img !== "" ? (
               <img src={img} alt="User Profile" />
             ) : (
-              <img src={userData.avatar || imgDefaul} alt="Default Profile" />
+              <img src={userData.avatar || avatar} alt="Default Profile" />
             )}
           </div>
           <h5 className="nametitle">{userData.username}</h5>

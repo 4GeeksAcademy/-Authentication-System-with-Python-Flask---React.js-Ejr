@@ -1,19 +1,22 @@
 import React from "react";
 import styles from "./updateServiceCard.module.css";
 import Input from "../input/index.jsx";
-import UpdateMessage from "../updateMessage/index.jsx";
 import { useNavigate } from "react-router-dom";
+import Button from "../button/index.jsx";
 
-const UpdateServiceList = ({ list, handleSubmit, handleChange, isUpdated }) => {
+const UpdateServiceList = ({ list, handleSubmit, handleChange, textBtn }) => {
   const navigate = useNavigate();
   return (
     <>
-      {isUpdated && <UpdateMessage />}
       <main className={styles._mainContainerImg}>
         <div className={styles._parentTwo}>
           <div className={styles._childTwo}>
             <h2 className={styles._titleService}>Update service</h2>
-            <form onSubmit={handleSubmit} onChange={handleChange}>
+            <form
+              className={styles._form}
+              onSubmit={handleSubmit}
+              onChange={handleChange}
+            >
               <Input
                 icon={<i className="fa-solid fa-circle-user"></i>}
                 type="text"
@@ -42,17 +45,14 @@ const UpdateServiceList = ({ list, handleSubmit, handleChange, isUpdated }) => {
                 name="price"
                 value={list.price}
               />
-              <button type="submit" className={`${styles._loginBtn} boxShadow`}>
-                Update
+              <Button type="submit" title={textBtn} />
+              <button
+                className={`${styles._loginBtnGoBack} boxShadow`}
+                onClick={() => navigate(-1)}
+              >
+                Go Back
               </button>
             </form>
-            <button
-              className={`${styles._loginBtnGoBack} boxShadow`}
-              onClick={() => navigate(-1)}
-            >
-              Go Back
-            </button>
-
           </div>
         </div>
       </main>
@@ -61,4 +61,3 @@ const UpdateServiceList = ({ list, handleSubmit, handleChange, isUpdated }) => {
 };
 
 export default UpdateServiceList;
-

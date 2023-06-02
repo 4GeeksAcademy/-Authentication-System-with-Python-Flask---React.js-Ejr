@@ -6,6 +6,10 @@ def create_service_worker(worker_id, service_id ):
     db.session.commit()
     return new_service_worker
 
+def get_all_service_workers():
+    service_workers = Services_workers.query.all()
+    return service_workers
+
 def get_workers_by_service(service_id):
     workers_by_service = Services_workers.query.filter_by(service_id=service_id).all()
     return workers_by_service

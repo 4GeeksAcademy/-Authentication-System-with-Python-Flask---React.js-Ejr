@@ -3,7 +3,7 @@ import { Context } from "../../store/appContext";
 import { useNavigate } from "react-router-dom";
 
 import styles from "./companyRegister.module.css";
-import bgImg from "../../../../assets/bgImg.jpeg";
+import { bgImg } from "../../../../assets/assets.jsx";
 
 import Logotipo from "../../components/logotipo/index.jsx";
 import CompanyForm from "../../components/companyForm/index.jsx";

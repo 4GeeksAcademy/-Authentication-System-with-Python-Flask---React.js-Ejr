@@ -12,8 +12,8 @@ class Booking(db.Model):
     start_service = db.Column(DateTime, nullable=False)
     description = db.Column(db.Text)
     user = db.relationship("User")
-    services_workers = db.relationship("Services_workers", back_populates="booking")
-
+    services_workers = db.relationship("Services_workers",  lazy="joined")
+    
     def __init__(self, user_id, company_id, service_workers_id, start_service, description):
         self.user_id = user_id
         self.company_id = company_id

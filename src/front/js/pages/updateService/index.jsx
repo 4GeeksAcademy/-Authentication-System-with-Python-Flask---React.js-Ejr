@@ -4,6 +4,7 @@ import { updateService } from "../../service/services.js";
 
 import Header from "../../components/header/index.jsx";
 import UpdateServiceList from "../../components/updateServiceCard/index.jsx";
+import { toast } from "react-toastify";
 
 const initialState = {
   name: "",
@@ -12,17 +13,18 @@ const initialState = {
   price: "",
 };
 
-export const UpdateService = () => {
+const UpdateService = () => {
   const { serviceID } = useParams();
   const [list, setList] = useState(initialState);
-  const [isUpdated, setIsUpdated] = useState(false);
+
+  const responseToast = (msg) => toast(msg);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setList(initialState);
     const service = await updateService(serviceID, list);
     setList(service);
-    setList(initialState);
-    setIsUpdated(true);
+    responseToast(service.msg);
   };
 
   const handleChange = ({ target }) => {
@@ -36,8 +38,10 @@ export const UpdateService = () => {
         list={list}
         handleSubmit={handleSubmit}
         handleChange={handleChange}
-        isUpdated={isUpdated}
+        textBtn="Update"
       />
     </>
   );
 };
+
+export default UpdateService;

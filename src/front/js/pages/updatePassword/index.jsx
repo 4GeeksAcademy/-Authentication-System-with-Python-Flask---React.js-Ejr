@@ -6,7 +6,7 @@ import "./styles.css";
 import Header from "../../components/header/index.jsx";
 import Input from "../../components/input/index.jsx";
 
-export const UpdatePassword = () => {
+const UpdatePassword = () => {
   const { store } = useContext(Context);
   console.log(store, "storeupdate");
   const navigate = useNavigate();
@@ -58,3 +58,5 @@ export const UpdatePassword = () => {
     </>
   );
 };
+
+export default UpdatePassword;

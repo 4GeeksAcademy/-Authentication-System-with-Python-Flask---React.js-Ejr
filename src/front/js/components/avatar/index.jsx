@@ -1,11 +1,11 @@
 import React from "react";
 import "./styles.css";
-import avatarImg from "../../../../assets/avatar.png";
+import { avatar } from "../../../../assets/assets.jsx";
 
 const Avatar = ({ url, ...rest }) => {
   return (
     <div {...rest}>
-      <img className="avatar" src={url ? url : avatarImg} alt="profile image" />
+      <img className="avatar" src={url ? url : avatar} alt="profile image" />
     </div>
   );
 };
