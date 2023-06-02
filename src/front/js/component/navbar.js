@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Modal from "../pages/modal";
 
 export const Navbar = () => {
 	return (
@@ -11,8 +10,8 @@ export const Navbar = () => {
 				</Link>
 				<div className="ml-auto">
 					<div className="btn-group dropstart">
-						<button type="button" style={{borderRadius:"33% 67% 32% 68% / 90% 9% 91% 10% "}}
-							className="btn btn-outline-info btn-lg dropdown-toggle px-5" data-bs-toggle="dropdown" aria-expanded="false">
+						<button type="button" 
+							className="btn btn-outline-info btn-lg dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
 								Tu loot!
 						</button>
 						<ul className="dropdown-menu">
@@ -22,13 +21,8 @@ export const Navbar = () => {
 							<li className="dropdown-item">This shalt clear thy loot</li>
 						</ul>
 					</div>
-					<button type="button" style={{borderRadius:"33% 67% 32% 68% / 90% 9% 91% 10% "}} className="btn btn-lg btn-outline-primary py-2 px-5" data-bs-toggle="modal" data-bs-target="#exampleModal">
-						Login
-					</button>
 				</div>
 			</div>
 		</nav>
-		
-		
 	);
 };
