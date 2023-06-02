@@ -2,7 +2,9 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 import os
-from flask import Flask, request, jsonify, url_for, send_from_directory
+import openai
+
+from flask import Flask, request, jsonify, url_for, send_from_directory, redirect, render_template, request, url_for
 from flask_migrate import Migrate
 from flask_swagger import swagger
 from flask_cors import CORS
@@ -29,6 +31,8 @@ else:
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 MIGRATE = Migrate(app, db, compare_type = True)
 db.init_app(app)
+
+
 
 # Allow CORS requests to this API
 CORS(app)
@@ -64,7 +68,41 @@ def serve_any_other_file(path):
     return response
 
 
+
+
 # this only runs if `$ python src/main.py` is executed
 if __name__ == '__main__':
     PORT = int(os.environ.get('PORT', 3001))
     app.run(host='0.0.0.0', port=PORT, debug=True)
+
+
+#apikey and app name
+app = Flask(__name__)
+openai.api_key = os.getenv("OPENAI_API_KEY")
+
+@app.route("/", methods=("GET", "POST"))
+def index():
+    if request.method == "POST":
+        animal = request.form["animal"]
+        response = openai.Completion.create(
+            model="text-davinci-003",
+            prompt=generate_prompt(animal),
+            temperature=0.6,
+        )
+        return redirect(url_for("index", result=response.choices[0].text))
+
+    result = request.args.get("result")
+    return render_template("index.html", result=result)
+
+openai.api_key = os.getenv("OPENAI_API_KEY")
+
+response = openai.Completion.create(
+  model="Ada",
+#   model="gpt-3.5-turbo"
+  prompt="Write a weekly diet based on these food types, ingredients and depending on the user's need:\n\nFrito Pie\n\nlasagna\n\npizza\n\nfish\n\nmeat\n\nchicken\n\npork\n\nspaghetti\n\npasta\n\ningredients:\n\npasta\n\npotatoes\n\nmeat\n\npork\n\nchicken\n\nlettuce\n\ntomatoes\n\nartisan bread\n\nveggie meat\n\nonion\n\nsuggestion:",
+  temperature=0.5,
+  max_tokens=120,
+  top_p=1.0,
+  frequency_penalty=0.0,
+  presence_penalty=0.0
+)
