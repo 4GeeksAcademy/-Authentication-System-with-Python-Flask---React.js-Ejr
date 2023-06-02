@@ -22,7 +22,7 @@ def create_new_booking(company_id):
         return Response.response_error(new_booking['msg'], new_booking['status'])
 
 
-@api.route('/admin/<int:company_id>/', methods=["POST"])
+@api.route('/admin/<int:company_id>', methods=["POST"])
 @jwt_required()
 def admin_create_new_booking(company_id):
     current_user = get_jwt_identity()
@@ -36,7 +36,6 @@ def admin_create_new_booking(company_id):
         return Response.response_ok('New booking created successfully!', new_booking.serialize_admin_booking())
     else:
         return Response.response_error(new_booking['msg'], new_booking['status'])
-
 
 @api.route('/<int:booking_id>', methods=['GET'])
 @jwt_required()

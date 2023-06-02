@@ -1,4 +1,4 @@
-.main-container {
+._mainContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -12,7 +12,20 @@ h1 {
   font-weight: var(--font-extrabold);
 }
 
-.list-container {
+._listContainer {
   width: 90%;
   overflow-y: auto;
+}
+
+._modalContent > p {
+  margin: 0;
+}
+
+._modalFooter {
+  margin-top: 24px;
+}
+._btnWrapper {
+  width: 30%;
+  display: flex;
+  gap: 16px;
 }

@@ -1,15 +1,8 @@
-.mainContainer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 60px;
-}
-
-.dropdownContainer {
+._selectContainer {
   position: relative;
 }
 
-.dropdownContainer select {
+._selectContainer select {
   padding: 8px 16px 8px 40px;
   margin-block: 6px;
   width: 100%;
@@ -18,14 +11,15 @@
   text-align: center;
   font-size: 1em;
   font-weight: var(--font-semibold);
+  box-shadow: inset;
 }
 
-.dropdownContainer select:focus {
+._selectContainer select:focus {
   outline: 2px solid var(--purple-500);
   outline-offset: -2px;
 }
 
-.loginBtn {
+._loginBtn {
   border: none;
   border-radius: var(--border-md);
   background-color: var(--black);
@@ -38,7 +32,7 @@
   transition: 0.2s ease-in-out;
 }
 
-.loginBtn:hover {
+._loginBtn:hover {
   background-color: var(--purple-500);
   color: var(--text-900);
 }

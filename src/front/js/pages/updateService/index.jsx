@@ -18,11 +18,10 @@ export const UpdateService = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setList(initialState);
     const service = await updateService(serviceID, list);
     setList(service);
-    setList(initialState);
     setIsUpdated(true);
-
   };
 
   const handleChange = ({ target }) => {
@@ -37,6 +36,7 @@ export const UpdateService = () => {
         handleSubmit={handleSubmit}
         handleChange={handleChange}
         isUpdated={isUpdated}
+        textBtn="Update"
       />
     </>
   );

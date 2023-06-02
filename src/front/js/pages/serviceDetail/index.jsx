@@ -3,7 +3,7 @@ import { getSingleService } from "../../service/services.js";
 import { useParams } from "react-router-dom";
 import { ServiceDetailCard } from "../../components/serviceDetailCard/index.jsx";
 
-export const ServiceDetail = () => {
+const ServiceDetail = () => {
   const [list, setList] = useState([]);
   const { serviceID } = useParams();
 
@@ -21,3 +21,5 @@ export const ServiceDetail = () => {
     </>
   );
 };
+
+export default ServiceDetail;

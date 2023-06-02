@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import "../../pages/servicesWorkers/styles.css";
+import Navbar from "../../components/navbar/index.jsx";
 import BigContainer from "../../components/bigContainer/index.jsx";
 import { listWorkers } from "../../service/workers";
 import { listServicesByCompany } from "../../service/services";
 import { createServiceWorker } from "../../service/service_worker";
-import Toast from "../../components/toast/index.jsx";
 import { toast } from "react-toastify";
 
 const initialState = {
@@ -18,6 +18,7 @@ const ServicesWorkers = () => {
   const [servicesList, setServicesList] = useState([]);
   const [serviceWorker, setServiceWorker] = useState(initialState);
 
+  const navigate = useNavigate();
   const { company_id } = useParams();
 
   const getWorkers = async () => {
@@ -49,7 +50,9 @@ const ServicesWorkers = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await createServiceWorker(company_id, transformData());
+    const resMsg = await createServiceWorker(company_id, transformData());
+    resMsg.data ? toast.success(resMsg?.msg) : toast.error(resMsg?.msg);
+    navigate("/admin-dashboard");
   };
 
   useEffect(() => {
@@ -57,36 +60,32 @@ const ServicesWorkers = () => {
     getServices();
   }, []);
 
-  const notify = () => toast("Service Assigned Succesfully!");
-
   return (
-    <main className="main-container">
-      <BigContainer>
-        <h1>Assign Services to Workers</h1>
-        <div className="dropdownContainer">
-          <form onChange={handleChange} onSubmit={handleSubmit}>
-            <select name="worker" className="boxShadow">
-              {workersList.map((op) => (
-                <option key={op.id}>{op.user.username}</option>
-              ))}
-            </select>
-            <select name="service" className="boxShadow">
-              {servicesList.map((op) => (
-                <option key={op.id}>{op.name}</option>
-              ))}
-            </select>
-            <button
-              type="submit"
-              className="loginBtn boxShadow"
-              onClick={notify}
-            >
-              Assign Service
-            </button>
-          </form>
-        </div>
-        <Toast />
-      </BigContainer>
-    </main>
+    <>
+      <Navbar />
+      <main className="main-container">
+        <BigContainer>
+          <h1>Assign Services to Workers</h1>
+          <div className="dropdownContainer">
+            <form onChange={handleChange} onSubmit={handleSubmit}>
+              <select name="worker" className="boxShadow">
+                {workersList.map((op) => (
+                  <option key={op.id}>{op.user.username}</option>
+                ))}
+              </select>
+              <select name="service" className="boxShadow">
+                {servicesList.map((op) => (
+                  <option key={op.id}>{op.name}</option>
+                ))}
+              </select>
+              <button type="submit" className="loginBtn boxShadow">
+                Assign Service
+              </button>
+            </form>
+          </div>
+        </BigContainer>
+      </main>
+    </>
   );
 };
 

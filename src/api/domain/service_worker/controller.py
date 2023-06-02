@@ -18,13 +18,23 @@ def create_service_worker(company_id, current_user_id, body):
     service_worker = Services_workers.query.filter_by(worker_id=worker_id, service_id=service_id).first()
 
     if service_worker: 
-        return { "msg": "This servicer has already been asigned to this worker ", "status": 400}
+        return { "msg": "This service has already been asigned to this worker ", "status": 400 }
+
  
     if company.id == worker.company_id and company.id == service.company_id and current_user_id == company.user_id: 
         return Repository.create_service_worker(worker_id, service_id )
     
     return { "msg": "Service worker have conflicts ", "status": 409}
-        
+
+def get_all_service_workers():
+
+    service_workers = Repository.get_all_service_workers()
+    if service_workers is None:
+        return { "msg": "An error occured to retrieves service workers", "status": 400}
+    
+    return service_workers
+
+
 def get_workers_by_service(service_id):
 
     service = Services.query.get(service_id)

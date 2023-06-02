@@ -22,12 +22,12 @@ def get_workers_by_company(company_id):
     if company is None:
         return {'msg': f'The Company with id: {company_id}, does not exists in this database.', 'status': 404}
 
-    workers_by_company = Repository.get_workers_by_company(company_id)
+    workers = Repository.get_workers_by_company(company_id)
     
-    if workers_by_company == []:
+    if workers == []:
         return {'msg': 'There are no workers registered to this company.', 'status': 404}
     
-    return workers_by_company
+    return workers
 
 def get_single_worker(worker_id):
 

@@ -3,8 +3,15 @@ import styles from "./updateServiceCard.module.css";
 import Input from "../input/index.jsx";
 import UpdateMessage from "../updateMessage/index.jsx";
 import { useNavigate } from "react-router-dom";
+import Button from "../button/index.jsx";
 
-const UpdateServiceList = ({ list, handleSubmit, handleChange, isUpdated }) => {
+const UpdateServiceList = ({
+  list,
+  handleSubmit,
+  handleChange,
+  isUpdated,
+  textBtn,
+}) => {
   const navigate = useNavigate();
   return (
     <>
@@ -13,7 +20,11 @@ const UpdateServiceList = ({ list, handleSubmit, handleChange, isUpdated }) => {
         <div className={styles._parentTwo}>
           <div className={styles._childTwo}>
             <h2 className={styles._titleService}>Update service</h2>
-            <form onSubmit={handleSubmit} onChange={handleChange}>
+            <form
+              className={styles._form}
+              onSubmit={handleSubmit}
+              onChange={handleChange}
+            >
               <Input
                 icon={<i className="fa-solid fa-circle-user"></i>}
                 type="text"
@@ -42,9 +53,7 @@ const UpdateServiceList = ({ list, handleSubmit, handleChange, isUpdated }) => {
                 name="price"
                 value={list.price}
               />
-              <button type="submit" className={`${styles._loginBtn} boxShadow`}>
-                Update
-              </button>
+              <Button type="submit" title={textBtn} />
             </form>
             <button
               className={`${styles._loginBtnGoBack} boxShadow`}
@@ -52,7 +61,6 @@ const UpdateServiceList = ({ list, handleSubmit, handleChange, isUpdated }) => {
             >
               Go Back
             </button>
-
           </div>
         </div>
       </main>
@@ -61,4 +69,3 @@ const UpdateServiceList = ({ list, handleSubmit, handleChange, isUpdated }) => {
 };
 
 export default UpdateServiceList;
-

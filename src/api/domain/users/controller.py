@@ -53,6 +53,7 @@ def delete_user(current_user_id):
     else:
         deleted_user = Repository.delete_user(user)
         return deleted_user
+        
 def verify_user_email_and_pass(user):
     if user['email'] is None or user['email'] == "":
         return {"msg": "'Email is not valid'", "status": 400 }

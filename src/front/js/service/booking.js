@@ -4,7 +4,7 @@ const HEADERS = {
     "Content-Type": "application/json",
 };
 
-export const createBooking = async (company_id) => {
+export const createBooking = async (company_id, booking) => {
     try {
         const token = localStorage.getItem("token");
         const res = await fetch(`${URL}/booking/${company_id}`, {
@@ -13,6 +13,7 @@ export const createBooking = async (company_id) => {
                 Authorization: `Bearer ${token}`,
                 ...HEADERS,
             },
+            body: JSON.stringify(booking)
         });
         const data = await res.json();
         return data;
@@ -21,7 +22,7 @@ export const createBooking = async (company_id) => {
     }
 }
 
-export const adminCreateBooking = async (company_id) => {
+export const adminCreateBooking = async (company_id, booking) => {
     try {
         const token = localStorage.getItem("token");
         const res = await fetch(`${URL}/booking/admin/${company_id}`, {
@@ -30,8 +31,10 @@ export const adminCreateBooking = async (company_id) => {
                 Authorization: `Bearer ${token}`,
                 ...HEADERS,
             },
+            body: JSON.stringify(booking)
         });
         const data = await res.json();
+        console.log("admin create booking", data)
         return data;
     } catch (err) {
         console.log("Error to Create Booking by Company", err);
