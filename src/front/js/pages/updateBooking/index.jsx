@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Navbar from "../../components/navbar/index.jsx";
+import Header from "../../components/header/index.jsx";
 import UpdateBookingList from "../../components/updateBookingCard/index.jsx";
 import { useParams } from "react-router-dom";
 import { getBookingByUser, updateBooking } from "../../service/booking.js";
@@ -61,7 +61,7 @@ const UpdateBooking = () => {
 
   return (
     <>
-      <Navbar />
+      <Header />
       <UpdateBookingList
         formData={formData}
         handleSubmit={handleSubmit}

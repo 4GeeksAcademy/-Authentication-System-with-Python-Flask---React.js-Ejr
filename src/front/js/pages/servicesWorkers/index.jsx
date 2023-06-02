@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "../../pages/servicesWorkers/styles.css";
-import Navbar from "../../components/navbar/index.jsx";
+import Header from "../../components/header/index.jsx";
 import BigContainer from "../../components/bigContainer/index.jsx";
 import { listWorkers } from "../../service/workers";
 import { listServicesByCompany } from "../../service/services";
@@ -62,7 +62,7 @@ const ServicesWorkers = () => {
 
   return (
     <>
-      <Navbar />
+      <Header />
       <main className="main-container">
         <BigContainer>
           <h1>Assign Services to Workers</h1>

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import styles from "./createNewBooking.module.css";
-import Navbar from "../../components/navbar/index.jsx";
 import BigContainer from "../../components/bigContainer/index.jsx";
 import ReservationForm from "../../components/reservationForm/index.jsx";
 import { listServicesByCompany } from "../../service/services.js";
@@ -10,6 +9,7 @@ import { createBooking } from "../../service/booking.js";
 import { getAllServiceWorkers } from "../../service/service_worker.js";
 import Spinner from "../../components/spinner/index.jsx";
 import { toast } from "react-toastify";
+import Header from "../../components/header/index.jsx";
 
 const initialState = {
   service: "",
@@ -109,7 +109,7 @@ const CreateNewBooking = () => {
 
   return (
     <>
-      <Navbar />
+      <Header />
       <div className={styles._mainContainer}>
         <BigContainer>
           <h1>Create Booking</h1>

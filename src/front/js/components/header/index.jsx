@@ -2,18 +2,15 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./header.module.css";
 import Logotipo from "../logotipo/index.jsx";
-import avatar from "../../../../assets/avatar.png";
+import { avatar } from "../../../../assets/assets.jsx";
 import Modal from "../modal/index.jsx";
 
-const Header = ({ settings, settingsTitle }) => {
+const Header = ({ settings, settingsTitle, updateProfile }) => {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
 
   const handleLogOut = () => {
     console.log("Logout called!");
-  };
-  const handlesubmit = () => {
-    navigate("/");
   };
 
   const handleDashboard = () => {
@@ -44,7 +41,7 @@ const Header = ({ settings, settingsTitle }) => {
             className={`${styles._userProfileImg} _boxShadow`}
             src={avatar}
             alt="User profile img"
-            onClick={handlesubmit}
+            onClick={updateProfile}
           />
         </nav>
       </div>
