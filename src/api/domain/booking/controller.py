@@ -23,12 +23,12 @@ def admin_create_new_booking(company_id, current_user_id, body):
     company = Company.query.filter_by(id=company_id).first()
     worker = Workers.query.filter_by(user_id=current_user_id).first()
 
-    if company is None or worker is None:
-        return {'msg': 'This company / worker, does not exist in this database', 'status': 404}
+    if company is None: 
+        return {'msg': 'This company does not exist in this database', 'status': 404}
 
     if current_user_id == company.user_id or company_id == worker.company_id:
-        service_id = body['service']
-        worker_id = body['worker']
+        service_id = int(body['service'])
+        worker_id = int(body['worker'])
 
         service_workers = Services_workers.query.filter_by(service_id=service_id, worker_id=worker_id).first()
 

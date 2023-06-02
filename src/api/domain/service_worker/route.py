@@ -23,6 +23,18 @@ def create_service_worker(company_id):
     else:
         return Response.response_error(service_worker["msg"], service_worker["status"])
 
+@api.route("/all", methods=["GET"])
+def get_all_service_workers():
+    
+    all_service_workers = Controller.get_all_service_workers()
+
+    if isinstance(all_service_workers, list):
+        serialized_service_workers = list(map(lambda service_workers: service_workers.serialize(), all_service_workers))
+        return Response.response_ok('List of all services_workers', serialized_service_workers)
+    else:
+        return Response.response_error(serialized_service_workers['msg'], serialized_service_workers['status'])
+
+
 @api.route("/service/<int:service_id>", methods=["GET"])
 def get_workers_by_service(service_id):
     workers_by_service = Controller.get_workers_by_service(service_id)

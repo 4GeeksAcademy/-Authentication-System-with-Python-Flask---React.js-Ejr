@@ -47,18 +47,6 @@ const CompanyRegister2 = () => {
         </div>
       </section>
     </main>
-    // <main className="mainContainer">
-    //   <Header />
-    //   <section>
-    //     <h2 className="title">Now your data...</h2>
-    //     <UserForm
-    //       handleChange={handleChange}
-    //       handleSubmit={handleSubmit}
-    //       textBtn="Complete your Register"
-    //     />
-    //     <div className="bgImg"></div>
-    //   </section>
-    // </main>
   );
 };
 export default CompanyRegister2;

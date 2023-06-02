@@ -1,0 +1,17 @@
+.btn {
+  border: none;
+  border-radius: var(--border-md);
+  background-color: var(--gray-900);
+  color: var(--gray-100);
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+  margin-block: 6px;
+  padding: 12px;
+  width: 100%;
+  transition: 0.2s ease-in-out;
+}
+
+.btn:hover {
+  background-color: var(--gray-600);
+  color: var(--gray-100);
+}

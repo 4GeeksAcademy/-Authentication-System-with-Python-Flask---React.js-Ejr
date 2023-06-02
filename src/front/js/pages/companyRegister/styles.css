@@ -1,0 +1,61 @@
+.mainContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+}
+
+section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  flex: 1;
+}
+
+.title {
+  font-weight: var(--font-extrabold);
+  font-size: 2rem;
+  margin: 2rem 0;
+}
+
+.bgImg {
+  position: absolute;
+  bottom: 0px;
+  z-index: 0;
+  width: 100vw;
+  height: 300px;
+  clip-path: polygon(0% 30%, 100% 0%, 100% 100%, 0% 100%);
+  background: -moz-linear-gradient(
+    180deg,
+    rgba(210, 209, 252, 1) 0%,
+    rgba(210, 209, 252, 0.008862920168067223) 100%
+  );
+  background: -webkit-linear-gradient(
+    180deg,
+    rgba(210, 209, 252, 1) 0%,
+    rgba(210, 209, 252, 0.008862920168067223) 100%
+  );
+  background: linear-gradient(
+    180deg,
+    rgba(210, 209, 252, 1) 0%,
+    rgba(210, 209, 252, 0.008862920168067223) 100%
+  );
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#d2d1fc",endColorstr="#d2d1fc",GradientType=1);
+}
+
+@media (max-width: 678px) {
+  .title {
+    font-size: 1.5rem;
+  }
+
+  section form {
+    width: 300px;
+  }
+
+  .bgImg {
+    height: 220px;
+    clip-path: polygon(0% 20%, 100% 0%, 100% 100%, 0% 100%);
+  }
+}
