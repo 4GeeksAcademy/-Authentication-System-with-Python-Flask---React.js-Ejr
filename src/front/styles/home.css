@@ -5,7 +5,7 @@
     on that page only (the ones not reused in other pages).
 */
 .main-title{
-    font-size: 15rem;
+    font-size: 8rem;
     background: -webkit-linear-gradient(#4CB944, #4472CA);
     -webkit-background-clip: text;
     background-clip: text;

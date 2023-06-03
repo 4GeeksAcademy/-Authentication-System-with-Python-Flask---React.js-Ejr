@@ -26,9 +26,11 @@ export const Navbar = () => {
 					<button type="button" style={{borderRadius:"33% 67% 32% 68% / 90% 9% 91% 10% "}} className="btn btn-lg btn-outline-primary py-2 px-5" data-bs-toggle="modal" data-bs-target="#loginModal">
 						Login
 					</button>
-					<button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#registerModal">
-						Launch demo modal
-					</button>
+					<Link to="/register">
+						<button type="button" style={{borderRadius:"33% 67% 32% 68% / 90% 9% 91% 10% "}} className="btn btn-lg btn-outline-success py-2 px-5">
+							Registrate!
+						</button>
+					</Link>
 				</div>
 			</div>
 		</nav>

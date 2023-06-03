@@ -3,6 +3,7 @@ import { Context } from "../store/appContext";
 import "../../styles/home.css";
 import RegisterModal from "./RegisterModal";
 import LoginModal from "./loginModal";
+import Register from "../component/register";
 
 
 export const Home = () => {
@@ -12,7 +13,7 @@ export const Home = () => {
 		<div className="text-center">
 			<section className="container-fluid text-center text-dark" style={{height:"100%"}}>
 			<div className="container-fluid text-center m-1 h-100 gap-3 p-3 fs-1 m-3 py-2">
-				<div className="row m-2 fs-1">
+				<div className="row m-2 fs-1 d-sm-inline-flex">
 					<div className="col-sm-3 box text-dark b vh-100">
 						this is the AI box, please complete the AI task to complete this box only
 					</div>
@@ -20,7 +21,7 @@ export const Home = () => {
 						<div className="row m-1 text-dark box">
 							<div className="col-12 col-sm-12 vh-25">
 							<div className="box a">
-									<h1 className="main-title my-auto align-middle">GitLoot</h1>
+									<h1 className="main-title my-auto align-middle ">GitLoot</h1>
 								</div>
 							</div>
 						</div>
@@ -56,7 +57,7 @@ export const Home = () => {
 						</div>
 						<div className="row m-1 vh-25">
 							<div className="col-8 col-sm-6 vh-25 box g my-2 gap-2 border">
-								<section className="subscription-ads">
+								<section className="subscription-ads blur">
 									<p className="">Comidas super fancy, que preparamos para que lo puedas descongelar y disfrutar!</p>
 								</section>
 							</div>
@@ -73,6 +74,7 @@ export const Home = () => {
 			</section>
 			<RegisterModal />
 			<LoginModal />
+			<Register />
 		</div>
 	);
 };
