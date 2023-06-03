@@ -85,7 +85,7 @@ const TechCard = (props) => {
 
   return (
     <div className="tech_card card ">
-      <img
+      <img  className="techcard-img"
         src="https://previews.123rf.com/images/wavebreakmediamicro/wavebreakmediamicro1610/wavebreakmediamicro161001127/63630595-pareja-granjero-feliz-celebraci%C3%B3n-de-las-verduras-de-hoja-en-el-mercado-local.jpg"
         alt="imgTech"
       />
@@ -96,10 +96,10 @@ const TechCard = (props) => {
         <p className="card-text">{props.speciality}</p>
       </div>
       <div className="contact-btn">
-        <button className="btn" onClick={handleSendMessage}>
+        <button className="techcard-btn" onClick={handleSendMessage}>
           Contactar
         </button>
-        <button className="btn-danger" onClick={openModal}>
+        <button className="btn-hiring" onClick={openModal}>
           Contratar
         </button>
       </div>
@@ -111,8 +111,7 @@ const TechCard = (props) => {
       >
         <div className="hiring-modal">
           <h1>
-            Hola soy {props.name + " " + props.sur_name}, ¿quieres contratar mis
-            servicios?
+            Hola soy {props.name + " " + props.sur_name}
           </h1>
           <h5>Lista de tus cultivos</h5>
           <div className="cropList">
@@ -133,7 +132,7 @@ const TechCard = (props) => {
           <form onChange={handleChangeHiring}>
             <div className="selectCrop">
               <h5>Elige tu cultivo</h5>
-              <label htmlFor="granja">Selecciona tu cultivo</label>
+              
               <select className="form-control" id="granja" name="crop_id">
                 <option>Elige un Servicio</option>
                 {cropsFarmer.map((element, index) => (
@@ -142,7 +141,7 @@ const TechCard = (props) => {
               </select>
             </div>
             <h5>Elige mis servicios</h5>
-            <label htmlFor="servicios">Mis Servicios</label>
+            
             <select className="form-control" id="services" name="service_id">
               <option>Selecciona un servicio...</option>
               <option value={1}>Cuaderno de campo</option>
