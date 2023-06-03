@@ -8,9 +8,9 @@ export const Footer = () => (
 			<a href="http://www.4geeksacademy.com">Final project group</a>
 		</p>
 		<p className="mb-auto ms-2">
-		<i class="fa-brands fa-whatsapp" style={{ marginRight: '10px' }}></i>
-		<i class="fa-brands fa-instagram" style={{ marginRight: '10px' }}></i>
-		<i class="fa-brands fa-twitter" style={{ marginRight: '10px' }}></i>
+		<i className="fa-brands fa-whatsapp" style={{ marginRight: '10px' }}></i>
+		<i className="fa-brands fa-instagram" style={{ marginRight: '10px' }}></i>
+		<i className="fa-brands fa-twitter" style={{ marginRight: '10px' }}></i>
 		</p>
 	</footer>
 );
