@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 import "../../styles/navbar.css";
 export const Navbar = () => {
 	return (
-		<nav className="navbar navbar-expand-lg navbar-light custom-navbar">
-		<div className="container-fluid">
+		<nav className="navbar navbar-expand-lg navbar-light custom-navbar ">
+		<div className="container-fluid ">
 		  <a className="navbar-brand" href="#">
 		  <h1 style={{ fontSize: '36px' }}>StarWash</h1>
 			</a>
