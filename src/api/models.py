@@ -12,6 +12,13 @@ class User(db.Model):
     password = db.Column(db.String(80), unique=False, nullable=False)
     is_active = db.Column(db.Boolean(), unique=False, nullable=False)
 
+class Restaurant(db.Model):
+    __tablename__="Restaurant"
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(120), unique=True, nullable=False)
+    platos = db.Column(db.String(80), unique=False, nullable=False)
+    ubicaciones = db.Column(db.String(80), unique=False, nullable=False)
+
 class TokenBlockedList(db.Model):
     __tablename__="token_blocked_list"
     id=db.Column(db.Integer, primary_key=True)
