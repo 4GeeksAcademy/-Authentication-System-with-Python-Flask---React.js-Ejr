@@ -31,6 +31,16 @@ const getState = ({ getStore, getActions, setStore }) => {
 				localStorage.setItem("accessToken", resp.data.accessToken)
 				return resp
 			},
+			userCreate: async ( first_name, last_name, city, country, zip_code, address_one, address_two, phone, email, password) => {
+				const resp = await getActions().apiFetch("/api/register", "POST", { first_name, last_name, city, country, zip_code, address_one, address_two, phone, email, password })
+				console.log({ email, password })
+				if (resp.code >= 400) {
+					return resp
+				}
+				setStore({ accessToken: resp.data.accessToken })
+				localStorage.setItem("accessToken", resp.data.accessToken)
+				return resp
+			},
 			loadToken() {
 				let token = localStorage.getItem("accessToken")
 				setStore({ accessToken: token })
