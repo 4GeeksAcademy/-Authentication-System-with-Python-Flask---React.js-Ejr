@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { Context } from "../../store/appContext";
 import "./styles.css";
-import { avatar } from "../../../../assets/assets.jsx";
+import Avatar from "../avatar/index.jsx";
 
 const ImgProfile = ({ img, handleChange }) => {
   const { store } = useContext(Context);
@@ -12,11 +12,12 @@ const ImgProfile = ({ img, handleChange }) => {
       <div className="parent">
         <div className="child">
           <div className="profile-image-container ">
-            {img !== null && img !== "" ? (
-              <img src={img} alt="User Profile" />
+            <Avatar url={img} />
+            {/* {img !== null && img !== "" ? (
+              <img src={avatar} alt="User Profile" />
             ) : (
-              <img src={userData.avatar || avatar} alt="Default Profile" />
-            )}
+              <img src={img} alt="Default Profile" />
+            )} */}
           </div>
           <h5 className="nametitle">{userData.username}</h5>
           <p className="nametitle2">{userData.email}</p>

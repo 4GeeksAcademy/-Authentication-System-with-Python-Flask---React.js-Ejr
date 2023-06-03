@@ -97,9 +97,8 @@ export const getUserProfile = async () => {
       },
     });
     const data = await res.json();
-    console.log(data.data);
     return data.data;
   } catch (err) {
-    console.log("Error to get user id");
+    console.log("Error to get user", err);
   }
 };

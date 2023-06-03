@@ -1,9 +1,14 @@
-from flask import Flask, request, jsonify, Blueprint
+import os
+from flask import Flask, request, jsonify, Blueprint, redirect
 import api.utilities.handle_response as Response
 import api.domain.users.controller as Controller
 from api.models.index import User
 from flask_jwt_extended import jwt_required, get_jwt_identity, get_jwt
 import bcrypt
+import stripe
+
+stripe.api_key = os.environ['STRIPE_API_TEST_KEY']
+MY_DOMAIN = os.environ['BACKEND_URL']
 
 api = Blueprint('api/users', __name__)
 
@@ -84,6 +89,24 @@ def login():
     return Response.response_error(token_and_role_type['msg'], token_and_role_type['status'])
 
 
+@api.route('/checkout', methods=['POST'])
+def create_checkout_session():
+    try:
+        checkout_session = stripe.checkout.Session.create(
+            line_items=[
+                {
+                    # Provide the exact Price ID (for example, pr_1234) of the product you want to sell
+                    'price': '{{PRICE_ID}}',
+                    'quantity': 1,
+                },
+            ],
+            mode='payment',
+            success_url=MY_DOMAIN + '?success=true',
+            cancel_url=MY_DOMAIN + '?canceled=true',
+        )
+    except Exception as e:
+        return str(e)
 
+    return redirect(checkout_session.url, code=303)
 
 

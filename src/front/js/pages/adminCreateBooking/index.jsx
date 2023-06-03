@@ -105,17 +105,15 @@ const AdminCreateBooking = () => {
     <>
       <Header />
       <div className={styles._mainContainer}>
-        <BigContainer>
-          <AdminReservationForm
-            handleChange={handleChange}
-            handleSubmit={handleSubmit}
-            workersList={workersList}
-            servicesList={servicesList}
-            handleServiceSelect={handleServiceSelect}
-            handleWorkerSelect={handleWorkerSelect}
-            textBtn="Create"
-          />
-        </BigContainer>
+        <AdminReservationForm
+          handleChange={handleChange}
+          handleSubmit={handleSubmit}
+          workersList={workersList}
+          servicesList={servicesList}
+          handleServiceSelect={handleServiceSelect}
+          handleWorkerSelect={handleWorkerSelect}
+          textBtn="Create"
+        />
       </div>
     </>
   );

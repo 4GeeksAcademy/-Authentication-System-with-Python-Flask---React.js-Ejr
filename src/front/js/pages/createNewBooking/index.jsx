@@ -107,25 +107,25 @@ const CreateNewBooking = () => {
     navigate("/user-dashboard");
   };
 
+  console.log(transformedData());
+
   return (
     <>
       <Header />
       <div className={styles._mainContainer}>
-        <BigContainer>
-          <h1>Create Booking</h1>
-          {!isLoading ? (
-            <ReservationForm
-              handleChange={handleChange}
-              handleSubmit={handleSubmit}
-              workersList={workersList}
-              servicesList={servicesList}
-              handleServiceSelect={handleServiceSelect}
-              handleWorkerSelect={handleWorkerSelect}
-            />
-          ) : (
-            <Spinner />
-          )}
-        </BigContainer>
+        {!isLoading ? (
+          <ReservationForm
+            handleChange={handleChange}
+            handleSubmit={handleSubmit}
+            workersList={workersList}
+            servicesList={servicesList}
+            handleServiceSelect={handleServiceSelect}
+            handleWorkerSelect={handleWorkerSelect}
+            textBtn="Create"
+          />
+        ) : (
+          <Spinner />
+        )}
       </div>
     </>
   );

@@ -2,15 +2,17 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./header.module.css";
 import Logotipo from "../logotipo/index.jsx";
-import { avatar } from "../../../../assets/assets.jsx";
 import Modal from "../modal/index.jsx";
+import Avatar from "../avatar/index.jsx";
 
-const Header = ({ settings, settingsTitle, updateProfile }) => {
+const Header = ({ imgProfile, settings, settingsTitle, updateProfile }) => {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
 
   const handleLogOut = () => {
-    console.log("Logout called!");
+    localStorage.removeItem("token/role/company_id");
+    localStorage.removeItem("token");
+    navigate("/login");
   };
 
   const handleDashboard = () => {
@@ -37,12 +39,18 @@ const Header = ({ settings, settingsTitle, updateProfile }) => {
             <i className="fa-solid fa-arrow-right-from-bracket" />
           </button>
 
-          <img
+          <Avatar
+            url={imgProfile}
+            alt="User profile img"
+            onClick={updateProfile}
+          />
+
+          {/* <img
             className={`${styles._userProfileImg} _boxShadow`}
             src={avatar}
             alt="User profile img"
             onClick={updateProfile}
-          />
+          /> */}
         </nav>
       </div>
       <Modal
