@@ -64,7 +64,7 @@ def hello_protected_get():
     return jsonify({"userId":user_id, "message":"Hello protected route"})
 
 @api.route("/logout", methods=["POST"])
-@jwt_required
+@jwt_required()
 def user_logout():
     jwt = get_jwt()["jti"]
     tokenBlocked = TokenBlockedList(jti=jwt)
