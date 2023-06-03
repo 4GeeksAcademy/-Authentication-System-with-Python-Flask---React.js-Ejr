@@ -2,7 +2,6 @@
   min-height: 10rem;
 }
 .sub-title{
-  font-size: 5rem;
   background: -webkit-linear-gradient(90deg,#4CB944, #4472CA, #4CB944);
   -webkit-background-clip: text;
   background-clip: text;
@@ -24,7 +23,7 @@ body{
 
 .grid-wrapper {
   display: grid;
-  grid-gap: 1rem;
+  grid-gap: 1vh;
   grid-template-columns: 33% 33% 33%;
   margin-left: 1rem;
   margin-right: 1rem;
@@ -34,30 +33,17 @@ body{
   color: #fff;
   border-radius: 1rem;
   padding: 20px;
-  font-size: 150%;
-
-}
-
-.a{
-  grid-row: 1/span 1;
-  grid-column: 1/span 2;
 }
 .b{
-  grid-row: 1/span 6;
-  grid-column: 3/span 1;
   background-color: #384D48;
   background-image: url("https://cdn.leonardo.ai/users/25acf724-d0fb-44e7-8da5-a5932af5eac9/generations/ff4529c2-3ec9-46ac-86ff-077eafaa29b2/variations/Default_A_futuristic_cityscape_with_a_glowing_AI_core_in_the_0_ff4529c2-3ec9-46ac-86ff-077eafaa29b2_1.jpg");
   background-repeat: no-repeat;
   background-size: cover;
 }
 .c{
-  grid-row: 2/span 1;
-  grid-column: 1/span 2;
   background-color: #F7ECE1;
 }
 .d{
-  grid-row: 3/span 1;
-  grid-column: 1/span 1;
   background-image: url("https://cdn.leonardo.ai/users/25acf724-d0fb-44e7-8da5-a5932af5eac9/generations/8adcdd63-d772-4193-98fd-d6f3a996c203/DreamShaper_v6_fruits_vegetables_in_a_box_healthy_clean_realia_0.jpg");
   background-repeat: no-repeat;
   background-size: cover;
@@ -65,8 +51,6 @@ body{
   background-position: center top -200px;
 }
 .e{
-  grid-row: 3/span 1;
-  grid-column: 2/span 1;
   background-color: #4CB944;
   background-image: url("https://cdn.leonardo.ai/users/25acf724-d0fb-44e7-8da5-a5932af5eac9/generations/75ec9fdb-bdd2-4cd3-82b2-4589860b01bd/DreamShaper_v6_vegetable_fruit_plate_healthy_colorful_0.jpg");
   background-repeat: no-repeat;
@@ -79,13 +63,9 @@ body{
     radial-gradient(ellipse farthest-corner at left top, #FFFFFF 0%, #FFFFAC 8%, #D1B464 25%, #5d4a1f 62.5%, #5d4a1f 100%);
   }
 .f{
-  grid-row: 4/span 1;
-  grid-column: 1/span 2;
   background-color: #F7ECE1;
 }
 .g{
-  grid-row: 5/span 1;
-  grid-column: 1/span 1;
   background-color: #4CB944;
   background-image: url("https://cdn.leonardo.ai/users/25acf724-d0fb-44e7-8da5-a5932af5eac9/generations/c9db3591-cc03-48fb-ace1-9097838c224a/DreamShaper_v6_green_color_palette_384D48_Marketing_stock_pict_0.jpg");
   background-repeat: no-repeat;
@@ -93,8 +73,6 @@ body{
   height: 25rem;
 }
 .h{
-  grid-row: 5/span 1;
-  grid-column: 2/span 1;
   background-color: #384D48;
   background-image: url("https://cdn.leonardo.ai/users/25acf724-d0fb-44e7-8da5-a5932af5eac9/generations/7148c08b-592c-4251-af80-44d2dd29e876/DreamShaper_v5_4CB944_F7ECE1_9CE2F3_4CB944_384D48_generate_a_a_3.jpg");
   background-repeat: no-repeat;
@@ -114,12 +92,10 @@ button:hover{
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  font-size: 4rem;
 }
 .subscription-ads{
   background: -webkit-linear-gradient(#7bfdff, #f8f8f8);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  font-size: 4rem;
 }
