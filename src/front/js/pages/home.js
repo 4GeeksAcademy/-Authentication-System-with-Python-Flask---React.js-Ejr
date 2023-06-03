@@ -44,7 +44,7 @@ export const Home = () => {
 							</div>
 							<div className="col-4 col-sm-6 vh-25 box e my-2">
 								<section className="pt-0 mt-0">
-									<p className="store-ads">Nuestras tiendas tienen excelentes descuentos, le ponemos el alma para llevar los alimentos más fescos a tu hogar!</p>
+									<p className="store-ads blur">Nuestras tiendas tienen excelentes descuentos, le ponemos el alma para llevar los alimentos más frescos a tu hogar!</p>
 								</section>
 							</div>
 						</div>
@@ -64,7 +64,7 @@ export const Home = () => {
 							<div className="col-4 col-sm-6 vh-25 box h my-2 gap-2 border">	
 								<button className="store-ads p-4 mx-auto fs-1 fw-bold mt-5 blur fs-5" 
 								style={{borderRadius:"33% 67% 32% 68% / 90% 9% 91% 10% "}}>
-									Pedilo y recibilo boludo
+									Solo quiero comida
 								</button>
 							</div>
 						</div>
@@ -72,66 +72,7 @@ export const Home = () => {
 				</div>
 			</div>
 			</section>
-			<RegisterModal />
 			<LoginModal />
-			<Register />
 		</div>
 	);
 };
-
-{/* GRID */}
-			{/* <section>
-				<div className="grid-wrapper">
-					<div className="box a">
-					<section className="title-section align-middle">
-						<h1 className="main-title my-auto align-middle">GitLoot</h1>
-					</section>
-					</div>
-					<div className="box b">
-						<section className="ia text-center align-middle">
-
-							this is the AI box, please complete the AI task to complete this box only
-							
-						</section>
-					</div>
-					<div className="box c">
-					<section className="sub-section">
-							<h2 className="sub-title pt-5">Acá puedes tener la comida más saludable, ademas de conveniente</h2>
-							<h2 className="sub-title">¡En la puerta de tu casa!</h2>
-						</section>
-					</div>
-					<div className="box d">
-						<section className="stores">
-							<button className="store-ads p-4 mx-auto fs-1 fw-bold mt-5 blur fs-5" 
-							style={{borderRadius:"33% 67% 32% 68% / 90% 9% 91% 10% "}}>
-								Tiendas disponibles
-							</button>
-						</section>
-					</div>
-					<div className="box e">
-						<section className="store pt-0 mt-0">
-							<p className="store-ads">Nuestras tiendas tienen excelentes descuentos, le ponemos el alma para llevar los alimentos más fescos a tu hogar!</p>
-						</section>
-						
-					</div>
-					<div className="box f">
-						<section className="sub-section">
-							<h2 className="sub-title pt-4 fs-1">Te respalda una inteligencia artificial, que te recomendará una excelente dieta semanal basada en nuestros platos disponibles!</h2>
-						</section>
-					</div>
-					<div className="box g">
-						<section className="subscription-ads">
-							<p className="">Comidas super fancy, que preparamos para que lo puedas descongelar y disfrutar!</p>
-						</section>
-					</div>
-					<div className="box h">
-						<section className="">
-							<button className="store-ads p-4 mx-auto fs-1 btn btn-outline-success blur fw-bold" 
-							style={{borderRadius:"33% 67% 32% 68% / 90% 9% 91% 10% "}}>
-								Pedilo y recibilo boludo
-							</button>
-						</section>
-					</div>
-				</div>
-			</section> */}
-{/* end grid section */}

@@ -31,6 +31,11 @@ export const Navbar = () => {
 							Registrate!
 						</button>
 					</Link>
+					<Link to="/updateProfile">
+						<button type="button" style={{borderRadius:"33% 67% 32% 68% / 90% 9% 91% 10% "}} className="btn btn-lg btn-outline-secondary py-2 px-5">
+							Actualiza tus datos!
+						</button>
+					</Link>
 				</div>
 			</div>
 		</nav>

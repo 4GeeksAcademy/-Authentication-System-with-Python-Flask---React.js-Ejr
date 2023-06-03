@@ -7,11 +7,18 @@ const getState = ({ getStore, getActions, setStore }) => {
 					name: "wok",
 					platos: ["ramen", "onigiri", "arroz", "sushi"],
 					ubicaciones: "white"
-				},
+				}
+			],
+			user: [
 				{
-					title: "SECOND",
-					background: "white",
-					initial: "white"
+					firstName: "Alejandra",
+					secondName: "Martinez",
+					birthDay: "12",
+					birthMonth: "6",
+					birthYear: "2014",
+					Gender: "femenino",
+					email: "askingalessa@gfake.com",
+					phone: "3005562343",
 				}
 			]
 		},

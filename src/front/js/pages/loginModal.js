@@ -31,7 +31,7 @@ export const LoginModal = () => {
                     </div>
                     <div className="modal-footer">
                         <button type="button px-4" className="btn btn-outline-warning" data-bs-dismiss="modal" style={{borderRadius:"33% 67% 32% 68% / 90% 9% 91% 10% "}}>Close</button>
-                        <button type="button" className="btn btn-outline-info" style={{borderRadius:"33% 67% 32% 68% / 90% 9% 91% 10% "}}>Save changes</button>
+                        <button type="button" className="btn btn-outline-info" style={{borderRadius:"33% 67% 32% 68% / 90% 9% 91% 10% "}} data-bs-dismiss="modal">Save changes</button>
                     </div>
                     </div>
                 </div>
