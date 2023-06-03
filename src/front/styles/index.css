@@ -2,7 +2,6 @@
   min-height: 10rem;
 }
 .sub-title{
-  font-size: 5rem;
   background: -webkit-linear-gradient(90deg,#4CB944, #4472CA, #4CB944);
   -webkit-background-clip: text;
   background-clip: text;
@@ -34,73 +33,45 @@ body{
   color: #fff;
   border-radius: 1rem;
   padding: 20px;
-  font-size: 150%;
-
-}
-
-.a{
-  grid-row: 1/span 1;
-  grid-column: 1/span 2;
 }
 .b{
-  grid-row: 1/span 6;
-  grid-column: 3/span 1;
   background-color: #384D48;
   background-image: url("https://cdn.leonardo.ai/users/25acf724-d0fb-44e7-8da5-a5932af5eac9/generations/ff4529c2-3ec9-46ac-86ff-077eafaa29b2/variations/Default_A_futuristic_cityscape_with_a_glowing_AI_core_in_the_0_ff4529c2-3ec9-46ac-86ff-077eafaa29b2_1.jpg");
   background-repeat: no-repeat;
   background-size: cover;
 }
 .c{
-  grid-row: 2/span 1;
-  grid-column: 1/span 2;
   background-color: #F7ECE1;
 }
 .d{
-  grid-row: 3/span 1;
-  grid-column: 1/span 1;
-  background-image: url("https://cdn.leonardo.ai/users/25acf724-d0fb-44e7-8da5-a5932af5eac9/generations/8adcdd63-d772-4193-98fd-d6f3a996c203/DreamShaper_v6_fruits_vegetables_in_a_box_healthy_clean_realia_0.jpg");
+  background-image: url("https://cdn.leonardo.ai/users/25acf724-d0fb-44e7-8da5-a5932af5eac9/generations/c75830bc-3a7a-4997-8d22-dc297de6e00f/DreamShaper_v6_small_fruit_basket_in_front_of_a_store_people_p_1.jpg");
   background-repeat: no-repeat;
   background-size: cover;
-  height: 30rem;
-  background-position: center top -200px;
 }
 .e{
-  grid-row: 3/span 1;
-  grid-column: 2/span 1;
   background-color: #4CB944;
-  background-image: url("https://cdn.leonardo.ai/users/25acf724-d0fb-44e7-8da5-a5932af5eac9/generations/75ec9fdb-bdd2-4cd3-82b2-4589860b01bd/DreamShaper_v6_vegetable_fruit_plate_healthy_colorful_0.jpg");
+  background-image: url("https://cdn.leonardo.ai/users/25acf724-d0fb-44e7-8da5-a5932af5eac9/generations/5c035d28-90e1-421a-bf18-91e2a4d4c7eb/DreamShaper_v6_fruits_plate_delicious_healthy_and_edible_green_1.jpg");
   background-repeat: no-repeat;
   background-size: cover;
-  height: 30rem;
-  background-position: center top -2rem;
   }
   .store-ads{
     color: radial-gradient(ellipse farthest-corner at right bottom, #FEDB37 0%, #FDB931 8%, #9f7928 30%, #8A6E2F 40%, transparent 80%),
     radial-gradient(ellipse farthest-corner at left top, #FFFFFF 0%, #FFFFAC 8%, #D1B464 25%, #5d4a1f 62.5%, #5d4a1f 100%);
   }
 .f{
-  grid-row: 4/span 1;
-  grid-column: 1/span 2;
   background-color: #F7ECE1;
 }
 .g{
-  grid-row: 5/span 1;
-  grid-column: 1/span 1;
   background-color: #4CB944;
-  background-image: url("https://cdn.leonardo.ai/users/25acf724-d0fb-44e7-8da5-a5932af5eac9/generations/c9db3591-cc03-48fb-ace1-9097838c224a/DreamShaper_v6_green_color_palette_384D48_Marketing_stock_pict_0.jpg");
+  background-image: url("https://cdn.leonardo.ai/users/25acf724-d0fb-44e7-8da5-a5932af5eac9/generations/9ae67311-5a4b-4812-b60f-0610d2875ddc/DreamShaper_v6_frozen_ice_bags_with_food_items_organized_and_n_0.jpg");
   background-repeat: no-repeat;
   background-size: cover;
-  height: 25rem;
 }
 .h{
-  grid-row: 5/span 1;
-  grid-column: 2/span 1;
-  background-color: #384D48;
-  background-image: url("https://cdn.leonardo.ai/users/25acf724-d0fb-44e7-8da5-a5932af5eac9/generations/7148c08b-592c-4251-af80-44d2dd29e876/DreamShaper_v5_4CB944_F7ECE1_9CE2F3_4CB944_384D48_generate_a_a_3.jpg");
+  background-color: #108d70;
+  background-image: url("https://cdn.leonardo.ai/users/25acf724-d0fb-44e7-8da5-a5932af5eac9/generations/cb54ddd2-7abd-46ce-ac67-f9a2d94c22da/DreamShaper_v6_two_boxes_with_food_items_organized_and_nicely_0.jpg");
   background-repeat: no-repeat;
   background-size: cover;
-  height: 25rem;
-  background-position: center top -190px;
 }
 .blur{
   backdrop-filter: blur(0.2rem);
@@ -114,12 +85,31 @@ button:hover{
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  font-size: 4rem;
 }
 .subscription-ads{
-  background: -webkit-linear-gradient(#7bfdff, #f8f8f8);
+  background: -webkit-linear-gradient(#14d6d9, #779de8);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  font-size: 4rem;
 }
+/* template */
+.gradient-custom {
+  /* fallback for old browsers */
+  background: #6cde88;
+  
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: -webkit-linear-gradient(to bottom right, #F7ECE1, #9CE2F3);
+  
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background: linear-gradient(to bottom right, #9CE2F3, #4CB944)
+  }
+  
+  .card-registration .select-input.form-control[readonly]:not([disabled]) {
+  font-size: 1rem;
+  line-height: 2.15;
+  padding-left: .75em;
+  padding-right: .75em;
+  }
+  .card-registration .select-arrow {
+  top: 13px;
+  }

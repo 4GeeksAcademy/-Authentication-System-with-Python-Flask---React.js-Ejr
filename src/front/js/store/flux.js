@@ -1,9 +1,18 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
-			restaurante: [
-
-				
+			message: ["Parece que funciona...  (?) valor anterior era null y no referenciaba al backend"],
+			demo: [
+				{
+					title: "FIRST",
+					background: "white",
+					initial: "white"
+				},
+				{
+					title: "SECOND",
+					background: "white",
+					initial: "white"
+				}
 			]
 		},
 		actions: {
