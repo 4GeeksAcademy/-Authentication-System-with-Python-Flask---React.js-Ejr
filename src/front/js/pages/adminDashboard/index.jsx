@@ -33,6 +33,9 @@ const AdminDashboard = () => {
   const createNewWorker = () => {
     navigate(`/create-worker/${userStoredInContext?.id}`);
   };
+  const createServiceWorker = () => {
+    navigate(`/assign-services/${companyId}`);
+  };
 
   return (
     <>
@@ -42,8 +45,9 @@ const AdminDashboard = () => {
         settingsTitle="Admin Settings"
         settings={
           <div className={styles._adminSettings}>
-            <Button onClick={createNewService} title="CreateService" />
-            <Button onClick={createNewWorker} title="CreateWorker" />
+            <Button onClick={createNewService} title="Create Service" />
+            <Button onClick={createNewWorker} title="Create Worker" />
+            <Button onClick={createServiceWorker} title="Assign Service" />
           </div>
         }
       />

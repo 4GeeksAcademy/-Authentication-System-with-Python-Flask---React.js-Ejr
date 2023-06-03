@@ -91,7 +91,7 @@ def login(body):
             new_identity = user.serialize()
 
             new_token = create_access_token(identity=new_identity)
-            return {"token": new_token, "role": user_role_type, "company_id": worker.company_id}
+            return {"token": new_token, "role": user_role_type, "company_id": worker.company_id, "worker_id": worker.id}
 
     if user_role_type == 'client':
         if bcrypt.checkpw(body['password'].encode(), user.password.encode()):
