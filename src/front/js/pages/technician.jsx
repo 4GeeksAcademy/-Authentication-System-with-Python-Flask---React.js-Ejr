@@ -87,7 +87,7 @@ export const Technician = () => {
     await fetchData();
     await paramsSet();
     await getHiringFromService();
-    //await getConversations();
+    await getConversations();
   };
 
   useEffect(() => {
@@ -103,7 +103,7 @@ export const Technician = () => {
             <a className="navbar-link" onClick={openModal}>
               Mis contrataciones
             </a>
-            <a className="navbar-link" href="#conversations">
+            <a className="navbar-link" href="#" onClick={() => navigate(`/convers/${name}/tech`)}>
               Mis conversaciones
             </a>
             <div className="dropdown">
