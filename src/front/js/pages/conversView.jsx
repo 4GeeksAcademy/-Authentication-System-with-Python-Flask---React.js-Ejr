@@ -131,8 +131,14 @@ export const ConversView = () => {
         <div className="navbar-content">
           <h2 className="logo">LOGO</h2>
           <div className="navbar-right">
-            <a className="navbar-link" href="#conversations" onClick={() => navigate(`/farmer`)}>
-              Perfil
+          <a
+              className="navbar-link"
+              href="#"
+              onClick={() =>
+                navigate(role === "farmer" ? "/farmer" : "/technician")
+              }
+            >
+              Ir al perfil
             </a>
             <div className="dropdown">
               <span className="user-label">Nombre de usuario</span>
