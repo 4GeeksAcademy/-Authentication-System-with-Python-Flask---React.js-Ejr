@@ -69,6 +69,7 @@ export const getBookingByUser = async () => {
       },
     });
     const data = await res.json();
+    console.log("fetch", data)
     return data.data;
   } catch (err) {
     console.log("Error to Get Booking by User", err);

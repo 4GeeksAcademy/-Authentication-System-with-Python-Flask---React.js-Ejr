@@ -2,6 +2,7 @@ import React from "react";
 import styles from "./adminReservationForm.module.css";
 import Input from "../input/index.jsx";
 import Button from "../button/index.jsx";
+import { format } from "date-fns";
 
 const AdminReservationForm = ({
   handleChange,
@@ -46,6 +47,7 @@ const AdminReservationForm = ({
                 type="text"
                 placeholder="Start Service"
                 name="start_service"
+                date={format(new Date(), "MMM do yyyy 'at' hh:mm")}
               />
               <Input
                 icon={<i className="fa-solid fa-pen-to-square"></i>}

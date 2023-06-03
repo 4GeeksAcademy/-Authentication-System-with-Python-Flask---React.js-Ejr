@@ -9,6 +9,7 @@ const Input = ({
   defaultValue,
   disabled,
   value,
+  date,
 }) => {
   return (
     <div className={styles._inputContainer}>
@@ -21,6 +22,7 @@ const Input = ({
         value={value}
         defaultValue={defaultValue}
         disabled={disabled}
+        date={date}
       />
     </div>
   );
