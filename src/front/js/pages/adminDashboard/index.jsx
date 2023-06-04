@@ -19,7 +19,6 @@ const AdminDashboard = () => {
 
   const fetchUser = async () => {
     const user = await getUserProfile();
-    console.log(user);
     actions.saveUserProfileData(user);
   };
 

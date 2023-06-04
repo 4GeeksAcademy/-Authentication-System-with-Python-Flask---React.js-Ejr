@@ -1,31 +1,42 @@
 ._mainContainer {
+  width: 100%;
+  margin-top: 40px;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
-  margin-top: 60px;
 }
 
-h1 {
-  margin-top: 110px;
-  margin-bottom: 16px;
-  font-size: var(--subheading-md);
-  font-weight: var(--font-extrabold);
-}
-
-._listContainer {
-  width: 90%;
+._bookingsContainer {
+  width: 100%;
+  max-width: 400px;
+  height: 380px;
   overflow-y: auto;
+  scroll-snap-type: y mandatory;
 }
 
-._modalContent > p {
-  margin: 0;
-}
-
-._modalFooter {
-  margin-top: 24px;
-}
-._btnWrapper {
-  width: 30%;
+._bookingContainer {
+  width: 100%;
+  margin-bottom: 16px;
+  padding: 16px;
   display: flex;
-  gap: 16px;
+  border-radius: var(--border-md);
+  background-color: var(--primary-50);
+  flex-direction: column;
+  align-items: center;
+  scroll-snap-align: start;
+}
+
+._heading {
+  margin-top: 110px;
+  margin-bottom: 32px;
+  font-size: var(--heading-md);
+  font-weight: var(--font-extrabold);
+  line-height: 1;
+  text-align: center;
+}
+
+._adminSettings {
+  display: flex;
+  flex-direction: column;
 }

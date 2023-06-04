@@ -29,10 +29,8 @@ const CreateNewBooking = () => {
   const { company_id } = useParams();
 
   const listServiceWorkers = async () => {
-    setIsLoading(true);
     const allServiceWorkers = await getAllServiceWorkers();
     setServiceWorkers(allServiceWorkers);
-    setIsLoading(false);
   };
 
   const servicesByCompany = async () => {
@@ -48,12 +46,10 @@ const CreateNewBooking = () => {
   };
 
   useEffect(() => {
-    servicesByCompany();
     listServiceWorkers();
+    servicesByCompany();
     workersByCompany();
   }, []);
-
-  console.log(servicesByCompany);
 
   const handleServiceSelect = async (e) => {
     const service = servicesList.find(({ name }) => name === e.target.value);
