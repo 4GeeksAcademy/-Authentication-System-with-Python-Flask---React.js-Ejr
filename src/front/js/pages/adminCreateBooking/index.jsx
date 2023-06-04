@@ -101,9 +101,11 @@ const AdminCreateBooking = () => {
     const resMsg = await adminCreateBooking(company_id, transformedData());
     resMsg.data ? toast.success(resMsg?.msg) : toast.error(resMsg?.msg);
     if (resMsg.data.services_workers.workers.user.role === "worker")
-      navigate("/worker-dashboard");
-    else navigate("/admin-dashboard");
+      navigate(`/worker-dashboard/${company_id}`);
+    else navigate(`/admin-dashboard/${company_id}`);
   };
+
+  console.log(newBooking);
 
   return (
     <>
