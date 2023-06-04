@@ -1,0 +1,126 @@
+.link-unstyled {
+  color: inherit;
+  text-decoration: none;
+}
+
+.link-unstyled:hover,
+.link-unstyled:focus {
+  text-decoration: none;
+}
+
+.FooterIcon {
+  color: white;
+  margin-right: 10px;
+}
+
+.footer {
+  color: white;
+}
+
+body, html {
+  height: 100%;
+  margin: 0;
+  font: 400 15px/1.8 "Lato", sans-serif;
+  color: black;
+}
+
+.bgimg-1,
+.bgimg-2,
+.bgimg-3 {
+  position: relative;
+  opacity: 0.65;
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.bgimg-1 {
+  background-image: url("https://i.imgur.com/MOSSCWH.jpg");
+  min-height: 1000px;
+}
+
+.bgimg-2 {
+  background-image: url("https://i.imgur.com/MOSSCWH.jpg");
+  min-height: 1000px;
+}
+
+.bgimg-3 {
+  background-image: url("https://i.imgur.com/MOSSCWH.jpg");
+  min-height: 1000px;
+}
+
+.caption {
+  position: absolute;
+  left: 0;
+  top: 35%;
+  width: 100%;
+  transform: translateY(-50%);
+  text-align: center;
+  color: whitesmoke;
+  text-shadow: 2px 2px 3px black; /* Add a 1px shadow with a slight transparency */
+}
+
+.caption span.border {
+  background-color: #111;
+  color: #fff;
+  padding: 18px;
+  font-size: 25px;
+  letter-spacing: 10px;
+}
+
+h3 {
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  font: 20px "Lato", sans-serif;
+  color: white;
+}
+
+.transparent-borderless {
+  background-color: transparent;
+  border: none;
+  color: black;
+}
+
+.buttonjumbo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 150px;
+  background-color: blue;
+  border: none;
+  color: #ffffff;
+  text-align: center;
+  font-size: 18px;
+  padding: 20px;
+  width: 220px;
+  height: 50px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+}
+
+.buttonjumbo span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.buttonjumbo span:after {
+  content: '\00bb';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.buttonjumbo:hover span {
+  padding-right: 25px;
+}
+
+.buttonjumbo:hover span:after {
+  opacity: 1;
+  right: 0;
+}
