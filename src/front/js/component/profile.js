@@ -9,10 +9,10 @@ export const Profile = () => {
             {/* Account page navigation */}
             <nav className="nav nav-borders">
                 <Link to="/profile">
-                    <button className="nav-link ms-0" target="__blank">Perfil</button>
+                    <button className="nav-link ms-0 active" target="__blank">Perfil</button>
                 </Link>
                 <Link to="/billing">
-                    <button className="nav-link active" target="__blank">Pagos</button>
+                    <button className="nav-link" target="__blank">Pagos</button>
                 </Link>
                 <Link to="/security">
                     <button className="nav-link" target="__blank">Seguridad</button>
@@ -25,7 +25,7 @@ export const Profile = () => {
             <div className="row">
                 <div className="col-xl-4">
                     {/* Profile picture card */}
-                    <div className="card mb-4 mb-xl-0">
+                    <div className="card mb-4 mb-xl-0 gradient-custom-contrast">
                         <div className="card-header">Foto de perfil:</div>
                         <div className="card-body text-center">
                             {/* Profile picture image */}
@@ -39,7 +39,7 @@ export const Profile = () => {
                 </div>
                 <div className="col-xl-8">
                     {/* Account details card */}
-                    <div className="card mb-4">
+                    <div className="card mb-4 gradient-custom-contrast">
                         <div className="card-header">Account Details</div>
                         <div className="card-body">
                             <form>
