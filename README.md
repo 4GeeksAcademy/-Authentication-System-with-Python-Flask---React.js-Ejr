@@ -2,13 +2,24 @@
 
 A booking management system software solution that allows businesses to manage their bookings effectively.
 
-##### Models
+### Models
 
 ![booking system models](https://res.cloudinary.com/dlxxbuhxp/image/upload/v1685705470/cloud/models_ssewt5.png)
 
-##### Figma design
+### Figma design
 
 - To see the UI design click --> [HERE](https://www.figma.com/file/FxcPMOAP2tnDam7zqhCaDr/Booking-Manager?node-id=0%3A1&t=gzPizVXZKlI5G1EM-1)
+
+### Next Updates
+
+- Format of all dates
+- Form validations in the front, all inputs should have examples and checks
+- Integrate stripe payments
+- After registration redirect to the corresponding dashboard directly (right now, it only redirects when the user login)
+- Responsiveness
+- Accessibility
+- Add loading spinners and toasts
+- Better UI/UX in all dashboards
 
 ### Documentation about this template:
 
