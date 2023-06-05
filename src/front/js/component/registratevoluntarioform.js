@@ -59,6 +59,12 @@ export const RegistrateVoluntarioForm = () => {
               <input type="text" className="form-control" id="inputSurname" required />
             </div>
             <div className="mb-3">
+              <label htmlFor="inputUserName" className="form-label">
+                Nombre de Usuario
+              </label>
+              <input type="text" className="form-control" id="inputUserName" required />
+            </div>
+            <div className="mb-3">
               <label htmlFor="inputEmail" className="form-label">
                 Email
               </label>

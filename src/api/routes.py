@@ -17,12 +17,35 @@ def handle_hello():
 
     return jsonify(response_body), 200
 
-@api.route('/signup', methods=['POST'])
-def add_users():
 
-    request_body_user = request.get.json
+@api.route('/signup', methods=['POST'])
+def handle_signup():
+    request_data=request.get_json(force=True)
+
+    # verifica si el email esta en la base de datos
+
+    if db.session.query(User).filter(User.email == request_data['email']).first():
+
+    #db.session conecta con la base de datos y query hace una busqueda en la tabla de datos User
+
+        return jsonify({"message": "Este email ya está registrado en la base de datos"}), 400
+
+    if db.session.query(User).filter(User.user_name == request_data['user_name']).first():
+
+        return jsonify({"message": "El usuario ya está registrado"}), 400
+
+    #si ha pasado estas dos condiciones sin hacer los if, crea un usuario
+
     new_user = User(
-        email = request_body_user['email'], password = request_body_user['password'])
+        user_name=request_data['user_name'],
+        email=request_data['email'],
+        profile_img = None,
+        password=request_data['password'],
+        first_name=request_data['first_name'],
+        last_name=request_data['last_name'],
+        description = None,
+        es_abuelo=request_data['es_abuelo']
+    ) 
     db.session.add(new_user)
     db.session.commit()
-    return jsonify('Se ha añadido usario: ', request_body_user), 200
+    return jsonify('Se ha añadido usario: ', request_data), 200
