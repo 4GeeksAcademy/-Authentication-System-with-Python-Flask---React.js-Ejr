@@ -13,6 +13,8 @@ import { Footer } from "./component/footer";
 import Register from "./component/register";
 import UpdateProfile from "./component/updateProfile";
 import Profile from "./component/profile";
+import ProfileBilling from "./component/profileBilling";
+import { ProfileSecurity } from "./component/profileSecurity";
 
 //create your first component
 const Layout = () => {
@@ -33,6 +35,8 @@ const Layout = () => {
                         <Route element={<Single />} path="/single/:theid" />
                         <Route element={<Register />} path="/register" />
                         <Route element={<Profile />} path="/profile" />
+                        <Route element={<ProfileBilling />} path="/billing" />
+                        <Route element={<ProfileSecurity />} path="/security" />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
                     <Footer />
