@@ -43,7 +43,7 @@ export const RegistrateVoluntarioForm = () => {
             )}
             {!passwordMatch && (
               <div className="alert alert-danger" role="alert">
-                Contraseña no coinciden.
+                Las contraseñas no coinciden.
               </div>
             )}
             <div className="mb-3">
@@ -59,6 +59,12 @@ export const RegistrateVoluntarioForm = () => {
               <input type="text" className="form-control" id="inputSurname" required />
             </div>
             <div className="mb-3">
+              <label htmlFor="inputEmail" className="form-label">
+                Email
+              </label>
+              <input type="email" className="form-control" id="inputSurname" required />
+            </div>
+            <div className="mb-3">
               <label htmlFor="inputPassword" className="form-label">
                 Contraseña
               </label>
@@ -69,7 +75,7 @@ export const RegistrateVoluntarioForm = () => {
             </div>
             <div className="mb-3">
               <label htmlFor="inputRepeatPassword" className="form-label">
-                Repita contraseña
+                Repita la contraseña
               </label>
               <div className="input-group">
                 <input

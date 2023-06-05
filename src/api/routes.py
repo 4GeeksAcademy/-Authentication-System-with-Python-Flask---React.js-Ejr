@@ -17,3 +17,12 @@ def handle_hello():
 
     return jsonify(response_body), 200
 
+@api.route('/signup', methods=['POST'])
+def add_users():
+
+    request_body_user = request.get.json
+    new_user = User(
+        email = request_body_user['email'], password = request_body_user['password'])
+    db.session.add(new_user)
+    db.session.commit()
+    return jsonify('Se ha añadido usario: ', request_body_user), 200
