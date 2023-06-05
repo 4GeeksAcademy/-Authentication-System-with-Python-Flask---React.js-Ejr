@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { Context } from "../../store/appContext";
 import { useParams, useNavigate, Navigate } from "react-router-dom";
 import styles from "./adminCreateBooking.module.css";
 import BigContainer from "../../components/bigContainer/index.jsx";
@@ -22,6 +23,9 @@ const AdminCreateBooking = () => {
   const [servicesList, setServicesList] = useState([]);
   const [newBooking, setNewBooking] = useState(initialState);
   const [serviceWorkers, setServiceWorkers] = useState([]);
+
+  const { store } = useContext(Context);
+  const userStoredInContext = store.userProfileData.userData;
 
   const navigate = useNavigate();
   const { company_id } = useParams();
@@ -97,13 +101,18 @@ const AdminCreateBooking = () => {
     const resMsg = await adminCreateBooking(company_id, transformedData());
     resMsg.data ? toast.success(resMsg?.msg) : toast.error(resMsg?.msg);
     if (resMsg.data.services_workers.workers.user.role === "worker")
-      navigate("/worker-dashboard");
-    else navigate("/admin-dashboard");
+      navigate(`/worker-dashboard/${company_id}`);
+    else navigate(`/admin-dashboard/${company_id}`);
   };
+
+  console.log(newBooking);
 
   return (
     <>
-      <Header />
+      <Header
+        imgProfile={userStoredInContext?.avatar}
+        updateProfile={() => navigate(`/profile/${userStoredInContext?.id}`)}
+      />
       <div className={styles._mainContainer}>
         <AdminReservationForm
           handleChange={handleChange}

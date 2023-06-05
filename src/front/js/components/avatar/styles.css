@@ -1,6 +1,8 @@
 .avatar {
   width: 40px;
+  height: 40px;
   cursor: pointer;
   border: 1px solid black;
   border-radius: var(--border-full);
+  object-fit: cover;
 }

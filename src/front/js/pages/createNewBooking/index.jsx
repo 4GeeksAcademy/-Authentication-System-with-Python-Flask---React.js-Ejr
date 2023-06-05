@@ -29,10 +29,8 @@ const CreateNewBooking = () => {
   const { company_id } = useParams();
 
   const listServiceWorkers = async () => {
-    setIsLoading(true);
     const allServiceWorkers = await getAllServiceWorkers();
     setServiceWorkers(allServiceWorkers);
-    setIsLoading(false);
   };
 
   const servicesByCompany = async () => {
@@ -48,12 +46,10 @@ const CreateNewBooking = () => {
   };
 
   useEffect(() => {
-    servicesByCompany();
     listServiceWorkers();
+    servicesByCompany();
     workersByCompany();
   }, []);
-
-  console.log(servicesByCompany);
 
   const handleServiceSelect = async (e) => {
     const service = servicesList.find(({ name }) => name === e.target.value);
@@ -84,10 +80,10 @@ const CreateNewBooking = () => {
   };
 
   const transformedData = () => {
-    const serviceID = servicesList.filter(
+    const serviceID = servicesList?.filter(
       (service) => service.name === newBooking.service
     )[0]?.id;
-    const workerID = workersList.filter(
+    const workerID = workersList?.filter(
       (worker) => worker.user.username === newBooking.worker
     )[0]?.id;
     const startService = newBooking.start_service;
@@ -107,6 +103,8 @@ const CreateNewBooking = () => {
     navigate("/user-dashboard");
   };
 
+  console.log("services: ", servicesList);
+  console.log("workers: ", workersList);
   console.log(transformedData());
 
   return (

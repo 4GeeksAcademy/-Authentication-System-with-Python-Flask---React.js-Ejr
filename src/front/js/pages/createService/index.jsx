@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { Context } from "../../store/appContext";
 import { createService } from "../../service/services.js";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -13,9 +14,13 @@ const initialState = {
 };
 
 const CreateService = () => {
+  const [newService, setNewService] = useState(initialState);
+
+  const { store } = useContext(Context);
+  const userStoredInContext = store.userProfileData.userData;
+
   const params = useParams();
   const navigate = useNavigate();
-  const [newService, setNewService] = useState(initialState);
 
   const responseToast = (msg) => toast(msg);
 
@@ -32,7 +37,10 @@ const CreateService = () => {
 
   return (
     <>
-      <Header />
+      <Header
+        imgProfile={userStoredInContext?.avatar}
+        updateProfile={() => navigate(`/profile/${userStoredInContext?.id}`)}
+      />
       <ServiceForm
         newService={newService}
         handleSubmit={handleSubmit}

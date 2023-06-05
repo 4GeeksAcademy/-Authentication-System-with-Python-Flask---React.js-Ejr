@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { getBookingByUser, deleteBooking } from "../../service/booking";
+import React, { useEffect, useState, useContext } from "react";
+import { Context } from "../../store/appContext";
 import { useNavigate } from "react-router-dom";
+import { getBookingByUser, deleteBooking } from "../../service/booking";
 import { format } from "date-fns";
 import { toast } from "react-toastify";
 
@@ -13,6 +14,7 @@ import Button from "../../components/button/index.jsx";
 import Header from "../../components/header/index.jsx";
 import DeleteToast from "../../components/deleteToast/index.jsx";
 import Spinner from "../../components/spinner/index.jsx";
+import { getUserProfile } from "../../service/user";
 
 const initialState = {
   services_workers: {
@@ -27,10 +29,12 @@ const initialState = {
 
 const UserDashboard = () => {
   const [bookingList, setBookingList] = useState([]);
-
   const [isOpen, setIsOpen] = useState(false);
   const [selectedBooking, setSelectedBooking] = useState(initialState);
   const [Loading, setLoading] = useState(false);
+
+  const { store, actions } = useContext(Context);
+  const userStoredInContext = store.userProfileData.userData;
 
   const navigate = useNavigate();
 
@@ -40,8 +44,17 @@ const UserDashboard = () => {
     setBookingList(bookingData);
     setLoading(false);
   };
+
+  const fetchUser = async () => {
+    setLoading(true);
+    const user = await getUserProfile();
+    actions.saveUserProfileData(user);
+    setLoading(false);
+  };
+
   useEffect(() => {
     getBooking();
+    fetchUser();
   }, []);
 
   const deleteReservation = async (bookingID) => {
@@ -52,12 +65,23 @@ const UserDashboard = () => {
 
   return (
     <div>
-      <Header />
+      <Header
+        imgProfile={userStoredInContext?.avatar}
+        updateProfile={() => navigate(`/profile/${userStoredInContext?.id}`)}
+      />
       <main className={styles._mainContainer}>
+        <div className={styles._bookingBtn}>
+          <Button
+            title="New Booking"
+            onClick={() => navigate("/companies-list")}
+          />
+        </div>
         <BigContainer>
           <h1 className={styles._title}>List of Reservations</h1>
           {Loading ? (
             <Spinner />
+          ) : bookingList.length === 0 ? (
+            <p>There are no reservations yet, booking your next service!</p>
           ) : (
             <div className={styles._listContainer}>
               {bookingList.map((booking) => {

@@ -2,7 +2,9 @@ import React, { useEffect, useState, useContext } from "react";
 import { Context } from "../../store/appContext";
 import { getUserProfile } from "../../service/user";
 import { useNavigate, useParams } from "react-router-dom";
+
 import styles from "./adminDashboard.module.css";
+
 import Header from "../../components/header/index.jsx";
 import SubHeader from "../../components/subHeader/index.jsx";
 import Button from "../../components/button/index.jsx";
@@ -12,14 +14,11 @@ const AdminDashboard = () => {
   const { store, actions } = useContext(Context);
   const userStoredInContext = store.userProfileData.userData;
 
-  console.log(userStoredInContext);
-
   const { companyId } = useParams();
   const navigate = useNavigate();
 
   const fetchUser = async () => {
     const user = await getUserProfile();
-    console.log(user);
     actions.saveUserProfileData(user);
   };
 
@@ -28,10 +27,13 @@ const AdminDashboard = () => {
   }, []);
 
   const createNewService = () => {
-    navigate(`/create-service/${userStoredInContext?.id}`);
+    navigate(`/create-service/${companyId}`);
   };
   const createNewWorker = () => {
-    navigate(`/create-worker/${userStoredInContext?.id}`);
+    navigate(`/create-worker/${companyId}`);
+  };
+  const createServiceWorker = () => {
+    navigate(`/assign-services/${companyId}`);
   };
 
   return (
@@ -42,8 +44,9 @@ const AdminDashboard = () => {
         settingsTitle="Admin Settings"
         settings={
           <div className={styles._adminSettings}>
-            <Button onClick={createNewService} title="CreateService" />
-            <Button onClick={createNewWorker} title="CreateWorker" />
+            <Button onClick={createNewService} title="Create Service" />
+            <Button onClick={createNewWorker} title="Create Worker" />
+            <Button onClick={createServiceWorker} title="Assign Service" />
           </div>
         }
       />

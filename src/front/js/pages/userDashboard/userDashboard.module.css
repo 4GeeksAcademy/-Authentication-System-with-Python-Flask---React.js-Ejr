@@ -24,8 +24,14 @@ h1 {
 ._modalFooter {
   margin-top: 24px;
 }
+
 ._btnWrapper {
   width: 30%;
   display: flex;
   gap: 16px;
+}
+
+._bookingBtn {
+  width: 150px;
+  margin-bottom: 40px;
 }

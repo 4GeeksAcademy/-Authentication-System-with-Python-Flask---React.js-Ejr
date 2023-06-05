@@ -9,28 +9,28 @@ const ProfileForm = ({ handleChange, handleClick, user }) => {
           type="text"
           placeholder="Username"
           name="username"
-          value={user.username}
+          defaultValue={user?.username}
         />
         <Input
           icon={<i className="fa-solid fa-circle-user"></i>}
           type="text"
           placeholder="First name"
           name="firstname"
-          value={user.firstname}
+          defaultValue={user?.firstname}
         />
         <Input
           icon={<i className="fa-solid fa-circle-user"></i>}
           type="text"
           placeholder="Last name"
           name="lastname"
-          value={user.lastname}
+          defaultValue={user?.lastname}
         />
         <Input
           icon={<i className="fa-solid fa-envelope"></i>}
           type="email"
           placeholder="Email"
           name="email"
-          value={user.email}
+          defaultValue={user?.email}
         />
         <button type="submit" className="submitBtn boxShadow">
           Update

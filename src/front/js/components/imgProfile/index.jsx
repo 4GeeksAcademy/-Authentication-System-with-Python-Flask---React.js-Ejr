@@ -19,8 +19,8 @@ const ImgProfile = ({ img, handleChange }) => {
               <img src={img} alt="Default Profile" />
             )} */}
           </div>
-          <h5 className="nametitle">{userData.username}</h5>
-          <p className="nametitle2">{userData.email}</p>
+          <h5 className="nametitle">{userData?.username}</h5>
+          <p className="nametitle2">{userData?.email}</p>
           <div className="file-select" id="src-file1">
             <input
               type="file"

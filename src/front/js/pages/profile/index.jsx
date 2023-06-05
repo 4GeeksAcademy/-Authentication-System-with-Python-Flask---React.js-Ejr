@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { updateUserProfile } from "../../service/user.js";
 import "./styles.css";
 
@@ -6,18 +6,15 @@ import ProfileForm from "../../components/profileForm/index.jsx";
 import Header from "../../components/header/index.jsx";
 import ImgProfile from "../../components/imgProfile/index.jsx";
 import { useNavigate } from "react-router-dom";
-
-const initialState = {
-  username: "",
-  firstname: "",
-  lastname: "",
-  email: "",
-};
+import { Context } from "../../store/appContext.js";
 
 const Profile = () => {
   const [file, setFile] = useState("");
   const [fileUrl, setFileUrl] = useState("");
-  const [user, setUser] = useState(initialState);
+  const [user, setUser] = useState(userStoredInContext);
+
+  const { store, actions } = useContext(Context);
+  const userStoredInContext = store.userProfileData.userData;
 
   const navigate = useNavigate();
 
@@ -40,12 +37,13 @@ const Profile = () => {
     e.preventDefault();
     const form = new FormData();
     form.append("avatar", file);
-    form.append("email", user.email);
-    form.append("username", user.username);
-    form.append("firstname", user.firstname);
-    form.append("lastname", user.lastname);
-    console.log(form);
+    form.append("email", userStoredInContext?.email);
+    form.append("username", userStoredInContext?.username);
+    form.append("firstname", userStoredInContext?.firstname);
+    form.append("lastname", userStoredInContext?.lastname);
+
     updateUserProfile(form);
+    actions.saveUserProfileData(user);
     navigate("/");
     // setUser({
     //   username: "",
@@ -56,15 +54,21 @@ const Profile = () => {
   };
   return (
     <main className="">
-      <Header />
-      <ImgProfile img={fileUrl} handleChange={handleChange} />
+      <Header
+        imgProfile={userStoredInContext?.avatar}
+        updateProfile={() => navigate(`/profile/${userStoredInContext?.id}`)}
+      />
+      <ImgProfile
+        img={fileUrl === "" ? userStoredInContext?.avatar : fileUrl}
+        handleChange={handleChange}
+      />
       <main className="mainContainerProfile">
         <div className="background">
           <h2 className="title">Profile update</h2>
           <ProfileForm
             handleChange={handleChange}
             handleClick={handleClick}
-            user={user}
+            user={userStoredInContext}
           />
         </div>
       </main>
