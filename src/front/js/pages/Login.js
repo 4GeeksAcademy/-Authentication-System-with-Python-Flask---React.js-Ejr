@@ -81,12 +81,12 @@ export const Login = () => {
           <h3>Privacy</h3>
           <div className="col-md-12 position-relative">
             <label className="form-label">Email</label>
-            <input type="text" className="form-control" name="email" placeholder="Username" aria-label="Username" />
+            <input type="text" className="form-control" name="email" placeholder="Username" aria-label="Username" required />
           </div>
           <div className="form-group">
             <label className="form-label">Password</label>
             <div className="input-group">
-              <input type={passwordShown ? "text" : "password"} className="form-control" name="password" />
+              <input type={passwordShown ? "text" : "password"} className="form-control" name="password" required />
               <button onClick={togglePassword} className="input-group-text">
                 <i className={passwordShowneye ? "fa fa-eye" : "fa fa-eye-slash"}></i>
               </button>
@@ -98,7 +98,7 @@ export const Login = () => {
           <div className="form-group">
             <label className="form-label">Confirm Password</label>
             <div className="input-group">
-              <input type="password" className="form-control" name="password" />
+              <input type="password" className="form-control" name="password" required />
               <span className="input-group-text"><i className="fa fa-eye-slash" aria-hidden="true"></i></span>
             </div>
           </div>
