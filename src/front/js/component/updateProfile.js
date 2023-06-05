@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import LoginModal from "../pages/loginModal";
-import RegisterModal from "../pages/RegisterModal";
 
 export const UpdateProfile = () => {
     return (

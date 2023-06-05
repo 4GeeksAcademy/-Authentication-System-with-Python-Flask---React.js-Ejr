@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import LoginModal from "../pages/loginModal";
-import RegisterModal from "../pages/RegisterModal";
 
 export const Navbar = () => {
 	return (
@@ -33,7 +32,7 @@ export const Navbar = () => {
 					</Link>
 					<Link to="/updateProfile">
 						<button type="button" style={{borderRadius:"33% 67% 32% 68% / 90% 9% 91% 10% "}} className="btn btn-lg btn-outline-secondary py-2 px-5">
-							Actualiza tus datos!
+							Perfil
 						</button>
 					</Link>
 				</div>

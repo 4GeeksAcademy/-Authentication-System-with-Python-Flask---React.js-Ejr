@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import LoginModal from "../pages/loginModal";
-import RegisterModal from "../pages/RegisterModal";
 
 export const Register = () => {
 	return (
@@ -95,6 +94,7 @@ export const Register = () => {
                 </div>
                 </div>
             </div>
+            <LoginModal />
         </section>
     )
 }

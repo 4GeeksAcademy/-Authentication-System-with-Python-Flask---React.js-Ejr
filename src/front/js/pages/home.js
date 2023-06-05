@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
 import { Context } from "../store/appContext";
 import "../../styles/home.css";
-import RegisterModal from "./RegisterModal";
 import LoginModal from "./loginModal";
 import Register from "../component/register";
 
@@ -14,7 +13,7 @@ export const Home = () => {
 			<section className="container-fluid text-center text-dark" style={{height:"100%"}}>
 			<div className="container-fluid text-center m-1 h-100 gap-3 p-3 fs-1 m-3 py-2">
 				<div className="row m-2 fs-1 d-sm-inline-flex">
-					<div className="col-sm-3 box text-dark b vh-100">
+					<div className="col-sm-3 box text-dark b">
 						this is the AI box, please complete the AI task to complete this box only
 					</div>
 					<div className="col-sm-9">
