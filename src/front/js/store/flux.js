@@ -33,7 +33,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 			userCreate: async ( first_name, last_name, city, country, zip_code, address_one, address_two, phone, email, password) => {
 				const resp = await getActions().apiFetch("/api/register", "POST", { first_name, last_name, city, country, zip_code, address_one, address_two, phone, email, password })
-				console.log({ email, password })
+				console.log({ first_name, last_name, email, password })
 				if (resp.code >= 400) {
 					return resp
 				}
@@ -77,7 +77,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 					method,
 					body: JSON.stringify(body),
 					headers: {
-						"Content-Type": "application/json"
+						"Content-Type": "application/json",
+						"Authorization" : "Bearer "+localStorage.getItem("accessToken") 
 					}
 				})
 				if (!resp.ok) {
