@@ -18,6 +18,7 @@ class User(db.Model):
     bith_year=db.Column(Integer, unique=True, nullable=False)
     gender=db.Column(db.String(120), unique=True, nullable=False)
     phone=db.Column(db.Integer, unique=True, nullable=False)
+    suscription = db.Column(db.Boolean(), unique=False, nullable=False)
 
 class Restaurant(db.Model):
     __tablename__="Restaurant"
