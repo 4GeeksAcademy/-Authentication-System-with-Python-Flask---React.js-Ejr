@@ -64,7 +64,6 @@ export const UpdateProfile = () => {
 
                                         </div>
                                         <div className="col-md-6 mb-4 pb-2">
-
                                             <div className="form-outline">
                                                 <input type="tel" id="phoneNumber" className="form-control form-control-lg" />
                                                 <label className="form-label" htmlFor="phoneNumber">Teléfono</label>

@@ -65,17 +65,17 @@ export const Profile = () => {
                                 <div className="row gx-3 mb-3">
                                     {/* (location) */}
                                     <div className="col-md-6">
-                                        <label className="small mb-1" htmlFor="inputLocation">Tu dirección:</label>
+                                        <label className="small mb-1" htmlFor="inputLocation">Tu dirección</label>
                                         <input className="form-control" id="inputLocation" type="text" placeholder="Tu dirección"></input>
                                     </div>
                                     <div className="col-md-6">
-                                        <label className="small mb-1" htmlFor="inputLocation">Cuentanos algun otro detalle de tu direccion:</label>
-                                        <input className="form-control" id="inputLocation" type="text" placeholder="Apto, casa, contunto, torre y otros detalles"></input>
+                                        <label className="small mb-1" htmlFor="inputLocationDetails">Cuentanos algun otro detalle de tu direccion</label>
+                                        <input className="form-control" id="inputLocationDetails" type="text" placeholder="Apto, casa, contunto, torre y otros detalles"></input>
                                     </div>
                                 </div>
                                 {/* (email address) */}
                                 <div className="mb-3">
-                                    <label className="small mb-1" htmlFor="inputEmailAddress">Tu correo:</label>
+                                    <label className="small mb-1" htmlFor="inputEmailAddress">Tu correo</label>
                                     <input className="form-control" id="inputEmailAddress" type="email" placeholder="Tu Correo Electrónico"></input>
                                 </div>
                                 {/* Form Row */}

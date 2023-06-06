@@ -35,9 +35,9 @@ export const Home = () => {
 						<div className="row m-1 vh-25">
 							<div className="col-8 col-sm-6 vh-25 box d my-2">
 							<section className="stores">
-								<button className="store-ads p-4 mx-auto fs-1 fw-bold mt-5 blur fs-5" 
+								<button className="store-ads p-4 px-5 mx-auto fs-1 fw-bold mt-5 blur fs-5" 
 								style={{borderRadius:"33% 67% 32% 68% / 90% 9% 91% 10% "}}>
-									Tiendas disponibles
+									Pedir Comida
 								</button>
 							</section>
 							</div>
@@ -63,7 +63,7 @@ export const Home = () => {
 							<div className="col-4 col-sm-6 vh-25 box h my-2 gap-2 border">	
 								<button className="store-ads p-4 mx-auto fs-1 fw-bold mt-5 blur fs-5" 
 								style={{borderRadius:"33% 67% 32% 68% / 90% 9% 91% 10% "}}>
-									Solo quiero comida
+									Suscripciones
 								</button>
 							</div>
 						</div>
