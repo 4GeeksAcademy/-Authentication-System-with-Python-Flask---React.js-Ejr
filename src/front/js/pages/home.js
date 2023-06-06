@@ -11,10 +11,10 @@ export const Home = () => {
 
 	return (
 		<div className="text-center">
-			<section className="container-fluid text-center text-dark color-font-ai" style={{height:"100%"}}>
+			<section className="container-fluid text-center" style={{height:"100%"}}>
 			<div className="container-fluid text-center m-1 h-100 g-4 gap-3 p-3 fs-1 m-3 py-2">
 				<div className="row m-2 fs-1 d-sm-inline-flex">
-					<div className="col-sm-3 box text-dark b">
+					<div className="col-sm-3 box b color-font-ai">
 						this is the AI box, please complete the AI task to complete this box only
 					</div>
 
