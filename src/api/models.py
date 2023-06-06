@@ -9,7 +9,7 @@ from sqlalchemy.orm import relationship
 db = SQLAlchemy()
 
 class User(db.Model):
-    __tablename__="User"
+    __tablename__="user"
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(80), unique=False, nullable=False)
@@ -22,16 +22,28 @@ class User(db.Model):
     gender=db.Column(db.String(120), unique=True, nullable=False)
     phone=db.Column(db.Integer, unique=True, nullable=False)
     suscription = db.Column(db.Boolean(), unique=False, nullable=False)
-    plato_id= db.Column(Integer, ForeignKey("Restaurant.id"))
-    plato=relationship("Restaurant")
+    
 
 class Restaurant(db.Model):
-    __tablename__="Restaurant"
+    __tablename__="restaurant"
     id = db.Column(db.Integer, primary_key=True)
     # user_id=db.Column(db.Integer, db.Foreignkey = ("User.id"))
     name = db.Column(db.String(120), unique=True, nullable=False)
     platos = db.Column(db.String(80), unique=False, nullable=False)
     ubicaciones = db.Column(db.String(80), unique=False, nullable=False)
+
+class Pedidos(db.Model):
+    __tablename__="pedidos"
+    id = db.Column(db.Integer, primary_key=True)
+    plato_id= db.Column(Integer, ForeignKey("restaurant.id"))
+    plato=relationship("restaurant")
+    usuario_id=db.Column(Integer, ForeignKey("user.id"))
+    usuario=relationship("user")
+
+class DetalleDePedidos(db.Model):
+    __tablename__="detalleDePedidos"
+    detalles=
+
 
 class TokenBlockedList(db.Model):
     __tablename__="token_blocked_list"
