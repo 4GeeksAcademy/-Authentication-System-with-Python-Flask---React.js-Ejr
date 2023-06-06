@@ -1,13 +1,12 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Context } from "../store/appContext";
 import "../../styles/home.css";
-import RegisterModal from "./RegisterModal";
 import LoginModal from "./loginModal";
-import Register from "../component/register";
 
 
 export const Home = () => {
 	const { store, actions } = useContext(Context);
+	const url=process.env.BACKEND_URL;
 
 	return (
 		<div className="text-center">
@@ -72,9 +71,7 @@ export const Home = () => {
 				</div>
 			</div>
 			</section>
-			<RegisterModal />
 			<LoginModal />
-			<Register />
 		</div>
 	);
 };
