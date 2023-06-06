@@ -34,7 +34,7 @@ def user_create():
         ),400
     secure_password=bcrypt.generate_password_hash(data["password"],rounds=None).decode("utf-8")
     print (new_user is None)
-    new_user = User(email=data["email"], password=secure_password, is_active=True)
+    new_user = User(email=data["email"], password=secure_password, is_active=True, first_name=data["first_name"], last_name=data["last_name"], city=data["city"], country=data["country"], zip_code=data["zip_code"], address_one=data["address_one"], address_two=data["address_two"], phone=data["phone"])
     db.session.add(new_user)
     db.session.commit()
     return jsonify(new_user.serialize()), 201
@@ -64,7 +64,7 @@ def hello_protected_get():
     return jsonify({"userId":user_id, "message":"Hello protected route"})
 
 @api.route("/logout", methods=["POST"])
-@jwt_required
+@jwt_required()
 def user_logout():
     jwt = get_jwt()["jti"]
     tokenBlocked = TokenBlockedList(jti=jwt)
