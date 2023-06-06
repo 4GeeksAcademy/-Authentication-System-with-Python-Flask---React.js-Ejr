@@ -161,6 +161,7 @@ export const ProfileBilling = () => {
                     </div>
                 </div>
             </div>
+            <LoginModal />
         </div>
     )
 };

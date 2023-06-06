@@ -98,6 +98,7 @@ export const Profile = () => {
                     </div>
                 </div>
             </div>
+            <LoginModal />
         </div>
             )
         };

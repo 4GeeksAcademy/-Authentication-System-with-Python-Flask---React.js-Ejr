@@ -101,6 +101,7 @@ export const ProfileSecurity = () => {
                     </div>
                 </div>
             </div>
+            <LoginModal />
          </div>
     )
     };

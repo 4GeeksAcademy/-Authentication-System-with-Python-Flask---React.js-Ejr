@@ -7,7 +7,7 @@ export const Navbar = () => {
 		<nav id="navbar-design" className="navbar sticky-top pt-0 mt-0 mb-3">
 			<div className="container">
 				<Link to="/">
-					<span className="navbar-brand fw-bold fs-2 mb-0">GitLoot</span>
+					<span className="navbar-brand fs-2 mb-0 color-font">GitLoot</span>
 				</Link>
 				<div className="ml-auto">
 					<div className="btn-group dropstart">

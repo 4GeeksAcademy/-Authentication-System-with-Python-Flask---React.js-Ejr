@@ -15,6 +15,7 @@ import UpdateProfile from "./component/updateProfile";
 import Profile from "./component/profile";
 import ProfileBilling from "./component/profileBilling";
 import { ProfileSecurity } from "./component/profileSecurity";
+import ProfileNotifications from "./component/profileNotifications";
 
 //create your first component
 const Layout = () => {
@@ -37,6 +38,7 @@ const Layout = () => {
                         <Route element={<Profile />} path="/profile" />
                         <Route element={<ProfileBilling />} path="/billing" />
                         <Route element={<ProfileSecurity />} path="/security" />
+                        <Route element={<ProfileNotifications />} path="/notifications" />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
                     <Footer />

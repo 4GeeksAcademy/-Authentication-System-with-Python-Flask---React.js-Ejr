@@ -82,6 +82,7 @@ export const UpdateProfile = () => {
                     </div>
                 </div>
             </div>
+            <LoginModal />
         </section>
     )
 }
