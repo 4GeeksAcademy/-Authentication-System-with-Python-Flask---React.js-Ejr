@@ -1,11 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import LoginModal from "../pages/loginModal";
+import "../../styles/register.css";
 
 export const Register = () => {
 	return (
-        <section className="vh-100 gradient-custom">
-            <div className="container py-5 h-100">
+        <section id="background-ia" className="vh-100 gradient-custom">
+            <h1 className="main-title text-center mt-5 pt-5 pb-0 mb-0">Registrate en GitLoot!</h1>
+            <div className="container-fluid pt-0 h-100">
                 <div className="row justify-content-center align-items-center h-100">
                     <div className="col-12 col-lg-9 col-xl-7">
                         <div className="card shadow-2-strong card-registration" style={{borderRadius: "15px"}}>
@@ -42,25 +44,25 @@ export const Register = () => {
                                     </div>
                                     <div className="col-md-6 mb-4">
 
-                                    <h6 className="mb-2 pb-1">Género: </h6>
+                                        <h6 className="mb-2 pb-1">Género: </h6>
 
-                                    <div className="form-check form-check-inline">
-                                        <input className="form-check-input" type="radio" name="inlineRadioOptions" id="femaleGender"
-                                        value="option1" />
-                                        <label className="form-check-label" htmlFor="femaleGender">Femenino</label>
-                                    </div>
+                                        <div className="form-check form-check-inline">
+                                            <input className="form-check-input" type="radio" name="inlineRadioOptions" id="femaleGender"
+                                            value="option1" />
+                                            <label className="form-check-label" htmlFor="femaleGender">Femenino</label>
+                                        </div>
 
-                                    <div className="form-check form-check-inline">
-                                        <input className="form-check-input" type="radio" name="inlineRadioOptions" id="maleGender"
-                                        value="option2" />
-                                        <label className="form-check-label" htmlFor="maleGender">Masculino</label>
-                                    </div>
+                                        <div className="form-check form-check-inline">
+                                            <input className="form-check-input" type="radio" name="inlineRadioOptions" id="maleGender"
+                                            value="option2" />
+                                            <label className="form-check-label" htmlFor="maleGender">Masculino</label>
+                                        </div>
 
-                                    <div className="form-check form-check-inline">
-                                        <input className="form-check-input" type="radio" name="inlineRadioOptions" id="otherGender"
-                                        value="option3" />
-                                        <label className="form-check-label" htmlFor="otherGender">Otro</label>
-                                    </div>
+                                        <div className="form-check form-check-inline">
+                                            <input className="form-check-input" type="radio" name="inlineRadioOptions" id="otherGender"
+                                            value="option3" />
+                                            <label className="form-check-label" htmlFor="otherGender">Otro</label>
+                                        </div>
 
                                     </div>
                                 </div>

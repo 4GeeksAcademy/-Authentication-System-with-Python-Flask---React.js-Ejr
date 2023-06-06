@@ -7,7 +7,6 @@ export const ProfileSecurity = () => {
     return (
         <div className="container-xl px-4 mt-4">
             {/* Account page navigation */}
-            {/* Account page navigation */}
             <nav className="nav nav-borders">
                 <Link to="/profile">
                     <button className="nav-link ms-0" target="__blank">Perfil</button>
