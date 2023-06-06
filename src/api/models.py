@@ -39,10 +39,19 @@ class TokenBlockedList(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     jti = db.Column(db.String(50), nullable = False)
 
-class Services(db.Model):
-    __tablename__ = "services"
-    id = db.Column(db.Integer, db.ForeignKey("user.id"))
-    user_service = db.Column(db.Integer, primary_key=True)
+class ServicesSedan(db.Model):
+    __tablename__ = "services_sedan"
+    id = db.Column(db.Integer, primary_key=True)
+    user_service = db.Column(db.Integer, db.ForeignKey("user.id"))
+    name = db.Column(db.String(120), unique=True, nullable=False)
+    description = db.Column(db.String(500), unique=True, nullable=False)
+    price = db.Column(db.Integer, nullable=False)
+    user = db.relationship(User)
+
+class ServicesSuv(db.Model):
+    __tablename__ = "services_suv"
+    id = db.Column(db.Integer, primary_key=True)
+    user_service = db.Column(db.Integer, db.ForeignKey("user.id"))
     name = db.Column(db.String(120), unique=True, nullable=False)
     description = db.Column(db.String(500), unique=True, nullable=False)
     price = db.Column(db.Integer, nullable=False)

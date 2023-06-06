@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, TokenBlockedList
+from api.models import db, User, TokenBlockedList, ServicesSedan, ServicesSuv
 from api.utils import generate_sitemap, APIException
 from flask_bcrypt import Bcrypt
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity, get_jwt
@@ -10,6 +10,26 @@ from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identi
 api = Blueprint('api', __name__)
 app=Flask(__name__)
 bcrypt=Bcrypt(app)
+
+
+
+@api.route('/testdata', methods=['POST'])
+def load_test_data():
+    test_data = [
+        ServicesSedan(name="Aspirado Sedan", description="Aspirado interno", price="30"),
+        ServicesSedan(name="Lavado Sedan", description="Lavado externo", price="50"),
+        ServicesSuv(name="Aspirado Suv", description="Aspirado interno", price="60"),
+        ServicesSuv(name="Lavado Suv", description="Lavado externo", price="80")
+    ]
+
+    created_services = []
+    for service in test_data:
+        db.session.add(service)
+        created_services.append(service)
+
+    db.session.commit()
+    return jsonify(services=[service.serialize() for service in created_services]), 201
+
 
 @api.route('/hello', methods=['POST', 'GET'])
 def handle_hello():
