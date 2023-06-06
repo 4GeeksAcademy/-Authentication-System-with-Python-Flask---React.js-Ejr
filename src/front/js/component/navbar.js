@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "../../styles/navbar.css";
+
 export const Navbar = () => {
 	return (
 		<nav className="navbar navbar-expand-lg navbar-light custom-navbar">
@@ -14,24 +15,25 @@ export const Navbar = () => {
 				<div className="collapse navbar-collapse justify-content-center p-2" id="navbarNav">
 					<ul className="navbar-nav ">
 						<li className="nav-item px-3">
-							<a className="nav-link active" aria-current="page" href="#">Home</a>
+							<Link to="/" className="nav-link active" aria-current="page">Home</Link>
 						</li>
 						<li className="nav-item px-3">
-							<a className="nav-link active" aria-current="page" href="#">About Us</a>
+							<Link to="/aboutUs" className="nav-link active" aria-current="page">About Us</Link>
 						</li>
 						<li className="nav-item px-3">
-							<a className="nav-link active" aria-current="page" href="#">Services</a>
+							<Link to="/services" className="nav-link active" aria-current="page" >Services</Link>
 						</li>
 						<li className="nav-item px-3">
-							<a className="nav-link active" aria-current="page" href="#">Frequently Asked Questions</a>
+							<Link to="/frecuently-asked-questions" className="nav-link active" aria-current="page">Frequently Asked Questions</Link>
 						</li>
 
 					</ul>
 				</div>
 				<div className="nav-item justify-content-end">
 					<div className="btn-group" role="group" aria-label="Basic example">
-						<button type="button" className="custom-button rounded" style={{ marginRight: '10px', backgroundColor: '#E9C46A', color: '#000', padding: '18px 32px', borderRadius: '6px', boxShadow: '0 6px 0 black' }}>Login</button>
-						<button type="button" className="custom-button rounded" style={{ marginRight: '10px', backgroundColor: '#E9C46A', color: '#000', padding: '18px 32px', borderRadius: '6px', boxShadow: '0 6px 0 black' }}>SignUp</button>
+					<Link to="/Login"><button type="button" className="custom-button rounded" style={{ marginRight: '10px', backgroundColor: '#E9C46A', color: '#000', padding: '18px 32px', borderRadius: '6px', boxShadow: '0 6px 0 black' }}><i class="fa-solid fa-cart-shopping"></i></button></Link>
+						<Link to="/Login"><button type="button" className="custom-button rounded" style={{ marginRight: '10px', backgroundColor: '#E9C46A', color: '#000', padding: '18px 32px', borderRadius: '6px', boxShadow: '0 6px 0 black' }}>Login</button></Link>
+						<Link to="/Register"><button type="button" className="custom-button rounded" style={{ marginRight: '10px', backgroundColor: '#E9C46A', color: '#000', padding: '18px 32px', borderRadius: '6px', boxShadow: '0 6px 0 black' }}>SignUp</button></Link>
 					</div>
 					{/* <a className="nav-link active" aria-current="page" href="#">Login/signup</a> */}
 				</div>

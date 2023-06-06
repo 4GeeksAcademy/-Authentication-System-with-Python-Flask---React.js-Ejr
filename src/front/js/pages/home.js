@@ -7,6 +7,7 @@ export const Home = () => {
   const { store, actions } = useContext(Context);
 
   return (
+    <div>
     <div className="text-center d-flex custom-home">
       <div id="carouselExampleControls" className="carousel slide pt-4" data-bs-ride="carousel">
         <div className="carousel-inner container" style={{ width: "60%", height: "600px", margin: "0 auto" }}>
@@ -39,15 +40,36 @@ export const Home = () => {
           <button type="button" className="custom-button rounded" style={{ backgroundColor: '#F4A261', color: '#000', padding: '18px 32px', borderRadius: '6px', boxShadow: '0 6px 0 black' }}>Services</button>
         </div>
       </div>
-
-      <div class="card" style={{ width: "20%",  backgroundColor: "#264653"}}>
-        <img src="https://images.squarespace-cdn.com/content/v1/632cad1bcd38e003eb2d978e/b84c2375-f1ad-4dd1-9b62-fba66e30c8a5/text-message+icon.png?format=300w" style={{ width: "20%" }} class="card-img-top" alt="..." />
-        <div class="card-body">
-        <h5 class="card-title">Step #1</h5>
-          <p class="card-text">Click the “Book Now” button, then select a date/time, and lastly fill out the customer intake information. That’s it!</p>
+    </div>
+     
+    <div className="d-flex">
+      <div className="card col border-0 d-flex flex-column align-items-center" style={{ backgroundColor: "#264653"}}>
+        <img src="https://images.squarespace-cdn.com/content/v1/632cad1bcd38e003eb2d978e/b84c2375-f1ad-4dd1-9b62-fba66e30c8a5/text-message+icon.png?format=300w" style={{ width: "30%" }} className="card-img-top justify-content-center" alt="..." />
+        <div className="card-body">
+        <h5 className="card-title">Step #1</h5>
+          <p className="card-text">Click the “Book Now” button, then select a date/time, and lastly fill out the customer intake information. That’s it!</p>
         </div>
       </div>
 
+
+      <div className="card col border-0 d-flex flex-column align-items-center" style={{ backgroundColor: "#264653"}}>
+        <img src="https://images.squarespace-cdn.com/content/v1/632cad1bcd38e003eb2d978e/482bccab-e622-4dbd-85c5-4656c01a4135/car+wash+icon.png?format=300w" style={{ width: "30%" }} className="card-img-top justify-content-center" alt="..." />
+        <div className="card-body">
+        <h5 className="card-title">Step #2</h5>
+          <p className="card-text">We come to your home or place of business with all the tools and detail! All we ask is for a water spigot and an electrical outlet.</p>
+        </div>
+      </div>
+
+
+      <div className="card col border-0 d-flex flex-column align-items-center" style={{ backgroundColor: "#264653"}}>
+        <img src="https://images.squarespace-cdn.com/content/v1/632cad1bcd38e003eb2d978e/e778f883-ad94-4b56-8ff4-78e89a939ec1/relax+icon+.png?format=300w" style={{ width: "30%" }} className="card-img-top justify-content-center" alt="..." />
+        <div className="card-body">
+        <h5 className="card-title">Step #3</h5>
+          <p className="card-text">Go on about your day and in a matter of few hours, your vehicle will be set to factory reset!</p>
+        </div>
+      </div>
+
+      </div>
     </div>
 
   );
