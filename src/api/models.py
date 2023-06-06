@@ -41,6 +41,9 @@ class TokenBlockedList(db.Model):
 
 class Services(db.Model):
     __tablename__ = "services"
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, db.ForeignKey("user.id"))
+    user_service = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(120), unique=True, nullable=False)
-    price = db.Column(db.Integer)
+    description = db.Column(db.String(500), unique=True, nullable=False)
+    price = db.Column(db.Integer, nullable=False)
+    user = db.relationship(User)
