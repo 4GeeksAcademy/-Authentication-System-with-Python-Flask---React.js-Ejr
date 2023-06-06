@@ -169,7 +169,10 @@ color:#69707a;
 .color-font{
   font-family: 'Cairo Play', sans-serif;
   background: -webkit-linear-gradient(#4CB944, #4472CA);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.color-font-ai{
+  font-family: 'Cairo Play', sans-serif;
 }
