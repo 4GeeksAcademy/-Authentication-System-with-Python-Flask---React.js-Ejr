@@ -2,7 +2,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
 			message: ["Parece que funciona...  (?) valor anterior era null y no referenciaba al backend"],
-			restaurante: [
+			demo: [
 				{
 					name: "wok",
 					platos: ["ramen", "onigiri", "arroz", "sushi"],
@@ -23,39 +23,37 @@ const getState = ({ getStore, getActions, setStore }) => {
 			]
 		},
 		actions: {
-			// Use getActions to call a function within a fuction
-			exampleFunction: () => {
-				getActions().changeColor(0, "green");
-			},
-
-			getMessage: async () => {
-				try{
-					// fetching data from the backend
-					const resp = await fetch(process.env.BACKEND_URL + "/api/hello")
-					const data = await resp.json()
-					setStore({ message: data.message })
-					// don't forget to return something, that is how the async resolves
-					return data;
-				}catch(error){
-					console.log("Error loading message from backend", error)
+			loadRestaurants:() => {
+				setStore()[
+					{
+						name: "wok",
+						platos: ["ramen", "onigiri", "arroz", "sushi"],
+						ubicaciones: "white"
+					},
+					{
+						name: "McDonalds",
+						platos: ["hamburguesa", "hamburguesa con queso", "Doble libra", "Big Mac"],
+						ubicaciones: "white"
+					},
+					{
+						name: "Pollo a la leña",
+						platos: ["Pollo asado", "Medio pollo asado", "Cuarto de pollo asado", "Tortillas"],
+						ubicaciones: "white"
+					},
+					{
+						name: "La Bella Italia",
+						platos: ["Pizza con hongos", "Pasta bolognesa", "Fetuccini Alfredo", "Gnocchi"],
+						ubicaciones: "white"
+					},
+					{
+						name: "La Bella Italia",
+						platos: ["Pizza con hongos", "Pasta bolognesa", "Fetuccini Alfredo", "Gnocchi"],
+						ubicaciones: "white"
+					}]
 				}
-			},
-			changeColor: (index, color) => {
-				//get the store
-				const store = getStore();
-
-				//we have to loop the entire demo array to look for the respective index
-				//and change its color
-				const demo = store.demo.map((elm, i) => {
-					if (i === index) elm.background = color;
-					return elm;
-				});
-
-				//reset the global store
-				setStore({ demo: demo });
 			}
 		}
 	};
-};
+;
 
 export default getState;
