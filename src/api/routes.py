@@ -96,8 +96,17 @@ def hello_protected_get():
         "message": "Hello protected route"
 
     })
-   
 
+@api.route('/restaurant', methods=['GET'])
+def get_restaurants():
+    restaurants= Restaurant(name="McDonalds", platos="Hamburguesa", ubicaciones="Colombia")
+    db.session.add(restaurants)
+    restaurants1= Restaurant(name="Burger King", platos="Hamburguesa", ubicaciones="Colombia")
+    db.session.add(restaurants1)
+    restaurants2= Restaurant(name="Wendys", platos="Hamburguesa", ubicaciones="Colombia")
+    db.session.add(restaurants2)
+    db.session.commit()
+    return "ok"
 
 
 
