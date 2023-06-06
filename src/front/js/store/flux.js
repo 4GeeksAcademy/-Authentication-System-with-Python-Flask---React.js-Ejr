@@ -46,6 +46,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 				let token = localStorage.getItem("accessToken")
 				setStore({ accessToken: token })
 			},
+			loadTestData: async (name, description, price) =>{
+				const resp = await getActions().apiFetch("/api/testdata", "POST", {name, description, price})
+				if (resp.code >= 400) {
+					return resp
+				}
+			},
 			getMessage: async () => {
 				try {
 					// fetching data from the backend
