@@ -32,18 +32,28 @@ class Restaurant(db.Model):
     platos = db.Column(db.String(80), unique=False, nullable=False)
     ubicaciones = db.Column(db.String(80), unique=False, nullable=False)
 
+class Platos(db.Model):
+    __tablename__="platos"
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(120), unique=True, nullable=False)
+    restaurante=db.Column(Integer, ForeignKey("restaurant.id"))
+    restaurante_id=relationship("Restaurant")
+
 class Pedidos(db.Model):
     __tablename__="pedidos"
     id = db.Column(db.Integer, primary_key=True)
     plato_id= db.Column(Integer, ForeignKey("restaurant.id"))
-    plato=relationship("restaurant")
+    plato=relationship("Restaurant")
     usuario_id=db.Column(Integer, ForeignKey("user.id"))
-    usuario=relationship("user")
+    usuario=relationship("User")
 
 class DetalleDePedidos(db.Model):
     __tablename__="detalleDePedidos"
-    detalles=
-
+    id = db.Column(db.Integer, primary_key=True)
+    detalles_pedido=db.Column(Integer, ForeignKey("platos.id"))
+    pedido=relationship("Pedidos")
+    detalles_restaurante=db.Column(Integer, ForeignKey("restaurant.id"))
+    resturante=relationship("Restaurant")
 
 class TokenBlockedList(db.Model):
     __tablename__="token_blocked_list"
