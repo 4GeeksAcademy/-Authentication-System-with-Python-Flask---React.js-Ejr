@@ -3,6 +3,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
 			message: null,
+			services: [],
 			demo: [
 				{
 					title: "FIRST",
@@ -87,9 +88,19 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 				let data = await resp.json()
 				return { code: resp.status, data: data }
+			},
+
+			addServices: (element) => {
+				const service = getStore().services;
+				if (service.includes(element) == false) {
+					const newServices = service.concat(element);
+					setStore({ services: newServices })
+					console.log(getStore().services)
+				}
+
 			}
-		}
+		},
 	};
 };
 
-export default getState;
+	export default getState;

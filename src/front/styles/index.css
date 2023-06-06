@@ -1,3 +1,8 @@
 /* 
     General Styles used on every website (Don't Repeat Yourself)
 */
+
+body {
+    font-family: 'Bruno Ace SC', cursive;
+    color: white
+}

@@ -7,8 +7,8 @@ export const AboutUs = () => {
 
     return (
         <div className="custom-aboutUs">
-            <h1 className="justify-conten-center text-light" style={{ textAlign: 'center' }}> What is StarWash?</h1>
-            <h5 className="justify-conten-center mb-5 text-light" style={{ textAlign: 'center' }}>
+            <h1 className="justify-conten-center" style={{ textAlign: 'center' }}> What is StarWash?</h1>
+            <h5 className="justify-conten-center mb-5 " style={{ textAlign: 'center' }}>
                 StarWash is a passionate, committed, and environmentally conscious company. They are always ready to meet the needs of their customers and strive to make a positive difference in the world of car washing.
             </h5>
 
@@ -91,17 +91,17 @@ export const AboutUs = () => {
             </div>
 
                 <div>
-            <div className="card align-items-end custom-aboutUs border-0 text-light" style={{width: "30rem", marginLeft: '70px' }}>
+            <div className="card align-items-end custom-aboutUs border-0" style={{width: "30rem", marginLeft: '70px' }}>
                     <div className="card-body">
                         <h4 className="card-title">Mission</h4>
-                        <p className="card-text">Our mission is to provide exceptional and environmentally-friendly mobile car wash service. We are committed to offering comprehensive care for our customers' vehicles, using exclusively eco-friendly products that minimize negative impact on the natural environment. We strive to exceed our customers' expectations by delivering a convenient, reliable, and high-quality washing experience while promoting sustainable practices that contribute to environmental preservation.</p>
+                        <p className="card-text justify">Our mission is to provide exceptional and environmentally-friendly mobile car wash service. We are committed to offering comprehensive care for our customers' vehicles, using exclusively eco-friendly products that minimize negative impact on the natural environment. We strive to exceed our customers' expectations by delivering a convenient, reliable, and high-quality washing experience while promoting sustainable practices that contribute to environmental preservation.</p>
                     </div>
                 </div>
 
-                <div className="card align-items-end custom-aboutUs border-0 text-light" style={{width: "30rem", paddingTop: '60px', marginLeft: '170px' }}>
+                <div className="card align-items-end custom-aboutUs border-0 " style={{width: "30rem", paddingTop: '60px', marginLeft: '170px' }}>
                     <div className="card-body">
                         <h4 className="card-title">Vision</h4>
-                        <p className="card-text">Our vision is to become the leading eco-friendly mobile car wash company, recognized for our excellence in customer service and commitment to environmental sustainability. We aspire to set a standard in the industry, driving the shift towards more environmentally-friendly vehicle washing practices and promoting environmental awareness in our community. Through continuous innovation and strategic expansion, we aim to be market leaders, providing convenient and eco-conscious washing solutions to meet the evolving needs of our customers and make a positive impact on the planet's care.</p>
+                        <p className="card-text justify">Our vision is to become the leading eco-friendly mobile car wash company, recognized for our excellence in customer service and commitment to environmental sustainability. We aspire to set a standard in the industry, driving the shift towards more environmentally-friendly vehicle washing practices and promoting environmental awareness in our community. Through continuous innovation and strategic expansion, we aim to be market leaders, providing convenient and eco-conscious washing solutions to meet the evolving needs of our customers and make a positive impact on the planet's care.</p>
                     </div>
                 </div>
                 </div>
