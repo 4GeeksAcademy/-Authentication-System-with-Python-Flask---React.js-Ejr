@@ -5,7 +5,6 @@ import "../../styles/profile.css";
 
 export const ProfileNotifications = () => {
     return (
-
         
     )
 };
