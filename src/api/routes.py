@@ -44,7 +44,7 @@ def handle_signup():
         first_name=request_data['first_name'],
         last_name=request_data['last_name'],
         description = None,
-        es_abuelo=request_data['es_abuelo']
+        is_grandparent=request_data['is_grandparent']
     ) 
     db.session.add(new_user)
     db.session.commit()

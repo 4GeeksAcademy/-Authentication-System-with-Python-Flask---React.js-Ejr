@@ -1,31 +1,66 @@
 import React, { useState } from "react";
 
-export const RegistrateVoluntarioForm = () => {
+export function RegistrateVoluntarioForm() {
+  const [showPassword, setShowPassword] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
   const [passwordMatch, setPasswordMatch] = useState(true);
-  const [showPassword, setShowPassword] = useState(false);
+
+  const toggleShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    const inputName = document.getElementById("inputName").value;
-    const inputSurname = document.getElementById("inputSurname").value;
-    const inputPassword = document.getElementById("inputPassword").value;
-    const inputRepeatPassword = document.getElementById("inputRepeatPassword").value;
+    const form = event.target;
+    const inputName = form.elements.inputName.value;
+    const inputSurname = form.elements.inputSurname.value;
+    const inputUserName = form.elements.inputUserName.value;
+    const inputEmail = form.elements.inputEmail.value;
+    const inputPassword = form.elements.inputPassword.value;
+    const inputRepeatPassword = form.elements.inputRepeatPassword.value;
 
-    if (inputName === "" || inputSurname === "" || inputPassword === "" || inputRepeatPassword === "") {
+    if (!inputName || !inputSurname || !inputUserName || !inputEmail || !inputPassword || !inputRepeatPassword) {
       setShowAlert(true);
-    } else if (inputPassword !== inputRepeatPassword) {
-      setPasswordMatch(false);
-    } else {
-      setShowAlert(false);
-      setPasswordMatch(true);
-      // Add your form submission logic here
+      return;
     }
-  };
 
-  const toggleShowPassword = () => {
-    setShowPassword(!showPassword);
+    if (inputPassword !== inputRepeatPassword) {
+      setPasswordMatch(false);
+      return;
+    }
+
+    const newUser = {
+      user_name: inputUserName,
+      email: inputEmail,
+      password: inputPassword,
+      first_name: inputName,
+      last_name: inputSurname,
+      is_grandparent: false,
+    };
+
+    // Make the POST request to your API endpoint
+    fetch("api/signup", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newUser),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(response.statusText);
+        }
+        return response.json();
+      })
+      .then((data) => {
+        // Handle successful signup
+        console.log("New user created:", data);
+      })
+      .catch((error) => {
+        // Handle signup error
+        console.error("Error creating user:", error);
+      });
   };
 
   return (
@@ -38,7 +73,7 @@ export const RegistrateVoluntarioForm = () => {
             </div>
             {showAlert && (
               <div className="alert alert-danger" role="alert">
-                Por favor rellene este campo.
+                Por favor, completa todos los campos.
               </div>
             )}
             {!passwordMatch && (
@@ -68,7 +103,7 @@ export const RegistrateVoluntarioForm = () => {
               <label htmlFor="inputEmail" className="form-label">
                 Email
               </label>
-              <input type="email" className="form-control" id="inputSurname" required />
+              <input type="email" className="form-control" id="inputEmail" required />
             </div>
             <div className="mb-3">
               <label htmlFor="inputPassword" className="form-label">
@@ -76,7 +111,6 @@ export const RegistrateVoluntarioForm = () => {
               </label>
               <div className="input-group">
                 <input type={showPassword ? "text" : "password"} className="form-control" id="inputPassword" required />
-               
               </div>
             </div>
             <div className="mb-3">
@@ -116,4 +150,4 @@ export const RegistrateVoluntarioForm = () => {
       </div>
     </div>
   );
-};
+}
