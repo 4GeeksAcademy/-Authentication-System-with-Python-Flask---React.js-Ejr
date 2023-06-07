@@ -181,3 +181,13 @@ button:hover{
 .color-font-ai{
   font-family: 'Cairo Play', sans-serif;
 }
+#background-ia-2{
+  background-image: url("https://cdn.leonardo.ai/users/25acf724-d0fb-44e7-8da5-a5932af5eac9/generations/1d8e2329-9bb4-484a-98ec-3804a5799cea/DreamShaper_v6_UI_background_light_and_nice_sensation_with_foo_1.jpg");
+  position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-size: cover;
+    background-position: center;
+}
