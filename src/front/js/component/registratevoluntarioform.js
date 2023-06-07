@@ -39,8 +39,9 @@ export function RegistrateVoluntarioForm() {
       is_grandparent: false,
     };
 
+
     // Make the POST request to your API endpoint
-    fetch("api/signup", {
+    fetch(process.env.BACKEND_URL + "/api/signup", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -56,6 +57,8 @@ export function RegistrateVoluntarioForm() {
       .then((data) => {
         // Handle successful signup
         console.log("New user created:", data);
+        // Redirect to google.com
+        window.location.href = "/landing";
       })
       .catch((error) => {
         // Handle signup error
