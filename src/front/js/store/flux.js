@@ -2,7 +2,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
 			message: ["Parece que funciona...  (?) valor anterior era null y no referenciaba al backend"],
-			
+
 			user: [
 				{
 					firstName: "Alejandra",
@@ -40,10 +40,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             ],
 		},
 		actions: {
-			fetch userData: async
-			
-				}
-			
+
 		}
 	
 ;
