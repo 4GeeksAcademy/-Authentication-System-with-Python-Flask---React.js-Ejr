@@ -10,7 +10,7 @@ export const Home = () => {
 
 
 	return (
-		<div className="text-center mt-5">
+		<div className="text-center mt-5" style={{margintop: "4rem", marginBottom: "0rem"}}>
 			<section className="container-fluid text-center" style={{height:"100%"}}>
 			<div className="container-fluid text-center m-1 h-100 g-4 gap-3 p-3 fs-1 m-3 py-2">
 				<div className="row m-2 fs-1 d-sm-inline-flex">
