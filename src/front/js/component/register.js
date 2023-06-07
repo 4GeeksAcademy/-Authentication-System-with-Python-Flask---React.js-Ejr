@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import LoginModal from "../pages/loginModal";
 import "../../styles/register.css";
 
 export const Register = () => {
+    const {store, actions} = useContext(Context)
+    
 	return (
         <section id="background-ia" className="vh-100 gradient-custom">
             <h1 className="main-title text-center mt-5 pt-5 pb-0 mb-0">Registrate en GitLoot!</h1>
