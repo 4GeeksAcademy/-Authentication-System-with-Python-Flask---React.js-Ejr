@@ -37,20 +37,20 @@ export const Home = () => {
 						</div>
 
 						<div className="row row-cols-1 row-cols-lg-2 g-2 g-lg-3 m-1 vh-25">
-							<div className="col-12 col-md-6 vh-25 box d my-2">
-							<section className="stores">
-								<button className="store-ads p-4 px-5 mx-auto fs-1 fw-bold mt-5 blur g-4 fs-5" 
-								style={{borderRadius:"33% 67% 32% 68% / 90% 9% 91% 10% "}}>
-									Pedir Comida
-								</button>
-							</section>
-							</div>
-							<div className="col-12 col-md-6 vh-25 box e my-2 g-4">
-								<section className="pt-0 mt-0">
-									<p className="store-ads blur">Nuestras tiendas tienen excelentes descuentos, le ponemos el alma para llevar los alimentos más frescos a tu hogar!</p>
-								</section>
-							</div>
-						</div>
+                            <div className="col-12 col-md-6 vh-25 box d my-2">
+                            <section className="stores">
+                                <button className="store-ads p-4 px-5 mx-auto fs-1 fw-bold mt-5 blur g-4 fs-5"
+                                style={{borderRadius:"33% 67% 32% 68% / 90% 9% 91% 10% "}}>
+                                    Pedir Comida
+                                </button>
+                            </section>
+                            </div>
+                            <div className="col-12 col-md-6 vh-25 box e my-2 g-4">
+                                <section className="pt-0 mt-0">
+                                    <p className="store-ads blur">Nuestras tiendas tienen excelentes descuentos, le ponemos el alma para llevar los alimentos más frescos a tu hogar!</p>
+                                </section>
+                            </div>
+                        </div>
 
 						<div className="row m-1 vh-25 box f my-2">
 							<div className="col-12 col-sm-12 vh-25">
