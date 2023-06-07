@@ -267,6 +267,10 @@ export const modifyTech = async (technicianId, body, token) => {
   try {
     const resp = await fetch(`${URL}/api/tech/${technicianId}`, {
       method: "PUT",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        ...HEADERS,
+      },
       body: JSON.stringify(body),
       redirect: "follow",
     });
