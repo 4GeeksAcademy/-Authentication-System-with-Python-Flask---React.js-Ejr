@@ -4,7 +4,7 @@ import LoginModal from "../pages/loginModal";
 
 export const Navbar = () => {
 	return (
-		<nav id="navbar-design" className="navbar sticky-top pt-0 mt-0 mb-3">
+		<nav id="navbar-design" className="navbar fixed-top">
 			<div className="container">
 				<Link to="/">
 					<span className="navbar-brand fs-2 mb-0 color-font">GitLoot</span>

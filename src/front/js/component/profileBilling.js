@@ -5,7 +5,7 @@ import "../../styles/profile.css";
 
 export const ProfileBilling = () => {
     return (
-        <div className="container-xl mb-0 pb-0">
+        <div className="container-xl px-4" style={{paddingTop:"3rem"}}>
             {/* Account page navigation */}
             <nav className="nav nav-borders">
                 <Link to="/profile">

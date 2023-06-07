@@ -5,10 +5,11 @@ import "../../styles/register.css";
 
 export const Register = () => {
 	return (
-        <section id="background-ia" className="vh-100 gradient-custom">
-            <h1 className="main-title text-center mt-5 pt-5 pb-0 mb-0">Registrate en GitLoot!</h1>
-            <div className="container-fluid pt-0 h-100">
-                <div className="row justify-content-center align-items-center h-100">
+        
+        <section  className="vh-100 gradient-custom mb-5 pb-5">
+            <div id="background-ia"className="container-fluid pt-0">
+            <h1 className="main-title text-center pt-5 pb-0 mb-0">Registrate en GitLoot!</h1>
+                <div className="row justify-content-center align-items-center mt-5 h-25">
                     <div className="col-12 col-lg-9 col-xl-7">
                         <div className="card shadow-2-strong card-registration" style={{borderRadius: "15px"}}>
                         <div className="card-body p-4 p-md-5">
