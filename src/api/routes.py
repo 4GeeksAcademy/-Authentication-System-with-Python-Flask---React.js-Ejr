@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, TokenBlockedList, ServicesSedan, ServicesSuv
+from api.models import db, User, TokenBlockedList, ServicesSedan, ServicesSuv, VehicleSuv, VehicleSedan
 from api.utils import generate_sitemap, APIException
 from flask_bcrypt import Bcrypt
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity, get_jwt
@@ -19,7 +19,10 @@ def load_test_data():
         ServicesSedan(name="Aspirado Sedan", description="Aspirado interno", price="30"),
         ServicesSedan(name="Lavado Sedan", description="Lavado externo", price="50"),
         ServicesSuv(name="Aspirado Suv", description="Aspirado interno", price="60"),
-        ServicesSuv(name="Lavado Suv", description="Lavado externo", price="80")
+        ServicesSuv(name="Lavado Suv", description="Lavado externo", price="80"),
+        VehicleSedan(name="Sedan"),
+        VehicleSuv(name="Suv")
+
     ]
 
     created_services = []

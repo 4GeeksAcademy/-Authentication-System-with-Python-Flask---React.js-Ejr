@@ -39,20 +39,34 @@ class TokenBlockedList(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     jti = db.Column(db.String(50), nullable = False)
 
+class VehicleSedan(db.Model):
+    __tablename__ = "vehicle_sedan"
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(120), unique=True, nullable=False)
+
+class VehicleSuv(db.Model):
+    __tablename__ = "vehicle_suv"
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(120), unique=True, nullable=False)
+
 class ServicesSedan(db.Model):
     __tablename__ = "services_sedan"
     id = db.Column(db.Integer, primary_key=True)
     user_service = db.Column(db.Integer, db.ForeignKey("user.id"))
+    vehicle_service = db.Column(db.Integer, db.ForeignKey("vehicle_sedan.id"))
     name = db.Column(db.String(120), unique=True, nullable=False)
     description = db.Column(db.String(500), unique=True, nullable=False)
     price = db.Column(db.Integer, nullable=False)
     user = db.relationship(User)
+    vehicle_sedan = db.relationship(VehicleSedan)
 
 class ServicesSuv(db.Model):
     __tablename__ = "services_suv"
     id = db.Column(db.Integer, primary_key=True)
     user_service = db.Column(db.Integer, db.ForeignKey("user.id"))
+    vehicle_service = db.Column(db.Integer, db.ForeignKey("vehicle_suv.id"))
     name = db.Column(db.String(120), unique=True, nullable=False)
     description = db.Column(db.String(500), unique=True, nullable=False)
     price = db.Column(db.Integer, nullable=False)
     user = db.relationship(User)
+    vehicle_suv = db.relationship(VehicleSuv)
