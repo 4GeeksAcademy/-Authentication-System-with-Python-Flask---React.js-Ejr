@@ -5,7 +5,7 @@ import "../../styles/profile.css";
 
 export const ProfileNotifications = () => {
     return (
-        <div className="container-xl px-4 mt-4">
+        <div className="container-xl px-4" style={{paddingTop:"3rem"}}>
             {/* Account page navigation */}
             <nav className="nav nav-borders">
                 <Link to="/profile">
