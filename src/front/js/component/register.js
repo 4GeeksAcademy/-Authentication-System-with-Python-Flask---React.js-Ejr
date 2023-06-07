@@ -21,7 +21,7 @@ export const Register = () => {
                                     <div className="col-md-6 mb-4">
 
                                     <div className="form-outline">
-                                        <input type="text" id="firstName" className="form-control form-control-lg" />
+                                        <input type="text" id="firstName" className="form-control form-control-lg" placeholder="Nombres"/>
                                         <label className="form-label" htmlFor="firstName">Nombres</label>
                                     </div>
 
@@ -29,7 +29,7 @@ export const Register = () => {
                                     <div className="col-md-6 mb-4">
 
                                     <div className="form-outline">
-                                        <input type="text" id="lastName" className="form-control form-control-lg" />
+                                        <input type="text" id="lastName" className="form-control form-control-lg" placeholder="Apellidos"/>
                                         <label className="form-label" htmlFor="lastName">Apellidos</label>
                                     </div>
 
@@ -40,7 +40,7 @@ export const Register = () => {
                                     <div className="col-md-6 mb-4 d-flex align-items-center">
 
                                     <div className="form-outline datepicker w-100">
-                                        <input type="text" className="form-control form-control-lg" id="birthdayDate" />
+                                        <input type="text" className="form-control form-control-lg" placeholder="dd-mm-aaaa" id="birthdayDate" />
                                         <label htmlFor="birthdayDate" className="form-label">Fecha de Nacimiento</label>
                                     </div>
 
@@ -74,7 +74,7 @@ export const Register = () => {
                                     <div className="col-md-6 mb-4 pb-2">
 
                                     <div className="form-outline">
-                                        <input type="email" id="emailAddress" className="form-control form-control-lg" />
+                                        <input type="email" id="emailAddress" className="form-control form-control-lg" placeholder="Tu correo"/>
                                         <label className="form-label" htmlFor="emailAddress">Correo</label>
                                     </div>
 
@@ -82,7 +82,7 @@ export const Register = () => {
                                     <div className="col-md-6 mb-4 pb-2">
 
                                     <div className="form-outline">
-                                        <input type="tel" id="phoneNumber" className="form-control form-control-lg" />
+                                        <input type="tel" id="phoneNumber" className="form-control form-control-lg" placeholder="Tu numero móvil"/>
                                         <label className="form-label" htmlFor="phoneNumber">Teléfono</label>
                                     </div>
 
