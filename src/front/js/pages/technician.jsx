@@ -43,10 +43,11 @@ export const Technician = () => {
     
     const conversationsByFarmer = {};
     
-    if (conversations.length === 0) {
+    if (conversations === 0) {
       return [];
     }
     else{
+      
       conversations.forEach((conversation) => {
       const farmerId = conversation.farmer_id;
       if (!conversationsByFarmer[farmerId]) {
@@ -69,8 +70,17 @@ export const Technician = () => {
   };
   const getConversations = async () => {
     const data = await getMessages();
-    const uniqueConversations = getUniqueConversationsByFarmer(data);
-    setConversations(uniqueConversations);
+  
+    if (Array.isArray(data)) {
+      if (data.length > 0) {
+        const uniqueConversations = getUniqueConversationsByFarmer(data);
+        setConversations(uniqueConversations);
+      } else {
+        setConversations([]);
+      }
+    } else {
+      setConversations([]);
+    }
   };
 
   const infoUser = async () => {
