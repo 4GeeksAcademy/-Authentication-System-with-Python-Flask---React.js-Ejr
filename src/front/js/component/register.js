@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import LoginModal from "../pages/loginModal";
 
 export const Register = () => {
+    const {store, actions} = useContext(Context)
+    
 	return (
         <section className="vh-100 gradient-custom">
             <div className="container py-5 h-100">

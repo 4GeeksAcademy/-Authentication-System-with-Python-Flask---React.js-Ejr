@@ -67,7 +67,7 @@ def user_logout():
     return jsonify ({"msg": "Token revoked"})
 
 
-@api.route('/login', methods=['POST'])
+@api.route('/register', methods=['POST'])
 def user_create():
     data=request.get_json()
     print(data)
@@ -82,10 +82,23 @@ def user_create():
         data["password"], rounds=None).decode("utf-8")
     new_user=User(email=data ["email"], password=secure_password, is_active=True)
     print(new_user)
+    new_user = User(
+        email=data["email"],
+        password=secure_password,
+        is_active=True,
+        first_name=data["first_name"],
+        last_name=data["last_name"],
+        birth_day=data["birth_day"],
+        birth_month=data["birth_month"],
+        birth_year=data["birth_year"],
+        gender=data["gender"],
+        phone=data["phone"],
+        suscription=data["suscription"]
+    )
     db.session.add(new_user)
     db.session.commit()
-    print(new_user.serialize()),201
-    return "ok"
+    return jsonify(new_user.serialize()), 201
+    
 
 @api.route('/helloprotected', methods=['GET'])
 @jwt_required()
@@ -107,6 +120,7 @@ def get_restaurants():
     db.session.add(restaurants2)
     db.session.commit()
     return "ok"
+
 
 
 
