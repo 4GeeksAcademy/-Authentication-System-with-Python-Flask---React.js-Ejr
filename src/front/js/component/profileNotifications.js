@@ -8,10 +8,18 @@ export const ProfileNotifications = () => {
         <div className="container-xl px-4 mt-4">
             {/* Account page navigation */}
             <nav className="nav nav-borders">
-                <a className="nav-link  ms-0" href="https://www.bootdey.com/snippets/view/bs5-edit-profile-account-details" target="__blank">Profile</a>
-                <a className="nav-link" href="https://www.bootdey.com/snippets/view/bs5-profile-billing-page" target="__blank">Billing</a>
-                <a className="nav-link" href="https://www.bootdey.com/snippets/view/bs5-profile-security-page" target="__blank">Security</a>
-                <a className="nav-link active" href="https://www.bootdey.com/snippets/view/bs5-edit-notifications-page"  target="__blank">Notifications</a>
+                <Link to="/profile">
+                    <button className="nav-link ms-0" target="__blank">Perfil</button>
+                </Link>
+                <Link to="/billing">
+                    <button className="nav-link" target="__blank">Pagos</button>
+                </Link>
+                <Link to="/security">
+                    <button className="nav-link" target="__blank">Seguridad</button>
+                </Link>
+                <Link to="/notifications">
+                    <button className="nav-link active" target="__blank">Notificaciones</button>
+                </Link>
             </nav>
             <hr className="mt-0 mb-4"></hr>
             <div className="row">
@@ -19,7 +27,7 @@ export const ProfileNotifications = () => {
                     {/* <Email notifications preferences card */}
                     <div className="card card-header-actions mb-4 gradient-custom-contrast">
                         <div className="card-header">
-                            Email Notifications
+                            Notificaciones por correo
                             <div className="form-check form-switch">
                                 <input className="form-check-input" id="flexSwitchCheckChecked" type="checkbox"></input>
                                 <label className="form-check-label" htmlFor="flexSwitchCheckChecked"></label>
@@ -29,35 +37,27 @@ export const ProfileNotifications = () => {
                             <form>
                                 {/* Form Group (default email) */}
                                 <div className="mb-3">
-                                    <label className="small mb-1" htmlFor="inputNotificationEmail">Default notification email</label>
-                                    <input className="form-control" id="inputNotificationEmail" type="email" disabled=""></input>
+                                    <label className="small mb-1" htmlFor="inputNotificationEmail">Correo predeterminado para notificaciones</label>
+                                    <input className="form-control" id="inputNotificationEmail" type="email" disabled="" placeholder="Tu correo electrónico"></input>
                                 </div>
                                 {/* Form Group (email updates checkboxes) */}
                                 <div className="mb-0">
-                                    <label className="small mb-2">Choose which types of email updates you receive</label>
+                                    <label className="small mb-2">Que notificaciones quieres recibir?</label>
                                     <div className="form-check mb-2">
                                         <input className="form-check-input" id="checkAccountChanges" type="checkbox"></input>
-                                        <label className="form-check-label" htmlFor="checkAccountChanges">Changes made to your account</label>
-                                    </div>
-                                    <div className="form-check mb-2">
-                                        <input className="form-check-input" id="checkAccountGroups" type="checkbox"></input>
-                                        <label className="form-check-label" htmlFor="checkAccountGroups">Changes are made to groups you're part of</label>
-                                    </div>
-                                    <div className="form-check mb-2">
-                                        <input className="form-check-input" id="checkProductUpdates" type="checkbox"></input>
-                                        <label className="form-check-label" htmlFor="checkProductUpdates">Product updates for products you've purchased or starred</label>
+                                        <label className="form-check-label" htmlFor="checkAccountChanges">Cambios a tu cuenta</label>
                                     </div>
                                     <div className="form-check mb-2">
                                         <input className="form-check-input" id="checkProductNew" type="checkbox"></input>
-                                        <label className="form-check-label" htmlFor="checkProductNew">Information on new products and services</label>
+                                        <label className="form-check-label" htmlFor="checkProductNew">Información de productos y servicios que lanzemos</label>
                                     </div>
                                     <div className="form-check mb-2">
                                         <input className="form-check-input" id="checkPromotional" type="checkbox"></input>
-                                        <label className="form-check-label" htmlFor="checkPromotional">Marketing and promotional offers</label>
+                                        <label className="form-check-label" htmlFor="checkPromotional">Promociones y Marketing</label>
                                     </div>
                                     <div className="form-check">
                                         <input className="form-check-input" id="checkSecurity" type="checkbox" disabled=""></input>
-                                        <label className="form-check-label" htmlFor="checkSecurity">Security alerts</label>
+                                        <label className="form-check-label" htmlFor="checkSecurity">Alertas de seguridad</label>
                                     </div>
                                 </div>
                             </form>
@@ -110,20 +110,16 @@ export const ProfileNotifications = () => {
                 <div className="col-lg-4"> */}
                     {/* Notifications preferences card */}
                     <div className="card gradient-custom-contrast">
-                        <div className="card-header">Notification Preferences</div>
+                        <div className="card-header">Preferencias de notificaciones</div>
                         <div className="card-body">
                             <form>
                                 {/* Form Group (notification preference checkboxes) */}
-                                <div className="form-check mb-2">
-                                    <input className="form-check-input" id="checkAutoGroup" type="checkbox"></input>
-                                    <label className="form-check-label" htmlFor="checkAutoGroup">Automatically subscribe to group notifications</label>
-                                </div>
                                 <div className="form-check mb-3">
                                     <input className="form-check-input" id="checkAutoProduct" type="checkbox"></input>
-                                    <label className="form-check-label" htmlFor="checkAutoProduct">Automatically subscribe to new product notifications</label>
+                                    <label className="form-check-label" htmlFor="checkAutoProduct">Recibe notificaciones de productos en lanzamiento</label>
                                 </div>
                                 {/* Submit button */}
-                                <button className="btn btn-danger-soft text-danger">Unsubscribe from all notifications</button>
+                                <button className="btn btn-outline-danger text-danger">Anular todas las notificaciones</button>
                             </form>
                         </div>
                     </div>
