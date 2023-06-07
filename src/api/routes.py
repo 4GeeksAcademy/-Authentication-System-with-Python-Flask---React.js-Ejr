@@ -1,8 +1,9 @@
 """
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
+from datetime import timedelta
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, TokenBlockedList, Restaurant
+from api.models import db, User, TokenBlockedList, Restaurant, DetalleDePedidos, Pedidos, Platos
 from api.utils import generate_sitemap, APIException
 from flask_bcrypt import Bcrypt
 from flask_jwt_extended import create_access_token, create_refresh_token, jwt_required, get_jwt_identity, get_jwt, get_jti
@@ -67,7 +68,7 @@ def user_logout():
     return jsonify ({"msg": "Token revoked"})
 
 
-@api.route('/login', methods=['POST'])
+@api.route('/register', methods=['POST'])
 def user_create():
     data=request.get_json()
     print(data)
@@ -82,10 +83,47 @@ def user_create():
         data["password"], rounds=None).decode("utf-8")
     new_user=User(email=data ["email"], password=secure_password, is_active=True)
     print(new_user)
+    new_user = User(
+        email=data["email"],
+        password=secure_password,
+        is_active=True,
+        first_name=data["first_name"],
+        last_name=data["last_name"],
+        birth_day=data["birth_day"],
+        birth_month=data["birth_month"],
+        birth_year=data["birth_year"],
+        gender=data["gender"],
+        phone=data["phone"],
+        suscription=data["suscription"]
+    )
     db.session.add(new_user)
     db.session.commit()
-    print(new_user.serialize()),201
-    return "ok"
+    return jsonify(new_user.serialize()), 201
+
+@api.route('/changepassword', methods = ['POST'])
+@jwt_required()
+def change_password():
+    new_password=request.json.get("password")
+    user_id=get_jwt_identity()
+    secure_password=bcrypt.generate_password_hash(new_password, rounds=None).decode("utf-8")
+    user=User.query.get(user_id)
+    user.password=secure_password
+    db.session.add(user)
+    db.session.commit()
+    return jsonify({"msg": "Clave actualizada"})
+
+@api.route('/recoverypassword', methods=['POST'])
+def recovery_password():
+    user_email=request.json.get("email")
+    user=User.query.filter_by(email=user_email).first()
+    if (user is None):
+        return jsonify({"message": "user not found"}),401
+    # Generar el token temporal para el cmbio de clave
+    access_token= create_access_token(identity=user.id, additional_claims={"type": "password"})
+    return jsonify({"recoveryToken": access_token})
+    # Enviar el token via email para el cambio de clave
+
+    
 
 @api.route('/helloprotected', methods=['GET'])
 @jwt_required()
@@ -107,6 +145,7 @@ def get_restaurants():
     db.session.add(restaurants2)
     db.session.commit()
     return "ok"
+
 
 
 

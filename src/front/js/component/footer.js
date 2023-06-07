@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 
 export const Footer = () => (
-	<footer className="text-center bg-light sticky-bottom">
-		<p className="text-dark">
+	<footer className=" footer text-center bg-light sticky-bottom" style={{zIndex: "9999", marginTop:"4rem"}}>
+		<p className="text-dark p-0 m-0">
 			Made with <i className="fa fa-heart text-danger" /> by{" "}
 			<a href="http://www.4geeksacademy.com">4Geeks Academy</a>
 		</p>
