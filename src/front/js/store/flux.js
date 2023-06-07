@@ -40,7 +40,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             ],
 		},
 		actions: {
-			fetch userData: async
+		
 			
 				}
 			
