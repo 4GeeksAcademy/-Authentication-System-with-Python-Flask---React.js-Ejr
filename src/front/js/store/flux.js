@@ -39,11 +39,23 @@ const getState = ({ getStore, getActions, setStore }) => {
 					Gender: "femenino",
 					email: "askingalessa@gfake.com",
 					phone: "3005562343",
+
 				}
 			]
 		},
 		actions: {
-			
+			fetchUserData: async(email) =>{
+				const baseUrl = `${process.env.BACKEND_URL}/${email}`;
+
+				try{
+					let response = await fetch(baseUrl)
+					if(!response.ok) return response.status
+					setStore(email)
+				}
+				catch (error){
+					console.error(error)
+				}
+			}
 			}
 		}
 	};
