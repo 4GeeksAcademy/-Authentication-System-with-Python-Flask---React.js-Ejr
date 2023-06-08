@@ -7,11 +7,12 @@ import { Home } from "./pages/home";
 import { Demo } from "./pages/demo";
 import { Single } from "./pages/single";
 import { Login } from "./pages/Login";
-import {LoginUsuario} from "./pages/LoginUsuario";
+import { LoginUsuario } from "./pages/LoginUsuario";
 import { Services } from "./pages/services";
-import {Questions} from "./pages/questions";
+import { Questions } from "./pages/questions";
 import { Book } from "./pages/book";
 import injectContext from "./store/appContext";
+
 
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
@@ -45,7 +46,7 @@ const Layout = () => {
                         <Route element={<TestData />} path="/testdata" />
                         <Route element={<Single />} path="/single/:theid" />
                         <Route element={<h1>Not found!</h1>} />
-                    </Routes>
+                        </Routes>
                     <Footer />
                 </ScrollToTop>
             </BrowserRouter>
