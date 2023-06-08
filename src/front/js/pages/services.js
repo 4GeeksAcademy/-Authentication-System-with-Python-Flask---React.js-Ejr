@@ -30,10 +30,10 @@ export const Services = () => {
               <div className="card-body " style={{ backgroundColor: '#40768C' }}>
                 <h5 className="card-title">{element.name}</h5>
                 <p className="card-text" style={{ height: "15rem" }}>Want to learn more? click Learn More to see more details! <br/>Price: ${element.price} USD</p>
-                <button type="button" className="btn btn-dark " data-bs-toggle="modal" data-bs-target="#exampleModal">
+                <button type="button" className="btn btn-dark " data-bs-toggle="modal" data-bs-target={`#exampleModal${index}`}>
                   Learn More
                 </button>
-                <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div className="modal fade" id={`exampleModal${index}`} tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                   <div className="modal-dialog  modal-dialog-scrollable">
                     <div className="modal-content">
                       <div className="modal-header">
@@ -42,7 +42,6 @@ export const Services = () => {
                       </div>
                       <div className="modal-body">
                         <p>{element.description}</p>
-                        <p>{element.price}</p>
                       </div>
                       <div className="modal-footer">
                         <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
