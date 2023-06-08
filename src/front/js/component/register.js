@@ -4,103 +4,70 @@ import LoginModal from "../pages/loginModal";
 import "../../styles/register.css";
 
 export const Register = () => {
-    const {store, actions} = useContext(Context)
-    
-	return (
-        
-        <section  className="vh-100 gradient-custom mb-5 pb-5">
-            <div id="background-ia" className="container-fluid pt-0">
-            <h1 className="main-title text-center pt-5 pb-0 mb-0">Registrate en GitLoot!</h1>
-                <div className="row justify-content-center align-items-center mt-5 h-25">
-                    <div className="col-12 col-lg-9 col-xl-7">
-                        <div className="card shadow-2-strong card-registration" style={{borderRadius: "15px"}}>
-                        <div className="card-body p-4 p-md-5">
-                            <h3 className="mb-4 pb-2 pb-md-0 mb-md-5">Por favor, llena tus datos!</h3>
-                            <form>
-                                <div className="row">
-                                    <div className="col-md-6 mb-4">
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
 
-                                    <div className="form-outline">
-                                        <input type="text" id="firstName" className="form-control form-control-lg" placeholder="Nombres"/>
-                                        <label className="form-label" htmlFor="firstName">Nombres</label>
-                                    </div>
+    const handleNameChange = (event) => {
+        setName(event.target.value);
+    };
 
-                                    </div>
-                                    <div className="col-md-6 mb-4">
+    const handleEmailChange = (event) => {
+        setEmail(event.target.value);
+    };
 
-                                    <div className="form-outline">
-                                        <input type="text" id="lastName" className="form-control form-control-lg" placeholder="Apellidos"/>
-                                        <label className="form-label" htmlFor="lastName">Apellidos</label>
-                                    </div>
+    const handlePasswordChange = (event) => {
+        setPassword(event.target.value);
+    };
 
-                                    </div>
-                                </div>
+    const handleSubmit = (event) => {
+        event.preventDefault();
 
-                                <div className="row">
-                                    <div className="col-md-6 mb-4 d-flex align-items-center">
+        const user = {
+            name: name,
+            email: email,
+            password: password,
+        };
 
-                                    <div className="form-outline datepicker w-100">
-                                        <input type="text" className="form-control form-control-lg" placeholder="dd-mm-aaaa" id="birthdayDate" />
-                                        <label htmlFor="birthdayDate" className="form-label">Fecha de Nacimiento</label>
-                                    </div>
+        const url = process.env.BACKEND_URL; // Obtener la URL de la variable de entorno
 
-                                    </div>
-                                    <div className="col-md-6 mb-4">
+        fetch(`${url}/signup`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(user)
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data); // Manejar la respuesta de la API
+            })
+            .catch(error => {
+                console.error(error); // Manejar errores
+            });
+    };
 
-                                        <h6 className="mb-2 pb-1">Género: </h6>
+    return (
+        <div>
+            <h1>Sign Up</h1>
+            <form onSubmit={handleSubmit}>
+                <label htmlFor="name">Name:</label>
+                <input type="text" id="name" name="name" value={name} onChange={handleNameChange} required /><br /><br />
 
-                                        <div className="form-check form-check-inline">
-                                            <input className="form-check-input" type="radio" name="inlineRadioOptions" id="femaleGender"
-                                            value="option1" />
-                                            <label className="form-check-label" htmlFor="femaleGender">Femenino</label>
-                                        </div>
+                <label htmlFor="email">Email:</label>
+                <input type="email" id="email" name="email" value={email} onChange={handleEmailChange} required /><br /><br />
 
-                                        <div className="form-check form-check-inline">
-                                            <input className="form-check-input" type="radio" name="inlineRadioOptions" id="maleGender"
-                                            value="option2" />
-                                            <label className="form-check-label" htmlFor="maleGender">Masculino</label>
-                                        </div>
+                <label htmlFor="password">Password:</label>
+                <input type="password" id="password" name="password" value={password} onChange={handlePasswordChange} required /><br /><br />
 
-                                        <div className="form-check form-check-inline">
-                                            <input className="form-check-input" type="radio" name="inlineRadioOptions" id="otherGender"
-                                            value="option3" />
-                                            <label className="form-check-label" htmlFor="otherGender">Otro</label>
-                                        </div>
+                <input type="submit" value="Sign Up" />
+            </form>
 
-                                    </div>
-                                </div>
+            <Link to="/login">Login</Link> {/* Agrega el enlace para ir a la página de login */}
+            <LoginModal /> {/* Agrega el componente del modal de login */}
+        </div>
+    );
+};
 
-                                <div className="row">
-                                    <div className="col-md-6 mb-4 pb-2">
-
-                                    <div className="form-outline">
-                                        <input type="email" id="emailAddress" className="form-control form-control-lg" placeholder="Tu correo"/>
-                                        <label className="form-label" htmlFor="emailAddress">Correo</label>
-                                    </div>
-
-                                    </div>
-                                    <div className="col-md-6 mb-4 pb-2">
-
-                                    <div className="form-outline">
-                                        <input type="tel" id="phoneNumber" className="form-control form-control-lg" placeholder="Tu numero móvil"/>
-                                        <label className="form-label" htmlFor="phoneNumber">Teléfono</label>
-                                    </div>
-
-                                    </div>
-                                </div>
-                                <Link to="/">
-                                    <div className="mt-4 pt-2">
-                                        <input className="btn btn-outline-success px-5 btn-lg" style={{borderRadius:"33% 67% 32% 68% / 90% 9% 91% 10% "}} type="submit" value="Listo!" />
-                                    </div>
-                                </Link>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-                </div>
-            </div>
-            <LoginModal />
-        </section>
-    )
-}
 export default Register;
+
