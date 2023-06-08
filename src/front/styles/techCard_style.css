@@ -1,7 +1,7 @@
 .tech_card {
   min-height: 24rem;
-  background-color: transparent;
-  border: 2px solid #2c9131;
+  
+  
   
   height: fit-content;
   border-radius: 10%;
@@ -11,10 +11,30 @@
   overflow: hidden;
   
   background-color: transparent;
-  
+  border: none;
   width: 20rem; 
+  box-shadow: -3px 5px 12px 3px rgba(0,0,0,0.11);
+  margin: 3rem;
+  transition: all 0.2s ease-in-out;
+  
+}
+.tech_card:hover {
+  min-height: 24rem;
+  
+  
+  
+  height: fit-content;
   border-radius: 10%;
-  margin: 1rem;
+  
+  transition: all 0.2s ease-in-out;
+  color:black;
+  overflow: hidden;
+  
+  background-color: transparent;
+  border: none;
+  width: 20rem; 
+  box-shadow: -3px 5px 12px 3px rgba(0,0,0,0.24);
+  margin: 3rem;
   transition: all 0.2s ease-in-out;
   
 }

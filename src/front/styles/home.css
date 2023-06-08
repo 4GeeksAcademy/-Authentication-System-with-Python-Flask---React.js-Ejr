@@ -77,11 +77,17 @@ background: linear-gradient(90deg, rgba(231,215,146,1) 0%, rgba(0,212,255,0) 100
 border-radius: 5rem;
 display: flex;
 }
+.textos1{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: 2rem;
+  margin-right: 1rem;
+}
 .titulo{
   text-align: center;
-  margin:6rem;
+  margin:2rem;
   
- 
 }
 .titulo h1 {
   font-size: 8rem;
@@ -93,6 +99,7 @@ display: flex;
 .img1 {
   width: 100%;
   height: auto;
+  margin-right: 2rem;
 }
 
 

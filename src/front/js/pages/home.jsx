@@ -157,7 +157,7 @@ export const Home = () => {
         </div>
 
         <div className="section1 container-fluid" id="section1">
-          <div className="textos  d-flex align-items-center justify-content-center">
+          <div className="textos1  d-flex align-items-center justify-content-center">
             <h1 className="titulo1">
               El <span>técnico agrícola</span> perfecto para ti.
             </h1>
