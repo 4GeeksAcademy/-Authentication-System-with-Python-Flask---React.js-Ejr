@@ -39,20 +39,32 @@ class TokenBlockedList(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     jti = db.Column(db.String(50), nullable = False)
 
-class ServicesSedan(db.Model):
-    __tablename__ = "services_sedan"
+class VehicleType(db.Model):
+    __tablename__ = "vehicle_type"
     id = db.Column(db.Integer, primary_key=True)
-    user_service = db.Column(db.Integer, db.ForeignKey("user.id"))
     name = db.Column(db.String(120), unique=True, nullable=False)
-    description = db.Column(db.String(500), unique=True, nullable=False)
-    price = db.Column(db.Integer, nullable=False)
-    user = db.relationship(User)
+    
+    def serialize(self):
+        return{"name" : self.name}
 
-class ServicesSuv(db.Model):
-    __tablename__ = "services_suv"
+class Services(db.Model):
+    __tablename__ = "services"
     id = db.Column(db.Integer, primary_key=True)
-    user_service = db.Column(db.Integer, db.ForeignKey("user.id"))
+    vehicle_type = db.Column(db.Integer, db.ForeignKey("vehicle_type.id"))
     name = db.Column(db.String(120), unique=True, nullable=False)
-    description = db.Column(db.String(500), unique=True, nullable=False)
+    description = db.Column(db.String(500), unique=False, nullable=False)
     price = db.Column(db.Integer, nullable=False)
-    user = db.relationship(User)
+    type = db.relationship(VehicleType, backref='vehicle_type', lazy=True)
+
+    def serialize(self):
+        return {
+            "vehicle_type" : self.vehicle_type,
+            "name" : self.name,
+            "description" : self.description,
+            "price" : self.price
+        }
+    
+    
+    
+
+# Crear tabla para carrito, va a tener foreign key del servicio y relación con el usuario

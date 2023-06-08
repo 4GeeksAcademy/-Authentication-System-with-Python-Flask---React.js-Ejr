@@ -46,8 +46,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 				let token = localStorage.getItem("accessToken")
 				setStore({ accessToken: token })
 			},
-			loadTestData: async (name, description, price) =>{
-				const resp = await getActions().apiFetch("/api/testdata", "POST", {name, description, price})
+			loadTestData: async (name, description, price, vehicle_type) =>{
+				const resp = await getActions().apiFetch("/api/testdata", "POST", {name, description, price, vehicle_type})
 				if (resp.code >= 400) {
 					return resp
 				}
@@ -95,6 +95,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 				let data = await resp.json()
 				return { code: resp.status, data: data }
 			},
+
+
 
 			addServices: (element) => {
 				const service = getStore().services;

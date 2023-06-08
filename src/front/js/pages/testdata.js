@@ -6,28 +6,28 @@ import "../../styles/home.css";
 export const TestData = () => {
     const { store, actions } = useContext(Context);
 
-    let services = {
-        service_sedan_1 : {
-            name: "Aspirado", 
-            description: "Aspirado interno", 
-            price: "30"
-        },
-        service_sedan_2 : {
-            name: "Lavado", 
-            description: "Lavado externo", 
-            price: "50"
-        },
-        service_suv_1 : {
-            name: "Aspirado", 
-            description: "Aspirado interno", 
-            price: "60"
-        },
-        service_suv_2 : {
-            name: "Lavado", 
-            description: "Lavado externo", 
-            price: "80"
-        }
-    }
+    // let services = {
+    //     service_sedan_1 : {
+    //         name: "Aspirado", 
+    //         description: "Aspirado interno", 
+    //         price: "30"
+    //     },
+    //     service_sedan_2 : {
+    //         name: "Lavado", 
+    //         description: "Lavado externo", 
+    //         price: "50"
+    //     },
+    //     service_suv_1 : {
+    //         name: "Aspirado", 
+    //         description: "Aspirado interno", 
+    //         price: "60"
+    //     },
+    //     service_suv_2 : {
+    //         name: "Lavado", 
+    //         description: "Lavado externo", 
+    //         price: "80"
+    //     }
+    // }
 
     function loadData(e) {
         
@@ -41,9 +41,10 @@ export const TestData = () => {
 
     return (
         <div className="container" style={{ color: 'black' }}>
-            // AGREGAR UN FORM
+            AGREGAR Datos de Prueba
             <form onSubmit={loadData}>
-                <div class="mb-3">
+            
+                {/* <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Nombre Servicio 1 Sedan</label>
                     <input type="text" class="form-control" name="name" value={services.service_sedan_1.name} id="exampleInputEmail1" aria-describedby="emailHelp" />
                 </div>
@@ -90,8 +91,8 @@ export const TestData = () => {
                 <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Precio Servicio 2 Suv</label>
                     <input type="text" class="form-control" name="price" value={services.service_suv_2.price} id="exampleInputEmail1" aria-describedby="emailHelp" />
-                </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
+                </div> */}
+                <button type="submit" className="btn btn-primary">Submit</button>
             </form>
         </div>
     );
