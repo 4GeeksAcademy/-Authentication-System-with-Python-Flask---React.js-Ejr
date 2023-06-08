@@ -8,7 +8,7 @@ from sqlalchemy.orm import relationship
 db = SQLAlchemy()
 
 class User(db.Model):
-    #__tablename__="user"
+    __tablename__="user"
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(80), unique=False, nullable=False)
@@ -43,11 +43,11 @@ class User(db.Model):
 
 
 class Restaurant(db.Model):
-    # __tablename__="restaurant"
+    __tablename__="restaurant"
     id = db.Column(db.Integer, primary_key=True)
     # user_id=db.Column(db.Integer, db.Foreignkey = ("User.id"))
     name = db.Column(db.String(120), unique=True, nullable=False)
-    platos = db.Column(db.Integer, db.ForeignKey("platos.id"))
+    
     ubicaciones = db.Column(db.String(80), unique=False, nullable=False)
     pedido=db.relationship("Pedidos")
     detalles_de_pedido=db.relationship("DetalleDePedidos")
@@ -64,12 +64,13 @@ class Restaurant(db.Model):
         }
 
 class Platos(db.Model):
-    #__tablename__="platos"
+    __tablename__="platos"
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(120), unique=True, nullable=False)
     description=db.Column(db.String(500), unique=True, nullable=False)
     price=db.Column(db.Integer, unique=True, nullable=False)
-    restaurante=db.relationship("Restaurant")
+    restaurant_id = db.Column(db.Integer, db.ForeignKey("restaurant.id"))
+    restaurant=db.relationship(Restaurant)
     detalles_de_pedido=db.relationship("DetalleDePedidos")
 
     def __repr__(self):
@@ -80,16 +81,20 @@ class Platos(db.Model):
             "id":self.id,
             "name":self.name,
             "price": self.price,
-            "description": self.description
+            "description": self.description,
+            "platos":self.description,
+            "restaurant":self.restaurant
             }
 
 
 class Pedidos(db.Model):
-    # __tablename__="pedidos"
+    __tablename__="pedidos"
     id = db.Column(db.Integer, primary_key=True)
     restaurant_id= db.Column(db.Integer, ForeignKey("restaurant.id"))
-    # plato=relationship("Restaurant")
+    restaurant=db.relationship(Restaurant)
     usuario_id=db.Column(db.Integer, ForeignKey("user.id"))
+    platos_id=db.Column(db.Integer, ForeignKey("platos.id"))
+    platos=db.relationship(Platos)
     # usuario=relationship("User")
 
     def __repr__(self):
@@ -100,6 +105,8 @@ class Pedidos(db.Model):
             "id":self.id,
             "restaurant_id":self.restaurant_id,
             "usuario_id": self.usuario_id,
+            "platos_id": self.platos_id,
+            "platos": self.platos
         }
 
 
@@ -109,8 +116,10 @@ class DetalleDePedidos(db.Model):
     # __tablename__="detalleDePedidos"
     id = db.Column(db.Integer, primary_key=True)
     platos_id=db.Column(db.Integer, ForeignKey("platos.id"))
+    platos=db.relationship(Platos)
     # pedido=relationship("Pedidos")
     restaurant_id=db.Column(db.Integer, ForeignKey("restaurant.id"))
+    restaurant=db.relationship("Restaurant")
     # resturante=relationship("Restaurant")
 
     def __repr__(self):
@@ -120,7 +129,9 @@ class DetalleDePedidos(db.Model):
         return {
             "id":self.id,
             "restaurant_id":self.restaurant_id,
-            "platos_id": self.platos_id
+            "platos_id": self.platos_id,
+            "restaurant":self.restaurant,
+            "platos": self.platos
         }
 
 
