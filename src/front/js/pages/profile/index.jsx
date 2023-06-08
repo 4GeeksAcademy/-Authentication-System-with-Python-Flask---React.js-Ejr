@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import { updateUserProfile } from "../../service/user.js";
-import "./styles.css";
+import styles from "./profile.module.css";
 
 import ProfileForm from "../../components/profileForm/index.jsx";
 import Header from "../../components/header/index.jsx";
@@ -11,7 +11,6 @@ import { Context } from "../../store/appContext.js";
 const Profile = () => {
   const [file, setFile] = useState("");
   const [fileUrl, setFileUrl] = useState("");
-  const [user, setUser] = useState(userStoredInContext);
 
   const { store, actions } = useContext(Context);
   const userStoredInContext = store.userProfileData.userData;
@@ -29,7 +28,10 @@ const Profile = () => {
       };
       reader.readAsDataURL(target.files[0]);
     } else {
-      setUser({ ...user, [target.name]: target.value });
+      actions.saveUserProfileData({
+        ...userStoredInContext,
+        [target.name]: target.value,
+      });
     }
   };
 
@@ -45,12 +47,6 @@ const Profile = () => {
     updateUserProfile(form);
     actions.saveUserProfileData(user);
     navigate("/");
-    // setUser({
-    //   username: "",
-    //   firstname: "",
-    //   lastname: "",
-    //   email: "",
-    // });
   };
   return (
     <main className="">
@@ -62,9 +58,11 @@ const Profile = () => {
         img={fileUrl === "" ? userStoredInContext?.avatar : fileUrl}
         handleChange={handleChange}
       />
-      <main className="mainContainerProfile">
-        <div className="background">
-          <h2 className="title">Profile update</h2>
+
+      <main className={styles._mainContainerProfile}>
+        <div className={styles._subContainer}>
+          <h2 className={styles._title}>Profile update</h2>
+
           <ProfileForm
             handleChange={handleChange}
             handleClick={handleClick}

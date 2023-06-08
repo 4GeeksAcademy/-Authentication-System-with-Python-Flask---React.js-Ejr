@@ -1,22 +1,23 @@
-.mainContainerimg {
+._mainContainerimg {
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-top: 20px;
   margin-bottom: 12px;
+  width: 100vw;
 }
 
-.parent {
+._parent {
   width: 948px;
   height: 200px;
   position: relative;
   margin-top: 3rem;
-  background: #f5f4ff;
+  background: var(--purple-300);
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 12px;
 }
 
-.child {
+._child {
   width: 948px;
   height: 97px;
   position: absolute;
@@ -31,7 +32,7 @@
   flex-direction: column;
 }
 
-.child img {
+._child img {
   width: 105px;
   height: 105px;
   margin-top: 11rem;
@@ -43,7 +44,7 @@
   filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.25));
   border-radius: 250px;
 }
-.btnPhoto {
+._btnPhoto {
   border: none;
   border-radius: var(--border-md);
   background-color: var(--text-900);
@@ -55,29 +56,29 @@
   transition: 0.2s ease-in-out;
 }
 
-.btnPhoto:hover {
+._btnPhoto:hover {
   background-color: var(--purple-500);
   color: var(--text-900);
 }
-.nametitle {
+._nametitle {
   font-weight: var(--font-extrabold);
   font-size: 20px;
   line-height: 24px;
   letter-spacing: -0.03em;
   color: var(--text-900);
 }
-.nametitle2 {
+._nametitle2 {
   line-height: 19px;
   letter-spacing: -0.03em;
 }
 /* input file */
 
-.file-select {
+._fileSelect {
   position: relative;
   display: inline-block;
 }
 
-.file-select::before {
+._fileSelect::before {
   background-color: var(--text-900);
   color: var(--text-100);
   display: flex;
@@ -94,7 +95,7 @@
   bottom: 0;
 }
 
-.file-select input[type="file"] {
+._fileSelect input[type="file"] {
   opacity: 0;
   width: 129px;
   height: 29px;
@@ -102,12 +103,12 @@
   display: inline-block;
   cursor: pointer;
 }
-.file-select:hover::before {
+._fileSelect:hover::before {
   background-color: var(--purple-500);
   color: var(--text-900);
 }
 
-.file-select:hover::before {
+._fileSelect:hover::before {
   content: "Change Photo";
   background-color: var(--purple-500);
   color: var(--text-900);
