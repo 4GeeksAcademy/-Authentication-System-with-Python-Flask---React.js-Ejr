@@ -117,6 +117,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log(getStore().services)
 				}
 
+			},
+
+			deleteServices: (services) => {
+				const listservices = getStore().services;
+				const newservices = listservices.filter((element) => element !== services)
+				setStore({services: newservices})
 			}
 		},
 	};
