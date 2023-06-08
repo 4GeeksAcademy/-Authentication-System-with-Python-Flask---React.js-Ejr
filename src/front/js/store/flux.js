@@ -103,9 +103,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 				//reset the global store
 				setStore({ demo: demo });
 			},
-			apiFetch: async (endpoint, method, body = {}) => {
-				//let resp = await fetch(apiUrl + endpoint, method == "GET" ? undefined :{
-				let resp = await fetch(apiUrl + endpoint, {
+			apiFetch: async (endpoint, method = "GET", body = {}) => {
+				let resp = await fetch(apiUrl + endpoint, method == "GET" ? undefined :{
+				// let resp = await fetch(apiUrl + endpoint, {
 					method,
 					body: JSON.stringify(body),
 					headers: {

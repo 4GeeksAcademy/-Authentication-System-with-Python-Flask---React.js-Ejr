@@ -52,7 +52,7 @@ class Services(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     vehicle_type = db.Column(db.Integer, db.ForeignKey("vehicle_type.id"))
     name = db.Column(db.String(120), unique=True, nullable=False)
-    description = db.Column(db.String(500), unique=False, nullable=False)
+    description = db.Column(db.String(10000), unique=False, nullable=False)
     price = db.Column(db.Integer, nullable=False)
     type = db.relationship(VehicleType, backref='vehicle_type', lazy=True)
 
