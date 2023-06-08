@@ -11,7 +11,8 @@ import {
   getAllTech,
   filterTechByField,
   getHiring,
-  addFarm
+  addFarm,
+  modifyFarm
 } from "../service/service";
 import Modal from "react-modal";
 import HiringCard from "../component/hiringCard.jsx";
@@ -53,11 +54,20 @@ export const FarmerView = () => {
   };
 
   const handleAddNewCrop = async (cropData) => {
-    try {
-      await addFarm(cropData);
-    } catch (error) {
-      console.log("Error al agregar el nuevo cultivo", error);
-    }
+    if(editingCrop){
+      try{
+        console.log("From handleAddNewCrop --> ",cropData)
+        await modifyFarm(cropData)
+      }catch(error){
+        console.log("Error al modificar el cultivo", error)
+      }
+    }else{
+      try {
+        await addFarm(cropData);
+      } catch (error) {
+        console.log("Error al agregar el nuevo cultivo", error);
+      }
+    }  
   };
 
   const getInfo = async () => {
