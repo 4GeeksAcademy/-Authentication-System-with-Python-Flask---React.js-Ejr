@@ -6,7 +6,7 @@ import { loginUser } from "../service/service";
 
 export const Home = () => {
   const navigate = useNavigate();
-
+  const [errorMessage, setErrorMessage] = useState("");
   const [state, setState] = useState({ email: "", password: "" });
 
   const handleChange = ({ target }) => {
@@ -23,6 +23,8 @@ export const Home = () => {
     if (userRedirect === "tech") {
       console.log("A Tech");
       navigate("/technician");
+    } else {
+      setErrorMessage("Usuario o contraseña incorrectos");
     }
   };
 
@@ -106,6 +108,7 @@ export const Home = () => {
                         onChange={handleChange}
                       />
                     </div>
+                    
                     <div className="form-group pb-3 d-flex justify-content-center">
                       <button
                         type="submit"
@@ -170,13 +173,12 @@ export const Home = () => {
               ideal, ¡únete a nosotros y haz crecer tu negocio hoy mismo!
             </p>
           </div>
-          
-            <img
-              className="img1 img-fluid"
-              src="https://res.cloudinary.com/ddyd5ebc7/image/upload/v1682015035/_dde26f94-d3f6-44ef-a892-4c90bd2c8dd6_rorddp.png"
-              alt="Imagen de la sección 1"
-            />
-          
+
+          <img
+            className="img1 img-fluid"
+            src="https://res.cloudinary.com/ddyd5ebc7/image/upload/v1682015035/_dde26f94-d3f6-44ef-a892-4c90bd2c8dd6_rorddp.png"
+            alt="Imagen de la sección 1"
+          />
         </div>
 
         {/* Sección 2  contactos (habría que hacer un slider y que se llene con 7-8 contactos al azar)*/}
@@ -210,9 +212,9 @@ export const Home = () => {
             <div className="card-body-landing">
               <h5 className="card-title-landing">Luis Gonzaga</h5>
               <p className="card-text-landing">
-              Listo para brindar soluciones efectivas y asesoramiento personalizado para optimizar sus operaciones agrícolas. 
+                Listo para brindar soluciones efectivas y asesoramiento
+                personalizado para optimizar sus operaciones agrícolas.
               </p>
-              
             </div>
           </div>
           <div className=" card-landing">
@@ -224,10 +226,9 @@ export const Home = () => {
             <div className="card-body-landing">
               <h5 className="card-title-landing">Susana Arias</h5>
               <p className="card-text-landing">
-              Puedo ayudarles a maximizar la productividad y 
-              minimizar el impacto ambiental en su actividad agrícola.
+                Puedo ayudarles a maximizar la productividad y minimizar el
+                impacto ambiental en su actividad agrícola.
               </p>
-              
             </div>
           </div>
           <div className=" card-landing ">
@@ -238,62 +239,55 @@ export const Home = () => {
             />
             <div className="card-body-landing">
               <h5 className="card-title-landing">Manuel Coujil</h5>
-              Estoy dedicado a colaborar con ustedes para lograr un 
-              crecimiento sostenible, ofreciendo herramientas prácticas y conocimientos especializados
+              Estoy dedicado a colaborar con ustedes para lograr un crecimiento
+              sostenible, ofreciendo herramientas prácticas y conocimientos
+              especializados
             </div>
           </div>
-          
         </div>
         <div className="btn-container">
-        <button
-            className="btn-busca"  onClick={() => navigate(`/Search`) }
-          >
+          <button className="btn-busca" onClick={() => navigate(`/Search`)}>
             BUSCAR
           </button>
-          </div>
-          {/* Sección 3  reseñas*/}
-          <div className="section-review">
-          <h1>¿Qué opinan nuestros <span>agricultores</span> ?</h1>
+        </div>
+        {/* Sección 3  reseñas*/}
+        <div className="section-review">
+          <h1>
+            ¿Qué opinan nuestros <span>agricultores</span> ?
+          </h1>
           <div className="review-container">
-            
             <div className="review-box">
               <p className="review-description">
-                Muy sencillo de usar. Contacté con Julio y ha sido mi técnico de confianza desde entonces
+                Muy sencillo de usar. Contacté con Julio y ha sido mi técnico de
+                confianza desde entonces
               </p>
-              <p className="review-name">
-                Javier - Zamora
-              </p>
+              <p className="review-name">Javier - Zamora</p>
             </div>
 
             <div className="review-box">
               <p className="review-description">
                 Me ha servido. Contento la verdad, la seguiré usando.
-                </p>
-              <p className="review-name">
-                Juampe - Ourense
               </p>
+              <p className="review-name">Juampe - Ourense</p>
             </div>
 
             <div className="review-box">
               <p className="review-description">
-                Necesitaba un técnico agrícola y me hablaron de ésta página, la recomiendo completamente. Me ha salvado
-                </p>
-              <p className="review-name">
-                María - Almeria
+                Necesitaba un técnico agrícola y me hablaron de ésta página, la
+                recomiendo completamente. Me ha salvado
               </p>
+              <p className="review-name">María - Almeria</p>
             </div>
 
             <div className="review-box">
               <p className="review-description">
-               No tenía mucha esperanza, pero he encontrado lo que esperaba, gracias.
+                No tenía mucha esperanza, pero he encontrado lo que esperaba,
+                gracias.
               </p>
-              <p className="review-name">
-                Julio - Valencia
-              </p>
+              <p className="review-name">Julio - Valencia</p>
             </div>
-
           </div>
-          </div>
+        </div>
         {/* Sección 4  Preguntas frecuentes*/}
 
         <div
