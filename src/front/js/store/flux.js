@@ -96,6 +96,17 @@ const getState = ({ getStore, getActions, setStore }) => {
 				return { code: resp.status, data: data }
 			},
 
+			fetchServices: async(name, description, price) =>{
+				let baseUrl = apiUrl+"/api/services"
+
+				try{
+					let response = await fetch(baseUrl)
+					if (!response.ok) return response.status
+					let data = await response.json()
+					let obj = {}
+					obj[name] = {}
+				}
+			},
 
 
 			addServices: (element) => {

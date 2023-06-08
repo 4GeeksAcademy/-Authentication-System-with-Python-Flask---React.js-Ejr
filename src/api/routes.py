@@ -13,7 +13,7 @@ bcrypt=Bcrypt(app)
 
 
 
-@api.route('/testdata', methods=['POST'])
+@api.route('/testdata', methods=['GET'])
 def load_test_data():
     test_data = [
         VehicleType(name="Sedan"),
