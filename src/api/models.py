@@ -39,34 +39,32 @@ class TokenBlockedList(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     jti = db.Column(db.String(50), nullable = False)
 
-class VehicleSedan(db.Model):
-    __tablename__ = "vehicle_sedan"
+class VehicleType(db.Model):
+    __tablename__ = "vehicle_type"
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(120), unique=True, nullable=False)
+    
+    def serialize(self):
+        return{"name" : self.name}
 
-class VehicleSuv(db.Model):
-    __tablename__ = "vehicle_suv"
+class Services(db.Model):
+    __tablename__ = "services"
     id = db.Column(db.Integer, primary_key=True)
+    vehicle_type = db.Column(db.Integer, db.ForeignKey("vehicle_type.id"))
     name = db.Column(db.String(120), unique=True, nullable=False)
-
-class ServicesSedan(db.Model):
-    __tablename__ = "services_sedan"
-    id = db.Column(db.Integer, primary_key=True)
-    user_service = db.Column(db.Integer, db.ForeignKey("user.id"))
-    vehicle_service = db.Column(db.Integer, db.ForeignKey("vehicle_sedan.id"))
-    name = db.Column(db.String(120), unique=True, nullable=False)
-    description = db.Column(db.String(500), unique=True, nullable=False)
+    description = db.Column(db.String(500), unique=False, nullable=False)
     price = db.Column(db.Integer, nullable=False)
-    user = db.relationship(User)
-    vehicle_sedan = db.relationship(VehicleSedan)
+    type = db.relationship(VehicleType, backref='vehicle_type', lazy=True)
 
-class ServicesSuv(db.Model):
-    __tablename__ = "services_suv"
-    id = db.Column(db.Integer, primary_key=True)
-    user_service = db.Column(db.Integer, db.ForeignKey("user.id"))
-    vehicle_service = db.Column(db.Integer, db.ForeignKey("vehicle_suv.id"))
-    name = db.Column(db.String(120), unique=True, nullable=False)
-    description = db.Column(db.String(500), unique=True, nullable=False)
-    price = db.Column(db.Integer, nullable=False)
-    user = db.relationship(User)
-    vehicle_suv = db.relationship(VehicleSuv)
+    def serialize(self):
+        return {
+            "vehicle_type" : self.vehicle_type,
+            "name" : self.name,
+            "description" : self.description,
+            "price" : self.price
+        }
+    
+    
+    
+
+# Crear tabla para carrito, va a tener foreign key del servicio y relación con el usuario

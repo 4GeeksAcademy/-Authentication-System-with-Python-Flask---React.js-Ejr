@@ -92,7 +92,7 @@ export const TestData = () => {
                     <label for="exampleInputEmail1" class="form-label">Precio Servicio 2 Suv</label>
                     <input type="text" class="form-control" name="price" value={services.service_suv_2.price} id="exampleInputEmail1" aria-describedby="emailHelp" />
                 </div> */}
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" className="btn btn-primary">Submit</button>
             </form>
         </div>
     );
