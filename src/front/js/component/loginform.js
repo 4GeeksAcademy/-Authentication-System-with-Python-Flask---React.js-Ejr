@@ -31,9 +31,10 @@ export const LoginForm = () => {
               </div>
             </div>
 
-            <div className="row">
-              <div className="col-sm-12 mt-5">
-                <div className="recoverpassword">
+            <div className="row" >
+              <div className="col-sm-12 mt-5 d-flex">
+                <div className="col-sm-6 me-3"></div>
+                <div className="recoverpassword  col-sm-6">
                   <a href="/recoverpassword">
                     <h5>Olvidaste tu contraseña</h5>
                   </a>
