@@ -11,6 +11,13 @@ api = Blueprint('api', __name__)
 app=Flask(__name__)
 bcrypt=Bcrypt(app)
 
+@api.route('/services', methods=['GET'])
+@api.route('/book', methods=['GET'])
+def get_data():
+    services = Services.query.all()
+    vehicle_types = VehicleType.query.all()
+    return jsonify(services=[service.serialize() for service in services],
+                   vehicle_types=[vehicle_type.serialize() for vehicle_type in vehicle_types]), 200
 
 
 @api.route('/testdata', methods=['GET'])
@@ -31,6 +38,7 @@ def load_test_data():
 
     db.session.commit()
     return jsonify(services=[service.serialize() for service in created_services]), 201
+
 
 
 @api.route('/hello', methods=['POST', 'GET'])
