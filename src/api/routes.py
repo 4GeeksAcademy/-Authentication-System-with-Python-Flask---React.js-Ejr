@@ -51,6 +51,7 @@ def handle_signup():
     ) 
     db.session.add(new_user)
     db.session.commit()
+
     return jsonify('Se ha añadido usario: ', request_data), 200
 
 @api.route('/login', methods=['POST'])
