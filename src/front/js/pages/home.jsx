@@ -1,4 +1,4 @@
-import React, { useState, useContext,useEffect } from "react";
+import React, { useState,useEffect } from "react";
 
 import { Link, useNavigate } from "react-router-dom";
 
@@ -15,24 +15,22 @@ export const Home = () => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    
     const userRedirect = await loginUser(state);
     if (userRedirect === "farmer") {
       setmodalstate("modal");
       console.log("A granjero");
       navigate("/farmer");
-
       console.log(modalstate);
     }
     if (userRedirect === "tech") {
       setmodalstate("modal");
       console.log("A Tech");
       navigate("/technician");
-
       console.log(modalstate);
     } else {
+      
       setErrorMessage("Usuario o contraseña incorrectos");
-      setmodalstate("modals");
       console.log(modalstate);
     }
   };
@@ -44,6 +42,7 @@ export const Home = () => {
       bootstrapModal.hide();
     }
   }, [modalstate]);
+  
   
   return (
     <div>
@@ -134,7 +133,7 @@ export const Home = () => {
                       <button
                         type="submit"
                         className="btn mb-3"
-                        data-bs-dismiss={modalstate}
+                        
                       >
                         Enviar
                       </button>
