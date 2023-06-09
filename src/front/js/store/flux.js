@@ -71,7 +71,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				  if (resp.code >= 400) {
 					return resp;
 				  }
-				  setStore({ vehicleTypes: resp.data.vehicleTypes });
+				  setStore({ vehicle_types: resp.data.vehicle_types });
 				  return resp;
 				} catch (error) {
 				  console.log("Error fetching vehicle types", error);
