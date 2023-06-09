@@ -140,8 +140,4 @@ class TokenBlockedList(db.Model):
         return {
             "id":self.id,
             "jti":self.jti,
-        }
-
- 
-
-    
+        }   

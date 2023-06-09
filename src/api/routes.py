@@ -108,12 +108,6 @@ def get_restaurants():
     db.session.commit()
     return "ok"
 
-
-
-
-
-
-
 @api.route('/hello', methods=['POST', 'GET'])
 def handle_hello():
 
