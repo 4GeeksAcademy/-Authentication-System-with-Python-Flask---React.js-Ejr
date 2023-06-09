@@ -2,14 +2,14 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 20px;
-  margin-bottom: 12px;
+  margin-top: 50px;
+  margin-bottom: 35px;
   width: 100vw;
 }
 
 ._parent {
   width: 948px;
-  height: 200px;
+  height: 250px;
   position: relative;
   margin-top: 3rem;
   background: var(--purple-300);
@@ -28,48 +28,28 @@
   align-items: center;
   background: linear-gradient(90deg, #00ffff 0%, #37cfff 100%);
   border-radius: 12px 12px 0px 0px;
-  display: flex;
   flex-direction: column;
 }
 
 ._child img {
   width: 105px;
   height: 105px;
-  margin-top: 11rem;
-
-  max-width: 100%;
-  max-height: 100%;
-  cursor: pointer;
-
+  margin-top: 195px;
   filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.25));
-  border-radius: 250px;
-}
-._btnPhoto {
-  border: none;
-  border-radius: var(--border-md);
-  background-color: var(--text-900);
-  color: var(--text-100);
-  font-weight: var(--font-semibold);
-  margin-block: 6px;
-  padding: 6px;
-  width: 129px;
-  transition: 0.2s ease-in-out;
 }
 
-._btnPhoto:hover {
-  background-color: var(--purple-500);
-  color: var(--text-900);
-}
 ._nametitle {
   font-weight: var(--font-extrabold);
   font-size: 20px;
   line-height: 24px;
   letter-spacing: -0.03em;
   color: var(--text-900);
+  margin-top: 16px;
 }
 ._nametitle2 {
   line-height: 19px;
   letter-spacing: -0.03em;
+  margin-bottom: 10px;
 }
 /* input file */
 
@@ -79,37 +59,36 @@
 }
 
 ._fileSelect::before {
-  background-color: var(--text-900);
-  color: var(--text-100);
+  width: 100%;
+  min-width: 80px;
+  margin-block: 6px;
+  padding: 8px 12px;
+  border: none;
+  background-color: var(--gray-900);
+  color: var(--gray-100);
+  border-radius: var(--border-md);
+  content: "Change Photo";
+  font-weight: var(--font-semibold);
+  font-size: var(--text-sm);
+  transition: 0.2s ease-in-out;
   display: flex;
   justify-content: center;
-  align-items: center;
-  border-radius: var(--border-md);
-  content: "Seleccionar"; /* testo por defecto */
+  cursor: pointer;
   position: absolute;
-  font-weight: var(--font-semibold);
-  transition: 0.2s ease-in-out;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
 }
 
 ._fileSelect input[type="file"] {
   opacity: 0;
   width: 129px;
-  height: 29px;
-  padding: 16px;
-  display: inline-block;
+  height: 45px;
   cursor: pointer;
 }
 ._fileSelect:hover::before {
-  background-color: var(--purple-500);
-  color: var(--text-900);
+  background-color: var(--gray-700);
+  color: var(--gray-100);
 }
 
-._fileSelect:hover::before {
-  content: "Change Photo";
-  background-color: var(--purple-500);
-  color: var(--text-900);
+._fileSelect:active::before {
+  scale: 0.95;
+  background-color: var(--gray-500);
 }

@@ -45,8 +45,10 @@ const Profile = () => {
     form.append("lastname", userStoredInContext?.lastname);
 
     updateUserProfile(form);
-    actions.saveUserProfileData(user);
-    navigate("/");
+    actions.saveUserProfileData(userStoredInContext);
+    navigate("/login");
+    localStorage.removeItem("token/role/company_id");
+    localStorage.removeItem("token");
   };
   return (
     <main className="">
