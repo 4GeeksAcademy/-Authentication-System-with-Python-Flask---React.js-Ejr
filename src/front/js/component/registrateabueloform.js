@@ -148,7 +148,7 @@ export function RegistrateAbueloForm() {
                 </div>
                 <div className="col-md-4 ms-5" style={{marginTop:"13rem"}}>
                    <h4>"¡Conéctate y comparte tus experiencias doradas!"</h4>
-                   <h4 className="mt-4">"Descubre nuevas amistades, revive recuerdos y mantente conectado con tus seres queridos" </h4>
+                   <h4 style={{marginTop:"9rem"}} >"Descubre nuevas amistades, revive recuerdos y mantente conectado con tus seres queridos" </h4>
                 </div>
             </div>
         </div>
