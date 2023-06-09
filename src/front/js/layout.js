@@ -3,13 +3,11 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
 import { BackendURL } from "./component/backendURL";
 
-import { Home } from "./pages/home";
 import { Demo } from "./pages/demo";
 import { Single } from "./pages/single";
 import injectContext from "./store/appContext";
 
 import { Footer } from "./component/footer";
-import { RegistrateVoluntario } from "./pages/registratevoluntario";
 import { Landing } from "./pages/landing";
 import { Login } from "./pages/login";
 import { Signup } from "./pages/signup";
@@ -29,10 +27,8 @@ const Layout = () => {
                 <ScrollToTop>
                     <Navbar />
                     <Routes>
-                        <Route element={<Home />} path="/" />
+                        <Route element={<Landing />} path="/" />
                         <Route element={<Signup />} path="/signup" />
-                        <Route element={<RegistrateVoluntario />} path="/signup" />
-                        <Route element={<Landing />} path="/landing" />
                         <Route element={<Demo />} path="/demo" />
                         <Route element={<Login />} path="/login" />
                         <Route element={<Single />} path="/single/:theid" />

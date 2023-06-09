@@ -60,8 +60,6 @@ def login():
     email = body['email']
     password = body['password']
 
-    print(body)
-
     user = User.query.filter_by(email=email, password=password).first()
 
     if user == None:
