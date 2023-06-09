@@ -8,6 +8,8 @@ import { Context } from "../store/appContext";
 
 export const FoodGeneral = () => {
     const {store, actions}= useContext(Context);
+    
+
 
 	return (
         <div className="container" style={{paddingTop:"5rem", marginBottom: "45rem"}}>
@@ -31,32 +33,29 @@ export const FoodGeneral = () => {
                     <div>
                         <div className="container-fluid text-center mt-5">
                             <div className="row row-cols-2 g-5">
-                                {/* card 
-                                <div className="d-flex col">p
-                                
-                                    <div className="card gradient-custom" style={{minHeight:"20rem", minWidth:"17rem"}}>
-                                        <img className="card-img-top mx-0 p-0" alt="{item.url}"></img>
-                                        <div className="main-title card-body">
-                                            <h5 className="card-body">item.name</h5>
-                                        </div>
-                                            <div className="footer text-center">
-                                                item.description
-                                            </div>
-                                        </div>
-                                    </div>           
-                                card */}
                                 <RestaurantCard />
                             </div>  
                         </div>
                     </div>
                 </section>
             </div>
+            <LoginModal />
         </div>
     )
-    };
-//         store[restaurantes]?.map(item=>{
-//             <h1>`${item.name}`</h1>
-                       
-// }))};
-
-export default FoodGeneral;
+};
+    
+    export default FoodGeneral;
+    {/* card 
+    <div className="d-flex col">p
+    
+        <div className="card gradient-custom" style={{minHeight:"20rem", minWidth:"17rem"}}>
+            <img className="card-img-top mx-0 p-0" alt="{item.url}"></img>
+            <div className="main-title card-body">
+                <h5 className="card-body">item.name</h5>
+            </div>
+                <div className="footer text-center">
+                    item.description
+                </div>
+            </div>
+        </div>           
+    card */}
