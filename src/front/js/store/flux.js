@@ -1,5 +1,5 @@
 import axios from "axios";
-import mercadopago from "mercadopago";
+// import mercadopago from "mercadopago";
 const apiUrl = process.env.BACKEND_URL
 const getState = ({ getStore, getActions, setStore }) => {
 	return {

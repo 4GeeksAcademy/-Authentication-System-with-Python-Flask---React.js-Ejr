@@ -15,7 +15,12 @@ export const Book = () => {
   useEffect(() => {
     actions.fetchServices()
     actions.fetchVehicleTypes()
+    actions.pagoMercadopago()
   }, [])
+
+  const pagoMercadoPago = () => {
+    window.location.replace(store?.mercadopago.init_point);
+  };
 
 
 
@@ -171,6 +176,7 @@ export const Book = () => {
         {/* </div> */}
         
         <br></br>
+        <button className="btn btn-success" onClick={pagoMercadoPago}>Pagar</button>
 
 
 
