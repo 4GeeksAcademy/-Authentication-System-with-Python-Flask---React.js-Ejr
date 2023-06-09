@@ -37,7 +37,7 @@ export const Services = () => {
                   <div className="modal-dialog  modal-dialog-scrollable">
                     <div className="modal-content">
                       <div className="modal-header">
-                        <h5 className="modal-title" id="exampleModalLabel">Full Exterior Detail</h5>
+                        <h5 className="modal-title" id="exampleModalLabel">{element.name}</h5>
                         <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                       </div>
                       <div className="modal-body">
