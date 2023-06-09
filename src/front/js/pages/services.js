@@ -43,7 +43,7 @@ export const Services = () => {
                         </p>
                       </div>
                       <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                       </div>
                     </div>
                   </div>
@@ -75,12 +75,11 @@ export const Services = () => {
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                       </div>
                       <div class="modal-body">
-                        <p>It’s not enough to simply look good. You need a clean, fresh smell that helps create a positive driving experience. This involves deep-cleaning techniques that sanitize upholstery, carpets, and surfaces for an immaculate finish.</p>
-                        Interior detailing to a high standard requires preparation, hard work, and a standardized process.
-                        Interior car detailing in general will help your car look great and operate at the highest level. When you’re considering taking your car to have it detailed, think about what you’ll get in return. Not only will you be rewarded with a clean car interior that looks nice, but you’ll also be maintaining your car so that it continues to be in the best possible shape.
+                        <p>It’s not enough to simply look good. You need a clean, fresh smell that helps create a positive driving experience. This involves deep-cleaning techniques that sanitize upholstery, carpets, and surfaces for an immaculate finish.Interior detailing to a high standard requires preparation, hard work, and a standardized process.
+                        Interior car detailing in general will help your car look great and operate at the highest level. When you’re considering taking your car to have it detailed, think about what you’ll get in return. Not only will you be rewarded with a clean car interior that looks nice, but you’ll also be maintaining your car so that it continues to be in the best possible shape.</p>
                       </div>
                       <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                       </div>
                     </div>
                   </div>
@@ -112,12 +111,11 @@ export const Services = () => {
                       </div>
                       <div class="modal-body">
                         <p>
-                          Engine cleaning is a task that needs to be done regularly. If you want to keep your car running smoothly and enjoy a long lifespan, it is important that you clean its engine bay regularly. The engine bay is where the most vital parts of your car are located and yet it is one of the most neglected areas when it comes to cleaning.
-                          If you have ever wondered why this area gets so dirty, here’s why: Engine oil and other fluids leak out of these parts onto the ground where they collect dirt, dust, grime, and other debris. If these parts are not cleaned regularly then they can cause damage to other components in your car such as electrical connections which can lead to expensive repairs later on down the line.
+                          Engine cleaning is a task that needs to be done regularly. If you want to keep your car running smoothly and enjoy a long lifespan, it is important that you clean its engine bay regularly. The engine bay is where the most vital parts of your car are located and yet it is one of the most neglected areas when it comes to cleaning. If you have ever wondered why this area gets so dirty, here’s why: Engine oil and other fluids leak out of these parts onto the ground where they collect dirt, dust, grime, and other debris. If these parts are not cleaned regularly then they can cause damage to other components in your car such as electrical connections which can lead to expensive repairs later on down the line.
                         </p>
                       </div>
                       <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                       </div>
                     </div>
                   </div>
@@ -144,7 +142,7 @@ export const Services = () => {
                   </button>
                   <div class="modal fade" id="exampleModal4" tabindex="-1" aria-labelledby="exampleModalLabel4" aria-hidden="true">
                   <div class="modal-dialog  modal-dialog-scrollable">
-                    <div class="modal-content">
+                    <div class="modal-content text-align-center">
                       <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel4">Ceramic Coating</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -155,7 +153,7 @@ export const Services = () => {
                         </p>
                       </div>
                       <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                       </div>
                     </div>
                   </div>
