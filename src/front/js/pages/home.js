@@ -1,13 +1,15 @@
+import React, {useState, useEffect } from "react";
+// import { Context } from "../store/appContext";
 import React, { useContext, useState, useEffect } from "react";
 import { Context } from "../store/appContext";
 import "../../styles/home.css";
-import LoginModal from "./loginModal";
 import Register from "../component/register";
 import { Link } from "react-router-dom";
+import LoginModal from "./loginModal";
 
 
 export const Home = () => {
-	const { store, actions } = useContext(Context);
+	// const { store, actions } = useContext(Context);
 
 
 	return (
@@ -31,7 +33,7 @@ export const Home = () => {
 						<div className="row m-1 vh-25">
 							<div className="col-12 col-sm-12 vh-25 box c my-2">
 								<section className="sub-section">
-									<h2 className="sub-title pt-5">Acá puedes tener la comida más saludable, ademas de conveniente</h2>
+									<h2 className="sub-title pt-5 ">Acá puedes tener la comida más saludable, ademas de conveniente</h2>
 									<h2 className="sub-title">¡En la puerta de tu casa!</h2>
 								</section>
 							</div>
