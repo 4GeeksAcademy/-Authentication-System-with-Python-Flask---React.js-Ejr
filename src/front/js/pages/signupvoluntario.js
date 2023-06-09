@@ -1,7 +1,8 @@
 import React from "react";
 import { RegistrateVoluntarioForm } from "../component/registratevoluntarioform";
 
-export const Signup = () => {
+
+export const SignupVoluntario = () => {
 
     return (
         <RegistrateVoluntarioForm />
