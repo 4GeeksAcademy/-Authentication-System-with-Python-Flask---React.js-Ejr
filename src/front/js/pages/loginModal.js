@@ -30,7 +30,9 @@ export const LoginModal = () => {
                             </div>
                             <div className="d-flex mt-5">
                                 <button className="btn btn-outline-info text-light mx-4">Olvide mi contraseña :c</button>
-                                <button className="btn btn-outline-info text-light mx-4">Me quiero registrar UwU</button>
+                                <Link to="/register">
+                                    <button className="btn btn-outline-info text-light mx-4">Me quiero registrar UwU</button>
+                                </Link>
                             </div>
                         </div>
                         <div className="modal-footer">
