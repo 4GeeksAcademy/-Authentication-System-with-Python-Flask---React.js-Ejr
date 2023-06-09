@@ -33,7 +33,7 @@ class User(db.Model):
             "last_name":self.last_name,
             "birthday":self.birthday,
             "gender": self.gender,
-            "phone": self.phone,
+            "phone": self.phone
             # "suscription": self.suscription
         }
 
@@ -46,7 +46,7 @@ class Restaurant(db.Model):
     url=db.Column(db.String(500), unique=True, nullable=False)
     ubicaciones = db.Column(db.String(80), unique=False, nullable=False)
     restaurantplatos=db.relationship("Restaurantplatos")
-
+    suscription = db.Column(db.Boolean(), unique=False, nullable=False)
     #platos=db.Column(db.Integer, db.Foreignkey ("Platos.id"))
     pedido=db.relationship("Pedidos")
     #detalles_de_pedido=db.relationship("DetalleDePedidos")
@@ -59,7 +59,8 @@ class Restaurant(db.Model):
             "id":self.id,
             "name":self.name,
             "url":self.url,
-            "ubicaciones":self.ubicaciones 
+            "ubicaciones":self.ubicaciones,
+            "suscription": self.suscription 
         }
 
 class Platos(db.Model):
@@ -68,7 +69,7 @@ class Platos(db.Model):
     name = db.Column(db.String(120), unique=True, nullable=False)
     description=db.Column(db.String(500), unique=True, nullable=False)
     price=db.Column(db.Integer, unique=True, nullable=False)
-    
+    url=db.Column(db.String(500), unique=True, nullable=False)
     # restaurant_id = db.Column(db.Integer, db.ForeignKey("restaurant.id"))
     restaurantplatos=db.relationship("Restaurantplatos")
     # detalles_de_pedido=db.relationship("DetalleDePedidos")
@@ -85,6 +86,7 @@ class Platos(db.Model):
             "name":self.name,
             "price": self.price,
             "description": self.description,
+            "url": self.url
             # "platos":self.description,
             # "restaurant_id":self.restaurant_id
             }
