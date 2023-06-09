@@ -11,9 +11,9 @@ export const LoginModal = () => {
                             <p className="modal-title text-light fs-5 fw-bold" id="exampleModalLabel">Inicia sesión!</p>
                             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <div className="modal-body">
+                        <div className="modal-body text-center mx-auto">
                             <div className="mb-3 row">
-                                <label htmlFor="inputEmail" className="col-sm-2 col-form-label text-light">Email</label>
+                                <label htmlFor="inputEmail" className="col-sm-2 col-form-label text-center text-light">Email</label>
                                 <div>
                                     <div className="col-sm-10">
                                         <input type="email" className="form-control" id="inputEmail" placeholder="Escribe tu correo"></input>
@@ -30,7 +30,9 @@ export const LoginModal = () => {
                             </div>
                             <div className="d-flex mt-5">
                                 <button className="btn btn-outline-info text-light mx-4">Olvide mi contraseña :c</button>
-                                <button className="btn btn-outline-info text-light mx-4">Me quiero registrar UwU</button>
+                                <Link to="/register">
+                                    <button className="btn btn-outline-info text-light mx-4">Me quiero registrar UwU</button>
+                                </Link>
                             </div>
                         </div>
                         <div className="modal-footer">

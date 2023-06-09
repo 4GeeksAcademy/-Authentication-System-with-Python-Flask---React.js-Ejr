@@ -4,11 +4,12 @@ import LoginModal from "../pages/loginModal";
 import "../../styles/register.css";
 
 export const Register = () => {
+    const { store, actions } = useContext(Context)
 
     return (
 
         <section className="vh-100 gradient-custom mb-5 pb-5">
-            <div id="background-ia" className="container-fluid pt-0">
+            <div id="background-ia" className="container-fluid pt-0 overflow-visible">
                 <h1 className="main-title text-center pt-5 pb-0 mb-0">Registrate en GitLoot!</h1>
                 <div className="row justify-content-center align-items-center mt-5 h-25">
                     <div className="col-12 col-lg-9 col-xl-7">
