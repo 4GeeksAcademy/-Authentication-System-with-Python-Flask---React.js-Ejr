@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import LoginModal from "../pages/loginModal";
 import "../../styles/register.css";
 
 export const Register = () => {
+    // const {store, actions} = useContext(Context)
+    
 	return (
         
         <section  className="vh-100 gradient-custom mb-5 pb-5">
@@ -41,6 +43,7 @@ export const Register = () => {
                                         <input type="text" className="form-control form-control-lg" placeholder="dd-mm-aaaa" id="birthdayDate" />
                                         <label htmlFor="birthdayDate" className="form-label">Fecha de Nacimiento</label>
                                     </div>
+                                    
 
                                     </div>
                                     <div className="col-md-6 mb-4">
