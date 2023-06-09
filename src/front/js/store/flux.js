@@ -4,6 +4,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 		store: {
 			message: null,
 			services: [],
+			vehicleType: [],
 			demo: [
 				{
 					title: "FIRST",
@@ -52,6 +53,30 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return resp
 				}
 			},
+			fetchServices: async () => {
+				try {
+				  const resp = await getActions().apiFetch("/api/services", "GET");
+				  if (resp.code >= 400) {
+					return resp;
+				  }
+				  setStore({ services: resp.data.services });
+				  return resp;
+				} catch (error) {
+				  console.log("Error fetching services", error);
+				}
+			  },
+			  fetchVehicleTypes: async () => {
+				try {
+				  const resp = await getActions().apiFetch("/api/book", "GET");
+				  if (resp.code >= 400) {
+					return resp;
+				  }
+				  setStore({ vehicleTypes: resp.data.vehicleTypes });
+				  return resp;
+				} catch (error) {
+				  console.log("Error fetching vehicle types", error);
+				}
+			  },
 			getMessage: async () => {
 				try {
 					// fetching data from the backend
@@ -78,14 +103,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 				//reset the global store
 				setStore({ demo: demo });
 			},
-			apiFetch: async (endpoint, method, body = {}) => {
-				//let resp = await fetch(apiUrl + endpoint, method == "GET" ? undefined :{
-				let resp = await fetch(apiUrl + endpoint, {
+			apiFetch: async (endpoint, method = "GET", body = {}) => {
+				let resp = await fetch(apiUrl + endpoint, method == "GET" ? undefined :{
+				// let resp = await fetch(apiUrl + endpoint, {
 					method,
 					body: JSON.stringify(body),
 					headers: {
 						"Content-Type": "application/json",
-						"Authorization" : "Bearer "+localStorage.getItem("accessToken") 
+						// "Authorization" : "Bearer "+localStorage.getItem("accessToken") 
 					}
 				})
 				if (!resp.ok) {
@@ -96,6 +121,17 @@ const getState = ({ getStore, getActions, setStore }) => {
 				return { code: resp.status, data: data }
 			},
 
+			// fetchServices: async(name, description, price) =>{
+			// 	let baseUrl = apiUrl+"/api/services"
+
+			// 	try{
+			// 		let response = await fetch(baseUrl)
+			// 		if (!response.ok) return response.status
+			// 		let data = await response.json()
+			// 		let obj = {}
+			// 		obj[name] = {}
+			// 	}
+			// },
 
 
 			addServices: (element) => {

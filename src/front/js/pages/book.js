@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Context } from "../store/appContext";
 import rigoImageUrl from "../../img/rigo-baby.jpg";
 import "../../styles/home.css";
@@ -9,7 +9,13 @@ import "../../styles/home.css";
 export const Book = () => {
 
   const { store, actions } = useContext(Context);
+  const services = store.services
+  const vehicles = store.vehicles
   // const [size, setSize] = useState("")
+  useEffect(() => {
+    actions.fetchServices()
+    actions.fetchVehicleTypes()
+  }, [])
 
 
 
@@ -17,15 +23,15 @@ export const Book = () => {
     <div style={{ backgroundColor: '#264653', color: '#000' }}>
       <div className="container">
         <h1 className=" display-4 text-center py-2" >  Our Services</h1>
-        <div class="accordion accordion-flush" id="accordionFlushExample">
-          <div class="accordion-item">
-            <h2 class="accordion-header" id="flush-headingOne">
-              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-                1° Seleccion el Tamaño del Auto
+        <div className="accordion accordion-flush" id="accordionFlushExample">
+          <div className="accordion-item">
+            <h2 className="accordion-header" id="flush-headingOne">
+              <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                1° Selecciona el Tamaño del Auto
               </button>
             </h2>
-            <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
-              <div class="accordion-body">
+            <div id="flush-collapseOne" className="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+              <div className="accordion-body">
                 <div className="row align-items-center" >
                   <div className="col" >
                     <div className="card text-center card border-dark mb-3" style={{ width: "35rem" }}>
@@ -58,19 +64,19 @@ export const Book = () => {
             </div>
           </div>
           <br></br>
-          <div class="accordion-item">
-            <h2 class="accordion-header" id="flush-headingTwo">
-              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+          <div className="accordion-item">
+            <h2 className="accordion-header" id="flush-headingTwo">
+              <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
                 2° Selecciona el servicio
               </button>
             </h2>
-            <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
-              <div class="accordion-body ">
+            <div id="flush-collapseTwo" className="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+              <div className="accordion-body ">
                 
                   {/* <div className="row align-items-center " > */}
                     {/* <div className="col" > */}
-                    <div class="card-group">
-                    <div class="overflow-auto d-flex">
+                    <div className="card-group">
+                    <div className="overflow-auto d-flex">
                       <div className="card text-center card border-dark   m-2" style={{ width: "35rem" }}>
                         <img src="https://img.freepik.com/foto-gratis/hermoso-coche-servicio-lavado_23-2149212221.jpg?w=740&t=st=1686075276~exp=1686075876~hmac=3d03bcfdf61ec295b42afde6c9cd4cfe3efe2341e0f841134f7dd60d29b0b2bb" className="card-img-top" alt="..." />
                         <div className="card-body " style={{ backgroundColor: '#40768C' }}>
@@ -141,14 +147,14 @@ export const Book = () => {
             </div>
           </div>
           <br></br>
-          <div class="accordion-item">
-            <h2 class="accordion-header" id="flush-headingThree">
-              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+          <div className="accordion-item">
+            <h2 className="accordion-header" id="flush-headingThree">
+              <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
                 3° Selecciona Fecha y Hora
               </button>
             </h2>
-            <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
-              <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the third item's accordion body. Nothing more exciting happening here in terms of content, but just filling up the space to make it look, at least at first glance, a bit more representative of how this would look in a real-world application.</div>
+            <div id="flush-collapseThree" className="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+              <div className="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the third item's accordion body. Nothing more exciting happening here in terms of content, but just filling up the space to make it look, at least at first glance, a bit more representative of how this would look in a real-world application.</div>
             </div>
           </div>
           </div>
