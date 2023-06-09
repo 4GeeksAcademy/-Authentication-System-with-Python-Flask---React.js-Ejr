@@ -4,7 +4,7 @@ import LoginModal from "../pages/loginModal";
 import "../../styles/register.css";
 
 export const Register = () => {
-    const { store, actions } = useContext(Context)
+    //const { store, actions } = useContext(Context)
 
     return (
 
