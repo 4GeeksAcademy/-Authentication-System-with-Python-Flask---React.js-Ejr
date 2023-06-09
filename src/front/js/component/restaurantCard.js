@@ -16,7 +16,7 @@ export const RestaurantCard = () => {
             <div className="col card gradient-custom-contrast">   
                         <div key={index} className="card-img-top mx-0 p-1" alt="{item.url}">
                             <img src={item.image} onError={imgError} className="card-img-top mx-0 p-1 pt-3" alt="restaurantImg"></img>
-                            <Link to={`/order-food/${item.name}`}>
+                            <Link to={`/order-food/${index}`}>
                                 <div className="card-body">
                                     <h5 className="card-body"><strong>{item.name}</strong></h5>
                                 </div>
@@ -29,7 +29,7 @@ export const RestaurantCard = () => {
                                             <button key={index} className="btn btn-outline-primary col fw-bold rounded d-flex align-self-center justify-content-center">
                                                 {element.plateName}
                                             </button>
-                                            <button key={index} className="btn btn-outline-primary col fw-bold rounded d-flex align-self-center justify-content-center">{element.price} Pesos</button>
+                                            <button className="btn btn-outline-primary col fw-bold rounded d-flex align-self-center justify-content-center">{element.price} Pesos</button>
                                         </div>
                                     </Link>
                                     )

@@ -1,5 +1,3 @@
-import React, {useState, useEffect } from "react";
-// import { Context } from "../store/appContext";
 import React, { useContext, useState, useEffect } from "react";
 import { Context } from "../store/appContext";
 import "../../styles/home.css";
