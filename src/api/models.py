@@ -71,6 +71,7 @@ class Platos(db.Model):
     price=db.Column(db.Integer, unique=True, nullable=False)
     restaurante=db.relationship("Restaurant")
     detalles_de_pedido=db.relationship("DetalleDePedidos")
+    #agregar propiedad para agregar url de imagen
 
     def __repr__(self):
         return f'<Platos {self.name}>'

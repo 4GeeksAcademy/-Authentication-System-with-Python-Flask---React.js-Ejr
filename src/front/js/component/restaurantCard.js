@@ -15,18 +15,18 @@ export const RestaurantCard = () => {
             {store.restaurantes && store.restaurantes.length > 0 && store.restaurantes.map((item, index) =>(
             <div className="col card gradient-custom-contrast">
                     <div key={index} className="card-img-top mx-0 p-1" alt="{item.url}">
-                        <img src={item.url} onError={imgError} className="card-img-top mx-0 p-1 pt-3" alt="CharacterImg"></img>
+                        <img src={item.image} onError={imgError} className="card-img-top mx-0 p-1 pt-3" alt="CharacterImg"></img>
                         <div className="cardTitle card-body">
                             <h5 className="cardTitle card-body"><strong>{item.name}</strong></h5>
                         </div>
                         <div className="cardFooter card-body ms-auto px-auto">
-                            {item.platos.map((element, index)=>{
+                            {item.plates.map((element, index)=>{
                                 return(
                                     <div className="row g-3 gap-3">
                                         <p key={index} className="col fw-bold rounded d-flex align-self-center justify-content-center">
-                                            {element.name}
+                                            {element.plateName}
                                         </p>
-                                        <p key={index} className="col fw-bold text-primary rounded d-flex align-self-center justify-content-center">{element.precio} Pesos</p>
+                                        <p key={index} className="col fw-bold text-primary rounded d-flex align-self-center justify-content-center">{element.price} Pesos</p>
                                     </div>
                                 )
                             })}
