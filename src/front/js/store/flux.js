@@ -1,3 +1,5 @@
+import axios from "axios";
+// import mercadopago from "mercadopago";
 const apiUrl = process.env.BACKEND_URL
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
@@ -5,6 +7,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			message: null,
 			services: [],
 			vehicleType: [],
+			mercadopago: {},
 			demo: [
 				{
 					title: "FIRST",
@@ -119,6 +122,21 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 				let data = await resp.json()
 				return { code: resp.status, data: data }
+			},
+
+			pagoMercadopago: async ()=>{
+				try{
+					const response=await axios.post(apiUrl + "/api/preference",{
+						// aca va la info que se quiere enviar
+
+					});
+					setStore({
+						mercadopago: response.data
+					})
+
+				} catch (error){
+					console.log(error)
+				}
 			},
 
 			// fetchServices: async(name, description, price) =>{
