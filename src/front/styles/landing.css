@@ -17,18 +17,19 @@
   color: white;
 }
 
-body, html {
+body,
+html {
   height: 100%;
   margin: 0;
   font: 400 15px/1.8 "Lato", sans-serif;
   color: black;
+  background-color: rgb(255, 255, 255);
 }
 
 .bgimg-1,
 .bgimg-2,
 .bgimg-3 {
   position: relative;
-  opacity: 0.65;
   background-attachment: fixed;
   background-position: center;
   background-repeat: no-repeat;
@@ -36,29 +37,33 @@ body, html {
 }
 
 .bgimg-1 {
-  background-image: url("https://i.imgur.com/MOSSCWH.jpg");
-  min-height: 1000px;
+  background-image: url("https://i.imgur.com/0bYnnLo.png");
+  min-height: 50rem;
+  background-position: right center;
 }
 
 .bgimg-2 {
-  background-image: url("https://i.imgur.com/MOSSCWH.jpg");
-  min-height: 1000px;
+  background-image: url("https://i.imgur.com/51yAYic.png?1");
+  min-height: 50rem;
+
 }
 
 .bgimg-3 {
   background-image: url("https://i.imgur.com/MOSSCWH.jpg");
-  min-height: 1000px;
+  min-height: 50rem;
 }
 
 .caption {
   position: absolute;
+  background: transparentº;
   left: 0;
   top: 35%;
   width: 100%;
   transform: translateY(-50%);
   text-align: center;
   color: whitesmoke;
-  text-shadow: 2px 2px 3px black; /* Add a 1px shadow with a slight transparency */
+  text-shadow: 2px 2px 3px black;
+  /* Add a 1px shadow with a slight transparency */
 }
 
 .caption span.border {
