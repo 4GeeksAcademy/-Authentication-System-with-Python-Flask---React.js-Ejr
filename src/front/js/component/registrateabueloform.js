@@ -146,9 +146,9 @@ export function RegistrateAbueloForm() {
                         </div>
                     </form>
                 </div>
-                <div className="col-md-4 ms-5" style={{ marginTop: "10rem" }}>
-                    <img src="https://images.pexels.com/photos/6787961/pexels-photo-6787961.jpeg?auto=compress&cs=tinysrgb&w=800"
-                        alt="abuelosriendo" style={{ height: "30rem", width:"30rem" }} />
+                <div className="col-md-4 ms-5" style={{marginTop:"13rem"}}>
+                   <h4>"¡Conéctate y comparte tus experiencias doradas!"</h4>
+                   <h4 className="mt-4">"Descubre nuevas amistades, revive recuerdos y mantente conectado con tus seres queridos" </h4>
                 </div>
             </div>
         </div>
