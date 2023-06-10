@@ -149,6 +149,31 @@ def user_login():
     # Retornar el token
     return jsonify({"accessToken": access_token, "refreshToken":refresh_token})
 
+@api.route("/changepassword", methods=["POST"])
+@jwt_required()
+def change_password():
+    new_password=request.json.get("password")
+    user_id=get_jwt_identity()
+    secure_password = bcrypt.generate_password_hash(
+        new_password, rounds=None).decode("utf-8")
+    user=User.query.get(user_id)
+    user.password=secure_password
+    db.session.add(user)
+    db.session.commit()
+    return jsonify({"msg":"clave actualizada"})
+
+@api.route("/recoverypassword", methods=["POST"])
+def recovery_password():
+    user_email=request.jeson.get("email")
+    user = User.query.filter_by(email=user_email).first()
+    if user is None:
+        return jsonify({"Message": "User not found"}), 401
+    # 1 Generar ek token temporal para el cambio de clave
+    access_token = create_access_token(
+        identity=user.id, additional_claims={"type":"password"})
+    return jsonify({"recoveryToken":access_token})
+    # 2 Enviar el enlace con el token via email para el cambio de clave
+
 @api.route("/refresh", methods=["POST"])
 @jwt_required(refresh=True)
 def user_refresh():
