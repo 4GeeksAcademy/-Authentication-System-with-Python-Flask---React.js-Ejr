@@ -38,7 +38,7 @@ export const LoginForm = () => {
 
         setEmail('');
         setPassword('');
-        navigate('/home');  // Updated navigation path
+        navigate('/');
       } else {
         setLoginSuccess(false);
         setLoginError(true);
@@ -74,6 +74,7 @@ export const LoginForm = () => {
                   />
                 </div>
               </div>
+              
               <div className="col-sm-6">
                 <div className="form-group">
                   <label htmlFor="inputPassword" className="form-label">
