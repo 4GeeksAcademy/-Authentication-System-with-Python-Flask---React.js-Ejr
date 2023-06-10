@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 
+
 export function RegistrateVoluntarioForm() {
   const [showPassword, setShowPassword] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
@@ -58,7 +59,7 @@ export function RegistrateVoluntarioForm() {
         // Handle successful signup
         console.log("New user created:", data);
         // Redirect to google.com
-        window.location.href = "/landing";
+        window.location.href = "/";
       })
       .catch((error) => {
         // Handle signup error
@@ -86,31 +87,31 @@ export function RegistrateVoluntarioForm() {
             )}
             <div className="mb-3">
               <label htmlFor="inputName" className="form-label">
-                Nombre
+                <h5>Nombre</h5>
               </label>
               <input type="text" className="form-control" id="inputName" required />
             </div>
             <div className="mb-3">
               <label htmlFor="inputSurname" className="form-label">
-                Apellido
+                <h5>Apellido</h5>
               </label>
               <input type="text" className="form-control" id="inputSurname" required />
             </div>
             <div className="mb-3">
               <label htmlFor="inputUserName" className="form-label">
-                Nombre de Usuario
+                <h5>Nombre de Usuario</h5>
               </label>
               <input type="text" className="form-control" id="inputUserName" required />
             </div>
             <div className="mb-3">
               <label htmlFor="inputEmail" className="form-label">
-                Email
+                <h5>Email</h5>
               </label>
               <input type="email" className="form-control" id="inputEmail" required />
             </div>
             <div className="mb-3">
               <label htmlFor="inputPassword" className="form-label">
-                Contraseña
+                <h5>Contraseña</h5>
               </label>
               <div className="input-group">
                 <input type={showPassword ? "text" : "password"} className="form-control" id="inputPassword" required />
@@ -118,7 +119,7 @@ export function RegistrateVoluntarioForm() {
             </div>
             <div className="mb-3">
               <label htmlFor="inputRepeatPassword" className="form-label">
-                Repita la contraseña
+                <h5>Repita la contraseña</h5>
               </label>
               <div className="input-group">
                 <input
@@ -138,14 +139,14 @@ export function RegistrateVoluntarioForm() {
             </div>
             <div className="text-center">
               <button type="submit" className="btn btn-primary">
-                Sign up
+                <h5>Sign up</h5>
               </button>
             </div>
           </form>
         </div>
-        <div className="col-md-6">
+        <div className="col-md-6" style={{ marginTop: "5rem" }}>
           <img
-            className="img-fluid m-5"
+            className="img-fluid m-5" style={{ height: "30rem", width: "50rem" }}
             src="https://images.pexels.com/photos/3823497/pexels-photo-3823497.jpeg?auto=compress&cs=tinysrgb&w=800"
             alt="Volunteer"
           />
