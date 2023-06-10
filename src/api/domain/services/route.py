@@ -27,7 +27,7 @@ def get_services_by_company(company_id):
 
     if isinstance(services_by_company, list):
         serialized_services = list(map(lambda service: service.serialize(), services_by_company))
-        return Response.response_ok(f'List of all services of the company with id: {company_id}', serialized_services)
+        return Response.response_ok('List of all services of the company', serialized_services)
     else:
         return Response.response_error(services_by_company['msg'], services_by_company['status'])
 
@@ -36,7 +36,7 @@ def get_single_service(service_id):
     service = Controller.get_single_service(service_id)
 
     if isinstance(service, Services):
-        return Response.response_ok(f'Service with id: {service_id}, was found in database.', service.serialize())
+        return Response.response_ok('Service was found in database.', service.serialize())
     else:
         return Response.response_error(service['msg'], service['status'])
 
@@ -49,7 +49,7 @@ def update_service(service_id):
 
     service = Controller.update_service(service_id, update_service,  current_user_id )
     if isinstance(service, Services):
-        return Response.response_ok(f'Service with id: {service_id}, has been updated in database.', service.serialize())
+        return Response.response_ok('Service has been updated in database.', service.serialize())
     else:
         return Response.response_error(service["msg"], service['status'])
 
@@ -62,6 +62,6 @@ def delete_service(service_id):
     service = Controller.delete_service(service_id, current_user_id)
 
     if isinstance(service, Services):
-        return Response.response_ok(f'Service with id: {service_id}, was deleted from database.', service.serialize())
+        return Response.response_ok('Service was deleted from database.', service.serialize())
     else:
         return Response.response_error(service['msg'], service['status'])

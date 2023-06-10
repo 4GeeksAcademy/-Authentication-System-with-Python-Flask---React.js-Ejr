@@ -41,7 +41,7 @@ def get_workers_by_service(service_id):
 
     if isinstance(workers_by_service, list):
         serialized_workers_by_service = list(map(lambda workers: workers.serialize_workers(), workers_by_service))
-        return Response.response_ok(f'List of all workers of the service with id: {service_id}', serialized_workers_by_service)
+        return Response.response_ok('List of all workers of the service with id: {service_id}', serialized_workers_by_service)
     else:
         return Response.response_error(workers_by_service['msg'], workers_by_service['status'])
 
@@ -65,6 +65,6 @@ def delete_service_worker(service_worker_id):
     service_worker = Controller.delete_service_worker(service_worker_id, current_user_id)
     
     if isinstance(service_worker, Services_workers):
-        return Response.response_ok(f'Service_worker with id: {service_worker_id}, was deleted from database', service_worker.serialize())
+        return Response.response_ok('Service-worker relationship was deleted from database', service_worker.serialize())
     
     return service_worker
