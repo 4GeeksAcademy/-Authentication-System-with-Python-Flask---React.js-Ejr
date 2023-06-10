@@ -44,6 +44,8 @@
   font-weight: var(--font-semibold);
   color: var(--black);
   transition: opacity 0.2s;
+  width: 100%;
+  text-align: center;
 }
 
 ._smallContainer p:hover {
@@ -86,4 +88,17 @@ span {
 
 ._workerImg:hover {
   opacity: 0.7;
+}
+
+._modalContent > p {
+  margin: 0;
+}
+
+._modalFooter {
+  margin-top: 24px;
+}
+._btnWrapper {
+  display: flex;
+  gap: 16px;
+  margin-top: 24px;
 }
