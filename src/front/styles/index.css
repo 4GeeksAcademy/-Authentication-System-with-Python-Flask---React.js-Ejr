@@ -191,6 +191,29 @@ button:hover{
     background-size: cover;
     background-position: center;
 }
+.text-stroke-dark-thin{
+  -webkit-text-stroke: 0.5px black;
+}
+.text-stroke-dark{
+  -webkit-text-stroke: 1px black;
+}
+.text-stroke-white{
+  -webkit-text-stroke: 0.4px white;
+}
+.text-stroke-white-thin{
+  -webkit-text-stroke: 0.2px white;
 
+}
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: white;
+  opacity: 1; /* Firefox */
+}
 
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+  color: white;
+}
+
+::-ms-input-placeholder { /* Microsoft Edge */
+  color: white;
+}
 

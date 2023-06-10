@@ -46,7 +46,7 @@ export const Profile = () => {
                             <form>
                                 {/* (username) */}
                                 <div className="mb-3">
-                                    <label className="small mb-1" htmlFor="inputUsername">Nombre de usuario (como quieres que te llamemos?):</label>
+                                    <label className="small mb-1" htmlFor="inputUsername">Nombre de usuario (como quieres que te llamemos?)</label>
                                     <input className="form-control" id="inputUsername" type="text" placeholder="Tu Usuario"></input>
                                 </div>
                                 {/* Form Row */}

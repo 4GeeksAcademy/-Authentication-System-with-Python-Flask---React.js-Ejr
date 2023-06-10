@@ -14,7 +14,7 @@ export const FoodCard = () => {
 
     return(
         <>   
-        {[plates] && [plates].length > 0 && [plates].map((element, index) =>{
+        {store[plates] && store[plates].length > 0 && store[plates].map((element, index) =>{
                                 return(
                 <div className="col card gradient-custom-contrast"> 
                     <div key={index} className="card-img-top mx-0 p-1 m-1" alt="{item.url}">
