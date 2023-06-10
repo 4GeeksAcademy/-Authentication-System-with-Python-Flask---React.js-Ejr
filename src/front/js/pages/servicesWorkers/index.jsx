@@ -64,8 +64,12 @@ const ServicesWorkers = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const resMsg = await createServiceWorker(company_id, transformData());
-    resMsg.data ? toast.success(resMsg?.msg) : toast.error(resMsg?.msg);
-    navigate(`/admin-dashboard/${company_id}`);
+    if (resMsg.data) {
+      toast.success(resMsg?.msg);
+      navigate(`/admin-dashboard/${company_id}`);
+    } else {
+      toast.error(resMsg?.msg);
+    }
   };
 
   useEffect(() => {

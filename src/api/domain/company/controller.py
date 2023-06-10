@@ -13,7 +13,11 @@ def create_company(body):
 
     new_user = UserController.create_new_user(body, 'admin')
 
-    return Repository.create_company(body, new_user.id)
+    if isinstance(new_user, User):
+        return Repository.create_company(body, new_user.id)
+
+    return {'msg': new_user['msg'], 'status': new_user['status']}
+
 
 def get_companies_list():
 	all_companies = Repository.get_companies_list()

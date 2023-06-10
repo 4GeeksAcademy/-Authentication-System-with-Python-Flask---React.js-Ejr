@@ -19,7 +19,7 @@ def create_service_worker(company_id):
     service_worker = Controller.create_service_worker(company_id ,current_user_id, body)
     
     if isinstance(service_worker, Services_workers):
-        return Response.response_ok("New service_worker created successfully!", service_worker.serialize())
+        return Response.response_ok("Service has been assigned successfully!", service_worker.serialize())
     else:
         return Response.response_error(service_worker["msg"], service_worker["status"])
 

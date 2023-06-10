@@ -11,6 +11,7 @@ import { Context } from "../../store/appContext.js";
 const Profile = () => {
   const [file, setFile] = useState("");
   const [fileUrl, setFileUrl] = useState("");
+  const [user, setUser] = useState(userStoredInContext);
 
   const { store, actions } = useContext(Context);
   const userStoredInContext = store.userProfileData.userData;
@@ -58,9 +59,9 @@ const Profile = () => {
         img={fileUrl === "" ? userStoredInContext?.avatar : fileUrl}
         handleChange={handleChange}
       />
-      <main className={styles._mainContainerProfile}>
-        <div className={styles._subContainer}>
-          <h2 className={styles._title}>Profile update</h2>
+      <main className="mainContainerProfile">
+        <div className="background">
+          <h2 className="title">Profile update</h2>
           <ProfileForm
             handleChange={handleChange}
             handleClick={handleClick}
