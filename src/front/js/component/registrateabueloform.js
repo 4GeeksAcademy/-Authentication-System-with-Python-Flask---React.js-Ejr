@@ -36,7 +36,7 @@ export function RegistrateAbueloForm() {
             password: inputPassword,
             first_name: inputName,
             last_name: inputSurname,
-            is_grandparent: false,
+            is_grandparent: true,
         };
 
 
@@ -58,7 +58,7 @@ export function RegistrateAbueloForm() {
                 // Handle successful signup
                 console.log("New user created:", data);
                 // Redirect to google.com
-                window.location.href = "/landing";
+                window.location.href = "/";
             })
             .catch((error) => {
                 // Handle signup error
@@ -70,7 +70,7 @@ export function RegistrateAbueloForm() {
         <div className="container">
             <div className="row">
                 <div className="col-md-1">
-                  
+
                 </div>
                 <div className="col-md-6">
                     <form className="m-5" onSubmit={handleSubmit}>
@@ -146,9 +146,9 @@ export function RegistrateAbueloForm() {
                         </div>
                     </form>
                 </div>
-                <div className="col-md-4 ms-5" style={{marginTop:"13rem"}}>
-                   <h4>"¡Conéctate y comparte tus experiencias doradas!"</h4>
-                   <h4 style={{marginTop:"9rem"}} >"Descubre nuevas amistades, revive recuerdos y mantente conectado con tus seres queridos" </h4>
+                <div className="col-md-4 ms-5" style={{ marginTop: "13rem" }}>
+                    <h4>"¡Conéctate y comparte tus experiencias doradas!"</h4>
+                    <h4 style={{ marginTop: "9rem" }} >"Descubre nuevas amistades, revive recuerdos y mantente conectado con tus seres queridos" </h4>
                 </div>
             </div>
         </div>

@@ -29,7 +29,8 @@ const Layout = () => {
                     <Navbar />
                     <Routes>
                         <Route element={<Landing />} path="/" />
-                        <Route element={<Signup />} path="/signup" />
+                        <Route element={<SignupVoluntario />} path="/signupvoluntario" />
+                        <Route element={<SignupAbuelo />} path="/signupabuelo" />
                         <Route element={<Demo />} path="/demo" />
                         <Route element={<Login />} path="/login" />
                         <Route element={<Single />} path="/single/:theid" />

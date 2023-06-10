@@ -59,7 +59,7 @@ export function RegistrateVoluntarioForm() {
         // Handle successful signup
         console.log("New user created:", data);
         // Redirect to google.com
-        window.location.href = "/landing";
+        window.location.href = "/";
       })
       .catch((error) => {
         // Handle signup error
@@ -146,7 +146,7 @@ export function RegistrateVoluntarioForm() {
         </div>
         <div className="col-md-6" style={{ marginTop: "5rem" }}>
           <img
-            className="img-fluid m-5" style={{height:"30rem", width: "50rem"}}
+            className="img-fluid m-5" style={{ height: "30rem", width: "50rem" }}
             src="https://images.pexels.com/photos/3823497/pexels-photo-3823497.jpeg?auto=compress&cs=tinysrgb&w=800"
             alt="Volunteer"
           />
