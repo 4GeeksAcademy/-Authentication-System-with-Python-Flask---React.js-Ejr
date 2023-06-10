@@ -1,12 +1,7 @@
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import Column, Integer, String, Boolean, ForeignKey
 from sqlalchemy.orm import relationship
-
-
-
-
 db = SQLAlchemy()
-
 class User(db.Model):
     __tablename__="user"
     id = db.Column(db.Integer, primary_key=True)
@@ -20,10 +15,8 @@ class User(db.Model):
     phone=db.Column(db.Integer, unique=True, nullable=False)
     # suscription = db.Column(db.Boolean(), unique=False, nullable=False)
     pedidos=db.relationship("Pedidos")
-    
     def __repr__(self):
         return f'<User {self.email}>'
-    
     def serialize(self):
         return {
             "id": self.id,
@@ -33,11 +26,9 @@ class User(db.Model):
             "last_name":self.last_name,
             "birthday":self.birthday,
             "gender": self.gender,
-            "phone": self.phone
+            "phone": self.phone,
             # "suscription": self.suscription
         }
-
-
 class Restaurant(db.Model):
     __tablename__="restaurant"
     id = db.Column(db.Integer, primary_key=True)
@@ -46,52 +37,38 @@ class Restaurant(db.Model):
     url=db.Column(db.String(500), unique=True, nullable=False)
     ubicaciones = db.Column(db.String(80), unique=False, nullable=False)
     restaurantplatos=db.relationship("Restaurantplatos")
-    suscription = db.Column(db.Boolean(), unique=False, nullable=False)
     #platos=db.Column(db.Integer, db.Foreignkey ("Platos.id"))
     pedido=db.relationship("Pedidos")
     #detalles_de_pedido=db.relationship("DetalleDePedidos")
-
     def __repr__(self):
         return f'<Restaurant {self.name}>'
-    
     def serialize(self):
         return {
             "id":self.id,
             "name":self.name,
             "url":self.url,
-            "ubicaciones":self.ubicaciones,
-            "suscription": self.suscription 
+            "ubicaciones":self.ubicaciones
         }
-
 class Platos(db.Model):
     __tablename__="platos"
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(120), unique=True, nullable=False)
     description=db.Column(db.String(500), unique=True, nullable=False)
     price=db.Column(db.Integer, unique=True, nullable=False)
-    url=db.Column(db.String(500), unique=True, nullable=False)
     # restaurant_id = db.Column(db.Integer, db.ForeignKey("restaurant.id"))
     restaurantplatos=db.relationship("Restaurantplatos")
     # detalles_de_pedido=db.relationship("DetalleDePedidos")
-    restaurante=db.relationship("Restaurant")
-    detalles_de_pedido=db.relationship("DetalleDePedidos")
-    #agregar propiedad para agregar url de imagen
-
     def __repr__(self):
         return f'<Platos {self.name}>'
-    
     def serialize(self):
         return {
             "id":self.id,
             "name":self.name,
             "price": self.price,
             "description": self.description,
-            "url": self.url
             # "platos":self.description,
             # "restaurant_id":self.restaurant_id
             }
-
-
 class Pedidos(db.Model):
     __tablename__="pedidos"
     id = db.Column(db.Integer, primary_key=True)
@@ -101,10 +78,8 @@ class Pedidos(db.Model):
     platos_id=db.Column(db.Integer, ForeignKey("platos.id"))
     # platos=db.relationship(Platos)
     # usuario=relationship("User")
-
     def __repr__(self):
         return f'<Pedidos {self.id}>'
-    
     def serialize(self):
         return {
             "id":self.id,
@@ -121,10 +96,8 @@ class Restaurantplatos(db.Model):
     platos_id=db.Column(db.Integer, ForeignKey("platos.id"))
     # platos=db.relationship(Platos)
     # usuario=relationship("User")
-
     def __repr__(self):
         return f'<Restaurantplatos {self.id}>'
-    
     def serialize(self):
         return {
             "id":self.id,
@@ -133,9 +106,6 @@ class Restaurantplatos(db.Model):
             "platos_id": self.platos_id,
             # "platos": self.platos
         }
-
-
-
 # class DetalleDePedidos(db.Model):
 #     # __tablename__="detalleDePedidos"
 #     id = db.Column(db.Integer, primary_key=True)
@@ -145,10 +115,8 @@ class Restaurantplatos(db.Model):
 #     restaurant_id=db.Column(db.Integer, ForeignKey("restaurant.id"))
 #     restaurant=db.relationship("Restaurant")
 #     # resturante=relationship("Restaurant")
-
 #     def __repr__(self):
 #         return f'< DetalleDePedidos {self.id}>'
-    
 #     def serialize(self):
 #         return {
 #             "id":self.id,
@@ -157,19 +125,12 @@ class Restaurantplatos(db.Model):
 #             "restaurant":self.restaurant,
 #             "platos": self.platos
 #         }
-
-
-
-    
-
 class TokenBlockedList(db.Model):
     # __tablename__="token_blocked_list"
     id=db.Column(db.Integer, primary_key=True)
     jti=db.Column(db.String(40), nullable=False)
-
     def __repr__(self):
         return f'< TokenBlockedList {self.id}>'
-    
     def serialize(self):
         return {
             "id":self.id,
