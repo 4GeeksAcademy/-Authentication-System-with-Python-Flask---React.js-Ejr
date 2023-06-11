@@ -138,7 +138,7 @@ const CompanyDetails = () => {
             <p>
               <strong>Do you want to appointment with this service?</strong>
             </p>
-            <div className={styles._btnWrapper}>
+            <div className={styles._btnWrapperdiv}>
               <Button
                 type="button"
                 title="Booking now"
@@ -166,13 +166,14 @@ const CompanyDetails = () => {
           <strong>
             {`${selectedWorker?.user.firstname} ${selectedWorker?.user.lastname}`}
           </strong>
-          <p>
-            <strong>Services: </strong>
-          </p>
-          {company.services?.map((service) => (
-            <p key={service.id}>{service.name}</p> //atento con los servicios que se mapean
-          ))}
-
+          <div className={styles._service}>
+            <p>
+              <strong>Services: </strong>
+            </p>
+            {company.services?.map((service) => (
+              <p key={service.id}>{service.name}</p>
+            ))}
+          </div>
           <div className={styles._modalFooter}>
             <p>
               <strong>
@@ -180,7 +181,7 @@ const CompanyDetails = () => {
                 {selectedWorker?.user.firstname}?
               </strong>
             </p>
-            <div className={styles._btnWrapper}>
+            <div className={styles._btnWrapperdiv}>
               <Button
                 type="button"
                 title="Booking now"
