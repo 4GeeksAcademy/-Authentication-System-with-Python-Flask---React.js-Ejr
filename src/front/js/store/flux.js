@@ -145,6 +145,23 @@ const getState = ({ getStore, getActions, setStore }) => {
 				return resp
 				
 			},
+			changePasswordRecovery: async (passwordToken, password)=>{
+				let resp = await fetch(apiUrl + "/api/changepassword",{
+					// let resp = await fetch(apiUrl + endpoint, {
+						method:"POST",
+						body: JSON.stringify(password),
+						headers: {
+							"Content-Type": "application/json",
+							"Authorization" : "Bearer "+passwordToken
+						}
+					})
+					if (!resp.ok) {
+						console.error(`${resp.status}: ${resp.statusText}`)
+						return { code: resp.status, error: `${resp.status}: ${resp.statusText}` }
+					}
+					let data = await resp.json()
+					return { code: resp.status, data: data }
+			},
 
 			pagoMercadopago: async ()=>{
 				try{
