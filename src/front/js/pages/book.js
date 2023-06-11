@@ -270,13 +270,16 @@ export const Book = () => {
                 <div className="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the third item's accordion body. Nothing more exciting happening here in terms of content, but just filling up the space to make it look, at least at first glance, a bit more representative of how this would look in a real-world application.</div>
               </div>
             </div>
-          </div><br></br><button className="btn btn-success" onClick={pagoMercadoPago}>Pagar</button></>: <div class="alert alert-warning" role="alert">
-            Signup or login before booking
-          </div>
+          </div><br></br><button className="btn btn-success" onClick={pagoMercadoPago}>Pagar</button></>
+            :
+            <div class="alert alert-warning" role="alert">
+              Signup or login before booking
+            </div>
+            
         }
 
         {/* </div> */}
-        
+
       </div>
     </div>
   );
