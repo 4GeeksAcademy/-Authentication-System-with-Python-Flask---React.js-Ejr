@@ -4,6 +4,7 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, User, TokenBlockedList, Services, VehicleType
 from api.utils import generate_sitemap, APIException
+from api.sendmail import sendMail, recoveryPasswordTemplate
 from flask_bcrypt import Bcrypt
 from flask_jwt_extended import create_access_token, create_refresh_token, jwt_required, get_jwt_identity, get_jwt, get_jti
 import json
@@ -172,8 +173,12 @@ def recovery_password():
     # 1 Generar ek token temporal para el cambio de clave
     access_token = create_access_token(
         identity=user.id, additional_claims={"type":"password"})
-    return jsonify({"recoveryToken":access_token})
+    #return jsonify({"recoveryToken":access_token})
     # 2 Enviar el enlace con el token via email para el cambio de clave
+    if recoveryPasswordTemplate(access_token, user_email):
+        return jsonify({"msg":"Correo enviado"})
+    else:
+        return jsonify({"msg":"Correo no enviado"}), 401
 
 @api.route("/refresh", methods=["POST"])
 @jwt_required(refresh=True)
