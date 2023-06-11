@@ -65,7 +65,9 @@ export const Home = () => {
 
 							<div className="col-12 col-md-6 vh-25 box e my-2 g-4 shadow">
 								<section className="pt-0 mt-0">
-									<p className="store-ads blur text-stroke-white fw-bold">Nuestras tiendas tienen excelentes descuentos, le ponemos el alma para llevar los alimentos más frescos a tu hogar!</p>
+									<p className="store-ads blur text-stroke-white fw-bold">
+										Nuestras tiendas tienen excelentes descuentos, le ponemos el alma para llevar los alimentos más frescos a tu hogar!
+									</p>
 								</section>
 							</div>
 
@@ -88,8 +90,7 @@ export const Home = () => {
 							</div>
 
 							<div className="col-12 col-md-6 vh-25 box h my-2 gap-2 border shadow">	
-								<button className="store-ads p-4 mx-auto fs-1 fw-bold mt-5 blur fs-5 text-stroke-dark shadow" 
-								style={{borderRadius:"33% 67% 32% 68% / 90% 9% 91% 10% "}}>
+								<button className="store-ads p-4 mx-auto fs-1 fw-bold mt-5 blur fs-5 text-stroke-dark shadow" style={{borderRadius:"33% 67% 32% 68% / 90% 9% 91% 10% "}}>
 									Suscripciones
 								</button>
 							</div>

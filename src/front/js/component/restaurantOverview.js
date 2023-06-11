@@ -7,7 +7,7 @@ import FoodCard from "./foodCard";
 
 export const RestaurantOverview = () => {
     const {store, actions}= useContext(Context);
-    const index = store.restaurantes.find(item=>item.id==restaurantIndex)
+    const index = store.restaurantes.find(item=>item.index==restaurantIndex)
     const {restaurantIndex} = useParams()
 
     function imgError(e){
@@ -15,7 +15,7 @@ export const RestaurantOverview = () => {
     }
 
 	return (
-        <div className="container-fluid bg-dark" style={{paddingTop:"5rem", marginBottom: "45rem", width: "100%"}}>
+        <div className="container-fluid bg-dark" style={{paddingTop:"5rem", width: "100%", height: "100vh", paddingBottom: "300vh"}}>
             <div>
             <section className="hero py-5 px-1 mx-auto rounded">
             {[index].map((item, index) =>(
@@ -37,7 +37,7 @@ export const RestaurantOverview = () => {
                 <section>
                     <div>
                         <div className="container-fluid text-center mt-5">
-                            <div className="row row-cols-2 gap-4 g-5">
+                            <div className="row row-cols-4 sm-row-cols-1 md-row-cols-2 lg-row-cols-3 xl-row-cols-4 g-5">
                                 <FoodCard />
                             </div>  
                         </div>

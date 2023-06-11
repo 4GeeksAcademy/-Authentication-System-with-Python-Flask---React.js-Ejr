@@ -216,4 +216,10 @@ button:hover{
 ::-ms-input-placeholder { /* Microsoft Edge */
   color: white;
 }
-
+.description-text{
+  background: -webkit-linear-gradient(90deg, #de9f60, #ffffff, #f0f8ad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-family: 'Cairo Play', sans-serif;
+}
