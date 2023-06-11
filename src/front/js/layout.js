@@ -12,6 +12,7 @@ import { Services } from "./pages/services";
 import { Questions } from "./pages/questions";
 import { Book } from "./pages/book";
 import injectContext from "./store/appContext";
+import { RecoveryPassword } from "./pages/recovery";
 
 
 import { Navbar } from "./component/navbar";
@@ -42,6 +43,7 @@ const Layout = () => {
                         <Route element={<Book />} path="/book" />
                         <Route element={<Questions />} path="/frecuently-asked-questions" />
                         <Route element={<Demo />} path="/demo" />
+                        <Route element={<RecoveryPassword />} path="/recovery" />
                         <Route element={<AboutUs />} path="/aboutUs" />
                         <Route element={<TestData />} path="/testdata" />
                         <Route element={<Single />} path="/single/:theid" />

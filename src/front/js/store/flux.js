@@ -140,6 +140,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 				let data = await resp.json()
 				return { code: resp.status, data: data }
 			},
+			requestPasswordRecovery: async (email)=>{
+				const resp = await getActions().apiFetch("/api/recoverypassword", "POST", { email })
+				return resp
+				
+			},
 
 			pagoMercadopago: async ()=>{
 				try{

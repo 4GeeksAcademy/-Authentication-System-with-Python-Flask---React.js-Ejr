@@ -165,7 +165,7 @@ def change_password():
 
 @api.route("/recoverypassword", methods=["POST"])
 def recovery_password():
-    user_email=request.jeson.get("email")
+    user_email=request.json.get("email")
     user = User.query.filter_by(email=user_email).first()
     if user is None:
         return jsonify({"Message": "User not found"}), 401
