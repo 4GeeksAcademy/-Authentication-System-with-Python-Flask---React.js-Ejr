@@ -70,7 +70,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			  },
 			  fetchVehicleTypes: async () => {
 				try {
-				  const resp = await getActions().apiFetch("/api/book", "GET");
+				  const resp = await getActions().apiFetchProtected("/api/book", "GET");
 				  if (resp.code >= 400) {
 					return resp;
 				  }
@@ -114,6 +114,23 @@ const getState = ({ getStore, getActions, setStore }) => {
 					headers: {
 						"Content-Type": "application/json",
 						// "Authorization" : "Bearer "+localStorage.getItem("accessToken") 
+					}
+				})
+				if (!resp.ok) {
+					console.error(`${resp.status}: ${resp.statusText}`)
+					return { code: resp.status, error: `${resp.status}: ${resp.statusText}` }
+				}
+				let data = await resp.json()
+				return { code: resp.status, data: data }
+			},
+			apiFetchProtected: async (endpoint, method = "GET", body = {}) => {
+				let resp = await fetch(apiUrl + endpoint, method == "GET" ? undefined :{
+				// let resp = await fetch(apiUrl + endpoint, {
+					method,
+					body: JSON.stringify(body),
+					headers: {
+						"Content-Type": "application/json",
+						"Authorization" : "Bearer "+getStore().accessToken
 					}
 				})
 				if (!resp.ok) {
