@@ -87,7 +87,7 @@ export const ProfileBilling = () => {
                     </div>
                     <hr></hr>
                     {/* Payment method 2 */}
-                    {/* <div className="d-flex align-items-center justify-content-between px-4">
+                    <div className="d-flex align-items-center justify-content-between px-4">
                         <div className="d-flex align-items-center">
                             <i className="fab fa-cc-mastercard fa-2x cc-color-mastercard"></i>
                             <div className="ms-4">
@@ -100,9 +100,9 @@ export const ProfileBilling = () => {
                             <a href="#!">Edit</a>
                         </div>
                     </div>
-                    <hr></hr> */}
+                    <hr></hr>
                     {/* Payment method 3 */}
-                    {/* <div className="d-flex align-items-center justify-content-between px-4">
+                    <div className="d-flex align-items-center justify-content-between px-4">
                         <div className="d-flex align-items-center">
                             <i className="fab fa-cc-amex fa-2x cc-color-amex"></i>
                             <div className="ms-4">
@@ -114,7 +114,7 @@ export const ProfileBilling = () => {
                             <a className="text-muted me-3" href="#!">configurar como Predeterminado</a>
                             <a href="#!">Edit</a>
                         </div>
-                    </div> */}
+                    </div>
                 </div>
             </div>
             {/* Billing history card */}
@@ -130,6 +130,7 @@ export const ProfileBilling = () => {
                                     <th className="border-gray-200" scope="col">Fecha</th>
                                     <th className="border-gray-200" scope="col">Cantidad</th>
                                     <th className="border-gray-200" scope="col">Estado</th>
+                                    <th className="border-gray-200" scope="col">Reembolso</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -138,25 +139,29 @@ export const ProfileBilling = () => {
                                     <td>15/06/2021</td>
                                     <td>30,000$</td>
                                     <td><span className="badge bg-light text-dark">Pendiente</span></td>
+                                    <td><button className="btn badge bg-danger text-warning">Pedir Reembolso</button></td>
                                 </tr>
-                                {/* <tr>
+                                <tr>
                                     <td>#38594</td>
                                     <td>05/15/2021</td>
                                     <td>$29.99</td>
                                     <td><span className="badge bg-success">Paid</span></td>
+                                    <td><button className="btn badge bg-danger text-warning">Pedir Reembolso</button></td>
                                 </tr>
                                 <tr>
                                     <td>#38223</td>
                                     <td>04/15/2021</td>
                                     <td>$29.99</td>
                                     <td><span className="badge bg-success">Paid</span></td>
+                                    <td><button className="btn badge bg-danger text-warning">Pedir Reembolso</button></td>
                                 </tr>
                                 <tr>
                                     <td>#38125</td>
                                     <td>03/15/2021</td>
                                     <td>$29.99</td>
                                     <td><span className="badge bg-success">Paid</span></td>
-                                </tr> */}
+                                    <td><button className="btn badge bg-danger text-warning">Pedir Reembolso</button></td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>

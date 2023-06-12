@@ -47,7 +47,7 @@ class Restaurant(db.Model):
             "id":self.id,
             "name":self.name,
             "url":self.url,
-            "ubicaciones":self.ubicaciones
+            "ubicaciones":self.ubicaciones 
         }
 class Platos(db.Model):
     __tablename__="platos"
@@ -55,9 +55,11 @@ class Platos(db.Model):
     name = db.Column(db.String(120), unique=True, nullable=False)
     description=db.Column(db.String(500), unique=True, nullable=False)
     price=db.Column(db.Integer, unique=True, nullable=False)
+    
     # restaurant_id = db.Column(db.Integer, db.ForeignKey("restaurant.id"))
     restaurantplatos=db.relationship("Restaurantplatos")
     # detalles_de_pedido=db.relationship("DetalleDePedidos")
+
     def __repr__(self):
         return f'<Platos {self.name}>'
     def serialize(self):
@@ -135,8 +137,4 @@ class TokenBlockedList(db.Model):
         return {
             "id":self.id,
             "jti":self.jti,
-        }
-
- 
-
-    
+        }   
