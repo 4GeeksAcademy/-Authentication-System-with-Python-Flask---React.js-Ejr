@@ -18,7 +18,7 @@ class User(db.Model):
     birthday=db.Column(db.String(120), unique=True, nullable=False)
     gender=db.Column(db.String(120), unique=True, nullable=False)
     phone=db.Column(db.Integer, unique=True, nullable=False)
-    # suscription = db.Column(db.Boolean(), unique=False, nullable=False)
+    suscription = db.Column(db.Boolean(), unique=False, nullable=False)
     pedidos=db.relationship("Pedidos")
     
     def __repr__(self):
@@ -34,7 +34,7 @@ class User(db.Model):
             "birthday":self.birthday,
             "gender": self.gender,
             "phone": self.phone,
-            # "suscription": self.suscription
+            "suscription": self.suscription
         }
 
 
