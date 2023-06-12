@@ -17,6 +17,8 @@ class User(db.Model):
     last_name=db.Column(db.String(120), unique=True, nullable=False)
     birthday=db.Column(db.String(120), unique=True, nullable=False)
     gender=db.Column(db.String(120), unique=True, nullable=False)
+    address=db.Column(db.String(120), unique=True, nullable=False)
+    address_details=db.Column(db.String(120), unique=True, nullable=False)
     phone=db.Column(db.Integer, unique=True, nullable=False)
     suscription = db.Column(db.Boolean(), unique=False, nullable=False)
     pedidos=db.relationship("Pedidos")
@@ -34,7 +36,9 @@ class User(db.Model):
             "birthday":self.birthday,
             "gender": self.gender,
             "phone": self.phone,
-            "suscription": self.suscription
+            "suscription": self.suscription,
+            "address": self.address,
+            "address_details": self.address_details
         }
 
 
@@ -46,6 +50,7 @@ class Restaurant(db.Model):
     url=db.Column(db.String(500), unique=True, nullable=False)
     ubicaciones = db.Column(db.String(80), unique=False, nullable=False)
     restaurantplatos=db.relationship("Restaurantplatos")
+    suscriptions=db.relationship("Suscriptions")
 
     #platos=db.Column(db.Integer, db.Foreignkey ("Platos.id"))
     pedido=db.relationship("Pedidos")
@@ -108,6 +113,7 @@ class Pedidos(db.Model):
             "platos_id": self.platos_id,
             # "platos": self.platos
         }
+    
 class Restaurantplatos(db.Model):
     __tablename__="restaurantplatos"
     id = db.Column(db.Integer, primary_key=True)
@@ -126,6 +132,27 @@ class Restaurantplatos(db.Model):
             "restaurant_id":self.restaurant_id,
             # "usuario_id": self.usuario_id,
             "platos_id": self.platos_id,
+            # "platos": self.platos
+        }
+    
+class Suscriptions(db.Model):
+    __tablename__="suscriptions"
+    id = db.Column(db.Integer, primary_key=True)
+    restaurant_id= db.Column(db.Integer, ForeignKey("restaurant.id"))
+    # restaurant=db.relationship(Restaurant)
+    user_id=db.Column(db.Integer, ForeignKey("user.id"))
+    # platos=db.relationship(Platos)
+    # usuario=relationship("User")
+
+    def __repr__(self):
+        return f'<Suscriptions {self.id}>'
+    
+    def serialize(self):
+        return {
+            "id":self.id,
+            "restaurant_id":self.restaurant_id,
+            # "usuario_id": self.usuario_id,
+            "user_id": self.user_id,
             # "platos": self.platos
         }
 

@@ -3,7 +3,7 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 """
 from datetime import timedelta
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, TokenBlockedList, Restaurant, Pedidos, Platos,Restaurantplatos
+from api.models import db, User, TokenBlockedList, Restaurant, Pedidos, Platos,Restaurantplatos, Suscriptions
 from api.utils import generate_sitemap, APIException
 from flask_bcrypt import Bcrypt
 from flask_jwt_extended import create_access_token, create_refresh_token, jwt_required, get_jwt_identity, get_jwt, get_jti
@@ -147,6 +147,8 @@ def get_restaurants():
     return "ok"
 
 
+
+
 @api.route('/hello', methods=['POST', 'GET'])
 def handle_hello():
 
@@ -155,3 +157,15 @@ def handle_hello():
     }
 
     return jsonify(response_body), 200
+
+@api.route('/registerrestaurant', methods=['POST'])
+def register_restaurant():
+    name=request.json.get("name")
+    url=request.json.get("url")
+    ubicaciones=request.json.get("ubicaciones")
+    new_restaurant=Restaurant(name=name, url=url, ubicaciones=ubicaciones)
+    db.session.add(new_restaurant)
+    db.session.commit()
+    response={"msg": "Restaurante creado exitosamente"}
+    return jsonify(response), 200
+
