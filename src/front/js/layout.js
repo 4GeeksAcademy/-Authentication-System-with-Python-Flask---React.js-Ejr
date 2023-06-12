@@ -13,6 +13,7 @@ import { Landing } from "./pages/landing";
 import { Login } from "./pages/login";
 import { SignupAbuelo } from "./pages/signupabuelo";
 import { SignupVoluntario } from "./pages/signupvoluntario";
+import Videocall from "./pages/videocall";
 
 //create your first component
 const Layout = () => {
@@ -29,6 +30,7 @@ const Layout = () => {
                     <Navbar />
                     <Routes>
                         <Route element={<Landing />} path="/" />
+                        <Route element={<Videocall />} path="/videocall" />
                         <Route element={<SignupVoluntario />} path="/signupvoluntario" />
                         <Route element={<SignupAbuelo />} path="/signupabuelo" />
                         <Route element={<Demo />} path="/demo" />
