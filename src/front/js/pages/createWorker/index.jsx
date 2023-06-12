@@ -5,6 +5,7 @@ import { createWorker } from "../../service/workers.js";
 
 import Header from "../../components/header/index.jsx";
 import WorkerForm from "../../components/workerForm/index.jsx";
+import Spinner from "../../components/spinner/index.jsx";
 import { toast } from "react-toastify";
 
 const initialState = {
@@ -18,6 +19,7 @@ const initialState = {
 
 const CreateWorker = () => {
   const [newWorker, setNewWorker] = useState(initialState);
+  const [isLoading, setIsLoading] = useState(false);
 
   const { store } = useContext(Context);
   const userStoredInContext = store.userProfileData.userData;
@@ -25,18 +27,19 @@ const CreateWorker = () => {
   const navigate = useNavigate();
   const { companyID } = useParams();
 
-  const responseToast = (msg) => toast(msg);
-
   const handleChange = ({ target }) => {
     setNewWorker({ ...newWorker, [target.name]: target.value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const data = await createWorker(companyID, newWorker);
-    setNewWorker(initialState);
-    responseToast(data.msg);
-    navigate(`/admin-dashboard/${companyID}`);
+    const resMsg = await createWorker(companyID, newWorker);
+    if (resMsg.data) {
+      toast.success(resMsg?.msg);
+      navigate(`/admin-dashboard/${companyID}`);
+    } else {
+      toast.error(resMsg?.msg);
+    }
   };
 
   return (
@@ -45,12 +48,16 @@ const CreateWorker = () => {
         imgProfile={userStoredInContext?.avatar}
         updateProfile={() => navigate(`/profile/${userStoredInContext?.id}`)}
       />
-      <WorkerForm
-        newWorker={newWorker}
-        handleSubmit={handleSubmit}
-        handleChange={handleChange}
-        textBtn="Create"
-      />
+      {!isLoading ? (
+        <WorkerForm
+          newWorker={newWorker}
+          handleSubmit={handleSubmit}
+          handleChange={handleChange}
+          textBtn="Create"
+        />
+      ) : (
+        <Spinner />
+      )}
     </>
   );
 };

@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import { updateUserProfile } from "../../service/user.js";
-import "./styles.css";
+import styles from "./profile.module.css";
 
 import ProfileForm from "../../components/profileForm/index.jsx";
 import Header from "../../components/header/index.jsx";
@@ -29,7 +29,10 @@ const Profile = () => {
       };
       reader.readAsDataURL(target.files[0]);
     } else {
-      setUser({ ...user, [target.name]: target.value });
+      actions.saveUserProfileData({
+        ...userStoredInContext,
+        [target.name]: target.value,
+      });
     }
   };
 
@@ -45,12 +48,6 @@ const Profile = () => {
     updateUserProfile(form);
     actions.saveUserProfileData(user);
     navigate("/");
-    // setUser({
-    //   username: "",
-    //   firstname: "",
-    //   lastname: "",
-    //   email: "",
-    // });
   };
   return (
     <main className="">

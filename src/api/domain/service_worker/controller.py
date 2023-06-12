@@ -18,19 +18,19 @@ def create_service_worker(company_id, current_user_id, body):
     service_worker = Services_workers.query.filter_by(worker_id=worker_id, service_id=service_id).first()
 
     if service_worker: 
-        return { "msg": "This service has already been asigned to this worker ", "status": 400 }
+        return { "msg": "This service has already been assigned to this worker ", "status": 400 }
 
  
     if company.id == worker.company_id and company.id == service.company_id and current_user_id == company.user_id: 
         return Repository.create_service_worker(worker_id, service_id )
     
-    return { "msg": "Service worker have conflicts ", "status": 409}
+    return { "msg": "Service worker cannot be assigned due to conflicts", "status": 409}
 
 def get_all_service_workers():
 
     service_workers = Repository.get_all_service_workers()
     if service_workers is None:
-        return { "msg": "An error occured to retrieves service workers", "status": 400}
+        return { "msg": "An error occured while retrieving service workers", "status": 400}
     
     return service_workers
 
@@ -40,12 +40,12 @@ def get_workers_by_service(service_id):
     service = Services.query.get(service_id)
 
     if service is None: 
-        return {'msg': f'Service with id: {service_id} does not exist in this database', 'status': 404}
+        return {'msg': 'Service does not exist in this database', 'status': 404}
 
     workers_by_service = Repository.get_workers_by_service(service_id)
     
     if workers_by_service == []:
-        return {'msg': f'Service with id: {service_id}, has no workers associated', 'status': 404}
+        return {'msg': 'Service has no workers associated', 'status': 404}
     
     return workers_by_service
 
@@ -54,12 +54,12 @@ def get_services_by_worker(worker_id):
     worker = Workers.query.get(worker_id)
 
     if worker is None: 
-        return {'msg': f'Worker with id: {worker_id} does not exist in this database', 'status': 404}
+        return {'msg': 'Worker does not exist in this database', 'status': 404}
 
     services_by_worker = Repository.get_services_by_worker(worker_id)
     
     if services_by_worker == []:
-        return {'msg': f'Worker with id: {worker_id} has no services associated', 'status': 404}
+        return {'msg': 'Worker has no services associated', 'status': 404}
     
     return services_by_worker
 

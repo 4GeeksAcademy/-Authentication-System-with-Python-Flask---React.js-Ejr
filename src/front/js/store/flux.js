@@ -13,6 +13,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       saveUserProfileData: (userData) => {
         const store = getStore();
         setStore({ userProfileData: { ...store.userProfileData, userData } });
+        console.log("Saved in Flux -->", store);
       },
 
       getMessage: async () => {

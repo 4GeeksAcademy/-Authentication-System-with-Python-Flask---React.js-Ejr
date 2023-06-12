@@ -80,11 +80,11 @@ const UserDashboard = () => {
           <h1 className={styles._title}>List of Reservations</h1>
           {Loading ? (
             <Spinner />
-          ) : bookingList.length === 0 ? (
+          ) : bookingList?.length === 0 ? (
             <p>There are no reservations yet, booking your next service!</p>
           ) : (
             <div className={styles._listContainer}>
-              {bookingList.map((booking) => {
+              {bookingList?.map((booking) => {
                 return (
                   <BookingCard
                     key={booking.id}

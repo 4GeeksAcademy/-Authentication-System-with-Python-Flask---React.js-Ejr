@@ -11,7 +11,7 @@ def create_new_booking(company_id, current_user_id, body):
     service_workers = Services_workers.query.filter_by(service_id=service_id, worker_id=worker_id).first()
 
     if service_workers is None:
-        return {'msg': 'This service / worker relationship does not exist', 'status': 404}
+        return {'msg': 'This service / worker relationship does not exist in database', 'status': 404}
 
     new_booking = Repository.create_new_booking(body, current_user_id, company_id, service_workers.id)
 
@@ -24,7 +24,7 @@ def admin_create_new_booking(company_id, current_user_id, body):
     worker = Workers.query.filter_by(user_id=current_user_id).first()
 
     if company is None: 
-        return {'msg': 'This company does not exist in this database', 'status': 404}
+        return {'msg': 'Company does not exist in database', 'status': 404}
 
     if current_user_id == company.user_id or company_id == worker.company_id:
         service_id = body['service']
@@ -33,7 +33,7 @@ def admin_create_new_booking(company_id, current_user_id, body):
         service_workers = Services_workers.query.filter_by(service_id=service_id, worker_id=worker_id).first()
 
         if service_workers is None:
-            return {'msg': 'This service / worker relationship does not exist', 'status': 404}
+            return {'msg': 'This service / worker relationship does not exist in database', 'status': 404}
 
         new_booking = Repository.admin_create_new_booking(None, body, company_id, service_workers.id)
 
@@ -48,13 +48,13 @@ def get_booking(booking_id, current_user_id):
     user = User.query.filter_by(id=current_user_id).first()
 
     if booking is None:
-        return {'msg': f'The booking with id: {booking_id}, does not exist in this database.', 'status': 404}
+        return {'msg': 'Booking does not exist in database.', 'status': 404}
 
     if user.roles.type == 'admin':
         company = Company.query.filter_by(user_id=current_user_id).first()
 
         if company is None:
-            return {'msg': 'The current user company, does not exist in this database', 'status': 404}
+            return {'msg': 'There are no companies for this user in database', 'status': 404}
 
         if company.id == booking.company_id:
             return booking
@@ -63,7 +63,7 @@ def get_booking(booking_id, current_user_id):
         worker = Workers.query.filter_by(user_id=current_user_id).first()
 
         if worker is None:
-            return {'msg': 'The current user does not exist in this database', 'status': 404}
+            return {'msg': 'Worker does not exist in database', 'status': 404}
 
         if worker.company_id == booking.company_id:
             return booking
@@ -72,7 +72,7 @@ def get_booking(booking_id, current_user_id):
         if user.id == booking.id:
             return booking
         
-    return {'msg': 'You do not have rights to see this bookings!', 'status': 403}
+    return {'msg': 'You do not have rights to see this bookings', 'status': 403}
         
 
 def get_bookings_by_company(company_id, current_user_id):
@@ -83,21 +83,16 @@ def get_bookings_by_company(company_id, current_user_id):
     if user.roles.type == 'admin':
         company = Company.query.filter_by(user_id=current_user_id).first()
         if company is None:
-            return {'msg': f'Company with id: {company.id}, does not exist in this database', 'status': 404}
+            return {'msg': 'Company does not exist in this database', 'status': 404}
 
     if user.roles.type == 'worker': 
         worker = Workers.query.filter_by(user_id=current_user_id).first()
         company = Company.query.filter_by(id=worker.company_id).first()
         if worker is None or company is None:
-            return {'msg': 'This worker / company does not exist in this database', 'status': 404}
+            return {'msg': 'This worker does not belong to this company', 'status': 404}
 
-    # The user 'client' should not be allowed to see all bookings from company...
     if user.roles.type == 'client':
-        return {'msg': 'You do not have rights to see this bookings!', 'status': 403}
-    
-
-    # if current_user_id != company.user_id:
-    #     return {'msg': 'You do not have rights to see this bookings!', 'status': 403}
+        return {'msg': 'You do not have rights to see these bookings!', 'status': 403}
         
     return bookings_by_company
 
@@ -106,7 +101,7 @@ def get_bookings_by_user_id(current_user_id):
     if current_user_id:
         return Repository.get_bookings_by_user_id(current_user_id)
     else:
-        return {'msg': 'You do not have rights to see this bookings!', 'status': 403}
+        return {'msg': 'You do not have rights to see these bookings!', 'status': 403}
 
 def update_booking(booking_id, current_user_id, update_booking):
     booking = Booking.query.get(booking_id)
@@ -125,13 +120,13 @@ def delete_booking(booking_id, current_user_id):
     user = User.query.filter_by(id=current_user_id).first()
 
     if booking is None:
-        return {'msg': f'The booking with id: {booking_id}, does not exist in this database.', 'status': 404}
+        return {'msg': 'Booking does not exist in this database.', 'status': 404}
 
     if user.roles.type == 'admin':
         company = Company.query.filter_by(user_id=current_user_id).first()
 
         if company is None:
-            return {'msg': 'This company does not exist in this database', 'status': 404}
+            return {'msg': 'Company does not exist in this database', 'status': 404}
 
         if company.id == booking.company_id:
             return Repository.delete_booking(booking)
@@ -146,4 +141,4 @@ def delete_booking(booking_id, current_user_id):
         if current_user_id == booking.user_id:
             return Repository.delete_booking(booking)
 
-    return {'msg': 'You do not have rights to see this bookings!', 'status': 403}
+    return {'msg': 'You do not have rights to see these bookings!', 'status': 403}

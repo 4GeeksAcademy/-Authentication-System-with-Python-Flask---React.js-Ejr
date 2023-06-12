@@ -12,7 +12,7 @@ export const createCompany = async (company) => {
       body: JSON.stringify(company),
     });
     const data = await res.json();
-    return data.data;
+    return data;
   } catch (err) {
     console.log("Error to Create Company", err);
   }

@@ -27,7 +27,7 @@ def get_workers_by_company(company_id):
     
     if isinstance(workers_by_company, list):
         serialized_workers = list(map(lambda worker: worker.serialize(), workers_by_company))
-        return Response.response_ok(f'List of all workers of the company with id: {company_id}', serialized_workers)
+        return Response.response_ok('List of all workers of the company', serialized_workers)
     else:
         return Response.response_error(workers_by_company['msg'], workers_by_company['status'])
 
@@ -38,7 +38,7 @@ def get_single_worker(worker_id):
     worker = Controller.get_single_worker(worker_id)
     
     if isinstance(worker, Workers):
-        return Response.response_ok(f'Worker with id: {worker_id}, has been retrieved from database.', worker.serialize())
+        return Response.response_ok('Worker has been retrieved from database.', worker.serialize())
     else:
         return Response.response_error(worker['msg'], worker['status']) 
 
@@ -51,7 +51,7 @@ def delete_worker(worker_id):
     worker = Controller.delete_worker(worker_id, current_user_id)
     
     if isinstance(worker, Workers):
-        return Response.response_ok(f'Worker with id: {worker_id}, was deleted from database.', worker.serialize())
+        return Response.response_ok('Worker was deleted from database.', worker.serialize())
     else: 
          return Response.response_error(worker['msg'], worker['status'])
 
@@ -64,6 +64,6 @@ def update_worker(worker_id):
 
     worker = Controller.update_worker(worker_id, update_worker, current_user_id )
     if isinstance(worker, Workers):
-        return Response.response_ok(f'Worker with id: {worker_id}, has been updated in database', worker.serialize())
+        return Response.response_ok('Worker has been updated in database', worker.serialize())
     else:
         return Response.response_error(worker["msg"], worker['status'])

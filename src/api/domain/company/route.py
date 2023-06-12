@@ -43,7 +43,7 @@ def update_company(company_id):
     company = Controller.update_company(update_company, company_id, current_user_id)
     
     if isinstance(company, Company):
-        return Response.response_ok(f'Your company has been updated in database.', company.serialize())
+        return Response.response_ok('Company has been updated in database.', company.serialize())
     else:
         return Response.response_error(company['msg'], company['status'])
 
@@ -56,7 +56,7 @@ def delete_company(company_id):
     company = Controller.delete_company(company_id, current_user_id)
 
     if isinstance(company, Company):
-        return Response.response_ok(f'Company with id: {company_id}, was deleted from database.', company.serialize())
+        return Response.response_ok('Company was deleted from database.', company.serialize())
     else:
         return Response.response_error(company['msg'], company['status'])
 

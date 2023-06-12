@@ -27,3 +27,23 @@
   display: flex;
   flex-direction: column;
 }
+
+._settingsContainer li {
+  list-style: none;
+  margin-bottom: 12px;
+}
+
+._settingsContainer > li > a {
+  color: var(--gray-600);
+  font-size: var(--text-md);
+  font-weight: var(--font-regular);
+}
+
+._settingsContainer > li > a:focus {
+  color: var(--gray-900);
+}
+
+._settingsContainer > li > a:hover {
+  color: var(--gray-900);
+  text-decoration: underline;
+}
