@@ -6,8 +6,14 @@ import { Context } from "../store/appContext";
 
 export const FoodCard = () => {
     const {store, actions}= useContext(Context);
-    const index = store.restaurantes.find(item=>item.index==restaurantIndex)
-    const {restaurantIndex} = useParams()
+    const { restaurantIndex } = useParams();
+    const index = parseInt(restaurantIndex); // Convert the string to an integer if needed
+
+    // Access the name property of the restaurant
+    const restaurant = store.restaurantes[index];
+    const name = restaurant ? restaurant.name : ""; // Check if the restaurant exists before accessing its name property
+
+    console.log(name); // Verify the value here
 
     function imgError(e){
         e.target.src="https://cdn.leonardo.ai/users/25acf724-d0fb-44e7-8da5-a5932af5eac9/generations/f3918add-a5b5-437e-9bed-186b25ef5636/DreamShaper_v5_3_An_AIpowered_machine_surrounded_by_a_vibr_1.jpg"
@@ -15,8 +21,7 @@ export const FoodCard = () => {
 
     return(
         <>   
-        {index.plates && index.plates.length > 0 && index.plates.map((element, index) =>{
-                                return(
+        {restaurant.plates.map((element, index) =>(
                 <div key={index} className="col card bg-transparent border border-primary"> 
                     <div key={index} onError={imgError} className="card-img-top mx-0 p-1 m-1 w-100" alt="{item.url}">
                         <img  src={element.image} onError={imgError} className="card-img-top mx-0 p-1 pt-3 img-fluid figure-image" alt="restaurantImg" style={{ backgroundSize: "cover"}}></img>
@@ -33,7 +38,7 @@ export const FoodCard = () => {
                         </div>
                     </div>
                     </div>
-                                )})|| <h1 className="main-title gradient-custom">loading...</h1>}
+                                ))|| <h1 className="main-title gradient-custom">loading...</h1>}
             </>
     )
 };
