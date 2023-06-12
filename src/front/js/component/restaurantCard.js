@@ -13,8 +13,8 @@ export const RestaurantCard = () => {
 	return (
         <>
             {store.restaurantes && store.restaurantes.length > 0 && store.restaurantes.map((item, index) =>(
-            <div className="col card gradient-custom-contrast">   
-                        <div key={index} className="card-img-top mx-0 p-1" alt="{item.url}">
+            <div key={index} className="col card gradient-custom-contrast">   
+                        <div className="card-img-top mx-0 p-1" alt="{item.url}">
                             <img src={item.image} onError={imgError} className="card-img-top mx-0 p-1 pt-3" alt="restaurantImg"></img>
                             <Link to={`/order-food/${index}`}>
                                 <div className="card-body">
@@ -24,9 +24,9 @@ export const RestaurantCard = () => {
                             <div className="footer card-body ms-auto px-auto">
                                 {item.plates.map((element, index)=>{
                                     return(
-                                    <Link to={`/${element.restaurantName}/${index}`}>
+                                    <Link key={index} to={`/${element.restaurantName}/${index}`}>
                                         <div className="row g-3 gap-3">
-                                            <button key={index} className="btn btn-outline-primary col fw-bold rounded d-flex align-self-center justify-content-center">
+                                            <button className="btn btn-outline-primary col fw-bold rounded d-flex align-self-center justify-content-center">
                                                 {element.plateName}
                                             </button>
                                             <button className="btn btn-outline-primary col fw-bold rounded d-flex align-self-center justify-content-center">{element.price} Pesos</button>

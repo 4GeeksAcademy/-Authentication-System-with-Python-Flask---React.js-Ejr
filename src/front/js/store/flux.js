@@ -51,31 +51,32 @@ const getState = ({ getStore, getActions, setStore }) => {
 				{
 					name: "McDonalds",
 					plates: [
-						{plateName: "Hamburguesa", 
+					{
+						plateName: "Hamburguesa", 
 						price: "15000", 
-						description: "x", 
-						image: "", 
+						description: "Prueba nuestra irresistible hamburguesa: un jugoso filete de carne cocinado a la perfección, envuelto en un pan suave y esponjoso. Acompañado de crujientes vegetales frescos y una explosión de sabores gracias a nuestra especial salsa secreta. ¡Una experiencia gourmet en cada mordisco!", 
+						image: "https://cdn.leonardo.ai/users/25acf724-d0fb-44e7-8da5-a5932af5eac9/generations/f2d4bab1-66ef-4549-b9db-3edb375a5a92/DreamShaper_v5_Delicious_hamburger_juicy_patty_steam_dark_eleg_0.jpg", 
 						restaurantName: "McDonalds"
 					}, 
 					{
 						plateName: "Hamburguesa con queso", 
 						price: "19000", 
-						description: "x", 
-						image: "", 
+						description: "¡Prepárate para una explosión de sabor con nuestra hamburguesa con queso! Imagina un filete jugoso y sazonado a la perfección, acompañado de una suave fusión de quesos que se derriten en tu boca. El pan brioche tostado añade un toque de crujiente y la frescura de los vegetales complementa esta obra maestra. ¿Estás listo para una experiencia de hamburguesa irresistible?", 
+						image: "https://cdn.leonardo.ai/users/25acf724-d0fb-44e7-8da5-a5932af5eac9/generations/bd5b796e-cc5a-4968-a432-eff627d518cd/DreamShaper_v5_Delicious_hamburger_with_a_lot_of_cheese_inside_1.jpg", 
 						restaurantName: "McDonalds"
 					}, 
 					{
 						plateName: "Doble libra", 
 						price: "20000", 
-						description: "x", 
-						image: "", 
+						description: "¡Déjate seducir por nuestra increíble hamburguesa doble libra! Dos jugosos filetes de carne perfectamente sazonados, colocados entre dos capas de pan brioche tostado. Una explosión de sabor y satisfacción en cada bocado. Acompañada de crujientes hojas de lechuga, rodajas de tomate maduro y nuestra irresistible salsa especial. ¡Una experiencia gourmet en tu paladar!", 
+						image: "https://cdn.leonardo.ai/users/25acf724-d0fb-44e7-8da5-a5932af5eac9/generations/f521b433-17a4-4ba2-bc63-4f3f84ef305d/DreamShaper_v5_Delicious_double_big_hamburger_juicy_patty_stea_0.jpg", 
 						restaurantName: "McDonalds"
 					}, 
 					{
 						plateName: "Big Mac", 
 						price: "25000", 
-						description: "x", 
-						image: "", 
+						description: "Imagina dos jugosas y sabrosas hamburguesas de carne 100% de res, perfectamente asadas y sazonadas, apiladas entre tres capas de panes suaves y esponjosos. En cada bocado, sentirás la deliciosa fusión de la carne, el queso cheddar fundido, los crujientes pepinillos, la cebolla fresca y nuestra inconfundible salsa secreta.", 
+						image: "https://cdn.leonardo.ai/users/25acf724-d0fb-44e7-8da5-a5932af5eac9/generations/ab3e02d0-42f2-4ddb-8476-29a888149470/DreamShaper_v5_Delicious_giant_hamburger_bacon_juicy_patty_ste_2.jpg", 
 						restaurantName: "McDonalds"
 					}
 					],
@@ -95,28 +96,28 @@ const getState = ({ getStore, getActions, setStore }) => {
 						{
 							plateName: "Pollo asado", 
 							price: "15000",  
-							description: "x", 
-							image: "", 
+							description: "¡Descubre la perfección en cada bocado con nuestro pollo asado! Jugoso, tierno y lleno de sabor, este plato te transportará a un festín irresistible. Cada porción está cuidadosamente sazonada con una mezcla de especias secretas que realza su sabor natural y lo convierte en una verdadera delicia.", 
+							image: "https://cdn.leonardo.ai/users/25acf724-d0fb-44e7-8da5-a5932af5eac9/generations/43708d93-6def-4e1f-84ee-22732705ad87/DreamShaper_v5_fried_chicken_with_fries_and_coke_served_in_a_p_0.jpg", 
 							restaurantName: "Kukulkan"
 						}, 
 						{
 							plateName: "Medio pollo asado", 
 							price: "8000", 
-							description: "x", 
-							image: "", 
+							description: "Disfruta de nuestro medio pollo asado, una delicia jugosa y llena de sabor. Tierno y dorado en su exterior, cada bocado te transportará a un festival de sabores ahumados y especias exquisitas.", 
+							image: "https://cdn.leonardo.ai/users/25acf724-d0fb-44e7-8da5-a5932af5eac9/generations/e8f79622-0dbb-4844-9fe8-c5cc70d2b7dd/DreamShaper_v5_fried_chicken_served_in_a_plate_delicious_steam_3.jpg", 
 							restaurantName: "Kukulkan"
 						}, 
 						{
 							plateName: "Cuarto de pollo asado", 
 							price: "6000", 
-							description: "x", 
-							image: "", 
+							description: " Este suculento manjar te transportará a un festín de sabores irresistibles. Nuestro pollo, cuidadosamente sazonado con hierbas y especias, se asa lentamente hasta alcanzar una jugosidad perfecta y una piel dorada y crujiente que te hará agua la boca.", 
+							image: "https://cdn.leonardo.ai/users/25acf724-d0fb-44e7-8da5-a5932af5eac9/generations/e0f0626b-1837-4fdc-b54a-0e6a17797f5a/DreamShaper_v5_fried_chicken_wing_pair_served_in_a_plate_delic_1.jpg", 
 							restaurantName: "Kukulkan"
 						}, 
 						{
 							plateName: "Tortillas", 
 							price: "4000", 
-							description: "x", 
+							description: "¡Descubre nuestras tortillas, el platillo que te transportará a la tradición y el sabor auténtico! Deliciosas, esponjosas y llenas de ingredientes frescos, nuestras tortillas son un verdadero festín para tu paladar. Cada bocado te sorprenderá con su textura suave y su mezcla perfecta de sabores.", 
 							image: "", 
 							restaurantName: "Kukulkan"
 						}
@@ -136,7 +137,36 @@ const getState = ({ getStore, getActions, setStore }) => {
 				},
 				{
 					name: "La Bella Italia",
-					plates: [{plateName: "Pizza con hongos", price: "5000", description: "x", image: "", restaurantName: "La Bella Italia"}, {plateName: "Pasta bolognesa", price: "14000", description: "x", image: "", restaurantName: "La Bella Italia"}, {plateName: "Fetuccini Alfredo", price: "13000", description: "x", image: "", restaurantName: "La Bella Italia"}, {plateName: "Gnocchi", price: "20000", description: "x", image: "", restaurantName: "La Bella Italia"}],
+					plates: [
+						{
+							plateName: "Pizza con hongos", 
+							price: "5000", 
+							description: "Nuestra pizza está cuidadosamente elaborada con los ingredientes más frescos y de la más alta calidad. Los champiñones, perfectamente cocidos, añaden una textura suave y un sabor terroso que se complementa a la perfección con el queso fundido y derretido.", 
+							image: "", 
+							restaurantName: "La Bella Italia"
+						}, 
+						{
+							plateName: "Pasta bolognesa", 
+							price: "14000", 
+							description: "Nuestra pasta al dente se combina con una salsa boloñesa casera, cuidadosamente preparada con carne de res jugosa, tomates maduros y una selección de hierbas aromáticas", 
+							image: "", 
+							restaurantName: "La Bella Italia"
+						}, 
+						{
+							plateName: "Fetuccini Alfredo", 
+							price: "13000", 
+							description: "¡Descubre el verdadero placer de la pasta con nuestro exquisito Fettuccini Alfredo! Sumérgete en un mundo de sabores seductores mientras los delicados fettuccini se entrelazan con una cremosa salsa Alfredo, enriquecida con mantequilla suave y queso parmesano fresco. ",
+							image: "", 
+							restaurantName: "La Bella Italia"
+						}, 
+						{
+							plateName: "Gnocchi", 
+							price: "20000", 
+							description: "Nuestros Gnocchi son suaves y tiernos, hechos a mano con la receta tradicional que ha pasado de generación en generación. Cada uno de ellos se combina con una exquisita salsa, cuidadosamente elaborada con ingredientes frescos y sabrosos, que se adhieren perfectamente a la textura suave de la pasta.", 
+							image: "", 
+							restaurantName: "La Bella Italia"
+						}
+					],
 					locations: ["Colombia", "Costa"],
 					image: "https://cdn.leonardo.ai/users/25acf724-d0fb-44e7-8da5-a5932af5eac9/generations/6d29df4b-801b-4bb5-9b3d-32c71d153902/DreamShaper_v6_italian_food_sphaguetti_pizza_lasagna_advertisi_0.jpg",
 					subscription: [{SubscriptionName: "Italianisimo", description: "Tendras una fabulosa comida variada todos los días!, Lunes Pizza, martes Pasta, miercoles fettucinni, jueves, gnocci, variaremos las combinaciones e ingredientes a lo lagro de la semana, asume lo delicioso y asegura tus sorpresas!", price: "20000"}]
@@ -147,29 +177,29 @@ const getState = ({ getStore, getActions, setStore }) => {
 						{
 							plateName: "Tarta de peces", 
 							price: "5000", 
-							description: "x", 
-							image: "", 
+							description: 'Inspirada en la famosa frase "dormirás con los peces", esta creación culinaria te transportará a un sabor inolvidable. Imagina una base crujiente de masa horneada, que esconde un relleno exquisito de peces frescos, cuidadosamente seleccionados para brindarte una experiencia gastronómica única. Cada bocado revela la delicadeza de los sabores marinos, fusionados con hierbas y especias secretas que te harán suspirar.', 
+							image: "https://cdn.leonardo.ai/users/25acf724-d0fb-44e7-8da5-a5932af5eac9/generations/7fb8d766-1e33-4127-a0e6-fe026cdb0aa2/DreamShaper_v5_Fish_tart_mafia_theme_gambling_card_mafia_men_p_0.jpg", 
 							restaurantName: "Don Pacino"
 						}, 
 						{
 							plateName: "Pasta destazada", 
 							price: "14000", 
-							description: "x", 
-							image: "", 
+							description: "Esta pasta, al igual que las transacciones clandestinas de la mafia, está llena de secretos. Deliciosos trozos de panceta ahumada y salchichas italianas picantes son combinados con una salsa pomodoro casera, que esconde un toque de chili para despertar tus sentidos.", 
+							image: "https://cdn.leonardo.ai/users/25acf724-d0fb-44e7-8da5-a5932af5eac9/generations/6e212d52-2ff4-42fb-8f97-b463ac7ba2b6/DreamShaper_v5_pasta_bolognese_ketchup_blood_aspect_delicious_0.jpg", 
 							restaurantName: "Don Pacino"
 						}, 
 						{
 							plateName: "Puñalini Alfredo", 
 							price: "13000", 
-							description: "x", 
-							image: "", 
+							description: "¡Sumérgete en el oscuro mundo de la mafia con nuestro Puñalini Alfredo! Una fusión única entre la clásica pasta Alfredo y la intensidad de la vida criminal. Imagina un plato de tallarines suaves y cremosos, bañados en una irresistible salsa Alfredo que esconde un toque de peligro. Esta exquisita combinación de sabores te transportará a las calles sombrías de la mafia, donde el sabor intenso se entrelaza con la elegancia.", 
+							image: "https://1.bp.blogspot.com/-R0CT562JZL4/YALVh_-qwDI/AAAAAAAAXx0/rt0gse_JkCg2lK46gYLKpp2UJfCqn0IZgCNcBGAsYHQ/s3200/espaguetis%2Bal%2Bcapone.jpg", 
 							restaurantName: "Don Pacino"
 						}, 
 						{
 							plateName: "Pastel de arandanitos", 
 							price: "20000", 
-							description: "x", 
-							image: "", 
+							description: "este no es un pastel común y corriente. En cada mordisco, podrás saborear un toque de peligro, ya que los arándanos representan las sutiles transacciones de flores en las sombras. Cada bocado te invita a sumergirte en una experiencia clandestina y emocionante.", 
+							image: "https://caudesucre.com/wp-content/uploads/2017/05/bizcocho_sin_harina-11.jpg", 
 							restaurantName: "Don Pacino"
 						}
 					],
