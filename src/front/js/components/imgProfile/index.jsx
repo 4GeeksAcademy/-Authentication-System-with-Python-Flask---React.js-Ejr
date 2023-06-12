@@ -5,6 +5,7 @@ import Avatar from "../avatar/index.jsx";
 
 const ImgProfile = ({ img, handleChange }) => {
   const { store } = useContext(Context);
+
   const userData = store.userProfileData.userData;
 
   return (
@@ -20,7 +21,6 @@ const ImgProfile = ({ img, handleChange }) => {
               name="src-file1"
               aria-label="Archivo"
               onChange={handleChange}
-              required
             />
           </div>
         </div>

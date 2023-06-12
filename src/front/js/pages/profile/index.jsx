@@ -11,7 +11,7 @@ import { Context } from "../../store/appContext.js";
 const Profile = () => {
   const [file, setFile] = useState("");
   const [fileUrl, setFileUrl] = useState("");
-  const [user, setUser] = useState(userStoredInContext);
+  const [loading, setLoading] = useState(false)
 
   const { store, actions } = useContext(Context);
   const userStoredInContext = store.userProfileData.userData;
@@ -36,40 +36,57 @@ const Profile = () => {
     }
   };
 
-  const handleClick = (e) => {
-    e.preventDefault();
+  const handleDashboard = () =>{
+    const localStorageData = JSON.parse(
+      localStorage.getItem("token/role/company_id"));
+
+    if (localStorageData.role === "admin") navigate(`/admin-dashboard/${localStorageData.company_id}`);
+    if (localStorageData.role === "client") navigate("/user-dashboard");
+    if (localStorageData.role === "worker") navigate(`/worker-dashboard/${localStorageData.company_id}`);
+
+  }
+
+  const handleClick = async () => {
+    setLoading(true);
     const form = new FormData();
+
     form.append("avatar", file);
     form.append("email", userStoredInContext?.email);
     form.append("username", userStoredInContext?.username);
     form.append("firstname", userStoredInContext?.firstname);
     form.append("lastname", userStoredInContext?.lastname);
 
-    updateUserProfile(form);
-    actions.saveUserProfileData(user);
-    navigate("/");
+    await updateUserProfile(form);
+    
+    handleDashboard()
+    setLoading(false);
+
   };
+
   return (
-    <main className="">
+    <>
       <Header
         imgProfile={userStoredInContext?.avatar}
         updateProfile={() => navigate(`/profile/${userStoredInContext?.id}`)}
       />
+      
       <ImgProfile
         img={fileUrl === "" ? userStoredInContext?.avatar : fileUrl}
         handleChange={handleChange}
       />
-      <main className="mainContainerProfile">
-        <div className="background">
-          <h2 className="title">Profile update</h2>
+      
+      <main className={styles._mainContainerProfile}>
+        <div className={styles._subContainer}>
+          <h2 className={styles._title}>Profile update</h2>
           <ProfileForm
             handleChange={handleChange}
             handleClick={handleClick}
             user={userStoredInContext}
+            loading={loading}
           />
         </div>
       </main>
-    </main>
+    </>
   );
 };
 export default Profile;

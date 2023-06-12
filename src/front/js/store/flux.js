@@ -8,12 +8,10 @@ const getState = ({ getStore, getActions, setStore }) => {
       saveCompanyData: (data) => {
         const store = getStore();
         setStore({ companyData: { ...store.companyData, data } });
-        console.log("Saved in Flux -->", store);
       },
       saveUserProfileData: (userData) => {
         const store = getStore();
         setStore({ userProfileData: { ...store.userProfileData, userData } });
-        console.log("Saved in Flux -->", store);
       },
 
       getMessage: async () => {
