@@ -147,12 +147,6 @@ def get_restaurants():
     return "ok"
 
 
-
-
-
-
-
-
 @api.route('/hello', methods=['POST', 'GET'])
 def handle_hello():
 

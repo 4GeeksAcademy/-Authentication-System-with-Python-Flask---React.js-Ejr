@@ -64,51 +64,6 @@ export const ProfileNotifications = () => {
                             </form>
                         </div>
                     </div>
-                    {/* SMS push notifications card */}
-                    {/* <div className="card card-header-actions mb-4 gradient-custom-contrast">
-                        <div className="card-header">
-                            Push Notifications
-                            <div className="form-check form-switch">
-                                <input className="form-check-input" id="smsToggleSwitch" type="checkbox"></input>
-                                <label className="form-check-label" htmlFor="smsToggleSwitch"></label>
-                            </div>
-                        </div> */}
-                        {/* <div className="card-body">
-                            <form> */}
-                                {/* Form Group (default SMS number) */}
-                                {/* <div className="mb-3">
-                                    <label className="small mb-1" htmlFor="inputNotificationSms">Default SMS number</label>
-                                    <input className="form-control" id="inputNotificationSms" type="tel" disabled=""></input>
-                                </div> */}
-                                {/* Form Group (SMS updates checkboxes) */}
-                                {/* <div className="mb-0">
-                                    <label className="small mb-2">Choose which types of push notifications you receive</label>
-                                    <div className="form-check mb-2">
-                                        <input className="form-check-input" id="checkSmsComment" type="checkbox"></input>
-                                        <label className="form-check-label" htmlFor="checkSmsComment">Someone comments on your post</label>
-                                    </div>
-                                    <div className="form-check mb-2">
-                                        <input className="form-check-input" id="checkSmsShare" type="checkbox"></input>
-                                        <label className="form-check-label" htmlFor="checkSmsShare">Someone shares your post</label>
-                                    </div>
-                                    <div className="form-check mb-2">
-                                        <input className="form-check-input" id="checkSmsFollow" type="checkbox"></input>
-                                        <label className="form-check-label" htmlFor="checkSmsFollow">A user follows your account</label>
-                                    </div>
-                                    <div className="form-check mb-2">
-                                        <input className="form-check-input" id="checkSmsGroup" type="checkbox"></input>
-                                        <label className="form-check-label" htmlFor="checkSmsGroup">New posts are made in groups you're part of</label>
-                                    </div>
-                                    <div className="form-check">
-                                        <input className="form-check-input" id="checkSmsPrivateMessage" type="checkbox"></input>
-                                        <label className="form-check-label" htmlFor="checkSmsPrivateMessage">You receive a private message</label>
-                                    </div>
-                                </div>
-                            </form>
-                        </div> 
-                    </div>
-                </div>
-                <div className="col-lg-4"> */}
                     {/* Notifications preferences card */}
                     <div className="card gradient-custom-contrast">
                         <div className="card-header">Preferencias de notificaciones</div>
