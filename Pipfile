@@ -22,6 +22,7 @@ flask-bcrypt = "*"
 flask-jwt-extended = "*"
 mercadopago = "*"
 sendgrid = "*"
+firebase-admin = "*"
 
 [requires]
 python_version = "3.10"
