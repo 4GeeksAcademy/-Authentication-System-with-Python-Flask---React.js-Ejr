@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import LoginModal from "../pages/loginModal";
 import "../../styles/register.css";
 import { Context } from "../store/appContext";
+import FoodModal from "./foodModal";
 
 export const FoodCard = () => {
     const {store, actions}= useContext(Context);
@@ -20,26 +21,36 @@ export const FoodCard = () => {
     }
 
     return(
-        <>   
+    <>   
         {restaurant.plates.map((element, index) =>(
-                <div key={index} className="col card bg-transparent border border-primary"> 
-                    <div key={index} onError={imgError} className="card-img-top mx-0 p-1 m-1 w-100" alt="{item.url}">
-                        <img  src={element.image} onError={imgError} className="card-img-top mx-0 p-1 pt-3 img-fluid figure-image" alt="restaurantImg" style={{ backgroundSize: "cover"}}></img>
-                            <div className="card-body">
-                                <h1 className="w-100 card-body text-light"><strong>{element.plateName}</strong></h1>
-                            </div>                        
-                        <div className="p-5 mt-5 w-100">
-                            <p className="text-light fs-3 description-text">{element.description}</p>
-                        </div>
-                        <div className="mx-auto d-flex justify-content-evenly w-100">
-                                <Link key={index} to={`/${element.plateName}/${index}`}>
-                                    <button className="btn btn-outline-primary fw-bold rounded d-flex align-self-center justify-content-center w-100 px-5 py-3">{element.price} Pesos</button>
-                                </Link>
-                        </div>
-                    </div>
-                    </div>
-                                ))|| <h1 className="main-title gradient-custom">loading...</h1>}
-            </>
+        <div key={index} className="col card bg-transparent border border-primary"> 
+            <div onError={imgError} className="card-img-top mx-0 p-1 m-1 w-100" alt="{item.url}">
+                <img  src={element.image} onError={imgError} className="card-img-top mx-0 p-1 pt-3 img-fluid figure-image" alt="restaurantImg" style={{ backgroundSize: "cover"}}></img>
+                <div className="card-body">
+                    <h1 className="w-100 card-body text-light d-flex justify-content-center">
+                        <strong>{element.plateName}</strong>
+                        <button className="btn btn-dark btn-outline-info align-self-end">♡</button>
+                    </h1>
+                </div>                        
+                <div className="p-5 mt-5 w-100">
+                    <p className="text-light fs-3 description-text">{element.description}</p>
+                </div>
+                <div className="mx-auto d-flex justify-content-evenly w-100">
+                    <button className="btn btn-outline-primary fw-bold rounded d-flex align-self-center justify-content-center w-100 px-5 py-3 mx-2 fs-7">
+                        Precio de: {element.price} Pesos
+                    </button>
+                    <button className="btn btn-outline-primary fw-bold rounded d-flex align-self-center justify-content-center w-100 px-5 py-3 mx-2">
+                        Agregar al Carrito
+                    </button>
+                    <button type="button" className="btn btn btn-outline-primary fw-bold rounded w-100 px-5 py-3 mx-2" data-bs-toggle="modal" data-bs-target={`#foodModal-${index}`}>
+                        Detalles del Plato
+                    </button>
+                </div>
+            </div>
+            <FoodModal />
+        </div>
+        ))|| <h1 className="main-title gradient-custom">loading...</h1>}
+    </>
     )
 };
 
