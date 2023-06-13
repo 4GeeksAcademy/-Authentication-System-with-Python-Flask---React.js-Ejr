@@ -124,6 +124,17 @@ const getState = ({ getStore, getActions, setStore }) => {
 				return { code: resp.status, data: data }
 			},
 
+			userLogout: async () => {
+				const resp = await getActions().apiFetchProtected("/api/Logout", "POST")
+				if (resp.code >= 400){
+					return resp
+				}
+					setStore({ accessToken: null })
+					localStorage.removeItem("accessToken")
+					return resp
+						 
+					},
+
 			pagoMercadopago: async ()=>{
 				try{
 					const response=await axios.post(apiUrl + "/api/preference",{
@@ -138,6 +149,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log(error)
 				}
 			},
+
+			
 
 			// fetchServices: async(name, description, price) =>{
 			// 	let baseUrl = apiUrl+"/api/services"
