@@ -250,6 +250,26 @@ const getState = ({ getStore, getActions, setStore }) => {
 					const { code, data } = response;
 
 					if (code === 200 && data) {
+            return data;
+					} else {
+						console.error("Error:", response);
+					}
+				} catch (error) {
+					console.error("Error:", error);
+				}
+			},
+			updateUserProfile: async (email, updatedProfile) => {
+				try {
+					// Realizar una solicitud a la API para actualizar el perfil del usuario
+					const response = await getActions().apiFetch(`/user/${email}`, "PUT", updatedProfile);
+					const { code, data } = response;
+
+					if (code === 200 && data) {
+						// Actualizar el perfil en el estado de la aplicación
+						const { store, setStore } = getStore();
+						const updatedUser = { ...store.user[0], ...updatedProfile };
+						const updatedStore = { ...store, user: [updatedUser] };
+						setStore(updatedStore);
 						return data;
 					} else {
 						console.error("Error:", response);
@@ -258,7 +278,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.error("Error:", error);
 				}
 			},
-
 			user_login: async (email, password) => {
 				const resp = await getActions().apiFetch("/login", "POST", { email, password })
 				if (resp.code >= 400) {
@@ -351,4 +370,3 @@ const getState = ({ getStore, getActions, setStore }) => {
 };
 
 export default getState;
-
