@@ -4,6 +4,7 @@ import LoginModal from "../pages/loginModal";
 import "../../styles/register.css";
 import { Context } from "../store/appContext";
 import FoodCard from "./foodCard";
+import FoodModal from "./foodModal";
 
 export const RestaurantOverview = () => {
     const {store, actions}= useContext(Context);
@@ -25,7 +26,7 @@ export const RestaurantOverview = () => {
 
 	return (
         <div className="container-fluid bg-dark" style={{paddingTop:"5rem", width: "100%", height: "100vh", paddingBottom: "300vh"}}>
-            <div>
+            <div className="container">
             <section className="hero py-5 px-1 mx-auto rounded">
             {[restaurant].map((item, index) =>(
                 <div key={index} className="container">
@@ -46,7 +47,7 @@ export const RestaurantOverview = () => {
                 <section>
                     <div>
                         <div className="container-fluid text-center mt-5">
-                            <div className="row row-cols-2 sm-row-cols-1 md-row-cols-2 lg-row-cols-3 xl-row-cols-4 g-5">
+                            <div className="row row-cols-2 sm-row-cols-1 md-row-cols-2 lg-row-cols-3 xl-row-cols-3 g-5">
                                 <FoodCard />
                             </div>  
                         </div>
