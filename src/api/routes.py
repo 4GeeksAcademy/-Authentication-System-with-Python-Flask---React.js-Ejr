@@ -70,7 +70,7 @@ def user_logout():
     db.session.commit()
     return jsonify ({"msg": "Token revoked"})
 
-
+# Preguntarle a Arnaldo
 @api.route('/register', methods=['POST'])
 def user_create():
     data=request.get_json()
@@ -92,11 +92,11 @@ def user_create():
         is_active=True,
         first_name=data["first_name"],
         last_name=data["last_name"],
-        birth_day=data["birth_day"],
-        birth_month=data["birth_month"],
-        birth_year=data["birth_year"],
+        birthday=data["birthday"],
         gender=data["gender"],
         phone=data["phone"],
+        address=data["address"]
+        address_details=data["address_details"]
         suscription=data["suscription"]
     )
     db.session.add(new_user)
@@ -171,6 +171,38 @@ def register_restaurant():
     db.session.commit()
     response={"msg": "Restaurante creado exitosamente"}
     return jsonify(response), 200
+
+@api.route('/registerplatos', methods=['POST'])
+def register_platos():
+    name=request.json.get("name")
+    url=request.json.get("url")
+    price=request.json.get("price")
+    description=request.json.get("description")
+    new_platos=Platos(name=name, url=url, price=price, description = description)
+    db.session.add(new_platos)  
+    db.session.commit()
+    response={"msg": "Plato creado exitosamente"}
+    return jsonify(response), 200
+
+# Alta de los platos en los restaurants
+@api.route('/restaurantsplatos', methods=['POST'])
+def restaurantsplatos():
+    body = json.loads(request.data)
+
+    new_rp = Restaurantplatos(restaurant_id=body["restaurant_id"],
+    platos_id=body["platos_id"])
+
+    db.session.add(new_rp)
+    db.session.commit()
+    return jsonify("Creado con exito"), 200
+
+# Muestra todos la tabla aux entre platos y restaurants
+@api.route('/restaurantsplatos', methods=['GET'])
+def get_restaurantsplatos():
+    rp = Restaurantplatos.query.all()
+    results = list(map(lambda x: x.serialize(), rp))
+    #print (results)
+    return jsonify(results), 200
 
 
 @api.route('/createRecipeChatGPT', methods=['GET'])
