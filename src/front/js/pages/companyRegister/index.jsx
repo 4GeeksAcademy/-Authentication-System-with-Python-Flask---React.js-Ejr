@@ -13,10 +13,12 @@ const initialState = {
   name: "",
   description: "",
   address: "",
-  working_schedule: "",
+  workingSchedule: "",
 };
 
 const CompanyRegister = () => {
+
+
   const [newCompany, setNewCompany] = useState(initialState);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -30,6 +32,7 @@ const CompanyRegister = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     actions.saveCompanyData(newCompany);
+    console.log(newCompany);
     navigate("/company-register-2");
   };
 

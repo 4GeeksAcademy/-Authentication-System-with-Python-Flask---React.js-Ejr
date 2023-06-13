@@ -12,6 +12,7 @@ import Spinner from "../../components/spinner/index.jsx";
 import { toast } from "react-toastify";
 
 const CompanyRegister2 = () => {
+
   const [isLoading, setIsLoading] = useState(false);
 
   const { store } = useContext(Context);
@@ -22,7 +23,6 @@ const CompanyRegister2 = () => {
   const handleChange = ({ target }) => {
     setNewCompany({ ...newCompany, [target.name]: target.value });
   };
-  console.log(newCompany);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

@@ -1,9 +1,22 @@
-import React from "react";
+import React, { forwardRef } from "react";
 import Input from "../input/index.jsx";
 import styles from "./companyForm.module.css";
 import Button from "../button/index.jsx";
+import { yupResolver } from '@hookform/resolvers/yup';
 
-const CompanyForm = ({ handleChange, handleSubmit, textBtn }) => (
+import { companySchema } from "../../validations/companyValidation.js";
+
+import { useForm } from "react-hook-form";
+
+  const CompanyForm = ({ handleSubmit, handleChange, textBtn }) => {
+
+  const { register, formState: { errors } } = useForm( {
+    resolver: yupResolver(companySchema)
+  });
+
+  console.log(errors); 
+
+  return (
   <form
     className={styles._form}
     onChange={handleChange}
@@ -13,34 +26,46 @@ const CompanyForm = ({ handleChange, handleSubmit, textBtn }) => (
       icon={<i className="fa-solid fa-circle-user"></i>}
       type="text"
       placeholder="Name"
-      name="name"
+      label="name"
+      ref={null}
+      {...register("name")}
     />
+    <p>{errors.name?.message}</p>
     <Input
       icon={<i className="fa-solid fa-circle-user"></i>}
       type="text"
       placeholder="CIF"
-      name="cif"
+      label="cif"
+      ref={null}
+      {...register("cif")}
     />
     <Input
       icon={<i className="fa-solid fa-circle-user"></i>}
       type="textarea"
       placeholder="Description"
-      name="description"
+      label="description"
+      ref={null}
+      {...register("description")}
     />
     <Input
       icon={<i className="fa-solid fa-envelope"></i>}
       type="text"
       placeholder="Address"
-      name="address"
+      label="address"
+      ref={null}
+      {...register("address")}
     />
     <Input
       icon={<i className="fa-solid fa-calendar-days"></i>}
       type="text"
       placeholder="Working Schedule"
-      name="working_schedule"
+      label="workingSchedule"
+      ref={null}
+      {...register("workingSchedule")}
     />
-    <Button type="submit" title={textBtn} />
+    <Button type="submit" title={textBtn}/>
   </form>
-);
+  )
+}; 
 
 export default CompanyForm;

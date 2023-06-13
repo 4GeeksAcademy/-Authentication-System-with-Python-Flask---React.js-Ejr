@@ -1,7 +1,7 @@
-import React from "react";
+import React, { forwardRef }from "react";
 import styles from "./input.module.css";
 
-const Input = ({
+const Input = forwardRef(function Input({
   type,
   placeholder,
   icon,
@@ -11,7 +11,9 @@ const Input = ({
   value,
   date,
   required,
-}) => {
+  register, 
+  label, 
+}, ref) {
   return (
     <div className={styles._inputContainer}>
       {icon}
@@ -25,9 +27,12 @@ const Input = ({
         disabled={disabled}
         date={date}
         required={required}
+        register={register}
+        label={label}
+        ref={ref}
       />
     </div>
   );
-};
+}); 
 
 export default Input;
