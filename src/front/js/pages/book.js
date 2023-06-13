@@ -2,9 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import { Context } from "../store/appContext";
 import rigoImageUrl from "../../img/rigo-baby.jpg";
 import "../../styles/home.css";
-
-
-
+import { useNavigate } from "react-router-dom";
 
 export const Book = () => {
 
@@ -12,12 +10,19 @@ export const Book = () => {
   const services = store.services
   const vehicles = store.vehicle_types
   const [selectedVehicleType, setSelectedVehicleType] = useState(null)
+  const navigate = useNavigate()
 
   // const [size, setSize] = useState("")
   useEffect(() => {
-    actions.fetchServices()
-    actions.fetchVehicleTypes()
-    actions.pagoMercadopago()
+    if (!store.accessToken) {
+      navigate("/login")
+    }
+    else {
+      actions.fetchServices()
+      actions.fetchVehicleTypes()
+      actions.pagoMercadopago()
+    }
+
   }, [])
 
   const handleSelectVehicleType = (vehicleType) => {
@@ -34,10 +39,10 @@ export const Book = () => {
       <div className="container">
         <h1 className=" display-4 text-center py-2" >Our Services</h1>
         {
-          !!store.accessToken ? <><div class="accordion accordion-flush" id="accordionFlushExample">
-            <div class="accordion-item">
-              <h2 class="accordion-header" id="flush-headingOne">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+          !!store.accessToken ? <><div className="accordion accordion-flush" id="accordionFlushExample">
+            <div className="accordion-item">
+              <h2 className="accordion-header" id="flush-headingOne">
+                <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
                   1° Pick the Size
                 </button>
               </h2>
@@ -178,9 +183,9 @@ export const Book = () => {
               </div>
             </div>
             <br></br>
-            {/* <div class="accordion-item">
-    <h2 class="accordion-header" id="flush-headingTwo">
-      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+            {/* <div className="accordion-item">
+    <h2 className="accordion-header" id="flush-headingTwo">
+      <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
         2° Pick the Services
       </button>
     </h2>
@@ -196,7 +201,7 @@ export const Book = () => {
                     <li className="list-group-item" style={{ backgroundColor: '#40768C' }}>Price 100 USD</li>
                     <li className="list-group-item" style={{ backgroundColor: '#40768C' }}>What is about?</li>
                   </ul>
-                  <div class="card-footer">
+                  <div className="card-footer">
                   <button className="btn btn-dark my-2">Add to Cart</button>
                   </div>
                 </div>
@@ -209,7 +214,7 @@ export const Book = () => {
                     <li className="list-group-item" style={{ backgroundColor: '#40768C' }}>Price 150 USD</li>
                     <li className="list-group-item" style={{ backgroundColor: '#40768C' }}>What is about?</li>
                   </ul>
-                  <div class="card-footer">
+                  <div className="card-footer">
                   <button className="btn btn-dark my-2" onClick={() => { actions.addServices(item.name) }}>Add to Cart</button>
                   </div>
                 </div>
@@ -222,7 +227,7 @@ export const Book = () => {
                     <li className="list-group-item" style={{ backgroundColor: '#40768C' }}>Price 100 USD</li>
                     <li className="list-group-item" style={{ backgroundColor: '#40768C' }}>What is about?</li>
                   </ul>
-                  <div class="card-footer">
+                  <div className="card-footer">
                   <button className="btn btn-dark my-2">Add to Cart</button>
                   </div>
                 </div>
@@ -235,7 +240,7 @@ export const Book = () => {
                     <li className="list-group-item" style={{ backgroundColor: '#40768C' }}>Price 100 USD</li>
                     <li className="list-group-item" style={{ backgroundColor: '#40768C' }}>What is about?</li>
                   </ul>
-                  <div class="card-footer">
+                  <div className="card-footer">
                   <button className="btn btn-dark my-2">Add to Cart</button>
                   </div>
                 </div>
@@ -248,7 +253,7 @@ export const Book = () => {
                     <li className="list-group-item" style={{ backgroundColor: '#40768C' }}>Price 100 USD</li>
                     <li className="list-group-item" style={{ backgroundColor: '#40768C' }}>What is about?</li>
                   </ul>
-                  <div class="card-footer">
+                  <div className="card-footer">
                   <button className="btn btn-dark my-2">Add to Cart</button>
                   </div>
                 </div>
@@ -260,9 +265,9 @@ export const Book = () => {
     </div>
   </div> */}
             {/* <br></br> */}
-            <div class="accordion-item">
-              <h2 class="accordion-header" id="flush-headingThree">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+            <div className="accordion-item">
+              <h2 className="accordion-header" id="flush-headingThree">
+                <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
                   3° Save the Date
                 </button>
               </h2>
@@ -272,10 +277,10 @@ export const Book = () => {
             </div>
           </div><br></br><button className="btn btn-success" onClick={pagoMercadoPago}>Pagar</button></>
             :
-            <div class="alert alert-warning" role="alert">
+            <div className="alert alert-warning" role="alert">
               Signup or login before booking
             </div>
-            
+
         }
 
         {/* </div> */}

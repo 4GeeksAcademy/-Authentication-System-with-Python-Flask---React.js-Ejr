@@ -55,7 +55,7 @@ def get_services():
 
 
 @api.route('/book', methods=['GET'])
-@jwt_required
+@jwt_required()
 def get_vehicle_types():
     vehicle_types = VehicleType.query.all()
     return jsonify(vehicle_types=[vehicle_type.serialize() for vehicle_type in vehicle_types]), 200

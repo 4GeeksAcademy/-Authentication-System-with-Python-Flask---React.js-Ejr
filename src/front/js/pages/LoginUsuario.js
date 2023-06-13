@@ -2,14 +2,14 @@ import React, { useContext, useState } from "react";
 import { Context } from "../store/appContext";
 import rigoImageUrl from "../../img/rigo-baby.jpg";
 import "../../styles/home.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 
 // Para iniciar sesión
 
 export const LoginUsuario = () => {
   const { store, actions } = useContext(Context);
-
+  const navigate=useNavigate()
   // function Password() {
   //   // Initialize a boolean state
   const [passwordShown, setPasswordShown] = useState(false);
@@ -29,6 +29,7 @@ export const LoginUsuario = () => {
     if (resp >= 400) {
       return
     }
+    navigate("/book")
     //console.log("Login exitoso")
   }
 

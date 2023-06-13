@@ -124,21 +124,25 @@ const getState = ({ getStore, getActions, setStore }) => {
 				return { code: resp.status, data: data }
 			},
 			apiFetchProtected: async (endpoint, method = "GET", body = {}) => {
-				let resp = await fetch(apiUrl + endpoint, method == "GET" ? undefined :{
-				// let resp = await fetch(apiUrl + endpoint, {
-					method,
-					body: JSON.stringify(body),
+				let params = {
 					headers: {
-						"Content-Type": "application/json",
-						"Authorization" : "Bearer "+getStore().accessToken
+						"Authorization": `Bearer ${getStore().accessToken}`
 					}
-				})
+				}
+				if (method !== "GET") {
+					params.method = method
+					params.body = JSON.stringify(body)
+					params.headers["Content-Type"] = "application/json"
+				}
+				console.log(params)
+				console.log(getStore().accessToken)
+				let resp = await fetch(apiUrl + endpoint, params)
 				if (!resp.ok) {
 					console.error(`${resp.status}: ${resp.statusText}`)
 					return { code: resp.status, error: `${resp.status}: ${resp.statusText}` }
 				}
 				let data = await resp.json()
-				return { code: resp.status, data: data }
+				return { code: resp.status, data }
 			},
 			requestPasswordRecovery: async (email)=>{
 				const resp = await getActions().apiFetch("/api/recoverypassword", "POST", { email })
