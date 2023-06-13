@@ -227,23 +227,27 @@ const getState = ({ getStore, getActions, setStore }) => {
 					Gender: "femenino",
 					email: "askingalessa@gfake.com",
 					phone: "3005562343",
-
+					invoiceHistory: [{invoiceNumber: "39201", invoiceDate: "15/06/2021", Quantity: "30000", invoiceStatus: "Pending", refunded: false }],
+					cardInfo: [{cardLastFour: "1234", cardExpiration: "04/2024", cardDefault: true},],
+					subscriptionInfo: [{subscriptionName: "Italianisimo", subscriptionAmount: 20000, SubscriptionPayDay: 12},],
+					emailNotification: [{accountChanges: false, newProducts: false, marketing: false, securityAlerts: false}],
+					multiFactor: [{optIn: false, multiFactorEmail: "askingalessa@gfake.com"}]
 				}
 			]
 		},
 		actions: {
-			fetchUserData: async (email) => {
-				const baseUrl = `${process.env.BACKEND_URL}/${email}`;
+			// fetchUserData: async (email) => {
+			// 	const baseUrl = `${process.env.BACKEND_URL}/${email}`;
 
-				try {
-					let response = await fetch(baseUrl)
-					if (!response.ok) return response.status
-					setStore(email)
-				}
-				catch (error) {
-					console.error(error)
-				}
-			},
+			// 	try {
+			// 		let response = await fetch(baseUrl)
+			// 		if (!response.ok) return response.status
+			// 		setStore(email)
+			// 	}
+			// 	catch (error) {
+			// 		console.error(error)
+			// 	}
+			// },
 			user_create: async (user) => {
 				try {
 					const response = await getActions().apiFetch("register", "POST", user);
