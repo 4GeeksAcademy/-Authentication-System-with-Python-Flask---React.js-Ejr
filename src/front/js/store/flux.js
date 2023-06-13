@@ -328,14 +328,17 @@ const getState = ({ getStore, getActions, setStore }) => {
 				return { code: resp.status, data }
 			},
 			apiFetchProtected: async (endpoint, method = "GET", body = {}) => {
-				let resp = await fetch(apiUrl + endpoint, method == "GET" ? undefined : {
-					method,
-					body: JSON.stringify(body),
+				let params = {
 					headers: {
-						"Content-Type": "application/json",
-						"Authorization": `Bearer  ${getStore().accessToken}`
+						"Authorization": `Bearer ${getStore().accessToken}`
 					}
-				})
+				}
+				if (method !== "GET") {
+					params.method = method
+					params.body = JSON.stringify(body)
+					params.headers["Content-Type"] = "application/json"
+				}
+				let resp = await fetch(apiUrl + endpoint, params)
 				if (!resp.ok) {
 					console.error(`${resp.status}: ${resp.statusText}`)
 					return { code: resp.status, error: `${resp.status}: ${resp.statusText}` }
@@ -343,11 +346,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 				let data = await resp.json()
 				return { code: resp.status, data }
 			}
-
 		}
 	}
 };
-;
 
 export default getState;
 

@@ -12,10 +12,10 @@ class User(db.Model):
     last_name=db.Column(db.String(120), unique=True, nullable=False)
     birthday=db.Column(db.String(120), unique=True, nullable=False)
     gender=db.Column(db.String(120), unique=True, nullable=False)
+    address=db.Column(db.String(120), unique=True, nullable=False)
+    address_details=db.Column(db.String(120), unique=True, nullable=False)
     phone=db.Column(db.Integer, unique=True, nullable=False)
-    address=db.Column(db.String(300), unique=False, nullable=False)
-    address_detail=db.Column(db.String(300), unique=True, nullable=False)
-    # suscription = db.Column(db.Boolean(), unique=False, nullable=False)
+    suscription = db.Column(db.Boolean(), unique=False, nullable=False)
     pedidos=db.relationship("Pedidos")
     def __repr__(self):
         return f'<User {self.email}>'
@@ -29,7 +29,9 @@ class User(db.Model):
             "birthday":self.birthday,
             "gender": self.gender,
             "phone": self.phone,
-            # "suscription": self.suscription
+            "suscription": self.suscription,
+            "address": self.address,
+            "address_details": self.address_details
         }
 class Restaurant(db.Model):
     __tablename__="restaurant"
@@ -39,6 +41,7 @@ class Restaurant(db.Model):
     url=db.Column(db.String(500), unique=True, nullable=False)
     ubicaciones = db.Column(db.String(80), unique=False, nullable=False)
     restaurantplatos=db.relationship("Restaurantplatos")
+    suscriptions=db.relationship("Suscriptions")
     #platos=db.Column(db.Integer, db.Foreignkey ("Platos.id"))
     pedido=db.relationship("Pedidos")
     #detalles_de_pedido=db.relationship("DetalleDePedidos")
@@ -49,7 +52,7 @@ class Restaurant(db.Model):
             "id":self.id,
             "name":self.name,
             "url":self.url,
-            "ubicaciones":self.ubicaciones 
+            "ubicaciones":self.ubicaciones
         }
 class Platos(db.Model):
     __tablename__="platos"
@@ -57,11 +60,9 @@ class Platos(db.Model):
     name = db.Column(db.String(120), unique=True, nullable=False)
     description=db.Column(db.String(500), unique=True, nullable=False)
     price=db.Column(db.Integer, unique=True, nullable=False)
-    
     # restaurant_id = db.Column(db.Integer, db.ForeignKey("restaurant.id"))
     restaurantplatos=db.relationship("Restaurantplatos")
     # detalles_de_pedido=db.relationship("DetalleDePedidos")
-
     def __repr__(self):
         return f'<Platos {self.name}>'
     def serialize(self):
@@ -110,6 +111,24 @@ class Restaurantplatos(db.Model):
             "platos_id": self.platos_id,
             # "platos": self.platos
         }
+class Suscriptions(db.Model):
+    __tablename__="suscriptions"
+    id = db.Column(db.Integer, primary_key=True)
+    restaurant_id= db.Column(db.Integer, ForeignKey("restaurant.id"))
+    # restaurant=db.relationship(Restaurant)
+    user_id=db.Column(db.Integer, ForeignKey("user.id"))
+    # platos=db.relationship(Platos)
+    # usuario=relationship("User")
+    def __repr__(self):
+        return f'<Suscriptions {self.id}>'
+    def serialize(self):
+        return {
+            "id":self.id,
+            "restaurant_id":self.restaurant_id,
+            # "usuario_id": self.usuario_id,
+            "user_id": self.user_id,
+            # "platos": self.platos
+        }
 # class DetalleDePedidos(db.Model):
 #     # __tablename__="detalleDePedidos"
 #     id = db.Column(db.Integer, primary_key=True)
@@ -139,4 +158,4 @@ class TokenBlockedList(db.Model):
         return {
             "id":self.id,
             "jti":self.jti,
-        }   
+        }
