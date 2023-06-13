@@ -7,7 +7,10 @@ from api.models import db, User, TokenBlockedList, Restaurant, Pedidos, Platos,R
 from api.utils import generate_sitemap, APIException
 from flask_bcrypt import Bcrypt
 from flask_jwt_extended import create_access_token, create_refresh_token, jwt_required, get_jwt_identity, get_jwt, get_jti
+import os
+import openai
 
+openai.api_key = os.getenv("OPENAI_API_KEY")
 api = Blueprint('api', __name__)
 app = Flask(__name__)
 bcrypt = Bcrypt(app)
@@ -169,3 +172,18 @@ def register_restaurant():
     response={"msg": "Restaurante creado exitosamente"}
     return jsonify(response), 200
 
+
+@api.route('/createRecipeChatGPT', methods=['GET'])
+def generateChatResponse():
+    prompt = request.json.get("prompt")
+    response = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo",
+            messages=[
+                {"role": "user", "content": "Create a diet plan with the following characteristics" + prompt }
+            ]
+        )
+    try:
+        answer = response['choices'][0]['message']['content'].replace('\n', '<br>')
+    except:
+        answer = 'Oops you beat the AI, try a different question, if the problem persists, come back later.'
+    return answer

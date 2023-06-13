@@ -4,11 +4,21 @@ import LoginModal from "../pages/loginModal";
 import "../../styles/register.css";
 import { Context } from "../store/appContext";
 import FoodCard from "./foodCard";
+import FoodModal from "./foodModal";
 
 export const RestaurantOverview = () => {
     const {store, actions}= useContext(Context);
-    const index = store.restaurantes.find(item=>item.index==restaurantIndex)
-    const {restaurantIndex} = useParams()
+    // const {restaurantIndex} = useParams()
+    // console.log(restaurantIndex)
+    // const index = store.restaurantes.find(item=>item.index==restaurantIndex)
+    const { restaurantIndex } = useParams();
+    const index = parseInt(restaurantIndex); // Convert the string to an integer if needed
+
+    // Access the name property of the restaurant
+    const restaurant = store.restaurantes[index];
+    const name = restaurant ? restaurant.name : ""; // Check if the restaurant exists before accessing its name property
+
+    console.log(name); // Verify the value here
 
     function imgError(e){
         e.target.src="https://cdn.leonardo.ai/users/25acf724-d0fb-44e7-8da5-a5932af5eac9/generations/f3918add-a5b5-437e-9bed-186b25ef5636/DreamShaper_v5_3_An_AIpowered_machine_surrounded_by_a_vibr_1.jpg"
@@ -16,9 +26,9 @@ export const RestaurantOverview = () => {
 
 	return (
         <div className="container-fluid bg-dark" style={{paddingTop:"5rem", width: "100%", height: "100vh", paddingBottom: "300vh"}}>
-            <div>
+            <div className="container">
             <section className="hero py-5 px-1 mx-auto rounded">
-            {[index].map((item, index) =>(
+            {[restaurant].map((item, index) =>(
                 <div key={index} className="container">
                 <div className="row">
                     <div className="col-md-8">
@@ -37,7 +47,7 @@ export const RestaurantOverview = () => {
                 <section>
                     <div>
                         <div className="container-fluid text-center mt-5">
-                            <div className="row row-cols-4 sm-row-cols-1 md-row-cols-2 lg-row-cols-3 xl-row-cols-4 g-5">
+                            <div className="row row-cols-2 sm-row-cols-1 md-row-cols-2 lg-row-cols-3 xl-row-cols-3 g-5">
                                 <FoodCard />
                             </div>  
                         </div>

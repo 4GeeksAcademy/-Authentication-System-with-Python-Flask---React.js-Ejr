@@ -1,12 +1,7 @@
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import Column, Integer, String, Boolean, ForeignKey
 from sqlalchemy.orm import relationship
-
-
-
-
 db = SQLAlchemy()
-
 class User(db.Model):
     __tablename__="user"
     id = db.Column(db.Integer, primary_key=True)
@@ -20,12 +15,12 @@ class User(db.Model):
     address=db.Column(db.String(120), unique=True, nullable=False)
     address_details=db.Column(db.String(120), unique=True, nullable=False)
     phone=db.Column(db.Integer, unique=True, nullable=False)
-    suscription = db.Column(db.Boolean(), unique=False, nullable=False)
+    address=db.Column(db.String(300), unique=False, nullable=False)
+    address_detail=db.Column(db.String(300), unique=True, nullable=False)
+    # suscription = db.Column(db.Boolean(), unique=False, nullable=False)
     pedidos=db.relationship("Pedidos")
-    
     def __repr__(self):
         return f'<User {self.email}>'
-    
     def serialize(self):
         return {
             "id": self.id,
@@ -40,8 +35,6 @@ class User(db.Model):
             "address": self.address,
             "address_details": self.address_details
         }
-
-
 class Restaurant(db.Model):
     __tablename__="restaurant"
     id = db.Column(db.Integer, primary_key=True)
@@ -50,15 +43,11 @@ class Restaurant(db.Model):
     url=db.Column(db.String(500), unique=True, nullable=False)
     ubicaciones = db.Column(db.String(80), unique=False, nullable=False)
     restaurantplatos=db.relationship("Restaurantplatos")
-    suscriptions=db.relationship("Suscriptions")
-
     #platos=db.Column(db.Integer, db.Foreignkey ("Platos.id"))
     pedido=db.relationship("Pedidos")
     #detalles_de_pedido=db.relationship("DetalleDePedidos")
-
     def __repr__(self):
         return f'<Restaurant {self.name}>'
-    
     def serialize(self):
         return {
             "id":self.id,
@@ -66,7 +55,6 @@ class Restaurant(db.Model):
             "url":self.url,
             "ubicaciones":self.ubicaciones 
         }
-
 class Platos(db.Model):
     __tablename__="platos"
     id = db.Column(db.Integer, primary_key=True)
@@ -80,7 +68,6 @@ class Platos(db.Model):
 
     def __repr__(self):
         return f'<Platos {self.name}>'
-    
     def serialize(self):
         return {
             "id":self.id,
@@ -90,8 +77,6 @@ class Platos(db.Model):
             # "platos":self.description,
             # "restaurant_id":self.restaurant_id
             }
-
-
 class Pedidos(db.Model):
     __tablename__="pedidos"
     id = db.Column(db.Integer, primary_key=True)
@@ -101,10 +86,8 @@ class Pedidos(db.Model):
     platos_id=db.Column(db.Integer, ForeignKey("platos.id"))
     # platos=db.relationship(Platos)
     # usuario=relationship("User")
-
     def __repr__(self):
         return f'<Pedidos {self.id}>'
-    
     def serialize(self):
         return {
             "id":self.id,
@@ -122,10 +105,8 @@ class Restaurantplatos(db.Model):
     platos_id=db.Column(db.Integer, ForeignKey("platos.id"))
     # platos=db.relationship(Platos)
     # usuario=relationship("User")
-
     def __repr__(self):
         return f'<Restaurantplatos {self.id}>'
-    
     def serialize(self):
         return {
             "id":self.id,
@@ -167,10 +148,8 @@ class Suscriptions(db.Model):
 #     restaurant_id=db.Column(db.Integer, ForeignKey("restaurant.id"))
 #     restaurant=db.relationship("Restaurant")
 #     # resturante=relationship("Restaurant")
-
 #     def __repr__(self):
 #         return f'< DetalleDePedidos {self.id}>'
-    
 #     def serialize(self):
 #         return {
 #             "id":self.id,
@@ -179,19 +158,12 @@ class Suscriptions(db.Model):
 #             "restaurant":self.restaurant,
 #             "platos": self.platos
 #         }
-
-
-
-    
-
 class TokenBlockedList(db.Model):
     # __tablename__="token_blocked_list"
     id=db.Column(db.Integer, primary_key=True)
     jti=db.Column(db.String(40), nullable=False)
-
     def __repr__(self):
         return f'< TokenBlockedList {self.id}>'
-    
     def serialize(self):
         return {
             "id":self.id,
