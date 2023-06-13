@@ -13,60 +13,33 @@ export const RestaurantCard = () => {
 	return (
         <>
             {store.restaurantes && store.restaurantes.length > 0 && store.restaurantes.map((item, index) =>(
-            <div className="col card gradient-custom-contrast">
-                    <div key={index} className="card-img-top mx-0 p-1" alt="{item.url}">
-                        <img src={item.image} onError={imgError} className="card-img-top mx-0 p-1 pt-3" alt="CharacterImg"></img>
-                        <div className="cardTitle card-body">
-                            <h5 className="cardTitle card-body"><strong>{item.name}</strong></h5>
+            <div key={index} className="col card gradient-custom-contrast">   
+                        <div className="card-img-top mx-0 p-1" alt="{item.url}">
+                            <img src={item.image} onError={imgError} className="card-img-top mx-0 p-1 pt-3" alt="restaurantImg"></img>
+                            <Link to={`/order-food/${index}`}>
+                                <div className="card-body">
+                                    <h5 className="card-body"><strong>{item.name}</strong></h5>
+                                </div>
+                            </Link>
+                            <div className="footer card-body ms-auto px-auto">
+                                {item.plates.map((element, index)=>{
+                                    return(
+                                    <Link key={index} to={`/${element.restaurantName}/${index}`}>
+                                        <div className="row g-3 gap-3">
+                                            <button className="btn btn-outline-primary col fw-bold rounded d-flex align-self-center justify-content-center">
+                                                {element.plateName}
+                                            </button>
+                                            <button className="btn btn-outline-primary col fw-bold rounded d-flex align-self-center justify-content-center">{element.price} Pesos</button>
+                                        </div>
+                                    </Link>
+                                    )
+                                })}
+                            </div>
                         </div>
-                        <div className="cardFooter card-body ms-auto px-auto">
-                            {item.plates.map((element, index)=>{
-                                return(
-                                    <div className="row g-3 gap-3">
-                                        <p key={index} className="col fw-bold rounded d-flex align-self-center justify-content-center">
-                                            {element.plateName}
-                                        </p>
-                                        <p key={index} className="col fw-bold text-primary rounded d-flex align-self-center justify-content-center">{element.price} Pesos</p>
-                                    </div>
-                                )
-                            })}
-                        </div>
-                    </div>
                 </div>
-             
-            ))|| <h1>loading...</h1>}
-            </>
-                
+             ))|| <h1 className="main-title gradient-custom">loading...</h1>}
+            </>   
     )
-    };
-//         store[restaurantes]?.map(item=>{
-//             <h1>`${item.name}`</h1>
-                       
-// }))};
+};
 
 export default RestaurantCard;
-
-
-{/* <div className="d-flex">
-            {store[widget]?.map(item=>(
-                    <div key={item.uid} className="wholecard card">
-                        <img src={item.img} onError={imgError} className="card-img-top mx-0 p-0" alt="CharacterImg"></img>
-                        <div className="cardTitle card-body">
-                            <h5 className="cardTitle card-body"><strong>{item.name}</strong></h5>
-                        </div>
-                        <div className="cardFooter card-body ms-auto px-auto">
-                            <Link to={`${widget}/${item.uid}`}>
-                            <button 
-                            className="btn btn-outline-info mx-4" 
-                            >Nerd Mode</button>
-                            </Link>
-                            
-                            <button 
-                            className={`btn btn-${verifyFavorite(item.uid)?"warning":"outline-warning"}`} 
-                            onClick={()=>actions.FavoriteChecked(`${widget}/${item.uid}`, item.name)}
-                            >♡</button>
-                        </div>
-                    </div>
-            ))|| <h1>loading...</h1>}
-                
-        </div> */}

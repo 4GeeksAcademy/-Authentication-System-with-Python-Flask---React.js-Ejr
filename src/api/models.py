@@ -18,6 +18,8 @@ class User(db.Model):
     birthday=db.Column(db.String(120), unique=True, nullable=False)
     gender=db.Column(db.String(120), unique=True, nullable=False)
     phone=db.Column(db.Integer, unique=True, nullable=False)
+    address=db.Column(db.String(300), unique=False, nullable=False)
+    address_detail=db.Column(db.String(300), unique=True, nullable=False)
     # suscription = db.Column(db.Boolean(), unique=False, nullable=False)
     pedidos=db.relationship("Pedidos")
     
@@ -169,8 +171,4 @@ class TokenBlockedList(db.Model):
         return {
             "id":self.id,
             "jti":self.jti,
-        }
-
- 
-
-    
+        }   
