@@ -37,6 +37,7 @@ export const TestData = () => {
         if (resp >= 400) {
             return
         }
+        console.log("Carga exitosa")
     }
 
     return (

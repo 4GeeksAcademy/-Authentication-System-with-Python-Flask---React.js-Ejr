@@ -75,6 +75,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return resp;
 				  }
 				  setStore({ vehicle_types: resp.data.vehicle_types });
+				  console.log("Carga exitosa")
 				  return resp;
 				} catch (error) {
 				  console.log("Error fetching vehicle types", error);
