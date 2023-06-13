@@ -43,8 +43,8 @@ export const Services = () => {
                       <div className="modal-body">
                         <p>{element.description}</p>
                       </div>
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                      <div className="modal-footer">
+                        <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                       </div>
                     </div>
                   </div>
@@ -67,22 +67,22 @@ export const Services = () => {
               <div className="card-body " style={{ backgroundColor: '#40768C' }}>
                 <h5 className="card-title">Full Interior Cleaning</h5>
                 <p className="card-text" style={{ height: "15rem" }}>It’s not enough to simply look good. You need a clean, fresh smell that helps create a positive driving experience. This involves deep-cleaning techniques that sanitize upholstery, carpets, and surfaces for an immaculate finish.</p>
-                <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModal2">
+                <button type="button" className="btn btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModal2">
                   Learn More
                 </button>
-                <div class="modal fade" id="exampleModal2" tabIndex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
-                  <div class="modal-dialog  modal-dialog-scrollable">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel2">Full Interior Cleaning</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div className="modal fade" id="exampleModal2" tabIndex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+                  <div className="modal-dialog  modal-dialog-scrollable">
+                    <div className="modal-content">
+                      <div className="modal-header">
+                        <h5 className="modal-title" id="exampleModalLabel2">Full Interior Cleaning</h5>
+                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                       </div>
-                      <div class="modal-body">
+                      <div className="modal-body">
                         <p>It’s not enough to simply look good. You need a clean, fresh smell that helps create a positive driving experience. This involves deep-cleaning techniques that sanitize upholstery, carpets, and surfaces for an immaculate finish.Interior detailing to a high standard requires preparation, hard work, and a standardized process.
                         Interior car detailing in general will help your car look great and operate at the highest level. When you’re considering taking your car to have it detailed, think about what you’ll get in return. Not only will you be rewarded with a clean car interior that looks nice, but you’ll also be maintaining your car so that it continues to be in the best possible shape.</p>
                       </div>
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                      <div className="modal-footer">
+                        <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                       </div>
                     </div>
                   </div>
@@ -102,23 +102,23 @@ export const Services = () => {
               <div className="card-body " style={{ backgroundColor: '#40768C' }}>
                 <h5 className="card-title">Engine Cleaning</h5>
                 <p className="card-text " style={{ height: "15rem" }}>Engine cleaning is a task that needs to be done regularly. If you want to keep your car running smoothly and enjoy a long lifespan, it is important that you clean its engine bay regularly. </p>
-                <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModal3">
+                <button type="button" className="btn btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModal3">
                   Learn More
                 </button>
-                <div class="modal fade" id="exampleModal3" tabindex="-1" aria-labelledby="exampleModalLabel3" aria-hidden="true">
-                  <div class="modal-dialog  modal-dialog-scrollable">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel3">Engine Cleaning</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div className="modal fade" id="exampleModal3" tabindex="-1" aria-labelledby="exampleModalLabel3" aria-hidden="true">
+                  <div className="modal-dialog  modal-dialog-scrollable">
+                    <div className="modal-content">
+                      <div className="modal-header">
+                        <h5 className="modal-title" id="exampleModalLabel3">Engine Cleaning</h5>
+                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                       </div>
-                      <div class="modal-body">
+                      <div className="modal-body">
                         <p>
                           Engine cleaning is a task that needs to be done regularly. If you want to keep your car running smoothly and enjoy a long lifespan, it is important that you clean its engine bay regularly. The engine bay is where the most vital parts of your car are located and yet it is one of the most neglected areas when it comes to cleaning. If you have ever wondered why this area gets so dirty, here’s why: Engine oil and other fluids leak out of these parts onto the ground where they collect dirt, dust, grime, and other debris. If these parts are not cleaned regularly then they can cause damage to other components in your car such as electrical connections which can lead to expensive repairs later on down the line.
                         </p>
                       </div>
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                      <div className="modal-footer">
+                        <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                       </div>
                     </div>
                   </div>
@@ -140,23 +140,23 @@ export const Services = () => {
               <div className="card-body " style={{ backgroundColor: '#40768C' }}>
                 <h5 className="card-title">Ceramic Coating</h5>
                 <p className="card-text" style={{ height: "15rem" }}>Ceramic coating has become a popular option for car owners looking to protect their vehicle's paint and improve its appearance.</p>
-                  <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModal4">
+                  <button type="button" className="btn btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModal4">
                     Learn More
                   </button>
-                  <div class="modal fade" id="exampleModal4" tabindex="-1" aria-labelledby="exampleModalLabel4" aria-hidden="true">
-                  <div class="modal-dialog  modal-dialog-scrollable">
-                    <div class="modal-content text-align-center">
-                      <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel4">Ceramic Coating</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  <div className="modal fade" id="exampleModal4" tabindex="-1" aria-labelledby="exampleModalLabel4" aria-hidden="true">
+                  <div className="modal-dialog  modal-dialog-scrollable">
+                    <div className="modal-content text-align-center">
+                      <div className="modal-header">
+                        <h5 className="modal-title" id="exampleModalLabel4">Ceramic Coating</h5>
+                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                       </div>
-                      <div class="modal-body">
+                      <div className="modal-body">
                         <p>
                         Ceramic coating has become a popular option for car owners looking to protect their vehicle's paint and improve its appearance.This innovative solution promises to deliver long-lasting protection against the elements, making it an appealing option for car enthusiasts and daily drivers alike. In this article, we'll explore the benefits of ceramic coating, as well as some of the myths surrounding this technology
                         </p>
                       </div>
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                      <div className="modal-footer">
+                        <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                       </div>
                     </div>
                   </div>
@@ -175,7 +175,7 @@ export const Services = () => {
               <div className="card-body " style={{ backgroundColor: '#40768C' }}>
                 <h5 className="card-title">Paint Correction Services</h5>
                 <p className="card-text" style={{ height: "15rem" }}>Paint correction is a great way to make your car look brand new, paint correction can help remove up to 70 - 75% of swirls and scratches.</p>
-                <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                <button type="button" className="btn btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModal">
                   Learn More
                 </button>
                 <div className="card-footer">

@@ -14,12 +14,14 @@ import { Book } from "./pages/book";
 import { Logout } from "./pages/Logout";
 import { ShoppingCar } from "./pages/ShoppingCar";
 import injectContext from "./store/appContext";
+import { RecoveryPassword } from "./pages/recovery";
 
 
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 import { AboutUs } from "./pages/aboutUs";
 import { TestData } from "./pages/testdata";
+import { ChangePassword } from "./pages/changePassword";
 
 
 
@@ -44,6 +46,8 @@ const Layout = () => {
                         <Route element={<Book />} path="/book" />
                         <Route element={<Questions />} path="/frecuently-asked-questions" />
                         <Route element={<Demo />} path="/demo" />
+                        <Route element={<RecoveryPassword />} path="/recovery" />
+                        <Route element={<ChangePassword />} path="/changepassword" />
                         <Route element={<AboutUs />} path="/aboutUs" />
                         <Route element={<TestData />} path="/testdata" />
                         <Route element={<Single />} path="/single/:theid" />

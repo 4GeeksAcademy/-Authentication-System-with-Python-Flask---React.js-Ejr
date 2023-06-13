@@ -46,6 +46,14 @@ class VehicleType(db.Model):
     
     def serialize(self):
         return{"name" : self.name}
+    
+class ShoppingCar(db.Model):
+    __tablename__ = "ShoppingCar"
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(120), unique=True, nullable=False)
+    description = db.Column(db.String(10000), unique=False, nullable=False)
+    vehicle_type = db.Column(db.Integer, db.ForeignKey("vehicle_type.id"))
+    price = db.Column(db.Integer, nullable=False)
 
 class Services(db.Model):
     __tablename__ = "services"
