@@ -3,21 +3,21 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
 import { BackendURL } from "./component/backendURL";
 
-import { Home } from "./pages/home";
-import { Demo } from "./pages/demo";
-import { Single } from "./pages/single";
-import injectContext from "./store/appContext";
+import { Home } from "./pages/home.js";
+import { Demo } from "./pages/demo.js";
+import { Single } from "./pages/single.js";
+import injectContext from "./store/appContext.js";
 
-import { Navbar } from "./component/navbar";
-import { Footer } from "./component/footer";
-import Register from "./component/register";
-import UpdateProfile from "./component/updateProfile";
-import Profile from "./component/profile";
-import ProfileBilling from "./component/profileBilling";
-import { ProfileSecurity } from "./component/profileSecurity";
-import ProfileNotifications from "./component/profileNotifications";
-import FoodGeneral from "./component/foodGeneral";
-import RestaurantOverview from "./component/restaurantOverview";
+import { Navbar } from "./component/navbar.js";
+import { Footer } from "./component/footer.js";
+import Register from "./component/register.js";
+import Profile from "./component/profile.js";
+import ProfileBilling from "./component/profileBilling.js";
+import { ProfileSecurity } from "./component/profileSecurity.js";
+import ProfileNotifications from "./component/profileNotifications.js";
+import FoodGeneral from "./component/foodGeneral.js";
+import RestaurantOverview from "./component/restaurantOverview.js";
+import SubscriptionGeneral from "./component/subscriptionGeneral.js";
 
 //create your first component
 const Layout = () => {
@@ -44,6 +44,8 @@ const Layout = () => {
                         <Route element={<FoodGeneral />} path="/order-food" />
                         <Route element={<RestaurantOverview />} path="/order-food/:restaurantIndex" />
                         <Route element={<h1>Not found!</h1>} />
+                        <Route element={<SubscriptionGeneral />} path="/subscription" />
+
                     </Routes>
                     <Footer />
                 </ScrollToTop>

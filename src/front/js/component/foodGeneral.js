@@ -45,17 +45,3 @@ export const FoodGeneral = () => {
 };
     
     export default FoodGeneral;
-    {/* card 
-    <div className="d-flex col">p
-    
-        <div className="card gradient-custom" style={{minHeight:"20rem", minWidth:"17rem"}}>
-            <img className="card-img-top mx-0 p-0" alt="{item.url}"></img>
-            <div className="main-title card-body">
-                <h5 className="card-body">item.name</h5>
-            </div>
-                <div className="footer text-center">
-                    item.description
-                </div>
-            </div>
-        </div>           
-    card */}
