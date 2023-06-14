@@ -23,13 +23,13 @@ def handle_hello():
 
 @api.route('/signup', methods=['POST'])
 def handle_signup():
-    request_data=request.get_json(force=True)
+    request_data = request.get_json(force=True)
 
     # verifica si el email esta en la base de datos
 
     if db.session.query(User).filter(User.email == request_data['email']).first():
 
-    #db.session conecta con la base de datos y query hace una busqueda en la tabla de datos User
+        # db.session conecta con la base de datos y query hace una busqueda en la tabla de datos User
 
         return jsonify({"message": "Este email ya está registrado en la base de datos"}), 400
 
@@ -37,22 +37,23 @@ def handle_signup():
 
         return jsonify({"message": "El usuario ya está registrado"}), 400
 
-    #si ha pasado estas dos condiciones sin hacer los if, crea un usuario
+    # si ha pasado estas dos condiciones sin hacer los if, crea un usuario
 
     new_user = User(
         user_name=request_data['user_name'],
         email=request_data['email'],
-        profile_img = None,
+        profile_img=None,
         password=request_data['password'],
         first_name=request_data['first_name'],
         last_name=request_data['last_name'],
-        description = None,
+        description=None,
         is_grandparent=request_data['is_grandparent']
-    ) 
+    )
     db.session.add(new_user)
     db.session.commit()
 
     return jsonify('Se ha añadido usario: ', request_data), 200
+
 
 @api.route('/login', methods=['POST'])
 def login():
@@ -74,3 +75,27 @@ def login():
     }
 
     return jsonify(response_body), 200
+
+
+@api.route('/profile', methods=['GET'])
+@jwt_required()
+def get_user():
+
+    current_user = get_jwt_identity()
+    current_user_id = current_user['id']
+    
+    user = User.query.filter_by(id = current_user_id).first()
+
+    if user:
+        profile_data = {
+
+            'user_name': user.user_name,
+            'profile_img': user.profile_img,
+            'description': user.description
+
+        }
+
+        return jsonify(profile_data)
+    else:
+        return jsonify({'message': 'No user found'}), 404
+
