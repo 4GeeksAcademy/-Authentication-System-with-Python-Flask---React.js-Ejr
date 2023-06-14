@@ -8,20 +8,31 @@ import { bgImg } from "../../../../assets/assets.jsx";
 
 import Logotipo from "../../components/logotipo/index.jsx";
 import UserForm from "../../components/userForm/index.jsx";
+import Spinner from "../../components/spinner/index.jsx";
+import { toast } from "react-toastify";
 
 const CompanyRegister2 = () => {
+  const [isLoading, setIsLoading] = useState(false);
+
   const { store } = useContext(Context);
+
   const [newCompany, setNewCompany] = useState(store.companyData.data);
   const navigate = useNavigate();
 
   const handleChange = ({ target }) => {
     setNewCompany({ ...newCompany, [target.name]: target.value });
   };
+  console.log(newCompany);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await createCompany(newCompany);
-    navigate("/login");
+    const resMsg = await createCompany(newCompany);
+    if (resMsg) {
+      toast.success(resMsg?.msg);
+      navigate(`/admin-dashboard/${resMsg?.data.id}`);
+    } else {
+      toast.error(resMsg?.msg);
+    }
   };
 
   return (
@@ -35,11 +46,15 @@ const CompanyRegister2 = () => {
         <div className={styles._actionContainer}>
           <Logotipo />
           <h1 className={styles._heading}>Admin Data</h1>
-          <UserForm
-            handleChange={handleChange}
-            handleSubmit={handleSubmit}
-            textBtn="Finish Register"
-          />
+          {!isLoading ? (
+            <UserForm
+              handleChange={handleChange}
+              handleSubmit={handleSubmit}
+              textBtn="Finish Register"
+            />
+          ) : (
+            <Spinner />
+          )}
           <span className={styles._credits}>
             Photo by Andrew Neel on Unsplash
           </span>

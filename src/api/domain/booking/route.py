@@ -46,7 +46,7 @@ def get_booking(booking_id):
     booking = Controller.get_booking(booking_id, current_user_id)
 
     if isinstance(booking, Booking):
-        return Response.response_ok(f'Booking with id: {booking_id}, was found in database.', booking.serialize())
+        return Response.response_ok('Booking was found in database.', booking.serialize())
     else:
         return Response.response_error(booking['msg'], booking['status'])
 
@@ -61,7 +61,7 @@ def get_bookings_by_company(company_id):
 
     if isinstance(bookings_by_company, list):
         serialized_bookings = list(map(lambda booking: booking.serialize_admin_booking(), bookings_by_company))
-        return Response.response_ok(f'List of all bookings of the company with id: {company_id}.', serialized_bookings)
+        return Response.response_ok('List of all bookings of this company .', serialized_bookings)
     else:
         return Response.response_error(bookings_by_company['msg'], bookings_by_company['status'])
 
@@ -74,7 +74,7 @@ def get_bookings_by_user_id():
 
     if isinstance(bookings_by_user_id, list):
         serialized_bookings = list(map(lambda booking: booking.serialize(), bookings_by_user_id))
-        return Response.response_ok('List of all bookings', serialized_bookings)
+        return Response.response_ok('List of all bookings of this user', serialized_bookings)
     else:
         return Response.response_error(bookings_by_user_id['msg'], bookings_by_user_id['status'])
 
@@ -89,7 +89,7 @@ def update_booking(booking_id):
     booking = Controller.update_booking(booking_id, current_user_id, update_booking)
 
     if isinstance (booking, Booking):
-        return Response.response_ok(f'Booking with id: {booking_id} has been updated in database', booking.serialize())
+        return Response.response_ok('Booking has been updated in database', booking.serialize())
     else: 
         return Response.response_error(booking['msg'], booking['status'])
 
@@ -102,7 +102,7 @@ def delete_booking(booking_id):
     deleted_booking = Controller.delete_booking(booking_id, current_user_id)
 
     if isinstance(deleted_booking, Booking):
-        return Response.response_ok(f'This booking with id: {booking_id}, was deleted from database', deleted_booking.serialize_admin_booking())
+        return Response.response_ok('Booking was deleted from database', deleted_booking.serialize_admin_booking())
     else:
         return Response.response_error(deleted_booking['msg'], deleted_booking['status'])
         

@@ -6,7 +6,7 @@
 }
 ._subContainer {
   width: 948px;
-  height: 400px;
+  height: 440px;
   background: var(--purple-300);
   display: flex;
   flex-direction: column;

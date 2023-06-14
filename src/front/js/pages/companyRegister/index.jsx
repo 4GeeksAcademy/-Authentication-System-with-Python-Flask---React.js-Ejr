@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 import styles from "./companyRegister.module.css";
 import { bgImg } from "../../../../assets/assets.jsx";
-
+import Spinner from "../../components/spinner/index.jsx";
 import Logotipo from "../../components/logotipo/index.jsx";
 import CompanyForm from "../../components/companyForm/index.jsx";
 
@@ -17,9 +17,11 @@ const initialState = {
 };
 
 const CompanyRegister = () => {
-  const navigate = useNavigate();
   const [newCompany, setNewCompany] = useState(initialState);
+  const [isLoading, setIsLoading] = useState(false);
+
   const { actions } = useContext(Context);
+  const navigate = useNavigate();
 
   const handleChange = ({ target }) => {
     setNewCompany({ ...newCompany, [target.name]: target.value });
@@ -42,11 +44,15 @@ const CompanyRegister = () => {
         <div className={styles._actionContainer}>
           <Logotipo />
           <h1 className={styles._heading}>Company Register</h1>
-          <CompanyForm
-            handleChange={handleChange}
-            handleSubmit={handleSubmit}
-            textBtn="Next Step"
-          />
+          {!isLoading ? (
+            <CompanyForm
+              handleChange={handleChange}
+              handleSubmit={handleSubmit}
+              textBtn="Next Step"
+            />
+          ) : (
+            <Spinner />
+          )}
           <span className={styles._credits}>
             Photo by Andrew Neel on Unsplash
           </span>

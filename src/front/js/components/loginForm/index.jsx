@@ -1,28 +1,73 @@
 import React from "react";
-import Input from "../input/index.jsx";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as Yup from "yup";
 import Button from "../button/index.jsx";
 import styles from "./login.module.css";
+import InputField from "../inputField/index.jsx";
+import { Link } from "react-router-dom";
+import Spinner from "../spinner/index.jsx"
 
-const LoginForm = ({ handleChange, handleSubmit }) => (
-  <form
-    className={styles._form}
-    onChange={handleChange}
-    onSubmit={handleSubmit}
-  >
-    <Input
-      icon={<i className="fa-solid fa-envelope"></i>}
-      type="email"
-      placeholder="Email"
-      name="email"
-    />
-    <Input
-      icon={<i className="fa-solid fa-lock"></i>}
-      type="password"
-      placeholder="Password"
-      name="password"
-    />
-    <Button type="submit" title="Login" />
-  </form>
-);
+
+const validationSchema = Yup.object().shape({
+  email: Yup.string()
+    .required("Email is required")
+    .email("Invalid email format"),
+  password: Yup.string()
+    .required('Password is required'),
+});
+
+
+const LoginForm = ({  handleClick, handleChange, invalidDate, loading }) => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(validationSchema),
+  });
+ 
+  const onSubmit = (data) => {
+    handleClick(data);
+  };
+
+  return ( 
+    <>
+    {loading ? (<Spinner/>) : (
+      <form
+            onSubmit={handleSubmit(onSubmit)}
+            onChange={handleChange}
+            className={styles._form}    
+          >
+            <InputField
+              icon="fa-solid fa-envelope"
+              type="email"
+              placeholder="Email"
+              name="email"
+              register={register}
+              errors={errors}
+            />
+            <InputField
+              icon="fa-solid fa-lock"
+              type="password"
+              placeholder="Password"
+              name="password"
+              register={register}
+              errors={errors}
+            />
+            <Button type="submit" title="Login" />
+      </form>)}
+  {invalidDate && <div className="this">
+                  <p className={styles._fail}>The data entered is incorrect.</p>
+                  <Link to={"/user-register"} className={styles._registerLink}>
+                    Register like client!
+                  </Link>
+                  <Link to={"/company-register"}className={styles._registerLink}>
+                      Register your company!
+                  </Link>
+                  </div>}              
+  </>
+  )
+ };
 
 export default LoginForm;

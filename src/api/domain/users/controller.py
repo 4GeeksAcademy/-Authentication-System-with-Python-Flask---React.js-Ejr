@@ -34,15 +34,23 @@ def get_single_user(user_id, current_user_id):
     current_user = User.query.get(current_user_id)
 
     if user is None:
-        return {'msg': f'User with id: {user_id}, does not exist in this database.', 'status': 404} 
+        return {'msg': 'User does not exist in this database.', 'status': 404} 
 
     if current_user.roles.type == 'client':
         return {'msg': 'User has no rights to view this profile,', 'status': 404 }
     return user
 
+
+
 def update_profile(username, firstname, lastname, email, avatar, current_user_id):
-    img = upload(avatar)
-    url_avatar = img['secure_url']
+   
+    if avatar:
+        img = upload(avatar)
+        url_avatar = img['secure_url']
+    else:
+        user = Repository.get_single_user(current_user_id)
+        url_avatar = user.avatar  
+    
     return Repository.update_profile(username, firstname, lastname, email, url_avatar, current_user_id)
 
 def delete_user(current_user_id):

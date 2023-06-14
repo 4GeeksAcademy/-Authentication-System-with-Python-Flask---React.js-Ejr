@@ -12,7 +12,7 @@ export const registerUser = async (user) => {
       body: JSON.stringify(user),
     });
     const data = await res.json();
-    return data.data;
+    return data;
   } catch (err) {
     console.log("Error Register User", err);
   }
@@ -29,7 +29,6 @@ export const getInfoUserId = async () => {
       },
     });
     const data = await res.json();
-    console.log(data.data);
     return data.data;
   } catch (err) {
     console.log("Error to get user id");

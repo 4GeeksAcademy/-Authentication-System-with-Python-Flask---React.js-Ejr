@@ -7,6 +7,7 @@ import { bgImg } from "../../../../assets/assets.jsx";
 
 import LoginForm from "../../components/loginForm/index.jsx";
 import Logotipo from "../../components/logotipo/index.jsx";
+import { toast } from "react-toastify";
 
 const initialState = {
   email: "",
@@ -14,21 +15,30 @@ const initialState = {
 };
 
 const LoginPage = () => {
-  const navigate = useNavigate();
   const [newLogin, setNewLogin] = useState(initialState);
+  const [invalidDate, setInvalidDate] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const navigate = useNavigate();
 
   const handleChange = ({ target }) => {
     setNewLogin({ ...newLogin, [target.name]: target.value });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const data = await loginUser(newLogin);
-
-    if (data.role === "admin") navigate(`/admin-dashboard/${data.company_id}`);
-    if (data.role === "client") navigate("/user-dashboard");
-    if (data.role === "worker")
-      navigate(`/worker-dashboard/${data.company_id}`);
+  const handleClick = async () => {
+    try{
+        setLoading(true)
+        const data = await loginUser(newLogin);
+        if (data.role === "admin")
+          navigate(`/admin-dashboard/${data.company_id}`);
+        if (data.role === "client") navigate("/user-dashboard");
+        if (data.role === "worker")
+          navigate(`/worker-dashboard/${data.company_id}`);
+        toast.success("Login successfully");
+        }catch(error) {
+          setLoading(false)
+          setInvalidDate(error.message);
+      };
   };
 
   return (
@@ -42,7 +52,8 @@ const LoginPage = () => {
         <div className={styles._actionContainer}>
           <Logotipo />
           <h1 className={styles._heading}>Login</h1>
-          <LoginForm handleSubmit={handleSubmit} handleChange={handleChange} />
+          <LoginForm handleClick={handleClick} handleChange={handleChange}
+           invalidDate={invalidDate} loading={loading}/>
           <span className={styles._credits}>
             Photo by Andrew Neel on Unsplash
           </span>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Button from "../../components/button/index.jsx";
 import { bgImg } from "../../../../assets/assets.jsx";
@@ -6,7 +6,25 @@ import { bgImg } from "../../../../assets/assets.jsx";
 import styles from "./home.module.css";
 
 const HomePage = () => {
+  const [isSignedIn, setIsSignedIn] = useState(false);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const localStorageData = JSON.parse(
+      localStorage.getItem("token/role/company_id")
+    );
+    localStorageData && setIsSignedIn(true);
+  }, [isSignedIn]);
+
+  const handleDashboard = () => {
+    const data = JSON.parse(localStorage.getItem("token/role/company_id"));
+
+    if (data.role === "admin") navigate(`/admin-dashboard/${data.company_id}`);
+    if (data.role === "client") navigate("/user-dashboard");
+    if (data.role === "worker")
+      navigate(`/worker-dashboard/${data.company_id}`);
+  };
+
   return (
     <main className={styles._mainContainer}>
       <section className={styles._sectionContainer}>
@@ -18,12 +36,24 @@ const HomePage = () => {
         <div className={styles._actionContainer}>
           <div className={styles._headerContainer}>
             <div className={styles._nav}>
-              <Link to={"/user-register"}>
-                <p className={styles._registerLink}>Sign Up</p>
-              </Link>
-              <div className={styles._loginWrapper}>
-                <Button title="Login" onClick={() => navigate("/login")} />
-              </div>
+              {isSignedIn ? (
+                <div className={styles._loginWrapper}>
+                  <Button
+                    type="button"
+                    title="Dashboard"
+                    onClick={() => handleDashboard()}
+                  />
+                </div>
+              ) : (
+                <>
+                  <Link to={"/user-register"}>
+                    <p className={styles._registerLink}>Sign Up</p>
+                  </Link>
+                  <div className={styles._loginWrapper}>
+                    <Button title="Login" onClick={() => navigate("/login")} />
+                  </div>
+                </>
+              )}
             </div>
           </div>
           <h1 className={styles._heading}>Booking Manager.</h1>
