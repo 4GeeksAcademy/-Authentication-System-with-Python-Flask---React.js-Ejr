@@ -7,8 +7,8 @@ from api.models import db, User, TokenBlockedList, Restaurant, Pedidos, Platos,R
 from api.utils import generate_sitemap, APIException
 from flask_bcrypt import Bcrypt
 from flask_jwt_extended import create_access_token, create_refresh_token, jwt_required, get_jwt_identity, get_jwt, get_jti
-import os
-import openai
+import os, openai, json, tempfile
+from firebase_admin import storage
 
 openai.api_key = os.getenv("OPENAI_API_KEY")
 api = Blueprint('api', __name__)
@@ -84,9 +84,8 @@ def user_create():
         }), 400
     secure_password=bcrypt.generate_password_hash(
         data["password"], rounds=None).decode("utf-8")
-    new_user=User(email=data ["email"], password=secure_password, is_active=True)
     print(new_user)
-    new_user = User(
+    new_user = User (
         email=data["email"],
         password=secure_password,
         is_active=True,
@@ -95,8 +94,8 @@ def user_create():
         birthday=data["birthday"],
         gender=data["gender"],
         phone=data["phone"],
-        address=data["address"]
-        address_details=data["address_details"]
+        address=data["address"],
+        address_details=data["address_details"],
         suscription=data["suscription"]
     )
     db.session.add(new_user)
@@ -132,8 +131,10 @@ def recovery_password():
 @jwt_required()
 def hello_protected_get():
     user_id=get_jwt_identity()
+    user=User.query.get(user_id)
+
     return jsonify({
-        "user_id": user_id,
+        "user_id": user.serialize(),
         "message": "Hello protected route"
 
     })
@@ -160,8 +161,8 @@ def handle_hello():
     }
 
     return jsonify(response_body), 200
-
-@api.route('/registerrestaurant', methods=['POST'])
+#se crea nuevo restaurante
+@api.route('/restaurant', methods=['POST'])
 def register_restaurant():
     name=request.json.get("name")
     url=request.json.get("url")
@@ -172,7 +173,16 @@ def register_restaurant():
     response={"msg": "Restaurante creado exitosamente"}
     return jsonify(response), 200
 
-@api.route('/registerplatos', methods=['POST'])
+# Se obtienen los restaurantes
+@api.route('/restaurant', methods=['GET'])
+def get_restaurant():
+    restaurant = Restaurant.query.all()
+    results = list(map(lambda x: x.serialize(), restaurant))
+    #print (results)
+    return jsonify(results), 200
+
+# se crea nuevo plato
+@api.route('/platos', methods=['POST'])
 def register_platos():
     name=request.json.get("name")
     url=request.json.get("url")
@@ -183,6 +193,24 @@ def register_platos():
     db.session.commit()
     response={"msg": "Plato creado exitosamente"}
     return jsonify(response), 200
+
+#Se obtienen los platos 
+@api.route('/platos', methods=['GET'])
+def get_platos():
+    platos = Platos.query.all()
+    results = list(map(lambda x: x.serialize(), platos))
+    #print (results)
+    return jsonify(results), 200
+
+#Se obtienen los pedidos
+@api.route('/pedidos', methods=['GET'])
+def get_pedidos():
+    pedidos = Restaurant.query.all()
+    results = list(map(lambda x: x.serialize(), pedidos))
+    #print (results)
+    return jsonify(results), 200
+
+
 
 # Alta de los platos en los restaurants
 @api.route('/restaurantsplatos', methods=['POST'])
@@ -203,6 +231,30 @@ def get_restaurantsplatos():
     results = list(map(lambda x: x.serialize(), rp))
     #print (results)
     return jsonify(results), 200
+
+#creacion de foto
+@api.route('profilepic', methods= ['POST'])
+@jwt_required
+def user_profile_pic():
+    user_id=get_jwt_identity()
+    user=User.query.get(user_id)
+    #Recibir el archivo
+    file=request.files["profilePic"]
+    #Extraer la extension del archivo
+    extension=file.filename.split(".")[1]
+    #Guardar en un archivo temporal
+    temp=tempfile.NamedTemporaryFile(delete=False)
+    file.save(temp.name)
+    #cargar el archivo a Firebase
+    bucket=storage.bucket(name="https://console.firebase.google.com/project/imagenes-4geeks/storage/imagenes-4geeks.appspot.com/files")
+    filename="profilePics/"+ str(user_id) + "." + extension
+    resource=bucket.blob(filename)
+    resource.upload_from_filename(temp.name, content_type="image/"+extension)
+    #agregar la imagen de perfil al usuario
+    user.profile_pic=filename
+    db.session.add(user)
+    db.session.commit()
+    return jsonify ({"msg":"Profile pic updated"})
 
 
 @api.route('/createRecipeChatGPT', methods=['GET'])

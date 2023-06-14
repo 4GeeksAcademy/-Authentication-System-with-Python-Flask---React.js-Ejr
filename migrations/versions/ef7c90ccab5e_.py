@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 9384fb8ac91e
+Revision ID: ef7c90ccab5e
 Revises: 
-Create Date: 2023-06-12 17:26:40.719495
+Create Date: 2023-06-14 00:40:58.795352
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '9384fb8ac91e'
+revision = 'ef7c90ccab5e'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -23,10 +23,10 @@ def upgrade():
     sa.Column('name', sa.String(length=120), nullable=False),
     sa.Column('description', sa.String(length=500), nullable=False),
     sa.Column('price', sa.Integer(), nullable=False),
+    sa.Column('url', sa.String(length=500), nullable=False),
     sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('description'),
     sa.UniqueConstraint('name'),
-    sa.UniqueConstraint('price')
+    sa.UniqueConstraint('url')
     )
     op.create_table('restaurant',
     sa.Column('id', sa.Integer(), nullable=False),
@@ -51,18 +51,14 @@ def upgrade():
     sa.Column('last_name', sa.String(length=120), nullable=False),
     sa.Column('birthday', sa.String(length=120), nullable=False),
     sa.Column('gender', sa.String(length=120), nullable=False),
-    sa.Column('address', sa.String(length=120), nullable=False),
     sa.Column('address_details', sa.String(length=120), nullable=False),
     sa.Column('phone', sa.Integer(), nullable=False),
-    sa.Column('suscription', sa.Boolean(), nullable=False),
+    sa.Column('address', sa.String(length=300), nullable=False),
+    sa.Column('address_detail', sa.String(length=300), nullable=False),
+    sa.Column('profile_pic', sa.String(length=500), nullable=True),
     sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('address'),
     sa.UniqueConstraint('address_details'),
-    sa.UniqueConstraint('birthday'),
     sa.UniqueConstraint('email'),
-    sa.UniqueConstraint('first_name'),
-    sa.UniqueConstraint('gender'),
-    sa.UniqueConstraint('last_name'),
     sa.UniqueConstraint('phone')
     )
     op.create_table('pedidos',
