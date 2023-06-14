@@ -161,6 +161,7 @@ def handle_hello():
     }
 
     return jsonify(response_body), 200
+
 #se crea nuevo restaurante
 @api.route('/restaurant', methods=['POST'])
 def register_restaurant():
@@ -209,6 +210,19 @@ def get_pedidos():
     results = list(map(lambda x: x.serialize(), pedidos))
     #print (results)
     return jsonify(results), 200
+
+#se crean los pedidos
+@api.route('/pedidos', methods=['POST'])
+def register_pedidos():
+    id=request.json.get("id")
+    restaurant=request.json.get("restaurant_id")
+    usuario=request.json.get("usuario_id")
+    platos=request.json.get("platos_id")
+    new_pedidos=Pedidos(name=id, restaurant=restaurant, usuario=usuario, platos = platos)
+    db.session.add(new_pedidos)  
+    db.session.commit()
+    response={"msg": "Pedido creado exitosamente"}
+    return jsonify(response), 200
 
 
 
