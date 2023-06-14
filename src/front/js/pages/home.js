@@ -4,8 +4,9 @@ import "../../styles/home.css";
 import Register from "../component/register";
 import { Link } from "react-router-dom";
 import LoginModal from "./loginModal";
+
 export const Home = () => {
-    // const { store, actions } = useContext(Context);
+
     return (
         <div className="text-center mt-5" style={{margintop: "8rem", marginBottom: "0rem", paddingTop: "4rem"}}>
             <section className="container-fluid text-center" style={{height:"100%"}}>
@@ -76,9 +77,13 @@ export const Home = () => {
                                 </section>
                             </div>
                             <div className="col-12 col-md-6 vh-25 box h my-2 gap-2 border shadow">
-                                <button className="store-ads p-4 mx-auto fs-1 fw-bold mt-5 blur fs-5 text-stroke-dark shadow" style={{borderRadius:"33% 67% 32% 68% / 90% 9% 91% 10% "}}>
-                                    Suscripciones
-                                </button>
+                                <Link to="/subscription">
+                                    <button 
+                                        className="store-ads p-4 mx-auto fs-1 fw-bold mt-5 blur fs-5 text-stroke-dark shadow" 
+                                        style={{borderRadius:"33% 67% 32% 68% / 90% 9% 91% 10% "}}>
+                                        Suscripciones
+                                    </button>
+                                </Link>
                             </div>
                         </div>
                     </div>

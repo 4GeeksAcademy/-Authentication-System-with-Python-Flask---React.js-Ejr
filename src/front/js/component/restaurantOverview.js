@@ -8,17 +8,14 @@ import FoodModal from "./foodModal";
 
 export const RestaurantOverview = () => {
     const {store, actions}= useContext(Context);
-    // const {restaurantIndex} = useParams()
-    // console.log(restaurantIndex)
-    // const index = store.restaurantes.find(item=>item.index==restaurantIndex)
+
     const { restaurantIndex } = useParams();
-    const index = parseInt(restaurantIndex); // Convert the string to an integer if needed
+    const index = parseInt(restaurantIndex); 
 
-    // Access the name property of the restaurant
     const restaurant = store.restaurantes[index];
-    const name = restaurant ? restaurant.name : ""; // Check if the restaurant exists before accessing its name property
+    const name = restaurant ? restaurant.name : ""; 
 
-    console.log(name); // Verify the value here
+    console.log(name); 
 
     function imgError(e){
         e.target.src="https://cdn.leonardo.ai/users/25acf724-d0fb-44e7-8da5-a5932af5eac9/generations/f3918add-a5b5-437e-9bed-186b25ef5636/DreamShaper_v5_3_An_AIpowered_machine_surrounded_by_a_vibr_1.jpg"
