@@ -8,6 +8,7 @@
 /*Navbar*/
 .navbar-brand {
   color: green;
+  padding-inline: 2rem;
 }
 .navbar-brand:hover {
   transform: translateY(-0px);
@@ -15,14 +16,9 @@
 }
 .BotLink{
   font-family: Roboto, sans-serif;
-  font-weight: 9;
-  
-  appearance: none;
-  background-color: transparent;
-  border: none;
+  font-weight: 20;
   cursor: pointer;
-  font-size: 25px;
-  padding: 0;
+  font-size: 2rem;
   color: green;
 }
 .form-group label{
@@ -37,11 +33,11 @@
 }
 .btn-navbar {
   font-family: Roboto, sans-serif;
-  font-weight: 3;
-  font-size: 14px;
+  font-weight: 8rem;
+  font-size: 1rem;
   color: #fff;
   background: linear-gradient(90deg, #237320 0%, #c1d230 68%);
-  padding: 10px 30px;
+  padding: 5px 2rem;
   border: none;
   box-shadow: rgb(0, 0, 0) 0px 0px 0px 0px;
   border-radius: 50px;
@@ -52,6 +48,8 @@
   align-items: center;
   cursor: pointer;
   text-decoration: none;
+  padding-right:2rem;
+  
 }
 
 
@@ -67,15 +65,76 @@
   color: #e9c46a;
   border: none;
 }
+.navbar-home {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid #2c9131; 
+  padding: 1rem;
+  padding-right: 4rem;
+  padding-left: 2rem;
+}
 
+@media screen and (max-width: 480px) {
+  /* Estilos para pantallas más pequeñas que 480px */
+  .modal{
+    justify-content: center;
+    width: 100%;
+    backdrop-filter: blur(3px);
+    width: 100rem;
+  }
+  .modal-body h6{
+    background-color: blur;
+    
+   
+  }
+  .modal-dialog{
+    justify-content: center;
+    width:40rem;
+  }
+  .buttons_navbar{
+    padding-right: 1rem;
+    padding-left: 3rem;
+
+  }
+  .navbar-home {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid #2c9131;
+  
+  width:max-content;
+  padding: 1rem;
+  
+  padding-left: 2rem;
+}
+  
+  .BotLink {
+    font-size: 18px;
+    font-family: Roboto, sans-serif;
+    font-weight: 9;
+    
+    appearance: none;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 25px;
+    padding: 0;
+    color: green;
+  }
+
+  .btn-navbar {
+    font-size: 10px;
+  }
+}
 /*----------SECCION 1----------*/
 
 
 .section1{
   background: rgb(231,215,146);
-background: linear-gradient(90deg, rgba(231,215,146,1) 0%, rgba(0,212,255,0) 100%);
-border-radius: 5rem;
-display: flex;
+  background: linear-gradient(90deg, rgba(231,215,146,1) 0%, rgba(0,212,255,0) 100%);
+  border-radius: 5rem;
+  display: flex;
 }
 .textos1{
   display: flex;
@@ -103,7 +162,41 @@ display: flex;
 }
 
 
-
+@media screen and (max-width: 480px) {
+  .body{
+    width:fit-content;
+    
+  }
+  .titulo{
+    width: auto;
+    
+  }
+  .titulo h1 {
+    padding: 2rem;
+    padding-left: 8rem;
+    justify-content: center;
+  }
+  .section1{
+    background: rgb(231,215,146);
+    background: linear-gradient(90deg, rgba(231,215,146,1) 0%, rgba(0,212,255,0) 100%);
+    border-radius: 5rem;
+    display: flex;
+    flex-direction: column;
+    
+  }
+  .textos1{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 7rem;
+    margin-right: 1rem;
+  }
+  .img1 {
+    width: 100%;
+    height: auto;
+    margin-left: 7rem;
+  }
+}
 
 /*----------SECCION 2----------*/
 
@@ -133,6 +226,7 @@ display: flex;
   color: #237320;
   font-weight: 900;
 }
+
 
 /* CARD*/
 .card-container-landing {

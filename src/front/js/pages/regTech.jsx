@@ -51,7 +51,7 @@ export const RegTech = () => {
   return (
     <div className="regbody">
       <div className="background-image"></div>
-    <div className="container-fluid register">
+    <div className="register container-fluid ">
       <div className="register-title">
         <h1>Regístrate como <span>técnico</span></h1>
       </div>

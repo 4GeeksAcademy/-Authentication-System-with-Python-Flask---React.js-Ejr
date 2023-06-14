@@ -21,17 +21,17 @@ export const Home = () => {
       setmodalstate("modal");
       console.log("A granjero");
       navigate("/farmer");
-      console.log(modalstate);
+      setErrorMessage("")
     }
     if (userRedirect === "tech") {
       setmodalstate("modal");
       console.log("A Tech");
       navigate("/technician");
-      console.log(modalstate);
+      setErrorMessage("")
     } else {
       
       setErrorMessage("Usuario o contraseña incorrectos");
-      console.log(modalstate);
+      
     }
   };
 
@@ -42,23 +42,25 @@ export const Home = () => {
       bootstrapModal.hide();
     }
   }, [modalstate]);
-  
+  useEffect(() => {
+    setErrorMessage("")
+  },[])  
   
   return (
     <div>
       {/* Navbar*/}
-      <nav className="navbar navbar-expand-lg bg-body-tertiary">
-        <div className="col2 ms-5">
+      <nav className="navbar-home navbar-expand-lg bg-body-tertiary">
+        <div className="Logo ">
           <h2>LOGO</h2>
         </div>
-        <div className="d-flex col justify-content-end p-2">
-          <a className="navbar-brand mb-0 h1 p-2 px-5" href="#section1">
+        <div className="buttons_navbar d-flex col justify-content-end ">
+          <a className="navbar-brand  h1  " href="#section1">
             Quienes somos
           </a>
-          <a className="navbar-brand mb-0 h1 p-2 px-5" href="#services">
+          <a className="navbar-brand  h1  " href="#services">
             Servicios
           </a>
-          <a className="navbar-brand mb-0 h1 p-2 px-5" href="#questions">
+          <a className="navbar-brand  h1  " href="#questions">
             Preguntas frecuentes
           </a>
           <button
