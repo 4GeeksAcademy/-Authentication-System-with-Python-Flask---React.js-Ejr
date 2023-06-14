@@ -8,3 +8,19 @@
     width: 300px;
   }
 }
+
+._fail {
+  color: var(--highlight);
+  text-align: center;
+  margin: 10px 0 ;
+}
+
+._registerLink {
+  font-weight: var(--font-semibold);
+  font-size: var(--text-sm);
+  line-height: 1;
+  text-decoration: underline;
+  text-align: center;
+  color: var(--gray-900);
+  margin-right: 20px;
+}
