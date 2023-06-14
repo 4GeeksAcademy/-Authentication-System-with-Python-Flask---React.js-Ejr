@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { getInfoCompanyById } from "../../service/company";
+import { getServicesbyWorker } from "../../service/service_worker";
 import Logotipo from "../../components/logotipo/index.jsx";
 import BigContainer from "../../components/bigContainer/index.jsx";
 import Avatar from "../../components/avatar/index.jsx";
@@ -9,6 +10,7 @@ import styles from "./company-details.module.css";
 import Button from "../../components/button/index.jsx";
 import BtnService from "../../components/btnService/index.jsx";
 import Modal from "../../components/modal/index.jsx";
+import Spinner from "../../components/spinner/index.jsx"
 
 const initialState = {
   user: {
@@ -20,30 +22,41 @@ const initialState = {
 
 const CompanyDetails = () => {
   const [company, setCompany] = useState({});
-  console.log(company);
+  const [selectedService, setSelectedService] = useState({});
+  const [selectedWorker, setSelectedWorker] = useState(initialState);
+  const [workerServices, setWorkerServices] = useState([]);
+
   const [isServiceModalOpen, setServiceModalOpen] = useState(false);
   const [isWorkerModalOpen, setWorkerModalOpen] = useState(false);
-
-  const [selectedService, setSelectedService] = useState({});
-  const [selectedWorker, setSelectedWorker] = useState(initialState); //intententa obtener estos datos desde
-  //company id sin tener que hacer el estado nuevo de selectedWorker
-
-  console.log(selectedWorker);
+  const [loading, setLoading] = useState(false);
+  
   const { companyId } = useParams();
 
   const navigate = useNavigate();
 
   const getCompany = async (companyId) => {
+    setLoading(true)
     const data = await getInfoCompanyById(companyId);
     setCompany(data);
+    setLoading(false)
+  };
+
+  const getServiceByWorkerId = async (worker_id) => {
+    setLoading(true)
+    const data = await getServicesbyWorker(worker_id);
+    setWorkerServices(data);
+    setLoading(false)
   };
 
   useEffect(() => {
     getCompany(companyId);
-  }, []);
-
+    if (selectedWorker.id) {
+    getServiceByWorkerId(selectedWorker.id);
+    }
+  }, [companyId, selectedWorker]);
+  
   return (
-    <div className={styles._mainContainer}>
+    <div className={styles._mainContainer}> {loading ? (<Spinner/>): (<>
       <Logotipo className={styles._logo} />
       <div className={styles._btnWrapper}>
         <Button
@@ -53,6 +66,7 @@ const CompanyDetails = () => {
         />
       </div>
       <BigContainer>
+       
         <h1>{company.name}</h1>
         <article className={styles._contentContainer}>
           <div className={styles._servicesContainer}>
@@ -111,6 +125,7 @@ const CompanyDetails = () => {
           </div>
         </article>
       </BigContainer>
+      
       <Modal
         title="Service Details"
         isOpen={isServiceModalOpen}
@@ -118,6 +133,7 @@ const CompanyDetails = () => {
         selectedService={selectedService}
       >
         <div className={styles._modalContent}>
+          <div className="separata">
           <p>
             <strong>Name: </strong>
             {selectedService?.name}
@@ -134,7 +150,8 @@ const CompanyDetails = () => {
             <strong>Description: </strong>
           </p>
           <p>{selectedService?.description}</p>
-          <div className={styles._modalFooter}>
+          </div>
+          <footer className={styles._modalFooter}>
             <p>
               <strong>Do you want to appointment with this service?</strong>
             </p>
@@ -145,7 +162,7 @@ const CompanyDetails = () => {
                 onClick={() => navigate(`/create-booking/${companyId}`)}
               />
             </div>
-          </div>
+          </footer>
         </div>
       </Modal>
 
@@ -158,10 +175,6 @@ const CompanyDetails = () => {
         <div className={styles._modalContent}>
           <Avatar
             url={selectedWorker?.user.avatar}
-            onClick={() => {
-              setSelectedWorker(worker);
-              setIsOpen(true);
-            }}
           ></Avatar>
           <strong>
             {`${selectedWorker?.user.firstname} ${selectedWorker?.user.lastname}`}
@@ -170,11 +183,11 @@ const CompanyDetails = () => {
             <p>
               <strong>Services: </strong>
             </p>
-            {company.services?.map((service) => (
-              <p key={service.id}>{service.name}</p>
-            ))}
+            {workerServices?.map((service) => (
+            <p key={service.id}>{service.services.name}</p>
+          ))}
           </div>
-          <div className={styles._modalFooter}>
+          <footer className={styles._modalFooter}>
             <p>
               <strong>
                 Do you want to make an appointment with{" "}
@@ -188,9 +201,10 @@ const CompanyDetails = () => {
                 onClick={() => navigate(`/create-booking/${companyId}`)}
               />
             </div>
-          </div>
+          </footer>
         </div>
       </Modal>
+      </>)}
     </div>
   );
 };
