@@ -238,17 +238,100 @@ const getState = ({ getStore, getActions, setStore }) => {
 					Gender: "femenino",
 					email: "askingalessa@gfake.com",
 					phone: "3005562343",
-					invoiceHistory: [{invoiceNumber: "39201", invoiceDate: "15/06/2021", Quantity: "30000", invoiceStatus: "Pending", refunded: false }],
-					cardInfo: [{cardLastFour: "1234", cardExpiration: "04/2024", cardDefault: true},],
-					subscriptionInfo: [{subscriptionName: "Italianisimo", subscriptionAmount: 20000, SubscriptionPayDay: 12},],
-					emailNotification: [{accountChanges: false, newProducts: false, marketing: false, securityAlerts: false}],
-					multiFactor: [{optIn: false, multiFactorEmail: "askingalessa@gfake.com"}]
+					invoiceHistory: [
+						{
+							invoiceNumber: "39201", 
+							invoiceDate: "15/06/2021", 
+							Quantity: "30000", 
+							invoiceStatus: "Pending", 
+							refunded: false 
+						}
+					],
+					cardInfo: [
+						{
+							cardLastFour: "1234", 
+							cardExpiration: "04/2024", cardDefault: true
+						},
+					],
+					subscriptionInfo: [
+						{
+							subscriptionName: "Italianisimo", 
+							subscriptionAmount: 20000, 
+							SubscriptionPayDay: 12
+						},
+					],
+					emailNotification: [
+						{
+							accountChanges: false, 
+							newProducts: false, 
+							marketing: false, 
+							securityAlerts: false
+						}
+					],
+					multiFactor: [
+						{
+							optIn: false, 
+							multiFactorEmail: "askingalessa@gfake.com"
+						}
+					]
 				}
 			]
 		},
 		actions: {
-			// insert functions
-		}
+			updateUserProfile: async (email, updatedProfile) => {
+				try {
+				 	//  Realizar una solicitud a la API para actualizar el perfil del usuario
+				 		const response = await getActions().apiFetch(`/user/${email}`, "PUT", updatedProfile);
+				 		const { code, data } = response;
+				
+				 		if (code === 200 && data) {
+				 			// Actualizar el perfil en el estado de la aplicación
+				 			const { store, setStore } = getStore();
+				 			const updatedUser = { ...store.user[0], ...updatedProfile };
+				 			const updatedStore = { ...store, user: [updatedUser] };
+				 			setStore(updatedStore);
+				 			return data;
+				 		} else {
+				 			console.error("Error:", response);
+				 		}
+				 	} catch (error) {
+				 		console.error("Error:", error);
+				 	}
+				},
+				apiFetch: async (endpoint, method = "GET", body = {}) => {
+						const apiUrl = process.env.BACKEND_URL
+						console.log(apiUrl)
+
+					 	let resp = await fetch(apiUrl + endpoint, method == "GET" ? undefined : {
+					 		method,
+					 		body: JSON.stringify(body),
+					 		headers: {
+					 			"Content-Type": "application/json"
+					 		}
+					 	})
+					 	if (!resp.ok) {
+					 		console.error(`${resp.status}: ${resp.statusText}`)
+					 		return { code: resp.status, error: `${resp.status}: ${resp.statusText}` }
+					 	}
+					 	let data = await resp.json()
+					 	return { code: resp.status, data }
+					},
+						//  function apiFetch('/login').then(response => response.json()).then(data => {
+						// 	console.log(data.email);
+						// 	console.log(data.password);
+						//   })
+						//   .catch(error => {
+						// 	console.error('Error:', error);
+						//   });
+	// 				fetch('/register').then(response => response.json())
+    // .then(data => {
+    //   console.log(data.new_user);
+    // })
+    // .catch(error => {
+    //   console.error('Error:', error);
+    // });
+
+				}
 	}
 };
 
@@ -280,26 +363,7 @@ export default getState;
 // 		console.error("Error:", error);
 // 	}
 // },
-// updateUserProfile: async (email, updatedProfile) => {
-// 	try {
-// 		// Realizar una solicitud a la API para actualizar el perfil del usuario
-// 		const response = await getActions().apiFetch(`/user/${email}`, "PUT", updatedProfile);
-// 		const { code, data } = response;
-
-// 		if (code === 200 && data) {
-// 			// Actualizar el perfil en el estado de la aplicación
-// 			const { store, setStore } = getStore();
-// 			const updatedUser = { ...store.user[0], ...updatedProfile };
-// 			const updatedStore = { ...store, user: [updatedUser] };
-// 			setStore(updatedStore);
-// 			return data;
-// 		} else {
-// 			console.error("Error:", response);
-// 		}
-// 	} catch (error) {
-// 		console.error("Error:", error);
-// 	}
-// },
+// 
 // user_login: async (email, password) => {
 // 	const resp = await getActions().apiFetch("/login", "POST", { email, password })
 // 	if (resp.code >= 400) {

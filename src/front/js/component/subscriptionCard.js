@@ -38,16 +38,17 @@ export const SubscriptionCard = () => {
                         <img src={element.image} onError={imgError} className="card-img-top mx-0 p-1 pt-3 img-fluid figure-image" alt="restaurantImg" style={{ backgroundSize: "cover" }}></img>
                         <div className="card-body">
                             <h1 className="w-100 card-body text-light d-flex justify-content-center">
-                                <strong>{element.subscription.SubscriptionName}</strong>
+                                <strong>{element.subscription[0].SubscriptionName}</strong>
                                 <button className="btn btn-dark btn-outline-info align-self-end">♡</button>
                             </h1>
+                            {JSON.stringify(element.subscription[0].price)}
                         </div>
                         <div className="p-5 mt-5 w-100">
-                            <p className="text-light fs-3 description-text">{element.description}</p>
+                            <p className="text-light fs-3 description-text">{element.subscription[0].description}</p>
                         </div>
                         <div className="mx-auto d-flex justify-content-evenly w-100">
                             <button className="btn btn-outline-primary fw-bold rounded d-flex align-self-center justify-content-center w-100 px-5 py-3 mx-2 fs-7">
-                                Precio de: {element.subscription.price} Pesos.
+                                Precio de: {element.subscription[0].price} Pesos.
                             </button>
                             <button className="btn btn-outline-primary fw-bold rounded d-flex align-self-center justify-content-center w-100 px-5 py-3 mx-2">
                                 Agregar al Carrito
