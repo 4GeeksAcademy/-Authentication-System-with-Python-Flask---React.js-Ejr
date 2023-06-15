@@ -32,13 +32,13 @@ export const SubscriptionCard = () => {
         ]]]
         ver en flux.  */}
             <div className="col card bg-transparent border border-primary">
-                {restaurant?.map((element, index) => (
+                {store.restaurantes?.map((element, index) => (
                     <div key={index} onError={imgError} className="card-img-top mx-0 p-1 m-1 w-100" alt="{item.url}">
                         {/* generar dentro de este div los datos de la suscripcion, o cargar la imagen desde subcription */}
                         <img src={element.image} onError={imgError} className="card-img-top mx-0 p-1 pt-3 img-fluid figure-image" alt="restaurantImg" style={{ backgroundSize: "cover" }}></img>
                         <div className="card-body">
                             <h1 className="w-100 card-body text-light d-flex justify-content-center">
-                                <strong>{element.SubscriptionName}</strong>
+                                <strong>{element.subscription.SubscriptionName}</strong>
                                 <button className="btn btn-dark btn-outline-info align-self-end">♡</button>
                             </h1>
                         </div>
@@ -47,7 +47,7 @@ export const SubscriptionCard = () => {
                         </div>
                         <div className="mx-auto d-flex justify-content-evenly w-100">
                             <button className="btn btn-outline-primary fw-bold rounded d-flex align-self-center justify-content-center w-100 px-5 py-3 mx-2 fs-7">
-                                Precio de: {element.price} Pesos.
+                                Precio de: {element.subscription.price} Pesos.
                             </button>
                             <button className="btn btn-outline-primary fw-bold rounded d-flex align-self-center justify-content-center w-100 px-5 py-3 mx-2">
                                 Agregar al Carrito
