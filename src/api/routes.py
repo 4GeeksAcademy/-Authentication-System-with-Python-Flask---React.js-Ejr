@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, TokenBlockedList, Services, VehicleType
+from api.models import db, User, TokenBlockedList, Services, VehicleType, ShoppingCar
 from api.utils import generate_sitemap, APIException
 from api.sendmail import sendMail, recoveryPasswordTemplate
 from flask_bcrypt import Bcrypt
@@ -215,6 +215,23 @@ def user_logout():
     db.session.add(tokenBlocked)
     db.session.commit()
     return jsonify({"msg": "Token revoked"})
+
+@api.route('/shoppingCar', methods=['POST'])
+@jwt_required()
+def new_shoppingCar():
+    data = request.get_json()
+    user_id = get_jwt_identity()
+    # user_service = ShoppingCar.query.filter_by(user_id = user_id)
+    new_service = ShoppingCar(service_name=data["name"], service_price=data["price"], id=data["id"])
+    db.session.add(new_service)
+    db.session.commit()
+    # services_list = list(map(lambda shopping: shopping.serialize(),new_service))
+    # services_list = []
+
+    # for servicio in user_services:
+    #     service = Services.query.get(servicio.id)
+    #     services_list.append({"id":service.id, "name":service.name, "description":service.description, "price": service.price})
+    return jsonify(new_service.serialize()), 200
 
 
 

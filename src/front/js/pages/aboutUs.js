@@ -111,5 +111,3 @@ export const AboutUs = () => {
     );
 };
 
-
-// style={{width: "30rem", paddingTop: '40px', marginLeft: '170px' }}

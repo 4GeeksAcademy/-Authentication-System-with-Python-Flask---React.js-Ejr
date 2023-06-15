@@ -118,7 +118,7 @@ export const Book = () => {
                                 <li className="list-group-item" style={{ backgroundColor: '#40768C' }}>Price {element.price} USD</li>
                                 <li className="list-group-item" style={{ backgroundColor: '#40768C' }}>What is about?</li>
                               </ul>
-                              <a href="#" className="btn btn-dark my-2">Add to Cart</a>
+                              <button onClick={()=>actions.addFavorites(element.name, element.price, element.id)} href="#" className="btn btn-dark my-2">Add to Cart</button>
                             </div>
                           </div>
                         )
