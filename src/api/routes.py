@@ -25,6 +25,7 @@ from flask_jwt_extended import (
 )
 import os, openai, json, tempfile
 from firebase_admin import storage
+from api.sendmail import sendMail, recoveryPasswordTemplate
 
 openai.api_key = os.getenv("OPENAI_API_KEY")
 api = Blueprint("api", __name__)
@@ -152,8 +153,9 @@ def recovery_password():
     access_token = create_access_token(
         identity=user.id, additional_claims={"type": "password"}
     )
-    return jsonify({"recoveryToken": access_token})
     # Enviar el token via email para el cambio de clave
+    recoveryPasswordTemplate(access_token, user_email)
+    return jsonify({"msg": "Correo enviado"})
 
 
 @api.route("/helloprotected", methods=["GET"])

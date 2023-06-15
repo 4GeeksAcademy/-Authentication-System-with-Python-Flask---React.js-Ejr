@@ -6,6 +6,18 @@ import { Link } from "react-router-dom";
 import LoginModal from "./loginModal";
 
 export const Home = () => {
+    const {store, actions}=useContext(Context)
+
+
+    async function submitForm(e){
+        e.preventDefault()
+        let data = new FormData(e.target)
+        let resp = await actions.userLogin(data.get("email"), data.get("password"))
+        if (resp>=400){
+            return 
+        }
+        console.log("Login exitoso")
+    }
 
     return (
         <div className="text-center mt-5" style={{margintop: "8rem", marginBottom: "0rem", paddingTop: "4rem"}}>
