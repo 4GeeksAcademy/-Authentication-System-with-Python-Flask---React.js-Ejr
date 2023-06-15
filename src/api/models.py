@@ -18,8 +18,8 @@ class User(db.Model):
     birthday = db.Column(db.String(120), nullable=False)
     gender = db.Column(db.String(120), nullable=False)
     phone = db.Column(db.Integer, unique=True, nullable=False)
-    address = db.Column(db.String(300), nullable=False)
-    address_detail = db.Column(db.String(300), nullable=False)
+    address = db.Column(db.String(300), unique=False, nullable=False)
+    address_detail = db.Column(db.String(300), unique=False, nullable=False)
     # suscription = db.Column(db.Boolean(), nullable=False)
     pedidos = db.relationship("Pedidos")
     profile_pic = db.Column(db.String(500))
@@ -28,7 +28,7 @@ class User(db.Model):
         return f"<User {self.email}>"
 
     def serialize(self):
-        bucket=storage.bucket(name="https://console.firebase.google.com/project/imagenes-4geeks/storage/imagenes-4geeks.appspot.com/files")
+        bucket=storage.bucket(name="imagenes-4geeks.appspot.com")
         resource=bucket.blob(self.profile_pic)
         picture_url=resource.generate_signed_url(version="v4", expiration =datetime.timedelta(minutes=15), method="GET")
     
