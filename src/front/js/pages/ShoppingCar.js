@@ -1,10 +1,10 @@
 import React from "react";
-import { useParams } from "react-router";
+// import {  } from "react-router";
 import { useContext } from "react";
 import { Context } from "../store/appContext";
 import { useEffect } from "react";
 import "../../styles/home.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 
 export const ShoppingCar = () => {
