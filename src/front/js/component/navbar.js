@@ -5,6 +5,9 @@ import LoginModal from "../pages/loginModal";
 
 export const Navbar = () => {
 	const {store, actions} = useContext({Context})
+	function logout(){
+		actions.userLogout()
+	}
 	return (
 		<nav id="navbar-design" className="navbar fixed-top">
 			<div className="container">
@@ -13,11 +16,11 @@ export const Navbar = () => {
 				</Link>
 				{
 					!!store.accessToken?
-					<Link to ="/demo">
-						<button classname="btn btn-primary">Logout</button>
-						</Link>
+					
+						<button onClick={logout} classname="btn btn-primary">Logout</button>
+						
 						:
-						<Link to ="/demo">
+						<Link to ="/recovery">
 						<button classname="btn btn-primary">Login</button>
 						</Link>
 				}

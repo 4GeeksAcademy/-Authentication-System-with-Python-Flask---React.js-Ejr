@@ -312,6 +312,30 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log("Error loading message from backend", error)
 				}
 			},
+			requestPasswordRecovery: async (email)=>{
+				const resp= await getActions().apiFetch("/recoverypassword", "POST", {email})
+				return resp
+				
+			},
+			changePasswordRecovery: async (passwordToken, password)=>{
+				let resp = await fetch(apiUrl+"/changepassword"{
+					method: "POST",
+					body:JSON.stringify({password}),
+					headers: {
+						"Content-Type": "application/json",
+						"Authorization": `Bearer ${passwordToken}`
+					}
+
+				})
+				if (!response.ok){
+					console.error(`${resp.status}: ${resp.statusText}`)
+					return {code: resp.status, error: `{resp.status}: ${resp.statusText}`}
+				}
+				let data = await resp.json()
+				return {code : resp.status, data}
+
+		}
+			},
 			apiFetch: async (endpoint, method="GET", body={})=>{
 				let resp = await fetch(apiUrl+endpoint, method == "GET"?undefined:{
 					method,
