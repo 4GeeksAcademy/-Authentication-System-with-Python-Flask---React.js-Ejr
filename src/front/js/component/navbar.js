@@ -1,14 +1,26 @@
-import React from "react";
+import React, {useContext} from "react";
 import { Link } from "react-router-dom";
+import { Context } from "../store/appContext";
 import LoginModal from "../pages/loginModal";
 
 export const Navbar = () => {
+	const {store, actions} = useContext({Context})
 	return (
 		<nav id="navbar-design" className="navbar fixed-top">
 			<div className="container">
 				<Link to="/">
 					<span className="navbar-brand fs-2 mb-0 color-font">GitLoot</span>
 				</Link>
+				{
+					!!store.accessToken?
+					<Link to ="/demo">
+						<button classname="btn btn-primary">Logout</button>
+						</Link>
+						:
+						<Link to ="/demo">
+						<button classname="btn btn-primary">Login</button>
+						</Link>
+				}
 				<div className="ml-auto">
 					<div className="btn-group dropstart">
 						<button type="button" style={{borderRadius:"33% 67% 32% 68% / 90% 9% 91% 10% "}}

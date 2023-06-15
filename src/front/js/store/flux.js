@@ -238,6 +238,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					Gender: "femenino",
 					email: "askingalessa@gfake.com",
 					phone: "3005562343",
+					login: false,
 					invoiceHistory: [
 						{
 							invoiceNumber: "39201", 
@@ -278,6 +279,76 @@ const getState = ({ getStore, getActions, setStore }) => {
 			]
 		},
 		actions: {
+			userLogin: async (email, password)=>{
+				const resp= await getActions().apiFetch("/login", "POST", {email, password})
+				if (resp.code>=400){
+					return resp
+				}
+				setStore({accessToken: resp.data.accessToken})
+				localStorage.setItem("accessToken, resp.data.accessToken")
+				return resp
+
+			},
+			userLogout: async ()=>{
+				const resp= await getActions().apiFetchProtected("/logout", "POST")
+				if (resp.code>=400){
+					return resp
+				}
+				setStore({accessToken: null})
+				localStorage.removeItem(accessToken)
+				return resp
+
+			},
+			loadToken(){
+				let token = localStorage.getItem("accessToken")
+				setStore ({accessToken:token})
+			},
+			getMessage: async ()=> {
+				try{
+					//fetching data fom the backend
+					const resp= await getActions().apiFetch("/hello")
+					setStore({message: resp.data.message})
+				}catch (error){
+					console.log("Error loading message from backend", error)
+				}
+			},
+			apiFetch: async (endpoint, method="GET", body={})=>{
+				let resp = await fetch(apiUrl+endpoint, method == "GET"?undefined:{
+					method,
+					body:JSON.stringify(body),
+					headers: {
+						"Content-Type": "application/json"
+					}
+
+				})
+				if (!response.ok){
+					console.error(`${resp.status}: ${resp.statusText}`)
+					return {code: resp.status, error: `{resp.status}: ${resp.statusText}`}
+				}
+				let data = await resp.json()
+				return {code : resp.status, data}
+
+			},
+			apiFetchProtected: async (endpoint, method = "GET", body = {}) => {
+				let params = {
+					headers: {
+						"Authorization": `Bearer ${getStore().accessToken}`
+					}
+				}
+				if (method !== "GET") {
+					params.method = method
+					params.body = JSON.stringify(body)
+					params.headers["Content-Type"] = "application/json"
+				}
+				let resp = await fetch(apiUrl + endpoint, params)
+				if (!resp.ok) {
+					console.error(`${resp.status}: ${resp.statusText}`)
+					return { code: resp.status, error: `${resp.status}: ${resp.statusText}` }
+				}
+				let data = await resp.json()
+				return { code: resp.status, data }
+			}
+		},
 			updateUserProfile: async (email, updatedProfile) => {
 				try {
 				 	//  Realizar una solicitud a la API para actualizar el perfil del usuario
@@ -316,13 +387,23 @@ const getState = ({ getStore, getActions, setStore }) => {
 					 	let data = await resp.json()
 					 	return { code: resp.status, data }
 					},
-						//  function apiFetch('/login').then(response => response.json()).then(data => {
+						// terminar esta funcion 
+						login: async (email, password)=>{
+							const credentials= {email, password}
+							const response = await getActions().apiFetch(`/login`, "POST", credentials);
+							response.data
+							
+						
+						}
+						// const apiUrl = process.env.BACKEND_URL
+
+						//  fetch('/login').then(response => response.json()).then(data => {
 						// 	console.log(data.email);
 						// 	console.log(data.password);
 						//   })
 						//   .catch(error => {
 						// 	console.error('Error:', error);
-						//   });
+						//   }),
 	// 				fetch('/register').then(response => response.json())
     // .then(data => {
     //   console.log(data.new_user);
