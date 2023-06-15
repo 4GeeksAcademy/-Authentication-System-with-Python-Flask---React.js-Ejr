@@ -9,7 +9,7 @@ import Avatar from "../../components/avatar/index.jsx";
 import styles from "./company-details.module.css";
 import Button from "../../components/button/index.jsx";
 import BtnService from "../../components/btnService/index.jsx";
-import Modal from "../../components/modal/index.jsx";
+import ModalCompany from "../../components/modalCompany/index.jsx";
 import Spinner from "../../components/spinner/index.jsx"
 
 const initialState = {
@@ -126,14 +126,14 @@ const CompanyDetails = () => {
         </article>
       </BigContainer>
       
-      <Modal
+      <ModalCompany
         title="Service Details"
         isOpen={isServiceModalOpen}
         close={() => setServiceModalOpen(false)}
         selectedService={selectedService}
       >
         <div className={styles._modalContent}>
-          <div className="separata">
+          <div className={styles._textModal}>
           <p>
             <strong>Name: </strong>
             {selectedService?.name}
@@ -164,9 +164,9 @@ const CompanyDetails = () => {
             </div>
           </footer>
         </div>
-      </Modal>
+      </ModalCompany>
 
-      <Modal
+      <ModalCompany
         title="Worker Details"
         isOpen={isWorkerModalOpen}
         close={() => setWorkerModalOpen(false)}
@@ -203,7 +203,7 @@ const CompanyDetails = () => {
             </div>
           </footer>
         </div>
-      </Modal>
+      </ModalCompany>
       </>)}
     </div>
   );
