@@ -232,15 +232,19 @@ const getState = ({ getStore, getActions, setStore }) => {
 			],
 			user: [
 				{
+					displayName: "Alepina",
 					firstName: "Alejandra",
 					secondName: "Martinez",
 					birthDay: "12",
 					birthMonth: "6",
 					birthYear: "2014",
+					address: "",
+					addressDetail: "",
 					Gender: "femenino",
 					email: "askingalessa@gfake.com",
 					phone: "3005562343",
 					login: false,
+					image: "https://cdn.leonardo.ai/users/25acf724-d0fb-44e7-8da5-a5932af5eac9/generations/5d52955e-942f-44f3-8686-94611922d455/DreamShaper_v5_3_An_AIpowered_android_woman_with_celticlik_0.jpg",
 					invoiceHistory: [
 						{
 							invoiceNumber: "39201",

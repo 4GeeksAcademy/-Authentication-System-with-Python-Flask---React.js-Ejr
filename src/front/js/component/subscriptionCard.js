@@ -8,9 +8,7 @@ import FoodModal from "./foodModal";
 export const SubscriptionCard = () => {
     const { store, actions } = useContext(Context);
     const restaurant = store.restaurantes;
-    const subItem = restaurant.subscription;
-    const name = subItem ? subItem.SubscriptionName : "";
-
+    
     console.log(restaurant)
     console.log(subItem)
 
