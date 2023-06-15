@@ -207,6 +207,6 @@ const CompanyDetails = () => {
       </>)}
     </div>
   );
-};
+};  
 
 export default CompanyDetails;
