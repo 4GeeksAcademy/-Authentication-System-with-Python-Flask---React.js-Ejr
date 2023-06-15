@@ -85,6 +85,10 @@ export const Register = () => {
                                                 <input type="email" id="emailAddress" className="form-control form-control-lg" placeholder="Tu correo" />
                                                 <label className="form-label" htmlFor="emailAddress">Correo</label>
                                             </div>
+                                            <div className="form-outline">
+                                                <input type="password" id="password" className="form-control form-control-lg" placeholder="Elige Una contraseña" />
+                                                <label className="form-label" htmlFor="password">Correo</label>
+                                            </div>
 
                                         </div>
                                         <div className="col-md-6 mb-4 pb-2">
