@@ -1,16 +1,12 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import LoginModal from "../pages/loginModal";
 import "../../styles/register.css";
+import { Context } from "../store/appContext";
 
 export const Register = () => {
-    fetch('/register').then(response => response.json())
-    .then(data => {
-      console.log(data.new_user);
-    })
-    .catch(error => {
-      console.error('Error:', error);
-    });
+    const {store, actions } = useContext(Context)
+    
 
     return (
 
@@ -102,7 +98,11 @@ export const Register = () => {
                                     </div>
                                     <Link to="/">
                                         <div className="mt-4 pt-2">
-                                            <input className="btn btn-outline-success px-5 btn-lg" style={{ borderRadius: "33% 67% 32% 68% / 90% 9% 91% 10% " }} type="submit" value="Listo!" />
+                                            <input className="btn btn-outline-success px-5 btn-lg" 
+                                            style={{ borderRadius: "33% 67% 32% 68% / 90% 9% 91% 10% " }} 
+                                            type="submit" value="Listo!" 
+                                            // onClick={()=>(actions.updateUserProfile(email="askingalessa@gfake.com", (firstName= "Alejandra",secondName= "Martinez", Gender= "femenino")))} 
+                                            />
                                         </div>
                                     </Link>
                                 </form>
@@ -116,3 +116,5 @@ export const Register = () => {
     )
 }
 export default Register;
+
+
