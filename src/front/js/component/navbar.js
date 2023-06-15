@@ -3,8 +3,9 @@ import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
 import LoginModal from "../pages/loginModal";
 
+
 export const Navbar = () => {
-	const {store, actions} = useContext({Context})
+	const {store, actions} = useContext(Context)
 	function logout(){
 		actions.userLogout()
 	}
@@ -17,11 +18,11 @@ export const Navbar = () => {
 				{
 					!!store.accessToken?
 					
-						<button onClick={logout} classname="btn btn-primary">Logout</button>
+						<button onClick={logout} className="btn btn-primary">Logout</button>
 						
 						:
 						<Link to ="/recovery">
-						<button classname="btn btn-primary">Login</button>
+						<button className="btn btn-primary">Login</button>
 						</Link>
 				}
 				<div className="ml-auto">
