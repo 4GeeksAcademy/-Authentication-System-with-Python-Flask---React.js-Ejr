@@ -238,18 +238,213 @@ const getState = ({ getStore, getActions, setStore }) => {
 					Gender: "femenino",
 					email: "askingalessa@gfake.com",
 					phone: "3005562343",
-					invoiceHistory: [{ invoiceNumber: "39201", invoiceDate: "15/06/2021", Quantity: "30000", invoiceStatus: "Pending", refunded: false }],
-					cardInfo: [{ cardLastFour: "1234", cardExpiration: "04/2024", cardDefault: true },],
-					subscriptionInfo: [{ subscriptionName: "Italianisimo", subscriptionAmount: 20000, SubscriptionPayDay: 12 },],
-					emailNotification: [{ accountChanges: false, newProducts: false, marketing: false, securityAlerts: false }],
-					multiFactor: [{ optIn: false, multiFactorEmail: "askingalessa@gfake.com" }]
+					invoiceHistory: [
+						{
+							invoiceNumber: "39201",
+							invoiceDate: "15/06/2021",
+							Quantity: "30000",
+							invoiceStatus: "Pending",
+							refunded: false
+						}
+					],
+					cardInfo: [
+						{
+							cardLastFour: "1234",
+							cardExpiration: "04/2024", cardDefault: true
+						},
+					],
+					subscriptionInfo: [
+						{
+							subscriptionName: "Italianisimo",
+							subscriptionAmount: 20000,
+							SubscriptionPayDay: 12
+						},
+					],
+					emailNotification: [
+						{
+							accountChanges: false,
+							newProducts: false,
+							marketing: false,
+							securityAlerts: false
+						}
+					],
+					multiFactor: [
+						{
+							optIn: false,
+							multiFactorEmail: "askingalessa@gfake.com"
+						}
+					]
 				}
 			]
 		},
 		actions: {
-			// insert functions
+			updateUserProfile: async (email, updatedProfile) => {
+				try {
+					//  Realizar una solicitud a la API para actualizar el perfil del usuario
+					const response = await getActions().apiFetch(`/user/${email}`, "PUT", updatedProfile);
+					const { code, data } = response;
+
+					if (code === 200 && data) {
+						// Actualizar el perfil en el estado de la aplicación
+						const { store, setStore } = getStore();
+						const updatedUser = { ...store.user[0], ...updatedProfile };
+						const updatedStore = { ...store, user: [updatedUser] };
+						setStore(updatedStore);
+						return data;
+					} else {
+						console.error("Error:", response);
+					}
+				} catch (error) {
+					console.error("Error:", error);
+				}
+			},
+			apiFetch: async (endpoint, method = "GET", body = {}) => {
+				const apiUrl = process.env.BACKEND_URL
+				console.log(apiUrl)
+
+				let resp = await fetch(apiUrl + endpoint, method == "GET" ? undefined : {
+					method,
+					body: JSON.stringify(body),
+					headers: {
+						"Content-Type": "application/json"
+					}
+				})
+				if (!resp.ok) {
+					console.error(`${resp.status}: ${resp.statusText}`)
+					return { code: resp.status, error: `${resp.status}: ${resp.statusText}` }
+				}
+				let data = await resp.json()
+				return { code: resp.status, data }
+			},
+			//  function apiFetch('/login').then(response => response.json()).then(data => {
+			// 	console.log(data.email);
+			// 	console.log(data.password);
+			//   })
+			//   .catch(error => {
+			// 	console.error('Error:', error);
+			//   });
+			// 				fetch('/register').then(response => response.json())
+			// .then(data => {
+			//   console.log(data.new_user);
+			// })
+			// .catch(error => {
+			//   console.error('Error:', error);
+			// });
+
 		}
 	}
 };
 
 export default getState;
+
+// fetchUserData: async (email) => {
+// 	const baseUrl = `${process.env.BACKEND_URL}/${email}`;
+
+// 	try {
+// 		let response = await fetch(baseUrl)
+// 		if (!response.ok) return response.status
+// 		setStore(email)
+// 	}
+// 	catch (error) {
+// 		console.error(error)
+// 	}
+// },
+// user_create: async (user) => {
+// 	try {
+// 		const response = await getActions().apiFetch("register", "POST", user);
+// 		const { code, data } = response;
+
+// 		if (code === 200 && data) {
+// return data;
+// 		} else {
+// 			console.error("Error:", response);
+// 		}
+// 	} catch (error) {
+// 		console.error("Error:", error);
+// 	}
+// },
+//
+// user_login: async (email, password) => {
+// 	const resp = await getActions().apiFetch("/login", "POST", { email, password })
+// 	if (resp.code >= 400) {
+// 		return resp
+// 	}
+// 	setStore({ accessToken: resp.data.accessToken })
+// 	localStorage.setItem("accessToken", resp.data.accessToken)
+// 	return resp
+// },
+// user_logout: async () => {
+// 	const resp = await getActions().apiFetchProtected("/logout", "POST")
+// 	if (resp.code >= 400) {
+// 		return resp
+// 	}
+// 	setStore({ accessToken: null })
+// 	localStorage.removeItem("accessToken")
+// 	return resp
+// },
+// loadToken() {
+// 	let token = localStorage.getItem("accessToken")
+// 	setStore({ accessToken: token })
+// },
+// getMessage: async () => {
+// 	try {
+// 		// fetching data from the backend
+// 		const resp = await getActions().apiFetch("/hello")
+// 		setStore({ message: resp.data.message })
+// 		// don't forget to return something, that is how the async resolves
+// 		//return data.message:
+// 	} catch (error) {
+// 		console.log("Error loading message from backend", error)
+// 	}
+// },
+// requestPasswordRecovery: async (email) => {
+// 	const resp = await getActions().apiFetch("/recoverypassword", "POST", { email })
+// 	return resp
+// },
+// changePasswordRecovery: async (passwordToken, password) => {
+// 	let resp = await fetch(apiUrl + endpoint, method == "GET" ? undefined : {
+// 		method,
+// 		body: JSON.stringify(password),
+// 		headers: {
+// 			"Content-Type": "application/json",
+// 			"Authorization": `Bearer ${passwordToken}`
+// 		}
+// 	})
+// 	if (!resp.ok) {
+// 		console.error(`${resp.status}: ${resp.statusText}`)
+// 		return { code: resp.status, error: `${resp.status}: ${resp.statusText}` }
+// 	}
+// 	let data = await resp.json()
+// 	return { code: resp.status, data }
+// },
+// apiFetch: async (endpoint, method = "GET", body = {}) => {
+// 	let resp = await fetch(apiUrl + endpoint, method == "GET" ? undefined : {
+// 		method,
+// 		body: JSON.stringify(body),
+// 		headers: {
+// 			"Content-Type": "application/json"
+// 		}
+// 	})
+// 	if (!resp.ok) {
+// 		console.error(`${resp.status}: ${resp.statusText}`)
+// 		return { code: resp.status, error: `${resp.status}: ${resp.statusText}` }
+// 	}
+// 	let data = await resp.json()
+// 	return { code: resp.status, data }
+// },
+// apiFetchProtected: async (endpoint, method = "GET", body = {}) => {
+// 	let resp = await fetch(apiUrl + endpoint, method == "GET" ? undefined : {
+// 		method,
+// 		body: JSON.stringify(body),
+// 		headers: {
+// 			"Content-Type": "application/json",
+// 			"Authorization": `Bearer  ${getStore().accessToken}`
+// 		}
+// 	})
+// 	if (!resp.ok) {
+// 		console.error(`${resp.status}: ${resp.statusText}`)
+// 		return { code: resp.status, error: `${resp.status}: ${resp.statusText}` }
+// 	}
+// 	let data = await resp.json()
+// 	return { code: resp.status, data }
+// }
