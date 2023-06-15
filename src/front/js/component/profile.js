@@ -14,7 +14,7 @@ export const Profile = () => {
 
     return (
         <>
-        {store.user?.map((item, index) => {
+        {store.user.map((item, index) => {
         <div key={index} className="container-xl px-4" style={{paddingTop:"3rem", marginBottom: "25rem"}}>
             <h1 className="main-title text-center pt-5 pb-0 mb-0">Bienvenido a tu Perfil</h1>  
             {/* Account page navigation */}

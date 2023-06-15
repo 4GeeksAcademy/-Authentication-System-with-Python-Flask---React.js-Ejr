@@ -6,25 +6,14 @@ import LoginModal from "../pages/loginModal";
 
 export const Navbar = () => {
 	const {store, actions} = useContext(Context)
-	function logout(){
-		actions.userLogout()
-	}
+
+	
 	return (
 		<nav id="navbar-design" className="navbar fixed-top">
 			<div className="container">
 				<Link to="/">
 					<span className="navbar-brand fs-2 mb-0 color-font">GitLoot</span>
 				</Link>
-				{
-					!!store.accessToken?
-					
-						<button onClick={logout} className="btn btn-primary">Logout</button>
-						
-						:
-						<Link to ="/recovery">
-						<button className="btn btn-primary">Login</button>
-						</Link>
-				}
 				<div className="ml-auto">
 					<div className="btn-group dropstart">
 						<button type="button" style={{borderRadius:"33% 67% 32% 68% / 90% 9% 91% 10% "}}
@@ -38,14 +27,24 @@ export const Navbar = () => {
 							<li className="dropdown-item">This shalt clear thy loot</li>
 						</ul>
 					</div>
-					<button type="button" style={{borderRadius:"33% 67% 32% 68% / 90% 9% 91% 10% "}} className="btn btn-outline-primary py-2 px-5" data-bs-toggle="modal" data-bs-target="#loginModal">
-						Inicia Sesión!
-					</button>
-					<Link to="/register">
-						<button type="button" style={{borderRadius:"33% 67% 32% 68% / 90% 9% 91% 10% "}} className="btn btn-outline-success py-2 px-5">
-							Registrate!
-						</button>
-					</Link>
+					{
+					!!store.accessToken?
+					""                                                                          
+					:
+					<>
+						<button type="button" style={{borderRadius:"33% 67% 32% 68% / 90% 9% 91% 10% "}} 
+							className="btn btn-outline-primary py-2 px-5" 
+							data-bs-toggle="modal" data-bs-target="#loginModal">
+								Inicia Sesión!
+							</button>
+						<Link to="/register">
+							<button type="button" style={{borderRadius:"33% 67% 32% 68% / 90% 9% 91% 10% "}} className="btn btn-outline-success py-2 px-5">
+								Registrate!
+							</button>
+						</Link>
+					</>
+					}
+					
 					<Link to="/profile">
 						<button type="button" style={{borderRadius:"33% 67% 32% 68% / 90% 9% 91% 10% "}} className="btn btn-outline-secondary py-2 px-5">
 							Tu Perfil

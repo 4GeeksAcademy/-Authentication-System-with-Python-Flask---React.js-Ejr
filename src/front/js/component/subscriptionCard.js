@@ -10,7 +10,6 @@ export const SubscriptionCard = () => {
     const restaurant = store.restaurantes;
     
     console.log(restaurant)
-    console.log(subItem)
 
 
     function imgError(e) {
