@@ -67,15 +67,15 @@ const CompanyDetails = () => {
       </div>
       <BigContainer>
        
-        <h1>{company.name}</h1>
+        <h1>{company?.name}</h1>
         <article className={styles._contentContainer}>
           <div className={styles._servicesContainer}>
             <span className={styles._serviceTitle}>Services:</span>
             <div className={`${styles._smallContainer} _boxShadow`}>
-              {company.services?.map((service) => (
+              {company?.services?.map((service) => (
                 <BtnService
                   key={service.id}
-                  name={service.name}
+                  name={service?.name}
                   setIsOpen={() => {
                     setSelectedService(service);
                     setServiceModalOpen(true);
@@ -87,23 +87,23 @@ const CompanyDetails = () => {
           <div className={styles._infoContainer}>
             <div className={styles._row}>
               <span>Name:</span>
-              <p>{company.name}</p>
+              <p>{company?.name}</p>
             </div>
             <div className={styles._row}>
               <span>CIF:</span>
-              <p>{company.cif}</p>
+              <p>{company?.cif}</p>
             </div>
             <div className={styles._row}>
               <span>Description:</span>
-              <p>{company.description}</p>
+              <p>{company?.description}</p>
             </div>
             <div className={styles._row}>
               <span>Address:</span>
-              <p>{company.address}</p>
+              <p>{company?.address}</p>
             </div>
             <div className={styles._row}>
               <span>Opening:</span>
-              <p>{company.working_schedule}</p>
+              <p>{company?.working_schedule}</p>
             </div>
             <div className={styles._workers}>
               <span>Workers:</span>
@@ -111,13 +111,13 @@ const CompanyDetails = () => {
                 {company.workers?.map((worker) => (
                   <div className={styles._workerImg} key={worker.id}>
                     <Avatar
-                      url={worker.user.avatar}
+                      url={worker?.user?.avatar}
                       onClick={() => {
                         setSelectedWorker(worker);
                         setWorkerModalOpen(true);
                       }}
                     ></Avatar>
-                    <p>{worker.user?.username}</p>
+                    <p>{worker?.user?.username}</p>
                   </div>
                 ))}
               </div>
@@ -174,10 +174,10 @@ const CompanyDetails = () => {
       >
         <div className={styles._modalContent}>
           <Avatar
-            url={selectedWorker?.user.avatar}
+            url={selectedWorker?.user?.avatar}
           ></Avatar>
           <strong>
-            {`${selectedWorker?.user.firstname} ${selectedWorker?.user.lastname}`}
+            {`${selectedWorker?.user?.firstname} ${selectedWorker?.user?.lastname}`}
           </strong>
           <div className={styles._service}>
             <p>
@@ -191,7 +191,7 @@ const CompanyDetails = () => {
             <p>
               <strong>
                 Do you want to make an appointment with{" "}
-                {selectedWorker?.user.firstname}?
+                {selectedWorker?.user?.firstname}?
               </strong>
             </p>
             <div className={styles._btnWrapperdiv}>
