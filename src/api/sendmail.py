@@ -11,7 +11,7 @@ def recoveryPasswordTemplate(token, email):
     subject='Recuperacion de clave',
     html_content='Para recuperar la contraseña haga click <a href = "'+os.getenv("FRONTEND_URL")+
     "/changepassword?token="+token+'"aqui</a> ')
-return sendMail(message) 
+    return sendMail(message) 
 
 def sendMail(message):
     try:
