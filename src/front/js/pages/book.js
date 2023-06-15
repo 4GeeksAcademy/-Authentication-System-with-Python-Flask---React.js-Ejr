@@ -52,11 +52,11 @@ export const Book = () => {
                     {vehicles ? (vehicles.map((vehicle, index) => (
                       <div className="col" key={index}>
                         <div className="card text-center card border-dark mb-3" style={{ width: "35rem" }}>
-                          <img src="https://img.freepik.com/fotos-premium/coche-deportivo-compacto-family-sedan-3d-ilustracion_101266-19260.jpg?w=900" className="card-img-top" alt="..." />
+                          <img src={vehicle.picture} className="card-img-top" alt="..." />
                           <div className="card-body " style={{ backgroundColor: '#40768C' }}>
                             <h5 className="card-title">{vehicle.name}</h5>
                             <ul className="list-group list-group-flush">
-                              <li className="list-group-item" style={{ backgroundColor: '#40768C' }}>Price 100 USD</li>
+                              {/* <li className="list-group-item" style={{ backgroundColor: '#40768C' }}>Price 100 USD</li> */}
                               <li className="list-group-item" style={{ backgroundColor: '#40768C' }}>What is about?</li>
                             </ul>
                             <button className="btn btn-dark my-2" onClick={() => handleSelectVehicleType(index + 1)}>Select</button>
@@ -111,14 +111,14 @@ export const Book = () => {
                       {services.map((element, index) => (
                         element.vehicle_type == selectedVehicleType && (
                           <div className="card text-center card border-dark   m-2" style={{ width: "35rem" }} key={index}>
-                            <img src="https://img.freepik.com/foto-gratis/hermoso-coche-servicio-lavado_23-2149212221.jpg?w=740&t=st=1686075276~exp=1686075876~hmac=3d03bcfdf61ec295b42afde6c9cd4cfe3efe2341e0f841134f7dd60d29b0b2bb" className="card-img-top" alt="..." />
+                            <img src={element.picture} className="card-img-top" alt="..." />
                             <div className="card-body " style={{ backgroundColor: '#40768C' }}>
                               <h5 className="card-title">{element.name}</h5>
                               <ul className="list-group list-group-flush">
                                 <li className="list-group-item" style={{ backgroundColor: '#40768C' }}>Price {element.price} USD</li>
                                 <li className="list-group-item" style={{ backgroundColor: '#40768C' }}>What is about?</li>
                               </ul>
-                              <a href="#" className="btn btn-dark my-2">Add to Cart</a>
+                              <button onClick={()=>actions.addFavorites(element.name, element.price, element.id)} href="#" className="btn btn-dark my-2">Add to Cart</button>
                             </div>
                           </div>
                         )

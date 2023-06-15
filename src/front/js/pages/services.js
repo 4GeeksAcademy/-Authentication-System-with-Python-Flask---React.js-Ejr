@@ -26,7 +26,7 @@ export const Services = () => {
             <div className="col" key={index}>
 
             <div className="card text-center border-dark m-3" style={{ width: "25rem" }}>
-              <img src="https://img.freepik.com/foto-gratis/hermoso-coche-servicio-lavado_23-2149212221.jpg?w=740&t=st=1686075276~exp=1686075876~hmac=3d03bcfdf61ec295b42afde6c9cd4cfe3efe2341e0f841134f7dd60d29b0b2bb" className="card-img-top" alt="..." style={{ width: "100%" }} />
+              <img src={element.picture} className="card-img-top" alt="..." style={{ width: "100%" }} />
               <div className="card-body " style={{ backgroundColor: '#40768C' }}>
                 <h5 className="card-title">{element.name}</h5>
                 <p className="card-text" style={{ height: "15rem" }}>Want to learn more? click Learn More to see more details! <br/>Price: ${element.price} USD</p>
