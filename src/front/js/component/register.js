@@ -4,9 +4,16 @@ import LoginModal from "../pages/loginModal";
 import "../../styles/register.css";
 
 export const Register = () => {
-    // const {store, actions} = useContext(Context)
+    fetch('/register').then(response => response.json())
+    .then(data => {
+      console.log(data.new_user);
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
 
     return (
+
 
         <section className="vh-100 gradient-custom mb-5 pb-5">
             <div id="background-ia" className="container-fluid pt-0 overflow-visible">
@@ -77,6 +84,10 @@ export const Register = () => {
                                             <div className="form-outline">
                                                 <input type="email" id="emailAddress" className="form-control form-control-lg" placeholder="Tu correo" />
                                                 <label className="form-label" htmlFor="emailAddress">Correo</label>
+                                            </div>
+                                            <div className="form-outline">
+                                                <input type="password" id="password" className="form-control form-control-lg" placeholder="Elige Una contraseña" />
+                                                <label className="form-label" htmlFor="password">Correo</label>
                                             </div>
 
                                         </div>
