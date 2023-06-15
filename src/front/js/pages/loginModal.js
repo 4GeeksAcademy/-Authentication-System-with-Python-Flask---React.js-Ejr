@@ -2,13 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 export const LoginModal = () => {
-    fetch('/login').then(response => response.json()).then(data => {
-        console.log(data.email);
-        console.log(data.password);
-      })
-      .catch(error => {
-        console.error('Error:', error);
-      });
+   
     return (
         <div className="container">
             <div className="modal fade large" id="loginModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
