@@ -1,10 +1,16 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import LoginModal from "../pages/loginModal";
 import "../../styles/profile.css";
+import { Context } from "../store/appContext";
 
 export const Profile = () => {
+    const {store, actions} = useContext(Context)
+    const user = store.user;
+
     return (
+        <>
+            {user?.map((item, index => {
         <div className="container-xl px-4" style={{paddingTop:"3rem", marginBottom: "25rem"}}>
             <h1 className="main-title text-center pt-5 pb-0 mb-0">Bienvenido a tu Perfil</h1>  
             {/* Account page navigation */}
@@ -99,8 +105,11 @@ export const Profile = () => {
                     </div>
                 </div>
             </div>
+
             <LoginModal />
         </div>
+            }))}
+        </>
             )
         };
 export default Profile;
