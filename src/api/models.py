@@ -2,6 +2,7 @@ from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 
+
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(120), unique=True, nullable=False)
@@ -23,29 +24,49 @@ class User(db.Model):
         return {
             "id": self.id,
             "email": self.email,
-            "first_name" : self.first_name,
-            "last_name" : self.last_name,
-            "address_one" : self.address_one,
-            "address_two" : self.address_two,
-            "phone" : self.phone,
-            "city" : self.city,
-            "country" : self.country,
-            "zip_code" : self.zip_code
+            "first_name": self.first_name,
+            "last_name": self.last_name,
+            "address_one": self.address_one,
+            "address_two": self.address_two,
+            "phone": self.phone,
+            "city": self.city,
+            "country": self.country,
+            "zip_code": self.zip_code
             # do not serialize the password, its a security breach
         }
+
 
 class TokenBlockedList(db.Model):
     __tablename__ = "token_blocked_list"
     id = db.Column(db.Integer, primary_key=True)
-    jti = db.Column(db.String(50), nullable = False)
+    jti = db.Column(db.String(50), nullable=False)
+
 
 class VehicleType(db.Model):
     __tablename__ = "vehicle_type"
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(120), unique=True, nullable=False)
-    
+    picture = db.Column(db.String(1000))
+
     def serialize(self):
         return{"name" : self.name}
+    
+class ShoppingCar(db.Model):
+    __tablename__ = "shoppingcar"
+    id = db.Column(db.Integer, primary_key=True)
+    services_id = db.Column(db.Integer, db.ForeignKey("services.id"))
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+    users = db.relationship(User) 
+    services = db.relationship("Services")
+    service_name = db.Column(db.String(120))
+    service_price = db.Column(db.Integer)
+    def serialize(self):
+        return {
+            "servicesVehicle":self.services.vehicle_type,
+            "servicesName":self.services.name,
+            "servicesPrice":self.services.name,
+            "userName":self.users.name
+        }
 
 class Services(db.Model):
     __tablename__ = "services"
@@ -54,17 +75,19 @@ class Services(db.Model):
     name = db.Column(db.String(120), unique=True, nullable=False)
     description = db.Column(db.String(10000), unique=False, nullable=False)
     price = db.Column(db.Integer, nullable=False)
+    picture = db.Column(db.String(1000))
     type = db.relationship(VehicleType, backref='vehicle_type', lazy=True)
+
 
     def serialize(self):
         return {
-            "vehicle_type" : self.vehicle_type,
-            "name" : self.name,
-            "description" : self.description,
-            "price" : self.price
+            "vehicle_type": self.vehicle_type,
+            "name": self.name,
+            "description": self.description,
+            "price": self.price,
+            "picture": self.picture,
+            "id":self.id
         }
-    
-    
-    
+
 
 # Crear tabla para carrito, va a tener foreign key del servicio y relación con el usuario

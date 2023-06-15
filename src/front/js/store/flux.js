@@ -5,6 +5,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
 			message: null,
+			new_service: [],
 			services: [],
 			vehicleType: [],
 			mercadopago: {},
@@ -26,6 +27,30 @@ const getState = ({ getStore, getActions, setStore }) => {
 			exampleFunction: () => {
 				getActions().changeColor(0, "green");
 			},
+
+			addFavorites: async(name, price, id) => {
+				const resp = await getActions().apiFetchProtected("/api/shoppingCar", "POST", { id, name, price })
+				if (resp.code >= 400) {
+					return resp
+				}
+				setStore({new_service:resp.data.new_service})
+				return resp
+				// let {favorites} = getStore()
+				// if(!favorites.some(item=>item.id==id)){
+				// 	// en caso de que NO exista, se agrega
+				// 	setStore({favorites:[...favorites,{id:id, name:name, price:price}]})
+				// }
+				// else {
+				// 	// en caso de que SI exista, se elimina
+				// 	let index=favorites.findIndex(item=>item.id==id)
+				// 	let newFavorites=[...favorites]
+				// 	newFavorites.splice(index,1)
+				// 	setStore({favorites:newFavorites})
+				// }
+				// let newFavorites = [...store.favorites, {id: (id + element), name: name}]
+				// setStore({favorites:newFavorites})
+			},
+
 			userLogin: async (email, password) => {
 				const resp = await getActions().apiFetch("/api/login", "POST", { email, password })
 				console.log({ email, password })
@@ -36,6 +61,18 @@ const getState = ({ getStore, getActions, setStore }) => {
 				localStorage.setItem("accessToken", resp.data.accessToken)
 				return resp
 			},
+			
+			userLogout: async () => {
+				const resp = await getActions().apiFetchProtected("/api/logout", "POST")
+				if (resp.code >= 400){
+					return resp
+				}
+					setStore({ accessToken: null })
+					localStorage.removeItem("accessToken")
+					return resp
+						 
+					},
+
 			userCreate: async ( first_name, last_name, city, country, zip_code, address_one, address_two, phone, email, password) => {
 				const resp = await getActions().apiFetch("/api/register", "POST", { first_name, last_name, city, country, zip_code, address_one, address_two, phone, email, password })
 				console.log({ first_name, last_name, email, password })
@@ -70,11 +107,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 			  },
 			  fetchVehicleTypes: async () => {
 				try {
-				  const resp = await getActions().apiFetch("/api/book", "GET");
+				  const resp = await getActions().apiFetchProtected("/api/book", "GET");
 				  if (resp.code >= 400) {
 					return resp;
 				  }
 				  setStore({ vehicle_types: resp.data.vehicle_types });
+				  console.log("Carga exitosa")
 				  return resp;
 				} catch (error) {
 				  console.log("Error fetching vehicle types", error);
@@ -123,6 +161,50 @@ const getState = ({ getStore, getActions, setStore }) => {
 				let data = await resp.json()
 				return { code: resp.status, data: data }
 			},
+			apiFetchProtected: async (endpoint, method = "GET", body = {}) => {
+				let params = {
+					headers: {
+						"Authorization": `Bearer ${getStore().accessToken}`
+					}
+				}
+				if (method !== "GET") {
+					params.method = method
+					params.body = JSON.stringify(body)
+					params.headers["Content-Type"] = "application/json"
+				}
+				console.log(params)
+				console.log(getStore().accessToken)
+				let resp = await fetch(apiUrl + endpoint, params)
+				if (!resp.ok) {
+					console.error(`${resp.status}: ${resp.statusText}`)
+					return { code: resp.status, error: `${resp.status}: ${resp.statusText}` }
+				}
+				let data = await resp.json()
+				return { code: resp.status, data }
+			},
+			requestPasswordRecovery: async (email)=>{
+				const resp = await getActions().apiFetch("/api/recoverypassword", "POST", { email })
+				return resp
+				
+			},
+			changePasswordRecovery: async (passwordToken, password)=>{
+				let resp = await fetch(apiUrl + "/api/changepassword",{
+					// let resp = await fetch(apiUrl + endpoint, {
+						method:"POST",
+						body: JSON.stringify(password),
+						headers: {
+							"Content-Type": "application/json",
+							"Authorization" : "Bearer "+passwordToken
+						}
+					})
+					if (!resp.ok) {
+						console.error(`${resp.status}: ${resp.statusText}`)
+						return { code: resp.status, error: `${resp.status}: ${resp.statusText}` }
+					}
+					let data = await resp.json()
+					return { code: resp.status, data: data }
+			},
+
 
 			pagoMercadopago: async ()=>{
 				try{
@@ -138,6 +220,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log(error)
 				}
 			},
+
+			
 
 			// fetchServices: async(name, description, price) =>{
 			// 	let baseUrl = apiUrl+"/api/services"

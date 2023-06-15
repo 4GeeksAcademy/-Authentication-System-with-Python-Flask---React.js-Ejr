@@ -2,12 +2,13 @@ import React, { useContext, useState } from "react";
 import { Context } from "../store/appContext";
 import rigoImageUrl from "../../img/rigo-baby.jpg";
 import "../../styles/home.css";
-
+import { useNavigate } from "react-router-dom";
 
 // Para registrarse
 
 export const Login = () => {
   const { store, actions } = useContext(Context);
+  const navigate=useNavigate()
 
   // function Password() {
   //   // Initialize a boolean state
@@ -28,6 +29,7 @@ export const Login = () => {
     if (resp >= 400) {
       return
     }
+    navigate("/login")
     //console.log("Login exitoso")
   }
 

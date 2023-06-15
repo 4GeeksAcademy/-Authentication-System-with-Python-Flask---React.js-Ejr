@@ -2,13 +2,14 @@ import React, { useContext, useState } from "react";
 import { Context } from "../store/appContext";
 import rigoImageUrl from "../../img/rigo-baby.jpg";
 import "../../styles/home.css";
+import { Link, useNavigate } from "react-router-dom";
 
 
 // Para iniciar sesión
 
 export const LoginUsuario = () => {
   const { store, actions } = useContext(Context);
-
+  const navigate=useNavigate()
   // function Password() {
   //   // Initialize a boolean state
   const [passwordShown, setPasswordShown] = useState(false);
@@ -28,6 +29,7 @@ export const LoginUsuario = () => {
     if (resp >= 400) {
       return
     }
+    navigate("/book")
     //console.log("Login exitoso")
   }
 
@@ -43,7 +45,7 @@ export const LoginUsuario = () => {
         <div className="form-group mb-3">
           <label className="form-label">Password</label>
           <div className="input-group">
-            <input type={passwordShown ? "text" : "password"} className="form-control" name="password"/>
+            <input type={passwordShown ? "text" : "password"} className="form-control" name="password" />
             <button onClick={togglePassword} className="input-group-text">
               <i className={passwordShowneye ? "fa fa-eye" : "fa fa-eye-slash"}></i>
             </button>
@@ -53,7 +55,9 @@ export const LoginUsuario = () => {
         <div className="col-12 mb-3 ">
           <div className="d-grid gap-2">
             <button className="btn btn-primary  mx-1" type="submit">Login</button>
-            <button type="button" className="btn btn-secondary  mx-1">Forgot your password?</button>
+            <Link to="/recovery">
+              <button type="button" className="btn btn-secondary  mx-1">Forgot your password?</button>
+            </Link>
           </div>
         </div>
 
