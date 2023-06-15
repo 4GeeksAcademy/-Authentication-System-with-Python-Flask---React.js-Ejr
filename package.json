@@ -73,7 +73,11 @@
 		]
 	},
 	"dependencies": {
+<<<<<<< HEAD
 		"@hookform/resolvers": "^3.1.1",
+=======
+		"@hookform/resolvers": "^3.1.0",
+>>>>>>> 40673fc4e3d01a3a7b22bac7728bceb959e40ba5
 		"date-fns": "^2.30.0",
 		"moment": "^2.29.4",
 		"prop-types": "^15.6.1",
