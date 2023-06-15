@@ -22,7 +22,6 @@ import { toast } from "react-toastify";
       console.log(data);
       actions.saveCompanyData(data); 
       navigate("/company-register-2");
-      //  need to show errors from back
     }; 
 
     return (

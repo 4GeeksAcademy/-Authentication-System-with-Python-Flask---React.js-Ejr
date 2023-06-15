@@ -6,10 +6,15 @@ def create_company(body):
     cif = body['cif']
     name = body['name']
 
-    existing_company = Company.query.filter(Company.cif == cif or Company.name == name).first()
+    existing_cif = Company.query.filter(Company.cif == cif).first()
 
-    if existing_company: 
-        return {'msg': 'Company with the this CIF or name already exists in database', 'status': 400}
+    existing_name = Company.query.filter(Company.name == name).first()
+
+    if existing_cif: 
+        return {'msg': 'Company with the this CIF already exists in database', 'status': 400}
+
+    if existing_name: 
+        return {'msg': 'Company with the this name already exists in database', 'status': 400}
 
     new_user = UserController.create_new_user(body, 'admin')
 

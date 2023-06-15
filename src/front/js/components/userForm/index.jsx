@@ -28,12 +28,12 @@ const UserForm = ({ textBtn }) => {
 
   const onSubmit = async () => {
     const resMsg = await createCompany(newCompany);
-    if (resMsg) {
-      console.log(resMsg)
+    console.log(resMsg); 
+    if (resMsg?.error) {
+      toast.error(resMsg?.msg);
+    } else {
       toast.success(resMsg?.msg);
       navigate(`/admin-dashboard/${resMsg?.data.id}`);
-    } else {
-      toast.error(resMsg?.msg);
     }
   };
 
@@ -97,7 +97,7 @@ const UserForm = ({ textBtn }) => {
       )}
    <Input
         icon={<i className="fa-solid fa-circle-user"></i>}
-        type="text"
+        type="password"
         placeholder="Password"
         label="password"
         name="password"

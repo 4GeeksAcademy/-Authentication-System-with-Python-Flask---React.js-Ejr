@@ -30,6 +30,7 @@ const Header = ({ imgProfile, settings, settingsTitle, updateProfile }) => {
     const localStorageData = JSON.parse(
       localStorage.getItem("token/role/company_id")
     );
+    console.log(localStorageData); 
     localStorageData.role === "admin" && setIsAdmin(true);
   }, [isAdmin]);
 

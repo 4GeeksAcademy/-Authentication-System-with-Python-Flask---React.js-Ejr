@@ -1,4 +1,5 @@
 import { URL } from ".";
+import { loginUser } from "./user";
 
 const HEADERS = {
   "Content-Type": "application/json",
@@ -12,7 +13,9 @@ export const createCompany = async (company) => {
       body: JSON.stringify(company),
     });
     const data = await res.json();
-    console.log("data del fetch =====>", data)
+    if (res.status === 200) {
+      await loginUser({ email: company.email, password: company.password })
+    }
     return data;
   } catch (err) {
     console.log("Error to Create Company", err);
