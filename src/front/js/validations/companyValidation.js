@@ -1,14 +1,14 @@
 import * as yup from "yup";
 
 
-export const companySchema = yup.object({
+export const companySchema = yup.object().shape({
     name: yup
         .string()
-        .required("Name is required"),
+        .required("Company name is required"),
     cif: yup
         .string()
-        .min(8)
-        .max(10)
+        .min(7)
+        .max(8)
         .required("CIF is required"),
     description: yup
         .string()
@@ -16,7 +16,7 @@ export const companySchema = yup.object({
     address: yup
         .string()
         .required("Address is required"),
-    workingSchedule: yup
+    working_schedule: yup
         .string()
         .required("Working Schedule is required"),
-}); 
+});  

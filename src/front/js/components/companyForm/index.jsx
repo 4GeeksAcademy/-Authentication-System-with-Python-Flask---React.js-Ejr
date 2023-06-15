@@ -1,71 +1,100 @@
-import React, { forwardRef } from "react";
+import React, { useContext } from "react";
+import { Context } from "../../store/appContext";
+import { useNavigate } from "react-router-dom";
 import Input from "../input/index.jsx";
 import styles from "./companyForm.module.css";
 import Button from "../button/index.jsx";
-import { yupResolver } from '@hookform/resolvers/yup';
-
-import { companySchema } from "../../validations/companyValidation.js";
-
 import { useForm } from "react-hook-form";
+import { yupResolver } from '@hookform/resolvers/yup';
+import { companySchema } from "../../validations/companyValidation.js";
+import { toast } from "react-toastify";
 
-  const CompanyForm = ({ handleSubmit, handleChange, textBtn }) => {
+  const CompanyForm = ({ textBtn }) => {
 
-  const { register, formState: { errors } } = useForm( {
-    resolver: yupResolver(companySchema)
-  });
+    const { actions } = useContext(Context);
+    const navigate = useNavigate();
 
-  console.log(errors); 
+    const { register, handleSubmit, formState:{ errors } } = useForm({
+      resolver: yupResolver(companySchema)
+    }); 
 
-  return (
-  <form
-    className={styles._form}
-    onChange={handleChange}
-    onSubmit={handleSubmit}
-  >
-    <Input
-      icon={<i className="fa-solid fa-circle-user"></i>}
-      type="text"
-      placeholder="Name"
-      label="name"
-      ref={null}
-      {...register("name")}
-    />
-    <p>{errors.name?.message}</p>
-    <Input
-      icon={<i className="fa-solid fa-circle-user"></i>}
-      type="text"
-      placeholder="CIF"
-      label="cif"
-      ref={null}
-      {...register("cif")}
-    />
-    <Input
-      icon={<i className="fa-solid fa-circle-user"></i>}
-      type="textarea"
-      placeholder="Description"
-      label="description"
-      ref={null}
-      {...register("description")}
-    />
-    <Input
-      icon={<i className="fa-solid fa-envelope"></i>}
-      type="text"
-      placeholder="Address"
-      label="address"
-      ref={null}
-      {...register("address")}
-    />
-    <Input
-      icon={<i className="fa-solid fa-calendar-days"></i>}
-      type="text"
-      placeholder="Working Schedule"
-      label="workingSchedule"
-      ref={null}
-      {...register("workingSchedule")}
-    />
+    const onSubmit = (data) => {
+      console.log(data);
+      actions.saveCompanyData(data); 
+      navigate("/company-register-2");
+      //  need to show errors from back
+    }; 
+
+    return (
+      <form className={styles._form} onSubmit={handleSubmit(onSubmit)}>
+       <Input
+        icon={<i className="fa-solid fa-circle-user"></i>}
+        type="text"
+        placeholder="Name"
+        label="name"
+        name="name"
+        register={register}
+      />
+        {errors?.name && (
+        <small className={styles._fail}>
+          <i className="fa-solid fa-circle-exclamation"></i> {errors.name?.message}
+        </small>
+      )}
+        <Input
+        icon={<i className="fa-solid fa-circle-user"></i>}
+        type="text"
+        placeholder="CIF"
+        label="cif"
+        name="cif"
+        register={register}
+      />
+       {errors?.cif && (
+        <small className={styles._fail}>
+          <i className="fa-solid fa-circle-exclamation"></i> {errors.cif?.message}
+        </small>
+      )}
+        <Input
+        icon={<i className="fa-solid fa-circle-user"></i>}
+        type="text"
+        placeholder="Description"
+        label="description"
+        name="description"
+        register={register}
+      />
+       {errors?.description && (
+        <small className={styles._fail}>
+          <i className="fa-solid fa-circle-exclamation"></i> {errors.description?.message}
+        </small>
+      )}
+        <Input
+        icon={<i className="fa-solid fa-circle-user"></i>}
+        type="text"
+        placeholder="Address"
+        label="address"
+        name="address"
+        register={register}
+      />
+        {errors?.address && (
+        <small className={styles._fail}>
+          <i className="fa-solid fa-circle-exclamation"></i> {errors.address?.message}
+        </small>
+      )}
+        <Input
+        icon={<i className="fa-solid fa-circle-user"></i>}
+        type="text"
+        placeholder="Working Schedule"
+        label="working_schedule"
+        name="working_schedule"
+        register={register}
+      />
+        {errors?.working_schedule && (
+        <small className={styles._fail}>
+          <i className="fa-solid fa-circle-exclamation"></i> {errors.working_schedule?.message}
+        </small>
+      )}
     <Button type="submit" title={textBtn}/>
   </form>
   )
 }; 
 
-export default CompanyForm;
+export default CompanyForm; 

@@ -1,38 +1,31 @@
-import React, { forwardRef }from "react";
+import React from "react";
 import styles from "./input.module.css";
 
-const Input = forwardRef(function Input({
+const Input = ({
+  icon,
   type,
   placeholder,
-  icon,
   name,
   defaultValue,
-  disabled,
-  value,
   date,
-  required,
-  register, 
-  label, 
-}, ref) {
+  register,
+  }) => {
+
   return (
-    <div className={styles._inputContainer}>
+    <div className={styles._inputContainer}
+      >
       {icon}
       <input
         className="_boxShadow"
         type={type}
         placeholder={placeholder}
         name={name}
-        value={value}
         defaultValue={defaultValue}
-        disabled={disabled}
         date={date}
-        required={required}
-        register={register}
-        label={label}
-        ref={ref}
+        {...register(name)}
       />
     </div>
   );
-}); 
+}; 
 
 export default Input;

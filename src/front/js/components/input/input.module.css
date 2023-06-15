@@ -30,3 +30,11 @@
 ._inputContainer input:disabled {
   cursor: not-allowed;
 }
+
+._fail {
+  color: var(--highlight);
+}
+
+._inputContainerError input {
+  border: 1px solid var(--highlight);
+}
