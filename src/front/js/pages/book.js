@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import { Context } from "../store/appContext";
 import rigoImageUrl from "../../img/rigo-baby.jpg";
 import "../../styles/home.css";
-
+import DateTimePicker from "react-datetime-picker";
 
 
 
@@ -17,6 +17,10 @@ export const Book = () => {
     actions.fetchVehicleTypes()
     actions.pagoMercadopago()
   }, [])
+
+  const [value, onChange] = useState(new Date());
+
+
 
   const pagoMercadoPago = () => {
     window.location.replace(store?.mercadopago.init_point);
@@ -169,7 +173,9 @@ export const Book = () => {
               </button>
             </h2>
             <div id="flush-collapseThree" className="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
-              <div className="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the third item's accordion body. Nothing more exciting happening here in terms of content, but just filling up the space to make it look, at least at first glance, a bit more representative of how this would look in a real-world application.</div>
+              <div className="accordion-body">
+              <DateTimePicker onChange={onChange} value={value}  />
+              </div>
             </div>
           </div>
           </div>
