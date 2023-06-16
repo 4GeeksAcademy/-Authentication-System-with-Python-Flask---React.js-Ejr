@@ -15,7 +15,9 @@ export const Navbar = () => {
 	// 	}
 	//    }, [])
 	function logout() {
-		actions.userLogout()
+		if (store.accessToken) {
+			navigate("/logout")
+		  }
 	}
 	return (
 		<nav className="navbar navbar-expand-lg navbar-light custom-navbar">
