@@ -1,10 +1,14 @@
+import React, { useState } from "react";
 const getState = ({ getStore, getActions, setStore }) => {
+
+
 	return {
+
 		store: {
 			message: [
 				"Parece que funciona...  (?) valor anterior era null y no referenciaba al backend"
 			],
-			pictureUrl: null, 
+			pictureUrl: null,
 			restaurantes: [
 				{
 					name: "Wok",
@@ -292,6 +296,28 @@ const getState = ({ getStore, getActions, setStore }) => {
 			],
 		},
 		actions: {
+			fetchChatGPT: async (prompt, setIaResponse) => {
+				console.log(JSON.stringify({ prompt }))
+				try {
+					const response = await fetch('http://127.0.0.1:3001/api/createDietChatGPT', {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json',
+						},
+						body: JSON.stringify({ prompt })
+					});
+					if (response.ok) {
+						const data = await response.text();
+						setIaResponse(data.replace('\n', '<br>'));
+					} else {
+						console.error('Error en la respuesta del servidor:', response.status, response.statusText);
+					}
+				} catch (error) {
+
+					console.error('Error en la solicitud:', error);
+				}
+			},
+
 			userLogin: async (email, password) => {
 				const resp = await getActions().apiFetch("/login", "POST", { email, password })
 				if (resp.code >= 400) {
@@ -307,7 +333,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				if (resp.code >= 400) {
 					return resp
 				}
-				setStore({ accessToken: null, pictureUrl:null })
+				setStore({ accessToken: null, pictureUrl: null })
 				localStorage.removeItem(accessToken)
 				return resp
 
@@ -331,7 +357,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			},
 			changePasswordRecovery: async (passwordToken, password) => {
-				let resp = await fetch(apiUrl + "/changepassword",{
+				let resp = await fetch(apiUrl + "/changepassword", {
 					method: "POST",
 					body: JSON.stringify({ password }),
 					headers: {
@@ -393,7 +419,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					method: "POST",
 					body: formData,
 					headers: {
-						
+
 						"Authorization": `Bearer ${getStore().accessToken}`
 					}
 				})
@@ -402,7 +428,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return { code: resp.status, error: `${resp.status}: ${resp.statusText}` }
 				}
 				let data = await resp.json()
-				setStore({profilePic:data.pictureUrl})
+				setStore({ profilePic: data.pictureUrl })
 				return { code: resp.status, data }
 			},
 
@@ -444,41 +470,41 @@ const getState = ({ getStore, getActions, setStore }) => {
 				let data = await resp.json()
 				return { code: resp.status, data }
 			},
-			addFavorite:(index, name)=>{
-				let {favorites} = getStore();
-				if(!favorites.some(item=>item.index==index)){
-					setStore({favorites:[...favorites, {id:index, name:displayName}]})
+			addFavorite: (index, name) => {
+				let { favorites } = getStore();
+				if (!favorites.some(item => item.index == index)) {
+					setStore({ favorites: [...favorites, { id: index, name: displayName }] })
 					console.log(getStore().favorites)
 				}
-				else{
+				else {
 					//if exisitng then delete
-					let newFavorites=[...favorites]
-					let itemIndex=favorites.findIndex(item=>item.id==index)
-					newFavorites.splice(itemIndex,1);
-					setStore({favorites:newFavorites})
+					let newFavorites = [...favorites]
+					let itemIndex = favorites.findIndex(item => item.id == index)
+					newFavorites.splice(itemIndex, 1);
+					setStore({ favorites: newFavorites })
 					console.log(itemIndex)
 					console.log(favorites)
 				}
 			},
-			deleteFavorite:(name)=>{
-				let {favorites} = getStore()
-				let newFavorites=[...favorites]
-					let itemIndex=favorites.findIndex(item=>item.name==name)
-					newFavorites.splice(itemIndex,1);
-					setStore({favorites:newFavorites})
-					console.log(itemIndex)
-					console.log(favorites)
-			},
-			deleteAllFavorites:()=>{
-				let {favorites} = getStore()
-				let newFavorites=[{}]
-				setStore({favorites:newFavorites})
+			deleteFavorite: (name) => {
+				let { favorites } = getStore()
+				let newFavorites = [...favorites]
+				let itemIndex = favorites.findIndex(item => item.name == name)
+				newFavorites.splice(itemIndex, 1);
+				setStore({ favorites: newFavorites })
+				console.log(itemIndex)
 				console.log(favorites)
-			}	
+			},
+			deleteAllFavorites: () => {
+				let { favorites } = getStore()
+				let newFavorites = [{}]
+				setStore({ favorites: newFavorites })
+				console.log(favorites)
+			}
 		}
 	};
 };
-			
+
 
 
 export default getState;
