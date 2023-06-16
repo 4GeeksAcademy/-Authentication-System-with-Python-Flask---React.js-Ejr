@@ -283,19 +283,24 @@ const getState = ({ getStore, getActions, setStore }) => {
 			]
 		},
 		actions: {
-			fetchChatGPT: async (prompt) => {
+			fetchChatGPT: async (prompt, setIaResponse) => {
+				console.log(JSON.stringify({ prompt }))
 				try {
-					const response = await fetch('/createDietChatGPT', {
+					const response = await fetch('http://127.0.0.1:3001/api/createDietChatGPT', {
 						method: 'POST',
 						headers: {
 							'Content-Type': 'application/json',
 						},
-						body: JSON.stringify({ prompt }),
+						body: JSON.stringify({ prompt })
 					});
-
-					// Resto de tu código
+					if (response.ok) {
+						const data = await response.text();
+						setIaResponse(data.replace('\n', '<br>'));
+					} else {
+						console.error('Error en la respuesta del servidor:', response.status, response.statusText);
+					}
 				} catch (error) {
-					// Manejar errores de conexión u otros errores
+
 					console.error('Error en la solicitud:', error);
 				}
 			},

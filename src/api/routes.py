@@ -311,11 +311,11 @@ def user_profile_pic():
     return jsonify({"msg": "Profile pic updated"})
 
 
-@api.route('/createDietChatGPT', methods=['POST'])
+@api.route('/createDietChatGPT', methods=['GET','POST'])
 def generateChatResponse():
     prompt = request.json.get("prompt")
     messages = [
-        {"role": "system", "content": "Create a diet plan with the characteristics that the user is going to give you and response in json "},
+        {"role": "system", "content": "Create a diet plan with the characteristics that the user is going to give you"},
         {"role": "user", "content": prompt}
     ]
     response = openai.ChatCompletion.create(
@@ -323,8 +323,9 @@ def generateChatResponse():
         messages=messages
     )
   
+    
     try:
-        answer = response.choices[0].message.content.replace('\n', '<br>')
+        answer = response.choices[0].message.content
     except:
         answer = "Oops you beat the AI, try a different question, if the problem persists, come back later."
     return answer

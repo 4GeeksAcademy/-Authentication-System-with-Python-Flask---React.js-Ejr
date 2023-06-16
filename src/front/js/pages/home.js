@@ -15,7 +15,7 @@ export const Home = () => {
     };
 
     const handleSubmit = () => {
-        actions.fetchChatGPT(userInput);
+        actions.fetchChatGPT(userInput, setIaResponse);
     };
 
     return (
@@ -29,7 +29,7 @@ export const Home = () => {
                                     <div className="card-body">
                                         <h5 className="card-title fs-3 text-stroke-white">Esta es nuestra IA!</h5>
                                         <h5 className="card-title fs-3 text-stroke-white">Puedes pedirle consejos de dieta y almentacion!</h5>
-                                        <p className="card-text fs-6 h-75 my-5 fs-3 text-stroke-dark-thin text-light overflow-auto">{iaResponse}</p>
+                                        <p className="card-text fs-6 h-75 my-5 fs-3 text-stroke-dark-thin text-light overflow-auto" dangerouslySetInnerHTML={{ __html: iaResponse }}></p>
                                     </div>
                                     <div className="card-footer mt-5 mx-auto fs-5 w-100 rounded">
                                         <div className="input-group d-flex align-self-end text-stroke-white-thin w-100" style={{ color: "white" }}>
