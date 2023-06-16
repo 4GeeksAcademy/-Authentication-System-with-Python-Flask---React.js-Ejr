@@ -4,10 +4,14 @@ import "../../styles/home.css";
 import Register from "../component/register";
 import { Link } from "react-router-dom";
 import LoginModal from "./loginModal";
+import { useNavigate } from "react-router-dom";
 
 export const Home = () => {
     const {store, actions}=useContext(Context)
-
+    const navigate=useNavigate()
+    useEffect(()=>{
+        if(!!store.accessToken) navigate ("/profile")
+    },[store.accessToken])
 
     async function submitForm(e){
         e.preventDefault()
@@ -16,6 +20,7 @@ export const Home = () => {
         if (resp>=400){
             return 
         }
+        navigate("/profile")
         console.log("Login exitoso")
     }
 
