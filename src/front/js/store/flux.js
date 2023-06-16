@@ -4,6 +4,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			message: [
 				"Parece que funciona...  (?) valor anterior era null y no referenciaba al backend"
 			],
+			pictureUrl: null, 
 			restaurantes: [
 				{
 					name: "Wok",
@@ -293,7 +294,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				if (resp.code >= 400) {
 					return resp
 				}
-				setStore({ accessToken: resp.data.accessToken })
+				setStore({ accessToken: resp.data.accessToken, pictureUrl: resp.data.userInfo.profilePic })
 				localStorage.setItem("accessToken, resp.data.accessToken")
 				return resp
 
@@ -303,7 +304,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				if (resp.code >= 400) {
 					return resp
 				}
-				setStore({ accessToken: null })
+				setStore({ accessToken: null, pictureUrl:null })
 				localStorage.removeItem(accessToken)
 				return resp
 
@@ -381,13 +382,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 				return { code: resp.status, data }
 			},
 
-			uploadProfilePic: async (picture) => {
+			uploadProfilePic: async (formData) => {
 				const apiUrl = process.env.BACKEND_URL
 				console.log(apiUrl)
 
-				let resp = await fetch(apiUrl + "profilepic", {
+				let resp = await fetch(apiUrl + "/profilepic", {
 					method: "POST",
-					body: {profilePic: picture},
+					body: formData,
 					headers: {
 						
 						"Authorization": `Bearer ${getStore().accessToken}`
