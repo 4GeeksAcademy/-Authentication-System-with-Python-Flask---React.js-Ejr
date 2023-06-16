@@ -8,11 +8,8 @@ import FoodModal from "./foodModal";
 export const SubscriptionCard = () => {
     const { store, actions } = useContext(Context);
     const restaurant = store.restaurantes;
-    const subItem = restaurant.subscription;
-    const name = subItem ? subItem.SubscriptionName : "";
-
+    
     console.log(restaurant)
-    console.log(subItem)
 
 
     function imgError(e) {
@@ -21,32 +18,20 @@ export const SubscriptionCard = () => {
 
     return (
         <>
-        {/* renderizar las sucripciones dentro de store.restaurantes.subcription para mostrar en cada tarjeta únicamente la suscripcion y sus datos 
-        store[restaurantes[
-        subscription: [ <--- subItem Hay que mapear en esta tarjeta las propiedades, similar a lo que secude en foodCard.js, puedes navegar ahi usando /order-food/0
-            {
-                SubscriptionName: "Italianisimo",
-                description: "Tendras una fabulosa comida variada todos los días!, Lunes Pizza, martes Pasta, miercoles fettucinni, jueves, gnocci, variaremos las combinaciones e ingredientes a lo lagro de la semana, asume lo delicioso y asegura tus sorpresas!",
-                price: "20000"
-            }
-        ]]]
-        ver en flux.  */}
-            <div className="col card bg-transparent border border-primary">
-                {store.restaurantes?.map((element, index) => (
-                    <div key={index} onError={imgError} className="card-img-top mx-0 p-1 m-1 w-100" alt="{item.url}">
-                        {/* generar dentro de este div los datos de la suscripcion, o cargar la imagen desde subcription */}
+            {store.restaurantes?.map((element, index) => (
+            <div key={index}className="col card bg-transparent border border-primary">
+                    <div onError={imgError} className="card-img-top mx-0 p-1 m-1 w-100" alt="{item.url}">
                         <img src={element.image} onError={imgError} className="card-img-top mx-0 p-1 pt-3 img-fluid figure-image" alt="restaurantImg" style={{ backgroundSize: "cover" }}></img>
-                        <div className="card-body">
-                            <h1 className="w-100 card-body text-light d-flex justify-content-center">
+                        <div className="card-bod my-0">
+                            <h1 className="card-body text-light d-flex justify-content-center mt-3">
                                 <strong>{element.subscription[0].SubscriptionName}</strong>
-                                <button className="btn btn-dark btn-outline-info align-self-end">♡</button>
+                                <button className="btn btn-dark btn-outline-info ms-5 px-3">♡</button>
                             </h1>
-                            {JSON.stringify(element.subscription[0].price)}
                         </div>
-                        <div className="p-5 mt-5 w-100">
-                            <p className="text-light fs-3 description-text">{element.subscription[0].description}</p>
+                        <div className="card-text p-5 mt-5 ">
+                            <p className="card-footer text-light fs-3 description-text">{element.subscription[0].description}</p>
                         </div>
-                        <div className="mx-auto d-flex justify-content-evenly w-100">
+                        <div className="my-0 mx-auto d-flex justify-content-evenly mb-4">
                             <button className="btn btn-outline-primary fw-bold rounded d-flex align-self-center justify-content-center w-100 px-5 py-3 mx-2 fs-7">
                                 Precio de: {element.subscription[0].price} Pesos.
                             </button>
@@ -55,10 +40,8 @@ export const SubscriptionCard = () => {
                             </button>
                         </div>
                     </div>
-                ))}
             </div>
-
-
+            ))}
         </>
     )
 };

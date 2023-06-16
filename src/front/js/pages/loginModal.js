@@ -1,7 +1,12 @@
-import React from "react";
+import React, {useContext} from "react";
 import { Link } from "react-router-dom";
+import { Context } from "../store/appContext";
 
 export const LoginModal = () => {
+    const {store, actions} = useContext(Context)
+	function logout(){
+		actions.userLogout()
+	}
     
     return (
         <div className="container">
@@ -30,16 +35,30 @@ export const LoginModal = () => {
                                 </div>
                             </div>
                             <div className="d-flex mt-5">
-                                <button className="btn btn-outline-info text-light mx-4">Olvide mi contraseña :c</button>
+                                {
+                                    !!store.accessToken?
+                                        ""                                                                          
+                                        :
+                                        <Link to ="/recovery">
+                                                <button className="btn btn-outline-info text-light mx-4">Olvide mi contraseña :c</button>
+                                        </Link>
+                                }
                                 <Link to="/register">
                                     <button className="btn btn-outline-info text-light mx-4" data-bs-dismiss="modal">Me quiero registrar UwU</button>
                                 </Link>
                             </div>
                         </div>
                         <div className="modal-footer">
-                            <button type="button px-4" className="btn btn-outline-warning px-4" data-bs-dismiss="modal" style={{borderRadius:"33% 67% 32% 68% / 90% 9% 91% 10% "}}>Cerrar</button>
+                            <button type="button px-4" className="btn btn-outline-warning px-4" 
+                            data-bs-dismiss="modal" style={{borderRadius:"33% 67% 32% 68% / 90% 9% 91% 10% "}}>
+                                Cerrar
+                            </button>
                             <Link to="/">
-                                <button type="button" className="btn btn-outline-info px-4" style={{borderRadius:"33% 67% 32% 68% / 90% 9% 91% 10% "}} data-bs-dismiss="modal">Iniciar Sesión</button>
+                                <button type="button" className="btn btn-outline-info px-4" 
+                                style={{borderRadius:"33% 67% 32% 68% / 90% 9% 91% 10% "}} 
+                                data-bs-dismiss="modal">
+                                    Iniciar Sesión
+                                </button>
                             </Link>    
                         </div>
                     </div>

@@ -1,7 +1,10 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
-			message: ["Parece que funciona...  (?) valor anterior era null y no referenciaba al backend"],
+			message: [
+				"Parece que funciona...  (?) valor anterior era null y no referenciaba al backend"
+			],
+			pictureUrl: null,
 			restaurantes: [
 				{
 					name: "Wok",
@@ -42,8 +45,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 					image: "https://cdn.leonardo.ai/users/25acf724-d0fb-44e7-8da5-a5932af5eac9/generations/65d1d1eb-9819-4610-9871-6d8e0ff7a206/DreamShaper_v6_wok_ramen_logo_on_top_right_elegant_marketing_0.jpg",
 					subscription: [
 						{
-							SubscriptionName: "Italianisimo",
-							description: "Tendras una fabulosa comida variada todos los días!, Lunes Pizza, martes Pasta, miercoles fettucinni, jueves, gnocci, variaremos las combinaciones e ingredientes a lo lagro de la semana, asume lo delicioso y asegura tus sorpresas!",
+							SubscriptionName: "Yamete Kudasai",
+							description: "¡Explora la deliciosa diversidad de la cocina japonesa con nuestra suscripción de sabores diarios! Descubre el auténtico ramen, el exquisito arroz japonés, los irresistibles onigiri y el fresco sushi, ¡una experiencia culinaria única para cada día",
 							price: "20000",
 							image: "https://cdn.leonardo.ai/users/25acf724-d0fb-44e7-8da5-a5932af5eac9/generations/65d1d1eb-9819-4610-9871-6d8e0ff7a206/DreamShaper_v6_wok_ramen_logo_on_top_right_elegant_marketing_0.jpg",
 						}
@@ -230,14 +233,19 @@ const getState = ({ getStore, getActions, setStore }) => {
 			],
 			user: [
 				{
+					displayName: "Alepina",
 					firstName: "Alejandra",
 					secondName: "Martinez",
 					birthDay: "12",
 					birthMonth: "6",
 					birthYear: "2014",
+					address: "",
+					addressDetail: "",
 					Gender: "femenino",
 					email: "askingalessa@gfake.com",
 					phone: "3005562343",
+					login: false,
+					image: "https://cdn.leonardo.ai/users/25acf724-d0fb-44e7-8da5-a5932af5eac9/generations/5d52955e-942f-44f3-8686-94611922d455/DreamShaper_v5_3_An_AIpowered_android_woman_with_celticlik_0.jpg",
 					invoiceHistory: [
 						{
 							invoiceNumber: "39201",
@@ -275,9 +283,126 @@ const getState = ({ getStore, getActions, setStore }) => {
 						}
 					]
 				}
+			],
+			favorites: [
+
 			]
 		},
 		actions: {
+			userLogin: async (email, password) => {
+				const resp = await getActions().apiFetch("/login", "POST", { email, password })
+				if (resp.code >= 400) {
+					return resp
+				}
+				setStore({ accessToken: resp.data.accessToken, pictureUrl: resp.data.userInfo.profilePic })
+				localStorage.setItem("accessToken, resp.data.accessToken")
+				return resp
+
+			},
+			userLogout: async () => {
+				const resp = await getActions().apiFetchProtected("/logout", "POST")
+				if (resp.code >= 400) {
+					return resp
+				}
+				setStore({ accessToken: null, pictureUrl: null })
+				localStorage.removeItem(accessToken)
+				return resp
+
+			},
+			loadToken() {
+				let token = localStorage.getItem("accessToken")
+				setStore({ accessToken: token })
+			},
+			getMessage: async () => {
+				try {
+					//fetching data fom the backend
+					const resp = await getActions().apiFetch("/hello")
+					setStore({ message: resp.data.message })
+				} catch (error) {
+					console.log("Error loading message from backend", error)
+				}
+			},
+			requestPasswordRecovery: async (email) => {
+				const resp = await getActions().apiFetch("/recoverypassword", "POST", { email })
+				return resp
+
+			},
+			changePasswordRecovery: async (passwordToken, password) => {
+				let resp = await fetch(apiUrl + "/changepassword", {
+					method: "POST",
+					body: JSON.stringify({ password }),
+					headers: {
+						"Content-Type": "application/json",
+						"Authorization": `Bearer ${passwordToken}`
+					}
+
+				})
+				if (!response.ok) {
+					console.error(`${resp.status}: ${resp.statusText}`)
+					return { code: resp.status, error: `{resp.status}: ${resp.statusText}` }
+				}
+				let data = await resp.json()
+				return { code: resp.status, data }
+
+			},
+			apiFetch: async (endpoint, method = "GET", body = {}) => {
+				let resp = await fetch(apiUrl + endpoint, method == "GET" ? undefined : {
+					method,
+					body: JSON.stringify(body),
+					headers: {
+						"Content-Type": "application/json"
+					}
+
+				})
+				if (!response.ok) {
+					console.error(`${resp.status}: ${resp.statusText}`)
+					return { code: resp.status, error: `{resp.status}: ${resp.statusText}` }
+				}
+				let data = await resp.json()
+				return { code: resp.status, data }
+
+			},
+			apiFetchProtected: async (endpoint, method = "GET", body = {}) => {
+				let params = {
+					headers: {
+						"Authorization": `Bearer ${getStore().accessToken}`
+					}
+				}
+				if (method !== "GET") {
+					params.method = method
+					params.body = JSON.stringify(body)
+					params.headers["Content-Type"] = "application/json"
+				}
+				let resp = await fetch(apiUrl + endpoint, params)
+				if (!resp.ok) {
+					console.error(`${resp.status}: ${resp.statusText}`)
+					return { code: resp.status, error: `${resp.status}: ${resp.statusText}` }
+				}
+				let data = await resp.json()
+				return { code: resp.status, data }
+			},
+
+			uploadProfilePic: async (formData) => {
+				const apiUrl = process.env.BACKEND_URL
+				console.log(apiUrl)
+
+				let resp = await fetch(apiUrl + "/profilepic", {
+					method: "POST",
+					body: formData,
+					headers: {
+
+						"Authorization": `Bearer ${getStore().accessToken}`
+					}
+				})
+				if (!resp.ok) {
+					console.error(`${resp.status}: ${resp.statusText}`)
+					return { code: resp.status, error: `${resp.status}: ${resp.statusText}` }
+				}
+				let data = await resp.json()
+				setStore({ profilePic: data.pictureUrl })
+				return { code: resp.status, data }
+			},
+
 			updateUserProfile: async (email, updatedProfile) => {
 				try {
 					//  Realizar una solicitud a la API para actualizar el perfil del usuario
@@ -316,135 +441,42 @@ const getState = ({ getStore, getActions, setStore }) => {
 				let data = await resp.json()
 				return { code: resp.status, data }
 			},
-			//  function apiFetch('/login').then(response => response.json()).then(data => {
-			// 	console.log(data.email);
-			// 	console.log(data.password);
-			//   })
-			//   .catch(error => {
-			// 	console.error('Error:', error);
-			//   });
-			// 				fetch('/register').then(response => response.json())
-			// .then(data => {
-			//   console.log(data.new_user);
-			// })
-			// .catch(error => {
-			//   console.error('Error:', error);
-			// });
-
+			addFavorite: (index, name) => {
+				let { favorites } = getStore();
+				if (!favorites.some(item => item.index == index)) {
+					setStore({ favorites: [...favorites, { id: index, name: displayName }] })
+					console.log(getStore().favorites)
+				}
+				else {
+					//if exisitng then delete
+					let newFavorites = [...favorites]
+					let itemIndex = favorites.findIndex(item => item.id == index)
+					newFavorites.splice(itemIndex, 1);
+					setStore({ favorites: newFavorites })
+					console.log(itemIndex)
+					console.log(favorites)
+				}
+			},
+			deleteFavorite: (name) => {
+				let { favorites } = getStore()
+				let newFavorites = [...favorites]
+				let itemIndex = favorites.findIndex(item => item.name == name)
+				newFavorites.splice(itemIndex, 1);
+				setStore({ favorites: newFavorites })
+				console.log(itemIndex)
+				console.log(favorites)
+			},
+			deleteAllFavorites: () => {
+				let { favorites } = getStore()
+				let newFavorites = [{}]
+				setStore({ favorites: newFavorites })
+				console.log(favorites)
+			}
 		}
-	}
+	};
 };
+
+
 
 export default getState;
 
-// fetchUserData: async (email) => {
-// 	const baseUrl = `${process.env.BACKEND_URL}/${email}`;
-
-// 	try {
-// 		let response = await fetch(baseUrl)
-// 		if (!response.ok) return response.status
-// 		setStore(email)
-// 	}
-// 	catch (error) {
-// 		console.error(error)
-// 	}
-// },
-// user_create: async (user) => {
-// 	try {
-// 		const response = await getActions().apiFetch("register", "POST", user);
-// 		const { code, data } = response;
-
-// 		if (code === 200 && data) {
-// return data;
-// 		} else {
-// 			console.error("Error:", response);
-// 		}
-// 	} catch (error) {
-// 		console.error("Error:", error);
-// 	}
-// },
-//
-// user_login: async (email, password) => {
-// 	const resp = await getActions().apiFetch("/login", "POST", { email, password })
-// 	if (resp.code >= 400) {
-// 		return resp
-// 	}
-// 	setStore({ accessToken: resp.data.accessToken })
-// 	localStorage.setItem("accessToken", resp.data.accessToken)
-// 	return resp
-// },
-// user_logout: async () => {
-// 	const resp = await getActions().apiFetchProtected("/logout", "POST")
-// 	if (resp.code >= 400) {
-// 		return resp
-// 	}
-// 	setStore({ accessToken: null })
-// 	localStorage.removeItem("accessToken")
-// 	return resp
-// },
-// loadToken() {
-// 	let token = localStorage.getItem("accessToken")
-// 	setStore({ accessToken: token })
-// },
-// getMessage: async () => {
-// 	try {
-// 		// fetching data from the backend
-// 		const resp = await getActions().apiFetch("/hello")
-// 		setStore({ message: resp.data.message })
-// 		// don't forget to return something, that is how the async resolves
-// 		//return data.message:
-// 	} catch (error) {
-// 		console.log("Error loading message from backend", error)
-// 	}
-// },
-// requestPasswordRecovery: async (email) => {
-// 	const resp = await getActions().apiFetch("/recoverypassword", "POST", { email })
-// 	return resp
-// },
-// changePasswordRecovery: async (passwordToken, password) => {
-// 	let resp = await fetch(apiUrl + endpoint, method == "GET" ? undefined : {
-// 		method,
-// 		body: JSON.stringify(password),
-// 		headers: {
-// 			"Content-Type": "application/json",
-// 			"Authorization": `Bearer ${passwordToken}`
-// 		}
-// 	})
-// 	if (!resp.ok) {
-// 		console.error(`${resp.status}: ${resp.statusText}`)
-// 		return { code: resp.status, error: `${resp.status}: ${resp.statusText}` }
-// 	}
-// 	let data = await resp.json()
-// 	return { code: resp.status, data }
-// },
-// apiFetch: async (endpoint, method = "GET", body = {}) => {
-// 	let resp = await fetch(apiUrl + endpoint, method == "GET" ? undefined : {
-// 		method,
-// 		body: JSON.stringify(body),
-// 		headers: {
-// 			"Content-Type": "application/json"
-// 		}
-// 	})
-// 	if (!resp.ok) {
-// 		console.error(`${resp.status}: ${resp.statusText}`)
-// 		return { code: resp.status, error: `${resp.status}: ${resp.statusText}` }
-// 	}
-// 	let data = await resp.json()
-// 	return { code: resp.status, data }
-// },
-// apiFetchProtected: async (endpoint, method = "GET", body = {}) => {
-// 	let resp = await fetch(apiUrl + endpoint, method == "GET" ? undefined : {
-// 		method,
-// 		body: JSON.stringify(body),
-// 		headers: {
-// 			"Content-Type": "application/json",
-// 			"Authorization": `Bearer  ${getStore().accessToken}`
-// 		}
-// 	})
-// 	if (!resp.ok) {
-// 		console.error(`${resp.status}: ${resp.statusText}`)
-// 		return { code: resp.status, error: `${resp.status}: ${resp.statusText}` }
-// 	}
-// 	let data = await resp.json()
-// 	return { code: resp.status, data }
-// }
