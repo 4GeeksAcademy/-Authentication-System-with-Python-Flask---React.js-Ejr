@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "431a7522a87c753c42d80b3554a7bc549bc636dd905461bd0f431168306d283b"
+            "sha256": "304d89593f19215a2e2a7fd2f4994492bcdb7c6bddd210ec9b429503390bec02"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -388,6 +388,14 @@
                 "sha256:f73bff05db2a3e5974a6fd248af2566134d8981fd7ab012e5dd4ddb1d9a70699"
             ],
             "version": "==41.0.1"
+        },
+        "firebase": {
+            "hashes": [
+                "sha256:46ddd748c2a5e064d38b76cc6c01fc6fdc5df49184d8774c1c178ba79746121c",
+                "sha256:5d91cbd8cb572a0cd3ea404e108b20fe58548ef8bcf464c83077367835b175f4"
+            ],
+            "index": "pypi",
+            "version": "==4.0.1"
         },
         "firebase-admin": {
             "hashes": [

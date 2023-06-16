@@ -1,7 +1,9 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
-			message: ["Parece que funciona...  (?) valor anterior era null y no referenciaba al backend"],
+			message: [
+				"Parece que funciona...  (?) valor anterior era null y no referenciaba al backend"
+			],
 			restaurantes: [
 				{
 					name: "Wok",
@@ -42,8 +44,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 					image: "https://cdn.leonardo.ai/users/25acf724-d0fb-44e7-8da5-a5932af5eac9/generations/65d1d1eb-9819-4610-9871-6d8e0ff7a206/DreamShaper_v6_wok_ramen_logo_on_top_right_elegant_marketing_0.jpg",
 					subscription: [
 						{
-							SubscriptionName: "Italianisimo",
-							description: "Tendras una fabulosa comida variada todos los días!, Lunes Pizza, martes Pasta, miercoles fettucinni, jueves, gnocci, variaremos las combinaciones e ingredientes a lo lagro de la semana, asume lo delicioso y asegura tus sorpresas!",
+							SubscriptionName: "Yamete Kudasai",
+							description: "¡Explora la deliciosa diversidad de la cocina japonesa con nuestra suscripción de sabores diarios! Descubre el auténtico ramen, el exquisito arroz japonés, los irresistibles onigiri y el fresco sushi, ¡una experiencia culinaria única para cada día",
 							price: "20000",
 							image: "https://cdn.leonardo.ai/users/25acf724-d0fb-44e7-8da5-a5932af5eac9/generations/65d1d1eb-9819-4610-9871-6d8e0ff7a206/DreamShaper_v6_wok_ramen_logo_on_top_right_elegant_marketing_0.jpg",
 						}
@@ -230,15 +232,19 @@ const getState = ({ getStore, getActions, setStore }) => {
 			],
 			user: [
 				{
+					displayName: "Alepina",
 					firstName: "Alejandra",
 					secondName: "Martinez",
 					birthDay: "12",
 					birthMonth: "6",
 					birthYear: "2014",
+					address: "",
+					addressDetail: "",
 					Gender: "femenino",
 					email: "askingalessa@gfake.com",
 					phone: "3005562343",
 					login: false,
+					image: "https://cdn.leonardo.ai/users/25acf724-d0fb-44e7-8da5-a5932af5eac9/generations/5d52955e-942f-44f3-8686-94611922d455/DreamShaper_v5_3_An_AIpowered_android_woman_with_celticlik_0.jpg",
 					invoiceHistory: [
 						{
 							invoiceNumber: "39201",
@@ -276,6 +282,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 						}
 					]
 				}
+			],
+			favorites: [
+
 			]
 		},
 		actions: {
@@ -410,6 +419,37 @@ const getState = ({ getStore, getActions, setStore }) => {
 				let data = await resp.json()
 				return { code: resp.status, data }
 			},
+			addFavorite:(index, name)=>{
+				let {favorites} = getStore();
+				if(!favorites.some(item=>item.index==index)){
+					setStore({favorites:[...favorites, {id:index, name:displayName}]})
+					console.log(getStore().favorites)
+				}
+				else{
+					//if exisitng then delete
+					let newFavorites=[...favorites]
+					let itemIndex=favorites.findIndex(item=>item.id==index)
+					newFavorites.splice(itemIndex,1);
+					setStore({favorites:newFavorites})
+					console.log(itemIndex)
+					console.log(favorites)
+				}
+			},
+			deleteFavorite:(name)=>{
+				let {favorites} = getStore()
+				let newFavorites=[...favorites]
+					let itemIndex=favorites.findIndex(item=>item.name==name)
+					newFavorites.splice(itemIndex,1);
+					setStore({favorites:newFavorites})
+					console.log(itemIndex)
+					console.log(favorites)
+			},
+			deleteAllFavorites:()=>{
+				let {favorites} = getStore()
+				let newFavorites=[{}]
+				setStore({favorites:newFavorites})
+				console.log(favorites)
+			}	
 		}
 	};
 };
