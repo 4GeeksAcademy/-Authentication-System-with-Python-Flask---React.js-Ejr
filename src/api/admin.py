@@ -15,7 +15,6 @@ def setup_admin(app):
     admin.add_view(ModelView(Services, db.session))
     admin.add_view(ModelView(ShoppingCar, db.session))
     admin.add_view(ModelView(VehicleType, db.session))
-
     admin.add_view(ModelView(TokenBlockedList, db.session))
 
     # You can duplicate that line to add mew models

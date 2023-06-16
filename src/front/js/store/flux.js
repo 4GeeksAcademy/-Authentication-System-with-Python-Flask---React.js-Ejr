@@ -28,12 +28,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 				getActions().changeColor(0, "green");
 			},
 
-			addFavorites: async(name, price, id) => {
+			addFavorites: async (name, price, id) => {
 				const resp = await getActions().apiFetchProtected("/api/shoppingCar", "POST", { id, name, price })
 				if (resp.code >= 400) {
 					return resp
 				}
-				setStore({new_service:resp.data.new_service})
+				setStore({ new_service: resp.data.new_service })
 				return resp
 				// let {favorites} = getStore()
 				// if(!favorites.some(item=>item.id==id)){
@@ -61,19 +61,19 @@ const getState = ({ getStore, getActions, setStore }) => {
 				localStorage.setItem("accessToken", resp.data.accessToken)
 				return resp
 			},
-			
+
 			userLogout: async () => {
 				const resp = await getActions().apiFetchProtected("/api/logout", "POST")
-				if (resp.code >= 400){
+				if (resp.code >= 400) {
 					return resp
 				}
-					setStore({ accessToken: null })
-					localStorage.removeItem("accessToken")
-					return resp
-						 
-					},
+				setStore({ accessToken: null })
+				localStorage.removeItem("accessToken")
+				return resp
 
-			userCreate: async ( first_name, last_name, city, country, zip_code, address_one, address_two, phone, email, password) => {
+			},
+
+			userCreate: async (first_name, last_name, city, country, zip_code, address_one, address_two, phone, email, password) => {
 				const resp = await getActions().apiFetch("/api/register", "POST", { first_name, last_name, city, country, zip_code, address_one, address_two, phone, email, password })
 				console.log({ first_name, last_name, email, password })
 				if (resp.code >= 400) {
@@ -87,37 +87,37 @@ const getState = ({ getStore, getActions, setStore }) => {
 				let token = localStorage.getItem("accessToken")
 				setStore({ accessToken: token })
 			},
-			loadTestData: async (name, description, price, vehicle_type) =>{
-				const resp = await getActions().apiFetch("/api/testdata", "POST", {name, description, price, vehicle_type})
+			loadTestData: async (name, description, price, vehicle_type) => {
+				const resp = await getActions().apiFetch("/api/testdata", "POST", { name, description, price, vehicle_type })
 				if (resp.code >= 400) {
 					return resp
 				}
 			},
 			fetchServices: async () => {
 				try {
-				  const resp = await getActions().apiFetch("/api/services", "GET");
-				  if (resp.code >= 400) {
+					const resp = await getActions().apiFetch("/api/services", "GET");
+					if (resp.code >= 400) {
+						return resp;
+					}
+					setStore({ services: resp.data.services });
 					return resp;
-				  }
-				  setStore({ services: resp.data.services });
-				  return resp;
 				} catch (error) {
-				  console.log("Error fetching services", error);
+					console.log("Error fetching services", error);
 				}
-			  },
-			  fetchVehicleTypes: async () => {
+			},
+			fetchVehicleTypes: async () => {
 				try {
-				  const resp = await getActions().apiFetchProtected("/api/book", "GET");
-				  if (resp.code >= 400) {
+					const resp = await getActions().apiFetchProtected("/api/book", "GET");
+					if (resp.code >= 400) {
+						return resp;
+					}
+					setStore({ vehicle_types: resp.data.vehicle_types });
+					console.log("Carga exitosa")
 					return resp;
-				  }
-				  setStore({ vehicle_types: resp.data.vehicle_types });
-				  console.log("Carga exitosa")
-				  return resp;
 				} catch (error) {
-				  console.log("Error fetching vehicle types", error);
+					console.log("Error fetching vehicle types", error);
 				}
-			  },
+			},
 			getMessage: async () => {
 				try {
 					// fetching data from the backend
@@ -145,8 +145,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({ demo: demo });
 			},
 			apiFetch: async (endpoint, method = "GET", body = {}) => {
-				let resp = await fetch(apiUrl + endpoint, method == "GET" ? undefined :{
-				// let resp = await fetch(apiUrl + endpoint, {
+				let resp = await fetch(apiUrl + endpoint, method == "GET" ? undefined : {
+					// let resp = await fetch(apiUrl + endpoint, {
 					method,
 					body: JSON.stringify(body),
 					headers: {
@@ -182,33 +182,33 @@ const getState = ({ getStore, getActions, setStore }) => {
 				let data = await resp.json()
 				return { code: resp.status, data }
 			},
-			requestPasswordRecovery: async (email)=>{
+			requestPasswordRecovery: async (email) => {
 				const resp = await getActions().apiFetch("/api/recoverypassword", "POST", { email })
 				return resp
-				
+
 			},
-			changePasswordRecovery: async (passwordToken, password)=>{
-				let resp = await fetch(apiUrl + "/api/changepassword",{
+			changePasswordRecovery: async (passwordToken, password) => {
+				let resp = await fetch(apiUrl + "/api/changepassword", {
 					// let resp = await fetch(apiUrl + endpoint, {
-						method:"POST",
-						body: JSON.stringify(password),
-						headers: {
-							"Content-Type": "application/json",
-							"Authorization" : "Bearer "+passwordToken
-						}
-					})
-					if (!resp.ok) {
-						console.error(`${resp.status}: ${resp.statusText}`)
-						return { code: resp.status, error: `${resp.status}: ${resp.statusText}` }
+					method: "POST",
+					body: JSON.stringify(password),
+					headers: {
+						"Content-Type": "application/json",
+						"Authorization": "Bearer " + passwordToken
 					}
-					let data = await resp.json()
-					return { code: resp.status, data: data }
+				})
+				if (!resp.ok) {
+					console.error(`${resp.status}: ${resp.statusText}`)
+					return { code: resp.status, error: `${resp.status}: ${resp.statusText}` }
+				}
+				let data = await resp.json()
+				return { code: resp.status, data: data }
 			},
 
 
-			pagoMercadopago: async ()=>{
-				try{
-					const response=await axios.post(apiUrl + "/api/preference",{
+			pagoMercadopago: async () => {
+				try {
+					const response = await axios.post(apiUrl + "/api/preference", {
 						// aca va la info que se quiere enviar
 
 					});
@@ -216,12 +216,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 						mercadopago: response.data
 					})
 
-				} catch (error){
+				} catch (error) {
 					console.log(error)
 				}
 			},
 
-			
+
 
 			// fetchServices: async(name, description, price) =>{
 			// 	let baseUrl = apiUrl+"/api/services"
@@ -249,10 +249,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 			deleteServices: (services) => {
 				const listservices = getStore().services;
 				const newservices = listservices.filter((element) => element !== services)
-				setStore({services: newservices})
+				setStore({ services: newservices })
 			}
 		},
 	};
 };
 
-	export default getState;
+export default getState;

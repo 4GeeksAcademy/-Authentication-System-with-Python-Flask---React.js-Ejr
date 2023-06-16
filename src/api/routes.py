@@ -213,7 +213,7 @@ def hello_protected_get():
     return jsonify({"userId": user_id, "message": "Hello protected route"})
 
 
-@api.route("/logout", methods=["POST"])
+@api.route("/logout", methods=['POST'])
 @jwt_required()
 def user_logout():
     jwt = get_jwt()["jti"]
@@ -221,7 +221,7 @@ def user_logout():
     tokenBlocked = TokenBlockedList(jti=jwt)
     db.session.add(tokenBlocked)
     db.session.commit()
-    return jsonify({"msg": "Token revoked"})
+    return jsonify({"msg":"Token revoked"})
 
 
 @api.route('/shoppingCar', methods=['POST'])

@@ -39,7 +39,7 @@ class User(db.Model):
 class TokenBlockedList(db.Model):
     __tablename__ = "token_blocked_list"
     id = db.Column(db.Integer, primary_key=True)
-    jti = db.Column(db.String(50), nullable=False)
+    jti = db.Column(db.String(1000), nullable=False)
 
 
 class VehicleType(db.Model):

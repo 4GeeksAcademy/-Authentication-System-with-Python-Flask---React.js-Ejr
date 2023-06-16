@@ -110,9 +110,9 @@ export const Book = () => {
               </div>
             </div>
             <br></br>
-          <div class="accordion-item">
-            <h2 class="accordion-header" id="flush-headingThree">
-              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+          <div className="accordion-item">
+            <h2 className="accordion-header" id="flush-headingThree">
+              <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
                 3° Save the Date
               </button>
             </h2>
@@ -130,11 +130,7 @@ export const Book = () => {
             <div className="alert alert-warning" role="alert">
               Signup or login before booking
             </div>
-}
-        
-
-       
-
+        }
       </div>
    
  
