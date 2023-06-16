@@ -26,7 +26,11 @@ class User(db.Model):
 
     def __repr__(self):
         return f"<User {self.email}>"
-
+    
+    def get_profile_pic(self):
+        bucket=storage.bucket(name="imagenes-4geeks.appspot.com")
+        resource=bucket.blob(self.profile_pic)
+        return resource.generate_signed_url(version="v4", expiration =datetime.timedelta(minutes=15), method="GET")
     def serialize(self):
         bucket=storage.bucket(name="imagenes-4geeks.appspot.com")
         resource=bucket.blob(self.profile_pic)

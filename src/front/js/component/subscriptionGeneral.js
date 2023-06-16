@@ -42,7 +42,7 @@ export const SubscriptionGeneral = () => {
             <section>
                 <div>
                     <div className="container-fluid text-center mt-5">
-                        <div className="row row-cols-2 g-5">
+                        <div className="row row-cols-2 g-3">
                             <SubscriptionCard />
                         </div>  
                     </div>

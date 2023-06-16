@@ -26,6 +26,7 @@ from flask_jwt_extended import (
 import os,json, tempfile
 import openai
 from firebase_admin import storage
+from api.sendmail import sendMail, recoveryPasswordTemplate
 
 openai.api_key = os.getenv("OPENAI_API_KEY")
 api = Blueprint("api", __name__)
@@ -55,7 +56,7 @@ def user_login():
     )
 
     # Retornar el token
-    return jsonify({"accessToken": access_token, "refreshToken": refresh_token})
+    return jsonify({"accessToken": access_token, "refreshToken": refresh_token, "userInfo":user.serialize()})
 
 
 # Refrescar el token
@@ -153,8 +154,9 @@ def recovery_password():
     access_token = create_access_token(
         identity=user.id, additional_claims={"type": "password"}
     )
-    return jsonify({"recoveryToken": access_token})
     # Enviar el token via email para el cambio de clave
+    recoveryPasswordTemplate(access_token, user_email)
+    return jsonify({"msg": "Correo enviado"})
 
 
 @api.route("/helloprotected", methods=["GET"])
@@ -308,7 +310,7 @@ def user_profile_pic():
     user.profile_pic = filename
     db.session.add(user)
     db.session.commit()
-    return jsonify({"msg": "Profile pic updated"})
+    return jsonify({"msg": "Profile pic updated", "pictureUrl": user.get_profile_pic()})
 
 
 @api.route('/createDietChatGPT', methods=['GET','POST'])
@@ -333,4 +335,3 @@ def generateChatResponse():
 
 if __name__ == "__main__":
     app.run(debug=True)
-
