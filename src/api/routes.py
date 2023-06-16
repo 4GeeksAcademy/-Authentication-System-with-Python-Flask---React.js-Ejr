@@ -309,7 +309,7 @@ def user_profile_pic():
     user.profile_pic = filename
     db.session.add(user)
     db.session.commit()
-    return jsonify({"msg": "Profile pic updated"})
+    return jsonify({"msg": "Profile pic updated", "pictureUrl": user.serialize().user.profilePic})
 
 
 @api.route('/createDietChatGPT', methods=['GET'])

@@ -381,6 +381,27 @@ const getState = ({ getStore, getActions, setStore }) => {
 				return { code: resp.status, data }
 			},
 
+			uploadProfilePic: async (picture) => {
+				const apiUrl = process.env.BACKEND_URL
+				console.log(apiUrl)
+
+				let resp = await fetch(apiUrl + "profilepic", {
+					method: "POST",
+					body: {profilePic: picture},
+					headers: {
+						
+						"Authorization": `Bearer ${getStore().accessToken}`
+					}
+				})
+				if (!resp.ok) {
+					console.error(`${resp.status}: ${resp.statusText}`)
+					return { code: resp.status, error: `${resp.status}: ${resp.statusText}` }
+				}
+				let data = await resp.json()
+				setStore({profilePic:data.pictureUrl})
+				return { code: resp.status, data }
+			},
+
 			updateUserProfile: async (email, updatedProfile) => {
 				try {
 					//  Realizar una solicitud a la API para actualizar el perfil del usuario
