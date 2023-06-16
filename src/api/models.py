@@ -49,11 +49,26 @@ class VehicleType(db.Model):
     picture = db.Column(db.String(1000))
 
     def serialize(self):
-        return {
-            "name": self.name,
-            "picture": self.picture
+        return{"name" : self.name,
+        "picture": self.picture,
         }
-
+    
+class ShoppingCar(db.Model):
+    __tablename__ = "shoppingcar"
+    id = db.Column(db.Integer, primary_key=True)
+    services_id = db.Column(db.Integer, db.ForeignKey("services.id"))
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+    users = db.relationship(User) 
+    services = db.relationship("Services")
+    service_name = db.Column(db.String(120))
+    service_price = db.Column(db.Integer)
+    def serialize(self):
+        return {
+            "servicesVehicle":self.services.vehicle_type,
+            "servicesName":self.services.name,
+            "servicesPrice":self.services.name,
+            "userName":self.users.name
+        }
 
 class Services(db.Model):
     __tablename__ = "services"
@@ -65,13 +80,15 @@ class Services(db.Model):
     picture = db.Column(db.String(1000))
     type = db.relationship(VehicleType, backref='vehicle_type', lazy=True)
 
+
     def serialize(self):
         return {
             "vehicle_type": self.vehicle_type,
             "name": self.name,
             "description": self.description,
             "price": self.price,
-            "picture": self.picture
+            "picture": self.picture,
+            "id":self.id
         }
 
 
