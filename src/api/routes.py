@@ -146,59 +146,65 @@ def user_login():
         return jsonify({"message": "Wrong password"}), 401
     # Generar el token
     access_token = create_access_token(identity=user.id)
-    access_jti=get_jti(access_token)
-    refresh_token=create_refresh_token(identity=user.id, additional_claims={"accessToken":access_jti})
+    access_jti = get_jti(access_token)
+    refresh_token = create_refresh_token(identity=user.id, additional_claims={
+                                         "accessToken": access_jti})
     # Retornar el token
-    return jsonify({"accessToken": access_token, "refreshToken":refresh_token})
+    return jsonify({"accessToken": access_token, "refreshToken": refresh_token})
+
 
 @api.route("/changepassword", methods=["POST"])
 @jwt_required()
 def change_password():
-    new_password=request.json.get("password")
-    user_id=get_jwt_identity()
+    new_password = request.json.get("password")
+    user_id = get_jwt_identity()
     secure_password = bcrypt.generate_password_hash(
         new_password, rounds=None).decode("utf-8")
-    user=User.query.get(user_id)
-    user.password=secure_password
+    user = User.query.get(user_id)
+    user.password = secure_password
     db.session.add(user)
     db.session.commit()
-    return jsonify({"msg":"clave actualizada"})
+    return jsonify({"msg": "clave actualizada"})
+
 
 @api.route("/recoverypassword", methods=["POST"])
 def recovery_password():
-    user_email=request.json.get("email")
+    user_email = request.json.get("email")
     user = User.query.filter_by(email=user_email).first()
     if user is None:
         return jsonify({"Message": "User not found"}), 401
     # 1 Generar ek token temporal para el cambio de clave
     access_token = create_access_token(
-        identity=user.id, additional_claims={"type":"password"})
-    #return jsonify({"recoveryToken":access_token})
+        identity=user.id, additional_claims={"type": "password"})
+    # return jsonify({"recoveryToken":access_token})
     # 2 Enviar el enlace con el token via email para el cambio de clave
     if recoveryPasswordTemplate(access_token, user_email):
-        return jsonify({"msg":"Correo enviado"})
+        return jsonify({"msg": "Correo enviado"})
     else:
-        return jsonify({"msg":"Correo no enviado"}), 401
+        return jsonify({"msg": "Correo no enviado"}), 401
+
 
 @api.route("/refresh", methods=["POST"])
 @jwt_required(refresh=True)
 def user_refresh():
-    #Identificadores de tokens viejos
+    # Identificadores de tokens viejos
     jti_refresh = get_jwt()["jti"]
-    jti_access=get_jwt()["accessToken"]
-    #Bloquear los tokens viejos
-    accessRevoked=TokenBlockedList(jti=jti_access)
-    refreshRevoked=TokenBlockedList(jti=jti_refresh)
+    jti_access = get_jwt()["accessToken"]
+    # Bloquear los tokens viejos
+    accessRevoked = TokenBlockedList(jti=jti_access)
+    refreshRevoked = TokenBlockedList(jti=jti_refresh)
     db.session.add(accessRevoked)
     db.session.add(refreshRevoked)
     db.session.commit()
     # Generar nuevos tokens
-    user_id=get_jwt_identity()
+    user_id = get_jwt_identity()
     access_token = create_access_token(identity=user_id)
-    access_jti=get_jti(access_token)
-    refresh_token=create_refresh_token(identity=user_id, additional_claims={"accessToken":access_jti})
+    access_jti = get_jti(access_token)
+    refresh_token = create_refresh_token(identity=user_id, additional_claims={
+                                         "accessToken": access_jti})
     # Retornar el token
-    return jsonify({"accessToken": access_token, "refreshToken":refresh_token})
+    return jsonify({"accessToken": access_token, "refreshToken": refresh_token})
+
 
 @api.route("/helloprotected", methods=["GET"])
 @jwt_required()
@@ -207,14 +213,16 @@ def hello_protected_get():
     return jsonify({"userId": user_id, "message": "Hello protected route"})
 
 
-@api.route("/logout", methods=["POST"])
+@api.route("/logout", methods=['POST'])
 @jwt_required()
 def user_logout():
     jwt = get_jwt()["jti"]
+    print(jwt)
     tokenBlocked = TokenBlockedList(jti=jwt)
     db.session.add(tokenBlocked)
     db.session.commit()
-    return jsonify({"msg": "Token revoked"})
+    return jsonify({"msg":"Token revoked"})
+
 
 @api.route('/shoppingCar', methods=['POST'])
 @jwt_required()
@@ -222,7 +230,8 @@ def new_shoppingCar():
     data = request.get_json()
     user_id = get_jwt_identity()
     # user_service = ShoppingCar.query.filter_by(user_id = user_id)
-    new_service = ShoppingCar(service_name=data["name"], service_price=data["price"], id=data["id"])
+    new_service = ShoppingCar(
+        service_name=data["name"], service_price=data["price"], id=data["id"])
     db.session.add(new_service)
     db.session.commit()
     # services_list = list(map(lambda shopping: shopping.serialize(),new_service))
@@ -232,6 +241,3 @@ def new_shoppingCar():
     #     service = Services.query.get(servicio.id)
     #     services_list.append({"id":service.id, "name":service.name, "description":service.description, "price": service.price})
     return jsonify(new_service.serialize()), 200
-
-
-
