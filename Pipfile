@@ -23,6 +23,7 @@ flask-jwt-extended = "*"
 openai = "*"
 firebase-admin = "*"
 sendgrid = "*"
+firebase = "*"
 
 [requires]
 python_version = "3.10"

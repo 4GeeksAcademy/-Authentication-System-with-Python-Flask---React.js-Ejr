@@ -282,6 +282,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 						}
 					]
 				}
+			],
+			favorites: [
+
 			]
 		},
 		actions: {
@@ -416,6 +419,37 @@ const getState = ({ getStore, getActions, setStore }) => {
 				let data = await resp.json()
 				return { code: resp.status, data }
 			},
+			addFavorite:(index, name)=>{
+				let {favorites} = getStore();
+				if(!favorites.some(item=>item.index==index)){
+					setStore({favorites:[...favorites, {id:index, name:displayName}]})
+					console.log(getStore().favorites)
+				}
+				else{
+					//if exisitng then delete
+					let newFavorites=[...favorites]
+					let itemIndex=favorites.findIndex(item=>item.id==index)
+					newFavorites.splice(itemIndex,1);
+					setStore({favorites:newFavorites})
+					console.log(itemIndex)
+					console.log(favorites)
+				}
+			},
+			deleteFavorite:(name)=>{
+				let {favorites} = getStore()
+				let newFavorites=[...favorites]
+					let itemIndex=favorites.findIndex(item=>item.name==name)
+					newFavorites.splice(itemIndex,1);
+					setStore({favorites:newFavorites})
+					console.log(itemIndex)
+					console.log(favorites)
+			},
+			deleteAllFavorites:()=>{
+				let {favorites} = getStore()
+				let newFavorites=[{}]
+				setStore({favorites:newFavorites})
+				console.log(favorites)
+			}	
 		}
 	};
 };
