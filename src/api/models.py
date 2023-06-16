@@ -49,7 +49,9 @@ class VehicleType(db.Model):
     picture = db.Column(db.String(1000))
 
     def serialize(self):
-        return{"name" : self.name}
+        return{"name" : self.name,
+        "picture": self.picture,
+        }
     
 class ShoppingCar(db.Model):
     __tablename__ = "shoppingcar"
