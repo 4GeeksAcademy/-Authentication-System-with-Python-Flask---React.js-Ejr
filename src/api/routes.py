@@ -23,7 +23,8 @@ from flask_jwt_extended import (
     get_jwt,
     get_jti,
 )
-import os, openai, json, tempfile
+import os,json, tempfile
+import openai
 from firebase_admin import storage
 
 openai.api_key = os.getenv("OPENAI_API_KEY")
@@ -310,7 +311,7 @@ def user_profile_pic():
     return jsonify({"msg": "Profile pic updated"})
 
 
-@api.route('/createDietChatGPT', methods=['GET'])
+@api.route('/createDietChatGPT', methods=['POST'])
 def generateChatResponse():
     prompt = request.json.get("prompt")
     messages = [
@@ -327,6 +328,7 @@ def generateChatResponse():
     except:
         answer = "Oops you beat the AI, try a different question, if the problem persists, come back later."
     return answer
+
 
 if __name__ == "__main__":
     app.run(debug=True)

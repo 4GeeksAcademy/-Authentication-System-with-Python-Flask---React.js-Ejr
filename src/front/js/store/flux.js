@@ -1,7 +1,12 @@
+import React, { useState } from "react";
 const getState = ({ getStore, getActions, setStore }) => {
+
+
 	return {
+
 		store: {
 			message: ["Parece que funciona...  (?) valor anterior era null y no referenciaba al backend"],
+
 			restaurantes: [
 				{
 					name: "Wok",
@@ -278,6 +283,23 @@ const getState = ({ getStore, getActions, setStore }) => {
 			]
 		},
 		actions: {
+			fetchChatGPT: async (prompt) => {
+				try {
+					const response = await fetch('/createDietChatGPT', {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json',
+						},
+						body: JSON.stringify({ prompt }),
+					});
+
+					// Resto de tu código
+				} catch (error) {
+					// Manejar errores de conexión u otros errores
+					console.error('Error en la solicitud:', error);
+				}
+			},
+
 			updateUserProfile: async (email, updatedProfile) => {
 				try {
 					//  Realizar una solicitud a la API para actualizar el perfil del usuario
