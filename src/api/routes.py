@@ -55,7 +55,7 @@ def user_login():
     )
 
     # Retornar el token
-    return jsonify({"accessToken": access_token, "refreshToken": refresh_token})
+    return jsonify({"accessToken": access_token, "refreshToken": refresh_token, "userInfo":user.serialize()})
 
 
 # Refrescar el token
@@ -309,7 +309,7 @@ def user_profile_pic():
     user.profile_pic = filename
     db.session.add(user)
     db.session.commit()
-    return jsonify({"msg": "Profile pic updated"})
+    return jsonify({"msg": "Profile pic updated", "pictureUrl": user.get_profile_pic()})
 
 
 @api.route('/createDietChatGPT', methods=['GET'])
