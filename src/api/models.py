@@ -5,7 +5,7 @@ from sqlalchemy.orm import relationship
 db = SQLAlchemy()
 
 class User(db.Model):
-    __tablename__ = "User"
+    __tablename__ = "user"
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(80), unique=False, nullable=False)
@@ -15,7 +15,6 @@ class User(db.Model):
     birthday = db.Column(db.String(120), nullable=False)
     phone = db.Column(db.Integer, unique=True, nullable=False)
     address = db.Column(db.String(300), unique=False, nullable=False)
-    pedidos = db.relationship("Pedidos")
 
     def __repr__(self):
         return f'<User {self.email}>'
@@ -34,19 +33,20 @@ class User(db.Model):
         }
 
 class Platos(db.Model):
-    __tablename__ = "Platos"
-    id = db.Column(db.Integer, primary_key=True)
+    __tablename__ = "platos"
+    plato_id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(120), unique=False, nullable=False)
     description = db.Column(db.String(250), unique=False)
     price = db.Column(db.Integer, unique=False, nullable=False)
     is_active = db.Column(db.Boolean(), unique=False, nullable=False)
+
 
     def __repr__(self):
         return f'<Platos {self.name}>'
 
     def serialize(self):
         return {
-            "id": self.id,
+            "plato_id": self.plato_id,
             "name": self.name,
             "price":self.price,
             "description":self.description,
@@ -55,20 +55,38 @@ class Platos(db.Model):
         }
 
 class Pedidos(db.Model):
-    __tablename__ = "Pedidos"
-    id = db.Column(db.Integer, primary_key=True)
-    User_id = db.Column(db.Integer, ForeignKey("User.id"))
-    Platos_id = db.Column(db.Integer, ForeignKey("Platos.id"))
+    __tablename__ = "pedidos"
+    pedido_id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, ForeignKey("user.id"))
+    user = db.relationship(User, backref='pedidos')
+    fecha_del_pedido = db.Column(db.String(120), nullable=False)
+    estado = db.Column(db.String(120), nullable=False)
+    
 
     def __repr__(self):
-        return f'<Pedidos {self.id}>'
+        return f'<Pedidos {self.pedido_id}>'
 
     def serialize(self):
         return {
-            "id": self.id,
-            "User_id": self.User_id,
-            "Platos_id": self.Platos_id
+            "pedido_id": self.pedido_id,
+            "user_id": self.user_id,
+            "fecha_del_pedido": self.fecha_del_pedido,
+            "estado": self.estado
         }
     
-#class DetallesDePedidos(db.Model):
- #  __tablename__ = ""
+class DetallesDePedidos(db.Model):
+   __tablename__ = "detallesdepedidos"
+   detallesedpedidos_id = db.Column(db.Integer, primary_key=True)
+   platos_id = db.Column('plato_id',db.Integer, db.ForeignKey("platos.plato_id")) 
+   pedido_id = db.Column('pedido_id',db.Integer, db.ForeignKey("pedidos.pedido_id"))
+   pedidos = db.relationship("detallesdepedidos")
+   platos = db.relationship("detallesdepedidos")
+
+   def __repr__(self):
+        return f'<detallesdepedidos {self.pedido_id}>'
+   
+   def serialize(self):
+        return {
+            "pedido_id": self.pedido_id,
+            "platos_id": self.platos_id
+        }
