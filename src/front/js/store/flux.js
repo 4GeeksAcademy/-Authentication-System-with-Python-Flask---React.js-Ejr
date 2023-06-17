@@ -299,10 +299,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 			fetchChatGPT: async (prompt, setIaResponse) => {
 				console.log(JSON.stringify({ prompt }))
 				try {
-					const response = await fetch('http://127.0.0.1:3001/api/createDietChatGPT', {
+					const response = await fetch(`${process.env.BACKEND_URL}/api/createDietChatGPT`, {
 						method: 'POST',
 						headers: {
 							'Content-Type': 'application/json',
+							"Access-Control-Allow-Origin": "*"
 						},
 						body: JSON.stringify({ prompt })
 					});
