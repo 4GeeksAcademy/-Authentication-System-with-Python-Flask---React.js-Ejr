@@ -23,8 +23,11 @@ export const Book = () => {
     else {
       actions.fetchServices()
       actions.fetchVehicleTypes()
-      actions.pagoMercadopago()
+      // actions.pagoMercadopago()
     }
+
+
+
 
   }, [])
 
@@ -35,9 +38,9 @@ export const Book = () => {
   const handleSelectVehicleType = (vehicleType) => {
     setSelectedVehicleType(vehicleType);
   };
-  const pagoMercadoPago = () => {
-    window.location.replace(store?.mercadopago.init_point);
-  };
+  // const pagoMercadoPago = () => {
+  //   window.location.replace(store?.mercadopago.init_point);
+  // };
 
 
 
@@ -125,7 +128,7 @@ export const Book = () => {
             </div>
           </div>
           <br></br>
-          <button className="btn btn-dark" onClick={pagoMercadoPago}>Pagar
+          <button className="btn btn-dark">Save
           </button>
           </div>
             :
