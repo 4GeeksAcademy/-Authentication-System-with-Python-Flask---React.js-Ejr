@@ -390,6 +390,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			},
 			apiFetchProtected: async (endpoint, method = "GET", body = {}) => {
+				const apiUrl = process.env.BACKEND_URL
 				let params = {
 					headers: {
 						"Authorization": `Bearer ${getStore().accessToken}`
