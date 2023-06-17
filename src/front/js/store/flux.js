@@ -1,4 +1,5 @@
 import axios from "axios";
+import jwt_decode from "jwt-decode";
 // import mercadopago from "mercadopago";
 const apiUrl = process.env.BACKEND_URL
 const getState = ({ getStore, getActions, setStore }) => {
@@ -57,18 +58,27 @@ const getState = ({ getStore, getActions, setStore }) => {
 				if (resp.code >= 400) {
 					return resp
 				}
-				setStore({ accessToken: resp.data.accessToken })
+				setStore({
+					accessToken: resp.data.accessToken,
+					refreshToken: resp.data.refreshToken
+				})
 				localStorage.setItem("accessToken", resp.data.accessToken)
+				localStorage.setItem("refreshToken", resp.data.refreshToken)
 				return resp
 			},
 
 			userLogout: async () => {
 				const resp = await getActions().apiFetchProtected("/api/logout", "POST")
 				if (resp.code >= 400) {
+					// setStore({ accessToken: null })
 					return resp
 				}
-				setStore({ accessToken: null })
+				setStore({
+					accessToken: null,
+					refreshToken: null
+				})
 				localStorage.removeItem("accessToken")
+				localStorage.removeItem("refreshToken")
 				return resp
 
 			},
@@ -83,9 +93,61 @@ const getState = ({ getStore, getActions, setStore }) => {
 				localStorage.setItem("accessToken", resp.data.accessToken)
 				return resp
 			},
-			loadToken() {
-				let token = localStorage.getItem("accessToken")
-				setStore({ accessToken: token })
+			loadToken: async () => {
+				let accessToken = localStorage.getItem("accessToken")
+				let refreshToken = localStorage.getItem("refreshToken")
+
+				if (!accessToken) {
+					if (refreshToken) {
+						var refreshDecoded = jwt_decode(refreshToken)
+						let refreshExpired = new Date(refreshDecoded.exp * 1000) < new Date()
+						if (!refreshExpired) {
+							localStorage.removeItem("accessToken")
+							localStorage.removeItem("refreshToken")
+							return
+						}
+					}
+				}
+				// Puedo verificar la vigencia del token antes de cargarlo al store
+				let expired = true
+				try {
+					var decoded = jwt_decode(accessToken)
+					let expired = new Date(decoded.exp * 1000) < new Date()
+				} catch {
+					
+				}
+				console.log({ expired })
+				if (expired) {
+					await getActions().refreshToken()
+					localStorage.removeItem("accessToken")
+
+				} else {
+					setStore({
+						accessToken: accessToken,
+						refreshToken: refreshToken
+					})
+				}
+
+			},
+			refreshToken: async () => {
+				let resp = await fetch(apiUrl + "/api/refresh", {
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json",
+						"Authorization": `Bearer ${getStore().accessToken}`
+					}
+				})
+				if (!resp.ok) {
+					console.error(`${resp.status}: ${resp.statusText}`)
+					return { code: resp.status, error: `${resp.status}: ${resp.statusText}` }
+				}
+				let data = await resp.json()
+				setStore({
+					accessToken: data.accessToken,
+					refreshToken: data.refreshToken
+				})
+				localStorage.setItem("accessToken", data.accessToken)
+				localStorage.setItem("refreshToken", data.refreshToken)
 			},
 			loadTestData: async (name, description, price, vehicle_type) => {
 				const resp = await getActions().apiFetch("/api/testdata", "POST", { name, description, price, vehicle_type })
@@ -176,8 +238,25 @@ const getState = ({ getStore, getActions, setStore }) => {
 				console.log(getStore().accessToken)
 				let resp = await fetch(apiUrl + endpoint, params)
 				if (!resp.ok) {
-					console.error(`${resp.status}: ${resp.statusText}`)
-					return { code: resp.status, error: `${resp.status}: ${resp.statusText}` }
+					// Verificar si el token ha expirado
+					if (data.msg == "Token has expired") {
+						// Aquí se solicita un nuevo token de acceso
+						await getActions().refreshToken()
+						params.headers.Authorization = `Bearer ${getStore().accessToken}`
+						// Se repite la peticion con el token nuevo
+						resp = await fetch(apiUrl + endpoint, params)
+						data = await resp.json()
+						if (!resp.ok) {
+							console.error(`${resp.status}: ${resp.statusText}`)
+							return { code: resp.status, error: `${resp.status}: ${resp.statusText}` }
+						}
+						else {
+							console.error(`${resp.status}: ${resp.statusText}`)
+							return { code: resp.status, error: `${resp.status}: ${resp.statusText}` }
+						}
+					}
+					// Si el token expira se debe usar el refresh token para obtener un nuevo access token
+					return { code: resp.status, data }
 				}
 				let data = await resp.json()
 				return { code: resp.status, data }
