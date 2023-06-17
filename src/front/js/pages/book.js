@@ -67,8 +67,6 @@ export const Book = () => {
                           <div className="card-body " style={{ backgroundColor: '#40768C' }}>
                             <h5 className="card-title">{vehicle.name}</h5>
                             <ul className="list-group list-group-flush">
-                             
-                              <li className="list-group-item" style={{ backgroundColor: '#40768C' }}>What is about?</li>
                             </ul>
                             <button className="btn btn-dark my-2" onClick={() => handleSelectVehicleType(index + 1)}>Select</button>
                           </div>
@@ -99,7 +97,6 @@ export const Book = () => {
                               <h5 className="card-title" style={{ height: "7rem" }}>{element.name}</h5>
                               <ul className="list-group list-group-flush" style={{ height: "7rem" }}>
                                 <li className="list-group-item" style={{ backgroundColor: '#40768C' }}>Price:  {element.price} USD</li>
-                               
                               </ul>
                               <div className="card-footer" style={{ height: "5rem" }}>
                               <button onClick={()=>actions.addFavorites(element.name, element.price, element.id)} href="#" className="btn btn-dark my-2">Add to Cart
