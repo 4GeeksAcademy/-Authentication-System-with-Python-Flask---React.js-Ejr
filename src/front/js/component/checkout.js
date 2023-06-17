@@ -74,8 +74,8 @@ export const Checkout = () => {
                                     {/* <div className="col-md-6">
                                         <label className="small mb-1" htmlFor="inputBirthday">Birthday</label>
                                         <input className="form-control" id="inputBirthday" type="text" name="birthday" placeholder="Tu Fecha de Nacimiento" value={`${item.birthDay}/${item.birthMonth}/${item.birthYear}`} onChange={handleInputChange}></input>
-                                    </div>
-                                </div> */}
+                                    </div> */}
+                                </div>
                                 {/* Save changes button */}
                                 <button className="btn btn-outline-success px-4" style={{ borderRadius: "33% 67% 32% 68% / 90% 9% 91% 10% " }} type="button">Guardar</button>
                             </form>
