@@ -292,7 +292,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			],
 			cart: [
-				
+
 			],
 		},
 		actions: {
@@ -505,6 +505,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 		}
 	};
 };
+
 
 
 
