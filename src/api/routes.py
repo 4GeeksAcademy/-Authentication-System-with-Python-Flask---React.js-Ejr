@@ -210,7 +210,8 @@ def user_refresh():
 @jwt_required()
 def hello_protected_get():
     user_id = get_jwt_identity()
-    return jsonify({"userId": user_id, "message": "Hello protected route"})
+    user = User.query.get(user_id)
+    return jsonify({"userId": user_id, "message": "Hello protected route", "userData":user.serialize()})
 
 
 @api.route("/logout", methods=['POST'])
@@ -231,7 +232,7 @@ def new_shoppingCar():
     user_id = get_jwt_identity()
     # user_service = ShoppingCar.query.filter_by(user_id = user_id)
     new_service = ShoppingCar(
-        service_name=data["name"], service_price=data["price"], id=data["id"])
+        service_name=data["name"], service_price=data["price"], user_id=user_id, date=data["date"])
     db.session.add(new_service)
     db.session.commit()
     # services_list = list(map(lambda shopping: shopping.serialize(),new_service))
@@ -241,3 +242,4 @@ def new_shoppingCar():
     #     service = Services.query.get(servicio.id)
     #     services_list.append({"id":service.id, "name":service.name, "description":service.description, "price": service.price})
     return jsonify(new_service.serialize()), 200
+

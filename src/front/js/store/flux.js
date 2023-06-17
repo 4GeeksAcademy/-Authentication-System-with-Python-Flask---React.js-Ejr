@@ -29,28 +29,15 @@ const getState = ({ getStore, getActions, setStore }) => {
 				getActions().changeColor(0, "green");
 			},
 
-			addFavorites: async (name, price, id) => {
-				const resp = await getActions().apiFetchProtected("/api/shoppingCar", "POST", { id, name, price })
+			addFavorites: async (name, price, date) => {
+				const resp = await getActions().apiFetchProtected("/api/shoppingCar", "POST", { name, price, date })
 				if (resp.code >= 400) {
 					return resp
 				}
 				setStore({ new_service: resp.data.new_service })
 				return resp
-				// let {favorites} = getStore()
-				// if(!favorites.some(item=>item.id==id)){
-				// 	// en caso de que NO exista, se agrega
-				// 	setStore({favorites:[...favorites,{id:id, name:name, price:price}]})
-				// }
-				// else {
-				// 	// en caso de que SI exista, se elimina
-				// 	let index=favorites.findIndex(item=>item.id==id)
-				// 	let newFavorites=[...favorites]
-				// 	newFavorites.splice(index,1)
-				// 	setStore({favorites:newFavorites})
-				// }
-				// let newFavorites = [...store.favorites, {id: (id + element), name: name}]
-				// setStore({favorites:newFavorites})
 			},
+	
 
 			userLogin: async (email, password) => {
 				const resp = await getActions().apiFetch("/api/login", "POST", { email, password })

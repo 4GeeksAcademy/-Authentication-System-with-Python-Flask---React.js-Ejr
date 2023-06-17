@@ -62,12 +62,14 @@ class ShoppingCar(db.Model):
     services = db.relationship("Services")
     service_name = db.Column(db.String(120))
     service_price = db.Column(db.Integer)
+    date = db.Column(db.Date())
     def serialize(self):
         return {
             "servicesVehicle":self.services.vehicle_type,
             "servicesName":self.services.name,
             "servicesPrice":self.services.price,
-            "userName":self.users.name
+            "userName":self.users.name, 
+            "date":self.date
         }
 
 class Services(db.Model):

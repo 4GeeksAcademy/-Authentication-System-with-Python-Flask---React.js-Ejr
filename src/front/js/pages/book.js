@@ -14,7 +14,7 @@ export const Book = () => {
   const vehicles = store.vehicle_types
   const [selectedVehicleType, setSelectedVehicleType] = useState(null)
   const navigate = useNavigate()
-  const [value, onChange] = useState(new Date());
+  const [dateService, setDateService] = useState(new Date());
 
   useEffect(() => {
     if (!store.accessToken) {
@@ -31,7 +31,7 @@ export const Book = () => {
 
   }, [])
 
-  
+
 
 
 
@@ -44,9 +44,9 @@ export const Book = () => {
 
 
 
-  return(
+  return (
     <>
-    {/* <div > */}
+      {/* <div > */}
       <div className="container" style={{ backgroundColor: '#264653', color: '#000' }}>
         <h1 className=" display-4 text-center py-2" >Our Services</h1>
         {
@@ -73,8 +73,22 @@ export const Book = () => {
                         </div>
                       </div>
                     ))) : (<p>Loading vehicles...</p>)}
-                   
+
                   </div>
+                </div>
+              </div>
+            </div>
+            <br></br>
+            <div className="accordion-item">
+              <h2 className="accordion-header" id="flush-headingThree">
+                <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+                  3° Save the Date
+                </button>
+              </h2>
+              <div id="flush-collapseThree" className="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+                <div className="accordion-body">
+                  <DateTimePicker onChange={setDateService} value={dateService} />
+                  {dateService && <p>Selected Date: {dateService.toString()}</p>}
                 </div>
               </div>
             </div>
@@ -99,8 +113,8 @@ export const Book = () => {
                                 <li className="list-group-item" style={{ backgroundColor: '#40768C' }}>Price:  {element.price} USD</li>
                               </ul>
                               <div className="card-footer" style={{ height: "5rem" }}>
-                              <button onClick={()=>actions.addFavorites(element.name, element.price, element.id)} href="#" className="btn btn-dark my-2">Add to Cart
-                              </button>
+                                <button onClick={() => actions.addFavorites(element.name, element.price, dateService)} href="#" className="btn btn-dark my-2">Add to Cart
+                                </button>
                               </div>
                             </div>
                           </div>
@@ -112,21 +126,10 @@ export const Book = () => {
               </div>
             </div>
             <br></br>
-          <div className="accordion-item">
-            <h2 className="accordion-header" id="flush-headingThree">
-              <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
-                3° Save the Date
-              </button>
-            </h2>
-            <div id="flush-collapseThree" className="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
-              <div className="accordion-body">
-              <DateTimePicker onChange={onChange} value={value}  />
-              </div>
-            </div>
-          </div>
-          <br></br>
-          <button className="btn btn-dark">Save
-          </button>
+
+            <br></br>
+            <button className="btn btn-dark">Save
+            </button>
           </div>
             :
             <div className="alert alert-warning" role="alert">
@@ -134,8 +137,8 @@ export const Book = () => {
             </div>
         }
       </div>
-   
- 
+
+
     </>
   );
 };
