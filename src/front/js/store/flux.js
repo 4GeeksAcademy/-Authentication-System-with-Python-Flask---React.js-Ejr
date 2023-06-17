@@ -29,16 +29,38 @@ const getState = ({ getStore, getActions, setStore }) => {
 				getActions().changeColor(0, "green");
 			},
 
-			addFavorites: async (name, price, date) => {
-				const resp = await getActions().apiFetchProtected("/api/shoppingCar", "POST", { name, price, date })
-				if (resp.code >= 400) {
-					return resp
-				}
-				setStore({ new_service: resp.data.new_service })
-				return resp
-			},
-	
+			// addFavorites: async (name, price, date) => {
+			// 	const resp = await getActions().apiFetchProtected("/api/shoppingCar", "POST", { name:name, price:price, date:date })
+			// 	if (resp.code >= 400) {
+			// 		return resp
+			// 	}
 
+			// 	setStore({ new_service : resp.data});
+			// 	return resp
+			// },
+			addFavorites: async (name, price, date) => {
+				const resp = await getActions().apiFetchProtected("/api/shoppingCar", "POST", { name: name, price: price, date: date });
+				if (resp.code >= 400) {
+					return resp;
+				}
+
+				const { new_service } = getStore();
+				const updatedNewService = [...new_service, resp.data];
+				setStore({ new_service: updatedNewService });
+
+				return resp;
+			},
+			deleteFavorites: (id) => {
+				const newFavorites = [...new_service]
+				let favoriteIndex = newFavorites.findIndex(favorite => favorite.id == id)
+				newFavorites.splice(favoriteIndex,1)
+				setStore({new_service:newFavorites})
+			},
+			// deleteFavorites: (id) => {
+			// 	const listservices = getStore().services;
+			// 	const newservices = listservices.filter((element) => element !== services)
+			// 	setStore({ services: newservices })
+			// }
 			userLogin: async (email, password) => {
 				const resp = await getActions().apiFetch("/api/login", "POST", { email, password })
 				console.log({ email, password })
@@ -53,7 +75,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 				localStorage.setItem("refreshToken", resp.data.refreshToken)
 				return resp
 			},
-
 			userLogout: async () => {
 				const resp = await getActions().apiFetchProtected("/api/logout", "POST")
 				if (resp.code >= 400) {
@@ -68,7 +89,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 				return resp
 
 			},
-
 			userCreate: async (first_name, last_name, city, country, zip_code, address_one, address_two, phone, email, password) => {
 				const resp = await getActions().apiFetch("/api/register", "POST", { first_name, last_name, city, country, zip_code, address_one, address_two, phone, email, password })
 				console.log({ first_name, last_name, email, password })
@@ -100,7 +120,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					var decoded = jwt_decode(accessToken)
 					let expired = new Date(decoded.exp * 1000) < new Date()
 				} catch {
-					
+
 				}
 				console.log({ expired })
 				if (expired) {
@@ -269,8 +289,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 				let data = await resp.json()
 				return { code: resp.status, data: data }
 			},
-
-
 			pagoMercadopago: async () => {
 				try {
 					const response = await axios.post(apiUrl + "/api/preference", {
@@ -311,11 +329,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			// },
 
-			deleteServices: (services) => {
-				const listservices = getStore().services;
-				const newservices = listservices.filter((element) => element !== services)
-				setStore({ services: newservices })
-			}
+
 		},
 	};
 };
