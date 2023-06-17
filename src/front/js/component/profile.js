@@ -87,11 +87,6 @@ export const Profile = () => {
                                         <input className="form-control" id="inputLocationDetails" type="text" placeholder="Apto, casa, contunto, torre y otros detalles" value={item.addressDetail}></input>
                                     </div>
                                 </div>
-                                {/* (email address) */}
-                                <div className="mb-3">
-                                    <label className="small mb-1" htmlFor="inputEmailAddress">Tu correo</label>
-                                    <input className="form-control" id="inputEmailAddress" type="email" placeholder="Tu Correo Electrónico" value={item.email}></input>
-                                </div>
                                 {/* Form Row */}
                                 <div className="row gx-3 mb-3">
                                     {/* phone number */}
@@ -99,11 +94,16 @@ export const Profile = () => {
                                         <label className="small mb-1" htmlFor="inputPhone">Phone number</label>
                                         <input className="form-control" id="inputPhone" type="tel" placeholder="Tu Número Celular" value={item.phone}></input>
                                     </div>
-                                    {/* birthday */}
-                                    <div className="col-md-6">
-                                        <label className="small mb-1" htmlFor="inputBirthday">Birthday</label>
-                                        <input className="form-control" id="inputBirthday" type="text" name="birthday" placeholder="Tu Fecha de Nacimiento"value={`${item.birthDay}/${item.birthMonth}/${item.birthYear}`}></input>
+                                    {/* (email address) */}
+                                    <div className="col-md-6 mb-3">
+                                        <label className="small mb-1" htmlFor="inputEmailAddress">Tu correo</label>
+                                        <input className="form-control" id="inputEmailAddress" type="email" placeholder="Tu Correo Electrónico" value={item.email}></input>
                                     </div>
+                                    {/* birthday */}
+                                    {/* <div className="col-md-6">
+                                        <label className="small mb-1" htmlFor="inputBirthday">Birthday</label>
+                                        <input className="form-control" id="inputBirthday" type="text" name="birthday" placeholder="Tu Fecha de Nacimiento" value={`${item.birthDay}/${item.birthMonth}/${item.birthYear}`}></input>
+                                    </div> */}
                                 </div>
                                 {/* Save changes button */}
                                 <button className="btn btn-outline-success px-4" style={{borderRadius:"33% 67% 32% 68% / 90% 9% 91% 10% "}} type="button">Save changes</button>
