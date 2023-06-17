@@ -71,10 +71,10 @@ export const Checkout = () => {
                                         <input className="form-control" id="inputPhone" type="tel" placeholder="Tu Número Celular" value={item.phone} onChange={handleInputChange}></input>
                                     </div>
                                     {/* birthday */}
-                                    <div className="col-md-6">
+                                    {/* <div className="col-md-6">
                                         <label className="small mb-1" htmlFor="inputBirthday">Birthday</label>
                                         <input className="form-control" id="inputBirthday" type="text" name="birthday" placeholder="Tu Fecha de Nacimiento" value={`${item.birthDay}/${item.birthMonth}/${item.birthYear}`} onChange={handleInputChange}></input>
-                                    </div>
+                                    </div> */}
                                 </div>
                                 {/* Save changes button */}
                                 <button className="btn btn-outline-success px-4" style={{ borderRadius: "33% 67% 32% 68% / 90% 9% 91% 10% " }} type="button">Guardar</button>
@@ -124,7 +124,7 @@ export const Checkout = () => {
                                             30mil pesos colombianos
                                         </div>
                                         <Link to="/order-tracking">
-                                            <button className="btn btn-outline-success fs-4 p-3">
+                                            <button className="btn btn-outline-success fs-4 p-3 w-100">
                                                 Realizar pago
                                             </button>
                                         </Link>

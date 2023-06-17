@@ -240,9 +240,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 					displayName: "Alepina",
 					firstName: "Alejandra",
 					secondName: "Martinez",
-					birthDay: "12",
-					birthMonth: "6",
-					birthYear: "2014",
 					address: "",
 					addressDetail: "",
 					Gender: "femenino",
@@ -393,6 +390,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			},
 			apiFetchProtected: async (endpoint, method = "GET", body = {}) => {
+				const apiUrl = process.env.BACKEND_URL
 				let params = {
 					headers: {
 						"Authorization": `Bearer ${getStore().accessToken}`
