@@ -70,7 +70,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 			userLogout: async () => {
 				const resp = await getActions().apiFetchProtected("/api/logout", "POST")
 				if (resp.code >= 400) {
-					// setStore({ accessToken: null })
 					return resp
 				}
 				setStore({
@@ -315,15 +314,15 @@ const getState = ({ getStore, getActions, setStore }) => {
 			// },
 
 
-			addServices: (element) => {
-				const service = getStore().services;
-				if (service.includes(element) == false) {
-					const newServices = service.concat(element);
-					setStore({ services: newServices })
-					console.log(getStore().services)
-				}
+			// addServices: (element) => {
+			// 	const service = getStore().services;
+			// 	if (service.includes(element) == false) {
+			// 		const newServices = service.concat(element);
+			// 		setStore({ services: newServices })
+			// 		console.log(getStore().services)
+			// 	}
 
-			},
+			// },
 
 			deleteServices: (services) => {
 				const listservices = getStore().services;

@@ -23,8 +23,11 @@ export const Book = () => {
     else {
       actions.fetchServices()
       actions.fetchVehicleTypes()
-      actions.pagoMercadopago()
+      // actions.pagoMercadopago()
     }
+
+
+
 
   }, [])
 
@@ -35,9 +38,9 @@ export const Book = () => {
   const handleSelectVehicleType = (vehicleType) => {
     setSelectedVehicleType(vehicleType);
   };
-  const pagoMercadoPago = () => {
-    window.location.replace(store?.mercadopago.init_point);
-  };
+  // const pagoMercadoPago = () => {
+  //   window.location.replace(store?.mercadopago.init_point);
+  // };
 
 
 
@@ -59,7 +62,7 @@ export const Book = () => {
                   <div className="row align-items-center">
                     {vehicles ? (vehicles.map((vehicle, index) => (
                       <div className="col" key={index}>
-                        <div className="card text-center card border-dark mb-3" style={{ width: "35rem" }}>
+                        <div className="card text-center card border-dark mb-3" style={{ width: "25rem" }}>
                           <img src={vehicle.picture} className="card-img-top" alt="..." />
                           <div className="card-body " style={{ backgroundColor: '#40768C' }}>
                             <h5 className="card-title">{vehicle.name}</h5>
@@ -92,14 +95,16 @@ export const Book = () => {
                         element.vehicle_type == selectedVehicleType && (
                           <div className="card text-center card border-dark   m-2" style={{ width: "35rem" }} key={index}>
                             <img src={element.picture} className="card-img-top" alt="..." />
-                            <div className="card-body " style={{ backgroundColor: '#40768C' }}>
-                              <h5 className="card-title">{element.name}</h5>
-                              <ul className="list-group list-group-flush">
-                                <li className="list-group-item" style={{ backgroundColor: '#40768C' }}>Price {element.price} USD</li>
-                                <li className="list-group-item" style={{ backgroundColor: '#40768C' }}>What is about?</li>
+                            <div className="card-body " style={{ backgroundColor: '#40768C', height: "22rem" }}>
+                              <h5 className="card-title" style={{ height: "7rem" }}>{element.name}</h5>
+                              <ul className="list-group list-group-flush" style={{ height: "7rem" }}>
+                                <li className="list-group-item" style={{ backgroundColor: '#40768C' }}>Price:  {element.price} USD</li>
+                               
                               </ul>
+                              <div className="card-footer" style={{ height: "5rem" }}>
                               <button onClick={()=>actions.addFavorites(element.name, element.price, element.id)} href="#" className="btn btn-dark my-2">Add to Cart
                               </button>
+                              </div>
                             </div>
                           </div>
                         )
@@ -123,7 +128,7 @@ export const Book = () => {
             </div>
           </div>
           <br></br>
-          <button className="btn btn-success" onClick={pagoMercadoPago}>Pagar
+          <button className="btn btn-dark">Save
           </button>
           </div>
             :

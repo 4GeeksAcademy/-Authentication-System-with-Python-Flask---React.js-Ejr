@@ -54,7 +54,7 @@ class VehicleType(db.Model):
         }
     
 class ShoppingCar(db.Model):
-    __tablename__ = "shoppingcar"
+    __tablename__ = "shopping_car"
     id = db.Column(db.Integer, primary_key=True)
     services_id = db.Column(db.Integer, db.ForeignKey("services.id"))
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
@@ -66,7 +66,7 @@ class ShoppingCar(db.Model):
         return {
             "servicesVehicle":self.services.vehicle_type,
             "servicesName":self.services.name,
-            "servicesPrice":self.services.name,
+            "servicesPrice":self.services.price,
             "userName":self.users.name
         }
 
