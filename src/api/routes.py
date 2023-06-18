@@ -243,3 +243,11 @@ def new_shoppingCar():
     #     services_list.append({"id":service.id, "name":service.name, "description":service.description, "price": service.price})
     return jsonify(new_service.serialize()), 200
 
+@api.route('/getShoppingCar', methods=['GET'])
+@jwt_required()
+def get_shoppingCart():
+    user_id = get_jwt_identity()
+    user_services = ShoppingCar.query.filter_by(user_id=user_id)
+    return jsonify(user_services=[service.serialize() for service in user_services]), 200
+    
+

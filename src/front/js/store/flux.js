@@ -10,6 +10,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			services: [],
 			vehicleType: [],
 			mercadopago: {},
+			user_services: [],
 			demo: [
 				{
 					title: "FIRST",
@@ -55,6 +56,19 @@ const getState = ({ getStore, getActions, setStore }) => {
 				let favoriteIndex = newFavorites.findIndex(favorite => favorite.id == id)
 				newFavorites.splice(favoriteIndex,1)
 				setStore({new_service:newFavorites})
+			},
+			fetchShoppingCart: async () => {
+				try {
+					const resp = await getActions().apiFetchProtected("/api/getShoppingCar", "GET");
+					console.log("API Response:", resp.data);
+					if (resp.code >= 400) {
+						return resp;
+					}
+					setStore({ user_services: resp.data.user_services });
+					return resp;
+				} catch (error) {
+					console.log("Error fetching user services", error);
+				}
 			},
 			// deleteFavorites: (id) => {
 			// 	const listservices = getStore().services;
