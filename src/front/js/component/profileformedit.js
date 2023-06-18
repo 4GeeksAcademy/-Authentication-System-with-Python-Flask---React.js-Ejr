@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 export const ProfileFormEdit = () => {
   const [userName, setUserName] = useState("");
   const [description, setDescription] = useState("");
+  const [profilePicture, setProfilePicture] = useState(null);
 
   const navigate = useNavigate();
 
@@ -17,19 +18,27 @@ export const ProfileFormEdit = () => {
     setDescription(event.target.value);
   };
 
+  const handleProfilePictureChange = (event) => {
+    const file = event.target.files[0];
+    setProfilePicture(file);
+  };
+
+
+
   const handleFormSubmit = async (event) => {
     event.preventDefault();
+
+    const formData = new FormData();
+    formData.append("user_name", userName);
+    formData.append("description", description);
+    formData.append("profile_img", profilePicture);
 
     const response = await fetch(process.env.BACKEND_URL + "/api/editprofile", {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify({
-        user_name: userName,
-        description: description,
-      }),
+      body: formData,
     });
 
     if (response.ok) {
@@ -59,7 +68,7 @@ export const ProfileFormEdit = () => {
       >
         <div className="row">
           <div className="col-md-6 d-flex align-items-center">
-            <input type="image"  />
+            <input type="file" accept="image/*" onChange={handleProfilePictureChange} />
 
           </div>
           <div className="col-md-6 d-flex justify-content-center align-items-center">
@@ -71,7 +80,6 @@ export const ProfileFormEdit = () => {
               value={userName}
               onChange={handleUserNameChange} style={{ fontSize: "40px", border: "none" }}
             />
-
 
           </div>
         </div>

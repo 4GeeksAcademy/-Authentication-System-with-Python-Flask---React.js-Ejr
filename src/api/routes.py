@@ -1,12 +1,16 @@
 """
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
+import os
 from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, User
 from api.utils import generate_sitemap, APIException
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required
+from werkzeug.utils import secure_filename
+# from app import app
+
 
 api = Blueprint('api', __name__)
 
@@ -76,38 +80,41 @@ def login():
 
     return jsonify(response_body), 200
 
+
 @api.route('/profile', methods=['GET'])
 @jwt_required()
 def get_profile():
     current_user = get_jwt_identity()
     current_user_id = current_user['id']
-    
+
     user = User.query.filter_by(id=current_user_id).first()
 
     if user:
-        profile_data = {
-            'user_name': user.user_name,
-            'description': user.description
-        }
-        return jsonify(profile_data)
+        return jsonify(user.serialize())
     else:
         return jsonify({'message': 'No user found'}), 404
-    
+
 
 @api.route('/editprofile', methods=['POST'])
 @jwt_required()
 def update_profile():
     current_user = get_jwt_identity()
     current_user_id = current_user['id']
-    
+
     user = User.query.filter_by(id=current_user_id).first()
 
     if user:
-        data = request.get_json()
+        data = request.form
         if 'user_name' in data:
             user.user_name = data['user_name']
         if 'description' in data:
-            user.description = data['description']
+            user.description = data['description'] 
+        # if 'profile_img' in request.files:
+        #     profile_img = request.files['profile_img']
+        #     if profile_img:
+        #         filename = secure_filename(profile_img.filename)
+        #         profile_img.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        #         user.profile_img = filename
 
         db.session.commit()
 

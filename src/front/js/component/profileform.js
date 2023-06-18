@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 export const ProfileForm = () => {
   const [userName, setUserName] = useState("");
   const [description, setDescription] = useState("");
+  const [profileImg, setProfileImg] = useState("");
 
   useEffect(() => {
     fetchProfileData();
@@ -23,6 +24,7 @@ export const ProfileForm = () => {
         const data = await response.json();
         setUserName(data.user_name);
         setDescription(data.description);
+        setProfileImg(data.profile_img); // Update profile image state
       } else {
         throw new Error("Failed to fetch profile data");
       }
@@ -47,13 +49,16 @@ export const ProfileForm = () => {
         <div className="row">
           <div className="col-md-6 d-flex align-items-center">
             <img
-              src="https://images.pexels.com/photos/428361/pexels-photo-428361.jpeg?auto=compress&cs=tinysrgb&w=800"
-              className="img-fluid"
-              style={{ borderRadius: "50%" }}
+              src={profileImg}
+              className="img-fluid rounded-circle" 
+              style={{ width: "200px", height: "200px" }} 
+              alt="Profile"
             />
           </div>
           <div className="col-md-6 d-flex justify-content-center align-items-center">
-            <h2 className="me-2"  style={{ fontSize:"40px"}}>{userName}</h2>
+            <h2 className="me-2" style={{ fontSize: "40px" }}>
+              {userName}
+            </h2>
           </div>
         </div>
         <div className="row mt-4">
@@ -67,7 +72,9 @@ export const ProfileForm = () => {
               id="floatingTextarea2"
               style={{ height: 100 }}
               defaultValue={description}
-            >{description}</p>
+            >
+              {description}
+            </p>
           </div>
         </div>
         <div className="row mt-4">
