@@ -76,26 +76,41 @@ def login():
 
     return jsonify(response_body), 200
 
-
 @api.route('/profile', methods=['GET'])
 @jwt_required()
-def get_user():
-
+def get_profile():
     current_user = get_jwt_identity()
     current_user_id = current_user['id']
     
-    user = User.query.filter_by(id = current_user_id).first()
+    user = User.query.filter_by(id=current_user_id).first()
 
     if user:
         profile_data = {
-
             'user_name': user.user_name,
-            'profile_img': user.profile_img,
             'description': user.description
-
         }
-
         return jsonify(profile_data)
     else:
         return jsonify({'message': 'No user found'}), 404
+    
 
+@api.route('/editprofile', methods=['POST'])
+@jwt_required()
+def update_profile():
+    current_user = get_jwt_identity()
+    current_user_id = current_user['id']
+    
+    user = User.query.filter_by(id=current_user_id).first()
+
+    if user:
+        data = request.get_json()
+        if 'user_name' in data:
+            user.user_name = data['user_name']
+        if 'description' in data:
+            user.description = data['description']
+
+        db.session.commit()
+
+        return jsonify({'message': 'Profile updated successfully'})
+    else:
+        return jsonify({'message': 'No user found'}), 404
