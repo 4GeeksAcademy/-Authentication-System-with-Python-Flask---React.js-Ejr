@@ -24,7 +24,8 @@ export const FoodCard = () => {
         {restaurant.plates.map((element, index) =>(
         <div key={index} className="col card bg-transparent border border-primary"> 
             <div onError={imgError} className="card-img-top mx-0 p-1 m-1 w-100" alt="{item.url}">
-                <img  src={element.image} onError={imgError} className="card-img-top mx-0 p-1 pt-3 img-fluid figure-image" alt="restaurantImg" style={{ backgroundSize: "cover"}}></img>
+                <img  src={element.image} onError={imgError} className="card-img-top mx-0 p-1 pt-3 img-fluid figure-image" alt="restaurantImg" 
+                onClick={()=>actions.addFavorite(element.id, element.name)} style={{ backgroundSize: "cover"}}></img>
                 <div className="card-body">
                     <h1 className="w-100 card-body text-light d-flex justify-content-center">
                         <strong>{element.plateName}</strong>
@@ -41,7 +42,8 @@ export const FoodCard = () => {
                     <button className="btn btn-outline-primary fw-bold rounded d-flex align-self-center justify-content-center w-100 px-5 py-3 mx-2 fs-7">
                         Precio de: {element.price} Pesos
                     </button>
-                    <button className="btn btn-outline-primary fw-bold rounded d-flex align-self-center justify-content-center w-100 px-5 py-3 mx-2">
+                    <button className="btn btn-outline-primary fw-bold rounded d-flex align-self-center justify-content-center w-100 px-5 py-3 mx-2"
+                    onClick={() => actions.addCart(element, index)}>
                         Agregar al Carrito
                     </button>
                     <button type="button" className="btn btn btn-outline-primary fw-bold rounded w-100 px-5 py-3 mx-2" data-bs-toggle="modal" data-bs-target={`#foodModal-${index}`}>
@@ -49,9 +51,9 @@ export const FoodCard = () => {
                     </button>
                 </div>
             </div>
-            <FoodModal />
         </div>
         ))|| <h1 className="main-title gradient-custom">loading...</h1>}
+        <FoodModal />
     </>
     )
 };

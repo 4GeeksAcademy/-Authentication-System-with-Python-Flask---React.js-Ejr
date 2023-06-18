@@ -21,10 +21,13 @@ export const Navbar = () => {
 								Tu loot!
 						</button>
 						<ul className="dropdown-menu">
-							<li className="dropdown-item">Loot 1</li>
-							<li className="dropdown-item">Loot 2</li>
-							<li className="dropdown-item">Loot 3</li>
-							<li className="dropdown-item">This shalt clear thy loot</li>
+						{store.cart.map((plate, index)=>{
+						return(
+							<div className="d-flex flex-row" key={index}>
+								<li key={index}><a className="dropdown-item d-flex flex-row overflow-hidden"  href="#">{plate.plateName}</a></li>
+								<button type="button" className="badge rounded-pill bg-info mx-auto">X</button>
+							</div>
+							)})}
 							<li className="dropdown-item"><Link to="/checkout"><button className="btn btn-success">Ir a pagar!</button></Link></li>
 						</ul>
 					</div>
