@@ -242,7 +242,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					secondName: "Martinez",
 					address: "",
 					addressDetail: "",
-					Gender: "femenino",
+					gender: "femenino",
 					email: "askingalessa@gfake.com",
 					phone: "3005562343",
 					login: false,
@@ -289,7 +289,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			],
 			cart: [
-
+				// {
+				// 	plateName: "Pasta destazada",
+				// 	price: "14000",
+				// 	description: "Esta pasta, al igual que las transacciones clandestinas de la mafia, está llena de secretos. Deliciosos trozos de panceta ahumada y salchichas italianas picantes son combinados con una salsa pomodoro casera, que esconde un toque de chili para despertar tus sentidos.",
+				// 	image: "https://cdn.leonardo.ai/users/25acf724-d0fb-44e7-8da5-a5932af5eac9/generations/6e212d52-2ff4-42fb-8f97-b463ac7ba2b6/DreamShaper_v5_pasta_bolognese_ketchup_blood_aspect_delicious_0.jpg",
+				// 	restaurantName: "Don Pacino"
+				// }
 			],
 		},
 		actions: {
@@ -499,7 +505,28 @@ const getState = ({ getStore, getActions, setStore }) => {
 				let newFavorites = [{}]
 				setStore({ favorites: newFavorites })
 				console.log(favorites)
+			},
+			addCart: (plate, index) => {
+				console.log(plate, index)
+				let store = getStore()
+				let cart = store.cart
+				// cart is pulling data correclty
+				let plateIndex = index
+				let newPlate = {
+					plateName: plate.plateName,
+					price: plate.price,
+					description: plate.description,
+					image: plate.image,
+					restaurantName: plate.restaurantName,
+					index: index,
+				}
+				setStore({cart: [...cart, newPlate]})
+				console.log(cart)
+			},
+			deleteCartItem: (plate, index){
+				
 			}
+
 		}
 	};
 };
@@ -508,4 +535,3 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 
 export default getState;
-
