@@ -43,6 +43,8 @@ def handle_signup():
 
     # si ha pasado estas dos condiciones sin hacer los if, crea un usuario
 
+    # NEW USER MODEL 
+
     new_user = User(
         user_name=request_data['user_name'],
         email=request_data['email'],
@@ -57,6 +59,9 @@ def handle_signup():
     db.session.commit()
 
     return jsonify('Se ha añadido usario: ', request_data), 200
+
+#-----------------------------------------------------------------
+# LOGIN ROUTE 
 
 
 @api.route('/login', methods=['POST'])
@@ -80,6 +85,9 @@ def login():
 
     return jsonify(response_body), 200
 
+#-----------------------------------------------------------------
+# PROFILE 
+
 
 @api.route('/profile', methods=['GET'])
 @jwt_required()
@@ -93,6 +101,23 @@ def get_profile():
         return jsonify(user.serialize())
     else:
         return jsonify({'message': 'No user found'}), 404
+    
+
+#-----------------------------------------------------------------
+# PROFILE <ID>
+
+@api.route('/profile/<int:user_id>', methods=['GET'])
+@jwt_required()
+def get_id_profile(user_id):
+    user = User.query.filter_by(id=user_id).first()
+
+    if user:
+        return jsonify(user.serialize())
+    else:
+        return jsonify({'message': 'No user found'}), 404
+    
+#-----------------------------------------------------------------
+# EDIT PROFILE
 
 
 @api.route('/editprofile', methods=['POST'])

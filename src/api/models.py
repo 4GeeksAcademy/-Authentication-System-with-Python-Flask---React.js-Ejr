@@ -14,11 +14,10 @@ class User(db.Model):
     is_grandparent = db.Column(db.Boolean(), unique=False, nullable=True)
 
     def __repr__(self):
-        return f'<User {self.email}>'
+        return f'<User {self.email}, {self.id}>'
 
     def serialize(self):
         return {
-            
             "id": self.id,
             "email": self.email,
             "profile_img":self.profile_img,
