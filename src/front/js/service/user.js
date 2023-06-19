@@ -1,3 +1,4 @@
+import { da } from "date-fns/locale";
 import { URL } from ".";
 
 const HEADERS = {

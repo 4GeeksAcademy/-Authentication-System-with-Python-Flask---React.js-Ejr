@@ -2,32 +2,30 @@ import React from "react";
 import styles from "./input.module.css";
 
 const Input = ({
+  icon,
   type,
   placeholder,
-  icon,
   name,
   defaultValue,
-  disabled,
-  value,
   date,
-  required,
-}) => {
+  register,
+  }) => {
+
   return (
-    <div className={styles._inputContainer}>
+    <div className={styles._inputContainer}
+      >
       {icon}
       <input
         className="_boxShadow"
         type={type}
         placeholder={placeholder}
         name={name}
-        value={value}
         defaultValue={defaultValue}
-        disabled={disabled}
         date={date}
-        required={required}
+        {...register(name)}
       />
     </div>
   );
-};
+}; 
 
 export default Input;
