@@ -10,6 +10,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			services: [],
 			vehicleType: [],
 			mercadopago: {},
+			user_services: [],
 			demo: [
 				{
 					title: "FIRST",
@@ -29,27 +30,56 @@ const getState = ({ getStore, getActions, setStore }) => {
 				getActions().changeColor(0, "green");
 			},
 
+			// addFavorites: async (name, price, date) => {
+			// 	const resp = await getActions().apiFetchProtected("/api/shoppingCar", "POST", { name:name, price:price, date:date })
+			// 	if (resp.code >= 400) {
+			// 		return resp
+			// 	}
+
+			// 	setStore({ new_service : resp.data});
+			// 	return resp
+			// },
 			addFavorites: async (name, price, date) => {
 				const resp = await getActions().apiFetchProtected("/api/shoppingCar", "POST", { name: name, price: price, date: date });
 				if (resp.code >= 400) {
-				  return resp;
+					return resp;
 				}
-			  
+
 				const { new_service } = getStore();
 				const updatedNewService = [...new_service, resp.data];
 				setStore({ new_service: updatedNewService });
-			  
+
 				return resp;
-			  },
-
-		
-			deleteServices: (id) => {
-				const listservices = getStore().services;
-				const newservices = listservices.filter((element) => element !== services)
-				setStore({ services: newservices })
 			},
-	
-
+			deleteFavorites: async (id) => {
+				const { user_services } = getStore();
+				const newFavorites = [...user_services]
+				let favoriteIndex = newFavorites.findIndex(favorite => favorite.id == id)
+				newFavorites.splice(favoriteIndex, 1)
+				setStore({ user_services: newFavorites })
+				const resp = await getActions().apiFetchProtected(`/api/deleteShoppingCar/${id}`, "POST", {newFavorites})
+				if (resp.code >= 400) {
+					return resp;
+				}
+			},
+			fetchShoppingCart: async () => {
+				try {
+					const resp = await getActions().apiFetchProtected("/api/getShoppingCar", "GET");
+					console.log("API Response:", resp.data);
+					if (resp.code >= 400) {
+						return resp;
+					}
+					setStore({ user_services: resp.data.user_services });
+					return resp;
+				} catch (error) {
+					console.log("Error fetching user services", error);
+				}
+			},
+			// deleteFavorites: (id) => {
+			// 	const listservices = getStore().services;
+			// 	const newservices = listservices.filter((element) => element !== services)
+			// 	setStore({ services: newservices })
+			// }
 			userLogin: async (email, password) => {
 				const resp = await getActions().apiFetch("/api/login", "POST", { email, password })
 				console.log({ email, password })
@@ -64,7 +94,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 				localStorage.setItem("refreshToken", resp.data.refreshToken)
 				return resp
 			},
-
 			userLogout: async () => {
 				const resp = await getActions().apiFetchProtected("/api/logout", "POST")
 				if (resp.code >= 400) {
@@ -79,7 +108,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 				return resp
 
 			},
-
 			userCreate: async (first_name, last_name, city, country, zip_code, address_one, address_two, phone, email, password) => {
 				const resp = await getActions().apiFetch("/api/register", "POST", { first_name, last_name, city, country, zip_code, address_one, address_two, phone, email, password })
 				console.log({ first_name, last_name, email, password })
@@ -98,31 +126,30 @@ const getState = ({ getStore, getActions, setStore }) => {
 					if (refreshToken) {
 						var refreshDecoded = jwt_decode(refreshToken)
 						let refreshExpired = new Date(refreshDecoded.exp * 1000) < new Date()
-						if (!refreshExpired) {
+						if (refreshExpired) {
 							localStorage.removeItem("accessToken")
 							localStorage.removeItem("refreshToken")
 							return
 						}
 					}
 				}
+				setStore({
+					accessToken: accessToken,
+					refreshToken: refreshToken
+				})
 				// Puedo verificar la vigencia del token antes de cargarlo al store
 				let expired = true
 				try {
 					var decoded = jwt_decode(accessToken)
-					let expired = new Date(decoded.exp * 1000) < new Date()
+					expired = new Date(decoded.exp * 1000) < new Date()
 				} catch {
-					
+
 				}
 				console.log({ expired })
 				if (expired) {
 					await getActions().refreshToken()
 					localStorage.removeItem("accessToken")
 
-				} else {
-					setStore({
-						accessToken: accessToken,
-						refreshToken: refreshToken
-					})
 				}
 
 			},
@@ -131,7 +158,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					method: "POST",
 					headers: {
 						"Content-Type": "application/json",
-						"Authorization": `Bearer ${getStore().accessToken}`
+						"Authorization": "Bearer " + getStore().refreshToken
 					}
 				})
 				if (!resp.ok) {
@@ -234,6 +261,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				console.log(params)
 				console.log(getStore().accessToken)
 				let resp = await fetch(apiUrl + endpoint, params)
+				let data = await resp.json()
 				if (!resp.ok) {
 					// Verificar si el token ha expirado
 					if (data.msg == "Token has expired") {
@@ -247,15 +275,15 @@ const getState = ({ getStore, getActions, setStore }) => {
 							console.error(`${resp.status}: ${resp.statusText}`)
 							return { code: resp.status, error: `${resp.status}: ${resp.statusText}` }
 						}
-						else {
-							console.error(`${resp.status}: ${resp.statusText}`)
-							return { code: resp.status, error: `${resp.status}: ${resp.statusText}` }
-						}
+					}
+					else {
+						console.error(`${resp.status}: ${resp.statusText}`)
+						return { code: resp.status, error: `${resp.status}: ${resp.statusText}` }
 					}
 					// Si el token expira se debe usar el refresh token para obtener un nuevo access token
 					return { code: resp.status, data }
 				}
-				let data = await resp.json()
+
 				return { code: resp.status, data }
 			},
 			requestPasswordRecovery: async (email) => {
@@ -280,8 +308,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 				let data = await resp.json()
 				return { code: resp.status, data: data }
 			},
-
-
 			pagoMercadopago: async () => {
 				try {
 					const response = await axios.post(apiUrl + "/api/preference", {
@@ -316,7 +342,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			// },
 
-			
 		},
 	};
 };
