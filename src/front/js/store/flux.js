@@ -1,6 +1,7 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
+			token: null,
 			message: null,
 			demo: [
 				{
@@ -21,15 +22,72 @@ const getState = ({ getStore, getActions, setStore }) => {
 				getActions().changeColor(0, "green");
 			},
 
+			signup: async (email, pass) => {
+				const options = {
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json"
+					},
+					body: JSON.stringify({
+						"email": email,
+						"password": pass,
+						"is_active": true
+					})
+				}
+				try {
+					const resp = await fetch('http://127.0.0.1:3001/api/user', options)
+					if (resp.status != 200) {
+						alert("error en fetch user")
+						return false
+					}
+
+					const data = await resp.json()
+					return true
+
+				}
+				catch (error) {
+					console.error("error en signUp")
+				}
+			},
+
+			login: async (email, pass) => {
+				const options = {
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json"
+					},
+					body: JSON.stringify({
+						"email": email,
+						"password": pass
+					})
+				}
+				try {
+					const resp = await fetch('http://127.0.0.1:3001/api/token', options)
+					if (resp.status != 200) {
+						alert("error en fetch token")
+						return false
+					}
+
+					const data = await resp.json()
+					sessionStorage.setItem("token", data.access_token)
+					setStore({ token: data.access_token })
+					return true
+
+				}
+				catch (error) {
+					console.error("error en login")
+				}
+			},
+
 			getMessage: async () => {
-				try{
+				try {
 					// fetching data from the backend
 					const resp = await fetch(process.env.BACKEND_URL + "/api/hello")
 					const data = await resp.json()
 					setStore({ message: data.message })
 					// don't forget to return something, that is how the async resolves
 					return data;
-				}catch(error){
+				} catch (error) {
 					console.log("Error loading message from backend", error)
 				}
 			},
