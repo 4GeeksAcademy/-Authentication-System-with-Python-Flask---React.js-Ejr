@@ -9,7 +9,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 export const LoginUsuario = () => {
   const { store, actions } = useContext(Context);
-  const navigate=useNavigate()
+  const navigate = useNavigate()
   // function Password() {
   //   // Initialize a boolean state
   const [passwordShown, setPasswordShown] = useState(false);
@@ -34,8 +34,8 @@ export const LoginUsuario = () => {
   }
 
   return (
-    <div className="container">
-
+    <div style={{ backgroundColor: '#40768C' }}>
+    <div className="container" >
       <h3>Sing in</h3>
       <form onSubmit={submitForm}>
         <div className="col-md-12 position-relative">
@@ -51,16 +51,14 @@ export const LoginUsuario = () => {
             </button>
           </div>
         </div>
-
         <div className="col-12 mb-3 ">
           <div className="d-grid gap-2">
-            <button className="btn btn-primary  mx-1" type="submit">Login</button>
+            <button className="btn btn-dark  mx-1" type="submit">Login</button>
             <Link to="/recovery">
               <button type="button" className="btn btn-secondary  mx-1">Forgot your password?</button>
             </Link>
           </div>
         </div>
-
         <div className="form-check ">
           <input className="form-check-input" type="checkbox" name="password" value="" id="flexCheckChecked" />
           <label className="form-check-label" htmlFor="flexCheckChecked">
@@ -69,9 +67,6 @@ export const LoginUsuario = () => {
         </div>
       </form>
     </div>
-
-
-
-
+    </div>
   );
 };

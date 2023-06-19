@@ -338,16 +338,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 			// },
 
 
-			// addServices: (element) => {
-			// 	const service = getStore().services;
-			// 	if (service.includes(element) == false) {
-			// 		const newServices = service.concat(element);
-			// 		setStore({ services: newServices })
-			// 		console.log(getStore().services)
-			// 	}
+		
 
 			// },
-
 
 		},
 	};

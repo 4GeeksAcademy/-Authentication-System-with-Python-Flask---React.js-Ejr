@@ -34,7 +34,8 @@ export const Login = () => {
   }
 
   return (
-    <div className="container">
+    <div style={{ backgroundColor: '#40768C' }}>
+    <div className="container" >
       <h3>Details</h3>
       <form onSubmit={submitForm}>
         <div className="row g-3" >
@@ -46,33 +47,24 @@ export const Login = () => {
             <label className="form-label">Last name</label>
             <input type="text" className="form-control" name="last_name" placeholder="Last name" required />
           </div>
-          <div className="col-md-5 position-relative">
+          <div className="col-md-6 position-relative">
             <label className="form-label">City</label>
             <input type="text" className="form-control" name="city" placeholder="City" required />
           </div>
-          <div className="col-md-5 position-relative">
+          <div className="col-md-6 position-relative">
             <label className="form-label">Country</label>
             <input type="text" className="form-control" name="country" placeholder="Country" required />
           </div>
-          {/* <div className="col-md-3 position-relative">
-            <label className="form-label">State</label>
-            <select className="form-select" required>
-              <option selected disabled value="">Please enter a state</option>
-              <option>Florida</option>
-              <option>California</option>
-              <option>Georgia</option>
-              <option>...</option>
-            </select>
-          </div> */}
+   
           <div className="col-md-4 position-relative">
             <label className="form-label">Zip Code</label>
             <input type="text" className="form-control" name="zip_code" placeholder="Enter your zip code. E.g. 10710" required />
           </div>
-          <div className="col-md-6 position-relative">
+          <div className="col-md-4 position-relative">
             <label className="form-label">Adress line 1</label>
             <input type="text" className="form-control" name="address_one" placeholder="Street address, P.O box or military address" required />
           </div>
-          <div className="col-md-6 position-relative">
+          <div className="col-md-4 position-relative">
             <label className="form-label">Adress line 2</label>
             <input type="text" className="form-control" name="address_two" placeholder="Building, floor, Apt, Suite, Unit, etc." required />
           </div>
@@ -94,7 +86,7 @@ export const Login = () => {
               </button>
             </div>
           </div>
-          <div id="passwordHelpBlock" className="form-text">
+          <div id="passwordHelpBlock" className="form-text text-dark">
             Your password must be 8-20 characters long, contain letters and numbers, and must not contain spaces, special characters, or emoji.
           </div>
           <div className="form-group">
@@ -107,20 +99,21 @@ export const Login = () => {
           <div className="col-12">
             <div className="form-check">
               <input className="form-check-input is-invalid" type="checkbox" value="" aria-describedby="invalidCheck3Feedback" required />
-              <label className="form-check-label">
+              <label className="form-check-label text-dark">
                 Agree to terms and conditions
               </label>
-              <div id="invalidCheck3Feedback" className="invalid-feedback">
+              <div id="invalidCheck3Feedback" className="invalid-feedback text-dark">
                 You must agree before submitting.
               </div>
             </div>
           </div>
           <div className="col-12 ">
-            <button className="btn btn-primary mx-1" type="submit">Save</button>
+            <button className="btn btn-dark mx-1" type="submit">Save</button>
             <button type="button" className="btn btn-secondary">Cancel</button>
           </div>
         </div>
       </form>
+    </div>
     </div>
   );
 };
