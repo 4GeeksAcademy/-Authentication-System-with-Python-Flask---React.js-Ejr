@@ -44,6 +44,8 @@
   font-weight: var(--font-semibold);
   color: var(--black);
   transition: opacity 0.2s;
+  width: 100%;
+  text-align: center;
 }
 
 ._smallContainer p:hover {
@@ -86,4 +88,45 @@ span {
 
 ._workerImg:hover {
   opacity: 0.7;
+}
+
+._modalContent > p {
+  margin: 0;
+}
+
+._modalFooter {
+  margin-top: 24px;
+}
+._btnWrapper {
+  display: flex;
+  gap: 16px;
+  margin-top: 24px;
+}
+
+._modalContent {
+  margin: 0 auto;
+}
+._modalContent img {
+  width: 105px;
+  height: 105px;
+  filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.25));
+  margin-bottom: 20px;
+}
+._modalContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: -webkit-center;
+}
+._service {
+  margin: 20px 0;
+  width: 197px;
+}
+._service p:not(:first-child) {
+  text-align: left;
+}
+
+._btnWrapperdiv {
+  margin-top: 22px;
+  width: 220px;
 }

@@ -1,0 +1,11 @@
+._serviceCardContainer {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+p {
+  margin: 0;
+  cursor: pointer;
+}
