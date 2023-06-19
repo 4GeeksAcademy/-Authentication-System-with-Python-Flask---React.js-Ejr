@@ -101,32 +101,28 @@ def user_logout():
 def user_create():
     data = request.get_json()
     print(data)
-    new_user = User.query.filter_by(
-        email=data["email"], password=data["password"], is_active=True
-    )
-    User.query.filter_by(email=data["email"]).first()
-    if new_user is not None:
-        return jsonify({"msg": "Email registrado"}), 400
+    existing_user = User.query.filter_by(email=data.get("email")).first()
+    if existing_user is not None:
+        return jsonify({"msg": "Email already registered"}), 400
     secure_password = bcrypt.generate_password_hash(
-        data["password"], rounds=None
+        data.get("password"), rounds=None
     ).decode("utf-8")
-    print(new_user)
+    print(existing_user)
     new_user = User(
-        email=data["email"],
+        email=data.get("email"),
         password=secure_password,
-        is_active=True,
-        first_name=data["first_name"],
-        last_name=data["last_name"],
-        birthday=data["birthday"],
-        gender=data["gender"],
-        phone=data["phone"],
-        address=data["address"],
-        address_details=data["address_details"],
-        suscription=data["suscription"],
+        first_name=data.get("first_name"),
+        last_name=data.get("last_name"),
+        birthday=data.get("birthday"),
+        gender=data.get("gender"),
+        phone=data.get("phone"),
+        address=data.get("address"),
+        address_details=data.get("address_details"),
     )
     db.session.add(new_user)
     db.session.commit()
     return jsonify(new_user.serialize()), 201
+
 
 
 @api.route("/changepassword", methods=["POST"])
