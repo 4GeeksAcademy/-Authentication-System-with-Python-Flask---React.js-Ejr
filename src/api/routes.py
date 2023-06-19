@@ -252,8 +252,23 @@ def get_shoppingCart():
     return jsonify(user_services=[service.serialize() for service in user_services]), 200
 
 
-@api.route('/deleteShoppingCar/<int:service_id>', methods=['PUT'])
-@jwt_required
+# @api.route('/deleteShoppingCar/<int:service_id>', methods=['PUT'])
+# @jwt_required()
+# def delete_shoppingCart(service_id):
+#     user_id = get_jwt_identity()
+#     shopping_cart_item = ShoppingCar.query.filter_by(
+#         id=service_id, user_id=user_id).first()
+#     if shopping_cart_item:
+#         user_services = ShoppingCar.query.filter_by(user_id=user_id)
+#         db.session.delete(shopping_cart_item)
+#         db.session.commit()
+#         return jsonify(user_services=[service.serialize() for service in user_services]), 200
+#         #return jsonify(message='Shopping car item deleted successfully'), 200
+#     else:
+#         return jsonify(message='Shopping car item not found'), 404
+
+@api.route('/deleteShoppingCar/<int:service_id>', methods=['DELETE'])
+@jwt_required()
 def delete_shoppingCart(service_id):
     user_id = get_jwt_identity()
     shopping_cart_item = ShoppingCar.query.filter_by(
@@ -261,6 +276,8 @@ def delete_shoppingCart(service_id):
     if shopping_cart_item:
         db.session.delete(shopping_cart_item)
         db.session.commit()
-        return jsonify(message='Shopping car item deleted successfully'), 200
+        user_services = ShoppingCar.query.filter_by(user_id=user_id).all()
+        return jsonify(user_services=[service.serialize() for service in user_services]), 200
     else:
         return jsonify(message='Shopping car item not found'), 404
+
