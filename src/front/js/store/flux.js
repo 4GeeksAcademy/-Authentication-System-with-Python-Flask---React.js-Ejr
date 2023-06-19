@@ -51,11 +51,16 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				return resp;
 			},
-			deleteFavorites: (id) => {
-				const newFavorites = [...new_service]
+			deleteFavorites: async (id) => {
+				const { user_services } = getStore();
+				const newFavorites = [...user_services]
 				let favoriteIndex = newFavorites.findIndex(favorite => favorite.id == id)
-				newFavorites.splice(favoriteIndex,1)
-				setStore({new_service:newFavorites})
+				newFavorites.splice(favoriteIndex, 1)
+				setStore({ user_services: newFavorites })
+				const resp = await getActions().apiFetchProtected(`/api/deleteShoppingCar/${id}`, "PUT", {newFavorites})
+				if (resp.code >= 400) {
+					return resp;
+				}
 			},
 			fetchShoppingCart: async () => {
 				try {
@@ -121,18 +126,22 @@ const getState = ({ getStore, getActions, setStore }) => {
 					if (refreshToken) {
 						var refreshDecoded = jwt_decode(refreshToken)
 						let refreshExpired = new Date(refreshDecoded.exp * 1000) < new Date()
-						if (!refreshExpired) {
+						if (refreshExpired) {
 							localStorage.removeItem("accessToken")
 							localStorage.removeItem("refreshToken")
 							return
 						}
 					}
 				}
+				setStore({
+					accessToken: accessToken,
+					refreshToken: refreshToken
+				})
 				// Puedo verificar la vigencia del token antes de cargarlo al store
 				let expired = true
 				try {
 					var decoded = jwt_decode(accessToken)
-					let expired = new Date(decoded.exp * 1000) < new Date()
+					expired = new Date(decoded.exp * 1000) < new Date()
 				} catch {
 
 				}
@@ -141,11 +150,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 					await getActions().refreshToken()
 					localStorage.removeItem("accessToken")
 
-				} else {
-					setStore({
-						accessToken: accessToken,
-						refreshToken: refreshToken
-					})
 				}
 
 			},
@@ -154,7 +158,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					method: "POST",
 					headers: {
 						"Content-Type": "application/json",
-						"Authorization": `Bearer ${getStore().accessToken}`
+						"Authorization": "Bearer " + getStore().refreshToken
 					}
 				})
 				if (!resp.ok) {
@@ -257,6 +261,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				console.log(params)
 				console.log(getStore().accessToken)
 				let resp = await fetch(apiUrl + endpoint, params)
+				let data = await resp.json()
 				if (!resp.ok) {
 					// Verificar si el token ha expirado
 					if (data.msg == "Token has expired") {
@@ -270,15 +275,15 @@ const getState = ({ getStore, getActions, setStore }) => {
 							console.error(`${resp.status}: ${resp.statusText}`)
 							return { code: resp.status, error: `${resp.status}: ${resp.statusText}` }
 						}
-						else {
-							console.error(`${resp.status}: ${resp.statusText}`)
-							return { code: resp.status, error: `${resp.status}: ${resp.statusText}` }
-						}
+					}
+					else {
+						console.error(`${resp.status}: ${resp.statusText}`)
+						return { code: resp.status, error: `${resp.status}: ${resp.statusText}` }
 					}
 					// Si el token expira se debe usar el refresh token para obtener un nuevo access token
 					return { code: resp.status, data }
 				}
-				let data = await resp.json()
+
 				return { code: resp.status, data }
 			},
 			requestPasswordRecovery: async (email) => {

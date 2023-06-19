@@ -43,7 +43,7 @@ export const ShoppingCar = () => {
                                     <h1>ADDRESS: {user_services[0]?.address}</h1>
                                     {user_services.map((element, index) => (
                                         <div className="col" key={index}>
-                                            <p>{element.servicesName}, $USD:{element.servicesPrice}, {element.date}</p>
+                                            <p>{element.servicesName}, $USD:{element.servicesPrice}, {element.date}</p><button className="btn btn-danger" onClick={() => actions.deleteFavorites(index)}><i className="fa-regular fa-trash-can"></i></button>
                                         </div>
                                     ))}
                                     <p className="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>

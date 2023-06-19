@@ -211,7 +211,7 @@ def user_refresh():
 def hello_protected_get():
     user_id = get_jwt_identity()
     user = User.query.get(user_id)
-    return jsonify({"userId": user_id, "message": "Hello protected route", "userData":user.serialize()})
+    return jsonify({"userId": user_id, "message": "Hello protected route", "userData": user.serialize()})
 
 
 @api.route("/logout", methods=['POST'])
@@ -222,7 +222,7 @@ def user_logout():
     tokenBlocked = TokenBlockedList(jti=jwt)
     db.session.add(tokenBlocked)
     db.session.commit()
-    return jsonify({"msg":"Token revoked"})
+    return jsonify({"msg": "Token revoked"})
 
 
 @api.route('/shoppingCar', methods=['POST'])
@@ -243,11 +243,24 @@ def new_shoppingCar():
     #     services_list.append({"id":service.id, "name":service.name, "description":service.description, "price": service.price})
     return jsonify(new_service.serialize()), 200
 
+
 @api.route('/getShoppingCar', methods=['GET'])
 @jwt_required()
 def get_shoppingCart():
     user_id = get_jwt_identity()
     user_services = ShoppingCar.query.filter_by(user_id=user_id)
     return jsonify(user_services=[service.serialize() for service in user_services]), 200
-    
 
+
+@api.route('/deleteShoppingCar/<int:service_id>', methods=['PUT'])
+@jwt_required
+def delete_shoppingCart(service_id):
+    user_id = get_jwt_identity()
+    shopping_cart_item = ShoppingCar.query.filter_by(
+        id=service_id, user_id=user_id).first()
+    if shopping_cart_item:
+        db.session.delete(shopping_cart_item)
+        db.session.commit()
+        return jsonify(message='Shopping car item deleted successfully'), 200
+    else:
+        return jsonify(message='Shopping car item not found'), 404
