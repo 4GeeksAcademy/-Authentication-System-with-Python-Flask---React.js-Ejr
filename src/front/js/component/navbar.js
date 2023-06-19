@@ -10,8 +10,9 @@ export const Navbar = () => {
 	
 	return (
 		<nav id="navbar-design" className="navbar fixed-top">
-			<div className="container">
+			<div className="container-fluid">
 				<Link to="/">
+					<img className="icon" src="https://cdn.leonardo.ai/users/25acf724-d0fb-44e7-8da5-a5932af5eac9/generations/a62b0af7-39d5-4341-b400-46ae9d323a43/variations/Default_Generate_a_elegant_design_logo_based_on_a_gaming_subsc_0_a62b0af7-39d5-4341-b400-46ae9d323a43_0.png"></img>
 					<span className="navbar-brand fs-2 mb-0 color-font">GitLoot</span>
 				</Link>
 				<div className="ml-auto">
@@ -33,7 +34,13 @@ export const Navbar = () => {
 					</div>
 					{
 					!!store.accessToken?
-					""                                                                          
+					<>
+						<Link to="/profile">
+						<button type="button" style={{borderRadius:"33% 67% 32% 68% / 90% 9% 91% 10% "}} className="btn btn-outline-secondary py-2 px-5">
+							Tu Perfil
+						</button>
+					</Link>
+					</>                                                                          
 					:
 					<>
 						<button type="button" style={{borderRadius:"33% 67% 32% 68% / 90% 9% 91% 10% "}} 
@@ -48,12 +55,6 @@ export const Navbar = () => {
 						</Link>
 					</>
 					}
-					
-					<Link to="/profile">
-						<button type="button" style={{borderRadius:"33% 67% 32% 68% / 90% 9% 91% 10% "}} className="btn btn-outline-secondary py-2 px-5">
-							Tu Perfil
-						</button>
-					</Link>
 				</div>
 			</div>
 		</nav>
