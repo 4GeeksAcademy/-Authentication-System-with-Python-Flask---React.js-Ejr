@@ -22,6 +22,34 @@ const getState = ({ getStore, getActions, setStore }) => {
 				getActions().changeColor(0, "green");
 			},
 
+			signup: async (email, pass) => {
+				const options = {
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json"
+					},
+					body: JSON.stringify({
+						"email": email,
+						"password": pass,
+						"is_active": true
+					})
+				}
+				try {
+					const resp = await fetch('http://127.0.0.1:3001/api/user', options)
+					if (resp.status != 200) {
+						alert("error en fetch user")
+						return false
+					}
+
+					const data = await resp.json()
+					return true
+
+				}
+				catch (error) {
+					console.error("error en signUp")
+				}
+			},
+
 			login: async (email, pass) => {
 				const options = {
 					method: "POST",

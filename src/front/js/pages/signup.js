@@ -3,7 +3,7 @@ import { Context } from "../store/appContext";
 import "../../styles/login.css";
 import { useNavigate } from "react-router-dom"
 
-export const Login = () => {
+export const Signup = () => {
     const { store, actions } = useContext(Context)
     const [email, setEmail] = useState("")
     const [pass, setPass] = useState("")
@@ -11,14 +11,14 @@ export const Login = () => {
 
     const handleClick = () => {
         event.preventDefault()
-        actions.login(email, pass).then(() => {
-            navigate("/")
+        actions.signup(email, pass).then(() => {
+            navigate("/login")
         })
     }
 
     return (
         <>
-            <h1>Login</h1>
+            <h1>SignUp</h1>
             <div className="d-flex justify-content-center mt-5">
                 <form className="">
                     <div className="mb-3">
