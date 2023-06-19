@@ -7,6 +7,7 @@ import Header from "../../components/header/index.jsx";
 import ImgProfile from "../../components/imgProfile/index.jsx";
 import { useNavigate } from "react-router-dom";
 import { Context } from "../../store/appContext.js";
+import { toast } from "react-toastify";
 
 const Profile = () => {
   const [file, setFile] = useState("");
@@ -59,6 +60,7 @@ const Profile = () => {
     await updateUserProfile(form);
     
     handleDashboard()
+
     setLoading(false);
 
   };

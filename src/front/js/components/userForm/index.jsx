@@ -1,10 +1,7 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { registerUser } from "../../service/user";
 import styles from "./userForm.module.css";
-import { createCompany } from "../../service/company.js";
-import { Context } from "../../store/appContext";
-import { useNavigate } from "react-router-dom";
 import Button from "../button/index.jsx";
 import Input from "../input/index.jsx";
 import { useForm } from "react-hook-form";
