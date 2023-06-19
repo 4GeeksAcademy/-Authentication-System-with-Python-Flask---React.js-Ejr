@@ -37,6 +37,10 @@ export const Home = () => {
 
     return (
         <div className="text-center mt-5" style={{ margintop: "8rem", marginBottom: "0rem", paddingTop: "4rem" }}>
+            <section className="container">
+
+            </section>
+
             <section className="container-fluid text-center" style={{ height: "100%" }}>
                 <div className="container-fluid text-center m-1 h-100 g-4 gap-3 p-3 fs-1 m-3 py-2">
                     <div className="row m-2 fs-1 d-sm-inline-flex">
@@ -52,7 +56,7 @@ export const Home = () => {
                                         <div className="input-group d-flex align-self-end text-stroke-white-thin w-100" style={{ color: "white" }}>
                                             <textarea className="bg-transparent border text-center text-white w-100 rounded text-break h-100" placeholder="Escribele algo a nuestra IA" value={userInput} onChange={handleUserInput}></textarea>
                                         </div>
-                                        <button className="btn btn-primary mt-2" onClick={handleSubmit}>Enviar</button>
+                                        <button className="btn btn-outline-primary mt-2"  onClick={handleSubmit}>Enviar</button>
                                     </div>
                                 </div>
                             </div>

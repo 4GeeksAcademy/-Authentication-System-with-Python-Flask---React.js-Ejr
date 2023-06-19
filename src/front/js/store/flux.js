@@ -15,28 +15,28 @@ const getState = ({ getStore, getActions, setStore }) => {
 					plates: [
 						{
 							plateName: "Ramen",
-							price: "40000",
+							price: "40",
 							description: "¡Descubre el sabor auténtico del Oriente en cada sorbo! Nuestro exquisito plato de ramen te transportará a las calles bulliciosas de Japón con su caldo rico y reconfortante. Sus fideos al dente se entrelazan con delicadeza en un mar de sabores, acompañados de trozos tiernos de cerdo desmenuzado, verduras frescas y un huevo suave y seductor.",
 							image: "https://cdn.leonardo.ai/users/25acf724-d0fb-44e7-8da5-a5932af5eac9/generations/2e56975e-3d9a-4cd7-ba95-362ae2e81927/DreamShaper_v6_ramen_black_table_elegant_delicious_steam_chops_0.jpg",
 							restaurantName: "Wok"
 						},
 						{
 							plateName: "Onigiri",
-							price: "20000",
+							price: "20",
 							description: "¡Descubre el bocado perfecto de Japón en un solo bocado! Nuestros exquisitos Onigiri son pequeñas obras maestras de arroz rellenas de sabores irresistibles. Con una textura suave y pegajosa, cada onigiri es cuidadosamente moldeado a mano para garantizar una presentación impecable. ",
 							image: "https://cdn.leonardo.ai/users/25acf724-d0fb-44e7-8da5-a5932af5eac9/generations/5935ad7f-cc73-44bd-9b0b-0d5f96d38395/DreamShaper_v6_onigiri_black_table_elegant_delicious_steam_cho_1.jpg",
 							restaurantName: "Wok"
 						},
 						{
 							plateName: "Arroz",
-							price: "4000",
+							price: "4",
 							description: "Nuestro arroz japonés es preparado con maestría por nuestros chefs expertos, quienes seleccionan cuidadosamente los ingredientes más frescos y auténticos para ofrecerte una experiencia culinaria única. Cada grano de arroz, perfectamente cocido y sazonado con una combinación de especias tradicionales, se transforma en una explosión de sabor en tu paladar.",
 							image: "https://cdn.leonardo.ai/users/25acf724-d0fb-44e7-8da5-a5932af5eac9/generations/2d4d91ae-f36a-451a-9e9a-16f3fd7e95ae/DreamShaper_v6_japanese_rice_in_a_black_bowl_black_table_elega_0.jpg",
 							restaurantName: "Wok"
 						},
 						{
 							plateName: "Sushi",
-							price: "20000",
+							price: "20",
 							description: "¡Descubre nuestro exquisito plato de sushi, una explosión de sabores en cada bocado! Nuestro sushi fresco y artísticamente presentado combina la suavidad del arroz con la frescura del pescado crudo y una cuidadosa selección de ingredientes. Cada pieza es una obra maestra culinaria, elaborada con maestría por nuestros expertos sushi chefs. ",
 							image: "https://cdn.leonardo.ai/users/25acf724-d0fb-44e7-8da5-a5932af5eac9/generations/366b9e90-63c9-429d-a771-e81025c2bce0/DreamShaper_v6_japanese_rice_with_sushi_black_table_elegant_de_0.jpg",
 							restaurantName: "Wok"
@@ -51,7 +51,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						{
 							SubscriptionName: "Yamete Kudasai",
 							description: "¡Yamete Kudasai: Una Experiencia Gastronómica Japonesa Cada Día de la Semana! Delicioso Ramen los Lunes, Sushi los Martes, Arroz Japonés los Miércoles, Bento los Jueves, ¡Y de Nuevo Ramen los Viernes! ¡Disfruta de Sushi los Sábados y Domingos!",
-							price: "20000",
+							price: "20",
 							image: "https://cdn.leonardo.ai/users/25acf724-d0fb-44e7-8da5-a5932af5eac9/generations/65d1d1eb-9819-4610-9871-6d8e0ff7a206/DreamShaper_v6_wok_ramen_logo_on_top_right_elegant_marketing_0.jpg",
 						}
 					]
@@ -61,28 +61,28 @@ const getState = ({ getStore, getActions, setStore }) => {
 					plates: [
 						{
 							plateName: "Hamburguesa",
-							price: "15000",
+							price: "15",
 							description: "Prueba nuestra irresistible hamburguesa: un jugoso filete de carne cocinado a la perfección, envuelto en un pan suave y esponjoso. Acompañado de crujientes vegetales frescos y una explosión de sabores gracias a nuestra especial salsa secreta. ¡Una experiencia gourmet en cada mordisco!",
 							image: "https://cdn.leonardo.ai/users/25acf724-d0fb-44e7-8da5-a5932af5eac9/generations/f2d4bab1-66ef-4549-b9db-3edb375a5a92/DreamShaper_v5_Delicious_hamburger_juicy_patty_steam_dark_eleg_0.jpg",
 							restaurantName: "McDonalds"
 						},
 						{
 							plateName: "Hamburguesa con queso",
-							price: "19000",
+							price: "19",
 							description: "¡Prepárate para una explosión de sabor con nuestra hamburguesa con queso! Imagina un filete jugoso y sazonado a la perfección, acompañado de una suave fusión de quesos que se derriten en tu boca. El pan brioche tostado añade un toque de crujiente y la frescura de los vegetales complementa esta obra maestra. ¿Estás listo para una experiencia de hamburguesa irresistible?",
 							image: "https://cdn.leonardo.ai/users/25acf724-d0fb-44e7-8da5-a5932af5eac9/generations/bd5b796e-cc5a-4968-a432-eff627d518cd/DreamShaper_v5_Delicious_hamburger_with_a_lot_of_cheese_inside_1.jpg",
 							restaurantName: "McDonalds"
 						},
 						{
 							plateName: "Doble libra",
-							price: "20000",
+							price: "20",
 							description: "¡Déjate seducir por nuestra increíble hamburguesa doble libra! Dos jugosos filetes de carne perfectamente sazonados, colocados entre dos capas de pan brioche tostado. Una explosión de sabor y satisfacción en cada bocado. Acompañada de crujientes hojas de lechuga, rodajas de tomate maduro y nuestra irresistible salsa especial. ¡Una experiencia gourmet en tu paladar!",
 							image: "https://cdn.leonardo.ai/users/25acf724-d0fb-44e7-8da5-a5932af5eac9/generations/f521b433-17a4-4ba2-bc63-4f3f84ef305d/DreamShaper_v5_Delicious_double_big_hamburger_juicy_patty_stea_0.jpg",
 							restaurantName: "McDonalds"
 						},
 						{
 							plateName: "Big Mac",
-							price: "25000",
+							price: "25",
 							description: "Imagina dos jugosas y sabrosas hamburguesas de carne 100% de res, perfectamente asadas y sazonadas, apiladas entre tres capas de panes suaves y esponjosos. En cada bocado, sentirás la deliciosa fusión de la carne, el queso cheddar fundido, los crujientes pepinillos, la cebolla fresca y nuestra inconfundible salsa secreta.",
 							image: "https://cdn.leonardo.ai/users/25acf724-d0fb-44e7-8da5-a5932af5eac9/generations/ab3e02d0-42f2-4ddb-8476-29a888149470/DreamShaper_v5_Delicious_giant_hamburger_bacon_juicy_patty_ste_2.jpg",
 							restaurantName: "McDonalds"
@@ -94,7 +94,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						{
 							SubscriptionName: "Bien Librado",
 							description: "Con Bien librado, tienes la opción de personalizar tu hamburguesa llamando a nuestro servicio al cliente. Si tienes algún antojo en particular o alguna restricción, estaremos encantados de adaptar tu hamburguesa a tus necesidades.",
-							price: "20000",
+							price: "20",
 							image: "https://cdn.leonardo.ai/users/25acf724-d0fb-44e7-8da5-a5932af5eac9/generations/65d1d1eb-9819-4610-9871-6d8e0ff7a206/DreamShaper_v6_wok_ramen_logo_on_top_right_elegant_marketing_0.jpg",
 						}
 					]
@@ -104,28 +104,28 @@ const getState = ({ getStore, getActions, setStore }) => {
 					plates: [
 						{
 							plateName: "Pollo asado",
-							price: "15000",
+							price: "15",
 							description: "¡Descubre la perfección en cada bocado con nuestro pollo asado! Jugoso, tierno y lleno de sabor, este plato te transportará a un festín irresistible. Cada porción está cuidadosamente sazonada con una mezcla de especias secretas que realza su sabor natural y lo convierte en una verdadera delicia.",
 							image: "https://cdn.leonardo.ai/users/25acf724-d0fb-44e7-8da5-a5932af5eac9/generations/43708d93-6def-4e1f-84ee-22732705ad87/DreamShaper_v5_fried_chicken_with_fries_and_coke_served_in_a_p_0.jpg",
 							restaurantName: "Kukulkan"
 						},
 						{
 							plateName: "Medio pollo asado",
-							price: "8000",
+							price: "8",
 							description: "Disfruta de nuestro medio pollo asado, una delicia jugosa y llena de sabor. Tierno y dorado en su exterior, cada bocado te transportará a un festival de sabores ahumados y especias exquisitas.",
 							image: "https://cdn.leonardo.ai/users/25acf724-d0fb-44e7-8da5-a5932af5eac9/generations/e8f79622-0dbb-4844-9fe8-c5cc70d2b7dd/DreamShaper_v5_fried_chicken_served_in_a_plate_delicious_steam_3.jpg",
 							restaurantName: "Kukulkan"
 						},
 						{
 							plateName: "Cuarto de pollo asado",
-							price: "6000",
+							price: "6",
 							description: " Este suculento manjar te transportará a un festín de sabores irresistibles. Nuestro pollo, cuidadosamente sazonado con hierbas y especias, se asa lentamente hasta alcanzar una jugosidad perfecta y una piel dorada y crujiente que te hará agua la boca.",
 							image: "https://cdn.leonardo.ai/users/25acf724-d0fb-44e7-8da5-a5932af5eac9/generations/e0f0626b-1837-4fdc-b54a-0e6a17797f5a/DreamShaper_v5_fried_chicken_wing_pair_served_in_a_plate_delic_1.jpg",
 							restaurantName: "Kukulkan"
 						},
 						{
 							plateName: "Tortillas",
-							price: "4000",
+							price: "4",
 							description: "¡Descubre nuestras tortillas, el platillo que te transportará a la tradición y el sabor auténtico! Deliciosas, esponjosas y llenas de ingredientes frescos, nuestras tortillas son un verdadero festín para tu paladar. Cada bocado te sorprenderá con su textura suave y su mezcla perfecta de sabores.",
 							image: "",
 							restaurantName: "Kukulkan"
@@ -150,28 +150,28 @@ const getState = ({ getStore, getActions, setStore }) => {
 					plates: [
 						{
 							plateName: "Pizza con hongos",
-							price: "5000",
+							price: "5",
 							description: "Nuestra pizza está cuidadosamente elaborada con los ingredientes más frescos y de la más alta calidad. Los champiñones, perfectamente cocidos, añaden una textura suave y un sabor terroso que se complementa a la perfección con el queso fundido y derretido.",
 							image: "",
 							restaurantName: "La Bella Italia"
 						},
 						{
 							plateName: "Pasta bolognesa",
-							price: "14000",
+							price: "14",
 							description: "Nuestra pasta al dente se combina con una salsa boloñesa casera, cuidadosamente preparada con carne de res jugosa, tomates maduros y una selección de hierbas aromáticas",
 							image: "",
 							restaurantName: "La Bella Italia"
 						},
 						{
 							plateName: "Fetuccini Alfredo",
-							price: "13000",
+							price: "13",
 							description: "¡Descubre el verdadero placer de la pasta con nuestro exquisito Fettuccini Alfredo! Sumérgete en un mundo de sabores seductores mientras los delicados fettuccini se entrelazan con una cremosa salsa Alfredo, enriquecida con mantequilla suave y queso parmesano fresco. ",
 							image: "",
 							restaurantName: "La Bella Italia"
 						},
 						{
 							plateName: "Gnocchi",
-							price: "20000",
+							price: "20",
 							description: "Nuestros Gnocchi son suaves y tiernos, hechos a mano con la receta tradicional que ha pasado de generación en generación. Cada uno de ellos se combina con una exquisita salsa, cuidadosamente elaborada con ingredientes frescos y sabrosos, que se adhieren perfectamente a la textura suave de la pasta.",
 							image: "",
 							restaurantName: "La Bella Italia"
@@ -183,7 +183,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						{
 							SubscriptionName: "Italianisimo",
 							description: "Sumérgete en un universo de deleite gastronómico, donde cada bocado es una obra maestra cuidadosamente elaborada. Nuestro enfoque principal es consentirte con los platos más destacados de Italia, comenzando con la realeza de la cocina italiana: la Pizza.",
-							price: "20000",
+							price: "20",
 							image: "https://cdn.leonardo.ai/users/25acf724-d0fb-44e7-8da5-a5932af5eac9/generations/65d1d1eb-9819-4610-9871-6d8e0ff7a206/DreamShaper_v6_wok_ramen_logo_on_top_right_elegant_marketing_0.jpg",
 						}
 					]
@@ -193,28 +193,28 @@ const getState = ({ getStore, getActions, setStore }) => {
 					plates: [
 						{
 							plateName: "Tarta de peces",
-							price: "5000",
+							price: "5",
 							description: 'Inspirada en la famosa frase "dormirás con los peces", esta creación culinaria te transportará a un sabor inolvidable. Imagina una base crujiente de masa horneada, que esconde un relleno exquisito de peces frescos, cuidadosamente seleccionados para brindarte una experiencia gastronómica única. Cada bocado revela la delicadeza de los sabores marinos, fusionados con hierbas y especias secretas que te harán suspirar.',
 							image: "https://cdn.leonardo.ai/users/25acf724-d0fb-44e7-8da5-a5932af5eac9/generations/7fb8d766-1e33-4127-a0e6-fe026cdb0aa2/DreamShaper_v5_Fish_tart_mafia_theme_gambling_card_mafia_men_p_0.jpg",
 							restaurantName: "Don Pacino"
 						},
 						{
 							plateName: "Pasta destazada",
-							price: "14000",
+							price: "14",
 							description: "Esta pasta, al igual que las transacciones clandestinas de la mafia, está llena de secretos. Deliciosos trozos de panceta ahumada y salchichas italianas picantes son combinados con una salsa pomodoro casera, que esconde un toque de chili para despertar tus sentidos.",
 							image: "https://cdn.leonardo.ai/users/25acf724-d0fb-44e7-8da5-a5932af5eac9/generations/6e212d52-2ff4-42fb-8f97-b463ac7ba2b6/DreamShaper_v5_pasta_bolognese_ketchup_blood_aspect_delicious_0.jpg",
 							restaurantName: "Don Pacino"
 						},
 						{
 							plateName: "Puñalini Alfredo",
-							price: "13000",
+							price: "13",
 							description: "¡Sumérgete en el oscuro mundo de la mafia con nuestro Puñalini Alfredo! Una fusión única entre la clásica pasta Alfredo y la intensidad de la vida criminal. Imagina un plato de tallarines suaves y cremosos, bañados en una irresistible salsa Alfredo que esconde un toque de peligro. Esta exquisita combinación de sabores te transportará a las calles sombrías de la mafia, donde el sabor intenso se entrelaza con la elegancia.",
 							image: "https://1.bp.blogspot.com/-R0CT562JZL4/YALVh_-qwDI/AAAAAAAAXx0/rt0gse_JkCg2lK46gYLKpp2UJfCqn0IZgCNcBGAsYHQ/s3200/espaguetis%2Bal%2Bcapone.jpg",
 							restaurantName: "Don Pacino"
 						},
 						{
 							plateName: "Pastel de arandanitos",
-							price: "20000",
+							price: "20",
 							description: "este no es un pastel común y corriente. En cada mordisco, podrás saborear un toque de peligro, ya que los arándanos representan las sutiles transacciones de flores en las sombras. Cada bocado te invita a sumergirte en una experiencia clandestina y emocionante.",
 							image: "https://caudesucre.com/wp-content/uploads/2017/05/bizcocho_sin_harina-11.jpg",
 							restaurantName: "Don Pacino"
@@ -229,7 +229,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						{
 							SubscriptionName: "Almorzar con los peces",
 							description: "Nuestros chefs, expertos en el arte de la cocina mafiosa, crean combinaciones de sabores únicas, mientras que nuestro ambiente íntimo y discreto te sumerge en la atmósfera intrigante de la mafia. Almorzar con los peces es el destino ideal para aquellos que buscan una experiencia culinaria sofisticada y cautivadora que transporta a un mundo de sabor y secretos bien guardados.",
-							price: "20000",
+							price: "20",
 							image: "https://cdn.leonardo.ai/users/25acf724-d0fb-44e7-8da5-a5932af5eac9/generations/65d1d1eb-9819-4610-9871-6d8e0ff7a206/DreamShaper_v6_wok_ramen_logo_on_top_right_elegant_marketing_0.jpg",
 						}
 					]
@@ -289,13 +289,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			],
 			cart: [
-				// {
-				// 	plateName: "Pasta destazada",
-				// 	price: "14000",
-				// 	description: "Esta pasta, al igual que las transacciones clandestinas de la mafia, está llena de secretos. Deliciosos trozos de panceta ahumada y salchichas italianas picantes son combinados con una salsa pomodoro casera, que esconde un toque de chili para despertar tus sentidos.",
-				// 	image: "https://cdn.leonardo.ai/users/25acf724-d0fb-44e7-8da5-a5932af5eac9/generations/6e212d52-2ff4-42fb-8f97-b463ac7ba2b6/DreamShaper_v5_pasta_bolognese_ketchup_blood_aspect_delicious_0.jpg",
-				// 	restaurantName: "Don Pacino"
-				// }
+				
 			],
 		},
 		actions: {
@@ -507,26 +501,30 @@ const getState = ({ getStore, getActions, setStore }) => {
 				console.log(favorites)
 			},
 			addCart: (plate, index) => {
-				console.log(plate, index)
 				let store = getStore()
 				let cart = store.cart
 				// cart is pulling data correclty
-				let plateIndex = index
 				let newPlate = {
 					plateName: plate.plateName,
 					price: plate.price,
 					description: plate.description,
 					image: plate.image,
 					restaurantName: plate.restaurantName,
-					index: index,
+					plateIndex: index,
 				}
 				setStore({cart: [...cart, newPlate]})
+				// console.log(store.cart) cart working as expected
+			},
+			deleteCartItem: (plate, index)=>{
+				let store = getStore();
+				let cart = store.cart;
+				//cart is pulling data properly
+				let updatedCart= cart.splice(index, 1);
+				console.log(updatedCart)
+								
+				setStore({ cart: updatedCart });
 				console.log(cart)
 			},
-			deleteCartItem: (plate, index){
-				
-			}
-
 		}
 	};
 };
