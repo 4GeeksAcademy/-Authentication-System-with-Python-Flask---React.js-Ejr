@@ -12,6 +12,7 @@ from api.routes import api
 from api.admin import setup_admin
 from api.commands import setup_commands
 from flask_jwt_extended import JWTManager
+from datetime import timedelta
 
 import firebase_admin
 from firebase_admin import credentials
@@ -29,6 +30,7 @@ app.url_map.strict_slashes = False
 
 # Configuracion JWTManager
 app.config["JWT_SECRET_KEY"]= os.getenv("FLASK_APP_KEY")
+app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=1)
 jwt=JWTManager(app)
 
 @jwt.token_in_blocklist_loader
