@@ -66,6 +66,7 @@ class ShoppingCar(db.Model):
     def serialize(self):
         return {
             #"servicesVehicle":self.services.vehicle_type,
+            "id":self.id,
             "servicesName":self.service_name,
             "servicesPrice":self.service_price,
             "userName":self.users.first_name, 

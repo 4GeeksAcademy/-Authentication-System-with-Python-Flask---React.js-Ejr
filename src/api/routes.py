@@ -267,7 +267,7 @@ def get_shoppingCart():
 #     else:
 #         return jsonify(message='Shopping car item not found'), 404
 
-@api.route('/deleteShoppingCar/<int:service_id>', methods=['DELETE'])
+@api.route('/deleteShoppingCar/<int:service_id>', methods=['POST'])
 @jwt_required()
 def delete_shoppingCart(service_id):
     user_id = get_jwt_identity()

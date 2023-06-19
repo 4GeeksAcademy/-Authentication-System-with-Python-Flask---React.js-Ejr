@@ -57,7 +57,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				let favoriteIndex = newFavorites.findIndex(favorite => favorite.id == id)
 				newFavorites.splice(favoriteIndex, 1)
 				setStore({ user_services: newFavorites })
-				const resp = await getActions().apiFetchProtected(`/api/deleteShoppingCar/${id}`, "DELETE", {newFavorites})
+				const resp = await getActions().apiFetchProtected(`/api/deleteShoppingCar/${id}`, "POST", {newFavorites})
 				if (resp.code >= 400) {
 					return resp;
 				}
