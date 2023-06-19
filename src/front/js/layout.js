@@ -13,6 +13,7 @@ import { Landing } from "./pages/landing";
 import { Login } from "./pages/login";
 import { SignupAbuelo } from "./pages/signupabuelo";
 import { SignupVoluntario } from "./pages/signupvoluntario";
+import { VideoRoom } from "./pages/videoroom";
 
 //create your first component
 const Layout = () => {
@@ -34,6 +35,7 @@ const Layout = () => {
                         <Route element={<Demo />} path="/demo" />
                         <Route element={<Login />} path="/login" />
                         <Route element={<Single />} path="/single/:theid" />
+                        <Route element={<VideoRoom />} path="/home" />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
                     <Footer />
