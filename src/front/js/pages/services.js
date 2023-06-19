@@ -23,11 +23,13 @@ export const Services = () => {
         <div className="row row-cols-1 row-cols-md-3 g-4">
           {services.map((element, index) => (
             <div className="col" key={index}>
-              <div className="card text-center border-dark m-3" style={{ width: "25rem" }}>
+              <div className="card text-center border-dark m-3" style={{ width: "20rem" }}>
                 <img src={element.picture} className="card-img-top" alt="..." style={{ width: "100%" }} />
                 <div className="card-body " style={{ backgroundColor: '#40768C' }}>
-                  <h5 className="card-title">{element.name}</h5>
-                  <p className="card-text" style={{ height: "15rem" }}>Want to learn more? click Learn More to see more details! <br />Price: ${element.price} USD</p>
+                  <h5 className="card-title" style={{ height: "5rem" }}>{element.name}</h5>
+                  <p className="card-text" style={{ height: "8rem" }}>Want to learn more? <br />
+                  click Learn More to see more details! <br />
+                  Price: ${element.price} USD</p>
                   <button type="button" className="btn btn-dark " data-bs-toggle="modal" data-bs-target={`#exampleModal${index}`}>
                     Learn More
                   </button>

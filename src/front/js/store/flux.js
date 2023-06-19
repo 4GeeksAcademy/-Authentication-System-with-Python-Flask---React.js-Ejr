@@ -30,12 +30,23 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 
 			addFavorites: async (name, price, date) => {
-				const resp = await getActions().apiFetchProtected("/api/shoppingCar", "POST", { name, price, date })
+				const resp = await getActions().apiFetchProtected("/api/shoppingCar", "POST", { name: name, price: price, date: date });
 				if (resp.code >= 400) {
-					return resp
+				  return resp;
 				}
-				setStore({ new_service: resp.data.new_service })
-				return resp
+			  
+				const { new_service } = getStore();
+				const updatedNewService = [...new_service, resp.data];
+				setStore({ new_service: updatedNewService });
+			  
+				return resp;
+			  },
+
+		
+			deleteServices: (id) => {
+				const listservices = getStore().services;
+				const newservices = listservices.filter((element) => element !== services)
+				setStore({ services: newservices })
 			},
 	
 
@@ -301,21 +312,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 			// },
 
 
-			// addServices: (element) => {
-			// 	const service = getStore().services;
-			// 	if (service.includes(element) == false) {
-			// 		const newServices = service.concat(element);
-			// 		setStore({ services: newServices })
-			// 		console.log(getStore().services)
-			// 	}
+		
 
 			// },
 
-			deleteServices: (services) => {
-				const listservices = getStore().services;
-				const newservices = listservices.filter((element) => element !== services)
-				setStore({ services: newservices })
-			}
+			
 		},
 	};
 };

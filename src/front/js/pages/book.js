@@ -23,6 +23,7 @@ export const Book = () => {
     else {
       actions.fetchServices()
       actions.fetchVehicleTypes()
+
       // actions.pagoMercadopago()
     }
 
@@ -45,7 +46,7 @@ export const Book = () => {
 
 
   return (
-    <>
+    <div style={{ backgroundColor: '#264653', color: '#000' }}>
       {/* <div > */}
       <div className="container" style={{ backgroundColor: '#264653', color: '#000' }}>
         <h1 className=" display-4 text-center py-2" >Our Services</h1>
@@ -62,7 +63,7 @@ export const Book = () => {
                   <div className="row align-items-center">
                     {vehicles ? (vehicles.map((vehicle, index) => (
                       <div className="col" key={index}>
-                        <div className="card text-center card border-dark mb-3" style={{ width: "25rem" }}>
+                        <div className="card text-center card border-dark mb-3" style={{ width: "30rem" }}>
                           <img src={vehicle.picture} className="card-img-top" alt="..." />
                           <div className="card-body " style={{ backgroundColor: '#40768C' }}>
                             <h5 className="card-title">{vehicle.name}</h5>
@@ -82,7 +83,7 @@ export const Book = () => {
             <div className="accordion-item">
               <h2 className="accordion-header" id="flush-headingThree">
                 <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
-                  3° Save the Date
+                  2° Save the Date
                 </button>
               </h2>
               <div id="flush-collapseThree" className="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
@@ -96,7 +97,7 @@ export const Book = () => {
             <div className="accordion-item">
               <h2 className="accordion-header" id="flush-headingTwo">
                 <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
-                  2° Pick the Services
+                  3° Pick the Services
                 </button>
               </h2>
               <div id="flush-collapseTwo" className="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
@@ -105,15 +106,18 @@ export const Book = () => {
                     <div className="overflow-auto d-flex">
                       {services.map((element, index) => (
                         element.vehicle_type == selectedVehicleType && (
-                          <div className="card text-center card border-dark   m-2" style={{ width: "35rem" }} key={index}>
+                          <div className="card text-center card border-dark   m-2" style={{ width: "30rem" }} key={index}>
                             <img src={element.picture} className="card-img-top" alt="..." />
-                            <div className="card-body " style={{ backgroundColor: '#40768C', height: "22rem" }}>
+                            <div className="card-body " style={{ backgroundColor: '#40768C', height: "20rem" }}>
                               <h5 className="card-title" style={{ height: "7rem" }}>{element.name}</h5>
                               <ul className="list-group list-group-flush" style={{ height: "7rem" }}>
                                 <li className="list-group-item" style={{ backgroundColor: '#40768C' }}>Price:  {element.price} USD</li>
                               </ul>
                               <div className="card-footer" style={{ height: "5rem" }}>
-                                <button onClick={() => actions.addFavorites(element.name, element.price, dateService)} href="#" className="btn btn-dark my-2">Add to Cart
+                                <button className="btn btn-dark my-2" onClick={() => actions.addFavorites(element.name, element.price, dateService)}  >
+                                 Select 
+                                  
+                          
                                 </button>
                               </div>
                             </div>
@@ -126,10 +130,12 @@ export const Book = () => {
               </div>
             </div>
             <br></br>
+            <div style={{"padding-botom": "2px"}}>
 
-            <br></br>
-            <button className="btn btn-dark">Save
+            <button className="btn btn-dark">Add to Cart
             </button>
+            </div>
+            <br></br>
           </div>
             :
             <div className="alert alert-warning" role="alert">
@@ -139,6 +145,6 @@ export const Book = () => {
       </div>
 
 
-    </>
+    </div>
   );
 };
