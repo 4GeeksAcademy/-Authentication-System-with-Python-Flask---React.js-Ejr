@@ -7,13 +7,13 @@ export const AboutUs = () => {
 
     return (
         
-        <div className="custom-aboutUs d-flex flex-column align-items-center justify-content-center">
-            <h1 className="justify-conten-center" style={{ textAlign: 'center' }}> What is StarWash?</h1>
-            <h5 className="justify-conten-center mb-5 col-9" style={{ textAlign: 'center' }}>
+        <div id="responsive" className="custom-aboutUs d-flex flex-column align-items-center justify-content-center" style={{height: "100%"}}>
+            <h1 className="justify-conten-center" style={{ textAlign: 'center'}}> What is StarWash?</h1>
+            <h5 className="justify-conten-center mb-5 col-9" style={{ textAlign: 'center'}}>
                 StarWash is a passionate, committed, and environmentally conscious company. They are always ready to meet the needs of their customers and strive to make a positive difference in the world of car washing.
             </h5>
 
-            <div className="d-flex mx-5 align-items-center justify-content-center">
+            <div className="d-flex mx-1 align-items-center justify-content-center">
             <div>
             <div className="d-flex ">
 

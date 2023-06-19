@@ -2,3 +2,14 @@
     background-color: #E76F51;
     color:black
   }
+  
+  html, body, #root {
+    height: 100%;
+  }
+ 
+  .sticky-footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+}

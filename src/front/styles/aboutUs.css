@@ -5,3 +5,18 @@
 .justify {
     text-align: justify;
   }
+
+  div > img {
+    border-radius: 8px;
+    height: auto;
+  }
+
+  #myCustomDiv {
+    div {
+        display: grid;
+        grid-template-columns: repeat(
+            auto-fit,
+            minmax(150px, 1fr)
+            );
+      }
+  }
