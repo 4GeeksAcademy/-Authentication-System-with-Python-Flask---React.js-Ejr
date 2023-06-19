@@ -42,11 +42,6 @@ def get_user(item_id):
 
 @api.route('/user', methods=['POST'])
 def create_user():
-    # email = request.json.get("email", None)
-    # password = request.json.get("password", None)
-
-    # if email is None & password is None:
-    #     return abort(404)
 
     newUser = User(email=request.json["email"],
                    password=request.json["password"],
