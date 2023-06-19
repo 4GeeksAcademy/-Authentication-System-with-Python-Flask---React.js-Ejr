@@ -4,7 +4,7 @@ import styles from "./companyRegister2.module.css";
 import { bgImg } from "../../../../assets/assets.jsx";
 
 import Logotipo from "../../components/logotipo/index.jsx";
-import UserForm from "../../components/userForm/index.jsx";
+import UserCompanyForm from "../../components/userCompanyForm/index.jsx";
 import Spinner from "../../components/spinner/index.jsx";
 
 const CompanyRegister2 = () => {
@@ -23,7 +23,7 @@ const CompanyRegister2 = () => {
           <Logotipo />
           <h1 className={styles._heading}>Admin Data</h1>
           {!isLoading ? (
-            <UserForm
+            <UserCompanyForm
               textBtn="Finish Register"
             />
           ) : (

@@ -1,46 +1,38 @@
-import React, { useState, useContext } from "react";
-import { useNavigate } from "react-router-dom";
-import { registerUser } from "../../service/user";
-import styles from "./userForm.module.css";
+import React, { useState, useContext} from "react";
+import styles from "./userCompanyForm.module.css";
 import { createCompany } from "../../service/company.js";
 import { Context } from "../../store/appContext";
 import { useNavigate } from "react-router-dom";
-import Button from "../button/index.jsx";
-import Input from "../input/index.jsx";
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
-import { userSchema } from "../../validations/userFormValidation.js"; 
+import { userSchema } from "../../validations/userFormValidation.js"
 import { toast } from "react-toastify";
+import Button from "../button/index.jsx";
+import Input from "../input/index.jsx";
 
-const initialState = {
-    username: "",
-    firstname: "",
-    lastname: "",
-    email: "",
-    password: "",
-  };
+const UserCompanyForm = ({ textBtn }) => {
+
+  const { store } = useContext(Context);
+
+  const [newCompany, setNewCompany] = useState(store.companyData.data);
   
-const UserForm = ({ textBtn }) => {
+  const { register, handleSubmit, formState:{ errors } } = useForm({
+    resolver: yupResolver(userSchema)
+  }); 
 
-    const { register, handleSubmit, formState:{ errors } } = useForm({
-        resolver: yupResolver(userSchema)
-      }); 
+  const navigate = useNavigate();
 
-    const [newUser, setNewUser] = useState(initialState);
-  
-    const navigate = useNavigate();
+  const handleChange = ({ target }) => {
+    setNewCompany({ ...newCompany, [target.name]: target.value });
+  }; 
 
-    const handleChange = ({ target }) => {
-    setNewUser({ ...newUser, [target.name]: target.value });
-  };
-
-    const onSubmit = async (e) => {
-    const resMsg = await registerUser(newUser);
+  const onSubmit = async () => {
+    const resMsg = await createCompany(newCompany);
     if (resMsg?.error) {
       toast.error(resMsg?.msg);
     } else {
       toast.success(resMsg?.msg);
-      navigate("/user-dashboard");
+      navigate(`/admin-dashboard/${resMsg?.data.id}`);
     }
   };
 
@@ -119,4 +111,4 @@ const UserForm = ({ textBtn }) => {
   </form>
 )
 }; 
-export default UserForm;
+export default UserCompanyForm;

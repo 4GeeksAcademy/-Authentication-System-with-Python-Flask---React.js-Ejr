@@ -1,13 +1,14 @@
 ._form {
-  width: 480px;
-}
-
-._fail {
-  color: var(--highlight);
-}
-
-@media (max-width: 678px) {
-  ._form {
-    width: 300px;
+    width: 480px;
   }
-}
+  
+  ._fail {
+    color: var(--highlight);
+  }
+  
+  @media (max-width: 678px) {
+    ._form {
+      width: 300px;
+    }
+  }
+  

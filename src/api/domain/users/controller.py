@@ -41,7 +41,6 @@ def get_single_user(user_id, current_user_id):
     return user
 
 
-
 def update_profile(username, firstname, lastname, email, avatar, current_user_id):
    
     if avatar:
@@ -50,7 +49,7 @@ def update_profile(username, firstname, lastname, email, avatar, current_user_id
     else:
         user = Repository.get_single_user(current_user_id)
         url_avatar = user.avatar  
-    
+
     return Repository.update_profile(username, firstname, lastname, email, url_avatar, current_user_id)
 
 def delete_user(current_user_id):
