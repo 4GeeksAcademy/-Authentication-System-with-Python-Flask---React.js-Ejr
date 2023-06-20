@@ -13,7 +13,7 @@ export const Signup = () => {
 
     const handleClick = () => {
         event.preventDefault()
-        actions.signup(email, pass, name).then(() => {
+        actions.signup(email, pass, name, lastName).then(() => {
             navigate("/login")
         })
     }
