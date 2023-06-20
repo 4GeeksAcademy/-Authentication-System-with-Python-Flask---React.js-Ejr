@@ -38,7 +38,7 @@ export const ChangePassword = () => {
     }
 
     return (
-        <div className="container">
+        <div className="container min-vh-100">
             {error && (
                 <div className="alert alert-danger" role="alert">
                     Passwords do not match!
@@ -67,7 +67,7 @@ export const ChangePassword = () => {
 
                 <div className="col-12 mb-3 ">
                     <div className="d-grid gap-2">
-                        <button className="btn btn-primary  mx-1" type="submit">Recovery</button>
+                        <button className="btn btn-dark  mx-1" type="submit">Recovery</button>
                     </div>
                 </div>
             </form>

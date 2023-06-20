@@ -17,20 +17,22 @@ export const RecoveryPassword = () => {
       }
 
 	return (
-        <div className="container">
+    <div style={{ backgroundColor: '#40768C' }}>
+        <div className="container min-vh-100" >
 
-        <h3>Sing in</h3>
+        <h3>Forgot your Password?</h3>
         <form onSubmit={submitForm}>
-          <div className="col-md-12 position-relative">
+          <div className="col-md-12 mb-2 position-relative">
             <label className="form-label">Email</label>
             <input type="text" className="form-control" name="email" placeholder="Username" aria-label="Username" />
           </div>
           <div className="col-12 mb-3 ">
             <div className="d-grid gap-2">
-              <button className="btn btn-primary  mx-1" type="submit">Recovery Password</button>
+              <button className="btn btn-dark  mx-1" type="submit">Recovery Password</button>
             </div>
           </div>
         </form>
+      </div>
       </div>
 	);
 };

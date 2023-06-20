@@ -86,9 +86,9 @@ export const Login = () => {
               </button>
             </div>
           </div>
-          <div id="passwordHelpBlock" className="form-text text-dark">
+          {/* <div id="passwordHelpBlock" className="form-text text-dark">
             Your password must be 8-20 characters long, contain letters and numbers, and must not contain spaces, special characters, or emoji.
-          </div>
+          </div> */}
           <div className="form-group">
             <label className="form-label">Confirm Password</label>
             <div className="input-group">
