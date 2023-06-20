@@ -16,9 +16,9 @@ export const ShoppingCar = () => {
         window.location.replace(store?.mercadopago.init_point);
     };
 
-   
+
     useEffect(() => {
-        
+
         if (!store.accessToken) {
             navigate("/login")
         }
@@ -30,51 +30,56 @@ export const ShoppingCar = () => {
 
 
     return (
-        <div className="custom-shoppingCar">
-            <div className="text-black text-center custom-shoppingCar">
-                <h1>
-                    <div className="card mb-3" style={{ width: "auto" }}>
+        <>
+        <div style={{ backgroundColor: '#40768C' }}  >
+            <div className="container min-vh-100" >
+                <div className="text-black text-center" >
+                    <div className="card" style={{  backgroundColor: '#40768C' }}>
                         <div className="row g-0">
-                            <div className="col-md-4">
-                                {/* <img src="..." class="img-fluid rounded-start" alt="..." /> */}
+                            <h1 className="card-title p-5">ShoppingCart</h1> <br></br>
+                            <div className="col-md-4" >
+                                <h2 className="card-title pb-2" >Your Account</h2><br></br>
+                                <img src="https://cdn-icons-png.flaticon.com/512/727/727399.png?w=826&t=st=1686358778~exp=1686359378~hmac=f84a1339da9e966863baaaa695a7da2268cb3f815bde80a01506c7777cf7cf50" className="card-img-top" alt="..." style={{ width: "100px" }} />
+                                <h3> {user_services[0]?.userName}</h3> <br></br>
+                                <h3>ADDRESS: {user_services[0]?.address}</h3> <br></br>
+
+
                             </div>
                             <div className="col-md-8">
+                                <h2 className="card-title pb-2">Your Services</h2><br></br>
                                 <div className="card-body">
-                                    <h5 className="card-title">ShoppingCar</h5>
-                                    <h1>USER: {user_services[0]?.userName}</h1>
-                                    <h1>ADDRESS: {user_services[0]?.address}</h1>
+
                                     {user_services.map((element, index) => (
-                                        <div className="col" key={index}>
-                                            <p>ID:{element.id} {element.servicesName}, $USD:{element.servicesPrice}, {element.date}</p><button className="btn btn-danger" onClick={() => actions.deleteFavorites(element.id)}><i className="fa-regular fa-trash-can"></i></button>
+                                        <div className="col-12" key={index}>
+                                            <p>
+                                                {/* ID:{element.id} <br></br> */}
+                                                {element.servicesName} <br></br>
+                                                $ USD: {element.servicesPrice}<br></br>
+                                                {element.date}<br></br>
+                                            </p>
+
+                                            <button className="btn btn-outline-dark" onClick={() => actions.deleteFavorites(element.id)}><i className="fa-regular fa-trash-can"></i></button>
                                         </div>
                                     ))}
-                                    
-                                    <p>
-                                        Total USD = ${store.totalValue}
-                                    </p>
-                                    <p className="card-footer">
-                                        <button className="btn btn-dark" onClick={pagoMercadoPago}>Pagar
-                                        </button>
-                                    </p>
+
+
                                 </div>
                             </div>
                         </div>
+                        <div >
+                            <p className="card-footer">
+                                <h2>
+                                    Total USD = ${store.totalValue}
+                                </h2>
+                                <button className="btn btn-dark" onClick={pagoMercadoPago}>Pay Here
+                                </button>
+                            </p>
+                        </div>
                     </div>
-
-                    {/* {favorites.name} */}
-                </h1>
-                {/* <img src={`https://starwars-visualguide.com/assets/img/planets/${params.theid}.jpg`}></img> */}
-
-                <br></br>
-                <br></br>
-
-                <h4>
-                    {/* Price :  {favorites.price} */}
-                </h4>
-
-
+                </div>
             </div>
-            </div>
+        </div>
+        </>
     )
 };
 
