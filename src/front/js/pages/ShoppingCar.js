@@ -48,7 +48,7 @@ export const ShoppingCar = () => {
                                             <p>ID:{element.id} {element.servicesName}, $USD:{element.servicesPrice}, {element.date}</p><button className="btn btn-danger" onClick={() => actions.deleteFavorites(element.id)}><i className="fa-regular fa-trash-can"></i></button>
                                         </div>
                                     ))}
-                                    <p className="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                    
                                     <p>
                                         Total USD = ${store.totalValue}
                                     </p>

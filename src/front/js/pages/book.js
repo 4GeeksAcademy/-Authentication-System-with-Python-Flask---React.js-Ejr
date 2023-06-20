@@ -54,7 +54,7 @@ export const Book = () => {
   return (
     <div style={{ backgroundColor: '#264653', color: '#000' }}>
       {/* <div > */}
-      <div className="container" style={{ backgroundColor: '#264653', color: '#000' }}>
+      <div className="container min-vh-100" style={{ backgroundColor: '#264653', color: '#000' }}>
         <h1 className=" display-4 text-center py-2" >Our Services</h1>
         {
           !!store.accessToken ? <div className="accordion accordion-flush" id="accordionFlushExample">
