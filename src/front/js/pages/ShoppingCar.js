@@ -2,7 +2,7 @@ import React from "react";
 // import {  } from "react-router";
 import { useContext, useEffect, useState } from "react";
 import { Context } from "../store/appContext";
-import "../../styles/home.css";
+import "../../styles/shoppingCar.css";
 import { useNavigate, useParams } from "react-router-dom";
 
 
@@ -16,7 +16,9 @@ export const ShoppingCar = () => {
         window.location.replace(store?.mercadopago.init_point);
     };
 
+   
     useEffect(() => {
+        
         if (!store.accessToken) {
             navigate("/login")
         }
@@ -28,8 +30,8 @@ export const ShoppingCar = () => {
 
 
     return (
-        <>
-            <div className="text-black text-center custom-home">
+        <div className="custom-shoppingCar">
+            <div className="text-black text-center custom-shoppingCar">
                 <h1>
                     <div className="card mb-3" style={{ width: "auto" }}>
                         <div className="row g-0">
@@ -47,6 +49,9 @@ export const ShoppingCar = () => {
                                         </div>
                                     ))}
                                     <p className="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                    <p>
+                                        Total USD = ${store.totalValue}
+                                    </p>
                                     <p className="card-footer">
                                         <button className="btn btn-dark" onClick={pagoMercadoPago}>Pagar
                                         </button>
@@ -69,7 +74,7 @@ export const ShoppingCar = () => {
 
 
             </div>
-        </>
+            </div>
     )
 };
 
