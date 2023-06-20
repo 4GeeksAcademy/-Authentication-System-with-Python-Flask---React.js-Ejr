@@ -6,8 +6,8 @@ export const AboutUs = () => {
     const { store, actions } = useContext(Context);
 
     return (
-        <div className="min-vw-100 min-vh-100 custom-aboutUs">
-            <div className="container-fluid custom-aboutUs d-flex flex-column align-items-center justify-content-center">
+        <div className="min-vh-100 custom-aboutUs">
+            <div className="container-fluid flex-column col-11">
 
                 <h1 className="justify-content-center" style={{ textAlign: 'center' }}> What is StarWash?</h1> <br />
                 <h5 className="justify-content-center mb-5 align-items-end" style={{ textAlign: 'center' }}>
@@ -15,18 +15,18 @@ export const AboutUs = () => {
                 </h5>
             </div>
             <div className="container-fluid">
-                <div className="row d-flex align-items-center justify-content-center">
+                <div className="row d-flex align-items-center justify-content-center flex-wrap">
 
-                    <div className="custom-aboutUs border-0 col-2 min-vh-100"  >
-                        <div >
+                    <div className="card custom-aboutUs border-0 col-2 min-vh-100" style={{ marginTop: "-140px" }}>
+                        <div className="card-body">
                             <h4 style={{ textAlign: 'center' }}>Mission</h4>
-                            <p>Our mission is to provide exceptional and environmentally-friendly mobile car wash service. We are committed to offering comprehensive care for our customers' vehicles, using exclusively eco-friendly products that minimize negative impact on the natural environment. We strive to exceed our customers' expectations by delivering a convenient, reliable, and high-quality washing experience while promoting sustainable practices that contribute to environmental preservation.</p>
+                            <p className="card-text justify">Our mission is to provide exceptional and environmentally-friendly mobile car wash service. We are committed to offering comprehensive care for our customers' vehicles, using exclusively eco-friendly products that minimize negative impact on the natural environment. We strive to exceed our customers' expectations by delivering a convenient, reliable, and high-quality washing experience while promoting sustainable practices that contribute to environmental preservation.</p>
                         </div>
                     </div>
 
 
 
-                    <div className="col-8">
+                    <div className="col-7">
 
                         <div className="d-flex">
                             <div className="card border-0 custom-aboutUs" style={{ width: "18rem", padding: '5px' }}>
@@ -95,7 +95,7 @@ export const AboutUs = () => {
 
 
                     <div className="card custom-aboutUs border-0 col-2" >
-                        <div className="card-body">
+                        <div className="card-bgit add ">
                             <h4 className="card-title" style={{ textAlign: 'center' }}>Vision</h4>
                             <p className="card-text justify">Our vision is to become the leading eco-friendly mobile car wash company, recognized for our excellence in customer service and commitment to environmental sustainability. We aspire to set a standard in the industry, driving the shift towards more environmentally-friendly vehicle washing practices and promoting environmental awareness in our community. Through continuous innovation and strategic expansion, we aim to be market leaders, providing convenient and eco-conscious washing solutions to meet the evolving needs of our customers and make a positive impact on the planet's care.</p>
                         </div>
