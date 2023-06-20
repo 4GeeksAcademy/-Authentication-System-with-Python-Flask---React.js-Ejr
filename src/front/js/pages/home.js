@@ -50,8 +50,8 @@ export const Home = () => {
     </div>
 
 
-    <div className="d-flex justify-content-center" style={{ backgroundColor: "#264653"}}>
-      <div className="card col-4 border-0 d-flex flex-column align-items-center mt-5" style={{ backgroundColor: "#264653"}}>
+    <div className="d-flex justify-content-center" style={{ backgroundColor: "#40768C"}}>
+      <div className="card col-4 border-0 d-flex flex-column align-items-center mt-5" style={{ backgroundColor: "#40768C"}}>
         <img src="https://images.squarespace-cdn.com/content/v1/632cad1bcd38e003eb2d978e/b84c2375-f1ad-4dd1-9b62-fba66e30c8a5/text-message+icon.png?format=300w" style={{ width: "25%", height: "35%" }} className="card-img-top justify-content-center" alt="..." />
         <div className="card-body">
         <h5 className="card-title d-flex flex-column align-items-center">Step #1</h5>
@@ -60,7 +60,7 @@ export const Home = () => {
       </div>
 
 
-      <div className="card col-4 border-0 d-flex flex-column align-items-center mt-5" style={{ backgroundColor: "#264653"}}>
+      <div className="card col-4 border-0 d-flex flex-column align-items-center mt-5" style={{ backgroundColor: "#40768C"}}>
         <img src="https://images.squarespace-cdn.com/content/v1/632cad1bcd38e003eb2d978e/482bccab-e622-4dbd-85c5-4656c01a4135/car+wash+icon.png?format=300w" style={{ width: "25%", height: "35%" }} className="card-img-top justify-content-center" alt="..." />
         <div className="card-body">
         <h5 className="card-title d-flex flex-column align-items-center">Step #2</h5>
@@ -69,7 +69,7 @@ export const Home = () => {
       </div>
 
 
-      <div className="card col-4 border-0 d-flex flex-column align-items-center mt-5" style={{ backgroundColor: "#264653"}}>
+      <div className="card col-4 border-0 d-flex flex-column align-items-center mt-5" style={{ backgroundColor: "#40768C"}}>
         <img src="https://images.squarespace-cdn.com/content/v1/632cad1bcd38e003eb2d978e/e778f883-ad94-4b56-8ff4-78e89a939ec1/relax+icon+.png?format=300w" style={{ width: "25%", height: "35%" }} className="card-img-top justify-content-center" alt="..." />
         <div className="card-body">
         <h5 className="card-title d-flex flex-column align-items-center">Step #3</h5>

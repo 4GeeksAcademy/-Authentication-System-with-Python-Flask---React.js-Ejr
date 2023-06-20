@@ -34,7 +34,7 @@ export const ShoppingCar = () => {
         <div style={{ backgroundColor: '#40768C' }}  >
             <div className="container min-vh-100" >
                 <div className="text-black text-center" >
-                    <div className="card" style={{  backgroundColor: '#40768C' }}>
+                    <div className="card border-0" style={{  backgroundColor: '#40768C' }}>
                         <div className="row g-0">
                             <h1 className="card-title p-5">ShoppingCart</h1> <br></br>
                             <div className="col-md-4" >

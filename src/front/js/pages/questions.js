@@ -12,7 +12,7 @@ export const Questions = () => {
 
 
   return (
-    <div style={{ backgroundColor: '#264653', color: '#000' }}>
+    <div style={{ backgroundColor: '#40768C', color: '#000' }}>
       <div className="container" >
         <h1>Our Services</h1>
         <div className="accordion my-3" id="accordionPanelsStayOpenExample">
