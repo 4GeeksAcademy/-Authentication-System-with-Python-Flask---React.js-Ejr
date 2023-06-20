@@ -3,6 +3,7 @@ import { Context } from "../store/appContext";
 import rigoImageUrl from "../../img/rigo-baby.jpg";
 import "../../styles/home.css";
 import DateTimePicker from "react-datetime-picker";
+import { Link } from "react-router-dom";
 
 
 import { useNavigate } from "react-router-dom";
@@ -69,7 +70,7 @@ export const Book = () => {
                   <div className="row align-items-center">
                     {vehicles ? (vehicles.map((vehicle, index) => (
                       <div className="col" key={index}>
-                        <div className={selectedVehicleType===index+1 ? "card text-center card border border-danger  mb-3": "card text-center card border-dark opacity-75 mb-3"} style={{ width: "30rem" }}>
+                        <div className={selectedVehicleType===index+1 ? "card text-center card border border-3 border-dark  mb-3": "card text-center card border-dark opacity-75 mb-3"} style={{ width: "30rem" }}>
                           <img src={vehicle.picture} className="card-img-top" alt="..." />
                           <div className="card-body " style={{ backgroundColor: '#40768C' }}>
                             <h5 className="card-title">{vehicle.name}</h5>
@@ -109,10 +110,10 @@ export const Book = () => {
               <div id="flush-collapseTwo" className="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
                 <div className="accordion-body ">
                   <div className="card-group">
-                    <div className="overflow-auto d-flex">
+                    <div className="row flex-nowrap overflow-auto">
                       {services.map((element, index) => (
                         element.vehicle_type == selectedVehicleType && (
-                          <div className={selectedServiceType===index+1 ? "card text-center card border-danger m-2" : "card text-center card border-dark m-2"} style={{ width: "30rem" }} key={index}>
+                          <div className={selectedServiceType===index+1 ? "card text-center card border-3 border-dark m-2" : "card text-center card border-dark opacity-75 m-2"} style={{ width: "15rem" }} key={index}>
                             <img src={element.picture} className="card-img-top" alt="..." />
                             <div className="card-body " style={{ backgroundColor: '#40768C', height: "20rem" }}>
                               <h5 className="card-title" style={{ height: "7rem" }}>{element.name}</h5>
@@ -138,10 +139,11 @@ export const Book = () => {
               </div>
             </div>
             <br></br>
-            <div style={{"padding-botom": "2px"}}>
-
-            <button className="btn btn-dark">Go to Shopping Cart
+            <div className="d-grid gap-2 col-6 mx-auto" style={{"padding-botom": "2px"}}>
+            <Link to="/shoppingCar">
+            <button className="btn btn-dark justify-content-md-center">Go to Shopping Cart
             </button>
+            </Link>
             </div>
             <br></br>
           </div>
