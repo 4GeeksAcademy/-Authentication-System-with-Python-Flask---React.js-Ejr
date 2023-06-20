@@ -17,10 +17,10 @@ export const Navbar = () => {
 	function logout() {
 		if (store.accessToken) {
 			navigate("/logout")
-		  }
+		}
 	}
 	return (
-		<nav className="navbar navbar-expand-lg navbar-light custom-navbar fixed-top">
+		<nav className="navbar navbar-expand-lg navbar-light custom-navbar">
 			<div className="container-fluid">
 				<Link to="/" className="text-decoration-none">
 					<h1 className="text-black" style={{ fontSize: '36px' }}>StarWash</h1>
@@ -47,7 +47,19 @@ export const Navbar = () => {
 				</div>
 				<div className="nav-item justify-content-end">
 					<div className="btn-group" role="group" aria-label="Basic example">
-						<Link to="/shoppingCar"><button type="button" className="custom-button rounded" style={{ marginRight: '10px', backgroundColor: '#E9C46A', color: '#000', padding: '18px 32px', borderRadius: '6px', boxShadow: '0 6px 0 black' }}><i className="fa-solid fa-cart-shopping"></i></button></Link>
+						<Link to="/shoppingCar">
+
+
+
+							<button type="button" className="custom-button rounded position-relative" style={{ marginRight: '10px', backgroundColor: '#E9C46A', color: '#000', padding: '18px 32px', borderRadius: '6px', boxShadow: '0 6px 0 black' }}>
+								<i className="fa-solid fa-cart-shopping"></i>
+
+								<span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+									{store.new_service.length}
+								
+								</span>
+							</button>
+							</Link>
 						{
 							!!store.accessToken ?
 								<button onClick={logout} type="button" className="custom-button rounded" style={{ marginRight: '10px', backgroundColor: '#E9C46A', color: '#000', padding: '18px 32px', borderRadius: '6px', boxShadow: '0 6px 0 black' }}>Logout</button> :

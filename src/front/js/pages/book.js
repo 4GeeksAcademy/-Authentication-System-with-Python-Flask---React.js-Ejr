@@ -13,6 +13,7 @@ export const Book = () => {
   const services = store.services
   const vehicles = store.vehicle_types
   const [selectedVehicleType, setSelectedVehicleType] = useState(null)
+  const [selectedServiceType, setSelectedServiceType] = useState (null)
   const navigate = useNavigate()
   const [dateService, setDateService] = useState(new Date());
 
@@ -39,6 +40,11 @@ export const Book = () => {
   const handleSelectVehicleType = (vehicleType) => {
     setSelectedVehicleType(vehicleType);
   };
+
+  const handleSelectServiceType = (vehicleType) => {
+    setSelectedServiceType(vehicleType);
+    
+  };
   // const pagoMercadoPago = () => {
   //   window.location.replace(store?.mercadopago.init_point);
   // };
@@ -63,7 +69,7 @@ export const Book = () => {
                   <div className="row align-items-center">
                     {vehicles ? (vehicles.map((vehicle, index) => (
                       <div className="col" key={index}>
-                        <div className="card text-center card border-dark mb-3" style={{ width: "30rem" }}>
+                        <div className={selectedVehicleType===index+1 ? "card text-center card border border-danger  mb-3": "card text-center card border-dark opacity-75 mb-3"} style={{ width: "30rem" }}>
                           <img src={vehicle.picture} className="card-img-top" alt="..." />
                           <div className="card-body " style={{ backgroundColor: '#40768C' }}>
                             <h5 className="card-title">{vehicle.name}</h5>
@@ -106,7 +112,7 @@ export const Book = () => {
                     <div className="overflow-auto d-flex">
                       {services.map((element, index) => (
                         element.vehicle_type == selectedVehicleType && (
-                          <div className="card text-center card border-dark   m-2" style={{ width: "30rem" }} key={index}>
+                          <div className={selectedServiceType===index+1 ? "card text-center card border-danger m-2" : "card text-center card border-dark m-2"} style={{ width: "30rem" }} key={index}>
                             <img src={element.picture} className="card-img-top" alt="..." />
                             <div className="card-body " style={{ backgroundColor: '#40768C', height: "20rem" }}>
                               <h5 className="card-title" style={{ height: "7rem" }}>{element.name}</h5>
@@ -114,7 +120,9 @@ export const Book = () => {
                                 <li className="list-group-item" style={{ backgroundColor: '#40768C' }}>Price:  {element.price} USD</li>
                               </ul>
                               <div className="card-footer" style={{ height: "5rem" }}>
-                                <button className="btn btn-dark my-2" onClick={() => actions.addFavorites(element.name, element.price, dateService)}  >
+                                <button className="btn btn-dark my-2" onClick={() => {
+                                  handleSelectServiceType(index + 1)
+                                  actions.addFavorites(element.name, element.price, dateService)}}  >
                                  Select 
                                   
                           
@@ -132,7 +140,7 @@ export const Book = () => {
             <br></br>
             <div style={{"padding-botom": "2px"}}>
 
-            <button className="btn btn-dark">Add to Cart
+            <button className="btn btn-dark">Go to Shopping Cart
             </button>
             </div>
             <br></br>
