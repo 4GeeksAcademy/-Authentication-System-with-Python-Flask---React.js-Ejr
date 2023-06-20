@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
+import loadingGifUrl from "../../img/loading-gif.gif";
 import "../../styles/videocall.css";
 import {
   MeetingProvider,
@@ -114,7 +115,9 @@ function MeetingView() {
       {joined && joined === "JOINED" ? (
         <div className="participants">{renderParticipants()}</div>
       ) : joined && joined === "JOINING" ? (
-        <p>Joining the meeting...</p>
+        <div className="joining-container">
+          <img src={loadingGifUrl} alt="Joining the meeting" className="joining-image" />
+        </div>
       ) : (
         <div>
           <button
@@ -130,10 +133,11 @@ function MeetingView() {
             className="btn btn-secondary"
             style={{ marginTop: "150px" }}
           >
-            Go back to /home
+            Volver atrás
           </button></div>
       )}
       {joined && joined === "JOINED" && (
+        
         <div className="footer" style={{ background: "transparent" }}>
           <div className="toggle-buttons" style={{ background: "transparent" }} >
             <button onClick={handleToggleWebcam} className="blue-button">
@@ -171,32 +175,32 @@ function MeetingView() {
         <div className="modal-dialog modal-dialog-centered" role="document">
           <div className="modal-content">
             <div className="modal-header">
-              <h5 className="modal-title">Leave Meeting</h5>
+              <h5 className="modal-title">Abandonar conferencia</h5>
               <button
                 type="button"
-                className="close"
+                className="closeModalButton"
                 onClick={handleCancelLeave}
               >
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
             <div className="modal-body">
-              <p>Are you sure you want to leave the meeting?</p>
+              <p>¿Quieres abandonar la video conferencia?</p>
             </div>
             <div className="modal-footer">
               <button
                 type="button"
-                className="btn btn-success"
+                className="btn btn-danger"
                 onClick={handleConfirmLeave}
               >
-                Yes, I want to leave the meeting
+                Sí, quiero abandonar la conferencia
               </button>
               <button
                 type="button"
-                className="btn btn-secondary"
+                className="btn btn-success"
                 onClick={handleCancelLeave}
               >
-                No, I wish to stay
+                No, me quedo
               </button>
             </div>
           </div>
@@ -244,7 +248,7 @@ function ParticipantView(props) {
   }, [micStream, micOn]);
 
   return (
-    <div className="col-md-4 col-sm-6 mb-3 p-3">
+    <div className="col-md-4 col-sm-6">
       <audio ref={micRef} autoPlay playsInline muted={isLocal} />
       {webcamOn && (
         <div className="video-container">
@@ -257,12 +261,11 @@ function ParticipantView(props) {
             muted={true}
             playing={true}
             url={videoStream}
-            height={"300px"}
+            height={"17.5rem"}
             width={"28.125rem"}
             onError={(err) => {
               console.log(err, "participant video error");
-            }}
-          />
+            }} />
         </div>
       )}
     </div>
