@@ -113,7 +113,7 @@ export const Book = () => {
                     <div className="row flex-nowrap overflow-auto">
                       {services.map((element, index) => (
                         element.vehicle_type == selectedVehicleType && (
-                          <div className={selectedServiceType===index+1 ? "card text-center card border-3 border-dark m-2" : "card text-center card border-dark opacity-75 m-2"} style={{ width: "15rem" }} key={index}>
+                          <div className={selectedServiceType===index+1 ? "card text-center card border-3 border-dark m-2" : "card text-center card border-dark opacity-75 m-2"} style={{ backgroundColor: '#40768C', width: "15rem" }} key={index}>
                             <img src={element.picture} className="card-img-top" alt="..." />
                             <div className="card-body " style={{ backgroundColor: '#40768C', height: "20rem" }}>
                               <h5 className="card-title" style={{ height: "7rem" }}>{element.name}</h5>
