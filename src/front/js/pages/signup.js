@@ -7,11 +7,13 @@ export const Signup = () => {
     const { store, actions } = useContext(Context)
     const [email, setEmail] = useState("")
     const [pass, setPass] = useState("")
+    const [name, setName] = useState("")
+    const [lastName, setLastName] = useState("")
     const navigate = useNavigate()
 
     const handleClick = () => {
         event.preventDefault()
-        actions.signup(email, pass).then(() => {
+        actions.signup(email, pass, name, lastName).then(() => {
             navigate("/login")
         })
     }
@@ -25,6 +27,14 @@ export const Signup = () => {
                         <label htmlFor="exampleInputEmail1" className="form-label">Email address</label>
                         <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value={email} onChange={(e) => setEmail(e.target.value)} />
                         <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
+                    </div>
+                    <div className="mb-3">
+                        <label htmlFor="name" className="form-label">Name</label>
+                        <input type="name" className="form-control" id="name" value={name} onChange={(e) => setName(e.target.value)} />
+                    </div>
+                    <div className="mb-3">
+                        <label htmlFor="lastName" className="form-label">Lastname</label>
+                        <input type="password" className="form-control" id="lastName" value={lastName} onChange={(e) => setLastName(e.target.value)} />
                     </div>
                     <div className="mb-3">
                         <label htmlFor="exampleInputPassword1" className="form-label">Password</label>

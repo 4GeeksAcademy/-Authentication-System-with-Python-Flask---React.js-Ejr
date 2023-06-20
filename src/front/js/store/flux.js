@@ -22,7 +22,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				getActions().changeColor(0, "green");
 			},
 
-			signup: async (email, pass) => {
+			signup: async (email, pass, name, lastname) => {
 				const options = {
 					method: "POST",
 					headers: {
@@ -31,7 +31,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 					body: JSON.stringify({
 						"email": email,
 						"password": pass,
-						"is_active": true
+						"name": name,
+						"lastname": lastname
 					})
 				}
 				try {
