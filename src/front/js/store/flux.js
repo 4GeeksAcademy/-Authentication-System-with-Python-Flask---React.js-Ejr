@@ -7,6 +7,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 		store: {
 			message: null,
 			new_service: [],
+			totalValue: 0,
 			services: [],
 			vehicleType: [],
 			mercadopago: {},
@@ -69,6 +70,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 					if (resp.code >= 400) {
 						return resp;
 					}
+					let totalPrice = 0
+					for (let i = 0; i < resp.data.user_services.length; i++) {
+					 totalPrice = totalPrice + resp.data.user_services[i].servicesPrice
+						
+					}
+					setStore({ totalValue: totalPrice });
 					setStore({ user_services: resp.data.user_services });
 					return resp;
 				} catch (error) {

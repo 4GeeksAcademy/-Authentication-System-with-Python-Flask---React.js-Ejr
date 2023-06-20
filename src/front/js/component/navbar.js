@@ -20,7 +20,7 @@ export const Navbar = () => {
 		  }
 	}
 	return (
-		<nav className="navbar navbar-expand-lg navbar-light custom-navbar fixed-top">
+		<nav className="navbar navbar-expand-lg navbar-light custom-navbar">
 			<div className="container-fluid">
 				<Link to="/" className="text-decoration-none">
 					<h1 className="text-black" style={{ fontSize: '36px' }}>StarWash</h1>
