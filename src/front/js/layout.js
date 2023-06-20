@@ -14,6 +14,7 @@ import { Login } from "./pages/login";
 import { SignupAbuelo } from "./pages/signupabuelo";
 import { SignupVoluntario } from "./pages/signupvoluntario";
 import Videocall from "./pages/videocall";
+import { VideoRoom } from "./pages/videoroom";
 
 const Layout = () => {
     const location = useLocation();
@@ -39,6 +40,7 @@ const Layout = () => {
                 <Routes>
                     <Route element={<Landing />} path="/" />
                     <Route element={<Videocall />} path="/videocall" />
+                    <Route element={<VideoRoom />} path="/home" />
                     <Route element={<SignupVoluntario />} path="/signupvoluntario" />
                     <Route element={<SignupAbuelo />} path="/signupabuelo" />
                     <Route element={<Demo />} path="/demo" />
