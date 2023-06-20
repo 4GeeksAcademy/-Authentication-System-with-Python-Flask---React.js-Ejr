@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
+import imageholder from "../../img/imageholder.jpg";
 
 export const ProfileForm = () => {
   const [userName, setUserName] = useState("");
   const [description, setDescription] = useState("");
-  const [profileImg, setProfileImg] = useState("");
+ 
 
   useEffect(() => {
     fetchProfileData();
@@ -49,9 +50,9 @@ export const ProfileForm = () => {
         <div className="row">
           <div className="col-md-6 d-flex align-items-center">
             <img
-              src={profileImg}
+              src={imageholder}
               className="img-fluid rounded-circle" 
-              style={{ width: "200px", height: "200px" }} 
+              style={{ width:300, height:300 , borderRadius:200 }} 
               alt="Profile"
             />
           </div>
