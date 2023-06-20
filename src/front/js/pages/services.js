@@ -24,7 +24,7 @@ export const Services = () => {
           {services.map((element, index) => (
             <div className="col" key={index}>
               <div className="card text-center border-dark m-3" style={{ width: "20rem" }}>
-                <img src={element.picture} className="card-img-top" alt="..." style={{ width: "100%" }} />
+                <img src={element.picture} className="card-img-top rounded-0" alt="..." style={{ width: "100%"}} />
                 <div className="card-body " style={{ backgroundColor: '#40768C' }}>
                   <h5 className="card-title" style={{ height: "5rem" }}>{element.name}</h5>
                   <p className="card-text" style={{ height: "8rem" }}>Want to learn more? <br />

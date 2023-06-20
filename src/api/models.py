@@ -71,7 +71,8 @@ class ShoppingCar(db.Model):
             "servicesPrice":self.service_price,
             "userName":self.users.first_name, 
             "date":self.date,
-            "address":self.users.address_one
+            "address":self.users.address_one,
+            "city":self.users.city
             
         }
 
