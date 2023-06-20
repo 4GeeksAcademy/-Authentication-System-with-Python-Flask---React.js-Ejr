@@ -13,7 +13,7 @@ class User(db.Model):
     first_name = db.Column(db.String(120), nullable=False)
     last_name = db.Column(db.String(120), nullable=False)
     birthday = db.Column(db.String(120), nullable=False)
-    phone = db.Column(db.Integer, unique=True, nullable=False)
+    phone = db.Column(db.String(20), unique=True, nullable=False)
     address = db.Column(db.String(300), unique=False, nullable=False)
 
     def __repr__(self):
@@ -36,7 +36,7 @@ class Platos(db.Model):
     __tablename__ = "platos"
     plato_id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(120), unique=False, nullable=False)
-    description = db.Column(db.String(250), unique=False)
+    description = db.Column(db.String(250), unique=False, nullable=False)
     price = db.Column(db.Integer, unique=False, nullable=False)
     is_active = db.Column(db.Boolean(), unique=False, nullable=False)
 
@@ -58,9 +58,10 @@ class Pedidos(db.Model):
     __tablename__ = "pedidos"
     pedido_id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, ForeignKey("user.id"))
-    user = db.relationship(User, backref='pedidos')
+    user = relationship("User", backref='pedidos')
     fecha_del_pedido = db.Column(db.String(120), nullable=False)
     estado = db.Column(db.String(120), nullable=False)
+    platos_id= db.Column(db.Integer, ForeignKey("platos.plato_id"))
     
 
     def __repr__(self):
@@ -71,22 +72,24 @@ class Pedidos(db.Model):
             "pedido_id": self.pedido_id,
             "user_id": self.user_id,
             "fecha_del_pedido": self.fecha_del_pedido,
+            "platos_id":self.platos_id,
             "estado": self.estado
         }
     
-class DetallesDePedidos(db.Model):
-   __tablename__ = "detallesdepedidos"
-   detallesedpedidos_id = db.Column(db.Integer, primary_key=True)
+class DetalleDePedidos(db.Model):
+   __tablename__ = "detalledepedidos"
+   detalledepedidos_id = db.Column(db.Integer, primary_key=True)
    platos_id = db.Column('plato_id',db.Integer, db.ForeignKey("platos.plato_id")) 
    pedido_id = db.Column('pedido_id',db.Integer, db.ForeignKey("pedidos.pedido_id"))
-   pedidos = db.relationship("detallesdepedidos")
-   platos = db.relationship("detallesdepedidos")
+   pedidos = db.relationship("Pedidos")
+   platos = db.relationship("Platos")
 
    def __repr__(self):
-        return f'<detallesdepedidos {self.pedido_id}>'
+        return f'<DetalleDePedidos {self.pedido_id}>'
    
    def serialize(self):
         return {
+            "detalledepedidos_id": self.detalledepedidos_id,
             "pedido_id": self.pedido_id,
             "platos_id": self.platos_id
         }
