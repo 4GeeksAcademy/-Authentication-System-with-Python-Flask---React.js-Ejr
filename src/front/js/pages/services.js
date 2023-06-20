@@ -20,7 +20,7 @@ export const Services = () => {
   return (
     <div style={{ backgroundColor: '#264653', color: '#000' }}>
       <div className="container">
-        <div className="row row-cols-1 row-cols-md-3 g-4">
+        <div className="row g-4">
           {services.map((element, index) => (
             <div className="col" key={index}>
               <div className="card text-center border-dark m-3" style={{ width: "20rem" }}>
