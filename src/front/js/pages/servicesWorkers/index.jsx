@@ -25,6 +25,7 @@ const ServicesWorkers = () => {
   const [workersList, setWorkersList] = useState([]);
   const [servicesList, setServicesList] = useState([]);
   const [serviceWorker, setServiceWorker] = useState(initialState);
+  const [step, setStep] = useState(1);
 
   const { company_id } = useParams();
   const navigate = useNavigate();
@@ -63,13 +64,25 @@ const ServicesWorkers = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const resMsg = await createServiceWorker(company_id, transformData());
-    if (resMsg.data) {
-      toast.success(resMsg?.msg);
-      navigate(`/admin-dashboard/${company_id}`);
-    } else {
-      toast.error(resMsg?.msg);
+    try {
+      const resMsg = await createServiceWorker(company_id, transformData());
+      if (resMsg.data) {
+        toast.success(resMsg?.msg);
+        navigate(`/admin-dashboard/${company_id}`);
+      } else {
+        toast.error(resMsg?.msg);
+      }
+    } catch (error) {
+      console.error("Error creating service worker:", error);
     }
+  };
+
+  const handleNextStep = () => {
+    setStep(step + 1);
+  };
+
+  const handlePreviousStep = () => {
+    setStep(step - 1);
   };
 
   useEffect(() => {
@@ -87,21 +100,49 @@ const ServicesWorkers = () => {
       <main className={styles._mainContainer}>
         <BigContainer>
           <h1>Assign Services to Workers</h1>
-          <div className={styles._dropdownContainer}>
-            <form onChange={handleChange} onSubmit={handleSubmit}>
-              <select name="worker" className={`${styles._select} _boxShadow`}>
+          {step === 1 && (
+            <div className={styles._dropdownContainer}>
+              <h1>Select Worker</h1>
+              <select
+                name="worker"
+                className={`${styles._select} _boxShadow`}
+                onChange={handleChange}
+                value={serviceWorker.worker}
+              >
+                <option value="">Select Worker</option>
                 {workersList.map((op) => (
-                  <option key={op.id}>{op.user.username}</option>
+                  <option key={op.id} value={op.user.username}>
+                    {op.user.username}
+                  </option>
                 ))}
               </select>
-              <select name="service" className={`${styles._select} _boxShadow`}>
+              <Button type="button" title="Next" onClick={handleNextStep} />
+            </div>
+          )}
+          {step === 2 && (
+            <div className={styles._dropdownContainer}>
+              <h1>Select Servicio</h1>
+              <select
+                name="service"
+                className={`${styles._select} _boxShadow`}
+                onChange={handleChange}
+                value={serviceWorker.service}
+              >
+                <option value="">Select Service</option>
                 {servicesList.map((op) => (
-                  <option key={op.id}>{op.name}</option>
+                  <option key={op.id} value={op.name}>
+                    {op.name}
+                  </option>
                 ))}
               </select>
-              <Button type="submit" title="Create" />
-            </form>
-          </div>
+              <Button
+                type="button"
+                title="Previous"
+                onClick={handlePreviousStep}
+              />
+              <Button type="submit" title="Create" onClick={handleSubmit} />
+            </div>
+          )}
         </BigContainer>
       </main>
     </>
