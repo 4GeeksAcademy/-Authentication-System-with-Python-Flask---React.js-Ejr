@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
 import { BackendURL } from "./component/backendURL";
 
@@ -15,36 +15,53 @@ import { SignupAbuelo } from "./pages/signupabuelo";
 import { SignupVoluntario } from "./pages/signupvoluntario";
 import { Profile } from "./pages/profile";
 import { ProfilEdit } from "./pages/profiledit";
+import Videocall from "./pages/videocall";
+import { VideoRoom } from "./pages/videoroom";
 
-//create your first component
 const Layout = () => {
-    //the basename is used when your project is published in a subdirectory and not in the root of the domain
-    // you can set the basename on the .env file located at the root of this project, E.g: BASENAME=/react-hello-webapp/
+    const location = useLocation();
+
+    const isFooterHidden = () => {
+        return location.pathname === "/videocall";
+    };
+
+    const isNavbarHidden = () => {
+        return location.pathname === "/videocall";
+    };
+
     const basename = process.env.BASENAME || "";
 
-    if (!process.env.BACKEND_URL || process.env.BACKEND_URL == "") return <BackendURL />;
+    if (!process.env.BACKEND_URL || process.env.BACKEND_URL === "") {
+        return <BackendURL />;
+    }
 
     return (
         <div>
-            <BrowserRouter basename={basename}>
-                <ScrollToTop>
-                    <Navbar />
-                    <Routes>
-                        <Route element={<Landing />} path="/" />
-                        <Route element={<SignupVoluntario />} path="/signupvoluntario" />
-                        <Route element= {<Profile/>}path = "/profile"/>
-                        <Route element= {<ProfilEdit/>}path = "/editprofile"/>
-                        <Route element={<SignupAbuelo />} path="/signupabuelo" />
-                        <Route element={<Demo />} path="/demo" />
-                        <Route element={<Login />} path="/login" />
-                        <Route element={<Single />} path="/single/:theid" />
-                        <Route element={<h1>Not found!</h1>} />
-                    </Routes>
-                    <Footer />
-                </ScrollToTop>
-            </BrowserRouter>
+            <ScrollToTop>
+                {!isNavbarHidden() && <Navbar />}
+                <Routes>
+                    <Route element={<Landing />} path="/" />
+                    <Route element={<Videocall />} path="/videocall" />
+                    <Route element={<VideoRoom />} path="/home" />
+                    <Route element= {<Profile/>}path = "/profile"/>
+                    <Route element= {<ProfilEdit/>}path = "/editprofile"/>
+                    <Route element={<SignupVoluntario />} path="/signupvoluntario" />
+                    <Route element={<SignupAbuelo />} path="/signupabuelo" />
+                    <Route element={<Demo />} path="/demo" />
+                    <Route element={<Login />} path="/login" />
+                    <Route element={<Single />} path="/single/:theid" />
+                    <Route element={<h1>Not found!</h1>} />
+                </Routes>
+                {!isFooterHidden() && <Footer />}
+            </ScrollToTop>
         </div>
     );
 };
 
-export default injectContext(Layout);
+const App = () => (
+    <BrowserRouter>
+        <Layout />
+    </BrowserRouter>
+);
+
+export default injectContext(App);
