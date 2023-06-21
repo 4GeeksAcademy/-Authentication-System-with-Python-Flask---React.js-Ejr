@@ -1,4 +1,4 @@
-import React, { useState } from "react"; 
+import React, { useState } from "react";
 
 import styles from "./companyRegister2.module.css";
 import { bgImg } from "../../../../assets/assets.jsx";
@@ -8,7 +8,6 @@ import UserCompanyForm from "../../components/userCompanyForm/index.jsx";
 import Spinner from "../../components/spinner/index.jsx";
 
 const CompanyRegister2 = () => {
-
   const [isLoading, setIsLoading] = useState(false);
 
   return (
@@ -25,6 +24,7 @@ const CompanyRegister2 = () => {
           {!isLoading ? (
             <UserCompanyForm
               textBtn="Finish Register"
+              textBackBtn="Previous Step"
             />
           ) : (
             <Spinner />

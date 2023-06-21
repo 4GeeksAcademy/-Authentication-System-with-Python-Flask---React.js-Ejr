@@ -1,30 +1,33 @@
-import React, { useState, useContext} from "react";
+import React, { useState, useContext } from "react";
 import styles from "./userCompanyForm.module.css";
 import { createCompany } from "../../service/company.js";
 import { Context } from "../../store/appContext";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { yupResolver } from '@hookform/resolvers/yup';
-import { userSchema } from "../../validations/userFormValidation.js"
+import { yupResolver } from "@hookform/resolvers/yup";
+import { userSchema } from "../../validations/userFormValidation.js";
 import { toast } from "react-toastify";
 import Button from "../button/index.jsx";
 import Input from "../input/index.jsx";
 
-const UserCompanyForm = ({ textBtn }) => {
-
+const UserCompanyForm = ({ textBtn, textBackBtn }) => {
   const { store } = useContext(Context);
 
   const [newCompany, setNewCompany] = useState(store.companyData.data);
-  
-  const { register, handleSubmit, formState:{ errors } } = useForm({
-    resolver: yupResolver(userSchema)
-  }); 
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(userSchema),
+  });
 
   const navigate = useNavigate();
 
   const handleChange = ({ target }) => {
     setNewCompany({ ...newCompany, [target.name]: target.value });
-  }; 
+  };
 
   const onSubmit = async () => {
     const resMsg = await createCompany(newCompany);
@@ -37,12 +40,12 @@ const UserCompanyForm = ({ textBtn }) => {
   };
 
   return (
-  <form
-    className={styles._form}
-    onChange={handleChange}
-    onSubmit={handleSubmit(onSubmit)}
-  >
-    <Input
+    <form
+      className={styles._form}
+      onChange={handleChange}
+      onSubmit={handleSubmit(onSubmit)}
+    >
+      <Input
         icon={<i className="fa-solid fa-circle-user"></i>}
         type="text"
         placeholder="Username"
@@ -50,12 +53,13 @@ const UserCompanyForm = ({ textBtn }) => {
         name="username"
         register={register}
       />
-        {errors?.username && (
+      {errors?.username && (
         <small className={styles._fail}>
-          <i className="fa-solid fa-circle-exclamation"></i> {errors.username?.message}
+          <i className="fa-solid fa-circle-exclamation"></i>{" "}
+          {errors.username?.message}
         </small>
       )}
-    <Input
+      <Input
         icon={<i className="fa-solid fa-circle-user"></i>}
         type="text"
         placeholder="First Name"
@@ -63,12 +67,13 @@ const UserCompanyForm = ({ textBtn }) => {
         name="firstname"
         register={register}
       />
-        {errors?.firstname && (
+      {errors?.firstname && (
         <small className={styles._fail}>
-          <i className="fa-solid fa-circle-exclamation"></i> {errors.firstname?.message}
+          <i className="fa-solid fa-circle-exclamation"></i>{" "}
+          {errors.firstname?.message}
         </small>
       )}
-   <Input
+      <Input
         icon={<i className="fa-solid fa-circle-user"></i>}
         type="text"
         placeholder="Last Name"
@@ -76,12 +81,13 @@ const UserCompanyForm = ({ textBtn }) => {
         name="lastname"
         register={register}
       />
-        {errors?.lastname && (
+      {errors?.lastname && (
         <small className={styles._fail}>
-          <i className="fa-solid fa-circle-exclamation"></i> {errors.lastname?.message}
+          <i className="fa-solid fa-circle-exclamation"></i>{" "}
+          {errors.lastname?.message}
         </small>
       )}
-    <Input
+      <Input
         icon={<i className="fa-solid fa-circle-user"></i>}
         type="text"
         placeholder="Email"
@@ -89,12 +95,13 @@ const UserCompanyForm = ({ textBtn }) => {
         name="email"
         register={register}
       />
-        {errors?.email && (
+      {errors?.email && (
         <small className={styles._fail}>
-          <i className="fa-solid fa-circle-exclamation"></i> {errors.email?.message}
+          <i className="fa-solid fa-circle-exclamation"></i>{" "}
+          {errors.email?.message}
         </small>
       )}
-   <Input
+      <Input
         icon={<i className="fa-solid fa-circle-user"></i>}
         type="password"
         placeholder="Password"
@@ -102,13 +109,19 @@ const UserCompanyForm = ({ textBtn }) => {
         name="password"
         register={register}
       />
-        {errors?.password && (
+      {errors?.password && (
         <small className={styles._fail}>
-          <i className="fa-solid fa-circle-exclamation"></i> {errors.password?.message}
+          <i className="fa-solid fa-circle-exclamation"></i>{" "}
+          {errors.password?.message}
         </small>
       )}
-    <Button type="submit" title={textBtn} />
-  </form>
-)
-}; 
+      <Button
+        type="submit"
+        title={textBackBtn}
+        onClick={() => navigate("/company-register")}
+      />
+      <Button type="submit" title={textBtn} />
+    </form>
+  );
+};
 export default UserCompanyForm;
