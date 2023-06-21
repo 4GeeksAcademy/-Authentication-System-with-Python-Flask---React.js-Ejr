@@ -145,18 +145,14 @@ export const Profile = () => {
                             </div>
                         </div>
                         <div className="row">
-                            <div>
-                                <div>
-                                    <RentButton />
-                                </div>
+                            <div className="button-container">
+                                <RentButton />
                             </div>
                         </div>
 
                         <div className="row">
-                            <div>
-                                <div>
-                                    <FindCanchaButton />
-                                </div>
+                            <div className="button-container">
+                                <FindCanchaButton />
                             </div>
                         </div>
                     </div>
