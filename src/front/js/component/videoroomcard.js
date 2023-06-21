@@ -12,7 +12,7 @@ import "../../styles/videoroom.css";
 export const VideoRoomCard = () => {
     return (
 
-        <div className="container-card">
+        <div className="container-card" style={{ marginTop: "45px" }}>
             <div className="display-card-container">
                 <div className="name-card-container">
                     <h1>Cocinando con la abuela</h1>
@@ -23,7 +23,7 @@ export const VideoRoomCard = () => {
                 </div>
                 <div className="button-card-container"> <button type="button" className="btn btn-primary">
                     Unete a la sala
-                </button></div>  
+                </button></div>
             </div>
 
             {/* ------------------------------------------- */}
@@ -33,17 +33,17 @@ export const VideoRoomCard = () => {
                 </div>
 
                 <div className="image-card-container">
-                    <img className="imagevideo" src={tertulias}  />
+                    <img className="imagevideo" src={tertulias} />
                 </div>
 
                 <div className="button-card-container"> <button type="button" className="btn btn-primary">
                     Unete a la sala
-                </button></div>  
+                </button></div>
             </div>
 
-             {/* ------------------------------------------- */}
+            {/* ------------------------------------------- */}
 
-             <div className="display-card-container">
+            <div className="display-card-container">
                 <div className="name-card-container">
                     <h1>Abuelos gamers</h1>
                 </div>
@@ -54,12 +54,12 @@ export const VideoRoomCard = () => {
 
                 <div className="button-card-container"> <button type="button" className="btn btn-primary">
                     Unete a la sala
-                </button></div>  
+                </button></div>
             </div>
 
-              {/* ------------------------------------------- */}
+            {/* ------------------------------------------- */}
 
-              <div className="display-card-container">
+            <div className="display-card-container">
                 <div className="name-card-container">
                     <h1>Historias fiesteras</h1>
                 </div>
@@ -70,12 +70,12 @@ export const VideoRoomCard = () => {
 
                 <div className="button-card-container"> <button type="button" className="btn btn-primary">
                     Unete a la sala
-                </button></div>  
+                </button></div>
             </div>
 
-              {/* ------------------------------------------- */}
+            {/* ------------------------------------------- */}
 
-              <div className="display-card-container">
+            <div className="display-card-container">
                 <div className="name-card-container">
                     <h1>Abuelos arquitectos</h1>
                 </div>
@@ -86,12 +86,12 @@ export const VideoRoomCard = () => {
 
                 <div className="button-card-container"> <button type="button" className="btn btn-primary">
                     Unete a la sala
-                </button></div>  
+                </button></div>
             </div>
 
-             {/* ------------------------------------------- */}
+            {/* ------------------------------------------- */}
 
-             <div className="display-card-container">
+            <div className="display-card-container">
                 <div className="name-card-container">
                     <h1>Abuelos viajeros</h1>
                 </div>
@@ -102,12 +102,12 @@ export const VideoRoomCard = () => {
 
                 <div className="button-card-container"> <button type="button" className="btn btn-primary">
                     Unete a la sala
-                </button></div>  
+                </button></div>
             </div>
 
-               {/* ------------------------------------------- */}
+            {/* ------------------------------------------- */}
 
-               <div className="display-card-container">
+            <div className="display-card-container">
                 <div className="name-card-container">
                     <h1>Abuelos cinefilos</h1>
                 </div>
@@ -118,7 +118,7 @@ export const VideoRoomCard = () => {
 
                 <div className="button-card-container"> <button type="button" className="btn btn-primary">
                     Unete a la sala
-                </button></div>  
+                </button></div>
             </div>
 
         </div>

@@ -2,60 +2,78 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-  }
-  
-  .container-card {
+}
+
+.container-card {
     display: flex;
     margin: 40px;
     overflow-x: auto;
-  }
-  
-  .display-card-container {
-    margin-left: 200px;
-  }
-  
-  .name-card-container {
+    scrollbar-width: thin;
+    scrollbar-color: #888888 #f5f5f5;
+}
+
+.container-card::-webkit-scrollbar {
+    width: 8px;
+}
+
+.container-card::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+
+.container-card::-webkit-scrollbar-thumb {
+    background-color: #888888;
+    border-radius: 4px;
+}
+
+.container-card::-webkit-scrollbar-thumb:hover {
+    background-color: #555555;
+}
+
+.display-card-container {
+    margin-left: 50px;
+}
+
+.name-card-container {
     display: flex;
     justify-content: center;
-  }
-  
-  .button-card-container {
+}
+
+.button-card-container {
     display: flex;
     justify-content: center;
     margin-top: 10px;
     margin-bottom: 50px;
-  }
-  
-  .imagevideo {
+}
+
+.imagevideo {
     height: 400px;
     width: 600px;
-  }
-  
-  /* Responsive Styles */
-  @media (max-width: 768px) {
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
     .container-card {
-      margin: 20px;
-      flex-wrap: wrap;
+        margin: 20px;
+        flex-wrap: wrap;
     }
-  
+
     .display-card-container {
-      margin-left: 0;
-      width: 100%;
+        margin-left: 0;
+        width: 100%;
     }
-  
+
     .name-card-container {
-      margin-bottom: 10px;
+        margin-bottom: 10px;
     }
-  
+
     .imagevideo {
-      height: auto;
-      width: 100%;
+        height: auto;
+        width: 100%;
     }
-  }
-  
-  @media (max-width: 576px) {
+}
+
+@media (max-width: 576px) {
     .container-card {
-      margin: 10px;
+        margin: 10px;
     }
-  }
- 
+}

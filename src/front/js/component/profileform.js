@@ -4,7 +4,7 @@ import imageholder from "../../img/imageholder.jpg";
 export const ProfileForm = () => {
   const [userName, setUserName] = useState("");
   const [description, setDescription] = useState("");
- 
+
 
   useEffect(() => {
     fetchProfileData();
@@ -35,7 +35,7 @@ export const ProfileForm = () => {
   };
 
   return (
-    <div className="container d-flex justify-content-center">
+    <div className="container d-flex justify-content-center" style={{ marginTop: "30px" }}>
       <form
         className="bg-white"
         style={{
@@ -51,8 +51,8 @@ export const ProfileForm = () => {
           <div className="col-md-6 d-flex align-items-center">
             <img
               src={imageholder}
-              className="img-fluid rounded-circle" 
-              style={{ width:300, height:300 , borderRadius:200 }} 
+              className="img-fluid rounded-circle"
+              style={{ width: 300, height: 300, borderRadius: 200 }}
               alt="Profile"
             />
           </div>
