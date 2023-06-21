@@ -1,8 +1,3 @@
-<!-- PROJECT LOGO -->
-<br />
-<div align="center">
-![(https://i.imgur.com/q8uzIGy.png)
-
   <h3 align="center">GenBridge</h3>
   <p align="center">
    An application that aims to connect generations through the use of conferences aimed at ease of use, friendly interface for people of all ages and the capability of connecting with those that were abandoned by the ever growing technologies.
