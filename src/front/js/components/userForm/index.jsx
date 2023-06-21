@@ -4,6 +4,7 @@ import { registerUser } from "../../service/user";
 import styles from "./userForm.module.css";
 import Button from "../button/index.jsx";
 import Input from "../input/index.jsx";
+import InputField from "../inputField/index.jsx";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { userSchema } from "../../validations/userFormValidation.js";
@@ -93,7 +94,7 @@ const UserForm = ({ textBtn }) => {
         </small>
       )}
       <Input
-        icon={<i className="fa-solid fa-circle-user"></i>}
+        icon={<i className="fa-solid fa-envelope"></i>}
         type="text"
         placeholder="Email"
         label="email"
@@ -106,13 +107,13 @@ const UserForm = ({ textBtn }) => {
           {errors.email?.message}
         </small>
       )}
-      <Input
-        icon={<i className="fa-solid fa-circle-user"></i>}
+      <InputField
+        icon="fa-solid fa-lock"
         type="password"
         placeholder="Password"
-        label="password"
         name="password"
         register={register}
+        errors={errors}
       />
       {errors?.password && (
         <small className={styles._fail}>

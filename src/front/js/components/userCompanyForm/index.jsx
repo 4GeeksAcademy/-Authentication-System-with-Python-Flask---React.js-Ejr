@@ -9,6 +9,7 @@ import { userSchema } from "../../validations/userFormValidation.js";
 import { toast } from "react-toastify";
 import Button from "../button/index.jsx";
 import Input from "../input/index.jsx";
+import InputField from "../inputField/index.jsx";
 
 const UserCompanyForm = ({ textBtn, textBackBtn }) => {
   const { store } = useContext(Context);
@@ -88,7 +89,7 @@ const UserCompanyForm = ({ textBtn, textBackBtn }) => {
         </small>
       )}
       <Input
-        icon={<i className="fa-solid fa-circle-user"></i>}
+        icon={<i className="fa-solid fa-envelope"></i>}
         type="text"
         placeholder="Email"
         label="email"
@@ -101,13 +102,13 @@ const UserCompanyForm = ({ textBtn, textBackBtn }) => {
           {errors.email?.message}
         </small>
       )}
-      <Input
-        icon={<i className="fa-solid fa-circle-user"></i>}
+      <InputField
+        icon="fa-solid fa-lock"
         type="password"
         placeholder="Password"
-        label="password"
         name="password"
         register={register}
+        errors={errors}
       />
       {errors?.password && (
         <small className={styles._fail}>
