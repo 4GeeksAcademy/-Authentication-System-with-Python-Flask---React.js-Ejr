@@ -4,34 +4,38 @@ import { registerUser } from "../../service/user";
 import styles from "./userForm.module.css";
 import Button from "../button/index.jsx";
 import Input from "../input/index.jsx";
+import InputField from "../inputField/index.jsx";
 import { useForm } from "react-hook-form";
-import { yupResolver } from '@hookform/resolvers/yup';
-import { userSchema } from "../../validations/userFormValidation.js"; 
+import { yupResolver } from "@hookform/resolvers/yup";
+import { userSchema } from "../../validations/userFormValidation.js";
 import { toast } from "react-toastify";
 
 const initialState = {
-    username: "",
-    firstname: "",
-    lastname: "",
-    email: "",
-    password: "",
-  };
-  
+  username: "",
+  firstname: "",
+  lastname: "",
+  email: "",
+  password: "",
+};
+
 const UserForm = ({ textBtn }) => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(userSchema),
+  });
 
-    const { register, handleSubmit, formState:{ errors } } = useForm({
-        resolver: yupResolver(userSchema)
-      }); 
+  const [newUser, setNewUser] = useState(initialState);
 
-    const [newUser, setNewUser] = useState(initialState);
-  
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-    const handleChange = ({ target }) => {
+  const handleChange = ({ target }) => {
     setNewUser({ ...newUser, [target.name]: target.value });
   };
 
-    const onSubmit = async (e) => {
+  const onSubmit = async (e) => {
     const resMsg = await registerUser(newUser);
     if (resMsg?.error) {
       toast.error(resMsg?.msg);
@@ -42,12 +46,12 @@ const UserForm = ({ textBtn }) => {
   };
 
   return (
-  <form
-    className={styles._form}
-    onChange={handleChange}
-    onSubmit={handleSubmit(onSubmit)}
-  >
-    <Input
+    <form
+      className={styles._form}
+      onChange={handleChange}
+      onSubmit={handleSubmit(onSubmit)}
+    >
+      <Input
         icon={<i className="fa-solid fa-circle-user"></i>}
         type="text"
         placeholder="Username"
@@ -55,12 +59,13 @@ const UserForm = ({ textBtn }) => {
         name="username"
         register={register}
       />
-        {errors?.username && (
+      {errors?.username && (
         <small className={styles._fail}>
-          <i className="fa-solid fa-circle-exclamation"></i> {errors.username?.message}
+          <i className="fa-solid fa-circle-exclamation"></i>{" "}
+          {errors.username?.message}
         </small>
       )}
-    <Input
+      <Input
         icon={<i className="fa-solid fa-circle-user"></i>}
         type="text"
         placeholder="First Name"
@@ -68,12 +73,13 @@ const UserForm = ({ textBtn }) => {
         name="firstname"
         register={register}
       />
-        {errors?.firstname && (
+      {errors?.firstname && (
         <small className={styles._fail}>
-          <i className="fa-solid fa-circle-exclamation"></i> {errors.firstname?.message}
+          <i className="fa-solid fa-circle-exclamation"></i>{" "}
+          {errors.firstname?.message}
         </small>
       )}
-   <Input
+      <Input
         icon={<i className="fa-solid fa-circle-user"></i>}
         type="text"
         placeholder="Last Name"
@@ -81,39 +87,42 @@ const UserForm = ({ textBtn }) => {
         name="lastname"
         register={register}
       />
-        {errors?.lastname && (
+      {errors?.lastname && (
         <small className={styles._fail}>
-          <i className="fa-solid fa-circle-exclamation"></i> {errors.lastname?.message}
+          <i className="fa-solid fa-circle-exclamation"></i>{" "}
+          {errors.lastname?.message}
         </small>
       )}
-    <Input
-        icon={<i className="fa-solid fa-circle-user"></i>}
+      <Input
+        icon={<i className="fa-solid fa-envelope"></i>}
         type="text"
         placeholder="Email"
         label="email"
         name="email"
         register={register}
       />
-        {errors?.email && (
+      {errors?.email && (
         <small className={styles._fail}>
-          <i className="fa-solid fa-circle-exclamation"></i> {errors.email?.message}
+          <i className="fa-solid fa-circle-exclamation"></i>{" "}
+          {errors.email?.message}
         </small>
       )}
-   <Input
-        icon={<i className="fa-solid fa-circle-user"></i>}
+      <InputField
+        icon="fa-solid fa-lock"
         type="password"
         placeholder="Password"
-        label="password"
         name="password"
         register={register}
+        errors={errors}
       />
-        {errors?.password && (
+      {errors?.password && (
         <small className={styles._fail}>
-          <i className="fa-solid fa-circle-exclamation"></i> {errors.password?.message}
+          <i className="fa-solid fa-circle-exclamation"></i>{" "}
+          {errors.password?.message}
         </small>
       )}
-    <Button type="submit" title={textBtn} />
-  </form>
-)
-}; 
+      <Button type="submit" title={textBtn} />
+    </form>
+  );
+};
 export default UserForm;

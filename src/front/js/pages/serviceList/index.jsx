@@ -1,13 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
+import { Context } from "../../store/appContext";
 import { useParams, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import {
   deleteService,
   listServicesByCompany,
 } from "../../service/services.js";
-
 import styles from "./serviceList.module.css";
-
 import Header from "../../components/header/index.jsx";
 import BigContainer from "../../components/bigContainer/index.jsx";
 import ServiceCard from "../../components/serviceCard/index.jsx";
@@ -19,6 +18,9 @@ const ListService = () => {
   const [list, setList] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const [selectedService, setSelectedService] = useState({});
+
+  const { store } = useContext(Context);
+  const userStoredInContext = store.userProfileData.userData;
 
   const navigate = useNavigate();
   const { companyID } = useParams();
@@ -42,7 +44,10 @@ const ListService = () => {
 
   return (
     <>
-      <Header />
+      <Header
+        imgProfile={userStoredInContext?.avatar}
+        updateProfile={() => navigate(`/profile/${userStoredInContext?.id}`)}
+      />
       <main className={styles._mainContainer}>
         <BigContainer>
           <h1 className={styles._title}>List Services</h1>

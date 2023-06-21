@@ -4,7 +4,7 @@
   max-width: 948px;
   min-height: 400px;
   height: fit-content;
-  max-height: 620px;
+  max-height: 100%;
   padding: 32px;
   display: flex;
   flex-direction: column;

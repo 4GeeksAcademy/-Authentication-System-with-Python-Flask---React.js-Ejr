@@ -29,7 +29,6 @@ def update_worker(update_worker, worker):
         worker.firstname = update_worker["firstname"]
         worker.lastname = update_worker["lastname"]
         worker.email = update_worker["email"]
-        worker.working_schedule = update_worker["working_schedule"]
         worker.password = update_worker["password"]
         db.session.commit()
         return service

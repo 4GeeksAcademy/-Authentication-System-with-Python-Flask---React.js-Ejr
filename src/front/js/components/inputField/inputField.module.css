@@ -34,10 +34,12 @@
 ._fail {
   color: var(--highlight);
 }
+
 ._inputContainerError input {
   border: 1px solid var(--highlight);
 }
-._passwordToggle{
+
+._passwordToggle {
   margin-left: 27rem;
   cursor: pointer;
 }
