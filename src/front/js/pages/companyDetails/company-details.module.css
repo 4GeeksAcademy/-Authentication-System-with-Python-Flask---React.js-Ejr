@@ -123,7 +123,7 @@ span {
   width: 197px;
 }
 ._service p:not(:first-child) {
-  text-align: left;
+  text-align: center;
 }
 
 ._btnWrapperdiv {

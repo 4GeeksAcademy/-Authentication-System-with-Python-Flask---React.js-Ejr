@@ -102,7 +102,7 @@ const ServicesWorkers = () => {
           {step === 1 && (
             <>
               <div className={styles._dropdownContainer}>
-                <p className={styles._firstTitle}>1/3</p>
+                <p className={styles._firstTitle}>{step}/3</p>
                 <p className={styles._secondTitle}>
                   Assign Services to Workers
                 </p>
@@ -135,7 +135,7 @@ const ServicesWorkers = () => {
           {step === 2 && (
             <>
               <div className={styles._dropdownContainer}>
-                <p className={styles._firstTitle}>2/3</p>
+                <p className={styles._firstTitle}>{step}/3</p>
                 <p className={styles._secondTitle}>
                   Assign Services to Workers
                 </p>
@@ -169,12 +169,52 @@ const ServicesWorkers = () => {
                   </div>
                   <div className={styles._buttonInside}>
                     <Button
-                      type="submit"
-                      title="Create"
-                      onClick={handleSubmit}
+                      type="button"
+                      title="Next"
+                      onClick={handleNextStep}
                     />
                   </div>
                 </div>
+              </div>
+            </>
+          )}
+          {step === 3 && (
+            <>
+              <div className={styles._dropdownContainer}>
+                <p className={styles._firstTitle}>{step}/3</p>
+                <p className={styles._secondTitle}>
+                  Assign Services to Workers
+                </p>
+                <p className={styles._fourthTitle}>Confirm your assignment</p>
+                <p className={styles._desTitle}>Service: </p>
+                <p className={styles._desinTitle}>{serviceWorker.service}</p>
+                <p className={styles._desTitle}>Worker: </p>
+                <p className={styles._desinTitle}>{serviceWorker.worker}</p>
+                <p className={styles._finalTitle}>
+                  Do you want to confirm your assignment?
+                </p>
+                <div className={styles._buttonPrevious}>
+                  <div className={styles._buttonInside}>
+                    <Button
+                      type="button"
+                      title="Change"
+                      onClick={handlePreviousStep}
+                    />
+                  </div>
+                  <div className={styles._buttonInside}>
+                    <Button
+                      type="submit"
+                      title="Confirm"
+                      onClick={handleSubmit}
+                    />
+                  </div>
+                </div>{" "}
+                {(serviceWorker.service === "" ||
+                  serviceWorker.worker === "") && (
+                  <p className={styles._errorText}>
+                    Please select a service and worker
+                  </p>
+                )}
               </div>
             </>
           )}

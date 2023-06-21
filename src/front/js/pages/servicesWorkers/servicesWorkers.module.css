@@ -29,6 +29,35 @@
   letter-spacing: -0.03em;
   margin-bottom: 24px;
 }
+
+._fourthTitle {
+  font-weight: var(--font-bold);
+  font-size: 16px;
+  line-height: 19px;
+  letter-spacing: -0.03em;
+  margin-bottom: 20px;
+}
+._desTitle {
+  font-weight: var(--font-bold);
+  font-size: 16px;
+  line-height: 19px;
+  letter-spacing: -0.03em;
+}
+._desinTitle {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 19px;
+  letter-spacing: -0.03em;
+  margin: 6px 0 12px 0;
+}
+._finalTitle {
+  font-weight: var(--font-semibold);
+  font-size: 15.12px;
+  line-height: 18px;
+  letter-spacing: -0.03em;
+  margin: 24px 0;
+}
+
 ._inputContainer {
   position: relative;
   font-size: var(--text-sm);
