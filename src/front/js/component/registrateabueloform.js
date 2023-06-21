@@ -57,7 +57,6 @@ export function RegistrateAbueloForm() {
             .then((data) => {
                 // Handle successful signup
                 console.log("New user created:", data);
-                // Redirect to google.com
                 window.location.href = "/";
             })
             .catch((error) => {

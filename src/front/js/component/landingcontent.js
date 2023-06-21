@@ -14,7 +14,7 @@ export const Landingcontent = () => {
               <div className="col-lg-6">
                 <h1 className="display-4 text-left">Encuentra apoyo y conexión a través de nuestra comunidad.</h1>
                 <p className="lead text-left">Regístrate y descubre nuevas amistades para compartir momentos especiales juntos.</p>
-                <Link className="nav-link" to="/signup">
+                <Link className="nav-link" to="/signupabuelo">
                   <button className="buttonjumbo"><span>¡Unete a nosotros! </span></button>
                 </Link>
               </div>
@@ -41,7 +41,7 @@ export const Landingcontent = () => {
               <div className="col-lg-6">
                 <h1 className="display-4 text-left">Acompaña a personas mayores que lo necesitan</h1>
                 <p className="lead text-left">Entra en nuestra comunidad como vulantario y participa en actividades con ellos</p>
-                <Link className="nav-link" to="/signup">
+                <Link className="nav-link" to="/signupvoluntario">
                   <button className="buttonjumbo"><span>¡Hazte voluntario!</span></button>
                 </Link>
               </div>

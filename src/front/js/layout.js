@@ -32,13 +32,12 @@ const Layout = () => {
         const token = localStorage.getItem("miTokenJWT");
 
         if (!token && !isPublicRoute(location.pathname)) {
-            // Redirect the user to the login page
             Navigate("/login");
         }
     }, [location.pathname]);
 
     const isPublicRoute = (pathname) => {
-        const publicRoutes = ["/", "/login", "/signupabuelo", "/signupvoluntario"];
+        const publicRoutes = ["/", "/login", "/signupabuelo", "/signupvoluntario", "/about", "/contact", "/terms", "/privacy"];
         return publicRoutes.includes(pathname);
     };
 
