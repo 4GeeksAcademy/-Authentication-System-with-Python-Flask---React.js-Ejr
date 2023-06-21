@@ -9,6 +9,7 @@ export const Landing = () => {
     <div>
       
       <Landingcontent />
+      
     </div>
   );
 };

@@ -13,6 +13,8 @@ import { Landing } from "./pages/landing";
 import { Login } from "./pages/login";
 import { SignupAbuelo } from "./pages/signupabuelo";
 import { SignupVoluntario } from "./pages/signupvoluntario";
+import { Profile } from "./pages/profile";
+import { ProfilEdit } from "./pages/profiledit";
 import Videocall from "./pages/videocall";
 import { VideoRoom } from "./pages/videoroom";
 import NotFound from "./pages/notfound";
@@ -55,6 +57,8 @@ const Layout = () => {
                     <Route element={<Landing />} path="/" />
                     <Route element={<Videocall />} path="/videocall" />
                     <Route element={<VideoRoom />} path="/home" />
+                    <Route element= {<Profile/>}path = "/profile"/>
+                    <Route element= {<ProfilEdit/>}path = "/editprofile"/>
                     <Route element={<SignupVoluntario />} path="/signupvoluntario" />
                     <Route element={<SignupAbuelo />} path="/signupabuelo" />
                     <Route element={<Demo />} path="/demo" />

@@ -8,13 +8,13 @@ class User(db.Model):
     user_name = db.Column(db.String(40), unique=True, nullable=False)
     first_name = db.Column(db.String(40), unique=False, nullable=False)
     last_name = db.Column(db.String(40), unique=False, nullable=False)
-    description = db.Column(db.String(40), unique=False, nullable=True )
+    description = db.Column(db.String(500), unique=False, nullable=True )
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(80), unique=False, nullable=False)
     is_grandparent = db.Column(db.Boolean(), unique=False, nullable=True)
 
     def __repr__(self):
-        return f'<User {self.email}>'
+        return f'<User {self.email}, {self.id}>'
 
     def serialize(self):
         return {
