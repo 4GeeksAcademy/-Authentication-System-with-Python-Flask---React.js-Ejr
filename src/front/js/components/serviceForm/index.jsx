@@ -37,7 +37,6 @@ const ServiceForm = ({ textBtn }) => {
 
   const onSubmit = async () => {
     const resMsg = await createService(companyID, newService);
-    console.log(resMsg);
     if (resMsg?.error) {
       toast.error(resMsg?.msg);
     } else {

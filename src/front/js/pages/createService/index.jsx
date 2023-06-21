@@ -11,13 +11,13 @@ const CreateService = () => {
   const userStoredInContext = store.userProfileData.userData;
 
   return (
-    <>
+    <main>
       <Header
         imgProfile={userStoredInContext?.avatar}
         updateProfile={() => navigate(`/profile/${userStoredInContext?.id}`)}
       />
       {!isLoading ? <ServiceForm textBtn="Create" /> : <Spinner />}
-    </>
+    </main>
   );
 };
 

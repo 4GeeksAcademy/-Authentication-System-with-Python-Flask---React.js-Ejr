@@ -1,13 +1,10 @@
 import React, { useState, useContext } from "react";
 import { Context } from "../../store/appContext";
-import styles from "./createWorker.module.css"
 import Header from "../../components/header/index.jsx";
 import WorkerForm from "../../components/workerForm/index.jsx";
 import Spinner from "../../components/spinner/index.jsx";
-import { toast } from "react-toastify";
 
 const CreateWorker = () => {
-
   const [isLoading, setIsLoading] = useState(false);
 
   const { store } = useContext(Context);
@@ -19,13 +16,7 @@ const CreateWorker = () => {
         imgProfile={userStoredInContext?.avatar}
         updateProfile={() => navigate(`/profile/${userStoredInContext?.id}`)}
       />
-      {!isLoading ? (
-        <WorkerForm
-          textBtn="Create"
-        />
-      ) : (
-        <Spinner />
-      )}
+      {!isLoading ? <WorkerForm textBtn="Create" /> : <Spinner />}
     </main>
   );
 };

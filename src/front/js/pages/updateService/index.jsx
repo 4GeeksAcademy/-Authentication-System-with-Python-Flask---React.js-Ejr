@@ -1,45 +1,22 @@
-import React, { useState } from "react";
-import { useParams } from "react-router-dom";
-import { updateService } from "../../service/services.js";
-
+import React, { useContext } from "react";
+import { Context } from "../../store/appContext";
+import { useNavigate } from "react-router-dom";
 import Header from "../../components/header/index.jsx";
 import UpdateServiceList from "../../components/updateServiceCard/index.jsx";
-import { toast } from "react-toastify";
-
-const initialState = {
-  name: "",
-  description: "",
-  service_duration: "",
-  price: "",
-};
 
 const UpdateService = () => {
-  const { serviceID } = useParams();
-  const [list, setList] = useState(initialState);
+  const navigate = useNavigate();
 
-  const responseToast = (msg) => toast(msg);
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setList(initialState);
-    const service = await updateService(serviceID, list);
-    setList(service);
-    responseToast(service.msg);
-  };
-
-  const handleChange = ({ target }) => {
-    setList({ ...list, [target.name]: target.value });
-  };
+  const { store } = useContext(Context);
+  const userStoredInContext = store.userProfileData.userData;
 
   return (
     <>
-      <Header />
-      <UpdateServiceList
-        list={list}
-        handleSubmit={handleSubmit}
-        handleChange={handleChange}
-        textBtn="Update"
+      <Header
+        imgProfile={userStoredInContext?.avatar}
+        updateProfile={() => navigate(`/profile/${userStoredInContext?.id}`)}
       />
+      <UpdateServiceList textBtn="Update" textBackBtn="Go Back" />
     </>
   );
 };

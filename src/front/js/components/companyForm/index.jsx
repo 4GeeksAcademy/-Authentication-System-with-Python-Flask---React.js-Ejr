@@ -7,7 +7,6 @@ import Button from "../button/index.jsx";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { companySchema } from "../../validations/companyValidation.js";
-import { toast } from "react-toastify";
 
 const CompanyForm = ({ textBtn }) => {
   const { actions } = useContext(Context);

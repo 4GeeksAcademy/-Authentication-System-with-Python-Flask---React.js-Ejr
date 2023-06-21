@@ -17,6 +17,7 @@
   justify-content: center;
   gap: 4px;
   padding: 16px;
+  overflow: auto;
   border-radius: var(--border-sm);
   background-color: var(--white);
   width: 100%;
