@@ -20,8 +20,8 @@ class User_role(Enum): #Solo se pueden usar los roles que pongamos aquí
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(50), nullable=False)
-    surname = db.Column(db.String(40), nullable=False)
+    nameandsur = db.Column(db.String(100), nullable=False)
+    #surname = db.Column(db.String(40), nullable=False)
     email = db.Column(db.String(80), unique=True, nullable=False)
     password = db.Column(db.String(80), unique=False, nullable=False)
     id_document = db.Column(db.Enum(IdDocument), nullable=False, default=IdDocument.DNI)
@@ -48,8 +48,8 @@ class User(db.Model):
     def serialize(self):
         return {
             "id": self.id,
-            "name": self.name,
-            "surname": self.surname,
+            "nameandsur": self.nameandsur,
+            #"surname": self.surname,
             "email": self.email,
             "id_document": self.id_document.value,
             "id_number": self.id_number,
