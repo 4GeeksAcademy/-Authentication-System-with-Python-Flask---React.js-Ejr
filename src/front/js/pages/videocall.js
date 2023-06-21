@@ -272,7 +272,7 @@ function ParticipantView(props) {
   );
 }
 
-const Videocall = () => {
+const VideocallCine = () => {
   return (
     <MeetingProvider
       config={{
@@ -292,4 +292,4 @@ const Videocall = () => {
   );
 };
 
-export default Videocall;
+export default VideocallCine;

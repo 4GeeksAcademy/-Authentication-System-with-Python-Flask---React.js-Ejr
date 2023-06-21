@@ -15,19 +15,29 @@ import { SignupAbuelo } from "./pages/signupabuelo";
 import { SignupVoluntario } from "./pages/signupvoluntario";
 import { Profile } from "./pages/profile";
 import { ProfilEdit } from "./pages/profiledit";
-import Videocall from "./pages/videocall";
+import VideocallCine from "./pages/videocall";
 import { VideoRoom } from "./pages/videoroom";
 import NotFound from "./pages/notfound";
+import VideocallTertulia from "./pages/tertuliallamada";
+import VideocallCocina from "./pages/videocallcocina";
+import VideocallArquitecto from "./pages/videocallarquitecto";
+import VideocallGamer from "./pages/videocallgamer";
+import VideocallFiesta from "./pages/videocallfiesta";
+import VideocallViajero from "./pages/videocallviajero";
 
 const Layout = () => {
     const location = useLocation();
 
     const isFooterHidden = () => {
-        return location.pathname === "/videocall";
+        return location.pathname === "/videocallcine" || location.pathname === "/videocalltertulia" ||
+            location.pathname === "/videocallcocina" || location.pathname === "/videocallgamer" || location.pathname === "/videoarquitecto" ||
+            location.pathname === "/videocallfiesta" || location.pathname === "/videocallviajero";
     };
 
     const isNavbarHidden = () => {
-        return location.pathname === "/videocall";
+        return location.pathname === "/videocallcine" || location.pathname === "/videocalltertulia" ||
+            location.pathname === "/videocallcocina" || location.pathname === "/videocallgamer" || location.pathname === "/videoarquitecto" ||
+            location.pathname === "/videocallfiesta" || location.pathname === "/videocallviajero";
     };
 
     useEffect(() => {
@@ -55,10 +65,16 @@ const Layout = () => {
                 {!isNavbarHidden() && <Navbar />}
                 <Routes>
                     <Route element={<Landing />} path="/" />
-                    <Route element={<Videocall />} path="/videocall" />
+                    <Route element={<VideocallCine />} path="/videocallcine" />
+                    <Route element={<VideocallTertulia />} path="/videocalltertulia" />
+                    <Route element={<VideocallCocina />} path="/videocallcocina" />
+                    <Route element={<VideocallArquitecto />} path="/videocallarquitecto" />
+                    <Route element={<VideocallGamer />} path="/videocallgamer" />
+                    <Route element={<VideocallFiesta />} path="/videocallfiesta" />
+                    <Route element={<VideocallViajero />} path="/videocallviajero" />
                     <Route element={<VideoRoom />} path="/home" />
-                    <Route element= {<Profile/>}path = "/profile"/>
-                    <Route element= {<ProfilEdit/>}path = "/editprofile"/>
+                    <Route element={<Profile />} path="/profile" />
+                    <Route element={<ProfilEdit />} path="/editprofile" />
                     <Route element={<SignupVoluntario />} path="/signupvoluntario" />
                     <Route element={<SignupAbuelo />} path="/signupabuelo" />
                     <Route element={<Demo />} path="/demo" />
