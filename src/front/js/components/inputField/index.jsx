@@ -34,6 +34,11 @@ const InputField = ({
           onClick={togglePasswordVisibility}
         ></i>
       )}
+      {errors[name] && (
+        <small className={styles._fail}>
+          <i className="fas fa-exclamation-circle"></i> {errors[name].message}
+        </small>
+      )}
     </div>
   );
 };
