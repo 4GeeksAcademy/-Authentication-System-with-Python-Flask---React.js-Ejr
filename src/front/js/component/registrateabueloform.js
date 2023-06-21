@@ -57,7 +57,6 @@ export function RegistrateAbueloForm() {
             .then((data) => {
                 // Handle successful signup
                 console.log("New user created:", data);
-                // Redirect to google.com
                 window.location.href = "/";
             })
             .catch((error) => {
@@ -130,7 +129,7 @@ export function RegistrateAbueloForm() {
                                     id="inputRepeatPassword"
                                     required
                                 />
-                                <button className="btn btn-outline-secondary" type="button" onClick={toggleShowPassword}>
+                                <button className="btn btn-secondary" type="button" onClick={toggleShowPassword}>
                                     {showPassword ? (
                                         <i className="fa-solid fa-eye-slash"></i>
                                     ) : (
@@ -141,7 +140,7 @@ export function RegistrateAbueloForm() {
                         </div>
                         <div className="text-center">
                             <button type="submit" className="btn btn-primary">
-                                <h5>Sign up</h5>
+                                Sign up
                             </button>
                         </div>
                     </form>

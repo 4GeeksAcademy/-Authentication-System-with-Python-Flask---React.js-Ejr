@@ -1,7 +1,6 @@
 import React from "react";
 import cocina from "../../img/cocina.jpeg";
 import tertulias from "../../img/tertulias.jpeg";
-import rap from "../../img/rap.jpeg";
 import ravera from "../../img/ravera.jpeg";
 import abueloarquitecto from "../../img/abueloarquitecto.jpeg";
 import abuelosgamers from "../../img/abuelosgamers.jpeg";
@@ -12,6 +11,7 @@ import "../../styles/videoroom.css";
 
 export const VideoRoomCard = () => {
     return (
+
         <div className="container">
             <div className="display-container">
                 <div className="name-container">
@@ -21,7 +21,6 @@ export const VideoRoomCard = () => {
                 <div className="image-container">
                     <img src={cocina} className="imagevideo" />
                 </div>
-
                 <div className="button-container"> <button type="button" className="btn btn-primary">
                     Unete a la sala
                 </button></div>  
@@ -121,9 +120,6 @@ export const VideoRoomCard = () => {
                     Unete a la sala
                 </button></div>  
             </div>
-
-
-
 
         </div>
     );

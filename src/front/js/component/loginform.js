@@ -7,14 +7,21 @@ export const LoginForm = () => {
   const [password, setPassword] = useState("");
   const [loginSuccess, setLoginSuccess] = useState(false);
   const [loginError, setLoginError] = useState(false);
+  const [username, setUsername] = useState("");
+  const [isGrandparent, setIsGrandparent] = useState(false);
   const navigate = useNavigate();
+
+  const handleLogin = () => {
+    setUsername(localStorage.getItem("loggedUsername"));
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const user = {
       "email": email,
-      "password": password
+      "password": password,
+      "user_name": username
     };
 
     try {
@@ -32,13 +39,20 @@ export const LoginForm = () => {
         const data = await response.json();
         const token = data.token;
         const email = data.email;
+        const username = data.username;
+        const userIsGrandparent = data.is_grandparent;
 
         localStorage.setItem("miTokenJWT", token);
         localStorage.setItem("loggedUserEmail", email);
+        localStorage.setItem("loggedUsername", username);
+        localStorage.setItem("isGrandparent", userIsGrandparent);
 
         setEmail('');
         setPassword('');
-        navigate('/');
+        setUsername(username);
+        setIsGrandparent(userIsGrandparent);
+        navigate('/home');
+        handleLogin();
       } else {
         setLoginSuccess(false);
         setLoginError(true);
@@ -51,7 +65,7 @@ export const LoginForm = () => {
   };
 
   return (
-    <div className="container">
+    <div className="container" style={{ marginTop: "11.2rem" }}>
       <div className="container-form">
         <div className="row">
           <form className="container-login-fom col-md-6" onSubmit={handleSubmit}>
@@ -74,7 +88,7 @@ export const LoginForm = () => {
                   />
                 </div>
               </div>
-              
+
               <div className="col-sm-6">
                 <div className="form-group">
                   <label htmlFor="inputPassword" className="form-label">
@@ -106,7 +120,7 @@ export const LoginForm = () => {
               <div className="col-sm-12 mt-4">
                 <div className="login-botton">
                   <button type="submit" className="btn btn-primary">
-                    <h5>Log in</h5>
+                    Login
                   </button>
                 </div>
               </div>

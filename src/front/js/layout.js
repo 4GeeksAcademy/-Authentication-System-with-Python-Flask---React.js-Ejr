@@ -1,5 +1,5 @@
-import React from "react";
-import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
+import React, { useEffect } from "react";
+import { BrowserRouter, Route, Routes, useLocation, Navigate } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
 import { BackendURL } from "./component/backendURL";
 
@@ -17,6 +17,7 @@ import { Profile } from "./pages/profile";
 import { ProfilEdit } from "./pages/profiledit";
 import Videocall from "./pages/videocall";
 import { VideoRoom } from "./pages/videoroom";
+import NotFound from "./pages/notfound";
 
 const Layout = () => {
     const location = useLocation();
@@ -27,6 +28,19 @@ const Layout = () => {
 
     const isNavbarHidden = () => {
         return location.pathname === "/videocall";
+    };
+
+    useEffect(() => {
+        const token = localStorage.getItem("miTokenJWT");
+
+        if (!token && !isPublicRoute(location.pathname)) {
+            Navigate("/login");
+        }
+    }, [location.pathname]);
+
+    const isPublicRoute = (pathname) => {
+        const publicRoutes = ["/", "/login", "/signupabuelo", "/signupvoluntario", "/about", "/contact", "/terms", "/privacy"];
+        return publicRoutes.includes(pathname);
     };
 
     const basename = process.env.BASENAME || "";
@@ -50,7 +64,7 @@ const Layout = () => {
                     <Route element={<Demo />} path="/demo" />
                     <Route element={<Login />} path="/login" />
                     <Route element={<Single />} path="/single/:theid" />
-                    <Route element={<h1>Not found!</h1>} />
+                    <Route element={<NotFound />} path="*" />
                 </Routes>
                 {!isFooterHidden() && <Footer />}
             </ScrollToTop>
