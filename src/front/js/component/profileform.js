@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import imageholder from "../../img/imageholder.jpg";
+import { Link } from "react-router-dom";
 
 export const ProfileForm = () => {
   const [userName, setUserName] = useState("");
@@ -94,8 +95,11 @@ export const ProfileForm = () => {
               {/* Add your list items here */}
             </ul>
           </div>
+          <Link to="/editprofile" className="btn btn-primary">Edita tu perfil</Link>
+
         </div>
       </form>
+      
     </div>
   );
 };
