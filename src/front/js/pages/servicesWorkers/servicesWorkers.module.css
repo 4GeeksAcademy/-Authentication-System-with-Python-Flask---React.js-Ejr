@@ -6,12 +6,39 @@
 }
 
 ._dropdownContainer {
+  margin-top: 110px;
+  text-align: center;
+  width: 477px;
+}
+
+._firstTitle {
+  margin: 20px 0;
+  font-weight: var(--font-bold);
+  line-height: 19px;
+  letter-spacing: -0.03em;
+}
+._secondTitle {
+  font-weight: var(--font-bold);
+  font-size: 20px;
+  line-height: 24px;
+  letter-spacing: -0.03em;
+  margin-bottom: 20px;
+}
+._thirdTitle {
+  line-height: 17px;
+  letter-spacing: -0.03em;
+  margin-bottom: 24px;
+}
+._inputContainer {
   position: relative;
-  display: flex;
-  flex-direction: column;
   font-size: var(--text-sm);
   color: var(--gray-900);
-  border: none;
+}
+
+._inputContainer > i {
+  position: absolute;
+  top: 18px;
+  left: 14px;
 }
 
 ._select {
@@ -26,25 +53,20 @@
   outline: 1px solid var(--gray-300);
 }
 
-._loginBtn {
-  border: none;
-  border-radius: var(--border-md);
-  background-color: var(--black);
-  color: var(--white);
-  font-size: 1em;
-  font-weight: var(--font-semibold);
-  margin-block: 6px;
-  padding: 12px;
-  width: 100%;
-  transition: 0.2s ease-in-out;
+._buttonNext {
+  min-width: 140px;
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
 }
-
-._loginBtn:hover {
-  background-color: var(--purple-500);
-  color: var(--text-900);
+._buttonPrevious {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 40px;
 }
-
-._loginBtn:active {
-  scale: 0.95;
-  background-color: var(--gray-500);
+._buttonInside {
+  min-width: 120px;
+}
+._errorText {
+  color: var(--cyan-500);
 }
