@@ -128,7 +128,7 @@ export function RegistrateVoluntarioForm() {
                   id="inputRepeatPassword"
                   required
                 />
-                <button className="btn btn-outline-secondary" type="button" onClick={toggleShowPassword}>
+                <button className="btn btn-secondary" type="button" onClick={toggleShowPassword}>
                   {showPassword ? (
                     <i className="fa-solid fa-eye-slash"></i>
                   ) : (
@@ -139,7 +139,7 @@ export function RegistrateVoluntarioForm() {
             </div>
             <div className="text-center">
               <button type="submit" className="btn btn-primary">
-                <h5>Sign up</h5>
+                Sign up
               </button>
             </div>
           </form>

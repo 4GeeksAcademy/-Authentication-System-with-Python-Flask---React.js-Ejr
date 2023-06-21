@@ -137,7 +137,7 @@ function MeetingView() {
           </button></div>
       )}
       {joined && joined === "JOINED" && (
-        
+
         <div className="footer" style={{ background: "transparent" }}>
           <div className="toggle-buttons" style={{ background: "transparent" }} >
             <button onClick={handleToggleWebcam} className="blue-button">

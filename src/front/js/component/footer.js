@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
 export const Footer = () => (
-	<footer className="footer text-white" style={{ backgroundColor: "#282E34" }}>
+	<footer className="footer text-white" style={{ backgroundColor: "#282E34", marginTop: "auto" }} >
 		<div className="container">
 			<div style={{ paddingTop: '20px' }}></div> {/* Blank space */}
 			<div className="row">
@@ -15,7 +15,7 @@ export const Footer = () => (
 						<div className="col-md-3">
 							<h3>Links</h3>
 							<ul className="footer-links list-unstyled">
-								<li><a href="/" className="link-unstyled">Home</a></li>
+								<li><a href="/home" className="link-unstyled">Home</a></li>
 								<li><a href="/about" className="link-unstyled">About</a></li>
 								<li><a href="/contact" className="link-unstyled">Contact</a></li>
 							</ul>
@@ -40,7 +40,7 @@ export const Footer = () => (
 						<div className="col-md-8">
 							<div className="row">
 								<div className="col-md-6">
-									<p>&copy; {new Date().getFullYear()} Adoptabuelo</p>
+									<p>&copy; {new Date().getFullYear()} GenBridge</p>
 								</div>
 								<div className="col-md-6">
 									<ul className="footer-nav list-unstyled">

@@ -70,7 +70,9 @@ def login():
     response_body = {
         "msg": "Token created successfully",
         "token": access_token,
-        "email": email
+        "email": email,
+        "username": user.user_name,
+        "is_grandparent": user.is_grandparent
     }
 
     return jsonify(response_body), 200

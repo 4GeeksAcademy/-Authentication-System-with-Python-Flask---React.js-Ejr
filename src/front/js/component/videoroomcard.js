@@ -1,9 +1,8 @@
 import React from "react";
 import cocina from "../../img/cocina.jpeg";
 import tertulias from "../../img/tertulias.jpeg";
-import rap from "../../img/rap.jpeg";
 import ravera from "../../img/ravera.jpeg";
-import abueloarquitecto from  "../../img/abueloarquitecto.jpeg";
+import abueloarquitecto from "../../img/abueloarquitecto.jpeg";
 import abuelosgamers from "../../img/abuelosgamers.jpeg";
 import abueloviajero from "../../img/abueloviajero.jpeg";
 
@@ -43,7 +42,7 @@ export const VideoRoomCard = () => {
                                 Cocina con la abuela
                             </h1>
                         </div>
-                        <a href="roomcocina">
+                        <a href="/videocall">
                             <img
                                 className="img-fluid mx-auto d-block"
                                 src={cocina}
@@ -137,7 +136,7 @@ export const VideoRoomCard = () => {
                                 Historias fiesteras
                             </h1>
                         </div>
-                        <a href="roomfiestera">
+                        <a href="/videocall">
                             <img
                                 className="img-fluid mx-auto d-block"
                                 src={ravera}
@@ -184,7 +183,7 @@ export const VideoRoomCard = () => {
                                 Abuelo arquitecto
                             </h1>
                         </div>
-                        <a href="roomarquitecto">
+                        <a href="/videocall">
                             <img
                                 className="img-fluid mx-auto d-block"
                                 src={abueloarquitecto}
@@ -230,7 +229,7 @@ export const VideoRoomCard = () => {
                                 Abuelos Gamers
                             </h1>
                         </div>
-                        <a href="roomgamers">
+                        <a href="/videocall">
                             <img
                                 className="img-fluid mx-auto d-block"
                                 src={abuelosgamers}
@@ -276,7 +275,7 @@ export const VideoRoomCard = () => {
                                 Abuelos Viajeros
                             </h1>
                         </div>
-                        <a href="roomviajero">
+                        <a href="/videocall">
                             <img
                                 className="img-fluid mx-auto d-block"
                                 src={abueloviajero}
@@ -294,7 +293,7 @@ export const VideoRoomCard = () => {
                         </a>
                     </div>
                 </div>
-                
+
             </div>
             <button
                 className="carousel-control-prev"
