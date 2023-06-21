@@ -21,9 +21,13 @@ export const VideoRoomCard = () => {
                 <div className="image-card-container">
                     <img src={cocina} className="imagevideo" />
                 </div>
-                <div className="button-card-container"> <button type="button" className="btn btn-primary">
-                    Unete a la sala
-                </button></div>
+                <div className="button-card-container">
+                    <a href="/videocallcocina">
+                        <button type="button" className="btn btn-primary">
+                            Unete a la sala
+                        </button>
+                    </a>
+                </div>
             </div>
 
             {/* ------------------------------------------- */}
@@ -36,9 +40,12 @@ export const VideoRoomCard = () => {
                     <img className="imagevideo" src={tertulias} />
                 </div>
 
-                <div className="button-card-container"> <button type="button" className="btn btn-primary">
-                    Unete a la sala
-                </button></div>
+                <div className="button-card-container">
+                    <a href="/videocalltertulia">
+                        <button type="button" className="btn btn-primary">
+                            Unete a la sala
+                        </button>
+                    </a></div>
             </div>
 
             {/* ------------------------------------------- */}
@@ -52,9 +59,13 @@ export const VideoRoomCard = () => {
                     <img src={abuelosgamers} className="imagevideo" />
                 </div>
 
-                <div className="button-card-container"> <button type="button" className="btn btn-primary">
-                    Unete a la sala
-                </button></div>
+                <div className="button-card-container">
+                    <a href="/videocallgamer">
+                        <button type="button" className="btn btn-primary">
+                            Unete a la sala
+                        </button>
+                    </a>
+                </div>
             </div>
 
             {/* ------------------------------------------- */}
@@ -68,9 +79,13 @@ export const VideoRoomCard = () => {
                     <img src={ravera} className="imagevideo" />
                 </div>
 
-                <div className="button-card-container"> <button type="button" className="btn btn-primary">
-                    Unete a la sala
-                </button></div>
+                <div className="button-card-container">
+                    <a href="/videocallfiesta">
+                        <button type="button" className="btn btn-primary">
+                            Unete a la sala
+                        </button>
+                    </a>
+                </div>
             </div>
 
             {/* ------------------------------------------- */}
@@ -84,9 +99,13 @@ export const VideoRoomCard = () => {
                     <img src={abueloarquitecto} className="imagevideo" />
                 </div>
 
-                <div className="button-card-container"> <button type="button" className="btn btn-primary">
-                    Unete a la sala
-                </button></div>
+                <div className="button-card-container">
+                    <a href="/videocallarquitecto">
+                        <button type="button" className="btn btn-primary">
+                            Unete a la sala
+                        </button>
+                    </a>
+                </div>
             </div>
 
             {/* ------------------------------------------- */}
@@ -100,9 +119,13 @@ export const VideoRoomCard = () => {
                     <img src={abueloviajero} className="imagevideo" />
                 </div>
 
-                <div className="button-card-container"> <button type="button" className="btn btn-primary">
-                    Unete a la sala
-                </button></div>
+                <div className="button-card-container">
+                    <a href="/videocallviajero">
+                        <button type="button" className="btn btn-primary">
+                            Unete a la sala
+                        </button>
+                    </a>
+                </div>
             </div>
 
             {/* ------------------------------------------- */}
@@ -116,9 +139,13 @@ export const VideoRoomCard = () => {
                     <img src={cine} className="imagevideo" />
                 </div>
 
-                <div className="button-card-container"> <button type="button" className="btn btn-primary">
-                    Unete a la sala
-                </button></div>
+                <div className="button-card-container">
+                    <a href="/videocallcine">
+                        <button type="button" className="btn btn-primary">
+                            Unete a la sala
+                        </button>
+                    </a>
+                </div>
             </div>
 
         </div>
