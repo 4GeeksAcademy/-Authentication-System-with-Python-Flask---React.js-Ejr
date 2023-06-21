@@ -89,32 +89,32 @@ export function RegistrateVoluntarioForm() {
               <label htmlFor="inputName" className="form-label">
                 <h5>Nombre</h5>
               </label>
-              <input type="text" className="form-control" id="inputName" required />
+              <input type="text" className="form-control" id="inputName" maxLength={10} required />
             </div>
             <div className="mb-3">
               <label htmlFor="inputSurname" className="form-label">
                 <h5>Apellido</h5>
               </label>
-              <input type="text" className="form-control" id="inputSurname" required />
+              <input type="text" className="form-control" id="inputSurname" maxLength={40} required />
             </div>
             <div className="mb-3">
               <label htmlFor="inputUserName" className="form-label">
                 <h5>Nombre de Usuario</h5>
               </label>
-              <input type="text" className="form-control" id="inputUserName" required />
+              <input type="text" className="form-control" id="inputUserName" maxLength={10} required />
             </div>
             <div className="mb-3">
               <label htmlFor="inputEmail" className="form-label">
                 <h5>Email</h5>
               </label>
-              <input type="email" className="form-control" id="inputEmail" required />
+              <input type="email" className="form-control" id="inputEmail" maxLength={120} required />
             </div>
             <div className="mb-3">
               <label htmlFor="inputPassword" className="form-label">
                 <h5>Contraseña</h5>
               </label>
               <div className="input-group">
-                <input type={showPassword ? "text" : "password"} className="form-control" id="inputPassword" required />
+                <input type={showPassword ? "text" : "password"} className="form-control" id="inputPassword" maxLength={80} required />
               </div>
             </div>
             <div className="mb-3">
