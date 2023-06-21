@@ -1,7 +1,7 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-![alt text](https://i.imgur.com/q8uzIGy.png)
+![(https://i.imgur.com/q8uzIGy.png)
 
   <h3 align="center">GenBridge</h3>
   <p align="center">
