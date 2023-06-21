@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import { Context } from "../store/appContext";
 import RentButton from "../component/RentButton"
 import FindCanchaButton from "../component/FindCanchaButton"
+import "../../styles/profile.css"
 
 
 export const Profile = () => {
@@ -18,8 +19,8 @@ export const Profile = () => {
         try {
             const response = await fetch(process.env.BACKEND_URL + "/api/user");
             const data = await response.json();
-            console.log(data,"dataaaaaaaaaaaaaaaa")
-            setUserData(data[0]); // Store user data in state
+            console.log(data, "dataaaaaaaaaaaaaaaa")
+            setUserData(data[0]); // quitar la seleccion de index cuando existan mas usuarios. 
         } catch (error) {
             console.error(error);
         }
@@ -27,7 +28,7 @@ export const Profile = () => {
 
     useEffect(() => {
         fetchUsers();
-    }, []); 
+    }, []);
 
 
     const name = userData ? userData.name : "";
@@ -42,7 +43,7 @@ export const Profile = () => {
                         <nav aria-label="breadcrumb" className="bg-light rounded-3 p-3 mb-4">
                             <ol className="breadcrumb mb-0">
                                 <li className="breadcrumb-item"><a href="#">Home</a></li>
-                                <li className="breadcrumb-item"><a href="#">User</a></li>
+                                <li className="breadcrumb-item"><a href="#">Canchas disponibles</a></li>
                                 <li className="breadcrumb-item active" aria-current="page">User Profile</li>
                             </ol>
                         </nav>
@@ -72,26 +73,24 @@ export const Profile = () => {
                         <div className="card mb-4 mb-lg-0">
                             <div className="card-body p-0">
                                 <ul className="list-group list-group-flush rounded-3">
-                                    <li className="list-group-item d-flex justify-content-between align-items-center p-3">
-                                        <i className="fas fa-globe fa-lg text-warning"></i>
-                                        <p className="mb-0">https://mdbootstrap.com</p>
-                                    </li>
-                                    <li className="list-group-item d-flex justify-content-between align-items-center p-3">
-                                        <i className="fab fa-github fa-lg" style={{ color: '#333333' }}></i>
-                                        <p className="mb-0">mdbootstrap</p>
-                                    </li>
-                                    <li className="list-group-item d-flex justify-content-between align-items-center p-3">
+
+                                    <a href="https://wa.me/15551234567" target="_blank" rel="noopener noreferrer" className="list-group-item d-flex justify-content-between align-items-center p-3">
+                                        <i className="fab fa-whatsapp fa-lg" style={{ color: '#333333' }}></i>
+                                        <p className="mb-0">Whatsapp</p>
+                                    </a>
+
+                                    <a href="https://twitter.com/home" target="_blank" rel="noopener noreferrer" className="list-group-item d-flex justify-content-between align-items-center p-3">
                                         <i className="fab fa-twitter fa-lg" style={{ color: '#55acee' }}></i>
-                                        <p className="mb-0">@mdbootstrap</p>
-                                    </li>
-                                    <li className="list-group-item d-flex justify-content-between align-items-center p-3">
+                                        <p className="mb-0">Twitter</p>
+                                    </a>
+                                    <a href="https://instagram.com/" target="_blank" rel="noopener noreferrer" className="list-group-item d-flex justify-content-between align-items-center p-3">
                                         <i className="fab fa-instagram fa-lg" style={{ color: '#ac2bac' }}></i>
-                                        <p className="mb-0">mdbootstrap</p>
-                                    </li>
-                                    <li className="list-group-item d-flex justify-content-between align-items-center p-3">
+                                        <p className="mb-0">Instagram</p>
+                                    </a>
+                                    <a href="https://facebook.com/" target="_blank" rel="noopener noreferrer" className="list-group-item d-flex justify-content-between align-items-center p-3">
                                         <i className="fab fa-facebook-f fa-lg" style={{ color: '#3b5998' }}></i>
-                                        <p className="mb-0">mdbootstrap</p>
-                                    </li>
+                                        <p className="mb-0">Facebook</p>
+                                    </a>
                                 </ul>
                             </div>
                         </div>
@@ -146,8 +145,19 @@ export const Profile = () => {
                             </div>
                         </div>
                         <div className="row">
-                            <RentButton/>
-                            <FindCanchaButton/>
+                            <div>
+                                <div>
+                                    <RentButton />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="row">
+                            <div>
+                                <div>
+                                    <FindCanchaButton />
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
