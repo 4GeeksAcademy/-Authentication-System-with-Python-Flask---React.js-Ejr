@@ -30,13 +30,13 @@ const Layout = () => {
 
     const isFooterHidden = () => {
         return location.pathname === "/videocallcine" || location.pathname === "/videocalltertulia" ||
-            location.pathname === "/videocallcocina" || location.pathname === "/videocallgamer" || location.pathname === "/videoarquitecto" ||
+            location.pathname === "/videocallcocina" || location.pathname === "/videocallgamer" || location.pathname === "/videocallarquitecto" ||
             location.pathname === "/videocallfiesta" || location.pathname === "/videocallviajero";
     };
 
     const isNavbarHidden = () => {
         return location.pathname === "/videocallcine" || location.pathname === "/videocalltertulia" ||
-            location.pathname === "/videocallcocina" || location.pathname === "/videocallgamer" || location.pathname === "/videoarquitecto" ||
+            location.pathname === "/videocallcocina" || location.pathname === "/videocallgamer" || location.pathname === "/videocallarquitecto" ||
             location.pathname === "/videocallfiesta" || location.pathname === "/videocallviajero";
     };
 
