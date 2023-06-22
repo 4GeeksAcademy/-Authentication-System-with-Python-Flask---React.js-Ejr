@@ -46,25 +46,14 @@ const LoginForm = ({ handleClick, handleChange, invalidDate, loading }) => {
             register={register}
             errors={errors}
           />
-          {errors?.email && (
-            <small className={styles._fail}>
-              <i className="fa-solid fa-circle-exclamation"></i>{" "}
-              {errors.email?.message}
-            </small>
-          )}
           <InputField
             icon="fa-solid fa-lock"
             type="password"
             placeholder="Password"
             name="password"
             register={register}
+            errors={errors}
           />
-          {errors?.password && (
-            <small className={styles._fail}>
-              <i className="fa-solid fa-circle-exclamation"></i>{" "}
-              {errors.password?.message}
-            </small>
-          )}
           <Button type="submit" title="Login" />
         </form>
       )}
