@@ -16,3 +16,12 @@ def handle_hello():
     }
 
     return jsonify(response_body), 200
+
+@api.route('/configuration/<int:user_id>', methods=['GET'])
+def configuration(user_id):
+    user=User.query.filter_by(id = user_id).first()
+    response_body = {
+        "data": user.serialize()
+    }
+
+    return jsonify(response_body), 200
