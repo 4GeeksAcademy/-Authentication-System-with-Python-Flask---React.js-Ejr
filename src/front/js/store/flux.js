@@ -3,6 +3,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 		store: {
 			token: null,
 			message: null,
+			users: [],
 			demo: [
 				{
 					title: "FIRST",
@@ -105,7 +106,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				//reset the global store
 				setStore({ demo: demo });
-			}
+			},
+			
 		}
 	};
 };
