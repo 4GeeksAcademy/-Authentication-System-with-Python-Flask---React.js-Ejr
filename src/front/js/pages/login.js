@@ -6,6 +6,7 @@ export const Login = () => {
     const { store, actions } = useContext(Context);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [eye, setEye] = useState(true);
     const navigate = useNavigate();
     const handleEmailChange = e => {
         setEmail(e.target.value);
@@ -23,6 +24,21 @@ export const Login = () => {
             navigate("/notfound");
         }
     };
+
+    const handleEye = () => {
+        if (eye == true) {
+            setEye(false)
+          
+        }
+        if (eye == false) {
+            setEye(true)
+        
+        }
+        
+    };
+  
+
+
     return (
         <div className="container text-center justify-content-center">
             <br />
@@ -39,7 +55,7 @@ export const Login = () => {
                                 className="form-control"
                                 id="exampleInputEmail1"
                                 aria-describedby="emailHelp"
-                                placeholder="Enter email"
+                                placeholder="Tu correo"
                                 value={email}
                                 onChange={handleEmailChange}
                             />
@@ -47,14 +63,17 @@ export const Login = () => {
                         <br />
                         <div className="form-group">
                             <label htmlFor="exampleInputPassword1" className="h4">Contraseña</label>
+                            <div className="d-flex">
                             <input
-                                type="password"
-                                className="form-control"
+                                type={eye == false ? "text" : "password"}
+                                className="form-control me-3"
                                 id="exampleInputPassword1"
-                                placeholder="Password"
+                                placeholder="Contraseña"
                                 value={password}
                                 onChange={handlePasswordChange}
                             />
+                            <i className={eye == true ? "fa-solid fa-eye-slash m-auto" : "fa-solid fa-eye m-auto"} onClick={handleEye}></i>
+                            </div>
                         </div>
                         <br />
                         <button type="submit" className="btn btn-primary">Enviar</button>
