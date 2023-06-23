@@ -1,3 +1,4 @@
+
 /* 
     General Styles used on every website (Don't Repeat Yourself)
 */
@@ -25,3 +26,50 @@
     font-size: 2rem;
 }
 
+
+.tittle-nav {
+    font-size: xx-large;
+}
+
+.switch {
+
+    font-size: medium;
+}
+
+
+.btn-plus {
+    height: 28px;
+    width: 36px;
+    margin: auto;
+    background-color: rgb(15, 76, 117);
+    color: white;
+    border-radius: 7px;
+    border-color: rgb(15, 76, 117);
+    border-top: rgb(15, 76, 117);
+    border-left: rgb(15, 76, 117);
+    border-right: rgb(15, 76, 117);
+    border-bottom: rgb(15, 76, 117);
+  }
+  
+  .btn-plus:hover {
+    background-color: rgb(36, 104, 183);
+  }
+  
+  .fa-plus {
+    font-size: small;
+    margin-left: 2px;
+    margin-bottom: 3px;
+  }
+  
+  #heart {
+    margin: 0 auto;
+    color: rgb(36, 144, 215);
+    font-size: larger;
+    
+  }
+  
+
+  .switch {
+
+    margin-top: -3px;
+  }
