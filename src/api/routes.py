@@ -39,3 +39,28 @@ def login():
         return("El usuario no es correcto"), 400
     token = create_access_token(identity=user.id)
     return jsonify({"token": token}), 200
+
+
+
+@api.route('/signup', methods=['POST'])
+def signup():
+    data = request.get_json()
+    nameandsur = data.get('nameandsur')
+    email = data.get('email')
+    password = data.get('password')
+    id_document = data.get('id_document')
+    id_number = data.get('id_number')
+    address = data.get('address')
+    role = data.get('role')
+    phone = data.get('phone')
+
+    register = User(nameandsur = nameandsur, email=email, password=password, id_document=id_document, id_number=id_number, address=address, role=role, phone=phone)
+    print(register)
+
+    if register is None:
+        return jsonify({"message" : "Complete the fields!"}), 400
+    
+    db.session.add(register)
+    db.session.commit()
+
+    return jsonify({"message" : "Signed up successfully!"}), 200
