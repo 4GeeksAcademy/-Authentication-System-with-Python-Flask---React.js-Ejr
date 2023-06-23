@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Navbar } from "./component/navbar";
 import ScrollToTop from "./component/scrollToTop";
 import { BackendURL } from "./component/backendURL";
 
@@ -11,7 +12,6 @@ import { Signup } from "./pages/signup";
 import injectContext from "./store/appContext";
 import {Profile} from "./pages/Profile-Protected";
 
-import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 
 //create your first component
@@ -25,6 +25,7 @@ const Layout = () => {
     return (
         <div>
             <BrowserRouter basename={basename}>
+                <Navbar/>
                 <ScrollToTop>
                     <Routes>
                         <Route element={<Home />} path="/" />
