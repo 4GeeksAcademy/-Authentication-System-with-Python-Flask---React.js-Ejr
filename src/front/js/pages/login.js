@@ -74,6 +74,7 @@ export const Login = () => {
                             />
                             <i className={eye == true ? "fa-solid fa-eye-slash m-auto" : "fa-solid fa-eye m-auto"} onClick={handleEye}></i>
                             </div>
+                            <small>¿No recuerdas tu contraseña? <Link to="/">Recuperar aquí</Link></small>
                         </div>
                         <br />
                         <button type="submit" className="btn btn-primary">Enviar</button>
