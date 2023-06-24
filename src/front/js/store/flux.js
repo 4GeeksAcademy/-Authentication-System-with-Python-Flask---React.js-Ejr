@@ -13,7 +13,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 					background: "white",
 					initial: "white"
 				}
-			]
+			],
+			user: []
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
@@ -46,6 +47,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				//reset the global store
 				setStore({ demo: demo });
+			},
+			getUser: (id) => {
+				fetch(`https://carlosgarciare2-friendly-giggle-pv654wwj99j36ww-3001.preview.app.github.dev/api/configuration/${id}`)
+				.then (response => response.json())
+				.then ((response) => {
+					setStore({user: response.data});
+				});
 			}
 		}
 	};
