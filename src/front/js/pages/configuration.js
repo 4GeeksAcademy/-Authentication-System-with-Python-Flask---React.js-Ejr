@@ -25,16 +25,17 @@ const handleSubmit = (event) => {
         body: JSON.stringify({
             "address": data.adress,
             "email": data.email,
-            "id_document": data.id_document,
-            "id_number": data.id_number,
-            "nameandsur": data.nameandsur,
+            "document_type": data.document_type,
+            "document_number": data.document_number,
+            "full_name": data.full_name,
             "phone": data.phone
         }),
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+
         }
     }
-    fetch(process.env.BACKEND_URL + `api/configuration/${userId}`, putConfig )
+    fetch(process.env.BACKEND_URL + `api/configuration`, putConfig )
     .then((response) => response.json())
     .then((response) => {
         console.log(data)
@@ -48,42 +49,42 @@ const handleSubmit = (event) => {
 return store.user ? (
     <div>
         <Link to="/demo" className="btn_back_config">
-                Back
+                Atrás
         </Link>
         <div className="container_config">
             <h1 className="configuration_title">Configuración del perfil</h1>
                 <div className="box col-12">
                     <div className="row">
-                        <label>Name:</label>
-                        <input className="col-8 input_config" name="nameandsur" type="text" value={data.nameandsur || store.user.nameandsur} onChange={handleChange}></input>
+                        <label>Nombre:</label>
+                        <input className="col-8 input_config" name="full_name" type="text" value={data.full_name || store.user.full_name} onChange={handleChange}></input>
                     </div>
                     <div className="row">
                         <label className="col-4">Email:</label>
                         <input className="col-8 input_config" name="email" type="text" value={data.email || store.user.email} onChange={handleChange}></input>
                     </div>
                         <div className="row">
-                            <label className="col-4 doc_type" htmlFor= "Document_type">Document Type:</label>
-                            <label className="col-4" htmlFor= "Document_number">Document Number:</label>
+                            <label className="col-4 doc_type" htmlFor= "Document_type">Tipo de documento:</label>
+                            <label className="col-4" htmlFor= "Document_number">Número del documento:</label>
                         </div>
                         <div className="row">
-                            <input className="col-4 input_config doc_type" name="Document Type" type="text" value={store.user.id_document}></input>
-                            <input name="Document_number" className="col-4 input_config" type="text" value={data.Document_number || store.user.id_number} onChange={handleChange}></input>
+                            <input className="col-4 input_config doc_type" name="Document Type" type="text" value={store.user.document_type}></input>
+                            <input name="Document_number" className="col-4 input_config" type="text" value={data.document_number || store.user.document_number} onChange={handleChange}></input>
                         </div>
                     <div className="row">
-                        <label>Phone:</label>
+                        <label>Teléfono:</label>
                         <input className="col-8 input_config" name="phone" type="text" value={data.phone || store.user.phone} onChange={handleChange}></input>
                     </div>
                     <div className="row">
-                        <label>Adress:</label>
+                        <label>Dirección:</label>
                         <input className="col-8 input_config" name="adress" type="text" value={data.adress || store.user.address} onChange={handleChange}></input>
                     </div>
                 </div>
                 <div className="buttons_config">
                     <Link to="/demo" className="btn_save_config" onClick={handleSubmit}>
-                        Save
+                        Guardar
                     </Link>
                     <Link to="/demo" className="btn_cancel_config">
-                        Cancel
+                        Cancelar
                     </Link>
                 </div>
         </div>

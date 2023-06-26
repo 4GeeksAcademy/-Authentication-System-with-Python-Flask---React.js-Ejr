@@ -11,8 +11,7 @@ class IdDocument(Enum):
     CIF = 'CIF'
 
 class User_role(Enum): #Solo se pueden usar los roles que pongamos aquí
-    BUYER = 'buyer'
-    SELLER = 'seller'
+    COMMON_USER= 'common_user'
     GARAGE = 'garage'
 
 
@@ -20,15 +19,15 @@ class User_role(Enum): #Solo se pueden usar los roles que pongamos aquí
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    nameandsur = db.Column(db.String(100), nullable=False)
-    #surname = db.Column(db.String(40), nullable=False)
+    full_name = db.Column(db.String(100), nullable=False)
     email = db.Column(db.String(80), unique=True, nullable=False)
     password = db.Column(db.String(80), unique=False, nullable=False)
-    id_document = db.Column(db.Enum(IdDocument), nullable=False, default=IdDocument.DNI)
-    id_number = db.Column(db.String(10), unique=True, nullable=False)
+    document_type = db.Column(db.Enum(IdDocument), nullable=False, default=IdDocument.DNI)
+    document_number = db.Column(db.String(10), unique=True, nullable=False)
     address = db.Column(db.String(120), nullable=True) 
-    role = db.Column(db.Enum(User_role), nullable=False, default=User_role.BUYER)
-    phone = db.Column(db.Integer, nullable=False) #Podría ser único
+    role = db.Column(db.Enum(User_role), nullable=False, default=User_role.COMMON_USER)
+    phone = db.Column(db.Integer, nullable=False) 
+    avatar = db.Column(db.String(200))
     #is_active = db.Column(db.Boolean(), unique=False, nullable=False)
 
     products = db.relationship('Product', backref='user') # Un usuario puede tener muchos productos asociados (relación de 1 a muchos)
@@ -48,13 +47,13 @@ class User(db.Model):
     def serialize(self):
         return {
             "id": self.id,
-            "nameandsur": self.nameandsur,
+            "full_name": self.full_name,
             #"surname": self.surname,
             "email": self.email,
-            "id_document": self.id_document.value,
-            "id_number": self.id_number,
-            "address": self.address,
-            #"role": self.role,
+            "document_type": self.document_type.value,
+            "document_number": self.document_number,
+            "address": self.address, 
+           #"role": self.role,
             "phone": self.phone
             
             # do not serialize the password, its a security breach
