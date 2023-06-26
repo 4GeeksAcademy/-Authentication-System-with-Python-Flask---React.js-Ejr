@@ -11,8 +11,7 @@ class IdDocument(Enum):
     CIF = 'CIF'
 
 class User_role(Enum): #Solo se pueden usar los roles que pongamos aquí
-    BUYER = 'buyer'
-    SELLER = 'seller'
+    COMMON_USER= 'common_user'
     GARAGE = 'garage'
 
 
