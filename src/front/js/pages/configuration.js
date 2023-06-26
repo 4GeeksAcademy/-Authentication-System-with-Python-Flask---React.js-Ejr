@@ -34,7 +34,7 @@ const handleSubmit = (event) => {
             'Content-Type': 'application/json'
         }
     }
-    fetch('https://carlosgarciare2-friendly-giggle-pv654wwj99j36ww-3001.preview.app.github.dev/api/configuration/1', putConfig )
+    fetch(process.env.BACKEND_URL + `api/configuration/${userId}`, putConfig )
     .then((response) => response.json())
     .then((response) => {
         console.log(data)
