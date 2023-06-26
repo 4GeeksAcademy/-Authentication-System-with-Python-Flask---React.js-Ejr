@@ -51,13 +51,16 @@ li {
 }
 
 
-.tittle-nav {
+#tittle-nav {
     font-size: xx-large;
+    font-weight: bolder;
+    
 }
 
 .switch {
 
     font-size: medium;
+    
 }
 
 

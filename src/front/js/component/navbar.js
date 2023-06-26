@@ -12,7 +12,7 @@ export const Navbar = () => {
 
 <nav className="navbar navbar-expand-lg bg-body-tertiary">
   <div className="container-fluid mx-3">
-    <a className="navbar-brand tittle-nav" href="/">WhataCar</a>
+    <a className="navbar-brand tittle-nav" id="tittle-nav" href="/">WhataCar</a>
     
     <div className="justify-content-end d-flex">
     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
