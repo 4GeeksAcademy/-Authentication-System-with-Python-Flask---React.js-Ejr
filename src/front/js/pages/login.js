@@ -17,8 +17,8 @@ export const Login = () => {
     const handleSubmit = async e => {
         e.preventDefault();
         try {
-            await actions.bestLogin(email, password);
-           navigate("/private");
+            await actions.login(email, password);
+           navigate("/");
         } catch (error) {
             console.log(error);
             navigate("/notfound");
