@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 713417995dea
+Revision ID: f250c289cfc1
 Revises: 
-Create Date: 2023-06-21 16:49:26.065860
+Create Date: 2023-06-26 17:07:09.388428
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '713417995dea'
+revision = 'f250c289cfc1'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -25,18 +25,18 @@ def upgrade():
     )
     op.create_table('user',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('name', sa.String(length=50), nullable=False),
-    sa.Column('surname', sa.String(length=40), nullable=False),
+    sa.Column('full_name', sa.String(length=100), nullable=False),
     sa.Column('email', sa.String(length=80), nullable=False),
     sa.Column('password', sa.String(length=80), nullable=False),
-    sa.Column('id_document', sa.Enum('DNI', 'CIF', name='iddocument'), nullable=False),
-    sa.Column('id_number', sa.String(length=10), nullable=False),
+    sa.Column('document_type', sa.Enum('DNI', 'CIF', name='iddocument'), nullable=False),
+    sa.Column('document_number', sa.String(length=10), nullable=False),
     sa.Column('address', sa.String(length=120), nullable=True),
-    sa.Column('role', sa.Enum('BUYER', 'SELLER', 'GARAGE', name='user_role'), nullable=False),
+    sa.Column('role', sa.Enum('COMMON_USER', 'GARAGE', name='user_role'), nullable=False),
     sa.Column('phone', sa.Integer(), nullable=False),
+    sa.Column('avatar', sa.String(length=200), nullable=True),
     sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('email'),
-    sa.UniqueConstraint('id_number')
+    sa.UniqueConstraint('document_number'),
+    sa.UniqueConstraint('email')
     )
     op.create_table('model',
     sa.Column('id', sa.Integer(), nullable=False),

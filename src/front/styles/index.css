@@ -4,3 +4,27 @@
 .navbar {
     margin-bottom: 20px;
 }
+/* 
+    General Styles used on every website (Don't Repeat Yourself)
+*/
+
+#light{
+    background-color: #a3c6f4;
+}
+
+#dark{
+    background-color: #393E46;
+}
+
+.switch{
+    display: flex;
+    width: 5rem;
+    height: 2rem;
+    justify-content: center;
+    align-items: center;
+}
+
+.mode{
+    font-size: 2rem;
+}
+
