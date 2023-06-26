@@ -26,9 +26,11 @@ def handle_hello():
 
     return jsonify(response_body), 200
 
-@api.route('/configuration/<int:user_id>', methods=['GET'])
-def configuration(user_id):
-    user=User.query.filter_by(id = user_id).first()
+@api.route('/configuration', methods=['GET'])
+@jwt_required()
+def configuration(current_user):
+    current_user = get_jwt_identity()
+    user=User.query.filter_by(current_user).first()
     response_body = {
         "data": user.serialize()
     }
@@ -37,7 +39,7 @@ def configuration(user_id):
 
 
 @api.route('/configuration', methods=['PUT'])
-@get_jwt_identity()
+@jwt_required()
 def update_configuration():
     current_user = get_jwt_identity()
     user = User.query.get(current_user)

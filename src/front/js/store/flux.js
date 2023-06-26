@@ -94,8 +94,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 				//reset the global store
 				setStore({ demo: demo });
 			},
-			getUser: (id) => {
-				fetch(`https://carlosgarciare2-friendly-giggle-pv654wwj99j36ww-3001.preview.app.github.dev/api/configuration/${id}`)
+			getUser: () => {
+				fetch(process.env.BACKEND_URL + `api/configuration`)
 				.then (response => response.json())
 				.then ((response) => {
 					setStore({user: response.data});
