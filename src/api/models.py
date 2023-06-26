@@ -25,7 +25,7 @@ class User(db.Model):
     document_type = db.Column(db.Enum(IdDocument), nullable=False, default=IdDocument.DNI)
     document_number = db.Column(db.String(10), unique=True, nullable=False)
     address = db.Column(db.String(120), nullable=True) 
-    role = db.Column(db.Enum(User_role), nullable=False, default=User_role.BUYER)
+    role = db.Column(db.Enum(User_role), nullable=False, default=User_role.COMMON_USER)
     phone = db.Column(db.Integer, nullable=False) 
     avatar = db.Column(db.String(200))
     #is_active = db.Column(db.Boolean(), unique=False, nullable=False)
