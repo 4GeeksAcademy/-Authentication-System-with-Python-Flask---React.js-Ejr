@@ -53,7 +53,7 @@ class User(db.Model):
             "document_type": self.document_type.value,
             "document_number": self.document_number,
             "address": self.address, 
-            "role": self.role,
+           #"role": self.role,
             "phone": self.phone
             
             # do not serialize the password, its a security breach
