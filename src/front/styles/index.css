@@ -1,6 +1,9 @@
 /* 
     General Styles used on every website (Don't Repeat Yourself)
 */
+.navbar {
+    margin-bottom: 20px;
+}
 /* 
     General Styles used on every website (Don't Repeat Yourself)
 */
