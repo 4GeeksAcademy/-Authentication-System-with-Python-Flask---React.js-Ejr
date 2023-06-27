@@ -1,17 +1,21 @@
 """
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
-from flask import Flask, request, jsonify, url_for, Blueprint
+from flask import Flask, request, jsonify, url_for, Blueprint, render_template
 from api.models import db, User
 from api.utils import generate_sitemap, APIException
-from flask_jwt_extended import create_access_token
-from flask_jwt_extended import jwt_required, get_jwt_identity
-from flask_jwt_extended import create_access_token
-from flask_jwt_extended import get_jwt_identity
-from flask_jwt_extended import jwt_required
-from flask_jwt_extended import JWTManager
+from flask_jwt_extended import create_access_token, JWTManager, jwt_required, get_jwt_identity, create_access_token, jwt_required, get_jwt_identity
+import cloudinary
+import cloudinary.uploader
+import os
+from flask_cors import CORS, cross_origin
+from dotenv import load_dotenv
+load_dotenv()
+
+
 
 app = Flask(__name__)
+CORS(app)
 
 
 api = Blueprint('api', __name__)
@@ -111,3 +115,20 @@ def signup():
     db.session.commit()
 
     return jsonify({"message" : "Signed up successfully!"}), 200
+
+
+@api.route("/upload", methods=['POST'])
+@cross_origin()
+def upload_file():
+  app.logger.info('in upload route')
+
+  cloudinary.config(cloud_name = os.getenv('CLOUD_NAME'), api_key=os.getenv('API_KEY'), 
+    api_secret=os.getenv('API_SECRET'))
+  upload_result = None
+  if request.method == 'POST':
+    file_to_upload = request.files['file']
+    app.logger.info('%s file_to_upload', file_to_upload)
+    if file_to_upload:
+      upload_result = cloudinary.uploader.upload(file_to_upload)
+      app.logger.info(upload_result)
+      return jsonify(upload_result)
