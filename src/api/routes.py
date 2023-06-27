@@ -45,16 +45,16 @@ def login():
 @api.route('/signup', methods=['POST'])
 def signup():
     data = request.get_json()
-    nameandsur = data.get('nameandsur')
+    full_name = data.get('full_name')
     email = data.get('email')
     password = data.get('password')
-    id_document = data.get('id_document')
-    id_number = data.get('id_number')
+    document_type = data.get('document_type')
+    document_number = data.get('document_number')
     address = data.get('address')
     role = data.get('role')
     phone = data.get('phone')
 
-    register = User(nameandsur = nameandsur, email=email, password=password, id_document=id_document, id_number=id_number, address=address, role=role, phone=phone)
+    register = User(full_name = full_name, email=email, password=password, document_type=document_type, document_number=document_number, address=address, role=role, phone=phone)
     print(register)
 
     if register is None:
