@@ -82,7 +82,7 @@ export const Signup = () => {
                 <div className="labelbox">
                   <label htmlFor="role">Rol:</label>
                   <select id="role" name="role" onChange={handleChange}>
-                    <option value="BUYER">Particular</option>
+                    <option value="COMMON_USER">Particular</option>
                     <option value="GARAGE">Taller</option>
                   </select>
                 </div>
