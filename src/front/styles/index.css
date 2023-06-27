@@ -6,6 +6,7 @@
     General Styles used on every website (Don't Repeat Yourself)
 */
 
+
 body {
   font-family: 'Roboto', sans-serif;
 }
@@ -65,28 +66,32 @@ li {
 
 
 .btn-plus {
-    height: 28px;
-    width: 36px;
-    margin: auto;
-    background-color: rgb(15, 76, 117);
-    color: white;
-    border-radius: 7px;
-    border-color: rgb(15, 76, 117);
-    border-top: rgb(15, 76, 117);
-    border-left: rgb(15, 76, 117);
-    border-right: rgb(15, 76, 117);
-    border-bottom: rgb(15, 76, 117);
-  }
-  
-  .btn-plus:hover {
-    background-color: rgb(36, 104, 183);
-  }
-  
-  .fa-plus {
-    font-size: small;
-    margin-left: 2px;
-    margin-bottom: 3px;
-  }
+  display: flex;
+  align-items: center;
+  height: 28px;
+  width: 36px;
+  margin: auto;
+  background-color: rgb(15, 76, 117);
+  color: white;
+  border-radius: 7px;
+  border-color: rgb(15, 76, 117);
+  border-top: rgb(15, 76, 117);
+  border-left: rgb(15, 76, 117);
+  border-right: rgb(15, 76, 117);
+  border-bottom: rgb(15, 76, 117);
+}
+
+.btn-plus:hover {
+  background-color: rgb(36, 104, 183);
+}
+
+.fa-plus {
+  font-size: small;
+  margin-left: 5px;
+}
+
+
+
   
   #heart {
     margin: 0 auto;

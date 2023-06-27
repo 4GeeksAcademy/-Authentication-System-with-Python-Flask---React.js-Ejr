@@ -2,6 +2,9 @@ import { Link } from "react-router-dom";
 import React, { useContext, useState } from "react";
 import { Context } from "../store/appContext";
 import { useNavigate } from "react-router-dom";
+
+
+
 export const Login = () => {
     const { store, actions } = useContext(Context);
     const [email, setEmail] = useState("");
@@ -16,8 +19,8 @@ export const Login = () => {
     const handleSubmit = async e => {
         e.preventDefault();
         try {
-            await actions.bestLogin(email, password);
-           navigate("/private");
+            await actions.login(email, password);
+           navigate("/");
         } catch (error) {
             console.log(error);
             navigate("/notfound");
