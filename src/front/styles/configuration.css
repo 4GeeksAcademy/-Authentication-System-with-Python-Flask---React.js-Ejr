@@ -1,0 +1,73 @@
+.container_config{
+    border: 2px;
+    border-style: solid;
+    border-color: black;
+    border-radius: 15px;
+    margin: 20px;
+    padding: 20px;
+}
+
+.btn_back_config{
+    border: 1px;
+    border-color: black;
+    border-style: solid;
+    padding: 10px;
+    margin-left: 20px;
+    color: white;
+    text-decoration: none;
+    border-radius: 10px;
+    background-color: rgb(15, 76, 117);
+}
+
+.btn_save_config{
+    border: 1px;
+    border-color: black;
+    border-style: solid;
+    padding: 10px;
+    margin-left: 20px;
+    color: white;
+    text-decoration: none;
+    border-radius: 10px;
+    background-color: rgb(104, 176, 82);
+}
+
+.btn_cancel_config{
+    border: 1px;
+    border-color: black;
+    border-style: solid;
+    padding: 10px;
+    margin-left: 20px;
+    color: white;
+    text-decoration: none;
+    border-radius: 10px;
+    background-color: rgb(147, 68, 68);
+}
+
+.buttons_config{
+    display: flex;
+    width: 100%;
+    align-content: end;
+}
+
+.input_config{
+    margin: 5px;
+    height: 2.5rem;
+    border-radius: 8px;
+}
+
+.box{
+    margin-left: 3rem;
+}
+
+.doc_number{
+    
+}
+
+@media only screen and (max-width: 600px) {
+    .container_config {
+        border: 2px;
+        border-style: solid;
+        border-color: black;
+        margin: 20px;
+    }
+  }
