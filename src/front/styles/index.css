@@ -80,6 +80,7 @@ li {
   font-family: 'Roboto', sans-serif;
   text-decoration: none;
   background-color: white;
+  padding: 2px;
 }
 
 .active {
