@@ -6,6 +6,7 @@ import { Context } from "../store/appContext";
 import ReactModal from 'react-modal'
 import { useNavigate } from "react-router-dom";
 import { Login } from "../pages/login";
+import { switchLight } from "./switchLight";
 
 
 
@@ -24,9 +25,9 @@ export const Navbar = () => {
   }
 
 
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [light, setLight] = useState(true)
   const navigate = useNavigate();
   const handleEmailChange = e => {
       setEmail(e.target.value);
@@ -50,10 +51,22 @@ export const Navbar = () => {
     store.token=""
   }
 
-const showLightSwitch = () => {
-  light == true
-  window.innerWidth < 768 ? setLight(false) : ""
-}
+  const showSwitch = () => {
+    return (
+      <div className="switch ms-4 mt-2">
+                <label className="mode me-2 switch">{theme === "light" ? <i className="fa-regular fa-lightbulb"></i> : <i className="fa-solid fa-lightbulb"></i>}</label>
+                <ReactSwitch
+                  onChange={toggleTheme}
+                  checked={theme === "dark"}
+                  className="switch"
+                  checkedIcon={null}
+                  uncheckedIcon={null}
+                  onColor="#200000"
+                />
+              </div>
+    )
+  }
+
 
 
 
@@ -174,34 +187,14 @@ const showLightSwitch = () => {
               </ul>
 
               {window.innerWidth < 768 ?           
-                <div className="switch ms-4 mt-2">
-                <label className="mode me-2 switch">{theme === "light" ? <i className="fa-regular fa-lightbulb"></i> : <i className="fa-solid fa-lightbulb"></i>}</label>
-                <ReactSwitch
-                  onChange={toggleTheme}
-                  checked={theme === "dark"}
-                  className="switch"
-                  checkedIcon={null}
-                  uncheckedIcon={null}
-                  onColor="#200000"
-                />
-              </div>
+                <switchLight />
               : ""}   
 
               
             </div>
           </div>
           {window.innerWidth >= 768 ?           
-          <div className="switch ms-4 mt-2">
-            <label className="mode me-2 switch">{theme === "light" ? <i className="fa-regular fa-lightbulb"></i> : <i className="fa-solid fa-lightbulb"></i>}</label>
-            <ReactSwitch
-              onChange={toggleTheme}
-              checked={theme === "dark"}
-              className="switch"
-              checkedIcon={null}
-              uncheckedIcon={null}
-              onColor="#200000"
-            />
-          </div>
+          <switchLight />
           : ""}   
         </div>
       </div>
