@@ -1,0 +1,48 @@
+.upload-container {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .upload-box {
+    background-color: white;
+    width: 80rem;
+    height: 44rem;
+    display: flex;
+    justify-content: space-evenly;
+  }
+  
+  .upload-title {
+    margin-top: 1rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .innerselect {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2.5rem;
+  }
+
+
+  
+  select,
+  input {
+    height: 3.5rem;
+    width: 20rem;
+    border-radius: .5rem;
+  }
+  
+  #select-left {
+    margin-right: 30rem;
+  }
+  
+  .input-left {
+    margin-right: 30rem !important;
+    background-color: white;
+  }
+  
+  .select-middle {
+
+  }
+  

@@ -18,6 +18,7 @@ import ReactSwitch from "react-switch";
 
 
 import { createContext } from "react";
+import { UploadProduct } from "./pages/uploadproduct";
 export const ThemeContext = React.createContext(null)
 
 //create your first component
@@ -46,6 +47,7 @@ const Layout = () => {
                                 <Route element={<Demo />} path="/demo" />
                                 <Route element={<Login />} path="/login" />
                                 <Route element={<Signup />} path="/signup" />
+                                <Route element={<UploadProduct />} path="/upload-product" />
                                 <Route element={<Configuration />} path="/configuration" />
                                 <Route element={<Single />} path="/single/:theid" />
                                 <Route element={<h1>Not found!</h1>} />
