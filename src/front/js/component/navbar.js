@@ -99,9 +99,9 @@ export const Navbar = () => {
     <nav className="navbar navbar-expand-lg bg-body-tertiary">
       <div className="container-fluid mx-3">
         <div>
-          <a className="navbar-brand tittle-nav" id="tittle-nav" href="/">
+          <Link className="navbar-brand tittle-nav" id="tittle-nav" href="/">
             WhataCar
-          </a>
+          </Link>
         </div>
 
         <div className="justify-content-end d-flex">
@@ -146,18 +146,18 @@ export const Navbar = () => {
                       )}
                     </li>
 
-                    <li className="nav-item dropdown">
+                    <li className="nav-item dropdown me-3">
                       <Link className="nav-link dropdown-toggle justify-content-end d-flex " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" to="profile">
                         <i className="fa-regular fa-user"></i>
                       </Link>
-                      <ul className="dropdown-menu text-aligment-end">
-                        <li><a className="dropdown-item justify-content-end d-flex " href="/profile">Mi perfil</a></li>
-                        <li><a className="dropdown-item justify-content-end d-flex " href="/configuration">Configuración</a></li>
-                        <li><a className="dropdown-item justify-content-end d-flex " href="favorites">Favoritos</a></li>
+                      <ul className="dropdown-menu ">
+                        <li><Link className="dropdown-item justify-content-end d-flex " href="/profile">Mi perfil</Link></li>
+                        <li><Link className="dropdown-item justify-content-end d-flex " href="/configuration">Configuración</Link></li>
+                        <li><Link className="dropdown-item justify-content-end d-flex " href="favorites">Favoritos</Link></li>
                         <li><hr className="dropdown-divider" /></li>
                         <li>
-                          <a className="dropdown-item justify-content-end d-flex " href="/" style={{"color": "red"}}
-                        onClick={handleLogOut}>Salir</a></li>
+                          <Link className="dropdown-item justify-content-end d-flex " href="/" style={{"color": "red"}}
+                        onClick={handleLogOut}>Salir</Link></li>
                       </ul>
                     </li>
                   </>
@@ -167,7 +167,7 @@ export const Navbar = () => {
               </ul>
             </div>
           </div>
-
+          {}              
           <div className="switch ms-4 mt-2">
             <label className="mode me-2 switch">{theme === "light" ? <i className="fa-regular fa-lightbulb"></i> : <i className="fa-solid fa-lightbulb"></i>}</label>
             <ReactSwitch
