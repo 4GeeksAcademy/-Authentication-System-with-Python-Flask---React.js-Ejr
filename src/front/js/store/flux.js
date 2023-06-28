@@ -43,6 +43,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			  }, 
 
+			  getFavorites: () => {
+				
+
+			  },
+
 			//   login: async (email, password) => {
             //     const store = getStore()
             //     const opts = {

@@ -44,6 +44,11 @@ export const Navbar = () => {
       }
   };
 
+  const handleLogOut = () =>{
+    localStorage.removeItem("token")
+    store.token=""
+  }
+
 
   const showModal = () => {
     return (
@@ -107,7 +112,7 @@ export const Navbar = () => {
 
             <div className="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
               <ul className="navbar-nav ml-auto align-items-end">
-                {!token ? (
+                {token ? (
                   <>
                     <li className="nav-item">
                       <Link className="nav-link active" style={{ color: "rgb(15, 76, 117)" }} aria-current="page" to="/signup">Registro</Link>
@@ -118,38 +123,47 @@ export const Navbar = () => {
                   </>
                 ) : (
                   <>
-                    <li className="nav-item dropdown">
-                      <a className="nav-link dropdown-toggle" id="heart" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <li className="nav-item ">
+                      <Link  className="nav-link active me-3" id="heart" href="#" role="button"  aria-expanded="page" to="/profile">
                         <i className="fa-regular fa-heart"></i>
-                      </a>
-                      <ul className="dropdown-menu">
-                        <li><a className="dropdown-item" href="#">Coche favorito 1</a></li>
-                        <li><a className="dropdown-item" href="#">Coche favorito 2</a></li>
-                        <li><a className="dropdown-item" href="#">Coche favorito 3</a></li>
-                      </ul>
+                      </Link>
                     </li>
+
                     <li className="nav-item">
-                      <Link className="nav-link active" style={{ color: "rgb(15, 76, 117)" }} aria-current="page" to="/profile">Mi perfil</Link>
+                      {!token ? (
+                        <button
+                          className="nav-link btn-plus mb-2 me-3"
+                          onClick={openModal}
+                        >
+                          <i className="fa-solid fa-plus"></i>
+                        </button>
+                      ) : (
+                        <Link to="/products">
+                          <button className="nav-link btn-plus mb-2">
+                            <i className="fa-solid fa-plus"></i>
+                          </button>
+                        </Link>
+                      )}
+                    </li>
+
+                    <li className="nav-item dropdown">
+                      <Link className="nav-link dropdown-toggle justify-content-end d-flex " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" to="profile">
+                        <i className="fa-regular fa-user"></i>
+                      </Link>
+                      <ul className="dropdown-menu text-aligment-end">
+                        <li><a className="dropdown-item justify-content-end d-flex " href="/profile">Mi perfil</a></li>
+                        <li><a className="dropdown-item justify-content-end d-flex " href="/configuration">Configuración</a></li>
+                        <li><a className="dropdown-item justify-content-end d-flex " href="favorites">Favoritos</a></li>
+                        <li><hr className="dropdown-divider" /></li>
+                        <li>
+                          <a className="dropdown-item justify-content-end d-flex " href="/" style={{"color": "red"}}
+                        onClick={handleLogOut}>Salir</a></li>
+                      </ul>
                     </li>
                   </>
                 )}
 
-                <li className="nav-item">
-                  {!token ? (
-                    <button
-                      className="nav-link btn-plus mb-2"
-                      onClick={openModal}
-                    >
-                      <i className="fa-solid fa-plus"></i>
-                    </button>
-                  ) : (
-                    <Link to="/products">
-                      <button className="nav-link btn-plus mb-2">
-                        <i className="fa-solid fa-plus"></i>
-                      </button>
-                    </Link>
-                  )}
-                </li>
+                
               </ul>
             </div>
           </div>
