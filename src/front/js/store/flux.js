@@ -1,3 +1,4 @@
+const apiUrl=process.env.BACKEND_URL
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
@@ -24,7 +25,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			getMessage: async () => {
 				try{
 					// fetching data from the backend
-					const resp = await fetch(process.env.BACKEND_URL + "/api/hello")
+					const resp = await fetch(process.env.BACKEND_URL + "/hello")
 					const data = await resp.json()
 					setStore({ message: data.message })
 					// don't forget to return something, that is how the async resolves
@@ -46,6 +47,18 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				//reset the global store
 				setStore({ demo: demo });
+			},
+			apiFetch: async (endpoint, method = "GET", body = {}) => {
+				let resp = await fetch(apiUrl + endpoint, method == "GET" ? undefined : {
+					method,
+					body
+				})
+				if (!resp.ok) {
+					console.error(`${resp.status}: ${resp.statusText}`)
+					return { code: resp.status, error: `${resp.status}; ${resp.statusText}`}
+				}
+				let data = await resp.json()
+				return { code: resp.status, data}
 			}
 		}
 	};
