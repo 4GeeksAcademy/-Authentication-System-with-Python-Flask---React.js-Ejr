@@ -26,6 +26,7 @@ export const Navbar = () => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [light, setLight] = useState(true)
   const navigate = useNavigate();
   const handleEmailChange = e => {
       setEmail(e.target.value);
@@ -48,6 +49,13 @@ export const Navbar = () => {
     localStorage.removeItem("token")
     store.token=""
   }
+
+const showLightSwitch = () => {
+  light == true
+  window.innerWidth < 768 ? setLight(false) : ""
+}
+
+
 
 
   const showModal = () => {
@@ -90,6 +98,7 @@ export const Navbar = () => {
     );
   };
   
+  
 
 
 
@@ -99,9 +108,9 @@ export const Navbar = () => {
     <nav className="navbar navbar-expand-lg bg-body-tertiary">
       <div className="container-fluid mx-3">
         <div>
-          <Link className="navbar-brand tittle-nav" id="tittle-nav" href="/">
+          <a className="navbar-brand tittle-nav" id="tittle-nav" href="/">
             WhataCar
-          </Link>
+          </a>
         </div>
 
         <div className="justify-content-end d-flex">
@@ -151,23 +160,37 @@ export const Navbar = () => {
                         <i className="fa-regular fa-user"></i>
                       </Link>
                       <ul className="dropdown-menu ">
-                        <li><Link className="dropdown-item justify-content-end d-flex " href="/profile">Mi perfil</Link></li>
-                        <li><Link className="dropdown-item justify-content-end d-flex " href="/configuration">Configuración</Link></li>
-                        <li><Link className="dropdown-item justify-content-end d-flex " href="favorites">Favoritos</Link></li>
+                        <li><a className="dropdown-item justify-content-end d-flex " href="/profile">Mi perfil</a></li>
+                        <li><a className="dropdown-item justify-content-end d-flex " href="/configuration">Configuración</a></li>
+                        <li><a className="dropdown-item justify-content-end d-flex " href="favorites">Favoritos</a></li>
                         <li><hr className="dropdown-divider" /></li>
                         <li>
-                          <Link className="dropdown-item justify-content-end d-flex " href="/" style={{"color": "red"}}
-                        onClick={handleLogOut}>Salir</Link></li>
+                          <a className="dropdown-item justify-content-end d-flex " href="/" style={{"color": "red"}}
+                        onClick={handleLogOut}>Salir</a></li>
                       </ul>
                     </li>
                   </>
                 )}
-
-                
               </ul>
+
+              {window.innerWidth < 768 ?           
+                <div className="switch ms-4 mt-2">
+                <label className="mode me-2 switch">{theme === "light" ? <i className="fa-regular fa-lightbulb"></i> : <i className="fa-solid fa-lightbulb"></i>}</label>
+                <ReactSwitch
+                  onChange={toggleTheme}
+                  checked={theme === "dark"}
+                  className="switch"
+                  checkedIcon={null}
+                  uncheckedIcon={null}
+                  onColor="#200000"
+                />
+              </div>
+              : ""}   
+
+              
             </div>
           </div>
-          {}              
+          {window.innerWidth >= 768 ?           
           <div className="switch ms-4 mt-2">
             <label className="mode me-2 switch">{theme === "light" ? <i className="fa-regular fa-lightbulb"></i> : <i className="fa-solid fa-lightbulb"></i>}</label>
             <ReactSwitch
@@ -179,6 +202,7 @@ export const Navbar = () => {
               onColor="#200000"
             />
           </div>
+          : ""}   
         </div>
       </div>
       {modalIsOpen && showModal()}
