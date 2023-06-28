@@ -4,6 +4,9 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, User
 from api.utils import generate_sitemap, APIException
+
+import pandas as pd
+
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from flask_jwt_extended import create_access_token
@@ -12,6 +15,7 @@ from flask_jwt_extended import jwt_required
 from flask_jwt_extended import JWTManager
 
 app = Flask(__name__)
+
 
 
 api = Blueprint('api', __name__)
@@ -25,6 +29,33 @@ def handle_hello():
     }
 
     return jsonify(response_body), 200
+
+
+
+@api.route('car-brands', methods=['GET'])
+def get_car_brands():
+    cars_data = pd.read_csv('/workspaces/Watacar_v2/src/api/brands-and-models/cars-2020.csv')
+    brands = cars_data['make'].unique().tolist()
+    return jsonify(brands)
+
+@api.route('car-models', methods=['GET'])
+def get_car_models():
+    cars_data = pd.read_csv('/workspaces/Watacar_v2/src/api/brands-and-models/cars-2020.csv')
+    models = cars_data['model'].unique().tolist()
+    return jsonify(models)
+
+
+@api.route('moto-brands', methods=['GET'])
+def get_moto_brands():
+    moto_data = pd.read_csv('/workspaces/Watacar_v2/src/api/brands-and-models/motorcycles-2020.csv')
+    brands = moto_data['Make'].unique().tolist()
+    return jsonify(brands)
+
+@api.route('moto-models', methods=['GET'])
+def get_moto_models():
+    moto_data = pd.read_csv('/workspaces/Watacar_v2/src/api/brands-and-models/motorcycles-2020.csv')
+    models = moto_data['Model'].unique().tolist()
+    return jsonify(models)
 
 @api.route('/configuration', methods=['GET'])
 @jwt_required()
@@ -111,3 +142,4 @@ def signup():
     db.session.commit()
 
     return jsonify({"message" : "Signed up successfully!"}), 200
+
