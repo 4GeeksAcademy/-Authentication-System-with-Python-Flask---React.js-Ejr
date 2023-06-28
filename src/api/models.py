@@ -11,7 +11,7 @@ cars_data = pd.read_csv('/workspaces/Watacar_v2/src/api/brands-and-models/cars-2
 
 #print(cars_data.head())
 
-print(cars_data[1])
+
 
 db = SQLAlchemy()
 
