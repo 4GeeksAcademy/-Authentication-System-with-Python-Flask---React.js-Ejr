@@ -4,15 +4,19 @@ body {
     color: #ffffff;
     text-rendering: optimizeLegibility;
     font-weight: initial;
-}
-
-.dark {
     background: #110f16;
+
+
 }
 
-.light {
+/* .dark {
+    background: #110f16;
+    padding: 0;
+} */
+
+/* .light {
     background: #f3f5f7;
-}
+} */
 
 a,
 a:hover {
@@ -30,14 +34,15 @@ a:hover {
 /* Cards */
 .postcard {
     flex-wrap: wrap;
-    display: flex;
+    display: inline-flex;
     box-shadow: 0 4px 21px -12px rgba(0, 0, 0, 0.66);
     border-radius: 10px;
     margin: 0 0 2rem 0;
     overflow: hidden;
-    position: relative;
+    position:relative;
     color: #ffffff;
     margin-bottom: 2rem;
+
 }
 
 .postcard.dark {
@@ -317,4 +322,7 @@ a:hover {
     max-width: 600px;
     margin-left: auto;
     margin-right: auto;
+    padding: 0;
 }
+
+

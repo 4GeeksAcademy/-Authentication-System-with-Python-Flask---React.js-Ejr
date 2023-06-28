@@ -1,9 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import "../../styles/navbar.css";
 
 export function Navbar() {
-	return (
-		<nav class="navbar navbar-dark bg-dark fixed-top">
+  return (
+    <nav class="navbar navbar-dark bg-dark fixed-top">
       <div class="container-fluid">
         <a class="navbar-brand" href="#">Sports Spot</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar">
@@ -30,19 +31,19 @@ export function Navbar() {
                   <li><a class="dropdown-item" href="#">Deporte</a></li>
                   <li><a class="dropdown-item" href="#">Ubicación</a></li>
                   <li>
-                    <hr class="dropdown-divider"/>
+                    <hr class="dropdown-divider" />
                   </li>
                   <li><a class="dropdown-item" href="#">Arrienda tu cancha</a></li>
                 </ul>
               </li>
             </ul>
             <form class="d-flex mt-3" role="search">
-              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
+              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
               <button class="btn btn-success" type="submit">Search</button>
             </form>
           </div>
         </div>
       </div>
     </nav>
-	) 
-  }
+  )
+}
