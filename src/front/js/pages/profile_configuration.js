@@ -1,10 +1,11 @@
-import { useState } from "react";
+import React from "react";
 import { Context } from "../store/appContext";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
+import { Profile_navbar } from "../component/profile_navbar";
 import "/workspaces/Watacar_v2/src/front/styles/profile.css"
 
 export const Profile_configuration = () => {
     return (
-        <h1>Información del usuario</h1>
+        <Profile_navbar />
     )
 }
