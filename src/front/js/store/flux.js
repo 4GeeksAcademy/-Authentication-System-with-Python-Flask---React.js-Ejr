@@ -14,6 +14,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 					initial: "white"
 				}
 			],
+
+			
 			users: [],
             token: ""
 		},
@@ -42,6 +44,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 				  console.error(error);
 				}
 			  }, 
+
+
 
 			//   login: async (email, password) => {
             //     const store = getStore()
