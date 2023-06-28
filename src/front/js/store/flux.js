@@ -99,7 +99,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({ demo: demo });
 			},
 			getUser: () => {
-				fetch(process.env.BACKEND_URL + `api/configuration`)
+				const store = getStore();
+				fetch(process.env.BACKEND_URL + `api/configuration`, {
+					method: "GET",
+					headers: {
+						"Content-Type": "application/json",
+						"Authorization": `Bearer ${localStorage.getItem("token")}`
+					}
+				})
 				.then (response => response.json())
 				.then ((response) => {
 					setStore({user: response.data});

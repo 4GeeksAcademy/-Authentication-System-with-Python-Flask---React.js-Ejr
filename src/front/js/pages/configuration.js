@@ -9,7 +9,7 @@ export const Configuration = () => {
     const [data, setData] = useState([])
 
     useEffect (() => {
-        actions.getUser(params.id)
+        actions.getUser()
     }, [])
 
 const handleChange = (e) => {
@@ -32,13 +32,12 @@ const handleSubmit = (event) => {
         }),
         headers: {
             'Content-Type': 'application/json',
-
+            "Authorization": `Bearer ${localStorage.getItem("token")}`
         }
     }
     fetch(process.env.BACKEND_URL + `api/configuration`, putConfig )
     .then((response) => response.json())
     .then((response) => {
-        console.log(data)
         setData({ ...data, response});
     })
     .catch((error) => {
