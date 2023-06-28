@@ -6,12 +6,12 @@ import { Context } from "../store/appContext";
 import ReactModal from 'react-modal'
 import { useNavigate } from "react-router-dom";
 import { Login } from "../pages/login";
-import { switchLight } from "./switchLight";
+import { SwitchLight } from "./switchLight";
 
 
 
 export const Navbar = () => {
-  const { theme, toggleTheme } = useContext(ThemeContext);
+
   const { store, actions, token } = useContext(Context);
 
   const [modalIsOpen, setIsOpen] = useState(false);
@@ -51,25 +51,7 @@ export const Navbar = () => {
     store.token=""
   }
 
-  const showSwitch = () => {
-    return (
-      <div className="switch ms-4 mt-2">
-                <label className="mode me-2 switch">{theme === "light" ? <i className="fa-regular fa-lightbulb"></i> : <i className="fa-solid fa-lightbulb"></i>}</label>
-                <ReactSwitch
-                  onChange={toggleTheme}
-                  checked={theme === "dark"}
-                  className="switch"
-                  checkedIcon={null}
-                  uncheckedIcon={null}
-                  onColor="#200000"
-                />
-              </div>
-    )
-  }
-
-
-
-
+ 
 
   const showModal = () => {
     return (
@@ -187,15 +169,15 @@ export const Navbar = () => {
               </ul>
 
               {window.innerWidth < 768 ?           
-                <switchLight />
-              : ""}   
+                <SwitchLight />
+              : null}   
 
               
             </div>
           </div>
           {window.innerWidth >= 768 ?           
-          <switchLight />
-          : ""}   
+          <SwitchLight />
+          : null}   
         </div>
       </div>
       {modalIsOpen && showModal()}
