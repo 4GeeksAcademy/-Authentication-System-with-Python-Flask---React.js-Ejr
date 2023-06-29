@@ -87,16 +87,17 @@ li {
 
 .fa-plus {
   font-size: small;
-  margin-left: 5px;
+  margin-left: 4px;
 }
 
 
 
   
   #heart {
-    margin: 0 auto;
+
+    margin-bottom: -5px;
     color: rgb(36, 144, 215);
-    font-size: larger;
+    font-size: x-large;
     
   }
   
@@ -109,3 +110,8 @@ li {
   }
   
   
+#iconProfile {
+  margin-bottom: 4px;
+  font-size: larger;
+
+}

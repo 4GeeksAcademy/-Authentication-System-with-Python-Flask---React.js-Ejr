@@ -8,13 +8,10 @@ import { useNavigate } from "react-router-dom";
 import { Login } from "../pages/login";
 import { SwitchLight } from "./switchLight";
 
-
-
 export const Navbar = () => {
-
   const { store, actions, token } = useContext(Context);
-
   const [modalIsOpen, setIsOpen] = useState(false);
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
 
   const openModal = () => {
     setIsOpen(true);
@@ -24,34 +21,54 @@ export const Navbar = () => {
     setIsOpen(false);
   }
 
-
-
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const navigate = useNavigate();
-  const handleEmailChange = e => {
-      setEmail(e.target.value);
-  };
-  const handlePasswordChange = e => {
-      setPassword(e.target.value);
-  };
-  const handleSubmit = async e => {
-      e.preventDefault();
-      try {
-          await actions.login(email, password);
-         navigate("/");
-      } catch (error) {
-          console.log(error);
-          navigate("/notfound");
-      }
-  };
-
-  const handleLogOut = () =>{
+  const handleLogOut = () => {
     localStorage.removeItem("token")
-    store.token=""
+    store.token = ""
   }
 
- 
+  const handleEmailChange = e => {
+    setEmail(e.target.value);
+  };
+
+  const handlePasswordChange = e => {
+    setPassword(e.target.value);
+  };
+
+  const handleSubmit = async e => {
+    e.preventDefault();
+    try {
+      await actions.login(email, password);
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+      navigate("/notfound");
+    }
+  };
+
+  useEffect(() => {
+    const checkScreenWidth = () => {
+      setIsSmallScreen(window.innerWidth < 993);
+    };
+
+    checkScreenWidth();
+    window.addEventListener("resize", checkScreenWidth);
+
+    return () => {
+      window.removeEventListener("resize", checkScreenWidth);
+    };
+  }, []);
+
+  const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const showSwitchBigScreen = () => {
+    return window.innerWidth >= 993 && <SwitchLight />;
+  }
+
+  const showSwitchMobile = () => {
+    return isSmallScreen && <SwitchLight />;
+  }
 
   const showModal = () => {
     return (
@@ -64,9 +81,9 @@ export const Navbar = () => {
               left: 0,
               right: 0,
               bottom: 0,
-              backgroundColor: 'rgba(170, 190, 214, 0.75)', // Color de fondo del overlay
-              backdropFilter: 'blur(8px) saturate(180%)', // Efecto de desenfoque
-              WebkitBackdropFilter: 'blur(16px) saturate(180%)', // Prefijo para navegadores basados en WebKit
+              backgroundColor: 'rgba(170, 190, 214, 0.75)',
+              backdropFilter: 'blur(8px) saturate(180%)',
+              WebkitBackdropFilter: 'blur(16px) saturate(180%)',
             },
             content: {
               position: 'absolute',
@@ -74,9 +91,9 @@ export const Navbar = () => {
               left: '40px',
               right: '40px',
               bottom: '40px',
-              border: '1px solid rgba(209, 213, 219, 0.3)', 
-              backgroundColor: 'rgba(255, 255, 255, 0.75)', 
-              borderRadius: '12px', 
+              border: '1px solid rgba(209, 213, 219, 0.3)',
+              backgroundColor: 'rgba(255, 255, 255, 0.75)',
+              borderRadius: '12px',
               outline: 'none',
               padding: '20px',
               overflow: 'auto',
@@ -92,12 +109,6 @@ export const Navbar = () => {
       </div>
     );
   };
-  
-  
-
-
-
-
 
   return (
     <nav className="navbar navbar-expand-lg bg-body-tertiary">
@@ -110,25 +121,58 @@ export const Navbar = () => {
 
         <div className="justify-content-end d-flex">
           <div>
-            <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <button
+              className="navbar-toggler"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#navbarNavDropdown"
+              aria-controls="navbarNavDropdown"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
               <span className="navbar-toggler-icon"></span>
             </button>
 
-            <div className="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
+            <div
+              className="collapse navbar-collapse justify-content-end"
+              id="navbarNavDropdown"
+            >
               <ul className="navbar-nav ml-auto align-items-end">
-                {token ? (
+                {!token ? (
                   <>
                     <li className="nav-item">
-                      <Link className="nav-link active" style={{ color: "rgb(15, 76, 117)" }} aria-current="page" to="/signup">Registro</Link>
+                      <Link
+                        className="nav-link active me-3"
+                        style={{ color: "rgb(15, 76, 117)" }}
+                        aria-current="page"
+                        to="/signup"
+                      >
+                        Registro
+                      </Link>
                     </li>
                     <li className="nav-item">
-                      <Link className="nav-link active" style={{ color: "rgb(15, 76, 117)" }} aria-current="page" to="/login">Accede</Link>
+                      <Link
+                        className="nav-link active me-3"
+                        style={{ color: "rgb(15, 76, 117)" }}
+                        aria-current="page"
+                        to="/login"
+                      >
+                        Accede
+                      </Link>
                     </li>
+                    {showSwitchMobile()}
                   </>
                 ) : (
                   <>
                     <li className="nav-item ">
-                      <Link  className="nav-link active me-3" id="heart" href="#" role="button"  aria-expanded="page" to="/profile">
+                      <Link
+                        className="nav-link active me-3"
+                        id="heart"
+                        href="#"
+                        role="button"
+                        aria-expanded="page"
+                        to="/profile"
+                      >
                         <i className="fa-regular fa-heart"></i>
                       </Link>
                     </li>
@@ -149,35 +193,65 @@ export const Navbar = () => {
                         </Link>
                       )}
                     </li>
-
+                    {showSwitchMobile()}
                     <li className="nav-item dropdown me-3">
-                      <Link className="nav-link dropdown-toggle justify-content-end d-flex " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" to="profile">
-                        <i className="fa-regular fa-user"></i>
+                      <Link
+                        className="nav-link dropdown-toggle justify-content-end d-flex "
+                        href="#"
+                        role="button"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                        to="profile"
+                      >
+                        <i className="fa-regular fa-user" id="iconProfile"></i>
                       </Link>
                       <ul className="dropdown-menu ">
-                        <li><a className="dropdown-item justify-content-end d-flex " href="/profile">Mi perfil</a></li>
-                        <li><a className="dropdown-item justify-content-end d-flex " href="/configuration">Configuración</a></li>
-                        <li><a className="dropdown-item justify-content-end d-flex " href="favorites">Favoritos</a></li>
-                        <li><hr className="dropdown-divider" /></li>
                         <li>
-                          <a className="dropdown-item justify-content-end d-flex " href="/" style={{"color": "red"}}
-                        onClick={handleLogOut}>Salir</a></li>
+                          <a
+                            className="dropdown-item justify-content-end d-flex "
+                            href="/profile"
+                          >
+                            Mi perfil
+                          </a>
+                        </li>
+                        <li>
+                          <a
+                            className="dropdown-item justify-content-end d-flex "
+                            href="/configuration"
+                          >
+                            Configuración
+                          </a>
+                        </li>
+                        <li>
+                          <a
+                            className="dropdown-item justify-content-end d-flex "
+                            href="favorites"
+                          >
+                            Favoritos
+                          </a>
+                        </li>
+                        <li>
+                          <hr className="dropdown-divider" />
+                        </li>
+                        <li>
+                          <a
+                            className="dropdown-item justify-content-end d-flex "
+                            href="/"
+                            style={{ color: "red" }}
+                            onClick={handleLogOut}
+                          >
+                            Salir
+                          </a>
+                        </li>
                       </ul>
                     </li>
                   </>
                 )}
               </ul>
-
-              {window.innerWidth < 768 ?           
-                <SwitchLight />
-              : null}   
-
               
             </div>
           </div>
-          {window.innerWidth >= 768 ?           
-          <SwitchLight />
-          : null}   
+          {showSwitchBigScreen()}
         </div>
       </div>
       {modalIsOpen && showModal()}
