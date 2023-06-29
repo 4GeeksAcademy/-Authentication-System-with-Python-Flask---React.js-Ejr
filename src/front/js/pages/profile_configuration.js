@@ -10,12 +10,12 @@ export const Profile_configuration = () => {
     useEffect (() => {
         actions.getUser()
     }, [])
-    return (
+    return store.user ? (
         <>
             <Profile_navbar />
             <div className="container">
-                <h2>{store.users.full_name}</h2>
+                <h2>{store.user.full_name}</h2>
             </div>
         </>
-    )
+    ): "cargando...";
 }
