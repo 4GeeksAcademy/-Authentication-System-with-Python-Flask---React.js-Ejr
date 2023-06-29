@@ -94,3 +94,17 @@ class DetalleDePedidos(db.Model):
             "pedido_id": self.pedido_id,
             "platos_id": self.platos_id
         }
+   
+class TokenBlockedList(db.Model):
+    __tablename__="token_blocked_list"
+    id = db.Column(db.Integer, primary_key=True)
+    jti = db.Column(db.String(40),nullable=False)
+
+    def __repr__(self):
+        return f'<TokenBlockedList {self.id}>'
+    
+    def serialize(self):
+        return {
+            "id": self.id,
+            "jti": self.jti
+        }
