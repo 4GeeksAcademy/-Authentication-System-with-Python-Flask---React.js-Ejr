@@ -72,7 +72,7 @@ li {
 }
 
 .navbar_profile{
-  border-color: #0F4C75;
+  border-color: #125c8e;
   border-style: solid;
   border-radius: 10px;
   margin-right: 2rem;
@@ -81,9 +81,22 @@ li {
   text-decoration: none;
   background-color: white;
   padding: 2px;
+  color: black;
+}
+
+.navbar_profile:hover {
+  color: rgb(122, 122, 122);
 }
 
 .active {
-  background-color: #0F4C75; 
-  color: #ffffff; 
+  background-color: #125c8e; 
+  color: #ffffff;
+}
+
+.profile_navbar_text{
+  margin-bottom: 1.5rem;
+}
+
+@media only screen and (max-width: 600px) {
+  
 }
