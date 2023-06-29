@@ -89,7 +89,7 @@ li {
 }
 
 .active {
-  background-color: #125c8e; 
+  background-color: #2776ab; 
   color: #ffffff;
 }
 
@@ -98,5 +98,10 @@ li {
 }
 
 @media only screen and (max-width: 600px) {
-  
+  .navbar_profile{
+    font-size: medium;
+    width: 7rem;
+    margin-left: 2.7rem;
+    margin-bottom: 1rem;
+  }
 }

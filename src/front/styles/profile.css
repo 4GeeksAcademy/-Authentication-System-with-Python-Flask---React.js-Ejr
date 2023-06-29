@@ -15,11 +15,11 @@
 }
 
 .label{
-    background-color: #125c8e;
+    background-color: #2776ab;
     color: white;
     border-style: solid;
     border-color: #125c8e;
-    border-radius: 15px;
+    border-radius: 12px;
     align-items: center;
     display: flex
 }
@@ -30,7 +30,7 @@
 
 .edit_profile{
     background-color: #125c8e;
-    border-radius: 15px;
+    border-radius: 12px;
     text-decoration: none;
     color: rgb(255, 253, 253);
     width: 6rem;
@@ -68,18 +68,19 @@
 @media only screen and (max-width: 600px) {
     .container_profile{
         margin: 1rem;
+        padding-top: 3.5rem;
     }
 
     .avatar_container {
         position: absolute;
-        top: 18rem;
+        top: 23rem;
         right: 2rem;
         margin: 10px;
     }
     
     .avatar_image {
-        width: 100px; 
-        height: 100px; 
+        width: 60px; 
+        height: 60px; 
         border-radius: 50%; 
         object-fit: cover;
         border: #125c8e;
@@ -87,7 +88,7 @@
     }
 
     .profile_info{
-        margin-top: 6rem;
+        margin-top: 0;
     }
 
     .label{
@@ -95,15 +96,15 @@
         height: 1.6rem;
         font-size: medium;
         border-radius: 8px;
-        background-color: white;
+        background-color:#2776ab;
         border-color: #125c8e;
         border-style: solid;
-        color: black;
+        color: rgb(255, 255, 255);
     }
 
     .user_data{
         font-size: medium;
-        margin-left: 1rem;
+        margin-left: 0;
         margin-top: 0.5rem;
     }
 
