@@ -14,7 +14,6 @@ export const Signup = () => {
 
   const handleSubmit = (ev) => {
     ev.preventDefault();
-    //console.log(data);
 
     const config = {
       method: "POST",
@@ -27,7 +26,6 @@ export const Signup = () => {
     fetch(process.env.BACKEND_URL + 'api/signup', config)
     .then((resp) => resp.json())
     .then((resp) => {
-      console.log(resp)
       navigate('/login');
     })
     .catch((error) => {
@@ -47,8 +45,8 @@ export const Signup = () => {
             <div className="row">
               <div className="col-6">
                 <div className="input-box">
-                  <label htmlFor="nameandsur">Nombre y apellidos</label>
-                  <input type="text" placeholder="Ramon Gutierrez" name="nameandsur" onChange={handleChange}/>
+                  <label htmlFor="full_name">Nombre y apellidos</label>
+                  <input type="text" placeholder="Ramon Gutierrez" name="full_name" onChange={handleChange}/>
                 </div>
               </div>
 
@@ -84,8 +82,7 @@ export const Signup = () => {
                 <div className="labelbox">
                   <label htmlFor="role">Rol:</label>
                   <select id="role" name="role" onChange={handleChange}>
-                    <option value="BUYER">Particular(compra)</option>
-                    <option value="SELLER">Particular(venta)</option>
+                    <option value="COMMON_USER">Particular</option>
                     <option value="GARAGE">Taller</option>
                   </select>
                 </div>
@@ -103,8 +100,8 @@ export const Signup = () => {
             <div className="row">
               <div className="col-6">
                 <div className="labelbox">
-                  <label htmlFor="id_document">Tipo de documento:</label> 
-                  <select id="idDocument" name="id_document" onChange={handleChange}>
+                  <label htmlFor="document_type">Tipo de documento:</label> 
+                  <select id="idDocument" name="document_type" onChange={handleChange}>
                     <option value="DNI">DNI</option>
                     <option value="CIF">CIF</option>
                   </select>
@@ -113,8 +110,8 @@ export const Signup = () => {
 
               <div className="col-6">
                 <div className="input-box">
-                  <label htmlFor="id_number">Número de documento:</label>
-                  <input type="text" id="idNumber" placeholder="123412312H" name="id_number" onChange={handleChange} />
+                  <label htmlFor="document_number">Número de documento:</label>
+                  <input type="text" id="idNumber" placeholder="123412312H" name="document_number" onChange={handleChange} />
                 </div>
               </div>
             </div>

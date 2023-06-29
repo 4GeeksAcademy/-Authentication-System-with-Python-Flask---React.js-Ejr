@@ -3,6 +3,15 @@ from datetime import datetime
 from pytz import timezone
 spain_tz = timezone('Europe/Madrid')
 from enum import Enum
+import pandas as pd
+
+cars_data = pd.read_csv('/workspaces/Watacar_v2/src/api/brands-and-models/cars-2020.csv',
+                    header = None)
+
+
+#print(cars_data.head())
+
+
 
 db = SQLAlchemy()
 

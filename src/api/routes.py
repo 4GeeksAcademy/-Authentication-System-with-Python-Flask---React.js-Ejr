@@ -18,6 +18,7 @@ app = Flask(__name__)
 CORS(app)
 
 
+
 api = Blueprint('api', __name__)
 
 
@@ -30,11 +31,38 @@ def handle_hello():
 
     return jsonify(response_body), 200
 
+
+
+@api.route('car-brands', methods=['GET'])
+def get_car_brands():
+    cars_data = pd.read_csv('/workspaces/Watacar_v2/src/api/brands-and-models/cars-2020.csv')
+    brands = cars_data['make'].unique().tolist()
+    return jsonify(brands)
+
+@api.route('car-models', methods=['GET'])
+def get_car_models():
+    cars_data = pd.read_csv('/workspaces/Watacar_v2/src/api/brands-and-models/cars-2020.csv')
+    models = cars_data['model'].unique().tolist()
+    return jsonify(models)
+
+
+@api.route('moto-brands', methods=['GET'])
+def get_moto_brands():
+    moto_data = pd.read_csv('/workspaces/Watacar_v2/src/api/brands-and-models/motorcycles-2020.csv')
+    brands = moto_data['Make'].unique().tolist()
+    return jsonify(brands)
+
+@api.route('moto-models', methods=['GET'])
+def get_moto_models():
+    moto_data = pd.read_csv('/workspaces/Watacar_v2/src/api/brands-and-models/motorcycles-2020.csv')
+    models = moto_data['Model'].unique().tolist()
+    return jsonify(models)
+
 @api.route('/configuration', methods=['GET'])
 @jwt_required()
-def configuration(current_user):
+def configuration():
     current_user = get_jwt_identity()
-    user=User.query.filter_by(current_user).first()
+    user=User.query.filter_by(id=current_user).first()
     response_body = {
         "data": user.serialize()
     }
@@ -96,16 +124,16 @@ def login():
 @api.route('/signup', methods=['POST'])
 def signup():
     data = request.get_json()
-    nameandsur = data.get('nameandsur')
+    full_name = data.get('full_name')
     email = data.get('email')
     password = data.get('password')
-    id_document = data.get('id_document')
-    id_number = data.get('id_number')
+    document_type = data.get('document_type')
+    document_number = data.get('document_number')
     address = data.get('address')
     role = data.get('role')
     phone = data.get('phone')
 
-    register = User(nameandsur = nameandsur, email=email, password=password, id_document=id_document, id_number=id_number, address=address, role=role, phone=phone)
+    register = User(full_name = full_name, email=email, password=password, document_type=document_type, document_number=document_number, address=address, role=role, phone=phone)
     print(register)
 
     if register is None:
