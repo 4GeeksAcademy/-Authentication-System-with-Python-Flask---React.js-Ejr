@@ -15,11 +15,11 @@
 }
 
 .label{
-    background-color: #2776ab;
-    color: white;
+    background-color: #ffffff;
+    color: #125c8e;
     border-style: solid;
     border-color: #125c8e;
-    border-radius: 12px;
+    border-radius: 4px;
     align-items: center;
     display: flex
 }
@@ -77,13 +77,13 @@
     .avatar_container {
         position: absolute;
         top: 23rem;
-        right: 2rem;
+        right: 1rem;
         margin: 10px;
     }
     
     .avatar_image {
-        width: 60px; 
-        height: 60px; 
+        width: 80px; 
+        height: 80px; 
         border-radius: 50%; 
         object-fit: cover;
         border: #125c8e;
@@ -91,7 +91,7 @@
     }
 
     .profile_info{
-        margin-top: 0;
+        margin-top: 1.5rem;
     }
 
     .label{
@@ -99,7 +99,7 @@
         height: 1.6rem;
         font-size: medium;
         border-radius: 8px;
-        background-color:#2776ab;
+        background-color:#ffffff;
         border-color: #125c8e;
         border-style: solid;
         color: rgb(255, 255, 255);
@@ -113,8 +113,10 @@
 
     .edit_profile{
         margin-top: 2rem;
-        background-color: #125c8e;
-        color: white;
+        color: rgb(0, 0, 0);
+        background-color: #ffffff;
+        border-color: #125c8e;
+        border-style: solid;
     }
 
     .row_edit_profile {
