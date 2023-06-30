@@ -1,10 +1,19 @@
 """
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
-from flask import Flask, request, jsonify, url_for, Blueprint, render_template
+from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, User
 from api.utils import generate_sitemap, APIException
-from flask_jwt_extended import create_access_token, JWTManager, jwt_required, get_jwt_identity, create_access_token, jwt_required, get_jwt_identity
+
+import pandas as pd
+
+from flask_jwt_extended import create_access_token
+from flask_jwt_extended import jwt_required, get_jwt_identity
+from flask_jwt_extended import create_access_token
+from flask_jwt_extended import get_jwt_identity
+from flask_jwt_extended import jwt_required
+from flask_jwt_extended import JWTManager
+
 import cloudinary
 import cloudinary.uploader
 import os
@@ -12,10 +21,7 @@ from flask_cors import CORS, cross_origin
 from dotenv import load_dotenv
 load_dotenv()
 
-
-
 app = Flask(__name__)
-CORS(app)
 
 
 
@@ -58,11 +64,18 @@ def get_moto_models():
     models = moto_data['Model'].unique().tolist()
     return jsonify(models)
 
+
+
+
+
+
+
+
 @api.route('/configuration', methods=['GET'])
 @jwt_required()
-def configuration():
+def configuration(current_user):
     current_user = get_jwt_identity()
-    user=User.query.filter_by(id=current_user).first()
+    user=User.query.filter_by(current_user).first()
     response_body = {
         "data": user.serialize()
     }
@@ -160,3 +173,4 @@ def upload_file():
       upload_result = cloudinary.uploader.upload(file_to_upload)
       app.logger.info(upload_result)
       return jsonify(upload_result)
+
