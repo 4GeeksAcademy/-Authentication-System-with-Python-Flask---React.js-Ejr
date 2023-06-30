@@ -85,7 +85,8 @@ li {
 }
 
 .navbar_profile:hover {
-  color: rgb(122, 122, 122);
+  color: rgb(255, 255, 255);
+  background-color: #2776ab;
 }
 
 .active {

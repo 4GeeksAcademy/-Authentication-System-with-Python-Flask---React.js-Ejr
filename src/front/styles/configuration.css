@@ -1,66 +1,99 @@
 .container_config{
-    border: 2px;
-    border-style: solid;
-    border-color: black;
+    background-color: white;
     border-radius: 15px;
     margin: 20px;
     padding: 20px;
 }
 
-.btn_back_config{
-    border: 1px;
-    border-color: black;
-    border-style: solid;
-    padding: 10px;
-    margin-left: 20px;
-    color: white;
+.btn_config{
+    background-color: #125c8e;
+    border-radius: 12px;
     text-decoration: none;
-    border-radius: 10px;
-    background-color: rgb(15, 76, 117);
-}
-
-.btn_save_config{
-    border: 1px;
-    border-color: black;
-    border-style: solid;
-    padding: 10px;
-    margin-left: 20px;
-    color: white;
-    text-decoration: none;
-    border-radius: 10px;
-    background-color: rgb(104, 176, 82);
-}
-
-.btn_cancel_config{
-    border: 1px;
-    border-color: black;
-    border-style: solid;
-    padding: 10px;
-    margin-left: 20px;
-    color: white;
-    text-decoration: none;
-    border-radius: 10px;
-    background-color: rgb(147, 68, 68);
-}
-
-.buttons_config{
+    color: rgb(255, 253, 253);
+    width: 6rem;
+    height: 2rem;
     display: flex;
-    width: 100%;
-    align-content: end;
+    justify-content: center;
+    align-items: center;
+}
+
+.save_cancel_config{
+    display: flex;
+    justify-content: end;
+    margin-right: 3.5rem;
+    margin-top: 4rem;
+}
+
+.btn_config:hover {
+    color: rgb(122, 122, 122);
+}
+
+.cancel{
+    margin-left: 1rem;
+    background-color: white;
+    color: black;
+}
+
+.save{
+    margin-left: 1rem;
+}
+
+.cancel:hover{
+    background-color: #2776ab;
+    color: white;
+}
+
+.back{
+    margin-left: 2rem;
 }
 
 .input_config{
-    margin: 5px;
+    margin: 1rem;
     height: 2.5rem;
     border-radius: 8px;
+    border-color: #125c8e;
+    height: 2rem;
 }
 
-.box{
-    margin-left: 3rem;
+.label_config{
+    background-color: #2776ab;
+    color: white;
+    border-style: solid;
+    border-color: #125c8e;
+    border-radius: 12px;
+    align-items: center;
+    display: flex;
+    margin: 1rem;
+    height: 2rem;
 }
 
-.doc_number{
-    
+.configuration_title{
+    font-family: 'Roboto', sans-serif;
+    text-decoration: none;
+    color: black;
+    margin-left: 2rem;
+    margin-top: 1rem;
+}
+
+.row_configuration{
+    height: 1.5rem;
+    margin-bottom: 3rem;
+}
+
+.avatar_container_configuration {
+    position: absolute;
+    top: 12rem;
+    right: 8rem;
+    margin: 10px;
+}
+
+.avatar_image_configuration {
+    width: 200px; 
+    height: 200px; 
+    border-radius: 50%; 
+    object-fit: cover;
+    border: #125c8e;
+    border-style: solid;
 }
 
 @media only screen and (max-width: 600px) {

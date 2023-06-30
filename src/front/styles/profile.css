@@ -29,10 +29,12 @@
 }
 
 .edit_profile{
-    background-color: #125c8e;
+    background-color: #ffffff;
+    border-color: #125c8e;
+    border-style: solid;
     border-radius: 12px;
     text-decoration: none;
-    color: rgb(255, 253, 253);
+    color: rgb(0, 0, 0);
     width: 6rem;
     height: 2rem;
     display: flex;
@@ -46,7 +48,8 @@
 }
 
 .edit_profile:hover {
-    color: rgb(122, 122, 122);
+    color: rgb(255, 255, 255);
+    background-color: #2776ab;
 }
 
 .avatar_container {
