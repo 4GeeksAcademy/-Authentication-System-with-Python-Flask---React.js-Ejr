@@ -13,7 +13,9 @@ import injectContext from "./store/appContext";
 import { Profile } from "./pages/Profile-Protected";
 import Canchas from "./pages/canchas";
 import InformationCard from "./component/BigCardInformation";
+import { AddCanchas } from "./pages/addCanchas";
 import ForTesting from "./pages/forTesting"
+
 
 
 import { Footer } from "./component/footer";
@@ -40,6 +42,7 @@ const Layout = () => {
                         <Route element={<ForTesting />} path="/test" />
                         <Route element={<InformationCard />} path="/information" />
                         <Route element={<Demo />} path="/demo" />
+                        <Route element={<AddCanchas />} path="/addcanchas" />
                         <Route element={<Single />} path="/single/:theid" />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
