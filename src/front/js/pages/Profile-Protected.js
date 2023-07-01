@@ -57,7 +57,7 @@ export const Profile = () => {
                             <div className="card-body text-center">
                                 <img src={profilePicture} alt="avatar" className="rounded-circle img-fluid" style={{ width: '150px' }} />
                                 <div>
-                                    aca va el boton, para cambiar foto.
+                                    <UploadWidget />
                                 </div>
                                 <h5 className="my-3">{lastName} {name}</h5>
                                 <p className="text-muted mb-1">Full Stack Prisoner</p>
