@@ -6,16 +6,12 @@ import Dropzone from 'react-dropzone';
 export const UploadCar = () => {
 
   const [carBrands, setCarBrands] = useState([])
-
-  // const [car, setCar] = useState([{
-  //   brands: "",
-  //   models: ""
-  // }])
-
   const [carModels, setCarModels] = useState([])
   const [image, setImage] = useState({array : {}})
   const [loading, setLoading] = useState("")
   const [uploadedFiles, setUploadedFiles] = useState([]);
+  const [data, setData] = useState("")
+  const [isSubmitClicked, setIsSubmitClicked] = useState(false);
 
 
 
@@ -26,20 +22,11 @@ export const UploadCar = () => {
   .then(data => setCarBrands(data))
   .catch(err => console.error(err))
 
-    // useEffect(() => {
-    //   // Marcas de coche
-    //   fetch(process.env.BACKEND_URL + 'api/car-brands')
-    //   .then(resp => resp.json())
-    //   .then(data => setCar({...car, brands:data}))
-    //   .catch(err => console.error(err))
-
     // Modelos de car
     fetch(process.env.BACKEND_URL + 'api/car-models')
     .then(resp => resp.json())
     .then(data => setCarModels(data))
     .catch(err => console.error(err))
-
-
 
   }, [])
 
@@ -57,7 +44,8 @@ export const UploadCar = () => {
       setUploadedFiles((prevUploadedFiles) => [...prevUploadedFiles, file.name]);
 
   
-      return fetch("https://api.cloudinary.com/v1_1/djpzj47gu/image/upload", {
+      if(isSubmitClicked === true){
+        return fetch("https://api.cloudinary.com/v1_1/djpzj47gu/image/upload", {
         method: 'POST',
         body: formData
       })
@@ -70,13 +58,26 @@ export const UploadCar = () => {
         .catch((error) => {
           console.error(error);
         });
+      } else {
+        return;
+      }
+      
     });
   };
+
+  const handleChange = (ev) => {
+    setData({...data , [ev.target.name] : ev.target.value}) 
+  }
+
+  const handleSubmit = (ev) => {
+    ev.preventDefault();
+    setIsSubmitClicked(true);
+  }
   
 
   return (
     <div className='upload-container'>
-      <form>
+      <form onSubmit={handleSubmit}>
         <div className='upload-box'>
           <div className='upload-innerbox'>
             <div className='upload-title'>
@@ -87,12 +88,12 @@ export const UploadCar = () => {
               
               <div className='col-3 me-3'>
                 <label htmlFor='name'> <h6><strong>Título</strong></h6> </label>
-                <input className='select ' type='text' maxLength="10" name='title' placeholder='de la publicación' />
+                <input className='select ' type='text' maxLength="100" name='title' placeholder='de la publicación' onChange={handleChange}/>
               </div>
   
               <div className='col-3 me-5 ms-5'>
                 <label htmlFor='select-middle'> <h6><strong>Marca</strong></h6> </label>
-                <select id='select-middle' name='brand' className='select '>
+                <select id='select-middle' name='brand' className='select ' onChange={handleChange}>
                   {carBrands.map((brand, index) => (
                     <option key={index} value={brand}>{brand}</option>
                   ))}
@@ -101,7 +102,7 @@ export const UploadCar = () => {
 
               <div className='col-3 ms-3'>
                 <label htmlFor='select-right'> <h6><strong>Modelo</strong></h6> </label>
-                <select id='select-right' name='model' className='select '>
+                <select id='select-right' name='model' className='select ' onChange={handleChange}>
                   {carModels.map((model, index) => (
                     <option key={index} value={model}>{model}</option>
                   ))}
@@ -113,24 +114,24 @@ export const UploadCar = () => {
             <div className='row innerselect'>
               <div className='col-3 me-3'>
                 <label htmlFor='name'> <h6><strong>Precio</strong></h6></label>
-                <input className='select ' type='number'  name='price' placeholder='2400€' />
+                <input className='select ' type='number'  name='price' placeholder='2400€' onChange={handleChange}/>
               </div>
 
               <div className='col-3 me-5 ms-5'>
                 <label htmlFor='select-middle'> <h6><strong>Estado del vehículo</strong></h6> </label>
-                <select id='select-middle' name='state' className='select '>
-                  <option value='value1'>Nuevo</option>
-                  <option value='value2' selected>Semi-nuevo</option>
+                <select id='select-middle' name='state' className='select ' onChange={handleChange}>
+                  <option value='new'>Nuevo</option>
+                  <option value='semi-new' selected>Semi-nuevo</option>
                 </select>
               </div>
 
               <div className='col-3 ms-3'>
                 <label htmlFor='select-right'> <h6><strong>Kilómetros</strong></h6> </label>
-                <select id='select-right' name='km' className='select '>
-                  <option value='value1'>Cómo nuevo: de 0 a 1,000</option>
-                  <option value='value2' selected>Bajo kilometraje: de 1,000 a 50,000</option>
-                  <option value='value3'>Kilometraje moderado: de 50,000 a 100,000</option>
-                  <option value='value3'>Alto kilometraje: Más de 100,000</option>
+                <select id='select-right' name='km' className='select ' onChange={handleChange}>
+                  <option value='practically new'>Cómo nuevo: de 0 a 1,000</option>
+                  <option value='low mileage' selected>Bajo kilometraje: de 1,000 a 50,000</option>
+                  <option value='moderate mileage'>Kilometraje moderado: de 50,000 a 100,000</option>
+                  <option value='high mileage'>Alto kilometraje: Más de 100,000</option>
                 </select>
               </div>
             </div>
@@ -138,12 +139,12 @@ export const UploadCar = () => {
             <div className='row innerselect'>
               <div className='col-3 me-3'>
                 <label htmlFor='name'> <h6><strong>Año de fabricación</strong></h6> </label>
-                <input className='select ' type='number'  name='year' placeholder='2020' />
+                <input className='select ' type='number'  name='year' placeholder='2020' onChange={handleChange}/>
               </div>
 
               <div className='col-3 ms-5 me-5'>
                 <label htmlFor='select-middle'> <h6><strong>Tipo de coche</strong></h6> </label>
-                <select id='select-middle' name='select' className='select '>
+                <select id='select-middle' name='select' className='select ' onChange={handleChange}>
                   <option value='value1'>Deportiva</option>
                   <option value='value2' selected>Turismo</option>
                   <option value='value3'>Scooter</option>
@@ -156,11 +157,11 @@ export const UploadCar = () => {
 
               <div className='col-3 ms-3'>
                 <label htmlFor='select-right'> <h6><strong>Combustible</strong></h6> </label>
-                <select id='select-right' name='select' className='select '>
-                  <option value='value1' selected>Gasolina</option>
-                  <option value='value2'>Diesel</option>
-                  <option value='value3'>Eléctrico</option>
-                  <option value='value3'>Híbrido</option>
+                <select id='select-right' name='select' className='select ' onChange={handleChange}>
+                  <option value='gasoline' selected>Gasolina</option>
+                  <option value='diesel'>Diesel</option>
+                  <option value='electric'>Eléctrico</option>
+                  <option value='hybrid'>Híbrido</option>
 
                 </select>
               </div>
@@ -170,7 +171,7 @@ export const UploadCar = () => {
                 <div className='description-title'>
                   <h5><strong>Descripción:</strong></h5>
                 </div>
-                <textarea className='upload-textarea-description' name="description" rows="7" cols="132" placeholder='Te recomendamos encarecidamente incluir algunos detalles clave cómo el número de puertas, plazas disponibles y el tipo de cambio del vehículo. '></textarea>
+                <textarea onChange={handleChange} className='upload-textarea-description' name="description" rows="7" cols="132" placeholder='Te recomendamos encarecidamente incluir algunos detalles clave cómo el número de puertas, plazas disponibles y el tipo de cambio del vehículo. '></textarea>
               </div>
 
 
@@ -184,7 +185,7 @@ export const UploadCar = () => {
                 className = "dropzone"
                 onChange = {(ev) => setImage(ev.target.value)}
                 value={image}
-
+                
                 >
 
                     {({getRootProps, getInputProps}) => (
@@ -203,6 +204,10 @@ export const UploadCar = () => {
                     {uploadedFiles.map((file, index) => (
                         <p key={index}>{file}</p>
                     ))}
+                </div>
+
+                <div className='text-center mt-5'>
+                    <button className='btn btn-primary'>¡Sube tu coche!</button>
                 </div>
 
 

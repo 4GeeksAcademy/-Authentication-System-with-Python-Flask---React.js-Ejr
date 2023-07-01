@@ -60,15 +60,17 @@
   display: flex;
   justify-content: center;
   margin-top: 5rem; /* Agrega un margen superior para separar del borde superior */
+  
 }
   
   .upload-box {
     background-color: white;
     width: 80rem;
-    height: 84rem;
+    height: 88rem;
     display: flex;
     justify-content: space-evenly;
     border-radius: 12px;
+    
     
   }
 
