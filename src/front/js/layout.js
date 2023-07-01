@@ -13,6 +13,7 @@ import injectContext from "./store/appContext";
 import { Profile } from "./pages/Profile-Protected";
 import Canchas from "./pages/canchas";
 import InformationCard from "./component/BigCardInformation";
+import ForTesting from "./pages/forTesting"
 
 
 import { Footer } from "./component/footer";
@@ -36,6 +37,7 @@ const Layout = () => {
                         <Route element={<Signup />} path="/signup" />
                         <Route element={<Profile />} path="/profile" />
                         <Route element={<Canchas />} path="/canchas" />
+                        <Route element={<ForTesting />} path="/test" />
                         <Route element={<InformationCard />} path="/information" />
                         <Route element={<Demo />} path="/demo" />
                         <Route element={<Single />} path="/single/:theid" />
