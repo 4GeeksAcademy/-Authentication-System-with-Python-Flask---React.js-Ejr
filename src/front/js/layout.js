@@ -16,8 +16,6 @@ import InformationCard from "./component/BigCardInformation";
 import { AddCanchas } from "./pages/addCanchas";
 import ForTesting from "./pages/forTesting"
 
-
-
 import { Footer } from "./component/footer";
 
 //create your first component
@@ -47,6 +45,7 @@ const Layout = () => {
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
                 </ScrollToTop>
+                <Footer />
             </BrowserRouter>
         </div>
     );

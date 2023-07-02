@@ -1,37 +1,78 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Context } from "../store/appContext";
 import rigoImageUrl from "../../img/rigo-baby.jpg";
 import "../../styles/home.css";
-import { useNavigate } from "react-router-dom"
-
+import { Link, useNavigate } from "react-router-dom";
+import "../../styles/buttonsHome.css";
 
 
 export const Home = () => {
 	const { store, actions } = useContext(Context);
-	const navigate = useNavigate()
-	console.log(window, "window")
+	const [currentImageIndex, setCurrentImageIndex] = useState(0);
+	const navigate = useNavigate();
 
 	const handleLogout = () => {
-		sessionStorage.removeItem("token")
-		navigate("/login")
-	}
+		sessionStorage.removeItem("token");
+		navigate("/login");
+	};
+
+	const images = [
+		"https://uploads-ssl.webflow.com/632871e15b53a0140af28aeb/633b061d864ce251bb36073e_pexels-markus-spiske-1752757.jpg",
+		"https://journey.app/blog/wp-content/uploads/2021/11/reglas-deportivas_Tenis_.jpg",
+		"https://thephysiocompany.co.uk/wp-content/uploads/football.jpg"
+	];
+
+	useEffect(() => {
+		const interval = setInterval(() => {
+			setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
+		}, 5000);
+
+		return () => {
+			clearInterval(interval);
+		};
+	}, []);
+
+	const currentImage = images[currentImageIndex];
 
 	return (
-		<div style={{ marginTop: "0px", marginLeft: "0px" }}>
-			<div style={{ height: "100%", width: "100%", backgroundImage: "url('https://img.freepik.com/vector-gratis/campo-futbol-verde_225004-1137.jpg?w=360&t=st=1687559589~exp=1687560189~hmac=d1c3aeaec090617431cd073486b551e3e0340e9ed6ea00447d2b065a9b7aaffe')", height: "100vh", width: "100vw" }}>
-				<div style={{ paddingTop: "350px", marginLeft: "400px" }}>
-					<button type="button" class="btn btn-dark btn-lg me-3" >Reserva tu Cancha</button>
-					<button type="button" class="btn btn-dark btn-lg">Administra tus Canchas</button>
+		<div>
+			<div
+				className="home"
+				style={{
+					backgroundImage: `url(${currentImage})`,
+					backgroundPosition: "center",
+					backgroundSize: "cover",
+					backgroundRepeat: "no-repeat",
+					backgroundAttachment: "fixed",
+					height: "100vh",
+					display: "flex",
+					flexDirection: "column",
+					justifyContent: "center",
+					alignItems: "center",
+					textAlign: "center"
+				}}
+			>
+				<p className="text-uppercase fw-bold float-right text-white">
+					"Spot Sport allows you to easily book courts for your preferred sports at the venue of your choice, ensuring the best prices and ultimate convenience."
+				</p>
+				<div className="d-flex justify-content-between ">
+					<div className="">
+						<Link className="btn btn-lg btn-dark" to="/canchas">
+							<span>Reserva tu Cancha</span>
+						</Link>
+					</div>
+					<div className="">
+						<Link className="btn btn-lg btn-dark" to="/profile">
+							<span>Administra tus Canchas</span>
+						</Link>
+					</div>
 				</div>
-
-
 			</div>
 		</div>
+	);
+};
 
-
-
-
-
-
-	)
-}
+				// {/* <div style={{ paddingTop: "350px", marginLeft: "400px" }}>
+				// 	<button type="button" className="btn btn-dark btn-lg me-3" >Reserva tu Cancha</button>
+				// 	<button type="button" className="btn btn-dark btn-lg">Administra tus Canchas</button>
+				// </div> */}

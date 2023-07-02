@@ -34,7 +34,7 @@ export const Signup = () => {
                     </div>
                     <div className="mb-3">
                         <label htmlFor="lastName" className="form-label">Lastname</label>
-                        <input type="password" className="form-control" id="lastName" value={lastName} onChange={(e) => setLastName(e.target.value)} />
+                        <input type="lastname" className="form-control" id="lastName" value={lastName} onChange={(e) => setLastName(e.target.value)} />
                     </div>
                     <div className="mb-3">
                         <label htmlFor="exampleInputPassword1" className="form-label">Password</label>
