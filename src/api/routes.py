@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User
+from api.models import db, User, Product
 from api.utils import generate_sitemap, APIException
 
 import pandas as pd
@@ -41,8 +41,11 @@ def handle_hello():
 
 @api.route('car-brands', methods=['GET'])
 def get_car_brands():
-    cars_data = pd.read_csv('/workspaces/Watacar_v2/src/api/brands-and-models/cars-2020.csv')
-    brands = cars_data['make'].unique().tolist()
+    cars_data = pd.read_csv('/workspaces/Watacar_v2/src/api/brands-and-models/cars-2020.csv', header=None)
+    
+    model = request.args.get('model')
+    brands = cars_data[cars_data['model'].str.lower() == model.lower()]['make'].unique().tolist()
+
     return jsonify(brands)
 
 @api.route('car-models', methods=['GET'])
@@ -64,8 +67,33 @@ def get_moto_models():
     models = moto_data['Model'].unique().tolist()
     return jsonify(models)
 
+@api.route('upload-car', methods=['POST'])
+def upload_car():
 
+    data = request.get_json()
+    title = data.get('name')
+    state = data.get('state')
+    price = data.get('price')
+    description = data.get('description')
+    year = data.get('year')
+    km = data.get('km')
+    fuel = data.get('fuel')
+    brand = data.get('brand_id')
+    model = data.get('model_id')
+    images = data.get('images')
+    user_id = data.get('user_id')
 
+    upload = Product(name = title, state = state, price = price, description = description,
+                     year = year, km = km, fuel = fuel, brand_id = brand, model_id = model,
+                     images = images, user_id = user_id)
+
+    if not upload:
+        return jsonify({"message" : "Complete the fields"}), 400
+
+    db.session.add(upload)
+    db.session.commit()
+
+    return jsonify({"message" : "Your product has been successfully uploaded"}), 200
 
 
 
