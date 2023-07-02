@@ -106,3 +106,29 @@ li {
     margin-bottom: 1rem;
   }
 }
+
+
+/* Footer */
+footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: #fbfbfb;
+  text-align: justify;
+  padding: 10px;
+}
+ul {
+  list-style-type: none;
+}
+
+div ul li {
+  font-size: small;
+  color: rgb(114, 113, 113);
+}
+
+#footerH4 {
+  color: black;
+  text-decoration-line: none;
+  
+}
