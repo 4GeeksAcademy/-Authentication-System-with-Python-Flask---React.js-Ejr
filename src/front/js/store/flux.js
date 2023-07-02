@@ -37,7 +37,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					})
 				}
 				try {
-					const resp = await fetch('http://127.0.0.1:3001/api/user', options)
+					const resp = await fetch('https://ss-api-render-2.onrender.com/signup', options)
 					if (resp.status != 200) {
 						alert("error en fetch user")
 						return false
@@ -64,7 +64,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					})
 				}
 				try {
-					const resp = await fetch('http://127.0.0.1:3001/api/token', options)
+					const resp = await fetch('https://ss-api-render-2.onrender.com/login', options)
 					if (resp.status != 200) {
 						alert("error en fetch token")
 						return false
