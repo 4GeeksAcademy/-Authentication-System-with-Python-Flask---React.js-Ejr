@@ -125,13 +125,13 @@ class Product(db.Model):
         return {
             "id": self.id,
             "name": self.name,
-            "state": self.state,
+            "state": self.state.value,
             "price": self.price,
             "description": self.description,
             "images": self.images,
             "year": self.year,
             "km": self.km,
-            "fuel": self.fuel,
+            "fuel": self.fuel.value,
             "user_id": self.user_id,
             "brand_id": self.brand_id,
             "model_id": self.model_id
@@ -237,7 +237,7 @@ class Review(db.Model): # Cambiar la tabla para que se pueda asociar al comrpado
             "buyer_id": self.buyer_id,
             "seller_id": self.seller_id,
             "product_id": self.product_id,
-            "stars": self.stars,
+            "stars": self.stars.value,
             "comment": self.comment
         }
     
