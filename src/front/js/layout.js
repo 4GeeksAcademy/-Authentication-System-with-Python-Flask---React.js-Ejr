@@ -14,7 +14,7 @@ import { Profile } from "./pages/Profile-Protected";
 import Canchas from "./pages/canchas";
 import InformationCard from "./component/BigCardInformation";
 import { AddCanchas } from "./pages/addCanchas";
-
+import { HomeLogin } from "./pages/homeLogin";
 
 import { Footer } from "./component/footer";
 
@@ -34,6 +34,7 @@ const Layout = () => {
                     <Routes>
                         <Route element={<Home />} path="/" />
                         <Route element={<Login />} path="/login" />
+                        <Route element={<HomeLogin />} path="/home2" />
                         <Route element={<Signup />} path="/signup" />
                         <Route element={<Profile />} path="/profile" />
                         <Route element={<Canchas />} path="/canchas" />
