@@ -3,7 +3,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 		store: {
 			token: null,
 			message: null,
-			users: [],
+			user: [],
+			id: null,
 			demo: [
 				{
 					title: "FIRST",
@@ -21,6 +22,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 			// Use getActions to call a function within a fuction
 			exampleFunction: () => {
 				getActions().changeColor(0, "green");
+			},
+
+			getid: () => {
+				const store = getStore();
+				return store.id
 			},
 
 			signup: async (email, pass, name, lastname) => {
@@ -56,7 +62,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				const options = {
 					method: "POST",
 					headers: {
-						"Content-Type": "application/json"
+						"Content-Type": "application/json",
 					},
 					body: JSON.stringify({
 						"email": email,
@@ -71,8 +77,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 					}
 
 					const data = await resp.json()
-					sessionStorage.setItem("token", data.access_token)
-					setStore({ token: data.access_token })
+					sessionStorage.setItem("auth_token", data.auth_token)
+					sessionStorage.setItem("id", data.id)
+					sessionStorage.setItem("isLoggedIn", true)
 					return true
 
 				}
@@ -81,6 +88,34 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
+			logout: () => {
+				sessionStorage.removeItem("auth_token")
+				sessionStorage.removeItem("isLoggedIn")
+
+			},
+
+			getUser: async (user_id) => {
+				const options = {
+					method: "GET",
+					headers: { Authorization: "Bearer " + sessionStorage.getItem("auth_token") }
+				}
+				try {
+					const resp = await fetch('https://ss-api-render-2.onrender.com/user/' + user_id, options)
+					if (resp.status != 200) {
+						alert("error en fetch user")
+						return false
+					}
+
+					const data = await resp.json()
+					console.log(data)
+					setStore({ user: data })
+					return true
+
+				}
+				catch (error) {
+					console.error("error en getUser")
+				}
+			},
 
 			changeColor: (index, color) => {
 				//get the store
