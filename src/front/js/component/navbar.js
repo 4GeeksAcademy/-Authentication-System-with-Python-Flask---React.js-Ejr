@@ -138,7 +138,7 @@ export const Navbar = () => {
               id="navbarNavDropdown"
             >
               <ul className="navbar-nav ml-auto align-items-end">
-                {token ? (
+                {!token ? (
                   <>
                     <li className="nav-item">
                       <Link
