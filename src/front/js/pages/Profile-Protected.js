@@ -9,17 +9,16 @@ import { Context } from "../store/appContext";
 export const Profile = () => {
     const [profilePicture, setProfilePicture] = useState('https://i1.sndcdn.com/avatars-000733526755-v9y8eh-t500x500.jpg');
     const { store, actions } = useContext(Context);
-
+    const sessionId = sessionStorage.getItem('id')
     // const handleChangePicture = () => {
     //     const randomImageURL = 'https://source.unsplash.com/random';
     //     setProfilePicture(randomImageURL);
     // };
 
     useEffect(() => {
-        actions.getUser(7).then(() => {
+        actions.getUser(sessionId).then(() => {
         })
     }, []);
-
 
 
     return (
