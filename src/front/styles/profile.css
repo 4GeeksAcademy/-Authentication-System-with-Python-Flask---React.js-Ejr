@@ -142,14 +142,19 @@
 .row_favorites_profile{
     background-color: white;
     margin: 3rem;
+    margin-top: 0.5rem;
     border-radius: 12px;
     height: 25rem;
     padding: 1rem;
     padding-left: 3rem;
     display: flex;
     align-items: center;
-    color:#125c8e
+    color:#125c8e;
+    overflow-x: scroll;
+    flex-wrap: nowrap; 
+    overflow-x: auto
 }
+
 
 .product_img_profile_favorites_box{
     width: 10rem;
@@ -170,12 +175,32 @@
     background-color: whitesmoke;
     border-radius: 12px;
     padding-top: 0.5rem;
+    text-align: justify
 }
 
 .product_description_profile_favorites{
     margin-top: 1rem;
     width: 8rem;
     margin-left: 0.5rem;
+}
+
+.product_type_profile{
+    margin-left: 5rem;
+    margin-top: 3rem;
+}
+
+.review_box_profile{
+    background-color: white;
+    border-radius: 12px;
+    margin: 3rem;
+}
+
+.product_img_profile_reviews_box{
+    margin: 2rem;
+}
+
+.review_content_profile{
+    margin-top: 2rem;
 }
 
 @media only screen and (max-width: 600px) {
@@ -290,12 +315,18 @@
     .row_favorites_profile{
         background-color: white;
         margin: 1rem;
+        margin-top: 0.5rem;
         border-radius: 12px;
         height: 25rem;
         padding: 1rem;
-        padding-left: 3rem;
+        padding-left: 1rem;
         display: flex;
         align-items: center;
         color:#125c8e
+    }
+
+    .product_type_profile{
+        margin-top: 1rem;
+        margin-left: 3rem;
     }
 }
