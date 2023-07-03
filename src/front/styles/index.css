@@ -110,11 +110,11 @@ li {
 
 /* Footer */
 footer {
-  position: fixed;
+  position: relative;
   left: 0;
   bottom: 0;
   width: 100%;
-  background-color: #fbfbfb;
+  background-color: #2a5eb7;
   text-align: justify;
   padding: 10px;
 }
@@ -122,13 +122,17 @@ ul {
   list-style-type: none;
 }
 
+div h5 {
+  color: white;
+}
+
 div ul li {
   font-size: small;
-  color: rgb(114, 113, 113);
+  color: rgb(224, 220, 220);
 }
 
 #footerH4 {
-  color: black;
+  color: rgb(255, 255, 255);
   text-decoration-line: none;
   
 }
