@@ -1,4 +1,4 @@
-.btn {
+.btnhome {
     color: #fff;
     background-color: rgba(255, 255, 255, 0.05);
     font-family: 'Work Sans', sans-serif;
@@ -14,10 +14,10 @@
     transition: all 0.3s ease 0s;
 }
 
-.btn:before,
-.btn:after,
-.btn span:before,
-.btn span:after {
+.btnhome:before,
+.btnhome:after,
+.btnhome span:before,
+.btnhome span:after {
     content: '';
     background: linear-gradient(to bottom, #FF416C, #FF4B2B);
     width: 25%;
@@ -29,72 +29,72 @@
     transition: all 0.3s;
 }
 
-.btn:before {
+.btnhome:before {
     transform: scaleY(0.2);
     transition-delay: 0.3s;
 }
 
-.btn:after {
+.btnhome:after {
     transform: scaleY(0.45);
     left: 25%;
     transition-delay: 0.2s;
 }
 
-.btn span:before {
+.btnhome span:before {
     transform: scaleY(0.65);
     left: 50%;
     z-index: -1;
     transition-delay: 0.1s;
 }
 
-.btn span:after {
+.btnhome span:after {
     transform: scaleY(0.8);
     left: 75%;
     z-index: -1;
 }
 
-.btn span {
+.btnhome span {
     padding: 10px 20px;
     display: block;
     position: relative;
     z-index: 1;
 }
 
-.btn:hover:before,
-.btn:hover:after,
-.btn:hover span:before,
-.btn:hover span:after {
+.btnhome:hover:before,
+.btnhome:hover:after,
+.btnhome:hover span:before,
+.btnhome:hover span:after {
     opacity: 1;
     transform: scaleY(1);
 }
 
-.btn.orange:before,
-.btn.orange:after,
-.btn.orange span:before,
-.btn.orange span:after {
+.btnhome.orange:before,
+.btnhome.orange:after,
+.btnhome.orange span:before,
+.btnhome.orange span:after {
     background: linear-gradient(to bottom, #f7b42c, #fc575e);
 }
 
-.btn.blue:before,
-.btn.blue:after,
-.btn.blue span:before,
-.btn.blue span:after {
+.btnhome.blue:before,
+.btnhome.blue:after,
+.btnhome.blue span:before,
+.btnhome.blue span:after {
     background: linear-gradient(to bottom, #7f53ac, #647dee);
 }
 
-.btn.green:before,
-.btn.green:after,
-.btn.green span:before,
-.btn.green span:after {
+.btnhome.green:before,
+.btnhome.green:after,
+.btnhome.green span:before,
+.btnhome.green span:after {
     background: linear-gradient(to bottom, #3bb78f, #0bab64);
 }
 
-.btn:hover {
+.btnhome:hover {
     color: #fff;
 }
 
 @media only screen and (max-width: 767px) {
-    .btn {
+    .btnhome {
         margin-bottom: 20px;
     }
 }

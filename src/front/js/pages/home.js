@@ -56,13 +56,13 @@ export const Home = () => {
 					"Spot Sport allows you to easily book courts for your preferred sports at the venue of your choice, ensuring the best prices and ultimate convenience."
 				</p>
 				<div className="d-flex justify-content-between ">
-					<div className="">
-						<Link className="btn btn-lg btn-dark" to="/canchas">
+					<div className="btnhome">
+						<Link className="btnhome btn-lg btn-dark" to="/canchas">
 							<span>Reserva tu Cancha</span>
 						</Link>
 					</div>
-					<div className="">
-						<Link className="btn btn-lg btn-dark" to="/profile">
+					<div className="btnhome">
+						<Link className="btnhome btn-lg btn-dark" to="/profile">
 							<span>Administra tus Canchas</span>
 						</Link>
 					</div>
