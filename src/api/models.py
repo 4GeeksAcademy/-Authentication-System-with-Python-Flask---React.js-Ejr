@@ -128,7 +128,7 @@ class Product(db.Model):
             "state": self.state,
             "price": self.price,
             "description": self.description,
-            "images": self.image,
+            "images": self.images,
             "year": self.year,
             "km": self.km,
             "fuel": self.fuel,
