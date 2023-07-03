@@ -1,0 +1,153 @@
+.container_config{
+    background-color: white;
+    border-radius: 15px;
+    margin: 20px;
+    padding: 20px;
+}
+
+.btn_config{
+    background-color: #125c8e;
+    border-radius: 12px;
+    text-decoration: none;
+    color: rgb(255, 253, 253);
+    width: 6rem;
+    height: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.save_cancel_config{
+    display: flex;
+    justify-content: end;
+    margin-right: 3.5rem;
+    margin-top: 4rem;
+}
+
+.btn_config:hover {
+    color: rgb(122, 122, 122);
+}
+
+.cancel{
+    margin-left: 1rem;
+    background-color: white;
+    color: black;
+}
+
+.save{
+    margin-left: 1rem;
+}
+
+.cancel:hover{
+    background-color: #2776ab;
+    color: white;
+}
+
+.back{
+    margin-left: 2rem;
+}
+
+.input_config{
+    margin: 1rem;
+    height: 2.5rem;
+    border-radius: 8px;
+    border-color: #125c8e !important;
+    height: 2rem;
+    border-style: none;
+}
+
+.label_config{
+    background-color: #2776ab;
+    color: white;
+    border-style: solid;
+    border-color: #125c8e;
+    border-radius: 12px;
+    align-items: center;
+    display: flex;
+    margin: 1rem;
+    height: 2rem;
+}
+
+.configuration_title{
+    font-family: 'Roboto', sans-serif;
+    text-decoration: none;
+    color: black;
+    margin-left: 2rem;
+    margin-top: 1rem;
+}
+
+.row_configuration{
+    height: 1.5rem;
+    margin-bottom: 3rem;
+}
+
+.avatar_container_configuration {
+    position: absolute;
+    top: 12rem;
+    right: 8rem;
+    margin: 10px;
+}
+
+.avatar_image_configuration {
+    width: 200px; 
+    height: 200px; 
+    border-radius: 50%; 
+    object-fit: cover;
+    border: #125c8e;
+    border-style: solid;
+}
+
+@media only screen and (max-width: 600px) {
+    .container_config {
+        border-radius: 12px;
+        margin: 20px;
+    }
+
+    .avatar_container_configuration {
+        position: absolute;
+        top: 13rem;
+        right: 2rem;
+        margin: 10px;
+    }
+    
+    .avatar_image_configuration {
+        width: 80px; 
+        height: 80px; 
+        border-radius: 50%; 
+        object-fit: cover;
+        border: #125c8e;
+        border-style: solid;
+    }
+
+
+    .label_config{
+        width: 13rem;
+        height: 1.6rem;
+        font-size: medium;
+        border-radius: 8px;
+        background-color:#2776ab;
+        border-color: #125c8e;
+        border-style: solid;
+        color: rgb(255, 255, 255);
+        margin-bottom: 0rem;
+        margin-top: 2rem;
+    }
+
+    .row_configuration{
+        margin-bottom: 4rem;
+    }
+
+    .input_config{
+        width: 18rem;
+    }
+
+    .save_cancel_config{
+        margin-top: 8rem;
+    }
+
+    .cancel{
+        border-style: solid;
+        border-color: #125c8e;
+        border-radius: 12px;
+    }
+}

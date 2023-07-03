@@ -14,6 +14,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 					initial: "white"
 				}
 			],
+
+			
 			users: [],
             token: ""
 		},
@@ -43,11 +45,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			  }, 
 
-			  getFavorites: () => {
-				
-
-			  },
-
 			//   login: async (email, password) => {
             //     const store = getStore()
             //     const opts = {
@@ -76,7 +73,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			getMessage: async () => {
 				try{
 					// fetching data from the backend
-					const resp = await fetch(process.env.BACKEND_URL + "/api/hello")
+					const resp = await fetch(process.env.BACKEND_URL + "api/hello")
 					const data = await resp.json()
 					setStore({ message: data.message })
 					// don't forget to return something, that is how the async resolves
@@ -98,6 +95,20 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				//reset the global store
 				setStore({ demo: demo });
+			},
+			getUser: () => {
+				const store = getStore();
+				fetch(process.env.BACKEND_URL + `api/configuration`, {
+					method: "GET",
+					headers: {
+						"Content-Type": "application/json",
+						"Authorization": `Bearer ${localStorage.getItem("token")}`
+					}
+				})
+				.then (response => response.json())
+				.then ((response) => {
+					setStore({user: response.data});
+				});
 			}
 		}
 	};

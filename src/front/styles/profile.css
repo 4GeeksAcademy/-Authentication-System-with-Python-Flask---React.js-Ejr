@@ -1,0 +1,125 @@
+.container_profile{
+    margin: 3rem;
+    background-color: rgb(255, 255, 255);
+    padding: 2rem;
+    padding-top: 4rem;
+    border-radius: 15px;
+}
+
+.row_profile_configuration{
+    height: 3rem;
+    margin-bottom: 2rem;
+    display: flex;
+    color: rgb(0, 0, 0);
+    align-items: center
+}
+
+.label{
+    background-color: #ffffff;
+    color: #125c8e;
+    border-style: solid;
+    border-color: #125c8e;
+    border-radius: 4px;
+    align-items: center;
+    display: flex
+}
+
+.user_data{
+    margin-left: 3rem;
+}
+
+.edit_profile{
+    background-color: #ffffff;
+    border-color: #125c8e;
+    border-style: solid;
+    border-radius: 12px;
+    text-decoration: none;
+    color: rgb(0, 0, 0);
+    width: 6rem;
+    height: 2rem;
+    display: flex;
+    justify-content: center;
+}
+
+.row_edit_profile{
+    display: flex;
+    justify-content: end;
+    margin-right: 4rem;
+}
+
+.edit_profile:hover {
+    color: rgb(255, 255, 255);
+    background-color: #2776ab;
+}
+
+.avatar_container {
+    position: absolute;
+    top: 17rem;
+    right: 9rem;
+    margin: 10px;
+}
+
+.avatar_image {
+    width: 200px; 
+    height: 200px; 
+    border-radius: 50%; 
+    object-fit: cover;
+    border: #125c8e;
+    border-style: solid;
+}
+
+@media only screen and (max-width: 600px) {
+    .container_profile{
+        margin: 1rem;
+        padding-top: 3.5rem;
+    }
+
+    .avatar_container {
+        position: absolute;
+        top: 23rem;
+        right: 1rem;
+        margin: 10px;
+    }
+    
+    .avatar_image {
+        width: 80px; 
+        height: 80px; 
+        border-radius: 50%; 
+        object-fit: cover;
+        border: #125c8e;
+        border-style: solid;
+    }
+
+    .profile_info{
+        margin-top: 1.5rem;
+    }
+
+    .label{
+        width: 14rem;
+        height: 1.6rem;
+        font-size: medium;
+        border-radius: 8px;
+        background-color:#ffffff;
+        border-color: #125c8e;
+        border-style: solid;
+        color: rgb(255, 255, 255);
+    }
+
+    .user_data{
+        font-size: medium;
+        margin-left: 0;
+        margin-top: 0.5rem;
+    }
+
+    .edit_profile{
+        margin-top: 2rem;
+        color: rgb(0, 0, 0);
+        background-color: #ffffff;
+        border-color: #125c8e;
+        border-style: solid;
+    }
+
+    .row_edit_profile {
+        margin-left: 3rem;
+    }
+}

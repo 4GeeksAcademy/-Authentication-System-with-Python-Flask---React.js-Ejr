@@ -2,9 +2,39 @@
 /* 
     General Styles used on every website (Don't Repeat Yourself)
 */
+.navbar {
+    margin-bottom: 20px;
+}
 /* 
     General Styles used on every website (Don't Repeat Yourself)
 */
+body {
+  font-family: 'Roboto', sans-serif;
+}
+
+h1 {
+  font-family: 'Roboto', sans-serif;
+}
+
+h2 {
+  font-family: 'Roboto', sans-serif;
+}
+
+h3 {
+  font-family: 'Roboto', sans-serif;
+}
+
+h4 {
+  font-family: 'Roboto', sans-serif;
+}
+
+h6 {
+  font-family: 'Roboto', sans-serif;
+}
+
+li {
+  font-family: 'Roboto', sans-serif;
+}
 
 
 body {
@@ -32,7 +62,7 @@ li {
 }
 
 #light{
-    background-color: #a3c6f4;
+    background-color: #c4d8f2;
 }
 
 #dark{
@@ -114,4 +144,54 @@ li {
   margin-bottom: 4px;
   font-size: larger;
 
+.input-with-icon {
+  position: relative;
+}
+
+.input-with-icon input {
+  padding-right: 30px; 
+}
+
+.input-with-icon .icon {
+  position: absolute;
+  top: 50%;
+  right: 10px; 
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+.navbar_profile{
+  border-color: #125c8e;
+  border-style: solid;
+  border-radius: 10px;
+  margin-right: 2rem;
+  text-align: center;
+  font-family: 'Roboto', sans-serif;
+  text-decoration: none;
+  background-color: white;
+  padding: 2px;
+  color: black;
+}
+
+.navbar_profile:hover {
+  color: rgb(255, 255, 255);
+  background-color: #2776ab;
+}
+
+.active {
+  background-color: #2776ab; 
+  color: #ffffff;
+}
+
+.profile_navbar_text{
+  margin-bottom: 1.5rem;
+}
+
+@media only screen and (max-width: 600px) {
+  .navbar_profile{
+    font-size: medium;
+    width: 7rem;
+    margin-left: 2.7rem;
+    margin-bottom: 1rem;
+  }
 }
