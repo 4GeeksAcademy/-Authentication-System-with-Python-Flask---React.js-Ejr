@@ -119,6 +119,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			logout: () => {
 				sessionStorage.removeItem("auth_token")
+				sessionStorage.removeItem("id")
 				sessionStorage.removeItem("isLoggedIn")
 
 			},
