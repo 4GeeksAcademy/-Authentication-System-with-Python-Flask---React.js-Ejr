@@ -45,8 +45,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			  }, 
 
-
-
 			//   login: async (email, password) => {
             //     const store = getStore()
             //     const opts = {

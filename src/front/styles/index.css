@@ -1,3 +1,4 @@
+
 /* 
     General Styles used on every website (Don't Repeat Yourself)
 */
@@ -35,6 +36,31 @@ li {
   font-family: 'Roboto', sans-serif;
 }
 
+
+body {
+  font-family: 'Roboto', sans-serif;
+}
+
+h1 {
+  font-family: 'Roboto', sans-serif;
+}
+
+h2 {
+  font-family: 'Roboto', sans-serif;
+}
+
+h3 {
+  font-family: 'Roboto', sans-serif;
+}
+
+h4 {
+  font-family: 'Roboto', sans-serif;
+}
+
+li {
+  font-family: 'Roboto', sans-serif;
+}
+
 #light{
     background-color: #c4d8f2;
 }
@@ -54,6 +80,69 @@ li {
 .mode{
     font-size: 2rem;
 }
+
+
+#tittle-nav {
+    font-size: xx-large;
+    font-weight: bolder;
+    
+}
+
+.switch {
+
+    font-size: medium;
+    
+}
+
+
+.btn-plus {
+  display: flex;
+  align-items: center;
+  height: 28px;
+  width: 36px;
+  margin: auto;
+  background-color: rgb(15, 76, 117);
+  color: white;
+  border-radius: 7px;
+  border-color: rgb(15, 76, 117);
+  border-top: rgb(15, 76, 117);
+  border-left: rgb(15, 76, 117);
+  border-right: rgb(15, 76, 117);
+  border-bottom: rgb(15, 76, 117);
+}
+
+.btn-plus:hover {
+  background-color: rgb(36, 104, 183);
+}
+
+.fa-plus {
+  font-size: small;
+  margin-left: 4px;
+}
+
+
+
+  
+  #heart {
+
+    margin-bottom: -5px;
+    color: rgb(36, 144, 215);
+    font-size: x-large;
+    
+  }
+  
+
+  .switch {
+
+    margin-top: -3px;
+    width: 70px; 
+    height: 30px; 
+  }
+  
+  
+#iconProfile {
+  margin-bottom: 4px;
+  font-size: larger;
 
 .input-with-icon {
   position: relative;
