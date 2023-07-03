@@ -5,6 +5,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 			message: null,
 			users: [],
 			canchas: [],
+			user: [],
+			id: null,
 			demo: [
 				{
 					title: "FIRST",
@@ -24,6 +26,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 				getActions().changeColor(0, "green");
 			},
 
+			getid: () => {
+				const store = getStore();
+				return store.id
+			},
+
 			signup: async (email, pass, name, lastname) => {
 				const options = {
 					method: "POST",
@@ -38,7 +45,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 					})
 				}
 				try {
-					const resp = await fetch('https://ss-api-render-2.onrender.com/user', options)
+
+					const resp = await fetch('https://ss-api-render-2.onrender.com/signup', options)
+
 					if (resp.status != 200) {
 						alert("error en fetch user")
 						return false
@@ -57,7 +66,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				const options = {
 					method: "POST",
 					headers: {
-						"Content-Type": "application/json"
+						"Content-Type": "application/json",
 					},
 					body: JSON.stringify({
 						"email": email,
@@ -65,15 +74,16 @@ const getState = ({ getStore, getActions, setStore }) => {
 					})
 				}
 				try {
-					const resp = await fetch('http://127.0.0.1:3001/api/token', options)
+					const resp = await fetch('https://ss-api-render-2.onrender.com/login', options)
 					if (resp.status != 200) {
 						alert("error en fetch token")
 						return false
 					}
 
 					const data = await resp.json()
-					sessionStorage.setItem("token", data.access_token)
-					setStore({ token: data.access_token })
+					sessionStorage.setItem("auth_token", data.auth_token)
+					sessionStorage.setItem("id", data.id)
+					sessionStorage.setItem("isLoggedIn", true)
 					return true
 
 				}
@@ -81,6 +91,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.error("error en login")
 				}
 			},
+
 
 			fetchCanchas: async () => {
 				const options = {
@@ -102,6 +113,36 @@ const getState = ({ getStore, getActions, setStore }) => {
 				} catch (error) {
 					console.error("Error in getCanchas:", error);
 					return [];
+				}
+			},
+
+
+			logout: () => {
+				sessionStorage.removeItem("auth_token")
+				sessionStorage.removeItem("isLoggedIn")
+
+			},
+
+			getUser: async (user_id) => {
+				const options = {
+					method: "GET",
+					headers: { Authorization: "Bearer " + sessionStorage.getItem("auth_token") }
+				}
+				try {
+					const resp = await fetch('https://ss-api-render-2.onrender.com/user/' + user_id, options)
+					if (resp.status != 200) {
+						alert("error en fetch user")
+						return false
+					}
+
+					const data = await resp.json()
+					console.log(data)
+					setStore({ user: data })
+					return true
+
+				}
+				catch (error) {
+					console.error("error en getUser")
 				}
 			},
 

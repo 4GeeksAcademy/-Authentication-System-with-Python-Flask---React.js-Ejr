@@ -1,40 +1,26 @@
-import React, { useState, useContext, useEffect } from 'react';
-import { Context } from "../store/appContext";
-import RentButton from "../component/RentButton"
-import FindCanchaButton from "../component/FindCanchaButton"
+import React, { useContext, useEffect, useState } from 'react';
+import "../../styles/profile.css";
+import FindCanchaButton from "../component/FindCanchaButton";
+import RentButton from "../component/RentButton";
 import UploadWidget from '../component/UploadWidget';
-import "../../styles/profile.css"
+import { Context } from "../store/appContext";
 
 
 export const Profile = () => {
     const [profilePicture, setProfilePicture] = useState('https://i1.sndcdn.com/avatars-000733526755-v9y8eh-t500x500.jpg');
-    const [userData, setUserData] = useState(null); // Added state for user data
     const { store, actions } = useContext(Context);
 
-    const handleChangePicture = () => {
-        const randomImageURL = 'https://source.unsplash.com/random';
-        setProfilePicture(randomImageURL);
-    };
-
-    const fetchUsers = async () => {
-        try {
-            const response = await fetch(process.env.BACKEND_URL + "/api/user");
-            const data = await response.json();
-            console.log(data, "dataaaaaaaaaaaaaaaa")
-            setUserData(data[0]); // quitar la seleccion de index cuando existan mas usuarios. 
-        } catch (error) {
-            console.error(error);
-        }
-    };
+    // const handleChangePicture = () => {
+    //     const randomImageURL = 'https://source.unsplash.com/random';
+    //     setProfilePicture(randomImageURL);
+    // };
 
     useEffect(() => {
-        fetchUsers();
+        actions.getUser(7).then(() => {
+        })
     }, []);
 
 
-    const name = userData ? userData.name : "";
-    const lastName = userData ? userData.lastname : "";
-    const email = userData ? userData.email : "";
 
     return (
         <section className='bg-dark'>
@@ -53,8 +39,8 @@ export const Profile = () => {
                                 <div>
                                     <UploadWidget />
                                 </div>
-                                <h5 className="my-3">{lastName} {name}</h5>
-                                <p className="text-muted mb-1">Full Stack Prisoner</p>
+                                <h5 className="my-3">{store.user.lastName} {store.user.name}</h5>
+                                <p className="text-muted mb-1">Full Stack Prisoner {store.user.name}</p>
                                 <p className="text-muted mb-4">New york, USA</p>
                                 <div className="d-flex justify-content-center mb-2">
                                     <button type="button" className="btn btn-primary">Follow</button>
@@ -95,7 +81,7 @@ export const Profile = () => {
                                         <p className="mb-0">Full Name</p>
                                     </div>
                                     <div className="col-sm-9">
-                                        <p className="text-muted mb-0">{lastName} {name}</p>
+                                        <p className="text-muted mb-0">{store.user.lastName} {store.user.name}</p>
                                     </div>
                                 </div>
                                 <hr />
@@ -104,7 +90,7 @@ export const Profile = () => {
                                         <p className="mb-0">Email</p>
                                     </div>
                                     <div className="col-sm-9">
-                                        <p className="text-muted mb-0">{email}</p>
+                                        <p className="text-muted mb-0">{store.user.email}</p>
                                     </div>
                                 </div>
                                 <hr />
