@@ -3,6 +3,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 		store: {
 			token: null,
 			message: null,
+			users: [],
+			canchas: [],
 			user: [],
 			id: null,
 			demo: [
@@ -43,7 +45,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 					})
 				}
 				try {
+
 					const resp = await fetch('https://ss-api-render-2.onrender.com/signup', options)
+
 					if (resp.status != 200) {
 						alert("error en fetch user")
 						return false
@@ -88,6 +92,31 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
+
+			fetchCanchas: async () => {
+				const options = {
+					method: "GET",
+					headers: {
+						"Content-Type": "application/json",
+						"Access-Control-Allow-Origin": "*",
+					},
+				};
+
+				try {
+					const resp = await fetch("https://ss-api-render-2.onrender.com/canchas", options);
+					if (resp.status !== 200) {
+						alert("Error fetching canchas");
+						return [];
+					}
+					const data = await resp.json();
+					return data;
+				} catch (error) {
+					console.error("Error in getCanchas:", error);
+					return [];
+				}
+			},
+
+
 			logout: () => {
 				sessionStorage.removeItem("auth_token")
 				sessionStorage.removeItem("isLoggedIn")
@@ -116,6 +145,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.error("error en getUser")
 				}
 			},
+
 
 			changeColor: (index, color) => {
 				//get the store
