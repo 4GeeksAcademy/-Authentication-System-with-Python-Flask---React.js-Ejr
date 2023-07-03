@@ -4,6 +4,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			token: null,
 			message: null,
 			users: [],
+			canchas: [],
 			demo: [
 				{
 					title: "FIRST",
@@ -37,7 +38,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					})
 				}
 				try {
-					const resp = await fetch('http://127.0.0.1:3001/api/user', options)
+					const resp = await fetch('https://ss-api-render-2.onrender.com/user', options)
 					if (resp.status != 200) {
 						alert("error en fetch user")
 						return false
@@ -78,6 +79,29 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 				catch (error) {
 					console.error("error en login")
+				}
+			},
+
+			fetchCanchas: async () => {
+				const options = {
+					method: "GET",
+					headers: {
+						"Content-Type": "application/json",
+						"Access-Control-Allow-Origin": "*",
+					},
+				};
+
+				try {
+					const resp = await fetch("https://ss-api-render-2.onrender.com/canchas", options);
+					if (resp.status !== 200) {
+						alert("Error fetching canchas");
+						return [];
+					}
+					const data = await resp.json();
+					return data;
+				} catch (error) {
+					console.error("Error in getCanchas:", error);
+					return [];
 				}
 			},
 
