@@ -15,13 +15,22 @@ import { Login } from "./pages/login";
 import { Signup } from "./pages/signup";
 import { Single } from "./pages/single";
 import injectContext from "./store/appContext";
+<<<<<<< HEAD
 import { ProfileProtected } from "./pages/Profile-Protected";
 import Canchas from "./pages/canchas";
 import { BigCardInformation } from "./component/BigCardInformation";
 import { addCanchas } from "./pages/addCanchas";
 import { HomeLogin } from "./pages/homeLogin";
 
+=======
+import { Profile } from "./pages/Profile-Protected";
+import RenderCanchas from "./pages/canchas";
+import RentInformationCard from "./component/BigCardInformation";
+import { AddCanchas } from "./pages/addCanchas";
+import ForTesting from "./pages/forTesting"
+>>>>>>> 5ff762fdc85c49d492346ea952f3edeceb43943b
 import { Footer } from "./component/footer";
+
 
 //create your first component
 const Layout = () => {
@@ -45,7 +54,7 @@ const Layout = () => {
                         <Route element={<Profile />} path="/profile" />
                         <Route element={<RenderCanchas />} path="/canchas" />
                         <Route element={<ForTesting />} path="/test" />
-                        <Route element={<InformationCard />} path="/information" />
+                        <Route element={<RentInformationCard />} path="/rent" />
                         <Route element={<Demo />} path="/demo" />
                         <Route element={<AddCanchas />} path="/addcanchas" />
                         <Route element={<Single />} path="/single/:theid" />
