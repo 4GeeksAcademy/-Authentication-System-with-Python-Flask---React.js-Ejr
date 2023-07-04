@@ -1,14 +1,32 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import "../../styles/navbar.css";
+import { Context } from "../store/appContext";
 
 export function Navbar() {
+  const { actions, store } = useContext(Context);
+  const logged = sessionStorage.getItem("isLoggedIn");
+  const navigate = useNavigate();
+
+  const handleClickLogOut = () => {
+    actions.logout();
+    navigate("/");
+  };
+
+  const handleClickLogIn = () => {
+    navigate("/login")
+  };
+
   return (
     <nav className="navbar navbar-dark fixed-top" style={{ backgroundColor: "#1c2331" }} >
-      <div className="container-fluid " style={{ backgroundColor: "#1c2331" }}>
-
-        <Link className="navbar-brand text-uppercase fw-bold" to="/">Sport Spot </Link> <i class="fa-light fa-basketball-hoop fa-bounce"></i>
-
+      <div className="container-fluid d-flex" style={{ backgroundColor: "#1c2331" }}>
+        <Link className="navbar-brand text-uppercase fw-bold" to="/">Sport Spot</Link>
+        <div>
+          {logged ?
+            (<button className="btn ms-auto" type="button" onClick={handleClickLogOut}>Logout</button>)
+            :
+            (<button className="btn ms-auto" type="button" onClick={handleClickLogIn}>Login</button>)}
+        </div>
         <button className="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar">
           <span className="navbar-toggler-icon"></span>
         </button>
@@ -47,5 +65,5 @@ export function Navbar() {
         </div>
       </div>
     </nav>
-  )
+  );
 }
