@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import "../../styles/profile.css";
 import FindCanchaButton from "../component/FindCanchaButton";
-import RentButton from "../component/RentButton";
 import UploadWidget from '../component/UploadWidget';
 import { Context } from "../store/appContext";
 

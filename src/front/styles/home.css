@@ -1,3 +1,8 @@
 .home {
     transition: background-image 0.2s ease;
 }
+
+body {
+    margin-top: 48px;
+    margin-bottom: 155px;
+}

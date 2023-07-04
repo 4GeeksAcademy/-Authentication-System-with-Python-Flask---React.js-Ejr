@@ -1,18 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import UploadWidget from "../component/UploadWidget";
 
-
 function ForTesting() {
+    const [picture, setPicture] = useState("");
+
+    const handlePictureUpload = (uploadedPicture) => {
+        setPicture(uploadedPicture);
+    };
+
     return (
         <>
-            <div> HOLA</div>
+            <div> HOLAaaaaaaaaaaaaa</div>
             <div>
-                <UploadWidget />
+                <div> HOLAaaaaaaaaaaaaa</div>
+                <UploadWidget handleUpload={handlePictureUpload} />
+                {picture && <img src={picture} alt="Uploaded Picture" />}
             </div>
-
         </>
-    )
-
+    );
 }
 
-export default ForTesting
+export default ForTesting;

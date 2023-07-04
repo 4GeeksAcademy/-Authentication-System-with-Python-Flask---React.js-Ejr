@@ -5,6 +5,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 			message: null,
 			users: [],
 			canchas: [],
+			imgProfile: [],
+			imgCancha: [],
 			user: [],
 			id: null,
 			demo: [
@@ -143,6 +145,62 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 				catch (error) {
 					console.error("error en getUser")
+				}
+			},
+
+
+			saveImgProfile: async (img, user_id) => {
+				const options = {
+					method: "POST",
+					headers: {
+						"Authorization": "Bearer " + sessionStorage.getItem("auth_token"),
+						"Content-Type": "application/json" // Add Content-Type header
+					},
+					body: JSON.stringify({ img }) // Send the img data in the request body
+				};
+
+				try {
+					const url = `https://ss-api-render-2.onrender.com/user/${user_id}`;
+					const resp = await fetch(url, options);
+
+					if (resp.status !== 200) {
+						alert("error en fetch token");
+						return false;
+					}
+
+					const data = await resp.json();
+					sessionStorage.setItem("imgProfile", JSON.stringify(data));
+
+					return true;
+				} catch (error) {
+					console.error("An error occurred:", error);
+					return false;
+				}
+			},
+
+
+			updateImgProfile: async (img, user_id) => {
+				const options = {
+					method: "PUT",
+					headers: { Authorization: "Bearer " + sessionStorage.getItem("auth_token") },
+					body: JSON.stringify(img)
+				};
+
+				try {
+					const resp = await fetch(`https://ss-api-render-2.onrender.com/user/${user_id}`, options);
+
+					if (resp.status !== 200) {
+						alert("error en fetch token");
+						return false;
+					}
+
+					const data = await resp.json();
+
+					sessionStorage.setItem("imgProfile", data);
+
+					return true;
+				} catch (error) {
+					console.error("error en login");
 				}
 			},
 

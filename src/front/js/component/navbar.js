@@ -6,7 +6,8 @@ export function Navbar() {
   return (
     <nav className="navbar navbar-dark fixed-top" style={{ backgroundColor: "#1c2331" }} >
       <div className="container-fluid " style={{ backgroundColor: "#1c2331" }}>
-        <a className="navbar-brand text-uppercase fw-bold" href="#">Sport Spot</a>
+
+        <Link className="navbar-brand text-uppercase fw-bold" to="/">Sport Spot </Link> <i class="fa-light fa-basketball-hoop fa-bounce"></i>
 
         <button className="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar">
           <span className="navbar-toggler-icon"></span>
