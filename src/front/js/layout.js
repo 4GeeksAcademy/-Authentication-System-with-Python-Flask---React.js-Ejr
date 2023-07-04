@@ -1,19 +1,24 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BackendURL } from "./component/backendURL";
 import { Navbar } from "./component/navbar";
 import ScrollToTop from "./component/scrollToTop";
-import { BackendURL } from "./component/backendURL";
 
-import { Home } from "./pages/home";
+import InformationCard from "./component/BigCardInformation";
+import { Profile } from "./pages/Profile-Protected";
+import { AddCanchas } from "./pages/addCanchas";
+import RenderCanchas from "./pages/canchas";
 import { Demo } from "./pages/demo";
-import { Single } from "./pages/single";
+import ForTesting from "./pages/forTesting";
+import { Home } from "./pages/home";
 import { Login } from "./pages/login";
 import { Signup } from "./pages/signup";
+import { Single } from "./pages/single";
 import injectContext from "./store/appContext";
-import { Profile } from "./pages/Profile-Protected";
+import { ProfileProtected } from "./pages/Profile-Protected";
 import Canchas from "./pages/canchas";
-import InformationCard from "./component/BigCardInformation";
-import { AddCanchas } from "./pages/addCanchas";
+import { BigCardInformation } from "./component/BigCardInformation";
+import { addCanchas } from "./pages/addCanchas";
 import { HomeLogin } from "./pages/homeLogin";
 
 import { Footer } from "./component/footer";
@@ -23,6 +28,7 @@ const Layout = () => {
     //the basename is used when your project is published in a subdirectory and not in the root of the domain
     // you can set the basename on the .env file located at the root of this project, E.g: BASENAME=/react-hello-webapp/
     const basename = process.env.BASENAME || "";
+    const logged = sessionStorage.getItem("isLoggedIn");
 
     if (!process.env.BACKEND_URL || process.env.BACKEND_URL == "") return <BackendURL />;
 
@@ -32,12 +38,13 @@ const Layout = () => {
                 <Navbar />
                 <ScrollToTop>
                     <Routes>
-                        <Route element={<Home />} path="/" />
+                        <Route element={logged ? <Profile /> : <Home />} path="/" />
                         <Route element={<Login />} path="/login" />
                         <Route element={<HomeLogin />} path="/home2" />
                         <Route element={<Signup />} path="/signup" />
                         <Route element={<Profile />} path="/profile" />
-                        <Route element={<Canchas />} path="/canchas" />
+                        <Route element={<RenderCanchas />} path="/canchas" />
+                        <Route element={<ForTesting />} path="/test" />
                         <Route element={<InformationCard />} path="/information" />
                         <Route element={<Demo />} path="/demo" />
                         <Route element={<AddCanchas />} path="/addcanchas" />
@@ -45,6 +52,7 @@ const Layout = () => {
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
                 </ScrollToTop>
+                <Footer />
             </BrowserRouter>
         </div>
     );

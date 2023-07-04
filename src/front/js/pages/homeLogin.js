@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import CanchaCard from "../component/CanchaCard";
 import BigCardInformation from "../component/BigCardInformation";
 import BigCardInformation2 from "../component/BigCardInformation2";
-import { Barousel } from "../component/carousel";
+import { Carousel } from "../component/carousel";
+
+
 
 export const HomeLogin = () => {
     const [comunasRegion, setcomunasRegion] = useState([])
@@ -197,8 +199,8 @@ export const HomeLogin = () => {
     return (
         <div className="container">
             <div className="searchForm">
-                <button type="button" className="btn btn-primary">Search</button>
-                <select className="form-select" aria-label="Default select example" onChange={e => buscarComunas(e)}>
+                <button type="button" className="btn btn- me-3">Search</button>
+                <select className="form-select-bg-size: 10px, 15px me-3" aria-label=".form-select-sm example" onChange={e => buscarComunas(e)}>
                     <option selected>Region</option>
                     <option value="1">Arica y Parinacota</option>
                     <option value="2">Tarapaca</option>
@@ -217,7 +219,7 @@ export const HomeLogin = () => {
                     <option value="15">Aysén</option>
                     <option value="16">Magallanes</option>
                 </select>
-                <select className="form-select" aria-label="Default select example">
+                <select className="form-select-bg-size: 10px, 20px me-3" aria-label=".form-select-sm example" form-select-bg-size>
                     <option selected>Comuna</option>
                     {
                         comunasRegion.map((comuna) =>
@@ -226,7 +228,7 @@ export const HomeLogin = () => {
                     }
 
                 </select>
-                <select className="form-select" aria-label="Default select example">
+                <select className="form-select-bg-size: 10px, 20px" aria-label=".form-select-sm example">
                     <option selected>Deporte</option>
                     <option value="1">Tenis</option>
                     <option value="2">Futbol</option>
@@ -235,9 +237,14 @@ export const HomeLogin = () => {
                     <option value="5">Baby Futbol</option>
                 </select>
             </div>
-            <button type="button" className="btn btn-primary">Administra Tus Canchas</button>
+            <BigCardInformation2 />
 
-            <Barousel />
+
+
+
+
+
+
 
         </div>
 

@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
-import { Context } from "../store/appContext";
+import { useNavigate } from "react-router-dom";
 import "../../styles/login.css";
-import { useNavigate } from "react-router-dom"
+import { Context } from "../store/appContext";
 
 export const Signup = () => {
     const { store, actions } = useContext(Context)
@@ -34,15 +34,11 @@ export const Signup = () => {
                     </div>
                     <div className="mb-3">
                         <label htmlFor="lastName" className="form-label">Lastname</label>
-                        <input type="password" className="form-control" id="lastName" value={lastName} onChange={(e) => setLastName(e.target.value)} />
+                        <input type="lastname" className="form-control" id="lastName" value={lastName} onChange={(e) => setLastName(e.target.value)} />
                     </div>
                     <div className="mb-3">
                         <label htmlFor="exampleInputPassword1" className="form-label">Password</label>
                         <input type="password" className="form-control" id="exampleInputPassword1" value={pass} onChange={(e) => setPass(e.target.value)} />
-                    </div>
-                    <div className="mb-3 form-check">
-                        <input type="checkbox" className="form-check-input" id="exampleCheck1" />
-                        <label className="form-check-label" htmlFor="exampleCheck1">Check me out</label>
                     </div>
                     <button type="submit" className="btn btn-primary" onClick={handleClick}>Submit</button>
                 </form>
