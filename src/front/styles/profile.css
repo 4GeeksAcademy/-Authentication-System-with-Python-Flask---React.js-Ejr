@@ -100,12 +100,12 @@
     justify-content: end;
 }
 
-.published{
+.state_product_profile_box{
     margin-top: 1rem;
     margin-right: 1rem;
 }
 
-.published_date_profile{
+.state_product_profile{
     font-weight: bolder;
 }
 

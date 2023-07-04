@@ -17,8 +17,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			
 			users: [],
-            token: ""
+            token: "",
+			products: []
 		},
+
 		actions: {
 			login: async (email, password) => {
 				const store = getStore();
@@ -111,6 +113,21 @@ const getState = ({ getStore, getActions, setStore }) => {
 				.then ((response) => {
 					setStore({user: response.data});
 				});
+			},
+			getProducts: () => {
+				const store = getStore();
+				fetch(process.env.BACKEND_URL + `api/profile/onsale`, {
+					method: "GET",
+					headers: {
+						"Content-Type": "application/json",
+						"Authorization": `Bearer ${localStorage.getItem("token")}`
+					}
+				})
+				.then (response => response.json())
+				.then ((response) => {
+					setStore({ products: response.data });
+					console.log(response.data)
+				})
 			}
 		}
 	};

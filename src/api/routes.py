@@ -147,8 +147,8 @@ def signup():
 @jwt_required()
 def getProducts():
     current_user = get_jwt_identity()
-    products = Product.query.filter_by(id=current_user).first()
+    products = Product.query.filter(Product.user_id == current_user).all()
     response_body = {
-        "data": products.serialize()
+        "data": [product.serialize() for product in products]
     }
     return jsonify(response_body), 200
