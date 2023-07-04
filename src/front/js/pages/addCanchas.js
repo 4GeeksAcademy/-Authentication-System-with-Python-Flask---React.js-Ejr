@@ -1,6 +1,26 @@
-import React from "react";
+import React, { useContext, useState, useEffect } from "react";
+
 
 export const AddCanchas = () => {
+
+    const [currentImageIndex, setCurrentImageIndex] = useState(0);
+    const images = [
+        "https://uploads-ssl.webflow.com/632871e15b53a0140af28aeb/633b061d864ce251bb36073e_pexels-markus-spiske-1752757.jpg",
+        "https://journey.app/blog/wp-content/uploads/2021/11/reglas-deportivas_Tenis_.jpg",
+        "https://thephysiocompany.co.uk/wp-content/uploads/football.jpg",
+
+    ];
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
+        }, 5000);
+
+        return () => {
+            clearInterval(interval);
+        };
+    }, []);
+
+    const currentImage = images[currentImageIndex];
     return (
         <>
             <h1>Agrega tu Cancha</h1>
@@ -52,6 +72,8 @@ export const AddCanchas = () => {
 
 
             </form >
+
+            <img src="`url(${currentImage})`" class="rounded float-end" alt="..." />
 
         </>
     );

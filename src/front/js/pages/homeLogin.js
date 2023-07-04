@@ -237,7 +237,7 @@ export const HomeLogin = () => {
                     <option value="5">Baby Futbol</option>
                 </select>
             </div>
-            <BigCardInformation2 />
+
 
 
 
