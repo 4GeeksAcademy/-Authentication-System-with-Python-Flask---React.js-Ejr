@@ -38,29 +38,15 @@ export const On_sale = () => {
                                     <h5 className="modal-title" id="exampleModalLabel">¿Has vendido este vehículo?</h5>
                                     <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
-                                <div className="modal-body">
-                                    <div className="product_img_profile_box col-2">
+                                <div className="modal-body row">
+                                    <div className="product_img_profile_box col-3">
                                         <img src="https://www.motofichas.com/images/phocagallery/Honda/cb500f-2022/01-honda-cb500f-2022-estudio-rojo.jpg" alt="product" className="product_img_profile"/>
                                     </div>
-                                    <h6 className="state_product_profile">{product.name}</h6>
-                                </div>
-                                <div>
-                                    <div className="form-check">
-                                        <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" />
-                                        <label className="form-check-label" for="flexRadioDefault1">
-                                            Usuario 1
-                                        </label>
-                                    </div>
-                                    <div className="form-check">
-                                        <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked />
-                                        <label className="form-check-label" for="flexRadioDefault2">
-                                            Usuario 2
-                                        </label>
-                                    </div>
+                                    <h6 className="state_product_profile col-8">{product.name}</h6>
                                 </div>
                                 <div className="modal-footer">
-                                    <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                                    <button type="button" className="btn btn-primary">marcar como vendido</button>
+                                    <button type="button" className="btn btn_config cancel" data-bs-dismiss="modal">Cancelar</button>
+                                    <button type="button" className="btn btn_config reservado">Reservado</button>
                                 </div>
                             </div>
                         </div>

@@ -18,7 +18,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 			
 			users: [],
             token: "",
-			products: []
+			products: [],
+			favorites: []
 		},
 
 		actions: {
@@ -128,9 +129,65 @@ const getState = ({ getStore, getActions, setStore }) => {
 					setStore({ products: response.data });
 					console.log(response.data)
 				})
+			},
+			getFavorites: () => {
+				const store = getStore();
+				fetch(process.env.BACKEND_URL + `api/profile/favorites`, {
+					method: "GET",
+					headers: {
+						"Content-Type": "application/json",
+						"Authorization": `Bearer ${localStorage.getItem("token")}`
+					}
+				})
+				.then (response => response.json())
+				.then ((response) => {
+					setStore({ favorites: response});
+					console.log(response.data)
+				})
+			},
+			postFavorite: (product_id) => {
+				const token = localStorage.getItem("token");
+				const requestOptions = {
+				  method: "POST",
+				  headers: {
+					"Content-Type": "application/json",
+					Authorization: `Bearer ${token}`
+				  },
+				  body: JSON.stringify({ product_id })
+				};
+			  
+				fetch(process.env.BACKEND_URL + "api/profile/favorites", requestOptions)
+				  .then(response => response.json())
+				  .then(data => {
+					console.log(data);
+				  })
+				  .catch(error => {
+					console.error("Error:", error);
+				  });
+			},
+
+			putFavorite: (product_id) => {
+				const token = localStorage.getItem("token");
+				const requestOptions = {
+				  method: "PUT",
+				  headers: {
+					"Content-Type": "application/json",
+					Authorization: `Bearer ${token}`
+				  }
+				};
+			  
+				fetch(process.env.BACKEND_URL + `api/profile/favorites/${product_id}`, requestOptions)
+				  .then(response => response.json())
+				  .then(data => {
+					console.log(data);
+				  })
+				  .catch(error => {
+					console.error("Error:", error);
+				  });
 			}
+			  
 		}
-	};
+	}
 };
 
 export default getState;

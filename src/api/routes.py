@@ -2,8 +2,9 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Product
+from api.models import db, User, Product, Favorites
 from api.utils import generate_sitemap, APIException
+
 
 import pandas as pd
 
@@ -152,3 +153,68 @@ def getProducts():
         "data": [product.serialize() for product in products]
     }
     return jsonify(response_body), 200
+
+@api.route('/profile/favorites', methods=['POST'])
+@jwt_required()
+def saveFavorites():
+    current_user = get_jwt_identity()
+    data = request.get_json()
+    product_id = data.get("product_id")
+
+    usuario = User.query.get(current_user)
+    producto = Product.query.get(product_id)
+
+    if not producto:
+        return jsonify({"mensaje": "Producto no encontrado"}), 404
+
+    favorite = Favorites(user_id=usuario.id, product_id=producto.id)
+    db.session.add(favorite)
+    db.session.commit()
+
+    return jsonify({"mensaje": "Producto guardado como favorito"}), 200
+
+@api.route('/profile/favorites', methods=['GET'])
+@jwt_required()
+def getFavorites():
+    current_user = get_jwt_identity()
+
+    usuario = User.query.get(current_user)
+    if not usuario:
+        return jsonify({"mensaje": "Usuario no encontrado"}), 404
+
+    favorites = Favorites.query.filter_by(user_id=usuario.id).all()
+
+    response = []
+    for favorite in favorites:
+        product = Product.query.get(favorite.product_id)
+        response.append({
+            "product_id": product.id,
+            "name": product.name,
+            "description": product.description,
+            "price": product.price,
+            "year": product.year,
+            "km": product.km
+        })
+
+    return jsonify(response), 200
+
+@api.route('/profile/favorites/<int:product_id>', methods=['PUT'])
+@jwt_required()
+def removeFavorite(product_id):
+    current_user = get_jwt_identity()
+
+    usuario = User.query.get(current_user)
+    producto = Product.query.get(product_id)
+
+    if not producto:
+        return jsonify({"mensaje": "Producto no encontrado"}), 404
+
+    favorite = Favorites.query.filter_by(user_id=usuario.id, product_id=producto.id).first()
+
+    if not favorite:
+        return jsonify({"mensaje": "El producto no está marcado como favorito"}), 404
+
+    db.session.delete(favorite)
+    db.session.commit()
+
+    return jsonify({"mensaje": "Producto desmarcado como favorito"}), 200

@@ -115,8 +115,14 @@
 
 .sold-product_profile{
     width: 40rem;
-    height: 25rem;
+    height: 20rem;
     border-radius: 12px;
+}
+
+.modal_body{
+    margin-left: 3rem;
+    display: flex;
+    align-content: center;
 }
 
 .product_img_profile_box{
@@ -153,6 +159,10 @@
     overflow-x: auto
 }
 
+.button_favorite{
+    border: none;
+    background: none;
+}
 
 .product_img_profile_favorites_box{
     width: 10rem;
@@ -173,7 +183,15 @@
     background-color: whitesmoke;
     border-radius: 12px;
     padding-top: 0.5rem;
-    text-align: justify
+    text-align: justify;
+    margin-left: 1rem;
+}
+
+.limit-text {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 10rem; 
 }
 
 .product_description_profile_favorites{
