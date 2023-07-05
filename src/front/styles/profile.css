@@ -113,12 +113,10 @@
     font-weight: bold;
 }
 
-#checkbox{
-    width: 2.5rem;
-    height: 2.5rem;
-    margin-right: 2rem;
-    margin-top: 1.5rem;
-    align-content: center;
+.sold-product_profile{
+    width: 40rem;
+    height: 25rem;
+    border-radius: 12px;
 }
 
 .product_img_profile_box{
