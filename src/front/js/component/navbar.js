@@ -110,6 +110,12 @@ export const Navbar = () => {
     );
   };
 
+  useEffect(() => {
+    actions.getToken()
+  }), []
+
+
+
   return (
     <nav className="navbar navbar-expand-lg bg-body-tertiary">
       <div className="container-fluid mx-3">
@@ -138,7 +144,7 @@ export const Navbar = () => {
               id="navbarNavDropdown"
             >
               <ul className="navbar-nav ml-auto align-items-end">
-                {!token ? (
+                {!store.token ? (
                   <>
                     <li className="nav-item">
                       <Link
@@ -178,7 +184,7 @@ export const Navbar = () => {
                     </li>
 
                     <li className="nav-item">
-                      {!token ? (
+                      {!store.token ? (
                         <button
                           className="nav-link btn-plus mb-2 me-3"
                           onClick={openModal}
@@ -207,28 +213,31 @@ export const Navbar = () => {
                       </Link>
                       <ul className="dropdown-menu ">
                         <li>
-                          <a
+                          <Link
+                            to="/profile"
                             className="dropdown-item justify-content-end d-flex "
                             href="/profile"
                           >
                             Mi perfil
-                          </a>
+                          </Link>
                         </li>
                         <li>
-                          <a
+                          <Link
+                            to="/profile/configuration"
                             className="dropdown-item justify-content-end d-flex "
                             href="/configuration"
                           >
                             Configuración
-                          </a>
+                          </Link>
                         </li>
                         <li>
-                          <a
+                          <Link
+                            to="/profile/onsale"
                             className="dropdown-item justify-content-end d-flex "
                             href="favorites"
                           >
-                            Favoritos
-                          </a>
+                            Mis productos
+                          </Link>
                         </li>
                         <li>
                           <hr className="dropdown-divider" />
