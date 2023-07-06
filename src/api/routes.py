@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Product
+from api.models import db, User, Product, Brand, Model
 from api.utils import generate_sitemap, APIException
 
 import pandas as pd
@@ -37,22 +37,37 @@ def handle_hello():
 
     return jsonify(response_body), 200
 
+# @api.route('car-models/<string:brand>', methods=['GET'])
+# def get_car_models(brand):
+#     df = pd.read_csv('/workspaces/Watacar_v2/src/api/brands-and-models/cars-2020.csv')
+#     models =  df.loc[df['make'] == brand, 'model'].tolist()
+#     #gpt recomienda crear un diccionario
+#     model_dictionary = [{'name': model, 'selected': False}for model in models]
+#     return jsonify(model_dictionary)
 
 
-@api.route('car-brands', methods=['GET'])
-def get_car_brands():
-    cars_data = pd.read_csv('/workspaces/Watacar_v2/src/api/brands-and-models/cars-2020.csv', header=None)
-    
-    model = request.args.get('model')
-    brands = cars_data[cars_data['model'].str.lower() == model.lower()]['make'].unique().tolist()
+@api.route('/car-brands', methods=['GET'])
+def obtener_brands():
+    brands = Brand.query.all()
 
-    return jsonify(brands)
+    brand_list = []
+    for brand in brands:
+        brand_data = brand.serialize()
+        brand_list.append(brand_data)
 
-@api.route('car-models', methods=['GET'])
-def get_car_models():
-    cars_data = pd.read_csv('/workspaces/Watacar_v2/src/api/brands-and-models/cars-2020.csv')
-    models = cars_data['model'].unique().tolist()
-    return jsonify(models)
+    return jsonify(brand_list)
+
+
+@api.route('/car-models', methods=['GET'])
+def get_models():
+    models = Model.query.all()
+    model_list = [model.serialize() for model in models]
+    return jsonify(model_list)
+
+
+
+
+
 
 
 @api.route('moto-brands', methods=['GET'])
@@ -67,33 +82,72 @@ def get_moto_models():
     models = moto_data['Model'].unique().tolist()
     return jsonify(models)
 
-@api.route('upload-car', methods=['POST'])
-def upload_car():
 
-    data = request.get_json()
-    title = data.get('name')
-    state = data.get('state')
-    price = data.get('price')
-    description = data.get('description')
-    year = data.get('year')
-    km = data.get('km')
-    fuel = data.get('fuel')
-    brand = data.get('brand_id')
-    model = data.get('model_id')
-    images = data.get('images')
-    user_id = data.get('user_id')
 
-    upload = Product(name = title, state = state, price = price, description = description,
-                     year = year, km = km, fuel = fuel, brand_id = brand, model_id = model,
-                     images = images, user_id = user_id)
+# @api.route('car-brands', methods=['GET'])
+# def get_brand():
+#     brands = set()
+#     df = pd.read_csv('/workspaces/Watacar_v2/src/api/brands-and-models/cars-2020.csv')
 
-    if not upload:
-        return jsonify({"message" : "Complete the fields"}), 400
+#     brand_column_index = 1
 
-    db.session.add(upload)
-    db.session.commit()
+#     for _, row in df.iterrows():
+#         brand_name = row.get('name')
+#         if brand_name:
+#             brand = Brand.query.filter_by(name=brand_name).first()
+#             if brand is None:
+#                 brand = Brand(name=brand_name)
+#                 db.session.add(brand)
+#                 db.session.commit()
+#                 brands.add(brand_name)
 
-    return jsonify({"message" : "Your product has been successfully uploaded"}), 200
+
+#     return jsonify(list(brands)) # Funciona, renderiza solo las marcas SIN repetirse
+
+
+@api.route('/car-brand-models/<brand>', methods=['GET'])
+def get_brand_models(brand):
+    df = pd.read_csv('/workspaces/Watacar_v2/src/api/brands-and-models/cars-2020.csv')
+    
+    filtered_df = df[df['make'] == brand]
+    models = filtered_df['model'].tolist()
+    return jsonify(models)
+
+
+
+
+# @api.route('upload-car', methods=['POST'])
+# def upload_car():
+
+#     data = request.get_json()
+    
+#     title = data.get('name')
+#     state = data.get('state')
+#     price = data.get('price')
+#     description = data.get('description')
+#     year = data.get('year')
+#     km = data.get('km')
+#     fuel = data.get('fuel')
+#     brand = data.get('brand_id')
+#     model = data.get('model_id')
+#     images = data.get('images')
+#     user_id = data.get('user_id')
+
+#     product = Product(name = title, state = state, price = price, description = description,
+#                      year = year, km = km, fuel = fuel, brand_id = brand, model_id = model,
+#                      images = images, user_id = user_id)
+    
+#     
+
+
+#     if not name:
+#         return jsonify({"message" : "Complete the fields"}), 400
+
+#     db.session.add(upload)
+#     db.session.commit()
+
+#     return jsonify({"message" : "Your product has been successfully uploaded"}), 200
+
 
 
 

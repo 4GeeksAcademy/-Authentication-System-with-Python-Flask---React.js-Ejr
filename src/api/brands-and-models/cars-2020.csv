@@ -14,7 +14,7 @@ year,make,model,body_styles
 2020,Audi,A4,"Sedan"
 2020,Audi,A5,"Coupe, Convertible, Sedan"
 2020,Audi,A6,"Sedan"
-2020,Audi,A6 allroad,"Wagon"
+2020,Audi,A6,"Wagon"
 2020,Audi,A7,"Sedan"
 2020,Audi,Q3,"SUV"
 2020,Audi,Q5,"SUV"
@@ -111,6 +111,7 @@ year,make,model,body_styles
 2020,Ford,Ranger,"Pickup"
 2020,Ford,Transit Connect Cargo,"Van"
 2020,Ford,Transit Connect Wagon,"Van"
+--------------------------------------
 2020,Genesis,G70,"Sedan"
 2020,Genesis,G80,"Sedan"
 2020,Genesis,G90,"Sedan"
@@ -235,6 +236,7 @@ year,make,model,body_styles
 2020,MINI,Countryman,"SUV"
 2020,MINI,Hardtop 2 Door,"Hatchback"
 2020,MINI,Hardtop 4 Door,"Hatchback"
+--------------------------------------------
 2020,Mitsubishi,Eclipse Cross,"SUV"
 2020,Mitsubishi,Mirage,"Hatchback"
 2020,Mitsubishi,Mirage G4,"Sedan"
