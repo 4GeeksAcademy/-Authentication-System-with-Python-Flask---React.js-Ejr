@@ -244,6 +244,20 @@
     color: #125c8e;
 }
 
+.sales_profile_box{
+    background-color: white;
+    margin: 3rem;
+    height: 17rem;
+    border-radius: 12px;
+    padding: 2rem;
+}
+
+.date_sale_profile{
+    color: #125c8e;
+    font-size: larger;
+    font-weight: bold !important;
+}
+
 @media only screen and (max-width: 600px) {
     .container_profile{
         margin: 1rem;
