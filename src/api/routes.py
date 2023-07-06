@@ -255,13 +255,16 @@ def getReviews():
     for review in reviews:
         stars = review.stars.value    
         product = Product.query.get(review.product_id)
+        user = User.query.get(review.user_id)
 
         review_data = {
             "product_id": review.product_id,
             "stars": int(stars),
             "comment": review.comment,
             "given_review_id": review.given_review_id,
-            "product_name": product.name
+            "product_name": product.name,
+            "recived_review_id": review.recived_review_id,
+            "user_name": user.name
         }
         review_list.append(review_data)
 

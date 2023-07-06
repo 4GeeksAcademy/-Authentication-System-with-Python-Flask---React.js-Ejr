@@ -20,7 +20,7 @@ export const Profile_reviews = () => {
                     <img src="https://www.motofichas.com/images/phocagallery/Honda/cb500f-2022/01-honda-cb500f-2022-estudio-rojo.jpg" alt="product" className="product_img_profile_favorites"/>
                 </div>
                 <div className="review_content_profile col-8">
-                    <h6 className="name_product_review">Nombre del producto</h6>
+                    <h6 className="name_product_review">{reviews.product_name}</h6>
                     <h6 className="stars_review">{reviews.stars}</h6>
                     <h6 className="comment_review">{reviews.comment}</h6>
                     <h6 className="user_reviewing">Valoración por: <strong>usuario1</strong> el 13/06/2022</h6>
