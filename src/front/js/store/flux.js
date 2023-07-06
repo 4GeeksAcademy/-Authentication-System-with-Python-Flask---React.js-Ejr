@@ -17,7 +17,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			
 			users: [],
-            token: "",
+
+      token: localStorage.getItem("token") || "",
 			products: [],
 			favorites: [],
 			reviews: []
@@ -37,7 +38,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					password: password
 				  })
 				};
-				
+			  
 				try {
 				  const resp = await fetch(`${process.env.BACKEND_URL}api/login`, opts);
 				  const data = await resp.json();
@@ -47,8 +48,31 @@ const getState = ({ getStore, getActions, setStore }) => {
 				} catch (error) {
 				  console.error(error);
 				}
-			  }, 
+			  },
+		
+			getUser: () => {
+				const store = getStore();
+				fetch(process.env.BACKEND_URL + `api/configuration`, {
+					method: "GET",
+					headers: {
+						"Content-Type": "application/json",
+						"Authorization": `Bearer ${localStorage.getItem("token")}`
+					}
+				})
+				.then (response => response.json())
+				.then ((response) => {
+					setStore({user: response.data});
+				});
+			},
 
+
+			getToken: () => {
+				const store = getStore()
+				if (localStorage.getItem("token")) {
+				  return localStorage.getItem("token"); 
+				}
+				return store.token; 
+			  },
 
 
 			//   login: async (email, password) => {
@@ -102,6 +126,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				//reset the global store
 				setStore({ demo: demo });
 			},
+
 			getUser: () => {
 				const store = getStore();
 				fetch(process.env.BACKEND_URL + `api/configuration`, {
@@ -224,9 +249,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log(response)
 				})
 			},
-			  
 		}
 	}
 };
 
 export default getState;
+
+

@@ -1,3 +1,4 @@
+
 /* 
     General Styles used on every website (Don't Repeat Yourself)
 */
@@ -35,6 +36,31 @@ li {
   font-family: 'Roboto', sans-serif;
 }
 
+
+body {
+  font-family: 'Roboto', sans-serif;
+}
+
+h1 {
+  font-family: 'Roboto', sans-serif;
+}
+
+h2 {
+  font-family: 'Roboto', sans-serif;
+}
+
+h3 {
+  font-family: 'Roboto', sans-serif;
+}
+
+h4 {
+  font-family: 'Roboto', sans-serif;
+}
+
+li {
+  font-family: 'Roboto', sans-serif;
+}
+
 #light{
     background-color: #c4d8f2;
 }
@@ -53,6 +79,71 @@ li {
 
 .mode{
     font-size: 2rem;
+}
+
+
+#tittle-nav {
+    font-size: xx-large;
+    font-weight: bolder;
+    
+}
+
+.switch {
+
+    font-size: medium;
+    
+}
+
+
+.btn-plus {
+  display: flex;
+  align-items: center;
+  height: 28px;
+  width: 36px;
+  margin: auto;
+  background-color: rgb(15, 76, 117);
+  color: white;
+  border-radius: 7px;
+  border-color: rgb(15, 76, 117);
+  border-top: rgb(15, 76, 117);
+  border-left: rgb(15, 76, 117);
+  border-right: rgb(15, 76, 117);
+  border-bottom: rgb(15, 76, 117);
+}
+
+.btn-plus:hover {
+  background-color: rgb(36, 104, 183);
+}
+
+.fa-plus {
+  font-size: small;
+  margin-left: 4px;
+}
+
+
+
+  
+  #heart {
+
+    margin-bottom: -5px;
+    color: rgb(36, 144, 215);
+    font-size: x-large;
+    
+  }
+  
+
+  .switch {
+
+    margin-top: -3px;
+    width: 70px; 
+    height: 30px; 
+  }
+  
+  
+#iconProfile {
+  margin-bottom: 4px;
+  font-size: larger;
+
 }
 
 .input-with-icon {
@@ -89,10 +180,6 @@ li {
   background-color: #2776ab;
 }
 
-.active {
-  background-color: #2776ab; 
-  color: #ffffff;
-}
 
 .profile_navbar_text{
   margin-bottom: 1.5rem;
@@ -105,4 +192,34 @@ li {
     margin-left: 2.7rem;
     margin-bottom: 1rem;
   }
+}
+
+
+/* Footer */
+footer {
+  position: relative;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: #2a5eb7;
+  text-align: justify;
+  padding: 10px;
+}
+ul {
+  list-style-type: none;
+}
+
+div h5 {
+  color: white;
+}
+
+div ul li {
+  font-size: small;
+  color: rgb(224, 220, 220);
+}
+
+#footerH4 {
+  color: rgb(255, 255, 255);
+  text-decoration-line: none;
+  
 }
