@@ -60,10 +60,24 @@ def obtener_brands():
 
 @api.route('/car-models', methods=['GET'])
 def get_models():
-    models = Model.query.all()
+    brand_id = request.args.get('brandId')
+    if brand_id:
+        models = Model.query.filter_by(brand_id=brand_id).all()
+    else:
+        models = Model.query.all()
+
     model_list = [model.serialize() for model in models]
     return jsonify(model_list)
 
+
+@api.route('/car-models/<int:id>', methods=['GET'])
+def get_model(id):
+    model = Model.query.get(id)
+    if model:
+        model_data = model.serialize()
+        return jsonify(model_data)
+    else:
+        return jsonify({'message': 'Model not found'}), 404
 
 
 

@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import '/workspaces/Watacar_v2/src/front/styles/uploadproduct.css';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import Dropzone from 'react-dropzone';
+import e from 'cors';
 
 export const UploadCar = () => {
 
@@ -13,6 +14,8 @@ export const UploadCar = () => {
   const [data, setData] = useState("")
   const [isSubmitClicked, setIsSubmitClicked] = useState(false);
   const [submitData, setSubmitData] = useState()
+  const [selectedBrand, setSelectedBrand] = useState("");
+
 
 
 const getBrands = () => {
@@ -25,18 +28,25 @@ const getBrands = () => {
 }
 
 const getModelsByBrand = (brandId) => {
-  fetch(process.env.BACKEND_URL + `api/car-brand-models/${brandId}`)
-    .then(resp => resp.json())
-    .then(data => {
-      setCarModels(data);
-    })
-    .catch(err => console.error(err));
-};
+  if (brandId !== selectedBrand) {
+    fetch(process.env.BACKEND_URL + `api/car-models?brandId=${brandId}`)
+      .then((resp) => resp.json())
+      .then((data) => {
+        console.log(data)
+        setCarModels(data)
+        setSelectedBrand(brandId)
+        setSelectedModel("")
+      })
+      .catch((err) => console.error(err))
+  }
+}
+
+
 
 
 useEffect(() => {
   getBrands();
-  getModelsByBrand();
+  //getModelsByBrand();
 }, []);
 
 
@@ -61,7 +71,7 @@ useEffect(() => {
       setLoading("true")
       setSubmitData(formData)
 
-      setUploadedFiles((prevUploadedFiles) => [...prevUploadedFiles, file.name]);
+      setUploadedFiles((prevUploadedFiles) => [...prevUploadedFiles, file.name])
 
   
 
@@ -69,14 +79,22 @@ useEffect(() => {
   })};
 
   const handleChange = (ev) => {
+    
+    getModelsByBrand(ev.target.value)
     setData({...data , [ev.target.name] : ev.target.value}) 
   }
 
+
   const handleBrandChange = (ev) => {
     const brandId = ev.target.value;
-    setData({ ...data, brand: brandId });
+    setSelectedBrand(brandId);
     getModelsByBrand(brandId);
   };
+
+  const handleModelChange = (ev) => {
+    setData({...data , [ev.target.name] : ev.target.value}) 
+  }
+  
   
   
   
@@ -130,9 +148,9 @@ useEffect(() => {
 
               <div className='col-3 ms-3'>
                 <label htmlFor='select-right'> <h6><strong>Modelo</strong></h6> </label>
-                  <select id='select-right' name='model' className='select' onChange={e => handleChange(e)}>
+                <select id='select-right' name='model' className='select' onChange={e => handleModelChange(e)} >
                     {carModels.map((model, index) => (
-                      <option key={index} value={model.id}>{model.name}</option>
+                      <option style={{color: 'green'}} key={index} value={model.id}>{model.model}</option>
                     ))}
                   </select>
               </div>
