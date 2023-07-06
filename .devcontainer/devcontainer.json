@@ -27,6 +27,20 @@
 	// Use 'postCreateCommand' to run commands after the container is created.
 	"postCreateCommand": "python docs/assets/greeting.py both > /workspaces/.codespaces/shared/first-run-notice.txt && npm install",
 
+	"customizations": {
+		// Configure properties specific to VS Code.
+		"vscode": {
+			// Set *default* container specific settings.json values on container create.
+			"settings": {
+				"editor.formatOnSave": true,
+				"editor.defaultFormatter": "esbenp.prettier-vscode",
+				"workbench.editorAssociations": {   
+					"*.md": "vscode.markdown.preview.editor"
+				}
+			},
+			"extensions": [ "esbenp.prettier-vscode", "MS-vsliveshare.vsliveshare" ]
+		}
+	}
 	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
 	// "remoteUser": "root"
 }
