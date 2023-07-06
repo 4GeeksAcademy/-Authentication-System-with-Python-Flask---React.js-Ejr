@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Product, Favorites
+from api.models import db, User, Product, Favorites, Review
 from api.utils import generate_sitemap, APIException
 
 
@@ -218,3 +218,51 @@ def removeFavorite(product_id):
     db.session.commit()
 
     return jsonify({"mensaje": "Producto desmarcado como favorito"}), 200
+
+@api.route('/profile/reviews', methods=['POST'])
+@jwt_required()
+def addReview():
+    current_user = get_jwt_identity()
+    data = request.get_json()
+    product_id = data.get("product_id")
+    stars = str(data.get("stars"))  # Convertir a cadena
+    comment = data.get("comment")
+
+    user = User.query.get(current_user)
+    product = Product.query.get(product_id)
+
+    if not product:
+        return jsonify({"mensaje": "Producto no encontrado"}), 404
+
+    recived_user = User.query.get(product.user_id)
+
+    review = Review(given_review_id=user.id, recived_review_id=recived_user.id, product_id=product.id, stars=stars, comment=comment)
+    db.session.add(review)
+    db.session.commit()
+
+    return jsonify({"mensaje": "Reseña agregada correctamente"}), 200
+
+@api.route('/profile/reviews', methods=['GET'])
+@jwt_required()
+def getReviews():
+    current_user = get_jwt_identity()
+
+    reviews = Review.query.filter_by(given_review_id=current_user).all()
+    if not reviews:
+        return jsonify({"mensaje": "No se encontraron reseñas"}), 404
+
+    review_list = []
+    for review in reviews:
+        stars = review.stars.value    
+        product = Product.query.get(review.product_id)
+
+        review_data = {
+            "product_id": review.product_id,
+            "stars": int(stars),
+            "comment": review.comment,
+            "given_review_id": review.given_review_id,
+            "product_name": product.name
+        }
+        review_list.append(review_data)
+
+    return jsonify(review_list), 200

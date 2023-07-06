@@ -219,6 +219,30 @@
     margin-top: 2rem;
 }
 
+.name_product_review{
+    color: #125c8e;
+    font-size: larger;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.stars_review{
+    margin-bottom: 1rem;
+    font-size: larger;
+}
+
+.comment_review{
+    width: 90%;
+    height: 4rem;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-all;
+}
+
+.user_reviewing{
+    color: #125c8e;
+}
+
 @media only screen and (max-width: 600px) {
     .container_profile{
         margin: 1rem;
