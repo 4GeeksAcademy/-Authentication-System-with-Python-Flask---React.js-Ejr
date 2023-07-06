@@ -68,6 +68,182 @@
     border-style: solid;
 }
 
+.row_product_profile{
+    background-color: white;
+    margin: 3rem;
+    border-radius: 12px;
+    height: 9rem;
+    padding: 1rem;
+    padding-left: 3rem;
+    display: flex;
+    align-items: center;
+    color:#125c8e
+}
+
+.product_profile_button{
+    margin: 0.5rem;
+    border-radius: 8px;
+    width: 2.5rem;
+    height: 2.5rem;
+    justify-content: end;
+    border-color: #125c8e;
+    background-color: white;
+}
+
+.product_profile_button:hover{
+    background-color: #2776ab;
+}
+
+.product_profile_buttons{
+    padding-top: 1rem;
+    display: flex;
+    justify-content: end;
+}
+
+.state_product_profile_box{
+    margin-top: 1rem;
+    margin-right: 1rem;
+}
+
+.state_product_profile{
+    font-weight: bolder;
+}
+
+.price_product_profile{
+    font-weight: bold;
+}
+
+.sold-product_profile{
+    width: 40rem;
+    height: 20rem;
+    border-radius: 12px;
+}
+
+.modal_body{
+    margin-left: 3rem;
+    display: flex;
+    align-content: center;
+}
+
+.product_img_profile_box{
+    width: 9rem;
+    height: 7rem;
+    padding: 0;
+    margin-right: 3rem;
+}
+
+.product_img_profile{
+    object-fit: cover;
+    width:100%;
+    height:100%;
+    border-radius: 20px;
+}
+
+.price_name{
+    padding-top: 1rem;
+}
+
+.row_favorites_profile{
+    background-color: white;
+    margin: 3rem;
+    margin-top: 0.5rem;
+    border-radius: 12px;
+    height: 25rem;
+    padding: 1rem;
+    padding-left: 3rem;
+    display: flex;
+    align-items: center;
+    color:#125c8e;
+    overflow-x: scroll;
+    flex-wrap: nowrap; 
+    overflow-x: auto
+}
+
+.button_favorite{
+    border: none;
+    background: none;
+}
+
+.product_img_profile_favorites_box{
+    width: 10rem;
+    height: 17rem;
+    padding: 0;
+    margin-right: 3rem;
+}
+
+.product_img_profile_favorites{
+    object-fit: cover;
+    width:100%;
+    height:100%;
+    border-radius: 20px;
+}
+
+.product_profile_favorites {
+    width: 11.5rem;
+    background-color: whitesmoke;
+    border-radius: 12px;
+    padding-top: 0.5rem;
+    text-align: justify;
+    margin-left: 1rem;
+}
+
+.limit-text {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 10rem; 
+}
+
+.product_description_profile_favorites{
+    margin-top: 1rem;
+    width: 8rem;
+    margin-left: 0.5rem;
+}
+
+.product_type_profile{
+    margin-left: 5rem;
+    margin-top: 3rem;
+}
+
+.review_box_profile{
+    background-color: white;
+    border-radius: 12px;
+    margin: 3rem;
+}
+
+.product_img_profile_reviews_box{
+    margin: 2rem;
+}
+
+.review_content_profile{
+    margin-top: 2rem;
+}
+
+.name_product_review{
+    color: #125c8e;
+    font-size: larger;
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+}
+
+.stars_review{
+    margin-bottom: 2rem;
+    font-size: larger;
+    color:#e6cd30
+}
+
+.comment_review{
+    width: 90%;
+    height: 4rem;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-all;
+}
+
+.user_reviewing{
+    color: #125c8e;
+}
+
 @media only screen and (max-width: 600px) {
     .container_profile{
         margin: 1rem;
@@ -102,7 +278,7 @@
         background-color:#ffffff;
         border-color: #125c8e;
         border-style: solid;
-        color: rgb(255, 255, 255);
+        color:#125c8e
     }
 
     .user_data{
@@ -120,6 +296,78 @@
     }
 
     .row_edit_profile {
+        margin-left: 3rem;
+    }
+
+    .row_product_profile{
+        margin: 1rem;
+        height: 7rem;
+        display: flex;
+        align-content: center;
+        padding: 1rem;
+        padding-right: 0
+    }
+
+    .product_img_profile_box{
+        width: 5rem;
+        height: 5rem;
+        margin-right: 0.5rem;
+    }
+
+    .price_name {
+        width: 6rem;
+    }
+
+    .price_product_profile{
+        font-size: smaller
+    }
+
+    .name_product_profile{
+        font-size: smaller;
+    }
+
+    .published_title_profile{
+        font-size: smaller;
+    }
+
+    .published_date_profile{
+        font-size: smaller;
+    }
+
+    .product_profile_button{
+        width: 2rem;
+        height: 2rem;
+        font-size: smaller;
+        border-radius: 5px;
+        display: block;
+    }
+
+    .product_profile_buttons{
+        display: inline-block;
+        padding-right: 0;
+        width: 2rem;
+    }
+
+    .published{
+        margin-left: 0;
+        padding-left: 0.5rem;
+    }
+
+    .row_favorites_profile{
+        background-color: white;
+        margin: 1rem;
+        margin-top: 0.5rem;
+        border-radius: 12px;
+        height: 25rem;
+        padding: 1rem;
+        padding-left: 1rem;
+        display: flex;
+        align-items: center;
+        color:#125c8e
+    }
+
+    .product_type_profile{
+        margin-top: 1rem;
         margin-left: 3rem;
     }
 }

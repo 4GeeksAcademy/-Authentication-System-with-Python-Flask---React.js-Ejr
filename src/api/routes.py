@@ -2,8 +2,9 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User
+from api.models import db, User, Product, Favorites, Review
 from api.utils import generate_sitemap, APIException
+
 
 import pandas as pd
 
@@ -143,3 +144,127 @@ def signup():
 
     return jsonify({"message" : "Signed up successfully!"}), 200
 
+@api.route('/profile/onsale', methods=['GET'])
+@jwt_required()
+def getProducts():
+    current_user = get_jwt_identity()
+    products = Product.query.filter(Product.user_id == current_user).all()
+    response_body = {
+        "data": [product.serialize() for product in products]
+    }
+    return jsonify(response_body), 200
+
+@api.route('/profile/favorites', methods=['POST'])
+@jwt_required()
+def saveFavorites():
+    current_user = get_jwt_identity()
+    data = request.get_json()
+    product_id = data.get("product_id")
+
+    usuario = User.query.get(current_user)
+    producto = Product.query.get(product_id)
+
+    if not producto:
+        return jsonify({"mensaje": "Producto no encontrado"}), 404
+
+    favorite = Favorites(user_id=usuario.id, product_id=producto.id)
+    db.session.add(favorite)
+    db.session.commit()
+
+    return jsonify({"mensaje": "Producto guardado como favorito"}), 200
+
+@api.route('/profile/favorites', methods=['GET'])
+@jwt_required()
+def getFavorites():
+    current_user = get_jwt_identity()
+
+    usuario = User.query.get(current_user)
+    if not usuario:
+        return jsonify({"mensaje": "Usuario no encontrado"}), 404
+
+    favorites = Favorites.query.filter_by(user_id=usuario.id).all()
+
+    response = []
+    for favorite in favorites:
+        product = Product.query.get(favorite.product_id)
+        response.append({
+            "product_id": product.id,
+            "name": product.name,
+            "description": product.description,
+            "price": product.price,
+            "year": product.year,
+            "km": product.km
+        })
+
+    return jsonify(response), 200
+
+@api.route('/profile/favorites/<int:product_id>', methods=['PUT'])
+@jwt_required()
+def removeFavorite(product_id):
+    current_user = get_jwt_identity()
+
+    usuario = User.query.get(current_user)
+    producto = Product.query.get(product_id)
+
+    if not producto:
+        return jsonify({"mensaje": "Producto no encontrado"}), 404
+
+    favorite = Favorites.query.filter_by(user_id=usuario.id, product_id=producto.id).first()
+
+    if not favorite:
+        return jsonify({"mensaje": "El producto no está marcado como favorito"}), 404
+
+    db.session.delete(favorite)
+    db.session.commit()
+
+    return jsonify({"mensaje": "Producto desmarcado como favorito"}), 200
+
+@api.route('/profile/reviews', methods=['POST'])
+@jwt_required()
+def addReview():
+    current_user = get_jwt_identity()
+    data = request.get_json()
+    product_id = data.get("product_id")
+    stars = str(data.get("stars"))  # Convertir a cadena
+    comment = data.get("comment")
+
+    user = User.query.get(current_user)
+    product = Product.query.get(product_id)
+
+    if not product:
+        return jsonify({"mensaje": "Producto no encontrado"}), 404
+
+    recived_user = User.query.get(product.user_id)
+
+    review = Review(given_review_id=user.id, recived_review_id=recived_user.id, product_id=product.id, stars=stars, comment=comment)
+    db.session.add(review)
+    db.session.commit()
+
+    return jsonify({"mensaje": "Reseña agregada correctamente"}), 200
+
+@api.route('/profile/reviews', methods=['GET'])
+@jwt_required()
+def getReviews():
+    current_user = get_jwt_identity()
+
+    reviews = Review.query.filter_by(given_review_id=current_user).all()
+    if not reviews:
+        return jsonify({"mensaje": "No se encontraron reseñas"}), 404
+
+    review_list = []
+    for review in reviews:
+        stars = review.stars.value    
+        product = Product.query.get(review.product_id)
+
+        review_data = {
+            "product_id": review.product_id,
+            "stars": int(stars),
+            "comment": review.comment,
+            "given_review_id": review.given_review_id,
+            "product_name": product.name,
+            "recived_review_id": review.recived_review_id,
+            "recived_user_id": review.recived_review_id
+        }
+        review_list.append(review_data)
+
+    return jsonify(review_list), 200

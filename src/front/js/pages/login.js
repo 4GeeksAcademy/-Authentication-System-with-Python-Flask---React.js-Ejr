@@ -3,6 +3,7 @@ import React, { useContext, useState } from "react";
 import { Context } from "../store/appContext";
 import { useNavigate } from "react-router-dom";
 
+
 export const Login = () => {
   const { store, actions } = useContext(Context);
   const [email, setEmail] = useState("");
@@ -44,7 +45,6 @@ export const Login = () => {
   }
 
 
- 
 
   return (
     <div className="container text-center justify-content-center">
