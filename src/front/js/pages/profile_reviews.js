@@ -11,6 +11,15 @@ export const Profile_reviews = () => {
         actions.getReviews()
     }, [])
 
+
+    const renderStars = (numStars) => {
+        const stars = [];
+        for (let i = 0; i < numStars; i++) {
+        stars.push(<i className="fa fa-star" key={i}></i>);
+        }
+        return stars;
+    };
+
     return store.reviews ? (
         <>
             <Profile_navbar />
@@ -21,9 +30,8 @@ export const Profile_reviews = () => {
                 </div>
                 <div className="review_content_profile col-8">
                     <h6 className="name_product_review">{reviews.product_name}</h6>
-                    <h6 className="stars_review">{reviews.stars}</h6>
+                    <h6 className="stars_review">{renderStars(reviews.stars)}</h6>
                     <h6 className="comment_review">{reviews.comment}</h6>
-                    <h6 className="user_reviewing">Valoración por: <strong>usuario1</strong> el 13/06/2022</h6>
                 </div>
             </div>
             ))}

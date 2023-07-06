@@ -223,12 +223,13 @@
     color: #125c8e;
     font-size: larger;
     margin-top: 1rem;
-    margin-bottom: 1rem;
+    margin-bottom: 2rem;
 }
 
 .stars_review{
-    margin-bottom: 1rem;
+    margin-bottom: 2rem;
     font-size: larger;
+    color:#e6cd30
 }
 
 .comment_review{
