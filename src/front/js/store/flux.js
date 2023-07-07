@@ -49,21 +49,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 				  console.error(error);
 				}
 			  },
-		
-			getUser: () => {
-				const store = getStore();
-				fetch(process.env.BACKEND_URL + `api/configuration`, {
-					method: "GET",
-					headers: {
-						"Content-Type": "application/json",
-						"Authorization": `Bearer ${localStorage.getItem("token")}`
-					}
-				})
-				.then (response => response.json())
-				.then ((response) => {
-					setStore({user: response.data});
-				});
-			},
 
 
 			getToken: () => {
