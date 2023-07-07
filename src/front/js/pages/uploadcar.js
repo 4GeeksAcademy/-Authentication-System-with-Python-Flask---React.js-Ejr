@@ -41,7 +41,9 @@ const getModelsByBrand = (brandId) => {
   }
 }
 
-
+useEffect(() => {
+  getModelsByBrand();
+}, []);
 
 
 useEffect(() => {
@@ -78,9 +80,17 @@ useEffect(() => {
       
   })};
 
-  const handleChange = (ev) => {
-    
+
+  const testBrand = (ev) => {
     getModelsByBrand(ev.target.value)
+    setData({...data , [ev.target.name] : ev.target.value}) 
+
+  }
+
+
+   const handleChange = (ev) => {
+    
+    //getModelsByBrand(ev.target.value)
     setData({...data , [ev.target.name] : ev.target.value}) 
   }
 
@@ -115,6 +125,12 @@ useEffect(() => {
           console.error(error);
         })
 
+        fetch(process.env.BACKEND_URL + 'api/upload-car', methods=['POST'])
+        .then(resp => resp.json())
+        .then(data => {
+          console.log(data)
+        })
+
       
     };
     //setIsSubmitClicked(true);
@@ -139,7 +155,7 @@ useEffect(() => {
   
               <div className='col-3 me-5 ms-5'>
                 <label htmlFor='select-middle'> <h6><strong>Marca</strong></h6> </label>
-                  <select id='select-middle' name='brand' className='select' onChange={e => handleChange(e)}>
+                  <select id='select-middle' name='brand' className='select' onChange={e => testBrand(e)}>
                     {carBrands.map((brand, index) => (
                       <option key={index} value={brand.id}>{brand.name}</option>
                     ))}

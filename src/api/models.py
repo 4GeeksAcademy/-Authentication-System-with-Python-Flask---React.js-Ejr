@@ -100,6 +100,10 @@ class fuel_type(Enum):
     GASOLINA = 'gasolina'
     HIBRIDO = 'hibrido'
     ELECTRICO = 'electrico'
+
+class product_type(Enum):
+    MOTO = 'moto'
+    COCHE = 'coche'
     
 
 
@@ -109,7 +113,7 @@ class Product(db.Model):
     state = db.Column(db.Enum(ProductState), nullable=False)
     price = db.Column(db.Float, nullable=False) #Estuve leyendo y cuando no quieres un número de decimales exactos el FLOAT es buena opción
     description = db.Column(db.String(2000))
-    
+    product_type = db.Column(db.Enum(product_type), nullable=False)
     year = db.Column(db.Integer)
     km = db.Column(db.Integer)
     fuel = db.Column(db.Enum(fuel_type))
@@ -126,17 +130,32 @@ class Product(db.Model):
         return {
             "id": self.id,
             "name": self.name,
-            "state": self.state,
+            "state": self.state.value,
             "price": self.price,
             "description": self.description,
             "images": self.image,
             "year": self.year,
             "km": self.km,
-            "fuel": self.fuel,
+            "fuel": self.fuel.value,
             "user_id": self.user_id,
             "brand_id": self.brand_id,
-            "model_id": self.model_id
+            "model_id": self.model_id,
+            "product_type": self.product_type.value
         }
+
+class status_product(Enum):
+    ONSALE = 'on sale'
+    PENDING_SALE = 'pending sale'
+    PENDING_BLOCKED = 'pending blocked'
+    BLOCKED = 'blocked'
+    SOLD = 'sold'
+
+
+class status(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    status = db.Column(db.Enum(status_product), nullable=False)
+    given_review_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    product_id = db.Column(db.Integer, db.ForeignKey('product.id'))
 
 class Garage (db.Model):
     id = db.Column(db.Integer, primary_key=True)
