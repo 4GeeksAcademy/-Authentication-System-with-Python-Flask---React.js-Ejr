@@ -219,6 +219,10 @@
     margin-top: 2rem;
 }
 
+.name_product_profile{
+    color: #125c8e;
+}
+
 .name_product_review{
     color: #125c8e;
     font-size: larger;
@@ -247,15 +251,47 @@
 .sales_profile_box{
     background-color: white;
     margin: 3rem;
+    margin-top: 0;
     height: 17rem;
     border-radius: 12px;
-    padding: 2rem;
 }
 
 .date_sale_profile{
     color: #125c8e;
     font-size: larger;
     font-weight: bold !important;
+    margin-left: 5rem;
+    margin-top: 4rem;
+}
+
+.product_img_profile_box_sales{
+    width: 19rem;
+    height: 12rem;
+    margin-top: 2.5rem;
+    margin-left: 3rem;
+}
+
+.product_data_sales{
+    margin-top: 3.7rem;
+    color: #125c8e;
+    font-weight: bold;
+}
+
+.product_data_sales h6{
+    margin-bottom: 1.5rem;
+}
+
+.price_sales_profile{
+    display: flex;
+    justify-content: end;
+    margin-top: 2rem;
+    margin-right: 6rem;
+}
+
+.review_sales_profile{
+    display: flex;
+    justify-content: end;
+    margin-right: 0;
 }
 
 @media only screen and (max-width: 600px) {
