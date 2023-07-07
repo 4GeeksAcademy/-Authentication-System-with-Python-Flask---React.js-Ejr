@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Product, Brand, Model
+from api.models import db, User, Product, Brand, Model, Image
 from api.utils import generate_sitemap, APIException
 
 import pandas as pd
@@ -28,14 +28,52 @@ app = Flask(__name__)
 api = Blueprint('api', __name__)
 
 
-@api.route('/hello', methods=['POST', 'GET'])
-def handle_hello():
 
-    response_body = {
-        "message": "Hello! I'm a message that came from the backend, check the network tab on the google inspector and you will see the GET request"
-    }
+@api.route('upload-car', methods=['POST'])
+@jwt_required()
+def upload_car():
+    current_user = get_jwt_identity()
+    cloudinary.config(cloud_name = os.getenv('CLOUD_NAME'), api_key=os.getenv('API_KEY'), 
+    api_secret=os.getenv('API_SECRET'))
+    
+    
+    data = request.get_json()
 
-    return jsonify(response_body), 200
+    user = User.query.get(current_user)
+
+    title = data.get('name')
+    state = data.get('state')
+    price = data.get('price')
+    description = data.get('description')
+    year = data.get('year')
+    km = data.get('km')
+    fuel = data.get('fuel')
+    brand = data.get('brand_id')
+    model = data.get('model_id')
+    user_id = user.id
+
+    product = Product(
+        name=title, state=state, price=price, description=description,
+        year=year, km=km, fuel=fuel, brand_id=brand, model_id=model,
+        user_id=user_id
+    )
+    db.session.add(product)
+    db.session.commit()
+
+    # Recipero la url
+    for image_file in data.get('images', []):
+        upload_result = cloudinary.uploader.upload(image_file)
+        image = Image(image=upload_result['secure_url'], user_id=user_id, product_id=product.id)
+        db.session.add(image)
+        db.session.commit()
+
+
+    if not title:
+        return jsonify({"message": "Complete the fields"}), 400
+
+
+
+    return jsonify({"message": "Your product has been successfully uploaded"}), 200
 
 # @api.route('car-models/<string:brand>', methods=['GET'])
 # def get_car_models(brand):
@@ -119,48 +157,19 @@ def get_moto_models():
 #     return jsonify(list(brands)) # Funciona, renderiza solo las marcas SIN repetirse
 
 
-@api.route('/car-brand-models/<brand>', methods=['GET'])
-def get_brand_models(brand):
-    df = pd.read_csv('/workspaces/Watacar_v2/src/api/brands-and-models/cars-2020.csv')
+# @api.route('/car-brand-models/<brand>', methods=['GET'])
+# def get_brand_models(brand):
+#     df = pd.read_csv('/workspaces/Watacar_v2/src/api/brands-and-models/cars-2020.csv')
     
-    filtered_df = df[df['make'] == brand]
-    models = filtered_df['model'].tolist()
-    return jsonify(models)
+#     filtered_df = df[df['make'] == brand]
+#     models = filtered_df['model'].tolist()
+#     return jsonify(models)
 
 
 
 
-# @api.route('upload-car', methods=['POST'])
-# def upload_car():
-
-#     data = request.get_json()
-    
-#     title = data.get('name')
-#     state = data.get('state')
-#     price = data.get('price')
-#     description = data.get('description')
-#     year = data.get('year')
-#     km = data.get('km')
-#     fuel = data.get('fuel')
-#     brand = data.get('brand_id')
-#     model = data.get('model_id')
-#     images = data.get('images')
-#     user_id = data.get('user_id')
-
-#     product = Product(name = title, state = state, price = price, description = description,
-#                      year = year, km = km, fuel = fuel, brand_id = brand, model_id = model,
-#                      images = images, user_id = user_id)
-    
-#     
 
 
-#     if not name:
-#         return jsonify({"message" : "Complete the fields"}), 400
-
-#     db.session.add(upload)
-#     db.session.commit()
-
-#     return jsonify({"message" : "Your product has been successfully uploaded"}), 200
 
 
 

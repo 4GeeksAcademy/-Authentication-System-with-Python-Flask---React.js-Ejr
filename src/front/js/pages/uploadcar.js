@@ -85,11 +85,11 @@ useEffect(() => {
   }
 
 
-  const handleBrandChange = (ev) => {
-    const brandId = ev.target.value;
-    setSelectedBrand(brandId);
-    getModelsByBrand(brandId);
-  };
+  // const handleBrandChange = (ev) => {
+  //   const brandId = ev.target.value;
+  //   setSelectedBrand(brandId);
+  //   getModelsByBrand(brandId);
+  // };
 
   const handleModelChange = (ev) => {
     setData({...data , [ev.target.name] : ev.target.value}) 
@@ -150,7 +150,7 @@ useEffect(() => {
                 <label htmlFor='select-right'> <h6><strong>Modelo</strong></h6> </label>
                 <select id='select-right' name='model' className='select' onChange={e => handleModelChange(e)} >
                     {carModels.map((model, index) => (
-                      <option style={{color: 'green'}} key={index} value={model.id}>{model.model}</option>
+                      <option key={index} value={model.id}>{model.model}</option>
                     ))}
                   </select>
               </div>
