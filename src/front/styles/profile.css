@@ -68,6 +68,10 @@
     border-style: solid;
 }
 
+#map{
+    height: 40%;
+}
+
 .row_product_profile{
     background-color: white;
     margin: 3rem;

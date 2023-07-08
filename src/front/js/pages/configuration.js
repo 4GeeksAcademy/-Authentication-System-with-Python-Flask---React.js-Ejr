@@ -1,51 +1,94 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
 import "/workspaces/Watacar_v2/src/front/styles/configuration.css"
+import { text } from "@fortawesome/fontawesome-svg-core";
 
 export const Configuration = () => {
     const params = useParams();
     const {actions, store} = useContext(Context);
     const [data, setData] = useState([]);
     const navigate =useNavigate();
+    
 
-    useEffect (() => {
-        actions.getUser()
-    }, [])
+useEffect (() => {
+    actions.getUser();
+}, [])
 
 const handleChange = (e) => {
         setData({ ...data, [e.target.name]: e.target.value });
         //console.log(data);
-      }
+}
+
+useEffect(() => {
+    const script = document.createElement("script");
+    script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyAf7aQ5JHWwJTvYuzpJw8QtQK8DYdwJqPE&libraries=places`;
+    script.async = true;
+    script.onload = handleScriptLoad;
+    document.body.appendChild(script);
+  
+    return () => {
+      document.body.removeChild(script);
+    };
+  }, []);
+  
+  const handleScriptLoad = () => {
+    const input = document.getElementById("address");
+    const autocomplete = new google.maps.places.Autocomplete(input);
+  
+    autocomplete.addListener("place_changed", () => {
+      const selectedPlace = autocomplete.getPlace();
+      const address = selectedPlace.formatted_address;
+  
+      setData({ ...data, adress: address }); // Cambia "address" a "adress"
+    });
+  };
+  
+  const handlePlaceSelect = () => {
+    const addressObject = document.getElementById("address").value;
+    // Aquí puedes utilizar el objeto `addressObject` para obtener información adicional del lugar seleccionado, si lo necesitas.
+  };
+
 
 const handleSubmit = (event) => {
     event.preventDefault()
 
+    const updatedData = {
+        ...store.user,
+        ...data,
+      };
+
     const putConfig = {
         method: "PUT",
         body: JSON.stringify({
-            "address": data.adress,
-            "email": data.email,
-            "document_type": data.document_type,
-            "document_number": data.document_number,
-            "full_name": data.full_name,
-            "phone": data.phone
+            "address": updatedData.adress,
+            "email": updatedData.email,
+            "document_type": updatedData.document_type,
+            "document_number": updatedData.document_number,
+            "full_name": updatedData.full_name,
+            "phone": updatedData.phone
         }),
         headers: {
             'Content-Type': 'application/json',
             "Authorization": `Bearer ${localStorage.getItem("token")}`
         }
     }
-    fetch(process.env.BACKEND_URL + `api/configuration`, putConfig )
-    .then((response) => response.json())
+    fetch(process.env.BACKEND_URL + "api/configuration", putConfig)
     .then((response) => {
-        setData({ ...data, response});
-        navigate('/profile/configuration')
+      if (response.ok) {
+        return response.json();
+      }
+      throw new Error("Error al guardar los datos");
+    })
+    .then((responseData) => {
+      setData({ ...data, response: responseData });
+      navigate("/profile/configuration");
     })
     .catch((error) => {
-        console.error(error);
-    })
+      console.error(error);
+    });
 };
+
 
 return store.user ? (
     <div>
@@ -80,7 +123,7 @@ return store.user ? (
                     </div>
                     <div className="row row_configuration">
                         <label className="col-3 label_config">Dirección:</label>
-                        <input className="col-8 input_config" name="adress" type="text" value={data.address || store.user.address} onChange={handleChange}></input>
+                        <input className="col-8 input_config" id="address" name="adress" type="text" value={data.adress || store.user.address} onChange={handleChange}></input>
                     </div>
                     <div className="row save_cancel_config">
                         <Link to="/profile/configuration" className="btn_config cancel">

@@ -2,10 +2,12 @@ import React, { useEffect, useContext } from "react";
 import { Context } from "../store/appContext";
 import { NavLink, Link } from "react-router-dom";
 import { Profile_navbar } from "../component/profile_navbar";
+import { GoogleMap, withScriptjs, withGoogleMap, Marker } from "react-google-maps";
 import "/workspaces/Watacar_v2/src/front/styles/profile.css"
 
 export const Profile_configuration = () => {
     const {actions, store} = useContext(Context);
+    
 
     useEffect (() => {
         actions.getUser()
