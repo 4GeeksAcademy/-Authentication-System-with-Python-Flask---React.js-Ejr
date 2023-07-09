@@ -24,6 +24,12 @@ export const CarouselDefault = () => {
   }, []) 
 
 
+
+  const selectFavoriteVehicle = (product_id) => {
+    actions.postFavorite(product_id);
+  }
+
+
     return (
     
     <div className="d-flex overflow-auto my-5">
@@ -35,7 +41,7 @@ export const CarouselDefault = () => {
                   <div className="flip-card">
                   <div className="flip-card-inner">
                     <div className="flip-card-front">
-                    <img src={vehicle.images} className="card-img-top imgCarousel" alt="..."/>
+                    <img src={carImage} className="card-img-top imgCarousel" alt="..."/>
                     </div>
                     <div className="flip-card-back">
                       <Link to="/login" style={{ color: 'white', textDecoration: 'none' }} className="link-hover">
@@ -73,7 +79,8 @@ export const CarouselDefault = () => {
                      
                       <Link
                         id="heartCard"
-                        to="/profile"
+                        to="/profile/favorites"
+                        onClick={() => selectFavoriteVehicle(vehicle.id)}
                         >
                         <script src="https://cdn.lordicon.com/bhenfmcm.js"></script>
                         <lord-icon
