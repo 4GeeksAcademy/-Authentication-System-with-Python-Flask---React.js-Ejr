@@ -143,9 +143,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 				});
 			},
 
-			getGarage: () => {
+			getGarages: () => {
 				const store = getStore();
-				fetch(process.env.BACKEND_URL + `api/garage`, {
+				fetch(process.env.BACKEND_URL + `api/profile/garage`, {
 					method: "GET",
 					headers: {
 						"Content-Type": "application/json",
@@ -154,7 +154,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 				})
 				.then (response => response.json())
 				.then ((response) => {
-					setStore({garage: response.data});
+					setStore({garages: response.data})
+					console.log(store.garages)
 				});
 			},
 

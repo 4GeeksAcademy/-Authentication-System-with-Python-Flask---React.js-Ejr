@@ -213,7 +213,7 @@ export const Navbar = () => {
                         href="#"
                         role="button"
                         aria-expanded="page"
-                        to="/profile"
+                        to="/profile/configuration"
                       >
                         <span>Favoritos</span> {""}
                         <i className="fa-regular fa-heart"></i>
@@ -250,7 +250,7 @@ export const Navbar = () => {
                       <ul className="dropdown-menu ms-3">
                         <li>
                           <Link
-                            to="/profile"
+                            to="/profile/configuration"
                             className="dropdown-item justify-content-end d-flex"
                           >
                             Mi perfil

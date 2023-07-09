@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Product, Favorites, Review
+from api.models import db, User, Product, Favorites, Review, Garage
 from api.utils import generate_sitemap, APIException
 
 
@@ -242,6 +242,12 @@ def addReview():
 
     return jsonify({"mensaje": "Reseña agregada correctamente"}), 200
 
+
+
+
+
+
+
 @api.route('/profile/reviews', methods=['GET'])
 @jwt_required()
 def getReviews():
@@ -268,3 +274,30 @@ def getReviews():
         review_list.append(review_data)
 
     return jsonify(review_list), 200
+
+
+
+@api.route('/garages', methods=['GET'])
+
+def getGarages():
+    garages = Garage.query.all()
+    if not garages:
+        return jsonify({"mensaje": "No se econtrón ningún garage"}), 404
+
+    garages_list = []
+ 
+    for garage in garages:
+        garage_data = {
+            "name": garage.name,
+            "web": garage.web,
+            "phone": garage.phone,
+            "address": garage.address,
+            "description": garage.description,
+            "cif": garage.cif,
+            "image_id": garage.image_id,
+            "product_id": garage.product_id,
+            "user_id": garage.user_id
+        }
+    garages_list.append(garage_data)
+
+    return jsonify(garages_list), 200
