@@ -24,6 +24,7 @@ import ReactSwitch from "react-switch";
 import { createContext } from "react";
 import { Favorites } from "./pages/favorites";
 import { On_sale } from "./pages/onSale";
+import { Garage } from "./pages/garage";
 
 
 export const ThemeContext = React.createContext(null)
@@ -58,6 +59,7 @@ const Layout = () => {
                                 <Route element={<Favorites />} path="/profile/favorites" />
                                 <Route element={<On_sale />} path="/profile/onsale" />
                                 <Route element={<Profile_sales />} path="/profile/sales" />
+                                <Route element={<Garage />} path="/garage" />
                                 <Route element={<Profile_buys />} path="/profile/buys" />
                                 <Route element={<Profile_reviews />} path="/profile/reviews" />
                                 <Route element={<Configuration />} path="/configuration" />
