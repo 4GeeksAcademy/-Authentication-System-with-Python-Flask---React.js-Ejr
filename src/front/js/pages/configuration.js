@@ -1,11 +1,10 @@
-import React, { useState, useEffect, useContext, useRef } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
 import "/workspaces/Watacar_v2/src/front/styles/configuration.css"
 import { text } from "@fortawesome/fontawesome-svg-core";
 
 export const Configuration = () => {
-    const params = useParams();
     const {actions, store} = useContext(Context);
     const [data, setData] = useState([]);
     const navigate =useNavigate();
@@ -40,15 +39,10 @@ useEffect(() => {
       const selectedPlace = autocomplete.getPlace();
       const address = selectedPlace.formatted_address;
   
-      setData({ ...data, adress: address }); // Cambia "address" a "adress"
+      setData({ ...data, adress: address }); 
     });
   };
   
-  const handlePlaceSelect = () => {
-    const addressObject = document.getElementById("address").value;
-    // Aquí puedes utilizar el objeto `addressObject` para obtener información adicional del lugar seleccionado, si lo necesitas.
-  };
-
 
 const handleSubmit = (event) => {
     event.preventDefault()
