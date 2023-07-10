@@ -7,33 +7,39 @@ import ReactModal from 'react-modal'
 import { useNavigate } from "react-router-dom";
 import { Login } from "../pages/login";
 import { SwitchLight } from "./switchLight";
+import  "../../styles/navbar.css"
 
 export const Navbar = () => {
   const { store, actions, token } = useContext(Context);
+  const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [modalIsOpen, setIsOpen] = useState(false);
   const [isSmallScreen, setIsSmallScreen] = useState(false);
-
-  const openModal = () => {
-    setIsOpen(true);
-  }
-
-  const closeModal = () => {
-    setIsOpen(false);
-  }
-
-  const handleLogOut = () => {
-    localStorage.removeItem("token")
-    store.token = ""
-  }
-
-  const handleEmailChange = e => {
-    setEmail(e.target.value);
-  };
-
-  const handlePasswordChange = e => {
-    setPassword(e.target.value);
-  };
-
+  const [dropMenu, setDropMenu] = useState("container-fluid mx-3");
+  const [ariaExpanded, setAriaExpanded] = useState(false);
+  const [manuallyClosed, setManuallyClosed] = useState(false); // Nueva variable de estado
+  
+  
+  
+  
+  
+  
+//Modal 
+    const openModal = () => {
+      setIsOpen(true);
+    }
+  
+    const closeModal = () => {
+      setIsOpen(false);
+    }
+  
+    const handleLogOut = () => {
+      localStorage.removeItem("token")
+      store.token = ""
+    }
+  
+  
   const handleSubmit = async e => {
     e.preventDefault();
     try {
@@ -44,32 +50,29 @@ export const Navbar = () => {
       navigate("/notfound");
     }
   };
-
+  
   useEffect(() => {
     const checkScreenWidth = () => {
       setIsSmallScreen(window.innerWidth < 993);
     };
-
+    
     checkScreenWidth();
     window.addEventListener("resize", checkScreenWidth);
-
+    
     return () => {
       window.removeEventListener("resize", checkScreenWidth);
     };
   }, []);
-
-  const navigate = useNavigate();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
+  
+  
   const showSwitchBigScreen = () => {
     return window.innerWidth >= 993 && <SwitchLight />;
   }
-
+  
   const showSwitchMobile = () => {
     return isSmallScreen && <SwitchLight />;
   }
-
+  
   const showModal = () => {
     return (
       <div className="modalLogin">
@@ -112,33 +115,64 @@ export const Navbar = () => {
 
   useEffect(() => {
     actions.getToken()
-  }), []
+  }, []);
+  
+  
+  
+  // Responsive Drop Menu
+  const handleToggle = () => {
+    if (manuallyClosed==true) { // Agregar condición para verificar si el menú ha sido cerrado manualmente
+      setAriaExpanded(!ariaExpanded);
+    }
+  };
 
 
+
+  const handleDropMenu = () => {
+    if (ariaExpanded == true) {
+      setDropMenu("justify-content-center text-center m-auto mb-5");
+      console.log("true")
+    } else {
+      setDropMenu("container-fluid mx-3");
+      console.log("false")
+    }
+  }
+  
+  const closeNavbar = () => {
+    setAriaExpanded(false);
+    setManuallyClosed(true); // Establecer que el menú ha sido cerrado manualmente
+  };
+  
+    
+  useEffect(()=> {
+    handleDropMenu()
+  }), [ariaExpanded]
+
+  
 
   return (
     <nav className="navbar navbar-expand-lg bg-body-tertiary">
-      <div className="container-fluid mx-3">
-        <div>
-          <a className="navbar-brand tittle-nav" id="tittle-nav" href="/">
+      <div className={dropMenu}>
+        <div className="text-center">
+          <Link to="/" className="navbar-brand tittle-nav" id="tittle-nav" onClick={closeNavbar}>
             WhataCar
-          </a>
+          </Link>
         </div>
-
-        <div className="justify-content-end d-flex">
-          <div>
+        <br></br>
+        <div className="justify-content-end d-flex mb-2">
+          <div className="mx-auto">
             <button
               className="navbar-toggler"
               type="button"
               data-bs-toggle="collapse"
               data-bs-target="#navbarNavDropdown"
               aria-controls="navbarNavDropdown"
-              aria-expanded="false"
+              aria-expanded={ariaExpanded}
+              onClick={handleToggle}
               aria-label="Toggle navigation"
             >
               <span className="navbar-toggler-icon"></span>
             </button>
-
             <div
               className="collapse navbar-collapse justify-content-end"
               id="navbarNavDropdown"
@@ -152,6 +186,7 @@ export const Navbar = () => {
                         style={{ color: "rgb(15, 76, 117)" }}
                         aria-current="page"
                         to="/signup"
+                        
                       >
                         Registro
                       </Link>
@@ -162,6 +197,7 @@ export const Navbar = () => {
                         style={{ color: "rgb(15, 76, 117)" }}
                         aria-current="page"
                         to="/login"
+                      
                       >
                         Accede
                       </Link>
@@ -172,17 +208,17 @@ export const Navbar = () => {
                   <>
                     <li className="nav-item ">
                       <Link
-                        className="nav-link active me-3"
+                        className="nav-link active "
                         id="heart"
                         href="#"
                         role="button"
                         aria-expanded="page"
                         to="/profile"
                       >
+                        <span>Favoritos</span> {""}
                         <i className="fa-regular fa-heart"></i>
                       </Link>
                     </li>
-
                     <li className="nav-item">
                       {!store.token ? (
                         <button
@@ -193,7 +229,7 @@ export const Navbar = () => {
                         </button>
                       ) : (
                         <Link to="/products">
-                          <button className="nav-link btn-plus mb-2">
+                          <button className="nav-link btn-plus btn_mucho mb-2 ms-4">
                             <i className="fa-solid fa-plus"></i>
                           </button>
                         </Link>
@@ -209,55 +245,56 @@ export const Navbar = () => {
                         aria-expanded="false"
                         to="profile"
                       >
-                        <i className="fa-regular fa-user" id="iconProfile"></i>
+                        <i className="fa-regular fa-user ms-4" id="iconProfile"></i>
                       </Link>
-                      <ul className="dropdown-menu ">
+                      <ul className="dropdown-menu ms-3">
                         <li>
                           <Link
                             to="/profile"
-                            className="dropdown-item justify-content-end d-flex "
-                            href="/profile"
+                            className="dropdown-item justify-content-end d-flex"
                           >
                             Mi perfil
+                            <i className="fa-solid fa-address-card ms-3 mt-1 profileIcons"></i>
                           </Link>
                         </li>
                         <li>
                           <Link
                             to="/profile/configuration"
-                            className="dropdown-item justify-content-end d-flex "
-                            href="/configuration"
+                            className="dropdown-item justify-content-end d-flex  profileIcons"
+                           
                           >
                             Configuración
+                            <i className="fa-solid fa-gear ms-2 mt-1 profileIcons" ></i>
                           </Link>
                         </li>
                         <li>
                           <Link
                             to="/profile/onsale"
                             className="dropdown-item justify-content-end d-flex "
-                            href="favorites"
                           >
                             Mis productos
+                            <i className="fa-solid fa-car ms-2 mt-1 profileIcons"></i>
                           </Link>
                         </li>
                         <li>
                           <hr className="dropdown-divider" />
                         </li>
                         <li>
-                          <a
+                          <Link
                             className="dropdown-item justify-content-end d-flex "
-                            href="/"
+                            to="/"
                             style={{ color: "red" }}
                             onClick={handleLogOut}
                           >
                             Salir
-                          </a>
+                            <i className="fa-solid fa-right-from-bracket ms-3 mt-1 "></i>
+                          </Link>
                         </li>
                       </ul>
                     </li>
                   </>
                 )}
               </ul>
-              
             </div>
           </div>
           {showSwitchBigScreen()}
