@@ -276,13 +276,37 @@ def getReviews():
     return jsonify(review_list), 200
 
 
+@api.route('/profile/garage', methods=['GET'])
+@jwt_required()
+def getMyGarage():
+    current_user = get_jwt_identity()
+    garage = Garage.query.filter_by(user_id=current_user).first()
+
+    if not garage:
+        return jsonify({"mensaje": "No se encontró tu garage"}), 404
+    
+    
+    garage_data = {
+        "name": garage.name,
+        "web": garage.web,
+        "phone": garage.phone,
+        "address": garage.address,
+        "description": garage.description,
+        "cif": garage.cif,
+        "image_id": garage.image_id,
+        "product_id": garage.product_id,
+        "user_id": garage.user_id
+    }
+
+    return jsonify(garage_data), 200
+
+
 
 @api.route('/garages', methods=['GET'])
-
 def getGarages():
     garages = Garage.query.all()
     if not garages:
-        return jsonify({"mensaje": "No se econtrón ningún garage"}), 404
+        return jsonify({"mensaje": "No se econtrón ningún garage"}), 500
 
     garages_list = []
  

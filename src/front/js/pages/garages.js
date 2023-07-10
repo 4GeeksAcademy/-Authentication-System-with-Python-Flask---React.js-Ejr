@@ -10,9 +10,12 @@ export const Garages = () => {
     useEffect (() => {
         actions.getGarages()
     }, [])
+
+
     return (
         <>
            
+  
     {store.garages.map((garage, index) => {
     return (
 
@@ -30,20 +33,13 @@ export const Garages = () => {
                 <li className="list-group-item">A third item</li>
             </ul>
             <div className="card-body">
-                <Link to={garage.email} className="btn btn-primary">Email</Link>
-                <Link to={`tel: ${garage.phone}`} className="btn btn-success">Llamar</Link>
+            {/*}      <Link to={garage.email} className="btn btn-primary">Email</Link>
+              <Link to={`tel: ${garage.phone}`} className="btn btn-success">Llamar</Link> */}
             </div>
         </div>
     )
 
     })}
-
-
-
-
-
-
-
 
 
         </>

@@ -17,12 +17,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			
 			users: [],
-
-      token: localStorage.getItem("token") || "",
+     		token: localStorage.getItem("token") || "",
 			products: [],
 			favorites: [],
 			reviews: [],
-			garages: []
+			garages: [],
+		
 		},
 
 		actions: {
@@ -128,34 +128,35 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({ demo: demo });
 			},
 
-			getUser: () => {
-				const store = getStore();
-				fetch(process.env.BACKEND_URL + `api/configuration`, {
+			
+
+			getGarages: () => {
+				fetch("https://fencer1993-super-lamp-9vvqv656vx7fp9jx-3001.preview.app.github.dev/api/garages" , {
 					method: "GET",
 					headers: {
 						"Content-Type": "application/json",
 						"Authorization": `Bearer ${localStorage.getItem("token")}`
-					}
+				}
 				})
 				.then (response => response.json())
 				.then ((response) => {
-					setStore({user: response.data});
+					setStore({garages: response})
+					console.log(response)
 				});
 			},
 
-			getGarages: () => {
-				const store = getStore();
+			getMyGarage: () => {
 				fetch(process.env.BACKEND_URL + `api/profile/garage`, {
 					method: "GET",
 					headers: {
 						"Content-Type": "application/json",
 						"Authorization": `Bearer ${localStorage.getItem("token")}`
-					}
+				}
 				})
 				.then (response => response.json())
 				.then ((response) => {
-					setStore({garages: response.data})
-					console.log(store.garages)
+					setStore({garage: response})
+					console.log(response)
 				});
 			},
 
@@ -266,7 +267,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				.then (response => response.json())
 				.then ((response) => {
 					setStore({ reviews: response});
-					console.log(response)
+					console.log(garages)
 				})
 			},
 		}

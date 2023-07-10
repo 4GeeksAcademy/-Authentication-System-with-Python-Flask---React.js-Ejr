@@ -13,7 +13,7 @@ export const Profile_navbar = () => {
                 <NavLink to="/profile/reviews" className="navbar_profile col-1" activeClassName="active">Valoraciones</NavLink>
                 <NavLink to="/profile/onsale" className="navbar_profile col-1" activeClassName="active">En venta</NavLink>
                 <NavLink to="/profile/favorites" className="navbar_profile col-1" activeClassName="active">Favoritos</NavLink>
-                <NavLink to="/garage" className="navbar_profile col-1" activeClassName="active">Perfil Taller</NavLink>
+                <NavLink to="/profile/garage" className="navbar_profile col-1" activeClassName="active">Perfil Taller</NavLink>
             </div>
         </div>
     )
