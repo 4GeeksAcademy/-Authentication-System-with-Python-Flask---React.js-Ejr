@@ -180,6 +180,10 @@ li {
   background-color: #2776ab;
 }
 
+.active{
+  background-color: #125c8e;
+  color: white;
+}
 
 .profile_navbar_text{
   margin-bottom: 1.5rem;
