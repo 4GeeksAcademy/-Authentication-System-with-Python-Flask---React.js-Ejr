@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 9f79f5f07349
+Revision ID: d75a87a85a78
 Revises: 
-Create Date: 2023-06-28 18:48:06.311117
+Create Date: 2023-07-08 17:44:28.858515
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '9f79f5f07349'
+revision = 'd75a87a85a78'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -52,6 +52,7 @@ def upgrade():
     sa.Column('state', sa.Enum('NUEVO', 'SEMINUEVO', name='productstate'), nullable=False),
     sa.Column('price', sa.Float(), nullable=False),
     sa.Column('description', sa.String(length=2000), nullable=True),
+    sa.Column('product_type', sa.Enum('MOTO', 'COCHE', name='product_type'), nullable=True),
     sa.Column('year', sa.Integer(), nullable=True),
     sa.Column('km', sa.Integer(), nullable=True),
     sa.Column('fuel', sa.Enum('DIESEL', 'GASOLINA', 'HIBRIDO', 'ELECTRICO', name='fuel_type'), nullable=True),
@@ -90,6 +91,15 @@ def upgrade():
     sa.ForeignKeyConstraint(['given_review_id'], ['user.id'], ),
     sa.ForeignKeyConstraint(['product_id'], ['product.id'], ),
     sa.ForeignKeyConstraint(['recived_review_id'], ['user.id'], ),
+    sa.PrimaryKeyConstraint('id')
+    )
+    op.create_table('status',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('status', sa.Enum('ONSALE', 'PENDING_SALE', 'PENDING_BLOCKED', 'BLOCKED', 'SOLD', name='status_product'), nullable=False),
+    sa.Column('given_review_id', sa.Integer(), nullable=True),
+    sa.Column('product_id', sa.Integer(), nullable=True),
+    sa.ForeignKeyConstraint(['given_review_id'], ['user.id'], ),
+    sa.ForeignKeyConstraint(['product_id'], ['product.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('garage',
@@ -136,6 +146,7 @@ def downgrade():
     op.drop_table('service')
     op.drop_table('sale')
     op.drop_table('garage')
+    op.drop_table('status')
     op.drop_table('review')
     op.drop_table('image')
     op.drop_table('favorites')

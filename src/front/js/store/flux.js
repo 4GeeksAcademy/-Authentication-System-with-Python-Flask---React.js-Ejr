@@ -33,7 +33,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					password: password
 				  })
 				};
-				
+			  
 				try {
 				  const resp = await fetch(`${process.env.BACKEND_URL}api/login`, opts);
 				  const data = await resp.json();
@@ -43,7 +43,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				} catch (error) {
 				  console.error(error);
 				}
-			  }, 
+			  },
 
 
 

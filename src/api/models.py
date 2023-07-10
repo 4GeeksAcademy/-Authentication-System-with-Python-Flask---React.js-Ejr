@@ -113,7 +113,7 @@ class Product(db.Model):
     state = db.Column(db.Enum(ProductState), nullable=False)
     price = db.Column(db.Float, nullable=False) #Estuve leyendo y cuando no quieres un número de decimales exactos el FLOAT es buena opción
     description = db.Column(db.String(2000))
-    product_type = db.Column(db.Enum(product_type), nullable=False)
+    product_type = db.Column(db.Enum(product_type), nullable=True, default=product_type.COCHE)
     year = db.Column(db.Integer)
     km = db.Column(db.Integer)
     fuel = db.Column(db.Enum(fuel_type))

@@ -2,19 +2,29 @@ import React, {useState, useEffect} from 'react';
 import '/workspaces/Watacar_v2/src/front/styles/uploadproduct.css';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import Dropzone from 'react-dropzone';
+import { useNavigate } from "react-router-dom";
 import e from 'cors';
 
 export const UploadCar = () => {
+  const navigate = useNavigate();
+
 
   const [carBrands, setCarBrands] = useState([])
   const [carModels, setCarModels] = useState([])
+  const [selectedModel, setSelectedModel] = useState("");
+  const [carTypes, setCarTypes] = useState([]);
+  
+  const [selectedType, setSelectedType] = useState("");
+
+  
   const [image, setImage] = useState({array : {}})
   const [loading, setLoading] = useState("")
   const [uploadedFiles, setUploadedFiles] = useState([]);
-  const [data, setData] = useState("")
+  const [data, setData] = useState({ product_type: 'coche', selectedType: '' });
   const [isSubmitClicked, setIsSubmitClicked] = useState(false);
   const [submitData, setSubmitData] = useState()
   const [selectedBrand, setSelectedBrand] = useState("");
+
 
 
 
@@ -36,10 +46,12 @@ const getModelsByBrand = (brandId) => {
         setCarModels(data)
         setSelectedBrand(brandId)
         setSelectedModel("")
+        setCarTypes([]) // Reiniciar el tipo cuando cambie el modelo 
       })
       .catch((err) => console.error(err))
   }
 }
+
 
 useEffect(() => {
   getModelsByBrand();
@@ -90,7 +102,7 @@ useEffect(() => {
 
    const handleChange = (ev) => {
     
-    //getModelsByBrand(ev.target.value)
+    getModelsByBrand(ev.target.value)
     setData({...data , [ev.target.name] : ev.target.value}) 
   }
 
@@ -102,8 +114,37 @@ useEffect(() => {
   // };
 
   const handleModelChange = (ev) => {
-    setData({...data , [ev.target.name] : ev.target.value}) 
-  }
+    setSelectedModel(ev.target.value);
+    setData({ ...data, model: ev.target.value });
+  };
+  
+  
+  
+  const getTypesByModel = (modelId) => {
+    fetch(process.env.BACKEND_URL + `api/car-types/${modelId}`)
+      .then((resp) => resp.json())
+      .then((data) => {
+        console.log(data);
+        if (data.type) {
+          setSelectedType(data.type);
+        } else {
+          setSelectedType("");
+        }
+      })
+      .catch((err) => console.error(err));
+  };
+  
+  
+  
+  
+  
+  
+
+  useEffect(() => {
+    if (selectedModel) {
+      getTypesByModel(selectedModel)
+    }
+  }, [selectedModel])
   
   
   
@@ -111,25 +152,45 @@ useEffect(() => {
 
   const handleSubmit = (ev) => {
     ev.preventDefault();
-    fetch("https://api.cloudinary.com/v1_1/djpzj47gu/image/upload", {
-        method: 'POST',
-        body: submitData
-      })
-        .then((resp) => resp.json()) 
-        .then((data) => {
-          const fileURL = data.secure_url;
-          console.log(fileURL);
-          console.log(data);
-        })
-        .catch((error) => {
-          console.error(error);
-        })
 
-        fetch(process.env.BACKEND_URL + 'api/upload-car', methods=['POST'])
-        .then(resp => resp.json())
-        .then(data => {
-          console.log(data)
-        })
+    const config = {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: {
+        'Content-Type': 'application/json',
+        "Authorization": `Bearer ${localStorage.getItem("token")}`
+      },
+    };
+
+    fetch(process.env.BACKEND_URL + 'api/upload-car', config)
+    .then((resp) => resp.json())
+    .then((resp) => {
+      navigate('/');
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
+
+
+
+
+    fetch("https://api.cloudinary.com/v1_1/djpzj47gu/image/upload", {
+      method: 'POST',
+      body: submitData
+    })
+      .then((resp) => resp.json())
+      .then((data) => {
+        const fileURL = data.secure_url;
+        console.log(fileURL);
+        console.log(data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+
+  
+  
+    
 
       
     };
@@ -152,10 +213,12 @@ useEffect(() => {
                 <label htmlFor='name'> <h6><strong>Título</strong></h6> </label>
                 <input className='select ' type='text' maxLength="100" name='title' placeholder='de la publicación' onChange={e => handleChange(e)}/>
               </div>
+
+
   
               <div className='col-3 me-5 ms-5'>
                 <label htmlFor='select-middle'> <h6><strong>Marca</strong></h6> </label>
-                  <select id='select-middle' name='brand' className='select' onChange={e => testBrand(e)}>
+                  <select id='select-middle' name='brand' className='select' onChange={e => handleChange(e)}>
                     {carBrands.map((brand, index) => (
                       <option key={index} value={brand.id}>{brand.name}</option>
                     ))}
@@ -205,26 +268,22 @@ useEffect(() => {
 
               <div className='col-3 ms-5 me-5'>
                 <label htmlFor='select-middle'> <h6><strong>Tipo de coche</strong></h6> </label>
-                <select id='select-middle' name='select' className='select ' onChange={e => handleChange(e)}>
-                  <option value='value1'>Deportiva</option>
-                  <option value='value2'  >Turismo</option>
-                  <option value='value3'>Scooter</option>
-                  <option value='value3'>Todoterreno</option>
-                  <option value='value3'>Crucero</option>
-                  <option value='value3'>Otro</option>
+                <select id='select-middle' name='model' className='select' onChange={e => handleModelChange(e)}>
+                  <option value={selectedType}>{selectedType}</option>
                 </select>
               </div>
 
 
+
               <div className='col-3 ms-3'>
                 <label htmlFor='select-right'> <h6><strong>Combustible</strong></h6> </label>
-                <select id='select-right' name='select' className='select ' onChange={e => handleChange(e)}>
-                  <option value='gasoline'  >Gasolina</option>
-                  <option value='diesel'>Diesel</option>
-                  <option value='electric'>Eléctrico</option>
-                  <option value='hybrid'>Híbrido</option>
+                  <select id='select-right' name='select' className='select ' onChange={e => handleChange(e)}>
+                    <option value='gasoline'  >Gasolina</option>
+                    <option value='diesel'>Diesel</option>
+                    <option value='electric'>Eléctrico</option>
+                    <option value='hybrid'>Híbrido</option>
 
-                </select>
+                  </select>
               </div>
             </div>
 

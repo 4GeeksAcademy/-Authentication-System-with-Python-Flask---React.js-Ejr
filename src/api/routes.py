@@ -50,17 +50,18 @@ def upload_car():
     fuel = data.get('fuel')
     brand = data.get('brand_id')
     model = data.get('model_id')
+    product_type = data.get('product_type')
     user_id = user.id
 
     product = Product(
         name=title, state=state, price=price, description=description,
         year=year, km=km, fuel=fuel, brand_id=brand, model_id=model,
-        user_id=user_id
+        product_type=product_type ,user_id=user_id
     )
     db.session.add(product)
     db.session.commit()
 
-    # Recipero la url
+    # Recupero la url
     for image_file in data.get('images', []):
         upload_result = cloudinary.uploader.upload(image_file)
         image = Image(image=upload_result['secure_url'], user_id=user_id, product_id=product.id)
@@ -116,23 +117,67 @@ def get_model(id):
         return jsonify(model_data)
     else:
         return jsonify({'message': 'Model not found'}), 404
+    
+
+@api.route('/car-types/<int:modelId>', methods=['GET'])
+def get_types_by_model(modelId):
+    model = Model.query.get(modelId)
+    if model:
+        return jsonify({"type": model.type})
+    else:
+        return jsonify({'message': 'Model not found'}), 404
+    
 
 
 
 
 
+@api.route('/moto-brands', methods=['GET'])
+def get_brands():
+    brands = Brand.query.all()
 
-@api.route('moto-brands', methods=['GET'])
-def get_moto_brands():
-    moto_data = pd.read_csv('/workspaces/Watacar_v2/src/api/brands-and-models/motorcycles-2020.csv')
-    brands = moto_data['Make'].unique().tolist()
-    return jsonify(brands)
+    lista_brands = []
+    for brand in brands:
+        data_brand = brand.serialize()
+        lista_brands.append(data_brand)
 
-@api.route('moto-models', methods=['GET'])
+    return jsonify(lista_brands)
+
+
+@api.route('/moto-models', methods=['GET'])
 def get_moto_models():
-    moto_data = pd.read_csv('/workspaces/Watacar_v2/src/api/brands-and-models/motorcycles-2020.csv')
-    models = moto_data['Model'].unique().tolist()
-    return jsonify(models)
+    brand_id = request.args.get('brandId')
+    if brand_id:
+        models = Model.query.filter_by(brand_id=brand_id).all()
+    else:
+        models = Model.query.all()
+
+    array_models = [model.serialize() for model in models]
+    return jsonify(array_models)
+
+
+@api.route('/moto-models/<int:id>', methods=['GET'])
+def get_moto_model(id):
+    model = Model.query.get(id)
+    if model:
+        data_model = model.serialize()
+        return jsonify(data_model)
+    else:
+        return jsonify({'mensaje': 'model not found!'}), 404
+    
+
+@api.route('/moto-types/<int:modelId>', methods=['GET'])
+def get_moto_type(modelId):
+    model = Model.query.get(modelId)
+    if model:
+        return jsonify({"tipo": model.tipo})
+    else:
+        return jsonify({'mensaje': 'type not found!'}), 404
+
+
+
+
+
 
 
 
@@ -154,7 +199,7 @@ def get_moto_models():
 #                 brands.add(brand_name)
 
 
-#     return jsonify(list(brands)) # Funciona, renderiza solo las marcas SIN repetirse
+#     return jsonify(list(brands)) # Funciona, renderiza solo las brands SIN repetirse
 
 
 # @api.route('/car-brand-models/<brand>', methods=['GET'])
@@ -166,7 +211,79 @@ def get_moto_models():
 #     return jsonify(models)
 
 
+@api.route('/post-brands', methods=['POST']) # SUBIR brands
+def post_brands():
+    data = request.get_json()
 
+    if 'brands' in data:
+        brands = data['brands']
+        created_brands = []
+
+        for brand_data in brands:
+            if 'name' in brand_data:
+                name = brand_data['name']
+                new_brand = Brand(name=name)
+                db.session.add(new_brand)
+                created_brands.append(new_brand)
+            else:
+                return jsonify({'error': 'Nombre de brand no proporcionado'}), 400
+
+        db.session.commit()
+        return jsonify([brand.serialize() for brand in created_brands]), 201
+    else:
+        return jsonify({'error': 'Lista de brands no proporcionada'}), 400
+
+
+
+
+@api.route('/post-moto-brands', methods=['POST']) # SUBIR marcas de moto 
+def post_moto_brands():
+    data = request.get_json()
+
+    if 'brands' in data:
+        brands = data['brands']
+        created_brands = []
+
+        for brand_data in brands:
+            if 'name' in brand_data:
+                name = brand_data['name']
+                new_brand = Brand(name=name)
+                db.session.add(new_brand)
+                created_brands.append(new_brand)
+            else:
+                return jsonify({'error': 'Nombre de brand no proporcionado'}), 400
+
+        db.session.commit()
+        return jsonify([brand.serialize() for brand in created_brands]), 201
+    else:
+        return jsonify({'error': 'Lista de brands no proporcionada'}), 400
+    
+
+
+@api.route('/post-moto-models', methods=['POST']) # SUBIR modelos de moto
+def post_moto_models():
+    data = request.get_json()
+
+    if 'models' in data:
+        models = data['models']
+        created_models = []
+
+        for model_data in models:
+            if 'model' in model_data and 'type' in model_data and 'brand_id' in model_data:
+                model = model_data['model']
+                type = model_data['type']
+                brand_id = model_data['brand_id']
+
+                new_model = Model(model=model, type=type, brand_id=brand_id)
+                db.session.add(new_model)
+                created_models.append(new_model)
+            else:
+                return jsonify({'error': 'data de model incompletos'}), 400
+
+        db.session.commit()
+        return jsonify([model.serialize() for model in created_models]), 201
+    else:
+        return jsonify({'error': 'Lista de models no proporcionada'}), 400
 
 
 
