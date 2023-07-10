@@ -41,20 +41,24 @@ def upload_car():
 
     user = User.query.get(current_user)
 
-    title = data.get('name')
+    name = data.get('name')
     state = data.get('state')
     price = data.get('price')
     description = data.get('description')
     year = data.get('year')
     km = data.get('km')
     fuel = data.get('fuel')
-    brand = data.get('brand_id')
-    model = data.get('model_id')
+    brand = data.get('brandId')
+    model = data.get('modelId')
+
     product_type = data.get('product_type')
     user_id = user.id
 
+    if name is None:
+        return jsonify({"message": "Name is required"}), 400
+
     product = Product(
-        name=title, state=state, price=price, description=description,
+        name=name, state=state, price=price, description=description,
         year=year, km=km, fuel=fuel, brand_id=brand, model_id=model,
         product_type=product_type ,user_id=user_id
     )
@@ -67,11 +71,6 @@ def upload_car():
         image = Image(image=upload_result['secure_url'], user_id=user_id, product_id=product.id)
         db.session.add(image)
         db.session.commit()
-
-
-    if not title:
-        return jsonify({"message": "Complete the fields"}), 400
-
 
 
     return jsonify({"message": "Your product has been successfully uploaded"}), 200
@@ -100,13 +99,15 @@ def obtener_brands():
 @api.route('/car-models', methods=['GET'])
 def get_models():
     brand_id = request.args.get('brandId')
-    if brand_id:
-        models = Model.query.filter_by(brand_id=brand_id).all()
+    
+    if brand_id and brand_id.isdigit():
+        models = Model.query.filter_by(brand_id=int(brand_id)).all()
     else:
         models = Model.query.all()
 
     model_list = [model.serialize() for model in models]
     return jsonify(model_list)
+
 
 
 @api.route('/car-models/<int:id>', methods=['GET'])

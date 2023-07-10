@@ -301,7 +301,7 @@ class Brand(db.Model):
 class Model(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     model = db.Column(db.String(50), nullable=False)
-    type = db.Column(db.String(20), nullable=False)
+    #type = db.Column(db.String(20), nullable=False)
     brand_id = db.Column(db.Integer, db.ForeignKey('brand.id'))
 
     # brands = db.relationship('Brand', backref='models') # Podemos acceder a una marca asociada con modelos 
@@ -313,6 +313,6 @@ class Model(db.Model):
         return{
             "id": self.id,
             "model": self.model,
-            "type": self.type,
+            #"type": self.type,
             "brand_id": self.brand_id
         }

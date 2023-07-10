@@ -20,7 +20,7 @@ export const UploadCar = () => {
   const [image, setImage] = useState({array : {}})
   const [loading, setLoading] = useState("")
   const [uploadedFiles, setUploadedFiles] = useState([]);
-  const [data, setData] = useState({ product_type: 'coche', selectedType: '' });
+  const [data, setData] = useState({ product_type: 'COCHE',  });
   const [isSubmitClicked, setIsSubmitClicked] = useState(false);
   const [submitData, setSubmitData] = useState()
   const [selectedBrand, setSelectedBrand] = useState("");
@@ -44,9 +44,10 @@ const getModelsByBrand = (brandId) => {
       .then((data) => {
         console.log(data)
         setCarModels(data)
+
         setSelectedBrand(brandId)
         setSelectedModel("")
-        setCarTypes([]) // Reiniciar el tipo cuando cambie el modelo 
+        //setCarTypes([]) // Reiniciar el tipo cuando cambie el modelo 
       })
       .catch((err) => console.error(err))
   }
@@ -55,13 +56,11 @@ const getModelsByBrand = (brandId) => {
 
 useEffect(() => {
   getModelsByBrand();
-}, []);
-
-
-useEffect(() => {
   getBrands();
-  //getModelsByBrand();
 }, []);
+
+
+
 
 
   // const getModelsByBrand = (brand) => {
@@ -93,11 +92,7 @@ useEffect(() => {
   })};
 
 
-  const testBrand = (ev) => {
-    getModelsByBrand(ev.target.value)
-    setData({...data , [ev.target.name] : ev.target.value}) 
-
-  }
+ 
 
 
    const handleChange = (ev) => {
@@ -120,19 +115,19 @@ useEffect(() => {
   
   
   
-  const getTypesByModel = (modelId) => {
-    fetch(process.env.BACKEND_URL + `api/car-types/${modelId}`)
-      .then((resp) => resp.json())
-      .then((data) => {
-        console.log(data);
-        if (data.type) {
-          setSelectedType(data.type);
-        } else {
-          setSelectedType("");
-        }
-      })
-      .catch((err) => console.error(err));
-  };
+  // const getTypesByModel = (modelId) => {
+  //   fetch(process.env.BACKEND_URL + `api/car-types/${modelId}`)
+  //     .then((resp) => resp.json())
+  //     .then((data) => {
+  //       console.log(data);
+  //       if (data.type) {
+  //         setSelectedType(data.type);
+  //       } else {
+  //         setSelectedType("");
+  //       }
+  //     })
+  //     .catch((err) => console.error(err));
+  // };
   
   
   
@@ -140,11 +135,11 @@ useEffect(() => {
   
   
 
-  useEffect(() => {
-    if (selectedModel) {
-      getTypesByModel(selectedModel)
-    }
-  }, [selectedModel])
+  // useEffect(() => {
+  //   if (selectedModel) {
+  //     getTypesByModel(selectedModel)
+  //   }
+  // }, [selectedModel])
   
   
   
@@ -165,7 +160,9 @@ useEffect(() => {
     fetch(process.env.BACKEND_URL + 'api/upload-car', config)
     .then((resp) => resp.json())
     .then((resp) => {
-      navigate('/');
+      setData(resp)
+      navigate('/')
+      
     })
     .catch((error) => {
       console.error('Error:', error);
@@ -211,7 +208,7 @@ useEffect(() => {
               
               <div className='col-3 me-3'>
                 <label htmlFor='name'> <h6><strong>Título</strong></h6> </label>
-                <input className='select ' type='text' maxLength="100" name='title' placeholder='de la publicación' onChange={e => handleChange(e)}/>
+                <input className='select ' type='text' maxLength="100" name='name' placeholder='de la publicación' onChange={e => handleChange(e)}/>
               </div>
 
 
@@ -219,6 +216,7 @@ useEffect(() => {
               <div className='col-3 me-5 ms-5'>
                 <label htmlFor='select-middle'> <h6><strong>Marca</strong></h6> </label>
                   <select id='select-middle' name='brand' className='select' onChange={e => handleChange(e)}>
+                    <option >Selecciona otro</option>
                     {carBrands.map((brand, index) => (
                       <option key={index} value={brand.id}>{brand.name}</option>
                     ))}
@@ -228,6 +226,7 @@ useEffect(() => {
               <div className='col-3 ms-3'>
                 <label htmlFor='select-right'> <h6><strong>Modelo</strong></h6> </label>
                 <select id='select-right' name='model' className='select' onChange={e => handleModelChange(e)} >
+                  <option >Selecciona otro</option>
                     {carModels.map((model, index) => (
                       <option key={index} value={model.id}>{model.model}</option>
                     ))}
@@ -244,18 +243,20 @@ useEffect(() => {
               <div className='col-3 me-5 ms-5'>
                 <label htmlFor='select-middle'> <h6><strong>Estado del vehículo</strong></h6> </label>
                 <select id='select-middle' name='state' className='select ' onChange={e => handleChange(e)}>
-                  <option value='new'>Nuevo</option>
-                  <option value='semi-new'  >Semi-nuevo</option>
+                  <option >Selecciona otro</option>
+                  <option value='NUEVO'>Nuevo</option>
+                  <option value='SEMINUEVO'  >Semi-nuevo</option>
                 </select>
               </div>
 
               <div className='col-3 ms-3'>
                 <label htmlFor='select-right'> <h6><strong>Kilómetros</strong></h6> </label>
                 <select id='select-right' name='km' className='select ' onChange={e => handleChange(e)}>
-                  <option value='practically new'>Cómo nuevo: de 0 a 1,000</option>
-                  <option value='low mileage'  >Bajo kilometraje: de 1,000 a 50,000</option>
-                  <option value='moderate mileage'>Kilometraje moderado: de 50,000 a 100,000</option>
-                  <option value='high mileage'>Alto kilometraje: Más de 100,000</option>
+                  <option >Selecciona otro</option>
+                  <option value='1000'>Cómo nuevo: de 0 a 1,000</option>
+                  <option value='50000'  >Bajo kilometraje: de 1,000 a 50,000</option>
+                  <option value='100000'>Kilometraje moderado: de 50,000 a 100,000</option>
+                  <option value='100000'>Alto kilometraje: Más de 100,000</option>
                 </select>
               </div>
             </div>
@@ -266,22 +267,23 @@ useEffect(() => {
                 <input className='select ' type='number'  name='year' placeholder='2020' onChange={e => handleChange(e)}/>
               </div>
 
-              <div className='col-3 ms-5 me-5'>
+              {/* <div className='col-3 ms-5 me-5'>
                 <label htmlFor='select-middle'> <h6><strong>Tipo de coche</strong></h6> </label>
                 <select id='select-middle' name='model' className='select' onChange={e => handleModelChange(e)}>
                   <option value={selectedType}>{selectedType}</option>
                 </select>
-              </div>
+              </div> */}
 
 
 
               <div className='col-3 ms-3'>
                 <label htmlFor='select-right'> <h6><strong>Combustible</strong></h6> </label>
                   <select id='select-right' name='select' className='select ' onChange={e => handleChange(e)}>
-                    <option value='gasoline'  >Gasolina</option>
-                    <option value='diesel'>Diesel</option>
-                    <option value='electric'>Eléctrico</option>
-                    <option value='hybrid'>Híbrido</option>
+                    <option >Selecciona otro</option>
+                    <option value='GASOLINA'  >Gasolina</option>
+                    <option value='DIESEL'>Diesel</option>
+                    <option value='ELECTRICO'>Eléctrico</option>
+                    <option value='HIBRIDO'>Híbrido</option>
 
                   </select>
               </div>
