@@ -55,9 +55,12 @@ const getModelsByBrand = (brandId) => {
 
 
 useEffect(() => {
-  getModelsByBrand();
+  //getModelsByBrand();
+  
   getBrands();
 }, []);
+
+
 
 
 
@@ -97,7 +100,7 @@ useEffect(() => {
 
    const handleChange = (ev) => {
     
-    getModelsByBrand(ev.target.value)
+    
     setData({...data , [ev.target.name] : ev.target.value}) 
   }
 
@@ -215,7 +218,7 @@ useEffect(() => {
   
               <div className='col-3 me-5 ms-5'>
                 <label htmlFor='select-middle'> <h6><strong>Marca</strong></h6> </label>
-                  <select id='select-middle' name='brand' className='select' onChange={e => handleChange(e)}>
+                  <select id='select-middle' name='brand' className='select' onChange={e => {handleChange(e); getModelsByBrand(e.target.value)}}>
                     <option >Selecciona otro</option>
                     {carBrands.map((brand, index) => (
                       <option key={index} value={brand.id}>{brand.name}</option>
