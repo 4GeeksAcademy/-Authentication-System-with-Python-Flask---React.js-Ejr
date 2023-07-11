@@ -45,7 +45,7 @@ def upload_car():
     state = data.get('state')
     price = data.get('price')
     description = data.get('description')
-    year = data.get('year')
+    year = data.get('year') 
     km = data.get('km')
     fuel = data.get('fuel')
     brand = data.get('brand')
@@ -60,8 +60,8 @@ def upload_car():
     product = Product(
         name=name, state=state, price=price, description=description,
         year=year, km=km, fuel=fuel, brand_id=brand, model_id=model,
-        product_type=product_type ,user_id=user_id
-    )
+        product_type=product_type ,user_id=user_id 
+    ) 
     db.session.add(product)
     db.session.commit()
 
@@ -71,12 +71,12 @@ def upload_car():
         image = Image(image=upload_result['secure_url'], user_id=user_id, product_id=product.id)
         db.session.add(image)
         db.session.commit()
-
-
+ 
+ 
     return jsonify({"message": "Your product has been successfully uploaded"}), 200
 
 
-
+ 
 @api.route('/products', methods=['GET'])
 def get_products():
     products = Product.query.all()

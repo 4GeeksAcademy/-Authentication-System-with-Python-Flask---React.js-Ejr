@@ -151,29 +151,8 @@ useEffect(() => {
   const handleSubmit = (ev) => {
     ev.preventDefault();
 
-    const config = {
-      method: "POST",
-      body: JSON.stringify(data),
-      headers: {
-        'Content-Type': 'application/json',
-        "Authorization": `Bearer ${localStorage.getItem("token")}`
-      },
-    };
 
-    fetch(process.env.BACKEND_URL + 'api/upload-car', config)
-    .then((resp) => resp.json())
-    .then((resp) => {
-      setData(resp)
-      navigate('/')
-      
-    })
-    .catch((error) => {
-      console.error('Error:', error);
-    });
-
-
-
-
+    
     fetch("https://api.cloudinary.com/v1_1/djpzj47gu/image/upload", {
       method: 'POST',
       body: submitData
@@ -181,12 +160,40 @@ useEffect(() => {
       .then((resp) => resp.json())
       .then((data) => {
         const fileURL = data.secure_url;
-        console.log(fileURL);
-        console.log(data);
+        return fileURL
+      })
+      .then((fileURL) => {
+        const config = {
+          method: "POST",
+          body: JSON.stringify({ ...data,  images: [fileURL] }),
+          headers: {
+            'Content-Type': 'application/json',
+            "Authorization": `Bearer ${localStorage.getItem("token")}`
+          },
+        };
+    
+        fetch(process.env.BACKEND_URL + 'api/upload-car', config)
+        .then((resp) => resp.json())
+        .then((resp) => {
+          setData(resp)
+          navigate('/')
+          
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+        });
       })
       .catch((error) => {
         console.error(error);
       });
+
+
+
+    
+
+
+
+
 
   
   
