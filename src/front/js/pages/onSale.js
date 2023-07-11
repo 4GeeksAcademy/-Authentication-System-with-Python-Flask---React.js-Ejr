@@ -3,6 +3,7 @@ import { Context } from "../store/appContext";
 import { NavLink } from "react-router-dom";
 import { Profile_navbar } from "../component/profile_navbar";
 import "/workspaces/Watacar_v2/src/front/styles/profile.css"
+import { Sales_navbar } from "../component/Sales_navbar";
 
 export const On_sale = () => {
     const {actions, store} = useContext(Context);
@@ -14,6 +15,7 @@ export const On_sale = () => {
     return store.products ? (
         <>
             <Profile_navbar />
+            <Sales_navbar />
             {store.products.map((product, index) => (
                 <div className="row row_product_profile" key={index}>
                     <div className="product_img_profile_box col-2">
