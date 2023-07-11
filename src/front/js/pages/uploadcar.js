@@ -12,10 +12,7 @@ export const UploadCar = () => {
   const [carBrands, setCarBrands] = useState([])
   const [carModels, setCarModels] = useState([])
   const [selectedModel, setSelectedModel] = useState("");
-  const [carTypes, setCarTypes] = useState([]);
-  
-  const [selectedType, setSelectedType] = useState("");
-
+ 
   
   const [image, setImage] = useState({array : {}})
   const [loading, setLoading] = useState("")
