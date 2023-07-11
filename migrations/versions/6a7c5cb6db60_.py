@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: d75a87a85a78
+Revision ID: 6a7c5cb6db60
 Revises: 
-Create Date: 2023-07-08 17:44:28.858515
+Create Date: 2023-07-11 15:28:13.368227
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'd75a87a85a78'
+revision = '6a7c5cb6db60'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -21,6 +21,7 @@ def upgrade():
     op.create_table('brand',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=50), nullable=False),
+    sa.Column('vehicle_type', sa.Enum('MOTO', 'CAR', 'COCHE', name='vehicle_type'), nullable=True),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('user',
@@ -41,7 +42,6 @@ def upgrade():
     op.create_table('model',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('model', sa.String(length=50), nullable=False),
-    sa.Column('type', sa.String(length=20), nullable=False),
     sa.Column('brand_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['brand_id'], ['brand.id'], ),
     sa.PrimaryKeyConstraint('id')
@@ -55,7 +55,7 @@ def upgrade():
     sa.Column('product_type', sa.Enum('MOTO', 'COCHE', name='product_type'), nullable=True),
     sa.Column('year', sa.Integer(), nullable=True),
     sa.Column('km', sa.Integer(), nullable=True),
-    sa.Column('fuel', sa.Enum('DIESEL', 'GASOLINA', 'HIBRIDO', 'ELECTRICO', name='fuel_type'), nullable=True),
+    sa.Column('fuel', sa.Enum('DIESEL', 'GASOLINA', 'HIBRIDO', 'ELECTRICO', name='fuel_type'), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=False),
     sa.Column('brand_id', sa.Integer(), nullable=True),
     sa.Column('model_id', sa.Integer(), nullable=True),

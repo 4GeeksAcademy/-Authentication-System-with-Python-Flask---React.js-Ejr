@@ -48,8 +48,8 @@ def upload_car():
     year = data.get('year')
     km = data.get('km')
     fuel = data.get('fuel')
-    brand = data.get('brandId')
-    model = data.get('modelId')
+    brand = data.get('brand')
+    model = data.get('model')
 
     product_type = data.get('product_type')
     user_id = user.id
@@ -75,6 +75,15 @@ def upload_car():
 
     return jsonify({"message": "Your product has been successfully uploaded"}), 200
 
+
+
+@api.route('/products', methods=['GET'])
+def get_products():
+    products = Product.query.all()
+    serialized_products = [product.serialize() for product in products]
+    return jsonify(serialized_products), 200
+
+
 # @api.route('car-models/<string:brand>', methods=['GET'])
 # def get_car_models(brand):
 #     df = pd.read_csv('/workspaces/Watacar_v2/src/api/brands-and-models/cars-2020.csv')
@@ -83,10 +92,9 @@ def upload_car():
 #     model_dictionary = [{'name': model, 'selected': False}for model in models]
 #     return jsonify(model_dictionary)
 
-
 @api.route('/car-brands', methods=['GET'])
 def obtener_brands():
-    brands = Brand.query.all()
+    brands = Brand.query.filter_by(vehicle_type='CAR').all()
 
     brand_list = []
     for brand in brands:
@@ -94,6 +102,20 @@ def obtener_brands():
         brand_list.append(brand_data)
 
     return jsonify(brand_list)
+
+
+@api.route('/moto-brands', methods=['GET'])
+def get_moto_brands():
+    brands = Brand.query.filter_by(vehicle_type='MOTO').all()
+
+    brand_list = []
+    for brand in brands:
+        brand_data = brand.serialize()
+        brand_list.append(brand_data)
+
+    return jsonify(brand_list)
+
+
 
 
 @api.route('/car-models', methods=['GET'])
@@ -233,6 +255,36 @@ def post_brands():
         return jsonify([brand.serialize() for brand in created_brands]), 201
     else:
         return jsonify({'error': 'Lista de brands no proporcionada'}), 400
+    
+
+@api.route('/post-brand', methods=['POST'])
+def post_brand():
+    data = request.get_json()
+
+    if 'brands' in data:
+        brands = data['brands']
+        created_brands = []
+
+        for brand_data in brands:
+            if 'name' in brand_data and 'vehicle_type' in brand_data:
+                name = brand_data['name']
+                vehicle_type = brand_data['vehicle_type'].upper()  # Convertir a mayúsculas
+
+                if vehicle_type == 'MOTO' or vehicle_type == 'COCHE' or vehicle_type == 'CAR':  # Validar valor del vehicle_type
+                    new_brand = Brand(name=name, vehicle_type=vehicle_type)
+                    db.session.add(new_brand)
+                    created_brands.append(new_brand)
+                else:
+                    return jsonify({'error': 'Tipo de vehículo no válido'}), 400
+            else:
+                return jsonify({'error': 'Datos de marca incompletos'}), 400
+
+        db.session.commit()
+        return jsonify([brand.serialize() for brand in created_brands]), 201
+    else:
+        return jsonify({'error': 'Lista de marcas no proporcionada'}), 400
+
+
 
 
 
@@ -261,8 +313,8 @@ def post_moto_brands():
     
 
 
-@api.route('/post-moto-models', methods=['POST']) # SUBIR modelos de moto
-def post_moto_models():
+@api.route('/post-models', methods=['POST'])
+def post_models():
     data = request.get_json()
 
     if 'models' in data:
@@ -270,12 +322,11 @@ def post_moto_models():
         created_models = []
 
         for model_data in models:
-            if 'model' in model_data and 'type' in model_data and 'brand_id' in model_data:
+            if 'model' in model_data and 'brand_id' in model_data:
                 model = model_data['model']
-                type = model_data['type']
                 brand_id = model_data['brand_id']
 
-                new_model = Model(model=model, type=type, brand_id=brand_id)
+                new_model = Model(model=model, brand_id=brand_id)
                 db.session.add(new_model)
                 created_models.append(new_model)
             else:
@@ -285,6 +336,32 @@ def post_moto_models():
         return jsonify([model.serialize() for model in created_models]), 201
     else:
         return jsonify({'error': 'Lista de models no proporcionada'}), 400
+    
+
+@api.route('/post-moto-models', methods=['POST'])
+def post_moto_models():
+    data = request.get_json()
+
+    if 'models' in data:
+        models = data['models']
+        created_models = []
+
+        for model_data in models:
+            if 'model' in model_data and 'brand_id' in model_data:
+                model = model_data['model']
+                brand_id = model_data['brand_id']
+
+                new_model = Model(model=model, brand_id=brand_id)
+                db.session.add(new_model)
+                created_models.append(new_model)
+            else:
+                return jsonify({'error': 'data de model incompletos'}), 400
+
+        db.session.commit()
+        return jsonify([model.serialize() for model in created_models]), 201
+    else:
+        return jsonify({'error': 'Lista de models no proporcionada'}), 400
+
 
 
 

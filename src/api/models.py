@@ -122,6 +122,8 @@ class Product(db.Model):
     model_id = db.Column(db.Integer, db.ForeignKey('model.id'))
 
     images = db.relationship('Image', backref='product')
+    brand = db.relationship('Brand', backref='products')
+    model = db.relationship('Model', backref='products')
 
     def __repr__(self):
         return f'<Products {self.id}>'
@@ -133,7 +135,7 @@ class Product(db.Model):
             "state": self.state.value,
             "price": self.price,
             "description": self.description,
-            "images": self.image,
+            "images": [image.serialize() for image in self.images],
             "year": self.year,
             "km": self.km,
             "fuel": self.fuel.value,
@@ -283,9 +285,17 @@ class Sale(db.Model):
             "fecha": self.fecha
         }
     
+
+class vehicle_type(Enum):
+    #SELECCIONA = 'selecciona'
+    MOTO = 'moto'
+    CAR = 'car'
+    COCHE = 'coche'
+    
 class Brand(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50), nullable=False)
+    vehicle_type = db.Column(db.Enum(vehicle_type), nullable=True, default=vehicle_type.COCHE)
 
     models = db.relationship('Model', backref='brands') # Podemos acceder a modelos asociados a una marca . 1 modelo solo puede pertenecer a 1 marca, las marcas peuden tener varios modelos
 
@@ -296,13 +306,18 @@ class Brand(db.Model):
         return{
             "id": self.id,
             "name": self.name,
+            "vehicle_type": self.vehicle_type.value.upper()
+
         }
+    
+
     
 class Model(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     model = db.Column(db.String(50), nullable=False)
     #type = db.Column(db.String(20), nullable=False)
     brand_id = db.Column(db.Integer, db.ForeignKey('brand.id'))
+    #product_type = db.Column(db.Enum(product_type), nullable=True, default=product_type.COCHE)
 
     # brands = db.relationship('Brand', backref='models') # Podemos acceder a una marca asociada con modelos 
 
@@ -314,7 +329,8 @@ class Model(db.Model):
             "id": self.id,
             "model": self.model,
             #"type": self.type,
-            "brand_id": self.brand_id
+            "brand_id": self.brand_id,
+            #"product_type": self.product_type.value
         }
     
 
