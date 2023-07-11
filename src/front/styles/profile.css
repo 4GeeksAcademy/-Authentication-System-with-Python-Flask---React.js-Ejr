@@ -116,6 +116,10 @@
     background-color: white;
 }
 
+.success-message{
+    color: #87e753;
+}
+
 .product_profile_button:hover{
     background-color: #2776ab;
 }

@@ -1,6 +1,6 @@
 import React, { useEffect, useContext, useState } from "react";
 import { Context } from "../store/appContext";
-import { NavLink, Link } from "react-router-dom";
+import { NavLink, Link, useNavigate } from "react-router-dom";
 import { Profile_navbar } from "../component/profile_navbar";
 import "/workspaces/Watacar_v2/src/front/styles/profile.css"
 
@@ -10,6 +10,8 @@ export const Profile_configuration = () => {
     const [password2, setPassword2] = useState("");
     const [eye1, setEye1] = useState(true); 
     const [eye2, setEye2] = useState(true);
+    const [data, setData] = useState([]);
+    const [successMessage, setSuccessMessage] = useState("");
 
     
 
@@ -22,7 +24,7 @@ const validatePasswords = () => {
       alert("Las contraseñas no coinciden");
       return false;
     }
-
+    handlePasswordChange();
     //Aquí se añadirá la función para que se guarde en BD o lo que Marcos nos diga que tenemos que hacer con las contraseñas
 
     return true;
@@ -43,6 +45,52 @@ const handlePasswordChange1 = (e) => {
 const handlePasswordChange2 = (e) => {
     setPassword2(e.target.value);
 };
+
+const handlePasswordChange = () => {
+    const updatedData = {
+      ...store.user,
+      password: password1
+    };
+
+    const putConfig = {
+      method: "PUT",
+      body: JSON.stringify({
+        password: updatedData.password
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+        "Authorization": `Bearer ${localStorage.getItem("token")}`
+      }
+    };
+
+    fetch(process.env.BACKEND_URL + "api/configuration/password", putConfig)
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw new Error("Error al guardar la contraseña");
+      })
+      .then((responseData) => {
+        setData({ ...data, response: responseData });
+        setSuccessMessage("Contraseña guardada correctamente");
+        // Reiniciar los campos de contraseña
+        setPassword1("");
+        setPassword2("");
+        // Cerrar el modal después de 2 segundos
+        setTimeout(() => {
+          closeModal();
+        }, 1000);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
+  const closeModal = () => {
+    const modal = document.getElementById("exampleModal");
+    const modalInstance = bootstrap.Modal.getInstance(modal);
+    modalInstance.hide();
+  };
 
     return store.user ? (
         <>
@@ -82,39 +130,50 @@ const handlePasswordChange2 = (e) => {
                             Editar 
                         </Link>
                         <div className="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div className="modal-dialog">
-                            <div className="modal-content sold-product_profile">
-                                <div className="modal-header">
-                                    <h5 className="modal-title" id="exampleModalLabel">Vas a cambiar tu contraseña</h5>
-                                    <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div className="modal-body">
-                                    <div>
-                                        <label htmlFor="contraseña" className="password_label row">Nueva contraseña </label>
-                                        <input type={eye1 ? "password" : "text"} className="change_password_input" id="password1" placeholder="Nueva Contraseña" value={password1} onChange={handlePasswordChange1} />
-                                        <i
-                                            className={!eye1 ? "fa-solid fa-eye icon" : "fa-solid fa-eye-slash icon"}
-                                            onClick={handleEye1}
-                                        ></i>
+                            <div className="modal-dialog">
+                                <div className="modal-content sold-product_profile">
+                                    <div className="modal-header">
+                                        <h5 className="modal-title" id="exampleModalLabel">Vas a cambiar tu contraseña</h5>
+                                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
-                                    <div>
-                                        <label htmlFor="contraseña" className="password_label row">Repetir contraseña </label>
-                                        <input type={eye2 ? "password" : "text"} className="change_password_input" id="password2" placeholder="Repetir Contraseña" value={password2} onChange={handlePasswordChange2} />
-                                        <i
-                                            className={!eye2 ? "fa-solid fa-eye icon" : "fa-solid fa-eye-slash icon"}
-                                            onClick={handleEye2}
-                                        ></i>
+                                    <div className="modal-body">
+                                        <div>
+                                            <label htmlFor="contraseña" className="password_label row">Nueva contraseña </label>
+                                            <input type={eye1 ? "password" : "text"} className="change_password_input" id="password1" placeholder="Nueva Contraseña" value={password1} onChange={handlePasswordChange1} />
+                                            <i
+                                                className={!eye1 ? "fa-solid fa-eye icon" : "fa-solid fa-eye-slash icon"}
+                                                onClick={handleEye1}
+                                            ></i>
+                                        </div>
+                                        <div>
+                                            <label htmlFor="contraseña" className="password_label row">Repetir contraseña </label>
+                                            <input type={eye2 ? "password" : "text"} className="change_password_input" id="password2" placeholder="Repetir Contraseña" value={password2} onChange={handlePasswordChange2} />
+                                            <i
+                                                className={!eye2 ? "fa-solid fa-eye icon" : "fa-solid fa-eye-slash icon"}
+                                                onClick={handleEye2}
+                                            ></i>
+                                        </div>
                                     </div>
-                                </div>
-                                <div className="modal-footer">
-                                    <button type="button" className="btn btn_config cancel" data-bs-dismiss="modal">Cancelar</button>
-                                    <button type="button" className="btn btn_config reservado" onClick={validatePasswords}>Guardar</button>
+                                    <div className="modal-footer">
+                                        <button type="button" className="btn btn_config cancel" data-bs-dismiss="modal">Cancelar</button>
+                                        <button
+                                            type="button"
+                                            className="btn btn_config reservado"
+                                            onClick={() => {
+                                                if (validatePasswords()) {
+                                                handlePasswordChange();
+                                                }
+                                            }}
+                                            >
+                                            Guardar
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    </div>
                 </div>
+                <div className="success-message">{successMessage}</div>
             </div>
         </>
     ): "cargando...";

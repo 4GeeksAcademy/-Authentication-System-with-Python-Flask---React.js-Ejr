@@ -105,6 +105,27 @@ def update_configuration():
     except Exception as e:
         db.session.rollback()
         return jsonify({"message": "Error updating user"}), 500
+    
+@api.route('/configuration/password', methods=['PUT'])
+@jwt_required()
+def update_password():
+    current_user = get_jwt_identity()
+    user = User.query.get(current_user)
+    if user is None:
+        return jsonify({"message": "User not found"}), 404
+
+    data = request.get_json()
+    password = data.get('password')
+
+    if password:
+        user.password = password
+
+    try:
+        db.session.commit()
+        return jsonify({"message": "Password updated successfully"}), 200
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"message": "Error updating password"}), 500
 
 @api.route('/login', methods=['POST'])
 def login():
