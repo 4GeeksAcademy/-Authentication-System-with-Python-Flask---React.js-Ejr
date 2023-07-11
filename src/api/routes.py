@@ -376,13 +376,12 @@ def post_moto_models():
 
 @api.route('/configuration', methods=['GET'])
 @jwt_required()
-def configuration(current_user):
+def configuration():
     current_user = get_jwt_identity()
-    user=User.query.filter_by(current_user).first()
+    user=User.query.filter_by(id=current_user).first()
     response_body = {
         "data": user.serialize()
     }
-
     return jsonify(response_body), 200
 
 
