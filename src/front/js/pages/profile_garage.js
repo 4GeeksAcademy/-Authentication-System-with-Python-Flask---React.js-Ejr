@@ -29,7 +29,7 @@ export const Profile_garage = () => {
                     </div>
                     <div className="row row_profile_configuration">
                         <h4 className="col-3 label input-radius">Correo del Taller:</h4>
-                        <h4 className="col-8 user_data">{store.garage.email}</h4>
+                        <h4 className="col-8 user_data">{store.garage.mail}</h4>
                     </div>
                     <div className="row row_profile_configuration">
                         <h4 className="col-3 label input-radius">Sitio Web:</h4>

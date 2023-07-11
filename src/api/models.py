@@ -142,6 +142,7 @@ class Garage (db.Model):
     name = db.Column(db.String(100), nullable=False)
     web = db.Column(db.String(150), nullable=True)
     phone = db.Column(db.String(15), nullable=False)
+    mail = db.Column(db.String(50), nullable=False)
     address = db.Column(db.String(50), nullable=False)
     description = db.Column(db.String(200), nullable=False)
     cif = db.Column(db.String(10), nullable=False)
@@ -160,6 +161,7 @@ class Garage (db.Model):
             "name": self.name,
             "web" : self.web,
             "phone": self.phone,
+            "mail": self.mail,
             "address": self.address,
             "description": self.description,
             "cif": self.cif,
