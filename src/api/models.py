@@ -116,7 +116,7 @@ class Product(db.Model):
     product_type = db.Column(db.Enum(product_type), nullable=True, default=product_type.COCHE)
     year = db.Column(db.Integer)
     km = db.Column(db.Integer)
-    fuel = db.Column(db.Enum(fuel_type))
+    fuel = db.Column(db.Enum(fuel_type), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     brand_id = db.Column(db.Integer, db.ForeignKey('brand.id'))
     model_id = db.Column(db.Integer, db.ForeignKey('model.id'))
@@ -316,3 +316,39 @@ class Model(db.Model):
             #"type": self.type,
             "brand_id": self.brand_id
         }
+    
+
+
+# class MotoBrand(db.Model):
+#     id = db.Column(db.Integer, primary_key=True)
+#     name = db.Column(db.String(50), nullable=False)
+
+#     models = db.relationship('Model', backref='brands') # Podemos acceder a modelos asociados a una marca . 1 modelo solo puede pertenecer a 1 marca, las marcas peuden tener varios modelos
+
+#     def __repr__(self):
+#         return f'<Brands {self.id}>'
+    
+#     def serialize(self):
+#         return{
+#             "id": self.id,
+#             "name": self.name,
+#         }
+    
+# class MotoModel(db.Model):
+#     id = db.Column(db.Integer, primary_key=True)
+#     model = db.Column(db.String(50), nullable=False)
+#     #type = db.Column(db.String(20), nullable=False)
+#     brand_id = db.Column(db.Integer, db.ForeignKey('brand.id'))
+
+#     # brands = db.relationship('Brand', backref='models') # Podemos acceder a una marca asociada con modelos 
+
+#     def __repr__(self):
+#         return f'<Models {self.id}>'
+    
+#     def serialize(self):
+#         return{
+#             "id": self.id,
+#             "model": self.model,
+#             #"type": self.type,
+#             "brand_id": self.brand_id
+#         }

@@ -278,7 +278,7 @@ useEffect(() => {
 
               <div className='col-3 ms-3'>
                 <label htmlFor='select-right'> <h6><strong>Combustible</strong></h6> </label>
-                  <select id='select-right' name='select' className='select ' onChange={e => handleChange(e)}>
+                  <select id='select-right' name='fuel' className='select ' onChange={e => handleChange(e)}>
                     <option >Selecciona otro</option>
                     <option value='GASOLINA'  >Gasolina</option>
                     <option value='DIESEL'>Diesel</option>
