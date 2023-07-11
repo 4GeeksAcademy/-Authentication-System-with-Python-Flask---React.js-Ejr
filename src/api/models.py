@@ -135,7 +135,9 @@ class Product(db.Model):
             "state": self.state.value,
             "price": self.price,
             "description": self.description,
+
             "images": [image.serialize() for image in self.images],
+
             "year": self.year,
             "km": self.km,
             "fuel": self.fuel.value,
@@ -259,7 +261,7 @@ class Review(db.Model): # Cambiar la tabla para que se pueda asociar al comrpado
             "buyer_id": self.buyer_id,
             "seller_id": self.seller_id,
             "product_id": self.product_id,
-            "stars": self.stars,
+            "stars": self.stars.value,
             "comment": self.comment
         }
     

@@ -17,8 +17,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			
 			users: [],
-            token: ""
+
+      token: localStorage.getItem("token") || "",
+			products: [],
+			favorites: [],
+			reviews: []
 		},
+
 		actions: {
 			login: async (email, password) => {
 				const store = getStore();
@@ -45,6 +50,31 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			  },
 
+		
+			getUser: () => {
+				const store = getStore();
+				fetch(process.env.BACKEND_URL + `api/configuration`, {
+					method: "GET",
+					headers: {
+						"Content-Type": "application/json",
+						"Authorization": `Bearer ${localStorage.getItem("token")}`
+					}
+				})
+				.then (response => response.json())
+				.then ((response) => {
+					setStore({user: response.data});
+				});
+			},
+
+
+
+			getToken: () => {
+				const store = getStore()
+				if (localStorage.getItem("token")) {
+				  return localStorage.getItem("token"); 
+				}
+				return store.token; 
+			  },
 
 
 			//   login: async (email, password) => {
@@ -98,6 +128,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				//reset the global store
 				setStore({ demo: demo });
 			},
+
 			getUser: () => {
 				const store = getStore();
 				fetch(process.env.BACKEND_URL + `api/configuration`, {
@@ -111,9 +142,119 @@ const getState = ({ getStore, getActions, setStore }) => {
 				.then ((response) => {
 					setStore({user: response.data});
 				});
-			}
+			},
+			getProducts: () => {
+				const store = getStore();
+				fetch(process.env.BACKEND_URL + `api/profile/onsale`, {
+					method: "GET",
+					headers: {
+						"Content-Type": "application/json",
+						"Authorization": `Bearer ${localStorage.getItem("token")}`
+					}
+				})
+				.then (response => response.json())
+				.then ((response) => {
+					setStore({ products: response.data });
+					console.log(response.data)
+				})
+			},
+			getFavorites: () => {
+				const store = getStore();
+				fetch(process.env.BACKEND_URL + `api/profile/favorites`, {
+					method: "GET",
+					headers: {
+						"Content-Type": "application/json",
+						"Authorization": `Bearer ${localStorage.getItem("token")}`
+					}
+				})
+				.then (response => response.json())
+				.then ((response) => {
+					setStore({ favorites: response});
+					console.log(response.data)
+				})
+			},
+			postFavorite: (product_id) => {
+				const token = localStorage.getItem("token");
+			  
+				// Primero, realiza una solicitud GET para obtener la lista de productos favoritos del usuario
+				fetch(process.env.BACKEND_URL + "api/profile/favorites", {
+				  method: "GET",
+				  headers: {
+					"Content-Type": "application/json",
+					Authorization: `Bearer ${token}`
+				  }
+				})
+				.then(response => response.json())
+				.then(data => {
+				  const favorites = data.favorites;
+				  const isProductFavorited = favorites.some(favorite => favorite.product_id === product_id);
+			  
+				  if (isProductFavorited) {
+					console.log("El producto ya está guardado como favorito.");
+				  } else {
+					const requestOptions = {
+					  method: "POST",
+					  headers: {
+						"Content-Type": "application/json",
+						Authorization: `Bearer ${token}`
+					  },
+					  body: JSON.stringify({ product_id })
+					};
+			  
+					fetch(process.env.BACKEND_URL + "api/profile/favorites", requestOptions)
+					  .then(response => response.json())
+					  .then(data => {
+						console.log(data);
+					  })
+					  .catch(error => {
+						console.error("Error:", error);
+					  });
+				  }
+				})
+				.catch(error => {
+				  console.error("Error:", error);
+				});
+			},
+
+			putFavorite: (product_id) => {
+				const token = localStorage.getItem("token");
+				const requestOptions = {
+				  method: "PUT",
+				  headers: {
+					"Content-Type": "application/json",
+					Authorization: `Bearer ${token}`
+				  }
+				};
+			  
+				fetch(process.env.BACKEND_URL + `api/profile/favorites/${product_id}`, requestOptions)
+				  .then(response => response.json())
+				  .then(data => {
+					console.log(data);
+				  })
+				  .catch(error => {
+					console.error("Error:", error);
+				  });
+			},
+
+			getReviews: () => {
+				const store = getStore();
+				fetch(process.env.BACKEND_URL + `api/profile/reviews`, {
+					method: "GET",
+					headers: {
+						"Content-Type": "application/json",
+						"Authorization": `Bearer ${localStorage.getItem("token")}`
+					}
+				})
+				.then (response => response.json())
+				.then ((response) => {
+					setStore({ reviews: response});
+					console.log(response)
+				})
+			},
 		}
-	};
+	}
 };
 
 export default getState;
+
+
