@@ -49,6 +49,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				  console.error(error);
 				}
 			  },
+
 		
 			getUser: () => {
 				const store = getStore();
@@ -64,6 +65,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					setStore({user: response.data});
 				});
 			},
+
 
 
 			getToken: () => {
