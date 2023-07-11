@@ -22,6 +22,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			favorites: [],
 			reviews: [],
 			garages: [],
+			garage: []
 		
 		},
 
@@ -160,6 +161,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 				});
 			},
 
+
+
+
+			
 
 
 			getProducts: () => {

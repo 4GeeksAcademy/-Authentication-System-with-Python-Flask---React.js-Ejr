@@ -105,6 +105,40 @@ def update_configuration():
     except Exception as e:
         db.session.rollback()
         return jsonify({"message": "Error updating user"}), 500
+    
+
+
+
+
+@api.route('/configuration/garage', methods=['PUT'])
+@jwt_required()
+def update_garage_configuration():
+    current_user = get_jwt_identity()
+    garage = Garage.query.filter(Garage.user_id == current_user).first()
+    if garage is None:
+        return jsonify({"message": "No existe el Taller que buscas"}), 404
+    
+    data = request.get_json()
+    garage.name = data.get('name')
+    garage.mail = data.get('mail')
+    garage.web = data.get('web')
+    garage.phone = data.get('phone')
+    garage.address = data.get('address')
+    garage.description = data.get('description')
+    garage.cif = data.get('cif')
+    garage.image_id = data.get('image_id')
+    garage.product_id = data.get('product_id')
+    garage.user_id = data.get('user_id')
+    print(garage.serialize())
+    try:
+       
+        db.session.commit()
+        return jsonify({"message": "Se ha actualizado correctamente el Taller"}), 200
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"message": Exception}), 500
+
+
 
 @api.route('/login', methods=['POST'])
 def login():

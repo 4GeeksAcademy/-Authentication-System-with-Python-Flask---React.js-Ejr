@@ -49,13 +49,10 @@ export const Profile_garage = () => {
                     </div>
 
               
-                    <div className="row row_profile_configuration " >
-                        <h4 className="col-3 label input-radius" >Servicios que ofrecemos:</h4>
-                        <h4 className="col-8 user_data">{store.garage.services}</h4>
-                    </div>
+                    
 
                     <div className="row row_edit_profile">
-                        <Link to="/configuration" className="edit_profile col-3 label">
+                        <Link to="/configuration/garage" className="edit_profile col-3 label">
                             Editar 
                         </Link>
                     </div>
