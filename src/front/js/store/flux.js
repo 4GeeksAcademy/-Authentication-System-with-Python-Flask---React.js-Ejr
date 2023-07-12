@@ -15,6 +15,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			],
 
+			productlist: [],
+
 			
 			users: [],
 
@@ -25,6 +27,20 @@ const getState = ({ getStore, getActions, setStore }) => {
 		},
 
 		actions: {
+
+			getProduct: (productid) => {
+				fetch(process.env.BACKEND_URL + `api/product/${productid}`)
+				.then(resp => resp.json())
+				.then((data) => {
+					//onsole.log(data); 
+					setStore({ productlist: [data] });
+
+				})
+				.catch(err => console.error(err))
+			},
+
+
+
 			login: async (email, password) => {
 				const store = getStore();
 				const opts = {
