@@ -145,18 +145,29 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 			getProducts: () => {
 				const store = getStore();
-				fetch(process.env.BACKEND_URL + `api/profile/onsale`, {
+				fetch(process.env.BACKEND_URL + "api/profile/products/on_sale", {
 					method: "GET",
 					headers: {
 						"Content-Type": "application/json",
 						"Authorization": `Bearer ${localStorage.getItem("token")}`
 					}
 				})
-				.then (response => response.json())
-				.then ((response) => {
-					setStore({ products: response.data });
-					console.log(response.data)
+				.then(response => {
+					if (!response.ok) {
+						throw new Error("Error en la solicitud de productos");
+					}
+					return response.json();
 				})
+				.then(response => {
+					// Filtrar solo los productos ON SALE
+					const onSaleProducts = response.data.filter(product => product.status === "on sale");
+					setStore({ products: onSaleProducts });
+					console.log(onSaleProducts);
+				})
+				.catch(error => {
+					console.error(error);
+					// Manejar el error aquí
+				});
 			},
 			getFavorites: () => {
 				const store = getStore();

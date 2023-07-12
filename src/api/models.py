@@ -43,6 +43,7 @@ class User(db.Model):
     products = db.relationship('Product', backref='user') # Un usuario puede tener muchos productos asociados (relación de 1 a muchos)
     favorites = db.relationship('Favorites', backref='user') # Un usuario puede tener muchos favoritos asociados (relación de 1 a muchos)
     sales = db.relationship('Sale', backref='user', foreign_keys='Sale.buyer_id') # Un usuario puede buscar buscar las ventas que hizo (1 a muchos)
+    status = db.relationship('status', backref='user')
     
 
 
@@ -120,6 +121,7 @@ class Product(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     brand_id = db.Column(db.Integer, db.ForeignKey('brand.id'))
     model_id = db.Column(db.Integer, db.ForeignKey('model.id'))
+    status_id = db.Column(db.Integer, db.ForeignKey('status.id'))
 
     images = db.relationship('Image', backref='product')
     brand = db.relationship('Brand', backref='products')
@@ -159,7 +161,11 @@ class status(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     status = db.Column(db.Enum(status_product), nullable=False)
     given_review_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    product_id = db.Column(db.Integer, db.ForeignKey('product.id'))
+
+    product = db.relationship('Product', backref='status')
+    
+
+
 
 class Garage (db.Model):
     id = db.Column(db.Integer, primary_key=True)

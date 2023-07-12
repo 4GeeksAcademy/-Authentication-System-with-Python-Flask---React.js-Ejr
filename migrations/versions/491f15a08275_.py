@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 79533fb40320
+Revision ID: 491f15a08275
 Revises: 
-Create Date: 2023-07-11 19:12:38.289625
+Create Date: 2023-07-12 19:26:38.014285
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '79533fb40320'
+revision = '491f15a08275'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -46,6 +46,13 @@ def upgrade():
     sa.ForeignKeyConstraint(['brand_id'], ['brand.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
+    op.create_table('status',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('status', sa.Enum('ONSALE', 'PENDING_SALE', 'PENDING_BLOCKED', 'BLOCKED', 'SOLD', name='status_product'), nullable=False),
+    sa.Column('given_review_id', sa.Integer(), nullable=True),
+    sa.ForeignKeyConstraint(['given_review_id'], ['user.id'], ),
+    sa.PrimaryKeyConstraint('id')
+    )
     op.create_table('product',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=100), nullable=False),
@@ -59,8 +66,10 @@ def upgrade():
     sa.Column('user_id', sa.Integer(), nullable=False),
     sa.Column('brand_id', sa.Integer(), nullable=True),
     sa.Column('model_id', sa.Integer(), nullable=True),
+    sa.Column('status_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['brand_id'], ['brand.id'], ),
     sa.ForeignKeyConstraint(['model_id'], ['model.id'], ),
+    sa.ForeignKeyConstraint(['status_id'], ['status.id'], ),
     sa.ForeignKeyConstraint(['user_id'], ['user.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
@@ -91,15 +100,6 @@ def upgrade():
     sa.ForeignKeyConstraint(['given_review_id'], ['user.id'], ),
     sa.ForeignKeyConstraint(['product_id'], ['product.id'], ),
     sa.ForeignKeyConstraint(['recived_review_id'], ['user.id'], ),
-    sa.PrimaryKeyConstraint('id')
-    )
-    op.create_table('status',
-    sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('status', sa.Enum('ONSALE', 'PENDING_SALE', 'PENDING_BLOCKED', 'BLOCKED', 'SOLD', name='status_product'), nullable=False),
-    sa.Column('given_review_id', sa.Integer(), nullable=True),
-    sa.Column('product_id', sa.Integer(), nullable=True),
-    sa.ForeignKeyConstraint(['given_review_id'], ['user.id'], ),
-    sa.ForeignKeyConstraint(['product_id'], ['product.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('garage',
@@ -146,11 +146,11 @@ def downgrade():
     op.drop_table('service')
     op.drop_table('sale')
     op.drop_table('garage')
-    op.drop_table('status')
     op.drop_table('review')
     op.drop_table('image')
     op.drop_table('favorites')
     op.drop_table('product')
+    op.drop_table('status')
     op.drop_table('model')
     op.drop_table('user')
     op.drop_table('brand')

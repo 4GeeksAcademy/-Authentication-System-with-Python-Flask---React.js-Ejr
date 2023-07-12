@@ -80,11 +80,12 @@ def upload_car():
 
 
  
-@api.route('/products', methods=['GET'])
-def get_products():
-    products = Product.query.all()
-    serialized_products = [product.serialize() for product in products]
+@api.route('/profile/products/on_sale', methods=['GET'])
+def get_products_on_sale():
+    on_sale_products = Product.query.filter_by(status_id=1).all()
+    serialized_products = [product.serialize() for product in on_sale_products]
     return jsonify(serialized_products), 200
+
 
 
 # @api.route('car-models/<string:brand>', methods=['GET'])
