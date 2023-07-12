@@ -154,6 +154,18 @@ def getProducts():
     }
     return jsonify(response_body), 200
 
+
+
+@api.route('/products', methods=['GET'])
+def getAllProducts():
+    products = Product.query.all()
+    response_body = {
+        "data": [product.serialize() for product in products]
+    }
+    return jsonify(response_body), 200
+
+
+
 @api.route('/profile/favorites', methods=['POST'])
 @jwt_required()
 def saveFavorites():

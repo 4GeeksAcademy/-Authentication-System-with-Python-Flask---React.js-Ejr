@@ -18,7 +18,7 @@ export const CarouselDefault = () => {
 
   useEffect(() => {
     
-    actions.getProducts()
+    actions.getAllProducts()
     actions.getUser()
     actions.getUsers()
     
