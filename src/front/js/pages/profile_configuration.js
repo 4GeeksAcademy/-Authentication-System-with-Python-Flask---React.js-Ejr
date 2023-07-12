@@ -72,14 +72,12 @@ const handlePasswordChange = () => {
       })
       .then((responseData) => {
         setData({ ...data, response: responseData });
-        setSuccessMessage("Contraseña guardada correctamente");
-        // Reiniciar los campos de contraseña
         setPassword1("");
         setPassword2("");
-        // Cerrar el modal después de 2 segundos
         setTimeout(() => {
           closeModal();
         }, 1000);
+        setSuccessMessage("Contraseña guardada correctamente");
       })
       .catch((error) => {
         console.error(error);
@@ -153,6 +151,7 @@ const handlePasswordChange = () => {
                                                 onClick={handleEye2}
                                             ></i>
                                         </div>
+                                        <div className="success-message">{successMessage}</div>
                                     </div>
                                     <div className="modal-footer">
                                         <button type="button" className="btn btn_config cancel" data-bs-dismiss="modal">Cancelar</button>
@@ -173,7 +172,6 @@ const handlePasswordChange = () => {
                         </div>
                     </div>
                 </div>
-                <div className="success-message">{successMessage}</div>
             </div>
         </>
     ): "cargando...";
