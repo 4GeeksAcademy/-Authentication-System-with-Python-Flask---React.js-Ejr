@@ -8,6 +8,7 @@ import { Demo } from "./pages/demo";
 import { Single } from "./pages/single";
 import { Profile_configuration } from "./pages/profile_configuration";
 import { Profile_sales } from "./pages/profile_sales";
+import { Block } from "./pages/block";
 import { Profile_buys} from "./pages/profile_buys"
 import { Profile_reviews } from "./pages/profile_reviews";
 import { Configuration } from "./pages/configuration";
@@ -69,6 +70,7 @@ const Layout = () => {
                                 <Route element={<Favorites />} path="/profile/favorites" />
                                 <Route element={<On_sale />} path="/profile/onsale" />
                                 <Route element={<Profile_sales />} path="/profile/sales" />
+                                <Route element={<Block />} path="/profile/block" />
                                 <Route element={<Profile_buys />} path="/profile/buys" />
                                 <Route element={<Profile_reviews />} path="/profile/reviews" />
 

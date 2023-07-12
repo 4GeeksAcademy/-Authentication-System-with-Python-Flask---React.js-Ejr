@@ -39,10 +39,31 @@
     height: 2rem;
     display: flex;
     justify-content: center;
+    margin-left: 1.5rem;
+}
+
+.change_password{
+    background-color: #ffffff;
+    border-color: #125c8e;
+    border-style: solid;
+    border-radius: 12px;
+    text-decoration: none;
+    color: rgb(0, 0, 0);
+    width: 8rem;
+    height: 4rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.change_password:hover{
+    color: rgb(255, 255, 255);
+    background-color: #2776ab;
 }
 
 .row_edit_profile{
     display: flex;
+    align-items: center;
     justify-content: end;
     margin-right: 4rem;
 }
@@ -75,6 +96,7 @@
 .row_product_profile{
     background-color: white;
     margin: 3rem;
+    margin-top: 0.5rem;
     border-radius: 12px;
     height: 9rem;
     padding: 1rem;
@@ -92,6 +114,10 @@
     justify-content: end;
     border-color: #125c8e;
     background-color: white;
+}
+
+.success-message{
+    color: #87e753;
 }
 
 .product_profile_button:hover{
@@ -127,6 +153,28 @@
     margin-left: 3rem;
     display: flex;
     align-content: center;
+}
+
+.modal-body{
+    margin-left: 12rem;
+    color: #125c8e;
+    margin-right: 0;
+}
+
+.modal-title{
+    color: #125c8e;
+}
+
+.modal-footer{
+    margin-bottom: 3rem;
+}
+
+.modal-content{
+    height: 24rem;
+}
+
+.change_password_input{
+    margin-bottom: 2rem;
 }
 
 .product_img_profile_box{

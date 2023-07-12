@@ -5,7 +5,7 @@ import { Profile_navbar } from "../component/profile_navbar";
 import "/workspaces/Watacar_v2/src/front/styles/profile.css"
 import { Sales_navbar } from "../component/Sales_navbar";
 
-export const On_sale = () => {
+export const Block = () => {
     const {actions, store} = useContext(Context);
 
     useEffect (() => {
