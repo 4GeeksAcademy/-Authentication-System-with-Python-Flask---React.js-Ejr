@@ -122,6 +122,7 @@ class Product(db.Model):
         return f'<Products {self.id}>'
     
     def serialize(self):
+        user=User.query.get(self.user_id)
         return {
             "id": self.id,
             "name": self.name,
@@ -133,6 +134,7 @@ class Product(db.Model):
             "km": self.km,
             "fuel": self.fuel.value,
             "user_id": self.user_id,
+            "user_full_name": user.full_name,
             "brand_id": self.brand_id,
             "model_id": self.model_id
         }

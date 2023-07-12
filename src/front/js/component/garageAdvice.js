@@ -87,7 +87,7 @@ export const GarageAdvice = () => {
                     </h5>   
                
                 
-                        <p className="text-start text-white pt-2 px-3 m-3 textGarageRight mt-5" style={{"font-size": "larger"}}> 
+                        <p className="text-start text-white pt-2 px-3 m-3 textGarageRight mt-5" style={{fontSize: "larger"}}> 
                          Date de alta y ayuda a vendedores y compradores a certificar el estado de tu vehículo.
               
                         {toolImage()}
