@@ -1,8 +1,6 @@
 import React, {useEffect, useContext, useState, } from 'react'
 import { useParams } from 'react-router-dom'
 import { Context } from "../store/appContext";
-import { ProductCarousel } from '../component/productCarousel';
-import Slider from 'react-slick';
 
 
 
