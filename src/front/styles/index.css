@@ -185,6 +185,15 @@ li {
   color: white;
 }
 
+.sales_navbar{
+  margin-top: 2rem;
+}
+
+.sales_navbar_buttons{
+  margin-right: 2rem;
+  text-decoration: none;
+}
+
 .profile_navbar_text{
   margin-bottom: 1.5rem;
 }
