@@ -65,6 +65,8 @@ const Layout = () => {
                                 <Route element={<UploadCar />} path="/upload-car" />
                                 <Route element={<UploadMoto />} path="/upload-motorcycle" />
                                 <Route element={<WichVehicle />} path="/choose-vehicle" />
+                                <Route element={<SingleProduct />} path="/product/:productid" />
+
 
                                 <Route element={<Profile_configuration />} path="/profile/configuration" />
                                 <Route element={<Favorites />} path="/profile/favorites" />
