@@ -5,6 +5,7 @@ import { ThemeContext } from "../layout";
 import { useNavigate } from "react-router-dom";
 import lottie from 'lottie-web';
 import { defineElement } from 'lord-icon-element';
+import { Filters } from "./filters";
 
 
 
@@ -33,6 +34,7 @@ export const CarouselDefault = () => {
 
 
     return (
+    
     store.products ? 
     <div className="d-flex overflow-auto my-5">
       {store.products.map((vehicle, index) => {
@@ -57,11 +59,7 @@ export const CarouselDefault = () => {
               </div>
             </div>
           </div>
-              <div className="d-flex justify-content-end m-2">
-                <i className="fa-solid fa-star star" style={{"color": "#bbc615"}}></i>
-                <i className="fa-solid fa-star star" style={{"color": "#bbc615"}}></i>
-                <i className="fa-solid fa-star star" style={{"color": "#bbc615"}}></i>
-              </div>
+             
               <div className="card-body d-flex justify-content-between">
                 <div>
                   <Link to="/login" style={{ color: 'black', textDecoration: 'none' }} className="link-hover">
