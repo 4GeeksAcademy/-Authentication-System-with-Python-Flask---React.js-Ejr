@@ -28,7 +28,11 @@ jwt=JWTManager(app)
 def check_token_blocklist(jwt_header, jwt_payload) -> bool:
     tokenBlocked = TokenBlockedList.query.filter_by(
         jti=jwt_payload["jti"]).first()
-    return isinstance(tokenBlocked, TokenBlockedList)
+    if not isinstance(tokenBlocked, TokenBlockedList):
+        if jwt_payload["type"] == "password" and request.path != "/api/changepassword":
+            return True
+        else :
+            return True
 
 # database condiguration
 db_url = os.getenv("DATABASE_URL")
