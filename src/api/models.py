@@ -10,8 +10,8 @@ class Saved(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, ForeignKey("user.id"), unique=True, nullable=True)
     car_id = db.Column(db.Integer, ForeignKey('car.id'), unique=True, nullable=True)
-    # saved_cars = relationship('Car', backref='user', uselist=False)
-
+    user = db.relationship('User', backref='saved_cars', foreign_keys=[user_id])
+    car = db.relationship('Car', backref='saved_by_users', foreign_keys=[car_id])  
 
 
     def __repr__(self):
@@ -32,7 +32,7 @@ class User(db.Model):
     first_name = db.Column(db.String(120), nullable=False)
     phone_number = db.Column(db.String(250), unique=True, nullable=False)
     password = db.Column(db.String(80), unique=False, nullable=False)
-    # saved = relationship('Saved', lazy=True, back_populates='user')
+    saved = relationship('Saved', lazy=True, back_populates='user', overlaps="saved_cars")
 
 
     def __repr__(self):
@@ -57,7 +57,7 @@ class Car(db.Model):
     car_type = db.Column(db.String(30), unique=False, nullable=False)
 
     def __repr__(self):
-        return f'<Car {self.id}>'
+        return f'<{self.year} {self.brand} {self.car_name}>'
 
     def serialize(self):
         return {
