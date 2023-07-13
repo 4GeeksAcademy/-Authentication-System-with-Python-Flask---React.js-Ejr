@@ -84,6 +84,7 @@
 		"react-dom": "^16.8.4",
 		"react-modal": "^3.16.1",
 		"react-polyfills": "0.0.1",
+		"react-range": "^1.8.14",
 		"react-router-dom": "^6.3.0",
 		"react-switch": "^7.0.0"
 	}

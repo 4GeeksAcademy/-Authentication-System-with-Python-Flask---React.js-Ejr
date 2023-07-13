@@ -1,19 +1,42 @@
-import React, {useContext} from "react";
-import { Context } from "../store/appContext";
+import React, {useContext, useState, useEffect  } from "react";
+import { Context, } from "../store/appContext";
 import { ThemeContext } from "../layout";
 import "../../styles/index.css";
 import { Link } from "react-router-dom";
+import "../../styles/filters.css"
+import { Range, getTrackBackground } from "react-range";
+import { FilterRange } from "./filterRange.js";
+import { FilterKm } from "./filterPrice";
 
 export const Filters = () => {
-    const {store, actions} = useContext(Context)
+  const [rangeValues, setRangeValues] = useState([0, 50000]);
+
+  const handleRangeChange = (newValues) => {
+    setRangeValues(newValues);
+
+  }
+
+
+  const generateYearOptions = () => {
+    const yearOptions = [];
+
+    for (let i = 2023; i > 1980; i--) {
+      yearOptions.push(
+        <option key={i} value={i}>
+          {i}
+        </option>
+      );
+    }
+
+    return yearOptions;
+  };
+
     return (
         <>
         <a class="btn btn-primary" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
           Filtros
         </a>
-      <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
-        Button with data-bs-target
-      </button>
+    
       
       <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
         <div class="offcanvas-header">
@@ -22,20 +45,147 @@ export const Filters = () => {
         </div>
         <div class="offcanvas-body">
           <div>
-            Some text as placeholder. In real life you can have the elements you have chosen. Like, text, images, lists, etc.
+  
+
+         
+<div>
+
+  <h4>Marcas</h4>
+  <ul>
+
+        <li>
+          <div class="form-check p-3">
+            <input class="form-check-input " type="checkbox" value="" id="flexCheckDefault1"/>
+            <label class="form-check-label" for="flexCheckDefault1">
+              Marca 1
+            </label>
           </div>
-          <div class="dropdown mt-3">
-            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
-              Dropdown button
-            </button>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">Action</a></li>
-              <li><a class="dropdown-item" href="#">Another action</a></li>
-              <li><a class="dropdown-item" href="#">Something else here</a></li>
-            </ul>
+        </li>
+        <li>
+          <div class="form-check p-3">
+            <input class="form-check-input " type="checkbox" value="" id="flexCheckDefault2"/>
+            <label class="form-check-label" for="flexCheckDefault2">
+              Marca 2
+            </label>
           </div>
+        </li>
+        <li>
+          <div class="form-check p-3">
+            <input class="form-check-input " type="checkbox" value="" id="flexCheckDefault3"/>
+            <label class="form-check-label" for="flexCheckDefault3">
+              Marca 3
+            </label>
+          </div>
+        </li>
+        <li>
+          <div class="form-check p-3">
+            <input class="form-check-input " type="checkbox" value="" id="flexCheckDefault4"/>
+            <label class="form-check-label" for="flexCheckDefault4">
+              Marca 4
+            </label>
+          </div>
+        </li>
+
+          </ul>
+          <button className="btn btn-primary">
+            Mostrar más
+          </button>
+    </div>
+
+
+
+    <FilterRange />  
+
+    <div className="py-5">
+    
+    <h4>
+      Estado
+    </h4>
+    <div className="ms-5">
+    <div class="form-check p-3 ">
+            <input class="form-check-input " type="checkbox" value="" id="flexCheckDefault"/>
+            <label class="form-check-label text-start d-flex ps-3 pt-2" for="flexCheckDefault">
+              Nuevo
+            </label>
+          </div>
+      
+          <div class="form-check p-3 ">
+            <input class="form-check-input  " type="checkbox" value="" id="flexCheckDefault"/>
+            <label class="form-check-label text-start d-flex ps-3 pt-2" for="flexCheckDefault">
+              Seminuevo
+            </label>
+          </div>
+       
+          </div>
+
+
+  </div>
+
+
+
+    <div className="py-5">
+    
+    <h4>
+      Año de fabricación
+    </h4>
+      <select className="form-select" size="3" aria-label="size 3 select example">
+       {generateYearOptions()}
+      </select>
+
+
+  </div>
+
+  <div className="my-5">
+    
+    <h4>
+      Combustible
+    </h4>
+    <div className="ms-5">
+    <div class="form-check p-3 ">
+            <input class="form-check-input " type="checkbox" value="" id="flexCheckDefault"/>
+            <label class="form-check-label text-start d-flex ps-3 pt-2" for="flexCheckDefault">
+              Diésel
+            </label>
+          </div>
+      
+          <div class="form-check p-3 ">
+            <input class="form-check-input  " type="checkbox" value="" id="flexCheckDefault"/>
+            <label class="form-check-label text-start d-flex ps-3 pt-2" for="flexCheckDefault">
+              Gasolina
+            </label>
+          </div>
+       
+          <div class="form-check p-3 ">
+            <input class="form-check-input  " type="checkbox" value="" id="flexCheckDefault"/>
+            <label class="form-check-label text-start d-flex ps-3 pt-2" for="flexCheckDefault">
+              Híbrido
+            </label>
+          </div>
+       
+          <div class="form-check p-3 ">
+            <input class="form-check-input  " type="checkbox" value="" id="flexCheckDefault"/>
+            <label class="form-check-label text-start d-flex ps-3 pt-2" for="flexCheckDefault">
+              Eléctrico
+            </label>
+          </div>
+       
+          </div>
+
+          </div>
+
+          </div>
+
+
+ 
+   
+      <FilterKm/>
+
+
+
+
         </div>
       </div>
+      
       </>
 )
 
