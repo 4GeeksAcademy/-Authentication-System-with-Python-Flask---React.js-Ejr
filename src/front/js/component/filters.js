@@ -3,10 +3,11 @@ import { Context, } from "../store/appContext";
 import { ThemeContext } from "../layout";
 import "../../styles/index.css";
 import { Link } from "react-router-dom";
-import "../../styles/filters.css"
-import { Range, getTrackBackground } from "react-range";
+import "../../styles/filters.css";
 import { FilterRange } from "./filterRange.js";
 import { FilterKm } from "./filterPrice";
+import { FilterBrands } from "./filterBrands";
+import { FilterYear } from "./filterYear";
 
 export const Filters = () => {
   const [rangeValues, setRangeValues] = useState([0, 50000]);
@@ -17,24 +18,18 @@ export const Filters = () => {
   }
 
 
-  const generateYearOptions = () => {
-    const yearOptions = [];
+ 
+  
 
-    for (let i = 2023; i > 1980; i--) {
-      yearOptions.push(
-        <option key={i} value={i}>
-          {i}
-        </option>
-      );
-    }
 
-    return yearOptions;
-  };
 
+
+
+  
     return (
         <>
         <a class="btn btn-primary" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
-          Filtros
+          Ajusta tus filtros de búsqueda
         </a>
     
       
@@ -48,49 +43,7 @@ export const Filters = () => {
   
 
          
-<div>
-
-  <h4>Marcas</h4>
-  <ul>
-
-        <li>
-          <div class="form-check p-3">
-            <input class="form-check-input " type="checkbox" value="" id="flexCheckDefault1"/>
-            <label class="form-check-label" for="flexCheckDefault1">
-              Marca 1
-            </label>
-          </div>
-        </li>
-        <li>
-          <div class="form-check p-3">
-            <input class="form-check-input " type="checkbox" value="" id="flexCheckDefault2"/>
-            <label class="form-check-label" for="flexCheckDefault2">
-              Marca 2
-            </label>
-          </div>
-        </li>
-        <li>
-          <div class="form-check p-3">
-            <input class="form-check-input " type="checkbox" value="" id="flexCheckDefault3"/>
-            <label class="form-check-label" for="flexCheckDefault3">
-              Marca 3
-            </label>
-          </div>
-        </li>
-        <li>
-          <div class="form-check p-3">
-            <input class="form-check-input " type="checkbox" value="" id="flexCheckDefault4"/>
-            <label class="form-check-label" for="flexCheckDefault4">
-              Marca 4
-            </label>
-          </div>
-        </li>
-
-          </ul>
-          <button className="btn btn-primary">
-            Mostrar más
-          </button>
-    </div>
+        <FilterBrands />
 
 
 
@@ -119,18 +72,12 @@ export const Filters = () => {
           </div>
 
 
-  </div>
+  
+
+   
+      <FilterYear />
 
 
-
-    <div className="py-5">
-    
-    <h4>
-      Año de fabricación
-    </h4>
-      <select className="form-select" size="3" aria-label="size 3 select example">
-       {generateYearOptions()}
-      </select>
 
 
   </div>
@@ -141,6 +88,7 @@ export const Filters = () => {
       Combustible
     </h4>
     <div className="ms-5">
+    
     <div class="form-check p-3 ">
             <input class="form-check-input " type="checkbox" value="" id="flexCheckDefault"/>
             <label class="form-check-label text-start d-flex ps-3 pt-2" for="flexCheckDefault">
@@ -181,11 +129,18 @@ export const Filters = () => {
       <FilterKm/>
 
 
-
+      <Link to ="/search-results" className="btn btn-primary mb-5">
+        Buscar por filtros
+      </Link>
 
         </div>
       </div>
       
+
+
+
+
+    
       </>
 )
 
