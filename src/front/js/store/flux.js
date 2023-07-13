@@ -1,3 +1,5 @@
+import { Navigate, useNavigate } from "react-router-dom";
+
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
@@ -162,7 +164,67 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 
 
-
+			postGarage: async (name, mail, phone, cif, address, description, web, user_id, image_id) => {
+				const token = localStorage.getItem("token");
+			  
+				try {
+				  // Realiza una solicitud GET para obtener el taller del usuario
+				  const garageResponse = await fetch(process.env.BACKEND_URL + "api/profile/garage", {
+					method: "GET",
+					headers: {
+					  "Content-Type": "application/json",
+					  Authorization: `Bearer ${token}`
+					}
+				  });
+				  const garageData = await garageResponse.json();
+				  const myGarage = garageData.garage;
+			  
+				  // Comprueba si ya existe un garaje con las mismas propiedades
+				  const isGarage = myGarage.some(garage => (
+					garage.name === name ||
+					garage.address === address||
+					garage.phone === phone
+				  ));
+			  
+				  if (isGarage) {
+					console.log("El garaje ya existe.");
+					const navigate = useNavigate()
+					navigate("/notfound")
+				  } else {
+					const requestOptions = {
+					  method: "POST",
+					  headers: {
+						"Content-Type": "application/json",
+						Authorization: `Bearer ${token}`
+					  },
+					  body: JSON.stringify({
+						name: name,
+						mail: mail,
+						phone: phone,
+						cif: cif,
+						address: address,
+						description: description,
+						web: web,
+						user_id: user_id,
+						image_id: image_id
+					  })
+					};
+			  
+					const response = await fetch(`${process.env.BACKEND_URL}api/create-garage`, requestOptions);
+					if (response.ok) {
+					  const data = await response.json();
+					  console.log(data);
+					  // Realiza las acciones necesarias después de un registro exitoso
+					} else {
+					  throw new Error("Error al registrar el garaje");
+					}
+				  }
+				} catch (error) {
+				  console.error(error);
+				  // Realiza las acciones necesarias en caso de error
+				}
+			  },
+			  
 
 			
 

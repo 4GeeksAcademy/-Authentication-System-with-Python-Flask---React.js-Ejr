@@ -28,6 +28,7 @@ import { On_sale } from "./pages/onSale";
 import { Profile_garage } from "./pages/profile_garage";
 import { Garages } from "./pages/garages";
 import { Configuration_Garage } from "./pages/configuration_garage";
+import { CreateGarage } from "./pages/create_garage";
 
 
 export const ThemeContext = React.createContext(null)
@@ -67,6 +68,7 @@ const Layout = () => {
                                 <Route element={<Profile_reviews />} path="/profile/reviews" />
                                 <Route element={<Configuration />} path="/configuration" />
                                 <Route element={<Garages />} path="/garages" />
+                                <Route element={<CreateGarage />} path="/create-garage" />
                                 <Route element={<Configuration_Garage />} path="/configuration/garage" />
                                 <Route element={<Single />} path="/single/:theid" />
                                 <Route element={<h1>Not found!</h1>} />
