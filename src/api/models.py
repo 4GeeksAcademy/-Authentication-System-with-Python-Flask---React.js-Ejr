@@ -139,6 +139,7 @@ class Product(db.Model):
             "description": self.description,
 
             "images": [image.serialize() for image in self.images],
+            "status": status.query.get(self.status_id).status.value,
 
             "year": self.year,
             "km": self.km,

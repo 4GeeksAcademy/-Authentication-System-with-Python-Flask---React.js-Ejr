@@ -3,7 +3,7 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
 
-from api.models import db, User, Product, Brand, Model, Image, Favorites, Review
+from api.models import db, User, Product, Brand, Model, Image, Favorites, Review, status
 
 from api.utils import generate_sitemap, APIException
 
@@ -80,12 +80,16 @@ def upload_car():
 
 
  
-@api.route('/profile/products/on_sale', methods=['GET'])
-def get_products_on_sale():
-    on_sale_products = Product.query.filter_by(status_id=1).all()
-    serialized_products = [product.serialize() for product in on_sale_products]
-    return jsonify(serialized_products), 200
+@api.route('/profile/products/<state>', methods=['GET'])
+def get_products_on_sale(state):
+    status_on_sale = status.query.filter_by(status=state).first()
+    if status_on_sale :
+        products_on_sale = status_on_sale.product
+        serialized_products = [product.serialize() for product in products_on_sale]
+        return jsonify(serialized_products), 200
+    return []
 
+    
 
 
 # @api.route('car-models/<string:brand>', methods=['GET'])
