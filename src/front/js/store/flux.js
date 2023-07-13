@@ -143,30 +143,42 @@ const getState = ({ getStore, getActions, setStore }) => {
 					setStore({user: response.data});
 				});
 			},
-			getProducts: () => {
+			getProductsOnSale: () => {
 				const store = getStore();
-				fetch(process.env.BACKEND_URL + "api/profile/products/on_sale", {
+				fetch(process.env.BACKEND_URL + "api/profile/products/ONSALE", {
 					method: "GET",
 					headers: {
-						"Content-Type": "application/json",
-						"Authorization": `Bearer ${localStorage.getItem("token")}`
+					"Content-Type": "application/json",
+					"Authorization": `Bearer ${localStorage.getItem("token")}`
 					}
 				})
+				.then (response => response.json())
 				.then(response => {
-					if (!response.ok) {
-						throw new Error("Error en la solicitud de productos");
-					}
-					return response.json();
-				})
-				.then(response => {
-					// Filtrar solo los productos ON SALE
-					const onSaleProducts = response.data.filter(product => product.status === "on sale");
-					setStore({ products: onSaleProducts });
-					console.log(onSaleProducts);
+				const onSaleProducts = response.filter(product => product.status === "on sale");
+				setStore({ products: onSaleProducts });
+				console.log(onSaleProducts);
 				})
 				.catch(error => {
-					console.error(error);
-					// Manejar el error aquí
+				console.error(error);
+				});
+			},
+			getProductsBlocked: () => {
+				const store = getStore();
+				fetch(process.env.BACKEND_URL + "api/profile/products/BLOCKED", {
+					method: "GET",
+					headers: {
+					"Content-Type": "application/json",
+					"Authorization": `Bearer ${localStorage.getItem("token")}`
+					}
+				})
+				.then (response => response.json())
+				.then(response => {
+				const onSaleProducts = response.filter(product => product.status === "blocked");
+				setStore({ products: onSaleProducts });
+				console.log(onSaleProducts);
+				})
+				.catch(error => {
+				console.error(error);
 				});
 			},
 			getFavorites: () => {

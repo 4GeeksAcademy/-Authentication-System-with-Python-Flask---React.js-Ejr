@@ -9,7 +9,7 @@ export const On_sale = () => {
     const {actions, store} = useContext(Context);
 
     useEffect (() => {
-        actions.getProducts()
+        actions.getProductsOnSale()
     }, [])
 
     return store.products ? (

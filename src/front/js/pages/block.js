@@ -9,7 +9,7 @@ export const Block = () => {
     const {actions, store} = useContext(Context);
 
     useEffect (() => {
-        actions.getProducts()
+        actions.getProductsBlocked()
     }, [])
 
     return store.products ? (
