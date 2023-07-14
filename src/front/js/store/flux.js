@@ -19,8 +19,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			
 			users: [],
-
-      token: localStorage.getItem("token") || "",
+     		token: localStorage.getItem("token") || "",
 			products: [],
 			favorites: [],
 			reviews: []
@@ -66,6 +65,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			  },
 
+
 		
 			getUser: () => {
 				const store = getStore();
@@ -81,6 +81,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					setStore({user: response.data});
 				});
 			},
+
 
 
 
@@ -145,6 +146,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({ demo: demo });
 			},
 
+
+
+
+//	 AQUÍ SE RETOMAN LAS FUNCIONES
+
 			getUser: () => {
 				const store = getStore();
 				fetch(process.env.BACKEND_URL + `api/configuration`, {
@@ -174,6 +180,25 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log(response.data)
 				})
 			},
+
+			getUsers: () => {
+				fetch(process.env.BACKEND_URL + "api/users", {
+				  method: "GET",
+				  headers: {
+					"Content-Type": "application/json",
+					"Authorization": `Bearer ${localStorage.getItem("token")}`
+				  }
+				})
+				.then(response => response.json())
+				.then(response => {
+				  setStore({ users: response.data })
+				  console.log(response)
+				})
+				.catch(error => {
+				  console.error("Error:", error);
+				});
+			  },
+			  
 			getFavorites: () => {
 				const store = getStore();
 				fetch(process.env.BACKEND_URL + `api/profile/favorites`, {
