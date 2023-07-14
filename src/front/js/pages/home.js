@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { CarouselVehicles } from "../component/carouselVehicles";
 import { GarageAdvice } from "../component/garageAdvice";
 import { Faq } from "../component/faq";
+import { Filters } from "../component/filters";
 
 export const Home = () => {
   const { store, actions } = useContext(Context);
@@ -53,11 +54,16 @@ export const Home = () => {
               aria-label="Search"
               value={searchText}
               onChange={handleSearchChange}
-            />
+              />
             {displaySearchButton()}
           </div>
         </form>
       </div>
+          <div className="my-3">
+          
+             <Filters/>
+
+          </div>
       <CarouselVehicles />
       <br></br>
       <br></br>

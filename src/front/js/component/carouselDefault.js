@@ -5,6 +5,7 @@ import { ThemeContext } from "../layout";
 import { useNavigate } from "react-router-dom";
 import lottie from 'lottie-web';
 import { defineElement } from 'lord-icon-element';
+import { Filters } from "./filters";
 
 
 
@@ -18,7 +19,7 @@ export const CarouselDefault = () => {
 
   useEffect(() => {
     
-    actions.getProducts()
+    actions.getAllProducts()
     actions.getUser()
     actions.getUsers()
     
@@ -34,9 +35,10 @@ export const CarouselDefault = () => {
 
     return (
     
+    store.products ? 
     <div className="d-flex overflow-auto my-5">
       {store.products.map((vehicle, index) => {
-              const user = store.users.find(user => user.id === vehicle.user_id);
+             
               
       return (
           <div className="col-12 col-md-4" key={index}>
@@ -57,11 +59,7 @@ export const CarouselDefault = () => {
               </div>
             </div>
           </div>
-              <div className="d-flex justify-content-end m-2">
-                <i className="fa-solid fa-star star" style={{"color": "#bbc615"}}></i>
-                <i className="fa-solid fa-star star" style={{"color": "#bbc615"}}></i>
-                <i className="fa-solid fa-star star" style={{"color": "#bbc615"}}></i>
-              </div>
+             
               <div className="card-body d-flex justify-content-between">
                 <div>
                   <Link to="/login" style={{ color: 'black', textDecoration: 'none' }} className="link-hover">
@@ -72,17 +70,15 @@ export const CarouselDefault = () => {
                   <h5 className="card-title justify-content-start d-flex">20.000€</h5>
                   <p>
                   Vendido por {""}
-              {user ? (
+             
                 <Link
                   to={!token ? "/login" : "/profile"}
                   style={{ color: 'black', textDecoration: 'none' }}
                   className="link-hover"
                 >
-                  {user.full_name}
+                  {vehicle.user_full_name}
                 </Link>
-              ) : (
-                "Usuario"
-              )}
+            
             </p>
             
                       </div>
@@ -119,6 +115,8 @@ export const CarouselDefault = () => {
               }      
 
             </div>
+            :
+            <h2>Aún no tenemos productos en venta</h2>
           
      )
           

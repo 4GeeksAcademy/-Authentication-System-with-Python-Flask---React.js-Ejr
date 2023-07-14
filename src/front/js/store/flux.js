@@ -181,6 +181,23 @@ const getState = ({ getStore, getActions, setStore }) => {
 				})
 			},
 
+
+			getAllProducts: () => {
+				const store = getStore();
+				fetch(process.env.BACKEND_URL + `api/products`, {
+					method: "GET",
+					headers: {
+						"Content-Type": "application/json",
+						
+					}
+				})
+				.then (response => response.json())
+				.then ((response) => {
+					setStore({ products: response.data });
+					console.log(response.data)
+				})
+			},
+
 			getUsers: () => {
 				fetch(process.env.BACKEND_URL + "api/users", {
 				  method: "GET",
@@ -214,6 +231,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log(response.data)
 				})
 			},
+
+
+			
+
 			postFavorite: (product_id) => {
 				const token = localStorage.getItem("token");
 			  

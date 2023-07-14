@@ -1,0 +1,26 @@
+.customCheck {
+
+    width: 10px;
+    height: 10px;
+    background-color: green;
+}
+
+.year-options {
+    height: 160px; /* Ajusta la altura deseada */
+    overflow-y: auto;
+  }
+  
+  .year-select {
+    width: 100%;
+    height: 100%;
+  }
+
+.buttonShowMore {
+  background-color: rgb(57, 133, 220);
+  color: white;
+  border-radius: 8px;
+  width: 30px;
+  height: 30px;
+  font-size: 12px;
+
+}
