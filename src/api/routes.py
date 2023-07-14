@@ -99,10 +99,10 @@ def upload_car():
 
 @api.route('/search-by/<filter>', methods=['GET'])
 def search_by_filter(filter):
-    brand_id = request.args.get('brand_id')  # Obtener el brand_id de los parámetros de la solicitud GET
-    vehicle_type = request.args.get('vehicle_type')  # Obtener el vehicle_type de los parámetros de la solicitud GET
+    
+    brand_id = request.args.get('brand_id')  
+    vehicle_type = request.args.get('vehicle_type')  
 
-    # Filtrar según las selecciones del usuario
     if filter == 'vehicle_type':
         products = Product.query.filter_by(product_type=vehicle_type).all()
 
@@ -111,6 +111,7 @@ def search_by_filter(filter):
 
     else:
         products = Product.query.filter_by(product_type=vehicle_type, brand_id=brand_id).all()
+
 
     serialized_products = [product.serialize() for product in products]
     return jsonify(serialized_products)
