@@ -2,9 +2,12 @@ import React, {useContext, useState, useEffect  } from "react";
 import { Context, } from "../store/appContext";
 import { ThemeContext } from "../layout";
 import "../../styles/index.css";
-import { Link } from "react-router-dom";
 import "../../styles/filters.css";
 import { CarouselDefault } from "../component/carouselDefault";
+import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import lottie from 'lottie-web';
+import { defineElement } from 'lord-icon-element';
 
 
 
@@ -12,6 +15,15 @@ import { CarouselDefault } from "../component/carouselDefault";
 
 export const SearchResults = () => {
 
+  defineElement(lottie.loadAnimation);
+  const { store, actions } = useContext(Context);
+
+
+    useEffect(() => {
+    
+        actions.getAllProducts()
+    
+      }, []) 
 
 
 

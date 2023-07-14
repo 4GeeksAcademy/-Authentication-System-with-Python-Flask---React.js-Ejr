@@ -29,7 +29,7 @@ export const FilterKm = () => {
         values={rangeValues}
         min={0}
         max={300000}
-        step={1000}
+        step={1500}
         onChange={handleRangeChange}
         renderTrack={({ props, children }) => (
           <div

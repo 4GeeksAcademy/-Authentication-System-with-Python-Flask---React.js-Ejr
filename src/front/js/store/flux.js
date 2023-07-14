@@ -196,6 +196,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log(response.data)
 				})
 			},
+
+
+			
+
 			postFavorite: (product_id) => {
 				const token = localStorage.getItem("token");
 			  
