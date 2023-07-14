@@ -53,6 +53,7 @@ export const Footer = () => (
 					<li>Nuestros Socios</li>
 					<li>Política de Cookies</li>
 					
+					
 				</ul>
 				</div>
 

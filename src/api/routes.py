@@ -3,7 +3,9 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
 
-from api.models import db, User, Product, Brand, Model, Image, Favorites, Review
+
+from api.models import db, User, Product, Brand, Model, Image, Favorites, Review, Garage
+
 
 from api.utils import generate_sitemap, APIException
 
@@ -421,6 +423,40 @@ def update_configuration():
         db.session.rollback()
         return jsonify({"message": "Error updating user"}), 500
     
+
+
+
+
+@api.route('/configuration/garage', methods=['PUT'])
+@jwt_required()
+def update_garage_configuration():
+    current_user = get_jwt_identity()
+    garage = Garage.query.filter(Garage.user_id == current_user).first()
+    if garage is None:
+        return jsonify({"message": "No existe el Taller que buscas"}), 404
+    
+    data = request.get_json()
+    garage.name = data.get('name')
+    garage.mail = data.get('mail')
+    garage.web = data.get('web')
+    garage.phone = data.get('phone')
+    garage.address = data.get('address')
+    garage.description = data.get('description')
+    garage.cif = data.get('cif')
+    garage.image_id = data.get('image_id')
+    garage.product_id = data.get('product_id')
+    garage.user_id = data.get('user_id')
+    print(garage.serialize())
+    try:
+       
+        db.session.commit()
+        return jsonify({"message": "Se ha actualizado correctamente el Taller"}), 200
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"message": Exception}), 500
+
+
+
 @api.route('/configuration/password', methods=['PUT'])
 @jwt_required()
 def update_password():
@@ -441,6 +477,7 @@ def update_password():
     except Exception as e:
         db.session.rollback()
         return jsonify({"message": "Error updating password"}), 500
+
 
 @api.route('/login', methods=['POST'])
 def login():
@@ -591,6 +628,12 @@ def addReview():
 
     return jsonify({"mensaje": "Reseña agregada correctamente"}), 200
 
+
+
+
+
+
+
 @api.route('/profile/reviews', methods=['GET'])
 @jwt_required()
 def getReviews():
@@ -617,4 +660,112 @@ def getReviews():
         review_list.append(review_data)
 
     return jsonify(review_list), 200
+
+
+@api.route('/profile/garage', methods=['GET'])
+@jwt_required()
+def getMyGarage():
+    current_user = get_jwt_identity()
+    garage = Garage.query.filter_by(user_id=current_user).first()
+
+    if not garage:
+        return jsonify({"mensaje": "No se encontró tu taller"}), 404
+    
+    
+    garage_data = {
+        "name": garage.name,
+        "web": garage.web,
+        "phone": garage.phone,
+        "mail": garage.mail,
+        "address": garage.address,
+        "description": garage.description,
+        "cif": garage.cif,
+        "image_id": garage.image_id,
+        "product_id": garage.product_id,
+        "user_id": garage.user_id
+    }
+
+    return jsonify(garage_data), 200
+
+
+
+@api.route('/garages', methods=['GET'])
+def getGarages():
+    garages = Garage.query.all()
+    if not garages:
+        return jsonify({"mensaje": "No se econtrón ningún garage"}), 500
+
+    garages_list = []
+ 
+    for garage in garages:
+        garage_data = {
+            "name": garage.name,
+            "web": garage.web,
+            "phone": garage.phone,
+            "mail": garage.mail,
+            "address": garage.address,
+            "description": garage.description,
+            "cif": garage.cif,
+            "image_id": garage.image_id,
+            "product_id": garage.product_id,
+            "user_id": garage.user_id
+        }
+    garages_list.append(garage_data)
+
+    return jsonify(garages_list), 200
+
+
+@api.route('/create-garage', methods=['POST'])
+@jwt_required()
+def createGarage():
+    current_user = get_jwt_identity()
+
+    # Verificar si el garaje ya existe para el usuario actual
+    existing_garage = Garage.query.filter_by(user_id=current_user).first()
+    if existing_garage:
+        return jsonify({"mensaje": "Ya existe un garaje asociado a este usuario"}), 400
+
+    try:
+        data = request.json
+        name = data.get("name")
+        mail = data.get("mail")
+        phone = data.get('phone')
+        cif = data.get('cif')
+        address = data.get('address')
+        web = data.get('web')
+        description = data.get('description')
+        image_id = data.get('image_id')
+        user_id = data.get('user_id')
+
+        if not all([name, mail, phone, address, cif]):
+            return jsonify({"mensaje": "No se han completado todos los campos requeridos (nombre, email, teléfono, dirección, descripción o cif)"}), 400
+
+        # Crear el nuevo garaje
+        new_garage = Garage(
+            name=name,
+            mail=mail,
+            phone=phone,
+            cif=cif,
+            address=address,
+            description=description,
+            web=web,
+            image_id=image_id,
+            user_id=current_user
+        )
+        print(new_garage.serialize())
+        print(db.session.add(new_garage))
+        db.session.add(new_garage)
+        db.session.commit()
+
+        return jsonify({"mensaje": "Garaje creado exitosamente"}), 200
+
+    except Exception as e:
+        print(e)
+        # Capturar cualquier excepción y devolver una respuesta de error
+        return jsonify({"mensaje": f"Error al crear el garaje: {str(e)}"}), 500
+
+
+#@api.route('/get-images', methods=['GET'])
+#def get_images():
+    #hacer get de las imágenes. pasar el id de la imagen, apra la imagen del taller
 

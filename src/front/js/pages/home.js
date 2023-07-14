@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import { Context } from "../store/appContext";
 import "../../styles/home.css";
+import { Link } from "react-router-dom";
 import lottie from 'lottie-web';
 import { defineElement } from 'lord-icon-element';
 import { useNavigate } from "react-router-dom";

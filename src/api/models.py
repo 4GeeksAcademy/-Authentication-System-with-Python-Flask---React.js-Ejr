@@ -43,7 +43,7 @@ class User(db.Model):
     products = db.relationship('Product', backref='user') # Un usuario puede tener muchos productos asociados (relación de 1 a muchos)
     favorites = db.relationship('Favorites', backref='user') # Un usuario puede tener muchos favoritos asociados (relación de 1 a muchos)
     sales = db.relationship('Sale', backref='user', foreign_keys='Sale.buyer_id') # Un usuario puede buscar buscar las ventas que hizo (1 a muchos)
-    
+    garage = db.relationship('Garage', backref='user')
 
 
 
@@ -63,7 +63,7 @@ class User(db.Model):
             "document_type": self.document_type.value,
             "document_number": self.document_number,
             "address": self.address, 
-           #"role": self.role,
+            "role": self.role.value,
             "phone": self.phone
             
             # do not serialize the password, its a security breach
@@ -167,6 +167,11 @@ class Garage (db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
     web = db.Column(db.String(150), nullable=True)
+    phone = db.Column(db.String(15), nullable=False)
+    mail = db.Column(db.String(50), nullable=False)
+    address = db.Column(db.String(50), nullable=False)
+    description = db.Column(db.String(200), nullable=False)
+    cif = db.Column(db.String(10), nullable=False)
     image_id = db.Column(db.Integer, db.ForeignKey('image.id')) 
     product_id = db.Column(db.Integer, db.ForeignKey('product.id'))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
@@ -181,6 +186,11 @@ class Garage (db.Model):
             "id": self.id,
             "name": self.name,
             "web" : self.web,
+            "phone": self.phone,
+            "mail": self.mail,
+            "address": self.address,
+            "description": self.description,
+            "cif": self.cif,
             "image_id": self.image_id,
             "product_id": self.product_id,
             "user_id": self.user_id
