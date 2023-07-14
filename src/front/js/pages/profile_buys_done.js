@@ -1,17 +1,15 @@
-import React, {useContext} from "react";
+import React from "react";
 import { Context } from "../store/appContext";
 import { NavLink } from "react-router-dom";
 import { Profile_navbar } from "../component/profile_navbar";
-import { Sales_navbar } from "../component/Sales_navbar";
 import "/workspaces/Watacar_v2/src/front/styles/profile.css"
+import { Purchase_navbar } from "../component/purchase_navbar";
 
-export const Profile_sales = () => {
-    const {actions, store} = useContext(Context);
-    const soldCount = store.products.length;
+export const Profile_buys_done = () => {
     return (
         <>
             <Profile_navbar />
-            <Sales_navbar soldCount={soldCount} />
+            <Purchase_navbar />
             <h6 className="date_sale_profile">23/07/2020</h6>
             <div className="sales_profile_box row">
                 <div className="col-4">

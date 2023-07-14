@@ -10,6 +10,7 @@ import { Profile_configuration } from "./pages/profile_configuration";
 import { Profile_sales } from "./pages/profile_sales";
 import { Block } from "./pages/block";
 import { Profile_buys} from "./pages/profile_buys"
+import { Profile_buys_done } from "./pages/profile_buys_done";
 import { Profile_reviews } from "./pages/profile_reviews";
 import { Configuration } from "./pages/configuration";
 import { Login } from "./pages/login";
@@ -72,6 +73,7 @@ const Layout = () => {
                                 <Route element={<Profile_sales />} path="/profile/sales" />
                                 <Route element={<Block />} path="/profile/block" />
                                 <Route element={<Profile_buys />} path="/profile/buys" />
+                                <Route element={<Profile_buys_done />} path="/profile/buys-done" />
                                 <Route element={<Profile_reviews />} path="/profile/reviews" />
 
                                 <Route element={<Configuration />} path="/configuration" />

@@ -7,15 +7,17 @@ import { Sales_navbar } from "../component/Sales_navbar";
 
 export const Block = () => {
     const {actions, store} = useContext(Context);
+    const blockedCount = store.products.length;
+    
 
     useEffect (() => {
         actions.getProductsBlocked()
     }, [])
-
+    
     return store.products ? (
         <>
             <Profile_navbar />
-            <Sales_navbar />
+            <Sales_navbar blockedCount={blockedCount} />
             {store.products.map((product, index) => (
                 <div className="row row_product_profile" key={index}>
                     <div className="product_img_profile_box col-2">
