@@ -1,9 +1,14 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { Context } from "../store/appContext";
 
 export const Profile_navbar = () => {
-  const { store } = useContext(Context);
+  const { store, actions } = useContext(Context);
+
+  useEffect(()=> {
+    actions.getUser()
+
+  }, [])
 
 
     return (

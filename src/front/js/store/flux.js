@@ -20,13 +20,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 			productlist: [],
 
 			
-			users: [],
+			user: [],
      		token: localStorage.getItem("token") || "",
 			products: [],
 			favorites: [],
 			reviews: [],
 			garages: [],
 			garage: []
+
 		
 		},
 
@@ -171,23 +172,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 
 
-
-			getUser: () => {
-				const store = getStore();
-				fetch(process.env.BACKEND_URL + `api/configuration`, {
-					method: "GET",
-					headers: {
-						"Content-Type": "application/json",
-						"Authorization": `Bearer ${localStorage.getItem("token")}`
-				}
-				})
-				.then (response => response.json())
-				.then ((response) => {
-					setStore({garages: response})
-					console.log(response)
-				});
-			},
-
 			getMyGarage: () => {
 				fetch(process.env.BACKEND_URL + `api/profile/garage`, {
 					method: "GET",
@@ -297,8 +281,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 				})
 				.then (response => response.json())
 				.then ((response) => {
-					setStore({ products: response.data });
-					console.log(response.data)
+					setStore({ products: response });
+					console.log(response)
 				})
 			},
 

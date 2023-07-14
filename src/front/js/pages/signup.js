@@ -26,6 +26,7 @@ export const Signup = () => {
     fetch(process.env.BACKEND_URL + 'api/signup', config)
     .then((resp) => resp.json())
     .then((resp) => {
+      setStore({ users: resp.data });
       navigate('/login');
     })
     .catch((error) => {
@@ -118,7 +119,7 @@ export const Signup = () => {
 
             
             <div className="button mt-4">
-              <button className="btn btn-primary btn1">Click Me!</button>
+              <button className="btn btn-primary btn1">Registrar Usuario</button>
             </div>
           </form>
         </div>

@@ -20,9 +20,6 @@ export const CarouselDefault = () => {
   useEffect(() => {
     
     actions.getAllProducts()
-    actions.getUser()
-    actions.getUsers()
-    
     
   }, []) 
 
@@ -116,7 +113,7 @@ export const CarouselDefault = () => {
 
             </div>
             :
-            <h2>Aún no tenemos productos en venta</h2>
+            <h4 className="my-5 text-center">Aún no tenemos productos en venta</h4>
           
      )
           
