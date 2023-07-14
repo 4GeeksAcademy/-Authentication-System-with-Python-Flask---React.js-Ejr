@@ -17,6 +17,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			],
 
+			productlist: [],
+
 			
 			users: [],
      		token: localStorage.getItem("token") || "",
@@ -29,6 +31,20 @@ const getState = ({ getStore, getActions, setStore }) => {
 		},
 
 		actions: {
+
+			getProduct: (productid) => {
+				fetch(process.env.BACKEND_URL + `api/product/${productid}`)
+				.then(resp => resp.json())
+				.then((data) => {
+					//onsole.log(data); 
+					setStore({ productlist: [data] });
+
+				})
+				.catch(err => console.error(err))
+			},
+
+
+
 			login: async (email, password) => {
 				const store = getStore();
 				const opts = {
@@ -53,6 +69,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 				  console.error(error);
 				}
 			  },
+
+
 		
 			getUser: () => {
 				const store = getStore();
@@ -68,6 +86,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 					setStore({user: response.data});
 				});
 			},
+
+
 
 
 			getToken: () => {
@@ -134,7 +154,27 @@ const getState = ({ getStore, getActions, setStore }) => {
 			
 
 			getGarages: () => {
-				fetch("https://fencer1993-super-lamp-9vvqv656vx7fp9jx-3001.preview.app.github.dev/api/garages" , {
+                fetch(process.env.BACKEND_URL + 'api/garages' , {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${localStorage.getItem("token")}`
+                }
+                })
+                .then (response => response.json())
+                .then ((response) => {
+                    setStore({garages: response})
+                    console.log(response)
+                });
+            },
+
+
+
+
+
+			getUser: () => {
+				const store = getStore();
+				fetch(process.env.BACKEND_URL + `api/configuration`, {
 					method: "GET",
 					headers: {
 						"Content-Type": "application/json",
@@ -244,6 +284,42 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log(response.data)
 				})
 			},
+
+
+			getAllProducts: () => {
+				const store = getStore();
+				fetch(process.env.BACKEND_URL + `api/products`, {
+					method: "GET",
+					headers: {
+						"Content-Type": "application/json",
+						
+					}
+				})
+				.then (response => response.json())
+				.then ((response) => {
+					setStore({ products: response.data });
+					console.log(response.data)
+				})
+			},
+
+			getUsers: () => {
+				fetch(process.env.BACKEND_URL + "api/users", {
+				  method: "GET",
+				  headers: {
+					"Content-Type": "application/json",
+					"Authorization": `Bearer ${localStorage.getItem("token")}`
+				  }
+				})
+				.then(response => response.json())
+				.then(response => {
+				  setStore({ users: response.data })
+				  console.log(response)
+				})
+				.catch(error => {
+				  console.error("Error:", error);
+				});
+			  },
+			  
 			getFavorites: () => {
 				const store = getStore();
 				fetch(process.env.BACKEND_URL + `api/profile/favorites`, {
@@ -259,6 +335,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log(response.data)
 				})
 			},
+
+
+			
+
 			postFavorite: (product_id) => {
 				const token = localStorage.getItem("token");
 			  

@@ -39,10 +39,31 @@
     height: 2rem;
     display: flex;
     justify-content: center;
+    margin-left: 1.5rem;
+}
+
+.change_password{
+    background-color: #ffffff;
+    border-color: #125c8e;
+    border-style: solid;
+    border-radius: 12px;
+    text-decoration: none;
+    color: rgb(0, 0, 0);
+    width: 8rem;
+    height: 4rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.change_password:hover{
+    color: rgb(255, 255, 255);
+    background-color: #2776ab;
 }
 
 .row_edit_profile{
     display: flex;
+    align-items: center;
     justify-content: end;
     margin-right: 4rem;
 }
@@ -68,9 +89,14 @@
     border-style: solid;
 }
 
+#map{
+    height: 40%;
+}
+
 .row_product_profile{
     background-color: white;
     margin: 3rem;
+    margin-top: 0.5rem;
     border-radius: 12px;
     height: 9rem;
     padding: 1rem;
@@ -88,6 +114,10 @@
     justify-content: end;
     border-color: #125c8e;
     background-color: white;
+}
+
+.success-message{
+    color: #87e753;
 }
 
 .product_profile_button:hover{
@@ -123,6 +153,28 @@
     margin-left: 3rem;
     display: flex;
     align-content: center;
+}
+
+.modal-body{
+    margin-left: 12rem;
+    color: #125c8e;
+    margin-right: 0;
+}
+
+.modal-title{
+    color: #125c8e;
+}
+
+.modal-footer{
+    margin-bottom: 3rem;
+}
+
+.modal-content{
+    height: 24rem;
+}
+
+.change_password_input{
+    margin-bottom: 2rem;
 }
 
 .product_img_profile_box{
@@ -219,6 +271,10 @@
     margin-top: 2rem;
 }
 
+.name_product_profile{
+    color: #125c8e;
+}
+
 .name_product_review{
     color: #125c8e;
     font-size: larger;
@@ -242,6 +298,52 @@
 
 .user_reviewing{
     color: #125c8e;
+}
+
+.sales_profile_box{
+    background-color: white;
+    margin: 3rem;
+    margin-top: 0;
+    height: 17rem;
+    border-radius: 12px;
+}
+
+.date_sale_profile{
+    color: #125c8e;
+    font-size: larger;
+    font-weight: bold !important;
+    margin-left: 5rem;
+    margin-top: 4rem;
+}
+
+.product_img_profile_box_sales{
+    width: 19rem;
+    height: 12rem;
+    margin-top: 2.5rem;
+    margin-left: 3rem;
+}
+
+.product_data_sales{
+    margin-top: 3.7rem;
+    color: #125c8e;
+    font-weight: bold;
+}
+
+.product_data_sales h6{
+    margin-bottom: 1.5rem;
+}
+
+.price_sales_profile{
+    display: flex;
+    justify-content: end;
+    margin-top: 2rem;
+    margin-right: 6rem;
+}
+
+.review_sales_profile{
+    display: flex;
+    justify-content: end;
+    margin-right: 0;
 }
 
 @media only screen and (max-width: 600px) {

@@ -5,6 +5,7 @@ spain_tz = timezone('Europe/Madrid')
 from enum import Enum
 import pandas as pd
 
+
 cars_data = pd.read_csv('/workspaces/Watacar_v2/src/api/brands-and-models/cars-2020.csv',
                     header = None)
 
@@ -99,6 +100,10 @@ class fuel_type(Enum):
     GASOLINA = 'gasolina'
     HIBRIDO = 'hibrido'
     ELECTRICO = 'electrico'
+
+class product_type(Enum):
+    MOTO = 'moto'
+    COCHE = 'coche'
     
 
 
@@ -108,34 +113,55 @@ class Product(db.Model):
     state = db.Column(db.Enum(ProductState), nullable=False)
     price = db.Column(db.Float, nullable=False) #Estuve leyendo y cuando no quieres un número de decimales exactos el FLOAT es buena opción
     description = db.Column(db.String(2000))
-    
+    product_type = db.Column(db.Enum(product_type), nullable=True, default=product_type.COCHE)
     year = db.Column(db.Integer)
     km = db.Column(db.Integer)
-    fuel = db.Column(db.Enum(fuel_type))
+    fuel = db.Column(db.Enum(fuel_type), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     brand_id = db.Column(db.Integer, db.ForeignKey('brand.id'))
     model_id = db.Column(db.Integer, db.ForeignKey('model.id'))
 
     images = db.relationship('Image', backref='product')
+    brand = db.relationship('Brand', backref='products')
+    model = db.relationship('Model', backref='products')
 
     def __repr__(self):
         return f'<Products {self.id}>'
     
     def serialize(self):
+        user=User.query.get(self.user_id)
         return {
             "id": self.id,
             "name": self.name,
             "state": self.state.value,
             "price": self.price,
             "description": self.description,
-            "images": self.images,
+
+            "images": [image.serialize() for image in self.images],
+
             "year": self.year,
             "km": self.km,
             "fuel": self.fuel.value,
             "user_id": self.user_id,
+            "user_full_name": user.full_name,
             "brand_id": self.brand_id,
-            "model_id": self.model_id
+            "model_id": self.model_id,
+            "product_type": self.product_type.value
         }
+
+class status_product(Enum):
+    ONSALE = 'on sale'
+    PENDING_SALE = 'pending sale'
+    PENDING_BLOCKED = 'pending blocked'
+    BLOCKED = 'blocked'
+    SOLD = 'sold'
+
+
+class status(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    status = db.Column(db.Enum(status_product), nullable=False)
+    given_review_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    product_id = db.Column(db.Integer, db.ForeignKey('product.id'))
 
 class Garage (db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -273,11 +299,19 @@ class Sale(db.Model):
             "fecha": self.fecha
         }
     
+
+class vehicle_type(Enum):
+    #SELECCIONA = 'selecciona'
+    MOTO = 'moto'
+    CAR = 'car'
+    COCHE = 'coche'
+    
 class Brand(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50), nullable=False)
+    vehicle_type = db.Column(db.Enum(vehicle_type), nullable=True, default=vehicle_type.COCHE)
 
-    # models = db.relationship('Model', backref='brands') # Podemos acceder a modelos asociados a una marca 
+    models = db.relationship('Model', backref='brands') # Podemos acceder a modelos asociados a una marca . 1 modelo solo puede pertenecer a 1 marca, las marcas peuden tener varios modelos
 
     def __repr__(self):
         return f'<Brands {self.id}>'
@@ -285,16 +319,21 @@ class Brand(db.Model):
     def serialize(self):
         return{
             "id": self.id,
-            "name": self.name
+            "name": self.name,
+            "vehicle_type": self.vehicle_type.value.upper()
+
         }
+    
+
     
 class Model(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     model = db.Column(db.String(50), nullable=False)
-    type = db.Column(db.String(20), nullable=False)
+    #type = db.Column(db.String(20), nullable=False)
     brand_id = db.Column(db.Integer, db.ForeignKey('brand.id'))
+    #product_type = db.Column(db.Enum(product_type), nullable=True, default=product_type.COCHE)
 
-    brands = db.relationship('Brand', backref='models') # Podemos acceder a una marca asociada con modelos 
+    # brands = db.relationship('Brand', backref='models') # Podemos acceder a una marca asociada con modelos 
 
     def __repr__(self):
         return f'<Models {self.id}>'
@@ -303,6 +342,43 @@ class Model(db.Model):
         return{
             "id": self.id,
             "model": self.model,
-            "type": self.type,
-            "brand_id": self.brand_id
+            #"type": self.type,
+            "brand_id": self.brand_id,
+            #"product_type": self.product_type.value
         }
+    
+
+
+# class MotoBrand(db.Model):
+#     id = db.Column(db.Integer, primary_key=True)
+#     name = db.Column(db.String(50), nullable=False)
+
+#     models = db.relationship('Model', backref='brands') # Podemos acceder a modelos asociados a una marca . 1 modelo solo puede pertenecer a 1 marca, las marcas peuden tener varios modelos
+
+#     def __repr__(self):
+#         return f'<Brands {self.id}>'
+    
+#     def serialize(self):
+#         return{
+#             "id": self.id,
+#             "name": self.name,
+#         }
+    
+# class MotoModel(db.Model):
+#     id = db.Column(db.Integer, primary_key=True)
+#     model = db.Column(db.String(50), nullable=False)
+#     #type = db.Column(db.String(20), nullable=False)
+#     brand_id = db.Column(db.Integer, db.ForeignKey('brand.id'))
+
+#     # brands = db.relationship('Brand', backref='models') # Podemos acceder a una marca asociada con modelos 
+
+#     def __repr__(self):
+#         return f'<Models {self.id}>'
+    
+#     def serialize(self):
+#         return{
+#             "id": self.id,
+#             "model": self.model,
+#             #"type": self.type,
+#             "brand_id": self.brand_id
+#         }
