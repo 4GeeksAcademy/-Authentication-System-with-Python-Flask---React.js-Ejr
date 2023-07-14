@@ -81,13 +81,18 @@ def upload_car():
 
  
 @api.route('/profile/products/<state>', methods=['GET'])
+@jwt_required()
 def get_products_on_sale(state):
+    current_user = get_jwt_identity()
+    products = Product.query.filter(Product.user_id == current_user).all()
+    
     status_on_sale = status.query.filter_by(status=state).first()
-    if status_on_sale :
-        products_on_sale = status_on_sale.product
+    if status_on_sale:
+        products_on_sale = [product for product in products if product.status == status_on_sale]
         serialized_products = [product.serialize() for product in products_on_sale]
         return jsonify(serialized_products), 200
-    return []
+
+    return jsonify([]), 200
 
     
 
