@@ -74,8 +74,18 @@ def upload_car():
         image = Image(image=upload_result['secure_url'], user_id=user_id, product_id=product.id)
         db.session.add(image)
         db.session.commit()
- 
- 
+    
+    Status = status (
+        status = 'ONSALE',
+        given_review_id = user_id,
+        
+    )
+    db.session.add(Status)
+    db.session.commit()
+
+    product.status_id = Status.id
+    db.session.commit()
+
     return jsonify({"message": "Your product has been successfully uploaded"}), 200
 
 
@@ -86,11 +96,10 @@ def get_products_on_sale(state):
     current_user = get_jwt_identity()
     products = Product.query.filter(Product.user_id == current_user).all()
     
-    status_on_sale = status.query.filter_by(status=state).first()
-    if status_on_sale:
-        products_on_sale = [product for product in products if product.status == status_on_sale]
-        serialized_products = [product.serialize() for product in products_on_sale]
-        return jsonify(serialized_products), 200
+    product_status = status.query.filter_by(status=state)
+    if product_status:
+        ListProducts = [status.product[0].serialize() for status in product_status if status.product and status.product[0].user_id==current_user]
+        return jsonify(ListProducts), 200
 
     return jsonify([]), 200
 

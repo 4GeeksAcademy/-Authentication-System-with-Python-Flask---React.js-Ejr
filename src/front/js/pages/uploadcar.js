@@ -19,7 +19,8 @@ export const UploadCar = () => {
   const [uploadedFiles, setUploadedFiles] = useState([]);
   const [data, setData] = useState({ product_type: 'COCHE',  });
   const [isSubmitClicked, setIsSubmitClicked] = useState(false);
-  const [submitData, setSubmitData] = useState()
+  const [submitData, setSubmitData] = useState([]);
+
   const [selectedBrand, setSelectedBrand] = useState("");
 
 
@@ -76,20 +77,23 @@ useEffect(() => {
   const handleDrop = (files) => {
     const uploaders = files.map((file) => {
       const formData = new FormData();
-      formData.append("file", file)
-      formData.append("tags", `codeinfuse, medium, gist`)
-      formData.append("upload_preset", "WhataCar")
-      formData.append("api_key", process.env.API_KEY)
-      formData.append("timestamp", (Date.now() / 1000 | 0))
-      setLoading("true")
-      setSubmitData(formData)
-
-      setUploadedFiles((prevUploadedFiles) => [...prevUploadedFiles, file.name])
-
+      formData.append("file", file);
+      formData.append("tags", "codeinfuse, medium, gist");
+      formData.append("upload_preset", "WhataCar");
+      formData.append("api_key", process.env.API_KEY);
+      formData.append("timestamp", Math.floor(Date.now() / 1000));
+      setLoading(true);
+      return formData;
+    });
   
-
-      
-  })};
+    setLoading(true);
+    setSubmitData(uploaders);
+    setUploadedFiles((prevUploadedFiles) => [
+      ...prevUploadedFiles,
+      ...files.map((file) => file.name),
+    ]);
+  };
+  
 
 
  
@@ -144,60 +148,44 @@ useEffect(() => {
   
   
   
-
   const handleSubmit = (ev) => {
     ev.preventDefault();
-
-
-    
-    fetch("https://api.cloudinary.com/v1_1/djpzj47gu/image/upload", {
-      method: 'POST',
-      body: submitData
-    })
-      .then((resp) => resp.json())
-      .then((data) => {
-        const fileURL = data.secure_url;
-        return fileURL
-      })
-      .then((fileURL) => {
+  
+    Promise.all(
+      submitData.map((formData) =>
+        fetch("https://api.cloudinary.com/v1_1/djpzj47gu/image/upload", {
+          method: "POST",
+          body: formData,
+        })
+          .then((resp) => resp.json())
+          .then((data) => data.secure_url)
+      )
+    )
+      .then((fileURLs) => {
         const config = {
           method: "POST",
-          body: JSON.stringify({ ...data,  images: [fileURL] }),
+          body: JSON.stringify({ ...data, images: fileURLs }),
           headers: {
-            'Content-Type': 'application/json',
-            "Authorization": `Bearer ${localStorage.getItem("token")}`
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         };
-    
-        fetch(process.env.BACKEND_URL + 'api/upload-car', config)
-        .then((resp) => resp.json())
-        .then((resp) => {
-          setData(resp)
-          navigate('/')
-          
-        })
-        .catch((error) => {
-          console.error('Error:', error);
-        });
+  
+        fetch(process.env.BACKEND_URL + "api/upload-car", config)
+          .then((resp) => resp.json())
+          .then((resp) => {
+            setData(resp);
+            navigate("/");
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
       })
       .catch((error) => {
         console.error(error);
       });
-
-
-
-    
-
-
-
-
-
+  };
   
-  
-    
-
-      
-    };
     //setIsSubmitClicked(true);
 
   
@@ -305,7 +293,7 @@ useEffect(() => {
 
 
                     
-              <div className='upload-product-images'>
+              <div className='upload-product-images '>
               <div>
                   <h5><strong>Imágenes:</strong></h5>
                 </div>
@@ -329,7 +317,7 @@ useEffect(() => {
 
                 </Dropzone>
 
-                <div>
+                <div className='mb-5'>
                     {uploadedFiles.map((file, index) => (
                         <p key={index}>{file}</p>
                     ))}

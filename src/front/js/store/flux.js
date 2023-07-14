@@ -128,21 +128,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				//reset the global store
 				setStore({ demo: demo });
 			},
-
-			getUser: () => {
-				const store = getStore();
-				fetch(process.env.BACKEND_URL + `api/configuration`, {
-					method: "GET",
-					headers: {
-						"Content-Type": "application/json",
-						"Authorization": `Bearer ${localStorage.getItem("token")}`
-					}
-				})
-				.then (response => response.json())
-				.then ((response) => {
-					setStore({user: response.data});
-				});
-			},
+			
 			getProductsOnSale: () => {
 				const store = getStore();
 				fetch(process.env.BACKEND_URL + "api/profile/products/ONSALE", {
@@ -154,7 +140,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				})
 				.then (response => response.json())
 				.then(response => {
-				const onSaleProducts = response.filter(product => product.status === "on sale");
+				const onSaleProducts = response.filter(product => product.status == "ONSALE");
 				setStore({ products: onSaleProducts });
 				console.log(onSaleProducts);
 				})
