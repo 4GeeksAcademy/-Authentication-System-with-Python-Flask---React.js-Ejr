@@ -4,18 +4,19 @@ from sqlalchemy.orm import relationship
 
 
 db = SQLAlchemy()
-
+# SAVED CARS BY USER WITH RELATED COLUMNS
 class Saved(db.Model):
     __tablename__ = 'saved'
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, ForeignKey("user.id"), unique=True, nullable=True)
-    car_id = db.Column(db.Integer, ForeignKey('car.id'), unique=True, nullable=True)
+    user_id = db.Column(db.Integer, ForeignKey("user.id"), nullable=True)
+    car_id = db.Column(db.Integer, ForeignKey('car.id'), nullable=True)
+    # THE FOLLOWING 2 COLUMNS ESTABLISHES RELATIONSHIP BETWEEN CARS ON OUR DATABASE AND USERS ON OUR DATABASE
     user = db.relationship('User', backref='saved_cars', foreign_keys=[user_id])
     car = db.relationship('Car', backref='saved_by_users', foreign_keys=[car_id])  
 
 
     def __repr__(self):
-        return f'<Saved {self.id}>'
+        return f'<Car id:{self.car_id} Saved id:{self.id}>'
 
     def serialize(self):
         return {
@@ -44,20 +45,22 @@ class User(db.Model):
             "email": self.email,
             "first_name": self.first_name,
             "phone_number": self.phone_number,
-            # "saved": list(map(lambda x: x.serialize(), self.saved))
+            "saved": list(map(lambda x: x.serialize(), self.saved))
         }
 
 
 class Car(db.Model):
     __tablename__ = 'car'
     id = db.Column(db.Integer, primary_key=True)
-    year = db.Column(db.Integer, unique=False, nullable=False)
-    brand = db.Column(db.String(100), unique=False, nullable=False)
-    car_name = db.Column(db.String(50), unique=False, nullable=False)
-    car_type = db.Column(db.String(30), unique=False, nullable=False)
+    year = db.Column(db.Integer, nullable=False)
+    brand = db.Column(db.String(100), nullable=False)
+    car_name = db.Column(db.String(50), nullable=False)
+    car_type = db.Column(db.String(30), nullable=False)
+    engine = db.Column(db.String(100), nullable=True)
+    transmission = db.Column(db.String(100), nullable=True)
 
     def __repr__(self):
-        return f'<{self.year} {self.brand} {self.car_name}>'
+        return f'<Car {self.id}>'
 
     def serialize(self):
         return {
@@ -65,7 +68,9 @@ class Car(db.Model):
             "year": self.year,
             "brand": self.brand,
             "car_name": self.car_name,
-            "car_type": self.car_type
+            "car_type": self.car_type,
+            "engine": self.engine,
+            "transmission": self.transmission,
         }
 
 
