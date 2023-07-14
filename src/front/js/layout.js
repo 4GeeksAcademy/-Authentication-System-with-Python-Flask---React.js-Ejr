@@ -8,6 +8,7 @@ import { Demo } from "./pages/demo";
 import { Single } from "./pages/single";
 import { Profile_configuration } from "./pages/profile_configuration";
 import { Profile_sales } from "./pages/profile_sales";
+import { Block } from "./pages/block";
 import { Profile_buys} from "./pages/profile_buys"
 import { Profile_reviews } from "./pages/profile_reviews";
 import { Configuration } from "./pages/configuration";
@@ -22,8 +23,15 @@ import ReactSwitch from "react-switch";
 
 
 import { createContext } from "react";
+
+import { UploadCar } from "./pages/uploadcar";
+import { WichVehicle } from "./pages/wichvehiche";
+import { UploadMoto } from "./pages/uploadmotorcycle";
+import { SingleProduct } from "./pages/singleProduct";
+
 import { Favorites } from "./pages/favorites";
 import { On_sale } from "./pages/onSale";
+
 
 
 export const ThemeContext = React.createContext(null)
@@ -54,12 +62,21 @@ const Layout = () => {
                                 <Route element={<Demo />} path="/demo" />
                                 <Route element={<Login />} path="/login" />
                                 <Route element={<Signup />} path="/signup" />
+
+                                <Route element={<UploadCar />} path="/upload-car" />
+                                <Route element={<UploadMoto />} path="/upload-motorcycle" />
+                                <Route element={<WichVehicle />} path="/choose-vehicle" />
+                                <Route element={SingleProduct} path="/product/:productid" />
+
+
                                 <Route element={<Profile_configuration />} path="/profile/configuration" />
                                 <Route element={<Favorites />} path="/profile/favorites" />
                                 <Route element={<On_sale />} path="/profile/onsale" />
                                 <Route element={<Profile_sales />} path="/profile/sales" />
+                                <Route element={<Block />} path="/profile/block" />
                                 <Route element={<Profile_buys />} path="/profile/buys" />
                                 <Route element={<Profile_reviews />} path="/profile/reviews" />
+
                                 <Route element={<Configuration />} path="/configuration" />
                                 <Route element={<Single />} path="/single/:theid" />
                                 <Route element={<h1>Not found!</h1>} />

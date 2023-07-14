@@ -15,6 +15,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			],
 
+			productlist: [],
+
 			
 			users: [],
      		token: localStorage.getItem("token") || "",
@@ -24,6 +26,20 @@ const getState = ({ getStore, getActions, setStore }) => {
 		},
 
 		actions: {
+
+			getProduct: (productid) => {
+				fetch(process.env.BACKEND_URL + `api/product/${productid}`)
+				.then(resp => resp.json())
+				.then((data) => {
+					//onsole.log(data); 
+					setStore({ productlist: [data] });
+
+				})
+				.catch(err => console.error(err))
+			},
+
+
+
 			login: async (email, password) => {
 				const store = getStore();
 				const opts = {
@@ -48,6 +64,25 @@ const getState = ({ getStore, getActions, setStore }) => {
 				  console.error(error);
 				}
 			  },
+
+
+		
+			getUser: () => {
+				const store = getStore();
+				fetch(process.env.BACKEND_URL + `api/configuration`, {
+					method: "GET",
+					headers: {
+						"Content-Type": "application/json",
+						"Authorization": `Bearer ${localStorage.getItem("token")}`
+					}
+				})
+				.then (response => response.json())
+				.then ((response) => {
+					setStore({user: response.data});
+				});
+			},
+
+
 
 
 			getToken: () => {
