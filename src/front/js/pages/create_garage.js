@@ -65,11 +65,12 @@ const handleImageIdChange = (e) => {
 
     try {
         await actions.postGarage(name, mail, phone, cif, address, description, web, user_id, image_id);
-        navigate("/profile/garage")
+        navigate("/profile/garage");
+        actions.getMyGarage()
     }
     catch(error) {
         console.log(error);
-        navigate("/notfound")
+        navigate("/profile/garage")
     }
  
 

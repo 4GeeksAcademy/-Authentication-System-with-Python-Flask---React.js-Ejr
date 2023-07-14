@@ -383,8 +383,9 @@ def createGarage():
         web = data.get('web')
         description = data.get('description')
         image_id = data.get('image_id')
+        user_id = data.get('user_id')
 
-        if not all([name, mail, phone, address, description, cif]):
+        if not all([name, mail, phone, address, cif]):
             return jsonify({"mensaje": "No se han completado todos los campos requeridos (nombre, email, teléfono, dirección, descripción o cif)"}), 400
 
         # Crear el nuevo garaje
@@ -399,11 +400,19 @@ def createGarage():
             image_id=image_id,
             user_id=current_user
         )
+        print(new_garage.serialize())
+        print(db.session.add(new_garage))
         db.session.add(new_garage)
         db.session.commit()
 
         return jsonify({"mensaje": "Garaje creado exitosamente"}), 200
 
     except Exception as e:
+        print(e)
         # Capturar cualquier excepción y devolver una respuesta de error
         return jsonify({"mensaje": f"Error al crear el garaje: {str(e)}"}), 500
+
+
+#@api.route('/get-images', methods=['GET'])
+#def get_images():
+    #hacer get de las imágenes. pasar el id de la imagen, apra la imagen del taller

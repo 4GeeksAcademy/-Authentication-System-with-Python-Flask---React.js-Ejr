@@ -169,28 +169,28 @@ const getState = ({ getStore, getActions, setStore }) => {
 			  
 				try {
 				  // Realiza una solicitud GET para obtener el taller del usuario
-				  const garageResponse = await fetch(process.env.BACKEND_URL + "api/profile/garage", {
-					method: "GET",
-					headers: {
-					  "Content-Type": "application/json",
-					  Authorization: `Bearer ${token}`
-					}
-				  });
-				  const garageData = await garageResponse.json();
-				  const myGarage = garageData.garage;
+				//   const garageResponse = await fetch(process.env.BACKEND_URL + "api/profile/garage", {
+				// 	method: "GET",
+				// 	headers: {
+				// 	  "Content-Type": "application/json",
+				// 	  Authorization: `Bearer ${token}`
+				// 	}
+				//   });
+				//   const garageData = await garageResponse.json();
+				//   const myGarage = garageData.garage;
 			  
-				  // Comprueba si ya existe un garaje con las mismas propiedades
-				  const isGarage = myGarage.some(garage => (
-					garage.name === name ||
-					garage.address === address||
-					garage.phone === phone
-				  ));
+				//   // Comprueba si ya existe un garaje con las mismas propiedades
+				//   const isGarage = myGarage.some(garage => (
+				// 	garage.name === name ||
+				// 	garage.address === address||
+				// 	garage.phone === phone
+				//   ));
 			  
-				  if (isGarage) {
-					console.log("El garaje ya existe.");
-					const navigate = useNavigate()
-					navigate("/notfound")
-				  } else {
+				//   if (isGarage) {
+				// 	console.log("El garaje ya existe.");
+				// 	const navigate = useNavigate()
+				// 	navigate("/create-garage")
+				//   } else {
 					const requestOptions = {
 					  method: "POST",
 					  headers: {
@@ -218,7 +218,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					} else {
 					  throw new Error("Error al registrar el garaje");
 					}
-				  }
+				  
 				} catch (error) {
 				  console.error(error);
 				  // Realiza las acciones necesarias en caso de error
