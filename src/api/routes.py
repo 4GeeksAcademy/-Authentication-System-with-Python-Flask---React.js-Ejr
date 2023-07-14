@@ -72,12 +72,65 @@ def upload_car():
     for image_file in data.get('images', []):
         upload_result = cloudinary.uploader.upload(image_file)
         image = Image(image=upload_result['secure_url'], user_id=user_id, product_id=product.id)
-        db.session.add(image)
+        db.session.add(image) 
         db.session.commit()
  
  
     return jsonify({"message": "Your product has been successfully uploaded"}), 200
 
+# @api.route('/search-by/<filter>', methods=['GET'])
+# def search_by_filter(filter):
+
+#     brand_id = request.args.get('brand_id')
+#     vehicle_type = request.args.get('vehicle_type')
+
+#     if filter == 'vehicle_type':
+#         products = Product.query.filter_by(product_type=vehicle_type).all()
+
+#     elif filter == 'brand_id':
+#         products = Product.query.filter_by(brand_id=brand_id).all()
+
+#     else:
+#         products = Product.query.filter_by(product_type=vehicle_type, brand_id=brand_id).all()
+
+#     serialized_products = [product.serialize() for product in products]
+#     return jsonify(serialized_products)
+
+
+@api.route('/search-by/<filter>', methods=['GET'])
+def search_by_filter(filter):
+    brand_id = request.args.get('brand_id')  # Obtener el brand_id de los parámetros de la solicitud GET
+    vehicle_type = request.args.get('vehicle_type')  # Obtener el vehicle_type de los parámetros de la solicitud GET
+
+    # Filtrar según las selecciones del usuario
+    if filter == 'vehicle_type':
+        products = Product.query.filter_by(product_type=vehicle_type).all()
+
+    elif filter == 'brand_id':
+        products = Product.query.filter_by(brand_id=brand_id).all()
+
+    else:
+        products = Product.query.filter_by(product_type=vehicle_type, brand_id=brand_id).all()
+
+    serialized_products = [product.serialize() for product in products]
+    return jsonify(serialized_products)
+
+
+
+
+     
+
+
+@api.route('/product/<int:productid>', methods=['GET'])
+def get_product(productid):
+    product = Product.query.get(productid)
+    
+    if product is None:
+        return jsonify({'message': 'Product not found'}), 404
+    
+    
+    serialized_product = product.serialize()
+    return jsonify(serialized_product), 200
 
  
 @api.route('/products', methods=['GET'])
@@ -119,6 +172,13 @@ def get_moto_brands():
     return jsonify(brand_list)
 
 
+@api.route('brands', methods=['GET'])
+def get_brands():
+    brands = Brand.query.all()
+    serialized_brands = [brand.serialize() for brand in brands]
+    return jsonify(serialized_brands), 200
+
+
 
 
 @api.route('/car-models', methods=['GET'])
@@ -158,16 +218,16 @@ def get_types_by_model(modelId):
 
 
 
-@api.route('/moto-brands', methods=['GET'])
-def get_brands():
-    brands = Brand.query.all()
+# @api.route('/moto-brands', methods=['GET'])
+# def get_moto_brands():
+#     brands = Brand.query.all()
 
-    lista_brands = []
-    for brand in brands:
-        data_brand = brand.serialize()
-        lista_brands.append(data_brand)
+#     lista_brands = []
+#     for brand in brands:
+#         data_brand = brand.serialize()
+#         lista_brands.append(data_brand)
 
-    return jsonify(lista_brands)
+#     return jsonify(lista_brands)
 
 
 @api.route('/moto-models', methods=['GET'])
