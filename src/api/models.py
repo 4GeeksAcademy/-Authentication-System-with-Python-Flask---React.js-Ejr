@@ -20,9 +20,7 @@ class Saved(db.Model):
 
     def serialize(self):
         return {
-            "id": self.id,
-            "user_id": self.user_id,
-            "car_id": self.car_id
+            "car": self.car.serialize() if self.car else None
         }
 
 

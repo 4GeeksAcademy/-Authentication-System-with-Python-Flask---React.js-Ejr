@@ -7,10 +7,12 @@ from flask_migrate import Migrate
 from flask_swagger import swagger
 from flask_cors import CORS
 from api.utils import APIException, generate_sitemap
-from api.models import db
+from api.models import db, User, Car, Saved
 from api.routes import api
 from api.admin import setup_admin
 from api.commands import setup_commands
+from flask_jwt_extended import jwt_required, get_jwt_identity, create_access_token, JWTManager
+
 
 #from models import Person
 
@@ -18,6 +20,12 @@ ENV = "development" if os.getenv("FLASK_DEBUG") == "1" else "production"
 static_file_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), '../public/')
 app = Flask(__name__)
 app.url_map.strict_slashes = False
+
+# Setup the Flask-JWT-Extended extension
+app.config["JWT_SECRET_KEY"] = "super-secret"  # Change this "super secret" with something else!
+jwt = JWTManager(app)
+
+
 
 # database condiguration
 db_url = os.getenv("DATABASE_URL")
@@ -62,6 +70,40 @@ def serve_any_other_file(path):
     response = send_from_directory(static_file_dir, path)
     response.cache_control.max_age = 0 # avoid cache memory
     return response
+
+
+
+# LOGIN ENDPOINT FOR USERS
+@app.route('/login', methods=['POST'])
+def login_user():
+     user_email = request.json.get("email", None)
+     user_password = request.json.get("password", None)
+
+     user = User.query.filter_by(email = user_email, password = user_password).first()
+
+     if user is None:
+          return jsonify({"Error": "Wrong email or password"}), 401
+     
+     token = create_access_token(identity=user.id)
+     return jsonify({"Response": "Successfully logged in", "token": token, "email": user.email}), 200
+
+
+# PRIVATE VIEW THAT USERS ARE GOING TO HAVE
+@app.route('/private', methods=['GET'])
+@jwt_required()
+def show_saved_cars():
+        current_user_id = get_jwt_identity()
+        user = User.query.get(current_user_id)
+        saved_cars = Saved.query.filter_by(user_id=current_user_id).all()
+        response = {
+             'user': user.first_name,
+             'email': user.email,
+             'saved_cars': [car.serialize() for car in saved_cars]
+        }
+
+        return jsonify(response),200
+
+
 
 
 # this only runs if `$ python src/main.py` is executed
