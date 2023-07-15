@@ -138,14 +138,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 					"Authorization": `Bearer ${localStorage.getItem("token")}`
 					}
 				})
-				.then (response => response.json())
-				.then(response => {
-				const onSaleProducts = response.filter(product => product.status == "ONSALE");
-				setStore({ products: onSaleProducts });
-				console.log(onSaleProducts);
+				.then(response => response.json())
+				.then(onSaleProducts => {
+					setStore({products: onSaleProducts})
 				})
 				.catch(error => {
-				console.error(error);
+					console.error(error);
 				});
 			},
 			getProductsBlocked: () => {
@@ -157,14 +155,29 @@ const getState = ({ getStore, getActions, setStore }) => {
 					"Authorization": `Bearer ${localStorage.getItem("token")}`
 					}
 				})
-				.then (response => response.json())
-				.then(response => {
-				const onSaleProducts = response.filter(product => product.status === "blocked");
-				setStore({ products: onSaleProducts });
-				console.log(onSaleProducts);
+				.then(response => response.json())
+				.then(onSaleProducts => {
+					setStore({products: onSaleProducts})
 				})
 				.catch(error => {
-				console.error(error);
+					console.error(error);
+				});
+			},
+			getProductsSold: () => {
+				const store = getStore();
+				fetch(process.env.BACKEND_URL + "api/profile/products/SOLD", {
+					method: "GET",
+					headers: {
+					"Content-Type": "application/json",
+					"Authorization": `Bearer ${localStorage.getItem("token")}`
+					}
+				})
+				.then(response => response.json())
+				.then(onSaleProducts => {
+					setStore({products: onSaleProducts})
+				})
+				.catch(error => {
+					console.error(error);
 				});
 			},
 			getFavorites: () => {

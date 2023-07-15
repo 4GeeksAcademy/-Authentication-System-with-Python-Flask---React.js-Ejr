@@ -31,7 +31,7 @@ export const On_sale = () => {
                         <h4 className="state_product_profile">{product.state}</h4>
                     </div>
                     <div className="col-2 product_profile_buttons">
-                        <button className="product_profile_button edit"><i className="fas fa-pencil"></i></button>
+                        <button className="product_profile_button edit">❌</button>
                         <button className="product_profile_button sold" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">🤝🏼</button>
                     </div>
                     <div className="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

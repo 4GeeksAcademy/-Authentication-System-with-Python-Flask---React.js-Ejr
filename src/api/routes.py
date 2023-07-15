@@ -103,6 +103,31 @@ def get_products_on_sale(state):
 
     return jsonify([]), 200
 
+
+@api.route('/profile/products/<int:product_id>/status', methods=['PUT'])
+@jwt_required()
+def update_product_status(state):
+    current_user = get_jwt_identity()
+    product = Product.query.filter(Product.user_id == current_user).all()
+
+    if not product:
+        return jsonify({'error': 'Producto no encontrado'}), 404
+
+    new_status = request.json.get('new_status')
+
+    if not new_status:
+        return jsonify({'error': 'El estado es requerido'}), 400
+    
+    product_status = status.query.filter_by(status=state)
+    valid_statuses = [status.value for status in product_status]
+
+    if new_status not in valid_statuses:
+        return jsonify({'error': 'Estado no válido'}), 400
+
+    product.status = new_status
+    db.session.commit()
+
+    return jsonify({'message': 'Estado actualizado exitosamente'}), 200
     
 
 
