@@ -6,6 +6,8 @@ from api.models import db, User, Car, Saved
 from api.utils import generate_sitemap, APIException
 import requests
 
+
+
 api = Blueprint('api', __name__)
 
 
@@ -65,3 +67,4 @@ def add_car():
              return jsonify({"this is the car's data": car.serialize()}), 200
         else:
             return jsonify({'error': 'Failed to retrieve car information'}), 500
+        

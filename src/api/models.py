@@ -20,9 +20,7 @@ class Saved(db.Model):
 
     def serialize(self):
         return {
-            "id": self.id,
-            "user_id": self.user_id,
-            "car_id": self.car_id
+            "car": self.car.serialize() if self.car else None
         }
 
 
@@ -45,7 +43,7 @@ class User(db.Model):
             "email": self.email,
             "first_name": self.first_name,
             "phone_number": self.phone_number,
-            "saved": list(map(lambda x: x.serialize(), self.saved))
+            # "saved": list(map(lambda x: x.serialize(), self.saved))
         }
 
 
