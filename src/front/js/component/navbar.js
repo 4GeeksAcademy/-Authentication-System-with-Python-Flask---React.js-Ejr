@@ -153,11 +153,11 @@ export const Navbar = () => {
 
   return (
     <nav className="navbar navbar-expand-lg bg-body-tertiary py-4">
-      <div className={dropMenu}>
-        <div className="text-center">
-          <Link to="/" className="navbar-brand tittle-nav ms-3" id="tittle-nav" onClick={closeNavbar}>
+      <div className={dropMenu} >
+        <div className="text-center lightSpeedIn">
+          <a href="/" className="navbar-brand tittle-nav ms-3 " id="tittle-nav" onClick={closeNavbar}>
             WhataCar
-          </Link>
+          </a>
         </div>
         <br></br>
         <div className="justify-content-end d-flex mb-2">
@@ -183,7 +183,7 @@ export const Navbar = () => {
                   <>
                     <li className="nav-item">
                       <Link
-                        className="nav-link active me-3"
+                        className="nav-link actived me-3"
                         style={{ color: "rgb(15, 76, 117)" }}
                         aria-current="page"
                         to="/signup"
@@ -194,7 +194,7 @@ export const Navbar = () => {
                     </li>
                     <li className="nav-item">
                       <Link
-                        className="nav-link active me-3"
+                        className="nav-link actived me-3"
                         style={{ color: "rgb(15, 76, 117)" }}
                         aria-current="page"
                         to="/login"
@@ -251,7 +251,7 @@ export const Navbar = () => {
                         aria-expanded="false"
                         to="profile"
                       >
-                        <i className="fa-regular fa-user ms-4" id="iconProfile"></i>
+                        <i className="fa-regular fa-user ms-4 jello-vertical" id="iconProfile"></i>
                       </Link>
                       <ul className="dropdown-menu ms-3">
                         <li>

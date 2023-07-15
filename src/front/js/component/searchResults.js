@@ -8,7 +8,7 @@ import { Range, getTrackBackground } from "react-range";
 import lottie from 'lottie-web';
 import { defineElement } from 'lord-icon-element';
 
-export const SearchResults = () => {
+export const SearchResults = (props) => {
 
     defineElement(lottie.loadAnimation);
     const { store, actions } = useContext(Context);
@@ -21,9 +21,9 @@ export const SearchResults = () => {
 
 return (
 
-    store.products ? 
+    props.products ? 
     <div className="d-flex overflow-auto my-5">
-      {store.products.map((vehicle, index) => {
+      {props.products.map((vehicle, index) => {
              
               
       return (

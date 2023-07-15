@@ -71,6 +71,8 @@ li {
 }
 
 
+
+
 .btn-plus {
   display: flex;
   align-items: center;
@@ -157,11 +159,14 @@ li {
   font-weight: bolder;
 }
 
-.active2 
+.card-blur {
+  box-shadow: 39px 38px 36px 7px rgba(0,0,0,0.1);
+}
 
 .sales_navbar{
   margin-top: 2rem;
 }
+
 
 .sales_navbar_buttons{
   margin-right: 2rem;
@@ -203,6 +208,10 @@ div h5 {
   color: white;
 }
 
+h5 {
+  color: black ;
+}
+
 div ul li {
   font-size: small;
   color: rgb(224, 220, 220);
@@ -213,3 +222,121 @@ div ul li {
   text-decoration-line: none;
   
 }
+
+
+.fadeInDown {
+  -webkit-animation-name: fadeInDown;
+  animation-name: fadeInDown;
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+  }
+  @-webkit-keyframes fadeInDown {
+  0% {
+  opacity: 0;
+  -webkit-transform: translate3d(0, -100%, 0);
+  transform: translate3d(0, -100%, 0);
+  }
+  100% {
+  opacity: 1;
+  -webkit-transform: none;
+  transform: none;
+  }
+  }
+  @keyframes fadeInDown {
+  0% {
+  opacity: 0;
+  -webkit-transform: translate3d(0, -100%, 0);
+  transform: translate3d(0, -100%, 0);
+  }
+  100% {
+  opacity: 1;
+  -webkit-transform: none;
+  transform: none;
+  }
+  } 
+
+  .lightSpeedIn {
+    -webkit-animation-name: lightSpeedIn;
+    animation-name: lightSpeedIn;
+    -webkit-animation-timing-function: ease-out;
+    animation-timing-function: ease-out;
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+    }
+    @-webkit-keyframes lightSpeedIn {
+    0% {
+    -webkit-transform: translate3d(100%, 0, 0) skewX(-30deg);
+    transform: translate3d(100%, 0, 0) skewX(-30deg);
+    opacity: 0;
+    }
+    60% {
+    -webkit-transform: skewX(20deg);
+    transform: skewX(20deg);
+    opacity: 1;
+    }
+    80% {
+    -webkit-transform: skewX(-5deg);
+    transform: skewX(-5deg);
+    opacity: 1;
+    }
+    100% {
+    -webkit-transform: none;
+    transform: none;
+    opacity: 1;
+    }
+    }
+    @keyframes lightSpeedIn {
+    0% {
+    -webkit-transform: translate3d(100%, 0, 0) skewX(-30deg);
+    transform: translate3d(100%, 0, 0) skewX(-30deg);
+    opacity: 0;
+    }
+    60% {
+    -webkit-transform: skewX(20deg);
+    transform: skewX(20deg);
+    opacity: 1;
+    }
+    80% {
+    -webkit-transform: skewX(-5deg);
+    transform: skewX(-5deg);
+    opacity: 1;
+    }
+    100% {
+    -webkit-transform: none;
+    transform: none;
+    opacity: 1;
+    }
+    } 
+
+   
+  .jello-vertical:hover {
+    animation: jello-vertical 0.9s both;
+  }
+  @keyframes jello-vertical {
+    0% {
+      transform: scale3d(1, 1, 1);
+    }
+    30% {
+      transform: scale3d(0.75, 1.25, 1);
+    }
+    40% {
+      transform: scale3d(1.25, 0.75, 1);
+    }
+    50% {
+      transform: scale3d(0.85, 1.15, 1);
+    }
+    65% {
+      transform: scale3d(1.05, 0.95, 1);
+    }
+    75% {
+      transform: scale3d(0.95, 1.05, 1);
+    }
+    100% {
+      transform: scale3d(1, 1, 1);
+    }
+  }
+  

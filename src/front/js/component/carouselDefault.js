@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import lottie from 'lottie-web';
 import { defineElement } from 'lord-icon-element';
 import { Filters } from "./filters";
+import "/workspaces/Watacar_v2/src/front/styles/index.css";
 
 
 
@@ -27,8 +28,8 @@ export const CarouselDefault = () => {
     <div className="d-flex overflow-auto my-5">
       {store.products ? (
         store.products.map((vehicle, index) => (
-          <div className="col-12 col-md-4" key={index}>
-            <div className="card" style={{ width: "18rem" }}>
+          <div className="col-12 col-md-4 mb-5" key={index}>
+            <div className="card card-blur" style={{ width: "18rem" }}>
               <div className="flip-card">
                 <div className="flip-card-inner">
                   <div className="flip-card-front">

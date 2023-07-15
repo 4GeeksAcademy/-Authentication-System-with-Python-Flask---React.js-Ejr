@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import "../../styles/filters.css";
 import { Range, getTrackBackground } from "react-range";
 
-export const Filters = () => {
+export const Filters = (props) => {
 
   const [rangeKm, setRangeKm] = useState([0, 50000]);
   const handleKmChange = (newKm) => {
@@ -67,6 +67,12 @@ export const Filters = () => {
   };
  
   
+const handleOnSubmit = (e) => {
+  e.preventDefault()
+// hacer el fetch para los filtros
+  props.setIsFilter(true)
+  props.setDataFilter([]) // meter los datos que me lleguen del fetch, se puede qutiar el array
+}
 
 
 
@@ -75,10 +81,11 @@ export const Filters = () => {
   
     return (
         <>
-        <a class="btn btn-primary" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
+        <a class="btn btn-primary jello-vertical" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
           <i class="fa-solid fa-filter"/>
         </a>
     
+<form onSubmit={handleOnSubmit}>
       
       <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
         <div class="offcanvas-header">
@@ -88,7 +95,6 @@ export const Filters = () => {
         <div class="offcanvas-body">
           <div>
   
-
           <div>
       <h4>Vehículo</h4>
       <ul>
@@ -120,15 +126,32 @@ export const Filters = () => {
       <ul>{renderBrands()}</ul>
       {visibleBrands < totalBrands && (
         <>
-          {showMoreButton ? (
-            <button className="btn buttonShowMore" onClick={handleShowMore}>
-              <i class="fa-solid fa-plus" style={{"color": "#ffffff"}}/>
-            </button>
+          {showMoreButton ? (  
+          
+          <div className="m-auto d-flex justify-content-center">
+             <button 
+             style={{width: 38, height: 35, background: '#0F4C75', borderRadius: 8}}
+             className="nav-link btn-plus m-auto"
+             onClick={handleShowMore}>
+             <i className="fa-solid fa-plus m-auto"></i>
+
+              </button>
+          </div>
+
+
+
           ) : (
             visibleBrands > 3 && (
-              <button className="btn buttonShowMore" onClick={handleShowLess}>
-                <i class="fa-solid fa-window-minimize" style={{"color": "#ffffff"}} />
-              </button>
+            
+              <button 
+              style={{width: 38, height: 35, background: '#0F4C75', borderRadius: 8}}
+              className="nav-link btn-plus btn_mucho mb-2 ms-4"
+              onClick={handleShowLess}>
+              <i className="fa-solid fa-window-minimize m-auto"></i>
+ 
+               </button>
+ 
+   
             )
           )}
         </>
@@ -142,14 +165,14 @@ export const Filters = () => {
 
    </div>
 
-      <Link to ="/search-results" className="btn btn-primary my-5">
+      <button className="btn btn-primary my-5">
         Buscar por filtros
-      </Link>
+      </button>
 
         </div>
       </div>
       
-
+      </form>
 
 
 
