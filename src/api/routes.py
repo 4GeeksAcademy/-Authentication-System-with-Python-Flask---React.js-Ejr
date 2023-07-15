@@ -5,8 +5,11 @@ from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, User, Car, Saved
 from api.utils import generate_sitemap, APIException
 import requests
+from flask_jwt_extended import JWTManager,create_access_token
 
 api = Blueprint('api', __name__)
+# api.config["JWT_SECRET_KEY"] = "super-secret"  # Change this "super secret" with something else!
+# jwt = JWTManager(api)
 
 
 # GET ALL THE CARS FROM OUR DATABASE
@@ -32,7 +35,7 @@ def get_users():
 def fetch_car_data(model):
     headers= {
         "X-RapidAPI-Key": "091b26d511msh9e1b3d4bf95fde1p1b1d59jsncc7949986be6",
-        "X-RapidAPI-Host": "cars-by-api-ninjas.p.rapidapi.com"  
+        "X-RapidAPI-Host": "cars-by-api-ninjas.p.rapidapi.com"
     }
 
     querystring = {"model":model, "year":"2022", "limit":"1"}
@@ -65,3 +68,18 @@ def add_car():
              return jsonify({"this is the car's data": car.serialize()}), 200
         else:
             return jsonify({'error': 'Failed to retrieve car information'}), 500
+
+
+@api.route("/token", methods=["POST"])
+def create_token():
+    email = request.json.get("email", None)
+    password = request.json.get("password", None)
+    # Query your database for username and password
+    user = User.query.filter_by(email=email, password=password).first()
+    if user is None:
+        # the user was not found on the database
+        return jsonify({"msg": "Bad username or password"}), 401
+
+    # create a new token with the user id inside
+    access_token = create_access_token(identity=user.id)
+    return jsonify({ "token": access_token, "user_id": user.id })

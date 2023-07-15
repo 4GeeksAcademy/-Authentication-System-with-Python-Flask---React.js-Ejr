@@ -1,5 +1,5 @@
 import React from 'react'
-export default function Demo() {
+export default function CreateAccount() {
   return (
     <div>Home</div>
   )
