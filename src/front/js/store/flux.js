@@ -323,49 +323,50 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			
 
-			postFavorite: (product_id) => {
+			postFavorite: async (user_id, product_id) => {
 				const token = localStorage.getItem("token");
 			  
-				// Primero, realiza una solicitud GET para obtener la lista de productos favoritos del usuario
-				fetch(process.env.BACKEND_URL + "api/profile/favorites", {
-				  method: "GET",
-				  headers: {
-					"Content-Type": "application/json",
-					Authorization: `Bearer ${token}`
-				  }
-				})
-				.then(response => response.json())
-				.then(data => {
-				  const favorites = data.favorites;
-				  const isProductFavorited = favorites.some(favorite => favorite.product_id === product_id);
+				try {
+				//   const favoritesResponse = await fetch(`${process.env.BACKEND_URL}api/profile/favorites`, {
+				// 	method: "GET",
+				// 	headers: {
+				// 	  "Content-Type": "application/json",
+				// 	  Authorization: `Bearer ${token}`,
+				// 	},
+				//   });
+				//   const favoritesData = await favoritesResponse.json();
+				//   const favorites = favoritesData.favorites;
 			  
-				  if (isProductFavorited) {
-					console.log("El producto ya está guardado como favorito.");
-				  } else {
+				//   const isProductFavorited = favorites.some((favorite) => favorite.product_id === product_id);
+			  
+				//   if (isProductFavorited) {
+				// 	console.log("El producto ya está guardado como favorito.");
+				//   } else {
 					const requestOptions = {
 					  method: "POST",
 					  headers: {
 						"Content-Type": "application/json",
-						Authorization: `Bearer ${token}`
+						Authorization: `Bearer ${token}`,
 					  },
-					  body: JSON.stringify({ product_id })
+					  body: JSON.stringify({ 
+						user_id: user_id,
+						product_id: product_id 
+					  }),
 					};
 			  
-					fetch(process.env.BACKEND_URL + "api/profile/favorites", requestOptions)
-					  .then(response => response.json())
-					  .then(data => {
-						console.log(data);
-					  })
-					  .catch(error => {
-						console.error("Error:", error);
-					  });
+					const response = await fetch(`${process.env.BACKEND_URL}api/profile/favorites`, requestOptions);
+					if (response.ok){
+					const data = await response.json();
+					console.log(data);
+				  } else {
+					throw new Error('Error al añadir Favorito')
 				  }
-				})
-				.catch(error => {
+				} catch (error) {
 				  console.error("Error:", error);
-				});
-			},
-
+				}
+			  },
+			  
+			  
 			putFavorite: (product_id) => {
 				const token = localStorage.getItem("token");
 				const requestOptions = {

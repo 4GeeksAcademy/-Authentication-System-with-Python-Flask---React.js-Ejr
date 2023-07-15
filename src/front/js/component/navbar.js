@@ -214,7 +214,7 @@ export const Navbar = () => {
                         href="#"
                         role="button"
                         aria-expanded="page"
-                        to="/profile/configuration"
+                        to="/profile/favorites"
                       >
                         <span>Favoritos</span> {""}
                         <i className="fa-regular fa-heart"></i>
