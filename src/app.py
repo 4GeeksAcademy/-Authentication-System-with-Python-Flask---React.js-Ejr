@@ -98,13 +98,29 @@ def show_saved_cars():
         response = {
              'user': user.first_name,
              'email': user.email,
+             'phone_number': user.phone_number,
              'saved_cars': [car.serialize() for car in saved_cars]
         }
 
         return jsonify(response),200
 
+# ALLOWING USERS TO CREATE A FAVORITE
+@app.route('/add_saved', methods=['POST'])
+@jwt_required()
+def add_favorite():
+    current_user_id = get_jwt_identity()
+    
+    user = User.query.get(current_user_id)
+    car_id = request.json.get("car_id")
 
+    car = Car.query.get(car_id)
+    if not car:
+         return jsonify({"Error": "Car does not exist"}), 404
+    saved = Saved(user_id=user.id, car_id=car_id)
+    db.session.add(saved)
+    db.session.commit()
 
+    return jsonify({"Message": "Car successfully saved"})
 
 # this only runs if `$ python src/main.py` is executed
 if __name__ == '__main__':

@@ -68,16 +68,3 @@ def add_car():
         else:
             return jsonify({'error': 'Failed to retrieve car information'}), 500
         
-
-# @api.route('/login', methods=['POST'])
-# def login_user():
-#      user_email = request.json.get("email", None)
-#      user_password = request.json.get("password", None)
-
-#      user = User.query.filter_by(email = user_email, password = user_password).first()
-
-#      if user is None:
-#           return jsonify({"Error": "Wrong email or password"}), 401
-     
-#      token = create_access_token(identity=user.id)
-#      return jsonify({"Response": "Successfully logged in", "token": token, "email": user.email}), 200
