@@ -325,46 +325,44 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			postFavorite: async (user_id, product_id) => {
 				const token = localStorage.getItem("token");
+				const store = getStore();
+				
+				// Comprobar si el producto ya está en los favoritos
+				const isProductFavorited = store.favorites.some((favorite) => favorite.product_id === product_id);
 			  
+				if (isProductFavorited) {
+				  console.log("El producto ya está guardado como favorito.");
+				  return; // Salir de la función si el producto ya está en favoritos
+				}
+				
 				try {
-				//   const favoritesResponse = await fetch(`${process.env.BACKEND_URL}api/profile/favorites`, {
-				// 	method: "GET",
-				// 	headers: {
-				// 	  "Content-Type": "application/json",
-				// 	  Authorization: `Bearer ${token}`,
-				// 	},
-				//   });
-				//   const favoritesData = await favoritesResponse.json();
-				//   const favorites = favoritesData.favorites;
+				  const requestOptions = {
+					method: "POST",
+					headers: {
+					  "Content-Type": "application/json",
+					  Authorization: `Bearer ${token}`,
+					},
+					body: JSON.stringify({ 
+					  user_id: user_id,
+					  product_id: product_id 
+					}),
+				  };
 			  
-				//   const isProductFavorited = favorites.some((favorite) => favorite.product_id === product_id);
-			  
-				//   if (isProductFavorited) {
-				// 	console.log("El producto ya está guardado como favorito.");
-				//   } else {
-					const requestOptions = {
-					  method: "POST",
-					  headers: {
-						"Content-Type": "application/json",
-						Authorization: `Bearer ${token}`,
-					  },
-					  body: JSON.stringify({ 
-						user_id: user_id,
-						product_id: product_id 
-					  }),
-					};
-			  
-					const response = await fetch(`${process.env.BACKEND_URL}api/profile/favorites`, requestOptions);
-					if (response.ok){
+				  const response = await fetch(`${process.env.BACKEND_URL}api/profile/favorites`, requestOptions);
+				  if (response.ok) {
 					const data = await response.json();
 					console.log(data);
+					// Actualizar el store de favoritos si es necesario
+					const updatedFavorites = [...store.favorites, data];
+					setStore({ favorites: updatedFavorites });
 				  } else {
-					throw new Error('Error al añadir Favorito')
+					throw new Error('Error al añadir Favorito');
 				  }
 				} catch (error) {
 				  console.error("Error:", error);
 				}
 			  },
+			  
 			  
 			  
 			putFavorite: (product_id) => {
