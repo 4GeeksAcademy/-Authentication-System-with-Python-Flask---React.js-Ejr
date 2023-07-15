@@ -153,7 +153,11 @@ li {
 .active{
  
   color: white;
+  background-color: #125c8e;
+  font-weight: bolder;
 }
+
+.active2 
 
 .sales_navbar{
   margin-top: 2rem;
@@ -162,6 +166,9 @@ li {
 .sales_navbar_buttons{
   margin-right: 2rem;
   text-decoration: none;
+  padding: 3px;
+  border: 1px solid #125c8e;
+  border-radius: 6px;
 }
 
 .profile_navbar_text{

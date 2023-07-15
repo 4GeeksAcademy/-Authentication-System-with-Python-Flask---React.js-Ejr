@@ -209,7 +209,7 @@ export const Navbar = () => {
                   <>
                     <li className="nav-item ">
                       <Link
-                        className="nav-link active "
+                        className="nav-link "
                         id="heart"
                         href="#"
                         role="button"
