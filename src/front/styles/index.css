@@ -32,30 +32,6 @@ h6 {
   font-family: 'Roboto', sans-serif;
 }
 
-li {
-  font-family: 'Roboto', sans-serif;
-}
-
-
-body {
-  font-family: 'Roboto', sans-serif;
-}
-
-h1 {
-  font-family: 'Roboto', sans-serif;
-}
-
-h2 {
-  font-family: 'Roboto', sans-serif;
-}
-
-h3 {
-  font-family: 'Roboto', sans-serif;
-}
-
-h4 {
-  font-family: 'Roboto', sans-serif;
-}
 
 li {
   font-family: 'Roboto', sans-serif;
@@ -123,13 +99,7 @@ li {
 
 
   
-  #heart {
 
-    margin-bottom: -5px;
-    color: rgb(36, 144, 215);
-    font-size: x-large;
-    
-  }
   
 
   .switch {
@@ -181,7 +151,7 @@ li {
 }
 
 .active{
-  background-color: #125c8e;
+ 
   color: white;
 }
 

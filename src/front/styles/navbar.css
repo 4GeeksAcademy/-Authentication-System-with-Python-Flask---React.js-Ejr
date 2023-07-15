@@ -5,10 +5,30 @@
     General Styles used on every website (Don't Repeat Yourself)
 */
 
+#tittle-nav {
+  font-weight:bolder;
+  font-size: 45px;
+}
+
+.nav-link {
+  font-weight: 800;
+  font-size: large;
+}
+
+.dropdown-item {
+  font-weight: 800;
+  font-size: large;
+}
+
 #light{
     background-color: #e1e5ea;
   
   }
+
+.fa-lightbulb {
+
+  font-size: 25px;
+}
   
   #dark{
     background-color: #393E46;
@@ -30,6 +50,15 @@
     font-size: medium;
   }
   
+
+  #heart {
+
+    margin-bottom: -5px;
+    color: rgb(36, 144, 215);
+    font-size: x-large;
+    
+  }
+
   #heartCard {
     font-size: 30px;
     position: absolute;

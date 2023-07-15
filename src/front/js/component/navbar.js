@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { Login } from "../pages/login";
 import { SwitchLight } from "./switchLight";
 import  "../../styles/navbar.css"
+import  "../../styles/index.css"
 
 export const Navbar = () => {
   const { store, actions, token } = useContext(Context);
@@ -151,10 +152,10 @@ export const Navbar = () => {
   
 
   return (
-    <nav className="navbar navbar-expand-lg bg-body-tertiary">
+    <nav className="navbar navbar-expand-lg bg-body-tertiary py-4">
       <div className={dropMenu}>
         <div className="text-center">
-          <Link to="/" className="navbar-brand tittle-nav" id="tittle-nav" onClick={closeNavbar}>
+          <Link to="/" className="navbar-brand tittle-nav ms-3" id="tittle-nav" onClick={closeNavbar}>
             WhataCar
           </Link>
         </div>
@@ -221,6 +222,7 @@ export const Navbar = () => {
                     </li>
                     <li className="nav-item">
                       {!store.token ? (
+                        
                         <button
                           className="nav-link btn-plus mb-2 me-3"
                           onClick={openModal}
@@ -228,10 +230,14 @@ export const Navbar = () => {
                           <i className="fa-solid fa-plus"></i>
                         </button>
                       ) : (
-                        <Link to="/products">
-                          <button className="nav-link btn-plus btn_mucho mb-2 ms-4">
-                            <i className="fa-solid fa-plus"></i>
-                          </button>
+                        <Link to="/products"
+                        style={{width: 38, height: 35, background: '#0F4C75', borderRadius: 8}}
+                        className="nav-link btn-plus btn_mucho mb-2 ms-4">
+                       
+                          
+                         
+                            <i className="fa-solid fa-plus m-auto"></i>
+                       
                         </Link>
                       )}
                     </li>
