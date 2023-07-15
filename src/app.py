@@ -122,6 +122,7 @@ def add_favorite():
 
     return jsonify({"Message": "Car successfully saved"})
 
+
 # this only runs if `$ python src/main.py` is executed
 if __name__ == '__main__':
     PORT = int(os.environ.get('PORT', 3001))
