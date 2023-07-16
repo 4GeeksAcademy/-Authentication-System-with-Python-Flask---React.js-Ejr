@@ -104,15 +104,23 @@ const getState = ({ getStore, getActions, setStore }) => {
 			  },
 
 
-			  getBrands: () => {
+			  getAllBrands: () => {
 				fetch(process.env.BACKEND_URL + 'api/all-brands')
 				  .then(response => response.json())
 				  .then(response => {
-					const brands = response.map(brand => brand.name);
-					setStore({ all_brands: brands });
-					console.log(brands);
+					if (Array.isArray(response)) {
+					  const brands = response.map(item => ({ ...item }));
+					  setStore({ allBrands: brands });
+					  console.log(brands);
+					} else {
+					  console.error('Error: La respuesta no es un array');
+					}
+				  })
+				  .catch(error => {
+					console.error('Error al obtener las marcas:', error);
 				  });
 			  },
+			  
 			  
 
 			//   login: async (email, password) => {
