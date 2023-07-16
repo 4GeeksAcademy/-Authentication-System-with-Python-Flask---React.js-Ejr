@@ -23,10 +23,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 			user: [],
      		token: localStorage.getItem("token") || "",
 			products: [],
+			motoBrands: [],
+			carBrands: [],
+			allBrands: [],
 			favorites: [],
 			reviews: [],
 			garages: [],
-			garage: []
+			garage: [],
+			filters: []
 
 		
 		},
@@ -99,6 +103,17 @@ const getState = ({ getStore, getActions, setStore }) => {
 				return store.token; 
 			  },
 
+
+			  getBrands: () => {
+				fetch(process.env.BACKEND_URL + 'api/all-brands')
+				  .then(response => response.json())
+				  .then(response => {
+					const brands = response.map(brand => brand.name);
+					setStore({ all_brands: brands });
+					console.log(brands);
+				  });
+			  },
+			  
 
 			//   login: async (email, password) => {
             //     const store = getStore()
@@ -403,7 +418,27 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log(garages)
 				})
 			},
-		}
+
+			getFilters: () => {
+				const store = getStore();
+				fetch(process.env.BACKEND_URL + `api//search-by/<filter>`, {
+					method: "GET",
+					headers: {
+						"Content-Type": "application/json",
+						
+					}
+				})
+				.then (response => response.json())
+				.then ((response) => {
+					setStore({ filters: response });
+					console.log(response)
+				})
+			},
+
+			}
+
+
+	
 	}
 };
 

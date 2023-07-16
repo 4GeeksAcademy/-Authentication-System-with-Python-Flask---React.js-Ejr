@@ -120,7 +120,36 @@ def get_moto_brands():
 
     return jsonify(brand_list)
 
+@api.route('all-brands', methods=['GET'])
+def get_all_brands():
+    brands = Brand.query.all()
 
+    brand_list = []
+    for brand in brands:
+        brand_data = brand.serialize()
+        brand_list.append(brand_data)
+    
+    return jsonify(brand_list)
+
+
+@api.route('/search-by/<filter>', methods=['GET'])
+def search_by_filter(filter):
+    
+    brand_id = request.args.get('brand_id')  
+    vehicle_type = request.args.get('vehicle_type')  
+
+    if filter == 'vehicle_type':
+        products = Product.query.filter_by(product_type=vehicle_type).all()
+
+    elif filter == 'brand_id':
+        products = Product.query.filter_by(brand_id=brand_id).all()
+
+    else:
+        products = Product.query.filter_by(product_type=vehicle_type, brand_id=brand_id).all()
+
+
+    serialized_products = [product.serialize() for product in products]
+    return jsonify(serialized_products)
 
 
 @api.route('/car-models', methods=['GET'])

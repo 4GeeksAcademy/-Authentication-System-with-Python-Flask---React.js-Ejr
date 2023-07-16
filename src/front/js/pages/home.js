@@ -13,7 +13,12 @@ import { SearchResults } from "../component/searchResults";
 
 export const Home = () => {
   const { store, actions } = useContext(Context);
-  const [searchText, setSearchText] = useState("");
+  const [searchText, setSearchText] = useState(""); 
+  const [isFilter, setIsFilter]  = useState(false)
+  const [dataFilter, setDataFilter] = useState([])
+
+
+  
   defineElement(lottie.loadAnimation);
 
   const navigate = useNavigate();
@@ -43,10 +48,6 @@ export const Home = () => {
     }
   };
 
-
-
-  const [isFilter, setIsFilter]  = useState(false)
-  const [dataFilter, setDataFilter] = useState([])
 
 
 

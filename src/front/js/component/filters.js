@@ -8,26 +8,11 @@ import { Range, getTrackBackground } from "react-range";
 
 export const Filters = (props) => {
 
-  const [rangeKm, setRangeKm] = useState([0, 50000]);
-  const handleKmChange = (newKm) => {
-    setRangeKm(newKm);
-  }
 
-  const [rangeYears, setRangeYears] = useState([1980, 2023]);
-  const handleYearsChange = (newYears) => {
-    setRangeYears(newYears);
-  }
-
-
-  const [rangePrice, setRangePrice] = useState([0, 50000]);
-  const handlePriceChange = (newPrice) => {
-    setRangePrice(newPrice);
-  }
-
-
+  const {store, actions} = useContext(Context)
 
   const [visibleBrands, setVisibleBrands] = useState(3);
-  const totalBrands = 20;
+  const totalBrands = store.motoBrands;
   const [showMoreButton, setShowMoreButton] = useState(true);
 
   const handleShowMore = () => {
@@ -42,28 +27,47 @@ export const Filters = (props) => {
     setShowMoreButton(true);
   };
 
-  const renderBrands = () => {
-    const brands = [];
-    for (let i = 1; i <= totalBrands; i++) {
-      if (i <= visibleBrands) {
-        brands.push(
-          <li key={i}>
-            <div className="form-check p-3">
-              <input
-                className="form-check-input"
-                type="checkbox"
-                value=""
-                id={`flexCheckDefault${i}`}
-              />
-              <label className="form-check-label" htmlFor={`flexCheckDefault${i}`}>
-                Marca {i}
-              </label>
-            </div>
-          </li>
-        );
-      }
-    }
-    return brands;
+  const renderBrands =   () => {
+    
+
+    // const brands = [];
+    // for (let i = 1; i <= totalBrands; i++) {
+    //   if (i <= visibleBrands) {
+    //     brands.push(
+    //       <li key={i}>
+    //         <div className="form-check p-3">
+    //           <input
+    //             className="form-check-input"
+    //             type="checkbox"
+    //             value=""
+    //             id={`flexCheckDefault${i}`}
+    //           />
+    //           <label className="form-check-label" htmlFor={`flexCheckDefault${i}`}>
+    //             Marca {i}
+    //           </label>
+    //         </div>
+    //       </li>
+    //     );
+    //   }
+    // }
+    // return brands;
+    return store.allBrands.map((brand, index) => (
+      <li key={index}>
+        <div className="form-check p-3">
+          <input
+            className="form-check-input"
+            type="checkbox"
+            value=""
+            id={`flexCheckDefault${index}`}
+          />
+          <label className="form-check-label" htmlFor={`flexCheckDefault${index}`}>
+            {brand}
+          </label>
+        </div>
+      </li>
+    ));
+
+
   };
  
   
@@ -75,6 +79,10 @@ const handleOnSubmit = (e) => {
 }
 
 
+useEffect(()=>{
+  actions.getAllBrands();
+
+},[])
 
 
 
