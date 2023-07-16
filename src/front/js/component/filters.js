@@ -4,7 +4,7 @@ import { ThemeContext } from "../layout";
 import "../../styles/index.css";
 import { Link } from "react-router-dom";
 import "../../styles/filters.css";
-import { RenderBrands } from "./renderBrands";
+
 
 export const Filters = (props) => {
   const { store, actions } = useContext(Context);
@@ -114,7 +114,7 @@ export const Filters = (props) => {
                   <>
                     {showMoreButton ? (
                       <div className="m-auto d-flex justify-content-end me-5">
-                        <button className="nav-link me-5 text-primary" style={{"fontSize": "14px"}} onClick={handleShowMore}>
+                        <button className="nav-link me-5 text-primary" style={{"fontSize": "16px"}} onClick={handleShowMore}>
                           Ver más
                         </button>
                       </div>
