@@ -26,7 +26,7 @@ export const CarouselDefault = () => {
 
   return (
     <div className="d-flex overflow-auto my-5">
-      {store.products ? (
+      {store.products.length > 0 ? (
         store.products.map((vehicle, index) => (
           <div className="col-12 col-md-4 mb-5" key={index}>
             <div className="card card-blur" style={{ width: "18rem" }}>
@@ -86,7 +86,7 @@ export const CarouselDefault = () => {
           </div>
         ))
       ) : (
-        <h4 className="my-5 text-center">Aún no tenemos productos en venta</h4>
+        <h4 className="m-auto ">Aún no tenemos productos en venta</h4>
       )}
     </div>
   );

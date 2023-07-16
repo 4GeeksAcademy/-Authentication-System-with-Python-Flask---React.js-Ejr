@@ -304,21 +304,22 @@ const getState = ({ getStore, getActions, setStore }) => {
 				});
 			  },
 			  
-			getFavorites: () => {
+			  getFavorites: () => {
 				const store = getStore();
 				fetch(process.env.BACKEND_URL + `api/profile/favorites`, {
-					method: "GET",
-					headers: {
-						"Content-Type": "application/json",
-						"Authorization": `Bearer ${localStorage.getItem("token")}`
-					}
+				  method: "GET",
+				  headers: {
+					"Content-Type": "application/json",
+					"Authorization": `Bearer ${localStorage.getItem("token")}`
+				  }
 				})
-				.then (response => response.json())
-				.then ((response) => {
-					setStore({ favorites: response});
-					console.log(response.data)
-				})
-			},
+				  .then(response => response.json())
+				  .then(response => {
+					setStore({ products: response }); // Cambiar "favorites" por "products"
+					console.log(response);
+				  });
+			  },
+			  
 
 
 			
@@ -378,6 +379,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 				fetch(process.env.BACKEND_URL + `api/profile/favorites/${product_id}`, requestOptions)
 				  .then(response => response.json())
 				  .then(data => {
+					const updatedFavorites = [...store.favorites, data]
+					setStore({ favorites: updatedFavorites })
 					console.log(data);
 				  })
 				  .catch(error => {
