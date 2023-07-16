@@ -115,12 +115,17 @@ def add_favorite():
 
     car = Car.query.get(car_id)
     if not car:
-         return jsonify({"Error": "Car does not exist"}), 404
+        return jsonify({"Error": "Car does not exist"}), 404
+    
+    if user.saved:
+        for saved_car in user.saved:
+            if saved_car.car_id == car.id:
+                return jsonify({"Message": "Car already saved"}), 409    
     saved = Saved(user_id=user.id, car_id=car_id)
     db.session.add(saved)
     db.session.commit()
 
-    return jsonify({"Message": "Car successfully saved"})
+    return jsonify({"Message": "Car successfully saved"}), 200
 
 
 # this only runs if `$ python src/main.py` is executed
