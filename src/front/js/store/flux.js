@@ -30,7 +30,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 			reviews: [],
 			garages: [],
 			garage: [],
-			filters: []
+			filters: [],
+			filterProducts: []
 
 		
 		},
@@ -118,6 +119,20 @@ const getState = ({ getStore, getActions, setStore }) => {
 				  })
 				  .catch(error => {
 					console.error('Error al obtener las marcas:', error);
+				  });
+			  },
+
+			  
+			  getFilteredProducts: (brand_id, vehicle_type) => {
+				fetch(`${process.env.BACKEND_URL}api/search-by/filter?brand_id=${brand_id}&vehicle_type=${vehicle_type}`)
+				  .then(response => response.json())
+				  .then(data => {
+					// Almacenar los productos filtrados en store.filterProducts
+					setStore({ filterProducts: data });
+				  })
+				  .catch(error => {
+					// Manejar errores en la solicitud
+					console.error('Error al obtener los productos filtrados:', error);
 				  });
 			  },
 			  

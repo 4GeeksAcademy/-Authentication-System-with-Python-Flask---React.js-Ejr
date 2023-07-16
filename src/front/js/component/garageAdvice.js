@@ -98,7 +98,7 @@ export const GarageAdvice = () => {
                    
           
 
-                    <Link to="/profile/garage"
+                    <Link to="/create-garage"
                         style={{width: 38, height: 35, background: '#0F4C75', borderRadius: 8}}
                         className="nav-link btn-plus me-3 mb-3 btn_mucho mb-2 ms-4 float-end">
                         <lord-icon

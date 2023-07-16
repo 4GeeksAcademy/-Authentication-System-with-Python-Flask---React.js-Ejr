@@ -13,9 +13,11 @@ export const Filters = (props) => {
   const totalBrands = store.allBrands.length;
   const [showMoreButton, setShowMoreButton] = useState(true);
   const [showLessButton, setShowLessButton] = useState(false);
+  const [vehicleType, setVehicleType] = useState("COCHE");
+  const [selectedBrand, setSelectedBrand] = useState(null);
 
   const handleShowMore = () => {
-    setVisibleBrands(prevVisibleBrands => prevVisibleBrands + 3);
+    setVisibleBrands((prevVisibleBrands) => prevVisibleBrands + 3);
     if (visibleBrands + 3 >= totalBrands) {
       setShowMoreButton(false);
     }
@@ -25,7 +27,7 @@ export const Filters = (props) => {
   };
 
   const handleShowLess = () => {
-    setVisibleBrands(prevVisibleBrands => prevVisibleBrands - 3);
+    setVisibleBrands((prevVisibleBrands) => prevVisibleBrands - 3);
     if (visibleBrands - 3 <= 3) {
       setShowLessButton(false);
     }
@@ -39,13 +41,15 @@ export const Filters = (props) => {
       <ul>
         {store.allBrands.slice(0, visibleBrands).map((brand, index) => {
           return (
-            <li key={index}>
+            <li key={brand.id}>
               <div className="form-check p-3">
                 <input
                   className="form-check-input"
                   type="checkbox"
                   value={brand.name}
                   id={`flexCheckDefault${index}`}
+                  checked={selectedBrand === brand.id}
+                  onChange={() => handleOnBrandChange(brand.id)}
                 />
                 <label className="form-check-label" htmlFor={`flexCheckDefault${index}`}>
                   {brand.name}
@@ -58,16 +62,48 @@ export const Filters = (props) => {
     );
   };
 
-  const handleOnSubmit = (e) => {
+  
+
+  const handleOnSubmit = async (e) => {
     e.preventDefault();
-    // hacer el fetch para los filtros
     props.setIsFilter(true);
-    props.setDataFilter([]); // meter los datos que me lleguen del fetch, se puede quitar el array
+    props.setDataFilter([]);
+  
+    const queryParams = [];
+    if (selectedBrand !== null) {
+      queryParams.push(`brand_id=${selectedBrand}`);
+    }
+    if (vehicleType !== "") {
+      queryParams.push(`vehicle_type=${vehicleType}`);
+    }
+    const queryString = queryParams.join('&');
+    const url = `${process.env.BACKEND_URL}api/search-by/filter?${queryString}`;
+  
+    try {
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error('Error al obtener los productos filtrados');
+      }
+      const data = await response.json();
+      props.setStore({ filterProducts: data });
+    } catch (error) {
+      console.error('Error al obtener los productos filtrados:', error);
+    }
   };
+  
+  
+  
+  
+  
+  
 
   useEffect(() => {
     actions.getAllBrands();
   }, []);
+
+
+
+
 
   return (
     <>
@@ -85,27 +121,42 @@ export const Filters = (props) => {
           </div>
           <div class="offcanvas-body">
             <div>
-              <div>
-                <h4>Vehículo</h4>
-                <ul>
-                  <li>
-                    <div class="form-check p-3">
-                      <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" />
-                      <label class="form-check-label" for="flexRadioDefault1">
-                        Coche
-                      </label>
-                    </div>
-                  </li>
-                  <li>
-                    <div class="form-check p-3">
-                      <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked />
-                      <label class="form-check-label" for="flexRadioDefault2">
-                        Moto
-                      </label>
-                    </div>
-                  </li>
-                </ul>
-              </div>
+            <div>
+  <h4>Vehículo</h4>
+  <ul>
+    <li>
+      <div className="form-check p-3">
+        <input
+          className="form-check-input"
+          type="radio"
+          name="flexRadioDefault"
+          id="flexRadioDefault1"
+          checked={vehicleType === "COCHE"}
+          onChange={() => setVehicleType("COCHE")}
+        />
+        <label className="form-check-label" htmlFor="flexRadioDefault1">
+          Coche
+        </label>
+      </div>
+    </li>
+    <li>
+      <div className="form-check p-3">
+        <input
+          className="form-check-input"
+          type="radio"
+          name="flexRadioDefault"
+          id="flexRadioDefault2"
+          checked={vehicleType === "MOTO"}
+          onChange={() => setVehicleType("MOTO")}
+        />
+        <label className="form-check-label" htmlFor="flexRadioDefault2">
+          Moto
+        </label>
+      </div>
+    </li>
+  </ul>
+</div>
+
 
               <div>
                 <h4>Marcas</h4>
