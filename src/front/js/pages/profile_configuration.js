@@ -134,7 +134,7 @@ const handlePasswordChange = () => {
                                         <h5 className="modal-title" id="exampleModalLabel">Vas a cambiar tu contraseña</h5>
                                         <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
-                                    <div className="modal-body">
+                                    <div className="modal-body-password">
                                         <div>
                                             <label htmlFor="contraseña" className="password_label row">Nueva contraseña </label>
                                             <input type={eye1 ? "password" : "text"} className="change_password_input" id="password1" placeholder="Nueva Contraseña" value={password1} onChange={handlePasswordChange1} />

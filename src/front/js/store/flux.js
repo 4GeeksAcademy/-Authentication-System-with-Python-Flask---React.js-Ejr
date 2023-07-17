@@ -146,9 +146,43 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.error(error);
 				});
 			},
+			getProductsPendingBlocked: () => {
+				const store = getStore();
+				fetch(process.env.BACKEND_URL + "api/profile/products/PENDING_BLOCKED", {
+					method: "GET",
+					headers: {
+					"Content-Type": "application/json",
+					"Authorization": `Bearer ${localStorage.getItem("token")}`
+					}
+				})
+				.then(response => response.json())
+				.then(onSaleProducts => {
+					setStore({products: onSaleProducts})
+				})
+				.catch(error => {
+					console.error(error);
+				});
+			},
 			getProductsBlocked: () => {
 				const store = getStore();
 				fetch(process.env.BACKEND_URL + "api/profile/products/BLOCKED", {
+					method: "GET",
+					headers: {
+					"Content-Type": "application/json",
+					"Authorization": `Bearer ${localStorage.getItem("token")}`
+					}
+				})
+				.then(response => response.json())
+				.then(onSaleProducts => {
+					setStore({products: onSaleProducts})
+				})
+				.catch(error => {
+					console.error(error);
+				});
+			},
+			getProductsPendingSale: () => {
+				const store = getStore();
+				fetch(process.env.BACKEND_URL + "api/profile/products/PENDING_SALE", {
 					method: "GET",
 					headers: {
 					"Content-Type": "application/json",

@@ -19,7 +19,7 @@ export const Profile_sales = () => {
             {store.products.map((product, index) => (
                 <>
                     <h6 className="date_sale_profile">23/07/2020</h6>
-                    <div className="sales_profile_box row">
+                    <div className="sales_profile_box row" key={index}>
                         <div className="col-4">
                             <div className="product_img_profile_box_sales col-2">
                                 <img src="https://www.motofichas.com/images/phocagallery/Honda/cb500f-2022/01-honda-cb500f-2022-estudio-rojo.jpg" alt="product" className="product_img_profile"/>

@@ -618,9 +618,7 @@ def getReviews():
     current_user = get_jwt_identity()
 
     reviews = Review.query.filter_by(given_review_id=current_user).all()
-    if not reviews:
-        return jsonify({"mensaje": "No se encontraron reseñas"}), 404
-
+    
     review_list = []
     for review in reviews:
         stars = review.stars.value    
