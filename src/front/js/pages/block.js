@@ -35,7 +35,7 @@ export const Block = () => {
                     <div className="col-2 product_profile_buttons">
                         {product.status === "blocked" && (
                             <>
-                                <button className="product_profile_button edit">Cancelar reserva</button>
+                                <button className="product_profile_button edit" data-bs-target="#exampleModal2" data-bs-toggle="modal">Cancelar reserva</button>
                             </>
                         )}
                         {product.status === "pending sale" && (
@@ -78,6 +78,38 @@ export const Block = () => {
                                 </div>
                                 <div className="modal-footer">
                                     <button type="button" className="btn btn_config cancel" data-bs-dismiss="modal">Rechazar</button>
+                                    <button type="button" className="btn btn_config reservado">Aceptar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div className="modal-dialog">
+                            <div className="modal-content sold-product_profile">
+                                <div className="modal-header">
+                                    <h5 className="modal-title" id="exampleModalLabel">¿Quieres cancelar el proceso de reserva?</h5>
+                                    <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div className="modal-body-sale-process row">
+                                    <div className="product_img_profile_box-sales-process col-4">
+                                        <img src="https://www.motofichas.com/images/phocagallery/Honda/cb500f-2022/01-honda-cb500f-2022-estudio-rojo.jpg" alt="product" className="product_img_profile"/>
+                                    </div>
+                                    <div className="col-7 state_product_profile_sales_process">
+                                        <div className="row">
+                                            <h6 className=" col-12">{product.name}</h6>
+                                        </div>
+                                        <div className="row">
+                                            <h6 className=" col-12">{product.description}</h6>
+                                        </div>
+                                        <div className="row">
+                                            <h6 className=" col-6">{product.state}</h6>
+                                            <h6 className=" col-6">{product.price}€</h6>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                                <div className="modal-footer">
+                                    <button type="button" className="btn btn_config cancel" data-bs-dismiss="modal">Cancelar</button>
                                     <button type="button" className="btn btn_config reservado">Aceptar</button>
                                 </div>
                             </div>
