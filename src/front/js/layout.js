@@ -37,6 +37,9 @@ import { Garages } from "./pages/garages";
 import { Configuration_Garage } from "./pages/configuration_garage";
 import { CreateGarage } from "./pages/create_garage";
 import { SearchResults } from "./pages/searchResults";
+import { PrivacyPolicy } from "./pages/privacyPolicy";
+import { LegalAdvice } from "./pages/legalAdvice";
+import { CookiePolicy } from "./pages/cookiePolicy"
 
 
 
@@ -89,6 +92,9 @@ const Layout = () => {
                                 <Route element={<CreateGarage />} path="/create-garage" />
                                 <Route element={<Configuration_Garage />} path="/configuration/garage" />
                                 <Route element={<SearchResults />} path="/search-result" />
+                                <Route element={<LegalAdvice />} path="/aviso-legal" />
+                                <Route element={<CookiePolicy />} path="/politica-de-cookies" />
+                                <Route element={<PrivacyPolicy />} path="/politica-de-privacidad" />
                                 <Route element={<Single />} path="/single/:theid" />
                                 <Route element={<h1>Not found!</h1>} />
                             </Routes>
