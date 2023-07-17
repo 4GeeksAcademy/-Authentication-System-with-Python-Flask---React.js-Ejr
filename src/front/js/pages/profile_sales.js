@@ -12,13 +12,18 @@ export const Profile_sales = () => {
     useEffect (() => {
         actions.getProductsSold()
     }, [])
+
+    useEffect ((product_id) => {
+            actions.getStatusInfo(product_id)
+    }, [])
+    
+
     return store.products ? (
         <>
             <Profile_navbar />
             <Sales_navbar soldCount={soldCount} />
             {store.products.map((product, index) => (
                 <>
-                    <h6 className="date_sale_profile">23/07/2020</h6>
                     <div className="sales_profile_box row" key={index}>
                         <div className="col-4">
                             <div className="product_img_profile_box_sales col-2">

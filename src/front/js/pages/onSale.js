@@ -7,13 +7,53 @@ import { Sales_navbar } from "../component/Sales_navbar";
 
 export const On_sale = () => {
     const {actions, store} = useContext(Context);
+    const {status, setStatus} = useState([]);
     const onsaleCount = store.products.length;
 
-    useEffect (() => {
+useEffect (() => {
         actions.getProductsOnSale(),
         actions.getProductsPendingBlocked()
-    }, [])
+}, [])
 
+const StatusToBlocked = (product) => {
+    const token = localStorage.getItem("token");
+    const requestOptions = {
+        method: "PUT",
+        headers: {
+            'Content-Type': 'application/json',
+            "Authorization": `Bearer ${localStorage.getItem("token")}`
+        }
+    };
+    
+    fetch(process.env.BACKEND_URL + `api/profile/products/${product.id}/BLOCKED`, requestOptions)
+        .then(response => response.json())
+        .then(response => {
+        console.log(response);
+        })
+        .catch(error => {
+        console.error("Error:", error);
+        });
+};
+
+const StatusToOnSale = (product) => {
+    const token = localStorage.getItem("token");
+    const requestOptions = {
+        method: "PUT",
+        headers: {
+            'Content-Type': 'application/json',
+            "Authorization": `Bearer ${localStorage.getItem("token")}`
+        }
+    };
+    
+    fetch(process.env.BACKEND_URL + `api/profile/products/${product.id}/ONSALE`, requestOptions)
+        .then(response => response.json())
+        .then(response => {
+        console.log(response);
+        })
+        .catch(error => {
+        console.error("Error:", error);
+        });
+};
     return store.products ? (
         <>
             <Profile_navbar />
@@ -49,7 +89,7 @@ export const On_sale = () => {
                         <div className="modal-dialog">
                             <div className="modal-content sold-product_profile">
                                 <div className="modal-header">
-                                    <h5 className="modal-title" id="exampleModalLabel">Fulanito quiere bloquear este vehículo</h5>
+                                    <h5 className="modal-title" id="exampleModalLabel">quiere bloquear este vehículo</h5>
                                     <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div className="modal-body-sale-process row">
@@ -71,8 +111,8 @@ export const On_sale = () => {
                                     
                                 </div>
                                 <div className="modal-footer">
-                                    <button type="button" className="btn btn_config cancel" data-bs-dismiss="modal">Rechazar</button>
-                                    <button type="button" className="btn btn_config reservado">Aceptar</button>
+                                    <button type="button" className="btn btn_config cancel" data-bs-dismiss="modal" onClick={() => StatusToOnSale(product)}>Rechazar</button>
+                                    <button type="button" className="btn btn_config reservado" onClick={() => StatusToBlocked(product)}>Aceptar</button>
                                 </div>
                             </div>
                         </div>

@@ -92,7 +92,7 @@ def upload_car():
  
 @api.route('/profile/products/<state>', methods=['GET'])
 @jwt_required()
-def get_products_on_sale(state):
+def get_products_by_status(state):
     current_user = get_jwt_identity()
     products = Product.query.filter(Product.user_id == current_user).all()
     
@@ -108,17 +108,41 @@ def get_products_on_sale(state):
 @jwt_required()
 def update_product_status(product_id, new_status):
     current_user = get_jwt_identity()
-    product = Product.query.filter_by(id=product_id, user_id=current_user).first()
+    product = Product.query.filter_by(id=product_id).first()
     if product:
-        status_obj = status.query.filter_by(status=new_status).first()
+        status_obj = status.query.filter_by(id=product.status_id).first()
         if status_obj:
-            product.status = status_obj
+            status_obj.status = new_status
             db.session.commit()
             return jsonify({'message': 'Product status updated successfully'}), 200
     return jsonify({'message': 'Product not found or invalid status'}), 404
     
-    
+@api.route('/profile/product/<int:product_id>/status', methods=['GET'])
+@jwt_required()
+def get_product_status(product_id):
+    current_user = get_jwt_identity()
 
+    product = Product.query.filter_by(id=product_id, user_id=current_user).first()
+
+    if not product:
+        return jsonify({'message': 'Producto no encontrado o no pertenece al usuario.'}), 404
+
+    product_status = status.query.filter_by(id=product.status_id).first()
+
+    if not product_status:
+        return jsonify({'message': 'Estado del producto no encontrado.'}), 404
+
+    user_data = {
+        'status_id': product_status.id,
+        'status': product_status.status.value,
+        'user_id': product_status.given_review_id,
+        'user': {
+            'full_name': product_status.user.full_name,
+            'email': product_status.user.email
+        },
+        'product_id': product.id
+    }
+    return jsonify(user_data), 200
 
 # @api.route('car-models/<string:brand>', methods=['GET'])
 # def get_car_models(brand):

@@ -9,7 +9,45 @@ export const Block = () => {
     const {actions, store} = useContext(Context);
     const blockedCount = store.products.length;
     
+const StatusToOnSale = (product) => {
+    const token = localStorage.getItem("token");
+    const requestOptions = {
+        method: "PUT",
+        headers: {
+            'Content-Type': 'application/json',
+            "Authorization": `Bearer ${localStorage.getItem("token")}`
+        }
+    };
+    
+    fetch(process.env.BACKEND_URL + `api/profile/products/${product.id}/ONSALE`, requestOptions)
+        .then(response => response.json())
+        .then(response => {
+        console.log(response);
+        })
+        .catch(error => {
+        console.error("Error:", error);
+        });
+};
 
+const StatusToSold = (product) => {
+    const token = localStorage.getItem("token");
+    const requestOptions = {
+        method: "PUT",
+        headers: {
+            'Content-Type': 'application/json',
+            "Authorization": `Bearer ${localStorage.getItem("token")}`
+        }
+    };
+    
+    fetch(process.env.BACKEND_URL + `api/profile/products/${product.id}/SOLD`, requestOptions)
+        .then(response => response.json())
+        .then(response => {
+        console.log(response);
+        })
+        .catch(error => {
+        console.error("Error:", error);
+        });
+};
     useEffect (() => {
         actions.getProductsBlocked(),
         actions.getProductsPendingSale()
@@ -77,8 +115,8 @@ export const Block = () => {
                                     
                                 </div>
                                 <div className="modal-footer">
-                                    <button type="button" className="btn btn_config cancel" data-bs-dismiss="modal">Rechazar</button>
-                                    <button type="button" className="btn btn_config reservado">Aceptar</button>
+                                    <button type="button" className="btn btn_config cancel" data-bs-dismiss="modal" onClick={() => StatusToOnSale(product)}>Rechazar</button>
+                                    <button type="button" className="btn btn_config reservado" onClick={() => StatusToSold(product)}>Aceptar</button>
                                 </div>
                             </div>
                         </div>
@@ -110,7 +148,7 @@ export const Block = () => {
                                 </div>
                                 <div className="modal-footer">
                                     <button type="button" className="btn btn_config cancel" data-bs-dismiss="modal">Cancelar</button>
-                                    <button type="button" className="btn btn_config reservado">Aceptar</button>
+                                    <button type="button" className="btn btn_config reservado" onClick={() => StatusToOnSale(product)}>Aceptar</button>
                                 </div>
                             </div>
                         </div>
