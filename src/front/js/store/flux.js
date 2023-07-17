@@ -14,6 +14,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					initial: "white"
 				}
 			]
+			,saved:[]
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
