@@ -51,9 +51,16 @@ export const Filters = (props) => {
 
 
   const renderBrands = () => {
+    let brandsToShow = [];
+    if (vehicleType === "COCHE") {
+      brandsToShow = store.allBrands.slice(0, 59);
+    } else if (vehicleType === "MOTO") {
+      brandsToShow = store.allBrands.slice(59);
+    }
+  
     return (
       <ul>
-        {store.allBrands.slice(0, visibleBrands).map((brand, index) => {
+        {brandsToShow.slice(0, visibleBrands).map((brand, index) => {
           return (
             <li key={brand.id}>
               <div className="form-check p-3">
@@ -75,6 +82,7 @@ export const Filters = (props) => {
       </ul>
     );
   };
+  
 
   const handleOnSubmit = async (e) => {
     e.preventDefault();
