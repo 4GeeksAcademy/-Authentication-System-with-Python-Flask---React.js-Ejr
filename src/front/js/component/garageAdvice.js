@@ -59,16 +59,18 @@ export const GarageAdvice = () => {
                     
                 
                   
-                        <Link to="profile" className="btn-plus btn-mas m-2 float-end buttonGarage  ">
-                        <script src="https://cdn.lordicon.com/bhenfmcm.js"></script>
+                    <Link to="/garages"
+                        style={{width: 38, height: 35, background: '#0F4C75', borderRadius: 8}}
+                        className="nav-link btn-plus me-3 mb-3 btn_mucho mb-2 ms-4 float-end">
                         <lord-icon
                             src="https://cdn.lordicon.com/mecwbjnp.json"
                             trigger="hover"
                             colors="primary:#b4b4b4,secondary:#ffffff"
                             stroke="80"
-                            style={{"width":"250px","height":"250px"}}>
+                            style={{"width":"250px","height":"250px"}}
+                            className="m-auto">
                         </lord-icon>
-                        </Link>
+                    </Link>
                
                    
                </div>
@@ -96,19 +98,22 @@ export const GarageAdvice = () => {
                    
           
 
-               
-                
-               
-                        <Link to="profile" className="btn-plus btn-mas m-2 float-end buttonGarage  ">
-                        <script src="https://cdn.lordicon.com/bhenfmcm.js"></script>
+                    <Link to="/create-garage"
+                        style={{width: 38, height: 35, background: '#0F4C75', borderRadius: 8}}
+                        className="nav-link btn-plus me-3 mb-3 btn_mucho mb-2 ms-4 float-end">
                         <lord-icon
                             src="https://cdn.lordicon.com/mecwbjnp.json"
                             trigger="hover"
                             colors="primary:#b4b4b4,secondary:#ffffff"
                             stroke="80"
-                            style={{"width":"250px","height":"250px"}}>
+                            style={{"width":"250px","height":"250px"}}
+                            className="m-auto">
                         </lord-icon>
-                        </Link>
+                    </Link>
+
+                
+               
+                       
                     
                   
              

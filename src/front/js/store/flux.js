@@ -23,10 +23,15 @@ const getState = ({ getStore, getActions, setStore }) => {
 			user: [],
      		token: localStorage.getItem("token") || "",
 			products: [],
+			motoBrands: [],
+			carBrands: [],
+			allBrands: [],
 			favorites: [],
 			reviews: [],
 			garages: [],
-			garage: []
+			garage: [],
+			filters: [],
+			filterProducts: []
 
 		
 		},
@@ -99,6 +104,44 @@ const getState = ({ getStore, getActions, setStore }) => {
 				return store.token; 
 			  },
 
+
+			  getAllBrands: () => {
+				fetch(process.env.BACKEND_URL + 'api/all-brands')
+				  .then(response => response.json())
+				  .then(response => {
+					if (Array.isArray(response)) {
+					  const brands = response.map(item => ({ ...item }));
+					  setStore({ allBrands: brands });
+					  console.log(brands);
+					} else {
+					  console.error('Error: La respuesta no es un array');
+					}
+				  })
+				  .catch(error => {
+					console.error('Error al obtener las marcas:', error);
+				  });
+			  },
+
+			  
+			  getFilteredProducts: (brand_id, vehicle_type) => {
+				fetch(`${process.env.BACKEND_URL}api/search-by/filter?brand_id=${brand_id}&vehicle_type=${vehicle_type}`)
+				  .then(response => response.json())
+				  .then(data => {
+					// Almacenar los productos filtrados en store.filterProducts
+					setStore({ filterProducts: data });
+					console.log("se han recuperado los datos")
+				  })
+				  .catch(error => {
+					// Manejar errores en la solicitud
+					console.error('Error al obtener los productos filtrados:', error);
+				  });
+			  },
+			  
+			  setFilterProducts: (products) => {
+				setStore({ filterProducts: products });
+			  },
+			
+			
 
 			//   login: async (email, password) => {
             //     const store = getStore()
@@ -304,68 +347,68 @@ const getState = ({ getStore, getActions, setStore }) => {
 				});
 			  },
 			  
-			getFavorites: () => {
+			  getFavorites: () => {
 				const store = getStore();
 				fetch(process.env.BACKEND_URL + `api/profile/favorites`, {
-					method: "GET",
-					headers: {
-						"Content-Type": "application/json",
-						"Authorization": `Bearer ${localStorage.getItem("token")}`
-					}
+				  method: "GET",
+				  headers: {
+					"Content-Type": "application/json",
+					"Authorization": `Bearer ${localStorage.getItem("token")}`
+				  }
 				})
-				.then (response => response.json())
-				.then ((response) => {
-					setStore({ favorites: response});
-					console.log(response.data)
-				})
-			},
+				  .then(response => response.json())
+				  .then(response => {
+					setStore({ products: response }); // Cambiar "favorites" por "products"
+					console.log(response);
+				  });
+			  },
+			  
 
 
 			
 
-			postFavorite: (product_id) => {
+			postFavorite: async (user_id, product_id) => {
 				const token = localStorage.getItem("token");
+				const store = getStore();
+				
+				// Comprobar si el producto ya está en los favoritos
+				const isProductFavorited = store.favorites.some((favorite) => favorite.product_id === product_id);
 			  
-				// Primero, realiza una solicitud GET para obtener la lista de productos favoritos del usuario
-				fetch(process.env.BACKEND_URL + "api/profile/favorites", {
-				  method: "GET",
-				  headers: {
-					"Content-Type": "application/json",
-					Authorization: `Bearer ${token}`
-				  }
-				})
-				.then(response => response.json())
-				.then(data => {
-				  const favorites = data.favorites;
-				  const isProductFavorited = favorites.some(favorite => favorite.product_id === product_id);
+				if (isProductFavorited) {
+				  console.log("El producto ya está guardado como favorito.");
+				  return; // Salir de la función si el producto ya está en favoritos
+				}
+				
+				try {
+				  const requestOptions = {
+					method: "POST",
+					headers: {
+					  "Content-Type": "application/json",
+					  Authorization: `Bearer ${token}`,
+					},
+					body: JSON.stringify({ 
+					  user_id: user_id,
+					  product_id: product_id 
+					}),
+				  };
 			  
-				  if (isProductFavorited) {
-					console.log("El producto ya está guardado como favorito.");
+				  const response = await fetch(`${process.env.BACKEND_URL}api/profile/favorites`, requestOptions);
+				  if (response.ok) {
+					const data = await response.json();
+					console.log(data);
+					// Actualizar el store de favoritos si es necesario
+					const updatedFavorites = [...store.favorites, data];
+					setStore({ favorites: updatedFavorites });
 				  } else {
-					const requestOptions = {
-					  method: "POST",
-					  headers: {
-						"Content-Type": "application/json",
-						Authorization: `Bearer ${token}`
-					  },
-					  body: JSON.stringify({ product_id })
-					};
-			  
-					fetch(process.env.BACKEND_URL + "api/profile/favorites", requestOptions)
-					  .then(response => response.json())
-					  .then(data => {
-						console.log(data);
-					  })
-					  .catch(error => {
-						console.error("Error:", error);
-					  });
+					throw new Error('Error al añadir Favorito');
 				  }
-				})
-				.catch(error => {
+				} catch (error) {
 				  console.error("Error:", error);
-				});
-			},
-
+				}
+			  },
+			  
+			  
+			  
 			putFavorite: (product_id) => {
 				const token = localStorage.getItem("token");
 				const requestOptions = {
@@ -379,6 +422,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 				fetch(process.env.BACKEND_URL + `api/profile/favorites/${product_id}`, requestOptions)
 				  .then(response => response.json())
 				  .then(data => {
+					const updatedFavorites = [...store.favorites, data]
+					setStore({ favorites: updatedFavorites })
 					console.log(data);
 				  })
 				  .catch(error => {
@@ -401,7 +446,27 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log(garages)
 				})
 			},
-		}
+
+			getFilters: () => {
+				const store = getStore();
+				fetch(process.env.BACKEND_URL + `api//search-by/<filter>`, {
+					method: "GET",
+					headers: {
+						"Content-Type": "application/json",
+						
+					}
+				})
+				.then (response => response.json())
+				.then ((response) => {
+					setStore({ filters: response });
+					console.log(response)
+				})
+			},
+
+			}
+
+
+	
 	}
 };
 

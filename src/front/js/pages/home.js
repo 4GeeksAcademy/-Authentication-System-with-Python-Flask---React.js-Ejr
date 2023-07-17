@@ -9,10 +9,16 @@ import { CarouselVehicles } from "../component/carouselVehicles";
 import { GarageAdvice } from "../component/garageAdvice";
 import { Faq } from "../component/faq";
 import { Filters } from "../component/filters";
+import { SearchResults } from "../component/searchResults";
 
 export const Home = () => {
   const { store, actions } = useContext(Context);
-  const [searchText, setSearchText] = useState("");
+  const [searchText, setSearchText] = useState(""); 
+  const [isFilter, setIsFilter]  = useState(false)
+  const [dataFilter, setDataFilter] = useState([])
+
+
+  
   defineElement(lottie.loadAnimation);
 
   const navigate = useNavigate();
@@ -42,9 +48,13 @@ export const Home = () => {
     }
   };
 
+
+
+
+
   return (
     <div className="text-center mt-5">
-      <h2>Vende tu Moto o Coche y desmelénate</h2>
+      <h2 className="flipInX">Vende tu Moto o Coche y desmelénate</h2>
       <div className="container d-flex justify-content-center mt-3">
         <form className="d-flex search-form" role="search">
           <div className="search-wrapper">
@@ -62,16 +72,22 @@ export const Home = () => {
       </div>
           <div className="my-3">
           
-             <Filters/>
+             <Filters setIsFilter={setIsFilter} setDataFilter={setDataFilter}/>
 
           </div>
-      <CarouselVehicles />
-      <br></br>
-      <br></br>
-  
-      <GarageAdvice />
-      <br></br>
-      <Faq />
+          {
+            !isFilter ? <>
+              <CarouselVehicles />
+              <br></br>
+              <br></br>
+
+              <GarageAdvice />
+              <br></br>
+              <Faq />
+            </>
+            :
+            <SearchResults products={dataFilter}/>
+          }
     </div>
   );
 };
