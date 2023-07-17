@@ -15,8 +15,8 @@ export const SearchResults = (props) => {
   },[])
   console.log(store.filterProducts)
   return (
-    
-    <div className="container d-flex overflow-auto my-5">
+    <div className="container">
+    <div className=" d-flex overflow-auto my-5">
        {store.filterProducts.length > 0 ? (
         <div className="d-flex overflow-auto my-5">
            {store.filterProducts.map((vehicle, index) => (
@@ -78,6 +78,7 @@ export const SearchResults = (props) => {
       ) : (
         <h2>No hemos encontrado resultados con tus filtros</h2>
       )}
+    </div>
     </div>
   );
 };
