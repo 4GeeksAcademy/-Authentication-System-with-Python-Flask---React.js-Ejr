@@ -7,20 +7,25 @@ import "../../styles/filters.css";
 
 export const SearchResults = (props) => {
   const { store, actions } = useContext(Context);
-  console.log(props.filterProducts);
-  const { filterProducts } = props;
 
+
+  useEffect(() => {
+    actions.getFilteredProducts()
+
+  },[])
+  console.log(store.filterProducts)
   return (
-    <>
-      {filterProducts && filterProducts.length > 0 ? (
+    
+    <div className="container d-flex overflow-auto my-5">
+       {store.filterProducts.length > 0 ? (
         <div className="d-flex overflow-auto my-5">
-          {filterProducts.map((vehicle, index) => (
+           {store.filterProducts.map((vehicle, index) => (
             <div className="col-12 col-md-4" key={index}>
               <div className="card" style={{ width: "18rem" }}>
                 <div className="flip-card">
                   <div className="flip-card-inner">
                     <div className="flip-card-front">
-                      <img src={carImage} className="card-img-top imgCarousel" alt="..." />
+                      <img src={""} className="card-img-top imgCarousel" alt="..." />
                     </div>
                     <div className="flip-card-back">
                       <Link to="/login" style={{ color: "white", textDecoration: "none" }} className="link-hover">
@@ -69,9 +74,10 @@ export const SearchResults = (props) => {
             </div>
           ))}
         </div>
+        
       ) : (
         <h2>No hemos encontrado resultados con tus filtros</h2>
       )}
-    </>
+    </div>
   );
 };

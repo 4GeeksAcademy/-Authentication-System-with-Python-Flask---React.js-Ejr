@@ -5,7 +5,6 @@ import "../../styles/index.css";
 import { Link } from "react-router-dom";
 import "../../styles/filters.css";
 
-
 export const Filters = (props) => {
   const { store, actions } = useContext(Context);
 
@@ -14,7 +13,8 @@ export const Filters = (props) => {
   const [showMoreButton, setShowMoreButton] = useState(true);
   const [showLessButton, setShowLessButton] = useState(false);
   const [vehicleType, setVehicleType] = useState("COCHE");
-  const [selectedBrand, setSelectedBrand] = useState(null);
+  const [selectedBrands, setSelectedBrands] = useState([]);
+
 
   const handleShowMore = () => {
     setVisibleBrands((prevVisibleBrands) => prevVisibleBrands + 3);
@@ -36,6 +36,20 @@ export const Filters = (props) => {
     }
   };
 
+  const handleOnBrandChange = (brandId) => {
+    setSelectedBrands((prevSelectedBrands) => {
+      if (prevSelectedBrands.includes(brandId)) {
+        // Desmarcar la marca si ya estaba seleccionada
+        return prevSelectedBrands.filter((id) => id !== brandId);
+      } else {
+        // Marcar la marca si no estaba seleccionada
+        return [...prevSelectedBrands, brandId];
+      }
+    });
+  };
+  
+
+
   const renderBrands = () => {
     return (
       <ul>
@@ -48,7 +62,7 @@ export const Filters = (props) => {
                   type="checkbox"
                   value={brand.name}
                   id={`flexCheckDefault${index}`}
-                  checked={selectedBrand === brand.id}
+                  checked={selectedBrands.includes(brand.id)}
                   onChange={() => handleOnBrandChange(brand.id)}
                 />
                 <label className="form-check-label" htmlFor={`flexCheckDefault${index}`}>
@@ -62,44 +76,35 @@ export const Filters = (props) => {
     );
   };
 
-  
-
   const handleOnSubmit = async (e) => {
     e.preventDefault();
     props.setIsFilter(true);
     props.setDataFilter([]);
   
     const queryParams = [];
-    if (selectedBrand !== null) {
-      queryParams.push(`brand_id=${selectedBrand}`);
+    if (selectedBrands.length > 0) {
+      queryParams.push(`brand_id=${selectedBrands.join(",")}`);
     }
     if (vehicleType !== "") {
       queryParams.push(`vehicle_type=${vehicleType}`);
     }
     const queryString = queryParams.join('&');
     const url = `${process.env.BACKEND_URL}api/search-by/filter?${queryString}`;
-  
+
     try {
-      const response = await fetch(url);
-      if (!response.ok) {
-        throw new Error('Error al obtener los productos filtrados');
-      }
-      const data = await response.json();
-      props.setStore({ filterProducts: data });
-    } catch (error) {
-      console.error('Error al obtener los productos filtrados:', error);
-    }
-  };
-  
-  
-  
-  
-  
-  
+     const brand_id = selectedBrands.join(",")
+     const vehicle_id = vehicleType
+     actions.getFilteredProducts(brand_id, vehicle_id)
+     } 
+     catch(error) { (console.error('Error nuevo'))}
+
+  }
+
 
   useEffect(() => {
-    actions.getAllBrands();
-  }, []);
+    actions.getAllBrands()
+
+  }, [])
 
 
 

@@ -132,23 +132,19 @@ def get_all_brands():
     return jsonify(brand_list)
 
 
-@api.route('/search-by/filter', methods=['GET'])
-def search_by_filter():
-    brand_id = request.args.get('brand_id')  
-    vehicle_type = request.args.get('vehicle_type')  
+@api.route('/search-by/<filter>', methods=['GET'])
+def search_by_filter(filter):
+    brand_id = request.args.get('brand_id')
+    vehicle_type = request.args.get('vehicle_type')
 
-    query = Product.query
-
-    if vehicle_type:
-        query = query.filter_by(product_type=vehicle_type)
-
-    if brand_id:
-        query = query.filter_by(brand_id=brand_id)
-
-    products = query.all()
+    if brand_id and brand_id != "null":
+        products = Product.query.filter_by(product_type=vehicle_type, brand_id=brand_id).all()
+    else:
+        products = Product.query.filter_by(product_type=vehicle_type).all()
 
     serialized_products = [product.serialize() for product in products]
     return jsonify(serialized_products)
+
 
 
 

@@ -129,6 +129,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				  .then(data => {
 					// Almacenar los productos filtrados en store.filterProducts
 					setStore({ filterProducts: data });
+					console.log("se han recuperado los datos")
 				  })
 				  .catch(error => {
 					// Manejar errores en la solicitud
@@ -136,7 +137,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 				  });
 			  },
 			  
-			  
+			  setFilterProducts: (products) => {
+				setStore({ filterProducts: products });
+			  },
+			
+			
 
 			//   login: async (email, password) => {
             //     const store = getStore()
