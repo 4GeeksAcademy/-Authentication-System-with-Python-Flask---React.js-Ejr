@@ -128,6 +128,23 @@ def add_favorite():
     return jsonify({"Message": "Car successfully saved"}), 200
 
 
+# REGISTER ENDPOINT
+@app.route('/register', methods=['POST'])
+def create_user():
+    user_email= request.json.get('email', None)
+    user_first_name = request.json.get('first_name', None)
+    user_password = request.json.get('password', None)
+    user_phone_number = request.json.get('phone_number', None)
+
+    active_user = User.query.filter_by(email = user_email).first()
+    if active_user:
+        return jsonify({"Error": "Email already in use, try another one"}), 409
+    new_user = User(email=user_email,first_name=user_first_name,password=user_password,phone_number=user_phone_number)
+    db.session.add(new_user)
+    db.session.commit()
+    return jsonify({"Message": "User successfully created"})
+
+
 # this only runs if `$ python src/main.py` is executed
 if __name__ == '__main__':
     PORT = int(os.environ.get('PORT', 3001))
