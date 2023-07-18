@@ -33,7 +33,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 			filters: [],
 			filterProducts: []
 
-			},
+		
+		},
 
 		actions: {
 
@@ -169,39 +170,29 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			getMessage: async () => {
 				try{
+					// fetching data from the backend
 					const resp = await fetch(process.env.BACKEND_URL + "api/hello")
 					const data = await resp.json()
 					setStore({ message: data.message })
+					// don't forget to return something, that is how the async resolves
 					return data;
 				}catch(error){
 					console.log("Error loading message from backend", error)
 				}
 			},
 			changeColor: (index, color) => {
+				//get the store
 				const store = getStore();
+
+				//we have to loop the entire demo array to look for the respective index
+				//and change its color
 				const demo = store.demo.map((elm, i) => {
 					if (i === index) elm.background = color;
 					return elm;
 				});
+
+				//reset the global store
 				setStore({ demo: demo });
-			},
-			
-			getProductsOnSale: () => {
-				const store = getStore();
-				fetch(process.env.BACKEND_URL + "api/profile/products/ONSALE", {
-					method: "GET",
-					headers: {
-					"Content-Type": "application/json",
-					"Authorization": `Bearer ${localStorage.getItem("token")}`
-					}
-				})
-				.then(response => response.json())
-				.then(response => {
-					setStore({products: response})
-				})
-				.catch(error => {
-					console.error(error);
-				});
 			},
 
 			
@@ -300,145 +291,28 @@ const getState = ({ getStore, getActions, setStore }) => {
 				  // Realiza las acciones necesarias en caso de error
 				}
 			  },
-		
-        getProductsPendingBlocked: () => {
+			  
+
+			
+
+
+			getProducts: () => {
 				const store = getStore();
-				fetch(process.env.BACKEND_URL + "api/profile/products/PENDING_BLOCKED", {
+				fetch(process.env.BACKEND_URL + `api/profile/onsale`, {
 					method: "GET",
 					headers: {
-					"Content-Type": "application/json",
-					"Authorization": `Bearer ${localStorage.getItem("token")}`
+						"Content-Type": "application/json",
+						"Authorization": `Bearer ${localStorage.getItem("token")}`
 					}
 				})
-				.then(response => response.json())
-				.then(response => {
-					setStore({products: response})
+				.then (response => response.json())
+				.then ((response) => {
+					setStore({ products: response.data });
+					console.log(response.data)
 				})
-				.catch(error => {
-					console.error(error);
-				});
 			},
 
-			getProductsBlocked: () => {
-				const store = getStore();
-				fetch(process.env.BACKEND_URL + "api/profile/products/BLOCKED", {
-					method: "GET",
-					headers: {
-					"Content-Type": "application/json",
-					"Authorization": `Bearer ${localStorage.getItem("token")}`
-					}
-				})
-				.then(response => response.json())
-				.then(response => {
-					setStore({products: response})
-				})
-				.catch(error => {
-					console.error(error);
-				});
-			},
-			getProductsPendingSale: () => {
-				const store = getStore();
-				fetch(process.env.BACKEND_URL + "api/profile/products/PENDING_SALE", {
-					method: "GET",
-					headers: {
-					"Content-Type": "application/json",
-					"Authorization": `Bearer ${localStorage.getItem("token")}`
-					}
-				})
-				.then(response => response.json())
-				.then(response => {
-					setStore({products: response})
-				})
-				.catch(error => {
-					console.error(error);
-				});
-			},
-			getProductsSold: () => {
-				const store = getStore();
-				fetch(process.env.BACKEND_URL + "api/profile/products/SOLD", {
-					method: "GET",
-					headers: {
-					"Content-Type": "application/json",
-					"Authorization": `Bearer ${localStorage.getItem("token")}`
-					}
-				})
-				.then(response => response.json())
-				.then(response => {
-					setStore({products: response})
-				})
-				.catch(error => {
-					console.error(error);
-				});
-			},
-			PendingBlockedChanged: () => {
-				const store = getStore();
-				fetch(process.env.BACKEND_URL + "api/profile/changed/PENDING_BLOCKED", {
-					method: "GET",
-					headers: {
-					"Content-Type": "application/json",
-					"Authorization": `Bearer ${localStorage.getItem("token")}`
-					}
-				})
-				.then(response => response.json())
-				.then(response => {
-					setStore({products: response})
-				})
-				.catch(error => {
-					console.error(error);
-				});
-			},
-			BlockedChanged: () => {
-				const store = getStore();
-				fetch(process.env.BACKEND_URL + "api/profile/changed/BLOCKED", {
-					method: "GET",
-					headers: {
-					"Content-Type": "application/json",
-					"Authorization": `Bearer ${localStorage.getItem("token")}`
-					}
-				})
-				.then(response => response.json())
-				.then(response => {
-					setStore({products: response})
-				})
-				.catch(error => {
-					console.error(error);
-				});
-			},
-			PendingSaleChanged: () => {
-				const store = getStore();
-				fetch(process.env.BACKEND_URL + "api/profile/changed/PENDING_SALE", {
-					method: "GET",
-					headers: {
-					"Content-Type": "application/json",
-					"Authorization": `Bearer ${localStorage.getItem("token")}`
-					}
-				})
-				.then(response => response.json())
-				.then(response => {
-					setStore({products: response})
-				})
-				.catch(error => {
-					console.error(error);
-				});
-			},
-			SoldChanged: () => {
-				const store = getStore();
-				fetch(process.env.BACKEND_URL + "api/profile/changed/SOLD", {
-					method: "GET",
-					headers: {
-					"Content-Type": "application/json",
-					"Authorization": `Bearer ${localStorage.getItem("token")}`
-					}
-				})
-				.then(response => response.json())
-				.then(response => {
-					setStore({products: response})
-				})
-				.catch(error => {
-					console.error(error);
-				});
-			},
-			
+
 			getAllProducts: () => {
 				const store = getStore();
 				fetch(process.env.BACKEND_URL + `api/products`, {
@@ -450,7 +324,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 				})
 				.then (response => response.json())
 				.then ((response) => {
-
 					setStore({ products: response });
 					console.log(response)
 				})
