@@ -1,9 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import "../../styles/Login.css";
+import { Context } from "../store/appContext";
+import { useNavigate } from "react-router-dom";
+
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { store, actions } = useContext(Context);
+  const navigate = useNavigate();
 
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
@@ -13,14 +18,19 @@ const Login = () => {
     setPassword(event.target.value);
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
-    // Here you can perform the login logic, such as making an API request
+    try {
+      // Call the login action from the Flux store
+      await actions.login(email, password);
 
-    // Reset the form fields after submission
-    setEmail("");
-    setPassword("");
+      // Reset the form fields after successful submission
+      setEmail("");
+      setPassword("");
+    } catch (error) {
+      console.log("Error during login", error);
+    }
   };
 
   return (
@@ -47,7 +57,9 @@ const Login = () => {
             required
           />
         </div>
-        <button className="login-button" type="submit">Login</button>
+        <button className="login-button" type="submit">
+          Login
+        </button>
       </form>
     </div>
   );

@@ -1,55 +1,78 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
-		store: {
-			message: null,
-			demo: [
-				{
-					title: "FIRST",
-					background: "white",
-					initial: "white"
-				},
-				{
-					title: "SECOND",
-					background: "white",
-					initial: "white"
-				}
-			]
-			,saved:[]
+	  store: {
+		message: null,
+		demo: [
+		  {
+			title: "FIRST",
+			background: "white",
+			initial: "white"
+		  },
+		  {
+			title: "SECOND",
+			background: "white",
+			initial: "white"
+		  }
+		],
+		saved: [],
+		token: null // Initialize token in the store
+	  },
+	  actions: {
+		exampleFunction: () => {
+		  getActions().changeColor(0, "green");
 		},
-		actions: {
-			// Use getActions to call a function within a fuction
-			exampleFunction: () => {
-				getActions().changeColor(0, "green");
-			},
-
-			getMessage: async () => {
-				try{
-					// fetching data from the backend
-					const resp = await fetch(process.env.BACKEND_URL + "/api/hello")
-					const data = await resp.json()
-					setStore({ message: data.message })
-					// don't forget to return something, that is how the async resolves
-					return data;
-				}catch(error){
-					console.log("Error loading message from backend", error)
-				}
-			},
-			changeColor: (index, color) => {
-				//get the store
-				const store = getStore();
-
-				//we have to loop the entire demo array to look for the respective index
-				//and change its color
-				const demo = store.demo.map((elm, i) => {
-					if (i === index) elm.background = color;
-					return elm;
-				});
-
-				//reset the global store
-				setStore({ demo: demo });
+  
+		getMessage: async () => {
+		  try {
+			const resp = await fetch("https://jonio298-symmetrical-train-9vxg75vgxp6fqq7-3001.preview.app.github.dev/api/hello");
+			const data = await resp.json();
+			setStore({ message: data.message });
+			return data;
+		  } catch (error) {
+			console.log("Error loading message from backend", error);
+		  }
+		},
+  
+		changeColor: (index, color) => {
+		  const store = getStore();
+		  const demo = store.demo.map((elm, i) => {
+			if (i === index) elm.background = color;
+			return elm;
+		  });
+		  setStore({ demo: demo });
+		},
+  
+		login: async (email, password) => {
+		  try {
+			const response = await fetch("https://jonio298-symmetrical-train-9vxg75vgxp6fqq7-3001.preview.app.github.dev/login", {
+			  method: "POST",
+			  headers: {
+				"Content-Type": "application/json"
+			  },
+			  body: JSON.stringify({ email, password })
+			});
+  
+			if (response.ok) {
+			  // Login successful
+			  const data = await response.json();
+  
+			  // Save the authentication token to the store
+			  setStore({ token: data.token });
+  
+			  // Redirect to the desired page or perform any necessary action
+			  // Example: history.push("/dashboard");
+			} else {
+			  // Login failed
+			  throw new Error("Invalid email or password");
 			}
+		  } catch (error) {
+			console.log("Error during login", error);
+			throw error;
+		  }
 		}
+	  }
 	};
-};
-
-export default getState;
+  };
+  
+  export default getState;
+  
