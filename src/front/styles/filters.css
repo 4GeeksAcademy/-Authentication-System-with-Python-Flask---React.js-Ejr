@@ -5,6 +5,13 @@
     background-color: green;
 }
 
+
+.customFilterImage{
+  width: 30px;
+  height: 30px;
+  color: white;
+}
+
 .year-options {
     height: 160px; /* Ajusta la altura deseada */
     overflow-y: auto;

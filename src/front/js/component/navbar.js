@@ -116,6 +116,7 @@ export const Navbar = () => {
 
   useEffect(() => {
     actions.getToken()
+    actions.getUser()
   }, []);
   
   
@@ -154,7 +155,7 @@ export const Navbar = () => {
   return (
     <nav className="navbar navbar-expand-lg bg-body-tertiary py-4">
       <div className={dropMenu} >
-        <div className="text-center lightSpeedIn">
+        <div className="text-center lightSpeedIn customDiv">
           <a href="/" className="navbar-brand tittle-nav ms-3 " id="tittle-nav" onClick={closeNavbar}>
             WhataCar
           </a>
@@ -282,9 +283,24 @@ export const Navbar = () => {
                             <i className="fa-solid fa-car ms-2 mt-1 profileIcons"></i>
                           </Link>
                         </li>
+
+                        {/* Cuando se inicia la aplicación hay que quitar esto, loguearte reescribirlo y recargar */}
+                         {/* {store.user.role === "GARAGE" && (
+                            <li>
+                              <Link
+                                to="/profile/garage"
+                                className="dropdown-item justify-content-end d-flex"
+                              >
+                                Mi Taller
+                                <i className="fa-solid fa-wrench ms-2 mt-1"></i>
+                              </Link>
+                            </li>
+                          )} */}
+
                         <li>
                           <hr className="dropdown-divider" />
                         </li>
+
                         <li>
                           <Link
                             className="dropdown-item justify-content-end d-flex "
@@ -292,6 +308,7 @@ export const Navbar = () => {
                             style={{ color: "red" }}
                             onClick={handleLogOut}
                           >
+                      
                             Salir
                             <i className="fa-solid fa-right-from-bracket ms-3 mt-1 "></i>
                           </Link>

@@ -54,7 +54,9 @@ export const Home = () => {
 
   return (
     <div className="text-center mt-5">
-      <h2 className="flipInX">Vende tu Moto o Coche y desmelénate</h2>
+      <div className="customDiv container pt-5 flipInX">
+      <h2 className="flipInX tittle pt-5">Vende tu Moto o Coche y desmelénate</h2>
+      </div>
       <div className="container d-flex justify-content-center mt-3">
         <form className="d-flex search-form" role="search">
           <div className="search-wrapper">

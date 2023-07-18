@@ -6,6 +6,11 @@
     on that page only (the ones not reused in other pages).
 */
 
+.tittle {
+    font-weight: bolder;
+   
+}
+
 .flipInX {
     -webkit-backface-visibility: visible !important;
     backface-visibility: visible !important;

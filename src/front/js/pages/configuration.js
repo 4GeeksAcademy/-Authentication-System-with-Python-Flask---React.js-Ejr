@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
-import "/workspaces/Watacar_v2/src/front/styles/configuration.css"
+
 import { text } from "@fortawesome/fontawesome-svg-core";
 
 export const Configuration = () => {
@@ -91,23 +91,23 @@ return store.user ? (
         </Link>
         <h2 className="configuration_title">Configuración del perfil</h2>
         <div className="container_config">
-                <div className="avatar_container_configuration">
+                <div className="">
                     <img src="https://appsdejoseluis.com/wp-content/uploads/2020/04/face_co.png" alt="Avatar" className="avatar_image_configuration" />
                 </div>
                 <div className="profile_info">
-                    <div className="row row_configuration">
+                    <div className="rw row_configuration">
                         <label className="col-3 label_config">Nombre:</label>
                         <input className="col-5 input_config" name="full_name" type="text" value={data.full_name || store.user.full_name} onChange={handleChange}></input>
                     </div>
-                    <div className="row row_configuration">
+                    <div className=" row_configuration d-md-flex d-lg-flex">
                         <label className="col-3 label_config">Email:</label>
                         <input className="col-5 input_config" name="email" type="text" value={data.email || store.user.email} onChange={handleChange}></input>
                     </div>
-                        <div className="row row_configuration">
+                        <div className=" row_configuration">
                             <label className="col-3 label_config">Tipo de documento:</label>
                             <input className="col-5 input_config" name="document_Type" type="text" value={store.user.document_type}></input>
                         </div>
-                        <div className="row row_configuration">
+                        <div className=" row_configuration">
                             <label className="col-3 label_config">Número del documento:</label>
                             <input className="col-8 input_config" name="document_number" type="text" value={data.document_number || store.user.document_number} onChange={handleChange}></input>
                         </div>
@@ -115,11 +115,11 @@ return store.user ? (
                         <label className="col-3 label_config">Teléfono:</label>
                         <input className="col-8 input_config" name="phone" type="text" value={data.phone || store.user.phone} onChange={handleChange}></input>
                     </div>
-                    <div className="row row_configuration">
+                    <div className=" row_configuration">
                         <label className="col-3 label_config">Dirección:</label>
                         <input className="col-8 input_config" id="address" name="adress" type="text" value={data.adress || store.user.address} onChange={handleChange}></input>
                     </div>
-                    <div className="row save_cancel_config">
+                    <div className=" save_cancel_config">
                         <Link to="/profile/configuration" className="btn_config cancel">
                             Cancelar
                         </Link>

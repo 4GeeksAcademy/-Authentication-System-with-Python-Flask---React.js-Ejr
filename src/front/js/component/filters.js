@@ -121,7 +121,8 @@ export const Filters = (props) => {
   return (
     <>
       <a class="btn btn-primary jello-vertical" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
-        <i class="fa-solid fa-filter" />
+       
+        <img className="" src="../../img/filterIcon2.png"/>
       </a>
 
       <form onSubmit={handleOnSubmit}>
