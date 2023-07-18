@@ -21,7 +21,8 @@ const getState = ({ getStore, getActions, setStore }) => {
       token: localStorage.getItem("token") || "",
 			products: [],
 			favorites: [],
-			reviews: []
+			reviews: [],
+			status: {}
 		},
 
 		actions: {
@@ -274,20 +275,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.error(error);
 				});
 			},
-			getStatusInfo: (product_id) => {
-				const store = getStore();
-				fetch(process.env.BACKEND_URL + `api/profile/product/${product_id}/status`, {
-					method: "GET",
-					headers: {
-					"Content-Type": "application/json",
-					"Authorization": `Bearer ${localStorage.getItem("token")}`
-					}
-				})
-				.then (response => response.json())
-				.then(response => {
-					console.log(response)
-				})
-			},
+			
 			getFavorites: () => {
 				const store = getStore();
 				fetch(process.env.BACKEND_URL + `api/profile/favorites`, {

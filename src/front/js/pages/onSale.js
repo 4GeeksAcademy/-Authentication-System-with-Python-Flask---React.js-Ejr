@@ -15,9 +15,7 @@ useEffect (() => {
         actions.getProductsPendingBlocked()
 }, [])
 
-const getStatusIn = (product_id) => {
-    actions.getStatusInfo(product_id)
-}
+
 
 const StatusToBlocked = (product) => {
     const token = localStorage.getItem("token");
@@ -84,7 +82,6 @@ const StatusToOnSale = (product) => {
                                     type="button"
                                     data-bs-toggle="modal"
                                     data-bs-target="#exampleModal"
-                                    onClick={getStatusIn}
                                 >
                                     Ver solicitud de reserva
                                 </button>
@@ -95,7 +92,7 @@ const StatusToOnSale = (product) => {
                         <div className="modal-dialog">
                             <div className="modal-content sold-product_profile">
                                 <div className="modal-header">
-                                    <h5 className="modal-title" id="exampleModalLabel">Fulanito quiere bloquear este vehículo</h5>
+                                    <h5 className="modal-title" id="exampleModalLabel">Firulais quiere bloquear este vehículo</h5>
                                     <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div className="modal-body-sale-process row">
