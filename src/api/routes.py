@@ -29,8 +29,8 @@ def handle_hello():
 @api.route('/signup', methods=['POST'])
 def user_signup():
     user = User(
-        email=request.json.get("email"),
-        password=request.json.get("password"),
+        email=request.json.get("email", None),
+        password=request.json.get("password", None),
         is_active=True
     )
     db.session.add(user)
@@ -40,7 +40,7 @@ def user_signup():
         "id": user.id,
         "email": user.email
     }
-    return jsonify(response_body), 200
+    return jsonify(response_body), 201
 
 @api.route("/login", methods=["POST"])
 def login():
