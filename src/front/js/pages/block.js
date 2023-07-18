@@ -27,6 +27,7 @@ const StatusToOnSale = (product) => {
         .catch(error => {
         console.error("Error:", error);
         });
+    window.location.reload();
 };
 
 const StatusToSold = (product) => {
@@ -47,6 +48,7 @@ const StatusToSold = (product) => {
         .catch(error => {
         console.error("Error:", error);
         });
+    window.location.reload();
 };
     useEffect (() => {
         actions.getProductsBlocked(),
@@ -116,7 +118,7 @@ const StatusToSold = (product) => {
                                 </div>
                                 <div className="modal-footer">
                                     <button type="button" className="btn btn_config cancel" data-bs-dismiss="modal" onClick={() => StatusToOnSale(product)}>Rechazar</button>
-                                    <button type="button" className="btn btn_config reservado" onClick={() => StatusToSold(product)}>Aceptar</button>
+                                    <button type="button" className="btn btn_config reservado" data-bs-dismiss="modal" onClick={() => StatusToSold(product)}>Aceptar</button>
                                 </div>
                             </div>
                         </div>
@@ -148,7 +150,7 @@ const StatusToSold = (product) => {
                                 </div>
                                 <div className="modal-footer">
                                     <button type="button" className="btn btn_config cancel" data-bs-dismiss="modal">Cancelar</button>
-                                    <button type="button" className="btn btn_config reservado" onClick={() => StatusToOnSale(product)}>Aceptar</button>
+                                    <button type="button" className="btn btn_config reservado" data-bs-dismiss="modal" onClick={() => StatusToOnSale(product)}>Aceptar</button>
                                 </div>
                             </div>
                         </div>

@@ -206,6 +206,74 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.error(error);
 				});
 			},
+			PendingBlockedChanged: () => {
+				const store = getStore();
+				fetch(process.env.BACKEND_URL + "api/profile/changed/PENDING_BLOCKED", {
+					method: "GET",
+					headers: {
+					"Content-Type": "application/json",
+					"Authorization": `Bearer ${localStorage.getItem("token")}`
+					}
+				})
+				.then(response => response.json())
+				.then(response => {
+					setStore({products: response})
+				})
+				.catch(error => {
+					console.error(error);
+				});
+			},
+			BlockedChanged: () => {
+				const store = getStore();
+				fetch(process.env.BACKEND_URL + "api/profile/changed/BLOCKED", {
+					method: "GET",
+					headers: {
+					"Content-Type": "application/json",
+					"Authorization": `Bearer ${localStorage.getItem("token")}`
+					}
+				})
+				.then(response => response.json())
+				.then(response => {
+					setStore({products: response})
+				})
+				.catch(error => {
+					console.error(error);
+				});
+			},
+			PendingSaleChanged: () => {
+				const store = getStore();
+				fetch(process.env.BACKEND_URL + "api/profile/changed/PENDING_SALE", {
+					method: "GET",
+					headers: {
+					"Content-Type": "application/json",
+					"Authorization": `Bearer ${localStorage.getItem("token")}`
+					}
+				})
+				.then(response => response.json())
+				.then(response => {
+					setStore({products: response})
+				})
+				.catch(error => {
+					console.error(error);
+				});
+			},
+			SoldChanged: () => {
+				const store = getStore();
+				fetch(process.env.BACKEND_URL + "api/profile/changed/SOLD", {
+					method: "GET",
+					headers: {
+					"Content-Type": "application/json",
+					"Authorization": `Bearer ${localStorage.getItem("token")}`
+					}
+				})
+				.then(response => response.json())
+				.then(response => {
+					setStore({products: response})
+				})
+				.catch(error => {
+					console.error(error);
+				});
+			},
 			getStatusInfo: (product_id) => {
 				const store = getStore();
 				fetch(process.env.BACKEND_URL + `api/profile/product/${product_id}/status`, {
@@ -232,7 +300,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 				.then (response => response.json())
 				.then ((response) => {
 					setStore({ favorites: response});
-					console.log(response.data)
 				})
 			},
 			postFavorite: (product_id) => {

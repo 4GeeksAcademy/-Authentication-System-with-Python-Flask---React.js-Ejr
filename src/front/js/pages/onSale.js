@@ -57,6 +57,7 @@ const StatusToOnSale = (product) => {
         .catch(error => {
         console.error("Error:", error);
         });
+    window.location.reload();
 };
     return store.products ? (
         <>
@@ -94,7 +95,7 @@ const StatusToOnSale = (product) => {
                         <div className="modal-dialog">
                             <div className="modal-content sold-product_profile">
                                 <div className="modal-header">
-                                    <h5 className="modal-title" id="exampleModalLabel">quiere bloquear este vehículo</h5>
+                                    <h5 className="modal-title" id="exampleModalLabel">Fulanito quiere bloquear este vehículo</h5>
                                     <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div className="modal-body-sale-process row">
@@ -117,7 +118,7 @@ const StatusToOnSale = (product) => {
                                 </div>
                                 <div className="modal-footer">
                                     <button type="button" className="btn btn_config cancel" data-bs-dismiss="modal" onClick={() => StatusToOnSale(product)}>Rechazar</button>
-                                    <button type="button" className="btn btn_config reservado" onClick={() => StatusToBlocked(product)}>Aceptar</button>
+                                    <button type="button" className="btn btn_config reservado" data-bs-dismiss="modal" onClick={() => StatusToBlocked(product)}>Aceptar</button>
                                 </div>
                             </div>
                         </div>

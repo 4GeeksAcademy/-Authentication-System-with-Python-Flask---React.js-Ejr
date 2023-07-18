@@ -9,13 +9,16 @@ export const Profile_buys_done = () => {
     const {actions, store} = useContext(Context);
     const soldCount = store.products.length;
 
+useEffect (() => {
+    actions.SoldChanged()
+}, [])
+
     return store.products ? (
         <>
             <Profile_navbar />
             <Purchase_navbar soldCount={soldCount} />
             {store.products.map((product, index) => (
                 <>
-                    <h6 className="date_sale_profile">23/07/2020</h6>
                     <div className="sales_profile_box row" key={index}>
                         <div className="col-4">
                             <div className="product_img_profile_box_sales col-2">

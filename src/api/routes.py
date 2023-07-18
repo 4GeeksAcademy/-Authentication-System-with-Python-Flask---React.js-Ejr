@@ -103,7 +103,7 @@ def get_products_by_status(state):
 
     return jsonify([]), 200
 
-@api.route('/profile/products/<state>/changed', methods=['GET'])
+@api.route('/profile/changed/<state>', methods=['GET'])
 @jwt_required()
 def get_products_by_status_changed(state):
     current_user = get_jwt_identity()

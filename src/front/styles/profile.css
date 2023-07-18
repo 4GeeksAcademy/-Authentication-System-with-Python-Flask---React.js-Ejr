@@ -120,6 +120,20 @@
     color: #87e753;
 }
 
+.cancel-buy {
+    height: 4rem !important;
+    background-color: white !important;
+    color: black !important;
+}
+
+.cancel-buy:hover {
+    background-color: #125c8e !important;
+    color: white !important;
+}
+
+.Ask-buy{
+    height: 4rem !important;
+}
 .product_profile_button:hover{
     background-color: #2776ab;
 }
