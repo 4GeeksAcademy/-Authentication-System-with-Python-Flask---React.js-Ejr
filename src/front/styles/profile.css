@@ -109,8 +109,8 @@
 .product_profile_button{
     margin: 0.5rem;
     border-radius: 8px;
-    width: 2.5rem;
-    height: 2.5rem;
+    width: 7rem;
+    height: 4rem;
     justify-content: end;
     border-color: #125c8e;
     background-color: white;
@@ -120,6 +120,20 @@
     color: #87e753;
 }
 
+.cancel-buy {
+    height: 4rem !important;
+    background-color: white !important;
+    color: black !important;
+}
+
+.cancel-buy:hover {
+    background-color: #125c8e !important;
+    color: white !important;
+}
+
+.Ask-buy{
+    height: 4rem !important;
+}
 .product_profile_button:hover{
     background-color: #2776ab;
 }
@@ -139,6 +153,10 @@
     font-weight: bolder;
 }
 
+.state_product_profile_sales_process h6{
+    margin-bottom: 1rem;
+}
+
 .price_product_profile{
     font-weight: bold;
 }
@@ -155,8 +173,9 @@
     align-content: center;
 }
 
-.modal-body{
-    margin-left: 12rem;
+.modal-body-password{
+    margin-left: 10rem;
+    margin-top: 2rem;
     color: #125c8e;
     margin-right: 0;
 }
@@ -323,6 +342,10 @@
     margin-left: 3rem;
 }
 
+.product_img_profile_box-sales-process{
+    margin-right: 0;
+}
+
 .product_data_sales{
     margin-top: 3.7rem;
     color: #125c8e;
@@ -331,6 +354,12 @@
 
 .product_data_sales h6{
     margin-bottom: 1.5rem;
+}
+
+.modal-body-sale-process{
+    margin-top: 2rem;
+    margin-left: 3rem;
+    margin-bottom: 2rem;
 }
 
 .price_sales_profile{

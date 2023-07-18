@@ -2,26 +2,21 @@ import React, {useContext, useEffect} from "react";
 import { Context } from "../store/appContext";
 import { NavLink } from "react-router-dom";
 import { Profile_navbar } from "../component/profile_navbar";
-import { Sales_navbar } from "../component/Sales_navbar";
 import "/workspaces/Watacar_v2/src/front/styles/profile.css"
+import { Purchase_navbar } from "../component/purchase_navbar";
 
-export const Profile_sales = () => {
+export const Profile_buys_done = () => {
     const {actions, store} = useContext(Context);
     const soldCount = store.products.length;
 
-    useEffect (() => {
-        actions.getProductsSold()
-    }, [])
-
-    useEffect (() => {
-            actions.getStatusInfo()
-    }, [])
-    
+useEffect (() => {
+    actions.SoldChanged()
+}, [])
 
     return store.products ? (
         <>
             <Profile_navbar />
-            <Sales_navbar soldCount={soldCount} />
+            <Purchase_navbar soldCount={soldCount} />
             {store.products.map((product, index) => (
                 <>
                     <div className="sales_profile_box row" key={index}>
