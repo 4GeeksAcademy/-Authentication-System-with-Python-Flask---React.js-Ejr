@@ -84,7 +84,7 @@
 }
 
 .avatar_container_configuration {
-    position: relative;
+    position: absolute;
     top: 12rem;
     right: 8rem;
     margin: 10px;
@@ -106,7 +106,7 @@
     }
 
     .avatar_container_configuration {
-        position: relative;
+        position: absolute;
         top: 13rem;
         right: 2rem;
         margin: 10px;

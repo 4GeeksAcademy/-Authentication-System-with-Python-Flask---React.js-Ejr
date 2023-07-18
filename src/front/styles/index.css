@@ -37,6 +37,21 @@ li {
   font-family: 'Roboto', sans-serif;
 }
 
+.container-garage {
+  
+
+  border-radius: 12px;
+  background-color: #2486c7;
+}
+
+
+.toolIcon {
+  float: right;
+  
+  
+  }
+  
+
 #light{
     background-color: #c4d8f2;
 }
