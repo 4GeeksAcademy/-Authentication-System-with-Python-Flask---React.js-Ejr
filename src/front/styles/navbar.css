@@ -5,10 +5,33 @@
     General Styles used on every website (Don't Repeat Yourself)
 */
 
+
+#tittle-nav {
+  font-weight:bolder;
+  font-size: 45px;
+}
+
+
+
+.nav-link {
+  font-weight: 800;
+  font-size: large;
+}
+
+.dropdown-item {
+  font-weight: 800;
+  font-size: large;
+}
+
 #light{
     background-color: #e1e5ea;
   
   }
+
+.fa-lightbulb {
+
+  font-size: 25px;
+}
   
   #dark{
     background-color: #393E46;
@@ -30,6 +53,15 @@
     font-size: medium;
   }
   
+
+  #heart {
+
+    margin-bottom: -5px;
+    color: rgb(36, 144, 215);
+    font-size: x-large;
+    
+  }
+
   #heartCard {
     font-size: 30px;
     position: absolute;
@@ -254,3 +286,32 @@
   bottom: 0;
   margin: auto;
   }
+
+
+  .jello-vertical:hover {
+    animation: jello-vertical 0.9s both;
+  }
+  @keyframes jello-vertical {
+    0% {
+      transform: scale3d(1, 1, 1);
+    }
+    30% {
+      transform: scale3d(0.75, 1.25, 1);
+    }
+    40% {
+      transform: scale3d(1.25, 0.75, 1);
+    }
+    50% {
+      transform: scale3d(0.85, 1.15, 1);
+    }
+    65% {
+      transform: scale3d(1.05, 0.95, 1);
+    }
+    75% {
+      transform: scale3d(0.95, 1.05, 1);
+    }
+    100% {
+      transform: scale3d(1, 1, 1);
+    }
+  }
+  

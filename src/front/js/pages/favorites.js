@@ -1,18 +1,19 @@
 import React, {useContext, useEffect} from "react";
 import { Context } from "../store/appContext";
-import { NavLink } from "react-router-dom";
+import { NavLink, Navigate, useNavigate } from "react-router-dom";
 import { Profile_navbar } from "../component/profile_navbar";
 import "/workspaces/Watacar_v2/src/front/styles/profile.css"
 
 export const Favorites = () => {
     const {actions, store} = useContext(Context);
-
+    const navigate = useNavigate()
     useEffect (() => {
         actions.getFavorites()
     }, [])
 
     const handleRemoveFavorite = (product_id) => {
         actions.putFavorite(product_id)
+        
       };
 
     return store.favorites ?(
