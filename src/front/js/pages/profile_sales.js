@@ -13,8 +13,8 @@ export const Profile_sales = () => {
         actions.getProductsSold()
     }, [])
 
-    useEffect ((product_id) => {
-            actions.getStatusInfo(product_id)
+    useEffect (() => {
+            actions.getStatusInfo()
     }, [])
     
 

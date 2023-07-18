@@ -15,6 +15,10 @@ useEffect (() => {
         actions.getProductsPendingBlocked()
 }, [])
 
+const getStatusIn = (product_id) => {
+    actions.getStatusInfo(product_id)
+}
+
 const StatusToBlocked = (product) => {
     const token = localStorage.getItem("token");
     const requestOptions = {
@@ -79,6 +83,7 @@ const StatusToOnSale = (product) => {
                                     type="button"
                                     data-bs-toggle="modal"
                                     data-bs-target="#exampleModal"
+                                    onClick={getStatusIn}
                                 >
                                     Ver solicitud de reserva
                                 </button>

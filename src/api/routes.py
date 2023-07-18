@@ -103,6 +103,17 @@ def get_products_by_status(state):
 
     return jsonify([]), 200
 
+@api.route('/profile/products/<state>/changed', methods=['GET'])
+@jwt_required()
+def get_products_by_status_changed(state):
+    current_user = get_jwt_identity()
+    
+    product_status = status.query.filter_by(status=state)
+    if product_status:
+        ListProducts = [status.product[0].serialize() for status in product_status if status.product and status.given_review_id==current_user]
+        return jsonify(ListProducts), 200
+
+    return jsonify([]), 200
 
 @api.route('/profile/products/<int:product_id>/<new_status>', methods=['PUT'])
 @jwt_required()
@@ -116,13 +127,14 @@ def update_product_status(product_id, new_status):
             db.session.commit()
             return jsonify({'message': 'Product status updated successfully'}), 200
     return jsonify({'message': 'Product not found or invalid status'}), 404
+
     
 @api.route('/profile/product/<int:product_id>/status', methods=['GET'])
 @jwt_required()
 def get_product_status(product_id):
     current_user = get_jwt_identity()
 
-    product = Product.query.filter_by(id=product_id, user_id=current_user).first()
+    product = Product.query.filter_by(id=product_id).first()
 
     if not product:
         return jsonify({'message': 'Producto no encontrado o no pertenece al usuario.'}), 404
