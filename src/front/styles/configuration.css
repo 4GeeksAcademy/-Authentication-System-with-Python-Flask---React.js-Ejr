@@ -23,7 +23,9 @@
     margin-right: 3.5rem;
     margin-top: 4rem;
 }
-
+.input-radius {
+    border-radius: 20px;
+}
 .btn_config:hover {
     color: rgb(122, 122, 122);
 }

@@ -118,7 +118,7 @@ export const Signup = () => {
 
             
             <div className="button mt-4">
-              <button className="btn btn-primary btn1">Click Me!</button>
+              <button className="btn btn-primary btn1">Registrar Usuario</button>
             </div>
           </form>
         </div>

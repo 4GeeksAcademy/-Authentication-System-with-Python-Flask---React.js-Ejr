@@ -14,6 +14,7 @@ import { Profile_reviews } from "./pages/profile_reviews";
 import { Configuration } from "./pages/configuration";
 import { Login } from "./pages/login";
 
+
 import injectContext from "./store/appContext";
 
 import { Navbar } from "./component/navbar";
@@ -31,6 +32,14 @@ import { SingleProduct } from "./pages/singleProduct";
 
 import { Favorites } from "./pages/favorites";
 import { On_sale } from "./pages/onSale";
+import { Profile_garage } from "./pages/profile_garage";
+import { Garages } from "./pages/garages";
+import { Configuration_Garage } from "./pages/configuration_garage";
+import { CreateGarage } from "./pages/create_garage";
+import { SearchResults } from "./pages/searchResults";
+import { PrivacyPolicy } from "./pages/privacyPolicy";
+import { LegalAdvice } from "./pages/legalAdvice";
+import { CookiePolicy } from "./pages/cookiePolicy"
 
 
 
@@ -73,11 +82,19 @@ const Layout = () => {
                                 <Route element={<Favorites />} path="/profile/favorites" />
                                 <Route element={<On_sale />} path="/profile/onsale" />
                                 <Route element={<Profile_sales />} path="/profile/sales" />
+                                <Route element={<Profile_garage />} path="/profile/garage" />
                                 <Route element={<Block />} path="/profile/block" />
                                 <Route element={<Profile_buys />} path="/profile/buys" />
                                 <Route element={<Profile_reviews />} path="/profile/reviews" />
 
                                 <Route element={<Configuration />} path="/configuration" />
+                                <Route element={<Garages />} path="/garages" />
+                                <Route element={<CreateGarage />} path="/create-garage" />
+                                <Route element={<Configuration_Garage />} path="/configuration/garage" />
+                                <Route element={<SearchResults />} path="/search-result" />
+                                <Route element={<LegalAdvice />} path="/aviso-legal" />
+                                <Route element={<CookiePolicy />} path="/politica-de-cookies" />
+                                <Route element={<PrivacyPolicy />} path="/politica-de-privacidad" />
                                 <Route element={<Single />} path="/single/:theid" />
                                 <Route element={<h1>Not found!</h1>} />
                             </Routes>

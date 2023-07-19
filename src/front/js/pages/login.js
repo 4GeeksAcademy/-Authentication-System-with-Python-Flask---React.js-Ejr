@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import React, { useContext, useState } from "react";
 import { Context } from "../store/appContext";
 import { useNavigate } from "react-router-dom";
+import "/workspaces/Watacar_v2/src/front/styles/login.css";
 
 
 export const Login = () => {
@@ -104,7 +105,7 @@ export const Login = () => {
         <br />
         <br />
         <div className="container d-flex justify-content-center">
-          <h5>
+          <h5 className="mb-4" id="textRegister">
             Si no te has registrado, puedes hacerlo <Link to="/login">Aquí</Link>
           </h5>
         </div>

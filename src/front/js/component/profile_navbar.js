@@ -1,7 +1,16 @@
-import React, { Component } from "react";
+import React, { useContext, useEffect } from "react";
 import { NavLink } from "react-router-dom";
+import { Context } from "../store/appContext";
 
 export const Profile_navbar = () => {
+  const { store, actions } = useContext(Context);
+
+  useEffect(()=> {
+    actions.getUser()
+
+  }, [])
+
+
     return (
         <div className="container">
             <h2>Tu perfil</h2>
@@ -13,6 +22,10 @@ export const Profile_navbar = () => {
                 <NavLink to="/profile/buys" className="navbar_profile col-1" activeClassName="active">Compras</NavLink>
                 <NavLink to="/profile/reviews" className="navbar_profile col-1" activeClassName="active">Valoraciones</NavLink>
                 <NavLink to="/profile/favorites" className="navbar_profile col-1" activeClassName="active">Favoritos</NavLink>
+                {store.user.role==='garage' ? <NavLink to="/profile/garage" className="navbar_profile col-1" activeClassName="active">Perfil Taller</NavLink> : ""}
+                
+                
+                
             </div>
         </div>
     )
