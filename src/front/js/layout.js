@@ -10,9 +10,11 @@ import { Profile_configuration } from "./pages/profile_configuration";
 import { Profile_sales } from "./pages/profile_sales";
 import { Block } from "./pages/block";
 import { Profile_buys} from "./pages/profile_buys"
+import { Profile_buys_done } from "./pages/profile_buys_done";
 import { Profile_reviews } from "./pages/profile_reviews";
 import { Configuration } from "./pages/configuration";
 import { Login } from "./pages/login";
+import { On_sale } from "./pages/onSale";
 
 
 import injectContext from "./store/appContext";
@@ -31,7 +33,6 @@ import { UploadMoto } from "./pages/uploadmotorcycle";
 import { SingleProduct } from "./pages/singleProduct";
 
 import { Favorites } from "./pages/favorites";
-import { On_sale } from "./pages/onSale";
 import { Profile_garage } from "./pages/profile_garage";
 import { Garages } from "./pages/garages";
 import { Configuration_Garage } from "./pages/configuration_garage";
@@ -85,6 +86,7 @@ const Layout = () => {
                                 <Route element={<Profile_garage />} path="/profile/garage" />
                                 <Route element={<Block />} path="/profile/block" />
                                 <Route element={<Profile_buys />} path="/profile/buys" />
+                                <Route element={<Profile_buys_done />} path="/profile/buys-done" />
                                 <Route element={<Profile_reviews />} path="/profile/reviews" />
 
                                 <Route element={<Configuration />} path="/configuration" />
