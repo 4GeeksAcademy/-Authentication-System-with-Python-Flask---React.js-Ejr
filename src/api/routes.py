@@ -5,10 +5,12 @@ from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, User, Car, Saved
 from api.utils import generate_sitemap, APIException
 import requests
-from flask_jwt_extended import jwt_required, get_jwt_identity, create_access_token
+from flask_jwt_extended import jwt_required, get_jwt_identity, create_access_token, JWTManager
 
 
 api = Blueprint('api', __name__)
+# api.config["JWT_SECRET_KEY"] = "super-secret"  # Change this "super secret" with something else!
+# jwt = JWTManager(api)
 
 
 # GET ALL THE CARS FROM OUR DATABASE
@@ -34,7 +36,7 @@ def get_users():
 def fetch_car_data(model):
     headers= {
         "X-RapidAPI-Key": "091b26d511msh9e1b3d4bf95fde1p1b1d59jsncc7949986be6",
-        "X-RapidAPI-Host": "cars-by-api-ninjas.p.rapidapi.com"  
+        "X-RapidAPI-Host": "cars-by-api-ninjas.p.rapidapi.com"
     }
 
     querystring = {"model":model, "year":"2022", "limit":"1"}
@@ -72,21 +74,22 @@ def add_car():
              return jsonify({"this is the car's data": car.serialize()}), 200
         else:
             return jsonify({'error': 'Failed to retrieve car information'}), 500
-        
+
 # LOGIN ENDPOINT FOR USERS
-@api.route('/login', methods=['POST'])
-def login_user():
-     user_email = request.json.get("email", None)
-     user_password = request.json.get("password", None)
+@api.route("/login", methods=["POST"])
+def create_token():
+    email = request.json.get("email", None)
+    password = request.json.get("password", None)
+    # Query your database for username and password
+    user = User.query.filter_by(email=email, password=password).first()
+    if user is None:
+        # the user was not found on the database
+        return jsonify({"msg": "Bad username or password"}), 401
 
-     user = User.query.filter_by(email = user_email, password = user_password).first()
-
-     if user is None:
-          return jsonify({"Error": "Wrong email or password"}), 401
-     
-     token = create_access_token(identity=user.id)
-     return jsonify({"Response": "Successfully logged in", "token": token, "email": user.email}), 200
-
+    # create a new token with the user id inside
+    access_token = create_access_token(identity=user.id)
+    return jsonify({ "token": access_token, "user_id": user.id })
+        
 
 # PRIVATE VIEW THAT USERS ARE GOING TO HAVE
 @api.route('/private', methods=['GET'])
