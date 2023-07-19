@@ -9,7 +9,7 @@ import { Single } from "./pages/single";
 import Login from "./pages/login";
 import CreateAccount from "./pages/create-account";
 import injectContext from "./store/appContext";
-
+import CreateAccount from "./pages/create-account"
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 
