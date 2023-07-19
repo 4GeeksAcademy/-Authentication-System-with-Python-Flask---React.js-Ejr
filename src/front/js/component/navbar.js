@@ -7,12 +7,12 @@ export const Navbar = () => {
 		<nav className="navbar navbar-light bg-light">
 			<div className="container">
 				<div>
-					<Link to={"/"}>
+					{/* <Link to={"/"}> */}
 						<img
 						src="https://static.vecteezy.com/system/resources/previews/013/923/543/original/blue-car-logo-png.png"
 						style={{"width": "20px", "height": "auto"}}
 						/>
-					</Link>
+					{/* </Link> */}
 				</div>
 				<div>
 					

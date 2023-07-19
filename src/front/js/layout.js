@@ -25,11 +25,8 @@ const Layout = () => {
         <ScrollToTop>
           <Navbar />
           <Routes>
-            <Route element={<userpage />} path="usermain" />
-            <Route element={<Home />} path="/" />
-            <Route element={<Demo />} path="/demo" />
-            <Route element={<Single />} path="/single/:theid" />
-            <Route element={<Login />} path="/Login" /> {/* Add the Login route */}
+            {/* <Route element={<userpage />} path="usermain" /> */}
+            {/* <Route element={<Login />} path="/Login" /> Add the Login route */}
             <Route element={<h1>Not found!</h1>} />
           </Routes>
           <Footer />
