@@ -96,6 +96,12 @@
     height: 40%;
 }
 
+.customPlaceholder{
+    height: 80px;
+}
+
+
+
 .row_product_profile{
     background-color: white;
     margin: 3rem;

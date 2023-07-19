@@ -8,8 +8,8 @@ export const Placeholder_profile = () => {
 
 
 return (
-    <>
-   
+  <>
+  
     <div className="container_profile">
       <div className="m-auto mb-4">
         <p aria-hidden="true" className="placeholder-glow ">
