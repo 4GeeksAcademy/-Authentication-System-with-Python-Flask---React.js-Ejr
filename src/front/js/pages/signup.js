@@ -26,7 +26,6 @@ export const Signup = () => {
     fetch(process.env.BACKEND_URL + 'api/signup', config)
     .then((resp) => resp.json())
     .then((resp) => {
-      setStore({ users: resp.data });
       navigate('/login');
     })
     .catch((error) => {
