@@ -32,7 +32,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 			garages: [],
 			garage: [],
 			filters: [],
-			filterProducts: []
+			filterProducts: [],
+			status: []
 
 		
 		},
@@ -49,8 +50,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 				})
 				.catch(err => console.error(err))
 			},
-
-
 
 			login: async (email, password) => {
 				const store = getStore();
@@ -77,8 +76,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			  },
 
-
-		
 			getUser: () => {
 				const store = getStore();
 				fetch(process.env.BACKEND_URL + `api/configuration`, {
@@ -93,9 +90,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 					setStore({user: response.data});
 				});
 			},
-
-
-
 
 			getToken: () => {
 				const store = getStore()
@@ -123,7 +117,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 				  });
 			  },
 
-			  
 			  getFilteredProducts: (brand_id, vehicle_type) => {
 				fetch(`${process.env.BACKEND_URL}api/search-by/filter?brand_id=${brand_id}&vehicle_type=${vehicle_type}`)
 				  .then(response => response.json())
@@ -142,8 +135,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({ filterProducts: products });
 			  },
 			
-			
-
 			//   login: async (email, password) => {
             //     const store = getStore()
             //     const opts = {
@@ -181,6 +172,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log("Error loading message from backend", error)
 				}
 			},
+
 			changeColor: (index, color) => {
 				//get the store
 				const store = getStore();
@@ -196,7 +188,167 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({ demo: demo });
 			},
 
-			
+			getProductsOnSale: () => {
+				const store = getStore();
+				fetch(process.env.BACKEND_URL + "api/profile/products/ONSALE", {
+					method: "GET",
+					headers: {
+					"Content-Type": "application/json",
+					"Authorization": `Bearer ${localStorage.getItem("token")}`
+					}
+				})
+				.then(response => response.json())
+				.then(response => {
+					setStore({products: response})
+				})
+				.catch(error => {
+					console.error(error);
+				});
+			},
+
+			getProductsPendingBlocked: () => {
+				const store = getStore();
+				fetch(process.env.BACKEND_URL + "api/profile/products/PENDING_BLOCKED", {
+					method: "GET",
+					headers: {
+					"Content-Type": "application/json",
+					"Authorization": `Bearer ${localStorage.getItem("token")}`
+					}
+				})
+				.then(response => response.json())
+				.then(response => {
+					setStore({products: response})
+				})
+				.catch(error => {
+					console.error(error);
+				});
+			},
+
+			getProductsBlocked: () => {
+				const store = getStore();
+				fetch(process.env.BACKEND_URL + "api/profile/products/BLOCKED", {
+					method: "GET",
+					headers: {
+					"Content-Type": "application/json",
+					"Authorization": `Bearer ${localStorage.getItem("token")}`
+					}
+				})
+				.then(response => response.json())
+				.then(response => {
+					setStore({products: response})
+				})
+				.catch(error => {
+					console.error(error);
+				});
+			},
+
+			getProductsPendingSale: () => {
+				const store = getStore();
+				fetch(process.env.BACKEND_URL + "api/profile/products/PENDING_SALE", {
+					method: "GET",
+					headers: {
+					"Content-Type": "application/json",
+					"Authorization": `Bearer ${localStorage.getItem("token")}`
+					}
+				})
+				.then(response => response.json())
+				.then(response => {
+					setStore({products: response})
+				})
+				.catch(error => {
+					console.error(error);
+				});
+			},
+
+			getProductsSold: () => {
+				const store = getStore();
+				fetch(process.env.BACKEND_URL + "api/profile/products/SOLD", {
+					method: "GET",
+					headers: {
+					"Content-Type": "application/json",
+					"Authorization": `Bearer ${localStorage.getItem("token")}`
+					}
+				})
+				.then(response => response.json())
+				.then(response => {
+					setStore({products: response})
+				})
+				.catch(error => {
+					console.error(error);
+				});
+			},
+
+			PendingBlockedChanged: () => {
+				const store = getStore();
+				fetch(process.env.BACKEND_URL + "api/profile/changed/PENDING_BLOCKED", {
+					method: "GET",
+					headers: {
+					"Content-Type": "application/json",
+					"Authorization": `Bearer ${localStorage.getItem("token")}`
+					}
+				})
+				.then(response => response.json())
+				.then(response => {
+					setStore({products: response})
+				})
+				.catch(error => {
+					console.error(error);
+				});
+			},
+
+			BlockedChanged: () => {
+				const store = getStore();
+				fetch(process.env.BACKEND_URL + "api/profile/changed/BLOCKED", {
+					method: "GET",
+					headers: {
+					"Content-Type": "application/json",
+					"Authorization": `Bearer ${localStorage.getItem("token")}`
+					}
+				})
+				.then(response => response.json())
+				.then(response => {
+					setStore({products: response})
+				})
+				.catch(error => {
+					console.error(error);
+				});
+			},
+
+			PendingSaleChanged: () => {
+				const store = getStore();
+				fetch(process.env.BACKEND_URL + "api/profile/changed/PENDING_SALE", {
+					method: "GET",
+					headers: {
+					"Content-Type": "application/json",
+					"Authorization": `Bearer ${localStorage.getItem("token")}`
+					}
+				})
+				.then(response => response.json())
+				.then(response => {
+					setStore({products: response})
+				})
+				.catch(error => {
+					console.error(error);
+				});
+			},
+
+			SoldChanged: () => {
+				const store = getStore();
+				fetch(process.env.BACKEND_URL + "api/profile/changed/SOLD", {
+					method: "GET",
+					headers: {
+					"Content-Type": "application/json",
+					"Authorization": `Bearer ${localStorage.getItem("token")}`
+					}
+				})
+				.then(response => response.json())
+				.then(response => {
+					setStore({products: response})
+				})
+				.catch(error => {
+					console.error(error);
+				});
+			},
 
 			getGarages: () => {
                 fetch(process.env.BACKEND_URL + 'api/garages' , {
@@ -213,9 +365,6 @@ const getState = ({ getStore, getActions, setStore }) => {
                 });
             },
 
-
-
-
 			getMyGarage: () => {
 				fetch(process.env.BACKEND_URL + `api/profile/garage`, {
 					method: "GET",
@@ -230,7 +379,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log(response)
 				});
 			},
-
 
 			postGarage: async (name, mail, phone, cif, address, description, web, user_id, image_id) => {
 				const token = localStorage.getItem("token");
@@ -293,10 +441,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			  },
 			  
-
-			
-
-
 			getProducts: () => {
 				const store = getStore();
 				fetch(process.env.BACKEND_URL + `api/profile/onsale`, {
@@ -312,7 +456,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log(response.data)
 				})
 			},
-
 
 			getAllProducts: () => {
 				const store = getStore();
@@ -348,7 +491,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				});
 			  },
 			  
-			  getFavorites: () => {
+			getFavorites: () => {
 				const store = getStore();
 				fetch(process.env.BACKEND_URL + `api/profile/favorites`, {
 				  method: "GET",
@@ -362,11 +505,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					setStore({ products: response }); // Cambiar "favorites" por "products"
 					console.log(response);
 				  });
-			  },
-			  
-
-
-			
+			},
 
 			postFavorite: async (user_id, product_id) => {
 				const token = localStorage.getItem("token");
@@ -391,7 +530,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					  user_id: user_id,
 					  product_id: product_id 
 					}),
-				  };
+					};
 			  
 				  const response = await fetch(`${process.env.BACKEND_URL}api/profile/favorites`, requestOptions);
 				  if (response.ok) {
@@ -407,8 +546,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 				  console.error("Error:", error);
 				}
 			  },
-			  
-			  
 			  
 			putFavorite: (product_id) => {
 				const token = localStorage.getItem("token");
@@ -444,7 +581,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				.then (response => response.json())
 				.then ((response) => {
 					setStore({ reviews: response});
-					console.log(garages)
+					console.log(response)
 				})
 			},
 
@@ -463,11 +600,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log(response)
 				})
 			},
-
-			}
-
-
-	
+		}
 	}
 };
 

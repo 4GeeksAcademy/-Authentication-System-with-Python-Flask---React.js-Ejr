@@ -18,14 +18,10 @@ export const Profile_navbar = () => {
             <div className="row">
                 <NavLink exact to="/profile/configuration" className="navbar_profile col-1" activeClassName="active">Perfil</NavLink>
                 <NavLink exact to="/profile/onsale" className="navbar_profile col-1" activeClassName="active">En venta</NavLink>
-                <NavLink to="/profile/sales" className="navbar_profile col-1" activeClassName="active">Ventas</NavLink>
                 <NavLink to="/profile/buys" className="navbar_profile col-1" activeClassName="active">Compras</NavLink>
                 <NavLink to="/profile/reviews" className="navbar_profile col-1" activeClassName="active">Valoraciones</NavLink>
                 <NavLink to="/profile/favorites" className="navbar_profile col-1" activeClassName="active">Favoritos</NavLink>
-                {store.user.role==='garage' ? <NavLink to="/profile/garage" className="navbar_profile col-1" activeClassName="active">Perfil Taller</NavLink> : ""}
-                
-                
-                
+                {store.user.role==='garage' ? <NavLink to="/profile/garage" className="navbar_profile col-1" activeClassName="active">Perfil Taller</NavLink> : ""}    
             </div>
         </div>
     )
