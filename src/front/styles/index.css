@@ -153,13 +153,14 @@ li {
   border-color: #125c8e;
   border-style: solid;
   border-radius: 10px;
-  margin-right: 2rem;
   text-align: center;
   font-family: 'Roboto', sans-serif;
   text-decoration: none;
   background-color: white;
-  padding: 2px;
+  padding: 3px;
+  margin: 2px;
   color: black;
+  font-size: 15px;
 }
 
 .navbar_profile:hover {
@@ -204,6 +205,28 @@ li {
   }
 }
 
+
+
+
+@media only screen and (max-width: 1300px) {
+  .navbar_profile{
+    font-size: medium;
+    width: 8rem;
+    margin-left: 2.7rem;
+    margin-bottom: 1rem;
+  }
+}
+
+
+
+@media only screen and (min-width: 1300px) {
+  .navbar_profile{
+    font-size: medium;
+    width: 8em;
+    margin-left: 2.7rem;
+    margin-bottom: 1rem;
+  }
+}
 
 /* Footer */
 footer {

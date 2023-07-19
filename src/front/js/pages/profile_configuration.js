@@ -2,6 +2,7 @@ import React, { useEffect, useContext, useState } from "react";
 import { Context } from "../store/appContext";
 import { NavLink, Link, useNavigate } from "react-router-dom";
 import { Profile_navbar } from "../component/profile_navbar";
+import { Placeholder_profile } from "./placeholder_profile";
 import "/workspaces/Watacar_v2/src/front/styles/profile.css"
 
 export const Profile_configuration = () => {
@@ -182,5 +183,5 @@ const handlePasswordChange = () => {
                 </div>
             </div>
         </>
-    ): "cargando...";
+    ): <Placeholder_profile />;
 }

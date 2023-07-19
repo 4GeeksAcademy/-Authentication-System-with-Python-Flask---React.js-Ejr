@@ -17,21 +17,26 @@ export const On_sale = () => {
             <Profile_navbar />
             <Sales_navbar />
             {store.products.map((product, index) => (
-                <div className="row row_product_profile" key={index}>
-                    <div className="product_img_profile_box col-2">
+                <div className="justify-content-center d-flex">
+                <div className="row row_product_profile container justify-content-evenly m-1" key={index}>
+                    <div className="product_img_profile_box col-lg-5 col-3 col-sm-2 col-xs-2">
                         <img src="https://www.motofichas.com/images/phocagallery/Honda/cb500f-2022/01-honda-cb500f-2022-estudio-rojo.jpg" alt="product" className="product_img_profile"/>
                     </div>
-                    <div className="price_name col-6">
+                    <div className="price_name col-3 col-sm-2 text-center ">
                         <h4 className="price_product_profile">{product.price}€</h4>
                         <h5 className="name_product_profile">{product.name}</h5>
                     </div>
-                    <div className="col-2 state_product_profile_box">
+                    <div className="col-3 col-sm-2 state_product_profile_box text-center">
                         <h6 className="state_title_profile">Estado</h6>
                         <h4 className="state_product_profile">{product.state}</h4>
                     </div>
-                    <div className="col-2 product_profile_buttons">
-                        <button className="product_profile_button edit"><i className="fas fa-pencil"></i></button>
-                        <button className="product_profile_button sold" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">🤝🏼</button>
+                    <div className="col-3 col-sm-1 product_profile_buttons ">
+                        <button className="product_profile_button edit">
+                            <i className="fas fa-pencil"/>
+                            </button>
+                        <button className="product_profile_button sold" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            <i class="fa-regular fa-handshake"/>
+                        </button>
                     </div>
                     <div className="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div className="modal-dialog">
@@ -53,6 +58,7 @@ export const On_sale = () => {
                             </div>
                         </div>
                     </div>
+                </div>
                 </div>
             ))}
         </>

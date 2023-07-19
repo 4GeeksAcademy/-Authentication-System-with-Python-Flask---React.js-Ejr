@@ -106,7 +106,8 @@
     padding-left: 3rem;
     display: flex;
     align-items: center;
-    color:#125c8e
+    color:#125c8e;
+   
 }
 
 .product_profile_button{
@@ -130,13 +131,10 @@
 .product_profile_buttons{
     padding-top: 1rem;
     display: flex;
-    justify-content: end;
+  
 }
 
-.state_product_profile_box{
-    margin-top: 1rem;
-    margin-right: 1rem;
-}
+
 
 .state_product_profile{
     font-weight: bolder;
@@ -184,7 +182,7 @@
     width: 9rem;
     height: 7rem;
     padding: 0;
-    margin-right: 3rem;
+   
 }
 
 .product_img_profile{
@@ -398,7 +396,7 @@
     }
 
     .row_product_profile{
-        margin: 1rem;
+      
         height: 7rem;
         display: flex;
         align-content: center;
@@ -438,6 +436,8 @@
         font-size: smaller;
         border-radius: 5px;
         display: block;
+        margin-left: -10px;
+        margin-top: -5px;
     }
 
     .product_profile_buttons{
