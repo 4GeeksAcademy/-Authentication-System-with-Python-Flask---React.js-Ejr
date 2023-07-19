@@ -5,7 +5,8 @@ from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, User, Car, Saved
 from api.utils import generate_sitemap, APIException
 import requests
-
+from werkzeug.security import generate_password_hash, check_password_hash
+import datetime
 
 
 api = Blueprint('api', __name__)
@@ -67,4 +68,22 @@ def add_car():
              return jsonify({"this is the car's data": car.serialize()}), 200
         else:
             return jsonify({'error': 'Failed to retrieve car information'}), 500
-        
+
+# Route to create user
+@api.route("/createuser", methods=['POST'])
+def add_user():
+     body= request.get_json()
+     user= User.query.fliter_by(email=body["email"]).first()
+     if user:
+          return jsonify("user alredy exists")
+     newUser= User(
+          email = body["email"],
+          first_name = body["firstName"],
+          phone_number = body["phoneNumber"],
+          password = generate_password_hash(body["password"])
+     )
+     db.session.add(newUser)
+     db.session.commit()
+     return jsonify("successfully created new user")
+
+
