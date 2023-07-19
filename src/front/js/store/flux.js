@@ -25,7 +25,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 		},
 		actions: {
 			getAllUsers: () => {
-				fetch('https://andresmedtr-supreme-space-fortnight-r9v57x44vx7cjw5-3001.preview.app.github.dev/api/users')
+				fetch(`${process.env.BACKEND_URL}/users`)
 				.then((res) => res.json())
 				.then((data) => {
 					console.log(data)
@@ -34,7 +34,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			},
 			getAllCars: () => {
-				fetch('https://andresmedtr-supreme-space-fortnight-r9v57x44vx7cjw5-3001.preview.app.github.dev/api/cars')
+				fetch(`${process.env.BACKEND_URL}/cars`)
 				.then((res) => res.json())
 				.then((data) => {
 					setStore({cars: data})
