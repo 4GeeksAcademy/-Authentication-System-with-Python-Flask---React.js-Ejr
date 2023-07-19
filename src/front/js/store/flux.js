@@ -14,6 +14,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					initial: "white"
 				}],
 			saved: [],
+			cars: [],
 			users: [],
 			staticCars: [
 				{ car_name: 'Car 1' },
