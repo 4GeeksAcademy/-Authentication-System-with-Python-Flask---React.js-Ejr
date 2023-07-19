@@ -7,6 +7,9 @@ from api.models import db, User, Product, Brand, Model, Image, Favorites, Review
 
 from api.utils import generate_sitemap, APIException
 
+from sqlalchemy.exc import IntegrityError
+
+
 
 import pandas as pd
 
@@ -18,7 +21,7 @@ from flask_jwt_extended import jwt_required
 from flask_jwt_extended import JWTManager
 
 import cloudinary
-import cloudinary.uploader
+from cloudinary.uploader import upload
 import os
 from flask_cors import CORS, cross_origin
 from dotenv import load_dotenv
@@ -132,6 +135,110 @@ def get_product(productid):
     
     serialized_product = product.serialize()
     return jsonify(serialized_product), 200
+
+
+# Otras importaciones y código ...
+
+@api.route('/product/<int:productid>/edit', methods=['PUT'])
+@jwt_required()
+def update_product(productid):
+    cloudinary.config(
+        cloud_name=os.getenv('CLOUD_NAME'),
+        api_key=os.getenv('API_KEY'),
+        api_secret=os.getenv('API_SECRET')
+    )
+
+    current_user = get_jwt_identity()
+    product = Product.query.get(productid)
+    
+    if product is None:
+        return jsonify({'message': 'Product not found'}), 404
+    
+    if product.user_id != current_user:
+        return jsonify({"message": "You're not authorized"})
+
+    data = request.get_json()
+
+    name = data.get('name')
+    state = data.get('state')
+    price = data.get('price')
+    description = data.get('description')
+    year = data.get('year')
+    km = data.get('km')
+    fuel = data.get('fuel')
+    brand_id = data.get('brand_id')
+    model_id = data.get('model_id')
+    # product_type = data.get('product_type')
+    images = data.get('images')
+
+    if name:
+        product.name = name
+    if state:
+        product.state = state.upper()
+    if price:
+        product.price = price
+    if description:
+        product.description = description
+    if year:
+        product.year = year
+    if km:
+        product.km = km
+    if fuel:
+        product.fuel = fuel.upper()
+    # if product_type:
+    #     product.product_type = product_type
+    if brand_id:
+        product.brand_id = brand_id
+    if model_id:
+        product.model_id = model_id
+
+    try:
+        db.session.commit()
+    except IntegrityError as e:
+        db.session.rollback()
+        return jsonify({"message": "Error updating product"}), 500
+
+    if images:
+        product.images.clear()  
+        for image_data in images:
+            image_url = image_data.get('image')
+            if image_url:
+                try:
+                    response = cloudinary.uploader.upload(image_url)
+                    image = Image(image=response['secure_url'], product_id=productid, user_id=current_user)
+                    db.session.add(image)
+                except Exception as e:
+                    pass
+
+        try:
+            db.session.commit()
+        except IntegrityError as e:
+            db.session.rollback()
+            return jsonify({"message": "Error updating product images"}), 500
+
+    return jsonify({"message": "Product updated successfully"}), 200
+
+
+
+@api.route('/api/delete-image/<int:id>', methods=['DELETE'])
+@jwt_required()
+def delete_image(id):
+    try:
+        # cloudinary.uploader.destroy(id)
+        
+        image = Image.query.filter_by(id=id).first()
+        if image:
+            db.session.delete(image)
+            db.session.commit()
+
+        return jsonify({"message": "Imagen eliminada correctamente"}), 200
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"message": "Error al eliminar la imagen"}), 500
+
+
+
+
 
  
 @api.route('/products', methods=['GET'])

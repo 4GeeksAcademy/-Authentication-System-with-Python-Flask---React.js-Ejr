@@ -31,6 +31,7 @@ import { SingleProduct } from "./pages/singleProduct";
 
 import { Favorites } from "./pages/favorites";
 import { On_sale } from "./pages/onSale";
+import { EditProduct } from "./pages/editProduct";
 
 
 
@@ -66,7 +67,9 @@ const Layout = () => {
                                 <Route element={<UploadCar />} path="/upload-car" />
                                 <Route element={<UploadMoto />} path="/upload-motorcycle" />
                                 <Route element={<WichVehicle />} path="/choose-vehicle" />
-                                <Route element={SingleProduct} path="/product/:productid" />
+                                <Route element={<SingleProduct />} path="/product/:productid" />
+                                <Route element={<EditProduct />} path="/edit-product/:productid" />
+
 
 
                                 <Route element={<Profile_configuration />} path="/profile/configuration" />

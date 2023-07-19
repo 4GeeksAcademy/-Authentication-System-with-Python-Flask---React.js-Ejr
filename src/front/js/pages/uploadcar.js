@@ -12,6 +12,7 @@ export const UploadCar = () => {
   const [carBrands, setCarBrands] = useState([])
   const [carModels, setCarModels] = useState([])
   const [selectedModel, setSelectedModel] = useState("");
+  
  
   
   const [image, setImage] = useState({array : {}})
@@ -115,6 +116,16 @@ useEffect(() => {
   const handleModelChange = (ev) => {
     setSelectedModel(ev.target.value);
     setData({ ...data, model: ev.target.value });
+  };
+  
+  const handleRemoveImage = (index) => {
+    // Eliminar la imagen de uploadedFiles
+    const newUploadedFiles = uploadedFiles.filter((file, i) => index !== i);
+    setUploadedFiles(newUploadedFiles);
+  
+    // Eliminar el archivo correspondiente de submitData
+    const newSubmitData = submitData.filter((formData, i) => index !== i);
+    setSubmitData(newSubmitData);
   };
   
   
@@ -293,35 +304,39 @@ useEffect(() => {
 
 
                     
-              <div className='upload-product-images '>
+              <div className='upload-innerbox'>
+            {/* ... (el código restante es el mismo) */}
+
+            <div className='upload-product-images'>
               <div>
-                  <h5><strong>Imágenes:</strong></h5>
-                </div>
-                <Dropzone 
+                <h5><strong>Imágenes:</strong></h5>
+              </div>
+              <Dropzone 
                 onDrop={handleDrop}
-                className = "dropzone"
-                onChange = {(ev) => setImage(ev.target.value)}
+                className="dropzone"
+                onChange={(ev) => setImage(ev.target.value)}
                 value={image}
-                
-                >
+              >
+                {({ getRootProps, getInputProps }) => (
+                  <section>
+                    <div {...getRootProps({ className: "dropzone" })}>
+                      <input {...getInputProps()} />
+                      <span className='upload-images-icon'>📁</span>
+                      <p>Arrastra tus imágenes o clickea para seleccionar</p>
+                    </div>
+                  </section>
+                )}
+              </Dropzone>
 
-                    {({getRootProps, getInputProps}) => (
-                        <section>
-                            <div {...getRootProps({className: "dropzone"})}>
-                                <input {...getInputProps()} />
-                                <span className='upload-images-icon'>📁</span>
-                                <p>Arrastra tus imágenes o clickea para seleccionar</p>
-                            </div>
-                        </section>
-                    )}
-
-                </Dropzone>
-
-                <div className='mb-5'>
-                    {uploadedFiles.map((file, index) => (
-                        <p key={index}>{file}</p>
-                    ))}
-                </div>
+              <div className='mb-5'>
+                {uploadedFiles.map((file, index) => (
+                  <div key={index} className="image-preview">
+                    <img src={file.url} alt={file.name} />
+                    <button onClick={() => handleRemoveImage(index)}>Eliminar</button>
+                  </div>
+                ))}
+              </div>
+              </div>
 
                 <div className='text-center mt-5'>
                     <button className='btn btn-primary'>¡Sube tu coche!</button>

@@ -17,6 +17,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			productlist: [],
 
+			brandlist: [],
+
 			
 			users: [],
 
@@ -32,12 +34,25 @@ const getState = ({ getStore, getActions, setStore }) => {
 				fetch(process.env.BACKEND_URL + `api/product/${productid}`)
 				.then(resp => resp.json())
 				.then((data) => {
-					//onsole.log(data); 
+					console.log(data); 
 					setStore({ productlist: [data] });
 
 				})
 				.catch(err => console.error(err))
 			},
+
+
+			  
+
+			getBrand: (brandId) => {
+				fetch(process.env.BACKEND_URL + `api/brands/${brandId}`)
+				.then(resp => resp.json())
+				.then(data => {
+					setBrand(data.name);
+				})
+				.catch(err => console.error(err))
+			},
+			  
 
 
 

@@ -92,18 +92,18 @@ class Favorites(db.Model):
 
 
 class ProductState(Enum):
-    NUEVO = 'nuevo'
-    SEMINUEVO = 'seminuevo'
+    NUEVO = 'Nuevo'
+    SEMINUEVO = 'Seminuevo'
 
 class fuel_type(Enum):
-    DIESEL = 'diesel'
-    GASOLINA = 'gasolina'
-    HIBRIDO = 'hibrido'
-    ELECTRICO = 'electrico'
+    DIESEL = 'Diesel'
+    GASOLINA = 'Gasolina'
+    HIBRIDO = 'Híbrido'
+    ELECTRICO = 'Eléctrico'
 
 class product_type(Enum):
-    MOTO = 'moto'
-    COCHE = 'coche'
+    MOTO = 'Moto'
+    COCHE = 'Coche'
     
 
 
@@ -137,7 +137,9 @@ class Product(db.Model):
             "description": self.description,
 
             "images": [image.serialize() for image in self.images],
-
+            "brand": self.brand.serialize(),
+            "model": self.model.serialize(),
+            "user": self.user.serialize(), #puede petar si creo producto desde admin
             "year": self.year,
             "km": self.km,
             "fuel": self.fuel.value,
