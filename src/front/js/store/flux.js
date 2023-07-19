@@ -15,13 +15,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			],
 			saved: [],
-			cars: [],
 			users: [],
 			staticCars: [
 				{ car_name: 'Car 1' },
 				{ car_name: 'Car 2' },
 				{ car_name: 'Car 3' },
-			  ]
+			  ],
 		},
 		actions: {
 			getAllUsers: () => {
