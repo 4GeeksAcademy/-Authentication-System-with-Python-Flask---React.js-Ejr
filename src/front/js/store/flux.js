@@ -12,15 +12,15 @@ const getState = ({ getStore, getActions, setStore }) => {
 					title: "SECOND",
 					background: "white",
 					initial: "white"
-				}
-			],
+				}],
 			saved: [],
 			users: [],
 			staticCars: [
 				{ car_name: 'Car 1' },
 				{ car_name: 'Car 2' },
 				{ car_name: 'Car 3' },
-			  ],
+				],
+			token: null
 		},
 		actions: {
 			getAllUsers: () => {
@@ -39,9 +39,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 					setStore({cars: data})
 					console.log("These are stored cars in database:", data)
 				})
-
-			}		
+			}
 		}
 	};
 };
+
 export default getState;
