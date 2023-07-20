@@ -123,7 +123,7 @@ export const Filters = (props) => {
     <>
       <a class="btn btn-primary jello-vertical buttonFilter" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
        
-      <i class="fa-solid fa-sliders fa-beat"></i>
+      <i class="fa-solid fa-sliders"></i>
       </a>
 
       <form onSubmit={handleOnSubmit}>

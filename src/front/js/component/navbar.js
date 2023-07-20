@@ -199,6 +199,7 @@ export const Navbar = () => {
                         style={{ color: "rgb(15, 76, 117)" }}
                         aria-current="page"
                         to="/login"
+                        onClick={closeNavbar}
                       
                       >
                         Accede
@@ -251,6 +252,7 @@ export const Navbar = () => {
                         data-bs-toggle="dropdown"
                         aria-expanded="false"
                         to="profile"
+                        onClick={closeNavbar}
                       >
                         <i className="fa-regular fa-user ms-4 jello-vertical" id="iconProfile"></i>
                       </Link>
@@ -259,6 +261,7 @@ export const Navbar = () => {
                           <Link
                             to="/profile/configuration"
                             className="dropdown-item justify-content-end d-flex"
+                            onClick={closeNavbar}
                           >
                             Mi perfil
                             <i className="fa-solid fa-address-card ms-3 mt-1 profileIcons"></i>
@@ -268,6 +271,7 @@ export const Navbar = () => {
                           <Link
                             to="/profile/configuration"
                             className="dropdown-item justify-content-end d-flex  profileIcons"
+                            onClick={closeNavbar}
                            
                           >
                             Configuración
@@ -278,6 +282,7 @@ export const Navbar = () => {
                           <Link
                             to="/profile/onsale"
                             className="dropdown-item justify-content-end d-flex "
+                            onClick={closeNavbar}
                           >
                             Mis productos
                             <i className="fa-solid fa-car ms-2 mt-1 profileIcons"></i>
