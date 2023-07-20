@@ -226,6 +226,10 @@
     background: none;
 }
 
+.btnFavorite {
+    margin-top: -16px;
+    margin-right: -20px;
+}
 .product_img_profile_favorites_box{
     width: 10rem;
     height: 17rem;

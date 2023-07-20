@@ -399,6 +399,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					// Actualizar el store de favoritos si es necesario
 					const updatedFavorites = [...store.favorites, data];
 					setStore({ favorites: updatedFavorites });
+					localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
 				  } else {
 					throw new Error('Error al añadir Favorito');
 				  }
