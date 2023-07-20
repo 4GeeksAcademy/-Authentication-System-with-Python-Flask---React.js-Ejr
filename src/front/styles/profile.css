@@ -231,6 +231,14 @@
     padding-top: 1rem;
 }
 
+
+.imagePlaceHolder {
+    width: 225px;
+    height: 200px;
+   
+    border-radius: 12px;
+}
+
 .row_favorites_profile{
     background-color: white;
     margin: 3rem;

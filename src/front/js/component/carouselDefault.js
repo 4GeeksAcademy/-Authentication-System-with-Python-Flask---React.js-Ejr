@@ -7,6 +7,7 @@ import lottie from 'lottie-web';
 import { defineElement } from 'lord-icon-element';
 import { Filters } from "./filters";
 import "/workspaces/Watacar_v2/src/front/styles/index.css";
+import { Placeholder_carousel } from "../pages/placeholder_carousel";
 
 
 
@@ -86,7 +87,7 @@ export const CarouselDefault = () => {
           </div>
         ))
       ) : (
-        <h4 className="m-auto ">Aún no tenemos productos en venta</h4>
+        <Placeholder_carousel/ >
       )}
     </div>
   );
