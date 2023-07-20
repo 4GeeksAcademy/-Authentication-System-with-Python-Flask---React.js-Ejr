@@ -73,9 +73,15 @@ def add_car():
 @api.route("/createuser", methods=['POST'])
 def add_user():
      body= request.get_json()
-     user= User.query.fliter_by(email=body["email"]).first()
+     if "email" not in body: return jsonify ("mising email"), 400
+
+     user= User.query.filter_by(email=body["email"]).first()
      if user:
-          return jsonify("user alredy exists")
+          return jsonify("user alredy exists"), 409
+     if "firstName" not in body: return jsonify ("mising firstName"), 400
+     if "phoneNumber" not in body: return jsonify ("phoneNumber"), 400
+     if "password" not in body: return jsonify ("password"), 400
+
      newUser= User(
           email = body["email"],
           first_name = body["firstName"],
@@ -84,6 +90,6 @@ def add_user():
      )
      db.session.add(newUser)
      db.session.commit()
-     return jsonify("successfully created new user")
+     return jsonify("successfully created new user"), 201
 
 
