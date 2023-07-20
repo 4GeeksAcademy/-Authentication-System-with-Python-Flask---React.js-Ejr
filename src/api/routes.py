@@ -76,10 +76,23 @@ def upload_car():
         image = Image(image=upload_result['secure_url'], user_id=user_id, product_id=product.id)
         db.session.add(image)
         db.session.commit()
+
+    
+    Status = status (
+        status = 'ONSALE',
+        given_review_id = user_id,
+        
+    )
+    db.session.add(Status)
+    db.session.commit()
+
+    product.status_id = Status.id
+    db.session.commit()
  
  
     return jsonify({"message": "Your product has been successfully uploaded"}), 200
 
+    
 
  
 @api.route('/products', methods=['GET'])
