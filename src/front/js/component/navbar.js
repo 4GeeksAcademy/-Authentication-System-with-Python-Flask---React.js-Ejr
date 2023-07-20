@@ -1,16 +1,17 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import SearchBar from "./SearchBar"
+import Filters from "./FilterModal/Filters";
 
 export const Navbar = () => {
 	return (
 		<nav className="navbar navbar-light bg-light">
-			<div className="container">
+			<div className="container m-0">
 				<div>
 					<Link to={"/"}>
 						<img
 						src="https://static.vecteezy.com/system/resources/previews/013/923/543/original/blue-car-logo-png.png"
-						style={{"width": "20px", "height": "auto"}}
+						style={{"width": "7rem", "height": "auto"}}
 						/>
 					</Link>
 				</div>
@@ -24,12 +25,17 @@ export const Navbar = () => {
 				<div>
 					< SearchBar/>
 				</div>
+				<div>
+					< Filters />
+				</div>
 				<div>	
 					<Link to={"/signup"}>
-					<button>Sign Up</button>
+					<button className="btn btn-primary">
+						<h5>Sign Up</h5>
+					</button>
 					</Link>
 					<Link to={"/Login"}>
-					<button>Login</button>
+					<button className="btn btn-primary"><h5>Login</h5></button>
 					</Link>
 				</div>
 			</div>

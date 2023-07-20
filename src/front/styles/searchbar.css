@@ -2,15 +2,21 @@
     display: flex;
 }
 
-
+.searchBarContainer {
+    width: 25rem;
+}
 
 .searchBar {
     padding-left: 0.5rem;
-    width: 20rem;
+    width: 80%;
     background-color: rgb(18,18,18);
-    border-radius: 2rem;
+    border-top-left-radius: 2.5rem;
+    border-top-right-radius: 2.5rem;
+
     color: grey;
 }
+
+
 
 .carsDiv {
     display: flex;
@@ -53,7 +59,9 @@
     max-height: 200px;
     overflow-y: auto;
     color: grey;
-    border-radius: 2rem;
+    border-bottom-left-radius: 2.5rem;
+    border-bottom-right-radius: 2.5rem;
+
   }
   
 
