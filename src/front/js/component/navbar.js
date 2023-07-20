@@ -26,10 +26,12 @@ export const Navbar = () => {
 					< SearchBar/>
 				</div>
 				<div>	
+					<Link to={"/signup"}>
 					<button>Sign Up</button>
-					{/* <Link to={"/Login"}> */}
+					</Link>
+					<Link to={"/Login"}>
 					<button>Login</button>
-					{/* </Link> */}
+					</Link>
 				</div>
 			</div>
 		</nav>
