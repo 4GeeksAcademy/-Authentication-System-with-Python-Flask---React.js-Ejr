@@ -1,14 +1,13 @@
 import React, { useState, useContext, useEffect } from 'react'
 import {Context} from "../store/appContext"
 import "../../styles/searchbar.css"
-
+import Filters from './FilterModal/Filters'
 
 const SearchBar = () => {
   const { store, actions } = useContext(Context)
   const [ inputValue, setInputValue ] = useState("")
-  const [ check, setChecked] = useState([])
-
-
+  const [ showDropdown, setShowDropdown] = useState(false)
+  
 
 
   const cars = store.cars
@@ -26,74 +25,42 @@ const SearchBar = () => {
     setInputValue(e.target.value)
   }
 
-// FILTERING ITEMS 
-  const filterSelection = (event) => {
-    let updatedList = [...check]
-    if (event.target.check) {
-      updatedList = [...check, event.target.value]
-    } else {
-      setChecked(updatedList)
-    }
-  }
 
-  const checkedItems = check.length
-  ? check.reduce((total, item) => {
-      return total + ", " + item;
-    })
-  : "";
 
-  console.log("CHECKED VARIABLE:",check)
   return (
     <div className="parentDiv">
-       <div>
           <form>
             <div className='searchBarContainer'>
-              <input
-              placeholder='Search for a Car'
-              value={inputValue}
-              list='cars-list'
-              onChange={(e) => handleSearch(e)}
-              className='searchBar'/>
-              <datalist id='cars-list'>
-                {filteredCars.length > 0 && filteredCars.map((car, index) => (
-                  <option key={index} value={car}>
-                    {car}
-                  </option>
+              <div className='inputContainer'>
+                <input
+                placeholder='       Search for a Car'
+                value={inputValue}
+                onChange={(e) => handleSearch(e)}
+                onFocus={() => setShowDropdown(true)}
+                onBlur={() => setShowDropdown(false)}
+                className='searchBar'/>
+              </div>                
+              {showDropdown && filteredCars.length > 0 && (
+              <div className='custom-dropdown'>
+                {filteredCars.map((car, index) => (
+                  <div className='carsDiv'>
+                    <div className="carNames" key={index} value={car}>
+                      <h4 key={index}>{car}</h4>
+                    </div>
+                    <div className='imagesDiv'>
+
+                      {/* NEED TO IMPLEMENT THE LOGIC TO GET THE IMAGES FROM DATABASE */}
+
+                      <img className="carImage" src='https://hips.hearstapps.com/hmg-prod/images/2023-nissan-altima-113-1654783718.jpg?crop=0.712xw:0.535xh;0.132xw,0.347xh&resize=1200:*'/>
+                    </div>
+                  </div>
                 ))}
-              </datalist>
-            </div>
-          </form>
-        </div>
-        <div className="dropdown">
-          <div className='filterButtonContainer'>
-            <button className="btn btn-secondary dropdown-toggle filterButton" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Filters
-            </button>
-          </div>
-          <div className="dropdown-menu">
-              <div>
-                <p>Price Range</p>
               </div>
-              <div className='listGroupContainer'>
-                <ul className="list-group">
-                  <p>Car Type</p>
-                  {store.cars.map((item, index) => {
-                    return (
-                      <div key={index}>
-                        <input
-                        type='checkbox'
-                        value={item.car_type}
-                        onClick={(e) => filterSelection(e)}/>
-                        {item.car_type}
-                      </div>
-                    )
-                    })}
-                </ul>
-              </div>     
-          </div>
-       </div>
+             )}
+            </div>
+          </form> 
     </div>
   )
 }
 
-export default SearchBar
+export default SearchBar;

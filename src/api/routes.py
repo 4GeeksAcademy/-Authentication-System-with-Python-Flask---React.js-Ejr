@@ -5,12 +5,15 @@ from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, User, Car, Saved
 from api.utils import generate_sitemap, APIException
 import requests
+from flask_jwt_extended import jwt_required, get_jwt_identity, create_access_token, JWTManager
 from werkzeug.security import generate_password_hash, check_password_hash
 import datetime
-from flask_jwt_extended import jwt_required, get_jwt_identity, create_access_token
+
 
 
 api = Blueprint('api', __name__)
+# api.config["JWT_SECRET_KEY"] = "super-secret"  # Change this "super secret" with something else!
+# jwt = JWTManager(api)
 
 
 # GET ALL THE CARS FROM OUR DATABASE
@@ -36,7 +39,7 @@ def get_users():
 def fetch_car_data(model):
     headers= {
         "X-RapidAPI-Key": "091b26d511msh9e1b3d4bf95fde1p1b1d59jsncc7949986be6",
-        "X-RapidAPI-Host": "cars-by-api-ninjas.p.rapidapi.com"  
+        "X-RapidAPI-Host": "cars-by-api-ninjas.p.rapidapi.com"
     }
 
     querystring = {"model":model, "year":"2022", "limit":"1"}
@@ -74,6 +77,79 @@ def add_car():
              return jsonify({"this is the car's data": car.serialize()}), 200
         else:
             return jsonify({'error': 'Failed to retrieve car information'}), 500
+
+
+# LOGIN ENDPOINT FOR USERS
+@api.route("/login", methods=["POST"])
+def create_token():
+    email = request.json.get("email", None)
+    password = request.json.get("password", None)
+    # Query your database for username and password
+    user = User.query.filter_by(email=email, password=password).first()
+    if user is None:
+        # the user was not found on the database
+        return jsonify({"msg": "Bad username or password"}), 401
+
+    # create a new token with the user id inside
+    access_token = create_access_token(identity=user.id)
+    return jsonify({ "token": access_token, "user_id": user.id })
+        
+
+# PRIVATE VIEW THAT USERS ARE GOING TO HAVE
+@api.route('/private', methods=['GET'])
+@jwt_required()
+def show_saved_cars():
+        current_user_id = get_jwt_identity()
+        user = User.query.get(current_user_id)
+        saved_cars = Saved.query.filter_by(user_id=current_user_id).all()
+        response = {
+             'user': user.first_name,
+             'email': user.email,
+             'phone_number': user.phone_number,
+             'saved_cars': [car.serialize() for car in saved_cars]
+        }
+
+        return jsonify(response),200
+
+# ALLOWING USERS TO CREATE A FAVORITE
+@api.route('/add_saved', methods=['POST'])
+@jwt_required()
+def add_favorite():
+    current_user_id = get_jwt_identity()
+    
+    user = User.query.get(current_user_id)
+    car_id = request.json.get("car_id")
+
+    car = Car.query.get(car_id)
+    if not car:
+        return jsonify({"Error": "Car does not exist"}), 404
+    
+    if user.saved:
+        for saved_car in user.saved:
+            if saved_car.car_id == car.id:
+                return jsonify({"Message": "Car already saved"}), 409    
+    saved = Saved(user_id=user.id, car_id=car_id)
+    db.session.add(saved)
+    db.session.commit()
+
+    return jsonify({"Message": "Car successfully saved"}), 200
+
+
+# REGISTER ENDPOINT
+@api.route('/register', methods=['POST'])
+def create_user():
+    user_email= request.json.get('email', None)
+    user_first_name = request.json.get('first_name', None)
+    user_password = request.json.get('password', None)
+    user_phone_number = request.json.get('phone_number', None)
+
+    active_user = User.query.filter_by(email = user_email).first()
+    if active_user:
+        return jsonify({"Error": "Email already in use, try another one"}), 409
+    new_user = User(email=user_email,first_name=user_first_name,password=user_password,phone_number=user_phone_number)
+    db.session.add(new_user)
+    db.session.commit()
+    return jsonify({"Message": "User successfully created"})
 
 # Route to create user
 @api.route("/createuser", methods=['POST'])

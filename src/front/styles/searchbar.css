@@ -2,15 +2,67 @@
     display: flex;
 }
 
+.searchBarContainer {
+    width: 25rem;
+}
 
 .searchBar {
-    width: 20rem;
+    padding-left: 0.5rem;
+    width: 80%;
     background-color: rgb(18,18,18);
-    border-radius: 2rem;
+    border-top-left-radius: 2.5rem;
+    border-top-right-radius: 2.5rem;
+
+    color: grey;
 }
 
-.filterButton {
-    background-color: rgb(23,27,34);
+
+
+.carsDiv {
+    display: flex;
+    border-bottom: 1px solid grey;
 }
+
+.carNames {
+    width: 90rem;
+    padding: 8px 16px;
+    cursor: pointer;
+}
+.carsDiv:hover {
+    background-color: #333;
+  }
+
+.imagesDiv {
+    display: flex;
+    text-align: center;
+    justify-content: end;
+    margin: auto;
+    margin-right: 3rem;
+}
+
+.carImage {
+    margin-right: 0;
+    display: flex;
+    justify-content: end;
+    height: auto;
+    width: 69%;
+    border-radius: 1rem;
+}
+
+
+
+.custom-dropdown {
+    margin-top: 0.07rem;
+    position:absolute;
+    background-color: rgb(18,18,18);
+    width: 18.5%;
+    max-height: 200px;
+    overflow-y: auto;
+    color: grey;
+    border-bottom-left-radius: 2.5rem;
+    border-bottom-right-radius: 2.5rem;
+
+  }
+  
 
 
