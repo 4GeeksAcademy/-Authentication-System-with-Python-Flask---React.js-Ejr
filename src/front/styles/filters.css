@@ -12,6 +12,10 @@
   color: white;
 }
 
+.card-item {
+  margin-right: 70px; 
+}
+
 .year-options {
     height: 160px; /* Ajusta la altura deseada */
     overflow-y: auto;
