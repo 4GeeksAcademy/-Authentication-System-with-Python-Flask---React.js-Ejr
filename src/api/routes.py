@@ -137,7 +137,6 @@ def get_product(productid):
     return jsonify(serialized_product), 200
 
 
-# Otras importaciones y código ...
 
 @api.route('/product/<int:productid>/edit', methods=['PUT'])
 @jwt_required()
@@ -220,9 +219,10 @@ def update_product(productid):
 
 
 
-@api.route('/api/delete-image/<int:id>', methods=['DELETE'])
+@api.route('/delete-image/<int:id>', methods=['DELETE'])
 @jwt_required()
 def delete_image(id):
+        
     try:
         # cloudinary.uploader.destroy(id)
         

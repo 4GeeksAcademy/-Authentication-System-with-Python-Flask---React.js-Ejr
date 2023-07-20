@@ -45,11 +45,12 @@ export const EditProduct = () => {
       .then(resp => resp.json())
       .then((data) => {
         setSelectedData(data);
+        console.log(data)
       });
   }, [productid]);
 
   const handleDeleteImage = (imageId) => {
-    //console.log(imageId)
+    console.log(imageId)
 
     const updatedImages = selectedData.images.filter((image) => image.id !== imageId);
     setSelectedData({ ...selectedData, images: updatedImages });
@@ -61,7 +62,7 @@ export const EditProduct = () => {
       }
     };
   
-    fetch(process.env.BACKEND_URL + `/api/delete-image/${imageId}`, deleteConfig)
+    fetch(process.env.BACKEND_URL + `api/delete-image/${imageId}`, deleteConfig)
       .then((resp) => {
         if (!resp.ok) {
           throw new Error('Error al eliminar la imagen del servidor');
@@ -73,29 +74,29 @@ export const EditProduct = () => {
   };
   
   
-  const handleFileChange = (ev) => {
-    const files = ev.target.files;
-    if (files && files.length > 0) {
-      const formData = new FormData();
-      formData.append("file", files[0]);
-      formData.append("upload_preset", "your_cloudinary_preset"); 
+  // const handleFileChange = (ev) => {
+  //   const files = ev.target.files;
+  //   if (files && files.length > 0) {
+  //     const formData = new FormData();
+  //     formData.append("file", files[0]);
+  //     formData.append("upload_preset", "your_cloudinary_preset"); 
   
-      fetch("https:/api.cloudinary.com/v1_1/djpzj47gu/image/upload", {
-        method: "POST",
-        body: formData,
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          setSelectedData({
-            ...selectedData,
-            images: [...selectedData.images, { id: data.public_id, image: data.secure_url }],
-          });
-        })
-        .catch((error) => {
-          console.error("Error uploading image: ", error);
-        });
-    }
-  };
+  //     fetch("https:/api.cloudinary.com/v1_1/djpzj47gu/image/upload", {
+  //       method: "POST",
+  //       body: formData,
+  //     })
+  //       .then((response) => response.json())
+  //       .then((data) => {
+  //         setSelectedData({
+  //           ...selectedData,
+  //           images: [...selectedData.images, { id: data.public_id, image: data.secure_url }],
+  //         });
+  //       })
+  //       .catch((error) => {
+  //         console.error("Error uploading image: ", error);
+  //       });
+  //   }
+  // };
   
   const handleUpload = () => {
     const files = document.querySelector("input[type='file']").files;
@@ -103,8 +104,89 @@ export const EditProduct = () => {
       handleFileChange({ target: { files } });
     }
   };
+
+  const handleFileChange = (ev) => {
+    const file = ev.target.files[0];
+    if (file) {
+      // Store the selected image in the component state to preview it later
+      setSelectedData({ ...selectedData, images: [...selectedData.images, file] });
+    }
+  };
+
+  const handleUpdateProduct = (event) => {
+    event.preventDefault();
+
+    // Gather the product data, excluding images, to send to the backend
+    const { images, ...dataToSend } = selectedData;
+
+    const putConfig = {
+      method: "PUT",
+      body: JSON.stringify(dataToSend),
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    };
+
+    // Send the product data to update the product
+    fetch(process.env.BACKEND_URL + `api/product/${productid}/edit`, putConfig)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Error al guardar los datos");
+        }
+        return response.json();
+      })
+      .then((responseData) => {
+        console.log(responseData);
+        setSelectedData({ ...selectedData, response: responseData });
+
+        // Now, handle the image upload to Cloudinary
+        if (images.length > 0) {
+          const formData = new FormData();
+          formData.append("file", images[0]);
+          formData.append("upload_preset", "your_cloudinary_preset");
+
+          fetch("https:/api.cloudinary.com/v1_1/djpzj47gu/image/upload", {
+            method: "POST",
+            body: formData,
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              // Update the product's images with the Cloudinary data
+              setSelectedData({
+                ...selectedData,
+                images: [
+                  ...selectedData.images,
+                  { id: data.public_id, image: data.secure_url },
+                ],
+              });
+              // Continue with any other actions after the image upload
+              // navigate("/"); // For example, navigate to a different page
+            })
+            .catch((error) => {
+              console.error("Error uploading image: ", error);
+            });
+        }
+      })
+      .catch((error) => {
+        console.error("El error es: ", error);
+      });
+  };
   
-  
+  // useEffect(() => {
+  //   const getModelsByBrand = (brandId) => {
+  //     if (brandId !== selectedBrand) {
+  //       fetch(process.env.BACKEND_URL + `api/car-models?brandId=${brandId}`)
+  //         .then((resp) => resp.json())
+  //         .then((data) => {
+  //           setCarModels(data);
+  //           setSelectedBrand(brandId);
+  //           setSelectedModel("");
+  //         })
+  //         .catch((err) => console.error(err));
+  //     }
+  //   };
+  // }[selectedData.brand])
 
   const handleChange = (ev) => {
     setSelectedData({ ...selectedData, [ev.target.name]: ev.target.value });
@@ -174,7 +256,7 @@ export const EditProduct = () => {
   return (
     <>
       <div className="upload-container">
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleUpdateProduct}>
           <div className="upload-box">
             <div className="upload-innerbox">
               <div className="upload-title">
@@ -194,16 +276,17 @@ export const EditProduct = () => {
                 </div>
 
                 <div className="col-3 me-5 ms-5">
-                  <label htmlFor="select-middle">
-                    <h6>
-                      <strong>Marca</strong>
-                    </h6>{" "}
-                  </label>
-                  <select id="select-middle" name="brand"  className="select" onChange={(e) => {handleChange(e) ; getModelsByBrand(e.target.value);}}
+                <label htmlFor="select-middle">
+                  <h6>
+                    <strong>Marca</strong>
+                    <span style={{fontSize:'.9rem', fontWeight:'bold', marginLeft:'.3rem'}}><i>(Actualmente és: {selectedData.brand?.name})</i></span>
+                  </h6>
+                </label>
+                  <select id="select-middle" name="brand" defaultValue={selectedData.brand.id}  className="select" onChange={(e) => {handleChange(e) ; getModelsByBrand(e.target.value);}}
                   >
                     <option >Selecciona otro</option>
                     {carBrands.map((brand) => (
-                      <option key={brand.id} value={brand.id}>
+                      <option key={brand.id} value={brand.id} selected={selectedData.brand.id}>
                         {brand.name}
                       </option>
                     ))}
@@ -214,6 +297,7 @@ export const EditProduct = () => {
                   <label htmlFor="select-right">
                     <h6>
                       <strong>Modelo</strong>
+                      <span style={{fontSize:'.9rem', fontWeight:'bold', marginLeft:'.3rem'}}><i>(Actualmente és: {selectedData.model.model})</i></span>
                     </h6>{" "}
                   </label>
                   <select id="select-right" name="model"  className="select" onChange={handleModelChange}>
@@ -240,10 +324,10 @@ export const EditProduct = () => {
                 <div className="col-3 me-5 ms-5">
                   <label htmlFor="select-middle">
                     <h6>
-                      <strong>Estado del vehículo</strong>
+                      <strong>Estado del vehículo </strong> <span style={{fontSize:'.9rem', fontWeight:'bold', marginLeft:'.3rem'}}><i>(Actualmente és: {selectedData.state})</i></span>
                     </h6>{" "}
                   </label>
-                  <select id="select-middle" name="state" value={selectedData} className="select" onChange={handleChange}>
+                  <select id="select-middle" name="state" value={selectedData.state} className="select" onChange={handleChange}>
                     <option>Selecciona otro</option>
                     <option value="NUEVO">Nuevo</option>
                     <option value="SEMINUEVO">Semi-nuevo</option>
@@ -280,6 +364,7 @@ export const EditProduct = () => {
                   <label htmlFor="select-right">
                     <h6>
                       <strong>Combustible</strong>
+                        <span style={{fontSize:'.9rem', fontWeight:'bold', marginLeft:'.3rem'}}><i>(Actualmente és: {selectedData.fuel})</i></span>
                     </h6>{" "}
                   </label>
                   <select id="select-right "name="fuel" value={selectedData.fuel} className="select" onChange={handleChange}>
