@@ -20,11 +20,15 @@ const CreateAccount = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
 
+//   const signUpUser = (event) => {
+//     fetch(`${process.env.BACKEND_URL}/register`)
+//   }
     // Here you can perform the login logic, such as making an API request
 
     // Reset the form fields after submission
     setEmail("");
     setPassword("");
+
   };
 
   return (

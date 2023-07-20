@@ -7,6 +7,7 @@ const SearchBar = () => {
   const { store, actions } = useContext(Context)
   const [ inputValue, setInputValue ] = useState("")
   const [ check, setChecked] = useState([])
+  const [ showDropdown, setShowDropdown] = useState(false)
 
 
 
@@ -35,35 +36,39 @@ const SearchBar = () => {
       setChecked(updatedList)
     }
   }
-
-  const checkedItems = check.length
-  ? check.reduce((total, item) => {
-      return total + ", " + item;
-    })
-  : "";
-
-  console.log("CHECKED VARIABLE:",check)
+  console.log(showDropdown)
   return (
     <div className="parentDiv">
-       <div>
           <form>
             <div className='searchBarContainer'>
-              <input
-              placeholder='Search for a Car'
-              value={inputValue}
-              list='cars-list'
-              onChange={(e) => handleSearch(e)}
-              className='searchBar'/>
-              <datalist id='cars-list'>
-                {filteredCars.length > 0 && filteredCars.map((car, index) => (
-                  <option key={index} value={car}>
-                    {car}
-                  </option>
+              <div>
+                <input
+                placeholder='Search for a Car'
+                value={inputValue}
+                onChange={(e) => handleSearch(e)}
+                onFocus={() => setShowDropdown(true)}
+                // onBlur={() => setShowDropdown(false)}
+                className='searchBar'/>
+              </div>                
+              {showDropdown && filteredCars.length > 0 && (
+              <div className='custom-dropdown'>
+                {filteredCars.map((car, index) => (
+                  <div className='carsDiv'>
+                    <div className="carNames" key={index} value={car}>
+                      {car}
+                    </div>
+                    <div className='imagesDiv'>
+
+                      {/* NEED TO IMPLEMENT THE LOGIC TO GET THE IMAGES FROM DATABASE */}
+
+                      <img className="carImage" src='https://hips.hearstapps.com/hmg-prod/images/2023-nissan-altima-113-1654783718.jpg?crop=0.712xw:0.535xh;0.132xw,0.347xh&resize=1200:*'/>
+                    </div>
+                  </div>
                 ))}
-              </datalist>
+              </div>
+            )}               
             </div>
           </form>
-        </div>
         <div className="dropdown">
           <div className='filterButtonContainer'>
             <button className="btn btn-secondary dropdown-toggle filterButton" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -75,7 +80,6 @@ const SearchBar = () => {
                 <p>Price Range</p>
               </div>
               <div className='listGroupContainer'>
-                <ul className="list-group">
                   <p>Car Type</p>
                   {store.cars.map((item, index) => {
                     return (
@@ -88,7 +92,6 @@ const SearchBar = () => {
                       </div>
                     )
                     })}
-                </ul>
               </div>     
           </div>
        </div>

@@ -3,14 +3,60 @@
 }
 
 
+
 .searchBar {
+    padding-left: 0.5rem;
     width: 20rem;
     background-color: rgb(18,18,18);
     border-radius: 2rem;
+    color: grey;
+}
+
+.carsDiv {
+    display: flex;
+    border-bottom: 1px solid grey;
+}
+
+.carNames {
+    width: 90rem;
+    padding: 8px 16px;
+    cursor: pointer;
+}
+.carsDiv:hover {
+    background-color: #333;
+  }
+
+.imagesDiv {
+    display: flex;
+    text-align: center;
+    justify-content: end;
+    margin: auto;
+    margin-right: 3rem;
+}
+
+.carImage {
+    margin-right: 0;
+    display: flex;
+    justify-content: end;
+    height: auto;
+    width: 69%;
+    border-radius: 1rem;
 }
 
 .filterButton {
     background-color: rgb(23,27,34);
 }
+
+.custom-dropdown {
+    margin-top: 0.07rem;
+    position:absolute;
+    background-color: rgb(18,18,18);
+    width: 18.5%;
+    max-height: 200px;
+    overflow-y: auto;
+    color: grey;
+    border-radius: 2rem;
+  }
+  
 
 

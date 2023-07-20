@@ -15,7 +15,6 @@ export const Navbar = () => {
 					</Link>
 				</div>
 				<div>
-					
 					{/* <Link to="/catalog"> */}
 						<button className="btn btn-primary">
 							<h5>Cars catalog</h5>
