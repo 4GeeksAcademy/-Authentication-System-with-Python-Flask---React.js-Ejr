@@ -16,6 +16,10 @@
   margin-right: 70px; 
 }
 
+.buttonFilter {
+  width: 40px;
+}
+
 .year-options {
     height: 160px; /* Ajusta la altura deseada */
     overflow-y: auto;

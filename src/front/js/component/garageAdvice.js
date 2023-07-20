@@ -49,7 +49,7 @@ export const GarageAdvice = () => {
                     <h5 className="text-end text-white pt-3 px-3 mx-3">
                                     {/* text-start text-white pt-3 px-3 mx-3 */}
                         <Link to="/garage" className="titleAdviceGarage">
-                            Consulta nuestros Talleres
+                           <strong>Consulta nuestros Talleres</strong> 
                         </Link> 
                     </h5>            
                     <p className="text-end text-white pt-2 px-3 textGarageLeft d-md-flex" style={{"font-size": "larger"}}> 
@@ -86,7 +86,7 @@ export const GarageAdvice = () => {
                     <h5 className="text-start text-white pt-3 px-3 mx-3">
                         
                         <Link to="/login" className="titleAdviceGarage">
-                            ¿Eres un Taller?
+                          <strong>¿Eres un Taller?</strong>  
                         </Link>
                     </h5>   
                
