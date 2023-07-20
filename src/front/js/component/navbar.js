@@ -17,13 +17,13 @@ export const Navbar = () => {
 				</div>
 				<div>
 					{/* <Link to="/catalog"> */}
-						<button className="btn btn-primary">
-							<h5>Cars catalog</h5>
-						</button>
+					<button className="btn btn-primary">
+						<h5>Cars catalog</h5>
+					</button>
 					{/* </Link> */}
 				</div>
 				<div>
-					< SearchBar/>
+					< SearchBar />
 				</div>
 				<div>
 					< Filters />

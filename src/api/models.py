@@ -30,7 +30,7 @@ class User(db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False)
     first_name = db.Column(db.String(120), nullable=False)
     phone_number = db.Column(db.String(250), unique=True, nullable=False)
-    password = db.Column(db.String(80), unique=False, nullable=False)
+    password = db.Column(db.String(250), unique=False, nullable=False)
     saved = relationship('Saved', lazy=True, back_populates='user', overlaps="saved_cars")
 
 
