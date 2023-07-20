@@ -25,10 +25,10 @@ export const CarouselDefault = () => {
   };
 
   return (
-    <div className="d-flex overflow-auto my-5">
+    <div className="d-flex overflow-auto my-5 ">
       {store.products.length > 0 ? (
         store.products.map((vehicle, index) => (
-          <div className="col-12 col-md-4 mb-5" key={index}>
+          <div className="mx-3 mb-5" key={index}>
             <div className="card card-blur" style={{ width: "18rem" }}>
               <div className="flip-card">
                 <div className="flip-card-inner">
