@@ -140,7 +140,10 @@
   
 }
 
-
+.h5State{
+    color: #125c8e !important;
+    font-size: 18px;
+}
 
 .state_product_profile{
     font-weight: bolder;

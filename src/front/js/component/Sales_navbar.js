@@ -10,7 +10,7 @@ export const Sales_navbar = () => {
   };
 
   return (
-    <div className="container sales_navbar my-3 me-2">
+    <div className="container sales_navbar my-3 me-4 ">
       <NavLink to="/profile/onsale" className="sales_navbar_buttons px-2" activeClassName="actived" isActive={isOnSaleActive}>
         A la venta
       </NavLink>
