@@ -1,15 +1,13 @@
 import React, { useState, useContext, useEffect } from 'react'
 import {Context} from "../store/appContext"
 import "../../styles/searchbar.css"
-
+import Filters from './Filters'
 
 const SearchBar = () => {
   const { store, actions } = useContext(Context)
   const [ inputValue, setInputValue ] = useState("")
-  const [ check, setChecked] = useState([])
   const [ showDropdown, setShowDropdown] = useState(false)
-
-
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
 
   const cars = store.cars
@@ -27,16 +25,23 @@ const SearchBar = () => {
     setInputValue(e.target.value)
   }
 
-// FILTERING ITEMS 
-  const filterSelection = (event) => {
-    let updatedList = [...check]
-    if (event.target.check) {
-      updatedList = [...check, event.target.value]
-    } else {
-      setChecked(updatedList)
-    }
-  }
-  console.log(showDropdown)
+  const handleOpenModal = (e) => {
+    e.preventDefault();
+    console.log('Opening the modal...');
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    console.log('Closing the modal...');
+    setIsModalOpen(false);
+  };
+  const handleApplyFilters = (selectedFilters, priceRange) => {
+    // Handle the selected filters and price range here (e.g., perform search based on filters)
+    console.log('Selected Filters:', selectedFilters);
+    console.log('Price Range:', priceRange);
+    handleCloseModal();
+  };
+
   return (
     <div className="parentDiv">
           <form>
@@ -47,7 +52,7 @@ const SearchBar = () => {
                 value={inputValue}
                 onChange={(e) => handleSearch(e)}
                 onFocus={() => setShowDropdown(true)}
-                // onBlur={() => setShowDropdown(false)}
+                onBlur={() => setShowDropdown(false)}
                 className='searchBar'/>
               </div>                
               {showDropdown && filteredCars.length > 0 && (
@@ -66,37 +71,21 @@ const SearchBar = () => {
                   </div>
                 ))}
               </div>
-            )}               
+            )}
+              <button onClick={(e) => handleOpenModal(e)}>Open Filter Modal</button>
+              <Filters isOpen={isModalOpen} onClose={ handleCloseModal} onApplyFilters={handleApplyFilters}>
+                {/* Your filter options go here */}
+                {/* For example: */}
+                {/* <p>Filter by Model, Type, Engine, Transmission, and Price</p>
+                <p>price</p>
+                {/* Add checkboxes, range input, etc. for filter options */}
+                <button onClick={ handleCloseModal}>Close</button>
+                <button onClick={ handleApplyFilters}>Apply Filters</button>
+              </Filters>     
             </div>
           </form>
-        <div className="dropdown">
-          <div className='filterButtonContainer'>
-            <button className="btn btn-secondary dropdown-toggle filterButton" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Filters
-            </button>
-          </div>
-          <div className="dropdown-menu">
-              <div>
-                <p>Price Range</p>
-              </div>
-              <div className='listGroupContainer'>
-                  <p>Car Type</p>
-                  {store.cars.map((item, index) => {
-                    return (
-                      <div key={index}>
-                        <input
-                        type='checkbox'
-                        value={item.car_type}
-                        onClick={(e) => filterSelection(e)}/>
-                        {item.car_type}
-                      </div>
-                    )
-                    })}
-              </div>     
-          </div>
-       </div>
     </div>
   )
 }
 
-export default SearchBar
+export default SearchBar;
