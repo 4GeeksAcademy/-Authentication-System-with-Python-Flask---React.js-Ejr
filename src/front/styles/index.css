@@ -161,6 +161,7 @@ li {
   margin: 2px;
   color: black;
   font-size: 15px;
+  font-weight:bolder;
 }
 
 .navbar_profile:hover {
@@ -192,8 +193,13 @@ li {
   border-radius: 6px;
 }
 
+.navbar_tittle_h2{
+  font-weight: bold;
+}
+
 .profile_navbar_text{
   margin-bottom: 1.5rem;
+  font-weight: bold;
 }
 
 @media only screen and (max-width: 600px) {

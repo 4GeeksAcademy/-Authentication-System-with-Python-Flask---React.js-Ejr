@@ -13,7 +13,7 @@ export const Profile_navbar = () => {
 
     return (
         <div className="container">
-            <h2>Tu perfil</h2>
+            <h2 className="navbar_tittle_h2">Tu perfil</h2>
             <h6 className="profile_navbar_text">Aquí podrás revisar todos los datos de tu cuenta de usuario</h6>
             <div className="row">
                 <NavLink exact to="/profile/configuration" className="navbar_profile col-1" activeClassName="active">Perfil</NavLink>

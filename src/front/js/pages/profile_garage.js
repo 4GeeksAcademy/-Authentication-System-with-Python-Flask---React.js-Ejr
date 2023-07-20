@@ -18,6 +18,8 @@ export const Profile_garage = () => {
     return store.garage ? (
         <>
             <Profile_navbar />
+            <div className="container mt-3 ms-5"> <h2 ><strong>Tu Taller</strong></h2></div>
+           
             <div className="container_profile">
                 <div className="avatar_container">
                     <img src="https://neomotor.epe.es/binrepository/990x619/0c62/990d557/none/2594535/UHEL/elegir-taller-confianza-1_285-37667622_20221031082702.jpg" alt="Avatar" className="avatar_image" />

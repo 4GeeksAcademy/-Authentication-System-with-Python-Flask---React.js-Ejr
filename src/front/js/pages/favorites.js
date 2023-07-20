@@ -25,7 +25,8 @@ export const Favorites = () => {
             <Profile_navbar />
                 <div>
                     <h2 className="product_type_profile">
-                        Tus vehículos favoritos
+                        <strong>Tus vehículos favoritos</strong>
+                        
                     </h2>
                     <div className="row row_favorites_profile">
                         {store.favorites.map((favorites, index) => (

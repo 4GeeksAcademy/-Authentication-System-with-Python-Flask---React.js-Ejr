@@ -5,15 +5,13 @@
     padding-top: 4rem;
     border-radius: 15px;
 }
-
-.row_profile_configuration{
-    height: 3rem;
-    margin-bottom: 2rem;
-   
-    color: rgb(0, 0, 0);
-    align-items: center
+.ad {
+    float: right;
+    
 }
-
+.as {
+    float: left;
+}
 .label{
     background-color: #ffffff;
     color: #125c8e;
@@ -23,11 +21,16 @@
     align-items: center;
     display: flex;
     font-size: 20px;
+
+
 }
 
 .user_data{
     margin-left: 3rem;
 }
+
+
+
 
 .edit_profile{
     background-color: #ffffff;
@@ -36,38 +39,62 @@
     border-radius: 12px;
     text-decoration: none;
     color: rgb(0, 0, 0);
-    width: 6rem;
+    padding: 17px;
     height: 2rem;
-    display: flex;
     justify-content: center;
-    margin-left: 1.5rem;
+    font-weight: bolder;
 }
 
-.change_password{
-    background-color: #ffffff;
-    border-color: #125c8e;
-    border-style: solid;
-    border-radius: 12px;
-    text-decoration: none;
-    color: rgb(0, 0, 0);
-    width: 8rem;
-    height: 4rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
+.input-with-icon2 {
+    position: relative;
+    color: #125c8e;
+    
+  }
+  
+  .input-with-icon2 input {
+      padding-right: 30px; 
+      
+    }
+    
+    
+    .iconAux {
+        margin-top: -8px;
+        
+    }
+    
+    .input-with-icon2 .icon {
+        position: absolute;
+        top: 50%;
+        right: 10px; 
+        transform: translateY(-50%);
+        cursor: pointer;
+    }
+    
+    .row_profile_configuration{
+        height: 4rem;
+        margin-bottom: 2rem;
+        color: rgb(0, 0, 0);
+    
+    }
+
+    .change_password{
+        background-color: #ffffff;
+        border: 3px solid #125c8e;
+        border-radius: 12px;
+        text-decoration: none;
+        color: rgb(0, 0, 0);
+        font-weight: bold;
+        padding: 4px;
+       
+        font-size: large;
+} 
 
 .change_password:hover{
     color: rgb(255, 255, 255);
     background-color: #2776ab;
 }
 
-.row_edit_profile{
-    display: flex;
-    align-items: center;
-    justify-content: end;
-    margin-right: 4rem;
-}
+
 
 .edit_profile:hover {
     color: rgb(255, 255, 255);
@@ -154,8 +181,7 @@
 }
 
 .sold-product_profile{
-    width: 40rem;
-    height: 20rem;
+   width: 100%;
     border-radius: 12px;
 }
 
@@ -379,8 +405,8 @@
     }
 
     .label{
-        width: 14rem;
-        height: 1.6rem;
+        width:150px;
+        height: 40px;
         font-size: medium;
         border-radius: 8px;
         background-color:#ffffff;
@@ -397,17 +423,19 @@
     }
 
     .edit_profile{
-        margin-top: 2rem;
+        
         color: rgb(0, 0, 0);
         background-color: #ffffff;
         border-color: #125c8e;
         border-style: solid;
+        margin-left: 0;
     }
 
     .row_edit_profile {
         margin-left: 3rem;
     }
-
+  
+    
     .row_product_profile{
       
         height: 7rem;
