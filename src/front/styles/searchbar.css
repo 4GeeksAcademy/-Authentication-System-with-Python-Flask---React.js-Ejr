@@ -1,0 +1,16 @@
+.parentDiv {
+    display: flex;
+}
+
+
+.searchBar {
+    width: 20rem;
+    background-color: rgb(18,18,18);
+    border-radius: 2rem;
+}
+
+.filterButton {
+    background-color: rgb(23,27,34);
+}
+
+

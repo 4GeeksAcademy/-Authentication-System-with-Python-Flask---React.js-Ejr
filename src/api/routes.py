@@ -7,6 +7,7 @@ from api.utils import generate_sitemap, APIException
 import requests
 from werkzeug.security import generate_password_hash, check_password_hash
 import datetime
+from flask_jwt_extended import jwt_required, get_jwt_identity, create_access_token
 
 
 api = Blueprint('api', __name__)
@@ -54,6 +55,11 @@ def fetch_car_data(model):
 @api.route('/cars', methods=['POST'])
 def add_car():
         model = request.json.get('model')
+
+        existing_car = Car.query.filter_by(car_name=model).first()
+        if existing_car:
+             return jsonify({"Message": "Car exists on database already"}), 400
+
         car_data = fetch_car_data(model)
         if car_data is not None:
              year=car_data[0]['year'],
