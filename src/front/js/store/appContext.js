@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import getState from "./flux.js";
+import favoritesList from "../component/favoritesList.js";
 
 // Don't change, here is where we initialize our context, by default it's just going to be null.
 export const Context = React.createContext(null);
@@ -44,3 +45,18 @@ const injectContext = PassedComponent => {
 };
 
 export default injectContext;
+
+
+function Fav (){
+	//set state using useState hook
+	const[favorite,setFavorite] = useState([])
+
+	// GET request
+	useEffect(() => {
+		fetch("https://bobo305-super-duper-space-palm-tree-j6xj5grxw4qc5w6-3001.preview.app.github.dev/favoritesList")
+		.then(response => response.json())
+		.then((favorite) => setFavorite(favorite))
+	}, [])
+
+
+}

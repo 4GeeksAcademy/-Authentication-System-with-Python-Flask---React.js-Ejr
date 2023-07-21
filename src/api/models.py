@@ -1,3 +1,4 @@
+import 
 from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
@@ -17,3 +18,12 @@ class User(db.Model):
             "email": self.email,
             # do not serialize the password, its a security breach
         }
+    
+
+class Favorites(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    # maybe db.Boolean(False)
+    favorite = db.Column(db.Boolean, unique=False, nullable=True ,default= False)
+    # foreingKey = user databae 
+    user_id = db.Column(db.Integer, ForeignKey(),unique = True )
+    

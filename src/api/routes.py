@@ -16,3 +16,7 @@ def handle_hello():
     }
 
     return jsonify(response_body), 200
+
+
+# @app.route('/favoritesList' , methods=[ 'GET', 'POST'])
+# def favorite():
