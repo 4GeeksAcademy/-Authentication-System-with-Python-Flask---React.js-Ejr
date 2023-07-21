@@ -13,10 +13,6 @@ useEffect (() => {
     actions.SoldChanged()
 }, [])
 
-const sendReview = (product) => {
-    actions.addReview(current_user, product.id, stars, comment)
-}
-
     return store.products ? (
         <>
             <Profile_navbar />
@@ -70,6 +66,9 @@ const sendReview = (product) => {
                                            
                                         </div>
                                     </div>
+                                </div>
+                                <div className="stars">
+                                    <h3><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i></h3>
                                 </div>
                                 <div className="row">
                                     <div class="input-group col-12 input_review">

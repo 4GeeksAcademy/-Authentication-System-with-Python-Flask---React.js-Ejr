@@ -600,47 +600,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log(response)
 				})
 			},
-			addReview: async (user_id, product_id, stars, comment) => {
-				const token = localStorage.getItem("token");
-				const store = getStore();
-			  
-				const hasReviewedProduct = store.reviews.some(
-				  (review) => review.product_id === product_id
-				);
-			  
-				if (hasReviewedProduct) {
-				  console.log("Ya has dejado una reseña para este producto.");
-				  return; 
-				}
-			  
-				try {
-				  const requestOptions = {
-					method: "POST",
-					headers: {
-					  "Content-Type": "application/json",
-					  Authorization: `Bearer ${token}`,
-					},
-					body: JSON.stringify({
-					  user_id: user_id,
-					  product_id: product_id,
-					  stars: stars,
-					  comment: comment,
-					}),
-				  };
-			  
-				  const response = await fetch(`${process.env.BACKEND_URL}api/profile/reviews`, requestOptions);
-				  if (response.ok) {
-					const data = await response.json();
-					console.log(data);
-					const updatedReviews = [...store.reviews, data];
-					setStore({ reviews: updatedReviews });
-				  } else {
-					throw new Error("Error al agregar la reseña");
-				  }
-				} catch (error) {
-				  console.error("Error:", error);
-				}
-			  },
 		}
 	}
 };
