@@ -169,7 +169,10 @@ useEffect(() => {
           body: formData,
         })
           .then((resp) => resp.json())
-          .then((data) => data.secure_url)
+          .then((data) => {
+            console.log("Uploaded image data:", data);
+            return data.secure_url;
+          })
       )
     )
       .then((fileURLs) => {

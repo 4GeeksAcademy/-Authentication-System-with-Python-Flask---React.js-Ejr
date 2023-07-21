@@ -44,7 +44,7 @@ def upload_car():
     
     
     data = request.get_json()
-
+    print(data)
     user = User.query.get(current_user)
 
     name = data.get('name')
@@ -70,13 +70,17 @@ def upload_car():
     ) 
     db.session.add(product)
     db.session.commit()
+    #print(data.get('images'))
 
     # Recupero la url
     for image_file in data.get('images', []):
-        upload_result = cloudinary.uploader.upload(image_file)
-        image = Image(image=upload_result['secure_url'], user_id=user_id, product_id=product.id)
-        db.session.add(image) 
-        db.session.commit()
+        
+        #upload_result = cloudinary.uploader.upload(image_file)
+        if image_file:
+
+            image = Image(image=image_file, user_id=user_id, product_id=product.id)
+            db.session.add(image) 
+            db.session.commit()
  
  
     return jsonify({"message": "Your product has been successfully uploaded"}), 200
@@ -199,12 +203,11 @@ def update_product(productid):
 
     if images:
         product.images.clear()  
-        for image_data in images:
-            image_url = image_data.get('image')
+        for image_url in images:  # Iterate through the list of image URLs directly
             if image_url:
                 try:
-                    response = cloudinary.uploader.upload(image_url)
-                    image = Image(image=response['secure_url'], product_id=productid, user_id=current_user)
+                    # Here, you can directly use the image_url to create the Image object
+                    image = Image(image=image_url, product_id=productid, user_id=current_user)
                     db.session.add(image)
                 except Exception as e:
                     pass
