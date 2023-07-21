@@ -5,6 +5,7 @@ import "../../styles/index.css";
 import { Link } from "react-router-dom";
 import "../../styles/filters.css";
 
+
 export const Filters = (props) => {
   const { store, actions } = useContext(Context);
 
@@ -120,8 +121,9 @@ export const Filters = (props) => {
 
   return (
     <>
-      <a class="btn btn-primary jello-vertical" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
-        <i class="fa-solid fa-filter" />
+      <a class="btn btn-primary jello-vertical buttonFilter" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
+       
+      <i class="fa-solid fa-sliders"></i>
       </a>
 
       <form onSubmit={handleOnSubmit}>

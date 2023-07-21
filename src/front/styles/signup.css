@@ -1,12 +1,11 @@
 input{
     border-radius: 3px;
-    width: 50%;
+    
     height: 3rem;
     border: 1px solid #a3c6f4;
     background: transparent;
     padding: 15px;
 }
-
 
 
 
@@ -16,24 +15,31 @@ input{
     border-radius: 10px;
     background: #D1D8EC;
     box-shadow: -11px 11px 15px #969caa, 11px 11px 15px #969caa;
-    width: 43rem;
-    height: 35rem;
+    
 
 }
 
+h2 {
+    font-weight: bold;
+    
+}
+
+label {
+
+font-weight: bold;
+
+}
 .input-box{
-    width: 38rem;
-    display: flex;
-    flex-direction: column;
-    margin-left: 1rem;
+    
+    
     margin-top: 1.5rem;
-    justify-content: center!important;
+ 
 }
 
 .labelbox{
-    margin-left: 1rem;
+ 
     margin-top: 1.6rem;
-    width: 10rem;
+   
 }
 
 .button{
@@ -43,7 +49,7 @@ input{
 
 .btn1{
     margin-top: 1rem;
-    width: 20rem;
+    
     padding: 10px 20px;
 }
 

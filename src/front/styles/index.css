@@ -37,6 +37,21 @@ li {
   font-family: 'Roboto', sans-serif;
 }
 
+.container-garage {
+  
+
+  border-radius: 12px;
+  background-color: #2486c7;
+}
+
+
+.toolIcon {
+  float: right;
+  
+  
+  }
+  
+
 #light{
     background-color: #c4d8f2;
 }
@@ -138,13 +153,15 @@ li {
   border-color: #125c8e;
   border-style: solid;
   border-radius: 10px;
-  margin-right: 2rem;
   text-align: center;
   font-family: 'Roboto', sans-serif;
   text-decoration: none;
   background-color: white;
-  padding: 2px;
+  padding: 3px;
+  margin: 2px;
   color: black;
+  font-size: 15px;
+  font-weight:bolder;
 }
 
 .navbar_profile:hover {
@@ -176,8 +193,13 @@ li {
   border-radius: 6px;
 }
 
+.navbar_tittle_h2{
+  font-weight: bold;
+}
+
 .profile_navbar_text{
   margin-bottom: 1.5rem;
+  font-weight: bold;
 }
 
 @media only screen and (max-width: 600px) {
@@ -189,6 +211,28 @@ li {
   }
 }
 
+
+
+
+@media only screen and (max-width: 1300px) {
+  .navbar_profile{
+    font-size: medium;
+    width: 8rem;
+    margin-left: 2.7rem;
+    margin-bottom: 1rem;
+  }
+}
+
+
+
+@media only screen and (min-width: 1300px) {
+  .navbar_profile{
+    font-size: medium;
+    width: 8em;
+    margin-left: 2.7rem;
+    margin-bottom: 1rem;
+  }
+}
 
 /* Footer */
 footer {

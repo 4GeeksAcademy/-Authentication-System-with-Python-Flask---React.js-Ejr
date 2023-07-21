@@ -5,6 +5,21 @@
     background-color: green;
 }
 
+
+.customFilterImage{
+  width: 30px;
+  height: 30px;
+  color: white;
+}
+
+.card-item {
+  margin-right: 70px; 
+}
+
+.buttonFilter {
+  width: 40px;
+}
+
 .year-options {
     height: 160px; /* Ajusta la altura deseada */
     overflow-y: auto;
