@@ -713,7 +713,6 @@ def addReview():
     current_user = get_jwt_identity()
     data = request.get_json()
     product_id = data.get("product_id")
-    stars = str(data.get("stars"))  # Convertir a cadena
     comment = data.get("comment")
 
     user = User.query.get(current_user)
@@ -724,7 +723,7 @@ def addReview():
 
     recived_user = User.query.get(product.user_id)
 
-    review = Review(given_review_id=user.id, recived_review_id=recived_user.id, product_id=product.id, stars=stars, comment=comment)
+    review = Review(given_review_id=user.id, recived_review_id=recived_user.id, product_id=product.id, comment=comment)
     db.session.add(review)
     db.session.commit()
 
@@ -744,13 +743,11 @@ def getReviews():
     reviews = Review.query.filter_by(given_review_id=current_user).all()
     
     review_list = []
-    for review in reviews:
-        stars = review.stars.value    
+    for review in reviews:   
         product = Product.query.get(review.product_id)
 
         review_data = {
             "product_id": review.product_id,
-            "stars": int(stars),
             "comment": review.comment,
             "given_review_id": review.given_review_id,
             "product_name": product.name,

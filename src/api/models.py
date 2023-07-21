@@ -157,6 +157,7 @@ class status_product(Enum):
     PENDING_BLOCKED = 'pending blocked'
     BLOCKED = 'blocked'
     SOLD = 'sold'
+    SOLD_REVIEWED = 'sold reviewed'
 
 
 class status(db.Model):
@@ -240,12 +241,6 @@ class Service (db.Model):
             "garage_id": self.garage_id
         }
 
-class Rating(Enum):
-    ONE_STAR = 1
-    TWO_STARS = 2
-    THREE_STARS = 3
-    FOUR_STARS = 4
-    FIVE_STARS = 5
 
     
 class Review(db.Model): # Cambiar la tabla para que se pueda asociar al comrpador y al vendedor
@@ -253,7 +248,6 @@ class Review(db.Model): # Cambiar la tabla para que se pueda asociar al comrpado
     given_review_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     recived_review_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     product_id = db.Column(db.Integer, db.ForeignKey('product.id'), nullable=False)
-    stars = db.Column(db.Enum(Rating), nullable=False) # Revisar Enum con los profes
     comment = db.Column(db.String(250), nullable=True)
 
     given = db.relationship('User', foreign_keys=[given_review_id])
