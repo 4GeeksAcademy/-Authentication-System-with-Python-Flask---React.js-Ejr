@@ -15,37 +15,38 @@ const getState = ({ getStore, getActions, setStore }) => {
 		  }
 		],
 		saved: [],
+		cars: [],
+		users: [],
+		staticCars: [
+		  { car_name: 'Car 1' },
+		  { car_name: 'Car 2' },
+		  { car_name: 'Car 3' },
+		],
 		token: null, // Initialize token in the store
 		errorMessage: null // Initialize errorMessage in the store
 	  },
 	  actions: {
-		exampleFunction: () => {
-		  getActions().changeColor(0, "green");
+		getAllUsers: () => {
+		  fetch(`${process.env.BACKEND_URL}/users`)
+			.then((res) => res.json())
+			.then((data) => {
+			  console.log(data);
+			  setStore({ users: data });
+			});
 		},
   
-		getMessage: async () => {
-		  try {
-			const resp = await fetch("https://jonio298-symmetrical-train-9vxg75vgxp6fqq7-3001.preview.app.github.dev/api/hello");
-			const data = await resp.json();
-			setStore({ message: data.message });
-			return data;
-		  } catch (error) {
-			console.log("Error loading message from backend", error);
-		  }
-		},
-  
-		changeColor: (index, color) => {
-		  const store = getStore();
-		  const demo = store.demo.map((elm, i) => {
-			if (i === index) elm.background = color;
-			return elm;
-		  });
-		  setStore({ demo: demo });
+		getAllCars: () => {
+		  fetch(`${process.env.BACKEND_URL}/cars`)
+			.then((res) => res.json())
+			.then((data) => {
+			  setStore({ cars: data });
+			  console.log("These are stored cars in the database:", data);
+			});
 		},
   
 		login: async (email, password) => {
 		  try {
-			const response = await fetch("https://jonio298-symmetrical-train-9vxg75vgxp6fqq7-3001.preview.app.github.dev/login", {
+			const response = await fetch(`${process.env.BACKEND_URL}/login`, {
 			  method: "POST",
 			  headers: {
 				"Content-Type": "application/json"
