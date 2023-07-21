@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import "/workspaces/Watacar_v2/src/front/styles/signup.css";
@@ -11,6 +11,29 @@ export const Signup = () => {
   const handleChange = (ev) => {
     setData({ ...data, [ev.target.name]: ev.target.value });
   };
+
+
+useEffect(() => {
+  const script = document.createElement("script");
+  script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyAf7aQ5JHWwJTvYuzpJw8QtQK8DYdwJqPE&libraries=places`;
+  script.async = true;
+  script.onload = handleScriptLoad;
+  document.body.appendChild(script);
+
+  return () => {
+    document.body.removeChild(script);
+  };
+}, []);
+
+const handleScriptLoad = () => {
+  const input = document.getElementById("address");
+  const autocomplete = new google.maps.places.Autocomplete(input);
+
+  autocomplete.addListener("place_changed", () => {
+    const selectedPlace = autocomplete.getPlace();
+    const address = selectedPlace.formatted_address;
+  });
+};
 
   const handleSubmit = (ev) => {
     ev.preventDefault();
@@ -91,7 +114,7 @@ export const Signup = () => {
               <div className="col-6">
                 <div className="input-box">
                   <label htmlFor="address">Dirección</label>
-                  <input type="text" placeholder="Av. del corral 7" name="address" onChange={handleChange} />
+                  <input type="text" placeholder="Av. del corral 7" id="address" name="address" onChange={handleChange} />
                 </div>
               </div>
             </div>
