@@ -17,11 +17,10 @@ export const Navbar = () => {
   const [password, setPassword] = useState("");
   const [modalIsOpen, setIsOpen] = useState(false);
   const [isSmallScreen, setIsSmallScreen] = useState(false);
-  const [dropMenu, setDropMenu] = useState("container-fluid mx-3");
+  const [dropMenu, setDropMenu] = useState("container-fluid mx-1");
   const [ariaExpanded, setAriaExpanded] = useState(false);
   const [manuallyClosed, setManuallyClosed] = useState(false); // Nueva variable de estado
-  
-  
+
   
   
   
@@ -120,57 +119,35 @@ export const Navbar = () => {
   }, []);
   
   
-  
-  // Responsive Drop Menu
-  const handleToggle = () => {
-    if (manuallyClosed==true) { // Agregar condición para verificar si el menú ha sido cerrado manualmente
-      setAriaExpanded(!ariaExpanded);
-    }
-  };
-
-
-
-  const handleDropMenu = () => {
-    if (ariaExpanded == true) {
-      setDropMenu("justify-content-center text-center m-auto mb-5");
-      console.log("true")
-    } else {
-      setDropMenu("container-fluid mx-3");
-      console.log("false")
-    }
+     
+ 
+  const closeForceNavbar = () => {
+    setAriaExpanded(false)
   }
-  
-  const closeNavbar = () => {
-    setAriaExpanded(false);
-    setManuallyClosed(true); // Establecer que el menú ha sido cerrado manualmente
-  };
-  
-    
-  useEffect(()=> {
-    handleDropMenu()
-  }), [ariaExpanded]
 
-  
+  const closeMenuOnItemClick = () => {
+    setManuallyClosed(true); // Establecer que el menú ha sido cerrado manualmente
+    setAriaExpanded(false); // Cerrar el menú
+  };
 
   return (
     <nav className="navbar navbar-expand-lg bg-body-tertiary py-4">
       <div className={dropMenu} >
         <div className="text-center lightSpeedIn customDiv">
-          <a href="/" className="navbar-brand tittle-nav ms-3 " id="tittle-nav" onClick={closeNavbar}>
+          <a href="/" className="navbar-brand tittle-nav ms-1 " id="tittle-nav" onClick={closeMenuOnItemClick}>
             WhataCar
           </a>
         </div>
         <br></br>
-        <div className="justify-content-end d-flex mb-2">
+        <div className="justify-content-end d-flex mb-2 ">
           <div className="mx-auto">
             <button
-              className="navbar-toggler"
+              className="navbar-toggler  ms-5"
               type="button"
               data-bs-toggle="collapse"
               data-bs-target="#navbarNavDropdown"
               aria-controls="navbarNavDropdown"
-              aria-expanded={ariaExpanded}
-              onClick={handleToggle}
+              aria-expanded={ariaExpanded}             
               aria-label="Toggle navigation"
             >
               <span className="navbar-toggler-icon"></span>
@@ -188,6 +165,7 @@ export const Navbar = () => {
                         style={{ color: "rgb(15, 76, 117)" }}
                         aria-current="page"
                         to="/signup"
+                        onClick={closeMenuOnItemClick}
                         
                       >
                         Registro
@@ -199,7 +177,7 @@ export const Navbar = () => {
                         style={{ color: "rgb(15, 76, 117)" }}
                         aria-current="page"
                         to="/login"
-                        onClick={closeNavbar}
+                        onClick={closeMenuOnItemClick}
                       
                       >
                         Accede
@@ -252,7 +230,7 @@ export const Navbar = () => {
                         data-bs-toggle="dropdown"
                         aria-expanded="false"
                         to="profile"
-                        onClick={closeNavbar}
+                        onClick={closeMenuOnItemClick}
                       >
                         <i className="fa-regular fa-user ms-4 jello-vertical" id="iconProfile"></i>
                       </Link>
@@ -261,17 +239,17 @@ export const Navbar = () => {
                           <Link
                             to="/profile/configuration"
                             className="dropdown-item justify-content-end d-flex"
-                            onClick={closeNavbar}
+                            onClick={closeMenuOnItemClick}
                           >
                             Mi perfil
-                            <i className="fa-solid fa-address-card ms-3 mt-1 profileIcons"></i>
+                            <i className="fa-solid fa-address-card ms-2 mt-1 profileIcons"></i>
                           </Link>
                         </li>
                         <li>
                           <Link
                             to="/profile/configuration"
                             className="dropdown-item justify-content-end d-flex  profileIcons"
-                            onClick={closeNavbar}
+                            onClick={closeMenuOnItemClick}
                            
                           >
                             Configuración
@@ -282,7 +260,7 @@ export const Navbar = () => {
                           <Link
                             to="/profile/onsale"
                             className="dropdown-item justify-content-end d-flex "
-                            onClick={closeNavbar}
+                            onClick={closeMenuOnItemClick}
                           >
                             Mis productos
                             <i className="fa-solid fa-car ms-2 mt-1 profileIcons"></i>

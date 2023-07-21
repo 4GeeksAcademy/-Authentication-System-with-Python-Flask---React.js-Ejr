@@ -8,7 +8,7 @@
 
 #tittle-nav {
   font-weight:bolder;
-  font-size: 45px;
+  font-size: 31px;
 
 }
 
@@ -175,6 +175,10 @@
   }
   
   
+  .mobile-nav-container {
+    display: flex;
+    align-items: center;
+  }
   
   
   
