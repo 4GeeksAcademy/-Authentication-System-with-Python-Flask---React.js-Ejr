@@ -15,7 +15,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 		  }
 		],
 		saved: [],
-		token: null // Initialize token in the store
+		token: null, // Initialize token in the store
+		errorMessage: null // Initialize errorMessage in the store
 	  },
 	  actions: {
 		exampleFunction: () => {
@@ -59,6 +60,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 			  // Save the authentication token to the store
 			  setStore({ token: data.token });
   
+			  // Reset the error message (if any) after successful login
+			  setStore({ errorMessage: null });
+  
 			  // Redirect to the desired page or perform any necessary action
 			  // Example: history.push("/dashboard");
 			} else {
@@ -69,6 +73,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 			console.log("Error during login", error);
 			throw error;
 		  }
+		},
+  
+		setErrorMessage: (message) => {
+		  setStore({ errorMessage: message });
+		},
+  
+		clearErrorMessage: () => {
+		  setStore({ errorMessage: null });
 		}
 	  }
 	};
