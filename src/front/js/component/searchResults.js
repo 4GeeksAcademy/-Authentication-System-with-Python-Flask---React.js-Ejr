@@ -4,10 +4,11 @@ import { ThemeContext } from "../layout";
 import "../../styles/index.css";
 import { Link } from "react-router-dom";
 import "../../styles/filters.css";
+import { Placeholder_carousel } from "../pages/placeholder_carousel";
 
 export const SearchResults = (props) => {
   const { store, actions } = useContext(Context);
-
+  const carImage = "https://images.coches.com/_vn_/kia/Sportage/c399cf1d98a95d24f8e8715dd0b13fb2.jpg?p=cc_vn_high"
 
   useEffect(() => {
     actions.getFilteredProducts()
@@ -16,16 +17,16 @@ export const SearchResults = (props) => {
   console.log(store.filterProducts)
   return (
     <div className="container">
-    <div className=" d-flex overflow-auto my-5">
-       {store.filterProducts.length > 0 ? (
+    <div className="d-flex overflow-auto my-5">
+      {store.filterProducts.length > 0 ? (
         <div className="d-flex overflow-auto my-5">
-           {store.filterProducts.map((vehicle, index) => (
-            <div className="col-12 col-md-4" key={index}>
+          {store.filterProducts.map((vehicle, index) => (
+            <div className="col-12 col-md-4 card-item" key={index}> 
               <div className="card" style={{ width: "18rem" }}>
                 <div className="flip-card">
                   <div className="flip-card-inner">
                     <div className="flip-card-front">
-                      <img src={""} className="card-img-top imgCarousel" alt="..." />
+                      <img src={carImage} className="card-img-top imgCarousel" alt="..." />
                     </div>
                     <div className="flip-card-back">
                       <Link to="/login" style={{ color: "white", textDecoration: "none" }} className="link-hover">
@@ -76,7 +77,7 @@ export const SearchResults = (props) => {
         </div>
         
       ) : (
-        <h2>No hemos encontrado resultados con tus filtros</h2>
+        <Placeholder_carousel />
       )}
     </div>
     </div>

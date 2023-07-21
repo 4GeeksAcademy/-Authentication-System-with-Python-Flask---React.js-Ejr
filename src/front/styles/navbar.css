@@ -8,7 +8,8 @@
 
 #tittle-nav {
   font-weight:bolder;
-  font-size: 45px;
+  font-size: 31px;
+
 }
 
 
@@ -142,12 +143,7 @@
   */
   
   
-  .container-garage {
-  
-    background-color: white;
-    border-radius: 12px;
-    background-color: #2486c7;
-  }
+
   
   .garageImageLanding {
   
@@ -179,15 +175,10 @@
   }
   
   
-  
-  
-  .textGarageLeft {
-    float: right
+  .mobile-nav-container {
+    display: flex;
+    align-items: center;
   }
-  .textGarageRight {
-    float: left
-  }
-  
   
   
   
@@ -258,12 +249,7 @@
   color:gray;
   }
   
-  .toolIcon {
-  float: right;
-  
-  
-  }
-  
+ 
   
   
   .search-form {
