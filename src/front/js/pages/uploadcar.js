@@ -23,6 +23,7 @@ export const UploadCar = () => {
   const [submitData, setSubmitData] = useState([]);
 
   const [selectedBrand, setSelectedBrand] = useState("");
+  const [selectedImages, setSelectedImages] = useState([]);
 
 
 
@@ -71,11 +72,31 @@ useEffect(() => {
   //   .then(data => setCarModels(data))
   //   .catch(err => console.error(err));
   // }
-
-
+  const handleDeleteImage = (index, e) => {
+    e.preventDefault();
+  
+    setSelectedImages((prevSelectedImages) =>
+      prevSelectedImages.filter((_, i) => index !== i)
+    );
+  
+    setUploadedFiles((prevUploadedFiles) =>
+      prevUploadedFiles.filter((_, i) => index !== i)
+    );
+  };
+  
 
 
   const handleDrop = (files) => {
+    setSelectedImages((prevSelectedImages) => [
+      ...prevSelectedImages,
+      ...files.map((file) => ({ file, url: URL.createObjectURL(file) })),
+    ]);
+  
+    setUploadedFiles((prevUploadedFiles) => [
+      ...prevUploadedFiles,
+      ...files.map((file) => file.name),
+    ]);
+  
     const uploaders = files.map((file) => {
       const formData = new FormData();
       formData.append("file", file);
@@ -87,13 +108,9 @@ useEffect(() => {
       return formData;
     });
   
-    setLoading(true);
     setSubmitData(uploaders);
-    setUploadedFiles((prevUploadedFiles) => [
-      ...prevUploadedFiles,
-      ...files.map((file) => file.name),
-    ]);
   };
+  
   
 
 
@@ -126,6 +143,9 @@ useEffect(() => {
     // Eliminar el archivo correspondiente de submitData
     const newSubmitData = submitData.filter((formData, i) => index !== i);
     setSubmitData(newSubmitData);
+
+    const newSelectedImages = selectedImages.filter((_, i) => index !== i);
+    setSelectedImages(newSelectedImages);
   };
   
   
@@ -162,18 +182,36 @@ useEffect(() => {
   const handleSubmit = (ev) => {
     ev.preventDefault();
   
+
+    const filesToUpload = uploadedFiles.filter((fileName) =>
+    selectedImages.some((image) => image.file.name === fileName)
+    );
+
     Promise.all(
-      submitData.map((formData) =>
-        fetch("https://api.cloudinary.com/v1_1/djpzj47gu/image/upload", {
-          method: "POST",
-          body: formData,
-        })
-          .then((resp) => resp.json())
-          .then((data) => {
-            console.log("Uploaded image data:", data);
-            return data.secure_url;
-          })
-      )
+      filesToUpload.map((fileName) => {
+        const file = selectedImages.find((image) => image.file.name === fileName);
+        if (file) {
+          const formData = new FormData();
+          formData.append("file", file.file);
+          formData.append("tags", "codeinfuse, medium, gist");
+          formData.append("upload_preset", "WhataCar");
+          formData.append("api_key", process.env.API_KEY);
+          formData.append("timestamp", Math.floor(Date.now() / 1000));
+          setLoading(true);
+          return fetch(
+            "https://api.cloudinary.com/v1_1/djpzj47gu/image/upload",
+            {
+              method: "POST",
+              body: formData,
+            }
+          )
+            .then((resp) => resp.json())
+            .then((data) => {
+              console.log("Uploaded image data:", data);
+              return data.secure_url;
+            });
+        }
+      })
     )
       .then((fileURLs) => {
         const config = {
@@ -331,11 +369,12 @@ useEffect(() => {
                 )}
               </Dropzone>
 
-              <div className='mb-5'>
-                {uploadedFiles.map((file, index) => (
+              <div className='mb-5 d-flex'>
+                {/* Display selected images */}
+                {selectedImages.map((selectedImage, index) => (
                   <div key={index} className="image-preview">
-                    <img src={file.url} alt={file.name} />
-                    <button onClick={() => handleRemoveImage(index)}>Eliminar</button>
+                    <img style={{width:'5rem'}} src={selectedImage.url} alt={selectedImage.file.name} />
+                    <button onClick={(e) => handleDeleteImage(index, e)}>Eliminar</button>
                   </div>
                 ))}
               </div>
