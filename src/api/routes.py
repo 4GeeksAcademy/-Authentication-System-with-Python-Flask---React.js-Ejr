@@ -93,7 +93,34 @@ def upload_car():
     return jsonify({"message": "Your product has been successfully uploaded"}), 200
 
     
+@api.route('/profile/product/<int:product_id>/status', methods=['GET'])
+@jwt_required()
+def get_product_status(product_id):
+    current_user = get_jwt_identity()
+    product = Product.query.filter_by(id=product_id).first()
+    if not product:
+        return jsonify({'message': 'Producto no encontrado o no pertenece al usuario.'}), 404
+    
+    
+    product_status = product.id
+    if not product_status:
+        return jsonify({'message': 'Estado del producto no encontrado.'}), 404
+    
 
+    status_data = {
+        'status_id': product_status.id,
+        'status': product_status.status.value,
+        'user_id': product_status.given_review_id,
+        'user': {
+            'full_name': product_status.user.full_name,
+            'email': product_status.user.email
+        },
+        'product_id': product.id
+    }
+    
+    print("Status data:", status_data)
+
+    return jsonify(status_data), 200
  
 @api.route('/products', methods=['GET'])
 def get_products():
