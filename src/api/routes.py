@@ -142,6 +142,7 @@ def get_product(productid):
 
 
 
+
 @api.route('/product/<int:productid>/edit', methods=['PUT'])
 @jwt_required()
 def update_product(productid):
@@ -202,7 +203,7 @@ def update_product(productid):
         return jsonify({"message": "Error updating product"}), 500
 
     if images:
-        product.images.clear()  
+        #product.images.clear()  
         for image_url in images:  # Iterate through the list of image URLs directly
             if image_url:
                 try:

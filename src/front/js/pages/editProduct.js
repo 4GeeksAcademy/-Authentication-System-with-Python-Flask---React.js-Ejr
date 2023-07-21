@@ -42,22 +42,7 @@ export const EditProduct = () => {
     const updatedImages = selectedData.images.filter((image) => image.id !== imageId);
     setSelectedData({ ...selectedData, images: updatedImages });
 
-    const deleteConfig = {
-      method: "DELETE",
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-    };
-
-    fetch(process.env.BACKEND_URL + `api/delete-image/${imageId}`, deleteConfig)
-      .then((resp) => {
-        if (!resp.ok) {
-          throw new Error("Error al eliminar la imagen del servidor");
-        }
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+    
   };
 
   const handleFileChange = (ev) => {
@@ -109,9 +94,9 @@ export const EditProduct = () => {
         const formData = new FormData();
         formData.append("file", file);
         formData.append("tags", "codeinfuse, medium, gist");
-        formData.append("upload_preset", "WhataCar");
-        formData.append("api_key", process.env.API_KEY);
-        formData.append("timestamp", Math.floor(Date.now() / 1000));
+      formData.append("upload_preset", "WhataCar");
+      formData.append("api_key", process.env.API_KEY);
+      formData.append("timestamp", Math.floor(Date.now() / 1000));
 
   
         return fetch("https://api.cloudinary.com/v1_1/djpzj47gu/image/upload", {
@@ -169,6 +154,23 @@ export const EditProduct = () => {
       .catch((error) => {
         console.error("Error uploading images to Cloudinary:", error);
       });
+
+      const deleteConfig = {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      };
+  
+      fetch(process.env.BACKEND_URL + `api/delete-image/${imageId}`, deleteConfig)
+        .then((resp) => {
+          if (!resp.ok) {
+            throw new Error("Error al eliminar la imagen del servidor");
+          }
+        })
+        .catch((err) => {
+          console.error(err);
+        });
   };
   
   

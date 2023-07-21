@@ -228,7 +228,7 @@ export const Navbar = () => {
                           <i className="fa-solid fa-plus"></i>
                         </button>
                       ) : (
-                        <Link to="/products">
+                        <Link to="/choose-vehicle">
                           <button className="nav-link btn-plus btn_mucho mb-2 ms-4">
                             <i className="fa-solid fa-plus"></i>
                           </button>

@@ -2,12 +2,32 @@ import React, { useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import { Context } from "../store/appContext";
 import { Link } from 'react-router-dom';
+import "/workspaces/Watacar_v2/src/front/styles/uploadproduct.css"
 // import "/workspaces/Watacar_v2/src/front/js/pages/singleProduct.js";
 import rigo from "../../img/rigo-baby.jpg" 
 
 export const SingleProduct = () => {
   const { store, actions } = useContext(Context);
   const params = useParams();
+
+  const StatusTopendingBlocked = (product) => {
+    const token = localStorage.getItem("token");
+    const requestOptions = {
+        method: "PUT",
+        headers: {
+            'Content-Type': 'application/json',
+            "Authorization": `Bearer ${localStorage.getItem("token")}`
+        }
+    };
+    fetch(process.env.BACKEND_URL + `api/profile/products/${product.id}/PENDING_BLOCKED`, requestOptions)
+        .then(response => response.json())
+        .then(response => {
+        console.log(response);
+        })
+        .catch(error => {
+        console.error("Error:", error);
+        });
+};
 
   useEffect(() => {
     actions.getProduct(params.productid);
@@ -113,17 +133,23 @@ export const SingleProduct = () => {
                     <div className='row'>
                       <div className='col-12 text-center '>
                         <p><strong> Descripción: </strong> <br></br></p>
-                        <p className='single-description mx-auto'>{product.description}</p>
+                        <div className=' desc-container'>
+                          <p className=' single-description mx-auto'>{product.description}</p>
+
+                        </div>
 
                       </div>
+
 
                     </div>
                     <div className='row'>
                       <div className=''>
-                      {store.user && store.user.id === product.user_id && (
-                      <Link to={`/edit-product/${product.id}`} className='btn btn-primary btn-edit'>Editar</Link>
-                      )}
-                        <button className='btn btn-success btn-pay'>Pagar</button>
+                      {store.user && store.user.id && product.user_id && store.user.id === product.user_id ? (
+                          <Link to={`/edit-product/${product.id}`} className='btn btn-primary btn-success'>Editar</Link>) : 
+                        (
+                          <Link to={'/profile/onsale'} onClick={() => StatusTopendingBlocked(product)} className='btn btn-primary'>Reservar</Link>
+                        )}
+
 
                       </div>
 

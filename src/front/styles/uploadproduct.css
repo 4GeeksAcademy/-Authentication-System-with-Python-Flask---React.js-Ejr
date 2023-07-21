@@ -151,6 +151,12 @@
   }
 
   .dropzone{
+    overflow-y: scroll;
+    flex-wrap: nowrap; 
+    overflow-y: auto;
+    max-width: 70rem;
+    max-height: 17rem;
+    height: 17rem;
     text-align: center;
     padding: 5rem;
     border: 5px dashed #eeeeee;
@@ -158,6 +164,11 @@
     color: #bdbdbd;
     margin-bottom: 20px;
 
+  }
+
+  .imgrender{
+    display: flex;
+    z-index: 9999;
   }
 
   .upload-images-icon{
