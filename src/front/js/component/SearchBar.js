@@ -12,11 +12,9 @@ const SearchBar = () => {
 
   const cars = store.cars
   
-// MAPPING CARS ARRAY TO GET JUST THE NAMES
-  const carNames = cars.map((car) => car.car_name)
 
 // FILTERING CAR NAMES ARRAY TO FILTER THE ONE THAT MATCHES INPUTVALUE
-  const filteredCars = carNames.filter((car) => car.toLowerCase().includes(inputValue.toLowerCase())
+  const filteredCars = cars.filter((car) => car.car_name.toLowerCase().includes(inputValue.toLowerCase())
   );
 
 // SETTING INPUT VALUE
@@ -42,17 +40,16 @@ const SearchBar = () => {
               </div>                
               {showDropdown && filteredCars.length > 0 && (
               <div className='custom-dropdown'>
-                {filteredCars.map((car, index) => (
+                {filteredCars.map((car, index) =>
+                (
                   <div className='carsDiv'>
-                    <div className="carNames" key={index} value={car}>
-                      <h4 key={index}>{car}</h4>
+                    <div className="carNames" key={index} value={car.car_name}>
+                      <h4 key={index}>{car.car_name}</h4>
                     </div>
-                    <div className='imagesDiv'>
+                    <div className='imagesDiv' style={{"width": "44rem", "height": "auto"}}>
 
-                      {/* NEED TO IMPLEMENT THE LOGIC TO GET THE IMAGES FROM DATABASE */}
-
-                      <img className="carImage" src='https://hips.hearstapps.com/hmg-prod/images/2023-nissan-altima-113-1654783718.jpg?crop=0.712xw:0.535xh;0.132xw,0.347xh&resize=1200:*'/>
-                    </div>
+                      <img className="rounded w-100" src={car.images[0].image_url }/>
+                  </div>
                   </div>
                 ))}
               </div>
