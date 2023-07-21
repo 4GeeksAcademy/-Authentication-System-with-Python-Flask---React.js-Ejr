@@ -4,7 +4,7 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 from flask import Flask, request, jsonify, url_for, Blueprint
 
 
-from api.models import db, User, Product, Brand, Model, Image, Favorites, Review, Garage
+from api.models import db, User, Product, Brand, Model, Image, Favorites, Review, Garage, status
 
 
 from api.utils import generate_sitemap, APIException
@@ -76,10 +76,23 @@ def upload_car():
         image = Image(image=upload_result['secure_url'], user_id=user_id, product_id=product.id)
         db.session.add(image)
         db.session.commit()
+
+    
+    Status = status (
+        status = 'ONSALE',
+        given_review_id = user_id,
+        
+    )
+    db.session.add(Status)
+    db.session.commit()
+
+    product.status_id = Status.id
+    db.session.commit()
  
  
     return jsonify({"message": "Your product has been successfully uploaded"}), 200
 
+    
 
  
 @api.route('/products', methods=['GET'])
@@ -96,6 +109,44 @@ def get_products():
 #     #gpt recomienda crear un diccionario
 #     model_dictionary = [{'name': model, 'selected': False}for model in models]
 #     return jsonify(model_dictionary)
+
+@api.route('/profile/products/<state>', methods=['GET'])
+@jwt_required()
+def get_products_by_status(state):
+    current_user = get_jwt_identity()
+    products = Product.query.filter(Product.user_id == current_user).all()
+    
+    product_status = status.query.filter_by(status=state)
+    if product_status:
+        ListProducts = [status.product[0].serialize() for status in product_status if status.product and status.product[0].user_id==current_user]
+        return jsonify(ListProducts), 200
+
+    return jsonify([]), 200
+
+@api.route('/profile/changed/<state>', methods=['GET'])
+@jwt_required()
+def get_products_by_status_changed(state):
+    current_user = get_jwt_identity()
+    
+    product_status = status.query.filter_by(status=state)
+    if product_status:
+        ListProducts = [status.product[0].serialize() for status in product_status if status.product and status.given_review_id==current_user]
+        return jsonify(ListProducts), 200
+
+    return jsonify([]), 200
+
+@api.route('/profile/products/<int:product_id>/<new_status>', methods=['PUT'])
+@jwt_required()
+def update_product_status(product_id, new_status):
+    current_user = get_jwt_identity()
+    product = Product.query.filter_by(id=product_id).first()
+    if product:
+        status_obj = status.query.filter_by(id=product.status_id).first()
+        if status_obj:
+            status_obj.status = new_status
+            db.session.commit()
+            return jsonify({'message': 'Product status updated successfully'}), 200
+    return jsonify({'message': 'Product not found or invalid status'}), 404
 
 @api.route('/car-brands', methods=['GET'])
 def obtener_brands():
@@ -564,7 +615,6 @@ def getAllProducts():
     return jsonify(response_body), 200
 
 
-
 @api.route('/profile/favorites', methods=['POST'])
 @jwt_required()
 def saveFavorites():
@@ -665,9 +715,7 @@ def getReviews():
     current_user = get_jwt_identity()
 
     reviews = Review.query.filter_by(given_review_id=current_user).all()
-    if not reviews:
-        return jsonify({"mensaje": "No se encontraron reseñas"}), 404
-
+    
     review_list = []
     for review in reviews:
         stars = review.stars.value    
