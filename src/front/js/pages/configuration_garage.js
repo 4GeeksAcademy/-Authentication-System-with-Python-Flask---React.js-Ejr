@@ -15,8 +15,31 @@ export const Configuration_Garage = () => {
 
 const handleChange = (e) => {
         setData({ ...data, [e.target.name]: e.target.value });
-        console.log(data);
-      }
+}
+
+useEffect(() => {
+    const script = document.createElement("script");
+    script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyAf7aQ5JHWwJTvYuzpJw8QtQK8DYdwJqPE&libraries=places`;
+    script.async = true;
+    script.onload = handleScriptLoad;
+    document.body.appendChild(script);
+  
+    return () => {
+      document.body.removeChild(script);
+    };
+  }, []);
+  
+  const handleScriptLoad = () => {
+    const input = document.getElementById("address");
+    const autocomplete = new google.maps.places.Autocomplete(input);
+  
+    autocomplete.addListener("place_changed", () => {
+      const selectedPlace = autocomplete.getPlace();
+      const address = selectedPlace.formatted_address;
+  
+      setData({ ...data, address: address }); 
+    });
+  };
 
 const handleSubmit = (event) => {
     event.preventDefault()
@@ -88,7 +111,7 @@ return store.garage ? (
                     </div>
                     <div className="row row_configuration">
                         <label className="col-3 label_config">Dirección:</label>
-                        <input className="col-8 input_config" name="address" type="text" value={data.address || store.garage.address} onChange={handleChange}></input>
+                        <input className="col-8 input_config" name="address" id="address" type="text" value={data.address || store.garage.address} onChange={handleChange}></input>
                     </div>
                     <div className="row save_cancel_config">
                         <Link to="/profile/garage" className="btn_config cancel">
