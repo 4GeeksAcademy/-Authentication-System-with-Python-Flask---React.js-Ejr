@@ -100,13 +100,10 @@ def get_product_status(product_id):
     product = Product.query.filter_by(id=product_id).first()
     if not product:
         return jsonify({'message': 'Producto no encontrado o no pertenece al usuario.'}), 404
-    
-    
-    product_status = product.id
+    product_status = status.query.filter_by(id=product_id).first()
+    print(product_status)
     if not product_status:
         return jsonify({'message': 'Estado del producto no encontrado.'}), 404
-    
-
     status_data = {
         'status_id': product_status.id,
         'status': product_status.status.value,
@@ -117,9 +114,6 @@ def get_product_status(product_id):
         },
         'product_id': product.id
     }
-    
-    print("Status data:", status_data)
-
     return jsonify(status_data), 200
  
 @api.route('/products', methods=['GET'])
@@ -731,16 +725,12 @@ def addReview():
 
 
 
-
-
-
-
 @api.route('/profile/reviews', methods=['GET'])
 @jwt_required()
 def getReviews():
     current_user = get_jwt_identity()
 
-    reviews = Review.query.filter_by(given_review_id=current_user).all()
+    reviews = Review.query.filter_by(recived_review_id=current_user).all()
     
     review_list = []
     for review in reviews:   
