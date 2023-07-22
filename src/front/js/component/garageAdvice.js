@@ -51,7 +51,7 @@ export const GarageAdvice = () => {
                            <strong>Consulta nuestros Talleres</strong> 
                       
                     </h5>            
-                    <p className="text-end text-white py-2 px-3 textGarageLeft d-md-flex" style={{"font-size": "larger"}}> 
+                    <p className="text-end text-white py-2 px-3 textGarageLeft d-md-flex" style={{fontSize: "larger"}}> 
                     Tasamos vuestros vehículos como garantía su estado. Las ventas serán más rápidas y las compras serán más seguras así. 
                  
                     </p>

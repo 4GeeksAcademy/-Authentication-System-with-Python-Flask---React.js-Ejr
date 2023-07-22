@@ -8,10 +8,10 @@ import "../../styles/filters.css"
 import { Range, getTrackBackground } from "react-range";
 
 export const FilterKm = () => {
-  const [rangeValues, setRangeValues] = useState([0, 50000]);
+  const [km, setKm] = useState([0, 50000]);
 
-  const handleRangeChange = (newValues) => {
-    setRangeValues(newValues);
+  const handleKmChange = (newKm) => {
+    setKm(newKm);
 
   }
 
@@ -26,11 +26,11 @@ export const FilterKm = () => {
  <div className="p-5">
       <h4>Kilometraje</h4>
       <Range
-        values={rangeValues}
+        values={km}
         min={0}
         max={300000}
         step={1500}
-        onChange={handleRangeChange}
+        onChange={handleKmChange}
         renderTrack={({ props, children }) => (
           <div
             onMouseDown={props.onMouseDown}
@@ -50,7 +50,7 @@ export const FilterKm = () => {
                 width: "100%",
                 borderRadius: "4px",
                 background: getTrackBackground({
-                  values: rangeValues,
+                  values: km,
                   colors: ["#ccc", "#548BF4", "#ccc"],
                   min: 0,
                   max: 300000
@@ -77,7 +77,7 @@ export const FilterKm = () => {
         )}
       />
       <p className="py-3">
-       Entre {rangeValues[0]} Kms y {rangeValues[1]} Kms
+       Entre {km[0]} Kms y {km[1]} Kms
       </p>
     </div>
 

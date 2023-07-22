@@ -7,12 +7,11 @@ import "../../styles/index.css";
 import "../../styles/filters.css"
 import { Range, getTrackBackground } from "react-range";
 
-export const FilterRange = () => {
-  const [rangeValues, setRangeValues] = useState([0, 50000]);
+export const FilterPrice = () => {
+  const [rangePrice, setRangePrice] = useState([0, 50000]);
 
-  const handleRangeChange = (newValues) => {
-    setRangeValues(newValues);
-
+  const handlePriceChange = (newPrice) => {
+    setRangePrice(newPrice);
   }
 
 
@@ -26,11 +25,11 @@ export const FilterRange = () => {
  <div className="p-5">
       <h4>Precio</h4>
       <Range
-        values={rangeValues}
+        values={rangePrice}
         min={0}
         max={50000}
         step={100}
-        onChange={handleRangeChange}
+        onChange={handlePriceChange}
         renderTrack={({ props, children }) => (
           <div
             onMouseDown={props.onMouseDown}
@@ -50,7 +49,7 @@ export const FilterRange = () => {
                 width: "100%",
                 borderRadius: "4px",
                 background: getTrackBackground({
-                  values: rangeValues,
+                  values: rangePrice,
                   colors: ["#ccc", "#548BF4", "#ccc"],
                   min: 0,
                   max: 50000
@@ -77,7 +76,7 @@ export const FilterRange = () => {
         )}
       />
       <p className="py-3">
-        Rango de precio entre {rangeValues[0]} y {rangeValues[1]}
+        Rango de precio entre {rangePrice[0]} y {rangePrice[1]}
       </p>
     </div>
 
