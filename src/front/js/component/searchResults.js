@@ -77,7 +77,13 @@ export const SearchResults = (props) => {
         </div>
         
       ) : (
-        <Placeholder_carousel />
+        <div className="d-flex justify-content-center m-auto" >
+          <h3 className="my-5">
+            <strong>
+              No hemos encontrado resultados con estos filtros. Prueba a utilizar otros parámetros.
+            </strong>
+          </h3>
+        </div>
       )}
     </div>
     </div>
