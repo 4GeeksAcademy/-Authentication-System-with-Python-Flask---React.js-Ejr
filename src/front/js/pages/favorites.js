@@ -16,8 +16,8 @@ export const Favorites = () => {
     }, [])
 
     const handleRemoveFavorite = (product_id) => {
-        actions.putFavorite(product_id)
-        
+      actions.putFavorite(product_id)
+      window.location.reload();
       };
 
     return store.favorites ?(
@@ -36,31 +36,31 @@ export const Favorites = () => {
                             </div>
                             <div className="product_description_profile_favorites">
                             <div className="row d-flex justify-content-between">
-  <h6 className="col-8 price_product_profile">
-    {favorites.price}
-    <i class="fa-solid fa-euro-sign"></i>
-  </h6>
-  <div className="col-4 d-flex justify-content-end">
-    <button
-      className="button_favorite btnFavorite "
-      id="heartCard"
-      onClick={() => handleRemoveFavorite(favorites.product_id)}
-    >
-      <script src="https://cdn.lordicon.com/bhenfmcm.js"></script>
-      <lord-icon
-      className=""
-        src="https://cdn.lordicon.com/rjzlnunf.json"
-        trigger="hover"
-        colors="primary:#1663c7,secondary:#16a9c7"
-        stroke="80"
-        style={{ width: "50px", height: "30px" }}
-      ></lord-icon>
-    </button>
-  </div>
-</div>
-                                <div className="row limit-text">
-                                    <h6>{favorites.name}</h6>
+                                <h6 className="col-8 price_product_profile">
+                                  {favorites.price}
+                                  <i class="fa-solid fa-euro-sign"></i>
+                                </h6>
+                                <div className="col-4 d-flex justify-content-end">
+                                  <button
+                                    className="button_favorite_favorites btnFavorite "
+                                    id="heartCard"
+                                    onClick={() => handleRemoveFavorite(favorites.product_id)}
+                                  >
+                                    <script src="https://cdn.lordicon.com/bhenfmcm.js"></script>
+                                    <lord-icon
+                                    className=""
+                                      src="https://cdn.lordicon.com/rjzlnunf.json"
+                                      trigger="hover"
+                                      colors="primary:#1663c7,secondary:#16a9c7"
+                                      stroke="80"
+                                      style={{ width: "50px", height: "30px" }}
+                                    ></lord-icon>
+                                  </button>
                                 </div>
+                              </div>
+                              <div className="row limit-text">
+                                  <h6>{favorites.name}</h6>
+                              </div>
                             </div>
                         </div>
                          ))}

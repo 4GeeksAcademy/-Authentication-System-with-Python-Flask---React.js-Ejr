@@ -43,6 +43,7 @@ const addReview = (product_id, comment) => {
     .catch(error => {
       console.error('Error:', error.message);
     });
+    window.location.reload();
 }
 
 const StatusToSoldReviewed = (product) => {
