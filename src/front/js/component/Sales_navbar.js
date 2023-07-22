@@ -12,13 +12,13 @@ export const Sales_navbar = ({onsaleCount, blockedCount, soldCount}) => {
 
   return (
     <div className="container sales_navbar my-3 me-4 ">
-      <NavLink exact to="/profile/onsale" className="sales_navbar_buttons px-2" activeClassName="active" isActive={isOnSaleActive}>
+      <NavLink exact to="/profile/onsale" className="sales_navbar_buttons px-2" activeclassname="active" isactive={isOnSaleActive}>
         A la venta {onsaleCount}
       </NavLink>
-      <NavLink to="/profile/block" className="sales_navbar_buttons" activeClassName="active" isActive={isOnSaleActive}>
+      <NavLink to="/profile/block" className="sales_navbar_buttons" activeclassname="active" isactive={isOnSaleActive}>
         Reservadas {blockedCount} 
       </NavLink>
-      <NavLink to="/profile/sales" className="sales_navbar_buttons" activeClassName="active" isActive={isOnSaleActive}>
+      <NavLink to="/profile/sales" className="sales_navbar_buttons" activeclassname="active" isactive={isOnSaleActive}>
             Vendidos {soldCount}
       </NavLink>
     </div>

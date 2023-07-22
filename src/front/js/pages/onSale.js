@@ -63,7 +63,7 @@ const StatusToOnSale = (product) => {
             <Profile_navbar />
             <Sales_navbar onsaleCount={onsaleCount}/>
             {store.products.map((product, index) => (
-                <div className="justify-content-center d-flex">
+                <div className="justify-content-center d-flex" key={index}>
                 <div className="row row_product_profile container justify-content-around m-1" key={index}>
                     <div className="product_img_profile_box col-lg-5 col-3 col-sm-2 col-xs-2">
                         <img src="https://www.motofichas.com/images/phocagallery/Honda/cb500f-2022/01-honda-cb500f-2022-estudio-rojo.jpg" alt="product" className="product_img_profile"/>
@@ -74,7 +74,7 @@ const StatusToOnSale = (product) => {
                     </div>
                     <div className="col-3 col-sm-2 state_product_profile_box text-start">
                         <h6 className="state_title_profile">Estado</h6>
-                        <h5 className="state_product_profile h5State">{product.state}</h5>
+                        <h4 className="state_product_profile ">{product.state}</h4>
                     </div>
 
   {/*
@@ -103,7 +103,11 @@ const StatusToOnSale = (product) => {
                         )}
 
                     </div>
-                    <div className="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+
+                    {/* AQUI EMPIEZA EL MODAL */}
+
+                    <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div className="modal-dialog">
                             <div className="modal-content sold-product_profile">
                                 <div className="modal-header">
