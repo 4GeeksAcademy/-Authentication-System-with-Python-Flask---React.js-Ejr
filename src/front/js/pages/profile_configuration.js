@@ -17,11 +17,34 @@ export const Profile_configuration = () => {
 
   useEffect(() => {
     actions.getUser();
+
+    // Add event listener for "Enter" key when the modal is shown
+    const modal = document.getElementById("exampleModal");
+    modal.addEventListener("shown.bs.modal", handleModalShown);
+
+    // Remove event listener when the component unmounts
+    return () => {
+      modal.removeEventListener("shown.bs.modal", handleModalShown);
+    };
   }, []);
+
+  const handleModalShown = () => {
+    // Add event listener for "Enter" key
+    document.addEventListener("keydown", handleEnterKey);
+  };
+
+  const handleEnterKey = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      if (validatePasswords()) {
+        handlePasswordChange();
+      }
+    }
+  };
 
   const validatePasswords = () => {
     if (password1 !== password2) {
-      alert("Las contraseñas no coinciden");
+      toast.error('Las contraseñas no coinciden');
       return false;
     }
     handlePasswordChange();
@@ -51,7 +74,7 @@ export const Profile_configuration = () => {
       ...store.user,
       password: password1,
     };
-  
+
     const putConfig = {
       method: "PUT",
       body: JSON.stringify({
@@ -62,7 +85,7 @@ export const Profile_configuration = () => {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     };
-  
+
     fetch(process.env.BACKEND_URL + "api/configuration/password", putConfig)
       .then((response) => {
         if (response.ok) {
@@ -74,14 +97,16 @@ export const Profile_configuration = () => {
         setData({ ...data, response: responseData });
         setPassword1("");
         setPassword2("");
-        closeModal(); // Cerrar el modal directamente sin setTimeout
-        toast.success('Contraseña guardada correctamente'); // Mostrar la alerta toast de éxito
+        setTimeout(() => {
+          closeModal();
+        }, 1000);
+        toast.success("Contraseña guardada correctamente")
       })
       .catch((error) => {
         console.error(error);
       });
   };
-  
+
   const closeModal = () => {
     const modal = document.getElementById("exampleModal");
     const modalInstance = bootstrap.Modal.getInstance(modal);
@@ -99,6 +124,8 @@ export const Profile_configuration = () => {
             alt="Avatar"
           />
         </div>
+
+        
         <div className="profile_info">
           <div className="row_profile_configuration">
             <h4 className="text-wrap badge label col-sm-6 col-md-5 col-lg-3">
@@ -163,7 +190,7 @@ export const Profile_configuration = () => {
               aria-hidden="true"
             >
               <div className="modal-dialog m-auto">
-                <div className="modal-content sold-product_profile m-auto my-3">
+                <div className="modal-content sold-product_profile m-auto">
                   <div className="modal-header">
                     <h5 className="modal-title" id="exampleModalLabel">
                       <strong>Vas a cambiar tu contraseña</strong>
@@ -176,7 +203,6 @@ export const Profile_configuration = () => {
                     ></button>
                   </div>
                   <div className="modal-body m-auto">
-                    
                     <div className="input-with-icon2 m-auto">
                       <label htmlFor="contraseña" className="password_label row">
                         <strong>Nueva contraseña</strong>
@@ -226,7 +252,7 @@ export const Profile_configuration = () => {
                     </div>
                     <div className="success-message">{successMessage}</div>
                   </div>
-                  <div className="modal-footer modalFooter">
+                  <div className="modal-footer">
                     <button
                       type="button"
                       className="btn btn_config cancel text-danger"
@@ -252,6 +278,7 @@ export const Profile_configuration = () => {
           </div>
         </div>
       </div>
+      <Toaster richColors position="top-center" />
     </>
   ) : (
     <Placeholder_profile />
