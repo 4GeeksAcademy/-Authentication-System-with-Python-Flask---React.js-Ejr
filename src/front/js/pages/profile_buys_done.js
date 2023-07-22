@@ -1,4 +1,4 @@
-import React, {useContext, useEffect } from "react";
+import React, {useContext, useEffect, useState } from "react";
 import { Context } from "../store/appContext";
 import { NavLink } from "react-router-dom";
 import { Profile_navbar } from "../component/profile_navbar";
@@ -8,10 +8,62 @@ import { Purchase_navbar } from "../component/purchase_navbar";
 export const Profile_buys_done = () => {
     const {actions, store} = useContext(Context);
     const soldCount = store.products.length;
+    const [productToReview, setProductToReview] = useState(null);
+    const [comment, setComment] = useState("");
 
 useEffect (() => {
-    actions.SoldChanged()
+    actions.SoldChanged(),
+    actions.SoldReviewedChanged()
 }, [])
+
+const addReview = (product_id, comment) => {
+							  
+    const data = {
+      product_id: product_id,
+      comment: comment
+    };
+  
+    fetch(process.env.BACKEND_URL + 'api/profile/reviews', {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Bearer ' + localStorage.getItem('token'),
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Error al agregar la reseña');
+      }
+      return response.json();
+    })
+    .then(data => {
+      console.log(data); 
+    })
+    .catch(error => {
+      console.error('Error:', error.message);
+    });
+}
+
+const StatusToSoldReviewed = (product) => {
+    const token = localStorage.getItem("token");
+    const requestOptions = {
+        method: "PUT",
+        headers: {
+            'Content-Type': 'application/json',
+            "Authorization": `Bearer ${localStorage.getItem("token")}`
+        }
+    };
+    
+    fetch(process.env.BACKEND_URL + `api/profile/products/${product.id}/SOLD_REVIEWED`, requestOptions)
+        .then(response => response.json())
+        .then(response => {
+        console.log(response);
+        })
+        .catch(error => {
+        console.error("Error:", error);
+        });
+};
 
     return store.products ? (
         <>
@@ -67,17 +119,25 @@ useEffect (() => {
                                         </div>
                                     </div>
                                 </div>
-                                <div className="stars">
-                                    <h3><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i></h3>
-                                </div>
                                 <div className="row">
-                                    <div class="input-group col-12 input_review">
-                                        <textarea class="form-control" aria-label="With textarea" />
+                                    <div className="input-group col-12 input_review">
+                                        <textarea className="form-control" aria-label="With textarea"/>
                                     </div>
                                 </div>
                                 <div className="modal-footer">
                                     <button type="button" className="btn btn_config cancel" data-bs-dismiss="modal">Cancelar</button>
-                                    <button type="button" className="btn btn_config reservado" data-bs-dismiss="modal" onClick={() => sendReview(product)}>Aceptar</button>
+                                    <button
+                                        type="button"
+                                        className="btn btn_config reservado"
+                                        data-bs-dismiss="modal"
+                                        onClick={() => {
+                                            const commentValue = document.querySelector(".form-control").value;
+                                            addReview(product.id, commentValue);
+                                            StatusToSoldReviewed(product); 
+                                        }}
+                                        >
+                                            Aceptar
+                                    </button>
                                 </div>
                             </div>
                         </div>

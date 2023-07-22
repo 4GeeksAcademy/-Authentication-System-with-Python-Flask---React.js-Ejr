@@ -210,7 +210,7 @@ export const Navbar = () => {
                           <i className="fa-solid fa-plus"></i>
                         </button>
                       ) : (
-                        <Link to="/products"
+                        <Link to="/upload-car"
                         style={{width: 38, height: 35, background: '#0F4C75', borderRadius: 8}}
                         className="nav-link btn-plus btn_mucho mb-2 ms-4">
                        
