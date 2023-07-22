@@ -10,12 +10,24 @@ export const Profile_buys_done = () => {
     const soldCount = store.products.length;
     const [productToReview, setProductToReview] = useState(null);
     const [comment, setComment] = useState("");
+    const [products, setProducts] = useState([]);
 
-useEffect (() => {
-    actions.SoldChanged(),
-    actions.SoldReviewedChanged()
-}, [])
 
+
+useEffect(() => {
+    async function fetchProducts() {
+      const response = await actions.SoldChanged();
+      setProducts(response); 
+    }
+    fetchProducts();
+  }, []);
+  useEffect(() => {
+    async function fetchProducts() {
+      const response = await actions.SoldReviewedChanged();
+      setProducts(response); 
+    }
+    fetchProducts();
+  }, []);
 const addReview = (product_id, comment) => {
 							  
     const data = {

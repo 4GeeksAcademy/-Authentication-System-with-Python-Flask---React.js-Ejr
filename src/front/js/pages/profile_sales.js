@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import { Context } from "../store/appContext";
 import { NavLink } from "react-router-dom";
 import { Profile_navbar } from "../component/profile_navbar";
@@ -8,11 +8,16 @@ import "/workspaces/Watacar_v2/src/front/styles/profile.css"
 export const Profile_sales = () => {
     const {actions, store} = useContext(Context);
     const soldCount = store.products.length;
+    const [products, setProducts] = useState([]);
 
-    useEffect (() => {
-        actions.getProductsSold()
-    }, [])
-    
+
+    useEffect(() => {
+        async function fetchProducts() {
+          const response = await actions.getProductsSold();
+          setProducts(response); 
+        }
+        fetchProducts();
+      }, []);
 
     return store.products ? (
         <>
