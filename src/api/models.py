@@ -1,4 +1,8 @@
-import 
+from flask import Flask
+from sqlalchemy import Column, ForeignKey, Integer, String
+from sqlalchemy.orm import relationship, declarative_base
+from sqlalchemy import create_engine
+# from eralchemy2 import render_er
 from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
@@ -21,9 +25,13 @@ class User(db.Model):
     
 
 class Favorites(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, ForeignKey(User.id), primary_key=True)
     # maybe db.Boolean(False)
     favorite = db.Column(db.Boolean, unique=False, nullable=True ,default= False)
-    # foreingKey = user databae 
-    user_id = db.Column(db.Integer, ForeignKey(),unique = True )
+    # foreingKey = User.db 
+    # user_id = db.Column(db.Integer, ForeignKey(User.id),unique = True )
+    def serialize(self):
+        return {
+            "id": self.id,
+        }    
     

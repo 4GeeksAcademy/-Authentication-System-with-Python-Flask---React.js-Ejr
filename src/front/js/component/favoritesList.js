@@ -31,6 +31,9 @@ import destinationSearch from "./destinationSearch";
 
 // export default favoritesList;
 
+
+
+
 function favList({favorites, onDestinationFavorite}){
     const FavoritedDestination = favorites.filter((favorites) => (favorites.favorite))
 
