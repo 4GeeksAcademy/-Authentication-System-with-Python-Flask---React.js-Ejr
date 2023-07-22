@@ -1,16 +1,49 @@
 import React, { useState } from "react";
+import { Context } from "../store/appContext";
+import "../../styles/signup.css";
+import { useNavigate } from "react-router-dom";
 
-const CreateAccount = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState("");
-  const [firstname, setFirstname] = useState('');
+
+  const CreateAccount = () => {
+  const { store, actions } = useContext(Context);
   const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [firstname, setFirstname] = useState("");
+  const [phonenumber, setPhonenumber] = useState("");
+  const navigate = useNavigate();
+  console.log("Password", password, "Email:", email);
+
+  // const registerUser = async () => {
+  //   const response = await fetch(
+  //     "`${process.env.BACKEND_URL}/signup`",
+  //     {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify({
+  //         email: email,
+  //         password: password,
+  //         firstname: firstname,
+  //         phonenumber: phonenumber
+
+  //       }),
+  //     }
+  //   );
+  //   const data = await response.json();
+  //   if (response.ok) {
+  //     navigate('/login');
+  //   } else {
+  //     console.log("Error:", data);
+  //   }
+  // };
 
 
 
 
-  const handleUsernameChange = (event) => {
-    setUsername(event.target.value);
+
+  const handlePhonenumberChange = (event) => {
+    setPhonenumber(event.target.value);
   };
 
 
@@ -29,11 +62,11 @@ const CreateAccount = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-
+    // registerUser()
     // Here you can perform the login logic, such as making an API request
 
     // Reset the form fields after submission
-    setUsername("");
+    setPhonenumber("");
     setEmail("");
     setPassword("");
     setFirstname("");
@@ -43,12 +76,12 @@ const CreateAccount = () => {
   return (
     <div>
     <h2>Sign Up</h2>
-    <form onSubmit={handleSubmit}>
+    <form>
       <input
         type="text"
-        placeholder="Username"
-        value={username}
-        onChange={handleUsernameChange}
+        placeholder="Phonenumber"
+        value={phonenumber}
+        onChange={handlePhonenumberChange}
       />
       <input
         type="email"
