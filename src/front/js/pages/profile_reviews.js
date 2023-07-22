@@ -8,7 +8,8 @@ export const Profile_reviews = () => {
     const {actions, store} = useContext(Context);
     
     useEffect (() => {
-        actions.getReviews()
+        actions.getReviews(),
+        actions.getProduct()
     }, [])
 
 

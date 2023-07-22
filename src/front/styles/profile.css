@@ -265,6 +265,11 @@
     margin-top: -16px;
     margin-right: -20px;
 }
+
+.button_favorite_favorites{
+   width: 2rem !important;
+   height: 2rem;
+} 
 .product_img_profile_favorites_box{
     width: 10rem;
     height: 17rem;
@@ -395,7 +400,19 @@
     margin-right: 0;
 }
 
-
+@media only screen and (max-width: 600px) {
+    .product_img_profile_reviews_box{
+        width: 13rem;
+        height: 7rem;
+        margin-bottom: 0;
+    }
+    .review_content_profile{
+        margin-left: 2rem
+    }
+    .review_box_profile {
+        height: auto;
+    }
+}
 
 
 

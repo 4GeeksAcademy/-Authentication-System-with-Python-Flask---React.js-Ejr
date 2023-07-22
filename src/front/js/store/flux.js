@@ -520,7 +520,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				})
 				  .then(response => response.json())
 				  .then(response => {
-					setStore({ products: response }); // Cambiar "favorites" por "products"
+					setStore({ favorites: response }); // Cambiar "favorites" por "products"
 					console.log(response);
 				  });
 			},
@@ -529,12 +529,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 				const token = localStorage.getItem("token");
 				const store = getStore();
 				
-				// Comprobar si el producto ya está en los favoritos
 				const isProductFavorited = store.favorites.some((favorite) => favorite.product_id === product_id);
 			  
 				if (isProductFavorited) {
 				  console.log("El producto ya está guardado como favorito.");
-				  return; // Salir de la función si el producto ya está en favoritos
+				  return;
 				}
 				
 				try {
@@ -554,7 +553,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 				  if (response.ok) {
 					const data = await response.json();
 					console.log(data);
-					// Actualizar el store de favoritos si es necesario
 					const updatedFavorites = [...store.favorites, data];
 					setStore({ favorites: updatedFavorites });
 					localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
@@ -564,7 +562,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				} catch (error) {
 				  console.error("Error:", error);
 				}
-			  },
+			},
 			  
 			putFavorite: (product_id) => {
 				const token = localStorage.getItem("token");
