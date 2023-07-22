@@ -4,6 +4,8 @@ import { Context } from "../store/appContext";
 import "/workspaces/Watacar_v2/src/front/styles/configuration.css"
 import "/workspaces/Watacar_v2/src/front/styles/profile.css"
 import { text } from "@fortawesome/fontawesome-svg-core";
+import { Toaster, toast } from 'sonner'
+import { Placeholder_profile } from "./placeholder_profile.js"
 
 export const Configuration = () => {
     const {actions, store} = useContext(Context);
@@ -78,6 +80,8 @@ const handleSubmit = (event) => {
     .then((responseData) => {
       setData({ ...data, response: responseData });
       navigate("/profile/configuration");
+      toast.success('Cambios guardados correctamente');
+      
     })
     .catch((error) => {
       console.error(error);
@@ -145,8 +149,9 @@ return store.user ? (
                         </Link>
                     </div>
                     </div>
+                    <Toaster richColors position="top-center" />
                 </div>
   
  
-): "cargando...";
+): <Placeholder_profile />
 }

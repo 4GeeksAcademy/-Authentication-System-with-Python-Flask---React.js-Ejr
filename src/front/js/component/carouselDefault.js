@@ -37,7 +37,7 @@ export const CarouselDefault = () => {
                     <img src={carImage} className="card-img-top imgCarousel" alt="..." />
                   </div>
                   <div className="flip-card-back">
-                    <Link to="/login" style={{ color: 'white', textDecoration: 'none' }} className="link-hover">
+                    <Link to={`product/${vehicle.id}`}  style={{ color: 'white', textDecoration: 'none' }} className="link-hover">
                       <h3 className="pt-2">{vehicle.name}</h3>
                     </Link>
                     <p>Matriculación: {vehicle.year}</p>
@@ -51,10 +51,10 @@ export const CarouselDefault = () => {
                 <div>
                   <Link to="/login" style={{ color: 'black', textDecoration: 'none' }} className="link-hover">
                     <h5 className="card-title justify-content-start d-flex" id="vehicleCardTittle">
-                      <strong>{vehicle.name}</strong>
+                      <strong>{vehicle.name} </strong>
                     </h5>
                   </Link>
-                  <h5 className="card-title justify-content-start d-flex">20.000€</h5>
+                  <h5 className="card-title justify-content-start d-flex">{vehicle.price} €</h5>
                   <p>
                     Vendido por{" "}
                     <Link

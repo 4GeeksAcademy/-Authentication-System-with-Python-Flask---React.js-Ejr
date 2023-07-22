@@ -43,35 +43,23 @@ export const GarageAdvice = () => {
 
             <div className=" mx-1 my-3 col-sm-12 col-md-6 col-lg-5 col-xl-5 container-garage">
 
+                <Link to="/garages" className="titleAdviceGarage">
                     <img src={garageImage} className="card-img garageImageLanding d-none d-sm-block d-sm-none d-md-block" alt="..."/>
-                    
-                    
                     <h5 className="text-end text-white pt-3 px-3 mx-3">
                                     {/* text-start text-white pt-3 px-3 mx-3 */}
-                        <Link to="/garage" className="titleAdviceGarage">
+                      
                            <strong>Consulta nuestros Talleres</strong> 
-                        </Link> 
+                      
                     </h5>            
-                    <p className="text-end text-white pt-2 px-3 textGarageLeft d-md-flex" style={{"font-size": "larger"}}> 
-                    Tasamos vuestros vehículos como garantía su estado. Las ventas serán más rápidas y las compras serán más seguras así.
-                    </p>
-                   
+                    <p className="text-end text-white py-2 px-3 textGarageLeft d-md-flex" style={{"font-size": "larger"}}> 
+                    Tasamos vuestros vehículos como garantía su estado. Las ventas serán más rápidas y las compras serán más seguras así. 
                  
+                    </p>
+                     </Link> 
+                
                     
                 
                   
-                    <Link to="/garages"
-                        style={{width: 38, height: 35, background: '#0F4C75', borderRadius: 8}}
-                        className="nav-link btn-plus me-3 mb-3  mb-2 ms-4 float-end">
-                        <lord-icon
-                            src="https://cdn.lordicon.com/mecwbjnp.json"
-                            trigger="hover"
-                            colors="primary:#b4b4b4,secondary:#ffffff"
-                            stroke="80"
-                            style={{"width":"250px","height":"250px"}}
-                            className="m-auto">
-                        </lord-icon>
-                    </Link>
                
                    
                </div>
@@ -80,41 +68,27 @@ export const GarageAdvice = () => {
     // DIV DE LLAVE INGLESA
 }
 
-            <div className=" mx-1 my-3 col-sm-12 col-md-6 col-lg-5 col-xl-5 container-garage ">
+            <div className=" mx-1 my-3 col-sm-12 col-md-6 col-lg-5 col-xl-5 container-garage pb-3 ">
 
           
-                    <h5 className="text-start text-white pt-3 px-3 mx-3">
+                        <Link to="/create-garage" className="titleAdviceGarage">
+                    <h5 className="text-end text-white pt-3 px-3 mx-3">
                         
-                        <Link to="/login" className="titleAdviceGarage">
-                          <strong>¿Eres un Taller?</strong>  
-                        </Link>
+                          <strong>¿Quieres unir tu Taller?</strong>  
                     </h5>   
                
                 
-                        <p className="text-start text-white pt-2 px-3 mx-3 " style={{fontSize: "larger"}}>  
+                        <p className="text-end text-white pt-2 px-3 mx-3 " style={{fontSize: "larger"}}>  
                       
-                        <span className="float-end">{toolImage()} </span> 
-                         Date de alta y ayuda a vendedores y compradores a certificar el estado de tu vehículo. ¡Únete a nuestra red!
+                        <span className="float-start ">{toolImage()} </span> 
+                         Date de alta y ayuda a otros usuarios a certificar el estado de los vehículos. ¡Únete a nuestra red!
                           
               
                       
                     </p>
-                   <br></br>
-                   <br></br>
-          
- {/* arreglar estilos en línea */}
-                    <Link to="/create-garage"
-                        style={{width: 38, height: 35, background: '#0F4C75', borderRadius: 8}}
-                        className="nav-link btn-plus me-3 mb-3  mb-2 ms-4 float-end">
-                        <lord-icon
-                            src="https://cdn.lordicon.com/mecwbjnp.json"
-                            trigger="hover"
-                            colors="primary:#b4b4b4,secondary:#ffffff"
-                            stroke="80"
-                            style={{"width":"250px","height":"250px"}}
-                            className="m-auto">
-                        </lord-icon>
-                    </Link>
+                        </Link>
+         
+                  
 
                 
                
