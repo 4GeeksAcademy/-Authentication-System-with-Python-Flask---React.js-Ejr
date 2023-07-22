@@ -9,9 +9,8 @@ export const Placeholder_profile = () => {
 
 return (
   <>
-  
-    <div className="container_profile">
-      <div className="m-auto mb-4">
+  <div className="container_profile">
+        <div className="d-lg-flex justify-content-end">
         <p aria-hidden="true" className="placeholder-glow ">
           <span className="placeholder col-4 avatar_image"></span>
         </p>
