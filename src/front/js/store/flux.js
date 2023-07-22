@@ -350,6 +350,24 @@ const getState = ({ getStore, getActions, setStore }) => {
 				});
 			},
 
+			SoldReviewedChanged: () => {
+				const store = getStore();
+				fetch(process.env.BACKEND_URL + "api/profile/changed/SOLD_REVIEWED", {
+					method: "GET",
+					headers: {
+					"Content-Type": "application/json",
+					"Authorization": `Bearer ${localStorage.getItem("token")}`
+					}
+				})
+				.then(response => response.json())
+				.then(response => {
+					setStore({products: response})
+				})
+				.catch(error => {
+					console.error(error);
+				});
+			},
+
 			getGarages: () => {
                 fetch(process.env.BACKEND_URL + 'api/garages' , {
                     method: "GET",

@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 681c6588f61f
+Revision ID: d9a3cf22e9d1
 Revises: 
-Create Date: 2023-07-19 18:56:46.081456
+Create Date: 2023-07-21 19:21:31.165958
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '681c6588f61f'
+revision = 'd9a3cf22e9d1'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -48,7 +48,7 @@ def upgrade():
     )
     op.create_table('status',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('status', sa.Enum('ONSALE', 'PENDING_SALE', 'PENDING_BLOCKED', 'BLOCKED', 'SOLD', name='status_product'), nullable=False),
+    sa.Column('status', sa.Enum('ONSALE', 'PENDING_SALE', 'PENDING_BLOCKED', 'BLOCKED', 'SOLD', 'SOLD_REVIEWED', name='status_product'), nullable=False),
     sa.Column('given_review_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['given_review_id'], ['user.id'], ),
     sa.PrimaryKeyConstraint('id')
@@ -95,7 +95,6 @@ def upgrade():
     sa.Column('given_review_id', sa.Integer(), nullable=True),
     sa.Column('recived_review_id', sa.Integer(), nullable=True),
     sa.Column('product_id', sa.Integer(), nullable=False),
-    sa.Column('stars', sa.Enum('ONE_STAR', 'TWO_STARS', 'THREE_STARS', 'FOUR_STARS', 'FIVE_STARS', name='rating'), nullable=False),
     sa.Column('comment', sa.String(length=250), nullable=True),
     sa.ForeignKeyConstraint(['given_review_id'], ['user.id'], ),
     sa.ForeignKeyConstraint(['product_id'], ['product.id'], ),
