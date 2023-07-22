@@ -60,6 +60,10 @@ const getState = ({ getStore, getActions, setStore }) => {
   
 			  // Save the authentication token to the store
 			  setStore({ token: data.token });
+			  console.log(data.token);
+  
+			  // Save the token to localStorage for persistent access
+			  localStorage.setItem("token", data.token);
   
 			  // Reset the error message (if any) after successful login
 			  setStore({ errorMessage: null });
