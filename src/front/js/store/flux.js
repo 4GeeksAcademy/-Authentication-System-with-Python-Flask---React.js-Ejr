@@ -368,22 +368,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 				});
 			},
 
-			getStatusInfo: (product_id) => {
-                const store = getStore();
-                fetch(process.env.BACKEND_URL + `api/profile/product/${product_id}/status`, {
-                    method: "GET",
-                    headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${localStorage.getItem("token")}`
-                    }
-                })
-                .then (response => response.json())
-                .then(response => {
-                    console.log(response)
-                })
-                .then(data => setStore({status: data}))
-            },
-
 			getGarages: () => {
                 fetch(process.env.BACKEND_URL + 'api/garages' , {
                     method: "GET",

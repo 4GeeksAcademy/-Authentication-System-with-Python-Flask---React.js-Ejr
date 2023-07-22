@@ -5,6 +5,7 @@ import { Profile_navbar } from "../component/profile_navbar";
 import "/workspaces/Watacar_v2/src/front/styles/profile.css"
 import { Sales_navbar } from "../component/Sales_navbar";
 
+
 export const On_sale = () => {
     const {actions, store} = useContext(Context);
     const {status, setStatus} = useState([]);
@@ -14,8 +15,6 @@ useEffect (() => {
         actions.getProductsOnSale(),
         actions.getProductsPendingBlocked()
 }, [])
-
-
 
 const StatusToBlocked = (product) => {
     const token = localStorage.getItem("token");
