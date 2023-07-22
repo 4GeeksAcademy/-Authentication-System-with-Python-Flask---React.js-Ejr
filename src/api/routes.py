@@ -6,7 +6,7 @@ from flask import Flask, request, jsonify, Blueprint
 from flask_migrate import Migrate
 from flask_cors import CORS
 from utils import APIException
-from models import db, User, Review, Post, Favorites, Business
+from models import db, User, Review, Post, Favorites
 from flask_bcrypt import Bcrypt
 from flask_sqlalchemy import SQLAlchemy
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity, unset_jwt_cookies
