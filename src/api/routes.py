@@ -150,7 +150,7 @@ def update_product_status(product_id, new_status):
 
 @api.route('/car-brands', methods=['GET'])
 def obtener_brands():
-    brands = Brand.query.filter_by(vehicle_type='CAR').all()
+    brands = Brand.query.filter_by(vehicle_type='COCHE').all()
 
     brand_list = []
     for brand in brands:
@@ -606,13 +606,13 @@ def getProducts():
 
 
 
-@api.route('/products', methods=['GET'])
-def getAllProducts():
-    products = Product.query.all()
-    response_body = {
-        "data": [product.serialize() for product in products]
-    }
-    return jsonify(response_body), 200
+@api.route('/products/<state>', methods=['GET'])
+def get_all_products_by_status(state):
+    product_status = status.query.filter_by(status=state).all()
+    if product_status:
+        ListProducts = [status.product[0].serialize() for status in product_status if status.product]
+        return jsonify(ListProducts), 200
+    return jsonify([]), 200
 
 
 @api.route('/profile/favorites', methods=['POST'])

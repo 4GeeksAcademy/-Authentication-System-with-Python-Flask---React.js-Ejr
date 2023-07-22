@@ -459,7 +459,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			getAllProducts: () => {
 				const store = getStore();
-				fetch(process.env.BACKEND_URL + `api/products`, {
+				fetch(process.env.BACKEND_URL + `api/products/ONSALE`, {
 					method: "GET",
 					headers: {
 						"Content-Type": "application/json",
