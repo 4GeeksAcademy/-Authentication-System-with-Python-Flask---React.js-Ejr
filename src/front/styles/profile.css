@@ -26,12 +26,25 @@
 
 }
 
+/* profile.css */
+.modal-content-body {
+    max-height: 300px; /* Establece la altura máxima del contenido principal */
+    overflow-y: auto; /* Agrega scroll vertical si el contenido excede la altura */
+  }
+  /* profile.css */
+.success-message {
+    margin-top: 20px; /* Espacio entre el contenido principal y el mensaje de éxito */
+  }
+  
+
 .user_data{
     margin-left: 3rem;
 }
 
 
-
+.modalFooter {
+    margin-top: -45px;
+}
 
 .edit_profile{
     background-color: #ffffff;
