@@ -245,10 +245,10 @@ useEffect(() => {
                   <label htmlFor='select-right'> <h6><strong>Modelo</strong></h6> </label>
                   </div>
                   <select id='select-right' name='model' className='select' onChange={e => handleModelChange(e)} >
-                    <option >Selecciona modelo</option>
-                      {motoModels.map((model, index) => (
-                        <option key={index} value={model.id}>{model.model}</option>
-                      ))}
+                  <option >Selecciona otro</option>
+                    {motoBrands.map((brand, index) => (
+                      <option key={index} value={brand.id}>{brand.name}</option>
+                    ))}
                     </select>
                 </div>
   
