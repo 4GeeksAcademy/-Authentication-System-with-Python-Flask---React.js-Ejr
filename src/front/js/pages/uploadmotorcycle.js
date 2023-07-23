@@ -352,34 +352,34 @@ useEffect(() => {
                     
               <div className='upload-innerbox'>
               
-                <div className=''>
-                  <div className="container d-flex justify-content-center mt-3">
-                    <h6><strong>Imágenes:</strong></h6>
+              <div className='m-auto justify-content-center'>
+                <div className="container d-flex  justify-content-center mt-3">
+                 
+                  <h6 className='justify-content-center'><strong>Imágenes:</strong></h6>
+               
+                </div>
+                <Dropzone 
+                  onDrop={handleDrop}
+                  className="m-auto justify-content-center"
+                  onChange={(ev) => setImage(ev.target.value)}
+                  value={image}
+                >
+                  {({ getRootProps, getInputProps }) => (
+                    
+
+          
+              <div className='row me-1 justify-content-around text-center'>    
+                <section >
+                  <div {...getRootProps({ "className": "dropzone" })} >
+                  <input {...getInputProps()} />
+                              <span className='upload-images-icon'>📁</span>
+                              <p>Arrastra tus imágenes o clickea para seleccionar</p>
+                          </div>
+                      </section>
+
                   </div>
-                  <Dropzone 
-                    onDrop={handleDrop}
-                    className=""
-                    onChange={(ev) => setImage(ev.target.value)}
-                    value={image}
-                  >
-                    {({ getRootProps, getInputProps }) => (
-                      
-
-            
-        <div className='row me-1 justify-content-around text-center '>    
-                  <section >
-                    <div {...getRootProps({ className: "" })}>
-                      <div  className='container m-auto '>
-
-                        <a className='btn btn-info btnadd'>Agrega tus imágenes</a>
-                        {/* <p></p>
-                        <p>Cliquea</p> */}
-                      </div>
-                    </div>
-                  </section>
-
-                    </div>
-                    )}
+                  )}
+                
                   </Dropzone>
                   <div className='mb-5 container justify-content-center mt-2'>
                     <div className={`dropzone justify-content-center ${hasSelectedImages 
