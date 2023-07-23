@@ -244,17 +244,17 @@ useEffect(() => {
 
   return (
     <div className="container col-12 my-5 justify-content-center ">
-        <div className='upload-title'>
-          <h3 className='text-center mt-2 pt-3'>
-            <strong>¿Qué vas a vender?</strong>
-            </h3>
-        </div>
       <form onSubmit={handleSubmit}>
-        <div className="box my-5 ">
+        <div className="box my-5">
+      <div className='upload-title'>
+        <h3 className='text-center mt-2 pt-3'>
+          <strong>¿Qué vas a vender?</strong>
+        </h3>
+      </div>
           <div className=''>
 
-          {/* <div className="row mx-1 justify-content-around text-center">
-              <div className="col-xs-10 col-sm-10 col-md-10 col-lg-5 ">
+          {/* <div className="row me-1 justify-content-around text-center">
+              <div className="col-xs-10 col-sm-10 col-md-10 col-lg-6 ">
                 <div className="input-box">
                   <label className="form-floating" htmlFor="full_name">Nombre y apellidos</label>
                  <div>
@@ -264,9 +264,9 @@ useEffect(() => {
               </div> */}
 
 
-            <div className='row mx-1 justify-content-around text-center p-4'>
+            <div className='row me-1 justify-content-around text-center p-4'>
               
-              <div className='col-xs-10 col-sm-10 col-md-10 col-lg-5 '>
+              <div className='col-xs-10 col-sm-10 col-md-10 col-lg-6 '>
                 <div>
                 <label htmlFor='name'> <h6><strong>Título</strong></h6> </label>
                </div> 
@@ -275,7 +275,7 @@ useEffect(() => {
 
 
   
-              <div className='col-xs-10 col-sm-10 col-md-10 col-lg-5 '>
+              <div className='col-xs-10 col-sm-10 col-md-10 col-lg-6 '>
                 <div>
                 <label htmlFor='select-middle'> <h6><strong>Marca</strong></h6> </label>
                   </div>
@@ -288,11 +288,14 @@ useEffect(() => {
               </div>
 
 
+              </div>
 
 
-            <div className='row mx-1 justify-content-around text-center p-4'>
+
+
+            <div className='row me-1 justify-content-around text-center p-4'>
               
-            <div className='col-xs-10 col-sm-10 col-md-10 col-lg-5 '>
+            <div className='col-xs-10 col-sm-10 col-md-10 col-lg-6 '>
                 <div>
                 <label htmlFor='select-right'> <h6><strong>Modelo</strong></h6> </label>
                 </div>
@@ -303,21 +306,21 @@ useEffect(() => {
                     ))}
                   </select>
               </div>
-            </div>
 
             
-              <div className='col-xs-10 col-sm-10 col-md-10 col-lg-5 '>
+              <div className='col-xs-10 col-sm-10 col-md-10 col-lg-6 '>
                 <div>
                 <label htmlFor='name'> <h6><strong>Precio</strong></h6></label>
                 </div>
                 <input className='select ' type='number'  name='price' placeholder='2400€' onChange={e => handleChange(e)}/>
               </div>
 
+            </div>
 
 
-         <div className='row mx-1 justify-content-around text-center p-4'>
+         <div className='row me-1 justify-content-around text-center p-4'>
           
-              <div className='col-xs-10 col-sm-10 col-md-10 col-lg-5'>
+              <div className='col-xs-10 col-sm-10 col-md-10 col-lg-6'>
                 <div>
                 <label htmlFor='select-middle'> <h6><strong>Estado del vehículo</strong></h6> </label>
                 </div>
@@ -328,7 +331,7 @@ useEffect(() => {
                 </select>
               </div>
 
-              <div className='col-xs-10 col-sm-10 col-md-10 col-lg-5'>
+              <div className='col-xs-10 col-sm-10 col-md-10 col-lg-6'>
                 <div>
                 <label htmlFor='select-right'> <h6><strong>Kilómetros</strong></h6> </label>
                </div>
@@ -341,13 +344,13 @@ useEffect(() => {
                 </select>
               </div>
             </div>
-            </div>
+           
 
 
 
-            <div className='row mx-1 justify-content-around text-center p-4'>
-            <div className='row mx-1 justify-content-around text-center'>
-              <div className='col-xs-10 col-sm-10 col-md-10 col-lg-5'>
+            <div className='row me-1 justify-content-around text-center p-4'>
+            <div className='row me-1 justify-content-around text-center'>
+              <div className='col-xs-10 col-sm-10 col-md-10 col-lg-6'>
                 <div>
                 <label htmlFor='name'> <h6><strong>Año de fabricación</strong></h6> </label>
                 </div>
@@ -363,7 +366,7 @@ useEffect(() => {
 
 
 
-              <div className='col-xs-10 col-sm-10 col-md-10 col-lg-5'>
+              <div className='col-xs-10 col-sm-10 col-md-10 col-lg-6'>
                 <div>
                 <label htmlFor='select-right'> <h6><strong>Combustible</strong></h6> </label>
                  </div>
@@ -380,12 +383,12 @@ useEffect(() => {
             </div>
 
 
-            <div className='row mx-1 justify-content-around text-center p-4'>
-              <div className=' col-xs-10 col-sm-10 col-md-10 col-lg-5 justify-content-center ms-5 mt-5 '>
+            <div className=' specialBox row me-1 justify-content-around text-center p-4'>
+              <div className=' col-xs-10 col-sm-10 col-md-10 col-lg-6 justify-content-center ms-5 mt-5 '>
                 <div className='description-title text-center justify-content-center d-flex'>
                   <h4><strong>Descripción:</strong></h4>
                 </div>
-                <div className="justify-content-center d-flex text-center align-items-center m-auto">
+                <div className="  justify-content-center d-flex text-center align-items-center m-auto">
                 <textarea 
                 onChange={e => handleChange(e)} 
                 className='container p-3' 
@@ -405,9 +408,9 @@ useEffect(() => {
                     
               <div className='upload-innerbox'>
               
-                <div className='upload-product-images'>
-                  <div>
-                    <h5><strong>Imágenes:</strong></h5>
+                <div className=''>
+                  <div className="container d-flex justify-content-center mt-3">
+                    <h6><strong>Imágenes:</strong></h6>
                   </div>
                   <Dropzone 
                     onDrop={handleDrop}
@@ -419,10 +422,10 @@ useEffect(() => {
                       
 
             
-        <div className='row mx-1 justify-content-around text-center'>    
-                  <section>
+        <div className='row me-1 justify-content-around text-center '>    
+                  <section >
                     <div {...getRootProps({ className: "" })}>
-                      <div  className='container m-auto'>
+                      <div  className='container m-auto '>
 
                         <a className='btn btn-info btnadd'>Agrega tus imágenes</a>
                         {/* <p></p>
@@ -438,8 +441,13 @@ useEffect(() => {
                     <div className={`dropzone image-preview ${hasSelectedImages ? "" : "d-none"}`}>
                     {selectedImages.map((selectedImage, index) => (
                             <div key={index} className="me-3">
-                              <img style={{width:'11rem', height:'8rem', border:'.1rem solid black', borderRadius:'.2rem'}} src={selectedImage.url} alt={selectedImage.file.name} />
-                              <button onClick={(e) => handleDeleteImage(index, e)}>🗑️</button>
+                              <img 
+                              style={{width:'11rem', height:'8rem'}} 
+                              src={selectedImage.url} 
+                              alt={selectedImage.file.name} />
+                              <button onClick={(e) => handleDeleteImage(index, e)}>
+                              <i class="fa-solid fa-trash-can"></i>
+                                </button>
                             </div>
                           ))}
                     </div>
