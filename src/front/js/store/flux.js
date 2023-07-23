@@ -29,7 +29,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 				engine: "",
 				transmission: "",
 				year: ""
-			}]
+			}],
+			singleCar: []
 		},
 		actions: {
 			getAllUsers: () => {
@@ -51,9 +52,26 @@ const getState = ({ getStore, getActions, setStore }) => {
 			applyFilters: (filterArray) => {
 				setStore({filters: filterArray})
 				console.log("filters value:", filterArray)
-			}
-		}
-	};
-};
+			},
+			singleCar: async (id) => {
+				try {
+				  const response = await fetch(`${process.env.BACKEND_URL}/cars/${id}`, {
+					method: 'GET',
+					redirect: 'follow'
+				  });
+				  if (!response.ok) {
+					// Handle error if the response is not successful (optional)
+					throw new Error('Network response was not ok');
+				  }
+				  const data = await response.json();
+				  setStore({ singleCar: data });
+				} catch (error) {
+				  console.error('Error fetching singleCar data:', error);
+				  // Handle any error or set error state if needed
+				}
+			  }
+	}
+}
+}
 
 export default getState;

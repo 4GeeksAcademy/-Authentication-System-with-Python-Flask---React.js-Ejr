@@ -11,6 +11,7 @@ import CreateAccount from "./pages/create-account";
 import injectContext from "./store/appContext";
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
+import AboutCar from "./pages/aboutcar";
 
 
 //create your first component
@@ -29,6 +30,7 @@ const Layout = () => {
                         <Route element={<Home />} path="/" />
                         <Route element={<Login />} path="/Login" />
                         <Route element={<UserView />} path="/usermain"/>
+                        <Route element={<AboutCar />} path="/about/:theid"/>
                         <Route element={<CarViews />} path="/catalog" />
                         <Route element={<CreateAccount />} path="/signup" />
                         <Route element={<h1>Not found!</h1>} />

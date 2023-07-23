@@ -1,8 +1,16 @@
 import React, { useContext } from 'react'
 import { Context } from '../store/appContext'
+import { useNavigate } from 'react-router-dom'
 
 const CarCards = ({cars}) => {
+  const {actions} = useContext(Context)
+  const navigate = useNavigate()
 
+  const handleClick = (e, carId) => {
+    actions.singleCar(carId)
+    e.preventDefault()
+    navigate("/about/" + carId)
+  }
 
   return (
     <div>
@@ -23,7 +31,8 @@ const CarCards = ({cars}) => {
                   <p className="card-text">Engine: {car.engine}</p>
                   <p className="card-text">Transmission: {car.transmission}</p>
                   <div className="buttonContainer">
-                      <button href="#" className="btn btn-danger">
+                      <button href="#" className="btn btn-danger"
+                      onClick={(e) => handleClick(e, car.id)}>
                         Detailed Specs
                       </button>
                     <button
