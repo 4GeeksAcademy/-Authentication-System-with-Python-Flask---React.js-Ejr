@@ -41,23 +41,16 @@ export const SingleProduct = () => {
   // }
 
   return (
-    <div className="container w-70">
+    <div className="container">
       <div className='single-prioduct-box'>
         {store.productlist.length > 0 ? (
           <div className='sp-box '>
             {store.productlist.map((product, index) => (
               <div key={index} className='row'>
-                
-                <div className='col-4 '>
 
-                </div>
-                
+              
 
-                <div className='col-12 text-center mt-2'>
-                  <h1><strong> {product.name} </strong></h1>
-                </div>
-
-              <div className='carousel-container'>
+              <div className='carousel-container w-60'>
               <div id="carouselExampleIndicators" className="carousel slide " data-bs-ride="carousel">
                   <div className="carousel-indicators">
                     {product.images.map((image, index) => (
@@ -89,6 +82,12 @@ export const SingleProduct = () => {
                   </button>
                 </div>
               </div>
+
+
+              <div className='col-12 text-start my-2'>
+                  <h2><strong> {product.name} </strong></h2>
+                </div>
+
                 
                 
                 <div className=' container single-pr-information text-start mt-3 mx-2'>
@@ -154,7 +153,7 @@ export const SingleProduct = () => {
                   
                     
                  
-                      <div className='col-lg-4 text-center '>
+                      <div className='col-lg-12 text-center '>
                         <p><strong> Descripción: </strong> <br></br></p>
                         <div className=' desc-container'>
                           <p className=' single-description mx-auto d-flex justify-content-flex-start'>{product.description}</p>
@@ -170,7 +169,7 @@ export const SingleProduct = () => {
                     <div className='row'>
                       <div className=''>
                       {store.user && store.user.id && product.user_id && store.user.id === product.user_id ? (
-                          <Link to={`/edit-product/${product.id}`} className='btn btn-primary btn-success'>Editar</Link>) : 
+                          <Link to={`/edit-product/${product.id}`} className='btn btn-primary btn-success ms-2'>Editar</Link>) : 
                         (
                           <Link to={'/profile/onsale'} onClick={() => StatusTopendingBlocked(product)} className='btn btn-primary'>Reservar</Link>
                         )}
@@ -188,8 +187,11 @@ export const SingleProduct = () => {
             ))}
           </div>
         ) : (
-          <div class="spinner-border text-primary m-auto d-flex justify-content-center" role="status">
-            <span class="sr-only">Loading...</span>
+          <div className="spinner-border text-primary m-auto d-flex 
+          justify-content-center "
+          style={{"width": "10rem", "height": "10rem"}}
+          role="status">
+            
           </div>
         )}
       </div>

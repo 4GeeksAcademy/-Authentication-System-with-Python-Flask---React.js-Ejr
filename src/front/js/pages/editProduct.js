@@ -347,7 +347,11 @@ export const EditProduct = () => {
 
 
               <div className="text-center mt-5">
-                <button className="btn btn-primary" type="submit" >¡Actualiza tu vehículo!</button>
+                <Link
+                to={``} 
+                className="btn btn-primary" type="submit" >
+                  ¡Actualiza tu vehículo!
+                  </Link>
               </div>
             </div>
           </div>
