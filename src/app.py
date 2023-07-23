@@ -5,7 +5,7 @@ from flask_swagger import swagger
 from flask_cors import CORS
 from api.utils import APIException, generate_sitemap
 from api.models import db
-from api.routes import api, initialize_jwt  # Importez la fonction initialize_jwt depuis api.routes
+from api.routes import api, initialize_jwt  
 from api.admin import setup_admin
 from api.commands import setup_commands
 
