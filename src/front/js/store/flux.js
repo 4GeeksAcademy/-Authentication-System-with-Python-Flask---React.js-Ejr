@@ -35,8 +35,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 			garage: [],
 			filters: [],
 			filterProducts: [],
-			status: []
-
+			status: [],
+			filteredMotos: [],
+			filteredCars: []
 		
 		},
 
@@ -148,6 +149,38 @@ const getState = ({ getStore, getActions, setStore }) => {
 				  });
 			  },
 			  
+
+			  getFilteredMotos: () => {
+				fetch(`${process.env.BACKEND_URL}api/search-by-moto`)
+				  .then(response => response.json())
+				  .then(data => {
+					// Almacenar los productos filtrados en store.filterProducts
+					setStore({ filteredMotos: data });
+					console.log("se han recuperado los datos")
+				  })
+				  .catch(error => {
+					// Manejar errores en la solicitud
+					console.error('Error al obtener los productos filtrados:', error);
+				  });
+			  },
+
+			  getFilteredCars: () => {
+				fetch(`${process.env.BACKEND_URL}api/search-by-car`)
+				  .then(response => response.json())
+				  .then(data => {
+					// Almacenar los productos filtrados en store.filterProducts
+					setStore({ filteredCars: data });
+					console.log("se han recuperado los datos")
+				  })
+				  .catch(error => {
+					// Manejar errores en la solicitud
+					console.error('Error al obtener los productos filtrados:', error);
+				  });
+			  },
+
+
+
+
 			  
 			  setFilterProducts: (products) => {
 				setStore({ filterProducts: products });

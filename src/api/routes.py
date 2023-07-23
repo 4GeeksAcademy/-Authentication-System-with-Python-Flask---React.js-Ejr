@@ -351,7 +351,24 @@ def get_all_brands():
     return jsonify(brand_list)
 
 
+@api.route('/search-by-moto', methods=['GET'])
+def filter_by_moto():
+    
+    products = Product.query.filter_by(product_type='MOTO')
+    products = products.all()
 
+    serialized_products = [product.serialize() for product in products]
+    return jsonify(serialized_products)
+
+
+@api.route('/search-by-car', methods=['GET'])
+def filter_by_car():
+    
+    products = Product.query.filter_by(product_type='COCHE')
+    products = products.all()
+
+    serialized_products = [product.serialize() for product in products]
+    return jsonify(serialized_products)
 
 
 @api.route('/search-by/filter', methods=['GET'])

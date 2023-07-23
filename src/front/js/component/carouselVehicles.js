@@ -4,6 +4,8 @@ import { Context } from "../store/appContext";
 import lottie from 'lottie-web';
 import { defineElement } from 'lord-icon-element';
 import { CarouselDefault } from "./carouselDefault";
+import { CarouselMotos } from "./carouselMotos";
+import { CarouselCars } from "./carouselCars";
 
 
 
@@ -22,16 +24,16 @@ export const CarouselVehicles = () => {
            </div>
           
            <div className="row pb-4 my-4">
-            <h2>Destacados</h2>
+            <h2>Motos</h2>
             <hr className="mb-4"></hr>
-                  <CarouselDefault />
+                  <CarouselMotos />
             </div>
 
 
            <div className="row pb-4 my-4">
-            <h2>Los Más Mirados</h2>
+            <h2>Coches</h2>
             <hr className="mb-4"></hr>
-                  <CarouselDefault />
+                  <CarouselCars />
             </div>
 
 
