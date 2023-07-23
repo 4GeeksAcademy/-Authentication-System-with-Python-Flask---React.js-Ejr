@@ -336,7 +336,7 @@ useEffect(() => {
                 </div>
 
                 <div className='text-center mt-5'>
-                    <button className='btn btn-primary'>¡Sube tu coche!</button>
+                    <button className='btn btn-primary'>¡Sube tu moto!</button>
                 </div>
 
 

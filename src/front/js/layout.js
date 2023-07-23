@@ -33,6 +33,8 @@ import { UploadMoto } from "./pages/uploadmotorcycle";
 import { SingleProduct } from "./pages/singleProduct";
 
 import { Favorites } from "./pages/favorites";
+import { On_sale } from "./pages/onSale";
+import { EditProduct } from "./pages/editProduct";
 import { Profile_garage } from "./pages/profile_garage";
 import { Garages } from "./pages/garages";
 import { Configuration_Garage } from "./pages/configuration_garage";
@@ -77,7 +79,9 @@ const Layout = () => {
                                 <Route element={<UploadCar />} path="/upload-car" />
                                 <Route element={<UploadMoto />} path="/upload-motorcycle" />
                                 <Route element={<WichVehicle />} path="/choose-vehicle" />
-                                <Route element={SingleProduct} path="/product/:productid" />
+                                <Route element={<SingleProduct />} path="/product/:productid" />
+                                <Route element={<EditProduct />} path="/edit-product/:productid" />
+
 
 
                                 <Route element={<Profile_configuration />} path="/profile/configuration" />

@@ -9,6 +9,9 @@ from api.models import db, User, Product, Brand, Model, Image, Favorites, Review
 
 from api.utils import generate_sitemap, APIException
 
+from sqlalchemy.exc import IntegrityError
+
+
 
 import pandas as pd
 
@@ -20,7 +23,7 @@ from flask_jwt_extended import jwt_required
 from flask_jwt_extended import JWTManager
 
 import cloudinary
-import cloudinary.uploader
+from cloudinary.uploader import upload
 import os
 from flask_cors import CORS, cross_origin
 from dotenv import load_dotenv
@@ -43,7 +46,7 @@ def upload_car():
     
     
     data = request.get_json()
-
+    print(data)
     user = User.query.get(current_user)
 
     name = data.get('name')
@@ -69,13 +72,18 @@ def upload_car():
     ) 
     db.session.add(product)
     db.session.commit()
+    #print(data.get('images'))
 
     # Recupero la url
     for image_file in data.get('images', []):
-        upload_result = cloudinary.uploader.upload(image_file)
-        image = Image(image=upload_result['secure_url'], user_id=user_id, product_id=product.id)
-        db.session.add(image)
-        db.session.commit()
+
+        
+        #upload_result = cloudinary.uploader.upload(image_file)
+        if image_file:
+
+            image = Image(image=image_file, user_id=user_id, product_id=product.id)
+            db.session.add(image) 
+            db.session.commit()
 
     
     Status = status (
@@ -88,9 +96,171 @@ def upload_car():
 
     product.status_id = Status.id
     db.session.commit()
+
  
  
     return jsonify({"message": "Your product has been successfully uploaded"}), 200
+
+
+# @api.route('/search-by/<filter>', methods=['GET'])
+# def search_by_filter(filter):
+
+#     brand_id = request.args.get('brand_id')
+#     vehicle_type = request.args.get('vehicle_type')
+
+#     if filter == 'vehicle_type':
+#         products = Product.query.filter_by(product_type=vehicle_type).all()
+
+#     elif filter == 'brand_id':
+#         products = Product.query.filter_by(brand_id=brand_id).all()
+
+#     else:
+#         products = Product.query.filter_by(product_type=vehicle_type, brand_id=brand_id).all()
+
+#     serialized_products = [product.serialize() for product in products]
+#     return jsonify(serialized_products)
+
+
+@api.route('/search-by/<filter>', methods=['GET'])
+def search_by_filter(filter):
+    
+    brand_id = request.args.get('brand_id')  
+    vehicle_type = request.args.get('vehicle_type')  
+
+    if filter == 'vehicle_type':
+        products = Product.query.filter_by(product_type=vehicle_type).all()
+
+    elif filter == 'brand_id':
+        products = Product.query.filter_by(brand_id=brand_id).all()
+
+    else:
+        products = Product.query.filter_by(product_type=vehicle_type, brand_id=brand_id).all()
+
+
+    serialized_products = [product.serialize() for product in products]
+    return jsonify(serialized_products)
+
+
+
+
+     
+
+
+@api.route('/product/<int:productid>', methods=['GET'])
+def get_product(productid):
+    product = Product.query.get(productid)
+    
+    if product is None:
+        return jsonify({'message': 'Product not found'}), 404
+    
+    
+    serialized_product = product.serialize()
+    return jsonify(serialized_product), 200
+
+
+
+
+@api.route('/product/<int:productid>/edit', methods=['PUT'])
+@jwt_required()
+def update_product(productid):
+    cloudinary.config(
+        cloud_name=os.getenv('CLOUD_NAME'),
+        api_key=os.getenv('API_KEY'),
+        api_secret=os.getenv('API_SECRET')
+    )
+
+    current_user = get_jwt_identity()
+    product = Product.query.get(productid)
+    
+    if product is None:
+        return jsonify({'message': 'Product not found'}), 404
+    
+    if product.user_id != current_user:
+        return jsonify({"message": "You're not authorized"})
+
+    data = request.get_json()
+
+    name = data.get('name')
+    state = data.get('state')
+    price = data.get('price')
+    description = data.get('description')
+    year = data.get('year')
+    km = data.get('km')
+    fuel = data.get('fuel')
+    brand_id = data.get('brand_id')
+    model_id = data.get('model_id')
+    # product_type = data.get('product_type')
+    images = data.get('images')
+
+    if name:
+        product.name = name
+    if state:
+        product.state = state.upper()
+    if price:
+        product.price = price
+    if description:
+        product.description = description
+    if year:
+        product.year = year
+    if km:
+        product.km = km
+    if fuel:
+        product.fuel = fuel.upper()
+    # if product_type:
+    #     product.product_type = product_type
+    if brand_id:
+        product.brand_id = brand_id
+    if model_id:
+        product.model_id = model_id
+
+    try:
+        db.session.commit()
+    except IntegrityError as e:
+        db.session.rollback()
+        return jsonify({"message": "Error updating product"}), 500
+
+    if images:
+        #product.images.clear()  
+        for image_url in images:  # Iterate through the list of image URLs directly
+            if image_url:
+                try:
+                    # Here, you can directly use the image_url to create the Image object
+                    image = Image(image=image_url, product_id=productid, user_id=current_user)
+                    db.session.add(image)
+                except Exception as e:
+                    pass
+
+        try:
+            db.session.commit()
+        except IntegrityError as e:
+            db.session.rollback()
+            return jsonify({"message": "Error updating product images"}), 500
+
+    return jsonify({"message": "Product updated successfully"}), 200
+
+
+
+@api.route('/delete-image/<int:id>', methods=['DELETE'])
+@jwt_required()
+def delete_image(id):
+        
+    try:
+        # cloudinary.uploader.destroy(id)
+        
+        image = Image.query.filter_by(id=id).first()
+        if image:
+            db.session.delete(image)
+            db.session.commit()
+
+        return jsonify({"message": "Imagen eliminada correctamente"}), 200
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"message": "Error al eliminar la imagen"}), 500
+
+
+
+
+
 
  
 @api.route('/products', methods=['GET'])
@@ -222,6 +392,13 @@ def search_by_filter():
 
 
 
+@api.route('brands', methods=['GET'])
+def get_brands():
+    brands = Brand.query.all()
+    serialized_brands = [brand.serialize() for brand in brands]
+    return jsonify(serialized_brands), 200
+
+
 
 
 @api.route('/car-models', methods=['GET'])
@@ -261,16 +438,16 @@ def get_types_by_model(modelId):
 
 
 
-@api.route('/moto-brands', methods=['GET'])
-def get_brands():
-    brands = Brand.query.all()
+# @api.route('/moto-brands', methods=['GET'])
+# def get_moto_brands():
+#     brands = Brand.query.all()
 
-    lista_brands = []
-    for brand in brands:
-        data_brand = brand.serialize()
-        lista_brands.append(data_brand)
+#     lista_brands = []
+#     for brand in brands:
+#         data_brand = brand.serialize()
+#         lista_brands.append(data_brand)
 
-    return jsonify(lista_brands)
+#     return jsonify(lista_brands)
 
 
 @api.route('/moto-models', methods=['GET'])

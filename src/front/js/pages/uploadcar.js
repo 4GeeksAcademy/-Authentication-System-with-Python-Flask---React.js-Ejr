@@ -8,11 +8,12 @@ import e from 'cors';
 export const UploadCar = () => {
   const navigate = useNavigate();
 
-
   const [carBrands, setCarBrands] = useState([])
   const [carModels, setCarModels] = useState([])
   const [selectedModel, setSelectedModel] = useState("");
- 
+  
+  const [hasSelectedImages, setHasSelectedImages] = useState(false); 
+
   
   const [image, setImage] = useState({array : {}})
   const [loading, setLoading] = useState("")
@@ -22,9 +23,10 @@ export const UploadCar = () => {
   const [submitData, setSubmitData] = useState([]);
 
   const [selectedBrand, setSelectedBrand] = useState("");
+  const [selectedImages, setSelectedImages] = useState([]);
 
 
-
+const MAX_IMAGES = 5;
 
 const getBrands = () => {
   fetch(process.env.BACKEND_URL + 'api/car-brands')
@@ -59,22 +61,40 @@ useEffect(() => {
 }, []);
 
 
+  const handleDeleteImage = (index, e) => {
+    e.preventDefault();
+  
+    setSelectedImages((prevSelectedImages) =>
+      prevSelectedImages.filter((_, i) => index !== i)
+    );
+  
+    setUploadedFiles((prevUploadedFiles) =>
+      prevUploadedFiles.filter((_, i) => index !== i)
+    );
 
+    const dropzone = e.target.closest('.dropzone');
+    const input = dropzone.querySelector('input');
+    if (selectedImages.length < MAX_IMAGES) {
+      input.disabled = false;
 
-
-
-
-  // const getModelsByBrand = (brand) => {
-  //   fetch(process.env.BACKEND_URL + 'api/car-model?make=' + brand)
-  //   .then(resp => resp.json())
-  //   .then(data => setCarModels(data))
-  //   .catch(err => console.error(err));
-  // }
-
-
+    if (selectedImages.length === 0) {
+      setHasSelectedImages(false);
+    }
+  };
+}
 
 
   const handleDrop = (files) => {
+    setSelectedImages((prevSelectedImages) => [
+      ...prevSelectedImages,
+      ...files.map((file) => ({ file, url: URL.createObjectURL(file) })),
+    ]);
+  
+    setUploadedFiles((prevUploadedFiles) => [
+      ...prevUploadedFiles,
+      ...files.map((file) => file.name),
+    ]);
+  
     const uploaders = files.map((file) => {
       const formData = new FormData();
       formData.append("file", file);
@@ -86,13 +106,11 @@ useEffect(() => {
       return formData;
     });
   
-    setLoading(true);
     setSubmitData(uploaders);
-    setUploadedFiles((prevUploadedFiles) => [
-      ...prevUploadedFiles,
-      ...files.map((file) => file.name),
-    ]);
+
+    setHasSelectedImages(true); 
   };
+  
   
 
 
@@ -115,6 +133,19 @@ useEffect(() => {
   const handleModelChange = (ev) => {
     setSelectedModel(ev.target.value);
     setData({ ...data, model: ev.target.value });
+  };
+  
+  const handleRemoveImage = (index) => {
+    // Eliminar la imagen de uploadedFiles
+    const newUploadedFiles = uploadedFiles.filter((file, i) => index !== i);
+    setUploadedFiles(newUploadedFiles);
+  
+    // Eliminar el archivo correspondiente de submitData
+    const newSubmitData = submitData.filter((formData, i) => index !== i);
+    setSubmitData(newSubmitData);
+
+    const newSelectedImages = selectedImages.filter((_, i) => index !== i);
+    setSelectedImages(newSelectedImages);
   };
   
   
@@ -151,15 +182,36 @@ useEffect(() => {
   const handleSubmit = (ev) => {
     ev.preventDefault();
   
+
+    const filesToUpload = uploadedFiles.filter((fileName) =>
+    selectedImages.some((image) => image.file.name === fileName)
+    );
+
     Promise.all(
-      submitData.map((formData) =>
-        fetch("https://api.cloudinary.com/v1_1/djpzj47gu/image/upload", {
-          method: "POST",
-          body: formData,
-        })
-          .then((resp) => resp.json())
-          .then((data) => data.secure_url)
-      )
+      filesToUpload.map((fileName) => {
+        const file = selectedImages.find((image) => image.file.name === fileName);
+        if (file) {
+          const formData = new FormData();
+          formData.append("file", file.file);
+          formData.append("tags", "codeinfuse, medium, gist");
+          formData.append("upload_preset", "WhataCar");
+          formData.append("api_key", process.env.API_KEY);
+          formData.append("timestamp", Math.floor(Date.now() / 1000));
+          setLoading(true);
+          return fetch(
+            "https://api.cloudinary.com/v1_1/djpzj47gu/image/upload",
+            {
+              method: "POST",
+              body: formData,
+            }
+          )
+            .then((resp) => resp.json())
+            .then((data) => {
+              //console.log("Uploaded image data:", data);
+              return data.secure_url;
+            });
+        }
+      })
     )
       .then((fileURLs) => {
         const config = {
@@ -293,77 +345,54 @@ useEffect(() => {
 
 
                     
-              <div className='upload-product-images '>
-              <div>
-                  <h5><strong>Imágenes:</strong></h5>
-                </div>
-                <Dropzone 
-                onDrop={handleDrop}
-                className = "dropzone"
-                onChange = {(ev) => setImage(ev.target.value)}
-                value={image}
-                
-                >
+              <div className='upload-innerbox'>
+              
+                <div className='upload-product-images'>
+                  <div>
+                    <h5><strong>Imágenes:</strong></h5>
+                  </div>
+                  <Dropzone 
+                    onDrop={handleDrop}
+                    className=""
+                    onChange={(ev) => setImage(ev.target.value)}
+                    value={image}
+                  >
+                    {({ getRootProps, getInputProps }) => (
+                      
+                  <section>
+                    <div {...getRootProps({ className: "" })}>
+                      <div >
 
-                    {({getRootProps, getInputProps}) => (
-                        <section>
-                            <div {...getRootProps({className: "dropzone"})}>
-                                <input {...getInputProps()} />
-                                <span className='upload-images-icon'>📁</span>
-                                <p>Arrastra tus imágenes o clickea para seleccionar</p>
-                            </div>
-                        </section>
+                        <a className='btn btn-info btnadd'>Agrega tus imágenes</a>
+                        {/* <p></p>
+                        <p>Cliquea</p> */}
+                      </div>
+                    </div>
+                  </section>
+
+                    
                     )}
+                  </Dropzone>
+                  <div className='mb-5 d-flex'>
+                    <div className={`dropzone image-preview ${hasSelectedImages ? "" : "d-none"}`}>
+                    {selectedImages.map((selectedImage, index) => (
+                            <div key={index} className="me-3">
+                              <img style={{width:'11rem', height:'8rem', border:'.1rem solid black', borderRadius:'.2rem'}} src={selectedImage.url} alt={selectedImage.file.name} />
+                              <button onClick={(e) => handleDeleteImage(index, e)}>🗑️</button>
+                            </div>
+                          ))}
+                    </div>
+                          
+                        </div>
 
-                </Dropzone>
-
-                <div className='mb-5'>
-                    {uploadedFiles.map((file, index) => (
-                        <p key={index}>{file}</p>
-                    ))}
-                </div>
+             
+              </div>
 
                 <div className='text-center mt-5'>
                     <button className='btn btn-primary'>¡Sube tu coche!</button>
                 </div>
 
 
-
-                {/* <div className='upload-product-images-center'>
-                  <button className='btnupload-image'> <img src="data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20height%3D%222em%22%20viewBox%3D%220%200%20448%20512%22%3E%3C!--!%20Font%20Awesome%20Free%206.4.0%20by%20%40fontawesome%20-%20https%3A%2F%2Ffontawesome.com%20License%20-%20https%3A%2F%2Ffontawesome.com%2Flicense%20(Commercial%20License)%20Copyright%202023%20Fonticons%2C%20Inc.%20--%3E%3Cpath%20d%3D%22M256%2080c0-17.7-14.3-32-32-32s-32%2014.3-32%2032V224H48c-17.7%200-32%2014.3-32%2032s14.3%2032%2032%2032H192V432c0%2017.7%2014.3%2032%2032%2032s32-14.3%2032-32V288H400c17.7%200%2032-14.3%2032-32s-14.3-32-32-32H256V80z%22%2F%3E%3C%2Fsvg%3E"
-                  alt="Icono del botón" />
-                  </button>
-                  <button className='btnupload-image'> <img src="data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20height%3D%222em%22%20viewBox%3D%220%200%20448%20512%22%3E%3C!--!%20Font%20Awesome%20Free%206.4.0%20by%20%40fontawesome%20-%20https%3A%2F%2Ffontawesome.com%20License%20-%20https%3A%2F%2Ffontawesome.com%2Flicense%20(Commercial%20License)%20Copyright%202023%20Fonticons%2C%20Inc.%20--%3E%3Cpath%20d%3D%22M256%2080c0-17.7-14.3-32-32-32s-32%2014.3-32%2032V224H48c-17.7%200-32%2014.3-32%2032s14.3%2032%2032%2032H192V432c0%2017.7%2014.3%2032%2032%2032s32-14.3%2032-32V288H400c17.7%200%2032-14.3%2032-32s-14.3-32-32-32H256V80z%22%2F%3E%3C%2Fsvg%3E"
-                  alt="Icono del botón" />
-                  </button>
-                  <button className='btnupload-image'> <img src="data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20height%3D%222em%22%20viewBox%3D%220%200%20448%20512%22%3E%3C!--!%20Font%20Awesome%20Free%206.4.0%20by%20%40fontawesome%20-%20https%3A%2F%2Ffontawesome.com%20License%20-%20https%3A%2F%2Ffontawesome.com%2Flicense%20(Commercial%20License)%20Copyright%202023%20Fonticons%2C%20Inc.%20--%3E%3Cpath%20d%3D%22M256%2080c0-17.7-14.3-32-32-32s-32%2014.3-32%2032V224H48c-17.7%200-32%2014.3-32%2032s14.3%2032%2032%2032H192V432c0%2017.7%2014.3%2032%2032%2032s32-14.3%2032-32V288H400c17.7%200%2032-14.3%2032-32s-14.3-32-32-32H256V80z%22%2F%3E%3C%2Fsvg%3E"
-                  alt="Icono del botón" />
-                  </button>
-                  <button className='btnupload-image'> <img src="data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20height%3D%222em%22%20viewBox%3D%220%200%20448%20512%22%3E%3C!--!%20Font%20Awesome%20Free%206.4.0%20by%20%40fontawesome%20-%20https%3A%2F%2Ffontawesome.com%20License%20-%20https%3A%2F%2Ffontawesome.com%2Flicense%20(Commercial%20License)%20Copyright%202023%20Fonticons%2C%20Inc.%20--%3E%3Cpath%20d%3D%22M256%2080c0-17.7-14.3-32-32-32s-32%2014.3-32%2032V224H48c-17.7%200-32%2014.3-32%2032s14.3%2032%2032%2032H192V432c0%2017.7%2014.3%2032%2032%2032s32-14.3%2032-32V288H400c17.7%200%2032-14.3%2032-32s-14.3-32-32-32H256V80z%22%2F%3E%3C%2Fsvg%3E"
-                  alt="Icono del botón" />
-                  </button>
-                  <button className='btnupload-image'> <img src="data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20height%3D%222em%22%20viewBox%3D%220%200%20448%20512%22%3E%3C!--!%20Font%20Awesome%20Free%206.4.0%20by%20%40fontawesome%20-%20https%3A%2F%2Ffontawesome.com%20License%20-%20https%3A%2F%2Ffontawesome.com%2Flicense%20(Commercial%20License)%20Copyright%202023%20Fonticons%2C%20Inc.%20--%3E%3Cpath%20d%3D%22M256%2080c0-17.7-14.3-32-32-32s-32%2014.3-32%2032V224H48c-17.7%200-32%2014.3-32%2032s14.3%2032%2032%2032H192V432c0%2017.7%2014.3%2032%2032%2032s32-14.3%2032-32V288H400c17.7%200%2032-14.3%2032-32s-14.3-32-32-32H256V80z%22%2F%3E%3C%2Fsvg%3E"
-                  alt="Icono del botón" />
-                  </button>
-                </div>  
-
-                <div className='upload-product-images-center mt-5'>
-                <button className='btnupload-image'> <img src="data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20height%3D%222em%22%20viewBox%3D%220%200%20448%20512%22%3E%3C!--!%20Font%20Awesome%20Free%206.4.0%20by%20%40fontawesome%20-%20https%3A%2F%2Ffontawesome.com%20License%20-%20https%3A%2F%2Ffontawesome.com%2Flicense%20(Commercial%20License)%20Copyright%202023%20Fonticons%2C%20Inc.%20--%3E%3Cpath%20d%3D%22M256%2080c0-17.7-14.3-32-32-32s-32%2014.3-32%2032V224H48c-17.7%200-32%2014.3-32%2032s14.3%2032%2032%2032H192V432c0%2017.7%2014.3%2032%2032%2032s32-14.3%2032-32V288H400c17.7%200%2032-14.3%2032-32s-14.3-32-32-32H256V80z%22%2F%3E%3C%2Fsvg%3E"
-                  alt="Icono del botón" />
-                  </button>
-                  <button className='btnupload-image'> <img src="data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20height%3D%222em%22%20viewBox%3D%220%200%20448%20512%22%3E%3C!--!%20Font%20Awesome%20Free%206.4.0%20by%20%40fontawesome%20-%20https%3A%2F%2Ffontawesome.com%20License%20-%20https%3A%2F%2Ffontawesome.com%2Flicense%20(Commercial%20License)%20Copyright%202023%20Fonticons%2C%20Inc.%20--%3E%3Cpath%20d%3D%22M256%2080c0-17.7-14.3-32-32-32s-32%2014.3-32%2032V224H48c-17.7%200-32%2014.3-32%2032s14.3%2032%2032%2032H192V432c0%2017.7%2014.3%2032%2032%2032s32-14.3%2032-32V288H400c17.7%200%2032-14.3%2032-32s-14.3-32-32-32H256V80z%22%2F%3E%3C%2Fsvg%3E"
-                  alt="Icono del botón" />
-                  </button>
-                  <button className='btnupload-image'> <img src="data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20height%3D%222em%22%20viewBox%3D%220%200%20448%20512%22%3E%3C!--!%20Font%20Awesome%20Free%206.4.0%20by%20%40fontawesome%20-%20https%3A%2F%2Ffontawesome.com%20License%20-%20https%3A%2F%2Ffontawesome.com%2Flicense%20(Commercial%20License)%20Copyright%202023%20Fonticons%2C%20Inc.%20--%3E%3Cpath%20d%3D%22M256%2080c0-17.7-14.3-32-32-32s-32%2014.3-32%2032V224H48c-17.7%200-32%2014.3-32%2032s14.3%2032%2032%2032H192V432c0%2017.7%2014.3%2032%2032%2032s32-14.3%2032-32V288H400c17.7%200%2032-14.3%2032-32s-14.3-32-32-32H256V80z%22%2F%3E%3C%2Fsvg%3E"
-                  alt="Icono del botón" />
-                  </button>
-                  <button className='btnupload-image'> <img src="data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20height%3D%222em%22%20viewBox%3D%220%200%20448%20512%22%3E%3C!--!%20Font%20Awesome%20Free%206.4.0%20by%20%40fontawesome%20-%20https%3A%2F%2Ffontawesome.com%20License%20-%20https%3A%2F%2Ffontawesome.com%2Flicense%20(Commercial%20License)%20Copyright%202023%20Fonticons%2C%20Inc.%20--%3E%3Cpath%20d%3D%22M256%2080c0-17.7-14.3-32-32-32s-32%2014.3-32%2032V224H48c-17.7%200-32%2014.3-32%2032s14.3%2032%2032%2032H192V432c0%2017.7%2014.3%2032%2032%2032s32-14.3%2032-32V288H400c17.7%200%2032-14.3%2032-32s-14.3-32-32-32H256V80z%22%2F%3E%3C%2Fsvg%3E"
-                  alt="Icono del botón" />
-                  </button>
-                  <button className='btnupload-image'> <img src="data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20height%3D%222em%22%20viewBox%3D%220%200%20448%20512%22%3E%3C!--!%20Font%20Awesome%20Free%206.4.0%20by%20%40fontawesome%20-%20https%3A%2F%2Ffontawesome.com%20License%20-%20https%3A%2F%2Ffontawesome.com%2Flicense%20(Commercial%20License)%20Copyright%202023%20Fonticons%2C%20Inc.%20--%3E%3Cpath%20d%3D%22M256%2080c0-17.7-14.3-32-32-32s-32%2014.3-32%2032V224H48c-17.7%200-32%2014.3-32%2032s14.3%2032%2032%2032H192V432c0%2017.7%2014.3%2032%2032%2032s32-14.3%2032-32V288H400c17.7%200%2032-14.3%2032-32s-14.3-32-32-32H256V80z%22%2F%3E%3C%2Fsvg%3E"
-                  alt="Icono del botón" />
-                  </button>
-                </div>       */}
               </div>
 
 
