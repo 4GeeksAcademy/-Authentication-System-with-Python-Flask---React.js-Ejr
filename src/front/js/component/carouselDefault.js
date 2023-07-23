@@ -27,16 +27,21 @@ export const CarouselDefault = () => {
 
   return (
     <div className="d-flex overflow-auto my-5 ">
-      {store.products.length > 0 ? (
-        store.products.map((vehicle, index) => (
-          <div className="mx-3 mb-5" key={index}>
-            <div className="card card-blur" style={{ width: "18rem" }}>
-              <div className="flip-card">
-                <div className="flip-card-inner">
-                  <div className="flip-card-front">
+    {store.products.length > 0 ? (
+      store.products.map((vehicle, index) => (
+        <div className="mx-3 mb-5" key={index}>
+          <div className="card card-blur" style={{ width: "18rem" }}>
+            <div className="flip-card">
+              <div className="flip-card-inner">
+                <div className="flip-card-front">
+                  {/* Update the rendering to show the first image of the vehicle */}
+                  {vehicle.images.length > 0 ? (
+                    <img src={vehicle.images} className="card-img-top imgCarousel" alt="..." />
+                  ) : (
                     <img src={carImage} className="card-img-top imgCarousel" alt="..." />
-                  </div>
-                  <div className="flip-card-back">
+                  )}
+                </div>
+                <div className="flip-card-back">
                     <Link to={`product/${vehicle.id}`}  style={{ color: 'white', textDecoration: 'none' }} className="link-hover">
                       <h3 className="pt-2">{vehicle.name}</h3>
                     </Link>
