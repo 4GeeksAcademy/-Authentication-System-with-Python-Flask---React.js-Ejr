@@ -6,7 +6,7 @@ import { BackendURL } from "./component/backendURL";
 import { Home } from "./pages/home";
 import  Demo  from "./pages/demo";
 import Login from "./pages/login";
-import CreateAccount from "./pages/create-account";
+import CreateAccount from "./pages/create-account.js";
 import injectContext from "./store/appContext";
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
