@@ -91,7 +91,7 @@ export const SingleProduct = () => {
               </div>
                 
                 
-                <div className='single-pr-information text-center mt-3'>
+                <div className=' container single-pr-information text-start mt-3 mx-2'>
 
                   {/* <div className='row'> 
                     <div className='col-12 text-center mt-3'>
@@ -100,47 +100,61 @@ export const SingleProduct = () => {
                   </div> */}
 
                     <div className='row '>
-                        <div className='col-6'>
-                          <p><strong>Precio: <span className='single-price'>{product.price}€</span></strong></p>
+                        <div className='col-lg-4'>
+                          <p><strong>Precio: <span className='single-price'>
+                            {product.price}€
+                            </span></strong></p>
 
                         </div>
-                        <div className='col-6'>
+                        <div className='col-lg-4'>
                           <p><strong>Tipo de vehículo: </strong> {product.product_type} </p>
                         </div>
-                    </div>
-                    <div className='row'>
-                        <div className='col-6'>
-                          <p><strong> Marca: </strong> {product.brand.name}</p>
+                  
+                        <div className='col-lg-4'>
+                          <p><strong> Marca: </strong> {product.brand.name}</p>  
                         </div>
+
+                    </div>
                         
-                        <div className='col-6'>
+                    <div className='row'>
+                        <div className='col-lg-4'>
                           <p><strong> Modelo: </strong> {product.model.model}</p>
                         </div>
-                    </div>
-                    <div className='row'>
-                        <div className='col-6'>
+                        <div className='col-lg-4'>
                           <p><strong> Estado: </strong> {product.state}</p>
-
                         </div>
-                        <div className='col-6'>
+
+                        <div className='col-lg-4'>
                           <p><strong> Combustible: </strong> {product.fuel}</p>
                         </div>
                     </div>
+
+
                     <div className='row'>
-                        <div className='col-6'>
+                        <div className='col-lg-4'>
                           <p><strong> Año de fabricación: </strong> {product.year}</p>
                         </div>
-                        <div className='col-6'>
+
+                        <div className='col-lg-4'>
+                          <p><strong> Kilómetros: </strong> {product.km}</p>
+                        </div>  
+                      
+                    </div>
+
+                      <div className='row d-flex justify-content center m-auto my-4'>
+                        <div className='col-lg-12 justify-content-center m-auto d-flex'>
                           
                           <UserInfo userName={product.user.full_name} email={product.user.email} address={product.user.address} phone={product.user.phone} />
 
                           {/* <p><strong>Vendedor: <a onClick={}>{product.user.full_name}</a> </strong></p> */}
 
                         </div>
-                    </div>
+                        </div>
+
+                  
                     
-                    <div className='row d-flex mb-3'>
-                      <div className='col-12 text-center '>
+                 
+                      <div className='col-lg-4 text-center '>
                         <p><strong> Descripción: </strong> <br></br></p>
                         <div className=' desc-container'>
                           <p className=' single-description mx-auto d-flex justify-content-flex-start'>{product.description}</p>
@@ -168,13 +182,15 @@ export const SingleProduct = () => {
 
                     </div>
 
-                </div>
+               
 
                 
             ))}
           </div>
         ) : (
-          <p>Loading...</p>
+          <div class="spinner-border text-primary m-auto d-flex justify-content-center" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
         )}
       </div>
     </div>
