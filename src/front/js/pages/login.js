@@ -76,7 +76,7 @@ export const Login = () => {
                 Contraseña
               </label>
               <div className="input-with-icon">
-                <input
+                <input 
                   type={eye ? "password" : "text"}
                   className="form-control"
                   id="exampleInputPassword1"
@@ -85,7 +85,7 @@ export const Login = () => {
                   onChange={handlePasswordChange}
                 />
                 <i
-                  className={!eye ? "fa-solid fa-eye icon" : "fa-solid fa-eye-slash icon"}
+                  className={!eye ? "fa-solid fa-eye icon input-with-icon2" : "fa-solid fa-eye-slash icon input-with-icon2"}
                   onClick={handleEye}
                 ></i>
               </div>
