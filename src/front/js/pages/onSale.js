@@ -11,11 +11,23 @@ export const OnSale = () => {
     const {actions, store} = useContext(Context);
     const {status, setStatus} = useState([]);
     const onsaleCount = store.products.length;
+    const [products, setProducts] = useState([]);
 
-useEffect (() => {
-        actions.getProductsOnSale(),
-        actions.getProductsPendingBlocked()
-}, [])
+    useEffect(() => {
+        async function fetchProducts() {
+          const response = await actions.getProductsOnSale();
+          setProducts(response); 
+        }
+        fetchProducts();
+      }, []);
+
+      useEffect(() => {
+        async function fetchProducts() {
+          const response = await actions.getProductsPendingBlocked();
+          setProducts(response); 
+        }
+        fetchProducts();
+      }, []);
 
 const StatusToBlocked = (product) => {
     const token = localStorage.getItem("token");

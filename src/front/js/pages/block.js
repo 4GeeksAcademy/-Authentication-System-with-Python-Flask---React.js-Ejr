@@ -8,6 +8,7 @@ import { Sales_navbar } from "../component/Sales_navbar";
 export const Block = () => {
     const {actions, store} = useContext(Context);
     const blockedCount = store.products.length;
+    const [products, setProducts] = useState([]);
     
 const StatusToOnSale = (product) => {
     const token = localStorage.getItem("token");
@@ -50,10 +51,22 @@ const StatusToSold = (product) => {
         });
     window.location.reload();
 };
-    useEffect (() => {
-        actions.getProductsBlocked(),
-        actions.getProductsPendingSale()
-    }, [])
+
+    useEffect(() => {
+        async function fetchProducts() {
+          const response = await actions.getProductsBlocked();
+          setProducts(response); 
+        }
+        fetchProducts();
+      }, []);
+
+      useEffect(() => {
+        async function fetchProducts() {
+          const response = await actions.getProductsPendingSale();
+          setProducts(response); 
+        }
+        fetchProducts();
+      }, []);
     
     return store.products ? (
         <>

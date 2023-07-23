@@ -9,12 +9,30 @@ import { Toaster, toast } from 'sonner'
 export const Profile_buys = () => {
     const {actions, store} = useContext(Context);
     const blockedCount = store.products.length;
+    const [products, setProducts] = useState([]);
 
-useEffect (() => {
-        actions.PendingBlockedChanged(),
-        actions.BlockedChanged(),
-        actions.PendingSaleChanged()
-}, [])
+
+useEffect(() => {
+    async function fetchProducts() {
+      const response = await actions.PendingBlockedChanged();
+      setProducts(response); 
+    }
+    fetchProducts();
+  }, []);
+  useEffect(() => {
+    async function fetchProducts() {
+      const response = await actions.BlockedChanged();
+      setProducts(response); 
+    }
+    fetchProducts();
+  }, []);
+  useEffect(() => {
+    async function fetchProducts() {
+      const response = await actions.PendingSaleChanged();
+      setProducts(response); 
+    }
+    fetchProducts();
+  }, []);
 
 const StatusToPendingSale = (product) => {
     const token = localStorage.getItem("token");
