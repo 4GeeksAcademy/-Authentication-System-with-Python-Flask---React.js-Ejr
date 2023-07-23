@@ -2,7 +2,10 @@ import React, { useState, useEffect, useContext } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
 import "/workspaces/Watacar_v2/src/front/styles/configuration.css"
+import "/workspaces/Watacar_v2/src/front/styles/profile.css"
 import { text } from "@fortawesome/fontawesome-svg-core";
+import { Toaster, toast } from 'sonner'
+import { Placeholder_profile } from "./placeholder_profile.js"
 
 export const Configuration = () => {
     const {actions, store} = useContext(Context);
@@ -77,6 +80,8 @@ const handleSubmit = (event) => {
     .then((responseData) => {
       setData({ ...data, response: responseData });
       navigate("/profile/configuration");
+      toast.success('Cambios guardados correctamente');
+      
     })
     .catch((error) => {
       console.error(error);
@@ -84,42 +89,58 @@ const handleSubmit = (event) => {
 };
 
 
+
+
+
+
 return store.user ? (
-    <div>
-        <Link to="/profile/configuration" className="btn_config back">
+    <div className="container_profile">
+        {/* <Link to="/profile/configuration" className="btn_config back">
                 Atrás
         </Link>
         <h2 className="configuration_title">Configuración del perfil</h2>
-        <div className="container_config">
-                <div className="avatar_container_configuration">
-                    <img src="https://appsdejoseluis.com/wp-content/uploads/2020/04/face_co.png" alt="Avatar" className="avatar_image_configuration" />
-                </div>
-                <div className="profile_info">
-                    <div className="row row_configuration">
-                        <label className="col-3 label_config">Nombre:</label>
-                        <input className="col-5 input_config" name="full_name" type="text" value={data.full_name || store.user.full_name} onChange={handleChange}></input>
+       
+      */}
+        <div className="d-lg-flex justify-content-end">
+          <img
+            className="avatar_image"
+            src="https://appsdejoseluis.com/wp-content/uploads/2020/04/face_co.png"
+            alt="Avatar"
+          />
+        </div>
+
+        
+        <div className="profile_info">
+          <div className="row_profile_configuration">
+                        <label className="text-wrap badge label_config col-sm-6 col-md-5 col-lg-3">Nombre:</label>
+                        <input className="user_data" name="full_name" type="text" value={data.full_name || store.user.full_name} onChange={handleChange}></input>
                     </div>
-                    <div className="row row_configuration">
-                        <label className="col-3 label_config">Email:</label>
-                        <input className="col-5 input_config" name="email" type="text" value={data.email || store.user.email} onChange={handleChange}></input>
+                    <div className="row_profile_configuration">
+                        <label className="text-wrap badge label_config col-sm-6 col-md-5 col-lg-3">Email:</label>
+                        <input className="user_data" name="email" type="text" value={data.email || store.user.email} onChange={handleChange}></input>
                     </div>
-                        <div className="row row_configuration">
-                            <label className="col-3 label_config">Tipo de documento:</label>
-                            <input className="col-5 input_config" name="document_Type" type="text" value={store.user.document_type}></input>
+                    <div className="row_profile_configuration">
+                      <label className="text-wrap badge label_config col-sm-6 col-md-5 col-lg-3">Tipo de documento:</label>
+                      <select className="user_data" name="document_type" value={data.document_type || store.user.document_type} onChange={handleChange}>
+                        <option value="DNI">DNI</option>
+                        <option value="CIF">CIF</option>
+                      </select>
+                    </div>
+                        <div className="row_profile_configuration">
+
+                            <label className="text-wrap badge label_config col-sm-6 col-md-5 col-lg-3">Número del documento:</label>
+                            <input className="user_data" name="document_number" type="text" value={data.document_number || store.user.document_number} onChange={handleChange}></input>
                         </div>
-                        <div className="row row_configuration">
-                            <label className="col-3 label_config">Número del documento:</label>
-                            <input className="col-8 input_config" name="document_number" type="text" value={data.document_number || store.user.document_number} onChange={handleChange}></input>
-                        </div>
-                    <div className="row row_configuration">
-                        <label className="col-3 label_config">Teléfono:</label>
-                        <input className="col-8 input_config" name="phone" type="text" value={data.phone || store.user.phone} onChange={handleChange}></input>
+                        <div className="row_profile_configuration">
+                        <label className="text-wrap badge label_config col-sm-6 col-md-5 col-lg-3">Teléfono:</label>
+                        <input className="user_data mb-3" name="phone" type="text" value={data.phone || store.user.phone} onChange={handleChange}></input>
                     </div>
-                    <div className="row row_configuration">
-                        <label className="col-3 label_config">Dirección:</label>
-                        <input className="col-8 input_config" id="address" name="adress" type="text" value={data.adress || store.user.address} onChange={handleChange}></input>
+                    <div className="row_profile_configuration">
+
+                        <label className="text-wrap badge label_config col-sm-6 col-md-5 col-lg-3">Dirección:</label>
+                        <input className="user_data mb-3" id="address" name="adress" type="text" value={data.adress || store.user.address} onChange={handleChange}></input>
                     </div>
-                    <div className="row save_cancel_config">
+                    <div className=" save_cancel_config">
                         <Link to="/profile/configuration" className="btn_config cancel">
                             Cancelar
                         </Link>
@@ -127,8 +148,10 @@ return store.user ? (
                             Guardar
                         </Link>
                     </div>
+                    </div>
+                    <Toaster richColors position="top-center" />
                 </div>
-        </div>
-    </div>
-): "cargando...";
+  
+ 
+): <Placeholder_profile />
 }

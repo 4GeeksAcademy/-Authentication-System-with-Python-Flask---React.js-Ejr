@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { Login } from "../pages/login";
 import { SwitchLight } from "./switchLight";
 import  "../../styles/navbar.css"
+import  "../../styles/index.css"
 
 export const Navbar = () => {
   const { store, actions, token } = useContext(Context);
@@ -16,11 +17,10 @@ export const Navbar = () => {
   const [password, setPassword] = useState("");
   const [modalIsOpen, setIsOpen] = useState(false);
   const [isSmallScreen, setIsSmallScreen] = useState(false);
-  const [dropMenu, setDropMenu] = useState("container-fluid mx-3");
+  const [dropMenu, setDropMenu] = useState("container-fluid mx-1");
   const [ariaExpanded, setAriaExpanded] = useState(false);
   const [manuallyClosed, setManuallyClosed] = useState(false); // Nueva variable de estado
-  
-  
+
   
   
   
@@ -115,60 +115,39 @@ export const Navbar = () => {
 
   useEffect(() => {
     actions.getToken()
+    actions.getUser()
   }, []);
   
   
-  
-  // Responsive Drop Menu
-  const handleToggle = () => {
-    if (manuallyClosed==true) { // Agregar condición para verificar si el menú ha sido cerrado manualmente
-      setAriaExpanded(!ariaExpanded);
-    }
-  };
-
-
-
-  const handleDropMenu = () => {
-    if (ariaExpanded == true) {
-      setDropMenu("justify-content-center text-center m-auto mb-5");
-      console.log("true")
-    } else {
-      setDropMenu("container-fluid mx-3");
-      console.log("false")
-    }
+     
+ 
+  const closeForceNavbar = () => {
+    setAriaExpanded(false)
   }
-  
-  const closeNavbar = () => {
-    setAriaExpanded(false);
-    setManuallyClosed(true); // Establecer que el menú ha sido cerrado manualmente
-  };
-  
-    
-  useEffect(()=> {
-    handleDropMenu()
-  }), [ariaExpanded]
 
-  
+  const closeMenuOnItemClick = () => {
+    setManuallyClosed(true); // Establecer que el menú ha sido cerrado manualmente
+    setAriaExpanded(false); // Cerrar el menú
+  };
 
   return (
-    <nav className="navbar navbar-expand-lg bg-body-tertiary">
-      <div className={dropMenu}>
-        <div className="text-center">
-          <Link to="/" className="navbar-brand tittle-nav" id="tittle-nav" onClick={closeNavbar}>
+    <nav className="navbar navbar-expand-lg bgNavbar py-4">
+      <div className={dropMenu} >
+        <div className="text-center lightSpeedIn customDiv">
+          <Link to="/" className="navbar-brand tittle-nav ms-1 " id="tittle-nav" onClick={closeMenuOnItemClick}>
             WhataCar
           </Link>
         </div>
         <br></br>
-        <div className="justify-content-end d-flex mb-2">
+        <div className="justify-content-end d-flex mb-2 ">
           <div className="mx-auto">
             <button
-              className="navbar-toggler"
+              className="navbar-toggler  ms-5"
               type="button"
               data-bs-toggle="collapse"
               data-bs-target="#navbarNavDropdown"
               aria-controls="navbarNavDropdown"
-              aria-expanded={ariaExpanded}
-              onClick={handleToggle}
+              aria-expanded={ariaExpanded}             
               aria-label="Toggle navigation"
             >
               <span className="navbar-toggler-icon"></span>
@@ -182,10 +161,11 @@ export const Navbar = () => {
                   <>
                     <li className="nav-item">
                       <Link
-                        className="nav-link active me-3"
+                        className="nav-link actived me-3"
                         style={{ color: "rgb(15, 76, 117)" }}
                         aria-current="page"
                         to="/signup"
+                        onClick={closeMenuOnItemClick}
                         
                       >
                         Registro
@@ -193,10 +173,11 @@ export const Navbar = () => {
                     </li>
                     <li className="nav-item">
                       <Link
-                        className="nav-link active me-3"
+                        className="nav-link actived me-3"
                         style={{ color: "rgb(15, 76, 117)" }}
                         aria-current="page"
                         to="/login"
+                        onClick={closeMenuOnItemClick}
                       
                       >
                         Accede
@@ -208,12 +189,12 @@ export const Navbar = () => {
                   <>
                     <li className="nav-item ">
                       <Link
-                        className="nav-link active "
+                        className="nav-link "
                         id="heart"
                         href="#"
                         role="button"
                         aria-expanded="page"
-                        to="/profile"
+                        to="/profile/favorites"
                       >
                         <span>Favoritos</span> {""}
                         <i className="fa-regular fa-heart"></i>
@@ -221,6 +202,7 @@ export const Navbar = () => {
                     </li>
                     <li className="nav-item">
                       {!store.token ? (
+                        
                         <button
                           className="nav-link btn-plus mb-2 me-3"
                           onClick={openModal}
@@ -228,10 +210,22 @@ export const Navbar = () => {
                           <i className="fa-solid fa-plus"></i>
                         </button>
                       ) : (
+
                         <Link to="/choose-vehicle">
+                         style={{width: 38, height: 35, background: '#0F4C75', borderRadius: 8}}
                           <button className="nav-link btn-plus btn_mucho mb-2 ms-4">
                             <i className="fa-solid fa-plus"></i>
                           </button>
+
+                        //<Link to="/upload-vehicle"
+                        //style={{width: 38, height: 35, background: '#0F4C75', borderRadius: 8}}
+                        //className="nav-link btn-plus btn_mucho mb-2 ms-4">
+                       
+                          
+                         
+                            //<i className="fa-solid fa-plus m-auto"></i>
+                       
+
                         </Link>
                       )}
                     </li>
@@ -244,23 +238,26 @@ export const Navbar = () => {
                         data-bs-toggle="dropdown"
                         aria-expanded="false"
                         to="profile"
+                        onClick={closeMenuOnItemClick}
                       >
-                        <i className="fa-regular fa-user ms-4" id="iconProfile"></i>
+                        <i className="fa-regular fa-user ms-4 jello-vertical" id="iconProfile"></i>
                       </Link>
                       <ul className="dropdown-menu ms-3">
                         <li>
                           <Link
-                            to="/profile"
+                            to="/profile/configuration"
                             className="dropdown-item justify-content-end d-flex"
+                            onClick={closeMenuOnItemClick}
                           >
                             Mi perfil
-                            <i className="fa-solid fa-address-card ms-3 mt-1 profileIcons"></i>
+                            <i className="fa-solid fa-address-card ms-2 mt-1 profileIcons"></i>
                           </Link>
                         </li>
                         <li>
                           <Link
                             to="/profile/configuration"
                             className="dropdown-item justify-content-end d-flex  profileIcons"
+                            onClick={closeMenuOnItemClick}
                            
                           >
                             Configuración
@@ -271,14 +268,30 @@ export const Navbar = () => {
                           <Link
                             to="/profile/onsale"
                             className="dropdown-item justify-content-end d-flex "
+                            onClick={closeMenuOnItemClick}
                           >
                             Mis productos
                             <i className="fa-solid fa-car ms-2 mt-1 profileIcons"></i>
                           </Link>
                         </li>
+
+                        {/* Cuando se inicia la aplicación hay que quitar esto, loguearte reescribirlo y recargar */}
+                         {/* {store.user.role === "GARAGE" && (
+                            <li>
+                              <Link
+                                to="/profile/garage"
+                                className="dropdown-item justify-content-end d-flex"
+                              >
+                                Mi Taller
+                                <i className="fa-solid fa-wrench ms-2 mt-1"></i>
+                              </Link>
+                            </li>
+                          )} */}
+
                         <li>
                           <hr className="dropdown-divider" />
                         </li>
+
                         <li>
                           <Link
                             className="dropdown-item justify-content-end d-flex "
@@ -286,6 +299,7 @@ export const Navbar = () => {
                             style={{ color: "red" }}
                             onClick={handleLogOut}
                           >
+                      
                             Salir
                             <i className="fa-solid fa-right-from-bracket ms-3 mt-1 "></i>
                           </Link>

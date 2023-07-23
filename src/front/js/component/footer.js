@@ -17,8 +17,12 @@ export const Footer = () => (
 					WhataCar
 				</h5>
 				<ul className="text-start">
+					<Link to="/sobre-nosotros">
 					<li>Sobre Nosotros</li>
+					</Link>
+					<Link to="/como-funciona">
 					<li>Cómo funciona</li>
+					</Link>
 					
 				</ul>
 			</div>
@@ -28,9 +32,12 @@ export const Footer = () => (
 					Soporte
 				</h5>
 				<ul className="text-start">
+					<Link to="/centro-de-ayuda">
 					<li>Centro de Ayuda</li>
+					</Link>
+					<Link to="/reglas-de-publicacion">
 					<li>Reglas de Publicación</li>
-					
+					</Link>
 				</ul>
 			</div>
 			
@@ -39,9 +46,12 @@ export const Footer = () => (
 					Legal
 				</h5>
 				<ul className="text-start">
+					<Link to="/aviso-legal">
 					<li>Aviso Legal</li>
+					</Link>
+					<Link to="/politica-de-privacidad">
 					<li>Política de Privacidad</li>
-					
+					</Link>
 				</ul>
 				</div>
 
@@ -50,8 +60,12 @@ export const Footer = () => (
 						Cookies
 					</h5>
 				<ul className="text-start">
+					<Link to="/nuestros-socios">
 					<li>Nuestros Socios</li>
+					</Link>					
+					<Link to="/politica-de-cookies">
 					<li>Política de Cookies</li>
+					</Link>
 					
 				</ul>
 				</div>

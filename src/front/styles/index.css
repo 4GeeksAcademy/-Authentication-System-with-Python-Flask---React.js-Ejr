@@ -32,34 +32,25 @@ h6 {
   font-family: 'Roboto', sans-serif;
 }
 
-li {
-  font-family: 'Roboto', sans-serif;
-}
-
-
-body {
-  font-family: 'Roboto', sans-serif;
-}
-
-h1 {
-  font-family: 'Roboto', sans-serif;
-}
-
-h2 {
-  font-family: 'Roboto', sans-serif;
-}
-
-h3 {
-  font-family: 'Roboto', sans-serif;
-}
-
-h4 {
-  font-family: 'Roboto', sans-serif;
-}
 
 li {
   font-family: 'Roboto', sans-serif;
 }
+
+.container-garage {
+  
+
+  border-radius: 12px;
+  background-color: #2486c7;
+}
+
+
+.toolIcon {
+  float: right;
+  
+  
+  }
+  
 
 #light{
     background-color: #c4d8f2;
@@ -95,6 +86,8 @@ li {
 }
 
 
+
+
 .btn-plus {
   display: flex;
   align-items: center;
@@ -123,13 +116,7 @@ li {
 
 
   
-  #heart {
 
-    margin-bottom: -5px;
-    color: rgb(36, 144, 215);
-    font-size: x-large;
-    
-  }
   
 
   .switch {
@@ -166,13 +153,15 @@ li {
   border-color: #125c8e;
   border-style: solid;
   border-radius: 10px;
-  margin-right: 2rem;
   text-align: center;
   font-family: 'Roboto', sans-serif;
   text-decoration: none;
   background-color: white;
-  padding: 2px;
+  padding: 3px;
+  margin: 2px;
   color: black;
+  font-size: 15px;
+  font-weight:bolder;
 }
 
 .navbar_profile:hover {
@@ -181,21 +170,36 @@ li {
 }
 
 .active{
-  background-color: #125c8e;
+ 
   color: white;
+  background-color: #125c8e;
+  font-weight: bolder;
+}
+
+.card-blur {
+  box-shadow: 39px 38px 36px 7px rgba(0,0,0,0.1);
 }
 
 .sales_navbar{
   margin-top: 2rem;
 }
 
+
 .sales_navbar_buttons{
   margin-right: 2rem;
   text-decoration: none;
+  padding: 3px;
+  border: 1px solid #125c8e;
+  border-radius: 6px;
+}
+
+.navbar_tittle_h2{
+  font-weight: bold;
 }
 
 .profile_navbar_text{
   margin-bottom: 1.5rem;
+  font-weight: bold;
 }
 
 @media only screen and (max-width: 600px) {
@@ -207,6 +211,28 @@ li {
   }
 }
 
+
+
+
+@media only screen and (max-width: 1300px) {
+  .navbar_profile{
+    font-size: medium;
+    width: 8rem;
+    margin-left: 2.7rem;
+    margin-bottom: 1rem;
+  }
+}
+
+
+
+@media only screen and (min-width: 1300px) {
+  .navbar_profile{
+    font-size: medium;
+    width: 8em;
+    margin-left: 2.7rem;
+    margin-bottom: 1rem;
+  }
+}
 
 /* Footer */
 footer {
@@ -226,6 +252,10 @@ div h5 {
   color: white;
 }
 
+h5 {
+  color: black ;
+}
+
 div ul li {
   font-size: small;
   color: rgb(224, 220, 220);
@@ -236,3 +266,121 @@ div ul li {
   text-decoration-line: none;
   
 }
+
+
+.fadeInDown {
+  -webkit-animation-name: fadeInDown;
+  animation-name: fadeInDown;
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+  }
+  @-webkit-keyframes fadeInDown {
+  0% {
+  opacity: 0;
+  -webkit-transform: translate3d(0, -100%, 0);
+  transform: translate3d(0, -100%, 0);
+  }
+  100% {
+  opacity: 1;
+  -webkit-transform: none;
+  transform: none;
+  }
+  }
+  @keyframes fadeInDown {
+  0% {
+  opacity: 0;
+  -webkit-transform: translate3d(0, -100%, 0);
+  transform: translate3d(0, -100%, 0);
+  }
+  100% {
+  opacity: 1;
+  -webkit-transform: none;
+  transform: none;
+  }
+  } 
+
+  .lightSpeedIn {
+    -webkit-animation-name: lightSpeedIn;
+    animation-name: lightSpeedIn;
+    -webkit-animation-timing-function: ease-out;
+    animation-timing-function: ease-out;
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+    }
+    @-webkit-keyframes lightSpeedIn {
+    0% {
+    -webkit-transform: translate3d(100%, 0, 0) skewX(-30deg);
+    transform: translate3d(100%, 0, 0) skewX(-30deg);
+    opacity: 0;
+    }
+    60% {
+    -webkit-transform: skewX(20deg);
+    transform: skewX(20deg);
+    opacity: 1;
+    }
+    80% {
+    -webkit-transform: skewX(-5deg);
+    transform: skewX(-5deg);
+    opacity: 1;
+    }
+    100% {
+    -webkit-transform: none;
+    transform: none;
+    opacity: 1;
+    }
+    }
+    @keyframes lightSpeedIn {
+    0% {
+    -webkit-transform: translate3d(100%, 0, 0) skewX(-30deg);
+    transform: translate3d(100%, 0, 0) skewX(-30deg);
+    opacity: 0;
+    }
+    60% {
+    -webkit-transform: skewX(20deg);
+    transform: skewX(20deg);
+    opacity: 1;
+    }
+    80% {
+    -webkit-transform: skewX(-5deg);
+    transform: skewX(-5deg);
+    opacity: 1;
+    }
+    100% {
+    -webkit-transform: none;
+    transform: none;
+    opacity: 1;
+    }
+    } 
+
+   
+  .jello-vertical:hover {
+    animation: jello-vertical 0.9s both;
+  }
+  @keyframes jello-vertical {
+    0% {
+      transform: scale3d(1, 1, 1);
+    }
+    30% {
+      transform: scale3d(0.75, 1.25, 1);
+    }
+    40% {
+      transform: scale3d(1.25, 0.75, 1);
+    }
+    50% {
+      transform: scale3d(0.85, 1.15, 1);
+    }
+    65% {
+      transform: scale3d(1.05, 0.95, 1);
+    }
+    75% {
+      transform: scale3d(0.95, 1.05, 1);
+    }
+    100% {
+      transform: scale3d(1, 1, 1);
+    }
+  }
+  

@@ -43,7 +43,8 @@ class User(db.Model):
     products = db.relationship('Product', backref='user') # Un usuario puede tener muchos productos asociados (relación de 1 a muchos)
     favorites = db.relationship('Favorites', backref='user') # Un usuario puede tener muchos favoritos asociados (relación de 1 a muchos)
     sales = db.relationship('Sale', backref='user', foreign_keys='Sale.buyer_id') # Un usuario puede buscar buscar las ventas que hizo (1 a muchos)
-    
+    garage = db.relationship('Garage', backref='user')
+    status = db.relationship('status', backref='user')
 
 
 
@@ -63,7 +64,7 @@ class User(db.Model):
             "document_type": self.document_type.value,
             "document_number": self.document_number,
             "address": self.address, 
-           #"role": self.role,
+            "role": self.role.value,
             "phone": self.phone
             
             # do not serialize the password, its a security breach
@@ -120,7 +121,7 @@ class Product(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     brand_id = db.Column(db.Integer, db.ForeignKey('brand.id'))
     model_id = db.Column(db.Integer, db.ForeignKey('model.id'))
-
+    status_id = db.Column(db.Integer, db.ForeignKey('status.id'))
     images = db.relationship('Image', backref='product')
     brand = db.relationship('Brand', backref='products')
     model = db.relationship('Model', backref='products')
@@ -129,6 +130,7 @@ class Product(db.Model):
         return f'<Products {self.id}>'
     
     def serialize(self):
+        user=User.query.get(self.user_id)
         return {
             "id": self.id,
             "name": self.name,
@@ -137,13 +139,19 @@ class Product(db.Model):
             "description": self.description,
 
             "images": [image.serialize() for image in self.images],
+
             "brand": self.brand.serialize(),
             "model": self.model.serialize(),
             "user": self.user.serialize(), #puede petar si creo producto desde admin
+
+            "status": status.query.get(self.status_id).status.value,
+
+
             "year": self.year,
             "km": self.km,
             "fuel": self.fuel.value,
             "user_id": self.user_id,
+            "user_full_name": user.full_name,
             "brand_id": self.brand_id,
             "model_id": self.model_id,
             "product_type": self.product_type.value
@@ -155,18 +163,24 @@ class status_product(Enum):
     PENDING_BLOCKED = 'pending blocked'
     BLOCKED = 'blocked'
     SOLD = 'sold'
+    SOLD_REVIEWED = 'sold reviewed'
 
 
 class status(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     status = db.Column(db.Enum(status_product), nullable=False)
     given_review_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    product_id = db.Column(db.Integer, db.ForeignKey('product.id'))
+    product = db.relationship('Product', backref='status')
 
 class Garage (db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
     web = db.Column(db.String(150), nullable=True)
+    phone = db.Column(db.String(15), nullable=False)
+    mail = db.Column(db.String(50), nullable=False)
+    address = db.Column(db.String(50), nullable=False)
+    description = db.Column(db.String(200), nullable=False)
+    cif = db.Column(db.String(10), nullable=False)
     image_id = db.Column(db.Integer, db.ForeignKey('image.id')) 
     product_id = db.Column(db.Integer, db.ForeignKey('product.id'))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
@@ -181,6 +195,11 @@ class Garage (db.Model):
             "id": self.id,
             "name": self.name,
             "web" : self.web,
+            "phone": self.phone,
+            "mail": self.mail,
+            "address": self.address,
+            "description": self.description,
+            "cif": self.cif,
             "image_id": self.image_id,
             "product_id": self.product_id,
             "user_id": self.user_id
@@ -228,12 +247,6 @@ class Service (db.Model):
             "garage_id": self.garage_id
         }
 
-class Rating(Enum):
-    ONE_STAR = 1
-    TWO_STARS = 2
-    THREE_STARS = 3
-    FOUR_STARS = 4
-    FIVE_STARS = 5
 
     
 class Review(db.Model): # Cambiar la tabla para que se pueda asociar al comrpador y al vendedor
@@ -241,7 +254,6 @@ class Review(db.Model): # Cambiar la tabla para que se pueda asociar al comrpado
     given_review_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     recived_review_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     product_id = db.Column(db.Integer, db.ForeignKey('product.id'), nullable=False)
-    stars = db.Column(db.Enum(Rating), nullable=False) # Revisar Enum con los profes
     comment = db.Column(db.String(250), nullable=True)
 
     given = db.relationship('User', foreign_keys=[given_review_id])

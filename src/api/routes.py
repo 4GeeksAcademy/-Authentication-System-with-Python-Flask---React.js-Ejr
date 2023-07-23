@@ -3,7 +3,9 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
 
-from api.models import db, User, Product, Brand, Model, Image, Favorites, Review
+
+from api.models import db, User, Product, Brand, Model, Image, Favorites, Review, Garage, status
+
 
 from api.utils import generate_sitemap, APIException
 
@@ -74,6 +76,7 @@ def upload_car():
 
     # Recupero la url
     for image_file in data.get('images', []):
+
         
         #upload_result = cloudinary.uploader.upload(image_file)
         if image_file:
@@ -81,9 +84,23 @@ def upload_car():
             image = Image(image=image_file, user_id=user_id, product_id=product.id)
             db.session.add(image) 
             db.session.commit()
+
+    
+    Status = status (
+        status = 'ONSALE',
+        given_review_id = user_id,
+        
+    )
+    db.session.add(Status)
+    db.session.commit()
+
+    product.status_id = Status.id
+    db.session.commit()
+
  
  
     return jsonify({"message": "Your product has been successfully uploaded"}), 200
+
 
 # @api.route('/search-by/<filter>', methods=['GET'])
 # def search_by_filter(filter):
@@ -244,6 +261,7 @@ def delete_image(id):
 
 
 
+
  
 @api.route('/products', methods=['GET'])
 def get_products():
@@ -260,9 +278,47 @@ def get_products():
 #     model_dictionary = [{'name': model, 'selected': False}for model in models]
 #     return jsonify(model_dictionary)
 
+@api.route('/profile/products/<state>', methods=['GET'])
+@jwt_required()
+def get_products_by_status(state):
+    current_user = get_jwt_identity()
+    products = Product.query.filter(Product.user_id == current_user).all()
+    
+    product_status = status.query.filter_by(status=state)
+    if product_status:
+        ListProducts = [status.product[0].serialize() for status in product_status if status.product and status.product[0].user_id==current_user]
+        return jsonify(ListProducts), 200
+
+    return jsonify([]), 200
+
+@api.route('/profile/changed/<state>', methods=['GET'])
+@jwt_required()
+def get_products_by_status_changed(state):
+    current_user = get_jwt_identity()
+    
+    product_status = status.query.filter_by(status=state)
+    if product_status:
+        ListProducts = [status.product[0].serialize() for status in product_status if status.product and status.given_review_id==current_user]
+        return jsonify(ListProducts), 200
+
+    return jsonify([]), 200
+
+@api.route('/profile/products/<int:product_id>/<new_status>', methods=['PUT'])
+@jwt_required()
+def update_product_status(product_id, new_status):
+    current_user = get_jwt_identity()
+    product = Product.query.filter_by(id=product_id).first()
+    if product:
+        status_obj = status.query.filter_by(id=product.status_id).first()
+        if status_obj:
+            status_obj.status = new_status
+            db.session.commit()
+            return jsonify({'message': 'Product status updated successfully'}), 200
+    return jsonify({'message': 'Product not found or invalid status'}), 404
+
 @api.route('/car-brands', methods=['GET'])
 def obtener_brands():
-    brands = Brand.query.filter_by(vehicle_type='CAR').all()
+    brands = Brand.query.filter_by(vehicle_type='COCHE').all()
 
     brand_list = []
     for brand in brands:
@@ -282,6 +338,58 @@ def get_moto_brands():
         brand_list.append(brand_data)
 
     return jsonify(brand_list)
+
+@api.route('all-brands', methods=['GET'])
+def get_all_brands():
+    brands = Brand.query.all()
+
+    brand_list = []
+    for brand in brands:
+        brand_data = brand.serialize()
+        brand_list.append(brand_data)
+    
+    return jsonify(brand_list)
+
+
+
+
+
+@api.route('/search-by/filter', methods=['GET'])
+def search_by_filter():
+    brand_id = request.args.get('brand_id')
+    vehicle_type = request.args.get('vehicle_type')
+    min_price = request.args.get('min_price')
+    max_price = request.args.get('max_price')
+    min_year = request.args.get('min_year')
+    max_year = request.args.get('max_year')
+    min_km = request.args.get('min_km')
+    max_km = request.args.get('max_km')
+
+    # Filtrar por marca y tipo de vehículo si se proporcionan
+    if brand_id and brand_id != "null":
+        products = Product.query.filter_by(product_type=vehicle_type, brand_id=brand_id)
+    else:
+        products = Product.query.filter_by(product_type=vehicle_type)
+
+    # Filtrar por precio mínimo y máximo si se proporcionan
+    if min_price is not None:
+        products = products.filter(Product.price >= float(min_price))
+    if max_price is not None:
+        products = products.filter(Product.price <= float(max_price))
+    if min_year is not None:
+        products = products.filter(Product.year >= float(min_year))
+    if max_year is not None:
+        products = products.filter(Product.year <= float(max_year))
+    if min_km is not None:
+        products = products.filter(Product.km >= float(min_km))
+    if max_km is not None:
+        products = products.filter(Product.km <= float(max_km))  # Utiliza 'max_km' para el filtro máximo de kilómetros
+
+    products = products.all()
+
+    serialized_products = [product.serialize() for product in products]
+    return jsonify(serialized_products)
+
 
 
 @api.route('brands', methods=['GET'])
@@ -593,6 +701,40 @@ def update_configuration():
         db.session.rollback()
         return jsonify({"message": "Error updating user"}), 500
     
+
+
+
+
+@api.route('/configuration/garage', methods=['PUT'])
+@jwt_required()
+def update_garage_configuration():
+    current_user = get_jwt_identity()
+    garage = Garage.query.filter(Garage.user_id == current_user).first()
+    if garage is None:
+        return jsonify({"message": "No existe el Taller que buscas"}), 404
+    
+    data = request.get_json()
+    garage.name = data.get('name')
+    garage.mail = data.get('mail')
+    garage.web = data.get('web')
+    garage.phone = data.get('phone')
+    garage.address = data.get('address')
+    garage.description = data.get('description')
+    garage.cif = data.get('cif')
+    garage.image_id = data.get('image_id')
+    garage.product_id = data.get('product_id')
+    garage.user_id = data.get('user_id')
+    print(garage.serialize())
+    try:
+       
+        db.session.commit()
+        return jsonify({"message": "Se ha actualizado correctamente el Taller"}), 200
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"message": Exception}), 500
+
+
+
 @api.route('/configuration/password', methods=['PUT'])
 @jwt_required()
 def update_password():
@@ -613,6 +755,7 @@ def update_password():
     except Exception as e:
         db.session.rollback()
         return jsonify({"message": "Error updating password"}), 500
+
 
 @api.route('/login', methods=['POST'])
 def login():
@@ -662,6 +805,17 @@ def getProducts():
         "data": [product.serialize() for product in products]
     }
     return jsonify(response_body), 200
+
+
+
+@api.route('/products/<state>', methods=['GET'])
+def get_all_products_by_status(state):
+    product_status = status.query.filter_by(status=state).all()
+    if product_status:
+        ListProducts = [status.product[0].serialize() for status in product_status if status.product]
+        return jsonify(ListProducts), 200
+    return jsonify([]), 200
+
 
 @api.route('/profile/favorites', methods=['POST'])
 @jwt_required()
@@ -734,7 +888,6 @@ def addReview():
     current_user = get_jwt_identity()
     data = request.get_json()
     product_id = data.get("product_id")
-    stars = str(data.get("stars"))  # Convertir a cadena
     comment = data.get("comment")
 
     user = User.query.get(current_user)
@@ -745,29 +898,27 @@ def addReview():
 
     recived_user = User.query.get(product.user_id)
 
-    review = Review(given_review_id=user.id, recived_review_id=recived_user.id, product_id=product.id, stars=stars, comment=comment)
+    review = Review(given_review_id=user.id, recived_review_id=recived_user.id, product_id=product.id, comment=comment)
     db.session.add(review)
     db.session.commit()
 
     return jsonify({"mensaje": "Reseña agregada correctamente"}), 200
+
+
 
 @api.route('/profile/reviews', methods=['GET'])
 @jwt_required()
 def getReviews():
     current_user = get_jwt_identity()
 
-    reviews = Review.query.filter_by(given_review_id=current_user).all()
-    if not reviews:
-        return jsonify({"mensaje": "No se encontraron reseñas"}), 404
-
+    reviews = Review.query.filter_by(recived_review_id=current_user).all()
+    
     review_list = []
-    for review in reviews:
-        stars = review.stars.value    
+    for review in reviews:   
         product = Product.query.get(review.product_id)
 
         review_data = {
             "product_id": review.product_id,
-            "stars": int(stars),
             "comment": review.comment,
             "given_review_id": review.given_review_id,
             "product_name": product.name,
@@ -777,4 +928,112 @@ def getReviews():
         review_list.append(review_data)
 
     return jsonify(review_list), 200
+
+
+@api.route('/profile/garage', methods=['GET'])
+@jwt_required()
+def getMyGarage():
+    current_user = get_jwt_identity()
+    garage = Garage.query.filter_by(user_id=current_user).first()
+
+    if not garage:
+        return jsonify({"mensaje": "No se encontró tu taller"}), 404
+    
+    
+    garage_data = {
+        "name": garage.name,
+        "web": garage.web,
+        "phone": garage.phone,
+        "mail": garage.mail,
+        "address": garage.address,
+        "description": garage.description,
+        "cif": garage.cif,
+        "image_id": garage.image_id,
+        "product_id": garage.product_id,
+        "user_id": garage.user_id
+    }
+
+    return jsonify(garage_data), 200
+
+
+
+@api.route('/garages', methods=['GET'])
+def getGarages():
+    garages = Garage.query.all()
+    if not garages:
+        return jsonify({"mensaje": "No se econtrón ningún garage"}), 500
+
+    garages_list = []
+ 
+    for garage in garages:
+        garage_data = {
+            "name": garage.name,
+            "web": garage.web,
+            "phone": garage.phone,
+            "mail": garage.mail,
+            "address": garage.address,
+            "description": garage.description,
+            "cif": garage.cif,
+            "image_id": garage.image_id,
+            "product_id": garage.product_id,
+            "user_id": garage.user_id
+        }
+    garages_list.append(garage_data)
+
+    return jsonify(garages_list), 200
+
+
+@api.route('/create-garage', methods=['POST'])
+@jwt_required()
+def createGarage():
+    current_user = get_jwt_identity()
+
+    # Verificar si el garaje ya existe para el usuario actual
+    existing_garage = Garage.query.filter_by(user_id=current_user).first()
+    if existing_garage:
+        return jsonify({"mensaje": "Ya existe un garaje asociado a este usuario"}), 400
+
+    try:
+        data = request.json
+        name = data.get("name")
+        mail = data.get("mail")
+        phone = data.get('phone')
+        cif = data.get('cif')
+        address = data.get('address')
+        web = data.get('web')
+        description = data.get('description')
+        image_id = data.get('image_id')
+        user_id = data.get('user_id')
+
+        if not all([name, mail, phone, address, cif]):
+            return jsonify({"mensaje": "No se han completado todos los campos requeridos (nombre, email, teléfono, dirección, descripción o cif)"}), 400
+
+        # Crear el nuevo garaje
+        new_garage = Garage(
+            name=name,
+            mail=mail,
+            phone=phone,
+            cif=cif,
+            address=address,
+            description=description,
+            web=web,
+            image_id=image_id,
+            user_id=current_user
+        )
+        print(new_garage.serialize())
+        print(db.session.add(new_garage))
+        db.session.add(new_garage)
+        db.session.commit()
+
+        return jsonify({"mensaje": "Garaje creado exitosamente"}), 200
+
+    except Exception as e:
+        print(e)
+        # Capturar cualquier excepción y devolver una respuesta de error
+        return jsonify({"mensaje": f"Error al crear el garaje: {str(e)}"}), 500
+
+
+#@api.route('/get-images', methods=['GET'])
+#def get_images():
+    #hacer get de las imágenes. pasar el id de la imagen, apra la imagen del taller
 

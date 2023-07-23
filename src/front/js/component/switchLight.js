@@ -14,7 +14,11 @@ export const SwitchLight = () => {
     const { theme, toggleTheme } = useContext(ThemeContext);
     return (
       <div className="switch ms-4 mt-2 me-3">
-                <label className="mode me-2 switch">{theme === "light" ? <i className="fa-regular fa-lightbulb"></i> : <i className="fa-solid fa-lightbulb"></i>}</label>
+                <label className="mode me-2 switch">{theme === "light" 
+                ? 
+                <i className="fa-regular fa-lightbulb"/>
+                : 
+                <i className="fa-solid fa-lightbulb"/>}</label>
                 <ReactSwitch
                   onChange={toggleTheme}
                   checked={theme === "dark"}

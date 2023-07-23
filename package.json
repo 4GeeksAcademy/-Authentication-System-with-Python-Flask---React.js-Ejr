@@ -83,12 +83,13 @@
 		"react": "^16.8.4",
 		"react-dom": "^16.8.4",
 		"react-dropzone": "^14.2.3",
-
 		"react-geocode": "^0.2.3",
 		"react-google-maps": "^9.4.5",
 		"react-modal": "^3.16.1",
 		"react-polyfills": "0.0.1",
+		"react-range": "^1.8.14",
 		"react-router-dom": "^6.3.0",
-		"react-switch": "^7.0.0"
+		"react-switch": "^7.0.0",
+		"sonner": "^0.6.2"
 	}
 }

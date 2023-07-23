@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import "/workspaces/Watacar_v2/src/front/styles/signup.css";
@@ -11,6 +11,29 @@ export const Signup = () => {
   const handleChange = (ev) => {
     setData({ ...data, [ev.target.name]: ev.target.value });
   };
+
+
+useEffect(() => {
+  const script = document.createElement("script");
+  script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyAf7aQ5JHWwJTvYuzpJw8QtQK8DYdwJqPE&libraries=places`;
+  script.async = true;
+  script.onload = handleScriptLoad;
+  document.body.appendChild(script);
+
+  return () => {
+    document.body.removeChild(script);
+  };
+}, []);
+
+const handleScriptLoad = () => {
+  const input = document.getElementById("address");
+  const autocomplete = new google.maps.places.Autocomplete(input);
+
+  autocomplete.addListener("place_changed", () => {
+    const selectedPlace = autocomplete.getPlace();
+    const address = selectedPlace.formatted_address;
+  });
+};
 
   const handleSubmit = (ev) => {
     ev.preventDefault();
@@ -36,89 +59,107 @@ export const Signup = () => {
 
   return (
     <>
-      <div className="container d-flex justify-content-center">
-        <div className="box mt-5 mb-5">
-          <h2 className="text-center mt-3">Únete a WhataCar</h2>
+      <div className="container col-12 my-5 justify-content-center ">
+        <div className="box my-5 ">
+          <h2 className="text-center mt-2 pt-3">Únete a WhataCar</h2>
 
           <form onSubmit={handleSubmit} method="POST">
 
-            <div className="row">
-              <div className="col-6">
+            <div className="row mx-1 justify-content-around text-center">
+              <div className="col-xs-10 col-sm-10 col-md-10 col-lg-5 ">
                 <div className="input-box">
-                  <label htmlFor="full_name">Nombre y apellidos</label>
+                  <label className="form-floating" htmlFor="full_name">Nombre y apellidos</label>
+                 <div>
                   <input type="text" placeholder="Ramon Gutierrez" name="full_name" onChange={handleChange}/>
                 </div>
+                </div>
               </div>
 
-              <div className="col-6">
+              <div className="col-xs-10 col-sm-10 col-md-10 col-lg-5  ">
                 <div className="input-box">
-                  <label htmlFor="email">Email</label>
+                  <label className="form-floating me-4" htmlFor="email">Email <FontAwesomeIcon icon={faEnvelope} /></label>
+                <div>
                   <input type="email" placeholder="email@example.com" name="email" onChange={handleChange} />
+               </div>
                 </div>
               </div>
 
             </div>
 
 
-            <div className="row">
-              <div className="col-6">
+            <div className="row  mx-1  justify-content-around text-center ">
+              <div className="col-xs-10 col-sm-10 col-md-10 col-lg-5 ">
                 <div className="input-box">
-                  <label htmlFor="password"> Contraseña <FontAwesomeIcon icon={faEnvelope} /> </label>
+                  <label className="form-floating" htmlFor="password"> Contraseña  </label>
+                  <div>
                   <input type="password" placeholder="******" name="password" onChange={handleChange} />
+                </div>  
                 </div>
               </div>
 
-              <div className="col-6">
+              <div className="col-xs-10 col-sm-10 col-md-10 col-lg-5 ">
                 <div className="input-box">
-                  <label htmlFor="phone">Teléfono</label>
+                  <label className="form-floating" htmlFor="phone">Teléfono</label>
+                  <div>
                   <input type="number" placeholder="696231829" name="phone" onChange={handleChange} />
+                  </div>
                 </div>
               </div>
             </div>
 
 
-            <div className="row">
-              <div className="col-6">
+            <div className="row   mx-1  justify-content-around text-center">
+              <div className="col-xs-12 col-sm-10 col-md-10 col-lg-5 ">
                 <div className="labelbox">
-                  <label htmlFor="role">Rol:</label>
+                  <label className="form-floating" htmlFor="role">Rol Usuario:</label>
+                 <div>
                   <select id="role" name="role" onChange={handleChange}>
                     <option value="COMMON_USER">Particular</option>
                     <option value="GARAGE">Taller</option>
                   </select>
                 </div>
+                </div> 
               </div>
 
-              <div className="col-6">
+              <div className="col-xs-10 col-sm-10 col-md-10 col-lg-5">
                 <div className="input-box">
-                  <label htmlFor="address">Dirección</label>
-                  <input type="text" placeholder="Av. del corral 7" name="address" onChange={handleChange} />
-                </div>
+
+                  <label className="form-floating" htmlFor="address">Dirección</label>
+                  <div>
+                  <input type="text"  placeholder="Av. del corral 7" id="address" name="address" onChange={handleChange} />
+               </div>
+               </div>
+
               </div>
             </div>
 
 
-            <div className="row">
-              <div className="col-6">
+            <div className="row  mx-1  justify-content-around d-md-flex text-center">
+              <div className="col-xs-10 col-sm-10 col-md-10 col-lg-5 mx-1">
                 <div className="labelbox">
-                  <label htmlFor="document_type">Tipo de documento:</label> 
+                  <label className="form-floating" htmlFor="document_type">Tipo de documento:</label> 
+                  <div>
                   <select id="idDocument" name="document_type" onChange={handleChange}>
                     <option value="DNI">DNI</option>
                     <option value="CIF">CIF</option>
                   </select>
+                  </div>
                 </div>
               </div>
 
-              <div className="col-6">
+              <div className="col-xs-12 col-sm-4 col-md-10 col-lg-5 mb-5">
                 <div className="input-box">
-                  <label htmlFor="document_number">Número de documento:</label>
+                  <label className="form-floating" htmlFor="document_number">Número de documento:</label>
+                  <div>
                   <input type="text" id="idNumber" placeholder="123412312H" name="document_number" onChange={handleChange} />
+                </div>
                 </div>
               </div>
             </div>
 
-            
-            <div className="button mt-4">
-              <button className="btn btn-primary btn1">Click Me!</button>
+            <h6 className="text-center mt-5"> <strong>* Todos los campos deben ser rellenados</strong></h6>
+            <div className="button mt-5 py-5">
+              <button className="btn btn-primary btn1">Registrar Usuario</button>
             </div>
           </form>
         </div>
