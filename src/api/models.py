@@ -118,17 +118,23 @@ class Review(db.Model):
     
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    author_id = db.Column(db.Integer, nullable=False)
-    review_id = db.Column(db.Integer, nullable=False)
+    author_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    review_id = db.Column(db.Integer, db.ForeignKey('review.id'), nullable=False)
+    content = db.Column(db.Text, nullable=False)
+    likes = db.Column(db.Integer, default=0, nullable=False)
+    author = db.relationship('User', backref='posts')
 
     def __repr__(self):
-        return '<Post %r>' % self.id
+        return f'<Post {self.id}>'
 
     def serialize(self):
         return {
             "id": self.id,
             "author_id": self.author_id,
-            "review_id": self.review_id
+            "author": self.author.serialize(),
+            "review_id": self.review_id,
+            "content": self.content,
+            "likes": self.likes
         }
     
 class Favorites(db.Model):

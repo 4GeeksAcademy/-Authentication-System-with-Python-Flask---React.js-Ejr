@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify, Blueprint, jsonify
-from api.models import db, User, Business_user
+from api.models import db, User, Business_user, Post
 from api.utils import APIException
 from flask_bcrypt import bcrypt
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity, JWTManager
@@ -247,3 +247,87 @@ def get_token():
 
     except Exception as e:
         return jsonify({'error': 'Error in token generation: ' + str(e)}), 500
+
+
+@api.route('/posts', methods=['GET'])
+def get_all_posts():
+    try:
+        posts = Post.query.all()
+        serialized_posts = [post.serialize() for post in posts]
+        return jsonify(posts=serialized_posts), 200
+
+    except Exception as e:
+        return jsonify({'error': 'Error retrieving posts: ' + str(e)}), 500
+
+
+@api.route('/posts', methods=['POST'])
+@jwt_required()
+def create_post():
+    try:
+        data = request.get_json()
+        content = data.get('content')
+        author_id = get_jwt_identity()  # Utilisateur authentifié avec JWT
+
+        if not content:
+            return jsonify({'error': 'Content is required.'}), 400
+
+        new_post = Post(content=content, author_id=author_id)
+        db.session.add(new_post)
+        db.session.commit()
+
+        return jsonify(message='Post created successfully', post=new_post.serialize()), 201
+
+    except Exception as e:
+        return jsonify({'error': 'Error in creating post: ' + str(e)}), 500
+
+# Route pour supprimer un message (DELETE)
+@api.route('/posts/<int:post_id>', methods=['DELETE'])
+@jwt_required()
+def delete_post(post_id):
+    try:
+        post = Post.query.get(post_id)
+
+        if not post:
+            return jsonify(message='Post not found'), 404
+
+        # Vérifier si l'utilisateur authentifié est l'auteur du message
+        current_user_id = get_jwt_identity()
+        if post.author_id != current_user_id:
+            return jsonify({'error': 'You are not allowed to delete this post.'}), 403
+
+        db.session.delete(post)
+        db.session.commit()
+
+        return jsonify(message='Post deleted successfully'), 200
+
+    except Exception as e:
+        return jsonify({'error': 'Error in deleting post: ' + str(e)}), 500
+
+# Route pour mettre à jour le contenu d'un message (PUT)
+@api.route('/posts/<int:post_id>', methods=['PUT'])
+@jwt_required()
+def update_post(post_id):
+    try:
+        post = Post.query.get(post_id)
+
+        if not post:
+            return jsonify(message='Post not found'), 404
+
+        # Vérifier si l'utilisateur authentifié est l'auteur du message
+        current_user_id = get_jwt_identity()
+        if post.author_id != current_user_id:
+            return jsonify({'error': 'You are not allowed to update this post.'}), 403
+
+        data = request.get_json()
+        content = data.get('content')
+
+        if not content:
+            return jsonify({'error': 'Content is required.'}), 400
+
+        post.content = content
+        db.session.commit()
+
+        return jsonify(message='Post updated successfully', post=post.serialize()), 200
+
+    except Exception as e:
+        return jsonify({'error': 'Error in updating post: ' + str(e)}), 500
