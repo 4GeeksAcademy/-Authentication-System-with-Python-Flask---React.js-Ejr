@@ -24,7 +24,6 @@ const SearchBar = () => {
   }
 
 
-
   return (
     <div className="parentDiv">
           <form>
@@ -49,7 +48,7 @@ const SearchBar = () => {
                     <div className='imagesDiv' style={{"width": "44rem", "height": "auto"}}>
 
                       <img className="rounded w-100" src={car.images[0].image_url }/>
-                  </div>
+                    </div>
                   </div>
                 ))}
               </div>

@@ -1,10 +1,12 @@
 import React, {useState, useContext } from 'react'
 import "../../../styles/filters.css"
 import { Context } from '../../store/appContext';
+import { useNavigate } from 'react-router-dom';
 
 
 const Filters = () => {
   const [checked, setChecked] = useState(false);
+  const navigate = useNavigate()
   const { store, actions } = useContext(Context)
   const [selectedCarTypes, setSelectedCarTypes] = useState([]);
   const [selectedCarMakes, setSelectedCarMakes] = useState([]);
@@ -23,7 +25,7 @@ const Filters = () => {
     );
   };
 
-// Function to handle checkbox change for car types
+// Function to handle checkbox change for carMake
 const handleCarMakeChange = (carMake) => {
   setSelectedCarMakes((prevSelected) =>
     prevSelected.includes(carMake)
@@ -32,7 +34,7 @@ const handleCarMakeChange = (carMake) => {
   );
 };
 
-// Function to handle checkbox change for car types
+// Function to handle checkbox change for carEngines
 const handleCarEngineChange = (carEngine) => {
   setSelectedCarEngines((prevSelected) =>
     prevSelected.includes(carEngine)
@@ -41,7 +43,7 @@ const handleCarEngineChange = (carEngine) => {
   );
 };
 
-// Function to handle checkbox change for car types
+// Function to handle checkbox change for carTransmission
 const handleCarTransmissionChange = (carTransmission) => {
   setSelectedCarTransmissions((prevSelected) =>
     prevSelected.includes(carTransmission)
@@ -50,6 +52,18 @@ const handleCarTransmissionChange = (carTransmission) => {
   );
 };
 
+
+// APPLY FILTERS BUTTON
+const handleApplyFilters = () => {
+  const filterArray = [{
+    brand: selectedCarMakes.length ? selectedCarMakes : "",
+    car_type: selectedCarTypes.length ? selectedCarTypes : "",
+    engine: selectedCarEngines.length ? selectedCarEngines : "",
+    transmission: selectedCarTransmissions.length ? selectedCarTransmissions : "",
+  }];
+  actions.applyFilters(filterArray)
+  navigate('/catalog')
+}
 
   return (
     <div>
@@ -168,7 +182,7 @@ const handleCarTransmissionChange = (carTransmission) => {
             </div>
             <div className="modal-footer">
               <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="button" className="btn btn-success">Apply Filter(s)</button>
+              <button type="button" className="btn btn-success" onClick={() =>handleApplyFilters()}>Apply Filter(s)</button>
             </div>
           </div>
         </div>
