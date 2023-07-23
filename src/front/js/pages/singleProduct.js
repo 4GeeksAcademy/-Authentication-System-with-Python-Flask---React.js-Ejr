@@ -41,7 +41,7 @@ export const SingleProduct = () => {
   // }
 
   return (
-    <div className="container">
+    <div className="container mx-2">
       <div className='single-prioduct-box'>
         {store.productlist.length > 0 ? (
           <div className='sp-box '>
@@ -101,32 +101,34 @@ export const SingleProduct = () => {
                     <div className='row '>
                         <div className='col-lg-4'>
                           <p><strong>Precio: <span className='single-price'>
-                            {product.price}€
+                            {product.price} €
                             </span></strong></p>
 
                         </div>
+                       
                         <div className='col-lg-4'>
-                          <p><strong>Tipo de vehículo: </strong> {product.product_type} </p>
-                        </div>
-                  
+                          <p><strong> Kilómetros: </strong> {product.km} km</p>
+                        </div>  
+                      
                         <div className='col-lg-4'>
-                          <p><strong> Marca: </strong> {product.brand.name}</p>  
+                          <p><strong> Combustible: </strong> {product.fuel}</p>
                         </div>
 
                     </div>
                         
                     <div className='row'>
+                  
+                        <div className='col-lg-4'>
+                          <p><strong> Marca: </strong> {product.brand.name}</p>  
+                        </div>
                         <div className='col-lg-4'>
                           <p><strong> Modelo: </strong> {product.model.model}</p>
                         </div>
                         <div className='col-lg-4'>
                           <p><strong> Estado: </strong> {product.state}</p>
                         </div>
-
-                        <div className='col-lg-4'>
-                          <p><strong> Combustible: </strong> {product.fuel}</p>
-                        </div>
                     </div>
+
 
 
                     <div className='row'>
@@ -134,10 +136,11 @@ export const SingleProduct = () => {
                           <p><strong> Año de fabricación: </strong> {product.year}</p>
                         </div>
 
+
                         <div className='col-lg-4'>
-                          <p><strong> Kilómetros: </strong> {product.km}</p>
-                        </div>  
-                      
+                          <p><strong>Tipo de vehículo: </strong> {product.product_type} </p>
+                        </div>
+                        
                     </div>
 
                       <div className='row d-flex justify-content center m-auto my-4'>
@@ -154,9 +157,11 @@ export const SingleProduct = () => {
                     
                  
                       <div className='col-lg-12 text-center '>
-                        <p><strong> Descripción: </strong> <br></br></p>
+                        <h4><strong> Descripción: </strong> <br></br></h4>
                         <div className=' desc-container'>
-                          <p className=' single-description mx-auto d-flex justify-content-flex-start'>{product.description}</p>
+                          <p className=' single-description mx-auto d-flex text-start'>
+                            {product.description}
+                            </p>
 
                         </div>
 
