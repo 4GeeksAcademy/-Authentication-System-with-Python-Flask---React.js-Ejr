@@ -79,6 +79,8 @@ class User(db.Model):
     dni = db.Column(db.Integer, nullable=False)
     location = db.Column(db.Integer, nullable=False)
     payment_method = db.Column(db.String(100), nullable=False)
+    is_admin = db.Column(db.Boolean, default=False)
+
 
     def __repr__(self):
         return '<User %r>' % self.username
@@ -94,6 +96,7 @@ class User(db.Model):
             "dni": self.dni,
             "location": self.location,
             "payment_method": self.payment_method,
+            "is_admin": self.is_admin
         }
 
 class Review(db.Model):
@@ -141,22 +144,5 @@ class Favorites(db.Model):
             "id": self.id,
             "user_id": self.user_id,
             "trip_id": self.trip_id
-        }
-class Admin(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(40), unique=True, nullable=False)
-    password = db.Column(db.String(80), nullable=False)
-    email = db.Column(db.String(120), unique=True, nullable=False)
-    is_admin = db.Column(db.Boolean, default=True)  # Vous pouvez définir la valeur par défaut à True si nécessaire
-
-    def __repr__(self):
-        return '<Admin %r>' % self.username
-
-    def serialize(self):
-        return {
-            "id": self.id,
-            "username": self.username,
-            "email": self.email,
-            "is_admin": self.is_admin
         }
 

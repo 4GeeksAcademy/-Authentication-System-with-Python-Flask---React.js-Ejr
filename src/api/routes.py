@@ -1,12 +1,8 @@
-"""
-This module takes care of starting the API Server, Loading the DB and Adding the endpoints
-"""
-from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Business_user, Post, Favorites, Review, Offers, Trip, Admin
-from api.utils import generate_sitemap, APIException
+from flask import Flask, request, jsonify, Blueprint, jsonify
+from api.models import db, User, Business_user
+from api.utils import APIException
 from flask_bcrypt import bcrypt
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity, JWTManager
-from sqlalchemy.orm.exc import NoResultFound
 
 
 api = Blueprint('api', __name__)
@@ -17,171 +13,42 @@ jwt = JWTManager()
 def initialize_jwt(api):
     jwt.init_app(api)
 
-@api.route('/token', methods=['POST'])
-def get_token():
+@api.route('/users', methods=['GET'])
+def get_all_users():
     try:
-        email = request.json.get('email')
-        password = request.json.get('password')
-
-        if not email or not password:
-            return jsonify({'error': 'Email and password are required.'}), 400
-
-        try:
-            # Check if the provided email exists in the User table
-            login_user = User.query.filter_by(email=email).one()
-            password_db_user = login_user.password
-            user_password_correct = bcrypt.check_password_hash(password_db_user, password)
-        except NoResultFound:
-            user_password_correct = False
-
-        try:
-            # Check if the provided email exists in the Business_user table
-            login_business = Business_user.query.filter_by(email=email).one()
-            password_db_business = login_business.password
-            business_password_correct = bcrypt.check_password_hash(password_db_business, password)
-        except NoResultFound:
-            business_password_correct = False
-
-        if user_password_correct and not business_password_correct:
-            user_id = login_user.id
-            access_token = create_access_token(identity=user_id)
-            return jsonify({'access_token': access_token}), 200
-
-        elif business_password_correct and not user_password_correct:
-            # Handle the scenario when the password is correct for the business user
-            business_user_id = login_business.id
-            access_token = create_access_token(identity=business_user_id)
-            return jsonify({'access_token': access_token}), 200
-
-        else:
-            return jsonify({'error': 'Incorrect Password'}), 401
+        users = User.query.all()
+        serialized_users = [user.serialize() for user in users]
+        return jsonify(users=serialized_users), 200
 
     except Exception as e:
-        return jsonify({'error': 'An error occurred: ' + str(e)}), 500
+        return jsonify({'error': 'Error retrieving users: ' + str(e)}), 500
 
+# Décorez la route pour obtenir un utilisateur par son ID
+@api.route('/users/<int:user_id>', methods=['GET'])
+def get_user(user_id):
+    user = User.query.get(user_id)
+    if not user:
+        return jsonify(message='User not found'), 404
+    return jsonify(user.serialize())
 
-# # Admin route   
-# @api.route('/admin', methods=['GET'])
-# @jwt_required()
-# def admin_dashboard():
-#     is_admin = get_jwt_identity()['is_admin']
-#     if is_admin:
-#         users = User.query.all()
-#         business = Business_user.query.all()
-#         return jsonify({
-#             'users': [user.serialize() for user in users],
-#             'business_users': [business.serialize() for business in business]
-#         }), 200
-#     else:
-#         return jsonify({'error': 'Unauthorized'}), 401
-
-
-# admin can delete users and companies
-@api.route('/admin/delete/<string:resource>/<int:resource_id>', methods=['DELETE'])
-@jwt_required()
-def delete_resource(resource, resource_id):
-    is_admin = get_jwt_identity()['is_admin']
-    if is_admin:
-        if resource == 'users':
-            resource_instance = User.query.get(resource_id)
-        elif resource == 'companies':
-            resource_instance = Business_user.query.get(resource_id)
-        else:
-            return jsonify({'error': 'Invalid resource type'}), 400
-
-        if resource_instance:
-            db.session.delete(resource_instance)
-            db.session.commit()
-            return jsonify({'message': f'{resource[:-1].capitalize()} deleted successfully'}), 200
-        else:
-            return jsonify({'error': f'{resource[:-1].capitalize()} not found'}), 404
-    else:
-        return jsonify({'error': 'Unauthorized'}), 401
-
-
-@api.route('/business/<int:business_id>', methods=['PUT'])
-@jwt_required()
-def update_business_profile(business_id):
+@api.route('/business-users', methods=['GET'])
+def get_all_business_users():
     try:
-        business = Business_user.query.get(business_id)
-
-        if not business:
-            return jsonify({'error': 'Business not found'}), 404
-
-        data = request.get_json()
-
-        # Update business profile data
-        business.name_business = data.get('name_business', business.name_business)
-        business.email = data.get('email', business.email)
-        business.nif = data.get('nif', business.nif)
-        business.address = data.get('address', business.address)
-        business.payment_method = data.get('payment_method', business.payment_method)
-
-        db.session.commit()
-
-        return jsonify({'message': 'Business profile updated successfully', 'business': business.serialize()}), 200
+        business_users = Business_user.query.all()
+        serialized_business_users = [business_user.serialize() for business_user in business_users]
+        return jsonify(business_users=serialized_business_users), 200
 
     except Exception as e:
-        return jsonify({'error': 'Error in updating business profile: ' + str(e)}), 500
+        return jsonify({'error': 'Error retrieving business users: ' + str(e)}), 500
 
+# Décorez la route pour obtenir un business_user par son ID
+@api.route('/business-users/<int:business_user_id>', methods=['GET'])
+def get_business_user(business_user_id):
+    business_user = Business_user.query.get(business_user_id)
+    if not business_user:
+        return jsonify(message='Business user not found'), 404
+    return jsonify(business_user.serialize())
 
-
-@api.route('/login', methods=['POST'])
-def login():
-    try:
-        data = request.get_json()
-
-        if not data.get("email") or not data.get("password"):
-            return jsonify({'error': 'Email and password are required.'}), 400
-
-        user_or_business = None
-        is_admin = False
-
-        # Vérifier si c'est un utilisateur
-        user = User.query.filter_by(email=data['email']).first()
-        if user:
-            password_db = user.password
-            if bcrypt.check_password_hash(password_db, data["password"]):
-                user_or_business = user
-                is_admin = user.is_admin
-
-        # Vérifier si c'est une entreprise
-        business = Business_user.query.filter_by(email=data['email']).first()
-        if business:
-            password_db = business.password
-            if bcrypt.check_password_hash(password_db, data["password"]):
-                user_or_business = business
-
-        if not user_or_business:
-            return jsonify({'error': 'User or Business not found or Incorrect password'}), 401
-
-        access_token = create_access_token(identity=user_or_business.id, is_admin=is_admin)
-        return jsonify({'access_token': access_token, 'user_or_business': user_or_business.serialize()}), 200
-
-    except Exception as e:
-        return jsonify({'error': 'Error in login: ' + str(e)}), 500
-
-# Route de login spéciale pour l'administrateur
-@api.route('/admin/login', methods=['POST'])
-def admin_login():
-    try:
-        data = request.get_json()
-
-        if not data.get("email") or not data.get("password"):
-            return jsonify({'error': 'Email and password are required.'}), 400
-
-        # Vérifier si l'administrateur existe
-        admin = Admin.query.filter_by(email=data['email']).first()
-        if admin:
-            password_db = admin.password
-            if bcrypt.check_password_hash(password_db, data["password"]):
-                access_token = create_access_token(identity=admin.id, is_admin=True)
-                return jsonify({'access_token': access_token, 'admin': admin.serialize()}), 200
-
-        return jsonify({'error': 'Admin not found or Incorrect password'}), 401
-
-    except Exception as e:
-        return jsonify({'error': 'Error in admin login: ' + str(e)}), 500
 
 @api.route('/signup', methods=['POST'])
 def create_user_or_business():
@@ -217,7 +84,7 @@ def create_user_or_business():
             db.session.add(new_business)
             db.session.commit()
 
-            return jsonify({'message': 'Business created successfully', 'business': new_business.serialize()}), 201
+            return jsonify({'message': 'Business created successfully', 'business': new_business.serialize()}), 200
 
         # Sinon, c'est une inscription d'utilisateur
         else:
@@ -235,29 +102,63 @@ def create_user_or_business():
             db.session.add(new_user)
             db.session.commit()
 
-            return jsonify({'message': 'User created successfully', 'user': new_user.serialize()}), 201
+            return jsonify(message='User created successfully', user=new_user.serialize()), 201
 
     except Exception as e:
         return jsonify({'error': 'Error in user/business creation: ' + str(e)}), 500
 
 
-# Private route
+@api.route('/login', methods=['POST'])
+def login():
+    try:
+        data = request.get_json()
+
+        if not data.get("email") or not data.get("password"):
+            return jsonify({'error': 'Email and password are required.'}), 400
+
+        user_or_business = None
+
+        # Vérifier si c'est un utilisateur
+        user = User.query.filter_by(email=data['email']).first()
+        if user:
+            password_db = user.password
+            if bcrypt.check_password_hash(password_db, data["password"]):
+                user_or_business = user
+
+
+        # Vérifier si c'est une entreprise
+        business = Business_user.query.filter_by(email=data['email']).first()
+        if business:
+            password_db = business.password
+            if bcrypt.check_password_hash(password_db, data["password"]):
+                user_or_business = business
+
+        if not user_or_business:
+            return jsonify({'error': 'User or Business not found or Incorrect password'}), 401
+
+        access_token = create_access_token(identity=user_or_business.id)
+        return jsonify({'access_token': access_token, 'user_or_business': user_or_business.serialize()}), 200
+
+    except Exception as e:
+        return jsonify({'error': 'Error in login: ' + str(e)}), 500
+
+
 @api.route('/private')
 @jwt_required()
 def private():
-    current_user = get_jwt_identity()
-    login_user = User.query.get(current_user)
+    current_user_id = get_jwt_identity()
+    user = User.query.get(current_user_id)
 
-    if login_user:
-        return jsonify({'message': 'Welcome to the private area!', 'user': login_user.serialize()})
+    if user:
+        return jsonify({'message': 'Welcome to the private area!', 'user': user.serialize()})
     else:
-        login_business = Business_user.query.get(current_user)
-        if login_business:
-            return jsonify({'message': 'Welcome to the private area!', 'business': login_business.serialize()})
+        business = Business_user.query.get(current_user_id)
+        if business:
+            return jsonify({'message': 'Welcome to the private area!', 'business': business.serialize()})
         else:
             return jsonify({'error': 'Unauthorized'}), 401
-        
-        # Update user profil
+
+
 @api.route('/user/<int:user_id>', methods=['PUT'])
 @jwt_required()
 def update_user_profile(user_id):
@@ -286,27 +187,63 @@ def update_user_profile(user_id):
         return jsonify({'error': 'Error in updating user profile: ' + str(e)}), 500
 
 
-@api.route('/user/profile', methods=['GET'])
+@api.route('/business/<int:business_id>', methods=['PUT'])
 @jwt_required()
-def get_user_profile():
-    user_id = get_jwt_identity()
-    user = User.query.get(user_id)
+def update_business_profile(business_id):
+    try:
+        business = Business_user.query.get(business_id)
 
-    if not user:
-        return jsonify({'error': 'User not found'}), 404
+        if not business:
+            return jsonify({'error': 'Business not found'}), 404
 
-    return jsonify({'user': user.serialize()}), 200
+        data = request.get_json()
+
+        # Update business profile data
+        business.business_name = data.get('name_business', business.business_name)
+        business.email = data.get('email', business.email)
+        business.nif = data.get('nif', business.nif)
+        business.address = data.get('address', business.address)
+        business.payment_method = data.get('payment_method', business.payment_method)
+
+        db.session.commit()
+
+        return jsonify({'message': 'Business profile updated successfully', 'business': business.serialize()}), 200
+
+    except Exception as e:
+        return jsonify({'error': 'Error in updating business profile: ' + str(e)}), 500
 
 
+@api.route('/token', methods=['POST'])
+def get_token():
+    try:
+        data = request.get_json()
+        email = data.get('email')
+        password = data.get('password')
 
-@api.route('/business/profile', methods=['GET'])
-@jwt_required()
-def get_business_profile():
-    business_id = get_jwt_identity()
-    business = Business_user.query.get(business_id)
+        if not email or not password:
+            return jsonify({'error': 'Email and password are required.'}), 400
 
-    if not business:
-        return jsonify({'error': 'Business not found'}), 404
+        user_or_business = None
 
-    return jsonify({'business': business.serialize()}), 200
+        # Vérifier si c'est un utilisateur
+        user = User.query.filter_by(email=email).first()
+        if user:
+            password_db = user.password
+            if bcrypt.check_password_hash(password_db, password):
+                user_or_business = user
 
+        # Vérifier si c'est une entreprise
+        business = Business_user.query.filter_by(email=email).first()
+        if business:
+            password_db = business.password
+            if bcrypt.check_password_hash(password_db, password):
+                user_or_business = business
+
+        if not user_or_business:
+            return jsonify({'error': 'User or Business not found or Incorrect password'}), 401
+
+        access_token = create_access_token(identity=user_or_business.id)
+        return jsonify({'access_token': access_token, 'user_or_business': user_or_business.serialize()}), 200
+
+    except Exception as e:
+        return jsonify({'error': 'Error in token generation: ' + str(e)}), 500
