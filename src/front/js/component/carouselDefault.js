@@ -43,7 +43,7 @@ export const CarouselDefault = () => {
                 </div>
                 <div className="flip-card-back">
                     <Link to={`product/${vehicle.id}`}  style={{ color: 'white', textDecoration: 'none' }} className="link-hover">
-                      <h3 className="pt-2">{vehicle.name}</h3>
+                      <h3 className="pt-2">{vehicle.brand.name}</h3>
                     </Link>
                     <p>Matriculación: {vehicle.year}</p>
                     <p>Estado: {vehicle.state}</p>
@@ -54,21 +54,21 @@ export const CarouselDefault = () => {
               </div>
               <div className="card-body d-flex justify-content-between">
                 <div>
-                  <Link to="/login" style={{ color: 'black', textDecoration: 'none' }} className="link-hover">
+                  <Link to={`/product/${vehicle.id}`} style={{ color: 'black', textDecoration: 'none' }} className="link-hover">
                     <h5 className="card-title justify-content-start d-flex" id="vehicleCardTittle">
-                      <strong>{vehicle.name} </strong>
+                    {vehicle.name.length >= 25 ? vehicle.name.slice(0, 24) + "..." : vehicle.name}
                     </h5>
                   </Link>
                   <h5 className="card-title justify-content-start d-flex">{vehicle.price} €</h5>
                   <p>
                     Vendido por{" "}
-                    <Link
-                      to={!store.token ? "/login" : "/profile"}
+                    <span
+                      
                       style={{ color: 'black', textDecoration: 'none' }}
                       className="link-hover"
                     >
                       {vehicle.user_full_name}
-                    </Link>
+                    </span>
                   </p>
                 </div>
                 <div className="d-flex justify-content-end">
