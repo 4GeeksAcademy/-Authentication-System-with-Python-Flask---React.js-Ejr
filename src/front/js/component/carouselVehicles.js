@@ -7,6 +7,7 @@ import { CarouselDefault } from "./carouselDefault";
 import { CarouselMotos } from "./carouselMotos";
 import { CarouselCars } from "./carouselCars";
 import { CarouselPrice } from "./carouselPrice";
+import { CarouselKm } from "./carouselKm";
 
 
 
@@ -37,6 +38,13 @@ export const CarouselVehicles = () => {
             <h2>Motos</h2>
             <hr className="mb-4"></hr>
                   <CarouselMotos />
+            </div>
+
+
+            <div className="row pb-4 my-4">
+            <h2>De bajo kilometraje</h2>
+            <hr className="mb-4"></hr>
+                  <CarouselKm />
             </div>
 
 

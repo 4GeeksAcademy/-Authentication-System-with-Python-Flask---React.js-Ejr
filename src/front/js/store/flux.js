@@ -38,7 +38,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 			status: [],
 			filteredMotos: [],
 			filteredCars: [],
-			filteredPrice: []
+			filteredPrice: [],
+			filteredKm: []
 		
 		},
 
@@ -191,6 +192,21 @@ const getState = ({ getStore, getActions, setStore }) => {
 				  .catch(error => {
 					// Manejar errores en la solicitud
 					console.error('Error al obtener los COCHES filtrados:', error);
+				  });
+			  },
+
+
+			  getFilteredKm: () => {
+				fetch(`${process.env.BACKEND_URL}api/search-by-price`)
+				  .then(response => response.json())
+				  .then(data => {
+					// Almacenar los productos filtrados en store.filterProducts
+					setStore({ filteredKm: data });
+					console.log("se han recuperado los datos")
+				  })
+				  .catch(error => {
+					// Manejar errores en la solicitud
+					console.error('Error al obtener los vehículos filtrados por KM:', error);
 				  });
 			  },
 

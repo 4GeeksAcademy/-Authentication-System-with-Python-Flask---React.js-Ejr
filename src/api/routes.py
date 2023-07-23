@@ -378,6 +378,14 @@ def filter_by_price():
     serialized_products = [product.serialize() for product in products]
     return jsonify(serialized_products)
 
+@api.route('/search-by-km', methods=['GET'])
+def km():
+    products = Product.query.filter(Product.km < 20000)
+    products = products.all()
+
+    serialized_products = [product.serialize() for product in products]
+    return jsonify(serialized_products)
+
 
 @api.route('/search-by/filter', methods=['GET'])
 def search_by_filter():
