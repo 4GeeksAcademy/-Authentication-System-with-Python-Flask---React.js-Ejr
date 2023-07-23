@@ -181,18 +181,45 @@ def get_all_brands():
     return jsonify(brand_list)
 
 
-@api.route('/search-by/<filter>', methods=['GET'])
-def search_by_filter(filter):
+
+
+
+@api.route('/search-by/filter', methods=['GET'])
+def search_by_filter():
     brand_id = request.args.get('brand_id')
     vehicle_type = request.args.get('vehicle_type')
+    min_price = request.args.get('min_price')
+    max_price = request.args.get('max_price')
+    min_year = request.args.get('min_year')
+    max_year = request.args.get('max_year')
+    min_km = request.args.get('min_km')
+    max_km = request.args.get('max_km')
 
+    # Filtrar por marca y tipo de vehículo si se proporcionan
     if brand_id and brand_id != "null":
-        products = Product.query.filter_by(product_type=vehicle_type, brand_id=brand_id).all()
+        products = Product.query.filter_by(product_type=vehicle_type, brand_id=brand_id)
     else:
-        products = Product.query.filter_by(product_type=vehicle_type).all()
+        products = Product.query.filter_by(product_type=vehicle_type)
+
+    # Filtrar por precio mínimo y máximo si se proporcionan
+    if min_price is not None:
+        products = products.filter(Product.price >= float(min_price))
+    if max_price is not None:
+        products = products.filter(Product.price <= float(max_price))
+    if min_year is not None:
+        products = products.filter(Product.year >= float(min_year))
+    if max_year is not None:
+        products = products.filter(Product.year <= float(max_year))
+    if min_km is not None:
+        products = products.filter(Product.km >= float(min_km))
+    if max_km is not None:
+        products = products.filter(Product.km <= float(max_km))  # Utiliza 'max_km' para el filtro máximo de kilómetros
+
+    products = products.all()
 
     serialized_products = [product.serialize() for product in products]
     return jsonify(serialized_products)
+
 
 
 

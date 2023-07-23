@@ -4,6 +4,7 @@ import { NavLink, Link, useNavigate } from "react-router-dom";
 import { Profile_navbar } from "../component/profile_navbar";
 import { Placeholder_profile } from "./placeholder_profile";
 import "/workspaces/Watacar_v2/src/front/styles/profile.css";
+import { Toaster, toast } from 'sonner'
 
 export const Profile_configuration = () => {
   const { actions, store } = useContext(Context);
@@ -16,11 +17,34 @@ export const Profile_configuration = () => {
 
   useEffect(() => {
     actions.getUser();
+
+    // Add event listener for "Enter" key when the modal is shown
+    const modal = document.getElementById("exampleModal");
+    modal.addEventListener("shown.bs.modal", handleModalShown);
+
+    // Remove event listener when the component unmounts
+    return () => {
+      modal.removeEventListener("shown.bs.modal", handleModalShown);
+    };
   }, []);
+
+  const handleModalShown = () => {
+    // Add event listener for "Enter" key
+    document.addEventListener("keydown", handleEnterKey);
+  };
+
+  const handleEnterKey = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      if (validatePasswords()) {
+        handlePasswordChange();
+      }
+    }
+  };
 
   const validatePasswords = () => {
     if (password1 !== password2) {
-      alert("Las contraseñas no coinciden");
+      toast.error('Las contraseñas no coinciden');
       return false;
     }
     handlePasswordChange();
@@ -76,7 +100,7 @@ export const Profile_configuration = () => {
         setTimeout(() => {
           closeModal();
         }, 1000);
-        setSuccessMessage("Contraseña guardada correctamente");
+        toast.success("Contraseña guardada correctamente")
       })
       .catch((error) => {
         console.error(error);
@@ -100,6 +124,8 @@ export const Profile_configuration = () => {
             alt="Avatar"
           />
         </div>
+
+        
         <div className="profile_info">
           <div className="row_profile_configuration">
             <h4 className="text-wrap badge label col-sm-6 col-md-5 col-lg-3">
@@ -252,6 +278,7 @@ export const Profile_configuration = () => {
           </div>
         </div>
       </div>
+      <Toaster richColors position="top-center" />
     </>
   ) : (
     <Placeholder_profile />

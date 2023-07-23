@@ -63,7 +63,7 @@ export const Home = () => {
             <input
               className="form-control me-2 search-input"
               type="search"
-              placeholder="Busca tu coche o moto"
+              placeholder="Busca tu moto o coche"
               aria-label="Search"
               value={searchText}
               onChange={handleSearchChange}

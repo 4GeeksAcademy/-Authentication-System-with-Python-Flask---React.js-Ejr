@@ -60,22 +60,26 @@ const StatusToSold = (product) => {
             <Profile_navbar />
             <Sales_navbar blockedCount={blockedCount} />
             {store.products.map((product, index) => (
-                <div className="row row_product_profile" key={index}>
-                    <div className="product_img_profile_box col-2">
+                <div className="justify-content-center d-flex" key={index}>
+                    <div className="row row_product_profile container justify-content-around m-1">
+                    <div className="product_img_profile_box col-lg-5 col-3 col-sm-2 col-xs-2">
                         <img src="https://www.motofichas.com/images/phocagallery/Honda/cb500f-2022/01-honda-cb500f-2022-estudio-rojo.jpg" alt="product" className="product_img_profile"/>
                     </div>
-                    <div className="price_name col-6">
+                    <div className="price_name col-3 col-sm-2 text-start ">
                         <h4 className="price_product_profile">{product.price}€</h4>
                         <h5 className="name_product_profile">{product.name}</h5>
                     </div>
-                    <div className="col-2 state_product_profile_box">
+                    <div className="col-3 col-sm-2 state_product_profile_box text-start">
                         <h6 className="state_title_profile">Estado</h6>
                         <h4 className="state_product_profile">{product.state}</h4>
                     </div>
                     <div className="col-2 product_profile_buttons">
+                        </div>
                         {product.status === "blocked" && (
                             <>
-                                <button className="product_profile_button edit" data-bs-target="#exampleModal2" data-bs-toggle="modal">Cancelar reserva</button>
+                                <button className="product_profile_button edit justify-content-center d-flex" data-bs-target="#exampleModal2" data-bs-toggle="modal">
+                                    <i class="fa-solid fa-ban m-auto" style={{"color": "#b50808"}}/>
+                                </button>
                             </>
                         )}
                         {product.status === "pending sale" && (
@@ -86,37 +90,52 @@ const StatusToSold = (product) => {
                                     data-bs-toggle="modal"
                                     data-bs-target="#exampleModal"
                                 >
-                                    Ver solicitud de compra
+                                   <i class="fa-solid fa-eye "/>
                                 </button>
                             </>
                         )}
                     </div>
-                    <div className="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+
+
+                    {/* AQUI EMPIEZA EL MODAL */}
+
+
+
+                    <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div className="modal-dialog">
                             <div className="modal-content sold-product_profile">
                                 <div className="modal-header">
-                                    <h5 className="modal-title" id="exampleModalLabel">Fulanito quiere comprar este vehículo</h5>
+                                <h5 className="modal-title" id="exampleModalLabel">
+                                       <strong>Fulanito quiere bloquear este vehículo
+                                        </strong></h5>
                                     <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
-                                <div className="modal-body-sale-process row">
-                                    <div className="product_img_profile_box-sales-process col-4">
+                                <div className="modal-body-sale-process ">
+                                    <div className="  product_img_profile_box-sales-process m-auto col-4">    
                                         <img src="https://www.motofichas.com/images/phocagallery/Honda/cb500f-2022/01-honda-cb500f-2022-estudio-rojo.jpg" alt="product" className="product_img_profile"/>
                                     </div>
-                                    <div className="col-7 state_product_profile_sales_process">
-                                        <div className="row">
-                                            <h6 className=" col-12">{product.name}</h6>
+                                    <div className="col-7 state_product_profile_sales_process m-auto">
+                                        <div className="row m-auto">
+                                            <h6 className=" col-12 name_product_profile m-auto ">{product.name}</h6>
                                         </div>
                                         <div className="row">
-                                            <h6 className=" col-12">{product.description}</h6>
+                                            <h6 className=" col-12 ">{product.description}</h6>
                                         </div>
-                                        <div className="row">
-                                            <h6 className=" col-6">{product.state}</h6>
-                                            <h6 className=" col-6">{product.price}€</h6>
+                                        <div className="row m-auto">
+                                            <h6 className=" col-6 state_product_profile">{product.state}</h6>
+                                            <h6 className=" col-6 price_product_profile" >{product.price}€</h6>
                                         </div>
                                     </div>
                                     
                                 </div>
                                 <div className="modal-footer">
+                                <div>
+                                            <br></br>
+                                            <br></br>
+                                            <br></br>
+                                            <p>Tenga en cuenta que una vez cancelada la reserva el comprador podrá vender a otro usuario el producto</p>
+                                        </div>
                                     <button type="button" className="btn btn_config cancel" data-bs-dismiss="modal" onClick={() => StatusToOnSale(product)}>Rechazar</button>
                                     <button type="button" className="btn btn_config reservado" data-bs-dismiss="modal" onClick={() => StatusToSold(product)}>Aceptar</button>
                                 </div>

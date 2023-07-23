@@ -117,8 +117,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 				  });
 			  },
 
-			  getFilteredProducts: (brand_id, vehicle_type) => {
-				fetch(`${process.env.BACKEND_URL}api/search-by/filter?brand_id=${brand_id}&vehicle_type=${vehicle_type}`)
+			  getFilteredProducts: (brand_id, vehicle_type, min_price, max_price, min_year, max_year, min_km, max_km) => {
+				fetch(`${process.env.BACKEND_URL}api/search-by/filter?brand_id=${brand_id}&vehicle_type=${vehicle_type}&min_price=${min_price}&max_price=${max_price}&min_year=${min_year}&max_year=${max_year}&min_km=${min_km}&max_km=${max_km}`)
 				  .then(response => response.json())
 				  .then(data => {
 					// Almacenar los productos filtrados en store.filterProducts
@@ -130,6 +130,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.error('Error al obtener los productos filtrados:', error);
 				  });
 			  },
+			  
 			  
 			  setFilterProducts: (products) => {
 				setStore({ filterProducts: products });
@@ -604,7 +605,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			getFilters: () => {
 				const store = getStore();
-				fetch(process.env.BACKEND_URL + `api//search-by/<filter>`, {
+				fetch(process.env.BACKEND_URL + `api/search-by/<filter>`, {
 					method: "GET",
 					headers: {
 						"Content-Type": "application/json",

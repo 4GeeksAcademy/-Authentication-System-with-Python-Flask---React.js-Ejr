@@ -131,12 +131,12 @@ export const Navbar = () => {
   };
 
   return (
-    <nav className="navbar navbar-expand-lg bg-body-tertiary py-4">
+    <nav className="navbar navbar-expand-lg bgNavbar py-4">
       <div className={dropMenu} >
         <div className="text-center lightSpeedIn customDiv">
-          <a href="/" className="navbar-brand tittle-nav ms-1 " id="tittle-nav" onClick={closeMenuOnItemClick}>
+          <Link to="/" className="navbar-brand tittle-nav ms-1 " id="tittle-nav" onClick={closeMenuOnItemClick}>
             WhataCar
-          </a>
+          </Link>
         </div>
         <br></br>
         <div className="justify-content-end d-flex mb-2 ">
