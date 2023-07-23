@@ -10,6 +10,26 @@ export const SearchResults = (props) => {
   const { store, actions } = useContext(Context);
   const carImage = "https://images.coches.com/_vn_/kia/Sportage/c399cf1d98a95d24f8e8715dd0b13fb2.jpg?p=cc_vn_high"
 
+  const [hasFiltered, setHasFiltered] = useState(false); // Estado local para indicar si se ha realizado un filtrado
+
+  useEffect(() => {
+    let isMounted = true; // Variable para asegurarnos de que el componente está montado
+
+    const filterProducts = async () => {
+      // Realizar el filtrado de productos aquí
+      await actions.getFilteredProducts();
+      if (isMounted) {
+        setHasFiltered(true); // Indicar que se ha realizado un filtrado
+      }
+    };
+
+    filterProducts();
+
+    return () => {
+      isMounted = false; // Actualizar la variable al desmontar el componente
+    };
+  }, []);
+
   useEffect(() => {
     actions.getFilteredProducts()
 
@@ -29,8 +49,8 @@ export const SearchResults = (props) => {
                       <img src={carImage} className="card-img-top imgCarousel" alt="..." />
                     </div>
                     <div className="flip-card-back">
-                      <Link to="/login" style={{ color: "white", textDecoration: "none" }} className="link-hover">
-                        <h3 className="pt-2">{vehicle.name}</h3>
+                      <Link to={`product/${vehicle.id}`} style={{ color: "white", textDecoration: "none" }} className="link-hover">
+                        <h3 className="pt-2">{vehicle.brand.name}</h3>
                       </Link>
                       <p>Matriculación: {vehicle.year}</p>
                       <p>Estado: {vehicle.state}</p>
@@ -41,7 +61,7 @@ export const SearchResults = (props) => {
                 </div>
                 <div className="card-body d-flex justify-content-between">
                   <div>
-                    <Link to="/login" style={{ color: "black", textDecoration: "none" }} className="link-hover">
+                    <Link to={`product/${vehicle.id}`} style={{ color: "black", textDecoration: "none" }} className="link-hover">
                       <h5 className="card-title justify-content-start d-flex" id="vehicleCardTittle">
                         <strong>
                           {vehicle.name.length >= 25 ? vehicle.name.slice(0, 19) + "..." : vehicle.name}</strong>

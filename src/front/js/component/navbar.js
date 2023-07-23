@@ -1,10 +1,9 @@
 import React, { useContext, useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom"; // Actualiza la importación aquí
 import ReactSwitch from "react-switch";
 import { ThemeContext } from "../layout";
 import { Context } from "../store/appContext";
 import ReactModal from 'react-modal'
-import { useNavigate } from "react-router-dom";
 import { Login } from "../pages/login";
 import { SwitchLight } from "./switchLight";
 import  "../../styles/navbar.css"
@@ -12,6 +11,7 @@ import  "../../styles/index.css"
 
 export const Navbar = () => {
   const { store, actions, token } = useContext(Context);
+  
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -21,6 +21,27 @@ export const Navbar = () => {
   const [ariaExpanded, setAriaExpanded] = useState(false);
   const [manuallyClosed, setManuallyClosed] = useState(false); // Nueva variable de estado
   const [eye, setEye] = useState(true); // Estado para controlar la visibilidad de la contraseña
+  const [hasFiltered, setHasFiltered] = useState(false)
+
+
+
+const handleWhataCarClick = () => {
+  closeMenuOnItemClick(); // Cerrar el menú antes de realizar cualquier acción
+
+  // Agregar una breve pausa de 100 milisegundos antes de redirigir
+  setTimeout(() => {
+    navigate("/");
+    window.location.reload();
+  }, 100);
+};
+
+  
+  
+  
+  useEffect(() => {
+    actions.getFilteredProducts();
+    setHasFiltered(true); // Indicar que se ha realizado un filtrado
+  }, []);
 
   const openModal = () => {
     setIsOpen(true);
@@ -129,9 +150,11 @@ export const Navbar = () => {
     <nav className="navbar navbar-expand-lg bgNavbar py-4">
       <div className={dropMenu} >
         <div className="text-center lightSpeedIn customDiv">
-          <Link to="/" className="navbar-brand tittle-nav ms-1 " id="tittle-nav" onClick={closeMenuOnItemClick}>
+          <button  onClick={handleWhataCarClick}  
+          className="navbar-brand tittle-nav ms-1 " 
+          id="tittle-nav" >
             WhataCar
-          </Link>
+          </button>
         </div>
         <br></br>
         <div className="justify-content-end d-flex mb-2 ">
@@ -144,6 +167,7 @@ export const Navbar = () => {
               aria-controls="navbarNavDropdown"
               aria-expanded={ariaExpanded}             
               aria-label="Toggle navigation"
+     
             >
               <span className="navbar-toggler-icon"></span>
             </button>
