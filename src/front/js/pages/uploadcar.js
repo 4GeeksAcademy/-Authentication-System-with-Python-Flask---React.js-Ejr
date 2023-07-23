@@ -437,17 +437,21 @@ useEffect(() => {
                     </div>
                     )}
                   </Dropzone>
-                  <div className='mb-5 d-flex'>
-                    <div className={`dropzone image-preview ${hasSelectedImages ? "" : "d-none"}`}>
+                  <div className='mb-5 container justify-content-center mt-2'>
+                    <div className={`dropzone justify-content-center ${hasSelectedImages 
+                      ? "" : "d-none"}`}>
                     {selectedImages.map((selectedImage, index) => (
                             <div key={index} className="me-3">
                               <img 
                               style={{width:'11rem', height:'8rem'}} 
                               src={selectedImage.url} 
                               alt={selectedImage.file.name} />
-                              <button onClick={(e) => handleDeleteImage(index, e)}>
-                              <i class="fa-solid fa-trash-can"></i>
+                              <div>
+                              <button onClick={(e) => handleDeleteImage(index, e)}
+                              className="btn">
+                              <i class="fa-solid fa-trash-can" style={{"color": "red"}}></i>
                                 </button>
+                                </div>
                             </div>
                           ))}
                     </div>

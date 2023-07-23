@@ -36,7 +36,7 @@ export const CarouselDefault = () => {
                 <div className="flip-card-front">
                   {/* Update the rendering to show the first image of the vehicle */}
                   {vehicle.images.length > 0 ? (
-                    <img src={vehicle.images} className="card-img-top imgCarousel" alt="..." />
+                    <img src={vehicle.images[0].image} className="card-img-top imgCarousel" alt="..." />
                   ) : (
                     <img src={carImage} className="card-img-top imgCarousel" alt="..." />
                   )}

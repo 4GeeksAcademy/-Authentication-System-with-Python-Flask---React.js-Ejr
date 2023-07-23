@@ -46,15 +46,14 @@ export const Favorites = () => {
                                     id="heartCard"
                                     onClick={() => handleRemoveFavorite(favorites.product_id)}
                                   >
-                                    <script src="https://cdn.lordicon.com/bhenfmcm.js"></script>
+                                   <script src="https://cdn.lordicon.com/bhenfmcm.js"></script>
                                     <lord-icon
-                                    className=""
-                                      src="https://cdn.lordicon.com/rjzlnunf.json"
-                                      trigger="hover"
-                                      colors="primary:#1663c7,secondary:#16a9c7"
-                                      stroke="80"
-                                      style={{ width: "50px", height: "30px" }}
-                                    ></lord-icon>
+                                        src="https://cdn.lordicon.com/rjzlnunf.json"
+                                        trigger="morph"
+                                        colors="primary:#1663c7,secondary:#16a9c7"
+                                        state="morph-heart-broken"
+                                        style={{"width":"250px","height":"30px"}}>
+                                    </lord-icon>
                                   </button>
                                 </div>
                               </div>
