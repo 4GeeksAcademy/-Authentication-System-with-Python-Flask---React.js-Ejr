@@ -243,25 +243,42 @@ useEffect(() => {
   
 
   return (
-    <div className='upload-container'>
+    <div className="container col-12 my-5 justify-content-center ">
+        <div className='upload-title'>
+          <h3 className='text-center mt-2 pt-3'>
+            <strong>¿Qué vas a vender?</strong>
+            </h3>
+        </div>
       <form onSubmit={handleSubmit}>
-        <div className='upload-box'>
-          <div className='upload-innerbox'>
-            <div className='upload-title'>
-              <h3><strong>¿Qué vas a vender?</strong></h3>
-            </div>
+        <div className="box my-5 ">
+          <div className=''>
 
-            <div className='row innerselect'>
+          {/* <div className="row mx-1 justify-content-around text-center">
+              <div className="col-xs-10 col-sm-10 col-md-10 col-lg-5 ">
+                <div className="input-box">
+                  <label className="form-floating" htmlFor="full_name">Nombre y apellidos</label>
+                 <div>
+                  <input type="text" placeholder="Ramon Gutierrez" name="full_name" onChange={handleChange}/>
+                </div>
+                </div>
+              </div> */}
+
+
+            <div className='row mx-1 justify-content-around text-center p-4'>
               
-              <div className='col-3 me-3'>
+              <div className='col-xs-10 col-sm-10 col-md-10 col-lg-5 '>
+                <div>
                 <label htmlFor='name'> <h6><strong>Título</strong></h6> </label>
-                <input className='select ' type='text' maxLength="100" name='name' placeholder='de la publicación' onChange={e => handleChange(e)}/>
+               </div> 
+               <input className='select ' type='text' maxLength="100" name='name' placeholder='de la publicación' onChange={e => handleChange(e)}/>
               </div>
 
 
   
-              <div className='col-3 me-5 ms-5'>
+              <div className='col-xs-10 col-sm-10 col-md-10 col-lg-5 '>
+                <div>
                 <label htmlFor='select-middle'> <h6><strong>Marca</strong></h6> </label>
+                  </div>
                   <select id='select-middle' name='brand' className='select' onChange={e => {handleChange(e); getModelsByBrand(e.target.value)}}>
                     <option >Selecciona otro</option>
                     {carBrands.map((brand, index) => (
@@ -270,8 +287,15 @@ useEffect(() => {
                   </select>
               </div>
 
-              <div className='col-3 ms-3'>
+
+
+
+            <div className='row mx-1 justify-content-around text-center p-4'>
+              
+            <div className='col-xs-10 col-sm-10 col-md-10 col-lg-5 '>
+                <div>
                 <label htmlFor='select-right'> <h6><strong>Modelo</strong></h6> </label>
+                </div>
                 <select id='select-right' name='model' className='select' onChange={e => handleModelChange(e)} >
                   <option >Selecciona otro</option>
                     {carModels.map((model, index) => (
@@ -281,14 +305,22 @@ useEffect(() => {
               </div>
             </div>
 
-            <div className='row innerselect'>
-              <div className='col-3 me-3'>
+            
+              <div className='col-xs-10 col-sm-10 col-md-10 col-lg-5 '>
+                <div>
                 <label htmlFor='name'> <h6><strong>Precio</strong></h6></label>
+                </div>
                 <input className='select ' type='number'  name='price' placeholder='2400€' onChange={e => handleChange(e)}/>
               </div>
 
-              <div className='col-3 me-5 ms-5'>
+
+
+         <div className='row mx-1 justify-content-around text-center p-4'>
+          
+              <div className='col-xs-10 col-sm-10 col-md-10 col-lg-5'>
+                <div>
                 <label htmlFor='select-middle'> <h6><strong>Estado del vehículo</strong></h6> </label>
+                </div>
                 <select id='select-middle' name='state' className='select ' onChange={e => handleChange(e)}>
                   <option >Selecciona otro</option>
                   <option value='NUEVO'>Nuevo</option>
@@ -296,9 +328,11 @@ useEffect(() => {
                 </select>
               </div>
 
-              <div className='col-3 ms-3'>
+              <div className='col-xs-10 col-sm-10 col-md-10 col-lg-5'>
+                <div>
                 <label htmlFor='select-right'> <h6><strong>Kilómetros</strong></h6> </label>
-                <select id='select-right' name='km' className='select ' onChange={e => handleChange(e)}>
+               </div>
+               <select id='select-right' name='km' className='select ' onChange={e => handleChange(e)}>
                   <option >Selecciona otro</option>
                   <option value='1000'>Cómo nuevo: de 0 a 1,000</option>
                   <option value='50000'  >Bajo kilometraje: de 1,000 a 50,000</option>
@@ -307,10 +341,16 @@ useEffect(() => {
                 </select>
               </div>
             </div>
+            </div>
 
-            <div className='row innerselect'>
-              <div className='col-3 me-3'>
+
+
+            <div className='row mx-1 justify-content-around text-center p-4'>
+            <div className='row mx-1 justify-content-around text-center'>
+              <div className='col-xs-10 col-sm-10 col-md-10 col-lg-5'>
+                <div>
                 <label htmlFor='name'> <h6><strong>Año de fabricación</strong></h6> </label>
+                </div>
                 <input className='select ' type='number'  name='year' placeholder='2020' onChange={e => handleChange(e)}/>
               </div>
 
@@ -323,8 +363,10 @@ useEffect(() => {
 
 
 
-              <div className='col-3 ms-3'>
+              <div className='col-xs-10 col-sm-10 col-md-10 col-lg-5'>
+                <div>
                 <label htmlFor='select-right'> <h6><strong>Combustible</strong></h6> </label>
+                 </div>
                   <select id='select-right' name='fuel' className='select ' onChange={e => handleChange(e)}>
                     <option >Selecciona otro</option>
                     <option value='GASOLINA'  >Gasolina</option>
@@ -335,15 +377,31 @@ useEffect(() => {
                   </select>
               </div>
             </div>
+            </div>
 
-              <div className='upload-product-description'>
-                <div className='description-title'>
-                  <h5><strong>Descripción:</strong></h5>
+
+            <div className='row mx-1 justify-content-around text-center p-4'>
+              <div className=' col-xs-10 col-sm-10 col-md-10 col-lg-5 justify-content-center ms-5 mt-5 '>
+                <div className='description-title text-center justify-content-center d-flex'>
+                  <h4><strong>Descripción:</strong></h4>
                 </div>
-                <textarea onChange={e => handleChange(e)} className='upload-textarea-description' name="description" rows="7" cols="132" placeholder='Te recomendamos encarecidamente incluir algunos detalles clave cómo el número de puertas, plazas disponibles y el tipo de cambio del vehículo. '></textarea>
+                <div className="justify-content-center d-flex text-center align-items-center m-auto">
+                <textarea 
+                onChange={e => handleChange(e)} 
+                className='container p-3' 
+                name="description" 
+                rows="7" 
+                cols="40" 
+                placeholder='Te recomendamos encarecidamente incluir 
+                algunos detalles clave cómo el número de puertas, 
+                plazas disponibles y el tipo de cambio del vehículo. '
+                >
+
+                </textarea>
+                </div>
               </div>
 
-
+              </div>
                     
               <div className='upload-innerbox'>
               
@@ -359,9 +417,12 @@ useEffect(() => {
                   >
                     {({ getRootProps, getInputProps }) => (
                       
+
+            
+        <div className='row mx-1 justify-content-around text-center'>    
                   <section>
                     <div {...getRootProps({ className: "" })}>
-                      <div >
+                      <div  className='container m-auto'>
 
                         <a className='btn btn-info btnadd'>Agrega tus imágenes</a>
                         {/* <p></p>
@@ -370,7 +431,7 @@ useEffect(() => {
                     </div>
                   </section>
 
-                    
+                    </div>
                     )}
                   </Dropzone>
                   <div className='mb-5 d-flex'>
@@ -383,12 +444,12 @@ useEffect(() => {
                           ))}
                     </div>
                           
+                    
                         </div>
-
              
               </div>
 
-                <div className='text-center mt-5'>
+                <div className='text-center pb-5'>
                     <button className='btn btn-primary'>¡Sube tu coche!</button>
                 </div>
 

@@ -128,6 +128,9 @@
     margin-top: 8rem;
     margin-left: auto;
     margin-right: auto;
+    border: 1px solid black;
+    margin-bottom: 10px;
+    border-radius: 12px;
   }
 
   .upload-product-images-center{
@@ -163,6 +166,8 @@
     background-color: #fafafa;
     color: #bdbdbd;
     margin-bottom: 20px;
+    border: 1px solid black;
+    border-radius: 12px;
 
   }
 
@@ -295,6 +300,8 @@
   .btnadd{
     background-color: #63B1D0;
   }
+
+
 
 
 
