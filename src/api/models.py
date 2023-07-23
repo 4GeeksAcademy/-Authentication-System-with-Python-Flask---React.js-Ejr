@@ -1,4 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import Column, ForeignKey, Integer, String
+from sqlalchemy.orm import relationship, declarative_base
 
 db = SQLAlchemy()
 
@@ -32,3 +34,17 @@ class User(db.Model):
             "dob": self.dob,
             # do not serialize the password, its a security breach
         }
+    
+class Favorites(db.Model):
+    id = db.Column(db.Integer, ForeignKey(User.id), primary_key=True)
+    # maybe db.Boolean(False)
+    favorite = db.Column(db.Boolean, unique=False, nullable=True ,default= False)
+    # foreingKey = User.db 
+    # user_id = db.Column(db.Integer, ForeignKey(User.id),unique = True )
+    def serialize(self):
+        return {
+            "id": self.id,
+        }    
+        
+
+        
