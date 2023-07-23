@@ -43,7 +43,8 @@ export const SearchResults = (props) => {
                   <div>
                     <Link to="/login" style={{ color: "black", textDecoration: "none" }} className="link-hover">
                       <h5 className="card-title justify-content-start d-flex" id="vehicleCardTittle">
-                        <strong>{vehicle.name}</strong>
+                        <strong>
+                          {vehicle.name.length >= 25 ? vehicle.name.slice(0, 19) + "..." : vehicle.name}</strong>
                       </h5>
                     </Link>
                     <h5 className="card-title justify-content-start d-flex">20.000€</h5>

@@ -56,7 +56,7 @@ export const CarouselDefault = () => {
                 <div>
                   <Link to={`/product/${vehicle.id}`} style={{ color: 'black', textDecoration: 'none' }} className="link-hover">
                     <h5 className="card-title justify-content-start d-flex" id="vehicleCardTittle">
-                    {vehicle.name.length >= 25 ? vehicle.name.slice(0, 24) + "..." : vehicle.name}
+                    {vehicle.name.length >= 25 ? vehicle.name.slice(0, 19) + "..." : vehicle.name}
                     </h5>
                   </Link>
                   <h5 className="card-title justify-content-start d-flex">{vehicle.price} €</h5>
