@@ -37,7 +37,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 			filterProducts: [],
 			status: [],
 			filteredMotos: [],
-			filteredCars: []
+			filteredCars: [],
+			filteredPrice: []
 		
 		},
 
@@ -160,7 +161,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				  })
 				  .catch(error => {
 					// Manejar errores en la solicitud
-					console.error('Error al obtener los productos filtrados:', error);
+					console.error('Error al obtener las MOTOS filtrados:', error);
 				  });
 			  },
 
@@ -174,7 +175,22 @@ const getState = ({ getStore, getActions, setStore }) => {
 				  })
 				  .catch(error => {
 					// Manejar errores en la solicitud
-					console.error('Error al obtener los productos filtrados:', error);
+					console.error('Error al obtener los COCHES filtrados:', error);
+				  });
+			  },
+
+
+			  getFilteredPrice: () => {
+				fetch(`${process.env.BACKEND_URL}api/search-by-price`)
+				  .then(response => response.json())
+				  .then(data => {
+					// Almacenar los productos filtrados en store.filterProducts
+					setStore({ filteredPrice: data });
+					console.log("se han recuperado los datos")
+				  })
+				  .catch(error => {
+					// Manejar errores en la solicitud
+					console.error('Error al obtener los COCHES filtrados:', error);
 				  });
 			  },
 

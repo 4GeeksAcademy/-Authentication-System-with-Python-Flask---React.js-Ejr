@@ -370,6 +370,14 @@ def filter_by_car():
     serialized_products = [product.serialize() for product in products]
     return jsonify(serialized_products)
 
+@api.route('/search-by-price', methods=['GET'])
+def filter_by_price():
+    products = Product.query.filter(Product.price < 20000)
+    products = products.all()
+
+    serialized_products = [product.serialize() for product in products]
+    return jsonify(serialized_products)
+
 
 @api.route('/search-by/filter', methods=['GET'])
 def search_by_filter():
