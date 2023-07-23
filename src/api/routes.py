@@ -139,14 +139,14 @@ def get_all_Favorites():
     return response_body, 200
 
 
-@api.route('/hello', methods=['POST', 'GET'])
-def handle_hello():
+# @api.route('/hello', methods=['POST', 'GET'])
+# def handle_hello():
 
-    response_body = {
-        "message": "Hello! I'm a message that came from the backend, check the network tab on the google inspector and you will see the GET request"
-    }
+#     response_body = {
+#         "message": "Hello! I'm a message that came from the backend, check the network tab on the google inspector and you will see the GET request"
+#     }
 
-    return jsonify(response_body), 200
+#     return jsonify(response_body), 200
 
 # from flask import Flask, request, jsonify
 
@@ -159,7 +159,7 @@ destinations_data = [
     {'id': 3, 'name': 'Tokyo', 'country': 'Japan', 'description': 'A vibrant and futuristic metropolis'}
 ]
 
-@app.route('/api/destinations', methods=['GET'])
+@api.route('/api/destinations', methods=['GET'])
 def search_destinations():
     search_query = request.args.get('query')
 
@@ -174,7 +174,7 @@ def search_destinations():
 
     return jsonify({'results': matching_destinations}), 200
 
-@app.route('/api/destination/<int:destination_id>', methods=['GET'])
+@api.route('/api/destination/<int:destination_id>', methods=['GET'])
 def get_destination(destination_id):
     
     destination = next((d for d in destinations_data if d['id'] == destination_id), None)
@@ -184,7 +184,7 @@ def get_destination(destination_id):
 
     return jsonify(destination), 200
 
-@app.route('/api/destinations', methods=['POST'])
+@api.route('/api/destinations', methods=['POST'])
 def save_destination():
     data = request.get_json()
     name = data.get('name')
