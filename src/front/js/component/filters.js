@@ -79,6 +79,9 @@ export const Filters = (props) => {
       brandsToShow = store.allBrands.slice(59);
     }
 
+
+
+
   
     return (
       <ul>
@@ -130,6 +133,10 @@ export const Filters = (props) => {
     queryParams.push(`min_km=${km[0]}`);
     queryParams.push(`max_km=${km[1]}`);
 
+    const offcanvas = document.getElementById("offcanvasExample");
+    const offcanvasBootstrap = bootstrap.Offcanvas.getInstance(offcanvas);
+    offcanvasBootstrap.hide();
+  
 
     const queryString = queryParams.join('&');
     const url = `${process.env.BACKEND_URL}api/search-by/filter?${queryString}`;

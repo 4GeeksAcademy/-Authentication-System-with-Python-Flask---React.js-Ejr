@@ -69,7 +69,9 @@ const StatusToOnSale = (product) => {
                     </div>
                     <div className="price_name col-3 col-sm-2 text-start ">
                         <h4 className="price_product_profile">{product.price}€</h4>
-                        <h5 className="name_product_profile">{product.name}</h5>
+                        <h5 className="name_product_profile">{product.name.length >= 25 ? 
+                        product.name.slice(0,24) + "..." 
+                        : product.name}</h5>
                     </div>
                     <div className="col-3 col-sm-2 state_product_profile_box text-start">
                         <h6 className="state_title_profile">Estado</h6>

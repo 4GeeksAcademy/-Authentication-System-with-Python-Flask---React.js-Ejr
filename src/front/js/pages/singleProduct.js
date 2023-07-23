@@ -41,23 +41,16 @@ export const SingleProduct = () => {
   // }
 
   return (
-    <div className="container w-70">
+    <div className="container mx-2">
       <div className='single-prioduct-box'>
         {store.productlist.length > 0 ? (
           <div className='sp-box '>
             {store.productlist.map((product, index) => (
               <div key={index} className='row'>
-                
-                <div className='col-4 '>
 
-                </div>
-                
+              
 
-                <div className='col-12 text-center mt-2'>
-                  <h1><strong> {product.name} </strong></h1>
-                </div>
-
-              <div className='carousel-container'>
+              <div className='carousel-container w-60'>
               <div id="carouselExampleIndicators" className="carousel slide " data-bs-ride="carousel">
                   <div className="carousel-indicators">
                     {product.images.map((image, index) => (
@@ -89,9 +82,15 @@ export const SingleProduct = () => {
                   </button>
                 </div>
               </div>
+
+
+              <div className='col-12 text-start my-2'>
+                  <h2><strong> {product.name} </strong></h2>
+                </div>
+
                 
                 
-                <div className='single-pr-information text-center mt-3'>
+                <div className=' container single-pr-information text-start mt-3 mx-2'>
 
                   {/* <div className='row'> 
                     <div className='col-12 text-center mt-3'>
@@ -100,50 +99,69 @@ export const SingleProduct = () => {
                   </div> */}
 
                     <div className='row '>
-                        <div className='col-6'>
-                          <p><strong>Precio: <span className='single-price'>{product.price}€</span></strong></p>
+                        <div className='col-lg-4'>
+                          <p><strong>Precio: <span className='single-price'>
+                            {product.price} €
+                            </span></strong></p>
 
                         </div>
-                        <div className='col-6'>
-                          <p><strong>Tipo de vehículo: </strong> {product.product_type} </p>
-                        </div>
-                    </div>
-                    <div className='row'>
-                        <div className='col-6'>
-                          <p><strong> Marca: </strong> {product.brand.name}</p>
-                        </div>
-                        
-                        <div className='col-6'>
-                          <p><strong> Modelo: </strong> {product.model.model}</p>
-                        </div>
-                    </div>
-                    <div className='row'>
-                        <div className='col-6'>
-                          <p><strong> Estado: </strong> {product.state}</p>
-
-                        </div>
-                        <div className='col-6'>
+                       
+                        <div className='col-lg-4'>
+                          <p><strong> Kilómetros: </strong> {product.km} km</p>
+                        </div>  
+                      
+                        <div className='col-lg-4'>
                           <p><strong> Combustible: </strong> {product.fuel}</p>
                         </div>
+
                     </div>
+                        
                     <div className='row'>
-                        <div className='col-6'>
+                  
+                        <div className='col-lg-4'>
+                          <p><strong> Marca: </strong> {product.brand.name}</p>  
+                        </div>
+                        <div className='col-lg-4'>
+                          <p><strong> Modelo: </strong> {product.model.model}</p>
+                        </div>
+                        <div className='col-lg-4'>
+                          <p><strong> Estado: </strong> {product.state}</p>
+                        </div>
+                    </div>
+
+
+
+                    <div className='row'>
+                        <div className='col-lg-4'>
                           <p><strong> Año de fabricación: </strong> {product.year}</p>
                         </div>
-                        <div className='col-6'>
+
+
+                        <div className='col-lg-4'>
+                          <p><strong>Tipo de vehículo: </strong> {product.product_type} </p>
+                        </div>
+                        
+                    </div>
+
+                      <div className='row d-flex justify-content center m-auto my-4'>
+                        <div className='col-lg-12 justify-content-center m-auto d-flex'>
                           
                           <UserInfo userName={product.user.full_name} email={product.user.email} address={product.user.address} phone={product.user.phone} />
 
                           {/* <p><strong>Vendedor: <a onClick={}>{product.user.full_name}</a> </strong></p> */}
 
                         </div>
-                    </div>
+                        </div>
+
+                  
                     
-                    <div className='row d-flex mb-3'>
-                      <div className='col-12 text-center '>
-                        <p><strong> Descripción: </strong> <br></br></p>
+                 
+                      <div className='col-lg-12 text-center '>
+                        <h4><strong> Descripción: </strong> <br></br></h4>
                         <div className=' desc-container'>
-                          <p className=' single-description mx-auto d-flex justify-content-flex-start'>{product.description}</p>
+                          <p className=' single-description mx-auto d-flex text-start'>
+                            {product.description}
+                            </p>
 
                         </div>
 
@@ -156,7 +174,7 @@ export const SingleProduct = () => {
                     <div className='row'>
                       <div className=''>
                       {store.user && store.user.id && product.user_id && store.user.id === product.user_id ? (
-                          <Link to={`/edit-product/${product.id}`} className='btn btn-primary btn-success'>Editar</Link>) : 
+                          <Link to={`/edit-product/${product.id}`} className='btn btn-primary btn-success ms-2'>Editar</Link>) : 
                         (
                           <Link to={'/profile/onsale'} onClick={() => StatusTopendingBlocked(product)} className='btn btn-primary'>Reservar</Link>
                         )}
@@ -168,13 +186,18 @@ export const SingleProduct = () => {
 
                     </div>
 
-                </div>
+               
 
                 
             ))}
           </div>
         ) : (
-          <p>Loading...</p>
+          <div className="spinner-border text-primary m-auto d-flex 
+          justify-content-center "
+          style={{"width": "10rem", "height": "10rem"}}
+          role="status">
+            
+          </div>
         )}
       </div>
     </div>

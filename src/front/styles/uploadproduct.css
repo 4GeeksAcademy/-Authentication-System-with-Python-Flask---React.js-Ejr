@@ -168,7 +168,8 @@
     margin-bottom: 20px;
     border: 1px solid black;
     border-radius: 12px;
-    margin: 4px
+    margin: 4px;
+  
 
   }
 
@@ -187,7 +188,7 @@
     width: 100%;
     height: auto;
     border: 1px solid black;
-    border-radius: .2rem;
+    border-radius: 8px;
     padding: 2rem;
     background-color: #eff1f4;
   }

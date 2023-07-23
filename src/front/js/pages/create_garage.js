@@ -117,10 +117,7 @@ const handleImageIdChange = (e) => {
                   
                   <input type="text" placeholder="Talleres Rodríguez" name="name" onChange={handleNameChange}/>
                 </div>
-              </div>
-
-            
-              <div className="row justify-content-center text-center align-items-center">
+              
               <div className="col-sm-12 col-md-12 col-lg-6 input-box mx-auto">
                   <div><label htmlFor="mail">Correo de contacto</label></div>
                   
@@ -137,13 +134,8 @@ const handleImageIdChange = (e) => {
                   
                   <input type="number" placeholder="777 777 777 " name="phone" onChange={handlePhoneChange} />
                 </div>
-              </div>
-            
-
-           
-              
-
-              <div className="row justify-content-center text-center align-items-center">
+   
+             
               <div className="col-sm-12 col-md-12 col-lg-6 input-box mx-auto">
                   <div><label htmlFor="address">Dirección</label></div>
                   
@@ -163,9 +155,7 @@ const handleImageIdChange = (e) => {
                   <input type="text" id="idNumber" placeholder="123412312H" name="cif" onChange={handleCifChange
                 } />
                 </div>
-              </div>
-
-              <div className="row justify-content-center text-center align-items-center">
+            
               <div className="col-sm-12 col-md-12 col-lg-6 input-box mx-auto">
                   <div>
                   <label htmlFor="web">Sitio Web</label>
@@ -181,10 +171,7 @@ const handleImageIdChange = (e) => {
                   
                   <input type="text" placeholder="Describe tu taller" name="description" onChange={handleDescriptionChange} />
                 </div>
-              </div>
-
-
-              <div className="row justify-content-center text-center align-items-center">
+              
               <div className="col-sm-12 col-md-12 col-lg-6 input-box mx-auto">
                   <div><label htmlFor="description">Foto del Taller</label></div>
                   
