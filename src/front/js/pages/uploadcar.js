@@ -408,13 +408,13 @@ useEffect(() => {
                     
               <div className='upload-innerbox'>
               
-                <div className=''>
-                  <div className="container d-flex justify-content-center mt-3">
+                <div className='m-auto justify-content-center'>
+                  <div className="container  justify-content-center mt-3">
                     <h6><strong>Imágenes:</strong></h6>
                   </div>
                   <Dropzone 
                     onDrop={handleDrop}
-                    className=""
+                    className="m-auto justify-content-center"
                     onChange={(ev) => setImage(ev.target.value)}
                     value={image}
                   >
@@ -436,8 +436,9 @@ useEffect(() => {
 
                     </div>
                     )}
+                  
                   </Dropzone>
-                  <div className='mb-5 container justify-content-center mt-2'>
+                  <div className='mb-5 container justify-content-center mx-auto mt-2'>
                     <div className={`dropzone justify-content-center ${hasSelectedImages 
                       ? "" : "d-none"}`}>
                     {selectedImages.map((selectedImage, index) => (
