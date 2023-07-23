@@ -268,9 +268,9 @@ useEffect(() => {
               
               <div className='col-xs-10 col-sm-10 col-md-10 col-lg-6 '>
                 <div>
-                <label htmlFor='name'> <h6><strong>Título</strong></h6> </label>
+                <label htmlFor='name'> <h6><strong>Título del anuncio</strong></h6> </label>
                </div> 
-               <input className='select ' type='text' maxLength="100" name='name' placeholder='de la publicación' onChange={e => handleChange(e)}/>
+               <input className='select ' type='text' maxLength="100" name='name' placeholder='Título breve' onChange={e => handleChange(e)}/>
               </div>
 
 
@@ -325,7 +325,7 @@ useEffect(() => {
                 <label htmlFor='select-middle'> <h6><strong>Estado del vehículo</strong></h6> </label>
                 </div>
                 <select id='select-middle' name='state' className='select ' onChange={e => handleChange(e)}>
-                  <option >Selecciona otro</option>
+                  <option >Selecciona estado</option>
                   <option value='NUEVO'>Nuevo</option>
                   <option value='SEMINUEVO'  >Semi-nuevo</option>
                 </select>
@@ -336,7 +336,7 @@ useEffect(() => {
                 <label htmlFor='select-right'> <h6><strong>Kilómetros</strong></h6> </label>
                </div>
                <select id='select-right' name='km' className='select ' onChange={e => handleChange(e)}>
-                  <option >Selecciona otro</option>
+                  <option >Selecciona kilometraje</option>
                   <option value='1000'>Cómo nuevo: de 0 a 1,000</option>
                   <option value='50000'  >Bajo kilometraje: de 1,000 a 50,000</option>
                   <option value='100000'>Kilometraje moderado: de 50,000 a 100,000</option>
@@ -354,7 +354,7 @@ useEffect(() => {
                 <div>
                 <label htmlFor='name'> <h6><strong>Año de fabricación</strong></h6> </label>
                 </div>
-                <input className='select ' type='number'  name='year' placeholder='2020' onChange={e => handleChange(e)}/>
+                <input className='select ' type='number'  name='year' placeholder='Ej.: 2020' onChange={e => handleChange(e)}/>
               </div>
 
               {/* <div className='col-3 ms-5 me-5'>
@@ -371,7 +371,7 @@ useEffect(() => {
                 <label htmlFor='select-right'> <h6><strong>Combustible</strong></h6> </label>
                  </div>
                   <select id='select-right' name='fuel' className='select ' onChange={e => handleChange(e)}>
-                    <option >Selecciona otro</option>
+                    <option >Selecciona combustible</option>
                     <option value='GASOLINA'  >Gasolina</option>
                     <option value='DIESEL'>Diesel</option>
                     <option value='ELECTRICO'>Eléctrico</option>

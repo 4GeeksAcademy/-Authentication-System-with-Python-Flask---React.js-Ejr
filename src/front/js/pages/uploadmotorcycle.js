@@ -30,7 +30,7 @@ const getBrands = () => {
 }
 const getModelsByBrand = (brandId) => {
   if (brandId !== selectedBrand) {
-    fetch(process.env.BACKEND_URL + `api/car-models?brandId=${brandId}`)
+    fetch(process.env.BACKEND_URL + `api/moto-models?brandId=${brandId}`)
       .then((resp) => resp.json())
       .then((data) => {
         console.log(data)
@@ -203,56 +203,84 @@ useEffect(() => {
     //setIsSubmitClicked(true);
   
   return (
-    <div className='upload-container'>
-      <form onSubmit={handleSubmit}>
-        <div className='upload-box'>
-          <div className='upload-innerbox'>
-            <div className='upload-title'>
-              <h3><strong>¿Qué vas a vender?</strong></h3>
-            </div>
-            <div className='row innerselect'>
+    <div className="container col-12 my-5 justify-content-center ">
+       <form onSubmit={handleSubmit}>
+        <div className="box my-5">
+      <div className='upload-title'>
+        <h3 className='text-center mt-2 pt-3'>
+          <strong>¿Qué vas a vender?</strong>
+        </h3>
+      </div>
+          <div className=''>
+
+
+
+
+            <div className='row me-1 justify-content-around text-center p-4'>
               
-              <div className='col-3 me-3'>
-                <label htmlFor='name'> <h6><strong>Título</strong></h6> </label>
-                <input className='select ' type='text' maxLength="100" name='name' placeholder='de la publicación' onChange={e => handleChange(e)}/>
+              <div className='col-xs-10 col-sm-10 col-md-10 col-lg-6 '>
+                <div>
+                <label htmlFor='name'> <h6><strong>Título breve</strong></h6> </label>
+                </div>
+                <input className='select ' type='text' maxLength="100" name='name' placeholder='Título de la publicación' onChange={e => handleChange(e)}/>
               </div>
   
-              <div className='col-3 me-5 ms-5'>
+              <div className='col-xs-10 col-sm-10 col-md-10 col-lg-6'>
+                <div>
                 <label htmlFor='select-middle'> <h6><strong>Marca</strong></h6> </label>
+                  </div>
                   <select id='select-middle' name='brand' className='select' onChange={e => {handleChange(e); getModelsByBrand(e.target.value)}}>
-                    <option >Selecciona otro</option>
+                    <option >Selecciona marca</option>
                     {motoBrands.map((brand, index) => (
                       <option key={index} value={brand.id}>{brand.name}</option>
                     ))}
                   </select>
               </div>
-              <div className='col-3 ms-3'>
-                <label htmlFor='select-right'> <h6><strong>Modelo</strong></h6> </label>
-                <select id='select-right' name='model' className='select' onChange={e => handleModelChange(e)} >
-                  <option >Selecciona otro</option>
-                    {motoModels.map((model, index) => (
-                      <option key={index} value={model.id}>{model.model}</option>
-                    ))}
-                  </select>
+
+
+              <div className='row me-1 justify-content-around text-center p-4'>
+              
+              <div className='col-xs-10 col-sm-10 col-md-10 col-lg-6 '>
+                  <div>
+                  <label htmlFor='select-right'> <h6><strong>Modelo</strong></h6> </label>
+                  </div>
+                  <select id='select-right' name='model' className='select' onChange={e => handleModelChange(e)} >
+                    <option >Selecciona modelo</option>
+                      {motoModels.map((model, index) => (
+                        <option key={index} value={model.id}>{model.model}</option>
+                      ))}
+                    </select>
+                </div>
+  
+              
+                <div className='col-xs-10 col-sm-10 col-md-10 col-lg-6 '>
+                  <div>
+                  <label htmlFor='name'> <h6><strong>Precio</strong></h6></label>
+                  </div>
+                  <input className='select ' type='number'  name='price' placeholder='2400€' onChange={e => handleChange(e)}/>
+                </div>
+  
               </div>
-            </div>
-            <div className='row innerselect'>
-              <div className='col-3 me-3'>
-                <label htmlFor='name'> <h6><strong>Precio</strong></h6></label>
-                <input className='select ' type='number'  name='price' placeholder='2400€' onChange={e => handleChange(e)}/>
-              </div>
-              <div className='col-3 me-5 ms-5'>
+
+         <div className='row me-1 justify-content-around text-center p-4'>
+          
+              <div className='col-xs-10 col-sm-10 col-md-10 col-lg-6'>
+                <div>
                 <label htmlFor='select-middle'> <h6><strong>Estado del vehículo</strong></h6> </label>
+                </div>
                 <select id='select-middle' name='state' className='select ' onChange={e => handleChange(e)}>
-                  <option >Selecciona otro</option>
+                  <option >Selecciona estado</option>
                   <option value='NUEVO'>Nuevo</option>
                   <option value='SEMINUEVO'  >Semi-nuevo</option>
                 </select>
               </div>
-              <div className='col-3 ms-3'>
+
+              <div className='col-xs-10 col-sm-10 col-md-10 col-lg-6'>
+                <div>
                 <label htmlFor='select-right'> <h6><strong>Kilómetros</strong></h6> </label>
-                <select id='select-right' name='km' className='select ' onChange={e => handleChange(e)}>
-                  <option >Selecciona otro</option>
+               </div>
+               <select id='select-right' name='km' className='select ' onChange={e => handleChange(e)}>
+                  <option >Selecciona kilometraje</option>
                   <option value='1000'>Cómo nuevo: de 0 a 1,000</option>
                   <option value='50000'  >Bajo kilometraje: de 1,000 a 50,000</option>
                   <option value='100000'>Kilometraje moderado: de 50,000 a 100,000</option>
@@ -260,40 +288,73 @@ useEffect(() => {
                 </select>
               </div>
             </div>
-            <div className='row innerselect'>
-              <div className='col-3 me-3'>
+           
+
+
+
+            <div className='row me-1 justify-content-around text-center p-4'>
+            <div className='row me-1 justify-content-around text-center'>
+              <div className='col-xs-10 col-sm-10 col-md-10 col-lg-6'>
+                <div>
                 <label htmlFor='name'> <h6><strong>Año de fabricación</strong></h6> </label>
-                <input className='select ' type='number'  name='year' placeholder='2020' onChange={e => handleChange(e)}/>
+                </div>
+                <input className='select ' type='number'  name='year' placeholder='Ej.: 2020' onChange={e => handleChange(e)}/>
               </div>
+
               {/* <div className='col-3 ms-5 me-5'>
                 <label htmlFor='select-middle'> <h6><strong>Tipo de coche</strong></h6> </label>
                 <select id='select-middle' name='model' className='select' onChange={e => handleModelChange(e)}>
                   <option value={selectedType}>{selectedType}</option>
                 </select>
               </div> */}
-              <div className='col-3 ms-3'>
+
+
+
+              <div className='col-xs-10 col-sm-10 col-md-10 col-lg-6'>
+                <div>
                 <label htmlFor='select-right'> <h6><strong>Combustible</strong></h6> </label>
+                 </div>
                   <select id='select-right' name='fuel' className='select ' onChange={e => handleChange(e)}>
-                    <option >Selecciona otro</option>
+                    <option >Selecciona combustible</option>
                     <option value='GASOLINA'  >Gasolina</option>
                     <option value='DIESEL'>Diesel</option>
                     <option value='ELECTRICO'>Eléctrico</option>
                     <option value='HIBRIDO'>Híbrido</option>
+
                   </select>
               </div>
             </div>
-              <div className='upload-product-description'>
-                <div className='description-title'>
-                  <h5><strong>Descripción:</strong></h5>
+            </div>
+
+
+            <div className=' specialBox row me-1 justify-content-around text-center p-4'>
+              <div className=' col-xs-10 col-sm-10 col-md-10 col-lg-6 justify-content-center ms-5 mt-5 '>
+                <div className='description-title text-center justify-content-center d-flex'>
+                  <h4><strong>Descripción:</strong></h4>
                 </div>
-                <textarea onChange={e => handleChange(e)} className='upload-textarea-description' name="description" rows="7" cols="132" placeholder='Te recomendamos encarecidamente incluir algunos detalles clave cómo el número de puertas, plazas disponibles y el tipo de cambio del vehículo. '></textarea>
+                <div className="  justify-content-center d-flex text-center align-items-center m-auto">
+                <textarea 
+                onChange={e => handleChange(e)} 
+                className='container p-3' 
+                name="description" 
+                rows="7" 
+                cols="40" 
+                placeholder='Te recomendamos encarecidamente incluir 
+                algunos detalles clave cómo el número de puertas, 
+                plazas disponibles y el tipo de cambio del vehículo. '
+                >
+
+                </textarea>
+                </div>
+              </div>
+
               </div>
                     
               <div className='upload-innerbox'>
               
-                <div className='upload-product-images'>
-                  <div>
-                    <h5><strong>Imágenes:</strong></h5>
+                <div className=''>
+                  <div className="container d-flex justify-content-center mt-3">
+                    <h6><strong>Imágenes:</strong></h6>
                   </div>
                   <Dropzone 
                     onDrop={handleDrop}
@@ -303,40 +364,63 @@ useEffect(() => {
                   >
                     {({ getRootProps, getInputProps }) => (
                       
-                  <section>
+
+            
+        <div className='row me-1 justify-content-around text-center '>    
+                  <section >
                     <div {...getRootProps({ className: "" })}>
-                      <div >
+                      <div  className='container m-auto '>
+
                         <a className='btn btn-info btnadd'>Agrega tus imágenes</a>
                         {/* <p></p>
                         <p>Cliquea</p> */}
                       </div>
                     </div>
                   </section>
-                    
+
+                    </div>
                     )}
                   </Dropzone>
-                  <div className='mb-5 d-flex'>
-                    <div className={`dropzone image-preview ${hasSelectedImages ? "" : "d-none"}`}>
+                  <div className='mb-5 container justify-content-center mt-2'>
+                    <div className={`dropzone justify-content-center ${hasSelectedImages 
+                      ? "" : "d-none"}`}>
                     {selectedImages.map((selectedImage, index) => (
                             <div key={index} className="me-3">
-                              <img style={{width:'11rem', height:'8rem', border:'.1rem solid black', borderRadius:'.2rem'}} src={selectedImage.url} alt={selectedImage.file.name} />
-                              <button onClick={(e) => handleDeleteImage(index, e)}>🗑️</button>
+                              <img 
+                              style={{width:'11rem', height:'8rem'}} 
+                              src={selectedImage.url} 
+                              alt={selectedImage.file.name} />
+                              <div>
+                              <button onClick={(e) => handleDeleteImage(index, e)}
+                              className="btn">
+                              <i class="fa-solid fa-trash-can" style={{"color": "red"}}></i>
+                                </button>
+                                </div>
                             </div>
                           ))}
                     </div>
                           
+                    
                         </div>
              
               </div>
-                <div className='text-center mt-5'>
+
+                <div className='text-center pb-5'>
                     <button className='btn btn-primary'>¡Sube tu moto!</button>
                 </div>
-       
+
+
               </div>
+
+
             
           </div>
         </div>
+
+
+
         
+      </div>
       </form>
     </div>
   );
