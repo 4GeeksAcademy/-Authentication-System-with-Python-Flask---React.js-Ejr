@@ -8,12 +8,12 @@ import e from 'cors';
 export const UploadCar = () => {
   const navigate = useNavigate();
 
-
   const [carBrands, setCarBrands] = useState([])
   const [carModels, setCarModels] = useState([])
   const [selectedModel, setSelectedModel] = useState("");
   
- 
+  const [hasSelectedImages, setHasSelectedImages] = useState(false); 
+
   
   const [image, setImage] = useState({array : {}})
   const [loading, setLoading] = useState("")
@@ -76,6 +76,10 @@ useEffect(() => {
     const input = dropzone.querySelector('input');
     if (selectedImages.length < MAX_IMAGES) {
       input.disabled = false;
+
+    if (selectedImages.length === 0) {
+      setHasSelectedImages(false);
+    }
   };
 }
 
@@ -103,6 +107,8 @@ useEffect(() => {
     });
   
     setSubmitData(uploaders);
+
+    setHasSelectedImages(true); 
   };
   
   
@@ -340,38 +346,44 @@ useEffect(() => {
 
                     
               <div className='upload-innerbox'>
-          
-            <div className='upload-product-images'>
-              <div>
-                <h5><strong>Imágenes:</strong></h5>
-              </div>
-              <Dropzone 
-                onDrop={handleDrop}
-                className="btn btn-primary"
-                onChange={(ev) => setImage(ev.target.value)}
-                value={image}
-              >
-                {({ getRootProps, getInputProps }) => (
-                  
-              <section>
-                <div {...getRootProps({ className: "btn btn-primary" })}>
+              
+                <div className='upload-product-images'>
                   <div>
-                    <p>Agrega tus imágenes</p>
+                    <h5><strong>Imágenes:</strong></h5>
                   </div>
-                </div>
-              </section>
+                  <Dropzone 
+                    onDrop={handleDrop}
+                    className=""
+                    onChange={(ev) => setImage(ev.target.value)}
+                    value={image}
+                  >
+                    {({ getRootProps, getInputProps }) => (
+                      
+                  <section>
+                    <div {...getRootProps({ className: "" })}>
+                      <div >
 
-                
-                )}
-              </Dropzone>
-              <div className='mb-5 d-flex'>
-                      {selectedImages.map((selectedImage, index) => (
-                        <div key={index} className="image-preview">
-                          <img style={{width:'5rem', height:'3rem'}} src={selectedImage.url} alt={selectedImage.file.name} />
-                          <button onClick={(e) => handleDeleteImage(index, e)}>🗑️</button>
-                        </div>
-                      ))}
+                        <a className='btn btn-info btnadd'>Agrega tus imágenes</a>
+                        {/* <p></p>
+                        <p>Cliquea</p> */}
+                      </div>
                     </div>
+                  </section>
+
+                    
+                    )}
+                  </Dropzone>
+                  <div className='mb-5 d-flex'>
+                    <div className={`dropzone image-preview ${hasSelectedImages ? "" : "d-none"}`}>
+                    {selectedImages.map((selectedImage, index) => (
+                            <div key={index} className="me-3">
+                              <img style={{width:'11rem', height:'8rem', border:'.1rem solid black', borderRadius:'.2rem'}} src={selectedImage.url} alt={selectedImage.file.name} />
+                              <button onClick={(e) => handleDeleteImage(index, e)}>🗑️</button>
+                            </div>
+                          ))}
+                    </div>
+                          
+                        </div>
 
              
               </div>

@@ -2,6 +2,7 @@ import React, { useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import { Context } from "../store/appContext";
 import { Link } from 'react-router-dom';
+import UserInfo from './userinfo';
 import "/workspaces/Watacar_v2/src/front/styles/uploadproduct.css"
 // import "/workspaces/Watacar_v2/src/front/js/pages/singleProduct.js";
 import rigo from "../../img/rigo-baby.jpg" 
@@ -33,6 +34,11 @@ export const SingleProduct = () => {
     actions.getProduct(params.productid);
     actions.getUser()
   }, []);
+
+
+  // const openModal = () => {
+
+  // }
 
   return (
     <div className="container w-70">
@@ -125,21 +131,26 @@ export const SingleProduct = () => {
                           <p><strong> Año de fabricación: </strong> {product.year}</p>
                         </div>
                         <div className='col-6'>
-                          <p><strong>Vendedor: {product.user.full_name} </strong></p>
+                          
+                          <UserInfo userName={product.user.full_name} email={product.user.email} address={product.user.address} phone={product.user.phone} />
+
+                          {/* <p><strong>Vendedor: <a onClick={}>{product.user.full_name}</a> </strong></p> */}
 
                         </div>
                     </div>
                     
-                    <div className='row'>
+                    <div className='row d-flex mb-3'>
                       <div className='col-12 text-center '>
                         <p><strong> Descripción: </strong> <br></br></p>
                         <div className=' desc-container'>
-                          <p className=' single-description mx-auto'>{product.description}</p>
+                          <p className=' single-description mx-auto d-flex justify-content-flex-start'>{product.description}</p>
 
                         </div>
 
                       </div>
-
+                    <div className='row'>
+                      <div className='col-12 userinfo mt-4'></div>
+                    </div>
 
                     </div>
                     <div className='row'>
