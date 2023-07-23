@@ -13,14 +13,14 @@ export const WichVehicle = () => {
         <>
         <div className="wich-vehicle-bg">
             <div className="container">
-                <div className="wich-vehicle-container ">
-                    <div className="text-center wich-title">
-                        <h2 style={{color: 'white'}}><strong>¿Qué deseas vender?</strong></h2>
+                <div className="wich-vehicle-container">
+                    <div className="text-center wich-title  py-5  my-5">
+                        <h1 style={{color: 'white'}}><strong>¿Qué deseas vender?</strong></h1>
                     </div>
-                    <div className="choose-vehicle row d-flex justify-content-center">
-                            <a className="btn btn-vehicle me-5" href="/upload-car"><FontAwesomeIcon icon={faCar} size="2xl" /></a>
+                    <div className="choose-vehicle row d-flex justify-content-around mx-1 mx-auto py-4">
+                            <Link className="btn btn-vehicle mb-5" to="/upload-car"><FontAwesomeIcon icon={faCar} size="2xl" /></Link>
 
-                            <a className="btn btn-vehicle ms-5" href="/upload-motorcycle"><FontAwesomeIcon icon={faMotorcycle} size="2xl"/></a>
+                            <Link className="btn btn-vehicle mb-5" to="/upload-motorcycle"><FontAwesomeIcon icon={faMotorcycle} size="2xl"/></Link>
 
                     </div>
 

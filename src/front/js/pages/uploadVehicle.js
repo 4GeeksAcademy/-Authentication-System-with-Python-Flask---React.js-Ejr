@@ -29,9 +29,8 @@ export const UploadVehicle = () => {
   }, []);
 
   return (
-    <div className=''>
-      <div className='upload-box'>
-        <div className='upload-innerbox'>
+ 
+        <div className=''>
           <div className='upload-title'>
             <h3>
               <strong>¿Qué Vehículo vas a vender?</strong>
@@ -43,7 +42,6 @@ export const UploadVehicle = () => {
             <div className='image_vehicles car' style={{ width: `${mouseX}%` }}></div>
           </div>
         </div>
-      </div>
-    </div>
+    
   );
 };

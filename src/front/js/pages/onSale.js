@@ -7,7 +7,7 @@ import { Sales_navbar } from "../component/Sales_navbar";
 import { Placeholder_onsale } from "./placeholder_onsale";
 
 
-export const On_sale = () => {
+export const OnSale = () => {
     const {actions, store} = useContext(Context);
     const {status, setStatus} = useState([]);
     const onsaleCount = store.products.length;
