@@ -41,7 +41,11 @@ import { SearchResults } from "./pages/searchResults";
 import { PrivacyPolicy } from "./pages/privacyPolicy";
 import { LegalAdvice } from "./pages/legalAdvice";
 import { CookiePolicy } from "./pages/cookiePolicy"
-
+import { AboutUs } from "./pages/aboutUs";
+import { PublicationRules } from "./pages/publicationRules";
+import { HowItWorks } from "./pages/howItWorks";
+import { HelpCenter } from "./pages/helpCenter";
+import { OurPartners } from "./pages/ourPartners"
 
 
 export const ThemeContext = React.createContext(null)
@@ -97,6 +101,11 @@ const Layout = () => {
                                 <Route element={<LegalAdvice />} path="/aviso-legal" />
                                 <Route element={<CookiePolicy />} path="/politica-de-cookies" />
                                 <Route element={<PrivacyPolicy />} path="/politica-de-privacidad" />
+                                <Route element={<AboutUs />} path="/sobre-nosotros" />
+                                <Route element={<PublicationRules />} path="/reglas-de-publicacion" />
+                                <Route element={<HowItWorks />} path="/como-funciona" />
+                                <Route element={<HelpCenter />} path="/centro-de-ayuda" />
+                                <Route element={<OurPartners />} path="/nuestros-socios" />
                                 <Route element={<Single />} path="/single/:theid" />
                                 <Route element={<h1>Not found!</h1>} />
                             </Routes>
