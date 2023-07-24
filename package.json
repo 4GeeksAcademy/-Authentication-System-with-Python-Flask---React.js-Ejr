@@ -73,9 +73,13 @@
 		]
 	},
 	"dependencies": {
+		"@emotion/react": "^11.11.1",
+		"@emotion/styled": "^11.11.0",
+		"@mui/icons-material": "^5.14.1",
+		"@mui/material": "^5.14.1",
 		"prop-types": "^15.6.1",
-		"react": "^16.8.4",
-		"react-dom": "^16.8.4",
+		"react": "^18",
+		"react-dom": "^18",
 		"react-polyfills": "0.0.1",
 		"react-router-dom": "^6.3.0"
 	}
