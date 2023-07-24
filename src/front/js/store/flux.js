@@ -70,11 +70,52 @@ const getState = ({ getStore, getActions, setStore }) => {
 				  console.error('Error fetching singleCar data:', error);
 				  // Handle any error or set error state if needed
 				}
+			  },
+			  setErrorMessage: (message) => {
+				setStore({ errorMessage: message });
+			  },
+	  
+			  clearErrorMessage: () => {
+				setStore({ errorMessage: null });
+			  },
+			  login: async (email, password) => {
+				try {
+				  const response = await fetch(`${process.env.BACKEND_URL}/login`, {
+					method: "POST",
+					headers: {
+					  "Content-Type": "application/json"
+					},
+					body: JSON.stringify({ email, password })
+				  });
+		
+				  if (response.ok) {
+					// Login successful
+					const data = await response.json();
+	  
+					// Save the authentication token to the store
+					setStore({ token: data.token });
+					console.log(data.token);
+	  
+					// Save the token to localStorage for persistent access
+					localStorage.setItem("token", data.token);
+	  
+					// Reset the error message (if any) after successful login
+					setStore({ errorMessage: null });
+		
+					// Redirect to the desired page or perform any necessary action
+					// Example: history.push("/dashboard");
+				  } else {
+					// Login failed
+					throw new Error("Invalid email or password");
+				  }
+				} catch (error) {
+				  console.log("Error during login", error);
+				  throw error;
+				}
 			  }
-	}
 }
 }
-
+}
 export default getState;
 
 	
