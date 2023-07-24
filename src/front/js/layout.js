@@ -5,6 +5,7 @@ import { BackendURL } from "./component/backendURL";
 
 import { Home } from "./pages/home";
 import Login from "./pages/Login";
+import AboutCar from "./pages/aboutcar";
 import UserView from "./pages/userview"
 import CarViews from "./pages/carviews";
 import CreateAccount from "./pages/create-account";
