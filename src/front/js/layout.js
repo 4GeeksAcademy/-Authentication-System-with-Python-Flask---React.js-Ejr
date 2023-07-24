@@ -5,35 +5,43 @@ import { BackendURL } from "./component/backendURL";
 
 import { Home } from "./pages/home";
 import Login from "./pages/Login";
+import UserView from "./pages/userview"
+import CarViews from "./pages/carviews";
 import CreateAccount from "./pages/create-account";
 import injectContext from "./store/appContext";
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 
+
 //create your first component
 const Layout = () => {
+  
   const basename = process.env.BASENAME || "";
+
 
   if (!process.env.BACKEND_URL || process.env.BACKEND_URL === "") {
     return <BackendURL />;
   }
+    return (
+        <div>
+            <BrowserRouter basename={basename}>
+                <ScrollToTop>
+                    <Navbar />
+                    <Routes>
+                        <Route element={<Home />} path="/" />
+                        <Route element={<Login />} path="/Login" />
+                        <Route element={<UserView />} path="/usermain"/>
+                        <Route element={<AboutCar />} path="/about/:theid"/>
+                        <Route element={<CarViews />} path="/catalog" />
+                        <Route element={<CreateAccount />} path="/signup" />
+                        <Route element={<h1>Not found!</h1>} />
+                    </Routes>
+                    <Footer />
+                </ScrollToTop>
+            </BrowserRouter>
+        </div>
+    );
 
-  return (
-    <div>
-      <BrowserRouter basename={basename}>
-        <ScrollToTop>
-          <Navbar />
-          <Routes>
-            <Route element={<Home />} path="/" />
-            <Route element={<Login />} path="/Login" /> {/* Add the Login route */}
-            <Route element={<CreateAccount />} path="/signup" /> {/* Add the CreateAccount route */}
-            <Route element={<h1>Not found!</h1>} />
-          </Routes>
-          <Footer />
-        </ScrollToTop>
-      </BrowserRouter>
-    </div>
-  );
 };
 
 export default injectContext(Layout);
