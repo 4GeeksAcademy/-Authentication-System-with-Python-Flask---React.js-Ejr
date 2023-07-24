@@ -1,15 +1,13 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
-
-
 import e from "cors";
-
 export const EditProduct = () => {
   const { productid } = useParams();
   const navigate = useNavigate();
   const { store } = useContext(Context);
-
+  const [selectedImageId, setSelectedImageId] = useState(null); 
+  const [selectedImageIds, setSelectedImageIds] = useState([]); 
   const [carBrands, setCarBrands] = useState([]);
   const [carModels, setCarModels] = useState([]);
   const [selectedBrand, setSelectedBrand] = useState("");
@@ -27,24 +25,23 @@ export const EditProduct = () => {
     description: "",
     images: [],
   });
-
   useEffect(() => {
     getBrands();
-
     fetch(process.env.BACKEND_URL + `api/product/${productid}`)
       .then((resp) => resp.json())
       .then((data) => {
         setSelectedData(data);
       });
   }, [productid]);
-
-  const handleDeleteImage = (imageId) => {
-    const updatedImages = selectedData.images.filter((image) => image.id !== imageId);
-    setSelectedData({ ...selectedData, images: updatedImages });
-
-    
+  const handleDeleteImage = (imageId, e) => {
+    e.preventDefault();
+    const isSelected = selectedImageIds.includes(imageId);
+    if (isSelected) {
+      setSelectedImageIds(selectedImageIds.filter((id) => id !== imageId));
+    } else {
+      setSelectedImageIds([...selectedImageIds, imageId]);
+    }
   };
-
   const handleFileChange = (ev) => {
     const files = ev.target.files;
     if (files && files.length > 0) {
@@ -53,16 +50,13 @@ export const EditProduct = () => {
     // console.log(selectedImages); 
   };
    
-
   const handleChange = (ev) => {
     setSelectedData({ ...selectedData, [ev.target.name]: ev.target.value });
   };
-
   const handleModelChange = (ev) => {
     setSelectedModel(ev.target.value);
     setSelectedData({ ...selectedData, model: ev.target.value });
   };
-
   const getBrands = () => {
     fetch(process.env.BACKEND_URL + "api/car-brands")
       .then((resp) => resp.json())
@@ -71,7 +65,6 @@ export const EditProduct = () => {
       })
       .catch((err) => console.error(err));
   };
-
   const getModelsByBrand = (brandId) => {
     if (brandId !== selectedBrand) {
       fetch(process.env.BACKEND_URL + `api/car-models?brandId=${brandId}`)
@@ -84,11 +77,9 @@ export const EditProduct = () => {
         .catch((err) => console.error(err));
     }
   };
-
   const handleSubmit = (event) => {
     event.preventDefault();
   
-    // Upload selected images to Cloudinary
     Promise.all(
       selectedImages.map((file) => {
         const formData = new FormData();
@@ -97,7 +88,6 @@ export const EditProduct = () => {
       formData.append("upload_preset", "WhataCar");
       formData.append("api_key", process.env.API_KEY);
       formData.append("timestamp", Math.floor(Date.now() / 1000));
-
   
         return fetch("https://api.cloudinary.com/v1_1/djpzj47gu/image/upload", {
           method: "POST",
@@ -118,7 +108,6 @@ export const EditProduct = () => {
         // Remove null values from fileURLs in case of any upload errors
         const filteredFileURLs = fileURLs.filter((url) => url !== null);
   
-        // Update the product data with the image URLs
         const updatedData = {
           ...selectedData,
           brand_id: selectedBrand,
@@ -126,7 +115,6 @@ export const EditProduct = () => {
           images: filteredFileURLs,
         };
   
-        // Make the PUT request to update the product data
         const putConfig = {
           method: "PUT",
           body: JSON.stringify(updatedData),
@@ -154,32 +142,30 @@ export const EditProduct = () => {
       .catch((error) => {
         console.error("Error uploading images to Cloudinary:", error);
       });
-
-      const deleteConfig = {
-        method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      };
-  
-      fetch(process.env.BACKEND_URL + `api/delete-image/${imageId}`, deleteConfig)
-        .then((resp) => {
-          if (!resp.ok) {
-            throw new Error("Error al eliminar la imagen del servidor");
-          }
-        })
-        .catch((err) => {
-          console.error(err);
-        });
-  };
-  
-  
+       selectedImageIds.forEach((imageId) => {
+    const deleteConfig = {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    };
+    fetch(process.env.BACKEND_URL + `api/delete-image/${imageId}`, deleteConfig)
+      .then((resp) => {
+        if (!resp.ok) {
+          throw new Error("Error al eliminar la imagen del servidor");
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  });
+};
   
   
-
+  
+  
   const handleAdd = (e) => {
     e.preventDefault();
-
     Promise.all(
       selectedData.map
     )
@@ -195,11 +181,6 @@ export const EditProduct = () => {
   };
   
   
-
-
-
-
-
   return (
     <>
       <div className="upload-container">
@@ -211,7 +192,6 @@ export const EditProduct = () => {
                   <strong>Actualiza tu producto</strong>
                 </h3>
               </div>
-
               <div className="row innerselect">
                 <div className="col-3 me-3">
                   <label htmlFor="name">
@@ -221,7 +201,6 @@ export const EditProduct = () => {
                   </label>
                   <input className="select" type="text" maxLength="100" name="name" value={selectedData.name} placeholder="de la publicación" onChange={handleChange}/>
                 </div>
-
                 <div className="col-3 me-5 ms-5">
                   <label htmlFor="select-middle">
                     <h6>
@@ -238,7 +217,6 @@ export const EditProduct = () => {
                     ))}
                   </select>
                 </div>
-
                 <div className="col-3 ms-3">
                   <label htmlFor="select-right">
                     <h6>
@@ -255,7 +233,6 @@ export const EditProduct = () => {
                   </select>
                 </div>
               </div>
-
               <div className="row innerselect">
                 <div className="col-3 me-3">
                   <label htmlFor="name">
@@ -265,7 +242,6 @@ export const EditProduct = () => {
                   </label>
                   <input className="select" type="number"name="price" value={selectedData.price} placeholder="2400€" onChange={handleChange}/>
                 </div>
-
                 <div className="col-3 me-5 ms-5">
                   <label htmlFor="select-middle">
                     <h6>
@@ -278,7 +254,6 @@ export const EditProduct = () => {
                     <option value="SEMINUEVO">Semi-nuevo</option>
                   </select>
                 </div>
-
                 <div className="col-3 ms-3">
                   <label htmlFor="select-right">
                     <h6>
@@ -294,7 +269,6 @@ export const EditProduct = () => {
                   </select>
                 </div>
               </div>
-
               <div className="row innerselect">
                 <div className="col-3 me-3">
                   <label htmlFor="name">
@@ -304,7 +278,6 @@ export const EditProduct = () => {
                   </label>
                   <input className="select" type="number" name="year" value={selectedData.year}   placeholder="2020" onChange={handleChange} /> 
                 </div>
-
                 <div className="col-3 ms-3">
                   <label htmlFor="select-right">
                     <h6>
@@ -320,7 +293,6 @@ export const EditProduct = () => {
                   </select>
                 </div>
               </div>
-
               <div className="upload-product-description">
                 <div className="description-title">
                   <h5>
@@ -331,27 +303,24 @@ export const EditProduct = () => {
                   placeholder="Te recomendamos encarecidamente incluir algunos detalles clave cómo el número de puertas, plazas disponibles y el tipo de cambio del vehículo."
                 ></textarea>
               </div>
-
-              <div>
-              {selectedData.images.map((image, index) => (
-                <div key={index}>
-                  <img style={{ width: '4rem', height: '5rem' }} src={image.image} alt={`Image ${image.id}`} />
-                  <button onClick={() => handleDeleteImage(image.id)}>Delete</button>
-                </div>
+              <div className="dropzone d-flex">
+              {selectedData.images.map((image) => (
+                !selectedImageIds.includes(image.id) && (
+                  <div key={image.id}>
+                    <img style={{width:'11rem', height:'8rem', border:'.1rem solid black', borderRadius:'.2rem'}} src={image.image} alt={`Image ${image.id}`} />
+                    <button className="btn" onClick={(e) => handleDeleteImage(image.id, e)}><i class="fa-solid fa-trash-can" style={{"color": "red"}}></i></button>
+                  </div>
+                )
               ))}
-
+              
+              
+            </div>
+            <div className="input_edit_images">
               <input type="file" onChange={handleFileChange} multiple />
-
               <button onClick={handleAdd}>Upload</button>
             </div>
-
-
               <div className="text-center mt-5">
-                <Link
-                to={``} 
-                className="btn btn-primary" type="submit" >
-                  ¡Actualiza tu vehículo!
-                  </Link>
+                <button className="btn btn-primary" type="submit" >¡Actualiza tu vehículo!</button>
               </div>
             </div>
           </div>

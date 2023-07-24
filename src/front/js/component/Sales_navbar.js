@@ -7,7 +7,7 @@ export const Sales_navbar = ({onsaleCount, blockedCount, soldCount}) => {
 
   const isOnSaleActive = () => {
     const pathname = location.pathname;
-    return pathname === "/profile/onsale" || pathname === "/profile/block";
+    return pathname === "/profile/onsale" || pathname === "/profile/block" || pathname === "/profile/sale";
   };
 
   return (

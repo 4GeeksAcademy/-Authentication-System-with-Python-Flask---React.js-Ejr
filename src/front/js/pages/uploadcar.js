@@ -438,7 +438,7 @@ useEffect(() => {
                   
                   </Dropzone>
                   <div className='mb-5 container justify-content-center mx-auto mt-2'>
-                    <div className={`dropzone justify-content-center ${hasSelectedImages 
+                    <div className={`dropzone segundo d-flex justify-content-center ${hasSelectedImages 
                       ? "" : "d-none"}`}>
                     {selectedImages.map((selectedImage, index) => (
                             <div key={index} className="me-3">

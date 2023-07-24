@@ -53,7 +53,9 @@ const StatusToPendingSale = (product) => {
         .catch(error => {
         console.error("Error:", error);
         });
-    window.location.reload();
+        setTimeout(() => {
+            window.location.reload();
+        }, 1000);
 };
 
 const StatusToOnSale = (product) => {
@@ -75,7 +77,9 @@ const StatusToOnSale = (product) => {
         .catch(error => {
         console.error("Error:", error);
         });
-    window.location.reload();
+        setTimeout(() => {
+            window.location.reload();
+        }, 1000);
 };
 
     return (

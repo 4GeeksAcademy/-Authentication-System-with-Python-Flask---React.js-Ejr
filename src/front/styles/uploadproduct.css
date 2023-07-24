@@ -169,13 +169,19 @@
     border: 1px solid black;
     border-radius: 12px;
     margin: 4px;
-  
-
+    margin-left: 5rem;
   }
 
   .imgrender{
     display: flex;
     z-index: 9999;
+  }
+
+  .input_edit_images{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
   }
 
   .upload-images-icon{

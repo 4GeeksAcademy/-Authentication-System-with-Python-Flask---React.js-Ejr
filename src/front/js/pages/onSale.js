@@ -11,13 +11,14 @@ export const On_Sale = () => {
     const {actions, store} = useContext(Context);
     const {status, setStatus} = useState([]);
     const onsaleCount = store.products.length;
-    const [products, setProducts] = useState([]);
+    const [productsOnsale, setProductsOnsale] = useState([]);
+    const [productsPendBlock, setProductsPendBlock] = useState([]);
     const carImage = "https://images.coches.com/_vn_/kia/Sportage/c399cf1d98a95d24f8e8715dd0b13fb2.jpg?p=cc_vn_high"
 
     useEffect(() => {
         async function fetchProducts() {
           const response = await actions.getProductsOnSale();
-          setProducts(response); 
+          setProductsOnsale(response);
         }
         fetchProducts();
       }, []);
@@ -25,7 +26,7 @@ export const On_Sale = () => {
       useEffect(() => {
         async function fetchProducts() {
           const response = await actions.getProductsPendingBlocked();
-          setProducts(response); 
+          setProductsPendBlock(response); 
         }
         fetchProducts();
       }, []);
@@ -48,6 +49,9 @@ const StatusToBlocked = (product) => {
         .catch(error => {
         console.error("Error:", error);
         });
+        setTimeout(() => {
+            window.location.reload();
+          }, 1000);
 };
 
 const StatusToOnSale = (product) => {

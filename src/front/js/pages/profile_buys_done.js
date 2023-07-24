@@ -56,7 +56,9 @@ const addReview = (product_id, comment) => {
     .catch(error => {
       console.error('Error:', error.message);
     });
-    window.location.reload();
+    setTimeout(() => {
+        window.location.reload();
+      }, 1000);
 }
 
 const StatusToSoldReviewed = (product) => {
@@ -98,8 +100,8 @@ const StatusToSoldReviewed = (product) => {
                         <div className="col-8 product_data_sales">
                             <h6>{product.name}</h6>
                             <div className="row">
-                                <h6 className="col-4">{product.brand}</h6>
-                                <h6 className="col-8">{product.model}</h6>
+                                <h6 className="col-4">{product.brand.name}</h6>
+                                <h6 className="col-8">{product.model.model}</h6>
                             </div>
                             {product.status === "sold" && (
                             <>

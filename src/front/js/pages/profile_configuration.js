@@ -15,7 +15,7 @@ export const Profile_configuration = () => {
   const [data, setData] = useState([]);
   const [successMessage, setSuccessMessage] = useState("");
 
-  useEffect(() => {
+  /*useEffect(() => {
     actions.getUser();
 
     // Add event listener for "Enter" key when the modal is shown
@@ -32,6 +32,7 @@ export const Profile_configuration = () => {
     // Add event listener for "Enter" key
     document.addEventListener("keydown", handleEnterKey);
   };
+  */
 
   const handleEnterKey = (e) => {
     if (e.key === "Enter") {

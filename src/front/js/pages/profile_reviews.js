@@ -6,10 +6,11 @@ import "/workspaces/Watacar_v2/src/front/styles/profile.css"
 
 export const Profile_reviews = () => {
     const {actions, store} = useContext(Context);
+    const carImage = "https://images.coches.com/_vn_/kia/Sportage/c399cf1d98a95d24f8e8715dd0b13fb2.jpg?p=cc_vn_high"
     
     useEffect (() => {
         actions.getReviews(),
-        actions.getProduct()
+        actions.getProductsSoldReviewed()
     }, [])
 
 
@@ -22,9 +23,15 @@ export const Profile_reviews = () => {
                         </h2>
                 {store.reviews.map((reviews, index) => (
                 <div className="review_box_profile row" key={index}>
-                    <div className="product_img_profile_reviews_box col-3">
-                        <img src="https://www.motofichas.com/images/phocagallery/Honda/cb500f-2022/01-honda-cb500f-2022-estudio-rojo.jpg" alt="product" className="product_img_profile_favorites"/>
+                    {store.products.map((product, index) => (
+                    <div className="product_img_profile_reviews_box col-3" key={index}>
+                    {product.images.length > 0 ? (
+                    <img src={product.images[0].image} className="card-img-top imgCarousel" alt="..." />
+                  ) : (
+                    <img src={carImage} className="card-img-top imgCarousel" alt="..." />
+                  )}
                     </div>
+                    ))}
                     <div className="review_content_profile col-8">
                         <h6 className="name_product_review">{reviews.product_name}</h6>
                         <h6 className="comment_review">{reviews.comment}</h6>

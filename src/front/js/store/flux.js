@@ -271,94 +271,124 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({ demo: demo });
 			},
 
-			getProductsOnSale: () => {
+			getProductsOnSale: async () => {
 				const store = getStore();
-				fetch(process.env.BACKEND_URL + "api/profile/products/ONSALE", {
+				try {
+					const response = await fetch(process.env.BACKEND_URL + "api/profile/products/ONSALE", {
 					method: "GET",
 					headers: {
 					"Content-Type": "application/json",
 					"Authorization": `Bearer ${localStorage.getItem("token")}`
 					}
 				})
-				.then(response => response.json())
-				.then(response => {
-					setStore({products: response})
-				})
-				.catch(error => {
+				const data = await response.json ()
+					setStore({products: data});
+					return data
+				}
+				catch{
+					(error => {
 					console.error(error);
-				});
+				})};
 			},
 
-			getProductsPendingBlocked: () => {
+			getProductsPendingBlocked: async () => {
 				const store = getStore();
-				fetch(process.env.BACKEND_URL + "api/profile/products/PENDING_BLOCKED", {
+				try {
+					const response = await fetch(process.env.BACKEND_URL + "api/profile/products/PENDING_BLOCKED", {
 					method: "GET",
 					headers: {
 					"Content-Type": "application/json",
 					"Authorization": `Bearer ${localStorage.getItem("token")}`
 					}
 				})
-				.then(response => response.json())
-				.then(response => {
-					setStore({products: response})
-				})
-				.catch(error => {
+				const data = await response.json ()
+					setStore({products: data});
+					return data
+				}
+				catch{
+					(error => {
 					console.error(error);
-				});
+				})};
 			},
 
-			getProductsBlocked: () => {
+			getProductsBlocked: async () => {
 				const store = getStore();
-				fetch(process.env.BACKEND_URL + "api/profile/products/BLOCKED", {
+				try {
+					const response = await fetch(process.env.BACKEND_URL + "api/profile/products/BLOCKED", {
 					method: "GET",
 					headers: {
 					"Content-Type": "application/json",
 					"Authorization": `Bearer ${localStorage.getItem("token")}`
 					}
 				})
-				.then(response => response.json())
-				.then(response => {
-					setStore({products: response})
-				})
-				.catch(error => {
+				const data = await response.json ()
+					setStore({products: data});
+					return data
+				}
+				catch{
+					(error => {
 					console.error(error);
-				});
+				})};
 			},
 
-			getProductsPendingSale: () => {
+			getProductsPendingSale: async () => {
 				const store = getStore();
-				fetch(process.env.BACKEND_URL + "api/profile/products/PENDING_SALE", {
+				try {
+					const response = await fetch(process.env.BACKEND_URL + "api/profile/products/PENDING_SALE", {
 					method: "GET",
 					headers: {
 					"Content-Type": "application/json",
 					"Authorization": `Bearer ${localStorage.getItem("token")}`
 					}
 				})
-				.then(response => response.json())
-				.then(response => {
-					setStore({products: response})
-				})
-				.catch(error => {
+				const data = await response.json ()
+					setStore({products: data});
+					return data
+				}
+				catch{
+					(error => {
 					console.error(error);
-				});
+				})};
 			},
 
-			getProductsSold: () => {
+			getProductsSold: async () => {
 				const store = getStore();
-				fetch(process.env.BACKEND_URL + "api/profile/products/SOLD", {
+				try {
+					const response = await fetch(process.env.BACKEND_URL + "api/profile/products/SOLD", {
 					method: "GET",
 					headers: {
 					"Content-Type": "application/json",
 					"Authorization": `Bearer ${localStorage.getItem("token")}`
 					}
 				})
-				.then(response => response.json())
-				.then(response => {
-					setStore({products: response})
-				})
-				.catch(error => {
+				const data = await response.json ()
+					setStore({products: data});
+					return data
+				}
+				catch{
+					(error => {
 					console.error(error);
-				});
+				})};
+			},
+
+			getProductsSoldReviewed: async () => {
+				const store = getStore();
+				try {
+					const response = await fetch(process.env.BACKEND_URL + "api/profile/products/SOLD_REVIEWED", {
+					method: "GET",
+					headers: {
+					"Content-Type": "application/json",
+					"Authorization": `Bearer ${localStorage.getItem("token")}`
+					}
+				})
+				const data = await response.json ()
+					setStore({products: data});
+					return data
+				}
+				catch{
+					(error => {
+					console.error(error);
+				})};
 			},
 
 			PendingBlockedChanged: () => {

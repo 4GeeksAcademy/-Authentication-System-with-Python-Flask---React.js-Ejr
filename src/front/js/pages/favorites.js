@@ -12,7 +12,8 @@ export const Favorites = () => {
     const navigate = useNavigate()
     defineElement(lottie.loadAnimation);
     useEffect (() => {
-        actions.getFavorites()
+        actions.getFavorites();
+        actions.getProducts()
     }, [])
 
     const handleRemoveFavorite = (product_id) => {
@@ -31,9 +32,15 @@ export const Favorites = () => {
                     <div className="row row_favorites_profile">
                         {store.favorites.map((favorites, index) => (
                         <div className="product_profile_favorites col-2" key={index}>
+                          {store.products.map((product, index) => (
                             <div className="product_img_profile_favorites_box">
-                                <img src="https://www.motofichas.com/images/phocagallery/Honda/cb500f-2022/01-honda-cb500f-2022-estudio-rojo.jpg" alt="product" className="product_img_profile_favorites"/>
+                                    {product.images.length > 0 ? (
+                            <img src={product.images[0].image} className="product_img_profile_favorites" alt="..." />
+                          ) : (
+                            <img src={carImage} className="card-img-top imgCarousel" alt="..." />
+                          )}
                             </div>
+                          ))}
                             <div className="product_description_profile_favorites">
                             <div className="row d-flex justify-content-between">
                                 <h6 className="col-8 price_product_profile">

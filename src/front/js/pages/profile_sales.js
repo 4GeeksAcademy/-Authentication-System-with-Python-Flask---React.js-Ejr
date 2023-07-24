@@ -38,8 +38,8 @@ export const Profile_sales = () => {
                         <div className="col-8 product_data_sales">
                             <h6>{product.name}</h6>
                             <div className="row">
-                                <h6 className="col-4">{product.brand}</h6>
-                                <h6 className="col-8">{product.model}</h6>
+                                <h6 className="col-4">{product.brand.name}</h6>
+                                <h6 className="col-8">{product.model.model}</h6>
                             </div>
                             <h6 className="price_sales_profile">{product.price}€</h6>
                         </div>
