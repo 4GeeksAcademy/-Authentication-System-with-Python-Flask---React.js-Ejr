@@ -20,13 +20,16 @@ def handle_hello():
 # PASSWORD RECOVERY ENDPOINT
 
 
-@api.route('/recover', methods=['GET'])
+@api.route('/recover', methods=['POST'])
 def recover_user():
     user_email = request.json.get('email', None)
     user_recovery_question = request.json.get('recovery_question', None)
     user_recovery_answer = request.json.get('recovery_answer', None)
+    active_user = User.query.filter_by(email=user_email).first()
     user = User.query.filter_by(
         email=user_email, recovery_question=user_recovery_question, recovery_answer=user_recovery_answer)
     if user is None:
         return jsonify({"Error": "No email or password found"}), 401
-    return jsonify(user.password)
+    db.session.query()
+    db.session.commit()
+    return jsonify({"msg": "Successfully recovered password"}), 200
