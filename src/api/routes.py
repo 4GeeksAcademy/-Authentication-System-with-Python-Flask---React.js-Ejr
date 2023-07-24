@@ -316,6 +316,20 @@ def update_product_status(product_id, new_status):
             return jsonify({'message': 'Product status updated successfully'}), 200
     return jsonify({'message': 'Product not found or invalid status'}), 404
 
+@api.route('/profile/products/<int:product_id>/<new_status>/status', methods=['PUT'])
+@jwt_required()
+def update_product_status_user(product_id, new_status):
+    current_user = get_jwt_identity()
+    product = Product.query.filter_by(id=product_id).first()
+    if product:
+        status_obj = status.query.filter_by(id=product.status_id).first()
+        if status_obj:
+            status_obj.status = new_status
+            status_obj.given_review_id = current_user
+            db.session.commit()
+            return jsonify({'message': 'Product status updated successfully'}), 200
+    return jsonify({'message': 'Product not found or invalid status'}), 404
+
 @api.route('/car-brands', methods=['GET'])
 def obtener_brands():
     brands = Brand.query.filter_by(vehicle_type='COCHE').all()

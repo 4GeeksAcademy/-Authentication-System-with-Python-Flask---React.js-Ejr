@@ -9,6 +9,7 @@ import { defineElement } from 'lord-icon-element';
 
 export const Favorites = () => {
     const {actions, store} = useContext(Context);
+    const carImage = "https://images.coches.com/_vn_/kia/Sportage/c399cf1d98a95d24f8e8715dd0b13fb2.jpg?p=cc_vn_high"
     const navigate = useNavigate()
     defineElement(lottie.loadAnimation);
     useEffect (() => {
@@ -33,7 +34,7 @@ export const Favorites = () => {
                         {store.favorites.map((favorites, index) => (
                         <div className="product_profile_favorites col-2" key={index}>
                           {store.products.map((product, index) => (
-                            <div className="product_img_profile_favorites_box">
+                            <div className="product_img_profile_favorites_box" key={index}>
                                     {product.images.length > 0 ? (
                             <img src={product.images[0].image} className="product_img_profile_favorites" alt="..." />
                           ) : (

@@ -38,10 +38,6 @@ const handleWhataCarClick = () => {
   
   
   
-  useEffect(() => {
-    actions.getFilteredProducts();
-    setHasFiltered(true); // Indicar que se ha realizado un filtrado
-  }, []);
 
   const openModal = () => {
     setIsOpen(true);

@@ -8,7 +8,9 @@ import { Sales_navbar } from "../component/Sales_navbar";
 export const Block = () => {
     const {actions, store} = useContext(Context);
     const blockedCount = store.products.length;
-    const [products, setProducts] = useState([]);
+    const [productsProductsBlocked, setProductsProductsBlocked] = useState([]);
+    const [productsProductsPendingSale, setProductsPendingSale] = useState([]);
+    const carImage = "https://images.coches.com/_vn_/kia/Sportage/c399cf1d98a95d24f8e8715dd0b13fb2.jpg?p=cc_vn_high"
     
 const StatusToOnSale = (product) => {
     const token = localStorage.getItem("token");
@@ -59,7 +61,7 @@ const StatusToSold = (product) => {
     useEffect(() => {
         async function fetchProducts() {
           const response = await actions.getProductsBlocked();
-          setProducts(response); 
+          setProductsProductsBlocked(response); 
         }
         fetchProducts();
       }, []);
@@ -67,7 +69,7 @@ const StatusToSold = (product) => {
       useEffect(() => {
         async function fetchProducts() {
           const response = await actions.getProductsPendingSale();
-          setProducts(response); 
+          setProductsPendingSale(response); 
         }
         fetchProducts();
       }, []);
@@ -80,7 +82,11 @@ const StatusToSold = (product) => {
                 <div className="justify-content-center d-flex" key={index}>
                     <div className="row row_product_profile container justify-content-around m-1">
                     <div className="product_img_profile_box col-lg-5 col-3 col-sm-2 col-xs-2">
-                        <img src="https://www.motofichas.com/images/phocagallery/Honda/cb500f-2022/01-honda-cb500f-2022-estudio-rojo.jpg" alt="product" className="product_img_profile"/>
+                    {product.images.length > 0 ? (
+                    <img src={product.images[0].image} className="card-img-top imgCarousel" alt="..." />
+                  ) : (
+                    <img src={carImage} className="card-img-top imgCarousel" alt="..." />
+                  )}
                     </div>
                     <div className="price_name col-3 col-sm-2 text-start ">
                         <h4 className="price_product_profile">{product.price}€</h4>

@@ -10,21 +10,23 @@ export const Profile_buys_done = () => {
     const soldCount = store.products.length;
     const [productToReview, setProductToReview] = useState(null);
     const [comment, setComment] = useState("");
-    const [products, setProducts] = useState([]);
+    const [productsSold, setProductsSold] = useState([]);
+    const [productsSoldReviewed, setProductsSoldReviewed] = useState([]);
+    const carImage = "https://images.coches.com/_vn_/kia/Sportage/c399cf1d98a95d24f8e8715dd0b13fb2.jpg?p=cc_vn_high"
 
 
 
 useEffect(() => {
     async function fetchProducts() {
       const response = await actions.SoldChanged();
-      setProducts(response); 
+      setProductsSold(response); 
     }
     fetchProducts();
   }, []);
   useEffect(() => {
     async function fetchProducts() {
       const response = await actions.SoldReviewedChanged();
-      setProducts(response); 
+      setProductsSoldReviewed(response); 
     }
     fetchProducts();
   }, []);

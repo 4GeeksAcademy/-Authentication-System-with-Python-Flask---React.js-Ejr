@@ -8,27 +8,30 @@ import { Purchase_navbar } from "../component/purchase_navbar";
 export const Profile_buys = () => {
     const {actions, store} = useContext(Context);
     const blockedCount = store.products.length;
-    const [products, setProducts] = useState([]);
+    const [productsPendingBlockedChanged, setProductsPendingBlockedChanged] = useState([]);
+    const [productsBlockedChanged, setProductsBlockedChanged] = useState([]);
+    const [productsPendingSaleChanged, setProductsPendingSaleChanged] = useState([]);
+    const carImage = "https://images.coches.com/_vn_/kia/Sportage/c399cf1d98a95d24f8e8715dd0b13fb2.jpg?p=cc_vn_high"
 
 
 useEffect(() => {
     async function fetchProducts() {
       const response = await actions.PendingBlockedChanged();
-      setProducts(response); 
+      setProductsPendingBlockedChanged(response); 
     }
     fetchProducts();
   }, []);
   useEffect(() => {
     async function fetchProducts() {
       const response = await actions.BlockedChanged();
-      setProducts(response); 
+      setProductsBlockedChanged(response); 
     }
     fetchProducts();
   }, []);
   useEffect(() => {
     async function fetchProducts() {
       const response = await actions.PendingSaleChanged();
-      setProducts(response); 
+      setProductsPendingSaleChanged(response); 
     }
     fetchProducts();
   }, []);

@@ -9,6 +9,7 @@ export const Profile_sales = () => {
     const {actions, store} = useContext(Context);
     const soldCount = store.products.length;
     const [products, setProducts] = useState([]);
+    const carImage = "https://images.coches.com/_vn_/kia/Sportage/c399cf1d98a95d24f8e8715dd0b13fb2.jpg?p=cc_vn_high"
 
 
     useEffect(() => {

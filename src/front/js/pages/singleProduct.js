@@ -20,7 +20,7 @@ export const SingleProduct = () => {
             "Authorization": `Bearer ${localStorage.getItem("token")}`
         }
     };
-    fetch(process.env.BACKEND_URL + `api/profile/products/${product.id}/PENDING_BLOCKED`, requestOptions)
+    fetch(process.env.BACKEND_URL + `api/profile/products/${product.id}/PENDING_BLOCKED/status`, requestOptions)
         .then(response => response.json())
         .then(response => {
         console.log(response);
@@ -28,6 +28,9 @@ export const SingleProduct = () => {
         .catch(error => {
         console.error("Error:", error);
         });
+        setTimeout(() => {
+          window.location.reload();
+      }, 1000);
 };
 
   useEffect(() => {
