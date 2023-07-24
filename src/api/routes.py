@@ -367,38 +367,62 @@ def get_all_brands():
 
 @api.route('/search-by-moto', methods=['GET'])
 def filter_by_moto():
-    
-    products = Product.query.filter_by(product_type='MOTO')
-    products = products.all()
+    # Obtener los productos que son de tipo "MOTO"
+    products = Product.query.filter_by(product_type='MOTO').all()
 
-    serialized_products = [product.serialize() for product in products]
+    # Unir la tabla de productos con la tabla de estado usando la función join()
+    onsale_products = Product.query.join(status).filter(status.status == 'ONSALE').all()
+
+    # Filtrar los productos que están en estado "ONSALE"
+    onsale_motos = [product for product in products if product in onsale_products]
+
+    serialized_products = [product.serialize() for product in onsale_motos]
     return jsonify(serialized_products)
-
 
 @api.route('/search-by-car', methods=['GET'])
 def filter_by_car():
-    
-    products = Product.query.filter_by(product_type='COCHE')
-    products = products.all()
+    # Obtener los productos que son de tipo "COCHE"
+    products = Product.query.filter_by(product_type='COCHE').all()
 
-    serialized_products = [product.serialize() for product in products]
+    # Unir la tabla de productos con la tabla de estado usando la función join()
+    onsale_products = Product.query.join(status).filter(status.status == 'ONSALE').all()
+
+    # Filtrar los productos que son de tipo "COCHE" y están en estado "ONSALE"
+    onsale_cars = [product for product in products if product in onsale_products]
+
+    serialized_products = [product.serialize() for product in onsale_cars]
     return jsonify(serialized_products)
+
 
 @api.route('/search-by-price', methods=['GET'])
 def filter_by_price():
-    products = Product.query.filter(Product.price < 20000)
-    products = products.all()
+    # Obtener los productos con precio menor a 20000
+    products = Product.query.filter(Product.price < 20000).all()
 
-    serialized_products = [product.serialize() for product in products]
+    # Filtrar los productos que están en estado "ONSALE"
+    onsale_products = Product.query.join(status).filter(status.status == 'ONSALE').all()
+
+    onsale_price = [product for product in products if product in onsale_products]
+
+
+    serialized_products = [product.serialize() for product in onsale_price]
     return jsonify(serialized_products)
+
 
 @api.route('/search-by-km', methods=['GET'])
-def km():
-    products = Product.query.filter(Product.km < 20000)
-    products = products.all()
+def filter_by_km():
+    # Obtener los productos con kilometraje menor a 20000
+    products = Product.query.filter(Product.km < 20000).all()
+    onsale_products = Product.query.join(status).filter(status.status == 'ONSALE').all()
 
-    serialized_products = [product.serialize() for product in products]
+    onsale_km = [product for product in products if product in onsale_products]
+
+    # Filtrar los productos que están en estado "ONSALE"
+  
+
+    serialized_products = [product.serialize() for product in onsale_km]
     return jsonify(serialized_products)
+
 
 
 @api.route('/search-by/filter', methods=['GET'])

@@ -74,9 +74,9 @@ export const Filters = (props) => {
   const renderBrands = () => {
     let brandsToShow = [];
     if (vehicleType === "COCHE") {
-      brandsToShow = store.allBrands.slice(0, 59);
+      brandsToShow = store.allBrands.slice(0, 29);
     } else if (vehicleType === "MOTO") {
-      brandsToShow = store.allBrands.slice(59);
+      brandsToShow = store.allBrands.slice(29);
     }
 
 
