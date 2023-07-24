@@ -2,7 +2,12 @@ import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
 import { BackendURL } from "./component/backendURL";
+import Login from "./views/Login.jsx"
+import  Home  from "./views/Home.jsx";
+import Signup from "./views/SignUp.jsx";
+
 import Prueba from "./views/PruebaComponentes.jsx";
+
 
 import injectContext from "./store/appContext";
 
@@ -21,8 +26,11 @@ const Layout = () => {
             <BrowserRouter basename={basename}>
                 <ScrollToTop>
                     <Routes>
-                        <Route element={<Login/>} />
-                        <Route element={<h1>Not found!</h1>} />
+                        <Route path="/" element={<Prueba />} />
+						<Route path="/home" element={<Home />} />
+                        <Route path="/signup" element={<Signup />} />
+                        <Route path="/login" element={<Login/>} />
+                        <Route path="*" element={<h1>Not found!</h1>} />
                     </Routes>
                 </ScrollToTop>
             </BrowserRouter>

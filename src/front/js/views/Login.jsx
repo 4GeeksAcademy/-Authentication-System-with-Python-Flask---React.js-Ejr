@@ -5,7 +5,6 @@ import { useNavigate } from "react-router";
 
 export const Login = () => {
 
-
 const [email, setEmail] = useState("");
 const [password, setPassword] = useState("");
 const { actions } = useContext(Context);
@@ -31,7 +30,7 @@ async function handleSubmit(e) {
 
 
 return (
-    <div >
+  <div >
      
     <form
       className="card w-75 mx-auto mb-5"
@@ -60,14 +59,15 @@ return (
           id="exampleInputPassword1"
         />
       </div>
-      <button type="submit" className="btn btn-warning  mx-auto m-3">
+      <button type="submit" className="btn btn-success  mx-auto m-3">
         Enter
       </button>
     </form>
     <h5 className="mt-3 card w-75 mx-auto" style={{ cursor: 'pointer' }}  onClick={handleRedirect}>You haven't account? Click Here to Register!</h5>
-    <Footer />
-    </div>
+    
+  </div>
   );
 };
+
 export default Login;
 
