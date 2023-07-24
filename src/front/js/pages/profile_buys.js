@@ -78,12 +78,6 @@ const StatusToOnSale = (product) => {
     window.location.reload();
 };
 
-
-
-
-
-
-
     return (
         <>
             <Profile_navbar />
@@ -92,7 +86,11 @@ const StatusToOnSale = (product) => {
                 <div className="justify-content-center d-flex" key={index}>
                 <div className="row row_product_profile container justify-content-around m-1" key={index}>
                     <div className="product_img_profile_box col-lg-5 col-3 col-sm-2 col-xs-2">
-                        <img src="https://www.motofichas.com/images/phocagallery/Honda/cb500f-2022/01-honda-cb500f-2022-estudio-rojo.jpg" alt="product" className="product_img_profile"/>
+                    {product.images.length > 0 ? (
+                        <img src={product.images[0].image} className="card-img-top imgCarousel" alt="..." />
+                    ) : (
+                        <img src={carImage} className="card-img-top imgCarousel" alt="..." />
+                    )}
                     </div>
                     <div className="price_name col-3 col-sm-2 text-start ">
                         <h4 className="price_product_profile">{product.price}€</h4>
@@ -111,7 +109,7 @@ const StatusToOnSale = (product) => {
                                     data-bs-toggle="modal"
                                     data-bs-target="#exampleModal"
                                 >
-                                    Cancelar solicitud de reserva
+                                    <i class="fa-solid fa-ban m-auto" style={{"color": "#b50808"}}/>
                                 </button>
                             </>
                         )}
@@ -135,7 +133,7 @@ const StatusToOnSale = (product) => {
                                     data-bs-toggle="modal"
                                     data-bs-target="#exampleModal3"
                                 >
-                                     Cancelar compra
+                                    <i class="fa-solid fa-ban m-auto" style={{"color": "#b50808"}}/>
                                 </button>
                             </>
                         )}
@@ -149,7 +147,11 @@ const StatusToOnSale = (product) => {
                                 </div>
                                 <div className="modal-body-sale-process row">
                                     <div className="product_img_profile_box-sales-process col-4">
-                                        <img src="https://www.motofichas.com/images/phocagallery/Honda/cb500f-2022/01-honda-cb500f-2022-estudio-rojo.jpg" alt="product" className="product_img_profile"/>
+                                    {product.images.length > 0 ? (
+                                        <img src={product.images[0].image} className="card-img-top imgCarousel" alt="..." />
+                                    ) : (
+                                        <img src={carImage} className="card-img-top imgCarousel" alt="..." />
+                                    )}
                                     </div>
                                     <div className="col-7 state_product_profile_sales_process">
                                         <div className="row">
@@ -172,79 +174,80 @@ const StatusToOnSale = (product) => {
                             </div>
                         </div>
                     </div>
-
-
-
-
-     {/* AQUI EMPIEZA EL MODAL */}
-
-
-        <div className="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div className="modal-dialog">
-                <div className="modal-content sold-product_profile">
-                    <div className="modal-header">
-                        <h5 className="modal-title" id="exampleModalLabel mx-5">Enhorabuena, el vendedor ha aceptado tu reserva. Ahora podrás solicitar la compra del vehículo o cancelar la reserva</h5>
-                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div className="modal-body-sale-process row">
-                    <div className="product_img_profile_box-sales-process m-auto col-4">
-                            <img src="https://www.motofichas.com/images/phocagallery/Honda/cb500f-2022/01-honda-cb500f-2022-estudio-rojo.jpg" alt="product" className="product_img_profile"/>
+                    <div className="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div className="modal-dialog">
+                            <div className="modal-content sold-product_profile">
+                                <div className="modal-header">
+                                    <h5 className="modal-title" id="exampleModalLabel mx-5">Enhorabuena, el vendedor ha aceptado tu reserva. Ahora podrás solicitar la compra del vehículo o cancelar la reserva</h5>
+                                    <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div className="modal-body-sale-process row">
+                                <div className="product_img_profile_box-sales-process m-auto col-4">
+                                {product.images.length > 0 ? (
+                                    <img src={product.images[0].image} className="card-img-top imgCarousel" alt="..." />
+                                ) : (
+                                    <img src={carImage} className="card-img-top imgCarousel" alt="..." />
+                                )}
+                                    </div>
+                                    <div className="col-7 state_product_profile_sales_process m-auto">
+                                        <div className="row">
+                                            <h6 className=" col-12">{product.name}</h6>
+                                        </div>
+                                        <div className="row">
+                                            <h6 className=" col-12">{product.description}</h6>
+                                        </div>
+                                        <div className="row">
+                                            <h6 className=" col-6">{product.state}</h6>
+                                            <h6 className=" col-6">{product.price}€</h6>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                                <div className="modal-footer">
+                                    <button type="button" className="btn btn_config cancel-buy py-4" data-bs-dismiss="modal" onClick={() => StatusToOnSale(product)}>Cancelar reserva</button>
+                                    <button type="button" className="btn btn_config Ask-buy py-4" data-bs-dismiss="modal" onClick={() => StatusToPendingSale(product)}>Solicitar compra</button>
+                                </div>
+                            </div>
                         </div>
-                        <div className="col-7 state_product_profile_sales_process m-auto">
-                            <div className="row">
-                                <h6 className=" col-12">{product.name}</h6>
-                            </div>
-                            <div className="row">
-                                <h6 className=" col-12">{product.description}</h6>
-                            </div>
-                            <div className="row">
-                                <h6 className=" col-6">{product.state}</h6>
-                                <h6 className=" col-6">{product.price}€</h6>
+                    </div>
+                    <div className="modal fade" id="exampleModal3" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div className="modal-dialog">
+                            <div className="modal-content sold-product_profile">
+                                <div className="modal-header">
+                                    <h5 className="modal-title" id="exampleModalLabel">¿Seguro que quieres cancelar la solicitud de compra de este vehículo?</h5>
+                                    <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div className="modal-body-sale-process row">
+                                    <div className="product_img_profile_box-sales-process col-4">
+                                    {product.images.length > 0 ? (
+                                        <img src={product.images[0].image} className="card-img-top imgCarousel" alt="..." />
+                                    ) : (
+                                        <img src={carImage} className="card-img-top imgCarousel" alt="..." />
+                                    )}
+                                    </div>
+                                    <div className="col-7 state_product_profile_sales_process">
+                                        <div className="row">
+                                            <h6 className=" col-12">{product.name}</h6>
+                                        </div>
+                                        <div className="row">
+                                            <h6 className=" col-12">{product.description}</h6>
+                                        </div>
+                                        <div className="row">
+                                            <h6 className=" col-6">{product.state}</h6>
+                                            <h6 className=" col-6">{product.price}€</h6>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                                <div className="modal-footer">
+                                    <button type="button" className="btn btn_config cancel-buy" data-bs-dismiss="modal" onClick={() => StatusToOnSale(product)}>Cancelar</button>
+                                    <button type="button" className="btn btn_config Ask-buy" data-bs-dismiss="modal">No, manetener solicitud</button>
+                                </div>
                             </div>
                         </div>
-                        
                     </div>
-                    <div className="modal-footer">
-                        <button type="button" className="btn btn_config cancel-buy py-4" data-bs-dismiss="modal" onClick={() => StatusToOnSale(product)}>Cancelar reserva</button>
-                        <button type="button" className="btn btn_config Ask-buy py-4" data-bs-dismiss="modal" onClick={() => StatusToPendingSale(product)}>Solicitar compra</button>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div className="modal fade" id="exampleModal3" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div className="modal-dialog">
-                <div className="modal-content sold-product_profile">
-                    <div className="modal-header">
-                        <h5 className="modal-title" id="exampleModalLabel">¿Seguro que quieres cancelar la solicitud de compra de este vehículo?</h5>
-                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div className="modal-body-sale-process row">
-                        <div className="product_img_profile_box-sales-process col-4">
-                            <img src="https://www.motofichas.com/images/phocagallery/Honda/cb500f-2022/01-honda-cb500f-2022-estudio-rojo.jpg" alt="product" className="product_img_profile"/>
-                        </div>
-                        <div className="col-7 state_product_profile_sales_process">
-                            <div className="row">
-                                <h6 className=" col-12">{product.name}</h6>
-                            </div>
-                            <div className="row">
-                                <h6 className=" col-12">{product.description}</h6>
-                            </div>
-                            <div className="row">
-                                <h6 className=" col-6">{product.state}</h6>
-                                <h6 className=" col-6">{product.price}€</h6>
-                            </div>
-                        </div>
-                        
-                    </div>
-                    <div className="modal-footer">
-                        <button type="button" className="btn btn_config cancel-buy" data-bs-dismiss="modal" onClick={() => StatusToOnSale(product)}>Sí, cancelar</button>
-                        <button type="button" className="btn btn_config Ask-buy" data-bs-dismiss="modal">No, manetener solicitud</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        </div>
-    </div>
     ))}
     <Toaster richColors position="top-center" />
     </>

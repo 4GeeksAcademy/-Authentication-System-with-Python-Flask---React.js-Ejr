@@ -33,7 +33,7 @@ import { UploadMoto } from "./pages/uploadmotorcycle";
 import { SingleProduct } from "./pages/singleProduct";
 
 import { Favorites } from "./pages/favorites";
-import { OnSale } from "./pages/onSale";
+import { On_Sale } from "./pages/onSale";
 import { EditProduct } from "./pages/editProduct";
 import { Profile_garage } from "./pages/profile_garage";
 import { Garages } from "./pages/garages";
@@ -86,7 +86,7 @@ const Layout = () => {
 
                                 <Route element={<Profile_configuration />} path="/profile/configuration" />
                                 <Route element={<Favorites />} path="/profile/favorites" />
-                                <Route element={<OnSale />} path="/profile/onsale" />
+                                <Route element={<On_Sale />} path="/profile/onsale" />
                                 <Route element={<Profile_sales />} path="/profile/sales" />
                                 <Route element={<Profile_garage />} path="/profile/garage" />
                                 <Route element={<Block />} path="/profile/block" />

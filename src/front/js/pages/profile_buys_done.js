@@ -28,6 +28,7 @@ useEffect(() => {
     }
     fetchProducts();
   }, []);
+  
 const addReview = (product_id, comment) => {
 							  
     const data = {
@@ -87,12 +88,15 @@ const StatusToSoldReviewed = (product) => {
                     <div className="sales_profile_box row" key={index}>
                         <div className="col-4">
                             <div className="product_img_profile_box_sales col-2">
-                                <img src="https://www.motofichas.com/images/phocagallery/Honda/cb500f-2022/01-honda-cb500f-2022-estudio-rojo.jpg" alt="product" className="product_img_profile"/>
+                            {product.images.length > 0 ? (
+                                <img src={product.images[0].image} className="card-img-top imgCarousel" alt="..." />
+                            ) : (
+                                <img src={carImage} className="card-img-top imgCarousel" alt="..." />
+                            )}
                             </div>
                         </div>
                         <div className="col-8 product_data_sales">
                             <h6>{product.name}</h6>
-                            <h6>Usuario 1</h6>
                             <div className="row">
                                 <h6 className="col-4">{product.brand}</h6>
                                 <h6 className="col-8">{product.model}</h6>
@@ -114,7 +118,11 @@ const StatusToSoldReviewed = (product) => {
                                 </div>
                                 <div className="modal-body-review row">
                                     <div className="product_img_profile_box-sales-process col-4">
-                                        <img src="https://www.motofichas.com/images/phocagallery/Honda/cb500f-2022/01-honda-cb500f-2022-estudio-rojo.jpg" alt="product" className="product_img_profile"/>
+                                    {product.images.length > 0 ? (
+                                        <img src={product.images[0].image} className="card-img-top imgCarousel" alt="..." />
+                                    ) : (
+                                        <img src={carImage} className="card-img-top imgCarousel" alt="..." />
+                                    )}
                                     </div>
                                     <div className="col-7 state_product_profile_sales_process">
                                         <div className="row">

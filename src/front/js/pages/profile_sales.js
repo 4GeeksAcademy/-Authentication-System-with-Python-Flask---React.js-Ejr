@@ -28,7 +28,11 @@ export const Profile_sales = () => {
                     <div className="sales_profile_box row" key={index}>
                         <div className="col-4">
                             <div className="product_img_profile_box_sales col-2">
-                                <img src="https://www.motofichas.com/images/phocagallery/Honda/cb500f-2022/01-honda-cb500f-2022-estudio-rojo.jpg" alt="product" className="product_img_profile"/>
+                            {product.images.length > 0 ? (
+                                <img src={product.images[0].image} className="card-img-top imgCarousel" alt="..." />
+                            ) : (
+                                <img src={carImage} className="card-img-top imgCarousel" alt="..." />
+                            )}
                             </div>
                         </div>
                         <div className="col-8 product_data_sales">
@@ -38,7 +42,6 @@ export const Profile_sales = () => {
                                 <h6 className="col-4">{product.brand}</h6>
                                 <h6 className="col-8">{product.model}</h6>
                             </div>
-                            <h6>Usuario 1</h6>
                             <h6 className="price_sales_profile">{product.price}€</h6>
                         </div>
                     </div>

@@ -7,7 +7,7 @@ import { Sales_navbar } from "../component/Sales_navbar";
 import { Placeholder_onsale } from "./placeholder_onsale";
 
 
-export const OnSale = () => {
+export const On_Sale = () => {
     const {actions, store} = useContext(Context);
     const {status, setStatus} = useState([]);
     const onsaleCount = store.products.length;
@@ -130,13 +130,17 @@ const StatusToOnSale = (product) => {
                             <div className="modal-content sold-product_profile">
                                 <div className="modal-header">
                                     <h5 className="modal-title" id="exampleModalLabel">
-                                       <strong>Fulanito quiere bloquear este vehículo
+                                       <strong>Se ha solicitado reservar este vehículo ¿Estás de acuerdo?
                                         </strong></h5>
                                     <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div className="modal-body-sale-process row">
                                     <div className="product_img_profile_box-sales-process m-auto col-4">
-                                        <img src="https://www.motofichas.com/images/phocagallery/Honda/cb500f-2022/01-honda-cb500f-2022-estudio-rojo.jpg" alt="product" className="product_img_profile"/>
+                                    {product.images.length > 0 ? (
+                                        <img src={product.images[0].image} className="card-img-top imgCarousel" alt="..." />
+                                    ) : (
+                                        <img src={carImage} className="card-img-top imgCarousel" alt="..." />
+                                    )}
                                     </div>
                                     <div className="col-7 state_product_profile_sales_process m-auto">
                                         <div className="row ">
