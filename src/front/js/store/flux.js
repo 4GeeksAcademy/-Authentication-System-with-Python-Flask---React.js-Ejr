@@ -30,7 +30,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 				transmission: "",
 				year: ""
 			}],
-			singleCar: []
+			singleCar: [],
+			errorMessage: null
 		},
 		actions: {
 			getAllUsers: () => {
@@ -75,3 +76,5 @@ const getState = ({ getStore, getActions, setStore }) => {
 }
 
 export default getState;
+
+	

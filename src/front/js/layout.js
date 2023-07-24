@@ -11,7 +11,6 @@ import CreateAccount from "./pages/create-account";
 import injectContext from "./store/appContext";
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
-import AboutCar from "./pages/aboutcar";
 
 
 //create your first component
