@@ -2,7 +2,7 @@ import React from 'react'
 import SearchBar from '../component/SearchBar'
 
 
-const userview = () => {
+const UserView = () => {
   return (
     <div>
         < SearchBar />
@@ -10,4 +10,4 @@ const userview = () => {
   )
 }
 
-export default userview
+export default UserView

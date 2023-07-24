@@ -77,7 +77,13 @@ def add_car():
              return jsonify({"this is the car's data": car.serialize()}), 200
         else:
             return jsonify({'error': 'Failed to retrieve car information'}), 500
-
+        
+# ROUTE TO GET SINGLE CAR INFORMATION
+@api.route('/cars/<int:car_id>', methods=['GET'])
+def singleCarInfo(car_id):
+    
+    singleCar = Car.query.get(car_id)
+    return jsonify(singleCar.serialize()), 200
 
 # LOGIN ENDPOINT FOR USERS
 @api.route("/login", methods=["POST"])
