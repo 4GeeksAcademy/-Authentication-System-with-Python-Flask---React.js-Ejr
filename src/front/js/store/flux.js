@@ -1,7 +1,7 @@
 const getState = ({ getStore, getActions, setStore }) => {
 
 	const API_URL =
-    "https://emmanuelv22-opulent-spoon-j6xqpjjq7r4hjjx-3001.preview.app.github.dev/";
+    "https://emmanuelv22-opulent-spoon-j6xqpjjq7r4hjjx-3001.preview.app.github.dev/api";
 
 	return {
 		store: {
@@ -40,7 +40,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				  return false; 
 				}
 			  },
-			  signup: async (userEmail, userPassword , Name ,phone , adress) => {
+			  signup: async (userEmail, userPassword , firstName, lastName ,phone, location , adress, paymentMethod) => {
 				try { 
 				  const response = await fetch(API_URL + "/signup", {
 					method: "POST",
@@ -50,9 +50,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 					body: JSON.stringify({
 					  email: userEmail,
 					  password: userPassword,
-					  name: Name,
+					  first_name: firstName,
+					  last_name: lastName,
 					  phone: phone,
-					  address: adress
+					  location : location,
+					  address: adress,
+					  payment_method : paymentMethod,
 					}),
 				  });
 		
@@ -62,11 +65,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return response
 				  } else if (response.status === 401) {
 					
-					return false;
+					return ("error: " + response.status);
 				  }
 				} catch (err) {
 				  console.log(err);
-				  return false; 
+				  return ("error:" + err); 
 				}
 			  },
 			  
