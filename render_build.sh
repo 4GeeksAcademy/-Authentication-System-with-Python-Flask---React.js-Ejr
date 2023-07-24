@@ -2,8 +2,8 @@
 # exit on error
 set -o errexit
 
-npm install
 npm install sonner --force
+npm install
 npm run build
 
 pipenv install
