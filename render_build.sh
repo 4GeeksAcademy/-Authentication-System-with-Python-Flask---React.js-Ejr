@@ -3,6 +3,7 @@
 set -o errexit
 
 npm install
+npm install sonner --force
 npm run build
 
 pipenv install
