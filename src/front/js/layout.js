@@ -10,7 +10,6 @@ import injectContext from "./store/appContext";
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 
-
 //create your first component
 const Layout = () => {
   const basename = process.env.BASENAME || "";
@@ -18,23 +17,23 @@ const Layout = () => {
   if (!process.env.BACKEND_URL || process.env.BACKEND_URL === "") {
     return <BackendURL />;
   }
-    return (
-        <div>
-            <BrowserRouter basename={basename}>
-                <ScrollToTop>
-                    <Navbar />
-                    <Routes>
-                        <Route element={<Home />} path="/" />
-                        <Route element={<Login />} path="/Login" />
-                        <Route element={<CreateAccount />} path="/signup" />
-                        <Route element={<h1>Not found!</h1>} />
-                    </Routes>
-                    <Footer />
-                </ScrollToTop>
-            </BrowserRouter>
-        </div>
-    );
 
+  return (
+    <div>
+      <BrowserRouter basename={basename}>
+        <ScrollToTop>
+          <Navbar />
+          <Routes>
+            <Route element={<Home />} path="/" />
+            <Route element={<Login />} path="/Login" /> {/* Add the Login route */}
+            <Route element={<CreateAccount />} path="/signup" /> {/* Add the CreateAccount route */}
+            <Route element={<h1>Not found!</h1>} />
+          </Routes>
+          <Footer />
+        </ScrollToTop>
+      </BrowserRouter>
+    </div>
+  );
 };
 
 export default injectContext(Layout);

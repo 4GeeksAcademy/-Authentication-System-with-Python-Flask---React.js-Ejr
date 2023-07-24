@@ -3,7 +3,6 @@ import "../../styles/Login.css";
 import { Context } from "../store/appContext";
 import { useNavigate } from "react-router-dom";
 
-
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -28,15 +27,22 @@ const Login = () => {
       // Reset the form fields after successful submission
       setEmail("");
       setPassword("");
-      navigate("/usermain")
+      navigate("/usermain");
     } catch (error) {
       console.log("Error during login", error);
+
+      // Handle the error by displaying a message to the user
+      actions.setErrorMessage("Invalid email or password");
     }
   };
 
   return (
     <div className="login-container">
       <h2 className="login-title">Login</h2>
+
+      {/* Display error message if it exists */}
+      {store.errorMessage && <p className="error-message">{store.errorMessage}</p>}
+
       <form className="login-form" onSubmit={handleSubmit}>
         <div className="form-group">
           <label className="form-label">Email</label>
