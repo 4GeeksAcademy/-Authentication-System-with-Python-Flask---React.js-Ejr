@@ -10,7 +10,6 @@ const SearchBar = () => {
   const navigate = useNavigate()
   
 
-
   const cars = store.cars
   
 
@@ -31,6 +30,13 @@ const SearchBar = () => {
   
   }
 
+  const handleClickComparison = (e, carId) => {
+    e.preventDefault()
+    actions.singleCar(carId)
+    
+  }
+
+
   return (
     <div className="parentDiv">
           <form>
@@ -50,7 +56,6 @@ const SearchBar = () => {
                 (
                     <div className="carsDiv" key={index} onClick={(e) => {
                       setShowDropdown(false)
-                      console.log("Car's id",car.id)
                       handleClick(e, car.id)
                     }} >
                           <div className="carNames" value={car.car_name}>

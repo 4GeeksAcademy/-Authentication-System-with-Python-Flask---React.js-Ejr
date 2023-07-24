@@ -16,7 +16,9 @@ import AboutCar from "./pages/aboutcar";
 
 //create your first component
 const Layout = () => {
+  
   const basename = process.env.BASENAME || "";
+
 
   if (!process.env.BACKEND_URL || process.env.BACKEND_URL === "") {
     return <BackendURL />;
