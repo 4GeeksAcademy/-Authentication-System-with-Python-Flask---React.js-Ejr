@@ -49,17 +49,18 @@ export const Favorites = () => {
                                 </h6>
                                 <div className="col-4 d-flex justify-content-end">
                                   <button
-                                    className="button_favorite_favorites btnFavorite "
+                                    className="button_favorite_favorites btnFavorite mt-1 "
                                     id="heartCard"
                                     onClick={() => handleRemoveFavorite(favorites.product_id)}
                                   >
                                    <script src="https://cdn.lordicon.com/bhenfmcm.js"></script>
                                     <lord-icon
+                                        className='lordicon'
                                         src="https://cdn.lordicon.com/rjzlnunf.json"
                                         trigger="morph"
                                         colors="primary:#1663c7,secondary:#16a9c7"
                                         state="morph-heart-broken"
-                                        style={{"width":"250px","height":"30px"}}>
+                                        style={{"width":"20px","height":"30px", }}>
                                     </lord-icon>
                                   </button>
                                 </div>

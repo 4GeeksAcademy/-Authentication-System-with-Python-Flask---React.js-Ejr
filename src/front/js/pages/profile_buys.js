@@ -3,7 +3,6 @@ import { Context } from "../store/appContext";
 import { Profile_navbar } from "../component/profile_navbar";
 import "/workspaces/Watacar_v2/src/front/styles/profile.css"
 import { Purchase_navbar } from "../component/purchase_navbar";
-import { Toaster, toast } from 'sonner'
 
 
 export const Profile_buys = () => {
@@ -48,7 +47,6 @@ const StatusToPendingSale = (product) => {
         .then(response => response.json())
         .then(response => {
         console.log(response);
-        toast('¡Enhorabuena por adquirir tu nuevo vehículo!');
         })
         .catch(error => {
         console.error("Error:", error);
@@ -253,7 +251,6 @@ const StatusToOnSale = (product) => {
                     </div>
                 </div>
     ))}
-    <Toaster richColors position="top-center" />
     </>
     )
     }

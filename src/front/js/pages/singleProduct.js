@@ -41,8 +41,8 @@ export const SingleProduct = () => {
   // }
 
   return (
-    <div className="container mx-2">
-      <div className='single-prioduct-box'>
+    <div className="container mx-auto ">
+      <div className='single-prioduct-box '>
         {store.productlist.length > 0 ? (
           <div className='sp-box '>
             {store.productlist.map((product, index) => (
@@ -171,12 +171,12 @@ export const SingleProduct = () => {
                     </div>
 
                     </div>
-                    <div className='row'>
+                    <div className='row mt-3'>
                       <div className=''>
                       {store.user && store.user.id && product.user_id && store.user.id === product.user_id ? (
                           <Link to={`/edit-product/${product.id}`} className='btn btn-primary btn-success ms-2'>Editar</Link>) : 
                         (
-                          <Link to={'/profile/onsale'} onClick={() => StatusTopendingBlocked(product)} className='btn btn-primary'>Reservar</Link>
+                          <Link to={'/profile/buys'} onClick={() => StatusTopendingBlocked(product)} className='btn btn-primary'>Reservar</Link>
                         )}
 
 

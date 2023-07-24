@@ -4,8 +4,6 @@ import { NavLink, Link, useNavigate } from "react-router-dom";
 import { Profile_navbar } from "../component/profile_navbar";
 import { Placeholder_profile } from "./placeholder_profile";
 import "/workspaces/Watacar_v2/src/front/styles/profile.css";
-import { Toaster, toast } from 'sonner'
-
 export const Profile_configuration = () => {
   const { actions, store } = useContext(Context);
   const [password1, setPassword1] = useState("");
@@ -14,26 +12,21 @@ export const Profile_configuration = () => {
   const [eye2, setEye2] = useState(true);
   const [data, setData] = useState([]);
   const [successMessage, setSuccessMessage] = useState("");
-
   /*useEffect(() => {
     actions.getUser();
-
     // Add event listener for "Enter" key when the modal is shown
     const modal = document.getElementById("exampleModal");
     modal.addEventListener("shown.bs.modal", handleModalShown);
-
     // Remove event listener when the component unmounts
     return () => {
       modal.removeEventListener("shown.bs.modal", handleModalShown);
     };
   }, []);
-
   const handleModalShown = () => {
     // Add event listener for "Enter" key
     document.addEventListener("keydown", handleEnterKey);
   };
   */
-
   const handleEnterKey = (e) => {
     if (e.key === "Enter") {
       e.preventDefault();
@@ -42,40 +35,31 @@ export const Profile_configuration = () => {
       }
     }
   };
-
   const validatePasswords = () => {
     if (password1 !== password2) {
-      toast.error('Las contraseñas no coinciden');
       return false;
     }
     handlePasswordChange();
     //Aquí se añadirá la función para que se guarde en BD o lo que Marcos nos diga que tenemos que hacer con las contraseñas
-
     return true;
   };
-
   const handleEye1 = () => {
     setEye1(!eye1);
   };
-
   const handleEye2 = () => {
     setEye2(!eye2);
   };
-
   const handlePasswordChange1 = (e) => {
     setPassword1(e.target.value);
   };
-
   const handlePasswordChange2 = (e) => {
     setPassword2(e.target.value);
   };
-
   const handlePasswordChange = () => {
     const updatedData = {
       ...store.user,
       password: password1,
     };
-
     const putConfig = {
       method: "PUT",
       body: JSON.stringify({
@@ -86,7 +70,6 @@ export const Profile_configuration = () => {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     };
-
     fetch(process.env.BACKEND_URL + "api/configuration/password", putConfig)
       .then((response) => {
         if (response.ok) {
@@ -101,65 +84,61 @@ export const Profile_configuration = () => {
         setTimeout(() => {
           closeModal();
         }, 1000);
-        toast.success("Contraseña guardada correctamente")
       })
       .catch((error) => {
         console.error(error);
       });
   };
-
   const closeModal = () => {
     const modal = document.getElementById("exampleModal");
     const modalInstance = bootstrap.Modal.getInstance(modal);
     modalInstance.hide();
   };
-
   return store.user ? (
     <>
       <Profile_navbar />
-      <div className="container_profile">
-        <div className="d-lg-flex justify-content-end">
+      <div className="container_profile ">
+        <div className="mx-5 px-5 box w-100">
+        <div className="d-lg-flex justify-content-start my-5">
           <img
             className="avatar_image"
             src="https://appsdejoseluis.com/wp-content/uploads/2020/04/face_co.png"
             alt="Avatar"
           />
         </div>
-
-        
-        <div className="profile_info">
-          <div className="row_profile_configuration">
-            <h4 className="text-wrap badge label col-sm-6 col-md-5 col-lg-3">
+        <div className="profile_info m-auto pb-5">
+          <div className="row_profile_configuration mx-1 justify-content-around text-center mx-1 justify-content-around text-center">
+            <h4 className="text-wrap badge label col-xs-12 col-sm-12 col-md-12 col-lg-12 ">
               Nombre y apellidos:
             </h4>
             <h4 className="user_data">{store.user.full_name}</h4>
           </div>
-          <div className="row_profile_configuration">
-            <h4 className="text-wrap badge label col-sm-6 col-md-5 col-lg-3">
+          <div className="row_profile_configuration mx-1 justify-content-around text-center">
+            <h4 className="text-wrap badge label col-xs-10 col-sm-10 col-md-12 col-lg-12 ">
               Email:
             </h4>
             <h4 className="col-8 user_data">{store.user.email}</h4>
           </div>
-          <div className="row_profile_configuration">
-            <h4 className="text-wrap badge label col-sm-6 col-md-5 col-lg-3 ">
+          <div className="row_profile_configuration mx-1 justify-content-around text-center">
+            <h4 className="text-wrap badge label col-xs-10 col-sm-10 col-md-12 col-lg-12  ">
               Tipo de documento:
             </h4>
             <h4 className="user_data">{store.user.document_type}</h4>
           </div>
           <div className="row_profile_configuration">
-            <h4 className="text-wrap badge label col-sm-6 col-md-5 col-lg-3">
+            <h4 className="text-wrap badge label col-xs-10 col-sm-10 col-md-12 col-lg-12 ">
               Nº del documento:
             </h4>
             <h4 className="user_data">{store.user.document_number}</h4>
           </div>
-          <div className="row_profile_configuration">
-            <h4 className="text-wrap badge label col-sm-6 col-md-5 col-lg-3">
+          <div className="row_profile_configuration mx-1 justify-content-around text-center">
+            <h4 className="text-wrap badge label col-xs-10 col-sm-10 col-md-12 col-lg-12 ">
               Teléfono:
             </h4>
             <h4 className="user_data">{store.user.phone}</h4>
           </div>
-          <div className="row_profile_configuration">
-            <h4 className="text-wrap badge label  col-sm-6 col-md-5 col-lg-3">
+          <div className="row_profile_configuration mx-1 justify-content-around text-center">
+            <h4 className="text-wrap badge label  col-xs-10 col-sm-10 col-md-12 col-lg-12 ">
               Dirección:
             </h4>
             <h4 className="user_data">{store.user.address}</h4>
@@ -167,7 +146,7 @@ export const Profile_configuration = () => {
           <hr className="mb-4"></hr>
           <div className="mt-5 justify-content-lg-end justify-content-md-end justify-content-md-start justify-content-xs-end d-lg-flex d-md-flex d-sm-flex">
             <button
-              className="change_password my-2 col-lg-3 col-md-4 me-2"
+              className="change_password my-2 col-lg-8 col-md-6 me-2"
               type="button"
               data-bs-toggle="modal"
               data-bs-target="#exampleModal"
@@ -176,13 +155,11 @@ export const Profile_configuration = () => {
             </button>
             <Link
               to="/configuration"
-              className="edit_profile col-lg-3 col-md-4 mt-2 label"
+              className="edit_profile col-lg-4 col-md-4 mt-2 label"
             >
               Editar
             </Link>
-
             {/* AQUÍ EMPIEZA EL MODAL */}
-
             <div
               className="modal fade m-auto"
               id="exampleModal"
@@ -227,7 +204,6 @@ export const Profile_configuration = () => {
                         ></i>
                       </label>
                     </div>
-
                     <div className="input-with-icon2 m-auto">
                       <label htmlFor="contraseña" className="password_label row ">
                         <strong>Repetir contraseña</strong>
@@ -278,8 +254,8 @@ export const Profile_configuration = () => {
             </div>
           </div>
         </div>
+        </div>
       </div>
-      <Toaster richColors position="top-center" />
     </>
   ) : (
     <Placeholder_profile />

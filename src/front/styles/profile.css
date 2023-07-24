@@ -1,10 +1,18 @@
-.container_profile{
-    margin: 3rem;
-    background-color: rgb(255, 255, 255);
+.container_profile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto; /* Para centrar horizontalmente */
     padding: 2rem;
     padding-top: 4rem;
     border-radius: 15px;
+  }
+
+.lordicon{
+    margin-bottom: 1rem;
 }
+
 .ad {
     float: right;
     
@@ -412,6 +420,9 @@
     }
     .review_box_profile {
         height: auto;
+    }
+    .inputProfile {
+        max-width: 160px;
     }
 }
 

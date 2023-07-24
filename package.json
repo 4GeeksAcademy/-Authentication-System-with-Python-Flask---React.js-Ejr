@@ -90,5 +90,6 @@
 		"react-range": "^1.8.14",
 		"react-router-dom": "^6.3.0",
 		"react-switch": "^7.0.0"
+		
 	}
 }

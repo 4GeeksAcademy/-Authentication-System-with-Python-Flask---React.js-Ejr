@@ -133,6 +133,7 @@ export const EditProduct = () => {
           })
           .then((responseData) => {
             setSelectedData({ ...selectedData, response: responseData });
+            console.log(selectedData)
             navigate("/");
           })
           .catch((error) => {
@@ -304,7 +305,7 @@ export const EditProduct = () => {
                 ></textarea>
               </div>
               <div className="dropzone d-flex">
-              {selectedData.images.map((image) => (
+              {selectedData.images.map((image, index) => (
                 !selectedImageIds.includes(image.id) && (
                   <div key={image.id}>
                     <img style={{width:'11rem', height:'8rem', border:'.1rem solid black', borderRadius:'.2rem'}} src={image.image} alt={`Image ${image.id}`} />
