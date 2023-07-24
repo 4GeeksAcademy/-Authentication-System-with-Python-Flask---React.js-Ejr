@@ -17,25 +17,6 @@ export const Signup = () => {
     setEye(!eye);
   };
 
-  useEffect(() => {
-    const script = document.createElement("script");
-    script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyAf7aQ5JHWwJTvYuzpJw8QtQK8DYdwJqPE&libraries=places`;
-    script.async = true;
-    script.onload = handleScriptLoad;
-    document.body.appendChild(script);
-    return () => {
-      document.body.removeChild(script);
-    };
-  }, []);
-  const handleScriptLoad = () => {
-    const input = document.getElementById("address");
-    const autocomplete = new google.maps.places.Autocomplete(input);
-    autocomplete.addListener("place_changed", () => {
-      const selectedPlace = autocomplete.getPlace();
-      const address = selectedPlace.formatted_address;
-    });
-  };
-
   const handleSubmit = (ev) => {
     ev.preventDefault();
 

@@ -36,7 +36,6 @@ export const Profile_sales = () => {
                             </div>
                         </div>
                         <div className="col-8 product_data_sales">
-                            <h4 className="col-8 review_sales_profile">***</h4>
                             <h6>{product.name}</h6>
                             <div className="row">
                                 <h6 className="col-4">{product.brand}</h6>

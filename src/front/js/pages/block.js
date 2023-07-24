@@ -148,9 +148,6 @@ const StatusToSold = (product) => {
                                 </div>
                                 <div className="modal-footer">
                                 <div>
-                                            <br></br>
-                                            <br></br>
-                                            <br></br>
                                             <p>Tenga en cuenta que una vez cancelada la reserva el comprador podrá vender a otro usuario el producto</p>
                                         </div>
                                     <button type="button" className="btn btn_config cancel" data-bs-dismiss="modal" onClick={() => StatusToOnSale(product)}>Rechazar</button>

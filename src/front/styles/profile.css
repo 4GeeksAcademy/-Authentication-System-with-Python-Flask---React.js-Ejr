@@ -204,6 +204,7 @@
 
 .modal-footer{
     margin-bottom: 3rem;
+    padding-top: 0;
 }
 
 .modal-content{

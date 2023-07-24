@@ -160,8 +160,6 @@ const StatusToOnSale = (product) => {
                                 <div className="modal-footer">
                                         <div>
                                             <br></br>
-                                            <br></br>
-                                            <br></br>
                                             <p>Tenga en cuenta que una vez aceptado el comprador bloqueará el producto</p>
                                         </div>
                                     <button type="button" className="btn btn_config cancel" data-bs-dismiss="modal" onClick={() => StatusToOnSale(product)}>Rechazar</button>
