@@ -134,6 +134,7 @@ export const EditProduct = () => {
           .then((responseData) => {
             setSelectedData({ ...selectedData, response: responseData });
             console.log(selectedData)
+            setSelectedImages([]);
             navigate("/");
           })
           .catch((error) => {
@@ -165,21 +166,15 @@ export const EditProduct = () => {
   
   
   
-  const handleAdd = (e) => {
-    e.preventDefault();
-    Promise.all(
-      selectedData.map
-    )
-  
-    const newImages = selectedImages.map((file) => ({ image: file }));
-  
-    setSelectedData({
-      ...selectedData,
-      images: [...selectedData.images, ...newImages],
-    });
-    console.log(selectedImages)
-    //setSelectedImages([]);
-  };
+const handleAdd = (e) => {
+  e.preventDefault();
+  const newImages = selectedImages.map((file) => ({ image: file }));
+  setSelectedData((prevState) => ({
+    ...prevState,
+    images: [...prevState.images, ...newImages],
+  }));
+  console.log(selectedImages);
+};
   
   
   return (

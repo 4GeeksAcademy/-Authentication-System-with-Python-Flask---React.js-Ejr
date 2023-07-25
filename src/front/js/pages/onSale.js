@@ -10,7 +10,6 @@ import { Placeholder_onsale } from "./placeholder_onsale";
 export const On_Sale = () => {
     const {actions, store} = useContext(Context);
     const {status, setStatus} = useState([]);
-    const onsaleCount = store.products.length;
     const [productsOnsale, setProductsOnsale] = useState([]);
     const [productsPendBlock, setProductsPendBlock] = useState([]);
     const carImage = "https://images.coches.com/_vn_/kia/Sportage/c399cf1d98a95d24f8e8715dd0b13fb2.jpg?p=cc_vn_high"
@@ -74,11 +73,11 @@ const StatusToOnSale = (product) => {
         });
     window.location.reload();
 };
-    return store.products ? (
+    return productsOnsale || productsPendBlock ? (
         <>
             <Profile_navbar />
-            <Sales_navbar onsaleCount={onsaleCount}/>
-            {store.products.map((product, index) => (
+            <Sales_navbar onsaleCount={productsOnsale.length + productsPendBlock.length}/>
+            {[...productsOnsale, ...productsPendBlock].map((product, index) => (
                 <div className="justify-content-center d-flex" key={index}>
                 <div className="row row_product_profile container justify-content-around m-1" key={index}>
                     <div className="product_img_profile_box col-lg-5 col-3 col-sm-2 col-xs-2">

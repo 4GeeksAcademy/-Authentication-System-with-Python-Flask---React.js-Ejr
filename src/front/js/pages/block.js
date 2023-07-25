@@ -7,7 +7,6 @@ import { Sales_navbar } from "../component/Sales_navbar";
 
 export const Block = () => {
     const {actions, store} = useContext(Context);
-    const blockedCount = store.products.length;
     const [productsProductsBlocked, setProductsProductsBlocked] = useState([]);
     const [productsProductsPendingSale, setProductsPendingSale] = useState([]);
     const carImage = "https://images.coches.com/_vn_/kia/Sportage/c399cf1d98a95d24f8e8715dd0b13fb2.jpg?p=cc_vn_high"
@@ -74,11 +73,11 @@ const StatusToSold = (product) => {
         fetchProducts();
       }, []);
     
-    return store.products ? (
+    return productsProductsBlocked || productsProductsPendingSale ? (
         <>
             <Profile_navbar />
-            <Sales_navbar blockedCount={blockedCount} />
-            {store.products.map((product, index) => (
+            <Sales_navbar blockedCount={productsProductsBlocked.length + productsProductsPendingSale.length} />
+            {[...productsProductsBlocked,...productsProductsPendingSale].map((product, index) => (
                 <div className="justify-content-center d-flex" key={index}>
                     <div className="row row_product_profile container justify-content-around m-1">
                     <div className="product_img_profile_box col-lg-5 col-3 col-sm-2 col-xs-2">
@@ -130,7 +129,7 @@ const StatusToSold = (product) => {
                             <div className="modal-content sold-product_profile">
                                 <div className="modal-header">
                                 <h5 className="modal-title" id="exampleModalLabel">
-                                       <strong>Se ha solicitado el bloqueo de este vehículo
+                                       <strong>Se ha solicitado la compra definitiva de este vehículo
                                         </strong></h5>
                                     <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
@@ -158,7 +157,7 @@ const StatusToSold = (product) => {
                                 </div>
                                 <div className="modal-footer">
                                 <div>
-                                            <p>Tenga en cuenta que una vez cancelada la reserva el comprador podrá vender a otro usuario el producto</p>
+                                            <p>Tenga en cuenta que una vez aceptada o cancelada la solicitud no se podrán revertirlos cambios</p>
                                         </div>
                                     <button type="button" className="btn btn_config cancel" data-bs-dismiss="modal" onClick={() => StatusToOnSale(product)}>Rechazar</button>
                                     <button type="button" className="btn btn_config reservado" data-bs-dismiss="modal" onClick={() => StatusToSold(product)}>Aceptar</button>

@@ -13,6 +13,7 @@
     margin-bottom: 1rem;
 }
 
+
 .ad {
     float: right;
     
@@ -111,11 +112,9 @@
 }
 
 .avatar_container {
-
     top: 17rem;
     right: 9rem;
     margin: 10px;
-
 }
 
 .avatar_image {
@@ -125,7 +124,6 @@
     object-fit: cover;
     border: #125c8e;
     border-style: solid;
-    
 }
 
 #map{
@@ -135,8 +133,6 @@
 .customPlaceholder{
     height: 80px;
 }
-
-
 
 .row_product_profile{
     background-color: white;
@@ -149,7 +145,6 @@
     display: flex;
     align-items: center;
     color:#125c8e;
-   
 }
 
 .product_profile_button{
@@ -215,8 +210,25 @@
     padding-top: 0;
 }
 
+.product_name{
+    font-weight: bold !important;
+}
+
 .modal-content{
     height: 24rem;
+}
+
+.review_button{
+    border-radius: 8px;
+    border: none;
+    background: #125c8e;
+    color: white;
+}
+
+.review_button :hover{
+    background: white !important;
+    border-color: #125c8e !important;
+    color: slategrey !important;
 }
 
 .change_password_input{
