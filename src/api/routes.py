@@ -2,36 +2,22 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Product, Order
-from api.utils import generate_sitemap, APIException
-from flask_migrate import Migrate
-from flask_swagger import swagger
-from flask_cors import CORS
-from flask_bcrypt import Bcrypt  # para encriptar y comparar
-from flask_sqlalchemy import SQLAlchemy  # Para rutas
-from flask_jwt_extended import  JWTManager, create_access_token, jwt_required, get_jwt_identity, unset_jwt_cookies
-from datetime import datetime, timedelta
+from src.api.models import db, User, Product, Order
+from src.api.utils import generate_sitemap, APIException
+import bcrypt
 
-api = Flask('api', __name__)
-bcrypt = Bcrypt(api)
-api.url_map.strict_slashes = False
-jwt = JWTManager(api)  # isntanciamos jwt de JWTManager utilizando app para tener las herramientas de encriptacion.
+from src import app
+
+api = Blueprint('api', __name__)
 
 
-api.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-MIGRATE = Migrate(api, db, compare_type = True)
-db.init_app(api)
-
-# Allow CORS requests to this API
-CORS(api)
 
 # La clave secreta para firmar los tokens JWT
 api.secret_key = 'Our_Unique_Proyect'
 
 # Función para generar un token JWT
 def generate_token(user_id):
-    expiration = datetime.utcnow() + timedelta(hours=1)  # Token expira en 1 hora
-    payload = {'user_id': user_id, 'exp': expiration}
+    payload = {'user_id': user_id}
     token = jwt.encode(payload, api.secret_key, algorithm='HS256')
     return token
 
