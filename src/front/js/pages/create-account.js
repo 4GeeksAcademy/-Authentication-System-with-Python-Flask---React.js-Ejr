@@ -9,14 +9,14 @@ export default function CreateAccount() {
   const { store, actions } = useContext(Context);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [firstname, setFirstname] = useState("");
-  const [phonenumber, setPhonenumber] = useState("");
+  const [first_name, setFirstname] = useState("");
+  const [phone_number, setPhonenumber] = useState("");
   const navigate = useNavigate();
   console.log("Password", password, "Email:", email);
 
   const registerUser = async () => {
      const response = await fetch(
-       `${process.env.BACKEND_URL}/signup`,
+       `${process.env.BACKEND_URL}/register`,
       {
          method: "POST",
          headers: {
@@ -25,8 +25,8 @@ export default function CreateAccount() {
          body: JSON.stringify({
            email: email,
            password: password,
-           firstname: firstname,
-           phonenumber: phonenumber
+           first_name: first_name,
+           phone_number: phone_number
 
          }),
       }
@@ -62,8 +62,9 @@ export default function CreateAccount() {
   };
 
   const handleSubmit = (event) => {
-    event.preventDefault();
-    registerUser()
+     event.preventDefault();
+     registerUser()
+
     // Here you can perform the login logic, such as making an API request
 
     // Reset the form fields after submission
@@ -77,11 +78,11 @@ export default function CreateAccount() {
   return (
     <div>
     <h2>Sign Up</h2>
-    <form>
+    <form onSubmit={handleSubmit}>
       <input
         type="text"
-        placeholder="Phonenumber"
-        value={phonenumber}
+        placeholder="Phone number"
+        value={phone_number}
         onChange={handlePhonenumberChange}
       />
       <input
@@ -98,8 +99,8 @@ export default function CreateAccount() {
       />
        <input
         type="text"
-        placeholder="Firstname"
-        value={firstname}
+        placeholder="First name"
+        value={first_name}
         onChange={handleFirstnameChange}
       />
 
