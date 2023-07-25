@@ -5,3 +5,10 @@
     one more css for each page that will contain the selected used 
     on that page only (the ones not reused in other pages).
 */
+:root {
+  --color-1: #f1445b;
+  --color-2: #65734b;
+  --color-3: #94a453;
+  --color-4: #d9c3b1;
+  --color-5: #f03625;
+}
