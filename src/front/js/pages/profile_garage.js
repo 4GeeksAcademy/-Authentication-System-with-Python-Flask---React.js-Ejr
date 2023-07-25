@@ -48,7 +48,7 @@ export const Profile_garage = () => {
                     <div className="row row_profile_configuration">
                         <div>
                         <h4 className="col-4 label p-2 input-radius">CIF:</h4>
-                        </div>
+                        </div> 
                         <h4 className="col-8 user_data">{store.garage.cif}</h4>
                     </div>
                     <div className="row row_profile_configuration">
