@@ -73,6 +73,7 @@ class Offers(db.Model):
             "premium_user_price": self.premium_user_price
         }
 
+
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(40), unique=True, nullable=False)
