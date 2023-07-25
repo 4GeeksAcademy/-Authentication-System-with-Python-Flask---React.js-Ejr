@@ -13,6 +13,7 @@ import  BusinessUserPrivate  from "./pages/BusinessUserPrivate.jsx";
 import  UsersReviews  from "./pages/UsersReviews.jsx";
 import  Business_offers  from "./pages/Business_offers.jsx";
 import Trips  from "./pages/Trips.jsx";
+import SignUp from "./pages/SignUp.jsx";
 
 import injectContext from "./store/appContext";
 
