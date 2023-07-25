@@ -34,6 +34,11 @@ export const Navbar = () => {
 							Compare added cars
 						</button>
 					</Link>
+					<Link to={"/saved"}>
+						<button>
+							Saved Cars
+						</button>
+					</Link>
 				</div>
 				<div>	
 					<Link to={"/signup"}>

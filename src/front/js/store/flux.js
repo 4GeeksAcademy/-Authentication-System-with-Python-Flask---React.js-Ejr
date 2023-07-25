@@ -121,9 +121,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
       addCarToCompare: (car) => {
         let compareCars = getStore().compareCars;
-        if (compareCars.length > 3) {
-          return alert("Max 3 cars to compare");
-        } else compareCars.push(car);
+        compareCars.push(car);
         setStore({ compareCars: compareCars });
         console.log("compareCars value: ", compareCars);
       },
@@ -135,6 +133,13 @@ const getState = ({ getStore, getActions, setStore }) => {
         });
         setStore({ compareCars: deletedCarComparison });
       },
+      
+      saveFavorites: (car) => {
+        let savedCars = getStore().saved
+        savedCars.push(car)
+        setStore({ saved : savedCars })
+        console.log("Value of savedcars", savedCars)
+      }
     },
   };
 };
