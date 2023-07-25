@@ -10,36 +10,31 @@ export const SearchResults = (props) => {
   const { store, actions } = useContext(Context);
   const carImage = "https://images.coches.com/_vn_/kia/Sportage/c399cf1d98a95d24f8e8715dd0b13fb2.jpg?p=cc_vn_high";
 
-  const [hasFiltered, setHasFiltered] = useState(false); // Estado local para indicar si se ha realizado un filtrado
+  const [hasFiltered, setHasFiltered] = useState(false);
 
   useEffect(() => {
-    let isMounted = true; // Variable para asegurarnos de que el componente está montado
+    let isMounted = true;
 
     const filterProducts = async () => {
-      // Realizar el filtrado de productos aquí
       await actions.getFilteredProducts();
       if (isMounted) {
-        setHasFiltered(true); // Indicar que se ha realizado un filtrado
+        setHasFiltered(true);
       }
     };
 
     filterProducts();
 
     return () => {
-      isMounted = false; // Actualizar la variable al desmontar el componente
+      isMounted = false;
     };
   }, []);
 
-  useEffect(() => {
-    actions.getFilteredProducts();
-
-  }, []);
-  console.log(store.filterProducts);
   return (
     <div className="container">
-    <div className="d-flex overflow-auto my-5 ">
-      {store.products.length > 0 ? (
-        store.products.map((vehicle, index) => (
+      <div className="d-flex overflow-auto my-5 ">
+        {/* Verificar si store.filterProducts existe y si tiene algún producto */}
+        {store.filterProducts?.length > 0 ? (
+          store.filterProducts.map((vehicle, index) => (
           <div className="mx-3 mb-5" key={index}>
             <div className="card card-blur" style={{ width: "18rem" }}>
               <div className="flip-card">

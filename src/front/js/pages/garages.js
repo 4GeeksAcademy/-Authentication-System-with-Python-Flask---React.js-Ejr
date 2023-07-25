@@ -16,12 +16,11 @@ export const Garages = () => {
 
     return (
         <div className="container mx-3 row">
-            {store.garages ? (
+            {Array.isArray(store.garages) && store.garages.length > 0 ?  (
                 store.garages.map((garage, index) => (
-                    <div className="m-5 textGarage col-lg-4 col-md-4 col-sm-10 " key={index}>
+                    <div className="m-5 textGarage col-lg-4 col-md-4 col-sm-10" key={index}>
                         <div className="card mx-auto justify-content-center d-flex align-items-center" style={{ width: "18rem" }}>
-                            <img src=
-                            "https://neomotor.epe.es/binrepository/990x619/0c62/990d557/none/2594535/UHEL/elegir-taller-confianza-1_285-37667622_20221031082702.jpg" alt="Avatar" className="avatar_image card-img-top"  />
+                            <img src="https://neomotor.epe.es/binrepository/990x619/0c62/990d557/none/2594535/UHEL/elegir-taller-confianza-1_285-37667622_20221031082702.jpg" alt="Avatar" className="avatar_image card-img-top"  />
                             <div className="card-body">
                                 <h5 className="card-title textGarage">{garage.name}</h5>
                                 <p className="card-text textGarage">{garage.description}</p>
@@ -29,7 +28,9 @@ export const Garages = () => {
                             <ul className="list-group list-group-flush">
                                 <li className="list-group-item text-center textAddress">{garage.address}</li>
                                 <li className="list-group-item text-center">
-                                    <ul><li className="text-center webLi mb-2">Sitio Web</li></ul>
+                                    <ul>
+                                        <li className="text-center webLi mb-2">Sitio Web</li>
+                                    </ul>
                                     <a href={garage.web}>
                                         <script src="https://cdn.lordicon.com/bhenfmcm.js"></script>
                                         <lord-icon
@@ -53,12 +54,7 @@ export const Garages = () => {
                     </div>
                 ))
             ) : (
-                <div className="spinner-border text-primary m-auto d-flex 
-          justify-content-center "
-          style={{"width": "10rem", "height": "10rem"}}
-          role="status">
-            
-          </div>
+                <div className="spinner-border text-primary m-auto d-flex justify-content-center" style={{"width": "10rem", "height": "10rem"}} role="status"></div>
             )}
         </div>
     );
