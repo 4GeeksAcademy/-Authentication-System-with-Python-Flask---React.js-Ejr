@@ -133,14 +133,48 @@ const getState = ({ getStore, getActions, setStore }) => {
         });
         setStore({ compareCars: deletedCarComparison });
       },
-      
+
       saveFavorites: (car) => {
-        let savedCars = getStore().saved
-        savedCars.push(car)
-        setStore({ saved : savedCars })
-        console.log("Value of savedcars", savedCars)
+        let store = getStore();
+        let token = localStorage.getItem("token");
+        fetch(`${process.env.BACKEND_URL}/add_saved`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            car_id: car.id,
+          }),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            console.log(data);
+            store.saved.push(car);
+            setStore(store);
+          })
+          .catch((error) => console.log(error));
+      },
+
+      retrieveData: () => {
+        let store = getStore();
+        let token = localStorage.getItem("token");
+        fetch(`${process.env.BACKEND_URL}/private`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          }})
+          .then((res) => res.json())
+          .then((data) => {
+            console.log("Response from PRIVATE GET: ",data);
+            let newSaved = store.saved.concat(data.saved_cars);
+            console.log("Saved cars of the user: ",newSaved)
+            setStore({saved : newSaved});
+          })
+          .catch((error) => console.log(error));
       }
-    },
+    }
   };
 };
 export default getState;

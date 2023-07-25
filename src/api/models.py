@@ -33,7 +33,7 @@ class User(db.Model):
             "email": self.email,
             "first_name": self.first_name,
             "phone_number": self.phone_number,
-            # "saved": list(map(lambda x: x.serialize(), self.saved))
+            "saved": list(map(lambda x: x.serialize(), self.saved))
         }
 class Car(db.Model):
     __tablename__ = 'car'

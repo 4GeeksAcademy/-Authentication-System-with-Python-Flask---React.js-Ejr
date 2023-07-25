@@ -1,9 +1,27 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import SearchBar from "./SearchBar"
 import Filters from "./FilterModal/Filters";
+import { Context } from "../store/appContext";
+import "../../styles/cardata.css"
 
 export const Navbar = () => {
+	const {store, actions} = useContext(Context);
+
+	useEffect( ()=>{
+		const dropDownMenu = document.querySelector("#drop-down-menu")
+		dropDownMenu.addEventListener("click", (e) => {
+			e.stopPropagation()
+		});
+		return () => {
+			dropDownMenu.addEventListener("click", (e) => {
+				e.stopPropagation()
+			});
+			}
+	}, [])
+
+
+
 	return (
 		<nav className="navbar navbar-light bg-light">
 			<div className="container m-0">
@@ -28,27 +46,67 @@ export const Navbar = () => {
 				<div>
 					< Filters />
 				</div>
-				<div>
-					<Link to={"/compare"}>
-						<button>
-							Compare added cars
-						</button>
-					</Link>
-					<Link to={"/saved"}>
-						<button>
-							Saved Cars
-						</button>
-					</Link>
-				</div>
 				<div>	
 					<Link to={"/signup"}>
-					<button className="btn btn-primary">
-						<h5>Sign Up</h5>
-					</button>
+						<button className="btn btn-primary">
+							<h5>Sign Up</h5>
+						</button>
 					</Link>
 					<Link to={"/Login"}>
-					<button className="btn btn-primary"><h5>Login</h5></button>
+						<button className="btn btn-primary"><h5>Login</h5></button>
 					</Link>
+						<button className="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
+							<span className="navbar-toggler-icon"></span>
+						</button>
+					<div className="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
+                <div className="offcanvas-header">
+                    <h5 className="offcanvas-title" id="offcanvasDarkNavbarLabel">Side Menu</h5>
+                    <button type="button" className="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div className="offcanvas-body">
+                    <ul className="navbar-nav justify-content-end flex-grow-1 pe-3">
+                    <li className="nav-item">
+                        <Link to={"/"}>
+							<a className="nav-link active" aria-current="page" href="#">Home</a>
+						</Link>
+                    </li>
+                    <li className="nav-item">
+						<Link to={"/compare"}>
+							<button>
+								Compare added cars
+							</button>
+						</Link>
+                    </li>
+                    <li className="nav-item dropdown">
+                        <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Saved Cars
+                        </a>
+                        <ul className="dropdown-menu dropdown-menu-dark" id="drop-down-menu" >
+							{store.saved.map((car, index) => {
+								return (
+									<div style={{"display": "flex"}}>
+										{/* <li key={index} className="carFormatted">{car.car_name}</li> */}
+										<button type="button" onClick={(e)=> {
+											if (store.compareCars.includes(car)) {
+												return alert("Car already added");
+											  } else {
+												actions.addCarToCompare(car);
+											  }
+											}}>Compare</button>
+									</div>
+								)
+							})}
+                        <li>
+                            <hr className="dropdown-divider"/>
+                        </li>
+                        <Link to={"/compare"}>
+							<li className="dropdown-item" href="#"><button className="btn btn-success">Compare selected saved cars (3 MAX.)</button></li>
+						</Link>
+                        </ul>
+                    </li>
+                    </ul>
+                </div>
+                </div>
 				</div>
 			</div>
 		</nav>

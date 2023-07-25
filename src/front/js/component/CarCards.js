@@ -41,7 +41,11 @@ const CarCards = ({cars}) => {
                       className="favoritesCards">
                       <div
                       style={{ marginLeft: "10px" }}
-                      onClick={() => actions.saveFavorites(car)}
+                      onClick={() => {
+                        if (store.saved.includes(car)) {
+                          return alert("Car's already saved")
+                        } else actions.saveFavorites(car);
+                      }}
                       >
                         Save<i className="fa-solid fa-star" style={{ color: "#ffd43b" }}></i>
                       </div>

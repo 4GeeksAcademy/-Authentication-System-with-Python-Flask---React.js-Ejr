@@ -112,7 +112,7 @@ def show_saved_cars():
              'user': user.first_name,
              'email': user.email,
              'phone_number': user.phone_number,
-             'saved_cars': [car.serialize() for car in saved_cars]
+             'saved_cars': user.saved
         }
 
         return jsonify(response),200
@@ -137,9 +137,11 @@ def add_favorite():
     saved = Saved(user_id=user.id, car_id=car_id)
     db.session.add(saved)
     db.session.commit()
-
+    print("car ID", car_id)
     return jsonify({"Message": "Car successfully saved"}), 200
 
+# CREATE A ROUTE THAT WHENEVER THERE'S A REFRESH REQUEST THIS ROUTE, IT WILL USE  THE TOKEN SAVED ON LOCALSTORAGE TO RETRIEVE THE USER INFO 
+# USE THE INFO TO PUT IN THE STORE OF FLUX
 
 # REGISTER ENDPOINT
 @api.route('/register', methods=['POST'])

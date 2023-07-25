@@ -16,7 +16,6 @@ const CarComparison= () => {
                     <CarCards cars={store.compareCars}/>
                 </div>
             </div>
-
         </div>
     )
 }
