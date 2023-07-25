@@ -921,13 +921,16 @@ def getFavorites():
     response = []
     for favorite in favorites:
         product = Product.query.get(favorite.product_id)
+        print(list(product.images)[0])
         response.append({
             "product_id": product.id,
             "name": product.name,
             "description": product.description,
             "price": product.price,
             "year": product.year,
-            "km": product.km
+            "km": product.km,
+            "image": list(product.images)[0].image
+            
         })
 
     return jsonify(response), 200

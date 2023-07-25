@@ -595,7 +595,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				.then (response => response.json())
 				.then ((response) => {
 					setStore({ products: response.data });
-					console.log(response.data)
+					
 				})
 			},
 
