@@ -41,10 +41,14 @@ const getState = ({ getStore, getActions, setStore }) => {
         lastName,
         phone,
         location,
-        adress,
+        address,
         paymentMethod
       ) => {
         try {
+         
+          if (!userEmail || !userPassword || !firstName || !lastName || !phone || !location || !address || !paymentMethod) {
+            return { error: 'Todos los campos son obligatorios.' };
+          }
           const response = await fetch(API_URL + '/signup', {
             method: 'POST',
             headers: {
@@ -57,7 +61,7 @@ const getState = ({ getStore, getActions, setStore }) => {
               last_name: lastName,
               phone: phone,
               location: location,
-              address: adress,
+              address: address,
               payment_method: paymentMethod,
             }),
           })
@@ -67,11 +71,12 @@ const getState = ({ getStore, getActions, setStore }) => {
             console.log('Succefully created user')
             return response
           } else if (response.status === 401) {
-            return 'error: ' + response.status
+            return ('error: ' + response.status)
           }
         } catch (err) {
-          console.log(err)
-          return 'error:' + err
+          console.log(err);
+          // Devolver un objeto que indica un error general
+          return { error: 'error:' + err };
         }
       },
 

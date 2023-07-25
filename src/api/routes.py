@@ -5,6 +5,7 @@ from flask import Flask, request, jsonify, url_for, Blueprint
 from src.api.models import db, User, Product, Order
 from src.api.utils import generate_sitemap, APIException
 import bcrypt
+import jwt
 
 from src import app
 
@@ -29,6 +30,11 @@ def signup():
     # Verificar si el usuario ya existe por su dirección de correo electrónico
     if User.query.filter_by(email=data['email']).first():
         return jsonify({'message': 'El usuario ya existe. Intente con otro correo electrónico.'}), 409
+    
+    # Verificar si se proporcionó la contraseña en el payload
+    if 'password' not in data or not data['password']:
+        return jsonify({'message': 'El campo de contraseña es obligatorio.'}), 400
+
 
     # Encriptar la contraseña antes de guardarla en la base de datos
     hashed_password = bcrypt.hashpw(data['password'].encode('utf-8'), bcrypt.gensalt())

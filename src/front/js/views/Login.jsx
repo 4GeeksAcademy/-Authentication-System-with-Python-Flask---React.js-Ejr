@@ -31,7 +31,7 @@ async function handleSubmit(e) {
 
 return (
   <div >
-     
+     <h1 className="mx-auto text-center" style={{ fontSize: '3rem' }}>Welcome Back!</h1>
     <form
       className="card w-75 mx-auto mb-5"
       onSubmit={handleSubmit}

@@ -12,7 +12,7 @@ const Signup = () => {
   const [lastName, setLastName] = useState("");
   const [location, setLocation] = useState("");
   const [phone, setPhone] = useState("");
-  const [adress, setAddress] = useState("");
+  const [address, setAddress] = useState("");
   const [paymentMethod, setPaymentMethod] = useState("");
 
 
@@ -23,12 +23,14 @@ const Signup = () => {
   async function handleSubmit(e) {
     e.preventDefault();
 
-    let signup = await actions.signup(email, password , firstName, lastName ,phone , location , adress, paymentMethod);
+    let signup = await actions.signup(email, password , firstName, lastName ,phone , location , address, paymentMethod);
     console.log(signup);
-    if (signup) {
+    if (signup && !signup.error) {
       navigate("/login");
-    }else {
-      return alert("Error : 409 ,User already exist")
+    } else if (signup && signup.error) {
+      alert("Error: " + signup.error);
+    } else {
+      alert("Error 409: Usuario ya existe");
     }
   }
 
