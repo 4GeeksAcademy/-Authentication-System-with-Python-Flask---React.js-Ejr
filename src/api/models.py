@@ -3,10 +3,39 @@ from sqlalchemy import ForeignKey
 
 db = SQLAlchemy()
 
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(40), unique=True, nullable=False)
+    password = db.Column(db.String(250), nullable=False)
+    email = db.Column(db.String(120), unique=True, nullable=False)
+    firstname = db.Column(db.String(100), nullable=False)
+    lastname = db.Column(db.String(100), nullable=False)
+    address = db.Column(db.String(200), nullable=False)
+    dni = db.Column(db.Integer, nullable=False)
+    payment_method = db.Column(db.String(100), nullable=False)
+    is_admin = db.Column(db.Boolean, default=False)
+
+
+    def _repr_(self):
+        return '<User %r>' % self.username
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "username": self.username,
+            "email": self.email,
+            "firstname": self.firstname,
+            "lastname": self.lastname,
+            "address": self.address,
+            "dni": self.dni,
+            "payment_method": self.payment_method,
+            "is_admin": self.is_admin
+            }
+
 class Business_user(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     business_name = db.Column(db.String(50), unique=True, nullable=False)
-    password = db.Column(db.String(80), unique=False, nullable=False)
+    password = db.Column(db.String(250), unique=False, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     nif = db.Column(db.Integer, nullable=False)
     address = db.Column(db.String(150), nullable=False)
@@ -25,6 +54,26 @@ class Business_user(db.Model):
             "payment_method": self.payment_method
         }
 
+class Trip(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    country = db.Column(db.String(40), nullable=False)
+    city = db.Column(db.String(40), nullable=False)
+    activities = db.Column(db.String(100), nullable=False)
+
+    # offers = db.relationship("Offers", backref="trip")
+    
+
+    def __repr__(self):
+        return '<Trip %r>' % self.id
+    
+    def serialize(self):
+        return {
+            "id": self.id,
+            "country": self.country,
+            "city": self.city,
+            "activities": self.activities
+        }
+
 class Offers(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     trip_id = db.Column(db.Integer, ForeignKey('trip.id'), nullable=False)
@@ -33,8 +82,10 @@ class Offers(db.Model):
     medium_user_price = db.Column(db.Integer, nullable=False)
     high_user_price = db.Column(db.Integer, nullable=False)
     premium_user_price = db.Column(db.Integer, nullable=False)
-    trip_id = db.Column(db.Integer, db.ForeignKey('trip.id'), nullable=False)
 
+
+    trip_id = db.Column(db.Integer, ForeignKey('trip.id'), nullable=False)
+    trip = db.relationship("Trip", backref="offers")
 
     def __repr__(self):
         return '<Offers %r>' % self.id
@@ -48,25 +99,7 @@ class Offers(db.Model):
             "medium_user_price": self.medium_user_price,
             "high_user_price": self.high_user_price,
             "premium_user_price": self.premium_user_price
-        }
 
-class Trip(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    country = db.Column(db.String(40), nullable=False)
-    city = db.Column(db.String(40), nullable=False)
-    activities = db.Column(db.String(100), nullable=False)
-    offers = db.relationship('Offers', backref='trip', lazy=True)
-
-    def __repr__(self):
-        return '<Trip %r>' % self.id
-    
-    def serialize(self):
-        return {
-            "id": self.id,
-            "country": self.country,
-            "city": self.city,
-            "activities": self.activities
-        }
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -149,4 +182,3 @@ class Favorites(db.Model):
             "user_id": self.user_id,
             "trip_id": self.trip_id
         }
-
