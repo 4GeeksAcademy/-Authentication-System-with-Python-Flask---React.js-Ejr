@@ -67,8 +67,59 @@ bcrypt = Bcrypt()
 def initialize_jwt(api):
     jwt.init_app(api)
 
-@api.route('/signup', methods=['POST'])
-def create_user_or_business():
+from sqlalchemy.exc import IntegrityError
+
+@api.route('/signup/user', methods=['POST'])
+def create_user():
+    try:
+        data = request.get_json()
+        email = data.get('email')
+        password = data.get('password')
+        username = data.get('username')
+        firstname = data.get('firstname')
+        lastname = data.get('lastname')
+        address = data.get('address')
+        dni = data.get('dni')
+        payment_method = data.get('payment_method')
+
+        # Vérifier si l'email et le mot de passe sont fournis
+        if not email or not password:
+            return jsonify({'error': 'Email and password are required.'}), 400
+
+        # Vérifier si l'utilisateur existe déjà
+        existing_user = User.query.filter_by(username=username).first()
+        if existing_user:
+            return jsonify({'error': 'Username already exists.'}), 409
+
+        # Hacher le mot de passe et créer l'utilisateur
+        password_hash = bcrypt.generate_password_hash(password).decode('utf-8')
+        new_user = User(
+            email=email,
+            password=password_hash,
+            username=username,
+            firstname=firstname,
+            lastname=lastname,
+            address=address,
+            dni=dni,
+            payment_method=payment_method,
+            is_admin=False  # Vous pouvez définir la valeur par défaut pour is_admin ici
+        )
+        db.session.add(new_user)
+        db.session.commit()
+
+        return jsonify(message='User created successfully', user=new_user.serialize()), 201
+
+    except IntegrityError as e:
+        db.session.rollback()  # Annuler l'opération en cas de violation de contrainte unique
+        return jsonify({'error': 'Error in user creation: ' + str(e)}), 409
+
+    except Exception as e:
+        db.session.rollback()  # Annuler l'opération en cas d'autres erreurs
+        return jsonify({'error': 'Error in user creation: ' + str(e)}), 500
+
+
+@api.route('/signup/business_user', methods=['POST'])
+def create_business_user():
     try:
         data = request.get_json()
         email = data.get('email')
@@ -78,47 +129,28 @@ def create_user_or_business():
         if not email or not password:
             return jsonify({'error': 'Email and password are required.'}), 400
 
-        # Vérifier si l'email existe déjà pour un utilisateur ou une entreprise
-        existing_user = User.query.filter_by(email=email).first()
+        # Vérifier si l'email existe déjà pour une entreprise
         existing_business = Business_user.query.filter_by(email=email).first()
 
-        if existing_user or existing_business:
+        if existing_business:
             return jsonify({'error': 'Email already exists.'}), 409
 
-        # Si le champ 'name_business' est présent, c'est une inscription d'entreprise
-        if 'name_business' in data:
-            name_business = data.get('name_business')
-            nif = data.get('nif')
-            address = data.get('address')
-            payment_method = data.get('payment_method')
+        name_business = data.get('name_business')
+        nif = data.get('nif')
+        address = data.get('address')
+        payment_method = data.get('payment_method')
 
-            # Hacher le mot de passe et créer l'entreprise
-            password_hash = bcrypt.generate_password_hash(password).decode('utf-8')
-            new_business = Business_user(business_name=name_business, email=email, password=password_hash, nif=nif, address=address, payment_method=payment_method)
-            db.session.add(new_business)
-            db.session.commit()
+        # Hacher le mot de passe et créer l'entreprise
+        password_hash = bcrypt.generate_password_hash(password).decode('utf-8')
+        new_business = Business_user(business_name=name_business, email=email, password=password_hash, nif=nif, address=address, payment_method=payment_method)
+        db.session.add(new_business)
+        db.session.commit()
 
-            return jsonify({'message': 'Business created successfully', 'business': new_business.serialize()}), 201
-
-        # Sinon, c'est une inscription d'utilisateur
-        else:
-            firstname = data.get('firstname')
-            lastname = data.get('lastname')
-            username = data.get('username')
-            address = data.get('address')
-            dni = data.get('dni')
-            payment_method = data.get('payment_method')
-
-            # Hacher le mot de passe et créer l'utilisateur
-            password_hash = bcrypt.generate_password_hash(password).decode('utf-8')
-            new_user = User(email=email, password=password_hash, firstname=firstname, lastname=lastname, username=username, address=address, dni=dni, payment_method=payment_method)
-            db.session.add(new_user)
-            db.session.commit()
-
-            return jsonify(message='User created successfully', user=new_user.serialize()), 201
+        return jsonify({'message': 'Business created successfully', 'business': new_business.serialize()}), 201
 
     except Exception as e:
-        return jsonify({'error': 'Error in user/business creation: ' + str(e)}), 500
+        return jsonify({'error': 'Error in business_user creation: ' + str(e)}), 500
+
 
 @api.route('/login', methods=['POST'])
 def login():

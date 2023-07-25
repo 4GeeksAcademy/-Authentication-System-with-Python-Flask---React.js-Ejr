@@ -1,11 +1,9 @@
 const getState = ({ getStore, getActions, setStore }) => {
-
-
   const API_URL =
-    "https://valentinfrar-super-pancake-66g4w999v69frgjq-3001.preview.app.github.dev";
+    "https://valentinfrar-laughing-space-cod-qrqp6777v9xc4wwj-3001.preview.app.github.dev";
   return {
     store: {
-      user: [],
+      user: {},
       business_user: [],
       trip: [],
       post: [],
@@ -13,10 +11,10 @@ const getState = ({ getStore, getActions, setStore }) => {
     },
     actions: {
       // Use getActions to call a function within a function
-      signup: async (userEmail, userPassword) => {
+      signupUser: async (userEmail, userPassword) => {
         try {
           // Utiliser la clé "myToken" au lieu de "token"
-          const response = await fetch(API_URL + "/api/signup", {
+          const response = await fetch(API_URL + "/api/signup/user", {
             method: "POST",
             headers: {
               "Content-Type": "application/json", // Utiliser le préfixe "Bearer" pour l'autorisation
@@ -26,7 +24,6 @@ const getState = ({ getStore, getActions, setStore }) => {
               password: userPassword,
             }),
           });
-
 
           if (response.ok) {
             console.log(response);
@@ -41,6 +38,36 @@ const getState = ({ getStore, getActions, setStore }) => {
           return false; // Gérer les autres erreurs, renvoyer false par défaut
         }
       },
+      signupBusiness: async (businessEmail, businessPassword) => {
+        try {
+          const response = await fetch(API_URL + "/api/signup/business_user", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              email: businessEmail,
+              password: businessPassword,
+            }),
+          });
+
+          if (response.ok) {
+            console.log(response);
+            console.log("Todo perfecto");
+            return response;
+          } else if (response.status === 401) {
+            // Gérer l'erreur de connexion non autorisée
+            return false;
+          } else {
+            // Gérer d'autres erreurs
+            return false;
+          }
+        } catch (err) {
+          console.log(err);
+          return false; // Gérer les autres erreurs, renvoyer false par défaut
+        }
+      },
+
       login: async (userEmail, userPassword) => {
         console.log(userEmail, userPassword);
         try {
