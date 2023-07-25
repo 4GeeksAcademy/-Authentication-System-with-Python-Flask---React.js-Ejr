@@ -1,8 +1,9 @@
 from flask import Flask, request, jsonify, Blueprint, jsonify
 from api.models import db, User, Business_user, Post
 from api.utils import APIException
-from flask_bcrypt import bcrypt
+from flask_bcrypt import bcrypt, Bcrypt
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity, JWTManager
+from werkzeug.security import generate_password_hash, check_password_hash
 
 
 api = Blueprint('api', __name__)
@@ -50,6 +51,9 @@ def get_business_user(business_user_id):
     return jsonify(business_user.serialize())
 
 
+
+bcrypt = Bcrypt()
+
 @api.route('/signup', methods=['POST'])
 def create_user_or_business():
     try:
@@ -65,11 +69,8 @@ def create_user_or_business():
         existing_user = User.query.filter_by(email=email).first()
         existing_business = Business_user.query.filter_by(email=email).first()
 
-        if existing_user:
-            return jsonify({'error': 'Email already exists for a user.'}), 409
-
-        if existing_business:
-            return jsonify({'error': 'Email already exists for a business.'}), 409
+        if existing_user or existing_business:
+            return jsonify({'error': 'Email already exists.'}), 409
 
         # Si le champ 'name_business' est présent, c'est une inscription d'entreprise
         if 'name_business' in data:
@@ -79,7 +80,7 @@ def create_user_or_business():
             payment_method = data.get('payment_method')
 
             # Hacher le mot de passe et créer l'entreprise
-            password_hash = bcrypt.generate_password_hash(password).decode('utf-8')
+            password_hash = generate_password_hash(password)
             new_business = Business_user(business_name=name_business, email=email, password=password_hash, nif=nif, address=address, payment_method=payment_method)
             db.session.add(new_business)
             db.session.commit()
@@ -91,14 +92,13 @@ def create_user_or_business():
             firstname = data.get('firstname')
             lastname = data.get('lastname')
             username = data.get('username')
-            Address = data.get('Address')
+            address = data.get('address')
             dni = data.get('dni')
-            location = data.get('location')
             payment_method = data.get('payment_method')
 
             # Hacher le mot de passe et créer l'utilisateur
-            password_hash = bcrypt.generate_password_hash(password).decode('utf-8')
-            new_user = User(email=email, password=password_hash, firstname=firstname, lastname=lastname, username=username, Address=Address, dni=dni, location=location, payment_method=payment_method)
+            password_hash = generate_password_hash(password)
+            new_user = User(email=email, password=password_hash, firstname=firstname, lastname=lastname, username=username, address=address, dni=dni, payment_method=payment_method)
             db.session.add(new_user)
             db.session.commit()
 
@@ -106,6 +106,8 @@ def create_user_or_business():
 
     except Exception as e:
         return jsonify({'error': 'Error in user/business creation: ' + str(e)}), 500
+
+
 
 
 @api.route('/login', methods=['POST'])
@@ -174,9 +176,8 @@ def update_user_profile(user_id):
         user.username = data.get('username', user.username)
         user.firstname = data.get('firstname', user.firstname)
         user.lastname = data.get('lastname', user.lastname)
-        user.Address = data.get('Address', user.Address)
+        user.address = data.get('address', user.address)
         user.dni = data.get('dni', user.dni)
-        user.location = data.get('location', user.location)
         user.payment_method = data.get('payment_method', user.payment_method)
 
         db.session.commit()
