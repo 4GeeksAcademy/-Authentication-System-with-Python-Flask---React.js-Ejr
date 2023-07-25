@@ -7,7 +7,6 @@ import { Purchase_navbar } from "../component/purchase_navbar";
 
 export const Profile_buys = () => {
     const {actions, store} = useContext(Context);
-    const blockedCount = store.products.length;
     const [productsPendingBlockedChanged, setProductsPendingBlockedChanged] = useState([]);
     const [productsBlockedChanged, setProductsBlockedChanged] = useState([]);
     const [productsPendingSaleChanged, setProductsPendingSaleChanged] = useState([]);
@@ -18,6 +17,7 @@ useEffect(() => {
     async function fetchProducts() {
       const response = await actions.PendingBlockedChanged();
       setProductsPendingBlockedChanged(response); 
+      console.log(response)
     }
     fetchProducts();
   }, []);
@@ -83,11 +83,11 @@ const StatusToOnSale = (product) => {
         }, 1000);
 };
 
-    return (
+    return productsPendingBlockedChanged || productsBlockedChanged || productsPendingSaleChanged ? (
         <>
             <Profile_navbar />
-            <Purchase_navbar blockedCount={blockedCount}/>
-            {store.products.map((product, index) => (
+            <Purchase_navbar blockedCount={productsPendingBlockedChanged.length + productsBlockedChanged.length + productsPendingSaleChanged.length}/>
+            {[...productsPendingBlockedChanged, ...productsBlockedChanged, ...productsPendingSaleChanged].map((product, index) => (
                 <div className="justify-content-center d-flex" key={index}>
                 <div className="row row_product_profile container justify-content-around m-1" key={index}>
                     <div className="product_img_profile_box col-lg-5 col-3 col-sm-2 col-xs-2">
@@ -150,7 +150,7 @@ const StatusToOnSale = (product) => {
                                     <h5 className="modal-title" id="exampleModalLabel">Tu reserva está pendiente de aprobación por parte del vendedor ¿Estás seguro de que quieres cancelar la solicitud de reserva del siguiente vehículo?</h5>
                                     <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
-                                <div className="modal-body-sale-process row">
+                                <div className="modal-body-sale-process row mt-2rem ml-0rem">
                                     <div className="product_img_profile_box-sales-process col-4">
                                     {product.images.length > 0 ? (
                                         <img src={product.images[0].image} className="card-img-top imgCarousel" alt="..." />
@@ -170,7 +170,6 @@ const StatusToOnSale = (product) => {
                                             <h6 className=" col-6">{product.price}€</h6>
                                         </div>
                                     </div>
-                                    
                                 </div>
                                 <div className="modal-footer">
                                     <button type="button" className="btn btn_config cancel" data-bs-dismiss="modal">Cancelar</button>
@@ -255,5 +254,5 @@ const StatusToOnSale = (product) => {
                 </div>
     ))}
     </>
-    )
+    ) : "cargando...";
     }

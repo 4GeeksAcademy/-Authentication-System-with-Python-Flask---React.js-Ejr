@@ -395,7 +395,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			PendingBlockedChanged: async () => {
 				const store = getStore();
 				try {
-					const response = await fetch(process.env.BACKEND_URL + "api/profile/products/PENDING_BLOCKED", {
+					const response = await fetch(process.env.BACKEND_URL + "api/profile/changed/PENDING_BLOCKED", {
 					method: "GET",
 					headers: {
 					"Content-Type": "application/json",
@@ -415,7 +415,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			BlockedChanged: async () => {
 				const store = getStore();
 				try {
-					const response = await fetch(process.env.BACKEND_URL + "api/profile/products/BLOCKED", {
+					const response = await fetch(process.env.BACKEND_URL + "api/profile/changed/BLOCKED", {
 					method: "GET",
 					headers: {
 					"Content-Type": "application/json",
@@ -435,7 +435,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			PendingSaleChanged: async () => {
 				const store = getStore();
 				try {
-					const response = await fetch(process.env.BACKEND_URL + "api/profile/products/PENDING_SALE", {
+					const response = await fetch(process.env.BACKEND_URL + "api/profile/changed/PENDING_SALE", {
 					method: "GET",
 					headers: {
 					"Content-Type": "application/json",
@@ -455,7 +455,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			SoldChanged: async () => {
 				const store = getStore();
 				try {
-					const response = await fetch(process.env.BACKEND_URL + "api/profile/products/SOLD", {
+					const response = await fetch(process.env.BACKEND_URL + "api/profile/changed/SOLD", {
 					method: "GET",
 					headers: {
 					"Content-Type": "application/json",
@@ -475,7 +475,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			SoldReviewedChanged: async () => {
 				const store = getStore();
 				try {
-					const response = await fetch(process.env.BACKEND_URL + "api/profile/products/SOLD_REVIEWED", {
+					const response = await fetch(process.env.BACKEND_URL + "api/profile/changed/SOLD_REVIEWED", {
 					method: "GET",
 					headers: {
 					"Content-Type": "application/json",

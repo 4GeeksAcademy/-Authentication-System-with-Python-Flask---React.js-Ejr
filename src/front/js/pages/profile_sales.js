@@ -7,24 +7,32 @@ import "/workspaces/Watacar_v2/src/front/styles/profile.css"
 
 export const Profile_sales = () => {
     const {actions, store} = useContext(Context);
-    const soldCount = store.products.length;
-    const [products, setProducts] = useState([]);
+    const [productsSold, setProductsSold] = useState([]);
+    const [productsSoldReviewed, setProductsSoldReviewed] = useState([]);
     const carImage = "https://images.coches.com/_vn_/kia/Sportage/c399cf1d98a95d24f8e8715dd0b13fb2.jpg?p=cc_vn_high"
 
 
     useEffect(() => {
         async function fetchProducts() {
           const response = await actions.getProductsSold();
-          setProducts(response); 
+          setProductsSold(response); 
         }
         fetchProducts();
       }, []);
 
-    return store.products ? (
+      useEffect(() => {
+        async function fetchProducts() {
+          const response = await actions.getProductsSoldReviewed();
+          setProductsSoldReviewed(response); 
+        }
+        fetchProducts();
+      }, []);
+
+    return productsSold || productsSoldReviewed ? (
         <>
             <Profile_navbar />
-            <Sales_navbar soldCount={soldCount} />
-            {store.products.map((product, index) => (
+            <Sales_navbar soldCount={productsSold.length + productsSoldReviewed.length} />
+            {[...productsSold, ...productsSoldReviewed].map((product, index) => (
                 <>
                     <div className="sales_profile_box row" key={index}>
                         <div className="col-4">
@@ -37,7 +45,10 @@ export const Profile_sales = () => {
                             </div>
                         </div>
                         <div className="col-8 product_data_sales">
-                            <h6>{product.name}</h6>
+                            <div className="row">
+                                <h6 className="col-4">{product.name}</h6>
+                                <h6 className="col-8">{product.year}</h6>
+                            </div>
                             <div className="row">
                                 <h6 className="col-4">{product.brand.name}</h6>
                                 <h6 className="col-8">{product.model.model}</h6>

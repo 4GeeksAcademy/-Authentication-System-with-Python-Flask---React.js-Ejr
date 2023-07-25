@@ -83,11 +83,11 @@ const StatusToSoldReviewed = (product) => {
         });
 };
 
-    return store.products ? (
+    return productsSold || productsSoldReviewed ? (
         <>
             <Profile_navbar />
-            <Purchase_navbar soldCount={soldCount} />
-            {store.products.map((product, index) => (
+            <Purchase_navbar soldCount={productsSold.length + productsSoldReviewed.length} />
+            {[...productsSold, ...productsSoldReviewed].map((product, index) => (
                 <>
                     <div className="sales_profile_box row" key={index}>
                         <div className="col-4">
@@ -100,17 +100,22 @@ const StatusToSoldReviewed = (product) => {
                             </div>
                         </div>
                         <div className="col-8 product_data_sales">
-                            <h6>{product.name}</h6>
+                            <div className="row">
+                                <h6 className="col-4">{product.name}</h6>
+                                <h6 className="col-8">{product.year}</h6>
+                            </div>
                             <div className="row">
                                 <h6 className="col-4">{product.brand.name}</h6>
                                 <h6 className="col-8">{product.model.model}</h6>
                             </div>
-                            {product.status === "sold" && (
-                            <>
-                                <button className="review_button" data-bs-target="#exampleModal2" data-bs-toggle="modal">Valorar venta</button>
-                            </>
-                            )}
-                            <h6 className="price_sales_profile">{product.price}€</h6>
+                            <div className="row">
+                                <h6 className="price_sales_profile col-8">{product.price}€</h6>
+                                {product.status === "sold" && (
+                                <>
+                                    <button className="review_button col-2"  data-bs-target="#exampleModal2" data-bs-toggle="modal">Valorar venta</button>
+                                </>
+                                )}
+                            </div>
                         </div>
                     </div>
                     <div className="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -144,12 +149,12 @@ const StatusToSoldReviewed = (product) => {
                                         </div>
                                     </div>
                                 </div>
-                                <div className="row">
+                                <div className="row mt-2 h-100 p-2">
                                     <div className="input-group col-12 input_review">
                                         <textarea className="form-control" aria-label="With textarea"/>
                                     </div>
                                 </div>
-                                <div className="modal-footer">
+                                <div className="modal-footer mt-2 pt-2">
                                     <button type="button" className="btn btn_config cancel" data-bs-dismiss="modal">Cancelar</button>
                                     <button
                                         type="button"

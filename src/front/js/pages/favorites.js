@@ -14,7 +14,7 @@ export const Favorites = () => {
     defineElement(lottie.loadAnimation);
     useEffect (() => {
         actions.getFavorites();
-        actions.getProducts()
+        actions.getProductsOnSale()
     }, [])
 
     const handleRemoveFavorite = (product_id) => {
