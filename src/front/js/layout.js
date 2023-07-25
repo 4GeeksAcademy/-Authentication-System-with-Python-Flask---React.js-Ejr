@@ -6,19 +6,19 @@ import { BackendURL } from "./component/backendURL";
 import { Home } from "./pages/home";
 import { Demo } from "./pages/demo";
 import { Single } from "./pages/single";
-import  LogIn  from "./pages/LogIn.jsx";
-import  ForgotPassword  from "./pages/ForgotPassword.jsx";
-import  UserPrivate  from "./pages/UserPrivate.jsx";
-import  BusinessUserPrivate  from "./pages/BusinessUserPrivate.jsx";
-import  UsersReviews  from "./pages/UsersReviews.jsx";
-import  Business_offers  from "./pages/Business_offers.jsx";
+import LogIn  from "./pages/LogIn.jsx";
+import ForgotPassword  from "./pages/ForgotPassword.jsx";
+import UserPrivate  from "./pages/UserPrivate.jsx";
+import BusinessUserPrivate  from "./pages/BusinessUserPrivate.jsx";
+import UsersReviews  from "./pages/UsersReviews.jsx";
+import Business_offers  from "./pages/Business_offers.jsx";
 import Trips  from "./pages/Trips.jsx";
 import SignUp from "./pages/SignUp.jsx";
 
 import injectContext from "./store/appContext";
 
-import { Navbar } from "./component/navbar";
-import { Footer } from "./component/footer";
+import Navbar from "./component/Navbar.jsx";
+import Footer  from "./component/Footer.jsx";
 
 //create your first component
 const Layout = () => {
