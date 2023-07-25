@@ -134,6 +134,7 @@ export const EditProduct = () => {
           .then((responseData) => {
             setSelectedData({ ...selectedData, response: responseData });
             console.log(selectedData)
+            setSelectedImages([]);
             navigate("/");
           })
           .catch((error) => {
@@ -165,49 +166,49 @@ export const EditProduct = () => {
   
   
   
-  const handleAdd = (e) => {
-    e.preventDefault();
-    Promise.all(
-      selectedData.map
-    )
-  
-    const newImages = selectedImages.map((file) => ({ image: file }));
-  
-    setSelectedData({
-      ...selectedData,
-      images: [...selectedData.images, ...newImages],
-    });
-    console.log(selectedImages)
-    //setSelectedImages([]);
-  };
+const handleAdd = (e) => {
+  e.preventDefault();
+  const newImages = selectedImages.map((file) => ({ image: file }));
+  setSelectedData((prevState) => ({
+    ...prevState,
+    images: [...prevState.images, ...newImages],
+  }));
+  console.log(selectedImages);
+};
   
   
   return (
     <>
-      <div className="upload-container">
-        <form onSubmit={handleSubmit}>
-          <div className="upload-box">
-            <div className="upload-innerbox">
-              <div className="upload-title">
-                <h3>
+  <div className="container col-12 my-5 justify-content-center ">
+      <form onSubmit={handleSubmit}>
+        <div className="box my-5">
+      <div className='upload-title'>
+            
+        <h3 className='text-center mt-2 pt-3'>
+              
                   <strong>Actualiza tu producto</strong>
-                </h3>
+            </h3>
               </div>
-              <div className="row innerselect">
-                <div className="col-3 me-3">
-                  <label htmlFor="name">
+
+
+             <div className='row me-1 justify-content-around text-center p-4'>
+             
+             <div className='col-xs-10 col-sm-10 col-md-10 col-lg-6 '>
+                  <div><label htmlFor="name">
                     <h6>
                       <strong>Título</strong>
                     </h6>{" "}
-                  </label>
+                  </label></div>
                   <input className="select" type="text" maxLength="100" name="name" value={selectedData.name} placeholder="de la publicación" onChange={handleChange}/>
                 </div>
-                <div className="col-3 me-5 ms-5">
-                  <label htmlFor="select-middle">
+
+
+                <div className='col-xs-10 col-sm-10 col-md-10 col-lg-6 '>
+                  <div><label htmlFor="select-middle">
                     <h6>
                       <strong>Marca</strong>
                     </h6>{" "}
-                  </label>
+                  </label></div>
                   <select id="select-middle" name="brand"  className="select" onChange={(e) => {handleChange(e) ; getModelsByBrand(e.target.value);}}
                   >
                     <option >Selecciona otro</option>
@@ -218,12 +219,14 @@ export const EditProduct = () => {
                     ))}
                   </select>
                 </div>
-                <div className="col-3 ms-3">
-                  <label htmlFor="select-right">
+
+                <div className='row me-1 justify-content-around text-center p-4'>
+                <div className='col-xs-10 col-sm-10 col-md-10 col-lg-6 '>
+                  <div><label htmlFor="select-right">
                     <h6>
                       <strong>Modelo</strong>
                     </h6>{" "}
-                  </label>
+                  </label></div>
                   <select id="select-right" name="model"  className="select" onChange={handleModelChange}>
                     <option>Selecciona otro</option>
                     {carModels.map((model) => (
@@ -233,34 +236,38 @@ export const EditProduct = () => {
                     ))}
                   </select>
                 </div>
-              </div>
-              <div className="row innerselect">
-                <div className="col-3 me-3">
-                  <label htmlFor="name">
+             
+             
+                <div className='col-xs-10 col-sm-10 col-md-10 col-lg-6 '>
+                  <div><label htmlFor="price">
                     <h6>
                       <strong>Precio</strong>
                     </h6>
-                  </label>
+                  </label></div>
                   <input className="select" type="number"name="price" value={selectedData.price} placeholder="2400€" onChange={handleChange}/>
                 </div>
-                <div className="col-3 me-5 ms-5">
-                  <label htmlFor="select-middle">
+                </div>
+
+
+                <div className='col-xs-10 col-sm-10 col-md-10 col-lg-6 '>
+                 <div><label htmlFor="select-middle">
                     <h6>
                       <strong>Estado del vehículo</strong>
                     </h6>{" "}
-                  </label>
+                  </label></div> 
                   <select id="select-middle" name="state" value={selectedData} className="select" onChange={handleChange}>
                     <option>Selecciona otro</option>
                     <option value="NUEVO">Nuevo</option>
                     <option value="SEMINUEVO">Semi-nuevo</option>
                   </select>
                 </div>
-                <div className="col-3 ms-3">
-                  <label htmlFor="select-right">
+
+                <div className='col-xs-10 col-sm-10 col-md-10 col-lg-6 '>
+                  <div><label htmlFor="select-right">
                     <h6>
                       <strong>Kilómetros</strong>
                     </h6>{" "}
-                  </label>
+                  </label></div>
                   <select id="select-right" name="km" value={selectedData.km} className="select" onChange={handleChange}>
                     <option>Selecciona otro</option>
                     <option value="1000">Cómo nuevo: de 0 a 1,000</option>
@@ -270,21 +277,26 @@ export const EditProduct = () => {
                   </select>
                 </div>
               </div>
-              <div className="row innerselect">
-                <div className="col-3 me-3">
-                  <label htmlFor="name">
+
+
+              <div className='row me-1 justify-content-around text-center p-4'>
+
+              <div className='col-xs-10 col-sm-10 col-md-10 col-lg-6 '>
+                  <div><label htmlFor="name">
                     <h6>
                       <strong>Año de fabricación</strong>
                     </h6>{" "}
-                  </label>
+                  </label></div>
                   <input className="select" type="number" name="year" value={selectedData.year}   placeholder="2020" onChange={handleChange} /> 
                 </div>
-                <div className="col-3 ms-3">
-                  <label htmlFor="select-right">
+
+
+                <div className='col-xs-10 col-sm-10 col-md-10 col-lg-6 '>
+                  <div><label htmlFor="select-right">
                     <h6>
                       <strong>Combustible</strong>
                     </h6>{" "}
-                  </label>
+                  </label></div>
                   <select id="select-right "name="fuel" value={selectedData.fuel} className="select" onChange={handleChange}>
                     <option>Selecciona otro</option>
                     <option value="GASOLINA">Gasolina</option>
@@ -294,37 +306,51 @@ export const EditProduct = () => {
                   </select>
                 </div>
               </div>
+
+
+              <div className=' specialBox row me-1 justify-content-around text-center p-4'>
+              <div className=' col-xs-10 col-sm-10 col-md-10 col-lg-6 justify-content-center ms-5 mt-5 '></div>
               <div className="upload-product-description">
                 <div className="description-title">
                   <h5>
                     <strong>Descripción:</strong>
                   </h5>
                 </div>
-                <textarea value={selectedData.description} onChange={handleChange}  className="upload-textarea-description" name="description" rows="7" cols="132"
-                  placeholder="Te recomendamos encarecidamente incluir algunos detalles clave cómo el número de puertas, plazas disponibles y el tipo de cambio del vehículo."
+                <textarea value={selectedData.description} 
+                onChange={handleChange}  
+                className="upload-textarea-description" 
+                name="description" 
+                rows="7"
+                cols="40"
+                placeholder="Te recomendamos encarecidamente incluir algunos detalles clave cómo el número de puertas, plazas disponibles y el tipo de cambio del vehículo."
                 ></textarea>
               </div>
-              <div className="dropzone d-flex">
+              </div>
+             
+              <div className="dropzone d-flex justify-content-center">
               {selectedData.images.map((image, index) => (
                 !selectedImageIds.includes(image.id) && (
                   <div key={image.id}>
-                    <img style={{width:'11rem', height:'8rem', border:'.1rem solid black', borderRadius:'.2rem'}} src={image.image} alt={`Image ${image.id}`} />
-                    <button className="btn" onClick={(e) => handleDeleteImage(image.id, e)}><i class="fa-solid fa-trash-can" style={{"color": "red"}}></i></button>
+                    <img style={{width:'11rem', height:'8rem', border:'.1rem solid black', borderRadius:'.2rem'}} 
+                    src={image.image} a
+                    lt={`Image ${image.id}`} />
+                    <button className="btn" 
+                    onClick={(e) => handleDeleteImage(image.id, e)}><i class="fa-solid fa-trash-can" style={{"color": "red"}}></i></button>
                   </div>
                 )
               ))}
               
               
             </div>
-            <div className="input_edit_images">
+            <div className="input_edit_images mt-3">
               <input type="file" onChange={handleFileChange} multiple />
-              <button onClick={handleAdd}>Upload</button>
+              <button className="btn btn-success ms-2" onClick={handleAdd}>Subir</button>
             </div>
-              <div className="text-center mt-5">
+              <div className="text-center py-5 my-5">
                 <button className="btn btn-primary" type="submit" >¡Actualiza tu vehículo!</button>
               </div>
             </div>
-          </div>
+      
         </form>
       </div>
     </>

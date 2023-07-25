@@ -448,13 +448,13 @@ def search_by_filter():
     if max_price is not None:
         products = products.filter(Product.price <= float(max_price))
     if min_year is not None:
-        products = products.filter(Product.year >= float(min_year))
+        products = products.filter(Product.year >= int(min_year))
     if max_year is not None:
-        products = products.filter(Product.year <= float(max_year))
+        products = products.filter(Product.year <= int(max_year))
     if min_km is not None:
-        products = products.filter(Product.km >= float(min_km))
+        products = products.filter(Product.km >= int(min_km))
     if max_km is not None:
-        products = products.filter(Product.km <= float(max_km))  # Utiliza 'max_km' para el filtro máximo de kilómetros
+        products = products.filter(Product.km <= int(max_km))
 
     products = products.all()
 
@@ -927,7 +927,9 @@ def getFavorites():
             "description": product.description,
             "price": product.price,
             "year": product.year,
-            "km": product.km
+            "km": product.km,
+            "image": list(product.images)[0].image
+            
         })
 
     return jsonify(response), 200
@@ -994,7 +996,8 @@ def getReviews():
             "given_review_id": review.given_review_id,
             "product_name": product.name,
             "recived_review_id": review.recived_review_id,
-            "recived_user_id": review.recived_review_id
+            "recived_user_id": review.recived_review_id,
+            "image": list(product.images)[0].image
         }
         review_list.append(review_data)
 

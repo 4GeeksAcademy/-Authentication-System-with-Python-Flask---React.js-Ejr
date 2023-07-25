@@ -97,7 +97,7 @@ export const Profile_configuration = () => {
   return store.user ? (
     <>
       <Profile_navbar />
-      <div className="container_profile ">
+      <div className="container_profile mx-4">
         <div className="mx-5 px-5 box w-100">
         <div className="d-lg-flex justify-content-start my-5">
           <img
@@ -108,40 +108,40 @@ export const Profile_configuration = () => {
         </div>
         <div className="profile_info m-auto pb-5">
           <div className="row_profile_configuration mx-1 justify-content-around text-center mx-1 justify-content-around text-center">
-            <h4 className="text-wrap badge label col-xs-12 col-sm-12 col-md-12 col-lg-12 ">
+            <h4 className="text-wrap badge label col-10 col-sm-10 col-md-10 col-lg-12 ">
               Nombre y apellidos:
             </h4>
-            <h4 className="user_data">{store.user.full_name}</h4>
+            <h4 className="user_data text-start">{store.user.full_name}</h4>
           </div>
           <div className="row_profile_configuration mx-1 justify-content-around text-center">
-            <h4 className="text-wrap badge label col-xs-10 col-sm-10 col-md-12 col-lg-12 ">
+            <h4 className="text-wrap badge label col-10 col-sm-10 col-md-10 col-lg-12 ">
               Email:
             </h4>
-            <h4 className="col-8 user_data">{store.user.email}</h4>
+            <h4 className="col-8 user_data text-start">{store.user.email}</h4>
           </div>
           <div className="row_profile_configuration mx-1 justify-content-around text-center">
-            <h4 className="text-wrap badge label col-xs-10 col-sm-10 col-md-12 col-lg-12  ">
+            <h4 className="text-wrap badge label col-10 col-sm-10 col-md-10 col-lg-12  ">
               Tipo de documento:
             </h4>
-            <h4 className="user_data">{store.user.document_type}</h4>
+            <h4 className="user_data text-start">{store.user.document_type}</h4>
           </div>
           <div className="row_profile_configuration">
-            <h4 className="text-wrap badge label col-xs-10 col-sm-10 col-md-12 col-lg-12 ">
+            <h4 className="text-wrap badge label col-10 col-sm-10 col-md-10 col-lg-12 ">
               Nº del documento:
             </h4>
-            <h4 className="user_data">{store.user.document_number}</h4>
+            <h4 className="user_data text-start">{store.user.document_number}</h4>
           </div>
           <div className="row_profile_configuration mx-1 justify-content-around text-center">
-            <h4 className="text-wrap badge label col-xs-10 col-sm-10 col-md-12 col-lg-12 ">
+            <h4 className="text-wrap badge label col-10 col-sm-10 col-md-10 col-lg-12 ">
               Teléfono:
             </h4>
-            <h4 className="user_data">{store.user.phone}</h4>
+            <h4 className="user_data text-start">{store.user.phone}</h4>
           </div>
           <div className="row_profile_configuration mx-1 justify-content-around text-center">
-            <h4 className="text-wrap badge label  col-xs-10 col-sm-10 col-md-12 col-lg-12 ">
+            <h4 className="text-wrap badge label  col-10 col-sm-10 col-md-10 col-lg-12 ">
               Dirección:
             </h4>
-            <h4 className="user_data">{store.user.address}</h4>
+            <h4 className="user_data text-start">{store.user.address}</h4>
           </div>
           <hr className="mb-4"></hr>
           <div className="mt-5 justify-content-lg-end justify-content-md-end justify-content-md-start justify-content-xs-end d-lg-flex d-md-flex d-sm-flex">

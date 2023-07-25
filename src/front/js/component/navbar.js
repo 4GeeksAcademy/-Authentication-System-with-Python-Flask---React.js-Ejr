@@ -1,13 +1,13 @@
 import React, { useContext, useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom"; // Actualiza la importación aquí
+import { Link, useNavigate } from "react-router-dom";
 import ReactSwitch from "react-switch";
 import { ThemeContext } from "../layout";
 import { Context } from "../store/appContext";
-import ReactModal from 'react-modal'
+import ReactModal from 'react-modal';
 import { Login } from "../pages/login";
 import { SwitchLight } from "./switchLight";
-import  "../../styles/navbar.css"
-import  "../../styles/index.css"
+import  "../../styles/navbar.css";
+import  "../../styles/index.css";
 
 export const Navbar = () => {
   const { store, actions, token } = useContext(Context);
@@ -19,38 +19,30 @@ export const Navbar = () => {
   const [isSmallScreen, setIsSmallScreen] = useState(false);
   const [dropMenu, setDropMenu] = useState("container-fluid mx-1");
   const [ariaExpanded, setAriaExpanded] = useState(false);
-  const [manuallyClosed, setManuallyClosed] = useState(false); // Nueva variable de estado
-  const [eye, setEye] = useState(true); // Estado para controlar la visibilidad de la contraseña
-  const [hasFiltered, setHasFiltered] = useState(false)
+  const [manuallyClosed, setManuallyClosed] = useState(false);
+  const [eye, setEye] = useState(true);
+  const [hasFiltered, setHasFiltered] = useState(false);
 
-
-
-const handleWhataCarClick = () => {
-  closeMenuOnItemClick(); // Cerrar el menú antes de realizar cualquier acción
-
-  // Agregar una breve pausa de 100 milisegundos antes de redirigir
-  setTimeout(() => {
-    navigate("/");
-    window.location.reload();
-  }, 100);
-};
-
-  
-  
-  
+  const handleWhataCarClick = () => {
+    closeMenuOnItemClick();
+    setTimeout(() => {
+      navigate("/");
+      window.location.reload();
+    }, 100);
+  };
 
   const openModal = () => {
     setIsOpen(true);
-  }
+  };
 
   const closeModal = () => {
     setIsOpen(false);
-  }
+  };
 
   const handleLogOut = () => {
-    localStorage.removeItem("token")
-    store.token = ""
-  }
+    localStorage.removeItem("token");
+    store.token = "";
+  };
 
   const handleSubmit = async e => {
     e.preventDefault();
@@ -78,11 +70,11 @@ const handleWhataCarClick = () => {
 
   const showSwitchBigScreen = () => {
     return window.innerWidth >= 993 && <SwitchLight />;
-  }
+  };
 
   const showSwitchMobile = () => {
     return isSmallScreen && <SwitchLight />;
-  }
+  };
 
   const showModal = () => {
     return (
@@ -125,30 +117,38 @@ const handleWhataCarClick = () => {
   };
 
   useEffect(() => {
-    actions.getToken()
-    actions.getUser()
+    actions.getToken();
+    actions.getUser();
   }, []);
 
   const closeForceNavbar = () => {
-    setAriaExpanded(false)
-  }
+    setAriaExpanded(false);
+  };
 
   const closeMenuOnItemClick = () => {
-    setManuallyClosed(true); // Establecer que el menú ha sido cerrado manualmente
-    setAriaExpanded(false); // Cerrar el menú
+    setManuallyClosed(true);
+    setAriaExpanded(false);
   };
 
   const handleEye = () => {
     setEye(!eye);
   };
 
+  const handleOutsideClick = (e) => {
+    if (!e.target.closest("#navbarNavDropdown")) {
+      closeMenuOnItemClick();
+    }
+  };
+
   return (
-    <nav className="navbar navbar-expand-lg bgNavbar py-4">
-      <div className={dropMenu} >
+    <nav className="navbar navbar-expand-lg bgNavbar py-4" onClick={handleOutsideClick}>
+      <div className={dropMenu}>
         <div className="text-center lightSpeedIn customDiv">
-          <button  onClick={handleWhataCarClick}  
-          className="navbar-brand tittle-nav ms-1 " 
-          id="tittle-nav" >
+          <button
+            onClick={handleWhataCarClick}
+            className="navbar-brand tittle-nav ms-1"
+            id="tittle-nav"
+          >
             WhataCar
           </button>
         </div>
@@ -182,7 +182,10 @@ const handleWhataCarClick = () => {
                         style={{ color: "rgb(15, 76, 117)" }}
                         aria-current="page"
                         to="/signup"
-                        onClick={closeMenuOnItemClick}
+                        onClick={() => {
+                          closeMenuOnItemClick();
+                          setManuallyClosed(false);
+                        }}
                       >
                         Registro
                       </Link>
@@ -193,7 +196,10 @@ const handleWhataCarClick = () => {
                         style={{ color: "rgb(15, 76, 117)" }}
                         aria-current="page"
                         to="/login"
-                        onClick={closeMenuOnItemClick}
+                        onClick={() => {
+                          closeMenuOnItemClick();
+                          setManuallyClosed(false);
+                        }}
                       >
                         Accede
                       </Link>
@@ -210,6 +216,10 @@ const handleWhataCarClick = () => {
                         role="button"
                         aria-expanded="page"
                         to="/profile/favorites"
+                                 onClick={() => {
+                          closeMenuOnItemClick();
+                          setManuallyClosed(false);
+                        }}
                       >
                         <span>Favoritos</span> {""}
                         <i className="fa-regular fa-heart"></i>
@@ -228,7 +238,10 @@ const handleWhataCarClick = () => {
                           to="/choose-vehicle"
                           style={{width: 38, height: 35, background: '#0F4C75', borderRadius: 8}}
                           className="nav-link btn-plus btn_mucho mb-2 ms-4"
-                          onClick={closeMenuOnItemClick}
+                          onClick={() => {
+                            closeMenuOnItemClick();
+                            setManuallyClosed(false);
+                          }}
                         >
                           <i className="fa-solid fa-plus m-auto"></i>
                         </Link>
@@ -247,12 +260,15 @@ const handleWhataCarClick = () => {
                       >
                         <i className="fa-regular fa-user ms-4 jello-vertical" id="iconProfile"></i>
                       </Link>
-                      <ul className="dropdown-menu ms-3">
+                      <ul className="dropdown-menu">
                         <li>
                           <Link
                             to="/profile/configuration"
                             className="dropdown-item justify-content-end d-flex"
-                            onClick={closeMenuOnItemClick}
+                            onClick={() => {
+                              closeMenuOnItemClick();
+                              setManuallyClosed(false);
+                            }}
                           >
                             Mi perfil
                             <i className="fa-solid fa-address-card ms-2 mt-1 profileIcons"></i>
@@ -260,36 +276,30 @@ const handleWhataCarClick = () => {
                         </li>
                         <li>
                           <Link
-                            to="/profile/configuration"
-                            className="dropdown-item justify-content-end d-flex  profileIcons"
-                            onClick={closeMenuOnItemClick}
+                            to="/profile/buys"
+                            className="dropdown-item justify-content-end d-flex ms-1 mt-1  profileIcons"
+                            onClick={() => {
+                              closeMenuOnItemClick();
+                              setManuallyClosed(false);
+                            }}
                           >
-                            Configuración
-                            <i className="fa-solid fa-gear ms-2 mt-1 profileIcons" ></i>
+                            Compras
+                            <i className="fa-solid fa-cart-arrow-down"></i>
                           </Link>
                         </li>
                         <li>
                           <Link
                             to="/profile/onsale"
                             className="dropdown-item justify-content-end d-flex "
-                            onClick={closeMenuOnItemClick}
+                            onClick={() => {
+                              closeMenuOnItemClick();
+                              setManuallyClosed(false);
+                            }}
                           >
-                            Mis productos
+                            Ventas
                             <i className="fa-solid fa-car ms-2 mt-1 profileIcons"></i>
                           </Link>
                         </li>
-                        {/* Cuando se inicia la aplicación hay que quitar esto, loguearte reescribirlo y recargar */}
-                         {/* {store.user.role === "GARAGE" && (
-                            <li>
-                              <Link
-                                to="/profile/garage"
-                                className="dropdown-item justify-content-end d-flex"
-                              >
-                                Mi Taller
-                                <i className="fa-solid fa-wrench ms-2 mt-1"></i>
-                              </Link>
-                            </li>
-                          )} */}
                         <li>
                           <hr className="dropdown-divider" />
                         </li>
@@ -298,7 +308,11 @@ const handleWhataCarClick = () => {
                             className="dropdown-item justify-content-end d-flex "
                             to="/"
                             style={{ color: "red" }}
-                            onClick={handleLogOut}
+                            onClick={() => {
+                              handleLogOut();
+                              closeMenuOnItemClick();
+                              setManuallyClosed(false);
+                            }}
                           >
                             Salir
                             <i className="fa-solid fa-right-from-bracket ms-3 mt-1 "></i>
@@ -318,4 +332,3 @@ const handleWhataCarClick = () => {
     </nav>
   );
 };
-

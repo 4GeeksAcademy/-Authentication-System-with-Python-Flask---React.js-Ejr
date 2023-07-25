@@ -6,7 +6,6 @@ import { Link } from "react-router-dom";
 import "../../styles/filters.css";
 import { Range, getTrackBackground } from "react-range";
 
-
 export const Filters = (props) => {
   const { store, actions } = useContext(Context);
 
@@ -22,22 +21,18 @@ export const Filters = (props) => {
 
   const handleKmChange = (newKm) => {
     setKm(newKm);
-
   }
-  
 
   const handleYearChange = (newYear) => {
     setYear(newYear);
-
   }
-
 
   const handlePriceChange = (newPrice) => {
     setRangePrice(newPrice);
   }
 
-
-  const handleShowMore = () => {
+  const handleShowMore = (e) => {
+    e.preventDefault(); // Evitar que se active el comportamiento por defecto del enlace
     setVisibleBrands((prevVisibleBrands) => prevVisibleBrands + 3);
     if (visibleBrands + 3 >= totalBrands) {
       setShowMoreButton(false);
@@ -47,7 +42,8 @@ export const Filters = (props) => {
     }
   };
 
-  const handleShowLess = () => {
+  const handleShowLess = (e) => {
+    e.preventDefault(); // Evitar que se active el comportamiento por defecto del enlace
     setVisibleBrands((prevVisibleBrands) => prevVisibleBrands - 3);
     if (visibleBrands - 3 <= 3) {
       setShowLessButton(false);
@@ -68,8 +64,6 @@ export const Filters = (props) => {
       }
     });
   };
-  
-
 
   const renderBrands = () => {
     let brandsToShow = [];
@@ -79,10 +73,6 @@ export const Filters = (props) => {
       brandsToShow = store.allBrands.slice(29);
     }
 
-
-
-
-  
     return (
       <ul>
         {brandsToShow.slice(0, visibleBrands).map((brand, index) => {
@@ -107,17 +97,12 @@ export const Filters = (props) => {
       </ul>
     );
   };
-  
-
-
-
-
 
   const handleOnSubmit = async (e) => {
     e.preventDefault();
     props.setIsFilter(true);
     props.setDataFilter([]);
-  
+
     const queryParams = [];
     if (selectedBrands.length > 0) {
       queryParams.push(`brand_id=${selectedBrands.join(",")}`);
@@ -125,7 +110,7 @@ export const Filters = (props) => {
     if (vehicleType !== "") {
       queryParams.push(`vehicle_type=${vehicleType}`);
     }
-    
+
     queryParams.push(`min_price=${rangePrice[0]}`);
     queryParams.push(`max_price=${rangePrice[1]}`);
     queryParams.push(`min_year=${year[0]}`);
@@ -136,44 +121,34 @@ export const Filters = (props) => {
     const offcanvas = document.getElementById("offcanvasExample");
     const offcanvasBootstrap = bootstrap.Offcanvas.getInstance(offcanvas);
     offcanvasBootstrap.hide();
-  
 
     const queryString = queryParams.join('&');
     const url = `${process.env.BACKEND_URL}api/search-by/filter?${queryString}`;
 
     try {
-     const brand_id = selectedBrands.join(",")
-     const vehicle_id = vehicleType
-     const min_price = rangePrice[0]
-     const max_price = rangePrice[1]
-     const min_year = year[0]
-     const max_year = year[1]
-     const min_km = km[0]
-     const max_km = km[1]
+      const brand_id = selectedBrands.join(",");
+      const vehicle_id = vehicleType;
+      const min_price = rangePrice[0];
+      const max_price = rangePrice[1];
+      const min_year = year[0];
+      const max_year = year[1];
+      const min_km = km[0];
+      const max_km = km[1];
 
-
-     actions.getFilteredProducts(brand_id, vehicle_id, min_price, max_price, min_year, max_year, min_km, max_km)
-
-     } 
-     catch(error) { (console.error('Error nuevo'))}
-
-  }
-
+      actions.getFilteredProducts(brand_id, vehicle_id, min_price, max_price, min_year, max_year, min_km, max_km);
+    } catch (error) {
+      console.error('Error nuevo', error);
+    }
+  };
 
   useEffect(() => {
-    actions.getAllBrands()
-
-  }, [])
-
-
-
-
+    actions.getAllBrands();
+  }, []);
 
   return (
     <>
       <a className="btn btn-primary jello-vertical buttonFilter" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
-       
-      <i className="fa-solid fa-sliders"></i>
+        <i className="fa-solid fa-sliders"></i>
       </a>
 
       <form onSubmit={handleOnSubmit}>
@@ -186,42 +161,41 @@ export const Filters = (props) => {
           </div>
           <div className="offcanvas-body">
             <div>
-            <div>
-  <h4>Vehículo</h4>
-  <ul>
-    <li>
-      <div className="form-check p-3">
-        <input
-          className="form-check-input"
-          type="radio"
-          name="flexRadioDefault"
-          id="flexRadioDefault1"
-          checked={vehicleType === "COCHE"}
-          onChange={() => setVehicleType("COCHE")}
-        />
-        <label className="form-check-label" htmlFor="flexRadioDefault1">
-          Coche
-        </label>
-      </div>
-    </li>
-    <li>
-      <div className="form-check p-3">
-        <input
-          className="form-check-input"
-          type="radio"
-          name="flexRadioDefault"
-          id="flexRadioDefault2"
-          checked={vehicleType === "MOTO"}
-          onChange={() => setVehicleType("MOTO")}
-        />
-        <label className="form-check-label" htmlFor="flexRadioDefault2">
-          Moto
-        </label>
-      </div>
-    </li>
-  </ul>
-</div>
-
+              <div>
+                <h4>Vehículo</h4>
+                <ul>
+                  <li>
+                    <div className="form-check p-3">
+                      <input
+                        className="form-check-input"
+                        type="radio"
+                        name="flexRadioDefault"
+                        id="flexRadioDefault1"
+                        checked={vehicleType === "COCHE"}
+                        onChange={() => setVehicleType("COCHE")}
+                      />
+                      <label className="form-check-label" htmlFor="flexRadioDefault1">
+                        Coche
+                      </label>
+                    </div>
+                  </li>
+                  <li>
+                    <div className="form-check p-3">
+                      <input
+                        className="form-check-input"
+                        type="radio"
+                        name="flexRadioDefault"
+                        id="flexRadioDefault2"
+                        checked={vehicleType === "MOTO"}
+                        onChange={() => setVehicleType("MOTO")}
+                      />
+                      <label className="form-check-label" htmlFor="flexRadioDefault2">
+                        Moto
+                      </label>
+                    </div>
+                  </li>
+                </ul>
+              </div>
 
               <div>
                 <h4>Marcas</h4>
@@ -249,75 +223,69 @@ export const Filters = (props) => {
                 )}
               </div>
 
+              <div className="px-5 mt-4">
+                <h4>Precio</h4>
+                <Range
+                  values={rangePrice}
+                  min={0}
+                  max={50000}
+                  step={100}
+                  onChange={handlePriceChange}
+                  renderTrack={({ props, children }) => (
+                    <div
+                      onMouseDown={props.onMouseDown}
+                      onTouchStart={props.onTouchStart}
+                      style={{
+                        ...props.style,
+                        height: "6px",
+                        display: "flex",
+                        width: "100%"
+                      }}
+                    >
+                      <div 
+                        className="py-2"
+                        ref={props.ref}
+                        style={{
+                          height: "6px",
+                          width: "100%",
+                          borderRadius: "4px",
+                          background: getTrackBackground({
+                            values: rangePrice,
+                            colors: ["#ccc", "#548BF4", "#ccc"],
+                            min: 0,
+                            max: 50000
+                          }),
+                          alignSelf: "center"
+                        }}
+                      >
+                        {children}
+                      </div>
+                    </div>
+                  )}
+                  renderThumb={({ props }) => (
+                    <div
+                      {...props}
+                      style={{
+                        ...props.style,
+                        height: "16px",
+                        width: "16px",
+                        borderRadius: "50%",
+                        backgroundColor: "#FFF",
+                        boxShadow: "0px 2px 6px #AAA"
+                      }}
+                    />
+                  )}
+                />
+                <p className="py-3">
+                  Rango de precio entre {rangePrice[0]} y {rangePrice[1]}
+                </p>
+              </div>
 
 
 
 
 
-
-    <div className="p-5">
-      <h4>Precio</h4>
-      <Range
-        values={rangePrice}
-        min={0}
-        max={50000}
-        step={100}
-        onChange={handlePriceChange}
-        renderTrack={({ props, children }) => (
-          <div
-            onMouseDown={props.onMouseDown}
-            onTouchStart={props.onTouchStart}
-            style={{
-              ...props.style,
-              height: "6px",
-              display: "flex",
-              width: "100%"
-            }}
-          >
-            <div 
-              className="py-2"
-              ref={props.ref}
-              style={{
-                height: "6px",
-                width: "100%",
-                borderRadius: "4px",
-                background: getTrackBackground({
-                  values: rangePrice,
-                  colors: ["#ccc", "#548BF4", "#ccc"],
-                  min: 0,
-                  max: 50000
-                }),
-                alignSelf: "center"
-              }}
-            >
-              {children}
-            </div>
-          </div>
-        )}
-        renderThumb={({ props }) => (
-          <div
-            {...props}
-            style={{
-              ...props.style,
-              height: "16px",
-              width: "16px",
-              borderRadius: "50%",
-              backgroundColor: "#FFF",
-              boxShadow: "0px 2px 6px #AAA"
-            }}
-          />
-        )}
-      />
-      <p className="py-3">
-        Rango de precio entre {rangePrice[0]} y {rangePrice[1]}
-      </p>
-    </div>
-
-
-
-
-
-<div className="p-5">
+<div className="px-5">
       <h4>Año de fabricación</h4>
       <Range
         values={year}
@@ -377,7 +345,7 @@ export const Filters = (props) => {
 
 
 
-    <div className="p-5">
+    <div className="px-5">
       <h4>Kilometraje</h4>
       <Range
         values={km}
