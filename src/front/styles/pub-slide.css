@@ -7,3 +7,13 @@
 .pub-slide img {
   height: 400px;
 }
+
+.title-slide {
+  font-size: 2.6rem;
+}
+
+.trip-desc {
+  color: #000;
+  font-weight: 600;
+  font-size: 1.6rem;
+}

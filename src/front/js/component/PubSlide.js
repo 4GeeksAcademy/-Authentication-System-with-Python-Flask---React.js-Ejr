@@ -38,8 +38,8 @@ const PubSlide = () => {
               alt="First Slide"
             />
             <div className="carousel-caption d-none d-md-block">
-              <h5>Brasil</h5>
-              <p>
+              <h2 className = 'title-slide'>Brasil</h2>
+              <p className = 'trip-desc'>
                 Come relax on the beaches of Brazil or dance to the rhythm of the
                 waves
               </p>
@@ -52,8 +52,8 @@ const PubSlide = () => {
               alt="Second Slide"
             />
             <div className="carousel-caption d-none d-md-block">
-              <h5>Peru</h5>
-              <p>
+              <h2 className = 'title-slide'>Peru</h2>
+              <p className = 'trip-desc'>
                 Come and discover the mysteries of the Inca civilization and the
                 immeasurable beauty of the Peruvian land
               </p>
@@ -66,8 +66,8 @@ const PubSlide = () => {
               alt="Third Slide"
             />
             <div className="carousel-caption d-none d-md-block">
-              <h5>Colombia</h5>
-              <p>Some representative placeholder content for the third slide.</p>
+              <h2 className = 'title-slide'>Colombia</h2>
+              <p className = 'trip-desc'>Some representative placeholder content for the third slide.</p>
             </div>
           </div>
         </div>
