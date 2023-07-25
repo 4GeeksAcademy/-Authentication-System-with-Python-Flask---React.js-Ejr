@@ -357,6 +357,7 @@ def get_offer(offer_id):
     return jsonify(offer.serialize())
 
 @api.route('/offers', methods=['POST'])
+@jwt_required()
 def create_offer():
     data = request.get_json()
     try:
@@ -375,6 +376,7 @@ def create_offer():
         return jsonify({"message": "Invalid data provided"}), 400
 
 @api.route('/offer/<int:offer_id>', methods=['PUT'])
+@jwt_required()
 def update_offer(offer_id):
     offer = Offers.query.get(offer_id)
     if not offer:
@@ -394,6 +396,7 @@ def update_offer(offer_id):
         return jsonify({"message": "Invalid data provided"}), 400
 
 @api.route('/offer/<int:offer_id>', methods=['DELETE'])
+@jwt_required()
 def delete_offer(offer_id):
     offer = Offers.query.get(offer_id)
     if not offer:
@@ -419,6 +422,7 @@ def get_trip(trip_id):
     return jsonify(trip.serialize())
 
 @api.route('/trip', methods=['POST'])
+@jwt_required()
 def create_trip():
     data = request.get_json()
     try:
@@ -435,6 +439,7 @@ def create_trip():
 
         
 @api.route('/trip/<int:trip_id>', methods=['PUT'])
+@jwt_required()
 def update_trip(trip_id):
     trip = Trip.query.get(trip_id)
     if not trip:
@@ -452,6 +457,7 @@ def update_trip(trip_id):
         return jsonify({"message": "Invalid data provided"}), 400
 
 @api.route('/trip/<int:trip_id>', methods=['DELETE'])
+@jwt_required()
 def delete_trip(trip_id):
     trip = Trip.query.get(trip_id)
     if not trip:
