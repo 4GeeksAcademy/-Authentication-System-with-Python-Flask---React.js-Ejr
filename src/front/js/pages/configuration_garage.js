@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
 import "/workspaces/Watacar_v2/src/front/styles/configuration.css"
+import { Profile_navbar } from "../component/profile_navbar";
 
 export const Configuration_Garage = () => {
     const params = useParams();
@@ -79,39 +80,60 @@ const handleSubmit = (event) => {
 };
 
 return store.garage ? (
-    <div>
-        <Link to="/profile/configuration" className="btn_config back">
-                Atrás
-        </Link>
-        <h2 className="configuration_title">Configuración del perfil</h2>
-        <div className="container_config">
-                <div className="avatar_container_configuration">
-                <img src="https://neomotor.epe.es/binrepository/990x619/0c62/990d557/none/2594535/UHEL/elegir-taller-confianza-1_285-37667622_20221031082702.jpg" alt="Avatar" className="avatar_image" />
+    <>
+<Profile_navbar />
+<div className="container mt-3 w-75 box py-4 justify-content-start"> 
+                    <div>
+                        <Link to="/profile/configuration" className="btn_config back mb-3">
+                                Atrás
+                        </Link>
+                        </div>
+
+    
+        <div className="container mt-3 w-75 py-4 justify-content-start "> 
+            <h2  className="ms-4"><strong>Configurar tu Taller</strong></h2>
+
+            <div className="container">
+                <div className="avatar_container pb-4">
+                    <img src="https://neomotor.epe.es/binrepository/990x619/0c62/990d557/none/2594535/UHEL/elegir-taller-confianza-1_285-37667622_20221031082702.jpg" alt="Avatar" className="avatar_image" />
                 </div>
+                
                 <div className="profile_info">
-                    <div className="row row_configuration">
-                        <label className="col-3 label_config">Nombre del Taller:</label>
-                        <input className="col-5 input_config" name="name" type="text" value={data.name || store.garage.name} onChange={handleChange}></input>
-                    </div>
-                    <div className="row row_configuration">
-                        <label className="col-3 label_config">Correo del Taller:</label>
-                        <input className="col-5 input_config" name="mail" type="text" value={data.mail || store.garage.mail} onChange={handleChange}></input>
-                    </div>
-                        <div className="row row_configuration">
-                            <label className="col-3 label_config">Sitio Web:</label>
-                            <input className="col-5 input_config" name="web" type="text" value={data.web || store.garage.web} onChange={handleChange}></input>/
+                    <div className="row  my-4 ">
+                        <div>
+                        <label className="my-2 col-10 col-sm-10 col-md-6 col-lg-5 label p-2 input-radius">Nombre del Taller:</label>
                         </div>
-                        <div className="row row_configuration">
-                            <label className="col-3 label_config">CIF:</label>
-                            <input className="col-8 input_config" name="cif" type="text" value={data.cif || store.garage.cif} onChange={handleChange}></input>
-                        </div>
-                    <div className="row row_configuration">
-                        <label className="col-3 label_config">Teléfono:</label>
-                        <input className="col-8 input_config" name="phone" type="text" value={data.phone || store.garage.phone} onChange={handleChange}></input>
+                        <input className="col-8  user_data" name="name" type="text" value={data.name || store.garage.name} onChange={handleChange}></input>
                     </div>
-                    <div className="row row_configuration">
-                        <label className="col-3 label_config">Dirección:</label>
-                        <input className="col-8 input_config" name="address" id="address" type="text" value={data.address || store.garage.address} onChange={handleChange}></input>
+                    <div className="row  my-4">
+                        <div>
+                        <label className=" my-2 col-10 col-sm-10 col-md-6 col-lg-5  label p-2 input-radius">Correo del Taller:</label>
+                        </div>
+                        <input className="my-2 col-8 user_data " name="mail" type="text" value={data.mail || store.garage.mail} onChange={handleChange}></input>
+                    </div>
+                        <div className="row  my-3">
+                            <div>
+                            <label className="col-10 col-sm-10 col-md-6 col-lg-5 label p-2 input-radius">Sitio Web:</label>
+                           </div>
+                           <input className="my-2 col-8 user_data" name="web" type="text" value={data.web || store.garage.web} onChange={handleChange}></input>
+                        </div>
+                        <div className="row my-3">
+                            <div>
+                            <label className="col-10 col-sm-10 col-md-6 col-lg-5  label p-2 input-radius">CIF:</label>
+                            </div>
+                            <input className="my-2 col-8 user_data " name="cif" type="text" value={data.cif || store.garage.cif} onChange={handleChange}></input>
+                        </div>
+                    <div className="row my-3">
+                        <div>
+                        <label className="col-10 col-sm-10 col-md-6 col-lg-5 label p-2 input-radius">Teléfono:</label>
+                        </div>
+                        <input className="my-2 col-8 user_data " name="phone" type="text" value={data.phone || store.garage.phone} onChange={handleChange}></input>
+                    </div>
+                    <div className="row my-3">
+                        <div>
+                        <label className="col-10 col-sm-10 col-md-6 col-lg-5 label p-2 input-radius">Dirección:</label>
+                        </div>
+                        <input className=" my-2 col-8 user_data " name="address" id="address" type="text" value={data.address || store.garage.address} onChange={handleChange}></input>
                     </div>
                     <div className="row save_cancel_config">
                         <Link to="/profile/garage" className="btn_config cancel">
@@ -123,6 +145,8 @@ return store.garage ? (
                     </div>
                 </div>
         </div>
+        </div>
     </div>
+    </>
 ): "cargando...";
 }
