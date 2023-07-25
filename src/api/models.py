@@ -71,13 +71,12 @@ class Trip(db.Model):
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(40), unique=True, nullable=False)
-    password = db.Column(db.String(80), nullable=False)
+    password = db.Column(db.String(250), nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     firstname = db.Column(db.String(100), nullable=False)
     lastname = db.Column(db.String(100), nullable=False)
-    Address = db.Column(db.String(200), nullable=False)
+    address = db.Column(db.String(200), nullable=False)
     dni = db.Column(db.Integer, nullable=False)
-    location = db.Column(db.Integer, nullable=False)
     payment_method = db.Column(db.String(100), nullable=False)
     is_admin = db.Column(db.Boolean, default=False)
 
@@ -92,9 +91,8 @@ class User(db.Model):
             "email": self.email,
             "firstname": self.firstname,
             "lastname": self.lastname,
-            "Address": self.Address,
+            "address": self.address,
             "dni": self.dni,
-            "location": self.location,
             "payment_method": self.payment_method,
             "is_admin": self.is_admin
         }
