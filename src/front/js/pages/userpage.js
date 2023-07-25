@@ -41,7 +41,7 @@ const UserPage = () => {
   if (user) {
     return (
       <div>
-        <h2>Welcome, {user.first_name}</h2>
+        <h2>Welcome, {user.user}</h2>
         <p>Email: {user.email}</p>
         <p>Phone Number: {user.phone_number}</p>
         {/* Render other user data here */}
