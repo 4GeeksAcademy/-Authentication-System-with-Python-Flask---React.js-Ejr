@@ -1,8 +1,8 @@
-from flask import Flask, request, jsonify, Blueprint, jsonify
+from flask import Flask, request, jsonify, Blueprint, jsonify, redirect, url_for
 from api.models import db, User, Business_user, Post, Offers, Trip
 from api.utils import APIException
 from flask_bcrypt import bcrypt, Bcrypt
-from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity, JWTManager
+from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity, JWTManager, unset_jwt_cookies
 
 
 
@@ -61,17 +61,6 @@ def delete_business_user(user_id):
     return jsonify({"message": "User deleted successfully"}), 200
 
 
-bcrypt = Bcrypt()
-
-from flask import Flask, request, jsonify, Blueprint
-from api.models import db, User, Business_user, Post, Offers, Trip
-from api.utils import APIException
-from flask_bcrypt import Bcrypt
-from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity, JWTManager
-
-api = Blueprint('api', __name__)
-
-jwt = JWTManager()
 bcrypt = Bcrypt()
 
 # Fonction d'initialisation de l'extension JWTManager avec l'application Flask
@@ -164,6 +153,12 @@ def login():
     except Exception as e:
         return jsonify({'error': 'Error in login: ' + str(e)}), 500
 
+@api.route('/logout', methods=['POST'])
+@jwt_required()  # Requires authentication with a valid JWT token
+def logout():
+    unset_jwt_cookies()  # Remove JWT token from the client
+
+    return redirect(url_for('/signup')) 
 
 
 @api.route('/private')
