@@ -6,13 +6,17 @@
 */
 
 
+
 #tittle-nav {
   font-weight:bolder;
   font-size: 31px;
+  border: none;
 
 }
 
-
+.bgNavbar {
+  background-color: #ebecee;
+}
 
 .nav-link {
   font-weight: 800;
@@ -25,7 +29,7 @@
 }
 
 #light{
-    background-color: #e1e5ea;
+    background-color: #ffffff;
   
   }
 

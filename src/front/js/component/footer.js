@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
 export const Footer = () => (
-	<footer className="footer text-center py-5 text-center">
+	<footer className="footer text-center py-5 text-center mt-4">
 		<div className="container d-md-flex justify-content-evenly">
 			<div className="text-center mb-4">
 				<h4 className="">
@@ -17,8 +17,12 @@ export const Footer = () => (
 					WhataCar
 				</h5>
 				<ul className="text-start">
+					<Link to="/sobre-nosotros">
 					<li>Sobre Nosotros</li>
+					</Link>
+					<Link to="/como-funciona">
 					<li>Cómo funciona</li>
+					</Link>
 					
 				</ul>
 			</div>
@@ -28,9 +32,12 @@ export const Footer = () => (
 					Soporte
 				</h5>
 				<ul className="text-start">
+					<Link to="/centro-de-ayuda">
 					<li>Centro de Ayuda</li>
+					</Link>
+					<Link to="/reglas-de-publicacion">
 					<li>Reglas de Publicación</li>
-					
+					</Link>
 				</ul>
 			</div>
 			
@@ -53,7 +60,9 @@ export const Footer = () => (
 						Cookies
 					</h5>
 				<ul className="text-start">
+					<Link to="/nuestros-socios">
 					<li>Nuestros Socios</li>
+					</Link>					
 					<Link to="/politica-de-cookies">
 					<li>Política de Cookies</li>
 					</Link>

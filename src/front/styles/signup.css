@@ -36,6 +36,8 @@ font-weight: bold;
  
 }
 
+
+
 .labelbox{
  
     margin-top: 1.6rem;
@@ -88,3 +90,19 @@ font-weight: bold;
 #dark .box{
     background-color: #c6dfff;
 }
+
+
+/* signup.css */
+
+.input-with-icon {
+    position: relative;
+  }
+  
+  .eye-icon {
+    position: absolute;
+    top: 50%;
+    right: 10%;
+    transform: translateY(-50%);
+    cursor: pointer;
+  }
+  

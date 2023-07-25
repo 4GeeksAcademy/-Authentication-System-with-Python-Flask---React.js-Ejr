@@ -1,10 +1,9 @@
 import React, { useContext, useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom"; // Actualiza la importación aquí
 import ReactSwitch from "react-switch";
 import { ThemeContext } from "../layout";
 import { Context } from "../store/appContext";
 import ReactModal from 'react-modal'
-import { useNavigate } from "react-router-dom";
 import { Login } from "../pages/login";
 import { SwitchLight } from "./switchLight";
 import  "../../styles/navbar.css"
@@ -12,6 +11,7 @@ import  "../../styles/index.css"
 
 export const Navbar = () => {
   const { store, actions, token } = useContext(Context);
+  
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -20,26 +20,38 @@ export const Navbar = () => {
   const [dropMenu, setDropMenu] = useState("container-fluid mx-1");
   const [ariaExpanded, setAriaExpanded] = useState(false);
   const [manuallyClosed, setManuallyClosed] = useState(false); // Nueva variable de estado
+  const [eye, setEye] = useState(true); // Estado para controlar la visibilidad de la contraseña
+  const [hasFiltered, setHasFiltered] = useState(false)
+
+
+
+const handleWhataCarClick = () => {
+  closeMenuOnItemClick(); // Cerrar el menú antes de realizar cualquier acción
+
+  // Agregar una breve pausa de 100 milisegundos antes de redirigir
+  setTimeout(() => {
+    navigate("/");
+    window.location.reload();
+  }, 100);
+};
 
   
   
   
-  
-//Modal 
-    const openModal = () => {
-      setIsOpen(true);
-    }
-  
-    const closeModal = () => {
-      setIsOpen(false);
-    }
-  
-    const handleLogOut = () => {
-      localStorage.removeItem("token")
-      store.token = ""
-    }
-  
-  
+
+  const openModal = () => {
+    setIsOpen(true);
+  }
+
+  const closeModal = () => {
+    setIsOpen(false);
+  }
+
+  const handleLogOut = () => {
+    localStorage.removeItem("token")
+    store.token = ""
+  }
+
   const handleSubmit = async e => {
     e.preventDefault();
     try {
@@ -50,7 +62,7 @@ export const Navbar = () => {
       navigate("/notfound");
     }
   };
-  
+
   useEffect(() => {
     const checkScreenWidth = () => {
       setIsSmallScreen(window.innerWidth < 993);
@@ -63,16 +75,15 @@ export const Navbar = () => {
       window.removeEventListener("resize", checkScreenWidth);
     };
   }, []);
-  
-  
+
   const showSwitchBigScreen = () => {
     return window.innerWidth >= 993 && <SwitchLight />;
   }
-  
+
   const showSwitchMobile = () => {
     return isSmallScreen && <SwitchLight />;
   }
-  
+
   const showModal = () => {
     return (
       <div className="modalLogin">
@@ -117,10 +128,7 @@ export const Navbar = () => {
     actions.getToken()
     actions.getUser()
   }, []);
-  
-  
-     
- 
+
   const closeForceNavbar = () => {
     setAriaExpanded(false)
   }
@@ -130,13 +138,19 @@ export const Navbar = () => {
     setAriaExpanded(false); // Cerrar el menú
   };
 
+  const handleEye = () => {
+    setEye(!eye);
+  };
+
   return (
-    <nav className="navbar navbar-expand-lg bg-body-tertiary py-4">
+    <nav className="navbar navbar-expand-lg bgNavbar py-4">
       <div className={dropMenu} >
         <div className="text-center lightSpeedIn customDiv">
-          <a href="/" className="navbar-brand tittle-nav ms-1 " id="tittle-nav" onClick={closeMenuOnItemClick}>
+          <button  onClick={handleWhataCarClick}  
+          className="navbar-brand tittle-nav ms-1 " 
+          id="tittle-nav" >
             WhataCar
-          </a>
+          </button>
         </div>
         <br></br>
         <div className="justify-content-end d-flex mb-2 ">
@@ -149,11 +163,14 @@ export const Navbar = () => {
               aria-controls="navbarNavDropdown"
               aria-expanded={ariaExpanded}             
               aria-label="Toggle navigation"
+     
             >
               <span className="navbar-toggler-icon"></span>
             </button>
             <div
-              className="collapse navbar-collapse justify-content-end"
+              className={`collapse navbar-collapse justify-content-end ${
+                manuallyClosed ? "show" : ""
+              }`}
               id="navbarNavDropdown"
             >
               <ul className="navbar-nav ml-auto align-items-end">
@@ -166,7 +183,6 @@ export const Navbar = () => {
                         aria-current="page"
                         to="/signup"
                         onClick={closeMenuOnItemClick}
-                        
                       >
                         Registro
                       </Link>
@@ -178,7 +194,6 @@ export const Navbar = () => {
                         aria-current="page"
                         to="/login"
                         onClick={closeMenuOnItemClick}
-                      
                       >
                         Accede
                       </Link>
@@ -202,7 +217,6 @@ export const Navbar = () => {
                     </li>
                     <li className="nav-item">
                       {!store.token ? (
-                        
                         <button
                           className="nav-link btn-plus mb-2 me-3"
                           onClick={openModal}
@@ -210,14 +224,13 @@ export const Navbar = () => {
                           <i className="fa-solid fa-plus"></i>
                         </button>
                       ) : (
-                        <Link to="/upload-car"
-                        style={{width: 38, height: 35, background: '#0F4C75', borderRadius: 8}}
-                        className="nav-link btn-plus btn_mucho mb-2 ms-4">
-                       
-                          
-                         
-                            <i className="fa-solid fa-plus m-auto"></i>
-                       
+                        <Link
+                          to="/choose-vehicle"
+                          style={{width: 38, height: 35, background: '#0F4C75', borderRadius: 8}}
+                          className="nav-link btn-plus btn_mucho mb-2 ms-4"
+                          onClick={closeMenuOnItemClick}
+                        >
+                          <i className="fa-solid fa-plus m-auto"></i>
                         </Link>
                       )}
                     </li>
@@ -228,7 +241,7 @@ export const Navbar = () => {
                         href="#"
                         role="button"
                         data-bs-toggle="dropdown"
-                        aria-expanded="false"
+                        aria-expanded={ariaExpanded}
                         to="profile"
                         onClick={closeMenuOnItemClick}
                       >
@@ -250,7 +263,6 @@ export const Navbar = () => {
                             to="/profile/configuration"
                             className="dropdown-item justify-content-end d-flex  profileIcons"
                             onClick={closeMenuOnItemClick}
-                           
                           >
                             Configuración
                             <i className="fa-solid fa-gear ms-2 mt-1 profileIcons" ></i>
@@ -266,7 +278,6 @@ export const Navbar = () => {
                             <i className="fa-solid fa-car ms-2 mt-1 profileIcons"></i>
                           </Link>
                         </li>
-
                         {/* Cuando se inicia la aplicación hay que quitar esto, loguearte reescribirlo y recargar */}
                          {/* {store.user.role === "GARAGE" && (
                             <li>
@@ -279,11 +290,9 @@ export const Navbar = () => {
                               </Link>
                             </li>
                           )} */}
-
                         <li>
                           <hr className="dropdown-divider" />
                         </li>
-
                         <li>
                           <Link
                             className="dropdown-item justify-content-end d-flex "
@@ -291,7 +300,6 @@ export const Navbar = () => {
                             style={{ color: "red" }}
                             onClick={handleLogOut}
                           >
-                      
                             Salir
                             <i className="fa-solid fa-right-from-bracket ms-3 mt-1 "></i>
                           </Link>
@@ -310,3 +318,4 @@ export const Navbar = () => {
     </nav>
   );
 };
+

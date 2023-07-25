@@ -55,7 +55,7 @@ export const Home = () => {
   return (
     <div className="text-center ">
       <div className="customDiv container pt-5 flipInX">
-      <h2 className="flipInX tittle ">Vende tu Moto o Coche y desmelénate</h2>
+      <h2 className="flipInX tittle ">Vende tu Coche o Moto y desmelénate</h2>
       </div>
       <div className="container d-flex justify-content-center mt-3">
         <form className="d-flex search-form" role="search">
@@ -63,7 +63,7 @@ export const Home = () => {
             <input
               className="form-control me-2 search-input"
               type="search"
-              placeholder="Busca tu coche o moto"
+              placeholder="Busca tu moto o coche"
               aria-label="Search"
               value={searchText}
               onChange={handleSearchChange}

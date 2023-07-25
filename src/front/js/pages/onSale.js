@@ -7,15 +7,29 @@ import { Sales_navbar } from "../component/Sales_navbar";
 import { Placeholder_onsale } from "./placeholder_onsale";
 
 
-export const On_sale = () => {
+export const On_Sale = () => {
     const {actions, store} = useContext(Context);
     const {status, setStatus} = useState([]);
     const onsaleCount = store.products.length;
+    const [productsOnsale, setProductsOnsale] = useState([]);
+    const [productsPendBlock, setProductsPendBlock] = useState([]);
+    const carImage = "https://images.coches.com/_vn_/kia/Sportage/c399cf1d98a95d24f8e8715dd0b13fb2.jpg?p=cc_vn_high"
 
-useEffect (() => {
-        actions.getProductsOnSale(),
-        actions.getProductsPendingBlocked()
-}, [])
+    useEffect(() => {
+        async function fetchProducts() {
+          const response = await actions.getProductsOnSale();
+          setProductsOnsale(response);
+        }
+        fetchProducts();
+      }, []);
+
+      useEffect(() => {
+        async function fetchProducts() {
+          const response = await actions.getProductsPendingBlocked();
+          setProductsPendBlock(response); 
+        }
+        fetchProducts();
+      }, []);
 
 const StatusToBlocked = (product) => {
     const token = localStorage.getItem("token");
@@ -35,6 +49,9 @@ const StatusToBlocked = (product) => {
         .catch(error => {
         console.error("Error:", error);
         });
+        setTimeout(() => {
+            window.location.reload();
+          }, 1000);
 };
 
 const StatusToOnSale = (product) => {
@@ -62,18 +79,24 @@ const StatusToOnSale = (product) => {
             <Profile_navbar />
             <Sales_navbar onsaleCount={onsaleCount}/>
             {store.products.map((product, index) => (
-                <div className="justify-content-center d-flex">
+                <div className="justify-content-center d-flex" key={index}>
                 <div className="row row_product_profile container justify-content-around m-1" key={index}>
                     <div className="product_img_profile_box col-lg-5 col-3 col-sm-2 col-xs-2">
-                        <img src="https://www.motofichas.com/images/phocagallery/Honda/cb500f-2022/01-honda-cb500f-2022-estudio-rojo.jpg" alt="product" className="product_img_profile"/>
+                    {product.images.length > 0 ? (
+                    <img src={product.images[0].image} className="card-img-top imgCarousel" alt="..." />
+                  ) : (
+                    <img src={carImage} className="card-img-top imgCarousel" alt="..." />
+                  )}
                     </div>
                     <div className="price_name col-3 col-sm-2 text-start ">
                         <h4 className="price_product_profile">{product.price}€</h4>
-                        <h5 className="name_product_profile">{product.name}</h5>
+                        <h5 className="name_product_profile">{product.name.length >= 25 ? 
+                        product.name.slice(0,24) + "..." 
+                        : product.name}</h5>
                     </div>
                     <div className="col-3 col-sm-2 state_product_profile_box text-start">
                         <h6 className="state_title_profile">Estado</h6>
-                        <h5 className="state_product_profile h5State">{product.state}</h5>
+                        <h4 className="state_product_profile ">{product.state}</h4>
                     </div>
 
   {/*
@@ -96,38 +119,53 @@ const StatusToOnSale = (product) => {
                                     data-bs-toggle="modal"
                                     data-bs-target="#exampleModal"
                                 >
-                                    Ver solicitud de reserva
+                                   <i class="fa-solid fa-eye "/>
                                 </button>
                             </>
                         )}
 
                     </div>
-                    <div className="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+
+                    {/* AQUI EMPIEZA EL MODAL */}
+
+                    <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div className="modal-dialog">
                             <div className="modal-content sold-product_profile">
                                 <div className="modal-header">
-                                    <h5 className="modal-title" id="exampleModalLabel">Fulanito quiere bloquear este vehículo</h5>
+                                    <h5 className="modal-title" id="exampleModalLabel">
+                                       <strong>Se ha solicitado reservar este vehículo ¿Estás de acuerdo?
+                                        </strong></h5>
                                     <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div className="modal-body-sale-process row">
-                                    <div className="product_img_profile_box-sales-process col-4">
-                                        <img src="https://www.motofichas.com/images/phocagallery/Honda/cb500f-2022/01-honda-cb500f-2022-estudio-rojo.jpg" alt="product" className="product_img_profile"/>
+                                    <div className="product_img_profile_box-sales-process m-auto col-4">
+                                    {product.images.length > 0 ? (
+                                        <img src={product.images[0].image} className="card-img-top imgCarousel" alt="..." />
+                                    ) : (
+                                        <img src={carImage} className="card-img-top imgCarousel" alt="..." />
+                                    )}
                                     </div>
-                                    <div className="col-7 state_product_profile_sales_process">
-                                        <div className="row">
-                                            <h6 className=" col-12">{product.name}</h6>
+                                    <div className="col-7 state_product_profile_sales_process m-auto">
+                                        <div className="row ">
+                                            <h6 className=" col-12 ">{product.name}</h6>
                                         </div>
                                         <div className="row">
                                             <h6 className=" col-12">{product.description}</h6>
                                         </div>
-                                        <div className="row">
+                                        <div className="row m-auto">
                                             <h6 className=" col-6">{product.state}</h6>
                                             <h6 className=" col-6">{product.price}€</h6>
                                         </div>
+
                                     </div>
                                     
                                 </div>
                                 <div className="modal-footer">
+                                        <div>
+                                            <br></br>
+                                            <p>Tenga en cuenta que una vez aceptado el comprador bloqueará el producto</p>
+                                        </div>
                                     <button type="button" className="btn btn_config cancel" data-bs-dismiss="modal" onClick={() => StatusToOnSale(product)}>Rechazar</button>
                                     <button type="button" className="btn btn_config reservado" data-bs-dismiss="modal" onClick={() => StatusToBlocked(product)}>Aceptar</button>
                                 </div>

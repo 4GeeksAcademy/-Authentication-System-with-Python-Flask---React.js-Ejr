@@ -11,14 +11,14 @@ import { Placeholder_carousel } from "../pages/placeholder_carousel";
 
 
 
-export const CarouselDefault = () => {
+export const CarouselKm = () => {
   defineElement(lottie.loadAnimation);
   const { store, actions } = useContext(Context);
   const carImage = "https://images.coches.com/_vn_/kia/Sportage/c399cf1d98a95d24f8e8715dd0b13fb2.jpg?p=cc_vn_high"
   const navigate = useNavigate();
 
   useEffect(() => {
-    actions.getAllProducts();
+    actions.getFilteredKm();
   }, []);
 
   const selectFavoriteVehicle = (user_id, product_id) => {
@@ -27,8 +27,8 @@ export const CarouselDefault = () => {
 
   return (
     <div className="d-flex overflow-auto my-5 ">
-    {store.products.length > 0 ? (
-      store.products.map((vehicle, index) => (
+    {store.filteredKm.length > 0 ? (
+      store.filteredKm.map((vehicle, index) => (
         <div className="mx-3 mb-5" key={index}>
           <div className="card card-blur" style={{ width: "18rem" }}>
             <div className="flip-card">

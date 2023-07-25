@@ -10,12 +10,27 @@ export const Profile_buys_done = () => {
     const soldCount = store.products.length;
     const [productToReview, setProductToReview] = useState(null);
     const [comment, setComment] = useState("");
+    const [productsSold, setProductsSold] = useState([]);
+    const [productsSoldReviewed, setProductsSoldReviewed] = useState([]);
+    const carImage = "https://images.coches.com/_vn_/kia/Sportage/c399cf1d98a95d24f8e8715dd0b13fb2.jpg?p=cc_vn_high"
 
-useEffect (() => {
-    actions.SoldChanged(),
-    actions.SoldReviewedChanged()
-}, [])
 
+
+useEffect(() => {
+    async function fetchProducts() {
+      const response = await actions.SoldChanged();
+      setProductsSold(response); 
+    }
+    fetchProducts();
+  }, []);
+  useEffect(() => {
+    async function fetchProducts() {
+      const response = await actions.SoldReviewedChanged();
+      setProductsSoldReviewed(response); 
+    }
+    fetchProducts();
+  }, []);
+  
 const addReview = (product_id, comment) => {
 							  
     const data = {
@@ -43,7 +58,9 @@ const addReview = (product_id, comment) => {
     .catch(error => {
       console.error('Error:', error.message);
     });
-    window.location.reload();
+    setTimeout(() => {
+        window.location.reload();
+      }, 1000);
 }
 
 const StatusToSoldReviewed = (product) => {
@@ -75,15 +92,18 @@ const StatusToSoldReviewed = (product) => {
                     <div className="sales_profile_box row" key={index}>
                         <div className="col-4">
                             <div className="product_img_profile_box_sales col-2">
-                                <img src="https://www.motofichas.com/images/phocagallery/Honda/cb500f-2022/01-honda-cb500f-2022-estudio-rojo.jpg" alt="product" className="product_img_profile"/>
+                            {product.images.length > 0 ? (
+                                <img src={product.images[0].image} className="card-img-top imgCarousel" alt="..." />
+                            ) : (
+                                <img src={carImage} className="card-img-top imgCarousel" alt="..." />
+                            )}
                             </div>
                         </div>
                         <div className="col-8 product_data_sales">
                             <h6>{product.name}</h6>
-                            <h6>Usuario 1</h6>
                             <div className="row">
-                                <h6 className="col-4">{product.brand}</h6>
-                                <h6 className="col-8">{product.model}</h6>
+                                <h6 className="col-4">{product.brand.name}</h6>
+                                <h6 className="col-8">{product.model.model}</h6>
                             </div>
                             {product.status === "sold" && (
                             <>
@@ -102,7 +122,11 @@ const StatusToSoldReviewed = (product) => {
                                 </div>
                                 <div className="modal-body-review row">
                                     <div className="product_img_profile_box-sales-process col-4">
-                                        <img src="https://www.motofichas.com/images/phocagallery/Honda/cb500f-2022/01-honda-cb500f-2022-estudio-rojo.jpg" alt="product" className="product_img_profile"/>
+                                    {product.images.length > 0 ? (
+                                        <img src={product.images[0].image} className="card-img-top imgCarousel" alt="..." />
+                                    ) : (
+                                        <img src={carImage} className="card-img-top imgCarousel" alt="..." />
+                                    )}
                                     </div>
                                     <div className="col-7 state_product_profile_sales_process">
                                         <div className="row">

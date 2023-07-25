@@ -19,6 +19,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			productlist: [],
 
+			brandlist: [],
+
 			
 			user: [],
 			users: [],
@@ -33,8 +35,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 			garage: [],
 			filters: [],
 			filterProducts: [],
-			status: []
-
+			status: [],
+			filteredMotos: [],
+			filteredCars: [],
+			filteredPrice: [],
+			filteredKm: []
 		
 		},
 
@@ -44,12 +49,27 @@ const getState = ({ getStore, getActions, setStore }) => {
 				fetch(process.env.BACKEND_URL + `api/product/${productid}`)
 				.then(resp => resp.json())
 				.then((data) => {
-					//onsole.log(data); 
+					console.log(data); 
 					setStore({ productlist: [data] });
 
 				})
 				.catch(err => console.error(err))
 			},
+
+
+
+			  
+
+			getBrand: (brandId) => {
+				fetch(process.env.BACKEND_URL + `api/brands/${brandId}`)
+				.then(resp => resp.json())
+				.then(data => {
+					setBrand(data.name);
+				})
+				.catch(err => console.error(err))
+			},
+			  
+
 
 			login: async (email, password) => {
 				const store = getStore();
@@ -117,8 +137,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 				  });
 			  },
 
-			  getFilteredProducts: (brand_id, vehicle_type) => {
-				fetch(`${process.env.BACKEND_URL}api/search-by/filter?brand_id=${brand_id}&vehicle_type=${vehicle_type}`)
+			  getFilteredProducts: (brand_id, vehicle_type, min_price, max_price, min_year, max_year, min_km, max_km) => {
+				fetch(`${process.env.BACKEND_URL}api/search-by/filter?brand_id=${brand_id}&vehicle_type=${vehicle_type}&min_price=${min_price}&max_price=${max_price}&min_year=${min_year}&max_year=${max_year}&min_km=${min_km}&max_km=${max_km}`)
 				  .then(response => response.json())
 				  .then(data => {
 					// Almacenar los productos filtrados en store.filterProducts
@@ -130,6 +150,69 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.error('Error al obtener los productos filtrados:', error);
 				  });
 			  },
+			  
+
+			  getFilteredMotos: () => {
+				fetch(`${process.env.BACKEND_URL}api/search-by-moto`)
+				  .then(response => response.json())
+				  .then(data => {
+					// Almacenar los productos filtrados en store.filterProducts
+					setStore({ filteredMotos: data });
+					console.log("se han recuperado los datos")
+				  })
+				  .catch(error => {
+					// Manejar errores en la solicitud
+					console.error('Error al obtener las MOTOS filtrados:', error);
+				  });
+			  },
+
+			  getFilteredCars: () => {
+				fetch(`${process.env.BACKEND_URL}api/search-by-car`)
+				  .then(response => response.json())
+				  .then(data => {
+					// Almacenar los productos filtrados en store.filterProducts
+					setStore({ filteredCars: data });
+					console.log("se han recuperado los datos")
+				  })
+				  .catch(error => {
+					// Manejar errores en la solicitud
+					console.error('Error al obtener los COCHES filtrados:', error);
+				  });
+			  },
+
+
+			  getFilteredPrice: () => {
+				fetch(`${process.env.BACKEND_URL}api/search-by-price`)
+				  .then(response => response.json())
+				  .then(data => {
+					// Almacenar los productos filtrados en store.filterProducts
+					setStore({ filteredPrice: data });
+					console.log("se han recuperado los datos")
+				  })
+				  .catch(error => {
+					// Manejar errores en la solicitud
+					console.error('Error al obtener los COCHES filtrados:', error);
+				  });
+			  },
+
+
+			  getFilteredKm: () => {
+				fetch(`${process.env.BACKEND_URL}api/search-by-price`)
+				  .then(response => response.json())
+				  .then(data => {
+					// Almacenar los productos filtrados en store.filterProducts
+					setStore({ filteredKm: data });
+					console.log("se han recuperado los datos")
+				  })
+				  .catch(error => {
+					// Manejar errores en la solicitud
+					console.error('Error al obtener los vehículos filtrados por KM:', error);
+				  });
+			  },
+
+
+
+
 			  
 			  setFilterProducts: (products) => {
 				setStore({ filterProducts: products });
@@ -188,184 +271,225 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({ demo: demo });
 			},
 
-			getProductsOnSale: () => {
+			getProductsOnSale: async () => {
 				const store = getStore();
-				fetch(process.env.BACKEND_URL + "api/profile/products/ONSALE", {
+				try {
+					const response = await fetch(process.env.BACKEND_URL + "api/profile/products/ONSALE", {
 					method: "GET",
 					headers: {
 					"Content-Type": "application/json",
 					"Authorization": `Bearer ${localStorage.getItem("token")}`
 					}
 				})
-				.then(response => response.json())
-				.then(response => {
-					setStore({products: response})
-				})
-				.catch(error => {
+				const data = await response.json ()
+					setStore({products: data});
+					return data
+				}
+				catch{
+					(error => {
 					console.error(error);
-				});
+				})};
 			},
 
-			getProductsPendingBlocked: () => {
+			getProductsPendingBlocked: async () => {
 				const store = getStore();
-				fetch(process.env.BACKEND_URL + "api/profile/products/PENDING_BLOCKED", {
+				try {
+					const response = await fetch(process.env.BACKEND_URL + "api/profile/products/PENDING_BLOCKED", {
 					method: "GET",
 					headers: {
 					"Content-Type": "application/json",
 					"Authorization": `Bearer ${localStorage.getItem("token")}`
 					}
 				})
-				.then(response => response.json())
-				.then(response => {
-					setStore({products: response})
-				})
-				.catch(error => {
+				const data = await response.json ()
+					setStore({products: data});
+					return data
+				}
+				catch{
+					(error => {
 					console.error(error);
-				});
+				})};
 			},
 
-			getProductsBlocked: () => {
+			getProductsBlocked: async () => {
 				const store = getStore();
-				fetch(process.env.BACKEND_URL + "api/profile/products/BLOCKED", {
+				try {
+					const response = await fetch(process.env.BACKEND_URL + "api/profile/products/BLOCKED", {
 					method: "GET",
 					headers: {
 					"Content-Type": "application/json",
 					"Authorization": `Bearer ${localStorage.getItem("token")}`
 					}
 				})
-				.then(response => response.json())
-				.then(response => {
-					setStore({products: response})
-				})
-				.catch(error => {
+				const data = await response.json ()
+					setStore({products: data});
+					return data
+				}
+				catch{
+					(error => {
 					console.error(error);
-				});
+				})};
 			},
 
-			getProductsPendingSale: () => {
+			getProductsPendingSale: async () => {
 				const store = getStore();
-				fetch(process.env.BACKEND_URL + "api/profile/products/PENDING_SALE", {
+				try {
+					const response = await fetch(process.env.BACKEND_URL + "api/profile/products/PENDING_SALE", {
 					method: "GET",
 					headers: {
 					"Content-Type": "application/json",
 					"Authorization": `Bearer ${localStorage.getItem("token")}`
 					}
 				})
-				.then(response => response.json())
-				.then(response => {
-					setStore({products: response})
-				})
-				.catch(error => {
+				const data = await response.json ()
+					setStore({products: data});
+					return data
+				}
+				catch{
+					(error => {
 					console.error(error);
-				});
+				})};
 			},
 
-			getProductsSold: () => {
+
+			getProductsSold: async () => {
 				const store = getStore();
-				fetch(process.env.BACKEND_URL + "api/profile/products/SOLD", {
+				try {
+					const response = await fetch(process.env.BACKEND_URL + "api/profile/products/SOLD", {
 					method: "GET",
 					headers: {
 					"Content-Type": "application/json",
 					"Authorization": `Bearer ${localStorage.getItem("token")}`
 					}
 				})
-				.then(response => response.json())
-				.then(response => {
-					setStore({products: response})
-				})
-				.catch(error => {
+				const data = await response.json ()
+					setStore({products: data});
+					return data
+				}
+				catch{
+					(error => {
 					console.error(error);
-				});
+				})};
 			},
 
-			PendingBlockedChanged: () => {
+			getProductsSoldReviewed: async () => {
 				const store = getStore();
-				fetch(process.env.BACKEND_URL + "api/profile/changed/PENDING_BLOCKED", {
+				try {
+					const response = await fetch(process.env.BACKEND_URL + "api/profile/products/SOLD_REVIEWED", {
 					method: "GET",
 					headers: {
 					"Content-Type": "application/json",
 					"Authorization": `Bearer ${localStorage.getItem("token")}`
 					}
 				})
-				.then(response => response.json())
-				.then(response => {
-					setStore({products: response})
-				})
-				.catch(error => {
+				const data = await response.json ()
+					setStore({products: data});
+					return data
+				}
+				catch{
+					(error => {
 					console.error(error);
-				});
+				})};
 			},
 
-			BlockedChanged: () => {
+			PendingBlockedChanged: async () => {
 				const store = getStore();
-				fetch(process.env.BACKEND_URL + "api/profile/changed/BLOCKED", {
+				try {
+					const response = await fetch(process.env.BACKEND_URL + "api/profile/products/PENDING_BLOCKED", {
 					method: "GET",
 					headers: {
 					"Content-Type": "application/json",
 					"Authorization": `Bearer ${localStorage.getItem("token")}`
 					}
 				})
-				.then(response => response.json())
-				.then(response => {
-					setStore({products: response})
-				})
-				.catch(error => {
+				const data = await response.json ()
+					setStore({products: data});
+					return data
+				}
+				catch{
+					(error => {
 					console.error(error);
-				});
+				})};
 			},
 
-			PendingSaleChanged: () => {
+			BlockedChanged: async () => {
 				const store = getStore();
-				fetch(process.env.BACKEND_URL + "api/profile/changed/PENDING_SALE", {
+				try {
+					const response = await fetch(process.env.BACKEND_URL + "api/profile/products/BLOCKED", {
 					method: "GET",
 					headers: {
 					"Content-Type": "application/json",
 					"Authorization": `Bearer ${localStorage.getItem("token")}`
 					}
 				})
-				.then(response => response.json())
-				.then(response => {
-					setStore({products: response})
-				})
-				.catch(error => {
+				const data = await response.json ()
+					setStore({products: data});
+					return data
+				}
+				catch{
+					(error => {
 					console.error(error);
-				});
+				})};
 			},
 
-			SoldChanged: () => {
+			PendingSaleChanged: async () => {
 				const store = getStore();
-				fetch(process.env.BACKEND_URL + "api/profile/changed/SOLD", {
+				try {
+					const response = await fetch(process.env.BACKEND_URL + "api/profile/products/PENDING_SALE", {
 					method: "GET",
 					headers: {
 					"Content-Type": "application/json",
 					"Authorization": `Bearer ${localStorage.getItem("token")}`
 					}
 				})
-				.then(response => response.json())
-				.then(response => {
-					setStore({products: response})
-				})
-				.catch(error => {
+				const data = await response.json ()
+					setStore({products: data});
+					return data
+				}
+				catch{
+					(error => {
 					console.error(error);
-				});
+				})};
 			},
 
-			SoldReviewedChanged: () => {
+			SoldChanged: async () => {
 				const store = getStore();
-				fetch(process.env.BACKEND_URL + "api/profile/changed/SOLD_REVIEWED", {
+				try {
+					const response = await fetch(process.env.BACKEND_URL + "api/profile/products/SOLD", {
 					method: "GET",
 					headers: {
 					"Content-Type": "application/json",
 					"Authorization": `Bearer ${localStorage.getItem("token")}`
 					}
 				})
-				.then(response => response.json())
-				.then(response => {
-					setStore({products: response})
-				})
-				.catch(error => {
+				const data = await response.json ()
+					setStore({products: data});
+					return data
+				}
+				catch{
+					(error => {
 					console.error(error);
-				});
+				})};
+			},
+
+			SoldReviewedChanged: async () => {
+				const store = getStore();
+				try {
+					const response = await fetch(process.env.BACKEND_URL + "api/profile/products/SOLD_REVIEWED", {
+					method: "GET",
+					headers: {
+					"Content-Type": "application/json",
+					"Authorization": `Bearer ${localStorage.getItem("token")}`
+					}
+				})
+				const data = await response.json ()
+					setStore({products: data});
+					return data
+				}
+				catch{
+					(error => {
+					console.error(error);
+				})};
 			},
 
 			getGarages: () => {
@@ -604,7 +728,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			getFilters: () => {
 				const store = getStore();
-				fetch(process.env.BACKEND_URL + `api//search-by/<filter>`, {
+				fetch(process.env.BACKEND_URL + `api/search-by/<filter>`, {
 					method: "GET",
 					headers: {
 						"Content-Type": "application/json",

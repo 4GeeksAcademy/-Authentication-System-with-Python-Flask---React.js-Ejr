@@ -8,10 +8,10 @@ import "../../styles/filters.css"
 import { Range, getTrackBackground } from "react-range";
 
 export const FilterYear = () => {
-  const [rangeValues, setRangeValues] = useState([1980, 2023]);
+  const [year, setYear] = useState([1980, 2023]);
 
-  const handleRangeChange = (newValues) => {
-    setRangeValues(newValues);
+  const handleYearChange = (newYear) => {
+    setYear(newYear);
 
   }
 
@@ -26,11 +26,11 @@ export const FilterYear = () => {
  <div className="p-5">
       <h4>Año de fabricación</h4>
       <Range
-        values={rangeValues}
+        values={year}
         min={1980}
         max={2023}
         step={1}
-        onChange={handleRangeChange}
+        onChange={handleYearChange}
         renderTrack={({ props, children }) => (
           <div
             onMouseDown={props.onMouseDown}
@@ -77,7 +77,7 @@ export const FilterYear = () => {
         )}
       />
       <p className="py-3">
-       Fabricación entre {rangeValues[0]} y {rangeValues[1]} 
+       Fabricación entre {year[0]} y {year[1]} 
       </p>
     </div>
 

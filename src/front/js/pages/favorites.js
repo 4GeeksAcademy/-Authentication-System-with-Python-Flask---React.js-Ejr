@@ -9,10 +9,12 @@ import { defineElement } from 'lord-icon-element';
 
 export const Favorites = () => {
     const {actions, store} = useContext(Context);
+    const carImage = "https://images.coches.com/_vn_/kia/Sportage/c399cf1d98a95d24f8e8715dd0b13fb2.jpg?p=cc_vn_high"
     const navigate = useNavigate()
     defineElement(lottie.loadAnimation);
     useEffect (() => {
-        actions.getFavorites()
+        actions.getFavorites();
+        actions.getProducts()
     }, [])
 
     const handleRemoveFavorite = (product_id) => {
@@ -31,9 +33,15 @@ export const Favorites = () => {
                     <div className="row row_favorites_profile">
                         {store.favorites.map((favorites, index) => (
                         <div className="product_profile_favorites col-2" key={index}>
-                            <div className="product_img_profile_favorites_box">
-                                <img src="https://www.motofichas.com/images/phocagallery/Honda/cb500f-2022/01-honda-cb500f-2022-estudio-rojo.jpg" alt="product" className="product_img_profile_favorites"/>
+                          {store.products.map((product, index) => (
+                            <div className="product_img_profile_favorites_box" key={index}>
+                                    {product.images.length > 0 ? (
+                            <img src={product.images[0].image} className="product_img_profile_favorites" alt="..." />
+                          ) : (
+                            <img src={carImage} className="card-img-top imgCarousel" alt="..." />
+                          )}
                             </div>
+                          ))}
                             <div className="product_description_profile_favorites">
                             <div className="row d-flex justify-content-between">
                                 <h6 className="col-8 price_product_profile">
@@ -42,19 +50,19 @@ export const Favorites = () => {
                                 </h6>
                                 <div className="col-4 d-flex justify-content-end">
                                   <button
-                                    className="button_favorite_favorites btnFavorite "
+                                    className="button_favorite_favorites btnFavorite mt-1 "
                                     id="heartCard"
                                     onClick={() => handleRemoveFavorite(favorites.product_id)}
                                   >
-                                    <script src="https://cdn.lordicon.com/bhenfmcm.js"></script>
+                                   <script src="https://cdn.lordicon.com/bhenfmcm.js"></script>
                                     <lord-icon
-                                    className=""
-                                      src="https://cdn.lordicon.com/rjzlnunf.json"
-                                      trigger="hover"
-                                      colors="primary:#1663c7,secondary:#16a9c7"
-                                      stroke="80"
-                                      style={{ width: "50px", height: "30px" }}
-                                    ></lord-icon>
+                                        className='lordicon'
+                                        src="https://cdn.lordicon.com/rjzlnunf.json"
+                                        trigger="morph"
+                                        colors="primary:#1663c7,secondary:#16a9c7"
+                                        state="morph-heart-broken"
+                                        style={{"width":"20px","height":"30px", }}>
+                                    </lord-icon>
                                   </button>
                                 </div>
                               </div>

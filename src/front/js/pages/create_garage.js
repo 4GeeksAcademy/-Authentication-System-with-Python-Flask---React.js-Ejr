@@ -76,31 +76,6 @@ const handleImageIdChange = (e) => {
 
     }
 
-    useEffect(() => {
-      const script = document.createElement("script");
-      script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyAf7aQ5JHWwJTvYuzpJw8QtQK8DYdwJqPE&libraries=places`;
-      script.async = true;
-      script.onload = handleScriptLoad;
-      document.body.appendChild(script);
-    
-      return () => {
-        document.body.removeChild(script);
-      };
-    }, []);
-    
-    const handleScriptLoad = () => {
-      const input = document.getElementById("address");
-      const autocomplete = new google.maps.places.Autocomplete(input);
-    
-      autocomplete.addListener("place_changed", () => {
-        const selectedPlace = autocomplete.getPlace();
-        const address = selectedPlace.formatted_address;
-
-        setData({ ...data, adress: address });
-      });
-    };
-
-
     
     return (
         <>
@@ -111,17 +86,16 @@ const handleImageIdChange = (e) => {
           <form onSubmit={handleSubmit} method="POST">
 
            
-              <div className="row justify-content-center">
-                <div className="col-6 input-box mx-auto">
-                  <label htmlFor="name">Nombre del Taller</label>
+              <div className="row justify-content-center text-center align-items-center">
+              <div className="col-sm-12 col-md-12 col-lg-6 input-box mx-auto">
+                  <div><label htmlFor="name">Nombre del Taller</label></div>
+                  
                   <input type="text" placeholder="Talleres Rodríguez" name="name" onChange={handleNameChange}/>
                 </div>
-              </div>
-
-            
-              <div className="row justify-content-center">
-                <div className="col-6 input-box mx-auto">
-                  <label htmlFor="mail">Correo de contacto</label>
+              
+              <div className="col-sm-12 col-md-12 col-lg-6 input-box mx-auto">
+                  <div><label htmlFor="mail">Correo de contacto</label></div>
+                  
                   <input type="text" placeholder="mitaller@talleres.com" name="mail" onChange={handleMailChange}/>
                 </div>
               </div>
@@ -129,20 +103,17 @@ const handleImageIdChange = (e) => {
 
             
               
-              <div className="row justify-content-center">
-                <div className="col-6 input-box  mx-auto">
-                  <label htmlFor="phone">Teléfono del Taller</label>
+              <div className="row justify-content-center text-center align-items-center">
+              <div className="col-sm-12 col-md-12 col-lg-6 input-box mx-auto">
+                  <div><label htmlFor="phone">Teléfono del Taller</label></div>
+                  
                   <input type="number" placeholder="777 777 777 " name="phone" onChange={handlePhoneChange} />
                 </div>
-              </div>
-            
-
-           
-              
-
-              <div className="row justify-content-center">
-                <div className="col-6 input-box  mx-auto">
-                  <label htmlFor="address">Dirección</label>
+   
+             
+              <div className="col-sm-12 col-md-12 col-lg-6 input-box mx-auto">
+                  <div><label htmlFor="address">Dirección</label></div>
+                  
                   <input type="text" placeholder="Av. del corral 7" id="address" name="address" onChange={handleAddressChange} />
                 </div>
               </div>
@@ -152,33 +123,33 @@ const handleImageIdChange = (e) => {
             
               
 
-              <div className="row justify-content-center">
-                <div className="col-6 input-box  mx-auto">
-                  <label htmlFor="cif">CIF</label>
+              <div className="row justify-content-center text-center align-items-center">
+              <div className="col-sm-12 col-md-12 col-lg-6 input-box mx-auto">
+                  <div> <label htmlFor="cif">CIF</label></div>
+                 
                   <input type="text" id="idNumber" placeholder="123412312H" name="cif" onChange={handleCifChange
                 } />
                 </div>
-              </div>
-
-              <div className="row justify-content-center">
-                <div className="col-12 input-box  mx-auto">
+            
+              <div className="col-sm-12 col-md-12 col-lg-6 input-box mx-auto">
+                  <div>
                   <label htmlFor="web">Sitio Web</label>
+                  </div>
                   <input type="text" id="idNumber" placeholder="123412312H" name="web" onChange={handleWebChange} />
                 </div>
               </div>
 
 
-              <div className="row justify-content-center">
-                <div className="col-6 input-box  mx-auto">
-                  <label htmlFor="description">Description</label>
+              <div className="row justify-content-center text-center align-items-center">
+              <div className="col-sm-12 col-md-12 col-lg-6 input-box mx-auto">
+                  <div><label htmlFor="description">Descripción</label></div>
+                  
                   <input type="text" placeholder="Describe tu taller" name="description" onChange={handleDescriptionChange} />
                 </div>
-              </div>
-
-
-              <div className="row justify-content-center">
-                <div className="col-6 input-box  mx-auto">
-                  <label htmlFor="description">Foto del Taller</label>
+              
+              <div className="col-sm-12 col-md-12 col-lg-6 input-box mx-auto">
+                  <div><label htmlFor="description">Foto del Taller</label></div>
+                  
                   <input type="text" placeholder="Sube tu foto" name="description" onChange={handleImageIdChange} />
                 </div>
               </div>
@@ -188,7 +159,7 @@ const handleImageIdChange = (e) => {
             
             
             <div className="button mt-4">
-              <button className="btn btn-primary btn1">Click Me!</button>
+              <button className="btn btn-primary btn1">Subir Taller</button>
             </div>
           </form>
         </div>
