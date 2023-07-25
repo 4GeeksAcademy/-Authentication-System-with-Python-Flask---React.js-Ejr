@@ -36,39 +36,37 @@ export const Favorites = () => {
                         {  
                         return (
                         <div className="product_profile_favorites col-2" key={index}>
-                         
                             <div className="product_img_profile_favorites_box" key={index}>
-                                    {favorites.image ? (
-                            <img src={favorites.image} className="product_img_profile_favorites" alt="..." />
-                          ) : (
-                            <img src={carImage} className="card-img-top imgCarousel" alt="..." />
-                          )}
+                                {favorites.image ? (
+                                  <img src={favorites.image} className="product_img_profile_favorites" alt="..." />
+                                ) : (
+                                  <img src={carImage} className="card-img-top imgCarousel" alt="..." />
+                                )}
                             </div>
-                      
                             <div className="product_description_profile_favorites">
-                            <div className="row d-flex justify-content-between">
-                                <h6 className="col-8 price_product_profile">
-                                  {favorites.price}
-                                  <i class="fa-solid fa-euro-sign"></i>
-                                </h6>
-                                <div className="col-4 d-flex justify-content-end">
-                                  <button
-                                    className="button_favorite_favorites btnFavorite mt-1 "
-                                    id="heartCard"
-                                    onClick={() => handleRemoveFavorite(favorites.product_id)}
-                                  >
-                                   <script src="https://cdn.lordicon.com/bhenfmcm.js"></script>
-                                    <lord-icon
-                                        className='lordicon'
-                                        src="https://cdn.lordicon.com/rjzlnunf.json"
-                                        trigger="morph"
-                                        colors="primary:#1663c7,secondary:#16a9c7"
-                                        state="morph-heart-broken"
-                                        style={{"width":"20px","height":"30px", }}>
-                                    </lord-icon>
-                                  </button>
+                              <div className="row d-flex justify-content-between">
+                                  <h6 className="col-8 price_product_profile">
+                                    {favorites.price}
+                                    <i class="fa-solid fa-euro-sign"></i>
+                                  </h6>
+                                  <div className="col-4 d-flex justify-content-end">
+                                    <button
+                                      className="button_favorite_favorites btnFavorite mt-1 "
+                                      id="heartCard"
+                                      onClick={() => handleRemoveFavorite(favorites.product_id)}
+                                    >
+                                    <script src="https://cdn.lordicon.com/bhenfmcm.js"></script>
+                                      <lord-icon
+                                          className='lordicon'
+                                          src="https://cdn.lordicon.com/rjzlnunf.json"
+                                          trigger="morph"
+                                          colors="primary:#1663c7,secondary:#16a9c7"
+                                          state="morph-heart-broken"
+                                          style={{"width":"20px","height":"30px", }}>
+                                      </lord-icon>
+                                    </button>
+                                  </div>
                                 </div>
-                              </div>
                               <div className="row limit-text">
                                   <h6>{favorites.name}</h6>
                               </div>

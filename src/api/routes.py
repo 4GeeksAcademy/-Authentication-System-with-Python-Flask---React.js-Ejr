@@ -921,7 +921,6 @@ def getFavorites():
     response = []
     for favorite in favorites:
         product = Product.query.get(favorite.product_id)
-        print(list(product.images)[0])
         response.append({
             "product_id": product.id,
             "name": product.name,
@@ -997,7 +996,8 @@ def getReviews():
             "given_review_id": review.given_review_id,
             "product_name": product.name,
             "recived_review_id": review.recived_review_id,
-            "recived_user_id": review.recived_review_id
+            "recived_user_id": review.recived_review_id,
+            "image": list(product.images)[0].image
         }
         review_list.append(review_data)
 
