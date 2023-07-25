@@ -27,7 +27,7 @@ const Login = () => {
       // Reset the form fields after successful submission
       setEmail("");
       setPassword("");
-      navigate("/usermain");
+      navigate("/userpage");
     } catch (error) {
       console.log("Error during login", error);
 

@@ -1,16 +1,24 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { Context } from "../store/appContext";
 
 const UserPage = () => {
+  const { store } = useContext(Context);
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const response = await fetch(`${process.env.BACKEND_URL}/user`);
+        const response = await fetch(`${process.env.BACKEND_URL}api/private`, {
+          headers: {
+            Authorization: `Bearer ${store.token}`
+          }
+        });
+
         if (!response.ok) {
           throw new Error("Failed to fetch user data");
         }
+
         const data = await response.json();
         console.log("User Data:", data); // For debugging (optional)
         setUser(data);
@@ -22,25 +30,27 @@ const UserPage = () => {
     };
 
     fetchUser();
-  }, []);
+  }, [store.token]);
 
-  return (
-    <div className="user-page-container">
-      <h2>User Page</h2>
-      {loading ? (
-        <p>Loading user data...</p>
-      ) : user ? (
-        <div>
-          <p>Name: {user.first_name}</p>
-          <p>Email: {user.email}</p>
-          <p>Phone Number: {user.phone_number}</p>
-          {/* Display additional user data here if needed */}
-        </div>
-      ) : (
-        <p>Unable to fetch user data.</p>
-      )}
-    </div>
-  );
+  // Show loading message while fetching user data
+  if (loading) {
+    return <p>Loading user data...</p>;
+  }
+
+  // If user data is available, display it
+  if (user) {
+    return (
+      <div>
+        <h2>Welcome, {user.first_name}</h2>
+        <p>Email: {user.email}</p>
+        <p>Phone Number: {user.phone_number}</p>
+        {/* Render other user data here */}
+      </div>
+    );
+  }
+
+  // If user data is not available, show an error message
+  return <p>Error fetching user data</p>;
 };
 
 export default UserPage;
