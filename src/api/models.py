@@ -98,7 +98,7 @@ class Offers(db.Model):
             "normal_user_price": self.normal_user_price,
             "medium_user_price": self.medium_user_price,
             "high_user_price": self.high_user_price,
-            "premium_user_price": self.premium_user_price
+            "premium_user_price": self.premium_user_price}
 
 
 class User(db.Model):

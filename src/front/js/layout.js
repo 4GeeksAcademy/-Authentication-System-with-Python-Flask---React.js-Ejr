@@ -6,6 +6,14 @@ import { BackendURL } from "./component/backendURL";
 import { Home } from "./pages/home";
 import { Demo } from "./pages/demo";
 import { Single } from "./pages/single";
+import  LogIn  from "./pages/LogIn.jsx";
+import  ForgotPassword  from "./pages/ForgotPassword.jsx";
+import  UserPrivate  from "./pages/UserPrivate.jsx";
+import  BusinessUserPrivate  from "./pages/BusinessUserPrivate.jsx";
+import  UsersReviews  from "./pages/UsersReviews.jsx";
+import  Business_offers  from "./pages/Business_offers.jsx";
+import Trips  from "./pages/Trips.jsx";
+
 import injectContext from "./store/appContext";
 
 import { Navbar } from "./component/navbar";
@@ -28,6 +36,14 @@ const Layout = () => {
                         <Route element={<Home />} path="/" />
                         <Route element={<Demo />} path="/demo" />
                         <Route element={<Single />} path="/single/:theid" />
+                        <Route element={<SignUp />} path="/signup" />
+                        <Route element={<LogIn />} path="/login" />
+                        <Route element={<ForgotPassword />} path="/forgot_password" />
+                        <Route element={<UserPrivate />} path="/user/private" />
+                        <Route element={<BusinessUserPrivate />} path="/business_user/private" />
+                        <Route element={<UsersReviews />} path="/users_reviews" />
+                        <Route element={<Business_offers />} path="/business_offers" />
+                        <Route element={<Trips />} path="/trips" />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
                     <Footer />
