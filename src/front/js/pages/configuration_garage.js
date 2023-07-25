@@ -103,37 +103,37 @@ return store.garage ? (
                         <div>
                         <label className="my-2 col-10 col-sm-10 col-md-6 col-lg-5 label p-2 input-radius">Nombre del Taller:</label>
                         </div>
-                        <input className="col-8  user_data" name="name" type="text" value={data.name || store.garage.name} onChange={handleChange}></input>
+                        <input className="col-12  user_data" name="name" type="text" value={data.name || store.garage.name} onChange={handleChange}></input>
                     </div>
                     <div className="row  my-4">
                         <div>
                         <label className=" my-2 col-10 col-sm-10 col-md-6 col-lg-5  label p-2 input-radius">Correo del Taller:</label>
                         </div>
-                        <input className="my-2 col-8 user_data " name="mail" type="text" value={data.mail || store.garage.mail} onChange={handleChange}></input>
+                        <input className="my-2 col-12 user_data " name="mail" type="text" value={data.mail || store.garage.mail} onChange={handleChange}></input>
                     </div>
                         <div className="row  my-3">
                             <div>
                             <label className="col-10 col-sm-10 col-md-6 col-lg-5 label p-2 input-radius">Sitio Web:</label>
                            </div>
-                           <input className="my-2 col-8 user_data" name="web" type="text" value={data.web || store.garage.web} onChange={handleChange}></input>
+                           <input className="my-2 col-12 user_data" name="web" type="text" value={data.web || store.garage.web} onChange={handleChange}></input>
                         </div>
                         <div className="row my-3">
                             <div>
                             <label className="col-10 col-sm-10 col-md-6 col-lg-5  label p-2 input-radius">CIF:</label>
                             </div>
-                            <input className="my-2 col-8 user_data " name="cif" type="text" value={data.cif || store.garage.cif} onChange={handleChange}></input>
+                            <input className="my-2 col-12 user_data " name="cif" type="text" value={data.cif || store.garage.cif} onChange={handleChange}></input>
                         </div>
                     <div className="row my-3">
                         <div>
                         <label className="col-10 col-sm-10 col-md-6 col-lg-5 label p-2 input-radius">Teléfono:</label>
                         </div>
-                        <input className="my-2 col-8 user_data " name="phone" type="text" value={data.phone || store.garage.phone} onChange={handleChange}></input>
+                        <input className="my-2 col-12 user_data " name="phone" type="text" value={data.phone || store.garage.phone} onChange={handleChange}></input>
                     </div>
                     <div className="row my-3">
                         <div>
                         <label className="col-10 col-sm-10 col-md-6 col-lg-5 label p-2 input-radius">Dirección:</label>
                         </div>
-                        <input className=" my-2 col-8 user_data " name="address" id="address" type="text" value={data.address || store.garage.address} onChange={handleChange}></input>
+                        <input className=" my-2 col-12 user_data " name="address" id="address" type="text" value={data.address || store.garage.address} onChange={handleChange}></input>
                     </div>
                     <div className="row save_cancel_config">
                         <Link to="/profile/garage" className="btn_config cancel">
