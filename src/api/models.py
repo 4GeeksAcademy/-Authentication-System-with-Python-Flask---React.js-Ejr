@@ -17,7 +17,7 @@ class User(db.Model):
     territory_state = db.Column(db.String(80), unique=False, nullable=True)
     dob = db.Column(db.String(80), unique=False, nullable=True)
     is_active = db.Column(db.Boolean(), unique=False, nullable=True)
-    favorites = db.Column(db.relationship("Favorites", backref= "user_id" , lazy= "subquery"))
+    favorites =db.relationship("Favorites", backref= "user")
 
     def __repr__(self):
         return f'<User {self.email}>'
@@ -41,8 +41,8 @@ class Favorites(db.Model):
     __tableName__ = "favorites"
     id = db.Column(db.Integer, primary_key=True)
     # maybe db.Boolean(False)
-    favorite = db.Column(db.Boolean,db.ForeignKey('user.favorites') , unique=False, nullable=True ,default= False)
-    User_id = db.Column("User" , db.Integer, db.ForeignKey("user.id"))
+    # favorite = db.Column(db.Boolean,db.ForeignKey('user.favorites') , unique=False, nullable=True ,default= False)
+    User_id = db.Column( db.Integer, db.ForeignKey("user.id"))
     country = db.Column(db.String(120), unique=False, nullable=True)
     territory_state = db.Column(db.String(80), unique=False, nullable=True)
     # foreingKey = User.db 
@@ -52,4 +52,8 @@ class Favorites(db.Model):
             "id": self.id,
         }    
         
+
+class countrys(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    Favorites_id = db.Column( db.Integer, db.ForeignKey("favorites.id"))
 
