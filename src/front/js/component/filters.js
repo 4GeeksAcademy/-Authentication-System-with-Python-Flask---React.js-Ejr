@@ -22,20 +22,15 @@ export const Filters = (props) => {
 
   const handleKmChange = (newKm) => {
     setKm(newKm);
-
   }
   
-
   const handleYearChange = (newYear) => {
     setYear(newYear);
-
   }
-
 
   const handlePriceChange = (newPrice) => {
     setRangePrice(newPrice);
   }
-
 
   const handleShowMore = () => {
     setVisibleBrands((prevVisibleBrands) => prevVisibleBrands + 3);
@@ -68,8 +63,6 @@ export const Filters = (props) => {
       }
     });
   };
-  
-
 
   const renderBrands = () => {
     let brandsToShow = [];
@@ -79,10 +72,6 @@ export const Filters = (props) => {
       brandsToShow = store.allBrands.slice(29);
     }
 
-
-
-
-  
     return (
       <ul>
         {brandsToShow.slice(0, visibleBrands).map((brand, index) => {
@@ -107,11 +96,6 @@ export const Filters = (props) => {
       </ul>
     );
   };
-  
-
-
-
-
 
   const handleOnSubmit = async (e) => {
     e.preventDefault();
@@ -137,7 +121,6 @@ export const Filters = (props) => {
     const offcanvasBootstrap = bootstrap.Offcanvas.getInstance(offcanvas);
     offcanvasBootstrap.hide();
   
-
     const queryString = queryParams.join('&');
     const url = `${process.env.BACKEND_URL}api/search-by/filter?${queryString}`;
 
@@ -151,29 +134,19 @@ export const Filters = (props) => {
      const min_km = km[0]
      const max_km = km[1]
 
-
      actions.getFilteredProducts(brand_id, vehicle_id, min_price, max_price, min_year, max_year, min_km, max_km)
-
      } 
      catch(error) { (console.error('Error nuevo'))}
-
   }
-
 
   useEffect(() => {
     actions.getAllBrands()
-
   }, [])
-
-
-
-
 
   return (
     <>
       <a className="btn btn-primary jello-vertical buttonFilter" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
-       
-      <i className="fa-solid fa-sliders"></i>
+        <i className="fa-solid fa-sliders"></i>
       </a>
 
       <form onSubmit={handleOnSubmit}>
@@ -186,265 +159,240 @@ export const Filters = (props) => {
           </div>
           <div className="offcanvas-body">
             <div>
+              <h4>Vehículo</h4>
+              <ul>
+                <li>
+                  <div className="form-check p-3">
+                    <input
+                      className="form-check-input"
+                      type="radio"
+                      name="flexRadioDefault"
+                      id="flexRadioDefault1"
+                      checked={vehicleType === "COCHE"}
+                      onChange={() => setVehicleType("COCHE")}
+                    />
+                    <label className="form-check-label" htmlFor="flexRadioDefault1">
+                      Coche
+                    </label>
+                  </div>
+                </li>
+                <li>
+                  <div className="form-check p-3">
+                    <input
+                      className="form-check-input"
+                      type="radio"
+                      name="flexRadioDefault"
+                      id="flexRadioDefault2"
+                      checked={vehicleType === "MOTO"}
+                      onChange={() => setVehicleType("MOTO")}
+                    />
+                    <label className="form-check-label" htmlFor="flexRadioDefault2">
+                      Moto
+                    </label>
+                  </div>
+                </li>
+              </ul>
+            </div>
+
             <div>
-  <h4>Vehículo</h4>
-  <ul>
-    <li>
-      <div className="form-check p-3">
-        <input
-          className="form-check-input"
-          type="radio"
-          name="flexRadioDefault"
-          id="flexRadioDefault1"
-          checked={vehicleType === "COCHE"}
-          onChange={() => setVehicleType("COCHE")}
-        />
-        <label className="form-check-label" htmlFor="flexRadioDefault1">
-          Coche
-        </label>
-      </div>
-    </li>
-    <li>
-      <div className="form-check p-3">
-        <input
-          className="form-check-input"
-          type="radio"
-          name="flexRadioDefault"
-          id="flexRadioDefault2"
-          checked={vehicleType === "MOTO"}
-          onChange={() => setVehicleType("MOTO")}
-        />
-        <label className="form-check-label" htmlFor="flexRadioDefault2">
-          Moto
-        </label>
-      </div>
-    </li>
-  </ul>
-</div>
+              <h4>Marcas</h4>
+              {renderBrands()}
+              {totalBrands > 3 && (
+                <>
+                  {showMoreButton ? (
+                    <div className="m-auto d-flex justify-content-end me-5">
+                      <button className="nav-link me-5 text-primary" style={{"fontSize": "16px"}} onClick={handleShowMore}>
+                        Ver más
+                      </button>
+                    </div>
+                  ) : (
+                    showLessButton && (
+                      <button
+                        style={{ width: 38, height: 35, background: "#0F4C75", borderRadius: 8 }}
+                        className="nav-link btn-plus btn_mucho mb-2 ms-4"
+                        onClick={handleShowLess}
+                      >
+                        <i className="fa-solid fa-window-minimize m-auto" />
+                      </button>
+                    )
+                  )}
+                </>
+              )}
+            </div>
 
-
-              <div>
-                <h4>Marcas</h4>
-                {renderBrands()}
-                {totalBrands > 3 && (
-                  <>
-                    {showMoreButton ? (
-                      <div className="m-auto d-flex justify-content-end me-5">
-                        <button className="nav-link me-5 text-primary" style={{"fontSize": "16px"}} onClick={handleShowMore}>
-                          Ver más
-                        </button>
-                      </div>
-                    ) : (
-                      showLessButton && (
-                        <button
-                          style={{ width: 38, height: 35, background: "#0F4C75", borderRadius: 8 }}
-                          className="nav-link btn-plus btn_mucho mb-2 ms-4"
-                          onClick={handleShowLess}
-                        >
-                          <i className="fa-solid fa-window-minimize m-auto" />
-                        </button>
-                      )
-                    )}
-                  </>
+            <div className="px-5 mt-4">
+              <h4>Precio</h4>
+              <Range
+                values={rangePrice}
+                min={0}
+                max={50000}
+                step={100}
+                onChange={handlePriceChange}
+                renderTrack={({ props, children }) => (
+                  <div
+                    onMouseDown={props.onMouseDown}
+                    onTouchStart={props.onTouchStart}
+                    style={{
+                      ...props.style,
+                      height: "6px",
+                      display: "flex",
+                      width: "100%"
+                    }}
+                  >
+                    <div 
+                      className="py-2"
+                      ref={props.ref}
+                      style={{
+                        height: "6px",
+                        width: "100%",
+                        borderRadius: "4px",
+                        background: getTrackBackground({
+                          values: rangePrice,
+                          colors: ["#ccc", "#548BF4", "#ccc"],
+                          min: 0,
+                          max: 50000
+                        }),
+                        alignSelf: "center"
+                      }}
+                    >
+                      {children}
+                    </div>
+                  </div>
                 )}
-              </div>
-
-
-
-
-
-
-
-    <div className="p-5">
-      <h4>Precio</h4>
-      <Range
-        values={rangePrice}
-        min={0}
-        max={50000}
-        step={100}
-        onChange={handlePriceChange}
-        renderTrack={({ props, children }) => (
-          <div
-            onMouseDown={props.onMouseDown}
-            onTouchStart={props.onTouchStart}
-            style={{
-              ...props.style,
-              height: "6px",
-              display: "flex",
-              width: "100%"
-            }}
-          >
-            <div 
-              className="py-2"
-              ref={props.ref}
-              style={{
-                height: "6px",
-                width: "100%",
-                borderRadius: "4px",
-                background: getTrackBackground({
-                  values: rangePrice,
-                  colors: ["#ccc", "#548BF4", "#ccc"],
-                  min: 0,
-                  max: 50000
-                }),
-                alignSelf: "center"
-              }}
-            >
-              {children}
+                renderThumb={({ props }) => (
+                  <div
+                    {...props}
+                    style={{
+                      ...props.style,
+                      height: "16px",
+                      width: "16px",
+                      borderRadius: "50%",
+                      backgroundColor: "#FFF",
+                      boxShadow: "0px 2px 6px #AAA"
+                    }}
+                  />
+                )}
+              />
+              <p className="py-3">
+                Rango de precio entre {rangePrice[0]} y {rangePrice[1]}
+              </p>
             </div>
-          </div>
-        )}
-        renderThumb={({ props }) => (
-          <div
-            {...props}
-            style={{
-              ...props.style,
-              height: "16px",
-              width: "16px",
-              borderRadius: "50%",
-              backgroundColor: "#FFF",
-              boxShadow: "0px 2px 6px #AAA"
-            }}
-          />
-        )}
-      />
-      <p className="py-3">
-        Rango de precio entre {rangePrice[0]} y {rangePrice[1]}
-      </p>
-    </div>
 
-
-
-
-
-<div className="p-5">
-      <h4>Año de fabricación</h4>
-      <Range
-        values={year}
-        min={1980}
-        max={2023}
-        step={1}
-        onChange={handleYearChange}
-       renderTrack={({ props, children }) => (
-  <div
-    onMouseDown={props.onMouseDown}
-    onTouchStart={props.onTouchStart}
-    style={{
-      ...props.style,
-      height: "6px",
-      display: "flex",
-      width: "100%"
-    }}
-  >
-    <div 
-      className="py-2"
-      ref={props.ref}
-      style={{
-        height: "6px",
-        width: "100%",
-        borderRadius: "4px",
-        background: getTrackBackground({
-          values: year, // <-- Aquí debe ser 'year' en lugar de 'rangeValues'
-          colors: ["#ccc", "#548BF4", "#ccc"],
-          min: 1980,
-          max: 2023
-        }),
-        alignSelf: "center"
-      }}
-    >
-      {children}
-    </div>
-  </div>
-)}
-        renderThumb={({ props }) => (
-          <div
-            {...props}
-            style={{
-              ...props.style,
-              height: "16px",
-              width: "16px",
-              borderRadius: "50%",
-              backgroundColor: "#FFF",
-              boxShadow: "0px 2px 6px #AAA"
-            }}
-          />
-        )}
-      />
-      <p className="py-3">
-       Fabricación entre {year[0]} y {year[1]} 
-      </p>
-    </div>
-
-
-
-    <div className="p-5">
-      <h4>Kilometraje</h4>
-      <Range
-        values={km}
-        min={0}
-        max={300000}
-        step={1500}
-        onChange={handleKmChange}
-        renderTrack={({ props, children }) => (
-          <div
-            onMouseDown={props.onMouseDown}
-            onTouchStart={props.onTouchStart}
-            style={{
-              ...props.style,
-              height: "6px",
-              display: "flex",
-              width: "100%"
-            }}
-          >
-            <div 
-              className="py-2"
-              ref={props.ref}
-              style={{
-                height: "6px",
-                width: "100%",
-                borderRadius: "4px",
-                background: getTrackBackground({
-                  values: km,
-                  colors: ["#ccc", "#548BF4", "#ccc"],
-                  min: 0,
-                  max: 300000
-                }),
-                alignSelf: "center"
-              }}
-            >
-              {children}
+            <div className="px-5">
+              <h4>Año de fabricación</h4>
+              <Range
+                values={year}
+                min={1980}
+                max={2023}
+                step={1}
+                onChange={handleYearChange}
+                renderTrack={({ props, children }) => (
+                  <div
+                    onMouseDown={props.onMouseDown}
+                    onTouchStart={props.onTouchStart}
+                    style={{
+                      ...props.style,
+                      height: "6px",
+                      display: "flex",
+                      width: "100%"
+                    }}
+                  >
+                    <div 
+                      className="py-2"
+                      ref={props.ref}
+                      style={{
+                        height: "6px",
+                        width: "100%",
+                        borderRadius: "4px",
+                        background: getTrackBackground({
+                          values: year,
+                          colors: ["#ccc", "#548BF4", "#ccc"],
+                          min: 1980,
+                          max: 2023
+                        }),
+                        alignSelf: "center"
+                      }}
+                    >
+                      {children}
+                    </div>
+                  </div>
+                )}
+                renderThumb={({ props }) => (
+                  <div
+                    {...props}
+                    style={{
+                      ...props.style,
+                      height: "16px",
+                      width: "16px",
+                      borderRadius: "50%",
+                      backgroundColor: "#FFF",
+                      boxShadow: "0px 2px 6px #AAA"
+                    }}
+                  />
+                )}
+              />
+              <p className="py-3">
+                Fabricación entre {year[0]} y {year[1]} 
+              </p>
             </div>
-          </div>
-        )}
-        renderThumb={({ props }) => (
-          <div
-            {...props}
-            style={{
-              ...props.style,
-              height: "16px",
-              width: "16px",
-              borderRadius: "50%",
-              backgroundColor: "#FFF",
-              boxShadow: "0px 2px 6px #AAA"
-            }}
-          />
-        )}
-      />
-      <p className="py-3">
-       Entre {km[0]} Kms y {km[1]} Kms
-      </p>
-    </div>
 
-
-
-
-
-
-
-
-     </div>
-
-            <button className="btn btn-primary my-5">Buscar por filtros</button>
+            <div className="px-5">
+              <h4>Kilometraje</h4>
+              <Range
+                values={km}
+                min={0}
+                max={300000}
+                step={1500}
+                onChange={handleKmChange}
+                renderTrack={({ props, children }) => (
+                  <div
+                    onMouseDown={props.onMouseDown}
+                    onTouchStart={props.onTouchStart}
+                    style={{
+                      ...props.style,
+                      height: "6px",
+                      display: "flex",
+                      width: "100%"
+                    }}
+                  >
+                    <div 
+                      className="py-2"
+                      ref={props.ref}
+                      style={{
+                        height: "6px",
+                        width: "100%",
+                        borderRadius: "4px",
+                        background: getTrackBackground({
+                          values: km,
+                          colors: ["#ccc", "#548BF4", "#ccc"],
+                          min: 0,
+                          max: 300000
+                        }),
+                        alignSelf: "center"
+                      }}
+                    >
+                      {children}
+                    </div>
+                  </div>
+                )}
+                renderThumb={({ props }) => (
+                  <div
+                    {...props}
+                    style={{
+                      ...props.style,
+                      height: "16px",
+                      width: "16px",
+                      borderRadius: "50%",
+                      backgroundColor: "#FFF",
+                      boxShadow: "0px 2px 6px #AAA"
+                    }}
+                  />
+                )}
+              />
+              <p className="py-3">
+                Entre {km[0]} Kms y {km[1]} Kms
+              </p>
+            </div>
           </div>
         </div>
       </form>
