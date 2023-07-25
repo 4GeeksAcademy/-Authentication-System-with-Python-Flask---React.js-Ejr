@@ -3,7 +3,7 @@ from api.models import db, User, Business_user, Post, Offers, Trip
 from api.utils import APIException
 from flask_bcrypt import bcrypt, Bcrypt
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity, JWTManager
-from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.security import generate_password_hash
 
 
 api = Blueprint('api', __name__)
@@ -89,12 +89,12 @@ def create_user_or_business():
             payment_method = data.get('payment_method')
 
             # Hacher le mot de passe et créer l'entreprise
-            password_hash = generate_password_hash(password)
+            password_hash = bcrypt.generate_password_hash(password).decode('utf-8')
             new_business = Business_user(business_name=name_business, email=email, password=password_hash, nif=nif, address=address, payment_method=payment_method)
             db.session.add(new_business)
             db.session.commit()
 
-            return jsonify({'message': 'Business created successfully', 'business': new_business.serialize()}), 200
+            return jsonify({'message': 'Business created successfully', 'business': new_business.serialize()}), 201
 
         # Sinon, c'est une inscription d'utilisateur
         else:
