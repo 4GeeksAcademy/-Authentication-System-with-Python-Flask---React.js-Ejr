@@ -38,23 +38,6 @@ def get_business_user(user_id):
         return jsonify({"message": "User not found"}), 404
     return jsonify(user.serialize())
 
-@api.route('/business_users', methods=['POST'])
-def create_business_user():
-    data = request.get_json()
-    try:
-        user = Business_user(
-            business_name=data['business_name'],
-            password=data['password'],
-            email=data['email'],
-            nif=data['nif'],
-            address=data['address'],
-            payment_method=data['payment_method']
-        )
-        db.session.add(user)
-        db.session.commit()
-        return jsonify(user.serialize()), 201
-    except KeyError:
-        return jsonify({"message": "Invalid data provided"}), 400
 
 @api.route('/business_user/<int:user_id>', methods=['PUT'])
 def update_business_user(user_id):
