@@ -3,7 +3,7 @@ from api.models import db, User, Business_user, Post, Offers, Trip
 from api.utils import APIException
 from flask_bcrypt import bcrypt, Bcrypt
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity, JWTManager
-from werkzeug.security import generate_password_hash, check_password_hash
+
 
 
 api = Blueprint('api', __name__)
@@ -63,6 +63,21 @@ def delete_business_user(user_id):
 
 bcrypt = Bcrypt()
 
+from flask import Flask, request, jsonify, Blueprint
+from api.models import db, User, Business_user, Post, Offers, Trip
+from api.utils import APIException
+from flask_bcrypt import Bcrypt
+from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity, JWTManager
+
+api = Blueprint('api', __name__)
+
+jwt = JWTManager()
+bcrypt = Bcrypt()
+
+# Fonction d'initialisation de l'extension JWTManager avec l'application Flask
+def initialize_jwt(api):
+    jwt.init_app(api)
+
 @api.route('/signup', methods=['POST'])
 def create_user_or_business():
     try:
@@ -89,12 +104,12 @@ def create_user_or_business():
             payment_method = data.get('payment_method')
 
             # Hacher le mot de passe et créer l'entreprise
-            password_hash = generate_password_hash(password)
+            password_hash = bcrypt.generate_password_hash(password).decode('utf-8')
             new_business = Business_user(business_name=name_business, email=email, password=password_hash, nif=nif, address=address, payment_method=payment_method)
             db.session.add(new_business)
             db.session.commit()
 
-            return jsonify({'message': 'Business created successfully', 'business': new_business.serialize()}), 200
+            return jsonify({'message': 'Business created successfully', 'business': new_business.serialize()}), 201
 
         # Sinon, c'est une inscription d'utilisateur
         else:
@@ -106,7 +121,7 @@ def create_user_or_business():
             payment_method = data.get('payment_method')
 
             # Hacher le mot de passe et créer l'utilisateur
-            password_hash = generate_password_hash(password)
+            password_hash = bcrypt.generate_password_hash(password).decode('utf-8')
             new_user = User(email=email, password=password_hash, firstname=firstname, lastname=lastname, username=username, address=address, dni=dni, payment_method=payment_method)
             db.session.add(new_user)
             db.session.commit()
@@ -115,9 +130,6 @@ def create_user_or_business():
 
     except Exception as e:
         return jsonify({'error': 'Error in user/business creation: ' + str(e)}), 500
-
-
-
 
 @api.route('/login', methods=['POST'])
 def login():
@@ -132,16 +144,15 @@ def login():
         # Vérifier si c'est un utilisateur
         user = User.query.filter_by(email=data['email']).first()
         if user:
-            password_db = user.password
-            if bcrypt.check_password_hash(password_db, data["password"]):
+            password_hash = user.password
+            if bcrypt.check_password_hash(password_hash, data["password"]):
                 user_or_business = user
-
 
         # Vérifier si c'est une entreprise
         business = Business_user.query.filter_by(email=data['email']).first()
         if business:
-            password_db = business.password
-            if bcrypt.check_password_hash(password_db, data["password"]):
+            password_hash = business.password
+            if bcrypt.check_password_hash(password_hash, data["password"]):
                 user_or_business = business
 
         if not user_or_business:
@@ -152,6 +163,7 @@ def login():
 
     except Exception as e:
         return jsonify({'error': 'Error in login: ' + str(e)}), 500
+
 
 
 @api.route('/private')
