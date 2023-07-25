@@ -8,11 +8,10 @@
 
 
 :root {
-    --bg-color: #d9c3b1;
-  }
-  
-  body {
-    background-color: var(--bg-color);
-  }
-
+  --color-1: #f1445b;
+  --color-2: #65734b;
+  --color-3: #94a453;
+  --color-4: #d9c3b1;
+  --color-5: #f03625;
+}
 
