@@ -15,4 +15,8 @@
   --color-5: #f03625;
 }
 
+body{
+  background-color: var(--color-4);
+}
+
 
