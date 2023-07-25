@@ -1,2 +1,11 @@
+
+/* 
+    General Styles used on every website (Don't Repeat Yourself)
+*/
+
 @import './home.css';
+@import './navbar.css';
+@import './footer.css';
+
 @import './pub-slide.css';
+
