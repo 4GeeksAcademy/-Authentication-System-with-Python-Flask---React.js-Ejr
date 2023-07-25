@@ -31,17 +31,20 @@ export const Favorites = () => {
                         
                     </h2>
                     <div className="row row_favorites_profile">
-                        {store.favorites.map((favorites, index) => (
+
+                        {store.favorites.map((favorites, index) => 
+                        {  
+                        return (
                         <div className="product_profile_favorites col-2" key={index}>
-                          {store.products.map((product, index) => (
+                         
                             <div className="product_img_profile_favorites_box" key={index}>
-                                    {product.images.length > 0 ? (
-                            <img src={product.images[0].image} className="product_img_profile_favorites" alt="..." />
+                                    {favorites.image ? (
+                            <img src={favorites.image} className="product_img_profile_favorites" alt="..." />
                           ) : (
                             <img src={carImage} className="card-img-top imgCarousel" alt="..." />
                           )}
                             </div>
-                          ))}
+                      
                             <div className="product_description_profile_favorites">
                             <div className="row d-flex justify-content-between">
                                 <h6 className="col-8 price_product_profile">
@@ -71,7 +74,7 @@ export const Favorites = () => {
                               </div>
                             </div>
                         </div>
-                         ))}
+                         )})}
                     </div>
                 </div>
         </>
