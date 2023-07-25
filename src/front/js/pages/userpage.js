@@ -9,7 +9,7 @@ const UserPage = () => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const response = await fetch(`${process.env.BACKEND_URL}api/private`, {
+        const response = await fetch(`${process.env.BACKEND_URL}/private`, {
           headers: {
             Authorization: `Bearer ${store.token}`
           }
