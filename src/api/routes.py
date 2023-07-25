@@ -117,36 +117,37 @@ def delete_Favorite(Favorites_id):
 
 
 # GETTING USER'S FAVORITE PAGE
-@api.route("/FAVORITE_PAGE", methods=["GET"])
-@jwt_required()
-def show_Favorites():
-    current_user_id = get_jwt_identity()
-    user = User.query.filterby(current_user_id = current_user_id ).first()
-    return jsonify({ "id": user.id, "response": "That is your lsit of Favorites!"}), 200
+# @api.route("/FAVORITE_PAGE", methods=["GET"])
+# @jwt_required()
+# def show_Favorites():
+#     current_user_id = get_jwt_identity()
+#     user = User.query.filterby(current_user_id = current_user_id ).first()
+#     return jsonify({ "id": user.id}), 200\
+    # "response": User.favorites
 
 
 
 # GETTING ALL THE FAVORITES OF A USER
 @api.route("/FAVORITES", methods=["GET"])
+@jwt_required()
 def get_all_Favorites():
-    all_Favorites =Favorites.query.all()
-    favorites = favorites.query.filter(favorites.user_id == user.id).all()
-    # or
-    # mapped_Favorites = list(map(lambda index: index.serialize(), all_Favorites))
-    response_body = jsonify(favorites)
+    user = get_jwt_identity()
+    all_Favorites =user.favorites.query.all()
+    mapped_Favorites = list(map(lambda index: index.serialize(), all_Favorites))
+    # response_body = jsonify(favorites)
     # or 
-    # response_body = jsonify(mapped_Favorites)
+    response_body = jsonify(mapped_Favorites)
     return response_body, 200
 
 
-# @api.route('/hello', methods=['POST', 'GET'])
-# def handle_hello():
+@api.route('/hello', methods=['POST', 'GET'])
+def handle_hello():
 
-#     response_body = {
-#         "message": "Hello! I'm a message that came from the backend, check the network tab on the google inspector and you will see the GET request"
-#     }
+    response_body = {
+        "message": "Hello! I'm a message that came from the backend, check the network tab on the google inspector and you will see the GET request"
+    }
 
-#     return jsonify(response_body), 200
+    return jsonify(response_body), 200
 
 # from flask import Flask, request, jsonify
 
