@@ -15,5 +15,85 @@ class User(db.Model):
         return {
             "id": self.id,
             "email": self.email,
-            # do not serialize the password, its a security breach
+            # do not serialize the password, security breach
         }
+
+class Movie(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(80))
+    description = db.Column(db.String(250))
+    ranking = db.Column(db.Integer)
+    actors = db.Column(db.String(140))
+    directors = db.Column(db.String(100))
+
+    def __repr__(self):
+        return f'<Movie {self.id} {self.name}>'
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            "description": self.description,
+            "ranking": self.ranking,
+            "actors": self.actors,
+            "directors": self.directors
+        }
+
+class Actor(db.Model):
+    id = db.Column(db.Integer, primary_key= True)
+    name = db.Column(db.String(80))
+    description = db.Column(db.String(800))
+    other_movies = db.Column(db.String(200))
+    
+    def __repr__(self):
+        return f'<Actor {self.id} {self.name}>'
+
+    def serialize (self):
+        return {
+        "id": self.id,
+        "name": self.name,
+        "description": self.description,
+        "other_movies": self.other_movies, 
+        }
+
+class Director(db.Model):
+    id = db.Column(db.Integer, primary_key= True)
+    name = db.Column(db.String(80))
+    description = db.Column(db.String(800))
+    other_movies = db.Column(db.String(200))
+    
+    def __repr__(self):
+        return f'<Director {self.id} {self.name}>'
+
+    def serialize (self):
+        return {
+        "id": self.id,
+        "name": self.name,
+        "description": self.description,
+        "other_movies": self.other_movies, 
+        }
+
+# class Favorite(db.Model):
+#     id = db.Column(db.Integer, primary_key=True)
+#     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))  
+#     actor_id = db.Column(db.Integer, db.ForeignKey('actor.id')) 
+#     director_id = db.Column(db.Integer, db.ForeignKey('director.id'))
+#     movie_id = db.Column(db.Integer, db.ForeignKey('movie.id'))
+#     series_id = db.Column(db.Integer, db.ForeignKey('series.id'))
+#     user = db.relationship("User", backref="favorites")
+#     actor = db.relationship("Actor", backref="favorites")
+
+
+
+#     def __repr__(self):
+#         return f'Favorite {self.id}'
+
+#     def serialize(self):
+#         return {
+#             "id": self.id,
+#             "user_id": self.user_id,
+#             "actor_id": self.actor_id,
+#             "director_id": self.director_id,
+#             "movie_id": self.movie_id,
+#             "series_id": self.series_id
+#         }
