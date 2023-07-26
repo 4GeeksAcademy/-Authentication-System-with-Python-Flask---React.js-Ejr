@@ -36,6 +36,7 @@ export const Favorites = () => {
                         {  
                         return (
                         <div className="product_profile_favorites col-2" key={index}>
+                          <NavLink to={`/product/${favorites.product_id}`}  style={{ color: 'white', textDecoration: 'none' }} className="link-hover">
                             <div className="product_img_profile_favorites_box" key={index}>
                                 {favorites.image ? (
                                   <img src={favorites.image} className="product_img_profile_favorites" alt="..." />
@@ -71,6 +72,7 @@ export const Favorites = () => {
                                   <h6>{favorites.name}</h6>
                               </div>
                             </div>
+                            </NavLink>
                         </div>
                          )})}
                     </div>
