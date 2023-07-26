@@ -48,7 +48,7 @@ const LogIn = () => {
               <Link to='/signup' > <span data-bs-dismiss="modal">Don't you have an account? Click here</span></Link>
               <div className="modal-footer">
                 <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="submit" className="btn btn-primary">Log In</button>
+                <button type="submit" className="btn btn-primary"><span data-bs-dismiss="modal">Log In</span>  </button>
               </div>
             </form>
           </div>

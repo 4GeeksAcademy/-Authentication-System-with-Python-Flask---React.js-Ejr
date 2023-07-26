@@ -31,27 +31,33 @@ const Navbar = () => {
         <div className="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
           <ul className="navbar-nav">
 
-          {isLoggedIn? (
-              <h3>Hi {data.username}</h3>
-            <li>
-              <button onClick={handleLogout}>Log Out</button>
-            </li>
-          ):( 
-            <li className="nav-item">
-            <a className="nav-link btn" href="#" data-bs-toggle="modal" data-bs-target="#staticBackdrop">LogIn</a>
-          </li>
+            {isLoggedIn ? (
+              <>
+                <h3>Hi {store.user.email} </h3>
+                <li>
+                  <button onClick={handleLogout}>Log Out</button>
+                </li> 
+              </>
 
-          )}
+            ) : (
+              <li className="nav-item">
+                <a className="nav-link btn" href="#" data-bs-toggle="modal" data-bs-target="#staticBackdrop">LogIn</a>
+              </li>
+
+            )}
             <li className="nav-item dropstart">
               <a className="nav-link" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 &#9776;
               </a>
               <ul className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                <li><a className="dropdown-item" href="#">Avisos/Notificaciones</a></li>
-                <li><a className="dropdown-item" href="#">Ofertas Favoritas</a></li>
-                <li><a className="dropdown-item" href="#">Explora tu siguiente trip</a></li>
-                <li><a className="dropdown-item" href="#">Help</a></li>
-                <li><a className="dropdown-item" href="#">LogOut</a></li>
+                <li><Link className="dropdown-item">Avisos/Notificaciones</Link></li>
+                <li><Link className="dropdown-item">Ofertas Favoritas</Link></li>
+                <li><Link className="dropdown-item">Explora tu siguiente trip</Link></li>
+                <li><Link className="dropdown-item">Help</Link></li>
+                {isLoggedIn ? (
+                  <li><button className="dropdown-item" onClick={handleLogout}>LogOut</button></li>
+
+                ) : (<li><Link className="dropdown-item signup" to='/signup'>Sign Up</Link></li>)}
               </ul>
             </li>
           </ul>
