@@ -83,10 +83,12 @@ def save_destination():
 def create_user():
     user_email= request.json.get('email', None)
     user_password = request.json.get('password', None)
+    recovery_question = request.json.get('recovery_question', None)
+    recovery_answer = request.json.get('recovery_answer', None)
     active_user = User.query.filter_by(email = user_email).first()
     if active_user:
         return jsonify({"Error": "Email already in use, try another one"}), 409
-    new_user = User(email=user_email,password=user_password)
+    new_user = User(email=user_email,password=user_password,recovery_question=recovery_question,recovery_answer=recovery_answer)
     db.session.add(new_user)
     db.session.commit()
     return jsonify({"Message": "User successfully created"})
