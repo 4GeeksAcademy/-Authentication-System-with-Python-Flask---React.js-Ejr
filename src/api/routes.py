@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Favorites
+from api.models import db, User, Favorites , Destinations
 from api.utils import generate_sitemap, APIException
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 
@@ -142,6 +142,18 @@ def handle_hello():
 # from flask import Flask, request, jsonify
 
 # app = Flask(__name__)
+
+# geting all destination 
+@api.route("/destination", methods=["GET"])
+def get_all_Destinations():
+    all_Destinations =Destinations.query.all()
+    mapped_Destinations = list(map(lambda index: index.serialize(), all_Destinations))
+    # response_body = jsonify(favorites)
+    # or 
+    response_body = jsonify(mapped_Destinations)
+    return response_body, 200
+
+
 
 
 destinations_data = [

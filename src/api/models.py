@@ -45,6 +45,7 @@ class Favorites(db.Model):
     User_id = db.Column( db.Integer, db.ForeignKey("user.id"))
     country = db.Column(db.String(120), unique=False, nullable=True)
     territory_state = db.Column(db.String(80), unique=False, nullable=True)
+    destinations =db.relationship("Destinations", backref= "favorites")
     # foreingKey = User.db 
     # user_id = db.Column(db.Integer, ForeignKey(User.id),unique = True )
     def serialize(self):
@@ -53,7 +54,17 @@ class Favorites(db.Model):
         }    
         
 
-class countrys(db.Model):
+class Destinations(db.Model):
+    __tableName__ = "destinations"
     id = db.Column(db.Integer, primary_key=True)
-    Favorites_id = db.Column( db.Integer, db.ForeignKey("favorites.id"))
+    city =  db.Column(db.String(120), unique=False, nullable=True) 
+    country = db.Column(db.String(120), unique=False, nullable=True) 
+    description = db.Column(db.String(120), unique=False, nullable=True) 
+    favorites_id = db.Column( db.Integer, db.ForeignKey("favorites.id"))
+
+    def serialize(self):
+        return {
+            "id": self.id,
+        }    
+
 
