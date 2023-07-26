@@ -1,6 +1,6 @@
 const getState = ({ getStore, getActions, setStore }) => {
   const API_URL =
-    "https://valentinfrar-laughing-space-cod-qrqp6777v9xc4wwj-3001.preview.app.github.dev";
+    "https://valentinfrar-studious-memory-qrqp6777vj7265vw-3001.preview.app.github.dev";
   return {
     store: {
       user: {},
@@ -52,16 +52,12 @@ const getState = ({ getStore, getActions, setStore }) => {
             console.log(response);
             console.log("Todo perfecto");
             return response;
-          } else if (response.status === 401) {
-            // Gérer l'erreur de connexion non autorisée
-            return false;
           } else {
-            // Gérer d'autres erreurs
             return false;
           }
         } catch (err) {
           console.log(err);
-          return false; // Gérer les autres erreurs, renvoyer false par défaut
+          return false;
         }
       },
 
@@ -86,13 +82,11 @@ const getState = ({ getStore, getActions, setStore }) => {
             setStore({ user: data.user });
             console.log(data);
             return data;
-          } else if (response.status === 401) {
-            // Gérer l'erreur de connexion non autorisée
-            return false;
-          }
+          } else response.status === 401;
+          return false;
         } catch (err) {
           console.log(err);
-          return false; // Gérer les autres erreurs, renvoyer false par défaut
+          return false;
         }
       },
       isAuth: async () => {
@@ -118,6 +112,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         let token = localStorage.getItem("myToken");
         return token != null ? true : false;
       },
+
 
       // get fetch  for all users
       getAllUsers : async () => {
@@ -557,6 +552,45 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
       
+    getReviews: async () => {
+        try {
+          const response = await fetch(API_URL + "/api/review");
+          if (response.ok) {
+            const data = await response.json();
+            setStore({ reviews: data });
+            return true;
+          } else {
+            return false;
+          }
+        } catch (error) {
+          console.log(error);
+          return false;
+        }
+      },
+      incrementLikes: async (reviewId) => {
+        try {
+          const response = await fetch(
+            API_URL + `/api/review/${reviewId}/like`,
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
+
+          if (response.ok) {
+            // Rechargez les avis pour mettre à jour le nombre de likes
+            getActions().getReviews();
+            return true;
+          } else {
+            return false;
+          }
+        } catch (error) {
+          console.log(error);
+          return false;
+        }
+      },
     },
   };
 };
