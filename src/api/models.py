@@ -101,6 +101,7 @@ class Review(db.Model):
     trip_id = db.Column(db.Integer, db.ForeignKey('trip.id'), nullable=False)  # Adding the ForeignKey
     title = db.Column(db.String(75), nullable=False)
     comment_text = db.Column(db.String(500), nullable=False)
+    likes = db.Column(db.Integer, default=0)
 
     user = db.relationship("User", backref="reviews")  # Relationship to User model
     trip = db.relationship("Trip", backref="reviews")  # Relationship to Trip model
@@ -114,7 +115,8 @@ class Review(db.Model):
             "user_id": self.user_id,
             "trip_id": self.trip_id,
             "title": self.title,
-            "comment_text": self.comment_text
+            "comment_text": self.comment_text,
+            "likes": self.likes 
         }
     
 class Favorites(db.Model):

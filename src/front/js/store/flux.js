@@ -1,6 +1,6 @@
 const getState = ({ getStore, getActions, setStore }) => {
   const API_URL =
-    "https://valentinfrar-potential-engine-v4vqw666vxrfprjp-3001.preview.app.github.dev";
+    "https://valentinfrar-studious-memory-qrqp6777vj7265vw-3001.preview.app.github.dev";
   return {
     store: {
       user: {},
@@ -118,6 +118,30 @@ const getState = ({ getStore, getActions, setStore }) => {
           if (response.ok) {
             const data = await response.json();
             setStore({ reviews: data });
+            return true;
+          } else {
+            return false;
+          }
+        } catch (error) {
+          console.log(error);
+          return false;
+        }
+      },
+      incrementLikes: async (reviewId) => {
+        try {
+          const response = await fetch(
+            API_URL + `/api/review/${reviewId}/like`,
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
+
+          if (response.ok) {
+            // Rechargez les avis pour mettre à jour le nombre de likes
+            getActions().getReviews();
             return true;
           } else {
             return false;
