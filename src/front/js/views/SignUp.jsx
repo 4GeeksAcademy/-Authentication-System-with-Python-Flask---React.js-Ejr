@@ -44,6 +44,10 @@ const Signup = () => {
     setPaymentMethod(event.target.value);
   };
 
+  const handleLogin = () => {
+    navigate('/login');
+  };
+
   return (
     <div className="">
     
@@ -60,7 +64,7 @@ const Signup = () => {
           type="email"
           onChange={(e) => setEmail(e.target.value)}
           className="form-control"
-          id="exampleInputEmail1"
+          id="email"
         />
       </div>
       <div className="m-3">
@@ -71,7 +75,7 @@ const Signup = () => {
           type="password"
           onChange={(e) => setPassword(e.target.value)}
           className="form-control"
-          id="exampleInputPassword1"
+          id="password"
         />
       </div>
       <div className="m-3 ">
@@ -82,7 +86,7 @@ const Signup = () => {
           type="text"
           onChange={(e) => setFirstName(e.target.value)}
           className="form-control"
-          id="exampleInputEmail1"
+          id="firstName"
         />
       </div>
       <div className="m-3 ">
@@ -93,7 +97,7 @@ const Signup = () => {
           type="text"
           onChange={(e) => setLastName(e.target.value)}
           className="form-control"
-          id="exampleInputEmail1"
+          id="lastName"
         />
       </div>
       <div className="m-3 ">
@@ -104,7 +108,7 @@ const Signup = () => {
           type="text"
           onChange={(e) => setPhone(e.target.value)}
           className="form-control"
-          id="exampleInputEmail1"
+          id="Phone"
         />
       </div>
       <div className="m-3 ">
@@ -115,7 +119,7 @@ const Signup = () => {
           type="text"
           onChange={(e) => setLocation(e.target.value)}
           className="form-control"
-          id="exampleInputEmail1"
+          id="location"
         />
       </div>
       <div className="m-3 ">
@@ -126,7 +130,7 @@ const Signup = () => {
           type="text"
           onChange={(e) => setAddress(e.target.value)}
           className="form-control"
-          id="exampleInputEmail1"
+          id="address"
         />
       </div>
       <div className="m-3 ">
@@ -160,7 +164,9 @@ const Signup = () => {
         Create account
       </button>
     </form>
-
+    <div className=" mb-5 card w-50 mx-auto">
+    <h5 className="text-center" style={{ cursor: 'pointer' }}  onClick={handleLogin}>if you already have an account go to Login</h5>
+    </div>
     </div>
   );
 };

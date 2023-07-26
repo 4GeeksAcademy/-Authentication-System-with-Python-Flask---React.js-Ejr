@@ -3,10 +3,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 
   return {
     store: {
-      user: {},
+            user: {},
     },
     actions: {
-      login: async (email, password) => {
+       login: async (email, password) => {
         try {
           const response = await fetch(API_URL + '/login', {
             method: 'POST',

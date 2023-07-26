@@ -5,6 +5,9 @@ import { BackendURL } from "./component/backendURL";
 import Login from "./views/Login.jsx"
 import  Home  from "./views/Home.jsx";
 import Signup from "./views/SignUp.jsx";
+import Details from "./views/Details.jsx";
+import Cart from "./views/Cart.jsx";
+import Settings from "./views/Settings.jsx";
 
 import Prueba from "./views/PruebaComponentes.jsx";
 
@@ -30,6 +33,9 @@ const Layout = () => {
 						<Route path="/home" element={<Home />} />
                         <Route path="/signup" element={<Signup />} />
                         <Route path="/login" element={<Login/>} />
+                        <Route path="/details" element={<Details/>} />
+                        <Route path="/settings" element={<Settings/>} />
+                        <Route path="/cart" element={<Cart/>} />
                         <Route path="/prueba" element={<Prueba />} />
                         <Route path="*" element={<h1>Not found!</h1>} />
                     </Routes>

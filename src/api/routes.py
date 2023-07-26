@@ -31,7 +31,7 @@ def signup():
     if User.query.filter_by(email=data['email']).first():
         return jsonify({'message': 'El usuario ya existe. Intente con otro correo electrónico.'}), 409
     
-    # Verificar si se proporcionó la contraseña en el payload
+    # Verificar si se proporcionó la contraseña
     if 'password' not in data or not data['password']:
         return jsonify({'message': 'El campo de contraseña es obligatorio.'}), 400
 
@@ -68,7 +68,7 @@ def login():
     if user and bcrypt.checkpw(password.encode('utf-8'), user.password.encode('utf-8')):
         # Generar un token JWT y devolverlo en la respuesta
         token = generate_token(user.id)
-        return jsonify({'message': 'Inicio de sesión exitoso.', 'token': token}), 200
+        return jsonify({'message': 'Inicio de sesión exitoso.', 'token': token , 'user':user.serialize()}), 200
     else:
         return jsonify({'message': 'Credenciales inválidas. Por favor, intenta de nuevo.'}), 401
 
@@ -78,7 +78,47 @@ def logout():
     # Para cerrar sesión con JWT, simplemente se omite el token en el cliente.
     return jsonify({'message': 'Cierre de sesión exitoso.'}), 200
 
+@api.route('/users', methods=['GET'])
+def get_all_users():
+    users = User.query.all()
+    serialized_users = [user.serialize() for user in users]
+    return jsonify(serialized_users), 200
 
+@api.route('/user/<int:user_id>', methods=['GET'])
+def get_user_by_id(user_id):
+    user = User.query.get(user_id)
+    if not user:
+        return jsonify({'message': 'Usuario no encontrado'}), 404
+    return jsonify(user.serialize()), 200
+
+@api.route('/user/<int:user_id>', methods=['PUT'])
+def update_user(user_id):
+    user = User.query.get(user_id)
+    if not user:
+        return jsonify({'message': 'Usuario no encontrado'}), 404
+
+    data = request.json 
+    user.first_name = data.get('firstName', user.first_name)
+    user.last_name = data.get('lastName', user.last_name)
+    user.email = data.get('email', user.email)
+    user.address = data.get('address', user.address)
+    user.location = data.get('location', user.location)
+    user.payment_method = data.get('paymentMethod', user.payment_method)
+    user.is_admin = data.get('isAdmin', user.is_admin)
+
+    db.session.commit()
+    return jsonify({'message': 'Usuario modificado exitosamente'}), 200
+
+# Ruta para eliminar un usuario por su ID
+@api.route('/user/<int:user_id>', methods=['DELETE'])
+def delete_user(user_id):
+    user = User.query.get(user_id)
+    if not user:
+        return jsonify({'message': 'Usuario no encontrado'}), 404
+
+    db.session.delete(user)
+    db.session.commit()
+    return jsonify({'message': 'Usuario eliminado exitosamente'}), 200
 
 @api.route('/hello', methods=['POST', 'GET'])
 def handle_hello():
