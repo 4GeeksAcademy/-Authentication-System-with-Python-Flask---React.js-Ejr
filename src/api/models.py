@@ -95,13 +95,15 @@ class Offers(db.Model):
             "high_user_price": self.high_user_price,
             "premium_user_price": self.premium_user_price
         }
-
 class Review(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, nullable=False)
-    trip_id = db.Column(db.Integer, nullable=False)
-    title = db.Column(db.String(75), nullable = False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    trip_id = db.Column(db.Integer, db.ForeignKey('trip.id'), nullable=False)  # Adding the ForeignKey
+    title = db.Column(db.String(75), nullable=False)
     comment_text = db.Column(db.String(500), nullable=False)
+
+    user = db.relationship("User", backref="reviews")  # Relationship to User model
+    trip = db.relationship("Trip", backref="reviews")  # Relationship to Trip model
 
     def __repr__(self):
         return '<Review %r>' % self.id
@@ -111,6 +113,7 @@ class Review(db.Model):
             "id": self.id,
             "user_id": self.user_id,
             "trip_id": self.trip_id,
+            "title": self.title,
             "comment_text": self.comment_text
         }
     
