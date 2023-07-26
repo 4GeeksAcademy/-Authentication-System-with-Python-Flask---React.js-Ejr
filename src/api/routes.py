@@ -299,21 +299,21 @@ def get_token():
     except Exception as e:
         return jsonify({'error': 'Error in token generation: ' + str(e)}), 500
 
-        # Trip routes
-@api.route('/offers', methods=['GET'])
+# Trip routes
+@api.route('/offer', methods=['GET'])
 def get_all_offers():
     offers = Offers.query.all()
     serialized_offers = [offer.serialize() for offer in offers]
-    return jsonify(serialized_offers)
+    return jsonify(offers=serialized_offers), 200
 
-@api.route('/offer/<int:offer_id>', methods=['GET'])
+@api.route('/offers/<int:offer_id>', methods=['GET'])
 def get_offer(offer_id):
     offer = Offers.query.get(offer_id)
     if not offer:
         return jsonify({"message": "Offer not found"}), 404
     return jsonify(offer.serialize())
 
-@api.route('/offers', methods=['POST'])
+@api.route('/offer', methods=['POST'])
 @jwt_required()
 def create_offer():
     data = request.get_json()
@@ -365,13 +365,13 @@ def delete_offer(offer_id):
 
     
 # Trip routes
-@api.route('/trip', methods=['GET'])
+@api.route('/trips', methods=['GET'])
 def get_all_trips():
-    trips = Trip.query.all()
-    serialized_trips = [trip.serialize() for trip in trips]
-    return jsonify(serialized_trips)
+        trips = Trip.query.all()
+        serialized_trips = [trip.serialize() for trip in trips]
+        return jsonify(trips = serialized_trips), 200
 
-@api.route('/trip/<int:trip_id>', methods=['GET'])
+@api.route('/trips/<int:trip_id>', methods=['GET'])
 def get_trip(trip_id):
     trip = Trip.query.get(trip_id)
     if not trip:
