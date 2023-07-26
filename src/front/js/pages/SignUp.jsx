@@ -10,7 +10,7 @@ const SignUp = () => {
   const [lastname, setLastname] = useState("");
   const [dni, setDni] = useState("");
   const [address, setAddress] = useState('')
-  const [payment, setPayment] = useState('')
+  const [payment_method, setPayment] = useState('')
   // const [loginError, setLoginError] = useState("");
   const { store, actions } = useContext(Context);
   let navigate = useNavigate();
@@ -25,7 +25,7 @@ const SignUp = () => {
       firstname,
       lastname,
       dni,
-      payment, // Assurez-vous d'utiliser la clé correcte pour le paiement
+      payment_method, // Assurez-vous d'utiliser la clé correcte pour le paiement
       address,
     };
 
@@ -68,7 +68,7 @@ const SignUp = () => {
       </div>
       <div className="mb-3">
         <label htmlFor="dni" className="form-label">DNI</label>
-        <input type="text" className="form-control" id="dni" onChange={(e) => setDni(e.target.value)} />
+        <input type="text" className="form-control" id="dni" onChange={(e) => setDni(parseInt(e.target.value))} />
       </div>
       <div className="mb-3">
         <label htmlFor="payment" className="form-label">Payment Method</label>
