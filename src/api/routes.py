@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify, Blueprint, jsonify, redirect, url_for
-from api.models import db, User, Business_user, Offers, Trip
+from api.models import db, User, Business_user, Offers, Trip, Review
 from api.utils import APIException
 from flask_bcrypt import bcrypt, Bcrypt
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity, JWTManager, unset_jwt_cookies
@@ -460,3 +460,62 @@ def delete_resource(resource, resource_id):
             return jsonify({'error': f'{resource[:-1].capitalize()} not found'}), 404
     else:
         return jsonify({'error': 'Unauthorized'}), 401
+
+@api.route('/review', methods=['GET'])
+def get_all_reviews():
+    reviews = Review.query.all()
+    serialized_reviews = [review.serialize() for review in reviews]
+    return jsonify(serialized_reviews)
+
+@api.route('/review/<int:review_id>', methods=['GET'])
+def get_review(review_id):
+    review = Review.query.get(review_id)
+    if not review:
+        return jsonify({"message": "Review not found"}), 404
+    return jsonify(review.serialize())
+
+@api.route('/review', methods=['POST'])
+@jwt_required()
+def create_review():
+    data = request.get_json()
+    try:
+        review = Review(
+            user_id=data['user_id'],
+            trip_id=data['trip_id'],
+            title=data['title'],
+            comment_text=data['comment_text']
+        )
+        db.session.add(review)
+        db.session.commit()
+        return jsonify(review.serialize()), 201
+    except KeyError:
+        return jsonify({"message": "Invalid data provided"}), 400
+
+@api.route('/review/<int:review_id>', methods=['PUT'])
+@jwt_required()
+def update_review(review_id):
+    review = Review.query.get(review_id)
+    if not review:
+        return jsonify({"message": "Review not found"}), 404
+
+    data = request.get_json()
+    try:
+        review.user_id = data['user_id']
+        review.trip_id = data['trip_id']
+        review.title = data['title']
+        review.comment_text = data['comment_text']
+        db.session.commit()
+        return jsonify(review.serialize()), 200
+    except KeyError:
+        return jsonify({"message": "Invalid data provided"}), 400
+
+@api.route('/review/<int:review_id>', methods=['DELETE'])
+@jwt_required()
+def delete_review(review_id):
+    review = Review.query.get(review_id)
+    if not review:
+        return jsonify({"message": "Review not found"}), 404
+
+    db.session.delete(review)
+    db.session.commit()
+    return jsonify({"message": "Review deleted successfully"}), 200

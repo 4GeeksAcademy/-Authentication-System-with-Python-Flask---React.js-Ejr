@@ -33,7 +33,7 @@ const Navbar = () => {
 
             {isLoggedIn ? (
               <>
-                <h3>Hi {store.user.email} </h3>
+                <h3>Hi {store.user.username} </h3>
                 <li>
                   <button onClick={handleLogout}>Log Out</button>
                 </li> 

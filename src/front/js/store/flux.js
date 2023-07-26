@@ -1,12 +1,12 @@
 const getState = ({ getStore, getActions, setStore }) => {
   const API_URL =
-    "https://valentinfrar-laughing-space-cod-qrqp6777v9xc4wwj-3001.preview.app.github.dev";
+    "https://valentinfrar-potential-engine-v4vqw666vxrfprjp-3001.preview.app.github.dev";
   return {
     store: {
       user: {},
       business_user: [],
       trip: [],
-      post: [],
+      reviews: [],
       offers: [],
     },
     actions: {
@@ -52,16 +52,12 @@ const getState = ({ getStore, getActions, setStore }) => {
             console.log(response);
             console.log("Todo perfecto");
             return response;
-          } else if (response.status === 401) {
-            // Gérer l'erreur de connexion non autorisée
-            return false;
           } else {
-            // Gérer d'autres erreurs
             return false;
           }
         } catch (err) {
           console.log(err);
-          return false; // Gérer les autres erreurs, renvoyer false par défaut
+          return false;
         }
       },
 
@@ -86,13 +82,11 @@ const getState = ({ getStore, getActions, setStore }) => {
             setStore({ user: data.user });
             console.log(data);
             return data;
-          } else if (response.status === 401) {
-            // Gérer l'erreur de connexion non autorisée
-            return false;
-          }
+          } else response.status === 401;
+          return false;
         } catch (err) {
           console.log(err);
-          return false; // Gérer les autres erreurs, renvoyer false par défaut
+          return false;
         }
       },
       isAuth: async () => {
@@ -117,6 +111,21 @@ const getState = ({ getStore, getActions, setStore }) => {
       logout: () => {
         let token = localStorage.getItem("myToken");
         return token != null ? true : false;
+      },
+      getReviews: async () => {
+        try {
+          const response = await fetch(API_URL + "/api/review");
+          if (response.ok) {
+            const data = await response.json();
+            setStore({ reviews: data });
+            return true;
+          } else {
+            return false;
+          }
+        } catch (error) {
+          console.log(error);
+          return false;
+        }
       },
     },
   };
