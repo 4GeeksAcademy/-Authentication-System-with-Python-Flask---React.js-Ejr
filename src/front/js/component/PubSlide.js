@@ -61,7 +61,7 @@ const PubSlide = () => {
           </div>
           <div className="carousel-item">
             <img
-              src="https://mma.prnewswire.com/media/1918859/ProColombia.jpg?p=facebook"
+              src="https://www.economy.com.bo/asset/thumbnail,992,558,center,center/media/economy/images/2021/11/30/2021113018453670867.jpg"
               className="d-block w-100"
               alt="Third Slide"
             />
