@@ -11,28 +11,24 @@ const getState = ({ getStore, getActions, setStore }) => {
     },
     actions: {
       // Use getActions to call a function within a function
-      signupUser: async (userEmail, userPassword) => {
+      signupUser: async (data) => {
         try {
           // Utiliser la clé "myToken" au lieu de "token"
           const response = await fetch(API_URL + "/api/signup/user", {
             method: "POST",
             headers: {
-              "Content-Type": "application/json", // Utiliser le préfixe "Bearer" pour l'autorisation
+              "Content-Type": "application/json",
             },
-            body: JSON.stringify({
-              email: userEmail,
-              password: userPassword,
-            }),
+            body: JSON.stringify(data),
           });
 
           if (response.ok) {
             console.log(response);
             console.log("Todo perfecto");
             return response;
-          } else if (response.status === 401) {
-            // Gérer l'erreur de connexion non autorisée
-            return false;
-          }
+          } else response.status === 401;
+          // Gérer l'erreur de connexion non autorisée
+          return false;
         } catch (err) {
           console.log(err);
           return false; // Gérer les autres erreurs, renvoyer false par défaut

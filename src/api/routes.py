@@ -73,7 +73,9 @@ from sqlalchemy.exc import IntegrityError
 def create_user():
     try:
         data = request.get_json()
+        print(data)
         email = data.get('email')
+        print(email)
         password = data.get('password')
         username = data.get('username')
         firstname = data.get('firstname')
@@ -87,9 +89,9 @@ def create_user():
             return jsonify({'error': 'Email and password are required.'}), 400
 
         # Vérifier si l'utilisateur existe déjà
-        existing_user = User.query.filter_by(username=username).first()
+        existing_user = User.query.filter_by(email=email).first()
         if existing_user:
-            return jsonify({'error': 'Username already exists.'}), 409
+            return jsonify({'error': 'Email already exists.'}), 409
 
         # Hacher le mot de passe et créer l'utilisateur
         password_hash = bcrypt.generate_password_hash(password).decode('utf-8')
