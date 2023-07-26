@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Footer = () => {
 	return (
+
 		<div className="container">
 			<footer className="py-5">
 				<div className="row">
@@ -84,6 +85,7 @@ const Footer = () => {
 			</footer>
 		</div>
 	);
+
 };
 
 export default Footer;

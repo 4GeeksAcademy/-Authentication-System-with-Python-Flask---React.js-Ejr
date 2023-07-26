@@ -23,6 +23,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           });
 
           if (response.ok) {
+            console.log(data);
             console.log(response);
             console.log("Todo perfecto");
             return response;
