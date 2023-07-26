@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify, Blueprint, jsonify, redirect, url_for
-from api.models import db, User, Business_user, Post, Offers, Trip
+from api.models import db, User, Business_user, Offers, Trip
 from api.utils import APIException
 from flask_bcrypt import bcrypt, Bcrypt
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity, JWTManager, unset_jwt_cookies
@@ -32,7 +32,7 @@ def get_user(user_id):
         return jsonify(message='User not found'), 404
     return jsonify(user.serialize())
 
-@api.route('/business-users', methods=['GET'])
+@api.route('/business_users', methods=['GET'])
 def get_all_business_users():
     try:
         business_users = Business_user.query.all()
@@ -43,14 +43,14 @@ def get_all_business_users():
         return jsonify({'error': 'Error retrieving business users: ' + str(e)}), 500
 
 # Décorez la route pour obtenir un business_user par son ID
-@api.route('/business-users/<int:business_user_id>', methods=['GET'])
+@api.route('/business_users/<int:business_user_id>', methods=['GET'])
 def get_business_user(business_user_id):
     business_user = Business_user.query.get(business_user_id)
     if not business_user:
         return jsonify(message='Business user not found'), 404
     return jsonify(business_user.serialize())
 
-@api.route('/business_user/<int:user_id>', methods=['DELETE'])
+@api.route('/business_user/<int:business_user_id>', methods=['DELETE'])
 def delete_business_user(user_id):
     user = Business_user.query.get(user_id)
     if not user:
@@ -238,30 +238,30 @@ def update_user_profile(user_id):
         return jsonify({'error': 'Error in updating user profile: ' + str(e)}), 500
 
 
-@api.route('/business/<int:business_id>', methods=['PUT'])
+@api.route('/business_user/<int:business__id>', methods=['PUT'])
 @jwt_required()
 def update_business_profile(business_id):
     try:
-        business = Business_user.query.get(business_id)
+        business_user = Business_user.query.get(business_id)
 
-        if not business:
+        if not business_user:
             return jsonify({'error': 'Business not found'}), 404
 
         data = request.get_json()
 
         # Update business profile data
-        business.business_name = data.get('name_business', business.business_name)
-        business.email = data.get('email', business.email)
-        business.nif = data.get('nif', business.nif)
-        business.address = data.get('address', business.address)
-        business.payment_method = data.get('payment_method', business.payment_method)
+        business_user.business_name = data.get('name_business', business_user.business_name)
+        business_user.email = data.get('email', business_user.email)
+        business_user.nif = data.get('nif', business_user.nif)
+        business_user.address = data.get('address', business_user.address)
+        business_user.payment_method = data.get('payment_method', business_user.payment_method)
 
         db.session.commit()
 
-        return jsonify({'message': 'Business profile updated successfully', 'business': business.serialize()}), 200
+        return jsonify({'message': 'Business user profile updated successfully', 'business': business_user.serialize()}), 200
 
     except Exception as e:
-        return jsonify({'error': 'Error in updating business profile: ' + str(e)}), 500
+        return jsonify({'error': 'Error in updating business user profile: ' + str(e)}), 500
 
 
 @api.route('/token', methods=['POST'])
@@ -298,90 +298,6 @@ def get_token():
 
     except Exception as e:
         return jsonify({'error': 'Error in token generation: ' + str(e)}), 500
-
-
-@api.route('/posts', methods=['GET'])
-def get_all_posts():
-    try:
-        posts = Post.query.all()
-        serialized_posts = [post.serialize() for post in posts]
-        return jsonify(posts=serialized_posts), 200
-
-    except Exception as e:
-        return jsonify({'error': 'Error retrieving posts: ' + str(e)}), 500
-
-
-@api.route('/posts', methods=['POST'])
-@jwt_required()
-def create_post():
-    try:
-        data = request.get_json()
-        content = data.get('content')
-        author_id = get_jwt_identity()  # Utilisateur authentifié avec JWT
-
-        if not content:
-            return jsonify({'error': 'Content is required.'}), 400
-
-        new_post = Post(content=content, author_id=author_id)
-        db.session.add(new_post)
-        db.session.commit()
-
-        return jsonify(message='Post created successfully', post=new_post.serialize()), 201
-
-    except Exception as e:
-        return jsonify({'error': 'Error in creating post: ' + str(e)}), 500
-
-# Route pour supprimer un message (DELETE)
-@api.route('/posts/<int:post_id>', methods=['DELETE'])
-@jwt_required()
-def delete_post(post_id):
-    try:
-        post = Post.query.get(post_id)
-
-        if not post:
-            return jsonify(message='Post not found'), 404
-
-        # Vérifier si l'utilisateur authentifié est l'auteur du message
-        current_user_id = get_jwt_identity()
-        if post.author_id != current_user_id:
-            return jsonify({'error': 'You are not allowed to delete this post.'}), 403
-
-        db.session.delete(post)
-        db.session.commit()
-
-        return jsonify(message='Post deleted successfully'), 200
-
-    except Exception as e:
-        return jsonify({'error': 'Error in deleting post: ' + str(e)}), 500
-
-# Route pour mettre à jour le contenu d'un message (PUT)
-@api.route('/posts/<int:post_id>', methods=['PUT'])
-@jwt_required()
-def update_post(post_id):
-    try:
-        post = Post.query.get(post_id)
-
-        if not post:
-            return jsonify(message='Post not found'), 404
-
-        # Vérifier si l'utilisateur authentifié est l'auteur du message
-        current_user_id = get_jwt_identity()
-        if post.author_id != current_user_id:
-            return jsonify({'error': 'You are not allowed to update this post.'}), 403
-
-        data = request.get_json()
-        content = data.get('content')
-
-        if not content:
-            return jsonify({'error': 'Content is required.'}), 400
-
-        post.content = content
-        db.session.commit()
-
-        return jsonify(message='Post updated successfully', post=post.serialize()), 200
-
-    except Exception as e:
-        return jsonify({'error': 'Error in updating post: ' + str(e)}), 500
 
         # Trip routes
 @api.route('/offers', methods=['GET'])
@@ -509,7 +425,7 @@ def delete_trip(trip_id):
     return jsonify({"message": "Trip deleted successfully"}), 200
 
     # Admin route   
-@api.route('/admin', methods=['GET'])
+@api.route('/admin_user', methods=['GET'])
 @jwt_required()
 def admin_dashboard():
     is_admin = get_jwt_identity().get('is_admin', False)
@@ -524,7 +440,7 @@ def admin_dashboard():
         return jsonify({'error': 'Unauthorized'}), 401
 
 # Admin can delete users and trips
-@api.route('/admin/delete/<string:resource>/<int:resource_id>', methods=['DELETE'])
+@api.route('/admin_user/delete/<string:resource>/<int:resource_id>', methods=['DELETE'])
 @jwt_required()
 def delete_resource(resource, resource_id):
     is_admin = get_jwt_identity().get('is_admin', False)
