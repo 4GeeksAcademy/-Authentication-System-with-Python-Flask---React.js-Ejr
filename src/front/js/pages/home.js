@@ -14,7 +14,7 @@ export const Home = () => {
 				TRIP NEXUS
 			</h1>
 			<PubSlide/>
-			<ReviewCard/>
+			{/* <ReviewCard/> */}
 			<OfferCard/>
 		</div>
 	);

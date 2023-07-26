@@ -33,7 +33,7 @@ const SignUp = () => {
     console.log(register);
     if (register) {
       //true
-      navigate("/login");
+      navigate("/");
     } else {
       // Connexion échouée
       alert("Email already exists");
