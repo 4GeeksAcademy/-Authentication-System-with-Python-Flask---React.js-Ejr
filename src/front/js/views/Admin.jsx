@@ -1,11 +1,11 @@
 import React, { useContext, useEffect , useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-// import { Context } from '../store/appContext.js';
+import { Context } from '../store/appContext.js';
 
-const Cart = () => {
+const Admin = () => {
 
-    // const { actions,store } = useContext(Context)
+    const { actions,store } = useContext(Context)
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
     let navigate = useNavigate();
 
@@ -14,15 +14,16 @@ const Cart = () => {
         const myToken = localStorage.getItem("myToken");
         setIsLoggedIn(!!myToken);
       }, []);
-	  const handleLogin = () => {
-		navigate('/login');
-	  };
+      const handleLogin = () => {
+        navigate('/login');
+      };
 	
       return (
         <div>
-            {isLoggedIn ? (
-                <h1> Soy Cart</h1>
-            ) : (<>
+            {store.user.isAdmin ? (
+                <h1> Soy Admin</h1>
+            ) : (
+                <>
                 <h2>No puedes entrar</h2>
                 <button className="btn btn-success" onClick={handleLogin}>
                     Login
@@ -33,4 +34,4 @@ const Cart = () => {
     );
 };
 
-export default Cart;
+export default Admin;

@@ -38,7 +38,9 @@ const Home = () => {
 			function handleSettings() {
 				navigate("/settings")
 				}
-	  
+				function handleAdmin() {
+					navigate("/admin")
+					}
 
 	  
 	
@@ -51,6 +53,11 @@ const Home = () => {
                 <button className="btn btn-danger m-3" onClick={handleLogout}>
                     Log Out
                 </button>
+				{store.user.isAdmin ? (
+					<button className="btn btn-primary m-3" onClick={handleAdmin}>
+   					 Edit Users
+  					</button>
+				) : null}
 				<button className="btn btn-success m-3" onClick={handleCart}>
                     Cart
                 </button>
