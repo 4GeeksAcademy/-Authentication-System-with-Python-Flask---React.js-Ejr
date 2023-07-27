@@ -1,11 +1,11 @@
 const getState = ({ getStore, getActions, setStore }) => {
   const API_URL =
-    "https://albertgescribano-studious-trout-66jrg7rr9r5h45-3001.preview.app.github.dev";
+    "https://valentinfrar-glowing-fishstick-447w6jjjqvxhj44v-3001.preview.app.github.dev";
   return {
     store: {
       user: {},
       business_user: {},
-      auth: false, 
+      auth: false,
       trip: [],
       reviews: [],
       offers: [],
@@ -31,7 +31,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             const store = getStore();
             setStore({ ...store, auth: true });
             const store2 = getStore();
-            console.log("Last state of Auth:" , store2.auth)
+            console.log("Last state of Auth:", store2.auth);
             return response;
           } else response.status === 401;
           // Gérer l'erreur de connexion non autorisée
@@ -92,8 +92,8 @@ const getState = ({ getStore, getActions, setStore }) => {
             setStore({ ...store, auth: true });
             setStore({ ...store, user: data.user_or_business });
             console.log("Clean data of response:", data.user_or_business);
-            localStorage.setItem("myToken", data.access_token);  
-          return data;
+            localStorage.setItem("myToken", data.access_token);
+            return data;
           } else response.status === 401;
           return false;
         } catch (err) {
@@ -116,11 +116,9 @@ const getState = ({ getStore, getActions, setStore }) => {
           const request = await fetch(API_URL + "/private", settings);
           const json = await request.json();
           const data = json;
+          console.log(data);
           setStore({ user: data.user });
           setStore({ auth: true });
-
-        
-
         } catch (error) {
           console.log("No se pudo cargar: ", error);
         }
@@ -128,18 +126,17 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       logout: () => {
         let token = localStorage.removeItem("myToken");
-        setStore({ auth: false})
+        setStore({ auth: false });
         return token != null ? true : false;
       },
 
-
       // get fetch  for all users
-      getAllUsers : async () => {
+      getAllUsers: async () => {
         try {
           const response = await fetch(API_URL + "/users", {
             method: "GET",
           });
-      
+
           if (response.ok) {
             const responseData = await response.json();
             console.log(responseData);
@@ -157,12 +154,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       // get fetch for individual users
 
-      getUserById : async (userId) => {
+      getUserById: async (userId) => {
         try {
           const response = await fetch(API_URL + `/users/${userId}`, {
             method: "GET",
           });
-      
+
           if (response.ok) {
             const responseData = await response.json();
             console.log(responseData);
@@ -184,12 +181,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       // get fetch for all business users
 
-      getAllBusinessUsers : async () => {
+      getAllBusinessUsers: async () => {
         try {
           const response = await fetch(API_URL + "/business_users", {
             method: "GET",
           });
-      
+
           if (response.ok) {
             const responseData = await response.json();
             console.log(responseData);
@@ -207,12 +204,15 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       // get fetch for individuals business users
 
-      getBusinessUserById :async (businessUserId) => {
+      getBusinessUserById: async (businessUserId) => {
         try {
-          const response = await fetch(API_URL + `/business_users/${businessUserId}`, {
-            method: "GET",
-          });
-      
+          const response = await fetch(
+            API_URL + `/business_users/${businessUserId}`,
+            {
+              method: "GET",
+            }
+          );
+
           if (response.ok) {
             const responseData = await response.json();
             console.log(responseData);
@@ -230,15 +230,15 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.log(err);
         }
       },
-      
+
       // get fetch for all offers that are created
 
-      getAllOffers : async () => {
+      getAllOffers: async () => {
         try {
           const response = await fetch(API_URL + "/offer", {
             method: "GET",
           });
-      
+
           if (response.ok) {
             const responseData = await response.json();
             console.log(responseData);
@@ -256,12 +256,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       // get fetch to get individual offer by id
 
-        getOfferById : async (offerId) => {
+      getOfferById: async (offerId) => {
         try {
           const response = await fetch(API_URL + `/offers/${offerId}`, {
             method: "GET",
           });
-      
+
           if (response.ok) {
             const responseData = await response.json();
             console.log(responseData);
@@ -283,7 +283,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       // create an offer
 
-      createOffer : async (data) => {
+      createOffer: async (data) => {
         try {
           const response = await fetch(API_URL + "/offer", {
             method: "POST",
@@ -293,7 +293,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
             body: JSON.stringify(data),
           });
-      
+
           if (response.ok) {
             const responseData = await response.json();
             console.log(responseData);
@@ -311,7 +311,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       // update an offer by id
 
-      updateOfferById : async (offerId, data) => {
+      updateOfferById: async (offerId, data) => {
         try {
           const response = await fetch(API_URL + `/offer/${offerId}`, {
             method: "PUT",
@@ -321,7 +321,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
             body: JSON.stringify(data),
           });
-      
+
           if (response.ok) {
             const responseData = await response.json();
             console.log(responseData);
@@ -343,7 +343,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       // delete an offer by id
 
-      deleteOfferById : async (offerId) => {
+      deleteOfferById: async (offerId) => {
         try {
           const response = await fetch(API_URL + `/offer/${offerId}`, {
             method: "DELETE",
@@ -352,7 +352,7 @@ const getState = ({ getStore, getActions, setStore }) => {
               Authorization: "Bearer " + localStorage.getItem("myToken"),
             },
           });
-      
+
           if (response.ok) {
             console.log("Offer deleted successfully");
             return true;
@@ -371,14 +371,14 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
 
-      // get fetch to get all trips 
+      // get fetch to get all trips
 
-      getAllTrips : async () => {
+      getAllTrips: async () => {
         try {
           const response = await fetch(API_URL + "/trips", {
             method: "GET",
           });
-      
+
           if (response.ok) {
             const responseData = await response.json();
             console.log(responseData);
@@ -396,12 +396,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       // get individual trip by id
 
-      getTripById : async (tripId) => {
+      getTripById: async (tripId) => {
         try {
           const response = await fetch(API_URL + `/trips/${tripId}`, {
             method: "GET",
           });
-      
+
           if (response.ok) {
             const responseData = await response.json();
             console.log(responseData);
@@ -423,7 +423,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       // create a trip
 
-      createTrip : async (data) => {
+      createTrip: async (data) => {
         try {
           const response = await fetch(API_URL + "/trip", {
             method: "POST",
@@ -433,7 +433,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
             body: JSON.stringify(data),
           });
-      
+
           if (response.ok) {
             const responseData = await response.json();
             console.log(responseData);
@@ -451,7 +451,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       // update trip by id
 
-      updateTripById : async (tripId, data) => {
+      updateTripById: async (tripId, data) => {
         try {
           const response = await fetch(API_URL + `/trip/${tripId}`, {
             method: "PUT",
@@ -461,7 +461,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
             body: JSON.stringify(data),
           });
-      
+
           if (response.ok) {
             const responseData = await response.json();
             console.log(responseData);
@@ -483,7 +483,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       // delete trip by id
 
-      deleteTripById : async (tripId) => {
+      deleteTripById: async (tripId) => {
         try {
           const response = await fetch(API_URL + `/trip/${tripId}`, {
             method: "DELETE",
@@ -492,7 +492,7 @@ const getState = ({ getStore, getActions, setStore }) => {
               Authorization: "Bearer " + localStorage.getItem("myToken"),
             },
           });
-      
+
           if (response.ok) {
             console.log("Trip deleted successfully");
             return true;
@@ -511,18 +511,21 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
 
-      // delete method for user 
+      // delete method for user
 
-      deleteUserById : async (userId) => {
+      deleteUserById: async (userId) => {
         try {
-          const response = await fetch(API_URL + `/business_user/delete/users/${userId}`, {
-            method: "DELETE",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: "Bearer " + localStorage.getItem("myToken"),
-            },
-          });
-      
+          const response = await fetch(
+            API_URL + `/business_user/delete/users/${userId}`,
+            {
+              method: "DELETE",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: "Bearer " + localStorage.getItem("myToken"),
+              },
+            }
+          );
+
           if (response.ok) {
             console.log("User deleted successfully");
             return true;
@@ -541,18 +544,21 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
 
-      // delete method for business_user 
+      // delete method for business_user
 
-      deleteBusinessUserById : async (businessUserId) => {
+      deleteBusinessUserById: async (businessUserId) => {
         try {
-          const response = await fetch(API_URL + `/business_user/delete/business_users/${businessUserId}`, {
-            method: "DELETE",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: "Bearer " + localStorage.getItem("myToken"),
-            },
-          });
-      
+          const response = await fetch(
+            API_URL + `/business_user/delete/business_users/${businessUserId}`,
+            {
+              method: "DELETE",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: "Bearer " + localStorage.getItem("myToken"),
+              },
+            }
+          );
+
           if (response.ok) {
             console.log("Business user deleted successfully");
             return true;
@@ -576,6 +582,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           const response = await fetch(API_URL + "/api/review");
           if (response.ok) {
             const data = await response.json();
+            console.log(data)
             setStore({ reviews: data });
             return true;
           } else {
@@ -593,7 +600,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             console.log("Token not found");
             return false;
           }
-      
+
           const response = await fetch(API_URL + "/api/review", {
             method: "POST",
             headers: {
@@ -602,10 +609,13 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
             body: JSON.stringify(formData),
           });
-      
+
           if (response.ok) {
-            // Rechargez les avis pour inclure le nouvel avis créé
-            getActions().getReviews();
+            const res = await response.json();
+            console.log(res);
+            const actions = getActions();
+
+            actions.getReviews();
             return true;
           } else {
             return false;
@@ -615,7 +625,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           return false;
         }
       },
-      
+
       incrementLikes: async (reviewId) => {
         try {
           const token = localStorage.getItem("myToken");
@@ -640,12 +650,8 @@ const getState = ({ getStore, getActions, setStore }) => {
         } catch (error) {
           console.log(error);
           return false;
-        }
-       },
-    
-    
-    
-    
+        }
+      },
     },
   };
 };

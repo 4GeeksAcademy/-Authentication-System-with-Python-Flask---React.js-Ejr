@@ -224,13 +224,13 @@ def logout():
 @api.route('/private')
 @jwt_required()
 def private():
-    current_user_id = get_jwt_identity()
-    user = User.query.get(current_user_id)
+    current_user = get_jwt_identity()
+    user = User.query.filter_by(email=current_user).first()
 
     if user:
         return jsonify({'message': 'Welcome to the private area!', 'user': user.serialize()})
     else:
-        business = Business_user.query.get(current_user_id)
+        business = Business_user.query.filter_by(email=current_user).first()
         if business:
             return jsonify({'message': 'Welcome to the private area!', 'business': business.serialize()})
         else:
@@ -504,12 +504,15 @@ def get_review(review_id):
 @jwt_required()
 def create_review():
     data = request.get_json()
+    current_user = get_jwt_identity()
+    user = User.query.filter_by(email=current_user).first()
+    print(current_user)
+    print(data)
     try:
         review = Review(
-            user_id=data['user_id'],
-            trip_id=data['trip_id'],
+            user_id=user.id,
             title=data['title'],
-            comment_text=data['comment_text']
+            comment_text=data['comment_text'],
         )
         db.session.add(review)
         db.session.commit()

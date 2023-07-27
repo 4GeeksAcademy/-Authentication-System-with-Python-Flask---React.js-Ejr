@@ -8,10 +8,10 @@ const Navbar = () => {
 
   function handleLogout() {
     actions.logout();
-  } 
-  
+  }
+
   return (
-    <nav className="navbar navbar-expand-lg navbar-light" style={{ backgroundColor: 'rgb(148, 163, 82)' }}>
+    <nav className="navbar navbar-expand-lg navbar-light">
       <div className="container-fluid">
         <Link className="navbar-brand" to='/'>
           <img src="https://i.ibb.co/C1sDhjs/White-Black-Minimalist-Logo-Distro-Fashion-6.jpg" width="70" height="65" alt="Logo"></img>
@@ -22,10 +22,8 @@ const Navbar = () => {
 
             {store.auth ? (
               <>
-                <h3>Hi, {store.user.firstname}</h3> 
-                {/* <li>
-                  <button onClick={handleLogout}>Log Out</button>
-                </li> */}
+                <h3>Hi, {store.user.username}</h3>
+
               </>
 
             ) : (

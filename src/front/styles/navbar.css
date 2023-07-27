@@ -12,6 +12,10 @@
     top: 0;
 } */
 
+.navbar {
+  background-color: var(--color-3);
+}
+
 .navbar-light .navbar-nav .nav-link {
   color: white;
 }
