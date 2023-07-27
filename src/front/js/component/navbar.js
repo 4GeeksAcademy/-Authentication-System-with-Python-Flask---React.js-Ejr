@@ -8,17 +8,6 @@ import "../../styles/cardata.css"
 export const Navbar = () => {
 	const {store, actions} = useContext(Context);
 
-	useEffect( ()=>{
-		const dropDownMenu = document.querySelector("#drop-down-menu")
-		dropDownMenu.addEventListener("click", (e) => {
-			e.stopPropagation()
-		});
-		return () => {
-			dropDownMenu.addEventListener("click", (e) => {
-				e.stopPropagation()
-			});
-			}
-	}, [])
 
 
 
@@ -85,7 +74,7 @@ export const Navbar = () => {
 							{store.saved.map((car, index) => {
 								return (
 									<div style={{"display": "flex"}}>
-										{/* <li key={index} className="carFormatted">{car.car_name}</li> */}
+										<li key={index} className="carFormatted">{car.car_name}</li>
 										<button type="button" onClick={(e)=> {
 											if (store.compareCars.includes(car)) {
 												return alert("Car already added");

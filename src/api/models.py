@@ -3,6 +3,8 @@ from sqlalchemy import Column, ForeignKey, Integer, String
 from sqlalchemy.orm import relationship
 db = SQLAlchemy()
 # SAVED CARS BY USER WITH RELATED COLUMNS
+
+
 class Saved(db.Model):
     __tablename__ = 'saved'
     id = db.Column(db.Integer, primary_key=True)
@@ -17,6 +19,9 @@ class Saved(db.Model):
         return {
             "car": self.car.serialize() if self.car else None
         }
+    
+
+
 class User(db.Model):
     __tablename__ = 'user'
     id = db.Column(db.Integer, primary_key=True)
@@ -35,6 +40,8 @@ class User(db.Model):
             "phone_number": self.phone_number,
             "saved": list(map(lambda x: x.serialize(), self.saved))
         }
+    
+
 class Car(db.Model):
     __tablename__ = 'car'
     id = db.Column(db.Integer, primary_key=True)
@@ -58,6 +65,8 @@ class Car(db.Model):
             "transmission": self.transmission,
             "images": list(map(lambda x: x.serialize(), self.images))
         }
+    
+    
 class Car_image(db.Model):
     __tablename__ = 'car_image'
     id = db.Column(db.Integer, primary_key=True)

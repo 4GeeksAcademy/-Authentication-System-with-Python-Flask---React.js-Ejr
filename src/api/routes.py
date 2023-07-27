@@ -108,10 +108,11 @@ def show_saved_cars():
         user = User.query.get(current_user_id)
         saved_cars = Saved.query.filter_by(user_id=current_user_id).all()
         response = {
+             'id': user.id,
              'user': user.first_name,
              'email': user.email,
              'phone_number': user.phone_number,
-             'saved_cars': user.saved
+             'saved': list(map(lambda x: x.serialize(), saved_cars))
         }
 
         return jsonify(response),200

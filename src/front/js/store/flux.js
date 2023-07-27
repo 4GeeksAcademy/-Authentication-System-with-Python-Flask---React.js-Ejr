@@ -35,7 +35,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       ],
       singleCar: [],
       errorMessage: null,
-      compareCars: [],
+      compareCars: []
     },
     actions: {
       getAllUsers: () => {
@@ -149,9 +149,9 @@ const getState = ({ getStore, getActions, setStore }) => {
         })
           .then((res) => res.json())
           .then((data) => {
-            console.log(data);
             store.saved.push(car);
             setStore(store);
+            console.log("saved cars by users: ", store.saved)
           })
           .catch((error) => console.log(error));
       },
@@ -169,8 +169,8 @@ const getState = ({ getStore, getActions, setStore }) => {
           .then((data) => {
             console.log("Response from PRIVATE GET: ",data);
             let newSaved = store.saved.concat(data.saved_cars);
-            console.log("Saved cars of the user: ",newSaved)
             setStore({saved : newSaved});
+            console.log("SAVED FOR CURRENT USER",store.saved)
           })
           .catch((error) => console.log(error));
       }
