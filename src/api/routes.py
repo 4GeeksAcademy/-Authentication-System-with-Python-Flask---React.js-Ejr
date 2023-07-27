@@ -140,8 +140,28 @@ def add_favorite():
     print("car ID", car_id)
     return jsonify({"Message": "Car successfully saved"}), 200
 
-# CREATE A ROUTE THAT WHENEVER THERE'S A REFRESH REQUEST THIS ROUTE, IT WILL USE  THE TOKEN SAVED ON LOCALSTORAGE TO RETRIEVE THE USER INFO 
-# USE THE INFO TO PUT IN THE STORE OF FLUX
+# DELETE A FAVORITE
+@api.route('/delete_saved', methods=['DELETE'])
+@jwt_required()
+def delete_saved():
+    current_user_id = get_jwt_identity()
+
+    user = User.query.get(current_user_id)
+    car_id = request.json.get("car_id")
+
+    car = Car.query.get(car_id)
+    if not car:
+        return jsonify({"Error": "Car does not exist"}), 404
+
+    saved_car = Saved.query.filter_by(user_id=user.id, car_id=car.id).first()
+    if not saved_car:
+        return jsonify({"Message": "Car is not saved by the user"}), 404
+
+    db.session.delete(saved_car)
+    db.session.commit()
+
+    return jsonify({"Message": "Car successfully removed from saved list"}), 200
+
 
 # REGISTER ENDPOINT
 @api.route('/register', methods=['POST'])

@@ -88,6 +88,7 @@ export const Navbar = () => {
 												actions.addCarToCompare(car);
 											  }
 											}}>Compare</button>
+										<button onClick={() => actions.deleteSaved(car.id)}>Unsave</button>
 									</div>
 								)
 							})}
