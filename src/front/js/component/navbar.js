@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import SearchBar from "./SearchBar"
 import Filters from "./FilterModal/Filters";
+import LogoutButton from "./LogoutButton";
 
 export const Navbar = () => {
 	return (
@@ -28,7 +29,7 @@ export const Navbar = () => {
 				<div>
 					< Filters />
 				</div>
-				<div>	
+				<div>
 					<Link to={"/signup"}>
 					<button className="btn btn-primary">
 						<h5>Sign Up</h5>
@@ -37,6 +38,7 @@ export const Navbar = () => {
 					<Link to={"/Login"}>
 					<button className="btn btn-primary"><h5>Login</h5></button>
 					</Link>
+					<LogoutButton/>
 				</div>
 			</div>
 		</nav>

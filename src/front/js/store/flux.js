@@ -31,7 +31,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 				year: ""
 			}],
 			singleCar: [],
-			errorMessage: null
+			errorMessage: null,
+			isLogged: false
 		},
 		actions: {
 			getAllUsers: () => {
@@ -74,7 +75,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			  setErrorMessage: (message) => {
 				setStore({ errorMessage: message });
 			  },
-	  
+
 			  clearErrorMessage: () => {
 				setStore({ errorMessage: null });
 			  },
@@ -87,21 +88,21 @@ const getState = ({ getStore, getActions, setStore }) => {
 					},
 					body: JSON.stringify({ email, password })
 				  });
-		
+
 				  if (response.ok) {
 					// Login successful
 					const data = await response.json();
-	  
+
 					// Save the authentication token to the store
 					setStore({ token: data.token });
 					console.log(data.token);
-	  
+
 					// Save the token to localStorage for persistent access
 					localStorage.setItem("token", data.token);
-	  
+
 					// Reset the error message (if any) after successful login
 					setStore({ errorMessage: null });
-		
+
 					// Redirect to the desired page or perform any necessary action
 					// Example: history.push("/dashboard");
 				  } else {
@@ -112,10 +113,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 				  console.log("Error during login", error);
 				  throw error;
 				}
+			  },
+			  setLoggedIn: () => {
+				setStore({isLogged: true})
+			  },
+			  setLoggedOut: () => {
+				setStore({isLoggedOut: false})
 			  }
 }
 }
 }
 export default getState;
-
-	
