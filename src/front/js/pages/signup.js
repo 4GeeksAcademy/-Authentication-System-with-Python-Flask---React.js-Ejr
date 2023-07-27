@@ -31,9 +31,18 @@ export const Signup = () => {
     fetch(process.env.BACKEND_URL + "api/signup", config)
       .then((resp) => resp.json())
       .then((resp) => {
+        Swal.fire({
+          icon: 'success',
+          title: 'Usuario Creado con éxito',
+        
+        });
         navigate("/login");
       })
       .catch((error) => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Faltan algunos datos',
+        });
         console.error("Error:", error);
       });
   };

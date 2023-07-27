@@ -44,6 +44,15 @@ const StatusToBlocked = (product) => {
         .then(response => response.json())
         .then(response => {
         console.log(response);
+        Swal.fire({
+            title: 'Has aceptado la reserva del vehículo',
+            showClass: {
+              popup: 'animate__animated animate__fadeInDown'
+            },
+            hideClass: {
+              popup: 'animate__animated animate__fadeOutUp'
+            }
+          })
         })
         .catch(error => {
         console.error("Error:", error);
@@ -67,6 +76,15 @@ const StatusToOnSale = (product) => {
         .then(response => response.json())
         .then(response => {
         console.log(response);
+        Swal.fire({
+            title: 'Has rechazado la venta del vehículo',
+            showClass: {
+              popup: 'animate__animated animate__fadeInDown'
+            },
+            hideClass: {
+              popup: 'animate__animated animate__fadeOutUp'
+            }
+          })
         })
         .catch(error => {
         console.error("Error:", error);
@@ -81,6 +99,8 @@ const StatusToOnSale = (product) => {
                 <div className="justify-content-center d-flex" key={index}>
                 <div className="row row_product_profile container justify-content-around m-1" key={index}>
                     <div className="product_img_profile_box col-lg-5 col-3 col-sm-2 col-xs-2">
+                   
+                   
                     {product.images.length > 0 ? (
                     <img src={product.images[0].image} className="card-img-top imgCarousel" alt="..." />
                   ) : (
@@ -163,7 +183,7 @@ const StatusToOnSale = (product) => {
                                 <div className="modal-footer">
                                         <div>
                                             <br></br>
-                                            <p>Tenga en cuenta que una vez aceptado el comprador bloqueará el producto</p>
+                                            <p>Ten en cuenta que una vez aceptado el comprador bloqueará este vehículo</p>
                                         </div>
                                     <button type="button" className="btn btn_config cancel" data-bs-dismiss="modal" onClick={() => StatusToOnSale(product)}>Rechazar</button>
                                     <button type="button" className="btn btn_config reservado" data-bs-dismiss="modal" onClick={() => StatusToBlocked(product)}>Aceptar</button>

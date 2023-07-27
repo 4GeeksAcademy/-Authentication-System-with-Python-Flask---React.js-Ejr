@@ -65,6 +65,10 @@ const handleSubmit = (event) => {
     })
     .then((responseData) => {
       setData({ ...data, response: responseData });
+      Swal.fire({
+        icon: 'success',
+        title: 'Datos actualizados',
+      });
       navigate("/profile/configuration");
     })
     .catch((error) => {

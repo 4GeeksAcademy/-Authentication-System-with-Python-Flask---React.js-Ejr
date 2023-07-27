@@ -24,6 +24,11 @@ export const SingleProduct = () => {
         .then(response => response.json())
         .then(response => {
         console.log(response);
+        Swal.fire({
+        
+          title: 'Vehículo reservado',
+         
+        });
         })
         .catch(error => {
         console.error("Error:", error);

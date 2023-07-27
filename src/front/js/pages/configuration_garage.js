@@ -72,6 +72,11 @@ const handleSubmit = (event) => {
     .then((response) => response.json())
     .then((response) => {
         setData({ ...data, response});
+        Swal.fire({
+            icon: 'success',
+            title: 'Datos del Taller actualizados',
+          
+          });
         navigate('/profile/garage')
     })
     .catch((error) => {
