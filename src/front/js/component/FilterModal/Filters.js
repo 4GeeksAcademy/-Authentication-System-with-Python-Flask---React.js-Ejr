@@ -90,8 +90,8 @@ const handleApplyFilters = () => {
                   {cars.map((carType, index) => {
                     if (index === 0 || carType.car_type !== cars[index - 1].car_type) {                 
                       return (
-                            <div>
-                              <label key={index} className='parametersContainer carFormatted'>
+                            <div key={index}>
+                              <label className='parametersContainer carFormatted'>
                                 <input type="checkbox"
                                   defaultChecked={checked}
                                   checked={selectedCarTypes.includes(carType.car_type)}
@@ -115,13 +115,13 @@ const handleApplyFilters = () => {
                   {cars.map((carMake, index) => {
                     if (index === 0 || carMake.brand !== cars[index - 1].brand) {                 
                       return (
-                          <div>
-                            <label key={index} className='parametersContainer carFormatted'>
+                        <div key={index}>
+                            <label  className='parametersContainer carFormatted'>
                                 <input type="checkbox"
                                   defaultChecked={checked}
                                   checked={selectedCarMakes.includes(carMake.brand)}
                                   onChange={() => handleCarMakeChange(carMake.brand)}
-                                  key={index}
+                                  
                                 />
                                 {carMake.brand}
                             </label>
@@ -138,13 +138,13 @@ const handleApplyFilters = () => {
                   {cars.map((carEngine, index) => {
                     if (index === 0 || carEngine.engine !== cars[index - 1].engine) {                 
                       return (
-                          <div>
-                            <label key={index} className='parametersContainer carFormatted'>
+                        <div key={index}>
+                            <label className='parametersContainer carFormatted'>
                                 <input type="checkbox"
                                   defaultChecked={checked}
                                   checked={selectedCarEngines.includes(carEngine.engine)}
                                   onChange={() => handleCarEngineChange(carEngine.engine)}
-                                  key={index}
+                                
                                 />
                                 {carEngine.engine}
                             </label>
@@ -161,13 +161,13 @@ const handleApplyFilters = () => {
                   {cars.map((carTransmission, index) => {
                     if (index === 0 || carTransmission.transmission !== cars[index - 1].transmission) {                 
                       return (
-                          <div>
-                            <label key={index} className='parametersContainer carFormatted'>
+                        <div key={index}>
+                            <label  className='parametersContainer carFormatted'>
                                 <input type="checkbox"
                                   defaultChecked={checked}
                                   checked={selectedCarTransmissions.includes(carTransmission.transmission)}
                                   onChange={() => handleCarTransmissionChange(carTransmission.transmission)}
-                                  key={index}
+                                  
                                 />
                                 {carTransmission.transmission}
                             </label>

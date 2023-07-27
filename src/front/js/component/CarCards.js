@@ -7,7 +7,7 @@ const CarCards = ({cars}) => {
   const {store, actions} = useContext(Context)
   const navigate = useNavigate()
   const [isLimit, setIsLimit] = useState(false)
-
+  const token = localStorage.getItem("token")
   const handleClick = (e, carId) => {
     actions.singleCar(carId)
     e.preventDefault()
@@ -18,7 +18,7 @@ const CarCards = ({cars}) => {
     <div style={{"display": "flex", "justifyContent": "space-between"}}>
     {cars.map((car, index) => {
         return (
-            <div className="card bg bg-white d-flex">
+            <div key={index} className="card bg bg-white d-flex">
             <img
               src={car.images[0].image_url}
               className="card-img-top"
@@ -26,7 +26,7 @@ const CarCards = ({cars}) => {
               style={{ width: "60%", height: "auto", borderRadius: "5px" }}
             />
             <div className="card-body d-flex">
-                <div key={index}>     
+                <div>     
                   <h5 className="card-title carFormatted">Model: {car.car_name}</h5>
                   <p className="card-text carFormatted">Make: {car.brand}</p>
                   <p className="card-text carFormatted">Car Type: {car.car_type}</p>
@@ -37,42 +37,46 @@ const CarCards = ({cars}) => {
                       onClick={(e) => {handleClick(e, car.id)}}>
                         Detailed Specs
                       </button>
-                    <button
-                      className="favoritesCards">
-                      <div
-                      style={{ marginLeft: "10px" }}
-                      onClick={() => {
-                        if (store.saved.includes(car)) {
-                          return alert("Car's already saved")
-                        } else actions.saveFavorites(car);
-                      }}
-                      >
-                        Save<i className="fa-solid fa-star" style={{ color: "#ffd43b" }}></i>
-                      </div>
-                    </button>
-                    <button>
-                      <div 
-                      onClick={() => {
-                        if (store.compareCars.includes(car)) {
-                          return alert("Car already added")
-                        } else {
-                          actions.addCarToCompare(car);
-                        }
-                        }}>
-                        Add to compare
-                      </div>
-                    </button>
-                    <button>
+                      {token ? 
+                      <div>
+                        <button
+                        className="favoritesCards">
+                        <div
+                        style={{ marginLeft: "10px" }}
+                        onClick={() => {
+                          if (store.saved.includes(car.id)) {
+                            return alert("Car's already saved")
+                          } else actions.saveFavorites(car);
+                        }}
+                        >
+                          Save<i className="fa-solid fa-star" style={{ color: "#ffd43b" }}></i>
+                        </div>
+                        </button>
+                        <button>
                         <div
                         onClick={() => {
-                          if (store.compareCars.length < 1) {
-                            return alert("No more cars to delete")
+                          if (store.compareCars.includes(car)) {
+                            return alert("Car already added")
                           } else {
-                            actions.deleteCarToCompare(car);
+                            actions.addCarToCompare(car);
                           }
                           }}>
-                          Delete from compare</div>
-                    </button>
+                          Add to compare
+                        </div>
+                          </button>
+                          <button>
+                          <div
+                          onClick={() => {
+                            if (store.compareCars.length < 1) {
+                              return alert("No more cars to delete")
+                            } else {
+                              actions.deleteCarToCompare(car);
+                            }
+                            }}>
+                            Delete from compare
+                            </div>
+                          </button>
+                      </div> : ""}
                   </div>
                 </div>
             </div>

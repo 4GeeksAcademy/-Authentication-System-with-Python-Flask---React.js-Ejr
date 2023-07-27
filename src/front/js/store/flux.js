@@ -149,9 +149,13 @@ const getState = ({ getStore, getActions, setStore }) => {
         })
           .then((res) => res.json())
           .then((data) => {
-            store.saved.push(car);
-            setStore(store);
-            console.log("saved cars by users: ", store.saved)
+            const isCarSaved = store.saved.some(savedCar => savedCar.id === car.id)
+            if (isCarSaved)
+              return alert("Car is already saved")
+            else
+              store.saved.push(car);
+              setStore(store);
+              console.log("saved cars by users: ", store.saved)
           })
           .catch((error) => console.log(error));
       },
@@ -159,6 +163,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       retrieveData: () => {
         let store = getStore();
         let token = localStorage.getItem("token");
+        if (token) {
         fetch(`${process.env.BACKEND_URL}/private`, {
           method: "GET",
           headers: {
@@ -168,11 +173,13 @@ const getState = ({ getStore, getActions, setStore }) => {
           .then((res) => res.json())
           .then((data) => {
             console.log("Response from PRIVATE GET: ",data);
-            let newSaved = store.saved.concat(data.saved_cars);
-            setStore({saved : newSaved});
-            console.log("SAVED FOR CURRENT USER",store.saved)
+            setStore({saved : data.saved});
+            console.log("SAVED FOR CURRENT USER", store.saved)
           })
           .catch((error) => console.log(error));
+          getActions().getAllCars();
+          getActions().getAllUsers();
+        } else null
       }
     }
   };
