@@ -52,6 +52,15 @@ const getState = ({ getStore, getActions, setStore }) => {
 				return resp
 			},
 
+			userSignup: async(email, password, first_name, last_name) => {
+				const resp = await getActions().apiFetch("/signup", "POST", {email, password, first_name, last_name})
+				if(resp.code >= 400) {
+					return resp
+				}
+				localStorage.setItem("accessToken", resp.data.accessToken)
+				return resp
+			},
+
 			loadToken: async() => {
 				let accessToken = localStorage.getItem("accessToken")
 				let refreshToken = localStorage.getItem("refreshToken")
@@ -113,7 +122,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					setStore({ message: resp.data.message })
 					// don't forget to return something, that is how the async resolves
 					//return data;
-				} catch (error){
+				} catch (error) {
 					console.log("Error loading message from backend", error)
 				}
 			},
