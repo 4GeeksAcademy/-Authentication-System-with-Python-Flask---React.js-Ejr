@@ -1,5 +1,5 @@
 import React from 'react'
-import CardsReview from '../component/CardsReview'
+import CardsReview from '../component/CardsReview.js'
 
 const Reviews = () => {
 
@@ -10,3 +10,5 @@ const Reviews = () => {
     </div>
   )
 }
+
+export default Reviews

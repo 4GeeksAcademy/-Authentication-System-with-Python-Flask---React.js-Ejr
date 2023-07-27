@@ -15,10 +15,10 @@ const LogIn = () => {
   async function handleLog(e) {
     e.preventDefault();
     let isLogged = await actions.login(email, password);
-    console.log(isLogged);
+    console.log("is Logged:", isLogged);
     if (isLogged) {
       // Connexion réussie
-      navigate("/home");
+      navigate("/");
     } else {
       // Connexion échouée
       setLoginError("Email and/or password incorrect");

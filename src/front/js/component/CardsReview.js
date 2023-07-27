@@ -27,6 +27,8 @@ const CardsReview = () => {
 
     return (
         <div>
+            {store.auth ? (
+
             <form onSubmit={handleSubmit}>
                 <div>
                     <label htmlFor="title">Title:</label>
@@ -38,6 +40,10 @@ const CardsReview = () => {
                 </div>
                 <button type="submit">Submit Review</button>
             </form>
+            ) : (
+
+                null
+            )}
 
             {/* Publicar las cartas que ya existen */}
             {store.reviews.map((review) => (
@@ -54,4 +60,4 @@ const CardsReview = () => {
     );
 }
 
-export default CardsReview;
+export default CardsReview;

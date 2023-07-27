@@ -108,8 +108,9 @@ def create_user():
         )
         db.session.add(new_user)
         db.session.commit()
+        access_token = create_access_token(identity= email)
 
-        return jsonify(message='User created successfully', user=new_user.serialize()), 201
+        return jsonify({"message" : 'User created successfully', "user" : new_user.serialize(), "acces_token" : access_token  }), 201
 
     except IntegrityError as e:
         db.session.rollback()  # Annuler l'opération en cas de violation de contrainte unique
@@ -147,8 +148,10 @@ def create_business_user():
         new_business = Business_user(business_name=name_business, email=email, password=password_hash, nif=nif, address=address, payment_method=payment_method)
         db.session.add(new_business)
         db.session.commit()
+        access_token = create_access_token(identity= email)
 
-        return jsonify({'message': 'Business created successfully', 'business': new_business.serialize()}), 201
+        return jsonify({'message': 'Business created successfully', 'business': new_business.serialize(), "access_token" : access_token}), 201
+    
 
     except Exception as e:
         return jsonify({'error': 'Error in business_user creation: ' + str(e)}), 500
@@ -170,6 +173,27 @@ def login():
             password_hash = user.password
             if bcrypt.check_password_hash(password_hash, data["password"]):
                 user_or_business = user
+                access_token = create_access_token(identity=user_or_business.email)
+                return jsonify(
+                    {'access_token': access_token, 
+                     'user_or_business': {
+                        "id": user_or_business.id,
+                        "username": user_or_business.username,
+                        "email": user_or_business.email,
+                        "firstname": user_or_business.firstname,
+                        "lastname": user_or_business.lastname,
+                        "address": user_or_business.address,
+                        "dni": user_or_business.dni,
+                        "payment_method": user_or_business.payment_method,
+                        "is_admin": user_or_business.is_admin
+                     }}), 200
+
+        #  "id": self.id,
+        #     "business_name": self.business_name,
+        #     "email": self.email,
+        #     "nif": self.nif,
+        #     "address": self.address,
+        #     "payment_method": self.payment_method
 
         # Vérifier si c'est une entreprise
         business = Business_user.query.filter_by(email=data['email']).first()
@@ -177,11 +201,13 @@ def login():
             password_hash = business.password
             if bcrypt.check_password_hash(password_hash, data["password"]):
                 user_or_business = business
+                access_token = create_access_token(identity=user_or_business.email)
+                return jsonify({'access_token': access_token, 'user_or_business': user_or_business.serialize()}), 200
 
         if not user_or_business:
             return jsonify({'error': 'User or Business not found or Incorrect password'}), 401
 
-        access_token = create_access_token(identity=user_or_business.id)
+        access_token = create_access_token(identity=user_or_business.email)
         return jsonify({'access_token': access_token, 'user_or_business': user_or_business.serialize()}), 200
 
     except Exception as e:
@@ -304,7 +330,7 @@ def get_token():
 def get_all_offers():
     offers = Offers.query.all()
     serialized_offers = [offer.serialize() for offer in offers]
-    return jsonify(serialized_offers)
+    return jsonify(offers = serialized_offers)
 
 @api.route('/offer/<int:offer_id>', methods=['GET'])
 def get_offer(offer_id):
@@ -369,7 +395,7 @@ def delete_offer(offer_id):
 def get_all_trips():
     trips = Trip.query.all()
     serialized_trips = [trip.serialize() for trip in trips]
-    return jsonify(serialized_trips)
+    return jsonify(trips = serialized_trips)
 
 @api.route('/trip/<int:trip_id>', methods=['GET'])
 def get_trip(trip_id):

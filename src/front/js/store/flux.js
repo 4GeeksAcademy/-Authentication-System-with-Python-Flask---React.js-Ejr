@@ -1,12 +1,13 @@
 const getState = ({ getStore, getActions, setStore }) => {
   const API_URL =
-    "https://valentinfrar-studious-memory-qrqp6777vj7265vw-3001.preview.app.github.dev";
+    "https://albertgescribano-studious-trout-66jrg7rr9r5h45-3001.preview.app.github.dev";
   return {
     store: {
       user: {},
-      business_user: [],
+      business_user: {},
+      auth: false, 
       trip: [],
-      review: [],
+      reviews: [],
       offers: [],
     },
     actions: {
@@ -23,9 +24,14 @@ const getState = ({ getStore, getActions, setStore }) => {
           });
 
           if (response.ok) {
-            console.log(data);
-            console.log(response);
+            const res = await response.json();
+            console.log(res);
             console.log("Todo perfecto");
+            localStorage.setItem("myToken", res.access_token);
+            const store = getStore();
+            setStore({ ...store, auth: true });
+            const store2 = getStore();
+            console.log("Last state of Auth:" , store2.auth)
             return response;
           } else response.status === 401;
           // Gérer l'erreur de connexion non autorisée
@@ -49,8 +55,12 @@ const getState = ({ getStore, getActions, setStore }) => {
           });
 
           if (response.ok) {
-            console.log(response);
+            const res = await response.json();
+            console.log(res);
             console.log("Todo perfecto");
+            localStorage.setItem("myToken", res.access_token);
+            const store = getStore();
+            setStore({ ...store, auth: true });
             return response;
           } else {
             return false;
@@ -78,10 +88,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 
           if (response.ok) {
             const data = await response.json();
-            localStorage.setItem("myToken", data.access_token);
-            setStore({ user: data.user });
-            console.log(data);
-            return data;
+            const store = getStore();
+            setStore({ ...store, auth: true });
+            setStore({ ...store, user: data.user_or_business });
+            console.log("Clean data of response:", data.user_or_business);
+            localStorage.setItem("myToken", data.access_token);  
+          return data;
           } else response.status === 401;
           return false;
         } catch (err) {
@@ -89,6 +101,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           return false;
         }
       },
+
       isAuth: async () => {
         try {
           let token = localStorage.getItem("myToken");
@@ -104,12 +117,18 @@ const getState = ({ getStore, getActions, setStore }) => {
           const json = await request.json();
           const data = json;
           setStore({ user: data.user });
+          setStore({ auth: true });
+
+        
+
         } catch (error) {
           console.log("No se pudo cargar: ", error);
         }
       },
+
       logout: () => {
-        let token = localStorage.getItem("myToken");
+        let token = localStorage.removeItem("myToken");
+        setStore({ auth: false})
         return token != null ? true : false;
       },
 
@@ -551,8 +570,8 @@ const getState = ({ getStore, getActions, setStore }) => {
           return false; // Handle other errors, return false by default
         }
       },
-      
-    getReviews: async () => {
+
+      getReviews: async () => {
         try {
           const response = await fetch(API_URL + "/api/review");
           if (response.ok) {
@@ -567,14 +586,46 @@ const getState = ({ getStore, getActions, setStore }) => {
           return false;
         }
       },
+      create_review: async (formData) => {
+        try {
+          const token = localStorage.getItem("myToken");
+          if (!token) {
+            console.log("Token not found");
+            return false;
+          }
+      
+          const response = await fetch(API_URL + "/api/review", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify(formData),
+          });
+      
+          if (response.ok) {
+            // Rechargez les avis pour inclure le nouvel avis créé
+            getActions().getReviews();
+            return true;
+          } else {
+            return false;
+          }
+        } catch (error) {
+          console.log(error);
+          return false;
+        }
+      },
+      
       incrementLikes: async (reviewId) => {
         try {
+          const token = localStorage.getItem("myToken");
           const response = await fetch(
-            API_URL + `/api/review/${reviewId}/like`,
+            `${API_URL}/api/review/${reviewId}/like`,
             {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
               },
             }
           );
@@ -589,8 +640,12 @@ const getState = ({ getStore, getActions, setStore }) => {
         } catch (error) {
           console.log(error);
           return false;
-        }
-      },
+        }
+       },
+    
+    
+    
+    
     },
   };
 };

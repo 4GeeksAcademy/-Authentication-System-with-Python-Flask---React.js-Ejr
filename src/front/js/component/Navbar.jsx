@@ -5,22 +5,11 @@ import { Context } from "../store/appContext";
 
 const Navbar = () => {
   const { store, actions } = useContext(Context);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  useEffect(() => {
-    const myToken = localStorage.getItem("myToken");
-    const userLoggedIn = !!myToken;
-    setIsLoggedIn(userLoggedIn);
-  }, []);
 
   function handleLogout() {
-    let isLogged = actions.logout();
-    if (isLogged) {
-      localStorage.removeItem("myToken");
-      setIsLoggedIn(false);
-      console.log("session closed");
-    }
-  }
+    actions.logout();
+  } 
+  
   return (
     <nav className="navbar navbar-expand-lg navbar-light" style={{ backgroundColor: 'rgb(148, 163, 82)' }}>
       <div className="container-fluid">
@@ -31,12 +20,12 @@ const Navbar = () => {
         <div className="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
           <ul className="navbar-nav">
 
-            {isLoggedIn ? (
+            {store.auth ? (
               <>
-                <h3>Hi {store.user.username} </h3>
-                <li>
+                <h3>Hi, {store.user.firstname}</h3> 
+                {/* <li>
                   <button onClick={handleLogout}>Log Out</button>
-                </li> 
+                </li> */}
               </>
 
             ) : (
@@ -51,10 +40,11 @@ const Navbar = () => {
               </a>
               <ul className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                 <li><Link className="dropdown-item">Avisos/Notificaciones</Link></li>
+                <li><Link to='/reviews' className="dropdown-item">Reseñas</Link></li>
                 <li><Link className="dropdown-item">Ofertas Favoritas</Link></li>
                 <li><Link className="dropdown-item">Explora tu siguiente trip</Link></li>
-                <li><Link className="dropdown-item">Help</Link></li>
-                {isLoggedIn ? (
+                <li><Link className="dropdown-item">Ayuda</Link></li>
+                {store.auth ? (
                   <li><button className="dropdown-item" onClick={handleLogout}>LogOut</button></li>
 
                 ) : (<li><Link className="dropdown-item signup" to='/signup'>Sign Up</Link></li>)}
