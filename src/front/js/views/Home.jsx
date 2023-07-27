@@ -7,15 +7,19 @@ import { Context } from '../store/appContext.js';
 
 const Home = () => {
 
-	const { actions,store } = useContext(Context)
+	const { actions, store } = useContext(Context)
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
 	let navigate = useNavigate();
 
 	useEffect(() => {
 		const myToken = localStorage.getItem("myToken");
+		const userDataString = localStorage.getItem("user");
+		const userData = JSON.parse(userDataString);
+// console.log(userData)
+		actions.saveUserDatainStore(userData)
 		const userLoggedIn = !!myToken;
 		setIsLoggedIn(userLoggedIn);
-		console.log(store.user);
+		// console.log(store.user);
 	  }, []);
 	
 	  function handleLogout() {

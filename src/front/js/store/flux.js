@@ -21,10 +21,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 
           if (response.ok) {
             const data = await response.json()
-
-            localStorage.setItem('myToken', data.access_token)
-            setStore({ user: data.user })
-            console.log(data.user)
+            localStorage.setItem('user', JSON.stringify(data.user));
+            localStorage.setItem('myToken', data.token)
+            // setStore({ user: data.user })
+            // console.log(data.user)
             return data
           } else if (response.status === 401) {
             return false
@@ -84,6 +84,9 @@ const getState = ({ getStore, getActions, setStore }) => {
         let token = localStorage.getItem('myToken')
         return token != null ? true : false
       },
+      saveUserDatainStore: async (user) =>{
+        setStore({user : user})
+      }
     },
   }
 }
