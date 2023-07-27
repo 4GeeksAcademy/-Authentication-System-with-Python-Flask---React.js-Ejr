@@ -1,3 +1,4 @@
+
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
@@ -9,9 +10,11 @@ import Details from "./views/Details.jsx";
 import Cart from "./views/Cart.jsx";
 import Settings from "./views/Settings.jsx";
 import Admin from "./views/Admin.jsx";
+import Navbar from "./component/Navbar.jsx";
+import Footer from "./component/Footer.jsx";
 
 
-import Prueba from "./views/PruebaComponentes.jsx";
+
 
 
 import injectContext from "./store/appContext";
@@ -30,6 +33,7 @@ const Layout = () => {
         <div>
             <BrowserRouter basename={basename}>
                 <ScrollToTop>
+                <Navbar /> 
                     <Routes>
                         <Route path="/" element={<Home />} />
 						<Route path="/home" element={<Home />} />
@@ -39,9 +43,10 @@ const Layout = () => {
                         <Route path="/settings" element={<Settings/>} />
                         <Route path="/cart" element={<Cart/>} />
                         <Route path="/admin" element={<Admin/>} />
-                        <Route path="/prueba" element={<Prueba />} />
+                        
                         <Route path="*" element={<h1>Not found!</h1>} />
                     </Routes>
+                    <Footer />                             
                 </ScrollToTop>
             </BrowserRouter>
         </div>
@@ -49,3 +54,4 @@ const Layout = () => {
 };
 
 export default injectContext(Layout);
+
