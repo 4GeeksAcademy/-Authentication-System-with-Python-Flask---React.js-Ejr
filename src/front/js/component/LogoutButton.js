@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Context } from '../store/appContext';
 
 
@@ -12,8 +12,8 @@ const LogoutButton = () => {
         if (store.isLogged == false) {
             return setIsLoggedIn(false)
         }
-        else if () {
-
+        else if (!isLoggedIn) {
+          return null;
         }
     })
 
