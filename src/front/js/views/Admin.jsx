@@ -1,11 +1,11 @@
 import React, { useContext, useEffect , useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-// import { Context } from '../store/appContext.js';
+import { Context } from '../store/appContext.js';
 
-const Settings = () => {
+const Admin = () => {
 
-    // const { actions,store } = useContext(Context)
+    const { actions,store } = useContext(Context)
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
     let navigate = useNavigate();
 
@@ -14,14 +14,14 @@ const Settings = () => {
         const myToken = localStorage.getItem("myToken");
         setIsLoggedIn(!!myToken);
       }, []);
-	  const handleLogin = () => {
-		navigate('/login');
-	  };
+      const handleLogin = () => {
+        navigate('/login');
+      };
 	
       return (
         <div>
-            {isLoggedIn ? (
-                <h1> Soy Settings</h1>
+            {store.user.isAdmin ? (
+                <h1> Soy Admin</h1>
             ) : (
                 <>
                 <h2>No puedes entrar</h2>
@@ -34,4 +34,4 @@ const Settings = () => {
     );
 };
 
-export default Settings;
+export default Admin;

@@ -1,37 +1,19 @@
+import * as api from '../utils/apiCalls.js'
+
 const getState = ({ getStore, getActions, setStore }) => {
   const API_URL = process.env.BACKEND_URL + 'api'
 
   return {
     store: {
       user: {},
+      token: undefined,
     },
     actions: {
       login: async (email, password) => {
-        try {
-          const response = await fetch(API_URL + '/login', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              email: email,
-              password: password,
-            }),
-          })
-
-          if (response.ok) {
-            const data = await response.json()
-
-            localStorage.setItem('myToken', data.access_token)
-            setStore({ user: data.user })
-            console.log(data.user)
-            return data
-          } else if (response.status === 401) {
-            return false
-          }
-        } catch (err) {
-          console.log(err)
-          return false
+        const data = await api.login(email, password)
+        if (!data.user.isAdmin) {
+          localStorage.setItem('user', JSON.stringify(data.user))
+          localStorage.setItem('myToken', data.token)
         }
       },
       signup: async (
@@ -44,45 +26,27 @@ const getState = ({ getStore, getActions, setStore }) => {
         address,
         paymentMethod
       ) => {
-        try {
-         
-          if (!userEmail || !userPassword || !firstName || !lastName || !phone || !location || !address || !paymentMethod) {
-            return { error: 'Todos los campos son obligatorios.' };
-          }
-          const response = await fetch(API_URL + '/signup', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              email: userEmail,
-              password: userPassword,
-              first_name: firstName,
-              last_name: lastName,
-              phone: phone,
-              location: location,
-              address: address,
-              payment_method: paymentMethod,
-            }),
-          })
-
-          if (response.ok) {
-            console.log(response)
-            console.log('Succefully created user')
-            return response
-          } else if (response.status === 401) {
-            return ('error: ' + response.status)
-          }
-        } catch (err) {
-          console.log(err);
-          // Devolver un objeto que indica un error general
-          return { error: 'error:' + err };
-        }
+        const response = await api.signup(
+          userEmail,
+          userPassword,
+          firstName,
+          lastName,
+          phone,
+          location,
+          address,
+          paymentMethod
+        )
+        console.log(response)
+        console.log('Succefully created user')
+        return response
       },
 
       logout: () => {
         let token = localStorage.getItem('myToken')
         return token != null ? true : false
+      },
+      saveUserDatainStore: async (user) => {
+        setStore({ user: user })
       },
     },
   }

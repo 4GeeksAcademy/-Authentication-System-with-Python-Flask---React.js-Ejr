@@ -1,3 +1,4 @@
+
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
@@ -5,13 +6,18 @@ import { BackendURL } from "./component/backendURL";
 import Login from "./views/Login.jsx"
 import  Home  from "./views/Home.jsx";
 import Signup from "./views/SignUp.jsx";
+import Details from "./views/Details.jsx";
+import Cart from "./views/Cart.jsx";
+import Settings from "./views/Settings.jsx";
+import Admin from "./views/Admin.jsx";
+import Navbar from "./component/Navbar.jsx";
+import Footer from "./component/Footer.jsx";
 
-import Prueba from "./views/PruebaComponentes.jsx";
+
+
 
 
 import injectContext from "./store/appContext";
-import Navbar from "./component/Navbar.jsx";
-import Footer from "./component/Footer.jsx";
 
 
 
@@ -27,16 +33,20 @@ const Layout = () => {
         <div>
             <BrowserRouter basename={basename}>
                 <ScrollToTop>
-                    <Navbar />
+                <Navbar /> 
                     <Routes>
                         <Route path="/" element={<Home />} />
 						<Route path="/home" element={<Home />} />
                         <Route path="/signup" element={<Signup />} />
                         <Route path="/login" element={<Login/>} />
-                        <Route path="/prueba" element={<Prueba />} />
+                        <Route path="/details" element={<Details/>} />
+                        <Route path="/settings" element={<Settings/>} />
+                        <Route path="/cart" element={<Cart/>} />
+                        <Route path="/admin" element={<Admin/>} />
+                        
                         <Route path="*" element={<h1>Not found!</h1>} />
                     </Routes>
-                    <Footer />
+                    <Footer />                             
                 </ScrollToTop>
             </BrowserRouter>
         </div>
@@ -44,3 +54,4 @@ const Layout = () => {
 };
 
 export default injectContext(Layout);
+
