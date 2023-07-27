@@ -10,6 +10,8 @@ import Prueba from "./views/PruebaComponentes.jsx";
 
 
 import injectContext from "./store/appContext";
+import Navbar from "./component/Navbar.jsx";
+import Footer from "./component/Footer.jsx";
 
 
 
@@ -25,6 +27,7 @@ const Layout = () => {
         <div>
             <BrowserRouter basename={basename}>
                 <ScrollToTop>
+                    <Navbar />
                     <Routes>
                         <Route path="/" element={<Home />} />
 						<Route path="/home" element={<Home />} />
@@ -33,6 +36,7 @@ const Layout = () => {
                         <Route path="/prueba" element={<Prueba />} />
                         <Route path="*" element={<h1>Not found!</h1>} />
                     </Routes>
+                    <Footer />
                 </ScrollToTop>
             </BrowserRouter>
         </div>
