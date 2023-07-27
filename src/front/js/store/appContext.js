@@ -18,8 +18,12 @@ const injectContext = PassedComponent => {
     );
 
     useEffect(() => {
-      state.actions.getAllCars();
-      state.actions.getAllUsers();
+      const token = localStorage.getItem("token")
+      token ? state.actions.retrieveData() : 
+        state.actions.getAllCars()
+        state.actions.getAllUsers()
+        
+      
     }, []);
 
     return (
