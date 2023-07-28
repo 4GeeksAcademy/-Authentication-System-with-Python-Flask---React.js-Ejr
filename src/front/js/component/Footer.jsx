@@ -23,7 +23,7 @@ const Footer = () => {
 					</div>
 
 					<div className="col-2">
-						<h5>Section</h5>
+						<h5>Users</h5>
 						<ul className="nav flex-column">
 							<li className="nav-item mb-2"><a href="#" className="nav-link p-0 text-muted">Home</a></li>
 							<li className="nav-item mb-2"><a href="#" className="nav-link p-0 text-muted">Features</a></li>
@@ -34,7 +34,7 @@ const Footer = () => {
 					</div>
 
 					<div className="col-2">
-						<h5>Section</h5>
+						<h5>Business Users</h5>
 						<ul className="nav flex-column">
 							<li className="nav-item mb-2"><a href="#" className="nav-link p-0 text-muted">Home</a></li>
 							<li className="nav-item mb-2"><a href="#" className="nav-link p-0 text-muted">Features</a></li>
@@ -58,7 +58,7 @@ const Footer = () => {
 				</div>
 
 				<div className="d-flex justify-content-between py-4 my-4 border-top">
-					<p>© 2023 Company, Inc. All rights reserved.</p>
+					<p>© 2023 TRIP NEXUS, S,L. All rights reserved.</p>
 					<ul className="list-unstyled d-flex">
 						<li className="ms-3"><a className="link-dark" href="#"><svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-brand-twitter" width="44" height="44" viewBox="0 0 24 24" strokeWidth="1.5" stroke="#2c3e50" fill="none" strokeLinecap="round" strokeLinejoin="round">
 							<path stroke="none" d="M0 0h24v24H0z" fill="none" />
