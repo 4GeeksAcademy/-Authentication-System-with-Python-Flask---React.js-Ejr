@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react'
 import {Context} from "../store/appContext"
 import "../../styles/searchbar.css"
+import "../../styles/cardata.css"
 import { Link, useNavigate } from 'react-router-dom'
 
 const SearchBar = () => {
@@ -58,9 +59,8 @@ const SearchBar = () => {
                       setShowDropdown(false)
                       handleClick(e, car.id)
                     }} >
-                          <div className="carNames" value={car.car_name}>
-                            <h4 key={index}>{car.car_name}
-                            </h4>
+                          <div className="carNames carFormatted" value={car.car_name}>
+                            <h4 key={index}>{car.car_name}</h4>
                           </div>
                           <div className='imagesDiv' style={{"width": "44rem", "height": "auto"}}>
                             <img className="rounded w-100" src={car.images[0].image_url }/>
