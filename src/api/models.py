@@ -72,6 +72,8 @@ class Director(db.Model):
         "description": self.description,
         "other_movies": self.other_movies, 
         }
+    
+# faltara añadir series
 
 # class Favorite(db.Model):
 #     id = db.Column(db.Integer, primary_key=True)

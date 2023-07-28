@@ -1,0 +1,38 @@
+body {
+  background-color: black;
+  color: white;
+  font-family: 'Roboto', sans-serif; 
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+  background-color: white;
+  color: black;
+  border-radius: 10px; 
+  font-family: 'Roboto', sans-serif; 
+  margin-bottom: 20px;  
+  width: 40%;  
+  padding: 10px;  
+}
+
+button[type="submit"] {
+  background-color: rgb(236, 206, 51); 
+  text-align: left; 
+  color: black;
+  border-radius: 10px; 
+  font-family: 'Roboto', sans-serif; 
+  padding: 10px 20px;  
+  border: none;  
+  width: 40%;  
+  cursor: pointer;  
+}
+
+label {
+  display: block;
+  margin-bottom: 20px; 
+  font-family: 'Roboto', sans-serif; 
+}
