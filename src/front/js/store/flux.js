@@ -128,6 +128,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       deleteCarToCompare: (car) => {
         let compareCars = getStore().compareCars;
+        console.log("car value parameter: ", car)
+        console.log("compareCars value: ", compareCars)
         let deletedCarComparison = compareCars.filter((item) => {
           return item.id != car.id;
         });
