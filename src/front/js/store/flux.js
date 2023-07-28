@@ -1,5 +1,6 @@
 import * as api from '../utils/apiCalls.js'
 
+
 const getState = ({ getStore, getActions, setStore }) => {
   const API_URL = process.env.BACKEND_URL + 'api'
 
@@ -50,7 +51,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         localStorage.removeItem('myToken')
         localStorage.removeItem('user')
         setStore({user: {}, token : undefined})
-        window.location.reload();
+        
       },
 
       // handleRefreshClick : async () => {

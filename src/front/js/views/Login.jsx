@@ -1,6 +1,8 @@
 import React, { useState, useContext } from 'react'
 import { Context } from '../store/appContext'
 import { useNavigate } from 'react-router'
+import Navbar from "../component/Navbar.jsx";
+
 
 export const Login = () => {
   const [email, setEmail] = useState('')
@@ -30,7 +32,8 @@ export const Login = () => {
 
   return (
     <div>
-      <h1 className='mx-auto text-center' style={{ fontSize: '3rem' }}>
+      <Navbar />
+      <h1 className='mx-auto p-5 text-center' style={{ fontSize: '3rem' }}>
         Welcome Back!
       </h1>
       <form className='card w-75 mx-auto mb-5' onSubmit={handleSubmit}>

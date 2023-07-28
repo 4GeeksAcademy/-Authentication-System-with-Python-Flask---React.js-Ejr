@@ -1,5 +1,6 @@
 import React, { useContext, useEffect , useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Navbar from "../component/Navbar.jsx";
 
 // import { Context } from '../store/appContext.js';
 
@@ -19,7 +20,7 @@ const Details = () => {
 	  };
 	
       return (
-        <div>
+        <div><Navbar />
             {isLoggedIn ? (
                 <h1> Soy Details</h1>
             ) : (

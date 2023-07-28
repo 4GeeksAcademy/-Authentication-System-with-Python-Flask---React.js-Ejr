@@ -16,14 +16,15 @@ const Navbar = () => {
 	useEffect(() => {
 	  const myToken = localStorage.getItem('myToken')
 	  setIsLoggedIn(!!myToken)
+	  store.token && setIsLoggedIn(true)
 	}, [])
 
-
+	
 	
 	function handleLogout() {
 		actions.logout();
-		navigate("/");
-
+		window.location.reload();
+        
 	}
 
 	return (

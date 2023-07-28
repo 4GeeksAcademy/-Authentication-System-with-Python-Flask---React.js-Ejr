@@ -10,7 +10,7 @@ import Details from "./views/Details.jsx";
 import Cart from "./views/Cart.jsx";
 import Settings from "./views/Settings.jsx";
 import Admin from "./views/Admin.jsx";
-import Navbar from "./component/Navbar.jsx";
+// import Navbar from "./component/Navbar.jsx";
 import Footer from "./component/Footer.jsx";
 
 
@@ -33,7 +33,7 @@ const Layout = () => {
         <div>
             <BrowserRouter basename={basename}>
                 <ScrollToTop>
-                <Navbar /> 
+                
                     <Routes>
                         <Route path="/" element={<Home />} />
 						<Route path="/home" element={<Home />} />

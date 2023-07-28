@@ -1,5 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import Navbar from "../component/Navbar.jsx";
+
 
 import { Context } from '../store/appContext.js';
 
@@ -9,16 +11,18 @@ const Settings = () => {
   let navigate = useNavigate()
 
   useEffect(() => {
-    const myToken = localStorage.getItem('myToken')
-    setIsLoggedIn(!!myToken)
-  }, [])
+	  const myToken = localStorage.getItem('myToken')
+	  setIsLoggedIn(!!myToken)
+	  store.token && setIsLoggedIn(true)
+	}, [])
   const handleLogin = () => {
     navigate('/login')
   }
 
   return (
-    <div>
-      {store.user ? (
+    <div>      <Navbar />
+
+      {isLoggedIn ? (
         <h1> Soy Settings</h1>
       ) : (
         <>

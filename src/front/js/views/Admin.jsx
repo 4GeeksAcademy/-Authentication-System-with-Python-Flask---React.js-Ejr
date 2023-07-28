@@ -1,5 +1,7 @@
 import React, { useContext, useEffect , useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Navbar from "../component/Navbar.jsx";
+
 
 import { Context } from '../store/appContext.js';
 
@@ -19,7 +21,7 @@ const Admin = () => {
       };
 	
       return (
-        <div>
+        <div><Navbar />
             {store.user.isAdmin ? (
                 <h1> Soy Admin</h1>
             ) : (
