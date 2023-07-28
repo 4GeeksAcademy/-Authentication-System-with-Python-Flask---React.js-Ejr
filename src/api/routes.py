@@ -108,9 +108,8 @@ def create_user():
         )
         db.session.add(new_user)
         db.session.commit()
-        access_token = create_access_token(identity= email)
 
-        return jsonify({"message" : 'User created successfully', "user" : new_user.serialize(), "acces_token" : access_token  }), 201
+        return jsonify({"message" : 'User created successfully', "user" : new_user.serialize()  }), 201
 
     except IntegrityError as e:
         db.session.rollback()  # Annuler l'opération en cas de violation de contrainte unique
@@ -148,9 +147,8 @@ def create_business_user():
         new_business = Business_user(business_name=business_name, email=email, password=password_hash, nif=nif, address=address, payment_method=payment_method)
         db.session.add(new_business)
         db.session.commit()
-        access_token = create_access_token(identity= email)
 
-        return jsonify({'message': 'Business created successfully', 'business': new_business.serialize(), "access_token" : access_token}), 201
+        return jsonify({'message': 'Business created successfully', 'business': new_business.serialize()}), 201
     
 
     except Exception as e:

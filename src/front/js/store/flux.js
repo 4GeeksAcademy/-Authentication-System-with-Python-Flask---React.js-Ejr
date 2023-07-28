@@ -27,14 +27,8 @@ const getState = ({ getStore, getActions, setStore }) => {
             const res = await response.json();
             console.log(res);
             console.log("Todo perfecto");
-            localStorage.setItem("myToken", res.access_token);
-            const store = getStore();
-            setStore({ ...store, auth: true });
-            const store2 = getStore();
-            console.log("Last state of Auth:", store2.auth);
             return response;
-          } else response.status === 401;
-          // Gérer l'erreur de connexion non autorisée
+          }
           return false;
         } catch (err) {
           console.log(err);
@@ -48,16 +42,13 @@ const getState = ({ getStore, getActions, setStore }) => {
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify(data)
+            body: JSON.stringify(data),
           });
 
           if (response.ok) {
             const res = await response.json();
             console.log(res);
             console.log("Todo perfecto");
-            localStorage.setItem("myToken", res.access_token);
-            const store = getStore();
-            setStore({ ...store, auth: true });
             return response;
           } else {
             return false;
@@ -112,11 +103,13 @@ const getState = ({ getStore, getActions, setStore }) => {
           };
 
           const request = await fetch(API_URL + "/api/private", settings);
-          const json = await request.json();
-          const data = json;
-          console.log(data);
-          setStore({ user: data.user });
-          setStore({ auth: true });
+          if (request.ok) {
+            const json = await request.json();
+            const data = json;
+            console.log(data);
+            setStore({ user: data.user });
+            setStore({ auth: true });
+          }
         } catch (error) {
           console.log("No se pudo cargar: ", error);
         }
