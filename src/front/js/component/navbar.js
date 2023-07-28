@@ -38,19 +38,7 @@ export const Navbar = () => {
 					< Filters />
 				</div>
 				<div>
-					{ !token ?
-					<div>
-						<Link to={"/signup"}>
-							<button className="btn btn-primary">
-								<h5>Sign Up</h5>
-							</button>
-						</Link>
-						<Link to={"/Login"}>
-							<button className="btn btn-primary"><h5>Login</h5></button>
-						</Link>
-					</div> :
-							<LogoutButton />
-						}
+					{ token ? <LogoutButton /> : ""}
 						<button onClick={() => actions.retrieveData()} className="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
 							<span className="navbar-toggler-icon"></span>
 						</button>
@@ -65,10 +53,27 @@ export const Navbar = () => {
                         <Link to={"/"}>
 							<p className="nav-link active" aria-current="page" href="#">Home</p>
 						</Link>
-                    </li>
+					</li>
+						{ !token ?
+						<div>
+							<div>
+								<Link to={"/signup"}>
+									<button className="btn btn-success">
+										<h5>Sign Up</h5>
+									</button>
+								</Link>
+							</div>
+							<div>
+								<Link to={"/Login"}>
+									<button className="btn btn-primary"><h5>Login</h5></button>
+								</Link>
+							</div>
+						</div> 
+						: "" }
+                    
                     <li className="nav-item">
 						<Link to={"/compare"}>
-							<button>
+							<button className="btn btn-secondary">
 								Compare added cars
 							</button>
 						</Link>
@@ -78,8 +83,8 @@ export const Navbar = () => {
                         Saved Cars
                         </p>
                         <ul className="dropdown-menu dropdown-menu-dark" id="drop-down-menu" >
-						{store.saved.map((item, index) => {
-							const car = item.car;
+							{store.saved.map((item, index) => {
+								const car = item.car;
 								if (store.saved.includes(car)) alert("Car is already added")
 									else if (!car || !car.car_name) {
 										return null;
@@ -99,12 +104,14 @@ export const Navbar = () => {
 									</div>
 								)
 							})}
-                        <li>
-                            <hr className="dropdown-divider"/>
-                        </li>
-                        <Link to={"/compare"}>
-							<li className="dropdown-item" href="#"><button className="btn btn-success">Compare selected saved cars (3 MAX.)</button></li>
-						</Link>
+							<li>
+								<hr className="dropdown-divider"/>
+							</li>
+							<Link to={"/compare"}>
+								<li className="dropdown-item" href="#">
+									<button className="btn btn-success">Compare selected saved cars (3 MAX.)</button>
+								</li>
+							</Link>
                         </ul>
                     </li>
                     </ul>

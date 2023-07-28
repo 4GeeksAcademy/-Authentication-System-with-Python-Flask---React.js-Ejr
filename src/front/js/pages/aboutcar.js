@@ -1,5 +1,6 @@
 import React, { useContext } from 'react'
 import { Context } from '../store/appContext'
+import "../../styles/cardata.css"
 
 const AboutCar = () => {
     const {store} = useContext(Context)
@@ -9,7 +10,7 @@ const AboutCar = () => {
     <div>
         <div className="container">
         <div className="row mb-4">
-          <div className="col-5">
+          <div className="col-5 carFormatted">
           <h1>{actualCar.car_name}</h1>
           <h1>{actualCar.car_type}</h1>
           <h1>{actualCar.brand}</h1>
