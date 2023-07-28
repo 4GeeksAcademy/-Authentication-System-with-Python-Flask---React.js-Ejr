@@ -1,28 +1,21 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import Navbar from "../component/Navbar.jsx";
+import Navbar from '../component/Navbar.jsx'
 
-
-import { Context } from '../store/appContext.js';
+import { Context } from '../store/appContext.js'
 
 const Settings = () => {
-  const { actions,store } = useContext(Context)
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const { actions, store } = useContext(Context)
   let navigate = useNavigate()
 
-  useEffect(() => {
-	  const myToken = localStorage.getItem('myToken')
-	  setIsLoggedIn(!!myToken)
-	  store.token && setIsLoggedIn(true)
-	}, [])
   const handleLogin = () => {
     navigate('/login')
   }
 
   return (
-    <div>      <Navbar />
-
-      {isLoggedIn ? (
+    <div>
+      <Navbar />
+      {store.token ? (
         <h1> Soy Settings</h1>
       ) : (
         <>
@@ -36,4 +29,4 @@ const Settings = () => {
   )
 }
 
-export default Settings;
+export default Settings

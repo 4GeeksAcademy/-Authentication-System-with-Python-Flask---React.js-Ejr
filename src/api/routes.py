@@ -82,6 +82,13 @@ def logout():
     # Para cerrar sesión con JWT, simplemente se omite el token en el cliente.
     return jsonify({'message': 'Cierre de sesión exitoso.'}), 200
 
+@api.route('/validate-token', methods=['POST'])
+@jwt_required()
+def validate_token():
+    current_user_id = get_jwt_identity()
+    user = User.query.get(current_user_id)
+    return jsonify(user.serialize())
+
 @api.route('/users', methods=['GET'])
 def get_all_users():
     users = User.query.all()
