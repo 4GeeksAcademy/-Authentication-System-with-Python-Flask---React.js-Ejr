@@ -23,9 +23,6 @@ const Navbar = () => {
             {store.auth ? (
               <>
                 <h3>Hi, {store.user.firstname}</h3> 
-                {/* <li>
-                  <button onClick={handleLogout}>Log Out</button>
-                </li> */}
               </>
 
             ) : (
