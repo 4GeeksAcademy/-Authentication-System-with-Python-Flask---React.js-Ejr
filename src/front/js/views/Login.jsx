@@ -14,12 +14,15 @@ export const Login = () => {
     actions
       .login(email, password)
       .then((res) => navigate('/home'))
+      // actions.handleRefreshClick())
       .catch((err) => {
         alert('Incorrect user/password')
-        console.log(err.message)
+        console.log(err)
         console.log(err.httpStatus)
       })
   }
+
+  
 
   const handleRedirect = () => {
     navigate('/signup')
@@ -69,4 +72,4 @@ export const Login = () => {
   )
 }
 
-export default Login
+export default Login;

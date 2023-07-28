@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-// import { Context } from '../store/appContext.js';
+import { Context } from '../store/appContext.js';
 
 const Cart = () => {
-  // const { actions,store } = useContext(Context)
+  const { actions,store } = useContext(Context)
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   let navigate = useNavigate()
 
@@ -18,7 +18,7 @@ const Cart = () => {
 
   return (
     <div>
-      {isLoggedIn ? (
+      {store.user ? (
         <h1> Soy Cart</h1>
       ) : (
         <>

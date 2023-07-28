@@ -10,11 +10,16 @@ const getState = ({ getStore, getActions, setStore }) => {
     },
     actions: {
       login: async (email, password) => {
+        
         const data = await api.login(email, password)
-        if (!data.user.isAdmin) {
-          localStorage.setItem('user', JSON.stringify(data.user))
-          localStorage.setItem('myToken', data.token)
-        }
+        // console.log(data.user)
+        setStore({ user: data.user, token : data.token })
+        const obj = {...data.user}
+        obj.isAdmin = false
+        delete obj.isAdmin
+        localStorage.setItem('user', JSON.stringify(obj))
+        if (!data.user.isAdmin) localStorage.setItem('myToken', data.token)
+        
       },
       signup: async (
         userEmail,
@@ -42,12 +47,18 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
 
       logout: () => {
-        let token = localStorage.getItem('myToken')
-        return token != null ? true : false
+        localStorage.removeItem('myToken')
+        localStorage.removeItem('user')
+        setStore({user: {}, token : undefined})
+        window.location.reload();
       },
-      saveUserDatainStore: async (user) => {
-        setStore({ user: user })
-      },
+
+      // handleRefreshClick : async () => {
+      //   const store = getStore()
+      //   setTimeout(() => {
+      //     // Utiliza el método window.location.reload() para refrescar la página
+      //     !store.user.isAdmin && window.location.reload();
+      //   }, 2500);}
     },
   }
 }
