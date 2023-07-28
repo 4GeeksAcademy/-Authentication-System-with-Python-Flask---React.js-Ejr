@@ -3,6 +3,7 @@ from sqlalchemy import ForeignKey
 
 db = SQLAlchemy()
 
+
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(40), unique=True, nullable=False)
@@ -15,7 +16,9 @@ class User(db.Model):
     payment_method = db.Column(db.String(100), nullable=False)
     is_admin = db.Column(db.Boolean, default=False)
 
+
     reviews = db.relationship("Review", backref="user")  # Relationship to User model
+
 
     def __repr__(self):
         return '<User %r>' % self.username
@@ -32,6 +35,7 @@ class User(db.Model):
             "payment_method": self.payment_method,
             "is_admin": self.is_admin
         }
+
 
 class Business_user(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -55,15 +59,18 @@ class Business_user(db.Model):
             "payment_method": self.payment_method
         }
 
+
 class Trip(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     country = db.Column(db.String(40), nullable=False)
     city = db.Column(db.String(40), nullable=False)
     activities = db.Column(db.String(100), nullable=False)
     
+    Offers = db.relationship("Offers", backref="Trip")
+
     def __repr__(self):
         return '<Trip %r>' % self.id
-    
+
     def serialize(self):
         return {
             "id": self.id,
@@ -71,17 +78,47 @@ class Trip(db.Model):
             "city": self.city,
             "activities": self.activities
         }
+    
+
+class Review(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    trip_id = db.Column(db.Integer, db.ForeignKey('trip.id'), nullable=False)  # Adding the ForeignKey
+    title = db.Column(db.String(75), nullable=False)
+    comment_text = db.Column(db.String(500), nullable=False)
+    likes = db.Column(db.Integer, default=0)
+
+    # Relationship to User model
+    user = db.relationship("User", backref="reviews")
+    # Relationship to Trip model
+    trip = db.relationship("Trip", backref="reviews")
+
+    def __repr__(self):
+        return '<Review %r>' % self.id
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "user_id": self.user_id,
+            "trip_id": self.trip_id,
+            "title": self.title,
+            "comment_text": self.comment_text,
+            "likes": self.likes
+        }
+
 
 class Offers(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     trip_id = db.Column(db.Integer, ForeignKey('trip.id'), nullable=False)
     business_id = db.Column(db.Integer, ForeignKey('business_user.id'), nullable=False)
+    offer_title = db.Column(db.String(75), nullable=False)
+    offer_description = db.Column(db.String(250), nullable=False)
     normal_user_price = db.Column(db.Integer, nullable=False)
     medium_user_price = db.Column(db.Integer, nullable=False)
     high_user_price = db.Column(db.Integer, nullable=False)
     premium_user_price = db.Column(db.Integer, nullable=False)
 
-    trip = db.relationship("Trip", backref="offers")
+
 
     def __repr__(self):
         return '<Offers %r>' % self.id
@@ -91,11 +128,16 @@ class Offers(db.Model):
             "id": self.id,
             "trip_id": self.trip_id,
             "business_id": self.business_id,
+            "offer_title" : self.offer_title,
+            "offer_description" : self.offer_description,
             "normal_user_price": self.normal_user_price,
             "medium_user_price": self.medium_user_price,
             "high_user_price": self.high_user_price,
             "premium_user_price": self.premium_user_price
         }
+
+
+
 class Review(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
@@ -119,7 +161,7 @@ class Review(db.Model):
             # "likes": self.likes 
         }
     
-    
+
 class Favorites(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, nullable=False)

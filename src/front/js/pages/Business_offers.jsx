@@ -1,8 +1,13 @@
 import React from 'react'
+import BusinessOfferCard from '../component/BusinessOfferCard.jsx'
 
 const Business_offers = () => {
   return (
-    <div>Business_offers</div>
+    <>
+      <BusinessOfferCard />
+    </>
+
+
   )
 }
 

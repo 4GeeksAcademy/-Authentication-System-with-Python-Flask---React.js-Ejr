@@ -21,7 +21,7 @@ const LogIn = () => {
       navigate("/");
     } else {
       // Connexion échouée
-      setLoginError("Email and/or password incorrect");
+      setLoginError("Email and/or password are incorrect");
     }
   }
 
@@ -46,6 +46,8 @@ const LogIn = () => {
               </div>
 
               <Link to='/signup' > <span data-bs-dismiss="modal">Don't you have an account? Click here</span></Link>
+              <Link to='/forgot_password' > <span data-bs-dismiss="modal">Forgot Password? Click here</span></Link>
+
               <div className="modal-footer">
                 <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 <button type="submit" className="btn btn-primary"><span data-bs-dismiss="modal">Log In</span>  </button>
