@@ -4,6 +4,7 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, User, Platos, Pedidos, DetalleDePedidos, TokenBlockedList
 from api.utils import generate_sitemap, APIException
+from api.sendmail import sendMail, recoveryPasswordTemplate
 from flask_bcrypt import Bcrypt
 from flask_jwt_extended import create_access_token, create_refresh_token, jwt_required, get_jwt_identity, get_jwt, get_jti
 
@@ -71,8 +72,11 @@ def recovery_password():
     # 1ro: Generar el token temporal para el cambio de clave
     access_token = create_access_token(
         identity=user.id, additional_claims={"type": "password"})
-    return jsonify({"recoveryToken": access_token})
     # 2do: Enviar el token via email para el cambio de clave
+    if recoveryPasswordTemplate(access_token,user_email):
+        return jsonify({"msg": "Correo enviado"})
+    else:
+        return jsonify({"msg":"Correo no enviado"}),401
     
 
 @api.route("/refresh", methods=["POST"])
@@ -121,3 +125,36 @@ def handle_hello():
     }
 
     return jsonify(response_body), 200
+
+@api.route("/platos", methods=["POST"])
+def register_platos():
+    name = request.json.get("name")
+    url = request.json.get("url")
+    price = request.json.get("price")
+    description = request.json.get("description")
+    new_platos = Platos(name=name, url=url, price=price, description=description)
+    db.session.add(new_platos)
+    db.session.commit()
+    response = {"msg": "Plato creado exitosamente"}
+    return jsonify(response), 200
+
+@api.route("/pedidos", methods=["GET"])
+def get_pedidos():
+    pedidos = Restaurant.query.all()
+    results = list(map(lambda x: x.serialize(), pedidos))
+    # print (results)
+    return jsonify(results), 200
+
+@api.route("/pedidos", methods=["POST"])
+def register_pedidos():
+    id = request.json.get("id")
+    restaurant = request.json.get("restaurant_id")
+    usuario = request.json.get("usuario_id")
+    platos = request.json.get("platos_id")
+    new_pedidos = Pedidos(
+        name=id, restaurant=restaurant, usuario=usuario, platos=platos
+    )
+    db.session.add(new_pedidos)
+    db.session.commit()
+    response = {"msg": "Pedido creado exitosamente"}
+    return jsonify(response), 200
