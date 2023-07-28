@@ -70,7 +70,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           return false;
         }
       },
--
+
       login: async (userEmail, userPassword) => {
         console.log(userEmail, userPassword);
         try {
