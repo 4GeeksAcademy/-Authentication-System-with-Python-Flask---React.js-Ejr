@@ -64,15 +64,15 @@ const CarCards = ({cars}) => {
                           Add to compare
                         </div>
                           </button>
-                          <button>
-                          <div
-                          onClick={() => {
-                            if (store.compareCars.length < 1) {
-                              return alert("No more cars to delete")
-                            } else {
-                              actions.deleteCarToCompare(car);
-                            }
-                            }}>
+                          <button
+                            onClick={() => {
+                              if (!store.compareCars.includes(car) ) {
+                                return alert("Car is not on compare list")
+                              }  else {
+                                actions.deleteCarToCompare(car);
+                              }
+                              }}>
+                          <div>
                             Delete from compare
                             </div>
                           </button>
