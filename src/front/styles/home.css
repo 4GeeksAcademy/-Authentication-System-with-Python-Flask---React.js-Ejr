@@ -5,3 +5,42 @@
     one more css for each page that will contain the selected used 
     on that page only (the ones not reused in other pages).
 */
+*{
+    background-color: black;
+    font-family: 'Roboto', sans-serif;
+}
+
+#username,
+#password{
+    background-color: white;
+    color: black;
+    padding: 8px 78px;
+    font-size: 16px;
+    border-radius: 15px;
+
+}
+
+#mo{
+    width: 200px;
+    height: 200px;
+}
+
+#login-button{
+    color: white;
+    background-color: rgb(236, 206, 51);
+    padding: 8px 150px;
+    font-size: 18px;
+    border: none; 
+    cursor: pointer; 
+    border-radius: 15px;
+}
+
+#ps{
+    font-size: 13px;
+    color: white;
+}
+
+#pd {
+    font-size: 13px;
+    color: rgba(167, 145, 145, 0.674); /* El último valor (0.5) representa la opacidad */
+  }
