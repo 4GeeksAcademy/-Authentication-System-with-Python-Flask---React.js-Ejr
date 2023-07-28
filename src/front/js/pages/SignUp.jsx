@@ -8,7 +8,7 @@ const SignUp = () => {
   const [username, setUsername] = useState("");
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
-  const [dni, setDni] = useState("");
+  const [pasaporte, setPasaporte] = useState("");
   const [address, setAddress] = useState('')
   const [payment_method, setPayment] = useState('')
   // const [loginError, setLoginError] = useState("");
@@ -24,7 +24,7 @@ const SignUp = () => {
       username,
       firstname,
       lastname,
-      dni,
+      pasaporte,
       payment_method, // Assurez-vous d'utiliser la clé correcte pour le paiement
       address,
     };
@@ -68,8 +68,8 @@ const SignUp = () => {
           <input type="text" className="form-control" id="address" onChange={(e) => setAddress(e.target.value)} />
         </div>
         <div className="mb-3">
-          <label htmlFor="dni" className="form-label">DNI</label>
-          <input type="text" className="form-control" id="dni" onChange={(e) => setDni(parseInt(e.target.value))} />
+          <label htmlFor="pasaporte" className="form-label">pasaporte</label>
+          <input type="text" className="form-control" id="pasaporte" onChange={(e) => setPasaporte(e.target.value)} />
         </div>
         <div className="mb-3">
           <label htmlFor="payment" className="form-label">Payment Method</label>

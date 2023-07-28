@@ -10,10 +10,10 @@ import LogIn  from "./pages/LogIn.jsx";
 import ForgotPassword  from "./pages/ForgotPassword.jsx";
 import UserPrivate  from "./pages/UserPrivate.jsx";
 import BusinessUserPrivate  from "./pages/BusinessUserPrivate.jsx";
-import UsersReviews  from "./pages/UsersReviews.jsx";
 import Business_offers  from "./pages/Business_offers.jsx";
 import Trips  from "./pages/Trips.jsx";
 import SignUp from "./pages/SignUp.jsx";
+import SignUpBusiness from "./pages/SignUpBusiness"
 import Reviews from "./pages/Reviews";
 
 import injectContext from "./store/appContext";
@@ -42,12 +42,12 @@ const Layout = () => {
                         <Route element={<Demo />} path="/demo" />
                         <Route element={<Single />} path="/single/:theid" />
                         <Route element={<SignUp />} path="/signup" />
+                        <Route element={<SignUpBusiness />} path='/signup-business'/>
                         <Route element={<LogIn />} path="/login" />
                         <Route element={<ForgotPassword />} path="/forgot_password" />
                         <Route element={<ContactForm />} path="/contact" />
                         <Route element={<UserPrivate />} path="/user/private" />
                         <Route element={<BusinessUserPrivate />} path="/business_user/private" />
-                        <Route element={<UsersReviews />} path="/users_reviews" />
                         <Route element={<Business_offers />} path="/business_offers" />
                         <Route element={<Trips />} path="/trips" />
                         <Route element={<Reviews />} path="/reviews" />

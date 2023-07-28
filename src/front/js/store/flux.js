@@ -1,6 +1,6 @@
 const getState = ({ getStore, getActions, setStore }) => {
   const API_URL =
-    "https://valentinfrar-glowing-fishstick-447w6jjjqvxhj44v-3001.preview.app.github.dev";
+    "https://valentinfrar-stunning-spork-9v9jw7777rj3796r-3001.preview.app.github.dev";
   return {
     store: {
       user: {},
@@ -41,17 +41,14 @@ const getState = ({ getStore, getActions, setStore }) => {
           return false; // Gérer les autres erreurs, renvoyer false par défaut
         }
       },
-      signupBusiness: async (businessEmail, businessPassword) => {
+      signupBusiness: async (data) => {
         try {
           const response = await fetch(API_URL + "/api/signup/business_user", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify({
-              email: businessEmail,
-              password: businessPassword,
-            }),
+            body: JSON.stringify(data)
           });
 
           if (response.ok) {

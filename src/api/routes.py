@@ -81,7 +81,7 @@ def create_user():
         firstname = data.get('firstname')
         lastname = data.get('lastname')
         address = data.get('address')
-        dni = data.get('dni')
+        pasaporte = data.get('pasaporte')
         payment_method = data.get('payment_method')
 
         # Vérifier si l'email et le mot de passe sont fournis
@@ -102,7 +102,7 @@ def create_user():
             firstname=firstname,
             lastname=lastname,
             address=address,
-            dni=dni,
+            pasaporte=pasaporte,
             payment_method=payment_method,
             is_admin=False  # Vous pouvez définir la valeur par défaut pour is_admin ici
         )
@@ -127,6 +127,10 @@ def create_business_user():
         data = request.get_json()
         email = data.get('email')
         password = data.get('password')
+        business_name = data.get('business_name')
+        address = data.get('address')
+        nif = data.get('nif')
+        payment_method = data.get('payment_method')
 
         # Vérifier si l'email et le mot de passe sont fournis
         if not email or not password:
@@ -138,14 +142,10 @@ def create_business_user():
         if existing_business:
             return jsonify({'error': 'Email already exists.'}), 409
 
-        name_business = data.get('name_business')
-        nif = data.get('nif')
-        address = data.get('address')
-        payment_method = data.get('payment_method')
-
+        
         # Hacher le mot de passe et créer l'entreprise
         password_hash = bcrypt.generate_password_hash(password).decode('utf-8')
-        new_business = Business_user(business_name=name_business, email=email, password=password_hash, nif=nif, address=address, payment_method=payment_method)
+        new_business = Business_user(business_name=business_name, email=email, password=password_hash, nif=nif, address=address, payment_method=payment_method)
         db.session.add(new_business)
         db.session.commit()
         access_token = create_access_token(identity= email)
@@ -183,7 +183,7 @@ def login():
                         "firstname": user_or_business.firstname,
                         "lastname": user_or_business.lastname,
                         "address": user_or_business.address,
-                        "dni": user_or_business.dni,
+                        "pasaporte": user_or_business.pasaporte,
                         "payment_method": user_or_business.payment_method,
                         "is_admin": user_or_business.is_admin
                      }}), 200
@@ -257,7 +257,7 @@ def update_user_profile(user_id):
         user.firstname = data.get('firstname', user.firstname)
         user.lastname = data.get('lastname', user.lastname)
         user.address = data.get('address', user.address)
-        user.dni = data.get('dni', user.dni)
+        user.pasaporte = data.get('pasaporte', user.pasaporte)
         user.payment_method = data.get('payment_method', user.payment_method)
 
         db.session.commit()
