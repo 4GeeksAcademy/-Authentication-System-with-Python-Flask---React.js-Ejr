@@ -70,7 +70,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           return false;
         }
       },
-
+-
       login: async (userEmail, userPassword) => {
         console.log(userEmail, userPassword);
         try {
@@ -105,15 +105,16 @@ const getState = ({ getStore, getActions, setStore }) => {
       isAuth: async () => {
         try {
           let token = localStorage.getItem("myToken");
+          console.log(token);
           const settings = {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
-              Authorization: "Bearer" + token,
+              Authorization: "Bearer " + token,
             },
           };
 
-          const request = await fetch(API_URL + "/private", settings);
+          const request = await fetch(API_URL + "/api/private", settings);
           const json = await request.json();
           const data = json;
           console.log(data);
@@ -582,7 +583,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           const response = await fetch(API_URL + "/api/review");
           if (response.ok) {
             const data = await response.json();
-            console.log(data)
+            console.log(data);
             setStore({ reviews: data });
             return true;
           } else {

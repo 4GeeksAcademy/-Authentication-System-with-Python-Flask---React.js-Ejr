@@ -221,11 +221,15 @@ def logout():
     return redirect(url_for('/signup')) 
 
 
-@api.route('/private')
+@api.route('/private', methods=['GET'])
 @jwt_required()
 def private():
+    
     current_user = get_jwt_identity()
+    print(current_user)
     user = User.query.filter_by(email=current_user).first()
+    print(current_user)
+    print(user)
 
     if user:
         return jsonify({'message': 'Welcome to the private area!', 'user': user.serialize()})
