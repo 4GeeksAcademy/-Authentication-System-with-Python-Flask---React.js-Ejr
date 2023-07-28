@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 00b498d484bf
+Revision ID: d764c42692de
 Revises: 
-Create Date: 2023-07-28 18:31:08.676788
+Create Date: 2023-07-28 22:36:01.820448
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '00b498d484bf'
+revision = 'd764c42692de'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -60,8 +60,8 @@ def upgrade():
     )
     op.create_table('offers',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('trip_id', sa.Integer(), nullable=False),
-    sa.Column('business_id', sa.Integer(), nullable=False),
+    sa.Column('trip_id', sa.Integer(), nullable=True),
+    sa.Column('business_id', sa.Integer(), nullable=True),
     sa.Column('offer_title', sa.String(length=75), nullable=False),
     sa.Column('offer_description', sa.String(length=250), nullable=False),
     sa.Column('normal_user_price', sa.Integer(), nullable=False),
@@ -74,12 +74,9 @@ def upgrade():
     )
     op.create_table('review',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('user_id', sa.Integer(), nullable=False),
-    sa.Column('trip_id', sa.Integer(), nullable=False),
+    sa.Column('user_id', sa.Integer(), nullable=True),
     sa.Column('title', sa.String(length=75), nullable=False),
     sa.Column('comment_text', sa.String(length=500), nullable=False),
-    sa.Column('likes', sa.Integer(), nullable=True),
-    sa.ForeignKeyConstraint(['trip_id'], ['trip.id'], ),
     sa.ForeignKeyConstraint(['user_id'], ['user.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
