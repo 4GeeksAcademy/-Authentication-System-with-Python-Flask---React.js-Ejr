@@ -2,7 +2,7 @@ import React from "react";
 
 const PubSlide = () => {
   return (
-    <div className="pub-slide">
+    <div className="pub-slide mt-5">
       <div
         id="carouselExampleCaptions"
         className="carousel slide"
@@ -38,10 +38,10 @@ const PubSlide = () => {
               alt="First Slide"
             />
             <div className="carousel-caption d-none d-md-block">
-              <h2 className = 'title-slide'>Brasil</h2>
-              <p className = 'trip-desc'>
-                Come relax on the beaches of Brazil or dance to the rhythm of the
-                waves
+              <h2 className="title-slide">Brasil</h2>
+              <p className="trip-desc">
+                Come relax on the beaches of Brazil or dance to the rhythm of
+                the waves
               </p>
             </div>
           </div>
@@ -52,8 +52,8 @@ const PubSlide = () => {
               alt="Second Slide"
             />
             <div className="carousel-caption d-none d-md-block">
-              <h2 className = 'title-slide'>Peru</h2>
-              <p className = 'trip-desc'>
+              <h2 className="title-slide">Peru</h2>
+              <p className="trip-desc">
                 Come and discover the mysteries of the Inca civilization and the
                 immeasurable beauty of the Peruvian land
               </p>
@@ -66,8 +66,10 @@ const PubSlide = () => {
               alt="Third Slide"
             />
             <div className="carousel-caption d-none d-md-block">
-              <h2 className = 'title-slide'>Colombia</h2>
-              <p className = 'trip-desc'>Some representative placeholder content for the third slide.</p>
+              <h2 className="title-slide">Colombia</h2>
+              <p className="trip-desc">
+                Some representative placeholder content for the third slide.
+              </p>
             </div>
           </div>
         </div>
@@ -77,7 +79,10 @@ const PubSlide = () => {
           data-bs-target="#carouselExampleCaptions"
           data-bs-slide="prev"
         >
-          <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span
+            className="carousel-control-prev-icon"
+            aria-hidden="true"
+          ></span>
           <span className="visually-hidden">Previous</span>
         </button>
         <button
@@ -86,7 +91,10 @@ const PubSlide = () => {
           data-bs-target="#carouselExampleCaptions"
           data-bs-slide="next"
         >
-          <span className="carousel-control-next-icon" aria-hidden="true"></span>
+          <span
+            className="carousel-control-next-icon"
+            aria-hidden="true"
+          ></span>
           <span className="visually-hidden">Next</span>
         </button>
       </div>

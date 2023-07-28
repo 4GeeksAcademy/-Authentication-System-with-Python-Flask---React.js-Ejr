@@ -16,6 +16,10 @@ class User(db.Model):
     payment_method = db.Column(db.String(100), nullable=False)
     is_admin = db.Column(db.Boolean, default=False)
 
+
+    reviews = db.relationship("Review", backref="user")  # Relationship to User model
+
+
     def __repr__(self):
         return '<User %r>' % self.username
 
@@ -132,6 +136,31 @@ class Offers(db.Model):
             "premium_user_price": self.premium_user_price
         }
 
+
+
+class Review(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
+    # trip_id = db.Column(db.Integer, db.ForeignKey('trip.id'), nullable=True)  # Adding the ForeignKey
+    title = db.Column(db.String(75), nullable=False)
+    comment_text = db.Column(db.String(500), nullable=False)
+    # likes = db.Column(db.Integer, default=0)
+
+    # trip = db.relationship("Trip", backref="reviews") 
+
+    def __repr__(self):
+        return '<Review %r>' % self.id
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "user": User.query.get(self.user_id).serialize(),
+            # "trip_id": self.trip_id,
+            "title": self.title,
+            "comment_text": self.comment_text,
+            # "likes": self.likes 
+        }
+    
 
 class Favorites(db.Model):
     id = db.Column(db.Integer, primary_key=True)
