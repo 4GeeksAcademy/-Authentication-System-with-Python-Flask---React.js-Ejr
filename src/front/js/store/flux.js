@@ -46,9 +46,28 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				//reset the global store
 				setStore({ demo: demo });
+			},
+			register:(email, password, recovery_question, recovery_answer) => {
+				fetch(`${process.env.BACKEND_URL}/register`,{
+					method:'POST',
+					headers:{
+						"Content-Type":"application/json"
+					},
+					body:JSON.stringify({email, password, recovery_question, recovery_answer})
+				})
+				.then(resp =>{
+					if(resp.ok){
+						return resp.json
+					}
+				})
+				.then(data=>{
+					return data.message
+				})
+				.catch(error=>console.log("error during registration",error))	
+				}
 			}
 		}
-	};
+	
 };
 
 export default getState;
