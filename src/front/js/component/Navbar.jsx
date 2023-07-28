@@ -22,10 +22,9 @@ const Navbar = () => {
 
             {store.auth ? (
               <>
+                <h3>Hi, {store.user.username ? store.user.username : store.business_user?.business_name} </h3>
 
 
-                <h3>Hi, </h3>
-                {/* {store.user.username} */}
 
 
               </>

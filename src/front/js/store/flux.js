@@ -1,6 +1,8 @@
 const getState = ({ getStore, getActions, setStore }) => {
   const API_URL =
+
     "https://albertgescribano-obscure-train-j6x45w44rqqfp66v-3001.preview.app.github.dev";
+
   return {
     store: {
       user: {},
@@ -27,40 +29,28 @@ const getState = ({ getStore, getActions, setStore }) => {
             const res = await response.json();
             console.log(res);
             console.log("Todo perfecto");
-            localStorage.setItem("myToken", res.access_token);
-            const store = getStore();
-            setStore({ ...store, auth: true });
-            const store2 = getStore();
-            console.log("Last state of Auth:", store2.auth);
             return response;
-          } else response.status === 401;
-          // Gérer l'erreur de connexion non autorisée
+          }
           return false;
         } catch (err) {
           console.log(err);
           return false; // Gérer les autres erreurs, renvoyer false par défaut
         }
       },
-      signupBusiness: async (businessEmail, businessPassword) => {
+      signupBusiness: async (data) => {
         try {
           const response = await fetch(API_URL + "/api/signup/business_user", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify({
-              email: businessEmail,
-              password: businessPassword,
-            }),
+            body: JSON.stringify(data),
           });
 
           if (response.ok) {
             const res = await response.json();
             console.log(res);
             console.log("Todo perfecto");
-            localStorage.setItem("myToken", res.access_token);
-            const store = getStore();
-            setStore({ ...store, auth: true });
             return response;
           } else {
             return false;
@@ -115,11 +105,13 @@ const getState = ({ getStore, getActions, setStore }) => {
           };
 
           const request = await fetch(API_URL + "/api/private", settings);
-          const json = await request.json();
-          const data = json;
-          console.log(data);
-          setStore({ user: data.user });
-          setStore({ auth: true });
+          if (request.ok) {
+            const json = await request.json();
+            const data = json;
+            console.log(data);
+            setStore({ user: data.user });
+            setStore({ auth: true });
+          }
         } catch (error) {
           console.log("No se pudo cargar: ", error);
         }

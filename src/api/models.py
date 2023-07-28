@@ -12,12 +12,13 @@ class User(db.Model):
     firstname = db.Column(db.String(100), nullable=False)
     lastname = db.Column(db.String(100), nullable=False)
     address = db.Column(db.String(200), nullable=False)
-    dni = db.Column(db.Integer, nullable=False)
+    pasaporte = db.Column(db.String(50), nullable=False)
     payment_method = db.Column(db.String(100), nullable=False)
     is_admin = db.Column(db.Boolean, default=False)
 
 
     reviews = db.relationship("Review", backref="user")  # Relationship to User model
+    favorites = db.relationship('Favorites', backref='user')
 
 
     def __repr__(self):
@@ -31,7 +32,7 @@ class User(db.Model):
             "firstname": self.firstname,
             "lastname": self.lastname,
             "address": self.address,
-            "dni": self.dni,
+            "pasaporte": self.pasaporte,
             "payment_method": self.payment_method,
             "is_admin": self.is_admin
         }
@@ -68,7 +69,12 @@ class Trip(db.Model):
     city = db.Column(db.String(40), nullable=False)
     activities = db.Column(db.String(100), nullable=False)
     
-    Offers = db.relationship("Offers", backref="Trip_id")
+
+    offers = db.relationship("Offers", backref="trip")
+    favorites = db.relationship('Favorites', backref='trip')
+
+=======
+ 
 
     def __repr__(self):
         return '<Trip %r>' % self.id
@@ -115,12 +121,10 @@ class Offers(db.Model):
 class Review(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
-    # trip_id = db.Column(db.Integer, db.ForeignKey('trip.id'), nullable=True)  # Adding the ForeignKey
+    trip_id = db.Column(db.Integer, db.ForeignKey('trip.id'), nullable=True)  # Adding the ForeignKey
     title = db.Column(db.String(75), nullable=False)
     comment_text = db.Column(db.String(500), nullable=False)
-    # likes = db.Column(db.Integer, default=0)
 
-    # trip = db.relationship("Trip", backref="reviews") 
 
     def __repr__(self):
         return '<Review %r>' % self.id
@@ -129,18 +133,16 @@ class Review(db.Model):
         return {
             "id": self.id,
             "user": User.query.get(self.user_id).serialize(),
-            # "trip_id": self.trip_id,
+            "trip_id": self.trip_id,
             "title": self.title,
             "comment_text": self.comment_text,
-            # "likes": self.likes 
         }
     
 
 class Favorites(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, nullable=False)
-    trip_id = db.Column(db.Integer, nullable=False)
-
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
+    trip_id = db.Column(db.Integer, db.ForeignKey('trip.id'), nullable=True)
     def __repr__(self):
         return '<Favorites %r>' % self.id
 
