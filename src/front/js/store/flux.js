@@ -35,7 +35,8 @@ const getState = ({ getStore, getActions, setStore }) => {
       ],
       singleCar: [],
       errorMessage: null,
-      compareCars: []
+      compareCars: [],
+      isLogged: false
     },
     actions: {
       getAllUsers: () => {
@@ -207,7 +208,13 @@ const getState = ({ getStore, getActions, setStore }) => {
           getActions().getAllCars();
           getActions().getAllUsers();
         } else null
-      }
+      },
+        setLoggedIn: () => {
+          setStore({isLogged: true})
+          },
+          setLoggedOut: () => {
+          setStore({isLogged: false})
+          }
     }
   };
 };

@@ -2,11 +2,13 @@ import React, { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import SearchBar from "./SearchBar"
 import Filters from "./FilterModal/Filters";
+import LogoutButton from "./LogoutButton";
 import { Context } from "../store/appContext";
 import "../../styles/cardata.css"
 
 export const Navbar = () => {
 	const {store, actions} = useContext(Context);
+	const token = localStorage.getItem("token");
 
 
 
@@ -35,15 +37,20 @@ export const Navbar = () => {
 				<div>
 					< Filters />
 				</div>
-				<div>	
-					<Link to={"/signup"}>
-						<button className="btn btn-primary">
-							<h5>Sign Up</h5>
-						</button>
-					</Link>
-					<Link to={"/Login"}>
-						<button className="btn btn-primary"><h5>Login</h5></button>
-					</Link>
+				<div>
+					{ !token ?
+					<div>
+						<Link to={"/signup"}>
+							<button className="btn btn-primary">
+								<h5>Sign Up</h5>
+							</button>
+						</Link>
+						<Link to={"/Login"}>
+							<button className="btn btn-primary"><h5>Login</h5></button>
+						</Link>
+					</div> :
+							<LogoutButton />
+						}
 						<button onClick={() => actions.retrieveData()} className="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
 							<span className="navbar-toggler-icon"></span>
 						</button>
@@ -72,7 +79,7 @@ export const Navbar = () => {
                         </p>
                         <ul className="dropdown-menu dropdown-menu-dark" id="drop-down-menu" >
 						{store.saved.map((item, index) => {
-							const car = item.car; 
+							const car = item.car;
 								if (store.saved.includes(car)) alert("Car is already added")
 									else if (!car || !car.car_name) {
 										return null;

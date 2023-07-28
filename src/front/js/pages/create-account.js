@@ -76,40 +76,48 @@ export default function CreateAccount() {
     setPassword("");
   };
 
-  return (
-    <div>
-    <h2>Sign Up</h2>
-    <form onSubmit={handleSubmit}>
-      <input
-        type="text"
-        placeholder="Phone number"
-        value={phone_number}
-        onChange={handlePhonenumberChange}
-      />
-      <input
-        type="email"
-        placeholder="Email"
-        value={email}
-        onChange={handleEmailChange}
-      />
-      <input
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={handlePasswordChange}
-      />
-       <input
-        type="text"
-        placeholder="First name"
-        value={first_name}
-        onChange={handleFirstnameChange}
-      />
+    return (
+      <div className="signup-container">
+      <h2 className="signup-title">Sign Up</h2>
 
 
-      <button type="submit">Sign Up</button>
-    </form>
-  </div>
-);
+
+      <form className="signup-form" onSubmit={handleSubmit}>
+        <input
+          className="form-input"
+          type="text"
+          placeholder="Phone number"
+          value={phone_number}
+          onChange={handlePhonenumberChange}
+        />
+        <input
+          className="form-input"
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={handleEmailChange}
+        />
+        <input
+          className="form-input"
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={handlePasswordChange}
+        />
+         <input
+          className="form-input"
+          type="text"
+          placeholder="First name"
+          value={first_name}
+          onChange={handleFirstnameChange}
+        />
+
+
+
+        <button type="submit" className="signup-button">Sign Up</button>
+      </form>
+    </div>
+  );
 
 
 }

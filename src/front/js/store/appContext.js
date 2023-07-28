@@ -22,8 +22,8 @@ const injectContext = PassedComponent => {
       token ? state.actions.retrieveData() : 
         state.actions.getAllCars()
         state.actions.getAllUsers()
-        
-      
+
+
     }, []);
 
     return (
