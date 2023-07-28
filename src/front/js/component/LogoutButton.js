@@ -12,29 +12,26 @@ const LogoutButton = () => {
         if (store.isLogged == false) {
             return setIsLoggedIn(false)
         }
-        else if (!isLoggedIn) {
-          return null;
+        else if (store.isLogged) {
+          return setIsLoggedIn(true);
         }
-    })
+    },[])
 
   const handleLogout = () => {
-    // Perform any necessary logout actions, e.g., API call to invalidate tokens, etc.
 
-    // Clear any stored tokens or session information
-    // Example: localStorage.removeItem('authToken');
-
-    // Set the isLoggedIn state to false to indicate the user is logged out
+    localStorage.removeItem('token');
+    actions.setLoggedOut()
     setIsLoggedIn(false);
   };
 
-  if (!isLoggedIn) {
-    return null; // Render nothing if the user is already logged out
-  }
+
 
   return (
-    <button onClick={handleLogout}>
-      Logout
-    </button>
+    <div>
+      <button className='btn btn-danger' onClick={handleLogout}>
+        Logout
+      </button>
+    </div>
   );
 };
 

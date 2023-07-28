@@ -4,7 +4,6 @@ import { Context } from '../store/appContext'
 const AboutCar = () => {
     const {store} = useContext(Context)
     const actualCar = store.singleCar
-    console.log("This is the current singleCar:", store.singleCar)
 
   return (
     <div>
