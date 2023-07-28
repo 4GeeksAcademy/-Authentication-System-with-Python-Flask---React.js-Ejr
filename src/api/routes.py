@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint, Response
-from src.api.models import db, User, Product, Order
+from src.api.models import db, User, Product, Order , OrderItems
 from src.api.utils import generate_sitemap, APIException
 from src.api.utils import save_new_product, update_product_by_id
 from src.api.utils import check_is_admin_by_user_id
@@ -130,6 +130,34 @@ def delete_user(user_id):
     db.session.delete(user)
     db.session.commit()
     return jsonify({'message': 'Usuario eliminado exitosamente'}), 200
+
+@api.route('/orders/<int:user_id>', methods=['GET'])
+def obtener_ordenes_usuario(user_id):
+    user = User.query.get(user_id)
+
+    if not user:
+        return jsonify({'error': 'Usuario no encontrado'}), 404
+
+    ordenes_activas = Order.query.filter_by(user_id=user_id, status='activa').all()
+
+    ordenes_confirmadas = OrderItems.query.filter_by(order_id=user_id).all()
+
+    if not ordenes_activas and not ordenes_confirmadas:
+        return jsonify({'message': 'No se encontraron órdenes para el usuario'}), 200
+
+    ordenes_confirmadas_data = []
+    for orden_confirmada in ordenes_confirmadas:
+        orden_confirmada_data = {
+            'order_id': orden_confirmada.order_id,
+            'product': orden_confirmada.product.serialize(),
+            'quantity': orden_confirmada.quantity
+        }
+        ordenes_confirmadas_data.append(orden_confirmada_data)
+    response = {
+        'ordenes_activas': [orden.serialize() for orden in ordenes_activas],
+        'ordenes_confirmadas': ordenes_confirmadas_data
+    }
+    return jsonify(response), 200
 
 @api.route('/hello', methods=['POST', 'GET'])
 def handle_hello():
