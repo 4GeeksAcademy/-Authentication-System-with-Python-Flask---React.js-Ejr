@@ -1,6 +1,6 @@
 const getState = ({ getStore, getActions, setStore }) => {
   const API_URL =
-    "https://valentinfrar-glowing-fishstick-447w6jjjqvxhj44v-3001.preview.app.github.dev";
+    "https://albertgescribano-obscure-train-j6x45w44rqqfp66v-3001.preview.app.github.dev";
   return {
     store: {
       user: {},
@@ -157,7 +157,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       getUserById: async (userId) => {
         try {
-          const response = await fetch(API_URL + `/users/${userId}`, {
+          const response = await fetch(API_URL + `/api/users/${userId}`, {
             method: "GET",
           });
 
@@ -184,7 +184,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       getAllBusinessUsers: async () => {
         try {
-          const response = await fetch(API_URL + "/business_users", {
+          const response = await fetch(API_URL + "/api/business_users", {
             method: "GET",
           });
 
@@ -208,7 +208,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       getBusinessUserById: async (businessUserId) => {
         try {
           const response = await fetch(
-            API_URL + `/business_users/${businessUserId}`,
+            API_URL + `/api/business_users/${businessUserId}`,
             {
               method: "GET",
             }
@@ -236,7 +236,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       getAllOffers: async () => {
         try {
-          const response = await fetch(API_URL + "/offer", {
+          const response = await fetch(API_URL + "/api/offers", {
             method: "GET",
           });
 
@@ -259,7 +259,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       getOfferById: async (offerId) => {
         try {
-          const response = await fetch(API_URL + `/offers/${offerId}`, {
+          const response = await fetch(API_URL + `/api/offers/${offerId}`, {
             method: "GET",
           });
 
@@ -286,11 +286,18 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       createOffer: async (data) => {
         try {
-          const response = await fetch(API_URL + "/offer", {
+
+          const token = localStorage.getItem("myToken");
+          if (!token) {
+            console.log("Token not found");
+            return false;
+          }
+
+          const response = await fetch(API_URL + "/api/offers", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
-              Authorization: "Bearer " + localStorage.getItem("myToken"),
+              Authorization:  `Bearer ${token}`,
             },
             body: JSON.stringify(data),
           });
@@ -298,7 +305,11 @@ const getState = ({ getStore, getActions, setStore }) => {
           if (response.ok) {
             const responseData = await response.json();
             console.log(responseData);
+            const actions = getActions();
+            actions.getAllOffers();
+
             return responseData;
+
           } else {
             // Handle other errors
             console.log("Error in creating offer");
@@ -314,7 +325,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       updateOfferById: async (offerId, data) => {
         try {
-          const response = await fetch(API_URL + `/offer/${offerId}`, {
+          const response = await fetch(API_URL + `/api/offer/${offerId}`, {
             method: "PUT",
             headers: {
               "Content-Type": "application/json",
@@ -346,7 +357,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       deleteOfferById: async (offerId) => {
         try {
-          const response = await fetch(API_URL + `/offer/${offerId}`, {
+          const response = await fetch(API_URL + `/api/offer/${offerId}`, {
             method: "DELETE",
             headers: {
               "Content-Type": "application/json",
@@ -376,7 +387,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       getAllTrips: async () => {
         try {
-          const response = await fetch(API_URL + "/trips", {
+          const response = await fetch(API_URL + "/api/trips", {
             method: "GET",
           });
 
@@ -399,7 +410,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       getTripById: async (tripId) => {
         try {
-          const response = await fetch(API_URL + `/trips/${tripId}`, {
+          const response = await fetch(API_URL + `/api/trips/${tripId}`, {
             method: "GET",
           });
 
@@ -426,7 +437,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       createTrip: async (data) => {
         try {
-          const response = await fetch(API_URL + "/trip", {
+          const response = await fetch(API_URL + "/api/trip", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -454,7 +465,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       updateTripById: async (tripId, data) => {
         try {
-          const response = await fetch(API_URL + `/trip/${tripId}`, {
+          const response = await fetch(API_URL + `/api/trip/${tripId}`, {
             method: "PUT",
             headers: {
               "Content-Type": "application/json",
@@ -486,7 +497,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       deleteTripById: async (tripId) => {
         try {
-          const response = await fetch(API_URL + `/trip/${tripId}`, {
+          const response = await fetch(API_URL + `/api/trip/${tripId}`, {
             method: "DELETE",
             headers: {
               "Content-Type": "application/json",
@@ -517,7 +528,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       deleteUserById: async (userId) => {
         try {
           const response = await fetch(
-            API_URL + `/business_user/delete/users/${userId}`,
+            API_URL + `/api/business_user/delete/users/${userId}`,
             {
               method: "DELETE",
               headers: {
@@ -550,7 +561,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       deleteBusinessUserById: async (businessUserId) => {
         try {
           const response = await fetch(
-            API_URL + `/business_user/delete/business_users/${businessUserId}`,
+            API_URL + `/api/business_user/delete/business_users/${businessUserId}`,
             {
               method: "DELETE",
               headers: {

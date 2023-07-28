@@ -349,8 +349,8 @@ def create_offer():
     data = request.get_json()
     try:
         offer = Offers(
-            trip_id=data['trip_id'],
-            business_id=data['business_id'],
+            # trip_id = data['trip_id'],
+            # business_id = data['business_id'],
             offer_title = data['offer_title'],
             offer_description = data['offer_descrition'],
             normal_user_price=data['normal_user_price'],

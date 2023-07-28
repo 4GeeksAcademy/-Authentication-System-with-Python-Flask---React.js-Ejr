@@ -43,8 +43,10 @@ const Navbar = () => {
               <ul className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                 <li><Link className="dropdown-item">Avisos/Notificaciones</Link></li>
                 <li><Link to='/reviews' className="dropdown-item">Reseñas</Link></li>
-                <li><Link className="dropdown-item">Ofertas Favoritas</Link></li>
-                <li><Link className="dropdown-item">Explora tu siguiente trip</Link></li>
+                <li><Link to='/business_offers' className="dropdown-item">Ofertas</Link></li>
+                <li><Link className="dropdown-item">Favoritos</Link></li>
+                <li><Link to='/trips' className="dropdown-item">Explora tu siguiente trip</Link></li>
+                <li><Link to='//user/private' className="dropdown-item">Mi Area privada</Link></li>
                 <li><Link className="dropdown-item">Ayuda</Link></li>
                 {store.auth ? (
                   <li><button className="dropdown-item" onClick={handleLogout}>LogOut</button></li>

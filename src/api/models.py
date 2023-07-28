@@ -46,6 +46,8 @@ class Business_user(db.Model):
     address = db.Column(db.String(150), nullable=False)
     payment_method = db.Column(db.String(150), nullable=False)
 
+    Offers = db.relationship("Offers", backref="Bussines_user")
+
     def __repr__(self):
         return '<Business_user %r>' % self.business_name
 
@@ -66,7 +68,7 @@ class Trip(db.Model):
     city = db.Column(db.String(40), nullable=False)
     activities = db.Column(db.String(100), nullable=False)
     
-    Offers = db.relationship("Offers", backref="Trip")
+    Offers = db.relationship("Offers", backref="Trip_id")
 
     def __repr__(self):
         return '<Trip %r>' % self.id
@@ -79,38 +81,10 @@ class Trip(db.Model):
             "activities": self.activities
         }
     
-
-class Review(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    trip_id = db.Column(db.Integer, db.ForeignKey('trip.id'), nullable=False)  # Adding the ForeignKey
-    title = db.Column(db.String(75), nullable=False)
-    comment_text = db.Column(db.String(500), nullable=False)
-    likes = db.Column(db.Integer, default=0)
-
-    # Relationship to User model
-    user = db.relationship("User", backref="reviews")
-    # Relationship to Trip model
-    trip = db.relationship("Trip", backref="reviews")
-
-    def __repr__(self):
-        return '<Review %r>' % self.id
-
-    def serialize(self):
-        return {
-            "id": self.id,
-            "user_id": self.user_id,
-            "trip_id": self.trip_id,
-            "title": self.title,
-            "comment_text": self.comment_text,
-            "likes": self.likes
-        }
-
-
 class Offers(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    trip_id = db.Column(db.Integer, ForeignKey('trip.id'), nullable=False)
-    business_id = db.Column(db.Integer, ForeignKey('business_user.id'), nullable=False)
+    trip_id = db.Column(db.Integer, ForeignKey('trip.id'), nullable= True)
+    business_id = db.Column(db.Integer, ForeignKey('business_user.id'), nullable=True)
     offer_title = db.Column(db.String(75), nullable=False)
     offer_description = db.Column(db.String(250), nullable=False)
     normal_user_price = db.Column(db.Integer, nullable=False)
