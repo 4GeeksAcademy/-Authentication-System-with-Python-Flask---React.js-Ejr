@@ -284,32 +284,34 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       // create an offer
 
-      createOffer: async (data) => {
+      createOffer : async (data) => {
         try {
-
           const token = localStorage.getItem("myToken");
           if (!token) {
             console.log("Token not found");
             return false;
           }
-
+      
           const response = await fetch(API_URL + "/api/offers", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
-              Authorization:  `Bearer ${token}`,
+              Authorization: `Bearer ${token}`,
             },
             body: JSON.stringify(data),
           });
-
+      
           if (response.ok) {
             const responseData = await response.json();
             console.log(responseData);
             const actions = getActions();
             actions.getAllOffers();
-
+      
             return responseData;
-
+          } else if (response.status === 422) {
+            // Handle 422 error (or any other error status codes you want to handle)
+            console.log("Error 422: Invalid data or client-side error");
+            return false;
           } else {
             // Handle other errors
             console.log("Error in creating offer");
@@ -320,6 +322,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           return false; // Handle other errors, return false by default
         }
       },
+      
 
       // update an offer by id
 
