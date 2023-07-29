@@ -25,9 +25,6 @@ const Navbar = () => {
               <>
                 <h3>Hi, {store.user.username ? store.user.username : store.business_user?.business_name} </h3>
 
-
-
-
               </>
 
             ) : (
@@ -49,7 +46,10 @@ const Navbar = () => {
                 <li><Link to='//user/private' className="dropdown-item">Mi Area privada</Link></li>
                 <li><Link className="dropdown-item">Ayuda</Link></li>
                 {store.auth ? (
+                  <>
+                  <li><Link to='/user/private' className="dropdown-item">Mi perfile</Link></li>
                   <li><button className="dropdown-item" onClick={handleLogout}>LogOut</button></li>
+                  </>
 
                 ) : (<li><Link className="dropdown-item signup" to='/signup'>Sign Up</Link></li>)}
               </ul>
