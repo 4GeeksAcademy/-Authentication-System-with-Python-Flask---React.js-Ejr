@@ -591,6 +591,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             const data = await response.json();
             console.log(data);
             setStore({ reviews: data });
+            console.log(data, reviews);
             return true;
           } else {
             return false;
@@ -623,6 +624,75 @@ const getState = ({ getStore, getActions, setStore }) => {
             const actions = getActions();
 
             actions.getReviews();
+            return true;
+          } else {
+            return false;
+          }
+        } catch (error) {
+          console.log(error);
+          return false;
+        }
+      },
+
+      updateReview: async (id, updatedData) => {
+        try {
+          const token = localStorage.getItem("myToken");
+          if (!token) {
+            console.log("Token not found");
+            return false;
+          }
+
+          const response = await fetch(API_URL + "/api/review/" + id, {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify(updatedData),
+          });
+
+          if (response.ok) {
+            const updatedReview = await response.json();
+
+            // Update the review in the store
+            setStore((prevStore) => ({
+              ...prevStore,
+              reviews: prevStore.reviews.map((review) =>
+                review.id === id ? updatedReview : review
+              ),
+            }));
+
+            return true;
+          } else {
+            return false;
+          }
+        } catch (error) {
+          console.log(error);
+          return false;
+        }
+      },
+      deleteReview: async (id) => {
+        try {
+          const token = localStorage.getItem("myToken");
+          if (!token) {
+            console.log("Token not found");
+            return false;
+          }
+
+          const response = await fetch(API_URL + "/api/review/" + id, {
+            method: "DELETE",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+
+          if (response.ok) {
+            // Remove the review from the store
+            setStore((prevStore) => ({
+              ...prevStore,
+              reviews: prevStore.reviews.filter((review) => review.id !== id),
+            }));
+
             return true;
           } else {
             return false;

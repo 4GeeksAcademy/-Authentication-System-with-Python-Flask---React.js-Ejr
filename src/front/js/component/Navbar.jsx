@@ -7,7 +7,8 @@ const Navbar = () => {
   const { store, actions } = useContext(Context);
 
   function handleLogout() {
-    actions.logout();
+    actions.logout()
+    window.location.reload();
   }
 
   return (
