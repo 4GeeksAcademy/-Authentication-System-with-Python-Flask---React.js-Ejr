@@ -9,7 +9,7 @@ const UserPrivate = () => {
   const handleUpdateField = async (fieldName, fieldValue) => {
     try {
       const updatedData = { [fieldName]: fieldValue };
-      
+
       const updatedUser = await actions.updateUserProfile(store.user.id, updatedData);
 
       if (updatedUser) {
@@ -29,7 +29,7 @@ const UserPrivate = () => {
       <UpdateProfileUser label="Username" value={username} onSave={(value) => handleUpdateField("username", value)} />
       <UpdateProfileUser label="Firstname" value={firstname} onSave={(value) => handleUpdateField("firstname", value)} />
       <UpdateProfileUser label="Lastname" value={lastname} onSave={(value) => handleUpdateField("lastname", value)} />
-      <UpdateProfileUser label="Pasaporte" value={pasaporte} onSave={(value) => handleUpdateField("pasaporte", value)} />
+      <UpdateProfileUser label="Passport" value={pasaporte} onSave={(value) => handleUpdateField("pasaporte", value)} />
       <UpdateProfileUser label="Address" value={address} onSave={(value) => handleUpdateField("address", value)} />
       <UpdateProfileUser label="Payment Method" value={payment_method} onSave={(value) => handleUpdateField("payment_method", value)} />
     </div>
