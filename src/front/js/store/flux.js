@@ -1,6 +1,6 @@
 const getState = ({ getStore, getActions, setStore }) => {
   const API_URL =
-    "https://valentinfrar-supreme-halibut-x6wvx555wpxc6959-3001.preview.app.github.dev";
+    "https://valentinfrar-potential-space-couscous-7q9pwvvv9xq2wrxp-3001.preview.app.github.dev";
 
   return {
     store: {
