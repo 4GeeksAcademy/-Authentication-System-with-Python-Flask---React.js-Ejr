@@ -1,6 +1,6 @@
 const getState = ({ getStore, getActions, setStore }) => {
   const API_URL =
-    "https://valentinfrar-opulent-journey-g9q764444r6cpp99-3001.preview.app.github.dev";
+    "https://valentinfrar-super-journey-7q9pwvvvr79crggv-3001.preview.app.github.dev";
 
   return {
     store: {
@@ -254,7 +254,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             return false;
           }
         } catch (error) {
-          console.log("Error in updating user profile:", error);
+          console.log("erreur fetch depuis Flux:", error);
           return false;
         }
       },
@@ -763,6 +763,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           return false;
         }
       },
+      
     },
   };
 };

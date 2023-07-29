@@ -10,16 +10,16 @@ const UpdateProfileUser = ({ label, value, onSave }) => {
 
   const handleSaveClick = () => {
     setIsEditing(false);
-    onSave(fieldValue); // Sauvegarder la nouvelle valeur lors de la validation.
+    onSave(fieldValue); // Appeler la fonction onSave avec la valeur mise à jour
   };
 
   const handleChange = (e) => {
-    setFieldValue(e.target.value); // Mettre à jour la valeur du champ lorsque le texte change.
+    setFieldValue(e.target.value);
   };
 
   const handleCancelClick = () => {
     setIsEditing(false);
-    setFieldValue(value); // Rétablir la valeur d'origine lorsque l'édition est annulée.
+    setFieldValue(value);
   };
 
   return (
@@ -34,7 +34,10 @@ const UpdateProfileUser = ({ label, value, onSave }) => {
               <button onClick={handleCancelClick}>Anular</button>
             </div>
           ) : (
-            <p>{value}</p>
+            <div>
+              <p>{value}</p>
+              <button onClick={handleEditClick}>Modificar</button>
+            </div>
           )}
         </div>
       ) : isEditing ? (
