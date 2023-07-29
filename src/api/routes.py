@@ -1,3 +1,4 @@
+from sqlalchemy.exc import IntegrityError
 from flask import Flask, request, jsonify, Blueprint, jsonify, redirect, url_for
 from api.models import db, User, Business_user, Offers, Trip, Review
 from api.utils import APIException
@@ -5,14 +6,16 @@ from flask_bcrypt import bcrypt, Bcrypt
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity, JWTManager, unset_jwt_cookies
 
 
-
 api = Blueprint('api', __name__)
 
 jwt = JWTManager()
 
 # Fonction d'initialisation de l'extension JWTManager avec l'application Flask
+
+
 def initialize_jwt(api):
     jwt.init_app(api)
+
 
 @api.route('/users', methods=['GET'])
 def get_all_users():
@@ -25,6 +28,8 @@ def get_all_users():
         return jsonify({'error': 'Error retrieving users: ' + str(e)}), 500
 
 # Décorez la route pour obtenir un utilisateur par son ID
+
+
 @api.route('/users/<int:user_id>', methods=['GET'])
 def get_user(user_id):
     user = User.query.get(user_id)
@@ -32,23 +37,28 @@ def get_user(user_id):
         return jsonify(message='User not found'), 404
     return jsonify(user.serialize())
 
+
 @api.route('/business_users', methods=['GET'])
 def get_all_business_users():
     try:
         business_users = Business_user.query.all()
-        serialized_business_users = [business_user.serialize() for business_user in business_users]
+        serialized_business_users = [
+            business_user.serialize() for business_user in business_users]
         return jsonify(business_users=serialized_business_users), 200
 
     except Exception as e:
         return jsonify({'error': 'Error retrieving business users: ' + str(e)}), 500
 
 # Décorez la route pour obtenir un business_user par son ID
+
+
 @api.route('/business_users/<int:business_user_id>', methods=['GET'])
 def get_business_user(business_user_id):
     business_user = Business_user.query.get(business_user_id)
     if not business_user:
         return jsonify(message='Business user not found'), 404
     return jsonify(business_user.serialize())
+
 
 @api.route('/business_user/<int:business_user_id>', methods=['DELETE'])
 def delete_business_user(user_id):
@@ -64,10 +74,11 @@ def delete_business_user(user_id):
 bcrypt = Bcrypt()
 
 # Fonction d'initialisation de l'extension JWTManager avec l'application Flask
+
+
 def initialize_jwt(api):
     jwt.init_app(api)
 
-from sqlalchemy.exc import IntegrityError
 
 @api.route('/signup/user', methods=['POST'])
 def create_user():
@@ -109,7 +120,9 @@ def create_user():
         db.session.add(new_user)
         db.session.commit()
 
-        return jsonify({"message" : 'User created successfully', "user" : new_user.serialize()  }), 201
+
+        return jsonify({"message": 'User created successfully', "user": new_user.serialize()}), 201
+
 
     except IntegrityError as e:
         db.session.rollback()  # Annuler l'opération en cas de violation de contrainte unique
@@ -141,15 +154,17 @@ def create_business_user():
         if existing_business:
             return jsonify({'error': 'Email already exists.'}), 409
 
-        
+
         # Hacher le mot de passe et créer l'entreprise
         password_hash = bcrypt.generate_password_hash(password).decode('utf-8')
-        new_business = Business_user(business_name=business_name, email=email, password=password_hash, nif=nif, address=address, payment_method=payment_method)
+        new_business = Business_user(business_name=business_name, email=email,
+                                     password=password_hash, nif=nif, address=address, payment_method=payment_method)
+
         db.session.add(new_business)
         db.session.commit()
 
         return jsonify({'message': 'Business created successfully', 'business': new_business.serialize()}), 201
-    
+
 
     except Exception as e:
         return jsonify({'error': 'Error in business_user creation: ' + str(e)}), 500
@@ -171,19 +186,22 @@ def login():
             password_hash = user.password
             if bcrypt.check_password_hash(password_hash, data["password"]):
                 user_or_business = user
-                access_token = create_access_token(identity=user_or_business.email)
+                access_token = create_access_token(
+                    identity=user_or_business.email)
                 return jsonify(
-                    {'access_token': access_token, 
+                    {'access_token': access_token,
                      'user_or_business': {
-                        "id": user_or_business.id,
-                        "username": user_or_business.username,
-                        "email": user_or_business.email,
-                        "firstname": user_or_business.firstname,
-                        "lastname": user_or_business.lastname,
-                        "address": user_or_business.address,
-                        "pasaporte": user_or_business.pasaporte,
-                        "payment_method": user_or_business.payment_method,
-                        "is_admin": user_or_business.is_admin
+
+                         "id": user_or_business.id,
+                         "username": user_or_business.username,
+                         "email": user_or_business.email,
+                         "firstname": user_or_business.firstname,
+                         "lastname": user_or_business.lastname,
+                         "address": user_or_business.address,
+                         "pasaporte": user_or_business.pasaporte,
+                         "payment_method": user_or_business.payment_method,
+                         "is_admin": user_or_business.is_admin
+
                      }}), 200
 
         #  "id": self.id,
@@ -199,7 +217,8 @@ def login():
             password_hash = business.password
             if bcrypt.check_password_hash(password_hash, data["password"]):
                 user_or_business = business
-                access_token = create_access_token(identity=user_or_business.email)
+                access_token = create_access_token(
+                    identity=user_or_business.email)
                 return jsonify({'access_token': access_token, 'user_or_business': user_or_business.serialize()}), 200
 
         if not user_or_business:
@@ -211,18 +230,19 @@ def login():
     except Exception as e:
         return jsonify({'error': 'Error in login: ' + str(e)}), 500
 
+
 @api.route('/logout', methods=['POST'])
 @jwt_required()  # Requires authentication with a valid JWT token
 def logout():
     unset_jwt_cookies()  # Remove JWT token from the client
 
-    return redirect(url_for('/signup')) 
+    return redirect(url_for('/signup'))
 
 
 @api.route('/private', methods=['GET'])
 @jwt_required()
 def private():
-    
+
     current_user = get_jwt_identity()
     print(current_user)
     user = User.query.filter_by(email=current_user).first()
@@ -278,11 +298,13 @@ def update_business_profile(business_id):
         data = request.get_json()
 
         # Update business profile data
-        business_user.business_name = data.get('name_business', business_user.business_name)
+        business_user.business_name = data.get(
+            'name_business', business_user.business_name)
         business_user.email = data.get('email', business_user.email)
         business_user.nif = data.get('nif', business_user.nif)
         business_user.address = data.get('address', business_user.address)
-        business_user.payment_method = data.get('payment_method', business_user.payment_method)
+        business_user.payment_method = data.get(
+            'payment_method', business_user.payment_method)
 
         db.session.commit()
 
@@ -327,12 +349,15 @@ def get_token():
     except Exception as e:
         return jsonify({'error': 'Error in token generation: ' + str(e)}), 500
 
-        # Trip routes
+
+# offers routes
+
 @api.route('/offers', methods=['GET'])
 def get_all_offers():
     offers = Offers.query.all()
     serialized_offers = [offer.serialize() for offer in offers]
-    return jsonify(offers = serialized_offers)
+    return jsonify(offers=serialized_offers)
+
 
 @api.route('/offer/<int:offer_id>', methods=['GET'])
 def get_offer(offer_id):
@@ -340,6 +365,7 @@ def get_offer(offer_id):
     if not offer:
         return jsonify({"message": "Offer not found"}), 404
     return jsonify(offer.serialize())
+
 
 @api.route('/offers', methods=['POST'])
 @jwt_required()
@@ -349,16 +375,20 @@ def create_offer():
         offer = Offers(
             trip_id=data['trip_id'],
             business_id=data['business_id'],
+            offer_title=data['offer_title'],
+            offer_description=data['offer_description'],
             normal_user_price=data['normal_user_price'],
             medium_user_price=data['medium_user_price'],
             high_user_price=data['high_user_price'],
             premium_user_price=data['premium_user_price']
         )
+
         db.session.add(offer)
         db.session.commit()
         return jsonify(offer.serialize()), 201
     except KeyError:
         return jsonify({"message": "Invalid data provided"}), 400
+
 
 @api.route('/offer/<int:offer_id>', methods=['PUT'])
 @jwt_required()
@@ -380,6 +410,7 @@ def update_offer(offer_id):
     except KeyError:
         return jsonify({"message": "Invalid data provided"}), 400
 
+
 @api.route('/offer/<int:offer_id>', methods=['DELETE'])
 @jwt_required()
 def delete_offer(offer_id):
@@ -391,13 +422,14 @@ def delete_offer(offer_id):
     db.session.commit()
     return jsonify({"message": "Offer deleted successfully"}), 200
 
-    
+
 # Trip routes
 @api.route('/trip', methods=['GET'])
 def get_all_trips():
     trips = Trip.query.all()
     serialized_trips = [trip.serialize() for trip in trips]
-    return jsonify(trips = serialized_trips)
+    return jsonify(trips=serialized_trips)
+
 
 @api.route('/trip/<int:trip_id>', methods=['GET'])
 def get_trip(trip_id):
@@ -405,6 +437,7 @@ def get_trip(trip_id):
     if not trip:
         return jsonify({"message": "Trip not found"}), 404
     return jsonify(trip.serialize())
+
 
 @api.route('/trip', methods=['POST'])
 @jwt_required()
@@ -422,14 +455,13 @@ def create_trip():
     except KeyError:
         return jsonify({"message": "Invalid data provided"}), 400
 
-        
+
 @api.route('/trip/<int:trip_id>', methods=['PUT'])
 @jwt_required()
 def update_trip(trip_id):
     trip = Trip.query.get(trip_id)
     if not trip:
         return jsonify({"message": "Trip not found"}), 404
-
 
     data = request.get_json()
     try:
@@ -440,6 +472,7 @@ def update_trip(trip_id):
         return jsonify(trip.serialize()), 200
     except KeyError:
         return jsonify({"message": "Invalid data provided"}), 400
+
 
 @api.route('/trip/<int:trip_id>', methods=['DELETE'])
 @jwt_required()
@@ -452,7 +485,9 @@ def delete_trip(trip_id):
     db.session.commit()
     return jsonify({"message": "Trip deleted successfully"}), 200
 
-    # Admin route   
+    # Admin route
+
+
 @api.route('/admin_user', methods=['GET'])
 @jwt_required()
 def admin_dashboard():
@@ -468,6 +503,8 @@ def admin_dashboard():
         return jsonify({'error': 'Unauthorized'}), 401
 
 # Admin can delete users and trips
+
+
 @api.route('/admin_user/delete/<string:resource>/<int:resource_id>', methods=['DELETE'])
 @jwt_required()
 def delete_resource(resource, resource_id):
@@ -489,11 +526,15 @@ def delete_resource(resource, resource_id):
     else:
         return jsonify({'error': 'Unauthorized'}), 401
 
+# Routes for review
+
+
 @api.route('/review', methods=['GET'])
 def get_all_reviews():
     reviews = Review.query.all()
     serialized_reviews = [review.serialize() for review in reviews]
     return jsonify(serialized_reviews)
+
 
 @api.route('/review/<int:review_id>', methods=['GET'])
 def get_review(review_id):
@@ -501,6 +542,7 @@ def get_review(review_id):
     if not review:
         return jsonify({"message": "Review not found"}), 404
     return jsonify(review.serialize())
+
 
 @api.route('/review', methods=['POST'])
 @jwt_required()
@@ -522,6 +564,7 @@ def create_review():
     except KeyError:
         return jsonify({"message": "Invalid data provided"}), 400
 
+
 @api.route('/review/<int:review_id>', methods=['PUT'])
 @jwt_required()
 def update_review(review_id):
@@ -539,6 +582,7 @@ def update_review(review_id):
         return jsonify(review.serialize()), 200
     except KeyError:
         return jsonify({"message": "Invalid data provided"}), 400
+
 
 @api.route('/review/<int:review_id>', methods=['DELETE'])
 @jwt_required()

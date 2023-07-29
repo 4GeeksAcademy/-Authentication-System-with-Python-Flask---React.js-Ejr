@@ -1,6 +1,7 @@
 const getState = ({ getStore, getActions, setStore }) => {
   const API_URL =
-    "https://valentinfrar-vigilant-disco-g9q76444x76cvx4w-3001.preview.app.github.dev";
+
+    "https://albertgescribano-obscure-train-j6x45w44rqqfp66v-3001.preview.app.github.dev";
 
   return {
     store: {
