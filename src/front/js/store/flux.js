@@ -1,7 +1,6 @@
 const getState = ({ getStore, getActions, setStore }) => {
   const API_URL =
-
-    "https://albertgescribano-obscure-train-j6x45w44rqqfp66v-3001.preview.app.github.dev";
+    "https://valentinfrar-supreme-halibut-x6wvx555wpxc6959-3001.preview.app.github.dev";
 
   return {
     store: {
@@ -276,14 +275,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       // create an offer
 
-      createOffer : async (data) => {
+      createOffer: async (data) => {
         try {
           const token = localStorage.getItem("myToken");
           if (!token) {
             console.log("Token not found");
             return false;
           }
-      
+
           const response = await fetch(API_URL + "/api/offers", {
             method: "POST",
             headers: {
@@ -292,13 +291,13 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
             body: JSON.stringify(data),
           });
-      
+
           if (response.ok) {
             const responseData = await response.json();
             console.log(responseData);
             const actions = getActions();
             actions.getAllOffers();
-      
+
             return responseData;
           } else if (response.status === 422) {
             // Handle 422 error (or any other error status codes you want to handle)
@@ -314,7 +313,6 @@ const getState = ({ getStore, getActions, setStore }) => {
           return false; // Handle other errors, return false by default
         }
       },
-      
 
       // update an offer by id
 
@@ -556,7 +554,8 @@ const getState = ({ getStore, getActions, setStore }) => {
       deleteBusinessUserById: async (businessUserId) => {
         try {
           const response = await fetch(
-            API_URL + `/api/business_user/delete/business_users/${businessUserId}`,
+            API_URL +
+              `/api/business_user/delete/business_users/${businessUserId}`,
             {
               method: "DELETE",
               headers: {
@@ -591,7 +590,6 @@ const getState = ({ getStore, getActions, setStore }) => {
             const data = await response.json();
             console.log(data);
             setStore({ reviews: data });
-            console.log(data, reviews);
             return true;
           } else {
             return false;

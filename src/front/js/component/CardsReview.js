@@ -27,9 +27,11 @@ const CardsReview = () => {
         comment_text: reviewToUpdate.comment_text,
       });
     }
+    console.log('click up')
   };
   const handleDelete = (id) => {
     actions.deleteReview(id);
+    console.log('click delete');
   };
 
   // const handleLike = (reviewId) => {
@@ -78,9 +80,9 @@ const CardsReview = () => {
           style={{ height: "16rem", width: "20rem" }}
         >
           {store.user.id === review.user.id ? (
-            <div className="btn-options">
-              <span onClick={handleUpdate(review.id)}>&#9998;</span>
-              <span onClick={handleDelete(review.id)}>&#10008;</span>
+            <div className="btn-options d-flex justify-content-end">
+              <button onClick={() => handleUpdate(review.id)}>&#9998;</button>
+              <button onClick={() => handleDelete(review.id)}>&#10008;</button>
             </div>
           ) : null}
           <div className="card-img-overlay">
