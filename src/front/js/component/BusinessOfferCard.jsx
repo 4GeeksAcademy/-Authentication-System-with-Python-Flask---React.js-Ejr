@@ -5,7 +5,7 @@ const BusinessOfferCard = () => {
   const { store, actions } = useContext(Context);
   const [formData, setFormData] = useState({
     offer_title: "",
-    offer_descrition: "",
+    offer_description: "",
     normal_user_price: "",
     medium_user_price: "",
     high_user_price: "",
@@ -42,12 +42,12 @@ const BusinessOfferCard = () => {
           </div>
 
           <div>
-            <label htmlFor="offer_descrition">Offer description:</label>
+            <label htmlFor="offer_description">Offer description:</label>
             <input
               type="text"
-              id='offer_descrition'
-              name='offer_descrition'
-              value={formData.offer_descrition}
+              id='offer_description'
+              name='offer_description'
+              value={formData.offer_description}
               onChange={handleChange} />
           </div>
 
@@ -95,7 +95,7 @@ const BusinessOfferCard = () => {
       ) : null}
 
       {/* Publicar las cartas que ya existen */}
-      {/* {store.offers = []} */}
+
       {store.offers.map((business_offer) => (
         <div
           key={business_offer.id}
@@ -104,7 +104,7 @@ const BusinessOfferCard = () => {
 
           <div className="card-body">
             <h5 className="card-title">{business_offer.offer_title}</h5>
-            <p className="card-text">{business_offer.offer_descrition}</p>
+            <p className="card-text">{business_offer.offer_description}</p>
             <p className="card-text">{business_offer.normal_user_price}</p>
             <p className="card-text">{business_offer.medium_user_price}</p>
             <p className="card-text">{business_offer.high_user_price}</p>
