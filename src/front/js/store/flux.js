@@ -1,5 +1,6 @@
 const getState = ({ getStore, getActions, setStore }) => {
   const API_URL =
+
     "https://albertgescribano-obscure-train-j6x45w44rqqfp66v-3001.preview.app.github.dev";
 
   return {
@@ -220,6 +221,36 @@ const getState = ({ getStore, getActions, setStore }) => {
           }
         } catch (err) {
           console.log(err);
+        }
+      },
+      // Fonction pour modifier le profil utilisateur
+      updateUserProfile: async (userId, updatedData) => {
+        try {0
+          const token = localStorage.getItem("myToken");
+          if (!token) {
+            console.log("Token not found");
+            return false;
+          }
+
+          const response = await fetch(`/api/user/${userId}`, {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify(updatedData),
+          });
+
+          if (response.ok) {
+            const updatedUser = await response.json();
+            return updatedUser;
+          } else {
+            console.log("Failed to update user profile");
+            return false;
+          }
+        } catch (error) {
+          console.log("Error in updating user profile:", error);
+          return false;
         }
       },
 

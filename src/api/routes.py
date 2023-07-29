@@ -120,7 +120,9 @@ def create_user():
         db.session.add(new_user)
         db.session.commit()
 
+
         return jsonify({"message": 'User created successfully', "user": new_user.serialize()}), 201
+
 
     except IntegrityError as e:
         db.session.rollback()  # Annuler l'opération en cas de violation de contrainte unique
@@ -152,14 +154,17 @@ def create_business_user():
         if existing_business:
             return jsonify({'error': 'Email already exists.'}), 409
 
+
         # Hacher le mot de passe et créer l'entreprise
         password_hash = bcrypt.generate_password_hash(password).decode('utf-8')
         new_business = Business_user(business_name=business_name, email=email,
                                      password=password_hash, nif=nif, address=address, payment_method=payment_method)
+
         db.session.add(new_business)
         db.session.commit()
 
         return jsonify({'message': 'Business created successfully', 'business': new_business.serialize()}), 201
+
 
     except Exception as e:
         return jsonify({'error': 'Error in business_user creation: ' + str(e)}), 500
@@ -186,6 +191,7 @@ def login():
                 return jsonify(
                     {'access_token': access_token,
                      'user_or_business': {
+
                          "id": user_or_business.id,
                          "username": user_or_business.username,
                          "email": user_or_business.email,
@@ -195,6 +201,7 @@ def login():
                          "pasaporte": user_or_business.pasaporte,
                          "payment_method": user_or_business.payment_method,
                          "is_admin": user_or_business.is_admin
+
                      }}), 200
 
         #  "id": self.id,
