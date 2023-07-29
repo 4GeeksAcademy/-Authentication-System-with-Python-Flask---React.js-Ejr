@@ -86,7 +86,7 @@ const CardsReview = () => {
           <div className="card-img-overlay">
             <h5 className="card-title">{review.title}</h5>
             <p className="card-text">{review.comment_text}</p>
-            <span>Mensaje escrito por : {review.user.username}</span>
+            <span>Mensaje escrito por: {review.user.username}</span>
             {/* <p className="card-text">Likes: {review.likes}</p>
             <button onClick={() => handleLike(review.id)}>Like</button> */}
           </div>
