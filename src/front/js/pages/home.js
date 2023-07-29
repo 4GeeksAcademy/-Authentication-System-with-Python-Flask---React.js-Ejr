@@ -12,6 +12,7 @@ export const Home = () => {
   return (
     <>
         <FilterMenu />
+
         <PubSlide />
         <HomeReviewCard />
         <HomeOfferCard />
