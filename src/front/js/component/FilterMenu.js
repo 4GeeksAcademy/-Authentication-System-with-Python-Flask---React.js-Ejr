@@ -11,7 +11,7 @@ const FilterMenu = ({ handleSearch }) => {
   };
 
   return (
-    <div className="filter-content">
+    <div className="filter-content mt-5">
       <div className="filter-items">
         <div className="filter-country filter-item">
           <input

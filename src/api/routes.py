@@ -4,10 +4,14 @@ from api.models import db, User, Business_user, Offers, Trip, Review
 from api.utils import APIException
 from flask_bcrypt import bcrypt, Bcrypt
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity, JWTManager, unset_jwt_cookies
-
+from flask_cors import CORS  # Import CORS from flask_cors
 
 api = Blueprint('api', __name__)
 
+# Enable CORS for the 'api' Blueprint
+CORS(api)
+
+# Your existing code for JWTManager initialization and other configurations
 jwt = JWTManager()
 
 # Fonction d'initialisation de l'extension JWTManager avec l'application Flask
@@ -422,6 +426,7 @@ def delete_offer(offer_id):
 
 
 # Trip routes
+
 @api.route('/trip', methods=['GET'])
 def get_all_trips():
     trips = Trip.query.all()
@@ -483,7 +488,8 @@ def delete_trip(trip_id):
     db.session.commit()
     return jsonify({"message": "Trip deleted successfully"}), 200
 
-    # Admin route
+
+# Admin user route
 
 
 @api.route('/admin_user', methods=['GET'])
