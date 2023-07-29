@@ -41,7 +41,7 @@ const SignUpBusiness = () => {
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
           <label htmlFor="email" className="form-label">
-            Email address
+            Correo electrónico
           </label>
           <input
             type="email"
@@ -54,7 +54,7 @@ const SignUpBusiness = () => {
         </div>
         <div className="mb-3">
           <label htmlFor="password" className="form-label">
-            Password
+            Contraseña
           </label>
           <input
             type="password"
@@ -65,7 +65,7 @@ const SignUpBusiness = () => {
         </div>
         <div className="mb-3">
           <label htmlFor="business_name" className="form-label">
-            business_name
+            Nombre de la empresa
           </label>
           <input
             type="text"
@@ -76,7 +76,7 @@ const SignUpBusiness = () => {
         </div>
         <div className="mb-3">
           <label htmlFor="address" className="form-label">
-            address
+            Dirección
           </label>
           <input
             type="text"
@@ -98,7 +98,7 @@ const SignUpBusiness = () => {
         </div>
         <div className="mb-3">
           <label htmlFor="payment" className="form-label">
-            Payment Method
+            Método de pago
           </label>
           <input
             type="text"
@@ -108,7 +108,7 @@ const SignUpBusiness = () => {
           />
         </div>
         <button type="submit" className="btn btn-primary btn-signupbusiness">
-          Create my account
+          Crear mi cuenta
         </button>
       </form>
     </div>

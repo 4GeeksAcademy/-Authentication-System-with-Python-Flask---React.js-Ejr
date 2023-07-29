@@ -44,38 +44,38 @@ const SignUp = () => {
     <div className="form-container">
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
-          <label htmlFor="email" className="form-label">Email address</label>
+          <label htmlFor="email" className="form-label">Correo electrónico</label>
           <input type="email" className="form-control" id="email" aria-describedby="emailHelp" onChange={(e) => setEmail(e.target.value)} required />
         </div>
         <div className="mb-3">
-          <label htmlFor="password" className="form-label">Password</label>
+          <label htmlFor="password" className="form-label">Contraseña</label>
           <input type="password" className="form-control" id="password" onChange={(e) => setPassword(e.target.value)} />
         </div>
         <div className="mb-3">
-          <label htmlFor="username" className="form-label">Username</label>
+          <label htmlFor="username" className="form-label">Nombre de usuario</label>
           <input type="text" className="form-control" id="username" onChange={(e) => setUsername(e.target.value)} />
         </div>
         <div className="mb-3">
-          <label htmlFor="firstname" className="form-label">Firstname</label>
+          <label htmlFor="firstname" className="form-label">Nombre</label>
           <input type="text" className="form-control" id="firstname" onChange={(e) => setFirstname(e.target.value)} />
         </div>
         <div className="mb-3">
-          <label htmlFor="lastname" className="form-label">Lastname</label>
+          <label htmlFor="lastname" className="form-label">Apellido</label>
           <input type="text" className="form-control" id="lastname" onChange={(e) => setLastname(e.target.value)} />
         </div>
         <div className="mb-3">
-          <label htmlFor="address" className="form-label">address</label>
+          <label htmlFor="address" className="form-label">Dirección</label>
           <input type="text" className="form-control" id="address" onChange={(e) => setAddress(e.target.value)} />
         </div>
         <div className="mb-3">
-          <label htmlFor="pasaporte" className="form-label">pasaporte</label>
+          <label htmlFor="pasaporte" className="form-label">Pasaporte</label>
           <input type="text" className="form-control" id="pasaporte" onChange={(e) => setPasaporte(e.target.value)} />
         </div>
         <div className="mb-3">
-          <label htmlFor="payment" className="form-label">Payment Method</label>
+          <label htmlFor="payment" className="form-label">Método de pago</label>
           <input type="text" className="form-control" id="payment" onChange={(e) => setPayment(e.target.value)} />
         </div>
-        <button type="submit" className="btn btn-primary btn-signup">Create my account</button>
+        <button type="submit" className="btn btn-primary btn-signup">Crear mi cuenta</button>
       </form>
     </div>
   )

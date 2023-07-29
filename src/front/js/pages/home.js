@@ -11,7 +11,6 @@ export const Home = () => {
   console.log(store.auth);
   return (
     <>
-      <FilterMenu />
         <PubSlide />
         <ReviewCard />
         <OfferCard />

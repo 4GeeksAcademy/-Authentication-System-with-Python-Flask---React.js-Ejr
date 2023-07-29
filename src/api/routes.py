@@ -262,26 +262,24 @@ def private():
 @api.route('/user/<int:user_id>', methods=['PUT'])
 @jwt_required()
 def update_user_profile(user_id):
+    user = User.query.get(user_id)
+    print(user)
+    if not user:
+        return jsonify({"message": "User not found"}), 404
+
+    data = request.get_json()
     try:
-        user = User.query.get(user_id)
-
-        if not user:
-            return jsonify({'error': 'User not found'}), 404
-
-        data = request.get_json()
-
-        # Update user profile data
-        user.username = data.get('username', user.username)
-        user.firstname = data.get('firstname', user.firstname)
-        user.lastname = data.get('lastname', user.lastname)
-        user.address = data.get('address', user.address)
-        user.pasaporte = data.get('pasaporte', user.pasaporte)
-        user.payment_method = data.get('payment_method', user.payment_method)
+        user.username = data['username']
+        user.firstname = data['firstname']
+        user.lastname = data['lastname']
+        user.address = data['address']
+        user.pasaporte = data['pasaporte']
+        user.payment_method = data['payment_method']
 
         db.session.commit()
-
         return jsonify({'message': 'User profile updated successfully', 'user': user.serialize()}), 200
-
+    except KeyError:
+        return jsonify({"message": "Invalid data provided"}), 400
     except Exception as e:
         return jsonify({'error': 'Error in updating user profile: ' + str(e)}), 500
 

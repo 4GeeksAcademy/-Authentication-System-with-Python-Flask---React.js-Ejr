@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Context } from "../store/appContext";
 import UpdateProfileUser from "../component/UpdateProfileUser.js";
 
@@ -9,17 +9,15 @@ const UserPrivate = () => {
   const handleUpdateField = async (fieldName, fieldValue) => {
     try {
       const updatedData = { [fieldName]: fieldValue };
-
       const updatedUser = await actions.updateUserProfile(store.user.id, updatedData);
 
       if (updatedUser) {
-        actions.setUser(updatedUser.user);
         console.log("User profile updated successfully");
       } else {
         console.log("Failed to update user profile");
       }
     } catch (error) {
-      console.log("Error in updating user profile:", error);
+      console.log("Error update UserPrivate:", error);
     }
   };
 

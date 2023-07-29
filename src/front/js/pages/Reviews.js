@@ -7,7 +7,6 @@ const Reviews = () => {
 
   return (
     <div>
-      <FilterMenu/>
       <CardsReview />
     </div>
   )

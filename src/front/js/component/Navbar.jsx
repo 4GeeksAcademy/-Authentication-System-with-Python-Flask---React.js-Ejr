@@ -43,7 +43,6 @@ const Navbar = () => {
                 <li><Link to='/business_offers' className="dropdown-item">Ofertas</Link></li>
                 <li><Link className="dropdown-item">Favoritos</Link></li>
                 <li><Link to='/trips' className="dropdown-item">Explora tu siguiente trip</Link></li>
-                <li><Link to='//user/private' className="dropdown-item">Mi Area privada</Link></li>
                 <li><Link className="dropdown-item">Ayuda</Link></li>
                 {store.auth ? (
                   <>
