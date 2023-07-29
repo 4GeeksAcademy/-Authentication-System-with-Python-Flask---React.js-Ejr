@@ -4,12 +4,12 @@ import { Context } from '../store/appContext';
 const BusinessOfferCard = () => {
   const { store, actions } = useContext(Context);
   const [formData, setFormData] = useState({
-    title: "",
-    offerDescription: "",
-    normalUserPrice: "",
-    mediumUserPrice: "",
-    highUserPrice: "",
-    premiumUserPrice: "",
+    offer_title: "",
+    offer_descrition: "",
+    normal_user_price: "",
+    medium_user_price: "",
+    high_user_price: "",
+    premium_user_price: "",
   });
 
   const handleChange = (e) => {
@@ -31,63 +31,63 @@ const BusinessOfferCard = () => {
       {store.auth ? (
         <form onSubmit={handleSubmit}>
           <div>
-            <label htmlFor="title">Title:</label>
+            <label htmlFor="offer_title">Title:</label>
             <input
               type="text"
-              id="title"
-              name='title'
-              value={formData.title}
+              id="offer_title"
+              name='offer_title'
+              value={formData.offer_title}
               onChange={handleChange}
             />
           </div>
 
           <div>
-            <label htmlFor="offerDescription">Offer description:</label>
+            <label htmlFor="offer_descrition">Offer description:</label>
             <input
               type="text"
-              id='offerDescription'
-              name='offerDescription'
-              value={formData.offerDescription}
+              id='offer_descrition'
+              name='offer_descrition'
+              value={formData.offer_descrition}
               onChange={handleChange} />
           </div>
 
           <div>
-            <label htmlFor="normalUserPrice">Normal User Price:</label>
+            <label htmlFor="normal_user_price">Normal User Price:</label>
             <input
               type="text"
-              id='normalUserPrice'
-              name='normalUserPrice'
-              value={formData.normalUserPrice}
+              id='normal_user_price'
+              name='normal_user_price'
+              value={formData.normal_user_price}
               onChange={handleChange} />
           </div>
 
           <div>
-            <label htmlFor="mediumUserPrice">Medium User Price:</label>
+            <label htmlFor="medium_user_price">Medium User Price:</label>
             <input
               type="text"
-              id='mediumUserPrice'
-              name='mediumUserPrice'
-              value={formData.mediumUserPrice}
+              id='medium_user_price'
+              name='medium_user_price'
+              value={formData.medium_user_price}
               onChange={handleChange} />
           </div>
 
           <div>
-            <label htmlFor="highUserPrice">High User Price:</label>
+            <label htmlFor="high_user_price">High User Price:</label>
             <input
               type="text"
-              id='highUserPrice'
-              name='highUserPrice'
-              value={formData.highUserPrice}
+              id='high_user_price'
+              name='high_user_price'
+              value={formData.high_user_price}
               onChange={handleChange} />
           </div>
 
           <div>
-            <label htmlFor="premiumUserPrice">Premium User Price:</label>
+            <label htmlFor="premium_user_price">Premium User Price:</label>
             <input
               type="text"
-              id='premiumUserPrice'
-              name='premiumUserPrice'
-              value={formData.premiumUserPrice}
+              id='premium_user_price'
+              name='premium_user_price'
+              value={formData.premium_user_price}
               onChange={handleChange} />
           </div>
           <button type="submit">Submit Offer</button>
@@ -95,6 +95,7 @@ const BusinessOfferCard = () => {
       ) : null}
 
       {/* Publicar las cartas que ya existen */}
+      {/* {store.offers = []} */}
       {store.offers.map((business_offer) => (
         <div
           key={business_offer.id}
@@ -102,12 +103,12 @@ const BusinessOfferCard = () => {
           <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSM23JE5rZmCQhGdgwGRj_jNOKbsrGP5C_t-g&usqp=CAU" className="card-img-top" alt="..."></img>
 
           <div className="card-body">
-            <h5 className="card-title">{business_offer.title}</h5>
-            <p className="card-text">{business_offer.offerDescription}</p>
-            <p className="card-text">{business_offer.normalUserPrice}</p>
-            <p className="card-text">{business_offer.mediumUserPrice}</p>
-            <p className="card-text">{business_offer.highUserPrice}</p>
-            <p className="card-text">{business_offer.premiumUserPrice}</p>
+            <h5 className="card-title">{business_offer.offer_title}</h5>
+            <p className="card-text">{business_offer.offer_descrition}</p>
+            <p className="card-text">{business_offer.normal_user_price}</p>
+            <p className="card-text">{business_offer.medium_user_price}</p>
+            <p className="card-text">{business_offer.high_user_price}</p>
+            <p className="card-text">{business_offer.premium_user_price}</p>
             <p className="card-text"><small className="text-muted">Last updated 3 mins ago</small></p>
           </div>
         </div>
