@@ -15,6 +15,7 @@ class User(db.Model):
     is_admin = db.Column(db.Boolean, default=False)
 
     favorites = db.relationship('Product', secondary='favorites')
+    cart = db.relationship('Product', secondary='carts')
     orders = db.relationship('Order', back_populates='user')
 
     def __repr__(self):
@@ -109,8 +110,8 @@ class Order(db.Model):
     
 class Category(db.Model):
     __tablename__ = 'categories'
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100), nullable=False)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=False)
+    name = db.Column(db.String(100), nullable=False, unique=True)
 
     products = db.relationship('Product', back_populates='category')
 
@@ -133,6 +134,12 @@ class Size(db.Model):
 
 favorites = db.Table(
     'favorites',
+    db.Column('user_id', db.Integer, db.ForeignKey('users.id'), primary_key=True),
+    db.Column('product_id', db.Integer, db.ForeignKey('products.id'), primary_key=True),
+)
+
+carts = db.Table(
+    'carts',
     db.Column('user_id', db.Integer, db.ForeignKey('users.id'), primary_key=True),
     db.Column('product_id', db.Integer, db.ForeignKey('products.id'), primary_key=True),
 )

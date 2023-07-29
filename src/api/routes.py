@@ -2,16 +2,14 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint, Response
-from src.api.models import db, User, Product, Order , OrderItems
+from src.api.models import db, User, Product, Order , OrderItems, Category
 from src.api.utils import generate_sitemap, APIException
-from src.api.utils import save_new_product, update_product_by_id
+from src.api.utils import save_new_product, update_product_by_id, update_category_by_id
 from src.api.utils import check_is_admin_by_user_id
 import bcrypt
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required
-
-from src import app
 
 api = Blueprint('api', __name__)
 
@@ -262,7 +260,7 @@ def all_products():
 
 @api.route('/products/<int:product_id>', methods=['GET'])
 def get_product_by_id(product_id):
-    product = Product.query.get(id)
+    product = Product.query.get(product_id)
     if product is None:
         raise APIException(message='Product not found', status_code=404)
     return jsonify(product.serialize()), 200
@@ -312,3 +310,64 @@ def delete_product(product_id):
     db.session.commit()
     return Response(status=204)
 # End rutas para products
+
+# Rutas para Category
+@api.route('/categories', methods=['GET'])
+def all_categories():
+    categories = Category.query.all()
+    return jsonify([c.serialize() for c in categories]), 200
+
+@api.route('/categories/<int:category_id>', methods=['GET'])
+def get_category_by_id(category_id):
+    category = Category.query.get(category_id)
+    if category is None:
+        raise APIException(message='Category not found', status_code=404)
+    return jsonify(category.serialize()), 200
+
+@api.route('/categories', methods=['POST'])
+@jwt_required()
+def create_category():
+    request_body = request.get_json()
+    current_user_id = get_jwt_identity()
+    check_is_admin_by_user_id(current_user_id) 
+    if 'name' not in request_body:
+        raise APIException(message='Name is required', status_code=422)
+    if 'id' not in request_body:
+        raise APIException(message='ID is required', status_code=422)
+
+    # Checks is the category exists by the name or id
+    category = Category.query.filter_by(name=request_body['name']).first()
+    print(category)
+    if category is not None:
+        raise APIException(message='Category already exists', status_code=409)
+    category = Category.query.filter_by(id=request_body['id']).first()
+    if category is not None:
+        raise APIException(message='Category ID already exists', status_code=409)
+    
+    category = Category(id=request_body['id'], name=request_body['name'])
+    db.session.add(category)
+    db.session.commit()
+    
+    return jsonify(category.serialize()), 200
+
+@api.route('/categories/<int:category_id>', methods=['PUT'])
+@jwt_required()
+def update_category(category_id):
+    request_body = request.get_json()
+    current_user_id = get_jwt_identity()
+    check_is_admin_by_user_id(current_user_id) 
+    updated_character = update_category_by_id(category_id, request_body)
+    return jsonify(updated_character.serialize()), 200
+
+@api.route('/categories/<int:category_id>', methods=['DELETE'])
+@jwt_required()
+def delete_category(category_id):
+    current_user_id = get_jwt_identity()
+    check_is_admin_by_user_id(current_user_id) 
+    category = Category.query.get(category_id)
+    if category is None:
+        raise APIException(message='Category not found', status_code=404)
+    db.session.delete(category)
+    db.session.commit()
+    return Response(status=204)
+# End rutas para category
