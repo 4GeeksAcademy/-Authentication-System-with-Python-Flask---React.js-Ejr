@@ -32,6 +32,7 @@ const Signup = () => {
       )
       .then((res) => navigate('/login'))
       .catch((error) => {
+        // Cambiar mensajes personalizados (?)
         if (error.httpStatus === 409) alert(error.message)
         else alert(error.message)
       })

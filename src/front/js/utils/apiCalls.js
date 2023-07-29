@@ -1,14 +1,22 @@
 const API_URL = process.env.BACKEND_URL + 'api'
 
-async function makeRequest(url, method = 'GET', body = null) {
+async function makeRequest(url, method = 'GET', body = null, token = null) {
+  const headers = {
+    'Content-Type': 'application/json',
+  }
+
+  if (token) {
+    headers['Authorization'] = 'Bearer ' + token
+  }
+
   const response = await fetch(API_URL + url, {
     method,
-    headers: {
-      'Content-Type': 'application/json',
-    },
+    headers,
     body: body && JSON.stringify(body),
   })
+
   const data = await response.json()
+
   if (!response.ok) {
     const newError = new Error(data.message)
     newError.httpStatus = response.status
@@ -48,4 +56,9 @@ export async function signup(
   })
 
   return response
+}
+
+export async function validateToken(token) {
+  const user = await makeRequest('/validate-token', 'POST', null, token)
+  return user
 }

@@ -1,24 +1,21 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import Navbar from '../component/Navbar.jsx'
 
-// import { Context } from '../store/appContext.js';
+import { Context } from '../store/appContext.js'
 
 const Cart = () => {
-  // const { actions,store } = useContext(Context)
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const { actions, store } = useContext(Context)
   let navigate = useNavigate()
 
-  useEffect(() => {
-    const myToken = localStorage.getItem('myToken')
-    setIsLoggedIn(!!myToken)
-  }, [])
   const handleLogin = () => {
     navigate('/login')
   }
 
   return (
     <div>
-      {isLoggedIn ? (
+      <Navbar />
+      {store.token ? (
         <h1> Soy Cart</h1>
       ) : (
         <>

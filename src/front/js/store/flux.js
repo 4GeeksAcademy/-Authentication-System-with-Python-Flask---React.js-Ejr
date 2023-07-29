@@ -1,8 +1,6 @@
 import * as api from '../utils/apiCalls.js'
 
 const getState = ({ getStore, getActions, setStore }) => {
-  const API_URL = process.env.BACKEND_URL + 'api'
-
   return {
     store: {
       user: {},
@@ -11,10 +9,12 @@ const getState = ({ getStore, getActions, setStore }) => {
     actions: {
       login: async (email, password) => {
         const data = await api.login(email, password)
-        if (!data.user.isAdmin) {
-          localStorage.setItem('user', JSON.stringify(data.user))
-          localStorage.setItem('myToken', data.token)
-        }
+        setStore({ user: data.user, token: data.token })
+        const obj = { ...data.user }
+        obj.isAdmin = false
+        delete obj.isAdmin
+        localStorage.setItem('user', JSON.stringify(obj))
+        if (!data.user.isAdmin) localStorage.setItem('myToken', data.token)
       },
       signup: async (
         userEmail,
@@ -42,12 +42,25 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
 
       logout: () => {
-        let token = localStorage.getItem('myToken')
-        return token != null ? true : false
+        localStorage.removeItem('myToken')
+        localStorage.removeItem('user')
+        setStore({ user: {}, token: undefined })
       },
-      saveUserDatainStore: async (user) => {
-        setStore({ user: user })
+
+      validateToken: async () => {
+        const token = localStorage.getItem('myToken')
+        if (!token) return
+        try {
+          const user = await api.validateToken(token)
+          localStorage.setItem('user', JSON.stringify(user))
+          setStore({ user, token })
+        } catch {
+          localStorage.removeItem('user')
+          localStorage.removeItem('myToken')
+          setStore({ user: {}, token: undefined })
+        }
       },
+
     },
   }
 }
