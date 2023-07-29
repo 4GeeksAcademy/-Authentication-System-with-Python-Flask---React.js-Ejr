@@ -1,7 +1,5 @@
 const getState = ({ getStore, getActions, setStore }) => {
-  const API_URL =
-
-    "https://albertgescribano-obscure-train-j6x45w44rqqfp66v-3001.preview.app.github.dev";
+const API_URL = 'https://albertgescribano-obscure-train-j6x45w44rqqfp66v-3001.preview.app.github.dev'
 
   return {
     store: {
@@ -13,6 +11,9 @@ const getState = ({ getStore, getActions, setStore }) => {
       offers: [],
     },
     actions: {
+
+
+      
       // Use getActions to call a function within a function
       signupUser: async (data) => {
         try {

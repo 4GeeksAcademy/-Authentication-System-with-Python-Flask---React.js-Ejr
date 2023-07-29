@@ -2,8 +2,8 @@ import React, { useContext } from "react";
 import { Context } from "../store/appContext";
 import "../../styles/home.css";
 import PubSlide from "../component/PubSlide";
-import OfferCard from "../component/OfferCard.jsx";
-import ReviewCard from "../component/ReviewCard.jsx";
+import HomeOfferCard from "../component/HomeOfferCard.jsx";
+import HomeReviewCard from "../component/HomeReviewCard.jsx";
 import FilterMenu from "../component/FilterMenu";
 
 export const Home = () => {
@@ -11,11 +11,10 @@ export const Home = () => {
   console.log(store.auth);
   return (
     <>
-      <FilterMenu />
+        <FilterMenu />
         <PubSlide />
-        <ReviewCard />
-        <OfferCard />
-      
+        <HomeReviewCard />
+        <HomeOfferCard />
     </>
   );
 };

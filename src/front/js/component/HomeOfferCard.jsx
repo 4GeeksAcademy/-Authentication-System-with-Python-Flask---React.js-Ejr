@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from 'react'
 import { Context } from '../store/appContext.js'
 
 
-const OffersCard = () => {
+const HomeOfferCard = () => {
     const { store, actions } = useContext(Context);
 
     useEffect(() => {
@@ -14,10 +14,10 @@ const OffersCard = () => {
 
 
     return (
-        <div>
+        <div className='homeOfferCard'>
+            
             {store.offers.map((offer) => (
-                <div className="card bg-dark text-white mt-4 container" style={{ height: "16rem", width: "20rem" }}>
-
+                <div key={offer.id} className="card bg-dark text-white mt-4 container">
                     <img src="..." className="card-img" alt="..."></img>
                     <div className="card-img-overlay">
                         <h5 className="card-title">{offer.offer_title}</h5>
@@ -25,16 +25,11 @@ const OffersCard = () => {
                         <p className="card-text">{offer.normal_user_price}</p>
                         <p className="card-text">{offer.premium_user_price}</p>
                         <p className="card-text">Last updated 3 mins ago</p>
-
                     </div>
                 </div>
             ))}
-
-
-
         </div>
-
     )
 }
 
-export default OffersCard
+export default HomeOfferCard
