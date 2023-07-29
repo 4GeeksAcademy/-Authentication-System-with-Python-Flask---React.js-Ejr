@@ -57,7 +57,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				})
 				.then(resp =>{
 					if(resp.ok){
-						return resp.json
+						return resp.json()
 					}
 				})
 				.then(data=>{
