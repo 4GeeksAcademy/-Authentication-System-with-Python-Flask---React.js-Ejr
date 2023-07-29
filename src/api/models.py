@@ -72,8 +72,6 @@ class Trip(db.Model):
 
     offers = db.relationship("Offers", backref="trip")
     favorites = db.relationship('Favorites', backref='trip')
-
-=======
  
 
     def __repr__(self):
