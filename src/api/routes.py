@@ -271,12 +271,12 @@ def update_user_profile(user_id):
         data = request.get_json()
 
         # Update user profile data
-        user.username = data.get('username', user.username)
-        user.firstname = data.get('firstname', user.firstname)
-        user.lastname = data.get('lastname', user.lastname)
-        user.address = data.get('address', user.address)
-        user.pasaporte = data.get('pasaporte', user.pasaporte)
-        user.payment_method = data.get('payment_method', user.payment_method)
+        user.username = data['username']
+        user.firstname = data['firstname']
+        user.lastname = data['lastname']
+        user.address = data['address']
+        user.pasaporte = data['pasaporte']
+        user.payment_method = data['payment_method']
 
         db.session.commit()
 

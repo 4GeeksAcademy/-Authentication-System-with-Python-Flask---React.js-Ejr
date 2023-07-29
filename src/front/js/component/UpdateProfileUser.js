@@ -10,25 +10,43 @@ const UpdateProfileUser = ({ label, value, onSave }) => {
 
   const handleSaveClick = () => {
     setIsEditing(false);
-    onSave(fieldValue);
+    onSave(fieldValue); // Sauvegarder la nouvelle valeur lors de la validation.
   };
 
   const handleChange = (e) => {
-    setFieldValue(e.target.value);
+    setFieldValue(e.target.value); // Mettre à jour la valeur du champ lorsque le texte change.
+  };
+
+  const handleCancelClick = () => {
+    setIsEditing(false);
+    setFieldValue(value); // Rétablir la valeur d'origine lorsque l'édition est annulée.
   };
 
   return (
     <div>
       <label>{label}:</label>
-      {isEditing ? (
+      {label === "Firstname" || label === "Lastname" ? (
+        <div>
+          {isEditing ? (
+            <div>
+              <textarea value={fieldValue} onChange={handleChange} />
+              <button onClick={handleSaveClick}>Validar</button>
+              <button onClick={handleCancelClick}>Anular</button>
+            </div>
+          ) : (
+            <p>{value}</p>
+          )}
+        </div>
+      ) : isEditing ? (
         <div>
           <textarea value={fieldValue} onChange={handleChange} />
-          <button onClick={handleSaveClick}>Valider</button>
+          <button onClick={handleSaveClick}>Validar</button>
+          <button onClick={handleCancelClick}>Anular</button>
         </div>
       ) : (
         <div>
           <p>{value}</p>
-          <button onClick={handleEditClick}>Modifier</button>
+          <button onClick={handleEditClick}>Modificar</button>
         </div>
       )}
     </div>

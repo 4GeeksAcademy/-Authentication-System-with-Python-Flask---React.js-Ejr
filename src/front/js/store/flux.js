@@ -1,7 +1,6 @@
 const getState = ({ getStore, getActions, setStore }) => {
   const API_URL =
-
-    "https://albertgescribano-obscure-train-j6x45w44rqqfp66v-3001.preview.app.github.dev";
+    "https://valentinfrar-opulent-journey-g9q764444r6cpp99-3001.preview.app.github.dev";
 
   return {
     store: {
@@ -225,7 +224,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
       // Fonction pour modifier le profil utilisateur
       updateUserProfile: async (userId, updatedData) => {
-        try {0
+        try {
           const token = localStorage.getItem("myToken");
           if (!token) {
             console.log("Token not found");
@@ -243,7 +242,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 
           if (response.ok) {
             const updatedUser = await response.json();
-            return updatedUser;
+
+            setStore((prevStore) => ({
+              ...prevStore,
+              user: updatedUser, 
+            }));
+
+            return true;
           } else {
             console.log("Failed to update user profile");
             return false;
@@ -273,7 +278,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           }
         } catch (err) {
           console.log(err);
-          return []; // Handle other errors, return an empty array by default
+          return []; 
         }
       },
 
