@@ -49,6 +49,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       validateToken: async () => {
         const token = localStorage.getItem('myToken')
+        if (!token) return
         try {
           const user = await api.validateToken(token)
           localStorage.setItem('user', JSON.stringify(user))
