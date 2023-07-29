@@ -327,12 +327,12 @@ def get_token():
     except Exception as e:
         return jsonify({'error': 'Error in token generation: ' + str(e)}), 500
 
-        # Trip routes
+        # Offers routes
 @api.route('/offers', methods=['GET'])
 def get_all_offers():
     offers = Offers.query.all()
     serialized_offers = [offer.serialize() for offer in offers]
-    return jsonify(offers = serialized_offers)
+    return jsonify(serialized_offers)
 
 @api.route('/offer/<int:offer_id>', methods=['GET'])
 def get_offer(offer_id):
@@ -345,14 +345,19 @@ def get_offer(offer_id):
 @jwt_required()
 def create_offer():
     data = request.get_json()
+    current_business = get_jwt_identity()
+    business = Business_user.query.filter_by(email = current_business).first()
+    print
     try:
         offer = Offers(
-            trip_id=data['trip_id'],
-            business_id=data['business_id'],
-            normal_user_price=data['normal_user_price'],
-            medium_user_price=data['medium_user_price'],
-            high_user_price=data['high_user_price'],
-            premium_user_price=data['premium_user_price']
+            # trip_id = data['trip_id'],
+            business_id = business.id,
+            offer_title = data['offer_title'],
+            offer_description = data['offer_descrition'],
+            normal_user_price=int(data['normal_user_price']),
+            medium_user_price=int(data['medium_user_price']),
+            high_user_price=int(data['high_user_price']),
+            premium_user_price=int(data['premium_user_price']),
         )
         db.session.add(offer)
         db.session.commit()
