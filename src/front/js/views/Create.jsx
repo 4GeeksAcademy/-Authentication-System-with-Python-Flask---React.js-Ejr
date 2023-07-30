@@ -18,7 +18,7 @@ const Create = () => {
     <div>
       <Navbar
       />
-      {store.token && store.user.isAdmin ? (<>
+      {store.token && store.user.is_admin ? (<>
         
 
           <NewProduct/>

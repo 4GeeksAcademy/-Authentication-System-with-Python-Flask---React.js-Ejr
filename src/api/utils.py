@@ -85,7 +85,7 @@ def save_new_product(request_body):
             type=request_body.get('type')
         )
         db.session.add(product)
-        if request_body['sizes_quantity'] is not None:
+        if request_body.get('sizes_quantity') is not None:
             for size in request_body['sizes_quantity']:
                 size_db = Size.query.get(size['size_id'])
                 if size_db is None:

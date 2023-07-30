@@ -67,7 +67,7 @@ const Navbar = () => {
               ) : (
                 <>
                 <li className='nav-item text-white'>
-                   <span>WELCOME {store.user.firstName.toUpperCase()}</span>
+                   <span>WELCOME {store.user.first_name.toUpperCase()}</span>
                   </li>
                   <li className='nav-item'>
                     <span
@@ -86,7 +86,7 @@ const Navbar = () => {
                 </>
               )}
 
-              {store.user.isAdmin && (<>
+              {store.user.is_admin && (<>
                 <li className='nav-item'>
                   <Link className='nav-link text-white' to='/admin'>
                     EDIT USERS

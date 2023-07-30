@@ -15,7 +15,7 @@ const Admin = () => {
   return (
     <div>
       <Navbar />
-      {store.token && store.user.isAdmin ? (
+      {store.token && store.user.is_admin ? (
         <h1> Soy Admin</h1>
       ) : (
         <>
