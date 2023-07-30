@@ -12,5 +12,9 @@
 @import './filter-menu.css';
 @import './card-review.css';
 @import './homeOfferCard.css';
+
+@import './forgotPassword.css'; 
+=======
 @import './search-review.css';
 @import './form-review.css'
+

@@ -7,9 +7,12 @@ const Navbar = () => {
   const { store, actions } = useContext(Context);
 
   function handleLogout() {
-    actions.logout()
-    window.location.reload();
+ 
+    alert('Cerraste sesión. Esperamos verte pronto!');
+    actions.logout();
+    window.location.href = '/';
   }
+  
 
   return (
     <nav className="navbar container-fluid navbar-expand-sm navbar-light">
