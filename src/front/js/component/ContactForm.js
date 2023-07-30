@@ -41,9 +41,9 @@ export const ContactForm = () => {
   return (
     <div className="form-container">
       <form ref={form} onSubmit={sendEmail} className="form-content">
-        <label>Name</label>
+        <label>Nombre</label>
         <input type="text" name="name" required autoComplete="off" id="name" />
-        <label>Email</label>
+        <label>Correo electrónico</label>
         <input
           type="email"
           name="email"
@@ -51,7 +51,7 @@ export const ContactForm = () => {
           autoComplete="off"
           id="email"
         />
-        <label>Message</label>
+        <label>Mensaje</label>
         <textarea name="message" id="mess" />
         <input type="submit" value="Send" className="hover button" />
       </form>

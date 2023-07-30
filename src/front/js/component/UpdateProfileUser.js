@@ -10,7 +10,7 @@ const UpdateProfileUser = ({ label, value, onSave }) => {
 
   const handleSaveClick = () => {
     setIsEditing(false);
-    onSave(fieldValue); // Appeler la fonction onSave avec la valeur mise à jour
+    onSave(fieldValue); 
   };
 
   const handleChange = (e) => {

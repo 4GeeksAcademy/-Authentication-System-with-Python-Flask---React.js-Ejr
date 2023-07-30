@@ -1,0 +1,36 @@
+.btn-search {
+  background-color: var(--color-3);
+  padding: 0px 16px;
+  height: 50px;
+  border-radius: 50px;
+  border: none;
+  color: #fff;
+  transition: all 0.5s;
+}
+.btn-search:hover {
+  color: var(--color-3);
+  background: #fff;
+}
+
+.btn-cancel-search {
+  background-color: var(--color-4);
+  padding: 0px 16px;
+  height: 50px;
+  border-radius: 50px;
+  border: none;
+  color: var(--color-5);
+  transition: all 0.5s;
+}
+
+.btn-cancel-search:hover {
+  color: var(--color-1);
+  background: #fff;
+}
+
+.review-input-search {
+  padding-left: 6px;
+  transition: all .5s;
+}
+.review-input-search:hover {
+  background: #ddd;
+}
