@@ -12,7 +12,7 @@ const Navbar = () => {
   }
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-light">
+    <nav className="navbar container-fluid navbar-expand-sm navbar-light">
       <div className="container-fluid">
         <Link className="navbar-brand" to='/'>
           <img src="https://i.ibb.co/C1sDhjs/White-Black-Minimalist-Logo-Distro-Fashion-6.jpg" width="70" height="65" alt="Logo"></img>
@@ -46,8 +46,8 @@ const Navbar = () => {
                 <li><Link className="dropdown-item">Ayuda</Link></li>
                 {store.auth ? (
                   <>
-                  <li><Link to='/user/private' className="dropdown-item">Mi perfile</Link></li>
-                  <li><button className="dropdown-item" onClick={handleLogout}>LogOut</button></li>
+                    <li><Link to='/user/private' className="dropdown-item">Mi perfile</Link></li>
+                    <li><button className="dropdown-item" onClick={handleLogout}>LogOut</button></li>
                   </>
 
                 ) : (<li><Link className="dropdown-item signup" to='/signup'>Sign Up</Link></li>)}

@@ -1,6 +1,5 @@
 .filter-content {
-  background: linear-gradient(90deg, var(--color-1), var(--color-5))
-    var(--color-1);
+  background:  var(--color-1);
   width: 85%;
   margin: auto;
   height: 100px;

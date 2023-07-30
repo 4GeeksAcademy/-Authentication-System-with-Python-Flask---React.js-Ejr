@@ -23,13 +23,13 @@ const UserPrivate = () => {
 
   return (
     <div className="profil-content">
-      <UpdateProfileUser label="Email" value={email} onSave={(value) => handleUpdateField("email", value)} />
-      <UpdateProfileUser label="Username" value={username} onSave={(value) => handleUpdateField("username", value)} />
-      <UpdateProfileUser label="Firstname" value={firstname} onSave={(value) => handleUpdateField("firstname", value)} />
-      <UpdateProfileUser label="Lastname" value={lastname} onSave={(value) => handleUpdateField("lastname", value)} />
-      <UpdateProfileUser label="Passport" value={pasaporte} onSave={(value) => handleUpdateField("pasaporte", value)} />
-      <UpdateProfileUser label="Address" value={address} onSave={(value) => handleUpdateField("address", value)} />
-      <UpdateProfileUser label="Payment Method" value={payment_method} onSave={(value) => handleUpdateField("payment_method", value)} />
+      <UpdateProfileUser label="Correo electrónico" value={email} onSave={(value) => handleUpdateField("email", value)} />
+      <UpdateProfileUser label="Nombre de usuario" value={username} onSave={(value) => handleUpdateField("username", value)} />
+      <UpdateProfileUser label="Nombre" value={firstname} onSave={(value) => handleUpdateField("firstname", value)} />
+      <UpdateProfileUser label="Apellido" value={lastname} onSave={(value) => handleUpdateField("lastname", value)} />
+      <UpdateProfileUser label="Pasaporte" value={pasaporte} onSave={(value) => handleUpdateField("pasaporte", value)} />
+      <UpdateProfileUser label="Dirección" value={address} onSave={(value) => handleUpdateField("address", value)} />
+      <UpdateProfileUser label="Método de pago" value={payment_method} onSave={(value) => handleUpdateField("payment_method", value)} />
     </div>
   );
 };
