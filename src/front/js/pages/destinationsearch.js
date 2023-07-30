@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import "./DestinationSearch.css"; 
+import React, { useState, useEffect } from "react"; 
+import "../../styles/DestinationSearch.css";
 
 const MySearch = () => {
   const [search, setSearch] = useState([]);
@@ -61,7 +61,6 @@ const MySearch = () => {
               <img src="vacation-icon.png" alt="Vacation Destination Icon" className="vacation-icon" />
               <div className="city-info">
                 <h3>{city.matching_full_name}</h3>
-                <p>Country: {city.matching_alternate_names[0].name}</p>
                 
               </div>
             </div>
