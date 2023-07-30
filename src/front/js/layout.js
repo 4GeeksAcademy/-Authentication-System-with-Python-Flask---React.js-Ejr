@@ -10,6 +10,9 @@ import Cart from './views/Cart.jsx'
 import Settings from './views/Settings.jsx'
 import Admin from './views/Admin.jsx'
 // import Navbar from "./component/Navbar.jsx";
+import Footwear from './views/Footwear.jsx'
+import Clothes from './views/Clothes.jsx'
+import Accesories from './views/Accesories.jsx'
 import Footer from './component/Footer.jsx'
 
 import injectContext from './store/appContext'
@@ -36,6 +39,9 @@ const Layout = () => {
             <Route path='/settings' element={<Settings />} />
             <Route path='/cart' element={<Cart />} />
             <Route path='/admin' element={<Admin />} />
+            <Route path='/footwear' element={<Footwear />} />
+            <Route path='/clothes' element={<Clothes />} />
+            <Route path='/accesories' element={<Accesories />} />
 
             <Route path='*' element={<h1>Not found!</h1>} />
           </Routes>
