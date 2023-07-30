@@ -35,24 +35,24 @@ export async function login(email, password) {
 }
 
 export async function signup(
-  userEmail,
-  userPassword,
-  firstName,
-  lastName,
+  email,
+  password,
+  first_name,
+  last_name,
   phone,
   location,
   address,
-  paymentMethod
+  payment_method
 ) {
   const response = await makeRequest('/signup', 'POST', {
-    email: userEmail,
-    password: userPassword,
-    first_name: firstName,
-    last_name: lastName,
+    email: email,
+    password: password,
+    first_name: first_name,
+    last_name: last_name,
     phone: phone,
     location: location,
     address: address,
-    payment_method: paymentMethod,
+    payment_method: payment_method,
   })
 
   return response
@@ -71,7 +71,7 @@ export async function createProduct(
       type,
       category_id,
       // sizes,
-      imageUrl,
+      image_url,
       token
 ) {
   const response = await makeRequest('/products', 'POST', {
@@ -82,7 +82,7 @@ export async function createProduct(
     type: type,
     category_id: category_id,
     // sizes: sizes,
-    imageUrl: imageUrl,
+    image_url: image_url,
   } , token)
 
   return response
