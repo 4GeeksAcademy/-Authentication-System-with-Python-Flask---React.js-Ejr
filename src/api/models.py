@@ -24,13 +24,13 @@ class User(db.Model):
     def serialize(self):
         return {
             'id': self.id,
-            'lastName': self.last_name,
-            'firstName': self.first_name,
+            'last_name': self.last_name,
+            'first_name': self.first_name,
             'email': self.email,
             'address': self.address,
             'location': self.location,
-            'paymentMethod': self.payment_method,
-            'isAdmin': self.is_admin,
+            'payment_method': self.payment_method,
+            'is_admin': self.is_admin,
         }
     
 class OrderItems(db.Model):
@@ -44,6 +44,7 @@ class OrderItems(db.Model):
 
     def serialize(self):
         return {
+            'id': self.product.id,
             'product': self.product.serialize(),
             'quantity': self.quantity
         }
@@ -58,8 +59,9 @@ class ProductSizesQuantity(db.Model):
     size = db.relationship("Size", back_populates="products")
     def serialize(self):
         return {
-            "size": self.size.name,
-            "quantity": self.quantity,
+            'size_id': self.size.id,
+            'size': self.size.name,
+            'quantity': self.quantity,
         }
     
 class Product(db.Model):
@@ -84,9 +86,9 @@ class Product(db.Model):
             'price': self.price,
             'description': self.description,
             'color': self.color,
-            'imageUrl': self.image_url,
+            'image_url': self.image_url,
             'type': self.type,
-            "sizes_quantity": [size_quantity.serialize() for size_quantity in self.sizes_quantity]
+            'sizes_quantity': [size_quantity.serialize() for size_quantity in self.sizes_quantity]
         }
     
 class Order(db.Model):
@@ -103,7 +105,7 @@ class Order(db.Model):
         return {
             'id': self.id,
             'user': self.user.serialize(),
-            'orderDate': self.order_date,
+            'order_date': self.order_date,
             'status': self.status,
             'products': [p.serialize() for p in self.products]
         }
@@ -128,8 +130,8 @@ class Size(db.Model):
     products = db.relationship('ProductSizesQuantity', back_populates='size')
     def serialize(self):
         return {
-            "id": self.id,
-            "name": self.name,
+            'id': self.id,
+            'name': self.name,
         }
 
 favorites = db.Table(

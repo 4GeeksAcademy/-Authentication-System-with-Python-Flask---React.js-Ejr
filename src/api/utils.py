@@ -1,6 +1,6 @@
 from flask import jsonify, url_for
 from sqlalchemy import exc
-from src.api.models import db, Category, Product, User, Size
+from src.api.models import db, Category, Product, User, Size, ProductSizesQuantity
 import re
 
 class APIException(Exception):
@@ -76,12 +76,23 @@ def save_new_product(request_body):
             message=f'Missing value for: {", ".join(missing_values)}', status_code=422, 
             payload={'missing_values': missing_values}
         )
+    
+    
     try:
         product = Product(name=request_body['name'], price=request_body['price'],
             description=request_body.get('description'), color=request_body.get('color'),
-            image_url=request_body.get('image_url'), category_id=request_body['category_id']
+            image_url=request_body.get('image_url'), category_id=request_body['category_id'],
+            type=request_body.get('type')
         )
         db.session.add(product)
+        if request_body['sizes_quantity'] is not None:
+            for size in request_body['sizes_quantity']:
+                size_db = Size.query.get(size['size_id'])
+                if size_db is None:
+                    raise APIException(message=f'Size with id {size["size_id"]} not found', status_code=422)
+                size_quantity = ProductSizesQuantity(size=size_db, product=product, quantity=size['quantity'])
+                db.session.add(size_quantity)
+                
         db.session.commit()
     except exc.IntegrityError as e:
         db.session.rollback()
@@ -98,6 +109,18 @@ def update_product_by_id(id, request_body):
     for key in product.__dict__.keys():
         if key in request_body:
             setattr(product, key, request_body[key])
+            
+    if request_body['sizes_quantity'] is not None:
+        for size_from_body in request_body['sizes_quantity']:
+            size_db = Size.query.get(size_from_body['size_id'])
+            if size_db is None:
+                raise APIException(message=f'Size with id {size_from_body["size_id"]} not found', status_code=422)
+            size_quantity = ProductSizesQuantity.query.filter_by(size=size_db, product=product).first()
+            if size_quantity is None:
+                new_size_quantity = ProductSizesQuantity(size=size_db, product=product, quantity=size_from_body['quantity'])
+                db.session.add(new_size_quantity)
+            else:
+                size_quantity.quantity = size_from_body['quantity']
 
     try:
         db.session.commit()
