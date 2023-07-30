@@ -26,13 +26,49 @@ def current_user():
     user = User.query.get(current_user_id)
     return jsonify({"user": user.serialize()})
 
+@api.route('/users', methods=['GET'])
+@jwt_required()
+def get_users():
+    users = User.query.all()
+    return jsonify([user.serialize() for user in users]), 200
+
+
+@api.route('/users/<int:user_id>', methods=['GET'])
+@jwt_required()
+def get_user(user_id):
+    user = User.query.get(user_id)
+    if user is None:
+        return jsonify({"msg": "User not found"}), 404
+    return jsonify(user.serialize()), 200
+
+
+@api.route('/users', methods=['POST'])
+def create_user():
+    if not request.is_json:
+        return jsonify({"msg": "Missing JSON in request"}), 400
+
+    name = request.json.get('name', None)
+    email = request.json.get('email', None)
+    password = request.json.get('password', None)
+
+    if not name or not email or not password:
+        return jsonify({"msg": "Missing name, email or password"}), 400
+
+    user = User.query.filter_by(email=email).first()
+    if user:
+        return jsonify({"msg": "User already exists"}), 400
+
+    new_user = User(name=name, email=email)
+    new_user.set_password(password)
+    db.session.add(new_user)
+    db.session.commit()
+
+    return jsonify(new_user.serialize()), 201
+
+
 @api.route('/users/<int:user_id>', methods=['PUT'])
 @jwt_required()
 def update_user(user_id):
-    current_user_id = get_jwt_identity()
-    if current_user_id != user_id:
-        return jsonify({"msg": "Cannot update another user's profile"}), 403
-
     if not request.is_json:
         return jsonify({"msg": "Missing JSON in request"}), 400
 
@@ -58,10 +94,6 @@ def update_user(user_id):
 @api.route('/users/<int:user_id>', methods=['DELETE'])
 @jwt_required()
 def delete_user(user_id):
-    current_user_id = get_jwt_identity() 
-    if current_user_id != user_id:
-        return jsonify({"msg": "Cannot delete another user's profile"}), 403
-
     user = User.query.get(user_id)
     if user is None:
         return jsonify({"msg": "User not found"}), 404
@@ -69,6 +101,7 @@ def delete_user(user_id):
     db.session.delete(user)
     db.session.commit()
     return jsonify({"msg": "User deleted"}), 200
+
 
 
 
