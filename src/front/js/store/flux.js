@@ -1,7 +1,6 @@
 const getState = ({ getStore, getActions, setStore }) => {
-
-const API_URL = 'https://albertgescribano-obscure-train-j6x45w44rqqfp66v-3001.preview.app.github.dev'
-
+  const API_URL =
+    "https://valentinfrar-super-duper-space-dollop-qrqp6777vpj29pxj-3001.preview.app.github.dev";
 
   return {
     store: {
@@ -13,9 +12,6 @@ const API_URL = 'https://albertgescribano-obscure-train-j6x45w44rqqfp66v-3001.pr
       offers: [],
     },
     actions: {
-
-
-      
       // Use getActions to call a function within a function
       signupUser: async (data) => {
         try {
@@ -249,7 +245,7 @@ const API_URL = 'https://albertgescribano-obscure-train-j6x45w44rqqfp66v-3001.pr
 
             setStore((prevStore) => ({
               ...prevStore,
-              user: updatedUser, 
+              user: updatedUser,
             }));
 
             return true;
@@ -282,7 +278,7 @@ const API_URL = 'https://albertgescribano-obscure-train-j6x45w44rqqfp66v-3001.pr
           }
         } catch (err) {
           console.log(err);
-          return []; 
+          return [];
         }
       },
 
@@ -767,7 +763,6 @@ const API_URL = 'https://albertgescribano-obscure-train-j6x45w44rqqfp66v-3001.pr
           return false;
         }
       },
-      
     },
   };
 };

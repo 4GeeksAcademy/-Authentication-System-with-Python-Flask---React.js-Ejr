@@ -1,11 +1,17 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../store/appContext";
 
-const CardsReview = () => {
+const CardsReview = ({ searchQuery }) => {
   const { store, actions } = useContext(Context);
   const [editContentId, setEditContentId] = useState(null);
   const [editContent, setEditContent] = useState("");
   const [formData, setFormData] = useState({ title: "", comment_text: "" });
+
+  const filteredReviews = store.reviews.filter(
+    (review) =>
+      review.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      review.comment_text.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -75,10 +81,10 @@ const CardsReview = () => {
 
       {/* Publicar las cartas que ya existen */}
       <div className="cards-review">
-      {store.reviews
-      .sort((a, b) => b.id - a.id)
-      .map((review) => (
-          <div key={review.id} className="card card-review text-white mt-4 container" style={{ height: "16rem", width: "20rem" }}>
+        {filteredReviews
+          .sort((a, b) => b.id - a.id)
+          .map((review) => (
+            <div key={review.id} className="card card-review text-white mt-4 container" style={{ height: "16rem", width: "20rem" }}>
             <div className="card-img-overlay">
               {store.user.id === review.user.id ? (
                 <div className="btn-options d-flex justify-content-end">

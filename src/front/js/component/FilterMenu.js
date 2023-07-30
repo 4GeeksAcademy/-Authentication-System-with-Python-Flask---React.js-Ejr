@@ -46,7 +46,7 @@ const FilterMenu = ({ handleSearch }) => {
         </div>
         <div className="filter-btn">
           <button type="submit" onClick={handleSubmit}>
-            Search
+            Buscar
           </button>
         </div>
       </div>
