@@ -1,6 +1,6 @@
 from flask import jsonify, url_for
 from sqlalchemy import exc
-from src.api.models import db, Category, Product, User
+from src.api.models import db, Category, Product, User, Size
 import re
 
 class APIException(Exception):
@@ -111,4 +111,38 @@ def update_product_by_id(id, request_body):
 def check_is_admin_by_user_id(user_id):
     user = User.query.get(user_id)
     if not user.is_admin:
-        raise APIException(message='Must be admin to modify a product', status_code=401)
+        raise APIException(message='Route only for admin users', status_code=401)
+    
+def update_category_by_id(id, request_body):
+    category = Category.query.get(id)
+    if category is None:
+        raise APIException(message='Category not found', status_code=404)
+
+    for key in category.__dict__.keys():
+        if key in request_body:
+            setattr(category, key, request_body[key])
+
+    try:
+        db.session.commit()
+    except exc.IntegrityError as e:
+        db.session.rollback()
+        message = generate_error_message(str(e.orig))
+        raise APIException(message=message, status_code=400)
+    return category
+
+def update_size_by_id(id, request_body):
+    size = Size.query.get(id)
+    if size is None:
+        raise APIException(message='Size not found', status_code=404)
+
+    for key in size.__dict__.keys():
+        if key in request_body:
+            setattr(size, key, request_body[key])
+
+    try:
+        db.session.commit()
+    except exc.IntegrityError as e:
+        db.session.rollback()
+        message = generate_error_message(str(e.orig))
+        raise APIException(message=message, status_code=400)
+    return size
