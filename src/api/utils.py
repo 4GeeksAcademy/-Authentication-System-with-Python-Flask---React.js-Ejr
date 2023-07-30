@@ -1,6 +1,6 @@
 from flask import jsonify, url_for
 from sqlalchemy import exc
-from src.api.models import db, Category, Product, User
+from src.api.models import db, Category, Product, User, Size
 import re
 
 class APIException(Exception):
@@ -129,3 +129,20 @@ def update_category_by_id(id, request_body):
         message = generate_error_message(str(e.orig))
         raise APIException(message=message, status_code=400)
     return category
+
+def update_size_by_id(id, request_body):
+    size = Size.query.get(id)
+    if size is None:
+        raise APIException(message='Size not found', status_code=404)
+
+    for key in size.__dict__.keys():
+        if key in request_body:
+            setattr(size, key, request_body[key])
+
+    try:
+        db.session.commit()
+    except exc.IntegrityError as e:
+        db.session.rollback()
+        message = generate_error_message(str(e.orig))
+        raise APIException(message=message, status_code=400)
+    return size

@@ -2,9 +2,9 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint, Response
-from src.api.models import db, User, Product, Order , OrderItems, Category
+from src.api.models import db, User, Product, Order , OrderItems, Category, Size
 from src.api.utils import generate_sitemap, APIException
-from src.api.utils import save_new_product, update_product_by_id, update_category_by_id
+from src.api.utils import save_new_product, update_product_by_id, update_category_by_id,update_size_by_id
 from src.api.utils import check_is_admin_by_user_id
 import bcrypt
 from flask_jwt_extended import create_access_token
@@ -337,7 +337,6 @@ def create_category():
 
     # Checks is the category exists by the name or id
     category = Category.query.filter_by(name=request_body['name']).first()
-    print(category)
     if category is not None:
         raise APIException(message='Category already exists', status_code=409)
     category = Category.query.filter_by(id=request_body['id']).first()
@@ -371,3 +370,57 @@ def delete_category(category_id):
     db.session.commit()
     return Response(status=204)
 # End rutas para category
+
+# Rutas size
+@api.route('/sizes', methods=['GET'])
+def all_sizes():
+    sizes = Size.query.all()
+    return jsonify([s.serialize() for s in sizes]), 200
+
+@api.route('/sizes/<int:size_id>', methods=['GET'])
+def get_size_by_id(size_id):
+    size = Size.query.get(size_id)
+    if size is None:
+        raise APIException(message='Size not found', status_code=404)
+    return jsonify(size.serialize()), 200
+
+@api.route('/sizes', methods=['POST'])
+@jwt_required()
+def create_size():
+    request_body = request.get_json()
+    current_user_id = get_jwt_identity()
+    check_is_admin_by_user_id(current_user_id) 
+    if 'name' not in request_body:
+        raise APIException(message='Name is required', status_code=422)
+    
+    # Checks is the size exists by the name
+    size = Size.query.filter_by(name=request_body['name']).first()
+    if size is not None:
+        raise APIException(message='Size already exists', status_code=409)
+    
+    size = Size(name=request_body['name'])
+    db.session.add(size)
+    db.session.commit()
+    
+    return jsonify(size.serialize()), 200
+
+@api.route('/sizes/<int:size_id>', methods=['PUT'])
+@jwt_required()
+def update_size(size_id):
+    request_body = request.get_json()
+    current_user_id = get_jwt_identity()
+    check_is_admin_by_user_id(current_user_id) 
+    updated_character = update_size_by_id(size_id, request_body)
+    return jsonify(updated_character.serialize()), 200
+
+@api.route('/sizes/<int:size_id>', methods=['DELETE'])
+@jwt_required()
+def delete_size(size_id):
+    current_user_id = get_jwt_identity()
+    check_is_admin_by_user_id(current_user_id) 
+    size = Size.query.get(size_id)
+    if size is None:
+        raise APIException(message='Size not found', status_code=404)
+    db.session.delete(size)
+    db.session.commit()
+    return Response(status=204)
