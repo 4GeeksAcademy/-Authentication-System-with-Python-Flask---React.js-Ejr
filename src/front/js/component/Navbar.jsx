@@ -5,8 +5,7 @@ import { useNavigate } from 'react-router-dom'
 
 const Navbar = () => {
   let navigate = useNavigate()
-  const userString = localStorage.getItem('user')
-  const user = JSON.parse(userString);
+ 
 
   const { actions, store } = useContext(Context)
 
@@ -68,7 +67,7 @@ const Navbar = () => {
               ) : (
                 <>
                 <li className='nav-item text-white'>
-                   <span>WELCOME {user.firstName.toUpperCase()}</span>
+                   <span>WELCOME {store.user.firstName.toUpperCase()}</span>
                   </li>
                   <li className='nav-item'>
                     <span
