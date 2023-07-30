@@ -9,24 +9,43 @@ from api.utils import generate_sitemap, APIException
 api = Blueprint('api', __name__)
 
 
-@api.route('/hello', methods=['POST', 'GET'])
-def handle_hello():
+# @api.route('/hello', methods=['POST', 'GET'])
+# def handle_hello():
 
-    response_body = {
-        "message": "Hello! I'm a message that came from the backend, check the network tab on the google inspector and you will see the GET request"
-    }
+#     response_body = {
+#         "message": "Hello! I'm a message that came from the backend, check the network tab on the google inspector and you will see the GET request"
+#     }
 
-    return jsonify(response_body), 200
+#     return jsonify(response_body), 200
 
 
-@api.route('/user', methods=['POST'])
+@api.route('/signup', methods=['POST'])
 def create_user():
+    if not request.is_json:
+        return jsonify({"msg": "Missing JSON in request"}), 400
 
-    response_body = {
-        "message": "Hello! I'm a message that came from the backend, check the network tab on the google inspector and you will see the POST request"
-    }
+    name = request.json.get('name', None)
+    email = request.json.get('email', None)
+    password = request.json.get('password', None)
+    confirm_password = request.json.get('confirm_password', None)
 
-    return jsonify(response_body), 200
+    if not name or not email or not password or not confirm_password:
+        return jsonify({"msg": "Missing name, email or password or confirm_password"}), 400
+
+    if password != confirm_password:
+        return jsonify({"msg": "Password and confirm_password do not match"}), 400
+
+    user = User.query.filter_by(email=email).first()
+    if user:
+        return jsonify({"msg": "User already exists"}), 400
+
+    new_user = User(name=name, email=email)
+    new_user.set_password(password)
+    db.session.add(new_user)
+    db.session.commit()
+
+    return jsonify({"msg": "User created", "id": new_user.id}), 201
+
 
 @api.route('/login', methods=['POST'])
 def login():
