@@ -9,6 +9,8 @@ import Details from './views/Details.jsx'
 import Cart from './views/Cart.jsx'
 import Settings from './views/Settings.jsx'
 import Admin from './views/Admin.jsx'
+import Create from './views/Create.jsx'
+
 // import Navbar from "./component/Navbar.jsx";
 import Footer from './component/Footer.jsx'
 
@@ -36,7 +38,7 @@ const Layout = () => {
             <Route path='/settings' element={<Settings />} />
             <Route path='/cart' element={<Cart />} />
             <Route path='/admin' element={<Admin />} />
-
+            <Route path='/create' element={<Create />} />
             <Route path='*' element={<h1>Not found!</h1>} />
           </Routes>
           <Footer />

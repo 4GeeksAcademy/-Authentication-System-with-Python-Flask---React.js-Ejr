@@ -62,3 +62,28 @@ export async function validateToken(token) {
   const user = await makeRequest('/validate-token', 'POST', null, token)
   return user
 }
+
+export async function createProduct(
+      name,
+      price,
+      description,
+      color,
+      type,
+      category_id,
+      // sizes,
+      imageUrl,
+      token
+) {
+  const response = await makeRequest('/products', 'POST', {
+    name: name,
+    price: price,
+    description: description,
+    color: color,
+    type: type,
+    category_id: category_id,
+    // sizes: sizes,
+    imageUrl: imageUrl,
+  } , token)
+
+  return response
+}

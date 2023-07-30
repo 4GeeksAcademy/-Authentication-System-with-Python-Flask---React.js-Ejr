@@ -297,8 +297,8 @@ def update_product(product_id):
     request_body = request.get_json()
     current_user_id = get_jwt_identity()
     check_is_admin_by_user_id(current_user_id) 
-    updated_character = update_product_by_id(product_id, request_body)
-    return jsonify(updated_character.serialize()), 200
+    updated_product = update_product_by_id(product_id, request_body)
+    return jsonify(updated_product.serialize()), 200
 
 @api.route('/products/<int:product_id>', methods=['DELETE'])
 @jwt_required()
