@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
-import "../../styles/SingIn.css";
+import { Link } from 'react-router-dom';
+import "../../styles/SignIn.css";
+import Moviestar from "../../img/Moviestar.png";
+
 
 const SignIn = () => {
     const [user, setUser] = useState({
@@ -22,7 +25,9 @@ const SignIn = () => {
 
     return (
         <div>
-            <h1>Movie Stars</h1>
+            <div>
+                <img id="mo" src={Moviestar} />
+            </div>
             <form onSubmit={handleSubmit}>
                 <label>
                     <input type="text" name="name" onChange={handleChange} value={user.name} placeholder="Nombre de usuario" required />
@@ -37,7 +42,7 @@ const SignIn = () => {
                     <input type="password" name="password" onChange={handleChange} value={user.password} placeholder="Confirmar Contraseña" required />
                 </label>
                 <button type="submit">Registrate</button>
-                <p>¿Ya tienes una cuenta?, Login</p>
+                <p>¿Ya tienes una cuenta?, <Link to="/login" className="login-link">Login</Link></p>
             </form>
         </div>
     );
