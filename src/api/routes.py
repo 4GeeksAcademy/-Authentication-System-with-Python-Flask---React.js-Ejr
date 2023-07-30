@@ -304,6 +304,9 @@ def delete_product(product_id):
     current_user_id = get_jwt_identity()
     check_is_admin_by_user_id(current_user_id) 
     product = Product.query.get(product_id)
+    if len(product.sizes_quantity) > 0:
+        for size in product.sizes_quantity:
+            db.session.delete(size)
     if product is None:
         raise APIException(message='Product not found', status_code=404)
     db.session.delete(product)
