@@ -16,7 +16,7 @@ const FormReview = () => {
       actions.create_review(formData);
       setFormData({ title: "", comment_text: "" });
     } else {
-      alert("Please enter a title with at least two characters and a comment with at least ten characters.");
+      alert("Ingrese un título con al menos dos caracteres y un comentario con al menos diez caracteres.");
     }
   };
 
@@ -24,7 +24,7 @@ const FormReview = () => {
     <div className="div-form-review-content">
       <form className="form-review-content" onSubmit={handleSubmit}>
         <div className="title-form-review">
-          <label htmlFor="title">Titutlo:</label>
+          <label htmlFor="title">Títutlo:</label>
           <input
             type="text"
             id="title"
