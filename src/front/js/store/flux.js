@@ -61,6 +61,35 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
 
+      addNewProduct: async (
+        name,
+        price,
+        description,
+        color,
+        type,
+        category_id,
+        // sizes,
+        imageUrl
+      ) => {
+        const response = await api.createProduct(
+          name,
+        price,
+        description,
+        color,
+        type,
+        category_id,
+        // sizes,
+        imageUrl,
+        getStore().token
+        )
+        console.log(response)
+        console.log('Succefully created product')
+        return response
+      },
+
+			
+      
+
     },
   }
 }

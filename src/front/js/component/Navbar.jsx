@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom'
 
 const Navbar = () => {
   let navigate = useNavigate()
+ 
 
   const { actions, store } = useContext(Context)
 
@@ -27,9 +28,9 @@ const Navbar = () => {
             {' '}
             <i className='fa-solid fa-cart-shopping' />
           </Link>
-          <div className='nav-item dropdown dropstart'>
+          <div className='nav-item dropdown dropstart '>
             <a
-              className='nav-link dropdown-toggle text-white'
+              className='nav-link  text-white'
               href='#'
               id='favoritesDropdown'
               role='button'
@@ -38,24 +39,9 @@ const Navbar = () => {
             >
               <i className='fa-sharp text-white fa-solid fa-heart'></i>
             </a>
-            <ul className='dropdown-menu' aria-labelledby='favoritesDropdown'>
+            <ul className='dropdown-menu bg-black text-white' aria-labelledby='favoritesDropdown'>
               <li>
-                <a className='dropdown-item' href='#'>
-                  Action
-                </a>
-              </li>
-              <li>
-                <a className='dropdown-item' href='#'>
-                  Another action
-                </a>
-              </li>
-              <li>
-                <hr className='dropdown-divider' />
-              </li>
-              <li>
-                <a className='dropdown-item' href='#'>
-                  Something else here
-                </a>
+                <span>FAVORITES</span>
               </li>
             </ul>
           </div>
@@ -80,6 +66,9 @@ const Navbar = () => {
                 </>
               ) : (
                 <>
+                <li className='nav-item text-white'>
+                   <span>WELCOME {store.user.firstName.toUpperCase()}</span>
+                  </li>
                   <li className='nav-item'>
                     <span
                       className='nav-link text-white'
@@ -97,12 +86,18 @@ const Navbar = () => {
                 </>
               )}
 
-              {store.user.isAdmin && (
+              {store.user.isAdmin && (<>
                 <li className='nav-item'>
                   <Link className='nav-link text-white' to='/admin'>
                     EDIT USERS
                   </Link>
                 </li>
+                <li className='nav-item'>
+                  <Link className='nav-link text-white' to='/create'>
+                    CREATE
+                  </Link>
+                </li>
+                </>
               )}
             </ul>
           </div>

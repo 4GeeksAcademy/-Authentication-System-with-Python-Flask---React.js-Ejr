@@ -36,7 +36,7 @@ export const Login = () => {
       <h1 className='mx-auto p-5 text-center' style={{ fontSize: '3rem' }}>
         Welcome Back!
       </h1>
-      <form className='card w-75 mx-auto mb-5' onSubmit={handleSubmit}>
+      <form className='card w-75 mx-auto mb-5 text-white bg-black' onSubmit={handleSubmit}>
         <div className='m-3'>
           <label htmlFor='exampleInputEmail1' className='form-label'>
             <h5>Email address</h5>
