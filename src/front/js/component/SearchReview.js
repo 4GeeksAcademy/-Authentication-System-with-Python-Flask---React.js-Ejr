@@ -21,6 +21,7 @@ const SearchReview = ({ handleSearch }) => {
       <div className="filter-items">
         <div className="filter-search filter-item">
           <input
+          className="review-input-search"
             type="text"
             id="searchQuery"
             placeholder="Busca lo que quieras.."

@@ -1,5 +1,50 @@
-.homeOfferCard {
-    display: flex;
-    height: 16rem;
-    width: 20rem;
+/* .homeOfferCard {
+  display: flex;
+  height: 16rem;
+  width: 20rem;
+  flex-wrap: nowrap !important;
+} */
+
+.home-reviews {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  width: 85%;
+  margin: 0 auto;
+  margin-top: 30px;
+  overflow: hidden;
+  overflow-x: scroll;
+}
+
+.card-home-review {
+  height: 16rem !important;
+  width: 20rem !important;
+  margin: 0 15px 10px;
+}
+
+/* ===== Scrollbar CSS ===== */
+/* Firefox */
+* {
+  scrollbar-width: 10px;
+  scrollbar-color: var(--color-1);
+}
+
+/* Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 10px;
+}
+
+*::-webkit-scrollbar-track {
+  background: var(--color-3);
+  width: 10px;
+  height: 10px;
+  border-radius: 10px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: var(--color-1);
+  border-radius: 10px;
+  border: 3px none var(--color-5);
+  height: 10px;
+  width: 10px;
 }

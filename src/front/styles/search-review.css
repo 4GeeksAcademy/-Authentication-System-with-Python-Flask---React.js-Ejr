@@ -26,3 +26,11 @@
   color: var(--color-1);
   background: #fff;
 }
+
+.review-input-search {
+  padding-left: 6px;
+  transition: all .5s;
+}
+.review-input-search:hover {
+  background: #ddd;
+}
