@@ -71,7 +71,7 @@ class Product(db.Model):
     price = db.Column(db.Float, nullable=False)
     description = db.Column(db.String(1000))
     color = db.Column(db.String(50))
-    image_url = db.Column(db.String(200))
+    image_url = db.Column(db.String(350))
     type = db.Column(db.String(100))
     category_id = db.Column(db.Integer, db.ForeignKey('categories.id'))
 

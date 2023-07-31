@@ -1,36 +1,31 @@
 import React, { useContext, useEffect, useState } from "react";
 // import { useNavigate } from "react-router-dom";
 import Navbar from "../component/Navbar.jsx";
-import Footwear from "./Footwear.jsx"
-import Clothes from "./Clothes.jsx"
-import Accesories from "./Accesories.jsx"
-
-
 import { Context } from '../store/appContext.js';
 import { Link } from 'react-router-dom'
 
-
-
-
 const Home = () => {
+	const { actions , store } = useContext(Context)
 
 	// const { actions, store } = useContext(Context)
 	// console.log(store.user)
+	
 
 	const cardImageStyle = {
-		height: "600px", // Ajusta la altura según tus preferencias
-		width: "600px",
-		objectFit: "cover", // Asegura que la imagen cubra todo el espacio disponible
-		borderTopLeftRadius: "20px", // Bordes redondeados en la esquina superior izquierda
-		borderTopRightRadius: "20px", // Bordes redondeados en la esquina superior derecha
+		height: "400px", 
+		objectFit: "cover", 
+		borderTopLeftRadius: "20px", 
+		borderTopRightRadius: "20px", 
 		padding: "10px",
 	};
+
+	
 
 	return (
 		<div>
 			<Navbar />
 
-			<div className="card-group">
+			<div className="container-fluid card-group">
 				<div className="card">
 					<Link className='clothesImage' to='/clothes'>
 						<img src="https://images.unsplash.com/photo-1564859228273-274232fdb516?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDl8fHxlbnwwfHx8fHw%3D&auto=format&fit=crop&w=500&q=60"
