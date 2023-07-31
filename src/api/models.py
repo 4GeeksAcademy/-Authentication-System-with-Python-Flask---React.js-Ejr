@@ -1,6 +1,8 @@
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import Column, ForeignKey, Integer, String
 from sqlalchemy.orm import relationship
+
+
 db = SQLAlchemy()
 # SAVED CARS BY USER WITH RELATED COLUMNS
 
@@ -51,7 +53,8 @@ class Car(db.Model):
     car_type = db.Column(db.String(30), nullable=False)
     engine = db.Column(db.String(100), nullable=True)
     transmission = db.Column(db.String(100), nullable=True)
-    images = db.relationship('Car_image')
+    images = db.relationship('Car_image', back_populates='car')
+    price = db.Column(db.String(50))
     def __repr__(self):
         return f'<Car {self.id}>'
     def serialize(self):
@@ -63,7 +66,8 @@ class Car(db.Model):
             "car_type": self.car_type,
             "engine": self.engine,
             "transmission": self.transmission,
-            "images": list(map(lambda x: x.serialize(), self.images))
+            "images": list(map(lambda x: x.serialize(), self.images)),
+            "price": self.price
         }
     
     
@@ -72,7 +76,7 @@ class Car_image(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     image_url = db.Column(db.String(250), nullable=False)
     car_id = db.Column(db.Integer, ForeignKey('car.id'), nullable=False)
-    car = db.relationship('Car', backref='car_image_url', foreign_keys=[car_id], overlaps='images' )
+    car = db.relationship('Car', back_populates='images', foreign_keys=[car_id], overlaps='images' )
     def __repr__(self):
         return f'<Image {self.id}>'
     def serialize(self):
