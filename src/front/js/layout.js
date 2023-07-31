@@ -5,11 +5,12 @@ import { BackendURL } from "./component/backendURL";
 
 import { Home } from "./pages/home";
 import { Demo } from "./pages/demo";
+import { LandingPage } from "./pages/landingPage";
 import { Single } from "./pages/single";
 import { Private} from "./pages/private"
 import injectContext from "./store/appContext";
 
-import { Navbar } from "./component/navbar";
+import { MyNavbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 
 import Login from "./pages/Login";
@@ -28,11 +29,16 @@ const Layout = () => {
         <div>
             <BrowserRouter basename={basename}>
                 <ScrollToTop>
-                    <Navbar />
+                    <MyNavbar />
                     <Routes>
 
-                        <Route element={<Home />} path="/" />
+                        <Route element={<LandingPage />} path="/" />
+                        <Route element={<Home />} path="/a" />
+
+
+                        
                         <Route element={<Register />}path="/register" />
+
 
                         <Route element={<Demo />} path="/demo" />
                         <Route element={<Single />} path="/single/:theid" /> */}
