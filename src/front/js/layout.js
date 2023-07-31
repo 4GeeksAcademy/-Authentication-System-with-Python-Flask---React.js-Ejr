@@ -6,9 +6,9 @@ import { BackendURL } from "./component/backendURL";
 import { Home } from "./pages/home";
 import Login from "./pages/Login";
 import AboutCar from "./pages/aboutcar";
-import UserView from "./pages/userview"
 import CarViews from "./pages/carviews";
 import CreateAccount from "./pages/create-account";
+import UserPage from "./pages/userpage";
 import injectContext from "./store/appContext";
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
@@ -30,9 +30,9 @@ const Layout = () => {
                 <ScrollToTop>
                     <Navbar />
                     <Routes>
+                        <Route element={<UserPage />} path="userpage" />
                         <Route element={<Home />} path="/" />
                         <Route element={<Login />} path="/Login" />
-                        <Route element={<UserView />} path="/usermain"/>
                         <Route element={<AboutCar />} path="/about/:theid"/>
                         <Route element={<CarViews />} path="/catalog" />
                         <Route element={<CarComparison/>} path="/compare"/>
