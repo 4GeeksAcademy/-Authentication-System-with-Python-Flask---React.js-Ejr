@@ -5,7 +5,7 @@ import Styles from "../views/styles/footer.css"
 const Footer = () => {
     return (
         <div>
-            <footer className="row  my-5 border-top bg-black text-light p-2">
+            <footer style={{"--bs-gutter-x":" 0"}} className="row  my-5 border-top bg-black text-light p-2">
                 <div className="col">
                     <ul className="nav flex-row listaFooter justify-content-center">
                         <li className="nav-item mb-2">

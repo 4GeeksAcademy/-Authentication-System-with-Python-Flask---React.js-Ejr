@@ -1,10 +1,14 @@
 import * as api from '../utils/apiCalls.js'
+const API_URL = process.env.BACKEND_URL + 'api'
 
 const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
       user: {},
       token: undefined,
+      clothes:[],
+      shoes:[],
+      accessories:[]
     },
     actions: {
       login: async (email, password) => {
@@ -86,6 +90,73 @@ const getState = ({ getStore, getActions, setStore }) => {
         console.log('Succefully created product')
         return response
       },
+
+      getClothes: async () => {
+        try {
+          const store = getStore();
+          const result = await fetch(API_URL + "/products/clothing");
+          const data = await result.json();
+      
+          if (Array.isArray(data)) {
+            setStore({clothes: data});
+            console.log("Prendas cargadas");     
+            console.log(store.clothes);
+            
+          } else {
+            console.log("El resultado de la API no es un array válido:", data);
+          }
+        } catch (error) {
+          console.log("No se pudo recuperar lista prendas", error);
+        }
+        
+      
+			},
+      getShoes: async () => {
+        try {
+          const store = getStore();
+          const result = await fetch(API_URL + "/products/shoes");
+          const data = await result.json();
+      
+          if (Array.isArray(data)) {
+            setStore({shoes: data});
+            console.log("shoes uploaded");     
+            console.log(store.shoes);
+            
+          } else {
+            console.log("El resultado de la API no es un array válido:", data);
+          }
+        } catch (error) {
+          console.log("No se pudo recuperar lista prendas", error);
+        }
+        
+      
+			},
+      getAccessories: async () => {
+        try {
+          const store = getStore();
+          const result = await fetch(API_URL + "/products/accessories");
+          const data = await result.json();
+      
+          if (Array.isArray(data)) {
+            setStore({accessories: data});
+            console.log("accesorios cargados");     
+            console.log(store.accessories);
+            
+          } else {
+            console.log("El resultado de la API no es un array válido:", data);
+          }
+        } catch (error) {
+          console.log("No se pudo recuperar lista prendas", error);
+        }
+        
+      
+			},
+
+			
+					
+				
+
+			
 
 			
       
