@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Context } from "../store/appContext";
-import rigoImageUrl from "../../img/rigo-baby.jpg";
+import Moviestar from "../../img/Moviestar.png";
 import "../../styles/home.css";
 import "../../styles/SignIn.css";
 import SignIn from './SignIn.js';
