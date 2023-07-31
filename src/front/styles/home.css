@@ -16,12 +16,12 @@
     color: black;
     padding: 8px 78px;
     font-size: 16px;
-    border-radius: 15px;
+    border-radius: 20px;
 
 }
 
 #mo{
-    width: 200px;
+    width: 400px;
     height: 200px;
 }
 
@@ -32,7 +32,7 @@
     font-size: 18px;
     border: none; 
     cursor: pointer; 
-    border-radius: 15px;
+    border-radius: 20px;
 }
 
 #ps{
