@@ -83,7 +83,7 @@ def login_user():
 
      if user is None:
           return jsonify({"Error": "Wrong email or password"}), 401
-     
+
      token = create_access_token(identity=user.id)
      return jsonify({"Response": "Successfully logged in", "token": token, "email": user.email}), 200
 
@@ -109,7 +109,7 @@ def show_saved_cars():
 @jwt_required()
 def add_favorite():
     current_user_id = get_jwt_identity()
-    
+
     user = User.query.get(current_user_id)
     car_id = request.json.get("car_id")
 
@@ -131,7 +131,7 @@ def add_favorite():
 
 #      if user is None:
 #           return jsonify({"Error": "Wrong email or password"}), 401
-     
+
 #      token = create_access_token(identity=user.id)
 #      return jsonify({"Response": "Successfully logged in", "token": token, "email": user.email}), 200
 
@@ -157,18 +157,18 @@ def add_favorite():
 # @jwt_required()
 # def add_favorite():
 #     current_user_id = get_jwt_identity()
-    
+
 #     user = User.query.get(current_user_id)
 #     car_id = request.json.get("car_id")
 
 #     car = Car.query.get(car_id)
 #     if not car:
 #         return jsonify({"Error": "Car does not exist"}), 404
-    
+
 #     if user.saved:
 #         for saved_car in user.saved:
 #             if saved_car.car_id == car.id:
-#                 return jsonify({"Message": "Car already saved"}), 409    
+#                 return jsonify({"Message": "Car already saved"}), 409
 #     saved = Saved(user_id=user.id, car_id=car_id)
 #     db.session.add(saved)
 #     db.session.commit()

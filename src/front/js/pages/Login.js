@@ -28,6 +28,7 @@ const Login = () => {
       setEmail("");
       setPassword("");
       navigate("/userpage");
+      actions.setLoggedIn()
     } catch (error) {
       console.log("Error during login", error);
 
