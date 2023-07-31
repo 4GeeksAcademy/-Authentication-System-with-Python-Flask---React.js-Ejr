@@ -1,0 +1,33 @@
+.homeOfferCard {
+  display: flex;
+  height: 16rem;
+  width: 20rem;
+  flex-wrap: nowrap !important;
+} */
+
+/* ===== Scrollbar CSS ===== */
+/* Firefox */
+* {
+  scrollbar-width: 10px;
+  scrollbar-color: var(--color-1);
+}
+
+/* Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 10px;
+}
+
+*::-webkit-scrollbar-track {
+  background: var(--color-3);
+  width: 10px;
+  height: 10px;
+  border-radius: 10px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: var(--color-1);
+  border-radius: 10px;
+  border: 3px none var(--color-5);
+  height: 10px;
+  width: 10px;
+}

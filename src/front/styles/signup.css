@@ -1,0 +1,12 @@
+.form-container {
+  margin-top: 50px !important;
+  width: 50%;
+  margin: auto;
+  border: 5px double var(--color-1);
+  background-color: var(--color-1);
+}
+
+.btn-signup {
+  text-align: center;
+  background-color: var(--color-3);
+}

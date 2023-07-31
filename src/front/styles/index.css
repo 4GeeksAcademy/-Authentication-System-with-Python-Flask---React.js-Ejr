@@ -1,3 +1,19 @@
 /* 
     General Styles used on every website (Don't Repeat Yourself)
 */
+
+@import "./home.css";
+@import "./navbar.css";
+@import "./signup.css";
+@import "./pub-slide.css";
+@import './contact.css';
+@import './businessOfferCard.css';
+@import './filter-menu.css';
+@import './homeOfferCard.css';
+@import './forgotPassword.css'; 
+@import './search-review.css';
+@import './form-review.css';
+@import './footer.css';
+@import './homeReviewCard.css';
+@import '/src/front/styles/card-review.css'
+

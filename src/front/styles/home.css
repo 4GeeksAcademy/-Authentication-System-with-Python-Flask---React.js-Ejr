@@ -5,3 +5,21 @@
     one more css for each page that will contain the selected used 
     on that page only (the ones not reused in other pages).
 */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --color-1: #f1445b;
+  --color-2: #65734b;
+  --color-3: #94a453;
+  --color-4: #d9c3b1;
+  --color-5: #f03625;
+}
+
+body {
+  background-color: var(--color-4);
+  height: 100vh;
+}
