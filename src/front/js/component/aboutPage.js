@@ -4,19 +4,19 @@ import React from 'react';
 const AboutPage = () => {
   return (
     <>
-      
+
       <div className="bg-light">
         <div className="container py-5">
           <div className="row h-100 align-items-center py-5">
             <div className="col-lg-6">
               <h1 className="display-4">About us page</h1>
               <p className="lead text-muted mb-0">
-                Create a minimal about us page using Bootstrap 4.
+                Find and compare cars you like! It makes it easier to purchase your next car with ease.
               </p>
               <p className="lead text-muted">
                 Snippet by{' '}
                 <a href="https://bootstrapious.com/snippets" className="text-muted">
-                  <u>Bootstrapious</u>
+                  <u>CarfindersUSA</u>
                 </a>
               </p>
             </div>
@@ -47,7 +47,7 @@ const AboutPage = () => {
             </div>
             <div className="col-lg-5 px-5 mx-auto order-1 order-lg-2">
               <img
-                src="https://bootstrapious.com/i/snippets/sn-about/img-1.jpg"
+                src="https://www.google.com/imgres?imgurl=https%3A%2F%2Fwww.motortrend.com%2Fuploads%2F2022%2F03%2F2022-Honda-Civic-Touring-vs-2022-Hyundai-Elantra-Limited-vs-2022-Kia-Forte-GT-vs-2022-Mazda-Mazda3-Sedan-AWD-Turbo-vs-2022-Nissan-Sentra-SR-vs-2022-Volkswagen-Jetta-SEL-19.jpg&tbnid=4mR_3Ysv7S76uM&vet=12ahUKEwjY-rHfgbqAAxVklIkEHS-7CHUQMygiegUIARCuAw..i&imgrefurl=https%3A%2F%2Fwww.motortrend.com%2Ffeatures%2Ftop-10-cheapest-new-cars%2F&docid=Pqjhb2hfX3bp7M&w=1920&h=1080&q=cars%20pictures&ved=2ahUKEwjY-rHfgbqAAxVklIkEHS-7CHUQMygiegUIARCuAw"
                 alt=""
                 className="img-fluid mb-4 mb-lg-0"
               />
@@ -247,6 +247,7 @@ const AboutPage = () => {
         </div>
       </footer>
     </>
+
   );
 };
 
