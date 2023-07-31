@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { Context } from "../store/appContext";
 import UpdateProfileUser from "../component/UpdateProfileUser.js";
 
@@ -17,7 +17,7 @@ const UserPrivate = () => {
         console.log("Failed to update user profile");
       }
     } catch (error) {
-      console.log("Error update UserPrivate:", error);
+      console.log("Error updating User private:", error);
     }
   };
 

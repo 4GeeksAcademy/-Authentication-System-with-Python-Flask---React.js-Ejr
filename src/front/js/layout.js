@@ -12,8 +12,7 @@ import UserPrivate  from "./pages/UserPrivate.jsx";
 import BusinessUserPrivate  from "./pages/BusinessUserPrivate.jsx";
 import Business_offers  from "./pages/Business_offers.jsx";
 import Trips  from "./pages/Trips.jsx";
-import SignUp from "./pages/SignUp.jsx";
-import SignUpBusiness from "./pages/SignUpBusiness"
+import SignupGeneralView from "./pages/SignupGeneralView.jsx";
 import Reviews from "./pages/Reviews";
 
 import injectContext from "./store/appContext";
@@ -41,8 +40,7 @@ const Layout = () => {
                         <Route element={<Home />} path="/" />
                         <Route element={<Demo />} path="/demo" />
                         <Route element={<Single />} path="/single/:theid" />
-                        <Route element={<SignUp />} path="/signup" />
-                        <Route element={<SignUpBusiness />} path='/signup-business'/>
+                        <Route element={<SignupGeneralView />} path="/signup" />
                         <Route element={<LogIn />} path="/login" />
                         <Route element={<ForgotPassword />} path="/forgot_password" />
                         <Route element={<ContactForm />} path="/contact" />

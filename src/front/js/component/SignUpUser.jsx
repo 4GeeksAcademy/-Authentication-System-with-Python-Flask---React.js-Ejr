@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import { Context } from "../store/appContext";
 import { useNavigate } from "react-router-dom";
 
-const SignUp = () => {
+const SignUpUser = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
@@ -81,4 +81,4 @@ const SignUp = () => {
   )
 }
 
-export default SignUp
+export default SignUpUser
