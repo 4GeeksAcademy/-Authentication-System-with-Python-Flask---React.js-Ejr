@@ -1,26 +1,9 @@
-/* .homeOfferCard {
+.homeOfferCard {
   display: flex;
   height: 16rem;
   width: 20rem;
   flex-wrap: nowrap !important;
 } */
-
-.home-reviews {
-  display: flex;
-  flex-wrap: nowrap;
-  justify-content: space-between;
-  width: 85%;
-  margin: 0 auto;
-  margin-top: 30px;
-  overflow: hidden;
-  overflow-x: scroll;
-}
-
-.card-home-review {
-  height: 16rem !important;
-  width: 20rem !important;
-  margin: 0 15px 10px;
-}
 
 /* ===== Scrollbar CSS ===== */
 /* Firefox */

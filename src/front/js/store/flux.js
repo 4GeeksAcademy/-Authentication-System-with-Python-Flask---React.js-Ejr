@@ -1,6 +1,6 @@
 const getState = ({ getStore, getActions, setStore }) => {
   const API_URL =
-    "https://valentinfrar-super-duper-space-dollop-qrqp6777vpj29pxj-3001.preview.app.github.dev";
+    "https://albertgescribano-obscure-train-j6x45w44rqqfp66v-3001.preview.app.github.dev";
 
   return {
     store: {
@@ -222,6 +222,47 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.log(err);
         }
       },
+
+
+      // Update business_user profile information
+
+      updateBusinessUserProfile: async (userId, updatedData) => {
+        try {
+          const token = localStorage.getItem("myToken");
+          if (!token) {
+            console.log("Token not found");
+            return false;
+          }
+
+          const response = await fetch(`/api/business_user/${userId}`, {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify(updatedData),
+          });
+
+          if (response.ok) {
+            const updatedBusinessUser = await response.json();
+
+            setStore((prevStore) => ({
+              ...prevStore,
+              business_user: updatedBusinessUser,
+            }));
+
+            return true;
+          } else {
+            console.log("Failed to update user profile");
+            return false;
+          }
+        } catch (error) {
+          console.log("Fetch error after flux:", error);
+          return false;
+        }
+      },
+
+
       // Fonction pour modifier le profil utilisateur
       updateUserProfile: async (userId, updatedData) => {
         try {
