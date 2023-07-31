@@ -4,7 +4,7 @@ import "../../styles/SignIn.css";
 import Moviestar from "../../img/Moviestar.png";
 
 
-const SignIn = () => {
+export const SignIn = () => {
     const [user, setUser] = useState({
         name: '',
         email: '',
@@ -25,7 +25,7 @@ const SignIn = () => {
     }
 
     return (
-        <div>
+        <div className="text-center mt-5">
             <div>
                 <img id="mo" src={Moviestar} />
             </div>
@@ -49,4 +49,4 @@ const SignIn = () => {
     );
 }
 
-export default SignIn;
+// export default SignIn;
