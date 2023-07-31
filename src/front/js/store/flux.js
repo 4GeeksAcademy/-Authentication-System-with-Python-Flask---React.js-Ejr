@@ -11,30 +11,30 @@ const getState = ({ getStore, getActions, setStore }) => {
         const data = await api.login(email, password)
         setStore({ user: data.user, token: data.token })
         const obj = { ...data.user }
-        obj.isAdmin = false
-        delete obj.isAdmin
+        obj.is_admin = false
+        delete obj.is_admin
         localStorage.setItem('user', JSON.stringify(obj))
-        if (!data.user.isAdmin) localStorage.setItem('myToken', data.token)
+        if (!data.user.is_admin) localStorage.setItem('myToken', data.token)
       },
       signup: async (
-        userEmail,
-        userPassword,
-        firstName,
-        lastName,
+        email,
+        password,
+        first_name,
+        last_name,
         phone,
         location,
         address,
-        paymentMethod
+        payment_method
       ) => {
         const response = await api.signup(
-          userEmail,
-          userPassword,
-          firstName,
-          lastName,
+          email,
+          password,
+          first_name,
+          last_name,
           phone,
           location,
           address,
-          paymentMethod
+          payment_method
         )
         console.log(response)
         console.log('Succefully created user')
@@ -60,6 +60,35 @@ const getState = ({ getStore, getActions, setStore }) => {
           setStore({ user: {}, token: undefined })
         }
       },
+
+      addNewProduct: async (
+        name,
+        price,
+        description,
+        color,
+        type,
+        category_id,
+        // sizes,
+        image_url
+      ) => {
+        const response = await api.createProduct(
+          name,
+        price,
+        description,
+        color,
+        type,
+        category_id,
+        // sizes,
+        image_url,
+        getStore().token
+        )
+        console.log(response)
+        console.log('Succefully created product')
+        return response
+      },
+
+			
+      
 
     },
   }

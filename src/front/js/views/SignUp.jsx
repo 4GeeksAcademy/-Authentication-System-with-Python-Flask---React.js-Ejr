@@ -47,11 +47,11 @@ const Signup = () => {
   }
 
   return (
-    <div className=''>
-      <h1 className='mx-auto text-center' style={{ fontSize: '3rem' }}>
+    <div className='p-5 '>
+      <h1 className='mx-auto text-center p-3' style={{ fontSize: '3rem' }}>
         Welcome to Vanguard Vesture!
       </h1>
-      <form className='card w-50 mx-auto mb-5' onSubmit={handleSubmit}>
+      <form className='card w-50 mx-auto mb-5 bg-black text-white' onSubmit={handleSubmit}>
         <div className='m-3 '>
           <label htmlFor='exampleInputEmail1' className='form-label'>
             <h5>Email address</h5>
@@ -129,13 +129,13 @@ const Signup = () => {
             id='address'
           />
         </div>
-        <div className='m-3 '>
-          <label htmlFor='exampleInputEmail1' className='form-label'>
+        <div className='m-3 row '>
+          <label htmlFor='exampleInputEmail1' className='form-label col'>
             <h5>Your Favorite Payment Methond</h5>
           </label>
           <label>
             <input
-              className='m-3'
+              className=' m-3'
               type='radio'
               name='metodo_pago'
               value='VISA'
@@ -146,7 +146,7 @@ const Signup = () => {
           </label>
           <label>
             <input
-              className='m-3'
+              className=' m-3'
               type='radio'
               name='metodo_pago'
               value='MASTERCARD'

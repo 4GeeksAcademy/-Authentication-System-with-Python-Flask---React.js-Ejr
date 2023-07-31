@@ -1,19 +1,21 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import Navbar from "../component/Navbar.jsx";
 import Footwear from "./Footwear.jsx"
 import Clothes from "./Clothes.jsx"
 import Accesories from "./Accesories.jsx"
+
 
 import { Context } from '../store/appContext.js';
 import { Link } from 'react-router-dom'
 
 
 
+
 const Home = () => {
 
-	const { actions, store } = useContext(Context)
-	console.log(store.user)
+	// const { actions, store } = useContext(Context)
+	// console.log(store.user)
 
 	const cardImageStyle = {
 		height: "600px", // Ajusta la altura según tus preferencias
@@ -27,6 +29,7 @@ const Home = () => {
 	return (
 		<div>
 			<Navbar />
+
 			<div className="card-group">
 				<div className="card">
 					<Link className='clothesImage' to='/clothes'>

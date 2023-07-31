@@ -35,24 +35,24 @@ export async function login(email, password) {
 }
 
 export async function signup(
-  userEmail,
-  userPassword,
-  firstName,
-  lastName,
+  email,
+  password,
+  first_name,
+  last_name,
   phone,
   location,
   address,
-  paymentMethod
+  payment_method
 ) {
   const response = await makeRequest('/signup', 'POST', {
-    email: userEmail,
-    password: userPassword,
-    first_name: firstName,
-    last_name: lastName,
+    email: email,
+    password: password,
+    first_name: first_name,
+    last_name: last_name,
     phone: phone,
     location: location,
     address: address,
-    payment_method: paymentMethod,
+    payment_method: payment_method,
   })
 
   return response
@@ -61,4 +61,29 @@ export async function signup(
 export async function validateToken(token) {
   const user = await makeRequest('/validate-token', 'POST', null, token)
   return user
+}
+
+export async function createProduct(
+      name,
+      price,
+      description,
+      color,
+      type,
+      category_id,
+      // sizes,
+      image_url,
+      token
+) {
+  const response = await makeRequest('/products', 'POST', {
+    name: name,
+    price: price,
+    description: description,
+    color: color,
+    type: type,
+    category_id: category_id,
+    // sizes: sizes,
+    image_url: image_url,
+  } , token)
+
+  return response
 }

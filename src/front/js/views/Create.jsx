@@ -1,10 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Navbar from '../component/Navbar.jsx'
+import NewProduct from "../component/NewProduct.jsx";
+
 
 import { Context } from '../store/appContext.js'
 
-const Admin = () => {
+const Create = () => {
   const { actions, store } = useContext(Context)
   let navigate = useNavigate()
 
@@ -14,9 +16,14 @@ const Admin = () => {
 
   return (
     <div>
-      <Navbar />
-      {store.token && store.user.is_admin ? (
-        <h1> Soy Admin</h1>
+      <Navbar
+      />
+      {store.token && store.user.is_admin ? (<>
+        
+
+          <NewProduct/>
+       
+      </>
       ) : (
         <>
           <h2>No puedes entrar</h2>
@@ -29,4 +36,4 @@ const Admin = () => {
   )
 }
 
-export default Admin
+export default Create
