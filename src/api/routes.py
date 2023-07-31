@@ -27,7 +27,7 @@ def recover_user():
     user_recovery_answer = request.json.get('recovery_answer', None)
     active_user = User.query.filter_by(email=user_email).first()
     user = User.query.filter_by(
-        email=user_email, recovery_question=user_recovery_question, recovery_answer=user_recovery_answer)
+        email=user_email, recovery_question=user_recovery_question, recovery_answer=user_recovery_answer) 
     if user is None:
         return jsonify({"Error": "No email or password found"}), 401
     db.session.query()
