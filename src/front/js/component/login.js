@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios'; 
-import './Login.css';
+// import './Login.css';
 
-const Login = () => {
+export const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [isLoggingIn, setIsLoggingIn] = useState(false);
@@ -68,7 +68,7 @@ const Login = () => {
   );
 };
 
-export default Login;
+// export default Login;
 
 
 
