@@ -4,10 +4,10 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, User, Car, Saved
 from api.utils import generate_sitemap, APIException
-import requests
 from flask_jwt_extended import jwt_required, get_jwt_identity, create_access_token, JWTManager
 from werkzeug.security import generate_password_hash, check_password_hash
 import datetime
+import requests
 
 
 
@@ -99,7 +99,7 @@ def create_token():
     # create a new token with the user id inside
     access_token = create_access_token(identity=user.id)
     return jsonify({ "token": access_token, "user_id": user.id })
-        
+
 
 # PRIVATE VIEW THAT USERS ARE GOING TO HAVE
 @api.route('/private', methods=['GET'])
@@ -109,10 +109,11 @@ def show_saved_cars():
         user = User.query.get(current_user_id)
         saved_cars = Saved.query.filter_by(user_id=current_user_id).all()
         response = {
+             'id': user.id,
              'user': user.first_name,
              'email': user.email,
              'phone_number': user.phone_number,
-             'saved_cars': [car.serialize() for car in saved_cars]
+             'saved': list(map(lambda x: x.serialize(), saved_cars))
         }
 
         return jsonify(response),200
@@ -122,23 +123,45 @@ def show_saved_cars():
 @jwt_required()
 def add_favorite():
     current_user_id = get_jwt_identity()
-    
+
     user = User.query.get(current_user_id)
     car_id = request.json.get("car_id")
 
     car = Car.query.get(car_id)
     if not car:
         return jsonify({"Error": "Car does not exist"}), 404
-    
+
     if user.saved:
         for saved_car in user.saved:
             if saved_car.car_id == car.id:
-                return jsonify({"Message": "Car already saved"}), 409    
+                return jsonify({"Message": "Car already saved"}), 409
     saved = Saved(user_id=user.id, car_id=car_id)
     db.session.add(saved)
     db.session.commit()
-
+    print("car ID", car_id)
     return jsonify({"Message": "Car successfully saved"}), 200
+
+# DELETE A FAVORITE
+@api.route('/delete_saved', methods=['DELETE'])
+@jwt_required()
+def delete_saved():
+    current_user_id = get_jwt_identity()
+
+    user = User.query.get(current_user_id)
+    car_id = request.json.get("car_id")
+
+    car = Car.query.get(car_id)
+    if not car:
+        return jsonify({"Error": "Car does not exist"}), 404
+
+    saved_car = Saved.query.filter_by(user_id=user.id, car_id=car.id).first()
+    if not saved_car:
+        return jsonify({"Message": "Car is not saved by the user"}), 404
+
+    db.session.delete(saved_car)
+    db.session.commit()
+
+    return jsonify({"Message": "Car successfully removed from saved list"}), 200
 
 
 # REGISTER ENDPOINT  
