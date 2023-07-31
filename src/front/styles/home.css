@@ -5,3 +5,8 @@
     one more css for each page that will contain the selected used 
     on that page only (the ones not reused in other pages).
 */
+
+.bg-image {
+    background-size: cover;
+    background: linear-gradient(to bottom, rgb(110, 197, 255), white);
+}
