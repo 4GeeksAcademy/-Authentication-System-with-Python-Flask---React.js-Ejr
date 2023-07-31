@@ -141,7 +141,7 @@ def add_favorite():
     return jsonify({"Message": "Car successfully saved"}), 200
 
 
-# REGISTER ENDPOINT
+# REGISTER ENDPOINT  
 # @api.route('/register', methods=['POST'])
 # def create_user():
 #     user_email= request.json.get('email', None)
