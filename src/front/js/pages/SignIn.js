@@ -9,6 +9,7 @@ const SignIn = () => {
         name: '',
         email: '',
         password: '',
+        confirm_password: '',
     });
 
     const handleChange = (e) => {
@@ -39,7 +40,7 @@ const SignIn = () => {
                     <input type="password" name="password" onChange={handleChange} value={user.password} placeholder="Contraseña" required />
                 </label>
                 <label>
-                    <input type="password" name="password" onChange={handleChange} value={user.password} placeholder="Confirmar Contraseña" required />
+                <input type="password" name="confirm_password" onChange={handleChange} value={user.confirm_password} placeholder="Confirmar Contraseña" required />
                 </label>
                 <button type="submit">Registrate</button>
                 <p>¿Ya tienes una cuenta?, <Link to="/login" className="login-link">Login</Link></p>
