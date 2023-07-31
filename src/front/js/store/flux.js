@@ -1,11 +1,11 @@
 const getState = ({ getStore, getActions, setStore }) => {
   const API_URL =
-    "https://albertgescribano-obscure-train-j6x45w44rqqfp66v-3001.preview.app.github.dev";
+    "https://valentinfrar-solid-fortnight-pvrp9jjjrgpfrgvx-3001.preview.app.github.dev";
 
   return {
     store: {
       user: {},
-      business_user: {},
+      business: {},
       auth: false,
       trip: [],
       reviews: [],
@@ -63,7 +63,6 @@ const getState = ({ getStore, getActions, setStore }) => {
       login: async (userEmail, userPassword) => {
         console.log(userEmail, userPassword);
         try {
-          // let myToken = localStorage.getItem("myToken");
           const response = await fetch(API_URL + "/api/login", {
             method: "POST",
             headers: {
@@ -77,19 +76,28 @@ const getState = ({ getStore, getActions, setStore }) => {
 
           if (response.ok) {
             const data = await response.json();
+            console.log(data);
             const store = getStore();
             setStore({ ...store, auth: true });
-            setStore({ ...store, user: data.user_or_business });
+
+            if (data.type === "user") {
+              setStore({ ...store, user: data.user_or_business });
+            } else if (data.type === "business") {
+              setStore({ ...store, business: data.user_or_business });
+            }
+
             console.log("Clean data of response:", data.user_or_business);
             localStorage.setItem("myToken", data.access_token);
             return data;
-          } else response.status === 401;
-          return false;
+          } else if (response.status === 401) {
+            return false;
+          }
         } catch (err) {
           console.log(err);
           return false;
         }
       },
+
 
       isAuth: async () => {
         try {
@@ -265,6 +273,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       // Fonction pour modifier le profil utilisateur
       updateUserProfile: async (userId, updatedData) => {
+        console.log(userId, updatedData);
         try {
           const token = localStorage.getItem("myToken");
           if (!token) {
@@ -272,7 +281,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             return false;
           }
 
-          const response = await fetch(`/api/user/${userId}`, {
+          const response = await fetch(`${API_URL}/api/user/${userId}`, {
             method: "PUT",
             headers: {
               "Content-Type": "application/json",
@@ -632,7 +641,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         try {
           const response = await fetch(
             API_URL +
-              `/api/business_user/delete/business_users/${businessUserId}`,
+            `/api/business_user/delete/business_users/${businessUserId}`,
             {
               method: "DELETE",
               headers: {

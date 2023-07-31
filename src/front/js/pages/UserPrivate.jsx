@@ -1,14 +1,30 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Context } from "../store/appContext";
 import UpdateProfileUser from "../component/UpdateProfileUser.js";
 
 const UserPrivate = () => {
   const { store, actions } = useContext(Context);
-  const { email, username, firstname, lastname, pasaporte, address, payment_method } = store.user;
+  const [email, setEmail] = useState(store.user?.email)
+  const [username, setUsername] = useState(store.user?.username)
+  const [firstName, setFirstName] = useState(store.user?.firstname)
+  const [lastName, setLastName] = useState(store.user?.lastname)
+  const [address, setAddress] = useState(store.user?.address)
+  const [passport, setPassport] = useState(store.user?.pasaporte)
+  const [paymentMethod, setPaymentMethod] = useState(store.user?.payment_method)
 
-  const handleUpdateField = async (fieldName, fieldValue) => {
+
+
+  const updateUser = async () => {
     try {
-      const updatedData = { [fieldName]: fieldValue };
+      const updatedData = {
+        'email': email,
+        'username': username,
+        'firstname': firstName,
+        'lastname': lastName,
+        'address': address,
+        'payment_method': paymentMethod,
+        'pasaporte': passport
+      }
       const updatedUser = await actions.updateUserProfile(store.user.id, updatedData);
 
       if (updatedUser) {
@@ -19,17 +35,21 @@ const UserPrivate = () => {
     } catch (error) {
       console.log("Error updating User private:", error);
     }
-  };
+  }
+
+
+
 
   return (
     <div className="profil-content">
-      <UpdateProfileUser label="Correo electrónico" value={email} onSave={(value) => handleUpdateField("email", value)} />
-      <UpdateProfileUser label="Nombre de usuario" value={username} onSave={(value) => handleUpdateField("username", value)} />
-      <UpdateProfileUser label="Nombre" value={firstname} onSave={(value) => handleUpdateField("firstname", value)} />
-      <UpdateProfileUser label="Apellido" value={lastname} onSave={(value) => handleUpdateField("lastname", value)} />
-      <UpdateProfileUser label="Pasaporte" value={pasaporte} onSave={(value) => handleUpdateField("pasaporte", value)} />
-      <UpdateProfileUser label="Dirección" value={address} onSave={(value) => handleUpdateField("address", value)} />
-      <UpdateProfileUser label="Método de pago" value={payment_method} onSave={(value) => handleUpdateField("payment_method", value)} />
+      <UpdateProfileUser label="Correo electrónico" value={email} onChange={(e) => setEmail(e.target.value)} />
+      <UpdateProfileUser label="Nombre de usuario" value={username} onChange={(e) => setUsername(e.target.value)} />
+      <UpdateProfileUser label="Nombre" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
+      <UpdateProfileUser label="Apellido" value={lastName} onChange={(e) => setLastName(e.target.value)} />
+      <UpdateProfileUser label="Pasaporte" value={passport} onChange={(e) => setPassport(e.target.value)} />
+      <UpdateProfileUser label="Dirección" value={address} onChange={(e) => setAddress(e.target.value)} />
+      <UpdateProfileUser label="Método de pago" value={paymentMethod} onChange={(e) => setPaymentMethod(e.target.value)} />
+      <button onClick={() => updateUser()}>Guardar cambios</button>
     </div>
   );
 };
