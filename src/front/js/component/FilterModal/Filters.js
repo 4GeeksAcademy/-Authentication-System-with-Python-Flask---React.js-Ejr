@@ -12,6 +12,7 @@ const Filters = () => {
   const [selectedCarMakes, setSelectedCarMakes] = useState([]);
   const [selectedCarEngines, setSelectedCarEngines] = useState([]);
   const [selectedCarTransmissions, setSelectedCarTransmissions] = useState([]);
+  const [rangeValue, setRangeValue] = useState(0)
 
   // GETTING CARS FROM STORE
   const cars = store.cars
@@ -52,6 +53,12 @@ const handleCarTransmissionChange = (carTransmission) => {
   );
 };
 
+// FUNCTION TO CONTROL RANGE INPUT
+
+const handleRange = (e) => {
+  setRangeValue(e.target.value)
+}
+
 
 // APPLY FILTERS BUTTON
 const handleApplyFilters = () => {
@@ -81,8 +88,12 @@ const handleApplyFilters = () => {
             </div>
             <div className="modal-body">
               <div className='carPriceContainer'>
-                <div>Price Range</div>
+                <div>
+                  Price Range
                 </div>
+                <input onChange={handleRange}type="range" min="0" max="100000" value={rangeValue} step="100"/>
+                <input onChange={handleRange} value={rangeValue}/>
+              </div>
               <div className='filtersContainer row'>
                 <div className="col-3 carTypeContainer">
                   Car Type
