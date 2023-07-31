@@ -10,6 +10,15 @@ from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identi
 
 api = Blueprint('api', __name__)
 
+@api.route('/landing-page', methods=['POST', 'GET'])
+def landing_page():
+
+    response_body = {
+        "message": "Hello! I'm a message that came from the backend, check the network tab on the google inspector and you will see the GET request"
+    }
+
+    return jsonify(response_body), 200
+
 
     # REGISTER ENDPOINT
 @api.route('/register', methods=['POST'])
