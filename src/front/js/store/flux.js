@@ -58,13 +58,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 				.catch(error=>console.log("error during registration",error))	
 				}
 
-				const response = await fetch("https://bobo305-verbose-pancake-7v7wxqvx677hr5v4-3001.preview.app.github.dev/api/destination")
-				const data = await response.json();
-				// setToken(data.token)
-				setStore({destinations: data});
-				return data;
+				// const response = await fetch("https://bobo305-verbose-pancake-7v7wxqvx677hr5v4-3001.preview.app.github.dev/api/destination")
+				// const data = await response.json();
+				// // setToken(data.token)
+				// setStore({destinations: data});
+				// return data;
 			
-				}catch(error){console.log ("error:", error)}
+				// }catch(error){console.log ("error:", error)}
 			
 
 			}
