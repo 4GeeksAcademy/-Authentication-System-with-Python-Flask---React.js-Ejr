@@ -1,11 +1,11 @@
 const getState = ({ getStore, getActions, setStore }) => {
   const API_URL =
-    "https://valentinfrar-solid-fortnight-pvrp9jjjrgpfrgvx-3001.preview.app.github.dev";
+    "https://valentinfrar-cuddly-giggle-v4vqw666rv43jg5-3001.preview.app.github.dev";
 
   return {
     store: {
       user: {},
-      business: {},
+      business_user: {},
       auth: false,
       trip: [],
       reviews: [],
@@ -83,7 +83,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             if (data.type === "user") {
               setStore({ ...store, user: data.user_or_business });
             } else if (data.type === "business") {
-              setStore({ ...store, business: data.user_or_business });
+              setStore({ ...store, business_user: data.user_or_business });
             }
 
             console.log("Clean data of response:", data.user_or_business);
