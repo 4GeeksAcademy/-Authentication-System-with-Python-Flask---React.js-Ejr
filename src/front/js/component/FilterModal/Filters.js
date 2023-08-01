@@ -1,7 +1,8 @@
-import React, {useState, useContext } from 'react'
+import React, {useState, useContext, useEffect } from 'react'
 import "../../../styles/filters.css"
 import { Context } from '../../store/appContext';
 import { useNavigate } from 'react-router-dom';
+
 
 
 const Filters = () => {
@@ -12,7 +13,8 @@ const Filters = () => {
   const [selectedCarMakes, setSelectedCarMakes] = useState([]);
   const [selectedCarEngines, setSelectedCarEngines] = useState([]);
   const [selectedCarTransmissions, setSelectedCarTransmissions] = useState([]);
-  const [rangeValue, setRangeValue] = useState(0)
+  const [selectedPrice, setSelectedPrice] = useState([]);
+  const [rangeValue, setRangeValue] = useState(null)
 
   // GETTING CARS FROM STORE
   const cars = store.cars
@@ -53,11 +55,21 @@ const handleCarTransmissionChange = (carTransmission) => {
   );
 };
 
+
 // FUNCTION TO CONTROL RANGE INPUT
 
 const handleRange = (e) => {
-  setRangeValue(e.target.value)
+  setRangeValue(parseInt(e.target.value))
 }
+  // Use useEffect to log the updated selectedPrice
+  useEffect(() => {
+    // filter cars under selected price
+    const filteredPrice = cars.filter((car) => car.price <= rangeValue);
+    const priceValues = filteredPrice.map((car) => car.price);
+    setSelectedPrice(priceValues);
+  }, [rangeValue]);
+
+
 
 
 // APPLY FILTERS BUTTON
@@ -67,7 +79,10 @@ const handleApplyFilters = () => {
     car_type: selectedCarTypes.length ? selectedCarTypes : "",
     engine: selectedCarEngines.length ? selectedCarEngines : "",
     transmission: selectedCarTransmissions.length ? selectedCarTransmissions : "",
-  }];
+    price: selectedPrice.length ? selectedPrice : ""
+  }
+];
+  console.log("Filtered cars: ", filterArray)
   actions.applyFilters(filterArray)
   navigate('/catalog')
 }
@@ -88,11 +103,15 @@ const handleApplyFilters = () => {
             </div>
             <div className="modal-body">
               <div className='carPriceContainer'>
-                <div>
-                  Price Range
+                <div className='d-flex justify-content-center'>
+                  Cars under:
                 </div>
-                <input onChange={handleRange}type="range" min="0" max="100000" value={rangeValue} step="100"/>
-                <input onChange={handleRange} value={rangeValue}/>
+                <div className='d-flex justify-content-center'>
+                  <input onChange={handleRange} type="range" min="22500" max="100000" value={rangeValue} step="100"/>
+                </div>
+                <div className='d-flex justify-content-center'>
+                  <input onChange={handleRange} value={rangeValue}/>
+                </div>
               </div>
               <div className='filtersContainer row'>
                 <div className="col-3 carTypeContainer">

@@ -32,6 +32,7 @@ const CarCards = ({cars}) => {
                   <p className="card-text carFormatted">Car Type: {car.car_type}</p>
                   <p className="card-text carFormatted">Engine: {car.engine}</p>
                   <p className="card-text carFormatted">Transmission: {car.transmission}</p>
+                  <p className="card-text carFormatted">MSRP: {car.price}</p>
                   <div className="buttonContainer">
                       <button href="#" className="btn btn-danger"
                       onClick={(e) => {handleClick(e, car.id)}}>
