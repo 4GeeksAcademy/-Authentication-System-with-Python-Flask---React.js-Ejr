@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Context } from "../store/appContext";
+import "../../styles/userPageStyles.css";
 
 const UserPage = () => {
   const { store } = useContext(Context);
@@ -11,7 +12,7 @@ const UserPage = () => {
       try {
         const response = await fetch(`${process.env.BACKEND_URL}/private`, {
           headers: {
-            Authorization: `Bearer ${store.token}`
+            Authorization: `Bearer ${localStorage.getItem("token")}`
           }
         });
 
@@ -34,23 +35,23 @@ const UserPage = () => {
 
   // Show loading message while fetching user data
   if (loading) {
-    return <p>Loading user data...</p>;
+    return <p className="login-title">Loading user data...</p>;
   }
 
   // If user data is available, display it
   if (user) {
     return (
-      <div>
-        <h2>Welcome, {user.user}</h2>
-        <p>Email: {user.email}</p>
-        <p>Phone Number: {user.phone_number}</p>
+      <div className="user-container">
+        <h2 className="user-title">Welcome, {user.user}</h2>
+        <p className="data-label">Email: <span className="data-value">{user.email}</span></p>
+        <p className="data-label">Phone Number: <span className="data-value">{user.phone_number}</span></p>
         {/* Render other user data here */}
       </div>
     );
   }
 
   // If user data is not available, show an error message
-  return <p>Error fetching user data</p>;
+  return <p className="login-title">Error fetching user data</p>;
 };
 
 export default UserPage;
