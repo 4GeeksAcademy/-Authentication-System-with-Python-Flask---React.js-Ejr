@@ -42,7 +42,7 @@ class Business_user(db.Model):
     business_name = db.Column(db.String(50), unique=True, nullable=False)
     password = db.Column(db.String(250), unique=False, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
-    nif = db.Column(db.Integer, nullable=False)
+    nif = db.Column(db.String(120), nullable=False)
     address = db.Column(db.String(150), nullable=False)
     payment_method = db.Column(db.String(150), nullable=False)
 
@@ -90,6 +90,8 @@ class Offers(db.Model):
     business_id = db.Column(db.Integer, ForeignKey('business_user.id'), nullable=True)
     offer_title = db.Column(db.String(75), nullable = False)
     offer_description = db.Column(db.String(250), nullable = False)
+    country = db.Column(db.String(250), nullable = False)
+    city = db.Column(db.String(250), nullable = False)
     normal_user_price = db.Column(db.Integer, nullable=False)
     medium_user_price = db.Column(db.Integer, nullable=False)
     high_user_price = db.Column(db.Integer, nullable=False)

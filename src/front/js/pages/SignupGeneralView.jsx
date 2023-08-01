@@ -6,7 +6,7 @@ import ForgotPassword from './ForgotPassword.jsx'
 
 const SignupGeneralView = () => {
     return (
-        <div className='container'>
+        <div className='container mt-5'>
             <ul className="nav nav-tabs justify-content-center" id="myTab" role="tablist">
                 <li className="nav-item" role="presentation">
                     <button className="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">¿Eres viajero?</button>
@@ -23,9 +23,6 @@ const SignupGeneralView = () => {
                 <div className="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab"><SignUpBusiness /></div>
                 <div className="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab"><ForgotPassword /></div>
             </div>
-
-
-
 
         </div>
     )
