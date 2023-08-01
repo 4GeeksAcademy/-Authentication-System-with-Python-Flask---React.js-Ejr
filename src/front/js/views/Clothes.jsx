@@ -6,6 +6,10 @@ import ClothesCard from "../component/ClothesCard.jsx";
 const Clothes = () => {
   const { actions, store } = useContext(Context);
 
+
+
+
+
   useEffect(() => {
     actions.getClothes();
   }, []);
@@ -14,19 +18,24 @@ const Clothes = () => {
     <div>
       <Navbar />
       <h1>Clothes</h1>
-      {store.clothes && store.clothes.length > 0 ? ( 
-        store.clothes.map((clothe) => (
-          <div className="d-flex" key={clothe.id}>
-            <ClothesCard
-              index={clothe.id}
-              clothe={clothe}
-            />
-          </div>
-        ))
-      ) : (
-        <h1>Cargando!!!</h1> 
-      )}
-    </div>
+      
+        {store.clothes && store.clothes.length > 0 ? (
+          store.clothes.map((clothe) => (
+            <div style={{
+              width: "90%",
+              margin: "auto"
+            }} className="d-flex" key={clothe.id}>
+              <ClothesCard
+                index={clothe.id}
+                clothe={clothe}
+              />
+            </div>
+          ))
+        ) : (
+          <h1>Cargando!!!</h1>
+        )}
+      </div>
+  
   );
 }
 

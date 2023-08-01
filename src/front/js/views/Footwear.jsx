@@ -16,7 +16,7 @@ const FootWear = () => {
       <h1>Shoes</h1>
       {store.shoes && store.shoes.length > 0 ? ( 
         store.shoes.map((shoe) => (
-          <div className="d-flex" key={shoe.id}>
+          <div className="row" key={shoe.id}>
             <ShoesCard
               index={shoe.id}
               shoe={shoe}

@@ -8,7 +8,8 @@ const getState = ({ getStore, getActions, setStore }) => {
       token: undefined,
       clothes:[],
       shoes:[],
-      accessories:[]
+      accessories:[],
+      details: {}
     },
     actions: {
       login: async (email, password) => {
@@ -151,8 +152,28 @@ const getState = ({ getStore, getActions, setStore }) => {
         
       
 			},
+      viewDetails:async (id) => {
+				const store = getStore();
+        // const cat = category == 1 ? "clothes" : category == 2 ? "accessories" : "shoes"
+				// const selected = store[cat].find((e)=>e.id === id);
+        // console.log(store.[cat])
+				// console.log("Esta es la info product", selected );
+				// setStore({details:selected });
+        try {
+          
+          const result = await fetch(API_URL + `/products/${id}`);
+          const data = await result.json();
+      
+          
+            setStore({details: data});
+            console.log("details cargados");
+          } catch (error) {
+            console.log("No se pudo recuperar detalles", error);
+          }
+			  },
 
-			
+             
+            
 					
 				
 
