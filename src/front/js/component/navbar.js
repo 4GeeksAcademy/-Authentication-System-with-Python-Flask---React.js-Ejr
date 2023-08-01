@@ -12,7 +12,7 @@ export const Navbar = () => {
   const token = localStorage.getItem("token");
 
   return (
-    <nav className="navbar navbar-light bg-light">
+    <nav className="navbar navbar-dark bg-dark">
       <div className="container m-0">
         <div>
           <Link to={"/"}>
