@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import axios from 'axios'; 
 import { useNavigate } from "react-router-dom";
+import { Context } from "../store/appContext";
 // import './Login.css';
 
 export const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const { store, actions } = useContext(Context);
   const [isLoggingIn, setIsLoggingIn] = useState(false);
   const navigate= useNavigate();
 
@@ -18,6 +20,7 @@ export const Login = () => {
       const response = await axios.post(`${process.env.BACKEND_URL}/login`, {
         email,
         password
+        
       });
       console.log(email)
       console.log(password)
@@ -31,6 +34,8 @@ export const Login = () => {
       } else {
         alert('Invalid credentials. Please try again.');
       }
+      setSessionStorage(data[1] = store.token)
+      console.log(store.token)
     } catch (error) {
       setIsLoggingIn(false);
       console.error('Error during login:', error);

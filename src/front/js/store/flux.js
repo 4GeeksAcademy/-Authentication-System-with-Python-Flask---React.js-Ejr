@@ -2,7 +2,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
 			favorites:[],
-			destination:[]
+			destination:[],
+			email:[],
+			token:null
 
 		},
 		actions: {
