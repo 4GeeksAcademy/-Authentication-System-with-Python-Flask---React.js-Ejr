@@ -60,7 +60,7 @@ const SearchBar = () => {
                       handleClick(e, car.id)
                     }} >
                           <div className="carNames carFormatted" value={car.car_name}>
-                            <h4 key={index}>{car.car_name}</h4>
+                            <h4 className='text-secondary' key={index}>{car.car_name}</h4>
                           </div>
                           <div className='imagesDiv' style={{"width": "44rem", "height": "auto"}}>
                             <img className="rounded w-100" src={car.images[0].image_url }/>

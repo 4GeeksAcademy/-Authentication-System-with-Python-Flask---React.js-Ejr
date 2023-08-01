@@ -19,6 +19,7 @@
 
 
 .carsDiv {
+    color: lightgray;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -56,11 +57,12 @@
 .custom-dropdown {
     margin-top: 0.07rem;
     position:absolute;
+    z-index: 9999;
     background-color: rgb(18,18,18);
     width: 18.5%;
     max-height: 200px;
     overflow-y: auto;
-    color: grey;
+    color: lightgray;
     border-bottom-left-radius: 2.5rem;
     border-bottom-right-radius: 2.5rem;
 
