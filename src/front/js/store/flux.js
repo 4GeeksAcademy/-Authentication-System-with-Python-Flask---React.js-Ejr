@@ -1,6 +1,6 @@
 const getState = ({ getStore, getActions, setStore }) => {
   const API_URL =
-    "https://valentinfrar-cuddly-giggle-v4vqw666rv43jg5-3001.preview.app.github.dev";
+    "https://valentinfrar-fictional-invention-g9q764445w6f94v4-3001.preview.app.github.dev";
 
   return {
     store: {
@@ -10,6 +10,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       trip: [],
       reviews: [],
       offers: [],
+      likes: 0
     },
     actions: {
       // Use getActions to call a function within a function
@@ -787,23 +788,44 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
 
-      incrementLikes: async (reviewId) => {
+      getLikes: async (reviewId) => {
+        try {
+          const response = await fetch(API_URL + `/api/reviews/${reviewId}/likes`);
+          if (response.ok) {
+            const data = await response.json();
+            console.log('data:', data);
+            setStore({likes: data})
+            return true
+          } else {
+            return null;
+          }
+        } catch (error) {
+          console.log(error);
+          return null;
+        }
+      },
+
+      likeReview: async (reviewId, userId) => {
         try {
           const token = localStorage.getItem("myToken");
-          const response = await fetch(
-            `${API_URL}/api/review/${reviewId}/like`,
-            {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`,
-              },
-            }
-          );
+          if (!token) {
+            console.log("Token not found");
+            return false;
+          }
+
+          const response = await fetch(API_URL + `/api/reviews/${reviewId}/likes`, {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`,
+            },
+            body: JSON.stringify({ user_id: userId }),
+          });
 
           if (response.ok) {
-            // Rechargez les avis pour mettre à jour le nombre de likes
-            getActions().getReviews();
+            const res = await response.json();
+            console.log(res);
+            setStore({likes: res.likes})
             return true;
           } else {
             return false;
@@ -813,6 +835,8 @@ const getState = ({ getStore, getActions, setStore }) => {
           return false;
         }
       },
+
+
     },
   };
 };
