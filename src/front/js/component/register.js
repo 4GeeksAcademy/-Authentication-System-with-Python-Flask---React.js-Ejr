@@ -2,6 +2,7 @@
 import React, { useContext, useState } from "react";
 import { Context } from "../store/appContext";
 import { useNavigate } from "react-router-dom";
+import "../../styles/register.css"
 
 
 
@@ -31,7 +32,7 @@ export const Register = () => {
 
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form className="form" onSubmit={handleSubmit}>
         <div>
             <div className="signup-form">
                 <div className="forms">

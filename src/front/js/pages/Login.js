@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import axios from 'axios'; 
+import { useNavigate } from "react-router-dom";
 // import './Login.css';
 
 export const Login = () => {
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoggingIn, setIsLoggingIn] = useState(false);
+  const navigate= useNavigate();
 
   const handleLogin = async (event) => { 
     event.preventDefault();
@@ -13,16 +15,18 @@ export const Login = () => {
     
     try {
       
-      const response = await axios.post('https://sblaise123-orange-guacamole-5wq5jw6967g37pq4-3001.preview.app.github.dev/login', {
-        username,
+      const response = await axios.post(`${process.env.BACKEND_URL}/login`, {
+        email,
         password
       });
-      
+      console.log(email)
+      console.log(password)
       setIsLoggingIn(false);
+      console.log(response)
+      navigate("/private")
       
-      
-      if (response.data.success) {
-        alert(`Logged in successfully as ${username}`);
+      if (response.status == 200) {
+        alert(`Logged in successfully as ${email}`);
         
       } else {
         alert('Invalid credentials. Please try again.');
@@ -43,8 +47,8 @@ export const Login = () => {
           <input
             type="text"
             id="username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             disabled={isLoggingIn}
             required
           />
