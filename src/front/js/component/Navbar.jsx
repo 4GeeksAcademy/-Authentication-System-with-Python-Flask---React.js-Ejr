@@ -7,12 +7,12 @@ const Navbar = () => {
   const { store, actions } = useContext(Context);
 
   function handleLogout() {
- 
+
     alert('Cerraste sesión. Esperamos verte pronto!');
     actions.logout();
     window.location.href = '/';
   }
-  
+
 
   return (
     <nav className="navbar container-fluid navbar-expand-sm navbar-light">
@@ -29,6 +29,7 @@ const Navbar = () => {
             
                 {/* <h3>Hi, {store.user.username ? store.user.username : store.business_user ?.business_name} </h3> */}
                 <h3>Hola, {store.user?.username ? store.user.username : store.business_user?.business_name}! </h3>
+
 
 
               </>

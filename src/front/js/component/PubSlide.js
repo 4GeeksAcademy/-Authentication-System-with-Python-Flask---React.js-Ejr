@@ -43,6 +43,9 @@ const PubSlide = () => {
                 Come relax on the beaches of Brazil or dance to the rhythm of
                 the waves
               </p>
+              <span className="normal-price">Normal Price: 1 200.00$</span>
+              <br />
+              <span className="prenium-price">Prenium Price: 1 000.00$</span>
             </div>
           </div>
           <div className="carousel-item">
@@ -57,6 +60,9 @@ const PubSlide = () => {
                 Come and discover the mysteries of the Inca civilization and the
                 immeasurable beauty of the Peruvian land
               </p>
+              <span className="normal-price">Normal Price: 1 200.00$</span>
+              <br />
+              <span className="prenium-price">Prenium Price: 1 000.00$</span>
             </div>
           </div>
           <div className="carousel-item">

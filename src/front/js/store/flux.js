@@ -1,6 +1,6 @@
 const getState = ({ getStore, getActions, setStore }) => {
   const API_URL =
-    "https://albertgescribano-obscure-train-j6x45w44rqqfp66v-3001.preview.app.github.dev";
+    "https://valentinfrar-fictional-invention-g9q764445w6f94v4-3001.preview.app.github.dev";
 
   return {
     store: {
@@ -10,6 +10,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       trip: [],
       reviews: [],
       offers: [],
+      likes: 0
     },
     actions: {
       // Use getActions to call a function within a function
@@ -63,7 +64,6 @@ const getState = ({ getStore, getActions, setStore }) => {
       login: async (userEmail, userPassword) => {
         console.log(userEmail, userPassword);
         try {
-          // let myToken = localStorage.getItem("myToken");
           const response = await fetch(API_URL + "/api/login", {
             method: "POST",
             headers: {
@@ -77,19 +77,28 @@ const getState = ({ getStore, getActions, setStore }) => {
 
           if (response.ok) {
             const data = await response.json();
+            console.log(data);
             const store = getStore();
             setStore({ ...store, auth: true });
-            setStore({ ...store, user: data.user_or_business });
+
+            if (data.type === "user") {
+              setStore({ ...store, user: data.user_or_business });
+            } else if (data.type === "business") {
+              setStore({ ...store, business_user: data.user_or_business });
+            }
+
             console.log("Clean data of response:", data.user_or_business);
             localStorage.setItem("myToken", data.access_token);
             return data;
-          } else response.status === 401;
-          return false;
+          } else if (response.status === 401) {
+            return false;
+          }
         } catch (err) {
           console.log(err);
           return false;
         }
       },
+
 
       isAuth: async () => {
         try {
@@ -271,6 +280,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       // Fonction pour modifier le profil utilisateur
       updateUserProfile: async (userId, updatedData) => {
+        console.log(userId, updatedData);
         try {
           const token = localStorage.getItem("myToken");
           if (!token) {
@@ -278,7 +288,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             return false;
           }
 
-          const response = await fetch(`/api/user/${userId}`, {
+          const response = await fetch(`${API_URL}/api/user/${userId}`, {
             method: "PUT",
             headers: {
               "Content-Type": "application/json",
@@ -780,23 +790,44 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
 
-      incrementLikes: async (reviewId) => {
+      getLikes: async (reviewId) => {
+        try {
+          const response = await fetch(API_URL + `/api/reviews/${reviewId}/likes`);
+          if (response.ok) {
+            const data = await response.json();
+            console.log('data:', data);
+            setStore({likes: data})
+            return true
+          } else {
+            return null;
+          }
+        } catch (error) {
+          console.log(error);
+          return null;
+        }
+      },
+
+      likeReview: async (reviewId, userId) => {
         try {
           const token = localStorage.getItem("myToken");
-          const response = await fetch(
-            `${API_URL}/api/review/${reviewId}/like`,
-            {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`,
-              },
-            }
-          );
+          if (!token) {
+            console.log("Token not found");
+            return false;
+          }
+
+          const response = await fetch(API_URL + `/api/reviews/${reviewId}/likes`, {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`,
+            },
+            body: JSON.stringify({ user_id: userId }),
+          });
 
           if (response.ok) {
-            // Rechargez les avis pour mettre à jour le nombre de likes
-            getActions().getReviews();
+            const res = await response.json();
+            console.log(res);
+            setStore({likes: res.likes})
             return true;
           } else {
             return false;
@@ -806,6 +837,8 @@ const getState = ({ getStore, getActions, setStore }) => {
           return false;
         }
       },
+
+
     },
   };
 };

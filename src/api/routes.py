@@ -1,6 +1,6 @@
 from sqlalchemy.exc import IntegrityError
 from flask import Flask, request, jsonify, Blueprint, jsonify, redirect, url_for
-from api.models import db, User, Business_user, Offers, Trip, Review
+from api.models import db, User, Business_user, Offers, Trip, Review, Likes
 from api.utils import APIException
 from flask_bcrypt import bcrypt, Bcrypt
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity, JWTManager, unset_jwt_cookies
@@ -30,8 +30,6 @@ def get_all_users():
 
     except Exception as e:
         return jsonify({'error': 'Error retrieving users: ' + str(e)}), 500
-
-# Décorez la route pour obtenir un utilisateur par son ID
 
 
 @api.route('/users/<int:user_id>', methods=['GET'])
@@ -165,6 +163,7 @@ def create_business_user():
         db.session.add(new_business)
         db.session.commit()
 
+
         return jsonify({'message': 'Business_user created successfully', 'business': new_business.serialize()}), 201
 
     except Exception as e:
@@ -191,26 +190,7 @@ def login():
                     identity=user_or_business.email)
                 return jsonify(
                     {'access_token': access_token,
-                     'user_or_business': {
-
-                         "id": user_or_business.id,
-                         "username": user_or_business.username,
-                         "email": user_or_business.email,
-                         "firstname": user_or_business.firstname,
-                         "lastname": user_or_business.lastname,
-                         "address": user_or_business.address,
-                         "pasaporte": user_or_business.pasaporte,
-                         "payment_method": user_or_business.payment_method,
-                         "is_admin": user_or_business.is_admin
-
-                     }}), 200
-
-        #  "id": self.id,
-        #     "business_name": self.business_name,
-        #     "email": self.email,
-        #     "nif": self.nif,
-        #     "address": self.address,
-        #     "payment_method": self.payment_method
+                     'user_or_business': user_or_business.serialize(), "type": "user"}), 200
 
         # Vérifier si c'est une entreprise
         business = Business_user.query.filter_by(email=data['email']).first()
@@ -220,7 +200,7 @@ def login():
                 user_or_business = business
                 access_token = create_access_token(
                     identity=user_or_business.email)
-                return jsonify({'access_token': access_token, 'user_or_business': user_or_business.serialize()}), 200
+                return jsonify({'access_token': access_token, 'user_or_business': user_or_business.serialize(), "type": "business"}), 200
 
         if not user_or_business:
             return jsonify({'error': 'User or Business not found or Incorrect password'}), 401
@@ -605,3 +585,31 @@ def delete_review(review_id):
     db.session.delete(review)
     db.session.commit()
     return jsonify({"message": "Review deleted successfully"}), 200
+
+
+@api.route('/reviews/<int:review_id>/likes', methods=['GET'])
+def get_likes(review_id):
+    review = Review.query.get(review_id)
+    print(review)
+    if review is None:
+        return jsonify(error="Review not found"), 404
+
+    return jsonify(review.likes), 200
+
+
+@api.route('/reviews/<int:review_id>/likes', methods=['PUT'])
+def like_review(review_id):
+    review = Review.query.get(review_id)
+    if review is None:
+        return jsonify(error='Review not found'), 404
+
+    user_id = request.json.get('user_id')
+    if Likes.query.filter_by(user_id=user_id, review_id=review_id).first() is not None:
+        return jsonify(error='User has already  likes this review'), 400
+
+    like = Likes(user_id=user_id)
+    print(like)
+    review.likes.append(like)
+    db.session.commit()
+
+    return jsonify(message='Review liked successfuly'), 200
