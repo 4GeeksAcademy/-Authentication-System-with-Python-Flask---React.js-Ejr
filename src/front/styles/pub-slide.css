@@ -17,3 +17,9 @@
   font-weight: 600;
   font-size: 1.6rem;
 }
+
+.normal-price,
+.prenium-price {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
