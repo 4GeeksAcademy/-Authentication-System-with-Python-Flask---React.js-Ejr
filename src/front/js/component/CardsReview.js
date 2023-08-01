@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../store/appContext";
 import FormReview from "./FormReview";
 import GooglePay from "./GooglePay";
+import Likes from "./Likes";
 
 const CardsReview = ({ searchQuery }) => {
   const { store, actions } = useContext(Context);
@@ -89,6 +90,9 @@ const CardsReview = ({ searchQuery }) => {
                 )}
                 <span>Mensaje escrito por: {review.user.username}</span>
                 <GooglePay />
+                <div className="likes">
+                  <Likes/>
+                </div>
               </div>
             </div>
           ))}

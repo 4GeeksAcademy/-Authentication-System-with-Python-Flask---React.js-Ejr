@@ -1,6 +1,6 @@
 from sqlalchemy.exc import IntegrityError
 from flask import Flask, request, jsonify, Blueprint, jsonify, redirect, url_for
-from api.models import db, User, Business_user, Offers, Trip, Review
+from api.models import db, User, Business_user, Offers, Trip, Review, Likes
 from api.utils import APIException
 from flask_bcrypt import bcrypt, Bcrypt
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity, JWTManager, unset_jwt_cookies
@@ -31,7 +31,7 @@ def get_all_users():
     except Exception as e:
         return jsonify({'error': 'Error retrieving users: ' + str(e)}), 500
 
-# Décorez la route pour obtenir un utilisateur par son ID
+
 
 
 @api.route('/users/<int:user_id>', methods=['GET'])
@@ -575,3 +575,29 @@ def delete_review(review_id):
     db.session.delete(review)
     db.session.commit()
     return jsonify({"message": "Review deleted successfully"}), 200
+
+@api.route('/reviews/<int:review_id>/likes', methods=['GET'])
+def get_likes(review_id):
+    review = Review.query.get(review_id)
+    if review is None:
+        return jsonify(error="Review not found"), 404
+
+    return jsonify(likes=review.likes), 200
+
+@api.route('/reviews/<int:review_id>/likes', methods=['PUT'])
+def like_review(review_id):
+    review = Review.query.get(review_id)
+    if review is None:
+        return jsonify(error='Review not found'), 404
+    
+    user_id =  request.json.get('user_id')
+    if Likes.query.filter_by(user_id=user_id, review_id=review_id).first() is not None:
+       return jsonify(error='User has already  likes this review'), 400
+
+
+    review.likes += 1
+    like = Likes(user_id=user_id, review_id=review_id)
+    db.session.add(like)
+    db.session.commit()
+
+    return jsonify(message='Review liked successfuly'), 200

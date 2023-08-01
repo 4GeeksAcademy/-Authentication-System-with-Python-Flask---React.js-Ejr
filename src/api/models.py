@@ -19,6 +19,7 @@ class User(db.Model):
     # Relationship to User model
     reviews = db.relationship("Review", backref="user")
     favorites = db.relationship('Favorites', backref='user')
+    likes = db.relationship('Likes', backref='user')
 
     def __repr__(self):
         return '<User %r>' % self.username
@@ -120,6 +121,8 @@ class Review(db.Model):
     title = db.Column(db.String(75), nullable=False)
     comment_text = db.Column(db.String(500), nullable=False)
 
+    likes = db.relationship('Likes', backref='review')
+
     def __repr__(self):
         return '<Review %r>' % self.id
 
@@ -130,6 +133,24 @@ class Review(db.Model):
             "trip_id": self.trip_id,
             "title": self.title,
             "comment_text": self.comment_text,
+        }
+    
+
+class Likes(db.Model):
+    id = db.Column(db.Integer, primary_key = True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
+    review_id = db.Column(db.Integer, db.ForeignKey('review.id'), nullable=False)
+    likes = db.Column(db.Integer, default=0)
+
+    def __repr__(self):
+        return '<Likes %r>' % self.id
+    
+    def serialize(self):
+        return {
+            "id": self.id,
+            "user": User.query.get(self.user_id).serialize(),
+            "review": Review.query.get(self.review_id).serialize(),
+            "likes": self.likes
         }
 
 
