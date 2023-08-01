@@ -10,6 +10,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       trip: [],
       reviews: [],
       offers: [],
+      likes: 0
     },
     actions: {
       // Use getActions to call a function within a function
@@ -789,10 +790,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       getLikes: async (reviewId) => {
         try {
-          const response = await fetch(API_URL + `/reviews/${reviewId}/likes`);
+          const response = await fetch(API_URL + `/api/reviews/${reviewId}/likes`);
           if (response.ok) {
             const data = await response.json();
-            return data.likes;
+            console.log('data:', data);
+            setStore({likes: data})
+            return true
           } else {
             return null;
           }
@@ -810,7 +813,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             return false;
           }
 
-          const response = await fetch(API_URL + `/reviews/${reviewId}/likes`, {
+          const response = await fetch(API_URL + `/api/reviews/${reviewId}/likes`, {
             method: 'PUT',
             headers: {
               'Content-Type': 'application/json',
@@ -822,6 +825,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           if (response.ok) {
             const res = await response.json();
             console.log(res);
+            setStore({likes: res.likes})
             return true;
           } else {
             return false;

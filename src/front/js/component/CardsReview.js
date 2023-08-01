@@ -91,7 +91,7 @@ const CardsReview = ({ searchQuery }) => {
                 <span>Mensaje escrito por: {review.user.username}</span>
                 <GooglePay />
                 <div className="likes">
-                  <Likes/>
+                  <Likes reviewId={review.id}/>
                 </div>
               </div>
             </div>
