@@ -137,6 +137,7 @@ def create_user():
 def create_business_user():
     try:
         data = request.get_json()
+        print(data)
         email = data.get('email')
         password = data.get('password')
         business_name = data.get('business_name')
@@ -162,7 +163,8 @@ def create_business_user():
         db.session.add(new_business)
         db.session.commit()
 
-        return jsonify({'message': 'Business created successfully', 'business': new_business.serialize()}), 201
+
+        return jsonify({'message': 'Business_user created successfully', 'business': new_business.serialize()}), 201
 
     except Exception as e:
         return jsonify({'error': 'Error in business_user creation: ' + str(e)}), 500
@@ -348,12 +350,18 @@ def get_offer(offer_id):
 @jwt_required()
 def create_offer():
     data = request.get_json()
+    current_user = get_jwt_identity()
+    business_user = Business_user.query.filter_by(email=current_user).first()
+    print(current_user)
+    print(data)
     try:
         offer = Offers(
-            trip_id=data['trip_id'],
-            business_id=data['business_id'],
+            # trip_id=data['trip_id'],
+            business_id=business_user.id,
             offer_title=data['offer_title'],
             offer_description=data['offer_description'],
+            country=data['country'],
+            city=data['city'],
             normal_user_price=data['normal_user_price'],
             medium_user_price=data['medium_user_price'],
             high_user_price=data['high_user_price'],
@@ -378,6 +386,10 @@ def update_offer(offer_id):
     try:
         offer.trip_id = data['trip_id']
         offer.business_id = data['business_id']
+        offer.offer_title=data['offer_title'],
+        offer.offer_description=data['offer_description'],
+        offer.country=data['country'],
+        offer.city=data['city'],
         offer.normal_user_price = data['normal_user_price']
         offer.medium_user_price = data['medium_user_price']
         offer.high_user_price = data['high_user_price']

@@ -13,7 +13,7 @@ const ForgotPassword = () => {
   }
 
   return (
-    <div className='container'>
+    <div className='container-password'>
       <div className='content'>
         <div className='title'>¿Has olvidado tu contraseña?</div>
         <div className='subtitle'>Restablecer la contraseña en dos pasos rápidos</div>

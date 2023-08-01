@@ -103,7 +103,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       isAuth: async () => {
         try {
           let token = localStorage.getItem("myToken");
-          console.log(token);
+          console.log('isAuth token:', token);
           const settings = {
             method: "GET",
             headers: {
@@ -117,7 +117,13 @@ const getState = ({ getStore, getActions, setStore }) => {
             const json = await request.json();
             const data = json;
             console.log(data);
-            setStore({ user: data.user });
+            const store = getStore();
+            if (data.user){
+              setStore({ ...store, user: data.user });
+            } else {
+              setStore({...store,  business_user: data.user_or_business});
+            }
+
             setStore({ auth: true });
           }
         } catch (error) {
@@ -321,6 +327,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           if (response.ok) {
             const responseData = await response.json();
             console.log(responseData);
+            setStore({offers: responseData.offers});
             return responseData.offers;
           } else {
             // Handle other errors
@@ -362,7 +369,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       // create an offer
 
-      createOffer: async (data) => {
+      createOffer: async (formData) => {
         try {
           const token = localStorage.getItem("myToken");
           if (!token) {
@@ -376,30 +383,25 @@ const getState = ({ getStore, getActions, setStore }) => {
               "Content-Type": "application/json",
               Authorization: `Bearer ${token}`,
             },
-            body: JSON.stringify(data),
+            body: JSON.stringify(formData),
           });
-
+          
           if (response.ok) {
-            const responseData = await response.json();
-            console.log(responseData);
+            const res = await response.json();
+            console.log(res);
             const actions = getActions();
-            actions.getAllOffers();
 
-            return responseData;
-          } else if (response.status === 422) {
-            // Handle 422 error (or any other error status codes you want to handle)
-            console.log("Error 422: Invalid data or client-side error");
-            return false;
+            actions.getAllOffers();
+            return true;
           } else {
-            // Handle other errors
-            console.log("Error in creating offer");
             return false;
           }
-        } catch (err) {
-          console.log(err);
-          return false; // Handle other errors, return false by default
+        } catch (error) {
+          console.log(error);
+          return false;
         }
       },
+
 
       // update an offer by id
 
@@ -675,7 +677,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           const response = await fetch(API_URL + "/api/review");
           if (response.ok) {
             const data = await response.json();
-            console.log(data);
+            console.log("reviews:", data);
             setStore({ reviews: data });
             return true;
           } else {

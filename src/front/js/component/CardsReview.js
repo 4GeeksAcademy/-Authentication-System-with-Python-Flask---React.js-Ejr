@@ -11,7 +11,7 @@ const CardsReview = ({ searchQuery }) => {
 
   useEffect(() => {
     actions.getReviews();
-    console.log("test");
+    console.log("Succes fetch for CardsReview");
   }, []);
 
   const handleUpdate = (id) => {

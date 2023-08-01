@@ -8,7 +8,7 @@ import FilterMenu from "../component/FilterMenu";
 
 export const Home = () => {
   const { store, actions } = useContext(Context);
-  console.log(store.auth);
+  console.log("User is auth:",store.auth);
   return (
     <>
         <FilterMenu />
