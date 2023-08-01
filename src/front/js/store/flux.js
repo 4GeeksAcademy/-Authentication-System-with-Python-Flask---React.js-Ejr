@@ -31,6 +31,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           engine: "",
           transmission: "",
           year: "",
+          price: ""
         },
       ],
       singleCar: [],

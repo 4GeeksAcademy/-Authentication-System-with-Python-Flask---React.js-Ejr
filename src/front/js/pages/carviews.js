@@ -7,12 +7,14 @@ const CarViews = () => {
 
   // Filter the cars based on the selected filters
   const filteredCars = () => {
+    console.log("Filters value: ", store.filters)
     // If no filters are selected, return all cars
     if (
       !store.filters.some((filter) => filter.brand) &&
       !store.filters.some((filter) => filter.car_type) &&
       !store.filters.some((filter) => filter.engine) &&
-      !store.filters.some((filter) => filter.transmission)
+      !store.filters.some((filter) => filter.transmission) &&
+      !store.filters.some((filter) => filter.price)
     ) {
       return store.cars;
     }
@@ -31,6 +33,10 @@ const CarViews = () => {
           if (store.filters.some((filter) => filter.transmission) && 
           !store.filters.some((filter) => filter.transmission.includes(car.transmission)) )
           return false;
+          if (store.filters.some((filter) => filter.price) && 
+          !store.filters.some((filter) => filter.price.includes(car.price)) )
+          return false;
+
         return true;
     });
   };
