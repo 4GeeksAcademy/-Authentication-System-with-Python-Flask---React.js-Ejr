@@ -1,11 +1,16 @@
-/* navbar.css */
+/* navbar.css
 
 /* Add this to your CSS file */
 /* Navbar side menu styles */
-.offcanvas-end {
+.navbar {
+    background-color: #000; /* Black background color */
+    padding: 10px; /* Add some padding to create space between content and navbar edges */
+    color: #fff; /* White text color for the navbar */
+  }
+  .offcanvas-end {
     background-color: #282c34; /* Dark background color */
-    color: #fff; /* White text color */
-}
+    color: #000; /* Black text color */
+  }
 
 .offcanvas-header {
     background-color: #1a1d23; /* Darker header background color */
@@ -90,4 +95,4 @@
 
 .offcanvas-body .btn-compare:hover {
     background-color: #c62828; /* Darker red background on hover for compare button */
-}
+} 
