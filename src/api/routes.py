@@ -124,9 +124,7 @@ def create_user():
         db.session.add(new_user)
         db.session.commit()
 
-
         return jsonify({"message": 'User created successfully', "user": new_user.serialize()}), 201
-
 
     except IntegrityError as e:
         db.session.rollback()  # Annuler l'opération en cas de violation de contrainte unique
@@ -158,7 +156,6 @@ def create_business_user():
         if existing_business:
             return jsonify({'error': 'Email already exists.'}), 409
 
-
         # Hacher le mot de passe et créer l'entreprise
         password_hash = bcrypt.generate_password_hash(password).decode('utf-8')
         new_business = Business_user(business_name=business_name, email=email,
@@ -168,7 +165,6 @@ def create_business_user():
         db.session.commit()
 
         return jsonify({'message': 'Business created successfully', 'business': new_business.serialize()}), 201
-
 
     except Exception as e:
         return jsonify({'error': 'Error in business_user creation: ' + str(e)}), 500
@@ -194,26 +190,7 @@ def login():
                     identity=user_or_business.email)
                 return jsonify(
                     {'access_token': access_token,
-                     'user_or_business': {
-
-                         "id": user_or_business.id,
-                         "username": user_or_business.username,
-                         "email": user_or_business.email,
-                         "firstname": user_or_business.firstname,
-                         "lastname": user_or_business.lastname,
-                         "address": user_or_business.address,
-                         "pasaporte": user_or_business.pasaporte,
-                         "payment_method": user_or_business.payment_method,
-                         "is_admin": user_or_business.is_admin
-
-                     }}), 200
-
-        #  "id": self.id,
-        #     "business_name": self.business_name,
-        #     "email": self.email,
-        #     "nif": self.nif,
-        #     "address": self.address,
-        #     "payment_method": self.payment_method
+                     'user_or_business': user_or_business.serialize(), "type": "user"}), 200
 
         # Vérifier si c'est une entreprise
         business = Business_user.query.filter_by(email=data['email']).first()
@@ -223,7 +200,7 @@ def login():
                 user_or_business = business
                 access_token = create_access_token(
                     identity=user_or_business.email)
-                return jsonify({'access_token': access_token, 'user_or_business': user_or_business.serialize()}), 200
+                return jsonify({'access_token': access_token, 'user_or_business': user_or_business.serialize(), "type": "business"}), 200
 
         if not user_or_business:
             return jsonify({'error': 'User or Business not found or Incorrect password'}), 401
