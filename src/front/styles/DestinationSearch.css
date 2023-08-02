@@ -10,6 +10,20 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+.favorite-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: red; 
+  transition: transform 0.3s ease; 
+  margin-bottom: 30px;
+}
+
+.favorite-button.flipped {
+  transform: rotateY(180deg); 
+}
+
+
 
 .jumbotron {
   background: linear-gradient(rgba(255, 183, 94, 0.8), rgba(255, 141, 117, 0.8)), url("https://images.unsplash.com/photo-1533371452382-d45a9da51ad9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=873&q=80");

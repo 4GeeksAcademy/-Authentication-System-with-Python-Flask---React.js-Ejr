@@ -95,7 +95,7 @@ const MySearch = () => {
     <div className="my-search-container">
       <div className="jumbotron">
         <h1>Vacation Destination Search</h1>
-        <p>Your next vacation is just a search away!</p>
+        <p>Where Do You Want To Go!</p>
       </div>
 
       
@@ -119,14 +119,25 @@ const MySearch = () => {
         <div className="my-search-results">
           {destinationResult.map(city => (
             <div key={city._links["city:item"].href} className="my-search-result-item">
-              <img src="https://png.pngtree.com/element_our/png/20180807/pngtree-pinmark-vacation-icon-and-concept-png-image_54653.jpg" alt="Vacation Destination Icon" className="vacation-icon" />
-              style={{ width: "10px", height: "10px" }}
+              <img src="https://png.pngtree.com/element_our/png/20180807/pngtree-pinmark-vacation-icon-and-concept-png-image_54653.jpg" height="35px" width="35px" alt="Vacation Destination Icon" className="vacation-icon" />
               <div className="city-info">
                 <h3>{city.matching_full_name}</h3>
-                <p>Country: {city.matching_alternate_names[0].name}</p>
-                <button onClick={() => isFavorite(city.matching_full_name) ? removeFromFavorites(city.matching_full_name) : addToFavorites(city.matching_full_name)}>
-                  {isFavorite(city.matching_full_name) ? <i className="fas fa-heart"></i> : <i className="far fa-heart"></i>}
-                </button>
+                <p>City: {city.matching_alternate_names[0].name}</p>
+                <button
+  className={`favorite-button ${isFavorite(city.matching_full_name) ? "flipped" : ""}`}
+  onClick={() =>
+    isFavorite(city.matching_full_name)
+      ? removeFromFavorites(city.matching_full_name)
+      : addToFavorites(city.matching_full_name)
+  }
+>
+  {isFavorite(city.matching_full_name) ? (
+    <i className="fas fa-heart"></i>
+  ) : (
+    <i className="far fa-heart"></i>
+  )}
+</button>
+
               </div>
             </div>
           ))}
