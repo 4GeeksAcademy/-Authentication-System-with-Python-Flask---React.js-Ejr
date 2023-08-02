@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom'
 
 const Navbar = () => {
   let navigate = useNavigate()
- 
+
 
   const { actions, store } = useContext(Context)
 
@@ -18,7 +18,7 @@ const Navbar = () => {
       <div className='container-fluid'>
         <Link className='navbar-brand' to='/'>
           <img
-            style={{ width: '100px', objectFit: '', border: 'none'}}
+            style={{ width: '100px', objectFit: '', border: 'none' }}
             src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5Kwl4gT7z8mc8Ug0BaVPrzvedTvuLAZ8VFQ&usqp=CAU</img'
             alt='logo'
           />
@@ -43,6 +43,12 @@ const Navbar = () => {
               <li>
                 <span>FAVORITES</span>
               </li>
+              {store.favorites.map(product => (
+                <li>
+                  <Link to={`/product/${product.id}`}>{product.name}</Link> 
+                  <i onClick={() => actions.deleteFavorites(product.id)} className="fa-solid fa-xmark" style={{color: "#eb000c"}}></i>
+                </li>
+              ))}
             </ul>
           </div>
 
@@ -66,8 +72,8 @@ const Navbar = () => {
                 </>
               ) : (
                 <>
-                <li className='nav-item text-white'>
-                   <span>WELCOME {store.user.first_name.toUpperCase()}</span>
+                  <li className='nav-item text-white'>
+                    <span>WELCOME {store.user.first_name.toUpperCase()}</span>
                   </li>
                   <li className='nav-item'>
                     <span
@@ -97,7 +103,7 @@ const Navbar = () => {
                     CREATE
                   </Link>
                 </li>
-                </>
+              </>
               )}
             </ul>
           </div>

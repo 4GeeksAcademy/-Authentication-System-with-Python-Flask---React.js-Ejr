@@ -9,7 +9,8 @@ const getState = ({ getStore, getActions, setStore }) => {
       clothes:[],
       shoes:[],
       accessories:[],
-      details: {}
+      details: {},
+      favorites: []
     },
     actions: {
       login: async (email, password) => {
@@ -171,9 +172,33 @@ const getState = ({ getStore, getActions, setStore }) => {
             console.log("No se pudo recuperar detalles", error);
           }
 			  },
+      getFavorites:async() => {
+        const store = getStore();
+        const response = await api.getFavorites(store.token)
+        setStore({favorites:response})
+        console.log(response)
+        console.log('Favorites upload')
+        return response
+      },
+         
+      postFavorites:async(id) => {
+        const store = getStore();
+        const response = await api.postFavorites(store.token,id)
 
-             
-            
+        setStore({favorites:response})
+        console.log(response)
+        console.log('Favorite added')
+        return response
+      },
+      
+      deleteFavorites:async(id) => {
+        const store = getStore();
+        const response = await api.deleteFavorites(store.token,id)
+        setStore({favorites:response})
+        console.log(response)
+        console.log('Favorite deleted')
+        return response
+      }
 					
 				
 

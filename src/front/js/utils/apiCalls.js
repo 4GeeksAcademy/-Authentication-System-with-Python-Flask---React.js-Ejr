@@ -87,3 +87,30 @@ export async function createProduct(
 
   return response
 }
+
+export async function getFavorites(
+  token
+) {
+const response = await makeRequest('/users/favorites', 'GET', 
+null, token)
+
+return response
+}
+
+export async function postFavorites(
+  token, product_id
+) {
+const response = await makeRequest('/users/favorites/'+product_id, 'POST', 
+null, token)
+
+return response
+}
+
+export async function deleteFavorites(
+  token, product_id
+) {
+const response = await makeRequest('/users/favorites/'+product_id, 'DELETE', 
+null, token)
+
+return response
+}

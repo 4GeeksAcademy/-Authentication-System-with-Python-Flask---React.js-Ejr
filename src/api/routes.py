@@ -118,6 +118,34 @@ def update_user(user_id):
     db.session.commit()
     return jsonify({'message': 'Usuario modificado exitosamente'}), 200
 
+@api.route('/users/favorites', methods=['GET'])
+@jwt_required()
+def get_favorite():
+    current_user_id = get_jwt_identity()
+    user = User.query.get(current_user_id)
+    return [p.serialize() for p in user.favorites], 200
+
+@api.route('/users/favorites/<int:product_id>', methods=['POST'])
+@jwt_required()
+def add_favorite(product_id):
+    current_user_id = get_jwt_identity()
+    user = User.query.get(current_user_id)
+    product = Product.query.get(product_id)
+    user.favorites.append(product)
+    db.session.commit()
+    return [p.serialize() for p in user.favorites], 200
+
+@api.route('/users/favorites/<int:product_id>', methods=['DELETE'])
+@jwt_required()
+def delete_favorite(product_id):
+    current_user_id = get_jwt_identity()
+    user = User.query.get(current_user_id)
+    product = Product.query.get(product_id)
+    user.favorites.remove(product)
+    db.session.commit()
+    return [p.serialize() for p in user.favorites], 200
+
+
 # Ruta para eliminar un usuario por su ID
 @api.route('/user/<int:user_id>', methods=['DELETE'])
 def delete_user(user_id):
