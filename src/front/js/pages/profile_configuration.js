@@ -37,6 +37,12 @@ export const Profile_configuration = () => {
   };
   const validatePasswords = () => {
     if (password1 !== password2) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Las contraseñas no coinciden',
+        text: 'vuelve a intentarlo',
+       
+      });
       return false;
     }
     handlePasswordChange();
@@ -81,6 +87,11 @@ export const Profile_configuration = () => {
         setData({ ...data, response: responseData });
         setPassword1("");
         setPassword2("");
+        Swal.fire({
+          icon: 'success',
+          title: 'Nueva contraseña guardada'
+         
+        });
         setTimeout(() => {
           closeModal();
         }, 1000);

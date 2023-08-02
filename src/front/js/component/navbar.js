@@ -42,6 +42,15 @@ export const Navbar = () => {
   const handleLogOut = () => {
     localStorage.removeItem("token");
     store.token = "";
+    Swal.fire({
+      title: '¡Hasta pronto!',
+      showClass: {
+        popup: 'animate__animated animate__fadeInDown'
+      },
+      hideClass: {
+        popup: 'animate__animated animate__fadeOutUp'
+      }
+    })
   };
 
   const handleSubmit = async e => {

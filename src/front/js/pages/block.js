@@ -157,7 +157,7 @@ const StatusToSold = (product) => {
                                 </div>
                                 <div className="modal-footer">
                                 <div>
-                                            <p>Tenga en cuenta que una vez aceptada o cancelada la solicitud no se podrán revertirlos cambios</p>
+                                            <p>Ten en cuenta que una vez aceptada o cancelada la solicitud no se podrán revertirlos cambios</p>
                                         </div>
                                     <button type="button" className="btn btn_config cancel" data-bs-dismiss="modal" onClick={() => StatusToOnSale(product)}>Rechazar</button>
                                     <button type="button" className="btn btn_config reservado" data-bs-dismiss="modal" onClick={() => StatusToSold(product)}>Aceptar</button>
@@ -195,7 +195,7 @@ const StatusToSold = (product) => {
                                     
                                 </div>
                                 <div className="modal-footer">
-                                    <button type="button" className="btn btn_config cancel" data-bs-dismiss="modal">Cancelar</button>
+                                    <button type="button" className="btn btn_config cancel" data-bs-dismiss="modal">No</button>
                                     <button type="button" className="btn btn_config reservado" data-bs-dismiss="modal" onClick={() => StatusToOnSale(product)}>Aceptar</button>
                                 </div>
                             </div>

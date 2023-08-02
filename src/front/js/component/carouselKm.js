@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
 import { ThemeContext } from "../layout";
@@ -9,13 +9,16 @@ import { Filters } from "./filters";
 import "/workspaces/Watacar_v2/src/front/styles/index.css";
 import { Placeholder_carousel } from "../pages/placeholder_carousel";
 
-
-
 export const CarouselKm = () => {
   defineElement(lottie.loadAnimation);
   const { store, actions } = useContext(Context);
-  const carImage = "https://images.coches.com/_vn_/kia/Sportage/c399cf1d98a95d24f8e8715dd0b13fb2.jpg?p=cc_vn_high"
+  const [favoriteIcon, setFavoriteIcon] = useState('fa-regular');
+  const carImage = "https://images.coches.com/_vn_/kia/Sportage/c399cf1d98a95d24f8e8715dd0b13fb2.jpg?p=cc_vn_high";
   const navigate = useNavigate();
+
+  const handleFavoriteButton = () => {
+    setFavoriteIcon('fa-solid');
+  }
 
   useEffect(() => {
     actions.getFilteredKm();
@@ -23,6 +26,7 @@ export const CarouselKm = () => {
 
   const selectFavoriteVehicle = (user_id, product_id) => {
     actions.postFavorite(user_id, product_id);
+    handleFavoriteButton();
   };
 
   return (
@@ -63,7 +67,6 @@ export const CarouselKm = () => {
                   <p>
                     Vendido por{" "}
                     <span
-                      
                       style={{ color: 'black', textDecoration: 'none' }}
                       className="link-hover"
                     >
@@ -77,14 +80,7 @@ export const CarouselKm = () => {
                     to=""
                     onClick={() => selectFavoriteVehicle(store.user.id, vehicle.id)}
                   >
-                    <script src="https://cdn.lordicon.com/bhenfmcm.js"></script>
-                    <lord-icon
-                      src="https://cdn.lordicon.com/rjzlnunf.json"
-                      trigger="hover"
-                      colors="primary:#1663c7,secondary:#16a9c7"
-                      stroke="80"
-                      style={{ width: "50px", height: "30px" }}
-                    ></lord-icon>
+                    <i className={`fa-heart ${favoriteIcon}`} style={{"color": "#2e6ad1"}}></i>
                   </Link>
                 </div>
               </div>

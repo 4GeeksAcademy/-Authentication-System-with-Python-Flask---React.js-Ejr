@@ -50,6 +50,11 @@ const StatusToPendingSale = (product) => {
         .then(response => response.json())
         .then(response => {
         console.log(response);
+        Swal.fire({
+            icon: 'success',
+            title: '¡Enhorabuena por tu compra!',
+         
+          })
         })
         .catch(error => {
         console.error("Error:", error);
@@ -73,6 +78,7 @@ const StatusToOnSale = (product) => {
         .then(response => response.json())
         .then(response => {
         console.log(response);
+        Swal.fire('Has cancelado el proceso de compra')
         
         })
         .catch(error => {

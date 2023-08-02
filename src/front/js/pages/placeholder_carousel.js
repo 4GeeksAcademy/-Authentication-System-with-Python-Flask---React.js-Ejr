@@ -4,7 +4,7 @@ import "/workspaces/Watacar_v2/src/front/styles/profile.css";
 export const Placeholder_carousel = () => {
   const generatePlaceholderCards = () => {
     const placeholderCards = [];
-    for (let i = 0; i < 4; i++) {
+    for (let i = 0; i < 5; i++) {
       placeholderCards.push(
         <div className="card mx-3" key={i} aria-hidden="true">
           <div className="image-container">

@@ -66,11 +66,28 @@ const handleImageIdChange = (e) => {
     try {
         await actions.postGarage(name, mail, phone, cif, address, description, web, user_id, image_id);
         navigate("/profile/garage");
+        Swal.fire({
+          icon: 'success',
+          title: '¡Enhorabuena!',
+          text: 'Has registrado tu Taller!',
+        
+        });
         actions.getMyGarage()
+
     }
     catch(error) {
+     
+
         console.log(error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Te faltan datos',
+          text: 'Completa los campos necesarios',
+     
+        });
         navigate("/profile/garage")
+      
+       
     }
  
 
