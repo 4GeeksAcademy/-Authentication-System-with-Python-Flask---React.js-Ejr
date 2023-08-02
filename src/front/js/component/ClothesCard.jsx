@@ -5,8 +5,11 @@ import { Context } from '../store/appContext'
 
 
 const ClothesCard = ({clothe}) => {
-    const { actions } = useContext(Context)
-    
+    const { actions, store } = useContext(Context)
+    const handleaddFavorites = ()=>{
+        actions.postFavorites(clothe.id)
+      }
+
 const navigate = useNavigate()
 
     const handleDetails = () => {
@@ -37,7 +40,7 @@ const navigate = useNavigate()
                     <button onClick={() => handleDetails()}  className="btn btn-warning m-3">Details</button>
 
 
-                    <button  href="#" className="btn btn-danger m-3 "   ><strong>♥</strong></button>
+                    <button href="#" onClick={()=>handleaddFavorites()} className="btn btn-danger m-3 " ><strong>♥</strong></button>
                 </div>
             </div>
 

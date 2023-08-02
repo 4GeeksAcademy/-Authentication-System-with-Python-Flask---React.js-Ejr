@@ -5,7 +5,9 @@ import { Context } from '../store/appContext.js';
 
 const ViewDetails = () => {
   const { actions, store } = useContext(Context);
-
+  const handleaddFavorites = ()=>{
+    actions.postFavorites(store.details.id)
+  }
 
 
   
@@ -34,7 +36,7 @@ const ViewDetails = () => {
                     <button  className="btn btn-warning m-3">Details</button>
 
 
-                    <button href="#" className="btn btn-danger m-3 "   ><strong>♥</strong></button>
+                    <button href="#" onClick={()=>handleaddFavorites()} className="btn btn-danger m-3 " ><strong>♥</strong></button>
                 </div>
             </div>
 
