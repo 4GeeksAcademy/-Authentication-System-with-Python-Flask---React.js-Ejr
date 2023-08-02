@@ -1,4 +1,4 @@
-import React, { useContext, useEffect} from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Context } from '../store/appContext';
 
 
@@ -12,7 +12,7 @@ const BusinessOfferCard = () => {
   return (
     <>
       {store.offers.map((business_offer) => {
-            // {store.offers && store.offers.length > 1 &&
+        // store.offers && store.offers.length > 1 && 
         return (
           <div
             key={business_offer.id}
