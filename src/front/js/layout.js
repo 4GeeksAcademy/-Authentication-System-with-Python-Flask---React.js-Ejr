@@ -7,6 +7,7 @@ import { SignIn } from "./pages/SignIn";
 import { Single } from "./pages/single";
 import injectContext from "./store/appContext";
 import { Login } from "./pages/Login";
+import { PassRecovery } from "./pages/passRecovery";
 
 
 
@@ -26,6 +27,7 @@ const Layout = () => {
                         <Route element={<Login />} path="/login" />
                         <Route element={<SignIn />} path="/sign-up" />
                         <Route element={<Single />} path="/single/:theid" />
+                        <Route element={<PassRecovery />} path="/pass-recovery" />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
                 </ScrollToTop>

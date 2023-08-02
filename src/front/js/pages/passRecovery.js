@@ -2,13 +2,13 @@ import React, { useContext } from "react";
 import { Context } from "../store/appContext";
 import Moviestar from "../../img/Moviestar.png";
 import "../../styles/Login.css";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 
-export const Login = () => {
+export const PassRecovery = () => {
 	const { store, actions } = useContext(Context);
 
-    const [form, setForm] = React.useState({ username: "", password: ""})
+    const [form, setForm] = React.useState({ email: "", secret_answer: ""})
     const navigate = useNavigate
 
     const handleChange = (e) => {
@@ -19,15 +19,16 @@ export const Login = () => {
 
     const onSubmit = async (e) => {
         e.preventDefault()
-        const apiUrl = `${process.env.BACKEND_URL}api/login`
+        const apiUrl = `${process.env.BACKEND_URL}/api/pass-recovery`
         try {
+            console.log(apiUrl,form)
             const res = await fetch(apiUrl, {
                 method:"POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(form)
             })
             const data = await res.json()
-            localStorage.setItem("token", data?.token)
+            console.log(data)
             navigate("/home")
         } catch (error) {
             console.error(error)
@@ -39,18 +40,16 @@ export const Login = () => {
 			<img id="image" src={Moviestar} />
 		<form onSubmit={onSubmit}>
             <div>
-                <input className="text-center" name="username" onChange={handleChange} type="text" id="username1" placeholder="Usuario" value={form.username} required></input>
+                <input className="text-center" name="email" onChange={handleChange} type="text" id="username1" placeholder="Usuario" value={form.email} required></input>
             </div>
             <br/>
             <div>
-                <input className="text-center" name="password" onChange={handleChange} type="password" id="password1" placeholder="Contraseña" value={form.password} required></input>
+                <input className="text-center" name="secret_answer" onChange={handleChange} type="password" id="secret_answer" placeholder="Respuesta secreta" value={form.secret_answer} required></input>
                 <br/>
-                <Link to={"/pass-recovery"} id="ps" href="#aja">Restablecer Contraseña.</Link>
             </div>
 			<br/>
-            <button type="submit" id="login-button">Entrar</button>
+            <button type="submit" id="recovery-button">Enviar</button>
             <br/>
-            <a id="sp" href="#aja">¿No tienes una cuenta?Registrate</a>
         </form>
 		</div>
 	);

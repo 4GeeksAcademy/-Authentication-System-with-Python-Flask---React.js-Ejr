@@ -268,3 +268,21 @@ def login():
     access_token = create_access_token(identity=user.id)
 
     return jsonify({"token": access_token, "user": user.serialize()}), 200
+
+
+@api.route('/pass-recovery', methods=['POST'])
+def passRecovery(): 
+
+    email = request.json.get("email", None)
+    secret_answer = request.json.get ("secret_answer", None)
+
+    if not email or not secret_answer:
+        return jsonify({"msg": "Email and secret_answer are required"}), 400
+            
+    user = User.query.filter_by(email=email).first()
+
+    if user is None or user.secret_answer != secret_answer:
+        return jsonify({"msg" : "Invalid email or secret_answer"}), 401
+
+
+    return jsonify ({"msg" : "ok"}), 200
