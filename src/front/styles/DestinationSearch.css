@@ -1,6 +1,7 @@
 
+
 .my-search-container {
-  max-width: 400px;
+  max-width: 600px;
   margin: 0 auto;
   padding: 20px;
   background-color: #f9f9f9;
@@ -10,49 +11,24 @@
 }
 
 
-.my-search-input {
-  width: 100%;
-  padding: 10px;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  margin-bottom: 10px;
-  background-color: #fff;
+.jumbotron {
+  background: linear-gradient(rgba(255, 183, 94, 0.8), rgba(255, 141, 117, 0.8)), url("https://images.unsplash.com/photo-1533371452382-d45a9da51ad9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=873&q=80");
+  background-size: cover;
+  color: #ffffff;
+  padding: 40px;
+  text-align: center;
+  border-radius: 10px;
+  margin-bottom: 20px;
 }
 
-
-.my-search-results {
-  background-color: #fff;
-  padding: 10px;
-  border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+.jumbotron h1 {
+  font-size: 36px;
+  font-weight: bold;
+  margin-bottom: 20px;
 }
 
-
-.my-search-result-item {
-  margin-bottom: 10px;
-  padding: 10px;
-  background-color: #f9f9f9;
-  border-radius: 5px;
-  display: flex;
-  align-items: center;
-  cursor: pointer;
+.jumbotron .lead {
+  font-size: 20px;
 }
 
-
-.my-search-result-item img {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  margin-right: 10px;
-}
-
-.my-search-result-item h3 {
-  font-size: 18px;
-  margin: 0;
-}
-
-.my-search-result-item p {
-  margin: 0;
-}
 
