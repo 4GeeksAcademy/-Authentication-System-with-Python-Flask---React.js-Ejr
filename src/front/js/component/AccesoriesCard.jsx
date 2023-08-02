@@ -1,9 +1,18 @@
-import  React  from "react";
-// import {  useNavigate  } from 'react-router-dom';
+import React, {  useContext } from 'react'
+import { useNavigate } from 'react-router'
+import { Context } from '../store/appContext'
 
 
 const AccessoriesCard = ({accessorie}) => {
- console.log(accessorie)
+    
+    const navigate = useNavigate()
+
+    const handleDetails = () => {
+        actions.viewDetails(accessorie.id);
+    navigate("/viewDetails")
+      };
+
+
     return (
 
 
@@ -17,14 +26,14 @@ const AccessoriesCard = ({accessorie}) => {
                     <h5 className="card-title"> {accessorie.name}</h5>
 
                     <div>
-                        <p className="card-text"><span>Description</span>{accessorie.description} </p>
+                        <p className="card-text"><span>Description:</span>{accessorie.description} </p>
                         <p className="card-text"><span>Color:</span>{accessorie.color} </p>
                         <p className="card-text"><span>Price:</span> {accessorie.price}</p>
                     </div>
 
 
 
-                    <button  className="btn btn-warning m-3">Details</button>
+                    <button onClick={() => handleDetails()}  className="btn btn-warning m-3">Details</button>
 
 
                     <button href="#" className="btn btn-danger m-3 "   ><strong>♥</strong></button>

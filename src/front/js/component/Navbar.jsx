@@ -18,12 +18,12 @@ const Navbar = () => {
       <div className='container-fluid'>
         <Link className='navbar-brand' to='/'>
           <img
-            style={{ width: '100px', objectFit: '', border: 'none' }}
+            style={{ width: '100px', objectFit: '', border: 'none'}}
             src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5Kwl4gT7z8mc8Ug0BaVPrzvedTvuLAZ8VFQ&usqp=CAU</img'
             alt='logo'
           />
         </Link>
-        <div className='d-flex'>
+        <div className='d-flex  end'>
           <Link className='nav-link text-white' to='/cart'>
             {' '}
             <i className='fa-solid fa-cart-shopping' />
@@ -50,7 +50,7 @@ const Navbar = () => {
             className='collapse navbar-collapse me-2'
             id='navbarSupportedContent'
           >
-            <ul className='navbar-nav me-auto text-end mb-2 mb-lg-0 '>
+            <ul className='navbar-nav  text-end mb-2  '>
               {!store.token ? (
                 <>
                   <li className='nav-item'>
@@ -60,7 +60,7 @@ const Navbar = () => {
                   </li>
                   <li className='nav-item'>
                     <Link className='nav-link text-white' to='/signup'>
-                      REGISTER
+                      SIGNUP
                     </Link>
                   </li>{' '}
                 </>
@@ -102,7 +102,7 @@ const Navbar = () => {
             </ul>
           </div>
           <button
-            style={{ color: 'black', border: 'none', alignSelf: 'start' }}
+            style={{ color: 'black', border: 'none', alignSelf: 'center' }}
             className='navbar-toggler pt-2'
             type='button'
             data-bs-toggle='collapse'

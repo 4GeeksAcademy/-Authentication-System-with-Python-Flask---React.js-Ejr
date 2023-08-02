@@ -12,6 +12,7 @@ import Admin from './views/Admin.jsx'
 import Create from './views/Create.jsx'
 import Footwear from './views/Footwear.jsx'
 import Clothes from './views/Clothes.jsx'
+import ViewDetails from './views/ViewDetails.jsx'
 import Accessories from './views/Accessories.jsx'
 
 // import Navbar from "./component/Navbar.jsx";
@@ -44,6 +45,7 @@ const Layout = () => {
             <Route path='/create' element={<Create />} />
             <Route path='/footwear' element={<Footwear />} />
             <Route path='/clothes' element={<Clothes />} />
+            <Route path='/viewDetails' element={<ViewDetails />} />
             <Route path='/accesories' element={<Accessories />} />
             <Route path='*' element={<h1>Not found!</h1>} />
           </Routes>
