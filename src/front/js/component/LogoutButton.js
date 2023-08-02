@@ -1,5 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { Context } from '../store/appContext';
+import { Link } from 'react-router-dom';
 
 
 const LogoutButton = () => {
@@ -28,9 +29,11 @@ const LogoutButton = () => {
 
   return (
     <div>
-      <button className='btn btn-danger' onClick={handleLogout}>
-        Logout
-      </button>
+      <Link to='/'>
+        <button className='btn btn-danger' onClick={handleLogout}>
+          Logout
+        </button>
+      </Link>
     </div>
   );
 };

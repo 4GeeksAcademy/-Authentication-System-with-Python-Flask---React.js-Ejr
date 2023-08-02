@@ -3,9 +3,8 @@
 /* Add this to your CSS file */
 /* Navbar side menu styles */
 .navbar {
-    background-color: #000; /* Black background color */
     padding: 10px; /* Add some padding to create space between content and navbar edges */
-    color: #fff; /* White text color for the navbar */
+    color: #000; /* White text color for the navbar */
   }
   .offcanvas-end {
     background-color: #282c34; /* Dark background color */
@@ -68,7 +67,7 @@
 
 /* Styling for the car list in the dropdown menu */
 .carFormatted {
-    color: #fff; /* White text color for car name */
+    color: #000; /* White text color for car name */
     font-size: 16px;
     margin-right: 10px;
 }
