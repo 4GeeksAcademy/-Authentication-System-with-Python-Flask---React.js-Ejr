@@ -21,7 +21,7 @@ def has_no_empty_params(rule):
     return len(defaults) >= len(arguments)
 
 def generate_sitemap(app):
-    links = ['/admin/']
+    links = ['/admin/', 'lalala']
     for rule in app.url_map.iter_rules():
         # Filter out rules we can't navigate to in a browser
         # and rules that require parameters

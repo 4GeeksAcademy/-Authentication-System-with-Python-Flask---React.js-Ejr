@@ -1,4 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.orm import relationship
+
 
 db = SQLAlchemy()
 
@@ -20,11 +22,15 @@ class User(db.Model):
 
 class Movie(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(80))
-    description = db.Column(db.String(250))
+    name = db.Column(db.String(180))
+    description = db.Column(db.String(1000))
     ranking = db.Column(db.Integer)
-    actors = db.Column(db.String(140))
-    directors = db.Column(db.String(100))
+    # Relación con la tabla Actor
+    actors = relationship('Actor', secondary='movie_actor')
+
+    # Relación con la tabla Director
+    directors = relationship('Director', secondary='movie_director')    
+
 
     def __repr__(self):
         return f'<Movie {self.id} {self.name}>'
@@ -35,8 +41,8 @@ class Movie(db.Model):
             "name": self.name,
             "description": self.description,
             "ranking": self.ranking,
-            "actors": self.actors,
-            "directors": self.directors
+            "actors": [actor.serialize() for actor in self.actors],  # Serializar los actores asociados
+            "directors": [director.serialize() for director in self.directors],  # Serializar los directores asociados
         }
 
 class Actor(db.Model):
@@ -72,6 +78,18 @@ class Director(db.Model):
         "description": self.description,
         "other_movies": self.other_movies, 
         }
+    
+# Tabla de relación entre Movie y Actor
+movie_actor = db.Table('movie_actor',
+    db.Column('movie_id', db.Integer, db.ForeignKey('movie.id'), primary_key=True),
+    db.Column('actor_id', db.Integer, db.ForeignKey('actor.id'), primary_key=True)
+)
+
+# Tabla de relación entre Movie y Director
+movie_director = db.Table('movie_director',
+    db.Column('movie_id', db.Integer, db.ForeignKey('movie.id'), primary_key=True),
+    db.Column('director_id', db.Integer, db.ForeignKey('director.id'), primary_key=True)
+)
     
 # faltara añadir series
 
