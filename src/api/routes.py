@@ -7,7 +7,7 @@ from api.utils import generate_sitemap, APIException
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
 
 
-api = Blueprint('api', __name__)
+api = Blueprint('api/user', __name__)
 
 
 # @api.route('/hello', methods=['POST', 'GET'])
@@ -103,12 +103,6 @@ def delete_user(user_id):
     return jsonify({"msg": "User deleted"}), 200
 
 
-
-
-
-
-
-
 @api.route('/signup', methods=['POST'])
 def create_new_user():
     if not request.is_json:
@@ -142,8 +136,6 @@ def create_new_user():
 
 
 
-
-
 @api.route('/login', methods=['POST'])
 def login():
 
@@ -161,8 +153,3 @@ def login():
     access_token = create_access_token(identity=user.id)
 
     return jsonify({"token": access_token, "user": user.serialize()}), 200
-
-
-
-
-    
