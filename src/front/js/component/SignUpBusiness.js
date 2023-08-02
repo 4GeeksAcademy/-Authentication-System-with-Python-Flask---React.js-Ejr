@@ -31,19 +31,19 @@ const SignUpBusiness = () => {
         console.log("Form submitted:", values);
 
         actions.signupBusiness(values)
-          // .then(() => {
-          //   // Handle successful submission
-          //   console.log("Form submitted successfully!");
-          //   navigate("/reviews");
-          // })
-          // .catch((error) => {
-          //   // Handle submission error
-          //   console.error("Error submitting form:", error);
-          //   alert("Email already exists");
-          // })
-          // .finally(() => {
-          //   setSubmitting(false); // Set submitting to false after submission is done
-          // });
+          .then(() => {
+            // Handle successful submission
+            console.log("Form submitted successfully!");
+            navigate("/reviews");
+          })
+          .catch((error) => {
+            // Handle submission error
+            console.error("Error submitting form:", error);
+            alert("Email already exists");
+          })
+          .finally(() => {
+            setSubmitting(false); // Set submitting to false after submission is done
+          });
       }}
     >
       {formik => (

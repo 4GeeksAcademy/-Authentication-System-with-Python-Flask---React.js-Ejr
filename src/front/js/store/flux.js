@@ -1,6 +1,6 @@
 const getState = ({ getStore, getActions, setStore }) => {
   const API_URL =
-    "https://valentinfrar-fictional-invention-g9q764445w6f94v4-3001.preview.app.github.dev";
+    "https://albertgescribano-obscure-train-j6x45w44rqqfp66v-3001.preview.app.github.dev";
 
   return {
     store: {
@@ -123,7 +123,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             } else {
               setStore({...store,  business_user: data.user_or_business});
             }
-
+ñ
             setStore({ auth: true });
           }
         } catch (error) {

@@ -19,7 +19,7 @@ class User(db.Model):
     # Relationship to User model
     reviews = db.relationship("Review", backref="user")
     favorites = db.relationship('Favorites', backref='user')
-    likes = db.relationship('Likes', backref='user')
+    # likes = db.relationship('Likes', backref='user')
 
     def __repr__(self):
         return '<User %r>' % self.username
@@ -68,7 +68,6 @@ class Trip(db.Model):
     country = db.Column(db.String(40), nullable=False)
     city = db.Column(db.String(40), nullable=False)
     activities = db.Column(db.String(100), nullable=False)
-
     offers = db.relationship("Offers", backref="trip")
     review = db.relationship("Review", backref="trip")
     favorites = db.relationship('Favorites', backref='trip')
@@ -109,6 +108,10 @@ class Offers(db.Model):
             "id": self.id,
             "trip_id": self.trip_id,
             "business_id": self.business_id,
+            "offer_title": self.offer_title,
+            "offer_description": self.offer_description,
+            "country":self.country,
+            "city": self.city,
             "normal_user_price": self.normal_user_price,
             "medium_user_price": self.medium_user_price,
             "high_user_price": self.high_user_price,
@@ -123,7 +126,7 @@ class Review(db.Model):
     title = db.Column(db.String(75), nullable=False)
     comment_text = db.Column(db.String(500), nullable=False)
 
-    likes = db.relationship('Likes', backref='review')
+    # likes = db.relationship('Likes', backref='review')
 
     def __repr__(self):
         return '<Review %r>' % self.id
@@ -138,22 +141,22 @@ class Review(db.Model):
         }
     
 
-class Likes(db.Model):
-    id = db.Column(db.Integer, primary_key = True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
-    review_id = db.Column(db.Integer, db.ForeignKey('review.id'), nullable=False)
-    likes = db.Column(db.Integer, default=0)
+# class Likes(db.Model):
+#     id = db.Column(db.Integer, primary_key = True)
+#     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
+#     review_id = db.Column(db.Integer, db.ForeignKey('review.id'), nullable=False)
+#     likes = db.Column(db.Integer, default=0)
 
-    def __repr__(self):
-        return '<Likes %r>' % self.id
+#     def __repr__(self):
+#         return '<Likes %r>' % self.id
     
-    def serialize(self):
-        return {
-            "id": self.id,
-            "user": User.query.get(self.user_id).serialize(),
-            "review": Review.query.get(self.review_id).serialize(),
-            "likes": self.likes
-        }
+#     def serialize(self):
+#         return {
+#             "id": self.id,
+#             "user": User.query.get(self.user_id).serialize(),
+#             "review": Review.query.get(self.review_id).serialize(),
+#             "likes": self.likes
+#         }
 
 
 class Favorites(db.Model):

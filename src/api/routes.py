@@ -1,6 +1,6 @@
 from sqlalchemy.exc import IntegrityError
 from flask import Flask, request, jsonify, Blueprint, jsonify, redirect, url_for
-from api.models import db, User, Business_user, Offers, Trip, Review, Likes
+from api.models import db, User, Business_user, Offers, Trip, Review
 from api.utils import APIException
 from flask_bcrypt import bcrypt, Bcrypt
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity, JWTManager, unset_jwt_cookies
@@ -162,7 +162,6 @@ def create_business_user():
 
         db.session.add(new_business)
         db.session.commit()
-
 
         return jsonify({'message': 'Business_user created successfully', 'business': new_business.serialize()}), 201
 
@@ -386,10 +385,10 @@ def update_offer(offer_id):
     try:
         offer.trip_id = data['trip_id']
         offer.business_id = data['business_id']
-        offer.offer_title=data['offer_title'],
-        offer.offer_description=data['offer_description'],
-        offer.country=data['country'],
-        offer.city=data['city'],
+        offer.offer_title = data['offer_title'],
+        offer.offer_description = data['offer_description'],
+        offer.country = data['country'],
+        offer.city = data['city'],
         offer.normal_user_price = data['normal_user_price']
         offer.medium_user_price = data['medium_user_price']
         offer.high_user_price = data['high_user_price']
@@ -477,7 +476,6 @@ def delete_trip(trip_id):
 
 
 # Admin user route
-
 
 @api.route('/admin_user', methods=['GET'])
 @jwt_required()
@@ -587,29 +585,29 @@ def delete_review(review_id):
     return jsonify({"message": "Review deleted successfully"}), 200
 
 
-@api.route('/reviews/<int:review_id>/likes', methods=['GET'])
-def get_likes(review_id):
-    review = Review.query.get(review_id)
-    print(review)
-    if review is None:
-        return jsonify(error="Review not found"), 404
+# @api.route('/reviews/<int:review_id>/likes', methods=['GET'])
+# def get_likes(review_id):
+#     review = Review.query.get(review_id)
+#     print(review)
+#     if review is None:
+#         return jsonify(error="Review not found"), 404
 
-    return jsonify(review.likes), 200
+#     return jsonify(review.likes), 200
 
 
-@api.route('/reviews/<int:review_id>/likes', methods=['PUT'])
-def like_review(review_id):
-    review = Review.query.get(review_id)
-    if review is None:
-        return jsonify(error='Review not found'), 404
+# @api.route('/reviews/<int:review_id>/likes', methods=['PUT'])
+# def like_review(review_id):
+#     review = Review.query.get(review_id)
+#     if review is None:
+#         return jsonify(error='Review not found'), 404
 
-    user_id = request.json.get('user_id')
-    if Likes.query.filter_by(user_id=user_id, review_id=review_id).first() is not None:
-        return jsonify(error='User has already  likes this review'), 400
+#     user_id = request.json.get('user_id')
+#     if Likes.query.filter_by(user_id=user_id, review_id=review_id).first() is not None:
+#         return jsonify(error='User has already  likes this review'), 400
 
-    like = Likes(user_id=user_id)
-    print(like)
-    review.likes.append(like)
-    db.session.commit()
+#     like = Likes(user_id=user_id)
+#     print(like)
+#     review.likes.append(like)
+#     db.session.commit()
 
-    return jsonify(message='Review liked successfuly'), 200
+#     return jsonify(message='Review liked successfuly'), 200
