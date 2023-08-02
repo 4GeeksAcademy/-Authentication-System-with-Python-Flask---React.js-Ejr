@@ -1,57 +1,60 @@
-import React, { useContext, useState } from "react";
-import { Context } from "../store/appContext";
+import React, { useContext } from 'react';
+import { Context } from '../store/appContext';
+import { Formik, Field, Form, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
 
 const FormReview = () => {
   const { store, actions } = useContext(Context);
-  const [formData, setFormData] = useState({ title: "", comment_text: "" });
-
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    if (formData.title.length >= 2 && formData.comment_text.length >= 10) {
-      actions.create_review(formData);
-      setFormData({ title: "", comment_text: "" });
-    } else {
-      alert("Ingrese un título con al menos dos caracteres y un comentario con al menos diez caracteres.");
-    }
-  };
-
   return (
-    <div className="div-form-review-content">
-      <form className="form-review-content" onSubmit={handleSubmit}>
-        <div className="title-form-review">
-          <label htmlFor="title">Títutlo:</label>
-          <input
-            type="text"
-            id="title"
-            name="title"
-            value={formData.title}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div className="comment-form-review">
-          <label htmlFor="comment_text">Commentario:</label>
-          <textarea
-            rows="4"
-            cols="30"
-            maxLength="300"
-            style={{ resize: "none" }}
-            id="comment_text"
-            name="comment_text"
-            value={formData.comment_text}
-            onChange={handleChange}
-            required
-          ></textarea>
-        </div>
-        <button type="submit">Enviar reseña</button>
-      </form>
-    </div>
-  );
-};
+    <Formik
+      initialValues={{
+        title: "",
+        comment_text: "",
+      }}
+      validationSchema={Yup.object({
+        title: Yup.string().min(10, 'Debe tener 10 carácteres o más').required('Obligatorio'),
+        comment_text: Yup.string().min(40, 'Debe tener 40 carácteres o más').required('Obligatorio'),
+      })}
+      onsubmit={(values, { setSubmitting }) => {
+        console.log("Form submitted:", values);
+        actions.create_review(values)
+          .then(() => {
+            console.log("Form submitted succesfuly!");
+          })
+          .catch((error) => {
+            // Handle submission error
+            console.error("Error submitting form:", error);
+            alert("Something gets wrong");
+          })
+          .finally(() => {
+            setSubmitting(false); // Set submitting to false after submission is done
+          });
+      }}
+    >
+      {formik => (
+        <div>
 
-export default FormReview;
+          {store.auth ? (
+            <div className="div-form-review-content">
+              <Form className="form-review-content" onSubmit={formik.handleSubmit}>
+                <div className="title-form-review">
+                  <label htmlFor="title">Títutlo:</label>
+                  <Field type="text" name="title" value={formik.values.title} />
+                  <ErrorMessage name='title' />
+                </div>
+                <div className="comment-form-review">
+                  <label htmlFor="comment_text">Commentario:</label>
+                  <Field type="text" name="comment_text" value={formik.values.comment_text} />
+                  <ErrorMessage name='comment_text' />
+                </div>
+                <button type="submit">Publicar mi reseña</button>
+              </Form>
+            </div>
+          ) : null}
+        </div>
+      )
+      }
+    </Formik >
+  )
+}
+export default FormReview
