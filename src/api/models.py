@@ -17,6 +17,7 @@ class User(db.Model):
     favorites = db.relationship('Product', secondary='favorites')
     cart = db.relationship('Product', secondary='carts')
     orders = db.relationship('Order', back_populates='user')
+    voted_products = db.relationship('ProductsRating', back_populates='user')
 
     def __repr__(self):
         return f'<User {self.email}>'
@@ -77,9 +78,13 @@ class Product(db.Model):
 
     category = db.relationship('Category', back_populates='products')
     orders = db.relationship('OrderItems', back_populates='product')
-    sizes_quantity = db.relationship('ProductSizesQuantity', back_populates='product')        
+    sizes_quantity = db.relationship('ProductSizesQuantity', back_populates='product')
+    ratings = db.relationship('ProductsRating', back_populates='product')
 
     def serialize(self):
+        total_rating = sum(rating.rating for rating in self.ratings)
+        average_rating = total_rating / len(self.ratings) if self.ratings else 0
+
         return {
             'id': self.id,
             'name': self.name,
@@ -88,7 +93,10 @@ class Product(db.Model):
             'color': self.color,
             'image_url': self.image_url,
             'type': self.type,
-            'sizes_quantity': [size_quantity.serialize() for size_quantity in self.sizes_quantity]
+            'sizes_quantity': [size_quantity.serialize() for size_quantity in self.sizes_quantity],
+            'category_id': self.category.id,
+            'rating': average_rating
+
         }
     
 class Order(db.Model):
@@ -147,5 +155,25 @@ carts = db.Table(
 )
 
 
+class ProductsRating(db.Model):
+    __tablename__= 'products_rating'
+    product_id = db.Column(db.Integer, db.ForeignKey('products.id'), primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), primary_key=True)
+    rating = db.Column(db.Float, nullable=False, default=0)
+
+    product = db.relationship("Product", back_populates="ratings")
+    user = db.relationship("User", back_populates="voted_products")
+
+    __table_args__ = (
+        db.CheckConstraint(rating >= 0, name='check_rating_min'),
+        db.CheckConstraint(rating <= 5, name='check_rating_max'),
+    )
+
+    def serialize(self):
+        return {
+            'user_id': self.user.id,
+            'user': self.user.serialize(),
+            'rating': self.rating,
+        }
 
     
