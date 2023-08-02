@@ -10,8 +10,8 @@
     font-family: 'Roboto', sans-serif;
 }
 
-#username,
-#password{
+#username1,
+#password1{
     background-color: white;
     color: black;
     padding: 8px 78px;
@@ -20,7 +20,7 @@
 
 }
 
-#mo{
+#image{
     width: 400px;
     height: 200px;
 }
@@ -40,7 +40,7 @@
     color: white;
 }
 
-#pd {
+#sp {
     font-size: 13px;
     color: rgba(167, 145, 145, 0.674); /* El último valor (0.5) representa la opacidad */
   }
