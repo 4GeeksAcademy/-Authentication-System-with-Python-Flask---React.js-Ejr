@@ -53,13 +53,14 @@ def load_database():
     for result in results:
         # Crear una instancia del modelo Movie con los datos de la película actual
         actors = get_actors_from_movie(result["id"])
-        
+        directors = get_directors_from_movie(result["id"]) 
+
         nueva_pelicula = Movie(
             name=result["title"],
             description=result["overview"][:250],
             ranking=result["vote_average"],
-            actors=actors,  # Unir los géneros en una cadena
-            directors=result["original_language"]
+            actors=actors,
+            directors=directors
         )
 
         # Agregar la nueva película a la sesión de SQLAlchemy
@@ -74,18 +75,68 @@ def load_database():
 def get_movie_credits(movie_id):
     """Obtiene los créditos de una película por su ID."""
     url = f"https://api.themoviedb.org/3/movie/{movie_id}/credits"
-    response = requests.get(url, params={"api_key": os.getenv("THEMOVIEDB_API_KEY")})
+    print(url)
+    headers = {
+        "accept": "application/json",
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5NGVjZTYyODBhZjZiMGQ0YzY1MWRiOWViYTYwYzVlNSIsInN1YiI6IjY0YzNmNTRkZWMzNzBjMDExYzQ2YmFhMiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.DmLTYp48jRT5TkS8IG0FAEuFro5YNx6S6pO1WghQFOw"
+    }
+    response = requests.get(url, headers=headers)
+
     return response.json()
 
 def get_actors_from_movie(movie_id):
     """Obtiene los actores de una película por su ID."""
     # Obtener los créditos
     credits = get_movie_credits(movie_id)
+
+    print(credits)
     # Extraer los actores de los créditos
-    actors = [person['name'] for person in credits['cast']]
-    # Unir los nombres de los actores en una cadena
-    actors_string = ", ".join(actors)
-    return actors_string
+    actors = []
+    for actor_data in credits["cast"]:
+        actor = Actor.query.get(actor_data["id"])
+        if actor is None:
+            actor = Actor(
+                id=actor_data["id"],
+                name=actor_data["name"],
+                description=actor_data.get("known_for_department", ""),
+                other_movies=actor_data.get("character", "")
+            )
+            db.session.add(actor)
+        actors.append(actor)
+
+        
+    # Guardar los cambios en la base de datos
+    db.session.commit()
+    return actors
+
+
+def get_directors_from_movie(movie_id):
+    """Obtiene los direcotres de una película por su ID."""
+    # Obtener los créditos
+    credits = get_movie_credits(movie_id)
+    print("Créditos completos:", credits)
+
+    # Extraer los directores de los créditos
+    directors = []
+
+    for crew_member in credits.get("crew", []):
+        if crew_member.get("job") == "Director":
+            print("Encontrado director:", crew_member)
+            director = Director.query.get(crew_member["id"])
+            if director is None:
+                director = Director(
+                    id=crew_member["id"],
+                    name=crew_member["name"],
+                    description=crew_member.get("known_for_department", ""),
+                    other_movies=crew_member.get("") 
+                )
+                db.session.add(director)
+            directors.append(director)
+
+        
+    # Guardar los cambios en la base de datos
+    db.session.commit()
+    return directors
 
 
     
