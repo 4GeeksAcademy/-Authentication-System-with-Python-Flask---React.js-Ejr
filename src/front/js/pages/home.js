@@ -16,10 +16,9 @@ export const Home = () => {
 			</section>
 			<div className="sight-info">
 				<p>cars on sight</p>
-			</div>
-		</div>	);
+			</div>		
 		<div className="text-center mt-5">
-			<AboutPage />
+		</div>
 		</div>
 	);
 };
