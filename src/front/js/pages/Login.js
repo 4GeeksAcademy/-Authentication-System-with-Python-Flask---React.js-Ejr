@@ -1,57 +1,46 @@
-import React, { useState } from 'react';
-import axios from 'axios'; 
+import React, { useState, useContext } from 'react';
+import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
 // import './Login.css';
-
 export const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { store, actions } = useContext(Context);
   const [isLoggingIn, setIsLoggingIn] = useState(false);
   const navigate= useNavigate();
-
-  const handleLogin = async (event) => { 
+  const handleLogin = async (event) => {
     event.preventDefault();
     setIsLoggingIn(true);
-    
     try {
-      
       const response = await axios.post(`${process.env.BACKEND_URL}/login`, {
         email,
         password
-        
       });
-      console.log(email)
-      console.log(password)
       setIsLoggingIn(false);
-      console.log(response)
-      navigate("/private")
-      
       if (response.status == 200) {
+        const token = response.data.token;
         alert(`Logged in successfully as ${email}`);
-        
+        localStorage.setItem('token', token)
+        navigate('/private')
       } else {
         alert('Invalid credentials. Please try again.');
       }
-      setSessionStorage(data[1] = store.token)
-      console.log(store.token)
     } catch (error) {
       setIsLoggingIn(false);
       console.error('Error during login:', error);
       alert('An error occurred during login. Please try again later.');
     }
   };
-
   return (
     <div className="login-container">
       <h1>Login</h1>
       <form onSubmit={handleLogin}>
         <div className="form-group">
-          <label htmlFor="username">Username:</label>
+          <label htmlFor="email">Email:</label>
           <input
             type="text"
-            id="username"
+            id="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             disabled={isLoggingIn}
@@ -76,16 +65,5 @@ export const Login = () => {
     </div>
   );
 };
-
-
 // export default Login;
-
-
-
-
-
-
-
-    
 export default Login;
-
