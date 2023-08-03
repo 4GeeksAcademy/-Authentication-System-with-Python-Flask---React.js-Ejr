@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import { Context } from '../store/appContext';
 import GooglePay from './GooglePay.js'
+import { format } from 'date-fns';
 
 
 const BusinessOfferCard = ({ searchQuery }) => {
@@ -20,6 +21,7 @@ const BusinessOfferCard = ({ searchQuery }) => {
               .toLowerCase()
               .includes(searchQuery.toLowerCase())
         )
+        .sort((a, b) => b.id - a.id)
         .map((business_offer) => {
           // store.offers && store.offers.length > 1 && 
           return (
@@ -28,16 +30,21 @@ const BusinessOfferCard = ({ searchQuery }) => {
               className="card card-offers card-offer mb-3 mt-4">
               <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSM23JE5rZmCQhGdgwGRj_jNOKbsrGP5C_t-g&usqp=CAU" className="card-img-top" alt="..."></img>
               <div className="card-body">
-                <h5 className="card-title">{business_offer.offer_title}</h5>
+                <h5 className="card-title offer-title">{business_offer.offer_title}</h5>
+                <div className='infos-country'>
+                  <p className="card-text country-offer">{business_offer.country}</p>
+                  <p className="card-text city-offer">{business_offer.city}</p>
+                </div>
                 <p className="card-text">{business_offer.offer_description}</p>
-                <p className="card-text">{business_offer.country}</p>
-                <p className="card-text">{business_offer.city}</p>
-                <p className="card-text">Precio normal : {business_offer.normal_user_price}</p>
-                {/* <p className="card-text">{business_offer.medium_user_price}</p>
-                <p className="card-text">{business_offer.high_user_price}</p> */}
-                <p className="card-text">Precio prenium : {business_offer.premium_user_price}</p>
-                <p className="card-text"><small className="text-muted">Last updated 3 mins ago</small></p>
+                <div className='offer-price'>
+                  <p className="card-text price-user">Precio normal : <span className='price'>{business_offer.normal_user_price.toLocaleString()}$</span></p>
+                  {/* <p className="card-text">{business_offer.medium_user_price}</p>
+                  <p className="card-text">{business_offer.high_user_price}</p> */}
+                  <p className="card-text price-user">Precio prenium : <span className='price'>{business_offer.premium_user_price.toLocaleString()}$</span></p>
+                </div>
+                {/* <p className="card-text"><small className="text-muted">Last updated 3 mins ago {business_offer.business_id}</small></p> */}
                 <GooglePay />
+
               </div>
             </div>
           )
@@ -46,6 +53,7 @@ const BusinessOfferCard = ({ searchQuery }) => {
   );
 };
 
+export default BusinessOfferCard
 
 
 
@@ -165,4 +173,3 @@ const BusinessOfferCard = ({ searchQuery }) => {
 //   )
 // }
 
-export default BusinessOfferCard

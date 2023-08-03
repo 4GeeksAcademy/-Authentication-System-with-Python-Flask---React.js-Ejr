@@ -47,7 +47,7 @@ class Business_user(db.Model):
     address = db.Column(db.String(150), nullable=False)
     payment_method = db.Column(db.String(150), nullable=False)
 
-    Offers = db.relationship("Offers", backref="business_user") 
+    Offers = db.relationship("Offers", backref="business_user")
 
     def __repr__(self):
         return '<Business_user %r>' % self.business_name
@@ -87,16 +87,16 @@ class Trip(db.Model):
 class Offers(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     trip_id = db.Column(db.Integer, ForeignKey('trip.id'), nullable=True)
-    business_id = db.Column(db.Integer, ForeignKey('business_user.id'), nullable=True)
-    offer_title = db.Column(db.String(75), nullable = False)
-    offer_description = db.Column(db.String(250), nullable = False)
-    country = db.Column(db.String(250), nullable = False)
-    city = db.Column(db.String(250), nullable = False)
+    business_id = db.Column(db.Integer, ForeignKey(
+        'business_user.id'), nullable=True)
+    offer_title = db.Column(db.String(75), nullable=False)
+    offer_description = db.Column(db.String(250), nullable=False)
+    country = db.Column(db.String(250), nullable=False)
+    city = db.Column(db.String(250), nullable=False)
     normal_user_price = db.Column(db.Integer, nullable=False)
-    medium_user_price = db.Column(db.Integer, nullable=False)
-    high_user_price = db.Column(db.Integer, nullable=False)
+    # medium_user_price = db.Column(db.Integer, nullable=False)
+    # high_user_price = db.Column(db.Integer, nullable=False)
     premium_user_price = db.Column(db.Integer, nullable=False)
-
 
     favorites = db.relationship('Favorites', backref='offers')
 
@@ -110,23 +110,24 @@ class Offers(db.Model):
             "business_id": self.business_id,
             "offer_title": self.offer_title,
             "offer_description": self.offer_description,
-            "country":self.country,
+            "country": self.country,
             "city": self.city,
             "normal_user_price": self.normal_user_price,
-            "medium_user_price": self.medium_user_price,
-            "high_user_price": self.high_user_price,
+            # "medium_user_price": self.medium_user_price,
+            # "high_user_price": self.high_user_price,
             "premium_user_price": self.premium_user_price
         }
+
 
 class Review(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
     trip_id = db.Column(db.Integer, db.ForeignKey(
-        'trip.id'), nullable=True)  # Adding the ForeignKey
+        'trip.id'), nullable=True)
     title = db.Column(db.String(75), nullable=False)
     comment_text = db.Column(db.String(500), nullable=False)
 
-    # likes = db.relationship('Likes', backref='review')
+    likes = db.relationship('Likes', backref='review')
 
     def __repr__(self):
         return '<Review %r>' % self.id
@@ -139,21 +140,22 @@ class Review(db.Model):
             "title": self.title,
             "comment_text": self.comment_text,
         }
-    
+
 
 class Likes(db.Model):
-    id = db.Column(db.Integer, primary_key = True)
+    id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
-    review_id = db.Column(db.Integer, db.ForeignKey('review.id'), nullable=False)
+    review_id = db.Column(
+        db.Integer, db.ForeignKey('review.id'), nullable=True)
 
     def __repr__(self):
         return '<Likes %r>' % self.id
-    
+
     def serialize(self):
         return {
             "id": self.id,
             "user": User.query.get(self.user_id).serialize(),
-            "review": Review.query.get(self.review_id).serialize(),
+            "review": Review.query.get(self.review_id).serialize()
         }
 
 
@@ -162,7 +164,6 @@ class Favorites(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
     trip_id = db.Column(db.Integer, db.ForeignKey('trip.id'), nullable=True)
     offer_id = db.Column(db.Integer, db.ForeignKey('offers.id'), nullable=True)
-
 
     def __repr__(self):
         return '<Favorites %r>' % self.id

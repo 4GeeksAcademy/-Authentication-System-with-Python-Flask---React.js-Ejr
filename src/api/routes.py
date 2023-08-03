@@ -234,7 +234,7 @@ def private():
     else:
         business = Business_user.query.filter_by(email=current_user).first()
         if business:
-            return jsonify({'message': 'Welcome to the private area!', 'business': business.serialize()})
+            return jsonify({'message': 'Welcome to the private area!', 'business':business.serialize()})
         else:
             return jsonify({'error': 'Unauthorized'}), 401
 
@@ -362,8 +362,8 @@ def create_offer():
             country=data['country'],
             city=data['city'],
             normal_user_price=data['normal_user_price'],
-            medium_user_price=data['medium_user_price'],
-            high_user_price=data['high_user_price'],
+            # medium_user_price=data['medium_user_price'],
+            # high_user_price=data['high_user_price'],
             premium_user_price=data['premium_user_price']
         )
 
@@ -390,8 +390,8 @@ def update_offer(offer_id):
         offer.country = data['country'],
         offer.city = data['city'],
         offer.normal_user_price = data['normal_user_price']
-        offer.medium_user_price = data['medium_user_price']
-        offer.high_user_price = data['high_user_price']
+        # offer.medium_user_price = data['medium_user_price']
+        # offer.high_user_price = data['high_user_price']
         offer.premium_user_price = data['premium_user_price']
         db.session.commit()
         return jsonify(offer.serialize()), 200
@@ -585,33 +585,38 @@ def delete_review(review_id):
     return jsonify({"message": "Review deleted successfully"}), 200
 
 
-# @api.route('/reviews/<int:review_id>/likes', methods=['GET'])
-# def get_likes(review_id):
-#     review = Review.query.get(review_id)
-#     print(review)
-#     if review is None:
-#         return jsonify(error="Review not found"), 404
+@api.route('/reviews/<int:review_id>/likes', methods=['GET'])
+def get_likes_for_review(review_id):
+    review = Review.query.get(review_id)
+    if review is None:
+        return jsonify({"error": "Review not found"}), 404
+    
+    likes = Likes.query.filter_by(review_id=review_id).all()
+    serialized_likes = [like.serialize() for like in likes]
+    return jsonify(serialized_likes)
 
-#     return jsonify(review.likes), 200
 
 
-# @api.route('/likes', methods=['POST'])
-# def create_like():
-#     data = request.get_json()
-#     user_id = data.get('user_id')
-#     review_id = data.get('review_id')
 
-#     if user_id is None or review_id is None:
-#         return jsonify({"message": "Les champs user_id et review_id sont obligatoires."}), 400
+@api.route('/reviews/<int:review_id>/likes', methods=['POST'])
+@jwt_required()
+def like_review(review_id):
+    current_user = get_jwt_identity()
+    user = User.query.filter_by(email=current_user).first()
 
-#     user = User.query.get(user_id)
-#     review = Review.query.get(review_id)
+    review = Review.query.get(review_id)
+    if review is None:
+        return jsonify(error='Review not found'), 404
 
-#     if user is None or review is None:
-#         return jsonify({"message": "L'utilisateur ou l'évaluation n'existe pas."}), 404
+    existing_like = Likes.query.filter_by(user_id=user.id, review_id=review_id).first()
+    if existing_like:
+        return jsonify(error='User has already liked this review'), 400
 
-#     like = Likes(user_id=user_id, review_id=review_id)
-#     db.session.add(like)
-#     db.session.commit()
+    # Créer le like pour la review
+    like = Likes(user_id=user.id, review_id=review_id)
+    db.session.add(like)
+    db.session.commit()
 
-#     return jsonify(like.serialize()), 201
+    return jsonify(message='Review liked successfully'), 200
+
+
