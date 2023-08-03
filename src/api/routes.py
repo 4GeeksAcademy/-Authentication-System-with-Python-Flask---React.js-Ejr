@@ -2,9 +2,9 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint, Response
-from src.api.models import db, User, Product, Order , OrderItems, Category, Size
+from src.api.models import db, User, Product, Order , OrderItems, Category, Size, ShoppingCart, ProductSizeStock
 from src.api.utils import generate_sitemap, APIException
-from src.api.utils import save_new_product, update_product_by_id, update_category_by_id,update_size_by_id
+from src.api.utils import save_new_product, update_product_by_id, update_category_by_id
 from src.api.utils import check_is_admin_by_user_id
 import bcrypt
 from flask_jwt_extended import create_access_token
@@ -429,7 +429,7 @@ def create_size():
     if size is not None:
         raise APIException(message='Size already exists', status_code=409)
     
-    size = Size(name=request_body['name'])
+    size = Size(name=request_body['name'].upper())
     db.session.add(size)
     db.session.commit()
     
@@ -441,8 +441,14 @@ def update_size(size_id):
     request_body = request.get_json()
     current_user_id = get_jwt_identity()
     check_is_admin_by_user_id(current_user_id) 
-    updated_character = update_size_by_id(size_id, request_body)
-    return jsonify(updated_character.serialize()), 200
+    size = Size.query.get(size_id)
+    if size is None:
+        raise APIException(message='Size not found', status_code=404)
+    
+    if 'name' in request_body:
+        size.name = request_body['name'].upper()
+    db.session.commit()
+    return jsonify(size.serialize()), 200
 
 @api.route('/sizes/<int:size_id>', methods=['DELETE'])
 @jwt_required()
@@ -455,3 +461,67 @@ def delete_size(size_id):
     db.session.delete(size)
     db.session.commit()
     return Response(status=204)
+
+# Cart routes
+@api.route('/cart', methods=['GET'])
+@jwt_required()
+def get_cart():
+    current_user_id = get_jwt_identity()
+    user = User.query.get(current_user_id)
+    return jsonify([p.serialize() for p in user.shopping_cart]), 200
+
+@api.route('/cart', methods=['POST'])
+@jwt_required()
+def add_to_cart():
+    current_user_id = get_jwt_identity()
+    request_body = request.get_json()
+    user = User.query.get(current_user_id)
+    if 'product_id' not in request_body:
+        raise APIException(message='Value product_id is missing', status_code=422)
+    product = Product.query.get(request_body['product_id'])
+    if product is None:
+        raise APIException(message='Product not found', status_code=404)
+    if 'size_id' not in request_body:
+        raise APIException(message='Value size_id is missing', status_code=422)
+    if 'quantity' not in request_body:
+        raise APIException(message='Value quantity is missing', status_code=422)
+    if request_body['quantity'] < 1:
+        raise APIException(message='Quantity must be greater than 0', status_code=422)
+    
+    size = Size.query.get(request_body['size_id'])
+    if size is None:
+        raise APIException(message='Size not found', status_code=404)
+    product_size_stock = ProductSizeStock.query.filter_by(product=product, size=size).first()
+    if product_size_stock.stock < request_body['quantity']:
+        raise APIException(message='Not enough stock', status_code=409, payload={'stock': product_size_stock.stock})
+    
+   # Checks if the product is already in the cart
+    product_in_cart = ShoppingCart.query.filter_by(product=product, size=size, user=user).first()
+    if product_in_cart is not None:
+        product_in_cart.quantity = request_body['quantity']
+        db.session.commit()
+        return jsonify([p.serialize() for p in user.shopping_cart]), 200
+    else:
+        new_item_cart = ShoppingCart(quantity=request_body['quantity'], product=product, size=size, user=user)
+        db.session.add(new_item_cart)
+        db.session.commit()
+        return jsonify([p.serialize() for p in user.shopping_cart]), 200
+  
+@api.route('/cart/<int:product_id>/size/<int:size_id>', methods=['DELETE'])
+@jwt_required()
+def delete_from_cart(product_id, size_id):
+    current_user_id = get_jwt_identity()
+    user = User.query.get(current_user_id)
+    product = Product.query.get(product_id)
+    if product is None:
+        raise APIException(message='Product not found', status_code=404)
+    size = Size.query.get(size_id)
+    if size is None:
+        raise APIException(message='Size not found', status_code=404)
+    product_in_cart = ShoppingCart.query.filter_by(product=product, size=size, user=user).first()
+    if product_in_cart is None:
+        raise APIException(message='Product not found in cart', status_code=404)
+    db.session.delete(product_in_cart)
+    db.session.commit()
+    return Response(status=204)
+
