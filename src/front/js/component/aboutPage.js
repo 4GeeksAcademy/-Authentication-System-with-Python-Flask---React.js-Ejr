@@ -1,9 +1,10 @@
 import React from 'react';
+import { Footer } from './footer';
 
 
 const AboutPage = () => {
   return (
-    <>
+    <div>
 
       <div className="bg-light">
         <div className="container py-5">
@@ -237,14 +238,15 @@ const AboutPage = () => {
         </div>
       </div>
 
-      <footer className="bg-light pb-5">
+      {/* <footer className="bg-light pb-5">
         <div className="container text-center">
           <p className="font-italic text-muted mb-0">
             &copy; Company.com All rights reserved.
           </p>
         </div>
-      </footer>
-    </>
+      </footer> */}
+      <Footer></Footer>
+    </div>
 
   );
 };

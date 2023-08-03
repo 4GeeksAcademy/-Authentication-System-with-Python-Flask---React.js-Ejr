@@ -3,6 +3,7 @@ import { Context } from "../store/appContext";
 import "../../styles/home.css";
 import AboutPage from "../component/aboutPage";
 
+
 export const Home = () => {
 	const { store, actions } = useContext(Context);
 
@@ -22,5 +23,7 @@ export const Home = () => {
 			</div>
 			<AboutPage />
 		</div>
+		
 		</div>	);
+		
 };
