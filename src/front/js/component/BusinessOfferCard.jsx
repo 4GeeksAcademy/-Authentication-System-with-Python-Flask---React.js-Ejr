@@ -1,5 +1,6 @@
-import React, { useContext, useEffect} from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Context } from '../store/appContext';
+import GooglePay from './GooglePay.js'
 
 
 const BusinessOfferCard = () => {
@@ -12,7 +13,7 @@ const BusinessOfferCard = () => {
   return (
     <>
       {store.offers.map((business_offer) => {
-            // {store.offers && store.offers.length > 1 &&
+        // store.offers && store.offers.length > 1 && 
         return (
           <div
             key={business_offer.id}
@@ -28,6 +29,7 @@ const BusinessOfferCard = () => {
               <p className="card-text">{business_offer.high_user_price}</p>
               <p className="card-text">{business_offer.premium_user_price}</p>
               <p className="card-text"><small className="text-muted">Last updated 3 mins ago</small></p>
+              <GooglePay />
             </div>
           </div>
         )

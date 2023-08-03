@@ -15,7 +15,7 @@ const FormReview = () => {
         title: Yup.string().min(10, 'Debe tener 10 carácteres o más').required('Obligatorio'),
         comment_text: Yup.string().min(40, 'Debe tener 40 carácteres o más').required('Obligatorio'),
       })}
-      onsubmit={(values, { setSubmitting }) => {
+      onSubmit={(values, { setSubmitting }) => {
         console.log("Form submitted:", values);
         actions.create_review(values)
           .then(() => {

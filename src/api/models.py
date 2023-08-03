@@ -141,22 +141,20 @@ class Review(db.Model):
         }
     
 
-# class Likes(db.Model):
-#     id = db.Column(db.Integer, primary_key = True)
-#     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
-#     review_id = db.Column(db.Integer, db.ForeignKey('review.id'), nullable=False)
-#     likes = db.Column(db.Integer, default=0)
+class Likes(db.Model):
+    id = db.Column(db.Integer, primary_key = True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
+    review_id = db.Column(db.Integer, db.ForeignKey('review.id'), nullable=False)
 
-#     def __repr__(self):
-#         return '<Likes %r>' % self.id
+    def __repr__(self):
+        return '<Likes %r>' % self.id
     
-#     def serialize(self):
-#         return {
-#             "id": self.id,
-#             "user": User.query.get(self.user_id).serialize(),
-#             "review": Review.query.get(self.review_id).serialize(),
-#             "likes": self.likes
-#         }
+    def serialize(self):
+        return {
+            "id": self.id,
+            "user": User.query.get(self.user_id).serialize(),
+            "review": Review.query.get(self.review_id).serialize(),
+        }
 
 
 class Favorites(db.Model):

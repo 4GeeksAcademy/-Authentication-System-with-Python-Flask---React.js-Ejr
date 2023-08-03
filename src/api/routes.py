@@ -1,6 +1,6 @@
 from sqlalchemy.exc import IntegrityError
 from flask import Flask, request, jsonify, Blueprint, jsonify, redirect, url_for
-from api.models import db, User, Business_user, Offers, Trip, Review
+from api.models import db, User, Business_user, Offers, Trip, Review, Likes
 from api.utils import APIException
 from flask_bcrypt import bcrypt, Bcrypt
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity, JWTManager, unset_jwt_cookies
@@ -595,19 +595,23 @@ def delete_review(review_id):
 #     return jsonify(review.likes), 200
 
 
-# @api.route('/reviews/<int:review_id>/likes', methods=['PUT'])
-# def like_review(review_id):
+# @api.route('/likes', methods=['POST'])
+# def create_like():
+#     data = request.get_json()
+#     user_id = data.get('user_id')
+#     review_id = data.get('review_id')
+
+#     if user_id is None or review_id is None:
+#         return jsonify({"message": "Les champs user_id et review_id sont obligatoires."}), 400
+
+#     user = User.query.get(user_id)
 #     review = Review.query.get(review_id)
-#     if review is None:
-#         return jsonify(error='Review not found'), 404
 
-#     user_id = request.json.get('user_id')
-#     if Likes.query.filter_by(user_id=user_id, review_id=review_id).first() is not None:
-#         return jsonify(error='User has already  likes this review'), 400
+#     if user is None or review is None:
+#         return jsonify({"message": "L'utilisateur ou l'évaluation n'existe pas."}), 404
 
-#     like = Likes(user_id=user_id)
-#     print(like)
-#     review.likes.append(like)
+#     like = Likes(user_id=user_id, review_id=review_id)
+#     db.session.add(like)
 #     db.session.commit()
 
-#     return jsonify(message='Review liked successfuly'), 200
+#     return jsonify(like.serialize()), 201
