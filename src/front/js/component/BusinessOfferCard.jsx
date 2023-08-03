@@ -3,7 +3,7 @@ import { Context } from '../store/appContext';
 import GooglePay from './GooglePay.js'
 
 
-const BusinessOfferCard = () => {
+const BusinessOfferCard = ({ searchQuery }) => {
   const { store, actions } = useContext(Context);
   useEffect(() => {
     actions.getAllOffers();
@@ -11,30 +11,38 @@ const BusinessOfferCard = () => {
   }, []);
 
   return (
-    <>
-      {store.offers.map((business_offer) => {
-        // store.offers && store.offers.length > 1 && 
-        return (
-          <div
-            key={business_offer.id}
-            className="card mb-3 mt-4">
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSM23JE5rZmCQhGdgwGRj_jNOKbsrGP5C_t-g&usqp=CAU" className="card-img-top" alt="..."></img>
-            <div className="card-body">
-              <h5 className="card-title">{business_offer.offer_title}</h5>
-              <p className="card-text">{business_offer.offer_description}</p>
-              <p className="card-text">{business_offer.city}</p>
-              <p className="card-text">{business_offer.country}</p>
-              <p className="card-text">{business_offer.normal_user_price}</p>
-              <p className="card-text">{business_offer.medium_user_price}</p>
-              <p className="card-text">{business_offer.high_user_price}</p>
-              <p className="card-text">{business_offer.premium_user_price}</p>
-              <p className="card-text"><small className="text-muted">Last updated 3 mins ago</small></p>
-              <GooglePay />
-            </div>
-          </div>
+    <div className='cards-offers cards-offer'>
+      {store.offers
+        .filter(
+          (business_offer) =>
+            business_offer.offer_title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            business_offer.offer_description
+              .toLowerCase()
+              .includes(searchQuery.toLowerCase())
         )
-      })}
-    </>
+        .map((business_offer) => {
+          // store.offers && store.offers.length > 1 && 
+          return (
+            <div
+              key={business_offer.id}
+              className="card card-offers card-offer mb-3 mt-4">
+              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSM23JE5rZmCQhGdgwGRj_jNOKbsrGP5C_t-g&usqp=CAU" className="card-img-top" alt="..."></img>
+              <div className="card-body">
+                <h5 className="card-title">{business_offer.offer_title}</h5>
+                <p className="card-text">{business_offer.offer_description}</p>
+                <p className="card-text">{business_offer.country}</p>
+                <p className="card-text">{business_offer.city}</p>
+                <p className="card-text">Precio normal : {business_offer.normal_user_price}</p>
+                {/* <p className="card-text">{business_offer.medium_user_price}</p>
+                <p className="card-text">{business_offer.high_user_price}</p> */}
+                <p className="card-text">Precio prenium : {business_offer.premium_user_price}</p>
+                <p className="card-text"><small className="text-muted">Last updated 3 mins ago</small></p>
+                <GooglePay />
+              </div>
+            </div>
+          )
+        })}
+    </div>
   );
 };
 
