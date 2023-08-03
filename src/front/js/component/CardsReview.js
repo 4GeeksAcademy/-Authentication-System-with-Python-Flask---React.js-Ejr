@@ -38,7 +38,7 @@ const CardsReview = ({ searchQuery }) => {
   return (
     <div>
       {/* Mostrar el form de creación de reseñas sólo si el usuario está logueado */}
-      {store.user && <FormReview />}
+      {store.user.username && <FormReview />}
       {/* Publicar las cartas que ya existen */}
       <div className="cards-review">
         {store.reviews
