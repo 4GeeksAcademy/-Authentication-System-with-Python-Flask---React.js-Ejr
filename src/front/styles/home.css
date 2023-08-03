@@ -5,3 +5,76 @@
     one more css for each page that will contain the selected used 
     on that page only (the ones not reused in other pages).
 */
+.main{
+    margin: 0;
+    height: 100vh;
+    background: linear-gradient(45deg, #ffffff, #8dcbf7aa, #6565ef92);
+    background-size: 600% 600%;
+    animation: gradientLoop 10s linear
+infinite;
+}
+@keyframes gradientLoop{
+    0%{
+      background-position: 0% 50%;
+    }
+    50%{
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+.signup-form{
+    margin: 0;
+    height: 100vh;
+    background: linear-gradient(45deg, #ffffff, #8dcbf7aa, #6565ef92);
+    background-size: 600% 600%;
+    animation: gradientLoop 10s linear
+infinite;
+}
+@keyframes gradientLoop{
+    0%{
+      background-position: 0% 50%;
+    }
+    50%{
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+
+}
+label{
+    color:  rgb(1, 63, 1);
+    font-size:200%;
+    font-kerning: calc(10px);
+    font-style: oblique;
+    -webkit-flow-into: calc(10%);
+    font-family:fantasy, copperplate
+    
+
+}
+h1{
+    color: rgba(240, 248, 255, 0.378);
+    font-size: 1500%;
+    opacity: var(80%);
+    animation: opacityLoop 20s vertical
+infinite;
+}
+@keyframes opacityLoop{
+        0%{
+          background-position: 0% 50%;
+        }
+        50%{
+            background-position: 100% 50%;
+        }
+        100% {
+            background-position: 0% 50%;
+        }
+}
+.navbar-button{
+border-color: aliceblue;
+border-style:inset;
+border-top-right-radius: 30%;
+color:rgba(61, 61, 61, 0.377);
+}
