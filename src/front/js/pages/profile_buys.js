@@ -97,19 +97,25 @@ const StatusToOnSale = (product) => {
                 <div className="justify-content-center d-flex" key={index}>
                 <div className="row row_product_profile container justify-content-around m-1" key={index}>
                     <div className="product_img_profile_box col-lg-5 col-3 col-sm-2 col-xs-2">
-                    {product.images.length > 0 ? (
-                        <img src={product.images[0].image} className="card-img-top imgCarousel" alt="..." />
-                    ) : (
-                        <img src={carImage} className="card-img-top imgCarousel" alt="..." />
-                    )}
+                        <NavLink to={`/product/${product.id}`}  style={{ color: 'white', textDecoration: 'none' }} className="link-hover">
+                            {product.images.length > 0 ? (
+                                <img src={product.images[0].image} className="card-img-top imgCarousel" alt="..." />
+                            ) : (
+                                <img src={carImage} className="card-img-top imgCarousel" alt="..." />
+                            )}
+                        </NavLink>
                     </div>
                     <div className="price_name col-3 col-sm-2 text-start ">
-                        <h4 className="price_product_profile">{product.price}€</h4>
-                        <h5 className="name_product_profile">{product.name}</h5>
+                        <NavLink to={`/product/${product.id}`}  style={{ color: 'white', textDecoration: 'none' }} className="link-hover">
+                            <h4 className="price_product_profile">{product.price}€</h4>
+                            <h5 className="name_product_profile">{product.name}</h5>
+                        </NavLink>
                     </div>
                     <div className="col-3 col-sm-2 state_product_profile_box text-start">
-                        <h6 className="state_title_profile">Estado</h6>
-                        <h4 className="state_product_profile ">{product.state}</h4>
+                        <NavLink to={`/product/${product.id}`}  style={{ color: 'white', textDecoration: 'none' }} className="link-hover">
+                            <h6 className="state_title_profile">Estado</h6>
+                            <h4 className="state_product_profile ">{product.state}</h4>
+                        </NavLink>
                     </div>
                     <div className="col-2 product_profile_buttons">
                         {product.status === "pending blocked" && (
@@ -118,7 +124,7 @@ const StatusToOnSale = (product) => {
                                     className="product_profile_button sold"
                                     type="button"
                                     data-bs-toggle="modal"
-                                    data-bs-target="#exampleModal"
+                                    data-bs-target={`#exampleModal${index}`}
                                 >
                                     <i class="fa-solid fa-ban m-auto" style={{"color": "#b50808"}}/>
                                 </button>
@@ -130,7 +136,7 @@ const StatusToOnSale = (product) => {
                                     className="product_profile_button sold"
                                     type="button"
                                     data-bs-toggle="modal"
-                                    data-bs-target="#exampleModal2"
+                                    data-bs-target={`#exampleModal2${index}`}
                                 >
                                      <i class="fa-solid fa-ticket"></i>
                                 </button>
@@ -142,14 +148,14 @@ const StatusToOnSale = (product) => {
                                     className="product_profile_button sold"
                                     type="button"
                                     data-bs-toggle="modal"
-                                    data-bs-target="#exampleModal3"
+                                    data-bs-target={`#exampleModal3${index}`}
                                 >
                                     <i class="fa-solid fa-ban m-auto" style={{"color": "#b50808"}}/>
                                 </button>
                             </>
                         )}
                     </div>
-                    <div className="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div className="modal fade" id={`exampleModal${index}`} tabindex="-1" aria-labelledby={`exampleModalLabel${index}`} aria-hidden="true">
                         <div className="modal-dialog">
                             <div className="modal-content sold-product_profile">
                                 <div className="modal-header">
@@ -184,7 +190,7 @@ const StatusToOnSale = (product) => {
                             </div>
                         </div>
                     </div>
-                    <div className="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div className="modal fade" id={`exampleModal2${index}`} tabindex="-1" aria-labelledby={`exampleModalLabel2${index}`} aria-hidden="true">
                         <div className="modal-dialog">
                             <div className="modal-content sold-product_profile">
                                 <div className="modal-header">
@@ -220,7 +226,7 @@ const StatusToOnSale = (product) => {
                             </div>
                         </div>
                     </div>
-                    <div className="modal fade" id="exampleModal3" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div className="modal fade" id={`exampleModal3${index}`} tabindex="-1" aria-labelledby={`exampleModalLabel3${index}`} aria-hidden="true">
                         <div className="modal-dialog">
                             <div className="modal-content sold-product_profile">
                                 <div className="modal-header">
