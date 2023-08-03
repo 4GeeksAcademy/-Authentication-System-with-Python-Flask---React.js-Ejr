@@ -73,6 +73,10 @@
     align-items: center;
 }
 
+.icon-tabler {
+    color: var(--color-4);
+}
+
 .likes-review {
     margin-left: 3px;
 }

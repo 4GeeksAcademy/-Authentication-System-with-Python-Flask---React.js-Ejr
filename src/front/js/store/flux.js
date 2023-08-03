@@ -119,13 +119,6 @@ const getState = ({ getStore, getActions, setStore }) => {
             const data = await request.json();
             console.log('first data before isAuth', data);
             const store = getStore();
-            // if (data.type === "user") {
-            //   setStore({ ...store, user: data.user_or_business });
-            //   setStore({ auth: true });
-            // } else if (data.type === "business") {
-            //   setStore({ ...store, business_user: data.user_or_business });
-            //   setStore({ auth: true });
-            // }
             if (data.user) {
               console.log('isAuth info data.user', data.user);
               setStore({ ...store, user: data.user })
@@ -808,7 +801,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           const response = await fetch(API_URL + `/api/reviews/${reviewId}/likes`);
           if (response.ok) {
             const data = await response.json();
-            console.log('data:', data);
+            console.log('data get likes:', data);
             setStore({ likes: data })
             return true
           } else {
@@ -829,7 +822,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           }
 
           const response = await fetch(API_URL + `/api/reviews/${reviewId}/likes`, {
-            method: 'PUT',
+            method: 'POST',
             headers: {
               'Content-Type': 'application/json',
               'Authorization': `Bearer ${token}`,
@@ -839,8 +832,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 
           if (response.ok) {
             const res = await response.json();
-            console.log(res);
-            setStore({ likes: res.likes })
+            console.log('reponse Likes:', res);
+            const actions = getActions()
+            actions.getLikes()
             return true;
           } else {
             return false;
