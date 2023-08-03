@@ -17,7 +17,7 @@ class User(db.Model):
     territory_state = db.Column(db.String(80), unique=False, nullable=True)
     dob = db.Column(db.String(80), unique=False, nullable=True)
     is_active = db.Column(db.Boolean(), unique=False, nullable=True)
-    favorites =db.relationship("Favorites", backref= "user")
+    # favorites =db.relationship("Favorites", backref= "user")
 
     def __repr__(self):
         return f'<User {self.email}>'
@@ -45,7 +45,7 @@ class Favorites(db.Model):
     User_id = db.Column( db.Integer, db.ForeignKey("user.id"))
     country = db.Column(db.String(120), unique=False, nullable=True)
     territory_state = db.Column(db.String(80), unique=False, nullable=True)
-    destinations =db.relationship("Destinations", backref= "favorites")
+    # destinations =db.relationship("Destinations", backref= "favorites")
     # foreingKey = User.db 
     # user_id = db.Column(db.Integer, ForeignKey(User.id),unique = True )
     def serialize(self):
@@ -60,7 +60,7 @@ class Destinations(db.Model):
     city =  db.Column(db.String(120), unique=False, nullable=True) 
     country = db.Column(db.String(120), unique=False, nullable=True) 
     description = db.Column(db.String(120), unique=False, nullable=True) 
-    favorites_id = db.Column( db.Integer, db.ForeignKey("favorites.id"))
+    # favorites_id = db.Column( db.Integer, db.ForeignKey("favorites.id"))
 
     def serialize(self):
         return {

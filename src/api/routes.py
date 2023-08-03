@@ -64,8 +64,7 @@ def get_all_users():
 def show_email():
     current_user_id = get_jwt_identity()
     user=User.query.get(current_user_id)
-    return jsonify ({"email": user.email, "id": user.id, "response": "That is your data up there!"}), 200
-
+    return jsonify (user.serialize()), 200
 
 @api.route("/protected", methods=["GET"])
 @jwt_required()

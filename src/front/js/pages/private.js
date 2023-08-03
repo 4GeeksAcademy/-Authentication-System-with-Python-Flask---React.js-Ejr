@@ -44,7 +44,7 @@ export const Private = () => {
 		  ) : (
 			// navigate("/")
 			<div>
-				<h1>test</h1>
+				<h1>{store.email}</h1>
 			</div>	
 		  )}
 		</div>
