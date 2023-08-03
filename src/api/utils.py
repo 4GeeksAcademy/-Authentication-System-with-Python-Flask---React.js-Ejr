@@ -1,6 +1,6 @@
 from flask import jsonify, url_for
 from sqlalchemy import exc
-from src.api.models import db, Category, Product, User, Size, ProductSizesQuantity
+from src.api.models import db, Category, Product, User, Size, ProductSizeStock
 import re
 
 class APIException(Exception):
@@ -90,7 +90,7 @@ def save_new_product(request_body):
                 size_db = Size.query.get(size['size_id'])
                 if size_db is None:
                     raise APIException(message=f'Size with id {size["size_id"]} not found', status_code=422)
-                size_quantity = ProductSizesQuantity(size=size_db, product=product, quantity=size['quantity'])
+                size_quantity = ProductSizeStock(size=size_db, product=product, stock=size['quantity'])
                 db.session.add(size_quantity)
                 
         db.session.commit()
@@ -106,18 +106,19 @@ def update_product_by_id(id, request_body):
     if product is None:
         raise APIException(message='Product not found', status_code=404)
 
+    print(product.__dict__.keys())
     for key in product.__dict__.keys():
         if key in request_body:
             setattr(product, key, request_body[key])
             
-    if request_body['sizes_quantity'] is not None:
+    if request_body.get('sizes_quantity') is not None:
         for size_from_body in request_body['sizes_quantity']:
             size_db = Size.query.get(size_from_body['size_id'])
             if size_db is None:
                 raise APIException(message=f'Size with id {size_from_body["size_id"]} not found', status_code=422)
-            size_quantity = ProductSizesQuantity.query.filter_by(size=size_db, product=product).first()
+            size_quantity = ProductSizeStock.query.filter_by(size=size_db, product=product).first()
             if size_quantity is None:
-                new_size_quantity = ProductSizesQuantity(size=size_db, product=product, quantity=size_from_body['quantity'])
+                new_size_quantity = ProductSizeStock(size=size_db, product=product, stock=size_from_body['quantity'])
                 db.session.add(new_size_quantity)
             else:
                 size_quantity.quantity = size_from_body['quantity']
@@ -153,19 +154,3 @@ def update_category_by_id(id, request_body):
         raise APIException(message=message, status_code=400)
     return category
 
-def update_size_by_id(id, request_body):
-    size = Size.query.get(id)
-    if size is None:
-        raise APIException(message='Size not found', status_code=404)
-
-    for key in size.__dict__.keys():
-        if key in request_body:
-            setattr(size, key, request_body[key])
-
-    try:
-        db.session.commit()
-    except exc.IntegrityError as e:
-        db.session.rollback()
-        message = generate_error_message(str(e.orig))
-        raise APIException(message=message, status_code=400)
-    return size
