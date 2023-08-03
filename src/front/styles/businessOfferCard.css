@@ -1,10 +1,71 @@
-.card {
-
-    width: 33%;
-    margin: auto;
-    height: 26rem;
+.cards-offer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 90%;
+    margin: 0 auto;
+    margin-top: 30px;
 }
 
-.card-img-top {
-    height: 17rem;
+.card-offer {
+    background: var(--color-2);
+    backdrop-filter: 10px;
+    height: 450px !important;
+    width: calc(25% - 20px);
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.btn-options {
+    position: absolute;
+    top: .4rem;
+    right: 0;
+}
+
+.btn-up-review,
+.btn-delete-review {
+    padding: 4px;
+    margin: 0;
+    border-radius: 7px;
+}
+
+.btn-delete-review {
+    margin-left: .3rem;
+    background: var(--color-5);
+}
+
+.btn-up-review {
+    background: var(--color-3);
+}
+
+.div-title-review {
+    backdrop-filter: 10px;
+    height: 50px;
+    border-bottom: 1px solid var(--color-4);
+    width: 100%;
+}
+
+.title-review {
+    font-size: 1.5rem;
+    padding-top: .6rem;
+}
+
+
+/* Media query */
+@media screen and (max-width: 1200px) {
+    .card-offer {
+        width: calc(33.33% - 20px);
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .card-offer {
+        width: calc(50% - 20px);
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .card-offer {
+        width: 100%;
+    }
 }

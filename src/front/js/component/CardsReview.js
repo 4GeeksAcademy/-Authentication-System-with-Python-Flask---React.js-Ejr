@@ -56,41 +56,45 @@ const CardsReview = ({ searchQuery }) => {
               className="card card-review text-white mt-4 container"
               style={{ height: "16rem", width: "20rem" }}
             >
-              <div className="card-img-overlay">
-                {store.user.id === review.user.id && (
-                  <div className="btn-options d-flex justify-content-end">
-                    <button onClick={() => handleUpdate(review.id)}>
-                      &#9998;
-                    </button>
-                    <button onClick={() => handleDelete(review.id)}>
-                      &#10008;
-                    </button>
-                  </div>
-                )}
-                <h5 className="card-title">{review.title}</h5>
-                {editContentId === review.id ? (
-                  <>
+
+
+              <div className="div-title-review">
+                <h5 className="card-title title-review">{review.title}</h5>
+              </div>
+              {editContentId === review.id ? (
+                <>
+                  <div className="comment-review">
                     <textarea
                       autoFocus={true}
                       value={editContent}
                       onChange={(e) => setEditContent(e.target.value)}
-                      className="card-text"
-                      rows="4"
-                      cols="30"
+
+                      rows="7"
+                      cols="38"
                       maxLength="300"
                       style={{ resize: "none" }}
                     ></textarea>
-                    <button onClick={() => handleSave(review.id)}>
-                      Validar
-                    </button>
-                  </>
-                ) : (
-                  <p className="card-text">{review.comment_text}</p>
-                )}
-                <span>Mensaje escrito por: {review.user.username}</span>
-                <div className="likes">
-                  <Likes reviewId={review.id} />
+                  </div>
+                  <button onClick={() => handleSave(review.id)}>
+                    Validar
+                  </button>
+                </>
+              ) : (
+                <p className="card-text">{review.comment_text}</p>
+              )}
+              {store.user.id === review.user.id && (
+                <div className="btn-options d-flex justify-content-end">
+                  <button className="btn-up-review" onClick={() => handleUpdate(review.id)}>
+                    &#9998;
+                  </button>
+                  <button className="btn-delete-review" onClick={() => handleDelete(review.id)}>
+                    &#10008;
+                  </button>
                 </div>
+              )}
+              <div className="likes card-likes">
+                <span className="author-review">Escrito por : <span>{review.user.username}</span> </span>
+                <Likes reviewId={review.id} />
               </div>
             </div>
           ))}

@@ -6,6 +6,7 @@ import * as Yup from 'yup';
 const FormOffers = () => {
     const { store, actions } = useContext(Context);
     return (
+
         <Formik
             initialValues={{
                 offer_title: "",
@@ -23,8 +24,8 @@ const FormOffers = () => {
                 country: Yup.string().min(2, 'Debe tener 2 caracteres o más').required('Obligatorio'),
                 city: Yup.string().min(2, 'Debe tener 2 caracteres o más').required('Obligatorio'),
                 normal_user_price: Yup.number().min(2, 'Debe tener 2 caracteres o más').required('Obligatorio').typeError('Debe ser un número').integer('Debe ser un número entero'),
-                medium_user_price: Yup.number().min(2, 'Debe tener 2 caracteres o más').required('Obligatorio').typeError('Debe ser un número').integer('Debe ser un número entero'),
-                high_user_price: Yup.number().min(2, 'Debe tener 2 caracteres o más').required('Obligatorio').typeError('Debe ser un número').integer('Debe ser un número entero'),
+                // medium_user_price: Yup.number().min(2, 'Debe tener 2 caracteres o más').required('Obligatorio').typeError('Debe ser un número').integer('Debe ser un número entero'),
+                // high_user_price: Yup.number().min(2, 'Debe tener 2 caracteres o más').required('Obligatorio').typeError('Debe ser un número').integer('Debe ser un número entero'),
                 premium_user_price: Yup.number().min(2, 'Debe tener 2 caracteres o más').required('Obligatorio').typeError('Debe ser un número').integer('Debe ser un número entero'),
             })}
             onSubmit={(values, { setSubmitting }) => {
@@ -74,7 +75,7 @@ const FormOffers = () => {
                                 <Field type="number" name='normal_user_price' value={formik.values.normal_user_price} />
                                 <ErrorMessage name='normal_user_price' />
                             </div>
-                            <div>
+                            {/* <div>
                                 <label htmlFor="medium_user_price">Precio para Usuario Medio:</label>
                                 <Field type="number" name='medium_user_price' value={formik.values.medium_user_price} />
                                 <ErrorMessage name='medium_user_price' />
@@ -83,7 +84,7 @@ const FormOffers = () => {
                                 <label htmlFor="high_user_price">Precio para Usuario Alto:</label>
                                 <Field type="number" name='high_user_price' value={formik.values.high_user_price} />
                                 <ErrorMessage name='high_user_price' />
-                            </div>
+                            </div> */}
                             <div>
                                 <label htmlFor="premium_user_price">Precio para Usuario Premium:</label>
                                 <Field type="number" name='premium_user_price' value={formik.values.premium_user_price} />
