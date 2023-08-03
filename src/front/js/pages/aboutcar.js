@@ -16,6 +16,7 @@ const AboutCar = () => {
           <h1>{actualCar && actualCar.car_type}</h1>
           <h1>{actualCar && actualCar.brand}</h1>
           <h1>{actualCar && actualCar.transmission}</h1>
+          <h1>{actualCar && actualCar.price}</h1>
           {actualCar && actualCar.images && actualCar.images.length > 0 ? (
               <img
                 className="border border-warning border-4 border-opacity-50 w-50"
