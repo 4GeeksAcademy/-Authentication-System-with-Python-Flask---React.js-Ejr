@@ -1,6 +1,5 @@
 const getState = ({ getStore, getActions, setStore }) => {
-  const API_URL =
-    "https://fictional-couscous-447w6jjjwp9h7q5-3001.preview.app.github.dev";
+  const API_URL = "http://127.0.0.1:3001";
 
   return {
     store: {
@@ -10,7 +9,8 @@ const getState = ({ getStore, getActions, setStore }) => {
       trip: [],
       reviews: [],
       offers: [],
-      likes: 0
+      likes: 0,
+
     },
     actions: {
       // Use getActions to call a function within a function
@@ -82,9 +82,11 @@ const getState = ({ getStore, getActions, setStore }) => {
             setStore({ ...store, auth: true });
 
             if (data.type === "user") {
-              setStore({ ...store, user: data.user_or_business });
+              setStore({ ...store, user: data.user_or_business, business_user: {} });
             } else if (data.type === "business") {
-              setStore({ ...store, business_user: data.user_or_business });
+              setStore({ ...store, business_user: data.user_or_business, user: {} });
+              const store2 = getStore()
+              console.log('info store business user ', store2.business_user);
             }
 
             console.log("Clean data of response:", data.user_or_business);
@@ -114,17 +116,29 @@ const getState = ({ getStore, getActions, setStore }) => {
 
           const request = await fetch(API_URL + "/api/private", settings);
           if (request.ok) {
-            const json = await request.json();
-            const data = json;
-            console.log(data);
+            const data = await request.json();
+            console.log('first data before isAuth', data);
             const store = getStore();
-            if (data.user){
-              setStore({ ...store, user: data.user });
-            } else {
-              setStore({...store,  business_user: data.user_or_business});
+            // if (data.type === "user") {
+            //   setStore({ ...store, user: data.user_or_business });
+            //   setStore({ auth: true });
+            // } else if (data.type === "business") {
+            //   setStore({ ...store, business_user: data.user_or_business });
+            //   setStore({ auth: true });
+            // }
+            if (data.user) {
+              console.log('isAuth info data.user', data.user);
+              setStore({ ...store, user: data.user })
+
             }
+            if (data.business) {
+              console.log('isAuth info data.business', data.business_user);
+              setStore({ ...store, business_user: data.business })
+            }
+
             setStore({ auth: true });
           }
+
         } catch (error) {
           console.log("No se pudo cargar: ", error);
         }
@@ -326,7 +340,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           if (response.ok) {
             const responseData = await response.json();
             console.log(responseData);
-            setStore({offers: responseData.offers});
+            setStore({ offers: responseData.offers });
             return responseData.offers;
           } else {
             // Handle other errors
@@ -384,7 +398,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
             body: JSON.stringify(formData),
           });
-          
+
           if (response.ok) {
             const res = await response.json();
             console.log(res);
@@ -795,7 +809,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           if (response.ok) {
             const data = await response.json();
             console.log('data:', data);
-            setStore({likes: data})
+            setStore({ likes: data })
             return true
           } else {
             return null;
@@ -826,7 +840,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           if (response.ok) {
             const res = await response.json();
             console.log(res);
-            setStore({likes: res.likes})
+            setStore({ likes: res.likes })
             return true;
           } else {
             return false;
