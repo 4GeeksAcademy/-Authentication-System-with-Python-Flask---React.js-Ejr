@@ -5,7 +5,7 @@ import FormOffers from '../component/FormOffers.jsx'
 const Business_offers = () => {
   return (
     <>
-      <FormOffers />
+      {store.business_user.business_name && <FormOffers />}
       <BusinessOfferCard />
     </>
 
