@@ -1,7 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import { Context } from '../store/appContext';
 import GooglePay from './GooglePay.js'
-import { format } from 'date-fns';
 
 
 const BusinessOfferCard = ({ searchQuery }) => {
@@ -53,7 +52,6 @@ const BusinessOfferCard = ({ searchQuery }) => {
   );
 };
 
-export default BusinessOfferCard
 
 
 
@@ -173,3 +171,4 @@ export default BusinessOfferCard
 //   )
 // }
 
+export default BusinessOfferCard
