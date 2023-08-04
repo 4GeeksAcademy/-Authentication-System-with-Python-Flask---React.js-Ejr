@@ -35,7 +35,7 @@ const ClothesCard = ({ clothe }) => {
 
           <button
             onClick={() =>
-              navigate(`/product/${clothe.id}`, { state: { product: clothe } })
+              navigate(`/product/${clothe.id}`)
             }
             className='btn btn-warning m-3'
           >

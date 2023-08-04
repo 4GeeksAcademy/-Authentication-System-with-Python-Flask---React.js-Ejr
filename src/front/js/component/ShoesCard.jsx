@@ -37,7 +37,7 @@ const ShoesCard = ({ shoe }) => {
           </div>
 
           <button
-            onClick={() => navigate(`/product/${shoe.id}`, { state: { product: shoe } })}
+            onClick={() => navigate(`/product/${shoe.id}`)}
             className='btn btn-warning m-3'
           >
             Details
