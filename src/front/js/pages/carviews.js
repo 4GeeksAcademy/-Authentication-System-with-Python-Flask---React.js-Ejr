@@ -44,15 +44,13 @@ const CarViews = () => {
   const carsToDisplay = filteredCars();
   return (
     <div>
-      <div className="cardsTitleHolder">
-        <h1 className="descriptionTitle text-center">Cars</h1>
+      <div className="cardsTitleHolder bg-secondary text-light bg-opacity-50 p-3">
+        <h1 className="descriptionTitle text-center m-0" style={{color: '#004f6d'}}>Cars Catalog</h1>
       </div>
       <div className="">
-        <div className="bg-black">
-              <span>
+              <div>
                 <CarCards cars={carsToDisplay}/>
-              </span>
-        </div>
+              </div>
       </div>      
     </div>
   )

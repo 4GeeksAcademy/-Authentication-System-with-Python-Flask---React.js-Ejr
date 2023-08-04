@@ -1,0 +1,10 @@
+.carCard {
+    border-radius: 12%;
+}
+
+.carCard:hover {
+    /* Set the card to pop up */
+    transform: scale(1.1);
+    /* Set the background color to highlight the card */
+    transition: transform 300ms ease-in, background-color 300ms ease;
+  }

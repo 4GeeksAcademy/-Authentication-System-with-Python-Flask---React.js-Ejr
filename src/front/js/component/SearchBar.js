@@ -44,7 +44,7 @@ const SearchBar = () => {
             <div className='searchBarContainer'>
               <div className='inputContainer' onClick={() => setShowDropdown(true)}>
                 <input
-                placeholder='       Search for a Car'
+                placeholder='Search for a Car'
                 value={inputValue}
                 onChange={(e) => handleSearch(e)}
                 onKeyDown={() => setShowDropdown(true)}
