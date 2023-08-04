@@ -49,6 +49,7 @@ const Navbar = () => {
                 <li><Link className="dropdown-item">Favoritos</Link></li>
                 <li><Link to='/trips' className="dropdown-item">Explora tu siguiente trip</Link></li>
                 <li><Link className="dropdown-item">Ayuda</Link></li>
+                {/* git */}
                 {store.auth && (
                   <>
                     <li><Link to='/user/private' className="dropdown-item">Mi espacio personal</Link></li>
