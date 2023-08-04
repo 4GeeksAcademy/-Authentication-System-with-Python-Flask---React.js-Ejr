@@ -17,19 +17,21 @@
   margin-top: 30px;
 }
 
+.home-price {
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+}
+
 /* .card-home-review {
   height: 16rem !important;
   width: 20rem !important;
   margin: 0 15px 10px;
-} */
-
-
-/* .card-home-review {
   background: var(--color-2);
   height: 350px !important;
   width: calc(25% - 20px);
   margin-bottom: 20px;
-} */
+}  */
 
 /* ===== Scrollbar CSS ===== */
 /* Firefox */
@@ -55,5 +57,5 @@
   border-radius: 10px;
   border: 3px none var(--color-5);
   height: 10px;
-  width: 10px;
+  width: 10px;
 }

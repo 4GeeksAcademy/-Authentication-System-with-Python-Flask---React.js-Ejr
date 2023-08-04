@@ -20,14 +20,17 @@ const FormReview = () => {
         actions.create_review(values)
           .then(() => {
             console.log("Form submitted succesfuly!");
+            
           })
           .catch((error) => {
             // Handle submission error
             console.error("Error submitting form:", error);
             alert("Something gets wrong");
+            
           })
           .finally(() => {
             setSubmitting(false); // Set submitting to false after submission is done
+            
           });
       }}
     >

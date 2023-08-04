@@ -5,6 +5,7 @@ import * as Yup from 'yup';
 
 const FormOffers = () => {
     const { store, actions } = useContext(Context);
+    
     return (
 
         <Formik
@@ -43,6 +44,7 @@ const FormOffers = () => {
                     })
                     .finally(() => {
                         setSubmitting(false); // Set submitting to false after submission is done
+                        
                     });
             }}
         >
