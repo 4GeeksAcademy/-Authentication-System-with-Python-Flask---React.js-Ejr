@@ -1,17 +1,53 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Context } from '../store/appContext';
 import GooglePay from './GooglePay.js'
 
-
 const BusinessOfferCard = ({ searchQuery }) => {
   const { store, actions } = useContext(Context);
+  const [editContentId, setEditContentId] = useState(null);
+  const [editTitle, setEditTitle] = useState("");
+  const [editDescription, setEditDescription] = useState("");
+  const [editNormalPrice, setEditNormalPrice] = useState(0);
+  const [editPremiumPrice, setEditPremiumPrice] = useState(0);
+
   useEffect(() => {
     actions.getAllOffers();
     console.log("Fetch for all offers is working")
   }, []);
 
+  const handleUpdate = (id) => {
+    const offerToUpdate = store.offers.find((offer) => offer.id === id);
+    if (offerToUpdate) {
+      setEditTitle(offerToUpdate.offer_title);
+      setEditDescription(offerToUpdate.offer_description);
+      setEditNormalPrice(offerToUpdate.normal_user_price);
+      setEditPremiumPrice(offerToUpdate.premium_user_price);
+      setEditContentId(id);
+    }
+  };
+
+  const handleSave = (id) => {
+    const offerToUpdate = store.offers.find((offer) => offer.id === id);
+    if (offerToUpdate) {
+      offerToUpdate.offer_title = editTitle;
+      offerToUpdate.offer_description = editDescription;
+      offerToUpdate.normal_user_price = editNormalPrice;
+      offerToUpdate.premium_user_price = editPremiumPrice;
+      setEditTitle("");
+      setEditDescription("");
+      setEditNormalPrice(0);
+      setEditPremiumPrice(0);
+      setEditContentId(null);
+    }
+  };
+
+  const handleDelete = (id) => {
+    actions.deleteOfferById(id);
+    window.location.reload();
+  };
+
   return (
-    <div className='cards-offers cards-offer'>
+    <div className='cards-offer'>
       {store.offers
         .filter(
           (business_offer) =>
@@ -22,28 +58,86 @@ const BusinessOfferCard = ({ searchQuery }) => {
         )
         .sort((a, b) => b.id - a.id)
         .map((business_offer) => {
-          // store.offers && store.offers.length > 1 && 
           return (
             <div
               key={business_offer.id}
               className="card card-offer mb-3 mt-4">
               <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSM23JE5rZmCQhGdgwGRj_jNOKbsrGP5C_t-g&usqp=CAU" className="card-img-top" alt="..."></img>
               <div className="card-body">
-                <h5 className="card-title offer-title">{business_offer.offer_title}</h5>
+                <div className="div-title-offer">
+                  {editContentId === business_offer.id ? (
+                    <input
+                      type="text"
+                      value={editTitle}
+                      onChange={(e) => setEditTitle(e.target.value)}
+                    />
+                  ) : (
+                    <h5 className="card-title offer-title">{business_offer.offer_title}</h5>
+                  )}
+                </div>
                 <div className='infos-country'>
                   <p className="card-text country-offer">{business_offer.country}</p>
                   <p className="card-text city-offer">{business_offer.city}</p>
                 </div>
-                <p className="card-text">{business_offer.offer_description}</p>
+                {editContentId === business_offer.id ? (
+                  <div className="comment-review">
+                    <textarea
+                      autoFocus={true}
+                      value={editDescription}
+                      onChange={(e) => setEditDescription(e.target.value)}
+                      rows="7"
+                      cols="38"
+                      maxLength="300"
+                      style={{ resize: "none" }}
+                    ></textarea>
+                  </div>
+                ) : (
+                  <p className="card-text">{business_offer.offer_description}</p>
+                )}
                 <div className='offer-price'>
-                  <p className="card-text price-user">Precio normal : <span className='price'>{business_offer.normal_user_price.toLocaleString()}$</span></p>
-                  {/* <p className="card-text">{business_offer.medium_user_price}</p>
-                  <p className="card-text">{business_offer.high_user_price}</p> */}
-                  <p className="card-text price-user">Precio prenium : <span className='price'>{business_offer.premium_user_price.toLocaleString()}$</span></p>
+                  {editContentId === business_offer.id ? (
+                    <input
+                      type="number"
+                      value={editNormalPrice}
+                      onChange={(e) => setEditNormalPrice(e.target.value)}
+                    />
+                  ) : (
+                    <p className="card-text price-user">Precio normal : <span className='price'>{business_offer.normal_user_price.toLocaleString()}$</span></p>
+                  )}
+                  {editContentId === business_offer.id ? (
+                    <input
+                      type="number"
+                      value={editPremiumPrice}
+                      onChange={(e) => setEditPremiumPrice(e.target.value)}
+                    />
+                  ) : (
+                    <p className="card-text price-user">Precio premium : <span className='price'>{business_offer.premium_user_price.toLocaleString()}$</span></p>
+                  )}
                 </div>
-                {/* <p className="card-text"><small className="text-muted">Last updated 3 mins ago {business_offer.business_id}</small></p> */}
-                <GooglePay />
+                <div className="btn-options d-flex justify-content-end">
+                  {editContentId === business_offer.id &&
+                    <button onClick={() => handleSave(business_offer.id)}>Validar</button>
+                  }
 
+                  {store.business_user.id === business_offer.business_id || store.user.is_admin &&
+                    <>
+                      <button
+                        className="btn-up-offer"
+                        onClick={() => handleUpdate(business_offer.id)}
+                      >
+                        &#9998;
+                      </button>
+                      <button
+                        className="btn-delete-offer"
+                        onClick={() => handleDelete(business_offer.id)}
+                      >
+                        &#10008;
+                      </button>
+                    </>
+                  }
+
+                </div>
+                <GooglePay />
               </div>
             </div>
           )
@@ -51,6 +145,8 @@ const BusinessOfferCard = ({ searchQuery }) => {
     </div>
   );
 };
+
+export default BusinessOfferCard;
 
 
 
@@ -171,4 +267,3 @@ const BusinessOfferCard = ({ searchQuery }) => {
 //   )
 // }
 
-export default BusinessOfferCard

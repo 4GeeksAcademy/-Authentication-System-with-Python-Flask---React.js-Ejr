@@ -6,16 +6,18 @@ import Likes from "./Likes";
 const CardsReview = ({ searchQuery }) => {
   const { store, actions } = useContext(Context);
   const [editContentId, setEditContentId] = useState(null);
+  const [editTitle, setEditTitle] = useState(""); // New state for edited title
   const [editContent, setEditContent] = useState("");
 
   useEffect(() => {
     actions.getReviews();
-    console.log("Succes fetch for CardsReview");
+    console.log("Success fetch for CardsReview");
   }, []);
 
   const handleUpdate = (id) => {
     const reviewToUpdate = store.reviews.find((review) => review.id === id);
     if (reviewToUpdate) {
+      setEditTitle(reviewToUpdate.title); // Set initial title
       setEditContent(reviewToUpdate.comment_text);
       setEditContentId(id);
     }
@@ -24,7 +26,9 @@ const CardsReview = ({ searchQuery }) => {
   const handleSave = (id) => {
     const reviewToUpdate = store.reviews.find((review) => review.id === id);
     if (reviewToUpdate) {
+      reviewToUpdate.title = editTitle; // Update title
       reviewToUpdate.comment_text = editContent;
+      setEditTitle(""); // Clear edited title
       setEditContent("");
       setEditContentId(null);
     }
@@ -38,7 +42,7 @@ const CardsReview = ({ searchQuery }) => {
   return (
     <div>
       {/* Mostrar el form de creación de reseñas sólo si el usuario está logueado y que no sea una empresa tampoco */}
-      {store.user.username && <FormReview />}
+      {store.user.username  && <FormReview />}
       {/* Publicar las cartas que ya existen */}
       <div className="cards-review">
         {store.reviews
@@ -56,10 +60,16 @@ const CardsReview = ({ searchQuery }) => {
               className="card card-review text-white mt-4 container"
               style={{ height: "16rem", width: "20rem" }}
             >
-
-
               <div className="div-title-review">
-                <h5 className="card-title title-review">{review.title}</h5>
+                {editContentId === review.id ? (
+                  <input
+                    type="text"
+                    value={editTitle}
+                    onChange={(e) => setEditTitle(e.target.value)}
+                  />
+                ) : (
+                  <h5 className="card-title title-review">{review.title}</h5>
+                )}
               </div>
               {editContentId === review.id ? (
                 <>
@@ -68,32 +78,37 @@ const CardsReview = ({ searchQuery }) => {
                       autoFocus={true}
                       value={editContent}
                       onChange={(e) => setEditContent(e.target.value)}
-
                       rows="7"
                       cols="38"
                       maxLength="300"
                       style={{ resize: "none" }}
                     ></textarea>
                   </div>
-                  <button onClick={() => handleSave(review.id)}>
-                    Validar
-                  </button>
+                  <button onClick={() => handleSave(review.id)}>Validar</button>
                 </>
               ) : (
                 <p className="card-text">{review.comment_text}</p>
               )}
-              {store.user.id === review.user.id && (
+              {store.user.id === review.user.id || store.user.is_admin && (
                 <div className="btn-options d-flex justify-content-end">
-                  <button className="btn-up-review" onClick={() => handleUpdate(review.id)}>
+                  <button
+                    className="btn-up-review"
+                    onClick={() => handleUpdate(review.id)}
+                  >
                     &#9998;
                   </button>
-                  <button className="btn-delete-review" onClick={() => handleDelete(review.id)}>
+                  <button
+                    className="btn-delete-review"
+                    onClick={() => handleDelete(review.id)}
+                  >
                     &#10008;
                   </button>
                 </div>
               )}
               <div className="likes card-likes">
-                <span className="author-review">Escrito por : <span>{review.user.username}</span> </span>
+                <span className="author-review">
+                  Escrito por : <span>{review.user.username}</span>{" "}
+                </span>
                 <Likes reviewId={review.id} />
               </div>
             </div>
