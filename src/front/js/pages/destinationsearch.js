@@ -37,25 +37,19 @@ const MySearch = () => {
     if (destinationResult.length > 0) {
       const city = destinationResult[0].matching_full_name;
 
-      const url =
-        "https://multi-site-flight-search.p.rapidapi.com/get-lowest-price-results/?searchid=%3CREQUIRED%3E";
+      const url = 'https://open-weather13.p.rapidapi.com/city'+ search;
       const options = {
-        method: "GET",
+        method: 'GET',
         headers: {
-          "X-RapidAPI-Key": "26417e7137msh4d7acb99d1bc795p134430jsn57e3f84c008c,",
-          "X-RapidAPI-Host": "multi-site-flight-search.p.rapidapi.com",
-        },
+          'X-RapidAPI-Key': '26417e7137msh4d7acb99d1bc795p134430jsn57e3f84c008c',
+          'X-RapidAPI-Host': 'open-weather13.p.rapidapi.com'
+        }
       };
-
+      
       try {
-        fetch(url, options)
-          .then((response) => response.json())
-          .then((data) => {
-            setWeatherResult(data);
-          })
-          .catch((error) => {
-            console.error("Error fetching weather data:", error);
-          });
+        const response =  fetch(url, options);
+        const result = response.text();
+        console.log(result);
       } catch (error) {
         console.error(error);
       }
@@ -68,25 +62,19 @@ const MySearch = () => {
     if (destinationResult.length > 0) {
       const city = destinationResult[0].matching_full_name;
 
-      const url =
-        "https://multi-site-flight-search.p.rapidapi.com/get-lowest-price-results/?searchid=%3CREQUIRED%3E";
+      const url = 'https://priceline-com-provider.p.rapidapi.com/v1/flights/locations?name=%24%7Bsearch%7D';
       const options = {
-        method: "GET",
+        method: 'GET',
         headers: {
-          "X-RapidAPI-Key": "26417e7137msh4d7acb99d1bc795p134430jsn57e3f84c008c,",
-          "X-RapidAPI-Host": "multi-site-flight-search.p.rapidapi.com",
-        },
+          'X-RapidAPI-Key': '26417e7137msh4d7acb99d1bc795p134430jsn57e3f84c008c',
+          'X-RapidAPI-Host': 'priceline-com-provider.p.rapidapi.com'
+        }
       };
-
+      
       try {
-        fetch(url, options)
-          .then((response) => response.json())
-          .then((data) => {
-            setFlightResult(data);
-          })
-          .catch((error) => {
-            console.error("Error fetching flight data:", error);
-          });
+        const response = fetch(url, options);
+        const result =  response.text();
+        console.log(result);
       } catch (error) {
         console.error(error);
       }
@@ -159,7 +147,7 @@ const MySearch = () => {
             >
               <div className="card-body">
                 <h3 className="card-title">{city.matching_full_name}</h3>
-                <p className="card-text">City: {city.matching_alternate_names[0].name}</p>
+                <p className="card-text">City: {city.matching_alternate_names.name}</p>
                 <button
                   className={`btn ${
                     isFavorite(city.matching_full_name) ? "btn-danger" : "btn-outline-danger"
