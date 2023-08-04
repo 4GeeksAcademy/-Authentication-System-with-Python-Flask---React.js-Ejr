@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import "../../styles/SignIn.css";
 import Moviestar from "../../img/Moviestar.png";
+import { useNavigate } from "react-router-dom";
 
 
 export const SignIn = () => {
@@ -19,9 +20,24 @@ export const SignIn = () => {
         });
     }
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        console.log(user);
+    const navigate = useNavigate()
+
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        const apiUrl = `${process.env.BACKEND_URL}api/signup`
+        console.log(user)
+        try {
+            const res = await fetch(apiUrl, {
+                method:"POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(user)
+            })
+            const data = await res.json()
+            localStorage.setItem("token", data?.token)
+            navigate("/")
+        } catch (error) {
+            console.error(error)
+        }
     }
 
     return (

@@ -8,7 +8,7 @@ import { Link, useNavigate } from "react-router-dom";
 export const Login = () => {
 	const { store, actions } = useContext(Context);
 
-    const [form, setForm] = React.useState({ username: "", password: ""})
+    const [form, setForm] = React.useState({ email: "", password: ""})
     const navigate = useNavigate()
 
     const handleChange = (e) => {
@@ -20,6 +20,7 @@ export const Login = () => {
     const onSubmit = async (e) => {
         e.preventDefault()
         const apiUrl = `${process.env.BACKEND_URL}api/login`
+        console.log(form)
         try {
             const res = await fetch(apiUrl, {
                 method:"POST",
@@ -28,7 +29,7 @@ export const Login = () => {
             })
             const data = await res.json()
             localStorage.setItem("token", data?.token)
-            navigate("/home")
+            navigate("/")
         } catch (error) {
             console.error(error)
         }
@@ -39,7 +40,7 @@ export const Login = () => {
 			<img id="image" src={Moviestar} />
 		<form onSubmit={onSubmit}>
             <div>
-                <input className="text-center" name="username" onChange={handleChange} type="text" id="username1" placeholder="Usuario" value={form.username} required></input>
+                <input className="text-center" name="email" onChange={handleChange} type="text" id="username1" placeholder="Usuario" value={form.email} required></input>
             </div>
             <br/>
             <div>
