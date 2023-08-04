@@ -7,8 +7,8 @@ import { SignIn } from "./pages/SignIn";
 import { Single } from "./pages/single";
 import injectContext from "./store/appContext";
 import { Login } from "./pages/Login";
-
-
+import { Listadomovies } from "./pages/Listadomovies.js";
+import { Movie } from "./pages/Movie";
 
 //create your first component
 const Layout = () => {
@@ -23,6 +23,8 @@ const Layout = () => {
             <BrowserRouter basename={basename}>
                 <ScrollToTop>
                     <Routes>
+                        <Route element={<Listadomovies />} path="/" />
+                        <Route element={<Movie />} path="/movie" />
                         <Route element={<Login />} path="/login" />
                         <Route element={<SignIn />} path="/sign-up" />
                         <Route element={<Single />} path="/single/:theid" />
