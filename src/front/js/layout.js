@@ -9,6 +9,11 @@ import injectContext from "./store/appContext";
 import { Login } from "./pages/Login";
 import { Listadomovies } from "./pages/Listadomovies.js";
 import { Movie } from "./pages/Movie";
+import { PassRecovery } from "./pages/passRecovery";
+import { PassChange } from "./pages/passChange";
+import { Footer } from "./pages/Footer";
+import { Navbar } from "./pages/Navbar";
+
 
 //create your first component
 const Layout = () => {
@@ -27,7 +32,11 @@ const Layout = () => {
                         <Route element={<Movie />} path="/movie" />
                         <Route element={<Login />} path="/login" />
                         <Route element={<SignIn />} path="/sign-up" />
+                        <Route element={<Footer />} path="/footer" />
+                        <Route element={<Navbar />} path="/navbar" />
                         <Route element={<Single />} path="/single/:theid" />
+                        <Route element={<PassRecovery />} path="/pass-recovery" />
+                        <Route element={<PassChange />} path="/pass-change" />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
                 </ScrollToTop>
