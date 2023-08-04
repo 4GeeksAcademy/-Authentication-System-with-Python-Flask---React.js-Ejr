@@ -54,7 +54,7 @@ const BusinessOfferCard = ({ searchQuery }) => {
             business_offer.offer_title.toLowerCase().includes(searchQuery.toLowerCase()) ||
             business_offer.offer_description
               .toLowerCase()
-              .includes(searchQuery.toLowerCase())
+              .includes(searchQuery.toLowerCase()) || business_offer.country.toLowerCase().includes(searchQuery.toLowerCase()) || business_offer.city.toLowerCase().includes(searchQuery.toLowerCase())
         )
         .sort((a, b) => b.id - a.id)
         .map((business_offer) => {

@@ -8,7 +8,7 @@
 }
 
 .card-review {
-    background: var(--color-2);
+    background: var(--color-3);
     backdrop-filter: 10px;
     height: 350px !important;
     width: calc(25% - 20px);
@@ -64,7 +64,7 @@
     left: 0;
     right: 0;
     padding: 10px;
-    background-color: rgba(0, 0, 0, 0.6);
+    background-color: var(--color-2);
     color: white;
 }
 
@@ -77,8 +77,13 @@
     color: var(--color-4);
 }
 
+.author-review {
+    font-size: 1.2rem;
+}
+
 .likes-review {
     margin-left: 3px;
+    font-size: 1.2rem;
 }
 
 .like-review svg {
@@ -90,6 +95,16 @@
     bottom: 0; */
     display: flex;
     justify-content: space-between;
+}
+
+.like-on {
+    color: #fff;
+    font-size: 1.2rem;
+}
+
+.like-off {
+    color: var(--color-5);
+    font-size: 1.2rem;
 }
 
 /* Media query */
