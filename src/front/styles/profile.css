@@ -211,8 +211,13 @@
 }
 
 .modal-footer{
-    margin-bottom: 3rem;
+    margin-bottom: 1rem;
+    margin-top: 2rem;
     padding-top: 0;
+}
+
+.modal-body-sale-process {
+    margin-top: 2rem;
 }
 
 .product_name{

@@ -181,22 +181,14 @@ export const SingleProduct = () => {
                     </div>
                     <div className='row mt-3'>
                       <div className=''>
-                      {store.user && store.user.id && product.user_id && store.user.id === product.user_id ? (
-                          <Link to={`/edit-product/${product.id}`} className='btn btn-primary btn-success ms-2'>Editar</Link>) : 
-                        (
-                          <Link to={'/profile/buys'} onClick={() => StatusTopendingBlocked(product)} className='btn btn-primary'>Reservar</Link>
-                        )}
-
-
+                        {store.user && store.user.id && product.user_id && store.user.id === product.user_id ? (
+                            <Link to={`/edit-product/${product.id}`} type='btn' className='btn button-edit-vehicle ms-2'>Editar</Link>) : 
+                          (
+                            <Link to={'/profile/buys'} onClick={() => StatusTopendingBlocked(product)} className='btn btn-primary'>Reservar</Link>
+                          )}
                       </div>
-
                     </div>
-
-                    </div>
-
-               
-
-                
+                  </div>
             ))}
           </div>
         ) : (

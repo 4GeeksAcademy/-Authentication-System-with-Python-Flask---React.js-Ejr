@@ -3,6 +3,7 @@ import { Context } from "../store/appContext";
 import { Profile_navbar } from "../component/profile_navbar";
 import "/workspaces/Watacar_v2/src/front/styles/profile.css"
 import { Purchase_navbar } from "../component/purchase_navbar";
+import { NavLink } from "react-router-dom";
 
 
 export const Profile_buys = () => {
@@ -175,9 +176,6 @@ const StatusToOnSale = (product) => {
                                             <h6 className=" col-12">{product.name}</h6>
                                         </div>
                                         <div className="row">
-                                            <h6 className=" col-12">{product.description}</h6>
-                                        </div>
-                                        <div className="row">
                                             <h6 className=" col-6">{product.state}</h6>
                                             <h6 className=" col-6">{product.price}€</h6>
                                         </div>
@@ -208,9 +206,6 @@ const StatusToOnSale = (product) => {
                                     <div className="col-7 state_product_profile_sales_process m-auto">
                                         <div className="row">
                                             <h6 className=" col-12">{product.name}</h6>
-                                        </div>
-                                        <div className="row">
-                                            <h6 className=" col-12">{product.description}</h6>
                                         </div>
                                         <div className="row">
                                             <h6 className=" col-6">{product.state}</h6>
@@ -244,9 +239,6 @@ const StatusToOnSale = (product) => {
                                     <div className="col-7 state_product_profile_sales_process">
                                         <div className="row">
                                             <h6 className=" col-12">{product.name}</h6>
-                                        </div>
-                                        <div className="row">
-                                            <h6 className=" col-12">{product.description}</h6>
                                         </div>
                                         <div className="row">
                                             <h6 className=" col-6">{product.state}</h6>

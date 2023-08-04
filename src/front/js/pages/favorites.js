@@ -36,16 +36,18 @@ export const Favorites = () => {
                         {  
                         return (
                         <div className="product_profile_favorites col-2" key={index}>
-                          <NavLink to={`/product/${favorites.product_id}`}  style={{ color: 'white', textDecoration: 'none' }} className="link-hover">
                             <div className="product_img_profile_favorites_box" key={index}>
+                              <NavLink to={`/product/${favorites.product_id}`}  style={{ color: 'white', textDecoration: 'none' }} className="link-hover">
                                 {favorites.image ? (
                                   <img src={favorites.image} className="product_img_profile_favorites" alt="..." />
                                 ) : (
                                   <img src={carImage} className="card-img-top imgCarousel" alt="..." />
                                 )}
+                              </NavLink>
                             </div>
                             <div className="product_description_profile_favorites">
                               <div className="row d-flex justify-content-between">
+                                <NavLink to={`/product/${favorites.product_id}`}  style={{ color: 'white', textDecoration: 'none' }} className="link-hover">
                                   <h6 className="col-8 price_product_profile">
                                     {favorites.price}
                                     <i class="fa-solid fa-euro-sign"></i>
@@ -67,12 +69,12 @@ export const Favorites = () => {
                                       </lord-icon>
                                     </button>
                                   </div>
-                                </div>
+                                </NavLink>
+                              </div>
                               <div className="row limit-text">
                                   <h6>{favorites.name}</h6>
                               </div>
                             </div>
-                            </NavLink>
                         </div>
                          )})}
                     </div>
