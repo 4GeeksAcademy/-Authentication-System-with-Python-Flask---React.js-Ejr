@@ -268,3 +268,35 @@ def login():
     access_token = create_access_token(identity=user.id)
 
     return jsonify({"token": access_token, "user": user.serialize()}), 200
+
+
+@api.route('/pass-recovery', methods=['POST'])
+def passRecovery(): 
+
+    email = request.json.get("email", None)
+    secret_answer = request.json.get ("secret_answer", None)
+
+    if not email or not secret_answer:
+        return jsonify({"msg": "Email and secret_answer are required"}), 400
+            
+    user = User.query.filter_by(email=email).first()
+
+    if user is None or user.secret_answer != secret_answer:
+        return jsonify({"msg" : "Invalid email or secret_answer"}), 401
+
+
+    return jsonify ({"msg" : "ok"}), 200
+
+
+@api.route('/pass-change', methods=['PATCH'])
+def passChange(): 
+
+    new_password = request.json.get("new_password", None)
+    confirm_password = request.json.get ("confirm_password", None)
+
+    if not new_password or new_password != confirm_password:
+        return jsonify({"msg": "Las contraseñas no coinciden"}), 400
+            
+    if new_password == confirm_password :
+         return jsonify ({"msg" : "contrasaeña actualizada correctamente"}), 200
+    
