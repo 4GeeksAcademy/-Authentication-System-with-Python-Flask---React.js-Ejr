@@ -12,6 +12,7 @@ input[type="password"] {
   color: black;
   border-radius: 20px; 
   font-family: 'Roboto', sans-serif; 
+  text-align: center;
   margin-bottom: 20px;  
   width: 30%;  
   padding: 10px;  

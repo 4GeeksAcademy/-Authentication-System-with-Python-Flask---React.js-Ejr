@@ -1,0 +1,30 @@
+.card-container {
+    position: relative;
+    font-family: 'Roboto', sans-serif; 
+    border: 0;
+    box-shadow: none;
+  }
+
+  .star-ranking {
+	position: absolute;
+	top: 10px;
+	left: 10px;
+	z-index: 1;
+	color: white; 
+	background-color: transparent;
+    font-size: 18px;
+}
+
+  .star-icon {
+	color: rgb(236, 206, 51);
+	background-color: transparent;
+  }
+  
+
+  .ranking {
+    display: inline;
+	margin-left: 5px;
+    background-color: transparent; 
+	color: white; 
+
+  }

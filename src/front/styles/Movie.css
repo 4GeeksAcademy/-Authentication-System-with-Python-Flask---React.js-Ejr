@@ -1,0 +1,54 @@
+.container {
+    font-family: 'Roboto', sans-serif; 
+  }
+
+.star-icon {
+    color: rgb(236, 206, 51);
+    background-color: transparent;
+}
+
+.ranking {
+    color: white; 
+    font-size: 18px; 
+}
+
+.gender, .mostrar-mas {
+    background-color: rgb(0, 0, 0); 
+    text-align: center; 
+    color: rgb(255, 255, 255);
+    border-radius: 20px; 
+    border: 1px solid white; 
+    font-family: 'Roboto', sans-serif; 
+    padding: 10px 20px;    
+    cursor: pointer;  
+    margin-bottom: 10px;
+    margin-right: 10px;
+  }
+
+  .video-container {
+    border-radius: 20px; 
+    overflow: hidden; 
+}
+
+.container-crew {
+  width: 70%; 
+}
+
+.card-title {
+  font-size: 18px;
+}
+
+.card-detail {
+  font-size: 14px; 
+  color:rgb(217, 217, 217)
+}
+
+
+.title-container {
+  margin-bottom: -20px; 
+}
+
+
+.card-title {
+  margin-bottom: -5px; 
+}
