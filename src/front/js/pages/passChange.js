@@ -5,10 +5,10 @@ import "../../styles/Login.css";
 import { useNavigate } from "react-router-dom";
 
 
-export const PassRecovery = () => {
+export const PassChange = () => {
 	const { store, actions } = useContext(Context);
 
-    const [form, setForm] = React.useState({ email: "", secret_answer: ""})
+    const [form, setForm] = React.useState({ new_password: "", confirm_password: ""})
     const navigate = useNavigate
 
     const handleChange = (e) => {
@@ -19,19 +19,19 @@ export const PassRecovery = () => {
 
     const onSubmit = async (e) => {
         e.preventDefault()
-        const apiUrl = `${process.env.BACKEND_URL}/api/pass-recovery`
+        const apiUrl = `${process.env.BACKEND_URL}/api/pass-change`
         try {
             console.log(apiUrl,form)
             const res = await fetch(apiUrl, {
-                method:"POST",
+                method:"PATCH",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(form)
             })
             const data = await res.json()
-            console.log(data)
-            navigate("/pass-change")
+            console.log("su contraseña se modificó correctamente")
+            navigate("/")
         } catch (error) {
-            console.error(error)
+            console.error("Las contraseñas no coinciden")
         }
     }
 
@@ -40,17 +40,19 @@ export const PassRecovery = () => {
 			<img id="image" src={Moviestar} />
 		<form onSubmit={onSubmit}>
             <div>
-                <input className="text-center" name="email" onChange={handleChange} type="text" id="username1" placeholder="Usuario" value={form.email} required></input>
+                <input className="text-center" name="new_password" onChange={handleChange} type="password" id="new_password" placeholder="Nueva contraseña" value={form.new_password} required></input>
             </div>
             <br/>
             <div>
-                <input className="text-center" name="secret_answer" onChange={handleChange} type="password" id="secret_answer" placeholder="Respuesta secreta" value={form.secret_answer} required></input>
+                <input className="text-center" name="confirm_password" onChange={handleChange} type="password" id="confirm_password" placeholder="Confirmar contraseña" value={form.confirm_password} required></input>
                 <br/>
             </div>
 			<br/>
-            <button type="submit" id="recovery-button">Enviar</button>
+            <button type="submit" id="recovery-button">Confirmar</button>
             <br/>
-        </form>
-		</div>
-	);
+            </form>
+            </div>
+    );
 };
+
+

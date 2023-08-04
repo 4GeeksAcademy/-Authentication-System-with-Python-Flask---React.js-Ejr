@@ -286,3 +286,17 @@ def passRecovery():
 
 
     return jsonify ({"msg" : "ok"}), 200
+
+
+@api.route('/pass-change', methods=['PATCH'])
+def passChange(): 
+
+    new_password = request.json.get("new_password", None)
+    confirm_password = request.json.get ("confirm_password", None)
+
+    if not new_password or new_password != confirm_password:
+        return jsonify({"msg": "Las contraseñas no coinciden"}), 400
+            
+    if new_password == confirm_password :
+         return jsonify ({"msg" : "contrasaeña actualizada correctamente"}), 200
+    
