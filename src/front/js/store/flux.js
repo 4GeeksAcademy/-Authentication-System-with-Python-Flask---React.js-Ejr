@@ -6,11 +6,11 @@ const getState = ({ getStore, getActions, setStore }) => {
     store: {
       user: {},
       token: undefined,
-      clothes:[],
-      shoes:[],
-      accessories:[],
+      clothes: [],
+      shoes: [],
+      accessories: [],
       details: {},
-      favorites: []
+      favorites: [],
     },
     actions: {
       login: async (email, password) => {
@@ -79,14 +79,14 @@ const getState = ({ getStore, getActions, setStore }) => {
       ) => {
         const response = await api.createProduct(
           name,
-        price,
-        description,
-        color,
-        type,
-        category_id,
-        // sizes,
-        image_url,
-        getStore().token
+          price,
+          description,
+          color,
+          type,
+          category_id,
+          // sizes,
+          image_url,
+          getStore().token
         )
         console.log(response)
         console.log('Succefully created product')
@@ -95,118 +95,87 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       getClothes: async () => {
         try {
-          const store = getStore();
-          const result = await fetch(API_URL + "/products/clothing");
-          const data = await result.json();
-      
+          const store = getStore()
+          const result = await fetch(API_URL + '/products/clothing')
+          const data = await result.json()
+
           if (Array.isArray(data)) {
-            setStore({clothes: data});
-            console.log("Prendas cargadas");     
-            console.log(store.clothes);
-            
+            setStore({ clothes: data })
+            console.log('Prendas cargadas')
+            console.log(store.clothes)
           } else {
-            console.log("El resultado de la API no es un array válido:", data);
+            console.log('El resultado de la API no es un array válido:', data)
           }
         } catch (error) {
-          console.log("No se pudo recuperar lista prendas", error);
+          console.log('No se pudo recuperar lista prendas', error)
         }
-        
-      
-			},
+      },
       getShoes: async () => {
         try {
-          const store = getStore();
-          const result = await fetch(API_URL + "/products/shoes");
-          const data = await result.json();
-      
+          const store = getStore()
+          const result = await fetch(API_URL + '/products/shoes')
+          const data = await result.json()
+
           if (Array.isArray(data)) {
-            setStore({shoes: data});
-            console.log("shoes uploaded");     
-            console.log(store.shoes);
-            
+            setStore({ shoes: data })
+            console.log('shoes uploaded')
+            console.log(store.shoes)
           } else {
-            console.log("El resultado de la API no es un array válido:", data);
+            console.log('El resultado de la API no es un array válido:', data)
           }
         } catch (error) {
-          console.log("No se pudo recuperar lista prendas", error);
+          console.log('No se pudo recuperar lista prendas', error)
         }
-        
-      
-			},
+      },
       getAccessories: async () => {
         try {
-          const store = getStore();
-          const result = await fetch(API_URL + "/products/accessories");
-          const data = await result.json();
-      
+          const store = getStore()
+          const result = await fetch(API_URL + '/products/accessories')
+          const data = await result.json()
+
           if (Array.isArray(data)) {
-            setStore({accessories: data});
-            console.log("accesorios cargados");     
-            console.log(store.accessories);
-            
+            setStore({ accessories: data })
+            console.log('accesorios cargados')
+            console.log(store.accessories)
           } else {
-            console.log("El resultado de la API no es un array válido:", data);
+            console.log('El resultado de la API no es un array válido:', data)
           }
         } catch (error) {
-          console.log("No se pudo recuperar lista prendas", error);
+          console.log('No se pudo recuperar lista prendas', error)
         }
-        
-      
-			},
-      viewDetails:async (id) => {
-				const store = getStore();
-        // const cat = category == 1 ? "clothes" : category == 2 ? "accessories" : "shoes"
-				// const selected = store[cat].find((e)=>e.id === id);
-        // console.log(store.[cat])
-				// console.log("Esta es la info product", selected );
-				// setStore({details:selected });
-        try {
-          
-          const result = await fetch(API_URL + `/products/${id}`);
-          const data = await result.json();
-      
-          
-            setStore({details: data});
-            console.log("details cargados");
-          } catch (error) {
-            console.log("No se pudo recuperar detalles", error);
-          }
-			  },
-      getFavorites:async() => {
-        const store = getStore();
+      },
+      getProductDetails: async (id) => {
+        const product = await api.getProductByID(id)
+        return product
+      },
+      getFavorites: async () => {
+        const store = getStore()
+        if (!store.token) return
         const response = await api.getFavorites(store.token)
-        setStore({favorites:response})
+        setStore({ favorites: response })
         console.log(response)
         console.log('Favorites upload')
         return response
       },
-         
-      postFavorites:async(id) => {
-        const store = getStore();
-        const response = await api.postFavorites(store.token,id)
 
-        setStore({favorites:response})
+      postFavorites: async (id) => {
+        const store = getStore()
+        const response = await api.postFavorites(store.token, id)
+
+        setStore({ favorites: response })
         console.log(response)
         console.log('Favorite added')
         return response
       },
-      
-      deleteFavorites:async(id) => {
-        const store = getStore();
-        const response = await api.deleteFavorites(store.token,id)
-        setStore({favorites:response})
+
+      deleteFavorites: async (id) => {
+        const store = getStore()
+        const response = await api.deleteFavorites(store.token, id)
+        setStore({ favorites: response })
         console.log(response)
         console.log('Favorite deleted')
         return response
-      }
-					
-				
-
-			
-
-			
-      
-
+      },
     },
   }
 }

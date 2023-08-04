@@ -74,7 +74,7 @@ class Product(db.Model):
     color = db.Column(db.String(50))
     image_url = db.Column(db.String(350))
     type = db.Column(db.String(100))
-    category_id = db.Column(db.Integer, db.ForeignKey('categories.id'))
+    category_id = db.Column(db.Integer, db.ForeignKey('categories.id'), nullable=False)
 
     category = db.relationship('Category', back_populates='products')
     orders = db.relationship('OrderItems', back_populates='product')
