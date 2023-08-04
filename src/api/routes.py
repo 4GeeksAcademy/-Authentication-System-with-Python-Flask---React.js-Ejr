@@ -240,8 +240,8 @@ def create_new_user():
     if user:
         return jsonify({"msg": "User already exists"}), 400
 
-    new_user = User(name=name, email=email)
-    new_user.set_password(password)
+    new_user = User(name=name, email=email, password=password, is_active=True)
+    # new_user.set_password(password)
     db.session.add(new_user)
     db.session.commit()
 
@@ -261,8 +261,8 @@ def login():
         return jsonify({"msg": "Email and password are required"}), 400
         
     user = User.query.filter_by(email=email).first()
-
-    if user is None or not user.check_password(password):
+   
+    if user is None or user.password != password:
         return jsonify({"msg": "Invalid email or password"}), 401
     
     access_token = create_access_token(identity=user.id)
