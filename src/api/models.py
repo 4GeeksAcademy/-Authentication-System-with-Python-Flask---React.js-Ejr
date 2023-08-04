@@ -123,7 +123,7 @@ class Review(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
     trip_id = db.Column(db.Integer, db.ForeignKey(
-        'trip.id'), nullable=True)
+        'trip.id'), nullable=True) 
     title = db.Column(db.String(75), nullable=False)
     comment_text = db.Column(db.String(500), nullable=False)
 
@@ -141,16 +141,14 @@ class Review(db.Model):
             "comment_text": self.comment_text,
         }
 
-
 class Likes(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key = True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
-    review_id = db.Column(
-        db.Integer, db.ForeignKey('review.id'), nullable=True)
+    review_id = db.Column(db.Integer, db.ForeignKey('review.id'), nullable=True)
 
     def __repr__(self):
         return '<Likes %r>' % self.id
-
+    
     def serialize(self):
         return {
             "id": self.id,

@@ -12,7 +12,7 @@ const FormReview = () => {
         comment_text: "",
       }}
       validationSchema={Yup.object({
-        title: Yup.string().min(10, 'Debe tener 10 carácteres o más').required('Obligatorio'),
+        title: Yup.string().min(10, 'Debe tener 10 o 25 carácteres').max(25).required('Obligatorio'),
         comment_text: Yup.string().min(40, 'Debe tener 40 carácteres o más').required('Obligatorio'),
       })}
       onSubmit={(values, { setSubmitting }) => {
@@ -43,11 +43,11 @@ const FormReview = () => {
                   <ErrorMessage name='title' />
                 </div>
                 <div className="comment-form-review">
-                  <label htmlFor="comment_text">Commentario:</label>
+                  <label htmlFor="comment_text">Comentario:</label>
                   <Field type="text" name="comment_text" value={formik.values.comment_text} />
                   <ErrorMessage name='comment_text' />
                 </div>
-                <button type="submit">Publicar mi reseña</button>
+                <button className='btn-review' type="submit">Publicar mi reseña</button>
               </Form>
             </div>
           ) : null}

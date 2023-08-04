@@ -7,6 +7,7 @@
   color: #fff;
   transition: all 0.5s;
 }
+
 .btn-search:hover {
   color: var(--color-3);
   background: #fff;
@@ -22,6 +23,7 @@
   transition: all 0.5s;
 }
 
+
 .btn-cancel-search:hover {
   color: var(--color-1);
   background: #fff;
@@ -30,7 +32,9 @@
 .review-input-search {
   padding-left: 6px;
   transition: all .5s;
+  width: 23rem;
 }
+
 .review-input-search:hover {
   background: #ddd;
 }

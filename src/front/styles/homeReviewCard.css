@@ -17,6 +17,12 @@
   margin-top: 30px;
 }
 
+.home-price {
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+}
+
 /* .card-home-review {
   height: 16rem !important;
   width: 20rem !important;
