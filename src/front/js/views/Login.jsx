@@ -1,13 +1,14 @@
 import React, { useState, useContext } from 'react'
 import { Context } from '../store/appContext'
-import { useNavigate } from 'react-router'
-import Navbar from "../component/Navbar.jsx";
-
+import { useNavigate, Navigate, useLocation } from 'react-router'
+import Navbar from '../component/Navbar.jsx'
 
 export const Login = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const { actions } = useContext(Context)
+  const { actions, store } = useContext(Context)
+  const location = useLocation()
+  const from = location.state?.from?.pathname || '/'
 
   let navigate = useNavigate()
 
@@ -15,8 +16,7 @@ export const Login = () => {
     e.preventDefault()
     actions
       .login(email, password)
-      .then((res) => navigate('/home'))
-      // actions.handleRefreshClick())
+      .then((res) => navigate(from, { replace: true }))
       .catch((err) => {
         alert('Incorrect user/password')
         console.log(err)
@@ -24,11 +24,11 @@ export const Login = () => {
       })
   }
 
-  
-
   const handleRedirect = () => {
     navigate('/signup')
   }
+
+  if (JSON.stringify(store.user) !== '{}') return <Navigate to={from} />
 
   return (
     <div>
@@ -36,7 +36,10 @@ export const Login = () => {
       <h1 className='mx-auto p-5 text-center' style={{ fontSize: '3rem' }}>
         Welcome Back!
       </h1>
-      <form className='card w-75 mx-auto mb-5 text-white bg-black' onSubmit={handleSubmit}>
+      <form
+        className='card w-75 mx-auto mb-5 text-white bg-black'
+        onSubmit={handleSubmit}
+      >
         <div className='m-3'>
           <label htmlFor='exampleInputEmail1' className='form-label'>
             <h5>Email address</h5>
@@ -75,4 +78,4 @@ export const Login = () => {
   )
 }
 
-export default Login;
+export default Login
