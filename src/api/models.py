@@ -67,7 +67,7 @@ class Trip(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     country = db.Column(db.String(40), nullable=False)
     city = db.Column(db.String(40), nullable=False)
-    activities = db.Column(db.String(100), nullable=False)
+    activity = db.Column(db.String(100), nullable=False)
     offers = db.relationship("Offers", backref="trip")
     review = db.relationship("Review", backref="trip")
     favorites = db.relationship('Favorites', backref='trip')
