@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "../../styles/DestinationSearch.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const MySearch = () => {
   const [search, setSearch] = useState("");
@@ -17,12 +18,12 @@ const MySearch = () => {
 
     if (search !== "") {
       fetch(`https://api.teleport.org/api/cities/?search=${search}`)
-        .then(response => response.json())
-        .then(data => {
+        .then((response) => response.json())
+        .then((data) => {
           setDestinationResult(data._embedded?.["city:search-results"]);
           setLoading(false);
         })
-        .catch(error => {
+        .catch((error) => {
           setError("Error fetching destination data. Please try again later.");
           setLoading(false);
         });
@@ -36,14 +37,28 @@ const MySearch = () => {
     if (destinationResult.length > 0) {
       const city = destinationResult[0].matching_full_name;
 
-      fetch(`https://api.example.com/api/weather?city=${city}`)
-        .then(response => response.json())
-        .then(data => {
-          setWeatherResult(data);
-        })
-        .catch(error => {
-          console.error("Error fetching weather data:", error);
-        });
+      const url =
+        "https://multi-site-flight-search.p.rapidapi.com/get-lowest-price-results/?searchid=%3CREQUIRED%3E";
+      const options = {
+        method: "GET",
+        headers: {
+          "X-RapidAPI-Key": "26417e7137msh4d7acb99d1bc795p134430jsn57e3f84c008c,",
+          "X-RapidAPI-Host": "multi-site-flight-search.p.rapidapi.com",
+        },
+      };
+
+      try {
+        fetch(url, options)
+          .then((response) => response.json())
+          .then((data) => {
+            setWeatherResult(data);
+          })
+          .catch((error) => {
+            console.error("Error fetching weather data:", error);
+          });
+      } catch (error) {
+        console.error(error);
+      }
     } else {
       setWeatherResult([]);
     }
@@ -53,24 +68,37 @@ const MySearch = () => {
     if (destinationResult.length > 0) {
       const city = destinationResult[0].matching_full_name;
 
-      fetch(`https://api.example.com/api/flights?city=${city}`)
-        .then(response => response.json())
-        .then(data => {
-          setFlightResult(data);
-        })
-        .catch(error => {
-          console.error("Error fetching flight data:", error);
-        });
+      const url =
+        "https://multi-site-flight-search.p.rapidapi.com/get-lowest-price-results/?searchid=%3CREQUIRED%3E";
+      const options = {
+        method: "GET",
+        headers: {
+          "X-RapidAPI-Key": "26417e7137msh4d7acb99d1bc795p134430jsn57e3f84c008c,",
+          "X-RapidAPI-Host": "multi-site-flight-search.p.rapidapi.com",
+        },
+      };
+
+      try {
+        fetch(url, options)
+          .then((response) => response.json())
+          .then((data) => {
+            setFlightResult(data);
+          })
+          .catch((error) => {
+            console.error("Error fetching flight data:", error);
+          });
+      } catch (error) {
+        console.error(error);
+      }
     } else {
       setFlightResult([]);
     }
   }, [destinationResult]);
 
-  const startSearch = (onKeyDownEvent) => {
-    if (onKeyDownEvent.key === "Enter") {
-      setSearch(input);
-      setInput("");
-    }
+  const startSearch = (event) => {
+    event.preventDefault();
+    setSearch(input);
+    setInput("");
   };
 
   const addToFavorites = (destination) => {
@@ -78,7 +106,7 @@ const MySearch = () => {
   };
 
   const removeFromFavorites = (destination) => {
-    setFavorites(favorites.filter(fav => fav !== destination));
+    setFavorites(favorites.filter((fav) => fav !== destination));
   };
 
   const isFavorite = (destination) => {
@@ -94,90 +122,101 @@ const MySearch = () => {
   return (
     <div className="my-search-container">
       <div className="jumbotron">
-        <h1>Vacation Destination Search</h1>
+        <h1>It's Time To Get Away</h1>
         <p>Where Do You Want To Go!</p>
       </div>
 
-      
-      <input
-        className="my-search-input"
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-        type="text"
-        id="searchInput"
-        name="fname"
-        onKeyDown={startSearch}
-        placeholder="Where to?"
-      />
+      <form onSubmit={startSearch} className="form-inline my-search-form">
+        <div className="input-group">
+          <input
+            className="form-control"
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            type="text"
+            id="searchInput"
+            name="fname"
+            placeholder="Your Next Destination"
+            aria-label="Destination"
+            required
+          />
+          <div className="input-group-append">
+            <button className="btn btn-primary" type="submit">
+              Search
+            </button>
+          </div>
+        </div>
+      </form>
 
-      
       {loading ? <div className="loader">Loading...</div> : null}
-      {error ? <div className="error-message">{error}</div> : null}
+      {error ? <div className="alert alert-danger">{error}</div> : null}
 
-      
       {destinationResult.length > 0 ? (
         <div className="my-search-results">
-          {destinationResult.map(city => (
-            <div key={city._links["city:item"].href} className="my-search-result-item">
-              <img src="https://png.pngtree.com/element_our/png/20180807/pngtree-pinmark-vacation-icon-and-concept-png-image_54653.jpg" height="35px" width="35px" alt="Vacation Destination Icon" className="vacation-icon" />
-              <div className="city-info">
-                <h3>{city.matching_full_name}</h3>
-                <p>City: {city.matching_alternate_names[0].name}</p>
+          {destinationResult.map((city) => (
+            <div
+              key={city._links["city:item"].href}
+              className="card my-search-result-item"
+            >
+              <div className="card-body">
+                <h3 className="card-title">{city.matching_full_name}</h3>
+                <p className="card-text">City: {city.matching_alternate_names[0].name}</p>
                 <button
-  className={`favorite-button ${isFavorite(city.matching_full_name) ? "flipped" : ""}`}
-  onClick={() =>
-    isFavorite(city.matching_full_name)
-      ? removeFromFavorites(city.matching_full_name)
-      : addToFavorites(city.matching_full_name)
-  }
->
-  {isFavorite(city.matching_full_name) ? (
-    <i className="fas fa-heart"></i>
-  ) : (
-    <i className="far fa-heart"></i>
-  )}
-</button>
-
+                  className={`btn ${
+                    isFavorite(city.matching_full_name) ? "btn-danger" : "btn-outline-danger"
+                  }`}
+                  onClick={() =>
+                    isFavorite(city.matching_full_name)
+                      ? removeFromFavorites(city.matching_full_name)
+                      : addToFavorites(city.matching_full_name)
+                  }
+                >
+                  {isFavorite(city.matching_full_name) ? (
+                    <i className="fas fa-heart"></i>
+                  ) : (
+                    <i className="far fa-heart"></i>
+                  )}
+                </button>
               </div>
             </div>
           ))}
         </div>
       ) : (
-        <div className="no-results"></div>
+        <div className="alert alert-info">No results found.</div>
       )}
 
-      
       {weatherResult.length > 0 ? (
         <div className="my-weather-results">
           <h2>Weather Information</h2>
           {weatherResult.map((weather, index) => (
-            <div key={index} className="weather-item">
-              <p>Date: {weather.date}</p>
-              <p>Temperature: {weather.temperature}</p>
-              <p>Weather Condition: {weather.condition}</p>
-              
+            <div key={index} className="card weather-item">
+              <div className="card-body">
+                <p>Date: {weather.date}</p>
+                <p>Temperature: {weather.temperature}</p>
+                <p>Weather Condition: {weather.condition}</p>
+              </div>
             </div>
           ))}
         </div>
       ) : null}
 
-      
       {flightResult.length > 0 ? (
         <div className="my-flight-results">
           <h2>Flight Prices</h2>
           {flightResult.map((flight, index) => (
-            <div key={index} className="flight-item">
-              <p>Flight Provider: {flight.provider}</p>
-              <p>Price: {flight.price}</p>
-              <p>Departure Date: {flight.departureDate}</p>
-              
+            <div key={index} className="card flight-item">
+              <div className="card-body">
+                <p>Flight Provider: {flight.provider}</p>
+                <p>Price: {flight.price}</p>
+                <p>Departure Date: {flight.departureDate}</p>
+              </div>
             </div>
           ))}
         </div>
       ) : null}
 
-      
-      <button className="clear-results-button" onClick={clearResults}>Clear Results</button>
+      <button className="btn btn-secondary" onClick={clearResults}>
+        Clear Results
+      </button>
     </div>
   );
 };
