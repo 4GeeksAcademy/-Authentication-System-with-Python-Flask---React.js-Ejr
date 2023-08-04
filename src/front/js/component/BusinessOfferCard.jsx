@@ -18,7 +18,7 @@ const BusinessOfferCard = ({ searchQuery }) => {
             business_offer.offer_title.toLowerCase().includes(searchQuery.toLowerCase()) ||
             business_offer.offer_description
               .toLowerCase()
-              .includes(searchQuery.toLowerCase())
+              .includes(searchQuery.toLowerCase()) || business_offer.country.toLowerCase().includes(searchQuery.toLowerCase()) || business_offer.city.toLowerCase().includes(searchQuery.toLowerCase())
         )
         .sort((a, b) => b.id - a.id)
         .map((business_offer) => {
@@ -26,7 +26,7 @@ const BusinessOfferCard = ({ searchQuery }) => {
           return (
             <div
               key={business_offer.id}
-              className="card card-offers card-offer mb-3 mt-4">
+              className="card card-offer mb-3 mt-4">
               <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSM23JE5rZmCQhGdgwGRj_jNOKbsrGP5C_t-g&usqp=CAU" className="card-img-top" alt="..."></img>
               <div className="card-body">
                 <h5 className="card-title offer-title">{business_offer.offer_title}</h5>
