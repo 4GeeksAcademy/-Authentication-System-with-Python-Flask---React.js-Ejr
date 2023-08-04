@@ -25,7 +25,7 @@ const Likes = ({ reviewId }) => {
     if (success) {
       setLikes((prevLikes) => (isLiked ? prevLikes - 1 : prevLikes + 1));
       setIsLiked((prevIsLiked) => !prevIsLiked)
-    } else if (store.user) {
+    } else if (store.business_user) {
       alert("Una empresa no puede hacer click acá!!");
     }
 
