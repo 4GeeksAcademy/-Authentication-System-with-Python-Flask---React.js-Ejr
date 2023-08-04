@@ -1,8 +1,9 @@
 .footer {
-    background-color: #333;
+    background-color: black;
     color: white;
     padding: 20px 0;
     text-align: center;
+    margin-top: 50px;
   }
   
   .social-icons a {
