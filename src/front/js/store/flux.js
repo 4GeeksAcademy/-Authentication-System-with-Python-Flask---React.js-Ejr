@@ -1,5 +1,5 @@
 const getState = ({ getStore, getActions, setStore }) => {
-  const API_URL = "http://127.0.0.1:3001";
+  const API_URL = process.env.BACKEND_URL;
 
   return {
     store: {
@@ -9,7 +9,6 @@ const getState = ({ getStore, getActions, setStore }) => {
       trip: [],
       reviews: [],
       offers: [],
-      likes: 0,
 
     },
     actions: {
@@ -802,8 +801,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           if (response.ok) {
             const data = await response.json();
             console.log('data get likes:', data);
-            setStore({ likes: data })
-            return true
+            return data
           } else {
             return null;
           }

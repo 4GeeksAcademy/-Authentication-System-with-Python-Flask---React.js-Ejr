@@ -155,7 +155,6 @@ class Likes(db.Model):
         return {
             "id": self.id,
             "user": User.query.get(self.user_id).serialize(),
-            "review": Review.query.get(self.review_id).serialize()
         }
 
 

@@ -234,7 +234,7 @@ def private():
     else:
         business = Business_user.query.filter_by(email=current_user).first()
         if business:
-            return jsonify({'message': 'Welcome to the private area!', 'business':business.serialize()})
+            return jsonify({'message': 'Welcome to the private area!', 'business': business.serialize()})
         else:
             return jsonify({'error': 'Unauthorized'}), 401
 
@@ -590,12 +590,12 @@ def get_likes_for_review(review_id):
     review = Review.query.get(review_id)
     if review is None:
         return jsonify({"error": "Review not found"}), 404
-    
+
     likes = Likes.query.filter_by(review_id=review_id).all()
+    print(len(likes))
+    likes_len = int(len(likes))
     serialized_likes = [like.serialize() for like in likes]
-    return jsonify(serialized_likes)
-
-
+    return jsonify({'user_data': serialized_likes, 'likes_len': likes_len})
 
 
 @api.route('/reviews/<int:review_id>/likes', methods=['POST'])
@@ -608,7 +608,8 @@ def like_review(review_id):
     if review is None:
         return jsonify(error='Review not found'), 404
 
-    existing_like = Likes.query.filter_by(user_id=user.id, review_id=review_id).first()
+    existing_like = Likes.query.filter_by(
+        user_id=user.id, review_id=review_id).first()
     if existing_like:
         return jsonify(error='User has already liked this review'), 400
 
@@ -618,5 +619,3 @@ def like_review(review_id):
     db.session.commit()
 
     return jsonify(message='Review liked successfully'), 200
-
-
