@@ -8,7 +8,7 @@ const AboutCar = () => {
     const actualCar = store.cars[parseInt(theid)-1]
     console.log(actualCar)
   return (
-    <div>
+    <div className='bg bg-secondary'>
         <div className="container">
         <div className="row mb-4 justify-content-between">
           <div className="col-5 carFormatted">
