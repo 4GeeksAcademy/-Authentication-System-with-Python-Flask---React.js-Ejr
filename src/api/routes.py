@@ -479,45 +479,45 @@ def delete_trip(trip_id):
     return jsonify({"message": "Trip deleted successfully"}), 200
 
 
-# Admin user route
+# # Admin user route
 
-@api.route('/admin_user', methods=['GET'])
-@jwt_required()
-def admin_dashboard():
-    is_admin = get_jwt_identity().get('is_admin', False)
-    if is_admin:
-        users = Business_user.query.all()
-        trips = Trip.query.all()
-        return jsonify({
-            'users': [user.serialize() for user in users],
-            'trips': [trip.serialize() for trip in trips]
-        }), 200
-    else:
-        return jsonify({'error': 'Unauthorized'}), 401
+# @api.route('/admin_user', methods=['GET'])
+# @jwt_required()
+# def admin_dashboard():
+#     is_admin = get_jwt_identity().get('is_admin', False)
+#     if is_admin:
+#         users = Business_user.query.all()
+#         trips = Trip.query.all()
+#         return jsonify({
+#             'users': [user.serialize() for user in users],
+#             'trips': [trip.serialize() for trip in trips]
+#         }), 200
+#     else:
+#         return jsonify({'error': 'Unauthorized'}), 401
 
-# Admin can delete users and trips
+# # Admin can delete users and trips
 
 
-@api.route('/admin_user/delete/<string:resource>/<int:resource_id>', methods=['DELETE'])
-@jwt_required()
-def delete_resource(resource, resource_id):
-    is_admin = get_jwt_identity().get('is_admin', False)
-    if is_admin:
-        if resource == 'users':
-            resource_instance = Business_user.query.get(resource_id)
-        elif resource == 'trips':
-            resource_instance = Trip.query.get(resource_id)
-        else:
-            return jsonify({'error': 'Invalid resource type'}), 400
+# @api.route('/admin_user/delete/<string:resource>/<int:resource_id>', methods=['DELETE'])
+# @jwt_required()
+# def delete_resource(resource, resource_id):
+#     is_admin = get_jwt_identity().get('is_admin', False)
+#     if is_admin:
+#         if resource == 'users':
+#             resource_instance = Business_user.query.get(resource_id)
+#         elif resource == 'trips':
+#             resource_instance = Trip.query.get(resource_id)
+#         else:
+#             return jsonify({'error': 'Invalid resource type'}), 400
 
-        if resource_instance:
-            db.session.delete(resource_instance)
-            db.session.commit()
-            return jsonify({'message': f'{resource[:-1].capitalize()} deleted successfully'}), 200
-        else:
-            return jsonify({'error': f'{resource[:-1].capitalize()} not found'}), 404
-    else:
-        return jsonify({'error': 'Unauthorized'}), 401
+#         if resource_instance:
+#             db.session.delete(resource_instance)
+#             db.session.commit()
+#             return jsonify({'message': f'{resource[:-1].capitalize()} deleted successfully'}), 200
+#         else:
+#             return jsonify({'error': f'{resource[:-1].capitalize()} not found'}), 404
+#     else:
+#         return jsonify({'error': 'Unauthorized'}), 401
 
 # Routes for review
 

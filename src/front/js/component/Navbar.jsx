@@ -49,13 +49,12 @@ const Navbar = () => {
                 <li><Link className="dropdown-item">Favoritos</Link></li>
                 <li><Link to='/trips' className="dropdown-item">Explora tu siguiente trip</Link></li>
                 <li><Link className="dropdown-item">Ayuda</Link></li>
-                {store.auth ? (
+                {store.auth && (
                   <>
                     <li><Link to='/user/private' className="dropdown-item">Mi espacio personal</Link></li>
                     <li><button className="dropdown-item" onClick={handleLogout}>LogOut</button></li>
                   </>
-
-                ) : (<li><Link className="dropdown-item signup" to='/signup'>Sign Up</Link></li>)}
+                )}
               </ul>
             </li>
           </ul>
