@@ -22,7 +22,7 @@ const CarCards = ({ cars }) => {
         return (
           <div key={index} className="col-3 m-3 carCard bg bg-dark rounded-4 p-0" style={{ width: "20%" }}>
             <img
-              src={car.images[0].image_url}
+              src={car.images.length ? car.images[0].image_url:"https://www.independentmediators.co.uk/wp-content/uploads/2016/02/placeholder-image.jpg"}
               className="card-img-top rounded-5"
               alt="..."
               style={{ width: "100%", height: "auto" }}
