@@ -9,7 +9,7 @@ export const Login = () => {
 	const { store, actions } = useContext(Context);
 
     const [form, setForm] = React.useState({ username: "", password: ""})
-    const navigate = useNavigate
+    const navigate = useNavigate()
 
     const handleChange = (e) => {
         const key = e.target.name 
