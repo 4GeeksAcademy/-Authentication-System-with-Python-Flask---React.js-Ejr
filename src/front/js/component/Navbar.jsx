@@ -26,20 +26,18 @@ const Navbar = () => {
 
             {store.auth ? (
               <>
-            
                 {/* <h3>Hi, {store.user.username ? store.user.username : store.business_user ?.business_name} </h3> */}
                 <h3>Hola, {store.user?.username ? store.user.username : store.business_user?.business_name}! </h3>
-
-
-
               </>
-
             ) : (
-              <li className="nav-item">
-                <a className="nav-link btn" href="#" data-bs-toggle="modal" data-bs-target="#staticBackdrop">LogIn</a>
+              <>
+              <li className="nav-item d-flex">
+                <a className="nav-link btn login me-2" href="#" data-bs-toggle="modal" data-bs-target="#staticBackdrop">LogIn</a>
               </li>
-
+              <li><Link className="nav-link btn signup" to='/signup'>Sign Up</Link></li>
+              </>
             )}
+
             <li className="nav-item dropstart">
               <a className="nav-link" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 &#9776;
@@ -51,13 +49,13 @@ const Navbar = () => {
                 <li><Link className="dropdown-item">Favoritos</Link></li>
                 <li><Link to='/trips' className="dropdown-item">Explora tu siguiente trip</Link></li>
                 <li><Link className="dropdown-item">Ayuda</Link></li>
-                {store.auth ? (
+                {/* git */}
+                {store.auth && (
                   <>
-                    <li><Link to='/user/private' className="dropdown-item">Mi perfile</Link></li>
+                    <li><Link to='/user/private' className="dropdown-item">Mi espacio personal</Link></li>
                     <li><button className="dropdown-item" onClick={handleLogout}>LogOut</button></li>
                   </>
-
-                ) : (<li><Link className="dropdown-item signup" to='/signup'>Sign Up</Link></li>)}
+                )}
               </ul>
             </li>
           </ul>

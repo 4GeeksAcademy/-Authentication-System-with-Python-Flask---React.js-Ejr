@@ -2,12 +2,13 @@
   margin-right: 3rem;
 }
 
-.navbar-brand {
-  margin-left: 3rem;
+.navbar-brand, .navbar-nav {
+  margin-left: 7rem;
+  margin-right: 7rem;
 }
 
-/* .navbar { */
-/* position: fixed;
+/* .navbar { 
+    position: fixed;
     width: 100%;
     top: 0;
 } */
@@ -20,7 +21,7 @@
   color: white;
 }
 
-li .signup {
+li .signup, .login {
   background-color: var(--color-2);
   color: var(--color-4);
 }

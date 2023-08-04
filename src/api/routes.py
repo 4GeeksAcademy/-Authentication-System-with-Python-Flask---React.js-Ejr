@@ -5,6 +5,7 @@ from api.utils import APIException
 from flask_bcrypt import bcrypt, Bcrypt
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity, JWTManager, unset_jwt_cookies
 from flask_cors import CORS  # Import CORS from flask_cors
+from sqlalchemy import and_
 
 api = Blueprint('api', __name__)
 
@@ -433,10 +434,13 @@ def get_trip(trip_id):
 def create_trip():
     data = request.get_json()
     try:
+        trip_exist = Trip.query.filter(and_(Trip.country == data["country"], Trip.city == data["city"], Trip.activity == data["activity"])).first()
+        if trip_exist:
+            raise APIException(f"The trip with the country {data['country']} and the city {data['city']} and the {data['activity']} already exist.", status_code=403)
         trip = Trip(
             country=data['country'],
             city=data['city'],
-            activities=data['activities']
+            activity=data['actitvity']
         )
         db.session.add(trip)
         db.session.commit()
@@ -456,7 +460,7 @@ def update_trip(trip_id):
     try:
         trip.country = data['country']
         trip.city = data['city']
-        trip.activities = data['activities']
+        trip.activity = data['activity']
         db.session.commit()
         return jsonify(trip.serialize()), 200
     except KeyError:
