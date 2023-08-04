@@ -43,7 +43,7 @@ const CarCards = ({ cars }) => {
                 </div>
                 <div className="buttonContainer d-flex justify-content-center pt-3">
                   <button href="#" className="btn btn-danger"
-                    onClick={(e) => { handleClick(e, car.id) }}>
+                    onClick={(e) => { handleClick(e, car.id); console.log("Car ID CLICKED: ", car.id)}}>
                     Detailed Specs
                   </button>
                   {token &&

@@ -73,7 +73,8 @@ const getState = ({ getStore, getActions, setStore }) => {
             throw new Error("Network response was not ok");
           }
           const data = await response.json();
-          setStore({ singleCar: data });
+          setStore({ singleCar: data })
+          console.log("Current car's data: ",singleCar);
         } catch (error) {
           console.error("Error fetching singleCar data:", error);
           // Handle any error or set error state if needed
