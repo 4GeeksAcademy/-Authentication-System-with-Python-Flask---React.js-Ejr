@@ -178,12 +178,17 @@
 
 .state_product_profile{
     font-weight: bolder;
+    color: #125c8e !important;
 }
 
 .price_product_profile{
     font-weight: bold;
+    color: #125c8e;
 }
 
+.state_title_profile {
+    color: #125c8e !important;
+}
 .sold-product_profile{
    width: 100%;
     border-radius: 12px;
@@ -206,8 +211,13 @@
 }
 
 .modal-footer{
-    margin-bottom: 3rem;
+    margin-bottom: 1rem;
+    margin-top: 2rem;
     padding-top: 0;
+}
+
+.modal-body-sale-process {
+    margin-top: 2rem;
 }
 
 .product_name{

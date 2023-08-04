@@ -18,8 +18,11 @@
 
 }
 
-.single-pr-information{
-
+.button-edit-vehicle {
+    text-decoration: none;
+    background-color: #125c8e !important;
+    color: white;
+    border-radius: 12px;
 }
 
 .single-price{
