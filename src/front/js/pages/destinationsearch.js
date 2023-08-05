@@ -20,6 +20,7 @@ const MySearch = () => {
       fetch(`https://api.teleport.org/api/cities/?search=${search}`)
         .then((response) => response.json())
         .then((data) => {
+          console.log("cities", data);
           setDestinationResult(data._embedded?.["city:search-results"]);
           setLoading(false);
         })
@@ -37,48 +38,38 @@ const MySearch = () => {
     if (destinationResult.length > 0) {
       const city = destinationResult[0].matching_full_name;
 
-      const url = 'https://open-weather13.p.rapidapi.com/city'+ search;
-      const options = {
+      const weatherUrl = `https://us-weather-by-city.p.rapidapi.com/getweather?city=${(city)}`;
+      const weatherOptions = {
         method: 'GET',
         headers: {
           'X-RapidAPI-Key': '26417e7137msh4d7acb99d1bc795p134430jsn57e3f84c008c',
-          'X-RapidAPI-Host': 'open-weather13.p.rapidapi.com'
+          'X-RapidAPI-Host': 'us-weather-by-city.p.rapidapi.com'
         }
       };
-      
-      try {
-        const response =  fetch(url, options);
-        const result = response.text();
-        console.log(result);
-      } catch (error) {
+
+      const flightUrl = `https://priceline-com-provider.p.rapidapi.com/v1/flights/locations?name=${(city)}`;
+      const flightOptions = {
+        method: "GET",
+        headers: {
+          'X-RapidAPI-Key': '26417e7137msh4d7acb99d1bc795p134430jsn57e3f84c008c', 
+          'X-RapidAPI-Host': 'priceline-com-provider.p.rapidapi.com',
+        },
+      };
+
+      Promise.all([
+        fetch(weatherUrl, weatherOptions),
+        fetch(flightUrl, flightOptions)
+      ])
+      .then(responses => Promise.all(responses.map(response => response.json())))
+      .then(data => {
+        setWeatherResult(data[0]);
+        setFlightResult(data[1]);
+      })
+      .catch((error) => {
         console.error(error);
-      }
+      });
     } else {
       setWeatherResult([]);
-    }
-  }, [destinationResult]);
-
-  useEffect(() => {
-    if (destinationResult.length > 0) {
-      const city = destinationResult[0].matching_full_name;
-
-      const url = 'https://priceline-com-provider.p.rapidapi.com/v1/flights/locations?name=%24%7Bsearch%7D';
-      const options = {
-        method: 'GET',
-        headers: {
-          'X-RapidAPI-Key': '26417e7137msh4d7acb99d1bc795p134430jsn57e3f84c008c',
-          'X-RapidAPI-Host': 'priceline-com-provider.p.rapidapi.com'
-        }
-      };
-      
-      try {
-        const response = fetch(url, options);
-        const result =  response.text();
-        console.log(result);
-      } catch (error) {
-        console.error(error);
-      }
-    } else {
       setFlightResult([]);
     }
   }, [destinationResult]);
@@ -138,69 +129,72 @@ const MySearch = () => {
       {loading ? <div className="loader">Loading...</div> : null}
       {error ? <div className="alert alert-danger">{error}</div> : null}
 
-      {destinationResult.length > 0 ? (
-        <div className="my-search-results">
-          {destinationResult.map((city) => (
-            <div
-              key={city._links["city:item"].href}
-              className="card my-search-result-item"
-            >
-              <div className="card-body">
-                <h3 className="card-title">{city.matching_full_name}</h3>
-                <p className="card-text">City: {city.matching_alternate_names.name}</p>
-                <button
-                  className={`btn ${
-                    isFavorite(city.matching_full_name) ? "btn-danger" : "btn-outline-danger"
-                  }`}
-                  onClick={() =>
-                    isFavorite(city.matching_full_name)
-                      ? removeFromFavorites(city.matching_full_name)
-                      : addToFavorites(city.matching_full_name)
-                  }
-                >
-                  {isFavorite(city.matching_full_name) ? (
-                    <i className="fas fa-heart"></i>
-                  ) : (
-                    <i className="far fa-heart"></i>
-                  )}
-                </button>
+      
+      <div className="my-results-container">
+        {destinationResult.length > 0 ? (
+          <div className="my-search-results">
+            {destinationResult.map((city) => (
+              <div
+                key={city._links["city:item"].href}
+                className="card my-search-result-item"
+              >
+                <div className="card-body">
+                  <h3 className="card-title">{city.matching_full_name}</h3>
+                  <p className="card-text">City: {city.matching_alternate_names.name}</p>
+                  <button
+                    className={`btn ${
+                      isFavorite(city.matching_full_name) ? "btn-danger" : "btn-outline-danger"
+                    }`}
+                    onClick={() =>
+                      isFavorite(city.matching_full_name)
+                        ? removeFromFavorites(city.matching_full_name)
+                        : addToFavorites(city.matching_full_name)
+                    }
+                  >
+                    {isFavorite(city.matching_full_name) ? (
+                      <i className="fas fa-heart"></i>
+                    ) : (
+                      <i className="far fa-heart"></i>
+                    )}
+                  </button>
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
-      ) : (
-        <div className="alert alert-info">No results found.</div>
-      )}
+            ))}
+          </div>
+        ) : (
+          <div className="alert alert-info">No results found.</div>
+        )}
 
-      {weatherResult.length > 0 ? (
-        <div className="my-weather-results">
-          <h2>Weather Information</h2>
-          {weatherResult.map((weather, index) => (
-            <div key={index} className="card weather-item">
-              <div className="card-body">
-                <p>Date: {weather.date}</p>
-                <p>Temperature: {weather.temperature}</p>
-                <p>Weather Condition: {weather.condition}</p>
+        {weatherResult.length > 0 ? (
+          <div className="my-weather-results">
+            <h2>Weather Information</h2>
+            {weatherResult.map((weather, index) => (
+              <div key={index} className="card weather-item">
+                <div className="card-body">
+                  <p>Date: {weather.date}</p>
+                  <p>Temperature: {weather.temperature}</p>
+                  <p>Weather Condition: {weather.condition}</p>
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
-      ) : null}
+            ))}
+          </div>
+        ) : null}
 
-      {flightResult.length > 0 ? (
-        <div className="my-flight-results">
-          <h2>Flight Prices</h2>
-          {flightResult.map((flight, index) => (
-            <div key={index} className="card flight-item">
-              <div className="card-body">
-                <p>Flight Provider: {flight.provider}</p>
-                <p>Price: {flight.price}</p>
-                <p>Departure Date: {flight.departureDate}</p>
+        {flightResult.length > 0 ? (
+          <div className="my-flight-results">
+            <h2>Flight Prices</h2>
+            {flightResult.map((flight, index) => (
+              <div key={index} className="card flight-item">
+                <div className="card-body">
+                  <p>Flight Provider: {flight.provider}</p>
+                  <p>Price: {flight.price}</p>
+                  <p>Departure Date: {flight.departureDate}</p>
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
-      ) : null}
+            ))}
+          </div>
+        ) : null}
+      </div>
 
       <button className="btn btn-secondary" onClick={clearResults}>
         Clear Results
