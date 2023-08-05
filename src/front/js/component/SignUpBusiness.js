@@ -34,6 +34,7 @@ const SignUpBusiness = () => {
           .then(() => {
             // Handle successful submission
             console.log("Form submitted successfully!");
+            alert("Tu registro fue todo un éxito!!! Revisa tu correo electrónico.");
             navigate("/reviews");
           })
           .catch((error) => {

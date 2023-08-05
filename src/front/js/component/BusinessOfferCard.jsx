@@ -62,7 +62,7 @@ const BusinessOfferCard = ({ searchQuery }) => {
             <div
               key={business_offer.id}
               className="card card-offer mb-3 mt-4">
-              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSM23JE5rZmCQhGdgwGRj_jNOKbsrGP5C_t-g&usqp=CAU" className="card-img-top" alt="..."></img>
+              <img src={business_offer.offer_image} className="card-img-top" alt="..."></img>
               <div className="card-body">
                 <div className="div-title-offer">
                   {editContentId === business_offer.id ? (
@@ -119,7 +119,8 @@ const BusinessOfferCard = ({ searchQuery }) => {
                     <button onClick={() => handleSave(business_offer.id)}>Validar</button>
                   }
 
-                  {store.business_user.id === business_offer.business_id || store.user.is_admin &&
+                  {store.business_user.id === business_offer.business_id &&
+                  // || store.user.is_admin 
                     <>
                       <button
                         className="btn-up-offer"

@@ -45,7 +45,7 @@ const PubSlide = () => {
               </p>
               <span className="normal-price">Normal Price: 1 200.00$</span>
               <br />
-              <span className="prenium-price">Prenium Price: 1 000.00$</span>
+              <span className="prenium-price">Premium Price: 1 000.00$</span>
             </div>
           </div>
           <div className="carousel-item">

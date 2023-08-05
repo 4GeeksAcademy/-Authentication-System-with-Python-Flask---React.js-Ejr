@@ -31,10 +31,10 @@ const Navbar = () => {
               </>
             ) : (
               <>
-              <li className="nav-item d-flex">
-                <a className="nav-link btn login me-2" href="#" data-bs-toggle="modal" data-bs-target="#staticBackdrop">LogIn</a>
-              </li>
-              <li><Link className="nav-link btn signup" to='/signup'>Sign Up</Link></li>
+                <li className="nav-item d-flex">
+                  <a className="nav-link btn login me-2" href="#" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Entra</a>
+                </li>
+                <li><Link className="nav-link btn signup" to='/signup'>Registro</Link></li>
               </>
             )}
 
@@ -43,16 +43,18 @@ const Navbar = () => {
                 &#9776;
               </a>
               <ul className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                <li><Link className="dropdown-item">Avisos/Notificaciones</Link></li>
+                {/* <li><Link className="dropdown-item">Avisos/Notificaciones</Link></li> */}
                 <li><Link to='/reviews' className="dropdown-item">Reseñas</Link></li>
                 <li><Link to='/business_offers' className="dropdown-item">Ofertas</Link></li>
-                <li><Link className="dropdown-item">Favoritos</Link></li>
                 <li><Link to='/trips' className="dropdown-item">Explora tu siguiente trip</Link></li>
                 <li><Link className="dropdown-item">Ayuda</Link></li>
+                <li><Link to='/contact' className="dropdown-item">Contacto</Link></li>
+
                 {store.auth && (
                   <>
+                    <li><Link className="dropdown-item">Favoritos</Link></li>
                     <li><Link to='/user/private' className="dropdown-item">Mi espacio personal</Link></li>
-                    <li><button className="dropdown-item" onClick={handleLogout}>LogOut</button></li>
+                    <li><button className="dropdown-item" onClick={handleLogout}>Cerrar sesión</button></li>
                   </>
                 )}
               </ul>
