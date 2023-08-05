@@ -38,7 +38,7 @@ const MySearch = () => {
     if (destinationResult.length > 0) {
       const city = destinationResult[0].matching_full_name;
 
-      const weatherUrl = `https://us-weather-by-city.p.rapidapi.com/getweather?city=${(city)}`;
+      const weatherUrl = `https://us-weather-by-city.p.rapidapi.com/getweather?city=${encodeURIComponent(city)}`;
       const weatherOptions = {
         method: 'GET',
         headers: {
@@ -47,7 +47,21 @@ const MySearch = () => {
         }
       };
 
-      const flightUrl = `https://priceline-com-provider.p.rapidapi.com/v1/flights/locations?name=${(city)}`;
+      try {
+        fetch(weatherUrl, weatherOptions)
+          .then((response) => response.json())
+          .then((data) => {
+            console.log("weather", data);
+            setWeatherResult(data);
+          })
+          .catch((error) => {
+            setError("Error fetching weather data. Please try again later.");
+          });
+      } catch (error) {
+        setError("Error fetching weather data. Please try again later.");
+      }
+
+      const flightUrl = `https://priceline-com-provider.p.rapidapi.com/v1/flights/locations?name=${encodeURIComponent(city)}`;
       const flightOptions = {
         method: "GET",
         headers: {
@@ -56,18 +70,19 @@ const MySearch = () => {
         },
       };
 
-      Promise.all([
-        fetch(weatherUrl, weatherOptions),
+      try {
         fetch(flightUrl, flightOptions)
-      ])
-      .then(responses => Promise.all(responses.map(response => response.json())))
-      .then(data => {
-        setWeatherResult(data[0]);
-        setFlightResult(data[1]);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+          .then((response) => response.json())
+          .then((data) => {
+            console.log("flights", data);
+            setFlightResult(data);
+          })
+          .catch((error) => {
+            setError("Error fetching flight data. Please try again later.");
+          });
+      } catch (error) {
+        setError("Error fetching flight data. Please try again later.");
+      }
     } else {
       setWeatherResult([]);
       setFlightResult([]);
@@ -129,7 +144,6 @@ const MySearch = () => {
       {loading ? <div className="loader">Loading...</div> : null}
       {error ? <div className="alert alert-danger">{error}</div> : null}
 
-      
       <div className="my-results-container">
         {destinationResult.length > 0 ? (
           <div className="my-search-results">
@@ -179,22 +193,22 @@ const MySearch = () => {
             ))}
           </div>
         ) : null}
-
-        {flightResult.length > 0 ? (
-          <div className="my-flight-results">
-            <h2>Flight Prices</h2>
-            {flightResult.map((flight, index) => (
-              <div key={index} className="card flight-item">
-                <div className="card-body">
-                  <p>Flight Provider: {flight.provider}</p>
-                  <p>Price: {flight.price}</p>
-                  <p>Departure Date: {flight.departureDate}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        ) : null}
       </div>
+
+      {flightResult.length > 0 ? (
+        <div className="my-flight-results">
+          <h2>Flight Prices</h2>
+          {flightResult.map((flight, index) => (
+            <div key={index} className="card flight-item">
+              <div className="card-body">
+                <p>Flight Provider: {flight.provider}</p>
+                <p>Price: {flight.price}</p>
+                <p>Departure Date: {flight.departureDate}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      ) : null}
 
       <button className="btn btn-secondary" onClick={clearResults}>
         Clear Results

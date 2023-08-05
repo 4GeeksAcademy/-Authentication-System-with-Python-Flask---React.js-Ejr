@@ -57,19 +57,3 @@
 }
 
 
-.my-results-container {
-  display: grid;
-  grid-template-columns: 1fr 1fr; 
-  gap: 20px; 
-}
-
-
-.my-search-result-item,
-.flight-item {
-  width: 100%;
-}
-
-
-.card-body {
-  text-align: center;
-}
