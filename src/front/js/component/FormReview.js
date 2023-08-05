@@ -1,7 +1,8 @@
-import React, { useContext } from 'react';
+import React, { useContext, useS } from 'react';
 import { Context } from '../store/appContext';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
+
 
 const FormReview = () => {
   const { store, actions } = useContext(Context);
@@ -12,7 +13,7 @@ const FormReview = () => {
         comment_text: "",
       }}
       validationSchema={Yup.object({
-        title: Yup.string().min(10, 'Debe tener 10 o 25 carácteres').max(25).required('Obligatorio'),
+        title: Yup.string().min(10, 'Debe tener 10 carácteres o más').required('Obligatorio'),
         comment_text: Yup.string().min(40, 'Debe tener 40 carácteres o más').required('Obligatorio'),
       })}
       onSubmit={(values, { setSubmitting }) => {

@@ -1,3 +1,4 @@
+import React, { useContext, useState, useEffect } from "react";
 import { Context } from "../store/appContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { library } from "@fortawesome/fontawesome-svg-core";
