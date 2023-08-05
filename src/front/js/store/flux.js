@@ -111,6 +111,12 @@ const getState = ({ getStore, getActions, setStore }) => {
             // Reset the error message (if any) after successful login
             setStore({ errorMessage: null });
 
+            const tokenExpTime = 60*60*1000;
+            setTimeout(() => {
+              setStore({token : null});
+              localStorage.removeItem("token");
+              alert("Session Expired due to inactivity");
+            }, tokenExpTime);
             // Redirect to the desired page or perform any necessary action
             // Example: history.push("/dashboard");
           } else {

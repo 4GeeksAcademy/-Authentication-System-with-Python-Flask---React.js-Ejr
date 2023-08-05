@@ -11,8 +11,8 @@ const CarComparison= () => {
     return (
         <div>
             <h1>START COMPARING VEHICLE TO VEHICLE</h1>
-            <div className="container row">
-                <div className="d-flex w-75 justify-content-between col">
+            <div className="row d-flex" style={{background: "rgb(174, 179, 183)"}}>
+                <div className="col text-end">
                     <CarCards cars={store.compareCars}/>
                 </div>
             </div>

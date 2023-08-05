@@ -32,17 +32,29 @@ const AboutCar = () => {
               <h5>{actualCar && actualCar.transmission}</h5>
             </section>
             <section className='bg-dark text-light my-2 p-2 rounded'>
-              <h2>Price</h2>
+              <h2>MSRP</h2>
               <h5>{actualCar && actualCar.price}</h5>
             </section>
           
           </div>
           {actualCar && actualCar.images && actualCar.images.length > 0 ? (
-              actualCar.images.map(({image_url})=><img
-                className="border border-warning border-4 border-opacity-50 w-50"
+              actualCar.images.map(({image_url, index})=> {
+               if (index == 0) {
+               <img
+                key={index}
+                className="border border-warning border-4 border-opacity-50"
                 src={image_url}
                 alt="Car"
-              />)
+                style={{ width: "57%", height: "auto", objectFit: "fill" }}
+              /> } else {
+              <img
+                key={index}
+                className="border border-warning border-4 border-opacity-50"
+                src={image_url}
+                alt="Car"
+                style={{ width: "100%", height: "auto", objectFit: "fill" }}
+              /> }
+              })
             ) : (
               <h1>Loading</h1>
             )}
