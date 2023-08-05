@@ -34,36 +34,11 @@ class User(db.Model):
             'is_admin': self.is_admin,
         }
     
-class OrderItems(db.Model):
-    __tablename__ = 'order_items'
-    order_id = db.Column(db.Integer, db.ForeignKey('orders.id'), primary_key=True)
-    product_id = db.Column(db.Integer, db.ForeignKey('products.id'), primary_key=True)
-    quantity = db.Column(db.Integer, nullable=False, default=1)
-
-    product = db.relationship('Product', back_populates='orders')
-    order = db.relationship('Order', back_populates='products')
-
-    def serialize(self):
-        return {
-            'id': self.product.id,
-            'product': self.product.serialize(),
-            'quantity': self.quantity
-        }
-    
-class ProductSizeStock(db.Model):
-    __tablename__= 'product_sizes_stock'
-    product_id = db.Column(db.Integer, db.ForeignKey('products.id'), primary_key=True)
-    size_id = db.Column(db.Integer, db.ForeignKey('sizes.id'), primary_key=True)
-    stock = db.Column(db.Integer, nullable=False, default=0)
-
-    product = db.relationship("Product", back_populates="sizes_stock")
-    size = db.relationship("Size", back_populates="products")
-    def serialize(self):
-        return {
-            'size_id': self.size.id,
-            'size': self.size.name,
-            'stock': self.stock,
-        }
+favorites = db.Table(
+    'favorites',
+    db.Column('user_id', db.Integer, db.ForeignKey('users.id'), primary_key=True),
+    db.Column('product_id', db.Integer, db.ForeignKey('products.id'), primary_key=True),
+)
     
 class Product(db.Model):
     __tablename__ = 'products'
@@ -83,9 +58,6 @@ class Product(db.Model):
     shopping_carts = db.relationship('ShoppingCart', back_populates='product')
 
     def serialize(self):
-        total_rating = sum(rating.rating for rating in self.users_ratings)
-        average_rating = total_rating / len(self.users_ratings) if self.users_ratings else 0
-
         return {
             'id': self.id,
             'name': self.name,
@@ -96,8 +68,75 @@ class Product(db.Model):
             'type': self.type,
             'sizes_stock': [size_stock.serialize() for size_stock in self.sizes_stock],
             'category_id': self.category_id,
-            'rating': average_rating
+            'rating': self.calculate_rating()
 
+        }
+    
+    def serialize_rating(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'rating': self.calculate_rating(),
+            'users_ratings': [rating.serialize() for rating in self.users_ratings]
+        }
+    
+    def calculate_rating(self):
+        total_rating = sum(rating.rating for rating in self.users_ratings)
+        average_rating = total_rating / len(self.users_ratings) if self.users_ratings else 0
+        return average_rating
+    
+class ProductSizeStock(db.Model):
+    __tablename__= 'product_sizes_stock'
+    product_id = db.Column(db.Integer, db.ForeignKey('products.id'), primary_key=True)
+    size_id = db.Column(db.Integer, db.ForeignKey('sizes.id'), primary_key=True)
+    stock = db.Column(db.Integer, nullable=False, default=0)
+
+    product = db.relationship("Product", back_populates="sizes_stock")
+    size = db.relationship("Size", back_populates="products")
+    def serialize(self):
+        return {
+            'size_id': self.size.id,
+            'size': self.size.name,
+            'stock': self.stock,
+        }
+    
+class ShoppingCart(db.Model):
+    __tablename__ = 'shopping_carts'
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), primary_key=True)
+    product_id = db.Column(db.Integer, db.ForeignKey('products.id'), primary_key=True)
+    size_id = db.Column(db.Integer, db.ForeignKey('sizes.id'), primary_key=True)
+    quantity = db.Column(db.Integer, nullable=False, default=1)
+
+    user = db.relationship('User', back_populates='shopping_cart')
+    product = db.relationship('Product', back_populates='shopping_carts')
+    size = db.relationship('Size')
+
+    def serialize(self):
+        return {
+            'product': self.product.serialize(),
+            'quantity': self.quantity,
+            'size': self.size.serialize(),
+        }
+
+class ProductsRating(db.Model):
+    __tablename__= 'products_rating'
+    product_id = db.Column(db.Integer, db.ForeignKey('products.id'), primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), primary_key=True)
+    rating = db.Column(db.Float, nullable=False, default=0)
+
+    product = db.relationship("Product", back_populates="users_ratings")
+    user = db.relationship("User", back_populates="voted_products")
+
+    __table_args__ = (
+        db.CheckConstraint(rating >= 0, name='check_rating_min'),
+        db.CheckConstraint(rating <= 5, name='check_rating_max'),
+    )
+
+    def serialize(self):
+        return {
+            'user_id': self.user.id,
+            'product_id': self.product.id,
+            'rating': self.rating,
         }
     
 class Order(db.Model):
@@ -118,6 +157,22 @@ class Order(db.Model):
             'status': self.status,
             'products': [p.serialize() for p in self.products]
         }
+
+class OrderItems(db.Model):
+    __tablename__ = 'order_items'
+    order_id = db.Column(db.Integer, db.ForeignKey('orders.id'), primary_key=True)
+    product_id = db.Column(db.Integer, db.ForeignKey('products.id'), primary_key=True)
+    quantity = db.Column(db.Integer, nullable=False, default=1)
+
+    product = db.relationship('Product', back_populates='orders')
+    order = db.relationship('Order', back_populates='products')
+
+    def serialize(self):
+        return {
+            'product': self.product.serialize(),
+            'quantity': self.quantity
+        }
+
     
 class Category(db.Model):
     __tablename__ = 'categories'
@@ -142,51 +197,3 @@ class Size(db.Model):
             'id': self.id,
             'name': self.name,
         }
-
-favorites = db.Table(
-    'favorites',
-    db.Column('user_id', db.Integer, db.ForeignKey('users.id'), primary_key=True),
-    db.Column('product_id', db.Integer, db.ForeignKey('products.id'), primary_key=True),
-)
-
-class ShoppingCart(db.Model):
-    __tablename__ = 'shopping_carts'
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), primary_key=True)
-    product_id = db.Column(db.Integer, db.ForeignKey('products.id'), primary_key=True)
-    size_id = db.Column(db.Integer, db.ForeignKey('sizes.id'), primary_key=True)
-    quantity = db.Column(db.Integer, nullable=False, default=1)
-
-    user = db.relationship('User', back_populates='shopping_cart')
-    product = db.relationship('Product', back_populates='shopping_carts')
-    size = db.relationship('Size')
-
-    def serialize(self):
-        return {
-            'product': self.product.serialize(),
-            'quantity': self.quantity,
-            'size': self.size.serialize(),
-        }
-
-
-class ProductsRating(db.Model):
-    __tablename__= 'products_rating'
-    product_id = db.Column(db.Integer, db.ForeignKey('products.id'), primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), primary_key=True)
-    rating = db.Column(db.Float, nullable=False, default=0)
-
-    product = db.relationship("Product", back_populates="users_ratings")
-    user = db.relationship("User", back_populates="voted_products")
-
-    __table_args__ = (
-        db.CheckConstraint(rating >= 0, name='check_rating_min'),
-        db.CheckConstraint(rating <= 5, name='check_rating_max'),
-    )
-
-    def serialize(self):
-        return {
-            'user_id': self.user.id,
-            'user': self.user.serialize(),
-            'rating': self.rating,
-        }
-
-    
