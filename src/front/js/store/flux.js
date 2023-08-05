@@ -68,13 +68,8 @@ const getState = ({ getStore, getActions, setStore }) => {
               redirect: "follow",
             }
           );
-          if (!response.ok) {
-            // Handle error if the response is not successful (optional)
-            throw new Error("Network response was not ok");
-          }
           const data = await response.json();
-          setStore({ singleCar: data })
-          console.log("Current car's data: ",singleCar);
+          setStore({ singleCar: data });
         } catch (error) {
           console.error("Error fetching singleCar data:", error);
           // Handle any error or set error state if needed
