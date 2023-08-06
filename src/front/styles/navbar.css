@@ -3,8 +3,13 @@
 }
 
 .navbar-brand, .navbar-nav {
-  margin-left: 7rem;
+  margin-left: 7.5rem;
   margin-right: 7rem;
+}
+
+.navbar-brand img {
+  height: 7rem;
+  width: auto;
 }
 
 /* .navbar { 

@@ -15,6 +15,10 @@
 @import './form-review.css';
 @import './footer.css';
 @import './homeReviewCard.css';
+
 @import './card-review.css';
 @import './about.css';
 @import './slogan.css';
+
+@import '/src/front/styles/litlleSlide.css';
+

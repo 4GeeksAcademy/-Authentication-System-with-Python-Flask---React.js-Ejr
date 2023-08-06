@@ -57,7 +57,9 @@ const CardsReview = ({ searchQuery }) => {
               ) : (
                 <p className="card-text">{review.comment_text}</p>
               )}
+
               {store.user.id === review.user.id && (
+         
                 <div className="btn-options d-flex justify-content-end">
                   <button
                     className="btn-up-review"

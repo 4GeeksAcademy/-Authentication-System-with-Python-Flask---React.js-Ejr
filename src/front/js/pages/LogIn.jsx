@@ -26,6 +26,7 @@ const LogIn = () => {
           console.log("is Logged:", isLogged);
           if (isLogged) {
             // Connexion réussie
+            alert("Bienvenid@ de nuevo!");
             navigate("/");
           } else {
             // Connexion échouée

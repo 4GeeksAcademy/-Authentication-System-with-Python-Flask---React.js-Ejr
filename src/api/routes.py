@@ -364,7 +364,8 @@ def create_offer():
             normal_user_price=data['normal_user_price'],
             # medium_user_price=data['medium_user_price'],
             # high_user_price=data['high_user_price'],
-            premium_user_price=data['premium_user_price']
+            premium_user_price=data['premium_user_price'],
+            offer_image=data['offer_image']
         )
 
         db.session.add(offer)
@@ -393,6 +394,8 @@ def update_offer(offer_id):
         # offer.medium_user_price = data['medium_user_price']
         # offer.high_user_price = data['high_user_price']
         offer.premium_user_price = data['premium_user_price']
+        offer.offer_image=data['offer_image']
+
         db.session.commit()
         return jsonify(offer.serialize()), 200
     except KeyError:
