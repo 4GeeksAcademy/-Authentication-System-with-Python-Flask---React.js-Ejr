@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint, Response
-from src.api.models import db, User, Product, Order , OrderItems, Category, Size, ShoppingCart, ProductSizeStock, ProductsRating
+from src.api.models import db, User, Product, Order , OrderItems, Category, Size, ShoppingCart, ProductSizeStock, ProductsRating, ProductImage
 from src.api.utils import generate_sitemap, APIException
 from src.api.utils import save_new_product, update_product_by_id, update_category_by_id
 from src.api.utils import check_is_admin_by_user_id
@@ -282,6 +282,65 @@ def create_product():
     check_is_admin_by_user_id(current_user_id) 
     product = save_new_product(request_body)
     return jsonify(product.serialize()), 200
+
+@api.route('/products/<int:product_id>/images', methods=['GET'])
+def get_product_images(product_id):
+    product = Product.query.get(product_id)
+    if product is None:
+        raise APIException(message='Product not found', status_code=404)
+    return jsonify(product.serialize_sorted_images()), 200
+
+@api.route('/products/<int:product_id>/images/<int:image_id>', methods=['GET'])
+def get_product_image_by_id(product_id, image_id):
+    product = Product.query.get(product_id)
+    if product is None:
+        raise APIException(message='Product not found', status_code=404)
+    product_image = ProductImage.query.get(image_id)
+    if product_image is None:
+        raise APIException(message='Product image not found', status_code=404)
+    if product_image.product_id != product_id:
+        raise APIException(message='Product image not found', status_code=404)
+    
+    return jsonify(product_image.serialize()), 200
+
+@api.route('/products/<int:product_id>/images', methods=['POST'])
+@jwt_required()
+def upload_product_image(product_id):
+    request_body = request.get_json()
+    current_user_id = get_jwt_identity()
+    check_is_admin_by_user_id(current_user_id)
+    product = Product.query.get(product_id)
+    if product is None:
+        raise APIException(message='Product not found', status_code=404)
+    if 'image_url' not in request_body:
+        raise APIException(message='Image URL is required', status_code=422)
+    if 'order' not in request_body:
+        raise APIException(message='Order is required', status_code=422)
+    product_image = ProductImage(image_url=request_body['image_url'], order=request_body['order'], product=product)
+    db.session.add(product_image)
+    db.session.commit()
+    return jsonify(product_image.serialize()), 200
+
+@api.route('/products/<int:product_id>/images/<int:product_image_id>', methods=['PUT'])
+@jwt_required()
+def update_product_image(product_id, product_image_id):
+    request_body = request.get_json()
+    current_user_id = get_jwt_identity()
+    check_is_admin_by_user_id(current_user_id)
+    product = Product.query.get(product_id)
+    if product is None:
+        raise APIException(message='Product not found', status_code=404)
+    product_image = ProductImage.query.get(product_image_id)
+    if product_image is None:
+        raise APIException(message='Product image not found', status_code=404)
+    if product_image.product_id != product_id:
+        raise APIException(message='Product image not found', status_code=404)
+    if 'image_url' in request_body:
+        product_image.image_url = request_body['image_url']
+    if 'order' in request_body:
+        product_image.order = request_body['order']
+    db.session.commit()
+    return jsonify(product_image.serialize()), 200
 
 @api.route('/products/clothing', methods=['GET'])
 def get_clothing_products():
