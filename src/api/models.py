@@ -97,6 +97,7 @@ class Offers(db.Model):
     # medium_user_price = db.Column(db.Integer, nullable=False)
     # high_user_price = db.Column(db.Integer, nullable=False)
     premium_user_price = db.Column(db.Integer, nullable=False)
+    offer_image = db.Column(db.String(1000), nullable = False)
 
     favorites = db.relationship('Favorites', backref='offers')
 
@@ -115,7 +116,8 @@ class Offers(db.Model):
             "normal_user_price": self.normal_user_price,
             # "medium_user_price": self.medium_user_price,
             # "high_user_price": self.high_user_price,
-            "premium_user_price": self.premium_user_price
+            "premium_user_price": self.premium_user_price,
+            "offer_image": self.offer_image,
         }
 
 

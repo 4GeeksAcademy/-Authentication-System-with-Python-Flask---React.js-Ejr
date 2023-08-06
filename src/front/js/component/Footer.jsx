@@ -15,7 +15,7 @@ const Footer = () => {
 							<li className="nav-item mb-2"><Link to="#" className="nav-link p-0 text-muted" >Features</Link></li>
 							<li className="nav-item mb-2"><Link to="#" className="nav-link p-0 text-muted" >Pricing</Link></li>
 							<li className="nav-item mb-2"><Link to="#" className="nav-link p-0 text-muted" >FAQs</Link></li>
-							<li className="nav-item mb-2"><Link to="/contact" className="nav-link p-0 text-muted">Contact</Link></li>
+							<li className="nav-item mb-2"><Link to="/contact" className="nav-link p-0 text-muted">Contacto</Link></li>
 						</ul>
 					</div>
 

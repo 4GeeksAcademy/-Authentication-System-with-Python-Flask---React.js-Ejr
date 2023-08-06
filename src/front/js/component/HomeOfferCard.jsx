@@ -12,7 +12,7 @@ const HomeOfferCard = () => {
                 .slice(0, 10)
                 .map((offer) =>
                     <div key={offer.id} className="card card-home-offer bg-dark text-white mt-4 container">
-                        <img src="..." className="card-img" alt="..."></img>
+                        <img src={offer.offer_image} className="card-img" alt="..."></img>
                         <div className="card-img-overlay">
                             <h5 className="home-offer-title">{offer.offer_title}</h5>
                             {/* <p className="card-text">{offer.offer_description}</p> */}
