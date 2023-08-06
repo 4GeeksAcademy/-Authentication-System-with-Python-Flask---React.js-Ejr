@@ -2,18 +2,18 @@ import React, { useState } from "react";
 
 const SearchReview = ({ handleSearch }) => {
   const [searchQuery, setSearchQuery] = useState("");
-  const [isSearching, setIsSearching] = useState(false); 
+  const [isSearching, setIsSearching] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     handleSearch(searchQuery);
-    setIsSearching(true); 
+    setIsSearching(true);
   };
 
   const handleCancel = () => {
-    setSearchQuery(""); 
-    setIsSearching(false); 
-    handleSearch(""); 
+    setSearchQuery("");
+    setIsSearching(false);
+    handleSearch("");
   };
 
   return (
@@ -21,21 +21,21 @@ const SearchReview = ({ handleSearch }) => {
       <div className="filter-items">
         <div className="filter-search filter-item">
           <input
-          className="review-input-search"
+            className="review-input-search"
             type="text"
             id="searchQuery"
-            placeholder="Busca lo que quieras.."
+            placeholder="Busca por país, ciudad o palabra clave!"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
         </div>
         <div className="filter-btn">
           {isSearching ? (
-            <button className="btn-cancel-search" onClick={handleCancel}>Cancelar búsqueda</button> 
+            <button className="btn-cancel-search" onClick={handleCancel}>Cancelar búsqueda</button>
           ) : (
             <button className="btn-search" type="submit" onClick={handleSubmit}>
               Buscar
-            </button> 
+            </button>
           )}
         </div>
       </div>

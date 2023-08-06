@@ -1,0 +1,12 @@
+.card-about {
+  width: 45%;
+  height: 20rem;
+  margin: auto;
+  background: transparent;
+  backdrop-filter: 20px;
+  border: 10px ridge var(--color-5);
+}
+
+.text-about {
+  font-size: 1rem;
+}

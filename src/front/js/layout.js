@@ -6,19 +6,19 @@ import { BackendURL } from "./component/backendURL";
 import { Home } from "./pages/home";
 import { Demo } from "./pages/demo";
 import { Single } from "./pages/single";
-import LogIn  from "./pages/LogIn.jsx";
-import ForgotPassword  from "./pages/ForgotPassword.jsx";
-import UserPrivate  from "./pages/UserPrivate.jsx";
-import BusinessUserPrivate  from "./pages/BusinessUserPrivate.jsx";
-import Business_offers  from "./pages/Business_offers.jsx";
-import Trips  from "./pages/Trips.jsx";
+import LogIn from "./pages/LogIn.jsx";
+import ForgotPassword from "./pages/ForgotPassword.jsx";
+import UserPrivate from "./pages/UserPrivate.jsx";
+import BusinessUserPrivate from "./pages/BusinessUserPrivate.jsx";
+import Business_offers from "./pages/Business_offers.jsx";
+import Trips from "./pages/Trips.jsx";
 import SignupGeneralView from "./pages/SignupGeneralView.jsx";
 import Reviews from "./pages/Reviews";
 
 import injectContext from "./store/appContext";
 
 import Navbar from "./component/Navbar.jsx";
-import Footer  from "./component/Footer.jsx";
+import Footer from "./component/Footer.jsx";
 import ContactForm from "./component/ContactForm";
 
 
@@ -29,7 +29,7 @@ const Layout = () => {
     // you can set the basename on the .env file located at the root of this project, E.g: BASENAME=/react-hello-webapp/
     const basename = process.env.BASENAME || "";
 
-    if(!process.env.BACKEND_URL || process.env.BACKEND_URL == "") return <BackendURL/ >;
+    if (!process.env.BACKEND_URL || process.env.BACKEND_URL == "") return <BackendURL />;
 
     return (
         <div>

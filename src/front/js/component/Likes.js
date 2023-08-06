@@ -12,13 +12,20 @@ const Likes = ({ reviewId }) => {
   const [userData, setUserData] = useState([]);
 
   useEffect(() => {
+    let isMounted = true;
+
     actions.getLikes(reviewId).then((likes) => {
-      if (likes !== null) {
-        setLikes(likes.likes_len);
-        setUserData(likes.user_data);
-        setIsLiked(likes.user_data.includes(store.user.id));
+      if (isMounted) {
+        if (likes !== null) {
+          setLikes(likes.likes_len);
+          setUserData(likes.user_data);
+          setIsLiked(likes.user_data.includes(store.user.id));
+        }
       }
     });
+    return () => {
+      isMounted = false;
+    };
   }, [reviewId, store.user.id]);
 
   const handleLikes = async () => {
@@ -26,10 +33,7 @@ const Likes = ({ reviewId }) => {
     if (success) {
       setLikes((prevLikes) => (isLiked ? prevLikes - 1 : prevLikes + 1));
       setIsLiked((prevIsLiked) => !prevIsLiked)
-    } else if (store.business_user) {
-      alert("Una empresa no puede hacer click acá!!");
     }
-
   };
 
   return (
@@ -37,7 +41,7 @@ const Likes = ({ reviewId }) => {
       <FontAwesomeIcon icon={faThumbsUp} />
       <span className="likes-review">{likes}</span>
     </span>
-  );
-};
+  )
+}
 
-export default Likes;
+export default Likes

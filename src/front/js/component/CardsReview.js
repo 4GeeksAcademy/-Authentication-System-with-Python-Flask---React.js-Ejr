@@ -1,48 +1,16 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import { Context } from "../store/appContext";
-import FormReview from "./FormReview";
 import Likes from "./Likes";
+import useReviewManagement from "../hooks/useReviewManagement";
+import FavoriteReview from "./FavoriteReview";
 
 const CardsReview = ({ searchQuery }) => {
-  const { store, actions } = useContext(Context);
-  const [editContentId, setEditContentId] = useState(null);
-  const [editTitle, setEditTitle] = useState(""); // New state for edited title
-  const [editContent, setEditContent] = useState("");
+  const { store, actions } = useContext(Context)
+  const { handleUpdate, handleSave, handleDelete, reviews, editContent, editContentId, editTitle, handleEditContent } = useReviewManagement();
 
-  useEffect(() => {
-    actions.getReviews();
-    console.log("Success fetch for CardsReview");
-  }, []);
-
-  const handleUpdate = (id) => {
-    const reviewToUpdate = store.reviews.find((review) => review.id === id);
-    if (reviewToUpdate) {
-      setEditTitle(reviewToUpdate.title); // Set initial title
-      setEditContent(reviewToUpdate.comment_text);
-      setEditContentId(id);
-    }
-  };
-
-  const handleSave = (id) => {
-    const reviewToUpdate = store.reviews.find((review) => review.id === id);
-    if (reviewToUpdate) {
-      reviewToUpdate.title = editTitle; // Update title
-      reviewToUpdate.comment_text = editContent;
-      setEditTitle(""); // Clear edited title
-      setEditContent("");
-      setEditContentId(null);
-    }
-  };
-
-  const handleDelete = (id) => {
-    actions.deleteReview(id);
-    window.location.reload();
-  };
 
   return (
     <div>
-      {/* Mostrar el form de creación de reseñas sólo si el usuario está logueado y que no sea una empresa tampoco */}
-      {store.user.username  && <FormReview />}
       {/* Publicar las cartas que ya existen */}
       <div className="cards-review">
         {store.reviews
@@ -65,7 +33,7 @@ const CardsReview = ({ searchQuery }) => {
                   <input
                     type="text"
                     value={editTitle}
-                    onChange={(e) => setEditTitle(e.target.value)}
+                    onChange={(e) => handleEditContent(e.target.value)}
                   />
                 ) : (
                   <h5 className="card-title title-review">{review.title}</h5>
@@ -77,7 +45,7 @@ const CardsReview = ({ searchQuery }) => {
                     <textarea
                       autoFocus={true}
                       value={editContent}
-                      onChange={(e) => setEditContent(e.target.value)}
+                      onChange={(e) => handleEditContent(e.target.value)}
                       rows="7"
                       cols="38"
                       maxLength="300"
@@ -89,7 +57,7 @@ const CardsReview = ({ searchQuery }) => {
               ) : (
                 <p className="card-text">{review.comment_text}</p>
               )}
-              {store.user.id === review.user.id || store.user.is_admin && (
+              {store.user.id === review.user.id && (
                 <div className="btn-options d-flex justify-content-end">
                   <button
                     className="btn-up-review"
@@ -109,6 +77,7 @@ const CardsReview = ({ searchQuery }) => {
                 <span className="author-review">
                   Escrito por : <span>{review.user.username}</span>{" "}
                 </span>
+                <FavoriteReview reviewId={review.id} />
                 <Likes reviewId={review.id} />
               </div>
             </div>

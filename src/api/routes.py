@@ -1,6 +1,6 @@
 from sqlalchemy.exc import IntegrityError
 from flask import Flask, request, jsonify, Blueprint, jsonify, redirect, url_for
-from api.models import db, User, Business_user, Offers, Trip, Review, Likes
+from api.models import db, User, Business_user, Offers, Trip, Review, Likes, Favorites
 from api.utils import APIException
 from flask_bcrypt import bcrypt, Bcrypt
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity, JWTManager, unset_jwt_cookies
@@ -8,7 +8,6 @@ from flask_cors import CORS  # Import CORS from flask_cors
 from sqlalchemy import and_
 
 api = Blueprint('api', __name__)
-
 # Enable CORS for the 'api' Blueprint
 CORS(api)
 
@@ -624,4 +623,40 @@ def like_review(review_id):
 
     return jsonify(message='Review liked successfully'), 200
 
+
+
+
+@api.route('/reviews/favorites', methods=['GET'])
+@jwt_required()
+def get_favorites_for_user():
+    current_user_id = get_jwt_identity()
+
+    user = User.query.get(current_user_id)
+    if user is None:
+        return jsonify({"error": "User not found"}), 404
+
+    favorites = user.favorites
+    serialized_favorites = [favorite.serialize() for favorite in favorites]
+
+    return jsonify({serialized_favorites}), 200
+
+@api.route('/reviews/favorites/<int:review_id>', methods=['POST'])
+@jwt_required()
+def add_favorite_for_review(review_id):
+    current_user = get_jwt_identity()
+    user = User.query.filter_by(email=current_user).first()
+
+    review = Review.query.get(review_id)
+    if review is None:
+        return jsonify(error="Review not found"), 404
+
+    existing_favorite = Favorites.query.filter_by(user_id=user.id, review_id=review_id).first()
+    if existing_favorite:
+        return jsonify(error="User has already added this review to favorites"), 400
+
+    favorite = Favorites(user_id=user.id, review_id=review.id)
+    db.session.add(favorite)
+    db.session.commit()
+
+    return jsonify(message="Review added to favorites successfully"), 200
 
