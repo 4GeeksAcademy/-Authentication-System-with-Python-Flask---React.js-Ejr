@@ -128,7 +128,7 @@ class Review(db.Model):
         'trip.id'), nullable=True) 
     title = db.Column(db.String(75), nullable=False)
     comment_text = db.Column(db.String(500), nullable=False)
-
+    favorites = db.relationship('Favorites', backref='review')
     likes = db.relationship('Likes', backref='review')
 
     def __repr__(self):
@@ -163,7 +163,7 @@ class Favorites(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
     trip_id = db.Column(db.Integer, db.ForeignKey('trip.id'), nullable=True)
     offer_id = db.Column(db.Integer, db.ForeignKey('offers.id'), nullable=True)
-
+    review_id = db.Column(db.Integer, db.ForeignKey('review.id'), nullable=True)
     def __repr__(self):
         return '<Favorites %r>' % self.id
 
@@ -171,5 +171,7 @@ class Favorites(db.Model):
         return {
             "id": self.id,
             "user_id": self.user_id,
-            "trip_id": self.trip_id
+            "trip_id": self.trip_id,
+            "offer_id": self.offer_id,
+            "review_id": self.review_id
         }

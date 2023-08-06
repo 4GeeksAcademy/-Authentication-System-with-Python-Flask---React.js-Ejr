@@ -1,6 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Context } from '../store/appContext';
-import GooglePay from './GooglePay.js'
+import { Link } from 'react-router-dom';
+import GooglePay from './GooglePay';
+import GooglePayButton from './GooglePayButton';
 
 const BusinessOfferCard = ({ searchQuery }) => {
   const { store, actions } = useContext(Context);
@@ -136,8 +138,11 @@ const BusinessOfferCard = ({ searchQuery }) => {
                       </button>
                     </>
                   }
-
                 </div>
+                {/* <GooglePayButton
+                  normalUserPrice={business_offer.normal_user_price}
+                  premiumUserPrice={business_offer.premium_user_price}
+                /> */}
                 <GooglePay />
               </div>
             </div>

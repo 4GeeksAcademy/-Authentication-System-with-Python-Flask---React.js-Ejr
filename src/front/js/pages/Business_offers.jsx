@@ -14,8 +14,11 @@ const Business_offers = () => {
   return (
     <>
       <SearchReview handleSearch={handleSearch} />
+
+
       {store.business_user.business_name  && <FormOffers />}
       {/* || store.user.is_admin */}
+
       <BusinessOfferCard searchQuery={searchQuery} />
     </>
 

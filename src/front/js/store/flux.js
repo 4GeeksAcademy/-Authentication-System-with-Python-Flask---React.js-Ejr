@@ -9,6 +9,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       trip: [],
       reviews: [],
       offers: [],
+      favorites: []
 
     },
     actions: {
@@ -104,7 +105,6 @@ const getState = ({ getStore, getActions, setStore }) => {
       isAuth: async () => {
         try {
           let token = localStorage.getItem("myToken");
-          console.log('isAuth token:', token);
           const settings = {
             method: "GET",
             headers: {
@@ -116,15 +116,12 @@ const getState = ({ getStore, getActions, setStore }) => {
           const request = await fetch(API_URL + "/api/private", settings);
           if (request.ok) {
             const data = await request.json();
-            console.log('first data before isAuth', data);
             const store = getStore();
             if (data.user) {
-              console.log('isAuth info data.user', data.user);
               setStore({ ...store, user: data.user })
 
             }
             if (data.business) {
-              console.log('isAuth info data.business', data.business_user);
               setStore({ ...store, business_user: data.business })
             }
 
@@ -800,7 +797,6 @@ const getState = ({ getStore, getActions, setStore }) => {
           const response = await fetch(API_URL + `/api/reviews/${reviewId}/likes`);
           if (response.ok) {
             const data = await response.json();
-            console.log('data get likes:', data);
             return data
           } else {
             return null;
@@ -820,6 +816,66 @@ const getState = ({ getStore, getActions, setStore }) => {
           }
 
           const response = await fetch(API_URL + `/api/reviews/${reviewId}/likes`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`,
+            },
+            body: JSON.stringify({ user_id: userId }),
+          });
+
+          if (response.ok) {
+            const res = await response.json();
+            const actions = getActions()
+            actions.getLikes()
+            return true;
+          } else {
+            return false;
+          }
+        } catch (error) {
+          console.log(error);
+          return false;
+        }
+      },
+      getFavoriteReview: async () => {
+        try {
+          const token = localStorage.getItem("myToken");
+          if (!token) {
+            console.log("Token not found");
+            return false;
+          }
+
+          const response = await fetch(API_URL + "/api/reviews/favorites", {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          });
+
+          if (response.ok) {
+            const data = await response.json();
+            console.log("GET DATA FAVORITES:", data);
+            setStore({ favorites: data.favorites });
+            return true;
+          } else {
+            return null;
+          }
+        } catch (error) {
+          console.log(error);
+          return null;
+        }
+      },
+
+      addFavoriteReview: async (reviewId, userId) => {
+        try {
+          const token = localStorage.getItem("myToken");
+          if (!token) {
+            console.log("Token not found");
+            return false;
+          }
+
+          const response = await fetch(API_URL + `/api/reviews/favorites/${reviewId}`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
