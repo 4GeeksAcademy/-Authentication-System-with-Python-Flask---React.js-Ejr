@@ -2,6 +2,67 @@ import React, { useState, useEffect } from "react";
 import "../../styles/DestinationSearch.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
+function convertState(input) {
+  var states = [
+    ['Arizona', 'AZ'],
+        ['Alabama', 'AL'],
+        ['Alaska', 'AK'],
+        ['Arkansas', 'AR'],
+        ['California', 'CA'],
+        ['Colorado', 'CO'],
+        ['Connecticut', 'CT'],
+        ['Delaware', 'DE'],
+        ['Florida', 'FL'],
+        ['Georgia', 'GA'],
+        ['Hawaii', 'HI'],
+        ['Idaho', 'ID'],
+        ['Illinois', 'IL'],
+        ['Indiana', 'IN'],
+        ['Iowa', 'IA'],
+        ['Kansas', 'KS'],
+        ['Kentucky', 'KY'],
+        ['Louisiana', 'LA'],
+        ['Maine', 'ME'],
+        ['Maryland', 'MD'],
+        ['Massachusetts', 'MA'],
+        ['Michigan', 'MI'],
+        ['Minnesota', 'MN'],
+        ['Mississippi', 'MS'],
+        ['Missouri', 'MO'],
+        ['Montana', 'MT'],
+        ['Nebraska', 'NE'],
+        ['Nevada', 'NV'],
+        ['New Hampshire', 'NH'],
+        ['New Jersey', 'NJ'],
+        ['New Mexico', 'NM'],
+        ['New York', 'NY'],
+        ['North Carolina', 'NC'],
+        ['North Dakota', 'ND'],
+        ['Ohio', 'OH'],
+        ['Oklahoma', 'OK'],
+        ['Oregon', 'OR'],
+        ['Pennsylvania', 'PA'],
+        ['Rhode Island', 'RI'],
+        ['South Carolina', 'SC'],
+        ['South Dakota', 'SD'],
+        ['Tennessee', 'TN'],
+        ['Texas', 'TX'],
+        ['Utah', 'UT'],
+        ['Vermont', 'VT'],
+        ['Virginia', 'VA'],
+        ['Washington', 'WA'],
+        ['West Virginia', 'WV'],
+        ['Wisconsin', 'WI'],
+        ['Wyoming', 'WY'],
+  ];
+  input = input.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+  for (let i = 0; i < states.length; i++) {
+    if (states[i][0] === input) {
+      return states[i][1];
+    }
+  }
+}
+
 const MySearch = () => {
   const [search, setSearch] = useState("");
   const [destinationResult, setDestinationResult] = useState([]);
@@ -36,16 +97,27 @@ const MySearch = () => {
 
   useEffect(() => {
     if (destinationResult.length > 0) {
-      const city = destinationResult[0].matching_full_name;
-
-      const weatherUrl = `https://us-weather-by-city.p.rapidapi.com/getweather?city=${encodeURIComponent(city)}`;
-      const weatherOptions = {
-        method: 'GET',
-        headers: {
-          'X-RapidAPI-Key': '26417e7137msh4d7acb99d1bc795p134430jsn57e3f84c008c',
-          'X-RapidAPI-Host': 'us-weather-by-city.p.rapidapi.com'
-        }
-      };
+      const result = destinationResult[0].matching_full_name;
+      const all = result.split(", ")
+      const city = all[0];
+      const fullState = all[1];
+      const state = convertState(fullState)
+      // const weatherUrl = `https://us-weather-by-city.p.rapidapi.com/getweather?state=${state}&city=${city}`;
+      // const weatherOptions = {
+      //   method: 'GET',
+      //   headers: {
+      //     'X-RapidAPI-Key': '26417e7137msh4d7acb99d1bc795p134430jsn57e3f84c008c',
+      //     'X-RapidAPI-Host': 'us-weather-by-city.p.rapidapi.com'
+      //   }
+      // };
+      const weatherUrl = 'https://weather-by-api-ninjas.p.rapidapi.com/v1/weather=${state}&city=${city};';
+const weatherOptions = {
+	method: 'GET',
+	headers: {
+		'X-RapidAPI-Key': '26417e7137msh4d7acb99d1bc795p134430jsn57e3f84c008c',
+		'X-RapidAPI-Host': 'weather-by-api-ninjas.p.rapidapi.com'
+	}
+};
 
       try {
         fetch(weatherUrl, weatherOptions)
