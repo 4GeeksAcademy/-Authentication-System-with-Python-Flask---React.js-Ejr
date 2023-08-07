@@ -29,7 +29,7 @@ const ClothesCard = ({ clothe }) => {
               {clothe.color}{' '}
             </p>
             <p className='card-text'>
-              <span>Price:</span> {clothe.price}
+              <span>Price:U$S</span> {clothe.price}
             </p>
           </div>
 
@@ -37,7 +37,7 @@ const ClothesCard = ({ clothe }) => {
             onClick={() =>
               navigate(`/product/${clothe.id}`)
             }
-            className='btn btn-warning m-3'
+            className='btn bg-black text-white m-3'
           >
             Details
           </button>
@@ -45,7 +45,7 @@ const ClothesCard = ({ clothe }) => {
           <button
             href='#'
             onClick={() => actions.postFavorites(clothe.id)}
-            className='btn btn-danger m-3 '
+            className={`btn bg-black m-3 ${store.favorites.some(favorite => favorite.id === clothe.id) ? 'text-danger' : 'text-white'}`}
           >
             <strong>♥</strong>
           </button>

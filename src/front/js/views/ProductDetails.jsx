@@ -4,8 +4,10 @@ import Navbar from '../component/Navbar.jsx'
 import { Context } from '../store/appContext.js'
 
 const ProductDetails = () => {
-  const { actions } = useContext(Context)
+  const { actions , store } = useContext(Context)
   const [product, setProduct] = useState(null)
+  const [quantity, setQuantity] = useState(1)
+  const [size_id, SetSizeId] = useState(1)
   const { id } = useParams()
   const navigate = useNavigate()
 
@@ -16,7 +18,9 @@ const ProductDetails = () => {
       .catch((error) => {
         navigate('/404')
       })
-  }, [])
+  }, [id])
+
+
 
   if (!product) return (<h1>Loading...</h1>)
 
@@ -51,14 +55,17 @@ const ProductDetails = () => {
               <p className='card-text'>
                 <span>Price:</span> {product.price}
               </p>
+              <label htmlFor="quantity">Quantity</label>
+              <input onChange={(e) => setQuantity(e.target.value)} type="text" />
             </div>
 
-            <button className='btn btn-warning m-3'>Details</button>
+            <button onClick={() => actions.postShoppingCart(product.id, Number(quantity), size_id)} className={`btn bg-black m-3 ${store.shopping_cart.some(item => item.product.id === product.id) ? 'text-success' : 'text-white'}`}><i className="fa-solid fa-cart-plus"></i></button>
+
 
             <button
               href='#'
               onClick={() => actions.postFavorites(product.id)}
-              className='btn btn-danger m-3 '
+              className={`btn bg-black m-3 ${store.favorites.some(favorite => favorite.id === product.id) ? 'text-danger' : 'text-white'}`}
             >
               <strong>♥</strong>
             </button>

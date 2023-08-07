@@ -11,15 +11,19 @@ const getState = ({ getStore, getActions, setStore }) => {
       accessories: [],
       details: {},
       favorites: [],
+      shopping_cart: [],
+      total_cart: 0
     },
     actions: {
       login: async (email, password) => {
+        const actions = getActions()
         const data = await api.login(email, password)
         setStore({ user: data.user, token: data.token })
         const obj = { ...data.user }
         obj.is_admin = false
         delete obj.is_admin
         localStorage.setItem('user', JSON.stringify(obj))
+        actions.getFavorites()
         if (!data.user.is_admin) localStorage.setItem('myToken', data.token)
       },
       signup: async (
@@ -57,9 +61,9 @@ const getState = ({ getStore, getActions, setStore }) => {
         const token = localStorage.getItem('myToken')
         if (!token) return
         try {
-          const user = await api.validateToken(token)
-          localStorage.setItem('user', JSON.stringify(user))
-          setStore({ user, token })
+          const data = await api.validateToken(token)
+          localStorage.setItem('user', JSON.stringify(data))
+          setStore({ user: data.user, token, favorites: data.favorites, shopping_cart: data.shopping_cart })
         } catch {
           localStorage.removeItem('user')
           localStorage.removeItem('myToken')
@@ -176,6 +180,56 @@ const getState = ({ getStore, getActions, setStore }) => {
         console.log('Favorite deleted')
         return response
       },
+      // getShoppingCart:async() => {
+      //   const store = getStore();
+      //   const response = await api.getShoppingCart(store.token)
+      //   // setStore({shopping_cart:response})
+      //   // console.log(response)
+      //   console.log('Shopping cart loaded')
+      //   // return response
+      // },
+      postShoppingCart: async (product_id, quantity, size_id) => {
+        const response = await api.postShoppingCart(
+          product_id, quantity, size_id,
+          getStore().token
+        )
+
+        setStore({ shopping_cart: response })
+
+        console.log('Shopping item added')
+        return response
+      },
+
+      deleteShoppingCart: async (product_id, size_id) => {
+        const store = getStore();
+        const response = await api.deleteShoppingCart(store.token, product_id, size_id);
+      
+        const updatedShoppingCart = store.shopping_cart.filter(item => (
+          item.product.id !== product_id || item.size.id !== size_id
+        ));
+      
+        const updatedTotalCart = updatedShoppingCart.reduce((total, item) => (
+          total + item.quantity * item.product.price
+        ), 0);
+      
+        setStore({
+          shopping_cart: updatedShoppingCart,
+          total_cart: updatedTotalCart
+        });
+      
+        console.log('Shopping item deleted');
+        return response;
+      },
+      
+      changeTotalCart: async (value) => {
+        const store = getStore();
+        const updatedTotal = store.total_cart + value; 
+      
+        setStore({ total_cart: updatedTotal });
+      },
+      
+      
+      
     },
   }
 }
