@@ -55,7 +55,9 @@ function convertState(input) {
         ['Wisconsin', 'WI'],
         ['Wyoming', 'WY'],
   ];
-  input = input.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+  input = input.replace(/\w\S*/g, function (txt) {
+    return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+  });
   for (let i = 0; i < states.length; i++) {
     if (states[i][0] === input) {
       return states[i][1];
@@ -98,26 +100,18 @@ const MySearch = () => {
   useEffect(() => {
     if (destinationResult.length > 0) {
       const result = destinationResult[0].matching_full_name;
-      const all = result.split(", ")
+      const all = result.split(", ");
       const city = all[0];
       const fullState = all[1];
-      const state = convertState(fullState)
-      // const weatherUrl = `https://us-weather-by-city.p.rapidapi.com/getweather?state=${state}&city=${city}`;
-      // const weatherOptions = {
-      //   method: 'GET',
-      //   headers: {
-      //     'X-RapidAPI-Key': '26417e7137msh4d7acb99d1bc795p134430jsn57e3f84c008c',
-      //     'X-RapidAPI-Host': 'us-weather-by-city.p.rapidapi.com'
-      //   }
-      // };
-      const weatherUrl = 'https://weather-by-api-ninjas.p.rapidapi.com/v1/weather=${state}&city=${city};';
-const weatherOptions = {
-	method: 'GET',
-	headers: {
-		'X-RapidAPI-Key': '26417e7137msh4d7acb99d1bc795p134430jsn57e3f84c008c',
-		'X-RapidAPI-Host': 'weather-by-api-ninjas.p.rapidapi.com'
-	}
-};
+      const state = convertState(fullState);
+      const weatherUrl = `https://weather-by-api-ninjas.p.rapidapi.com/v1/weather?city=${city}&state=${state}`;
+      const weatherOptions = {
+        method: 'GET',
+        headers: {
+          'X-RapidAPI-Key': '26417e7137msh4d7acb99d1bc795p134430jsn57e3f84c008c',
+          'X-RapidAPI-Host': 'weather-by-api-ninjas.p.rapidapi.com'
+        }
+      };
 
       try {
         fetch(weatherUrl, weatherOptions)
@@ -137,7 +131,7 @@ const weatherOptions = {
       const flightOptions = {
         method: "GET",
         headers: {
-          'X-RapidAPI-Key': '26417e7137msh4d7acb99d1bc795p134430jsn57e3f84c008c', 
+          'X-RapidAPI-Key': '26417e7137msh4d7acb99d1bc795p134430jsn57e3f84c008c',
           'X-RapidAPI-Host': 'priceline-com-provider.p.rapidapi.com',
         },
       };
@@ -254,12 +248,12 @@ const weatherOptions = {
         {weatherResult.length > 0 ? (
           <div className="my-weather-results">
             <h2>Weather Information</h2>
-            {weatherResult.map((weather, index) => (
+            {weatherResult.map((weather1, index) => (
               <div key={index} className="card weather-item">
                 <div className="card-body">
-                  <p>Date: {weather.date}</p>
-                  <p>Temperature: {weather.temperature}</p>
-                  <p>Weather Condition: {weather.condition}</p>
+                  <p>Temperature: {weather1.temp}</p>
+                  <p>Feels Like: {weather1.feels_like}</p>
+                  <p>Humidity: {weather1.humidity}</p>
                 </div>
               </div>
             ))}
