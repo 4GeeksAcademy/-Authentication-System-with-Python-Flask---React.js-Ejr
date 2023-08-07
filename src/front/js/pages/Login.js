@@ -51,7 +51,7 @@ export const Login = () => {
 			<br/>
             <button type="submit" id="login-button">Entrar</button>
             <br/>
-            <a id="sp" href="#aja">¿No tienes una cuenta?Registrate</a>
+            <Link to={"/sign-up"} id="sp" >¿No tienes una cuenta?Registrate</Link>
         </form>
 		</div>
 	);

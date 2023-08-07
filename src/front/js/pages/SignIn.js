@@ -11,6 +11,8 @@ export const SignIn = () => {
         email: '',
         password: '',
         confirm_password: '',
+        secret_answer: '',
+        secret_question: '',
     });
 
     const handleChange = (e) => {
@@ -32,12 +34,20 @@ export const SignIn = () => {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(user)
             })
-            const data = await res.json()
-            localStorage.setItem("token", data?.token)
-            navigate("/")
+            console.log("Response status:", res.status);
+            const data = await res.json();
+            console.log("Response data:", data);
+    
+            if (res.ok) {
+                localStorage.setItem("token", data?.token);
+                navigate("/");
+            } else {
+                console.error("Request was not successful:", data);
+            }
         } catch (error) {
-            console.error(error)
+            console.error("An error occurred:", error);
         }
+
     }
 
     return (
@@ -57,6 +67,12 @@ export const SignIn = () => {
                 </label>
                 <label>
                 <input type="password" name="confirm_password" onChange={handleChange} value={user.confirm_password} placeholder="Confirmar Contraseña" required />
+                </label>
+                <label>
+                <input type="text" name="secret_question" onChange={handleChange} value={user.secret_question} placeholder="Pregunta Secreta" required />
+                </label>
+                <label>
+                <input type="text" name="secret_answer" onChange={handleChange} value={user.secret_answer} placeholder="Respuesta Secreta" required />
                 </label>
                 <button type="submit">Registrate</button>
                 <p>¿Ya tienes una cuenta?, <Link to="/login" className="login-link">Login</Link></p>
