@@ -4,3 +4,6 @@
 
   
   /* Apply the custom font to the whole document (body) */
+body {
+  background-color: #6c757d;
+}
