@@ -5,55 +5,55 @@ import "bootstrap/dist/css/bootstrap.min.css";
 function convertState(input) {
   var states = [
     ['Arizona', 'AZ'],
-        ['Alabama', 'AL'],
-        ['Alaska', 'AK'],
-        ['Arkansas', 'AR'],
-        ['California', 'CA'],
-        ['Colorado', 'CO'],
-        ['Connecticut', 'CT'],
-        ['Delaware', 'DE'],
-        ['Florida', 'FL'],
-        ['Georgia', 'GA'],
-        ['Hawaii', 'HI'],
-        ['Idaho', 'ID'],
-        ['Illinois', 'IL'],
-        ['Indiana', 'IN'],
-        ['Iowa', 'IA'],
-        ['Kansas', 'KS'],
-        ['Kentucky', 'KY'],
-        ['Louisiana', 'LA'],
-        ['Maine', 'ME'],
-        ['Maryland', 'MD'],
-        ['Massachusetts', 'MA'],
-        ['Michigan', 'MI'],
-        ['Minnesota', 'MN'],
-        ['Mississippi', 'MS'],
-        ['Missouri', 'MO'],
-        ['Montana', 'MT'],
-        ['Nebraska', 'NE'],
-        ['Nevada', 'NV'],
-        ['New Hampshire', 'NH'],
-        ['New Jersey', 'NJ'],
-        ['New Mexico', 'NM'],
-        ['New York', 'NY'],
-        ['North Carolina', 'NC'],
-        ['North Dakota', 'ND'],
-        ['Ohio', 'OH'],
-        ['Oklahoma', 'OK'],
-        ['Oregon', 'OR'],
-        ['Pennsylvania', 'PA'],
-        ['Rhode Island', 'RI'],
-        ['South Carolina', 'SC'],
-        ['South Dakota', 'SD'],
-        ['Tennessee', 'TN'],
-        ['Texas', 'TX'],
-        ['Utah', 'UT'],
-        ['Vermont', 'VT'],
-        ['Virginia', 'VA'],
-        ['Washington', 'WA'],
-        ['West Virginia', 'WV'],
-        ['Wisconsin', 'WI'],
-        ['Wyoming', 'WY'],
+    ['Alabama', 'AL'],
+    ['Alaska', 'AK'],
+    ['Arkansas', 'AR'],
+    ['California', 'CA'],
+    ['Colorado', 'CO'],
+    ['Connecticut', 'CT'],
+    ['Delaware', 'DE'],
+    ['Florida', 'FL'],
+    ['Georgia', 'GA'],
+    ['Hawaii', 'HI'],
+    ['Idaho', 'ID'],
+    ['Illinois', 'IL'],
+    ['Indiana', 'IN'],
+    ['Iowa', 'IA'],
+    ['Kansas', 'KS'],
+    ['Kentucky', 'KY'],
+    ['Louisiana', 'LA'],
+    ['Maine', 'ME'],
+    ['Maryland', 'MD'],
+    ['Massachusetts', 'MA'],
+    ['Michigan', 'MI'],
+    ['Minnesota', 'MN'],
+    ['Mississippi', 'MS'],
+    ['Missouri', 'MO'],
+    ['Montana', 'MT'],
+    ['Nebraska', 'NE'],
+    ['Nevada', 'NV'],
+    ['New Hampshire', 'NH'],
+    ['New Jersey', 'NJ'],
+    ['New Mexico', 'NM'],
+    ['New York', 'NY'],
+    ['North Carolina', 'NC'],
+    ['North Dakota', 'ND'],
+    ['Ohio', 'OH'],
+    ['Oklahoma', 'OK'],
+    ['Oregon', 'OR'],
+    ['Pennsylvania', 'PA'],
+    ['Rhode Island', 'RI'],
+    ['South Carolina', 'SC'],
+    ['South Dakota', 'SD'],
+    ['Tennessee', 'TN'],
+    ['Texas', 'TX'],
+    ['Utah', 'UT'],
+    ['Vermont', 'VT'],
+    ['Virginia', 'VA'],
+    ['Washington', 'WA'],
+    ['West Virginia', 'WV'],
+    ['Wisconsin', 'WI'],
+    ['Wyoming', 'WY'],
   ];
   input = input.replace(/\w\S*/g, function (txt) {
     return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
@@ -104,51 +104,49 @@ const MySearch = () => {
       const city = all[0];
       const fullState = all[1];
       const state = convertState(fullState);
-      const weatherUrl = `https://weather-by-api-ninjas.p.rapidapi.com/v1/weather?city=${city}&state=${state}`;
-      const weatherOptions = {
-        method: 'GET',
-        headers: {
-          'X-RapidAPI-Key': '26417e7137msh4d7acb99d1bc795p134430jsn57e3f84c008c',
-          'X-RapidAPI-Host': 'weather-by-api-ninjas.p.rapidapi.com'
+
+      const fetchWeatherData = async () => {
+        const weatherUrl = `https://weatherapi-com.p.rapidapi.com/current.json?q=${city}&${state}`;
+        const weatherOptions = {
+          method: 'GET',
+          headers: {
+            'X-RapidAPI-Key': '26417e7137msh4d7acb99d1bc795p134430jsn57e3f84c008c',
+            'X-RapidAPI-Host': 'weatherapi-com.p.rapidapi.com'
+          }
+        };
+
+        try {
+          const response = await fetch(weatherUrl, weatherOptions);
+          const data = await response.json();
+          console.log("weather", data);
+          setWeatherResult(data);
+        } catch (error) {
+          setError("Error fetching weather data. Please try again later.");
         }
       };
 
-      try {
-        fetch(weatherUrl, weatherOptions)
-          .then((response) => response.json())
-          .then((data) => {
-            console.log("weather", data);
-            setWeatherResult(data);
-          })
-          .catch((error) => {
-            setError("Error fetching weather data. Please try again later.");
-          });
-      } catch (error) {
-        setError("Error fetching weather data. Please try again later.");
-      }
+      const fetchFlightData = async () => {
+        const flightUrl = `https://tripadvisor16.p.rapidapi.com/api/v1/flights/searchAirport?query=${city}`;
+        const flightOptions = {
+          method: 'GET',
+          headers: {
+            'X-RapidAPI-Key': '26417e7137msh4d7acb99d1bc795p134430jsn57e3f84c008c',
+            'X-RapidAPI-Host': 'tripadvisor16.p.rapidapi.com'
+          }
+        };
 
-      const flightUrl = `https://priceline-com-provider.p.rapidapi.com/v1/flights/locations?name=${encodeURIComponent(city)}`;
-      const flightOptions = {
-        method: "GET",
-        headers: {
-          'X-RapidAPI-Key': '26417e7137msh4d7acb99d1bc795p134430jsn57e3f84c008c',
-          'X-RapidAPI-Host': 'priceline-com-provider.p.rapidapi.com',
-        },
+        try {
+          const response = await fetch(flightUrl, flightOptions);
+          const data = await response.json();
+          console.log("flights", data);
+          setFlightResult(data);
+        } catch (error) {
+          setError("Error fetching flight data. Please try again later.");
+        }
       };
 
-      try {
-        fetch(flightUrl, flightOptions)
-          .then((response) => response.json())
-          .then((data) => {
-            console.log("flights", data);
-            setFlightResult(data);
-          })
-          .catch((error) => {
-            setError("Error fetching flight data. Please try again later.");
-          });
-      } catch (error) {
-        setError("Error fetching flight data. Please try again later.");
-      }
+      fetchWeatherData();
+      fetchFlightData();
     } else {
       setWeatherResult([]);
       setFlightResult([]);
@@ -220,7 +218,7 @@ const MySearch = () => {
               >
                 <div className="card-body">
                   <h3 className="card-title">{city.matching_full_name}</h3>
-                  <p className="card-text">City: {city.matching_alternate_names.name}</p>
+                  <p className="card-text">{city.matching_alternate_names.name}</p>
                   <button
                     className={`btn ${
                       isFavorite(city.matching_full_name) ? "btn-danger" : "btn-outline-danger"
@@ -242,7 +240,7 @@ const MySearch = () => {
             ))}
           </div>
         ) : (
-          <div className="alert alert-info">No results found.</div>
+          <div className="alert alert-info">no results</div>
         )}
 
         {weatherResult.length > 0 ? (
