@@ -17,7 +17,7 @@ const CarCards = ({ cars }) => {
   };
 
   return (
-    <div className="container-fluid row m-0 w-100 justify-content-center" style={{ background: '#aeb3b7' }}>
+    <div className="container-fluid row m-0 w-100 justify-content-center" style={{ background: '#A6A4A4' }}>
       {cars.map((car, index) => {
         return (
           <div key={index} className="col-3 m-3 carCard bg bg-dark rounded-4 p-0" style={{ width: "20%" }}>
