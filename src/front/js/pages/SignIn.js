@@ -24,7 +24,7 @@ export const SignIn = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        const apiUrl = `${process.env.BACKEND_URL}api/signup`
+        const apiUrl = `${process.env.BACKEND_URL}api/sign-ºup`
         console.log(user)
         try {
             const res = await fetch(apiUrl, {
@@ -57,6 +57,12 @@ export const SignIn = () => {
                 </label>
                 <label>
                 <input type="password" name="confirm_password" onChange={handleChange} value={user.confirm_password} placeholder="Confirmar Contraseña" required />
+                </label>
+                <label>
+                <input type="text" name="secret_question" onChange={handleChange} value={user.confirm_password} placeholder="Pregunta Secreta" required />
+                </label>
+                <label>
+                <input type="text" name="secret_answer" onChange={handleChange} value={user.confirm_password} placeholder="Respuesta Secreta" required />
                 </label>
                 <button type="submit">Registrate</button>
                 <p>¿Ya tienes una cuenta?, <Link to="/login" className="login-link">Login</Link></p>
