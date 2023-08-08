@@ -19,6 +19,9 @@ export const Home = () => {
     <>
 
 
+      {/* <Slogan /> */}
+      {/* <AboutUs /> */}
+
 
       <LitlleSlide />
       <FilterMenu />

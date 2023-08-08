@@ -62,7 +62,6 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
 
       login: async (userEmail, userPassword) => {
-        console.log(userEmail, userPassword);
         try {
           const response = await fetch(API_URL + "/api/login", {
             method: "POST",
@@ -243,7 +242,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       // Update business_user profile information
 
-      updateBusinessUserProfile: async (userId, updatedData) => {
+      updateBusinessUser: async (userId, updatedData) => {
         try {
           const token = localStorage.getItem("myToken");
           if (!token) {

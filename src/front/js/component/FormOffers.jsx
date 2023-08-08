@@ -25,14 +25,20 @@ const FormOffers = () => {
                 offer_image: "",
             }}
             validationSchema={Yup.object({
-                offer_title: Yup.string().min(10, 'Debe tener 10 caracteres o más').required('Obligatorio!'),
-                offer_description: Yup.string().min(40, 'Debe tener 40 caracteres o más').required('Obligatorio!'),
-                country: Yup.string().min(2, 'Debe tener 2 caracteres o más').required('Obligatorio!'),
-                city: Yup.string().min(2, 'Debe tener 2 caracteres o más').required('Obligatorio!'),
-                normal_user_price: Yup.number().min(2, 'Debe tener 2 caracteres o más').required('Obligatorio!').typeError('Debe ser un número').integer('Debe ser un número entero'),
-                // medium_user_price: Yup.number().min(2, 'Debe tener 2 caracteres o más').required('Obligatorio!').typeError('Debe ser un número').integer('Debe ser un número entero'),
-                // high_user_price: Yup.number().min(2, 'Debe tener 2 caracteres o más').required('Obligatorio!').typeError('Debe ser un número').integer('Debe ser un número entero'),
-                premium_user_price: Yup.number().min(2, 'Debe tener 2 caracteres o más').required('Obligatorio!').typeError('Debe ser un número').integer('Debe ser un número entero'),
+                offer_title: Yup.string()
+                .min(10, 'Debe tener 10 caracteres o más')
+                .matches(/^[A-ZÁÉÍÓÚÑ][A-Za-zÁÉÍÓÚáéíóúÑñ0-9,.*!¡?¿\s]*$/, 'Debe comenzar con una letra mayúscula')
+                .required('Campo obligatorio!'),
+                offer_description: Yup.string()
+                .min(50, 'Debe tener 50 caracteres o más')
+                .matches(/^[A-ZÁÉÍÓÚÑ][A-Za-zÁÉÍÓÚáéíóúÑñ0-9,.*!¡?¿\s]*$/, 'Debe comenzar con una letra mayúscula')
+                .required('Campo obligatorio!'),
+                country: Yup.string().min(2, 'Debe tener 2 caracteres o más').required('Campo obligatorio!'),
+                city: Yup.string().min(2, 'Debe tener 2 caracteres o más').required('Campo obligatorio!'),
+                normal_user_price: Yup.number().min(2, 'Debe tener 2 caracteres o más').required('Campo obligatorio!').typeError('Debe ser un número').integer('Debe ser un número entero'),
+                // medium_user_price: Yup.number().min(2, 'Debe tener 2 caracteres o más').required('Campo obligatorio!').typeError('Debe ser un número').integer('Debe ser un número entero'),
+                // high_user_price: Yup.number().min(2, 'Debe tener 2 caracteres o más').required('Campo obligatorio!').typeError('Debe ser un número').integer('Debe ser un número entero'),
+                premium_user_price: Yup.number().min(2, 'Debe tener 2 caracteres o más').required('Campo obligatorio!').typeError('Debe ser un número').integer('Debe ser un número entero'),
                 offer_image: Yup.mixed().required('Debes seleccionar almenos una imagen!')
                     .test("FILE_SIZE", "El tamaño de la imagen es demasiado grande!", (value) => value && value.size < 1024 * 1024)
                     .test("FILE_TYPE", "Formato invalido", (value) => value && ['image/png', 'image/jpeg', 'image/jpg'].includes(value.type))
@@ -44,7 +50,7 @@ const FormOffers = () => {
 
                     const formData = new FormData();
                     formData.append("file", values.offer_image)
-                    formData.append("cloud_name", 'albertge')
+                    formData.append("cloud_name", "albertge")
                     formData.append("upload_preset", "trip_nexus_upload_preset")
 
                     const response = await axios.post("https://api.cloudinary.com/v1_1/albertge/image/upload", formData);

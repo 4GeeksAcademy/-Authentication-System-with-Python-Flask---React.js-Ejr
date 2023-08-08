@@ -11,6 +11,8 @@ class User(db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False)
     firstname = db.Column(db.String(100), nullable=False)
     lastname = db.Column(db.String(100), nullable=False)
+    prefix_telephone = db.Column(db.Integer, nullable=True)
+    telephone = db.Column(db.Integer, nullable=True)
     address = db.Column(db.String(200), nullable=False)
     pasaporte = db.Column(db.String(50), nullable=False)
     payment_method = db.Column(db.String(100), nullable=False)
@@ -31,6 +33,8 @@ class User(db.Model):
             "email": self.email,
             "firstname": self.firstname,
             "lastname": self.lastname,
+            "prefix_telephone": self.prefix_telephone,
+            "telephone": self.telephone,
             "address": self.address,
             "pasaporte": self.pasaporte,
             "payment_method": self.payment_method,
@@ -43,6 +47,8 @@ class Business_user(db.Model):
     business_name = db.Column(db.String(50), unique=True, nullable=False)
     password = db.Column(db.String(250), unique=False, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
+    prefix_telephone = db.Column(db.Integer, nullable=True)
+    telephone = db.Column(db.Integer, nullable=True)
     nif = db.Column(db.String(120), nullable=False)
     address = db.Column(db.String(150), nullable=False)
     payment_method = db.Column(db.String(150), nullable=False)
@@ -57,6 +63,8 @@ class Business_user(db.Model):
             "id": self.id,
             "business_name": self.business_name,
             "email": self.email,
+            "prefix_telephone": self.prefix_telephone,
+            "telephone": self.telephone,
             "nif": self.nif,
             "address": self.address,
             "payment_method": self.payment_method
@@ -97,7 +105,7 @@ class Offers(db.Model):
     # medium_user_price = db.Column(db.Integer, nullable=False)
     # high_user_price = db.Column(db.Integer, nullable=False)
     premium_user_price = db.Column(db.Integer, nullable=False)
-    offer_image = db.Column(db.String(1000), nullable = False)
+    offer_image = db.Column(db.String(1000), nullable=False)
 
     favorites = db.relationship('Favorites', backref='offers')
 
@@ -124,8 +132,7 @@ class Offers(db.Model):
 class Review(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
-    trip_id = db.Column(db.Integer, db.ForeignKey(
-        'trip.id'), nullable=True) 
+    trip_id = db.Column(db.Integer, db.ForeignKey('trip.id'), nullable=True)
     title = db.Column(db.String(75), nullable=False)
     comment_text = db.Column(db.String(500), nullable=False)
     favorites = db.relationship('Favorites', backref='review')
@@ -143,14 +150,16 @@ class Review(db.Model):
             "comment_text": self.comment_text,
         }
 
+
 class Likes(db.Model):
-    id = db.Column(db.Integer, primary_key = True)
+    id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
-    review_id = db.Column(db.Integer, db.ForeignKey('review.id'), nullable=True)
+    review_id = db.Column(
+        db.Integer, db.ForeignKey('review.id'), nullable=True)
 
     def __repr__(self):
         return '<Likes %r>' % self.id
-    
+
     def serialize(self):
         return {
             "id": self.id,
@@ -163,7 +172,9 @@ class Favorites(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
     trip_id = db.Column(db.Integer, db.ForeignKey('trip.id'), nullable=True)
     offer_id = db.Column(db.Integer, db.ForeignKey('offers.id'), nullable=True)
-    review_id = db.Column(db.Integer, db.ForeignKey('review.id'), nullable=True)
+    review_id = db.Column(
+        db.Integer, db.ForeignKey('review.id'), nullable=True)
+
     def __repr__(self):
         return '<Favorites %r>' % self.id
 

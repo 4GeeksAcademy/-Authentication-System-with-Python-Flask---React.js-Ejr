@@ -1,26 +1,30 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import ScrollToTop from "./component/scrollToTop";
-import { BackendURL } from "./component/backendURL";
+
 
 import { Home } from "./pages/home";
 import { Demo } from "./pages/demo";
 import { Single } from "./pages/single";
 import LogIn from "./pages/LogIn.jsx";
-import ForgotPassword from "./pages/ForgotPassword.jsx";
+import ForgotPassword from "./pages/ForgotPassword.jsx"
 import UserPrivate from "./pages/UserPrivate.jsx";
 import BusinessUserPrivate from "./pages/BusinessUserPrivate.jsx";
 import Business_offers from "./pages/Business_offers.jsx";
 import Trips from "./pages/Trips.jsx";
 import SignupGeneralView from "./pages/SignupGeneralView.jsx";
 import Reviews from "./pages/Reviews";
+import TermsConditions from "./pages/TermsConditions.jsx";
+import Favorites from "./pages/Favorites";
 
 import injectContext from "./store/appContext";
 
 import Navbar from "./component/Navbar.jsx";
 import Footer from "./component/Footer.jsx";
 import ContactForm from "./component/ContactForm";
-import Favorites from "./pages/Favorites";
+import ScrollToTop from "./component/scrollToTop";
+import { BackendURL } from "./component/backendURL";
+
+
 
 
 
@@ -51,6 +55,7 @@ const Layout = () => {
                         <Route element={<Business_offers />} path="/business_offers" />
                         <Route element={<Trips />} path="/trips" />
                         <Route element={<Reviews />} path="/reviews" />
+                        <Route element={<TermsConditions />} path="/terms" />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
                     <Footer />
