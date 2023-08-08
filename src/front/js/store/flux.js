@@ -12,7 +12,8 @@ const getState = ({ getStore, getActions, setStore }) => {
       details: {},
       favorites: [],
       shopping_cart: [],
-      total_cart: 0
+      total_cart: 0,
+      clothes_types: [],
     },
     actions: {
       login: async (email, password) => {
@@ -155,6 +156,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       getFavorites: async () => {
         const store = getStore()
         if (!store.token) return
+        if (store.user.is_admin) return
         const response = await api.getFavorites(store.token)
         setStore({ favorites: response })
         console.log(response)
@@ -227,7 +229,10 @@ const getState = ({ getStore, getActions, setStore }) => {
       
         setStore({ total_cart: updatedTotal });
       },
-      
+      getClothesTypes : async () => {
+        const response = await api.getClothesTypes();
+        setStore({clothes_types: response})
+      }
       
       
     },
