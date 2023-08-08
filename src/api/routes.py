@@ -634,14 +634,15 @@ def like_review(review_id):
 def get_favorites_for_user():
     current_user_id = get_jwt_identity()
 
-    user = User.query.get(current_user_id)
+    user = User.query.filter_by(email=current_user_id).first()
     if user is None:
         return jsonify({"error": "User not found"}), 404
+    user_favorites = Favorites.query.filter_by(user_id =user.id).all()
+    user_favorites = [favorite.serialize() for favorite in user_favorites ]
+    return jsonify(user_favorites), 200
 
-    favorites = user.favorites
-    serialized_favorites = [favorite.serialize() for favorite in favorites]
 
-    return jsonify({serialized_favorites}), 200
+
 
 @api.route('/reviews/favorites/<int:review_id>', methods=['POST'])
 @jwt_required()

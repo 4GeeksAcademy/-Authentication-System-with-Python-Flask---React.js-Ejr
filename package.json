@@ -79,6 +79,7 @@
 		"@fortawesome/react-fontawesome": "^0.2.0",
 		"@google-pay/button-element": "^3.0.10",
 		"@google-pay/button-react": "^3.0.10",
+		"@paypal/react-paypal-js": "^8.1.1",
 		"@testing-library/jest-dom": "^5.17.0",
 		"axios": "^1.4.0",
 		"cloudinary": "^1.40.0",
