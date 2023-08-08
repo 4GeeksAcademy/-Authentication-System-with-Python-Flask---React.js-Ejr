@@ -150,3 +150,8 @@ export async function deleteShoppingCart(token, product_id,size_id) {
   )
   return response
 }
+
+export async function getClothesTypes() {
+  const response = await makeRequest('/clothes/types', 'GET', null)
+  return response
+}

@@ -45,9 +45,9 @@ class Product(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(200), nullable=False)
     price = db.Column(db.Float, nullable=False)
-    description = db.Column(db.String(1000))
-    color = db.Column(db.String(50))
-    type = db.Column(db.String(100))
+    description = db.Column(db.String(1000), nullable=False)
+    color = db.Column(db.String(50), nullable=False)
+    type = db.Column(db.String(100), nullable=False)
     category_id = db.Column(db.Integer, db.ForeignKey('categories.id'), nullable=False)
 
     images = db.relationship('ProductImage', back_populates='product')

@@ -664,3 +664,20 @@ def delete_from_cart(product_id, size_id):
     return jsonify([p.serialize() for p in user.shopping_cart]), 200
 # End cart routes
 
+@api.route('/clothes/types', methods=['GET'])
+def all_clothing_types():
+    types = db.session.query(Product.type).filter_by(category_id=1).distinct().all()
+    types_as_string = [type[0] for type in types]
+    return jsonify(types_as_string), 200
+
+@api.route('/accessories/types', methods=['GET'])
+def all_accessories_types():
+    types = db.session.query(Product.type).filter_by(category_id=2).distinct().all()
+    types_as_string = [type[0] for type in types]
+    return jsonify(types_as_string), 200
+
+@api.route('/shoes/types', methods=['GET'])
+def all_shoes_types():
+    types = db.session.query(Product.type).filter_by(category_id=3).distinct().all()
+    types_as_string = [type[0] for type in types]
+    return jsonify(types_as_string), 200
