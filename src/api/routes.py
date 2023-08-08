@@ -342,6 +342,23 @@ def update_product_image(product_id, product_image_id):
     db.session.commit()
     return jsonify(product_image.serialize()), 200
 
+@api.route('/products/<int:product_id>/images/<int:product_image_id>', methods=['DELETE'])
+@jwt_required()
+def delete_product_image(product_id, product_image_id):
+    current_user_id = get_jwt_identity()
+    check_is_admin_by_user_id(current_user_id)
+    product = Product.query.get(product_id)
+    if product is None:
+        raise APIException(message='Product not found', status_code=404)
+    product_image = ProductImage.query.get(product_image_id)
+    if product_image is None:
+        raise APIException(message='Product image not found', status_code=404)
+    if product_image.product_id != product_id:
+        raise APIException(message='Product image not found', status_code=404)
+    db.session.delete(product_image)
+    db.session.commit()
+    return Response(status=204)
+
 @api.route('/products/clothing', methods=['GET'])
 def get_clothing_products():
     products = Product.query.filter_by(category_id=1)
