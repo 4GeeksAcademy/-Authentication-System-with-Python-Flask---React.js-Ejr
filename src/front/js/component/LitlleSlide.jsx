@@ -1,4 +1,5 @@
 import React from 'react'
+import Slogan from './Slogan'
 
 const LitlleSlide = () => {
     return (
@@ -8,8 +9,12 @@ const LitlleSlide = () => {
                     <div className="carousel-item active">
                         <img src="https://picsum.photos/id/218/500/200" className=" litleslideimg d-block w-100" alt="..." />
                         <div className="carousel-caption d-none d-md-block">
+
                             <h5 className='title-slide'>First slide label</h5>
                             <p className='desc'>Some representative placeholder content for the first slide.</p>
+
+                            <Slogan />
+
                         </div>
                     </div>
                     <div className="carousel-item">

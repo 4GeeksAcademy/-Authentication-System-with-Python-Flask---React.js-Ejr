@@ -107,6 +107,23 @@
     font-size: 1.2rem;
 }
 
+.menu-review {
+    display: flex;
+    justify-content: space-between;
+}
+
+.nav-review {
+    width: 33%;
+    text-align: center;
+    margin: auto;
+    justify-content: center;
+}
+
+.nav-review button {
+    width: 100%;
+    display: block;
+}
+
 /* Media query */
 @media screen and (max-width: 1200px) {
     .card-review {

@@ -10,6 +10,12 @@
 
 .trip-nexus {
   font-size: 4rem !important;
+  display: flex;
+}
+
+.slogan-content {
+  display: flex;
+  flex-direction: column;
 }
 
 .welcome {

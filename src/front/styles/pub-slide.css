@@ -5,7 +5,7 @@
 }
 
 .pub-slide img {
-  height: 600px;
+  height: 30rem;
 }
 
 .title-slide {
@@ -13,7 +13,7 @@
 }
 
 .trip-desc {
-  color: #000;
+  color: #fff;
   font-weight: 600;
   font-size: 1.6rem;
 }
@@ -22,4 +22,8 @@
 .prenium-price {
   font-size: 1.5rem;
   font-weight: 600;
+}
+
+.prenium-price {
+  color: gold;
 }

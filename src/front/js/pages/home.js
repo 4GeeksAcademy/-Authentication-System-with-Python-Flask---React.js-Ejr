@@ -18,14 +18,17 @@ export const Home = () => {
   return (
     <>
 
+
       {/* <Slogan /> */}
       {/* <AboutUs /> */}
 
-        <LitlleSlide />
-        <FilterMenu />
-        <PubSlide />
-        <HomeReviewCard />
-        <HomeOfferCard />
+
+      <LitlleSlide />
+      <FilterMenu />
+      <PubSlide />
+      <HomeReviewCard />
+      <HomeOfferCard />
+      <AboutUs />
 
     </>
   );

@@ -184,5 +184,5 @@ class Favorites(db.Model):
             "user_id": self.user_id,
             "trip_id": self.trip_id,
             "offer_id": self.offer_id,
-            "review_id": self.review_id
+            "reviews": Review.query.get(self.review_id).serialize()
         }

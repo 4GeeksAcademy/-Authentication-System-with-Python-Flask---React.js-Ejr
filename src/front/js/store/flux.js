@@ -844,18 +844,21 @@ const getState = ({ getStore, getActions, setStore }) => {
             return false;
           }
 
-          const response = await fetch(API_URL + "/api/reviews/favorites", {
+          const response = await fetch(API_URL + `/api/reviews/favorites`, {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
               Authorization: `Bearer ${token}`,
             },
           });
+          console.log(response);
 
           if (response.ok) {
             const data = await response.json();
             console.log("GET DATA FAVORITES:", data);
-            setStore({ favorites: data.favorites });
+            const store = getStore()
+            setStore({ ...store, favorites: data });
+            console.log('log apres setStore FAV', data);
             return true;
           } else {
             return null;
@@ -882,10 +885,11 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
             body: JSON.stringify({ user_id: userId }),
           });
-
+          console.log('FETCH POST FAV:', response);
           if (response.ok) {
             const res = await response.json();
-            console.log('reponse Likes:', res);
+            console.log('reponse FAVORITES:', res);
+            setStore({ favorites: res })
             const actions = getActions()
             actions.getLikes()
             return true;

@@ -7,32 +7,19 @@ library.add(faHeart);
 
 const FavoriteReview = ({ reviewId }) => {
   const { store, actions } = useContext(Context);
-  const [favorites, setFavorites] = useState([]);
-  const [isFavorite, setIsFavorite] = useState(false);
-
-  useEffect(() => {
-    const checkFavoriteStatus = async () => {
-      const favorites = await actions.getFavoriteReview();
-      if (favorites !== null) {
-        setFavorites(store.favorites.map((favorite) => favorite.review_id));
-        setIsFavorite(store.favorites.some((favorite) => favorite.review_id === reviewId));
-      }
-    };
-    checkFavoriteStatus();
-  }, [reviewId]);
 
   const handleAddToFavorite = async () => {
-    if (!isFavorite) {
-      await actions.addFavoriteReview(reviewId);
-      setIsFavorite(true);
-      setFavorites([...favorites, reviewId]);
-    }
+    await actions.addFavoriteReview(reviewId);
   };
+
+  const handleDeleteFavorite = async () => {
+    await actions.deleteFavoriteReview(reviewId)
+  }
 
   return (
     <div>
       <span onClick={handleAddToFavorite}>
-        <FontAwesomeIcon icon={faHeart} size="lg" color={isFavorite ? "red" : "black"} />
+        <FontAwesomeIcon icon={faHeart} size="lg" />
       </span>
     </div>
   );
