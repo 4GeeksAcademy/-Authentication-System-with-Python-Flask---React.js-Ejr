@@ -1,0 +1,12 @@
+.my-navbar {
+	position: fixed;
+	width: 100%;
+	z-index: 1000;
+}
+
+.dropdown-nav .dropdown-menu {
+    width: 30vw; /* This is 30% of the viewport width */
+}
+
+
+

@@ -1,29 +1,30 @@
-import React, { useState } from 'react';
-import axios from 'axios'; 
+
+import React, { useState, useContext } from 'react';
+import axios from 'axios';
+import { useNavigate } from "react-router-dom";
+import { Context } from "../store/appContext";
 // import './Login.css';
-
-const Login = () => {
-  const [username, setUsername] = useState('');
+export const Login = () => {
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const { store, actions } = useContext(Context);
   const [isLoggingIn, setIsLoggingIn] = useState(false);
-
-  const handleLogin = async (event) => { 
+  const navigate= useNavigate();
+  const handleLogin = async (event) => {
     event.preventDefault();
     setIsLoggingIn(true);
-    
     try {
-      
-      const response = await axios.post('https://sblaise123-orange-guacamole-5wq5jw6967g37pq4-3001.preview.app.github.dev/login', {
-        username,
+      const response = await axios.post(`${process.env.BACKEND_URL}/login`, {
+        email,
         password
       });
-      
       setIsLoggingIn(false);
-      
-      
-      if (response.data.success) {
-        alert(`Logged in successfully as ${username}`);
-        
+      if (response.status == 200) {
+        const token = response.data.token;
+        alert(`Logged in successfully as ${email}`);
+        localStorage.setItem('token', token)
+        navigate('/private')
+
       } else {
         alert('Invalid credentials. Please try again.');
       }
@@ -39,12 +40,14 @@ const Login = () => {
       <h1>Login</h1>
       <form onSubmit={handleLogin}>
         <div className="form-group">
-          <label htmlFor="username">Username:</label>
+
+          <label htmlFor="email">Email:</label>
           <input
             type="text"
-            id="username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            id="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+
             disabled={isLoggingIn}
             required
           />
@@ -68,8 +71,6 @@ const Login = () => {
   );
 };
 
-export default Login;
-
 
 
 
@@ -77,3 +78,7 @@ export default Login;
 
 
     
+
+// export default Login;
+export default Login;
+
