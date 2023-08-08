@@ -103,7 +103,9 @@ class Review(db.Model):
     
     def serialize(self):
         return {
-            "id": self.id,
+            "review_id": self.id,
             "car": self.car_model.car_name,
-            "user": [{"Name": self.user_name.first_name, "ID": self.user_id}]
+            "user": self.user_name.first_name,
+            "review_text": self.review_text,
+            "rating": self.rating
         }

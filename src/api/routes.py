@@ -116,7 +116,7 @@ def show_saved_cars():
              'saved': list(map(lambda x: x.serialize(), saved_cars))
         }
 
-        return jsonify(response),200
+        return jsonify(response), 200
 
 # ALLOWING USERS TO CREATE A FAVORITE
 @api.route('/add_saved', methods=['POST'])
@@ -225,3 +225,9 @@ def get_reviews():
     request_body = list(map(lambda x:x.serialize(), reviews))
 
     return jsonify(request_body), 200
+
+@api.route('/reviews/<int:car_id>', methods=['GET'])
+def show_reviews(car_id):
+    car_reviews = Review.query.filter_by(car_id=car_id).all()
+    serialized_reviews = [review.serialize() for review in car_reviews]
+    return jsonify(serialized_reviews)

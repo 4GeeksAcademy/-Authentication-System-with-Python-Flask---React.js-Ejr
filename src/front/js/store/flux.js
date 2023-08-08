@@ -18,11 +18,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       cars: [],
       users: [],
       reviews: [],
-      staticCars: [
-        { car_name: "Car 1" },
-        { car_name: "Car 2" },
-        { car_name: "Car 3" },
-      ],
+      carReviews: [],
       token: null,
       filters: [
         {
@@ -221,7 +217,8 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
 
       createReview: async (rating, review_text, car_id) => {
-        const response = await fetch(`${process.env.BACKEND_URL}/add_review`, {
+        try {
+          const response = await fetch(`${process.env.BACKEND_URL}/add_review`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -235,7 +232,12 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
         )
         const data = await response.json()
-        if (!response.ok) console.log("Error", data)
+        if (!response.ok) throw new Error(data.message || "Error creating review")
+      } catch(error) {
+        console.log("Error", error.message)
+    }
+       
+
       },
 
       getReviews: () => {
@@ -245,9 +247,21 @@ const getState = ({ getStore, getActions, setStore }) => {
             setStore({ reviews: data });
             console.log("These are stored reviews in database:", data);
           });
-      }
+      },
 
+      getCarReviews: (car_id) => {
+        fetch(`${process.env.BACKEND_URL}/reviews/${car_id}`)
+        .then((res) => res.json())
+        .then((data) => {
+
+          setStore({carReviews: data})
+
+        })
+        .catch((error) => {
+          console.error("Error fetching reviews:", error.message);
+        });
+      }
     }
   };
 };
-export default getState;
+export default getState

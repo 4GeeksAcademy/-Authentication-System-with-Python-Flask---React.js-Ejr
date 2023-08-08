@@ -57,6 +57,14 @@ const AboutCar = () => {
               <h1>Loading</h1>
               )}
         </div>
+        <h1>WRITE A REVIEW</h1>
+        <form>
+            <input/>
+            <input/>
+        </form>
+        <div>
+          
+        </div>
       </div>      
     </div>
   );
