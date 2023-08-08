@@ -17,6 +17,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       saved: [],
       cars: [],
       users: [],
+      reviews: [],
       staticCars: [
         { car_name: "Car 1" },
         { car_name: "Car 2" },
@@ -212,12 +213,40 @@ const getState = ({ getStore, getActions, setStore }) => {
           getActions().getAllUsers();
         } else null
       },
-        setLoggedIn: () => {
-          setStore({isLogged: true})
+      setLoggedIn: () => {
+        setStore({isLogged: true})
+      },
+      setLoggedOut: () => {
+        setStore({isLogged: false})
+      },
+
+      createReview: async (rating, review_text, car_id) => {
+        const response = await fetch(`${process.env.BACKEND_URL}/add_review`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
-          setLoggedOut: () => {
-          setStore({isLogged: false})
-          }
+          body: JSON.stringify({
+            rating: rating,
+            review_text: review_text,
+            car_id: car_id
+          })
+        }
+        )
+        const data = await response.json()
+        if (!response.ok) console.log("Error", data)
+      },
+
+      getReviews: () => {
+        fetch(`${process.env.BACKEND_URL}/reviews`)
+          .then((res) => res.json())
+          .then((data) => {
+            setStore({ reviews: data });
+            console.log("These are stored reviews in database:", data);
+          });
+      }
+
     }
   };
 };

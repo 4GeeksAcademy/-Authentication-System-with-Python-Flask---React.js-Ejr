@@ -28,7 +28,7 @@ class User(db.Model):
     __tablename__ = 'user'
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(120), unique=True, nullable=False)
-    first_name = db.Column(db.String(120), nullable=False)
+    first_name = db.Column(db.String(120), nullable=False, unique=True)
     phone_number = db.Column(db.String(250), unique=True, nullable=False)
     password = db.Column(db.String(250), unique=False, nullable=False)
     saved = relationship('Saved', lazy=True, back_populates='user', overlaps="saved_cars")
@@ -49,12 +49,14 @@ class Car(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     year = db.Column(db.Integer, nullable=False)
     brand = db.Column(db.String(100), nullable=False)
-    car_name = db.Column(db.String(50), nullable=False)
+    car_name = db.Column(db.String(50), nullable=False, unique=True)
     car_type = db.Column(db.String(30), nullable=False)
     engine = db.Column(db.String(100), nullable=True)
     transmission = db.Column(db.String(100), nullable=True)
     images = db.relationship('Car_image', back_populates='car')
     price = db.Column(db.String(50))
+    overall_rating = db.Column(db.Float, nullable=True)
+
     def __repr__(self):
         return f'<Car {self.id} {self.brand} {self.car_name}>'
     def serialize(self):
@@ -67,7 +69,8 @@ class Car(db.Model):
             "engine": self.engine,
             "transmission": self.transmission,
             "images": list(map(lambda x: x.serialize(), self.images)),
-            "price": self.price
+            "price": self.price,
+            "overall": self.overall_rating
         }
     
     
@@ -83,4 +86,24 @@ class Car_image(db.Model):
         return {
             "id": self.id,
             "image_url": self.image_url,
+        }
+    
+class Review(db.Model):
+    __tablename__ = 'review'
+    id = db.Column(db.Integer, primary_key=True)
+    rating = db.Column(db.Integer, unique=False)
+    review_text = db.Column(db.String(450), nullable=True)
+    user_id = db.Column(db.Integer, ForeignKey("user.id"))
+    car_id = db.Column(db.Integer, ForeignKey("car.id"))
+    user_name = relationship('User', backref='reviews', foreign_keys=[user_id])
+    car_model = relationship('Car', backref='reviews', foreign_keys=[car_id])
+    
+    def __repr__(self):
+        return f'<Review {self.id}, {self.user_first_name}, {self.car_name}'
+    
+    def serialize(self):
+        return {
+            "id": self.id,
+            "car": self.car_model.car_name,
+            "user": [{"Name": self.user_name.first_name, "ID": self.user_id}]
         }
