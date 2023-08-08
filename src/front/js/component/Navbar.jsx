@@ -20,13 +20,11 @@ const Navbar = () => {
         <Link className="navbar-brand" to='/'>
           <img src="https://i.ibb.co/C1sDhjs/White-Black-Minimalist-Logo-Distro-Fashion-6.jpg" width="70" height="65" alt="Logo"></img>
         </Link>
-
         <div className="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
-          <ul className="navbar-nav">
 
+          <ul className="navbar-nav">
             {store.auth ? (
               <>
-                {/* <h3>Hi, {store.user.username ? store.user.username : store.business_user ?.business_name} </h3> */}
                 <h3>Hola, {store.user?.username ? store.user.username : store.business_user?.business_name}! </h3>
               </>
             ) : (
@@ -52,7 +50,7 @@ const Navbar = () => {
 
                 {store.auth && (
                   <>
-                    <li><Link className="dropdown-item">Favoritos</Link></li>
+                    <li><Link to='/favoritos' className="dropdown-item">Favoritos</Link></li>
                     <li><Link to='/user/private' className="dropdown-item">Mi espacio personal</Link></li>
                     <li><button className="dropdown-item" onClick={handleLogout}>Cerrar sesión</button></li>
                   </>

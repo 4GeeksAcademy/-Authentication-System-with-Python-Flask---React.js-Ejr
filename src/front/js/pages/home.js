@@ -18,15 +18,14 @@ export const Home = () => {
   return (
     <>
 
-      <Slogan />
 
+
+      <LitlleSlide />
+      <FilterMenu />
+      <PubSlide />
+      <HomeReviewCard />
+      <HomeOfferCard />
       <AboutUs />
-
-        <LitlleSlide />
-        <FilterMenu />
-        <PubSlide />
-        <HomeReviewCard />
-        <HomeOfferCard />
 
     </>
   );

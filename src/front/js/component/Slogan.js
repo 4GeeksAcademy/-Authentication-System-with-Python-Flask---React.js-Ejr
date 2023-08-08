@@ -2,7 +2,7 @@ import React from 'react';
 
 const Slogan = () => {
   return (
-    <>
+    <div className='slogan-content'>
       <div className='welcome trip-nexus pulse-anim'>
         <span className="first letter ">T</span>
         <span className="second letter ">R</span>
@@ -15,6 +15,7 @@ const Slogan = () => {
         <span className="eight letter ">U</span>
         <span className="nine  letter">S</span>
       </div>
+      <br />
       <div className='slogan-div'>
         <h1 className='slogan-title'>
           <span className="lettre">¡</span>
@@ -58,7 +59,7 @@ const Slogan = () => {
           <span className="lettre">!</span>
         </h1>
       </div>
-    </>
+    </div>
   );
 };
 
