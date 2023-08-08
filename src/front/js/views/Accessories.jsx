@@ -14,18 +14,21 @@ const Accessories = () => {
     <div>
       <Navbar />
       <h1>Accessories</h1>
+      <div className="d-flex justify-content-center row ">
       {store.accessories && store.accessories.length > 0 ? ( 
         store.accessories.map((accessorie) => (
-          <div className="d-flex" key={accessorie.id}>
+          <div className="col mx-auto mb-4 w-26" key={accessorie.id}>
             <AccesoriesCard
               index={accessorie.id}
               accessorie={accessorie}
             />
           </div>
+          
         ))
       ) : (
         <h1>Cargando!!!</h1> 
       )}
+      </div>
     </div>
   );
 }

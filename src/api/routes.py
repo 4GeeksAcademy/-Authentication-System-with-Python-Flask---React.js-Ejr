@@ -73,7 +73,12 @@ def login():
 def validate_token():
     current_user_id = get_jwt_identity()
     user = User.query.get(current_user_id)
-    return jsonify(user.serialize())
+    response = {
+        'user': user.serialize(),
+        'favorites': [p.serialize() for p in user.favorites],
+        'shopping_cart': [p.serialize() for p in user.shopping_cart]
+    }
+    return jsonify(response), 200
 # End auth routes
 
 # User routes
@@ -580,6 +585,6 @@ def delete_from_cart(product_id, size_id):
         raise APIException(message='Product not found in cart', status_code=404)
     db.session.delete(product_in_cart)
     db.session.commit()
-    return Response(status=204)
+    return jsonify([p.serialize() for p in user.shopping_cart]), 200
 # End cart routes
 

@@ -123,3 +123,30 @@ export async function getProductByID(id) {
   const response = await makeRequest(`/products/${id}`, 'GET', null)
   return response
 }
+
+export async function postShoppingCart( product_id, quantity ,size_id,token) {
+  console.log("quantity",quantity)
+  const response = await makeRequest(
+    '/cart' ,
+    'POST',
+    {
+      product_id: product_id,
+      size_id: size_id,
+      quantity: quantity,
+      
+    },
+    token
+  )
+  
+  return response
+}
+
+export async function deleteShoppingCart(token, product_id,size_id) {
+  const response = await makeRequest(
+    '/cart/' + product_id + '/size/' + size_id,
+    'DELETE',
+    null,
+    token
+  )
+  return response
+}

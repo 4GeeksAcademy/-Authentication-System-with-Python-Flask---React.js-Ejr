@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router'
 import { Context } from '../store/appContext'
 
 const AccessoriesCard = ({ accessorie }) => {
-  const { actions } = useContext(Context)
+  const { actions, store } = useContext(Context)
   const navigate = useNavigate()
 
   return (
@@ -17,7 +17,7 @@ const AccessoriesCard = ({ accessorie }) => {
         />
         <div
           className='card-body'
-          style={{ height: '16rem', overflow: 'scroll' }}
+          style={{ height: '16rem'}}
         >
           <h5 className='card-title'> {accessorie.name}</h5>
 
@@ -31,13 +31,13 @@ const AccessoriesCard = ({ accessorie }) => {
               {accessorie.color}{' '}
             </p>
             <p className='card-text'>
-              <span>Price:</span> {accessorie.price}
+              <span>Price:U$S</span> {accessorie.price}
             </p>
           </div>
 
           <button
             onClick={() => navigate(`/product/${accessorie.id}`)}
-            className='btn btn-warning m-3'
+            className='btn bg-black text-white m-3'
           >
             Details
           </button>
@@ -45,7 +45,7 @@ const AccessoriesCard = ({ accessorie }) => {
           <button
             href='#'
             onClick={() => actions.postFavorites(accessorie.id)}
-            className='btn btn-danger m-3 '
+            className={`btn bg-black m-3 ${store.favorites.some(favorite => favorite.id === accessorie.id) ? 'text-danger' : 'text-white'}`}
           >
             <strong>♥</strong>
           </button>
