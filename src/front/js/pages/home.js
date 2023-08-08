@@ -18,9 +18,8 @@ export const Home = () => {
   return (
     <>
 
-      <Slogan />
-
-      <AboutUs />
+      {/* <Slogan /> */}
+      {/* <AboutUs /> */}
 
         <LitlleSlide />
         <FilterMenu />

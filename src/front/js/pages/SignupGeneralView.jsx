@@ -1,8 +1,7 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import SignUpUser from '../component/SignUpUser.jsx'
 import SignUpBusiness from '../component/SignUpBusiness'
-import ForgotPassword from './ForgotPassword.jsx'
+import ForgotPasswordForm from '../component/ForgotPasswordForm.jsx'
 
 const SignupGeneralView = () => {
     return (
@@ -21,7 +20,7 @@ const SignupGeneralView = () => {
             <div className="tab-content" id="myTabContent">
                 <div className="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab"><SignUpUser /></div>
                 <div className="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab"><SignUpBusiness /></div>
-                <div className="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab"><ForgotPassword /></div>
+                <div className="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab"><ForgotPasswordForm /></div>
             </div>
 
         </div>

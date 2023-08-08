@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const UpdateBusinessProfileUser = ({ label, value, onSave }) => {
+const UpdateBusinessProfileUser = ({ label, value, onChange }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [fieldValue, setFieldValue] = useState(value);
 
@@ -10,7 +10,7 @@ const UpdateBusinessProfileUser = ({ label, value, onSave }) => {
 
   const handleSaveClick = () => {
     setIsEditing(false);
-    onSave(fieldValue); 
+    onChange(fieldValue);
   };
 
   const handleChange = (e) => {
@@ -25,33 +25,18 @@ const UpdateBusinessProfileUser = ({ label, value, onSave }) => {
   return (
     <div>
       <label>{label}:</label>
-      {label === "Firstname" || label === "Lastname" ? (
-        <div>
-          {isEditing ? (
-            <div>
-              <textarea value={fieldValue} onChange={handleChange} />
-              <button onClick={handleSaveClick}>Validar</button>
-              <button onClick={handleCancelClick}>Anular</button>
-            </div>
-          ) : (
-            <div>
-              <p>{value}</p>
-              <button onClick={handleEditClick}>Modificar</button>
-            </div>
-          )}
-        </div>
-      ) : isEditing ? (
-        <div>
-          <textarea value={fieldValue} onChange={handleChange} />
-          <button onClick={handleSaveClick}>Validar</button>
-          <button onClick={handleCancelClick}>Anular</button>
-        </div>
-      ) : (
-        <div>
-          <p>{value}</p>
-          <button onClick={handleEditClick}>Modificar</button>
-        </div>
-      )}
+        {isEditing ? (
+          <div>
+            <textarea value={fieldValue} onChange={handleChange} />
+            <button onClick={handleSaveClick}>Guardar</button>
+            <button onClick={handleCancelClick}>Cancelar</button>
+          </div>
+        ) : (
+          <div>
+            <p>{value}</p>
+            <button onClick={handleEditClick}>Modificar</button>
+          </div>
+        )}
     </div>
   );
 };

@@ -93,6 +93,8 @@ def create_user():
         username = data.get('username')
         firstname = data.get('firstname')
         lastname = data.get('lastname')
+        prefix_telephone = data.get('prefix_telephone')
+        telephone = data.get('telephone')
         address = data.get('address')
         pasaporte = data.get('pasaporte')
         payment_method = data.get('payment_method')
@@ -114,6 +116,8 @@ def create_user():
             username=username,
             firstname=firstname,
             lastname=lastname,
+            prefix_telephone=prefix_telephone,
+            telephone=telephone,
             address=address,
             pasaporte=pasaporte,
             payment_method=payment_method,
@@ -141,6 +145,8 @@ def create_business_user():
         email = data.get('email')
         password = data.get('password')
         business_name = data.get('business_name')
+        prefix_telephone = data.get('prefix_telephone')
+        telephone = data.get('telephone')
         address = data.get('address')
         nif = data.get('nif')
         payment_method = data.get('payment_method')
@@ -157,8 +163,8 @@ def create_business_user():
 
         # Hacher le mot de passe et créer l'entreprise
         password_hash = bcrypt.generate_password_hash(password).decode('utf-8')
-        new_business = Business_user(business_name=business_name, email=email,
-                                     password=password_hash, nif=nif, address=address, payment_method=payment_method)
+        new_business = Business_user(business_name=business_name, email=email, password=password_hash,
+                                     prefix_telephone=prefix_telephone, telephone=telephone, nif=nif, address=address, payment_method=payment_method)
 
         db.session.add(new_business)
         db.session.commit()
@@ -188,8 +194,7 @@ def login():
                 access_token = create_access_token(
                     identity=user_or_business.email)
                 return jsonify(
-                    {'access_token': access_token,
-                     'user_or_business': user_or_business.serialize(), "type": "user"}), 200
+                    {'access_token': access_token, 'user_or_business': user_or_business.serialize(), "type": "user"}), 200
 
         # Vérifier si c'est une entreprise
         business = Business_user.query.filter_by(email=data['email']).first()
@@ -234,7 +239,7 @@ def private():
     else:
         business = Business_user.query.filter_by(email=current_user).first()
         if business:
-            return jsonify({'message': 'Welcome to the private area!', 'business':business.serialize()})
+            return jsonify({'message': 'Welcome to the private area!', 'business': business.serialize()})
         else:
             return jsonify({'error': 'Unauthorized'}), 401
 
@@ -249,9 +254,12 @@ def update_user_profile(user_id):
 
     data = request.get_json()
     try:
+        user.email = data['email']
         user.username = data['username']
         user.firstname = data['firstname']
         user.lastname = data['lastname']
+        user.prefix_telephone = data['prefix_telephone']
+        user.telephone = data['telephone']
         user.address = data['address']
         user.pasaporte = data['pasaporte']
         user.payment_method = data['payment_method']
@@ -276,13 +284,13 @@ def update_business_profile(business_id):
         data = request.get_json()
 
         # Update business profile data
-        business_user.business_name = data.get(
-            'name_business', business_user.business_name)
+        business_user.business_name = data.get('name_business', business_user.business_name)
         business_user.email = data.get('email', business_user.email)
+        business_user.prefix_telephone = data.get("prefix_telephone", business_user.prefix_telephone)
+        business_user.telephone = data.get("telephone", business_user.telephone)
         business_user.nif = data.get('nif', business_user.nif)
         business_user.address = data.get('address', business_user.address)
-        business_user.payment_method = data.get(
-            'payment_method', business_user.payment_method)
+        business_user.payment_method = data.get('payment_method', business_user.payment_method)
 
         db.session.commit()
 
@@ -394,7 +402,7 @@ def update_offer(offer_id):
         # offer.medium_user_price = data['medium_user_price']
         # offer.high_user_price = data['high_user_price']
         offer.premium_user_price = data['premium_user_price']
-        offer.offer_image=data['offer_image']
+        offer.offer_image = data['offer_image']
 
         db.session.commit()
         return jsonify(offer.serialize()), 200
@@ -436,9 +444,11 @@ def get_trip(trip_id):
 def create_trip():
     data = request.get_json()
     try:
-        trip_exist = Trip.query.filter(and_(Trip.country == data["country"], Trip.city == data["city"], Trip.activity == data["activity"])).first()
+        trip_exist = Trip.query.filter(and_(
+            Trip.country == data["country"], Trip.city == data["city"], Trip.activity == data["activity"])).first()
         if trip_exist:
-            raise APIException(f"The trip with the country {data['country']} and the city {data['city']} and the {data['activity']} already exist.", status_code=403)
+            raise APIException(
+                f"The trip with the country {data['country']} and the city {data['city']} and the {data['activity']} already exist.", status_code=403)
         trip = Trip(
             country=data['country'],
             city=data['city'],
@@ -596,14 +606,12 @@ def get_likes_for_review(review_id):
     review = Review.query.get(review_id)
     if review is None:
         return jsonify({"error": "Review not found"}), 404
-    
+
     likes = Likes.query.filter_by(review_id=review_id).all()
     print(len(likes))
     likes_len = int(len(likes))
     serialized_likes = [like.serialize() for like in likes]
     return jsonify({'user_data': serialized_likes, 'likes_len': likes_len})
-
-
 
 
 @api.route('/reviews/<int:review_id>/likes', methods=['POST'])
@@ -616,7 +624,8 @@ def like_review(review_id):
     if review is None:
         return jsonify(error='Review not found'), 404
 
-    existing_like = Likes.query.filter_by(user_id=user.id, review_id=review_id).first()
+    existing_like = Likes.query.filter_by(
+        user_id=user.id, review_id=review_id).first()
     if existing_like:
         return jsonify(error='User has already liked this review'), 400
 
@@ -625,8 +634,6 @@ def like_review(review_id):
     db.session.commit()
 
     return jsonify(message='Review liked successfully'), 200
-
-
 
 
 @api.route('/reviews/favorites', methods=['GET'])
@@ -643,6 +650,7 @@ def get_favorites_for_user():
 
     return jsonify({serialized_favorites}), 200
 
+
 @api.route('/reviews/favorites/<int:review_id>', methods=['POST'])
 @jwt_required()
 def add_favorite_for_review(review_id):
@@ -653,7 +661,8 @@ def add_favorite_for_review(review_id):
     if review is None:
         return jsonify(error="Review not found"), 404
 
-    existing_favorite = Favorites.query.filter_by(user_id=user.id, review_id=review_id).first()
+    existing_favorite = Favorites.query.filter_by(
+        user_id=user.id, review_id=review_id).first()
     if existing_favorite:
         return jsonify(error="User has already added this review to favorites"), 400
 
@@ -662,4 +671,3 @@ def add_favorite_for_review(review_id):
     db.session.commit()
 
     return jsonify(message="Review added to favorites successfully"), 200
-

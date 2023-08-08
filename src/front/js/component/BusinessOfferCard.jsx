@@ -1,8 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Context } from '../store/appContext';
-import { Link } from 'react-router-dom';
 import GooglePay from './GooglePay';
-import GooglePayButton from './GooglePayButton';
 
 const BusinessOfferCard = ({ searchQuery }) => {
   const { store, actions } = useContext(Context);

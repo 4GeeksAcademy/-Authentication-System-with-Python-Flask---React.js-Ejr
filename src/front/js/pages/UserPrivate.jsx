@@ -8,6 +8,8 @@ const UserPrivate = () => {
   const [username, setUsername] = useState(store.user?.username);
   const [firstName, setFirstName] = useState(store.user?.firstname);
   const [lastName, setLastName] = useState(store.user?.lastname);
+  const [prefixTelephone, setPrefixTelephone] = useState(store.user?.prefix_telephone);
+  const [telephone, setTelephone] = useState(store.user?.telephone);
   const [address, setAddress] = useState(store.user?.address);
   const [passport, setPassport] = useState(store.user?.pasaporte);
   const [paymentMethod, setPaymentMethod] = useState(store.user?.payment_method);
@@ -18,6 +20,8 @@ const UserPrivate = () => {
     username: store.user?.username,
     firstName: store.user?.firstname,
     lastName: store.user?.lastname,
+    prefixTelephone: store.user?.prefix_telephone,
+    telephone: store.user?.telephone,
     address: store.user?.address,
     passport: store.user?.pasaporte,
     paymentMethod: store.user?.payment_method,
@@ -41,6 +45,8 @@ const UserPrivate = () => {
         setUsername(unsavedData.username);
         setFirstName(unsavedData.firstName);
         setLastName(unsavedData.lastName);
+        setPrefixTelephone(unsavedData.prefixTelephone);
+        setTelephone(unsavedData.telephone);
         setAddress(unsavedData.address);
         setPassport(unsavedData.passport);
         setPaymentMethod(unsavedData.paymentMethod);
@@ -59,6 +65,8 @@ const UserPrivate = () => {
       username: store.user?.username,
       firstName: store.user?.firstname,
       lastName: store.user?.lastname,
+      prefixTelephone: store.business_user?.prefix_telephone,
+      telephone: store.business_user?.telephone,
       address: store.user?.address,
       passport: store.user?.pasaporte,
       paymentMethod: store.user?.payment_method,
@@ -86,6 +94,18 @@ const UserPrivate = () => {
         label="Apellido"
         value={unsavedData.lastName}
         onChange={(e) => handleChange("lastName", e.target.value)}
+      />
+
+      <UpdateProfileUser
+        label="Prefijo telefónico"
+        value={unsavedData.prefixTelephone}
+        onChange={(e) => handleChange("Prefijo telefónico", e.target.value)}
+      />
+
+      <UpdateProfileUser
+        label="Número de teléfono"
+        value={unsavedData.telephone}
+        onChange={(e) => handleChange("Número de teléfono", e.target.value)}
       />
       <UpdateProfileUser
         label="Pasaporte"

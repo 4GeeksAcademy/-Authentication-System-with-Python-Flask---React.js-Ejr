@@ -13,25 +13,31 @@ const FormReview = () => {
         comment_text: "",
       }}
       validationSchema={Yup.object({
-        title: Yup.string().min(10, 'Debe tener 10 carácteres o más').required('Obligatorio'),
-        comment_text: Yup.string().min(40, 'Debe tener 40 carácteres o más').required('Obligatorio'),
+        title: Yup.string()
+        .min(10, 'Debe tener 10 caracteres o más')
+        .matches(/^[A-ZÁÉÍÓÚÑ][A-Za-zÁÉÍÓÚáéíóúÑñ0-9,.*!¡?¿\s]*$/, 'Debe comenzar con una letra mayúscula')
+        .required('Campo obligatorio!'),
+        comment_text: Yup.string()
+        .min(50, 'Debe tener 50 caracteres o más')
+        .matches(/^[A-ZÁÉÍÓÚÑ][A-Za-zÁÉÍÓÚáéíóúÑñ0-9,.*!¡?¿\s]*$/, 'Debe comenzar con una letra mayúscula')
+        .required('Campo obligatorio!'),
       })}
       onSubmit={(values, { setSubmitting }) => {
         console.log("Form submitted:", values);
         actions.create_review(values)
           .then(() => {
             console.log("Form submitted succesfuly!");
-            
+
           })
           .catch((error) => {
             // Handle submission error
             console.error("Error submitting form:", error);
             alert("Something gets wrong");
-            
+
           })
           .finally(() => {
             setSubmitting(false); // Set submitting to false after submission is done
-            
+
           });
       }}
     >
