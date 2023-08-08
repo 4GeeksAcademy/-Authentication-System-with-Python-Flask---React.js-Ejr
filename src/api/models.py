@@ -69,6 +69,7 @@ class Product(db.Model):
             'category_id': self.category_id,
             'rating': self.calculate_rating(),
             'images': self.serialize_sorted_images(),
+            'rating_count': len(self.users_ratings),
         }
     
     def serialize_rating(self):
@@ -114,7 +115,7 @@ class ProductSizeStock(db.Model):
     size = db.relationship("Size", back_populates="products")
     def serialize(self):
         return {
-            'size_id': self.size.id,
+            'id': self.size.id,
             'size': self.size.name,
             'stock': self.stock,
         }
