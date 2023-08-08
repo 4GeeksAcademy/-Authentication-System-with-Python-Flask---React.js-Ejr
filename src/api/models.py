@@ -47,10 +47,10 @@ class Product(db.Model):
     price = db.Column(db.Float, nullable=False)
     description = db.Column(db.String(1000))
     color = db.Column(db.String(50))
-    image_url = db.Column(db.String(350))
     type = db.Column(db.String(100))
     category_id = db.Column(db.Integer, db.ForeignKey('categories.id'), nullable=False)
 
+    images = db.relationship('ProductImage', back_populates='product')
     category = db.relationship('Category', back_populates='products')
     orders = db.relationship('OrderItems', back_populates='product')
     sizes_stock = db.relationship('ProductSizeStock', back_populates='product')
@@ -64,12 +64,12 @@ class Product(db.Model):
             'price': self.price,
             'description': self.description,
             'color': self.color,
-            'image_url': self.image_url,
             'type': self.type,
             'sizes_stock': [size_stock.serialize() for size_stock in self.sizes_stock],
             'category_id': self.category_id,
-            'rating': self.calculate_rating()
-
+            'rating': self.calculate_rating(),
+            'images': self.serialize_sorted_images(),
+            'rating_count': len(self.users_ratings),
         }
     
     def serialize_rating(self):
@@ -80,10 +80,30 @@ class Product(db.Model):
             'users_ratings': [rating.serialize() for rating in self.users_ratings]
         }
     
+    def serialize_sorted_images(self):
+        return [image.serialize() for image in sorted(self.images, key=lambda image: image.order)]
+    
     def calculate_rating(self):
         total_rating = sum(rating.rating for rating in self.users_ratings)
         average_rating = total_rating / len(self.users_ratings) if self.users_ratings else 0
         return average_rating
+    
+class ProductImage(db.Model):
+    __tablename__ = 'product_images'
+    id = db.Column(db.Integer, primary_key=True)
+    image_url = db.Column(db.String(500), nullable=False)
+    product_id = db.Column(db.Integer, db.ForeignKey('products.id'), nullable=False)
+    order = db.Column(db.Integer, nullable=False, default=0)
+
+    product = db.relationship('Product', back_populates='images')
+
+    def serialize(self):
+        return {
+            'id': self.id,
+            'order': self.order,
+            'image_url': self.image_url,
+            'product_id': self.product_id,
+        }
     
 class ProductSizeStock(db.Model):
     __tablename__= 'product_sizes_stock'
@@ -95,7 +115,7 @@ class ProductSizeStock(db.Model):
     size = db.relationship("Size", back_populates="products")
     def serialize(self):
         return {
-            'size_id': self.size.id,
+            'id': self.size.id,
             'size': self.size.name,
             'stock': self.stock,
         }
