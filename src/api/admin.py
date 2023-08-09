@@ -3,6 +3,11 @@ import os
 from flask_admin import Admin
 from .models import db, User, Movie, Actor, Director
 from flask_admin.contrib.sqla import ModelView
+from flask import Flask
+from flask_cors import CORS
+
+app = Flask(__name__)
+CORS(app)
 
 def setup_admin(app):
     app.secret_key = os.environ.get('FLASK_APP_KEY', 'sample key')

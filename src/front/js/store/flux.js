@@ -3,6 +3,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 		store: {
 			message: null,
 			logged: false,
+
+			movies: [],
+			movie: null,
+
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
@@ -11,14 +15,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 
 			getMessage: async () => {
-				try{
+				try {
 					// fetching data from the backend
 					const resp = await fetch(process.env.BACKEND_URL + "/api/hello")
 					const data = await resp.json()
 					setStore({ message: data.message })
 					// don't forget to return something, that is how the async resolves
 					return data;
-				}catch(error){
+				} catch (error) {
 					console.log("Error loading message from backend", error)
 				}
 			},
@@ -28,19 +32,23 @@ const getState = ({ getStore, getActions, setStore }) => {
 				console.log(form)
 				try {
 					const res = await fetch(apiUrl, {
-						method:"POST",
+
+						method: "POST",
+
 						headers: { "Content-Type": "application/json" },
 						body: JSON.stringify(form)
 					})
 					if (res.ok) {
-					const data = await res.json()
-					localStorage.setItem("token", data?.token)
-					setStore({ logged: true })
-					console.log(getStore().logged,"logged")
-					return true
-				} else {
-					console.log("login failed", res.status)
-				}
+
+						const data = await res.json()
+						localStorage.setItem("token", data?.token)
+						setStore({ logged: true })
+						console.log(getStore().logged, "logged")
+						return true
+					} else {
+						console.log("login failed", res.status)
+					}
+
 				} catch (error) {
 					console.error(error)
 					return false
@@ -49,7 +57,51 @@ const getState = ({ getStore, getActions, setStore }) => {
 			logout: () => {
 				localStorage.removeItem("token")
 				setStore({ logged: false })
-		}
+
+			},
+			getMovies: async () => {
+				const apiUrl = `${process.env.BACKEND_URL}api/movies`
+				try {
+					const res = await fetch(apiUrl, {
+						method: "GET",
+						headers: { "Content-Type": "application/json" }
+					})
+					if (res.ok) {
+						const data = await res.json()
+						console.log(data)
+						setStore({ movies: data })
+						console.log(getStore().movies);
+						return data;
+					} else {
+						console.log("Request failed", res.status)
+					}
+				} catch (error) {
+					console.error(error)
+					return null;
+				}
+			},
+
+			getMovieById: async (movieId) => {
+				const apiUrl = `${process.env.BACKEND_URL}api/movies/${movieId}`
+				try {
+					const res = await fetch(apiUrl, {
+						method: "GET",
+						headers: { "Content-Type": "application/json" }
+					})
+					if (res.ok) {
+						const data = await res.json()
+						setStore({ movie: data })
+						console.log(data);
+						return data;
+					} else {
+						console.log("Request failed", res.status)
+					}
+				} catch (error) {
+					console.error(error)
+					return null;
+				}
+			}
+
 
 		}
 	};

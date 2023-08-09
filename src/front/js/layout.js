@@ -30,7 +30,7 @@ const Layout = () => {
                     <Navbar/>
                     <Routes>
                         <Route element={<Listadomovies />} path="/" />
-                        <Route element={<Movie />} path="/movie" />
+                        <Route element={<Movie />} path="/movie/:movieId" /> 
                         <Route element={<Login />} path="/login" />
                         <Route element={<SignIn />} path="/sign-up" />
                         <Route element={<Single />} path="/single/:theid" />
