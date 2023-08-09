@@ -25,10 +25,6 @@ const Navbar = () => {
         </div> */}
 
         <div className="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
-    
-          <ul className="navbar-nav">
-
-        <div className="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
 
 
           <ul className="navbar-nav">

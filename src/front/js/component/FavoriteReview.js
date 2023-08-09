@@ -12,9 +12,9 @@ const FavoriteReview = ({ reviewId }) => {
     await actions.addFavoriteReview(reviewId);
   };
 
-  const handleDeleteFavorite = async () => {
-    await actions.deleteFavoriteReview(reviewId)
-  }
+  // const handleDeleteFavorite = async () => {
+  //   await actions.deleteFavoriteReview(reviewId)
+  // }
 
   return (
     <div>
@@ -26,4 +26,3 @@ const FavoriteReview = ({ reviewId }) => {
 };
 
 export default FavoriteReview;
-

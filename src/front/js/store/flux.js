@@ -858,7 +858,6 @@ const getState = ({ getStore, getActions, setStore }) => {
             console.log("GET DATA FAVORITES:", data);
             const store = getStore()
             setStore({ ...store, favorites: data });
-            console.log('log apres setStore FAV', data);
             return true;
           } else {
             return null;
@@ -889,9 +888,10 @@ const getState = ({ getStore, getActions, setStore }) => {
           if (response.ok) {
             const res = await response.json();
             console.log('reponse FAVORITES:', res);
-            setStore({ favorites: res })
+            const store = getStore()
+            setStore({ ...store, favorites: res })
             const actions = getActions()
-            actions.getLikes()
+            actions.getFavoriteReview()
             return true;
           } else {
             return false;
