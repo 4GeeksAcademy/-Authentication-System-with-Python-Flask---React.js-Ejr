@@ -246,6 +246,7 @@ def create_new_user():
     confirm_password = request.json.get('confirm_password', None)
     secret_question = request.json.get('secret_question', None)
 
+
     secret_answer= request.json.get('secret_answer', None)
 
     if not name or not email or not password or not confirm_password or not secret_question or not secret_answer:
@@ -261,7 +262,9 @@ def create_new_user():
     if user:
         return jsonify({"msg": "User already exists"}), 400
 
+
     new_user = User(name=name, email=email, password=password, secret_question= secret_question, secret_answer=secret_answer, is_active=True)
+
 
     # new_user.set_password(password)
     db.session.add(new_user)
