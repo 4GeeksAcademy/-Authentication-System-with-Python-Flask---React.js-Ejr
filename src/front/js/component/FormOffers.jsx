@@ -9,9 +9,7 @@ const FormOffers = () => {
     const { store, actions } = useContext(Context);
     const [selectedFile, setSelectedFile] = useState(null);
 
-
     return (
-
         <Formik
             initialValues={{
                 offer_title: "",
@@ -19,64 +17,68 @@ const FormOffers = () => {
                 country: "",
                 city: "",
                 normal_user_price: "",
-                medium_user_price: "",
-                high_user_price: "",
                 premium_user_price: "",
                 offer_image: "",
             }}
             validationSchema={Yup.object({
                 offer_title: Yup.string()
-                .min(10, 'Debe tener 10 caracteres o más')
-                .matches(/^[A-ZÁÉÍÓÚÑ][A-Za-zÁÉÍÓÚáéíóúÑñ0-9,.*!¡?¿\s]*$/, 'Debe comenzar con una letra mayúscula')
-                .required('Campo obligatorio!'),
+                    .min(10, 'Debe tener 10 caracteres o más')
+                    .matches(/^[A-ZÁÉÍÓÚÑ][A-Za-zÁÉÍÓÚáéíóúÑñ0-9,.*!¡?¿\s]*$/, 'Debe comenzar con una letra mayúscula')
+                    .required('Campo obligatorio!'),
                 offer_description: Yup.string()
-                .min(50, 'Debe tener 50 caracteres o más')
-                .matches(/^[A-ZÁÉÍÓÚÑ][A-Za-zÁÉÍÓÚáéíóúÑñ0-9,.*!¡?¿\s]*$/, 'Debe comenzar con una letra mayúscula')
-                .required('Campo obligatorio!'),
-                country: Yup.string().min(2, 'Debe tener 2 caracteres o más').required('Campo obligatorio!'),
-                city: Yup.string().min(2, 'Debe tener 2 caracteres o más').required('Campo obligatorio!'),
-                normal_user_price: Yup.number().min(2, 'Debe tener 2 caracteres o más').required('Campo obligatorio!').typeError('Debe ser un número').integer('Debe ser un número entero'),
-                // medium_user_price: Yup.number().min(2, 'Debe tener 2 caracteres o más').required('Campo obligatorio!').typeError('Debe ser un número').integer('Debe ser un número entero'),
-                // high_user_price: Yup.number().min(2, 'Debe tener 2 caracteres o más').required('Campo obligatorio!').typeError('Debe ser un número').integer('Debe ser un número entero'),
-                premium_user_price: Yup.number().min(2, 'Debe tener 2 caracteres o más').required('Campo obligatorio!').typeError('Debe ser un número').integer('Debe ser un número entero'),
-                offer_image: Yup.mixed().required('Debes seleccionar almenos una imagen!')
-                    .test("FILE_SIZE", "El tamaño de la imagen es demasiado grande!", (value) => value && value.size < 1024 * 1024)
-                    .test("FILE_TYPE", "Formato invalido", (value) => value && ['image/png', 'image/jpeg', 'image/jpg'].includes(value.type))
+                    .min(50, 'Debe tener 50 caracteres o más')
+                    .matches(/^[A-ZÁÉÍÓÚÑ][A-Za-zÁÉÍÓÚáéíóúÑñ0-9,.*!¡?¿\s]*$/, 'Debe comenzar con una letra mayúscula')
+                    .required('Campo obligatorio!'),
+                country: Yup.string()
+                    .min(2, 'Debe tener 2 caracteres o más')
+                    .required('Campo obligatorio!'),
+                city: Yup.string()
+                    .min(2, 'Debe tener 2 caracteres o más')
+                    .required('Campo obligatorio!'),
+                normal_user_price: Yup.number()
+                    .min(2, 'Debe tener al menos 2 dígitos')
+                    .required('Campo obligatorio!')
+                    .integer('Debe ser un número entero')
+                    .typeError('Debe ser un número'),
+                premium_user_price: Yup.number()
+                    .min(2, 'Debe tener al menos 2 dígitos')
+                    .required('Campo obligatorio!')
+                    .integer('Debe ser un número entero')
+                    .typeError('Debe ser un número'),
+                offer_image: Yup.mixed()
+                    .required('Debes seleccionar al menos una imagen!')
+                    .test("FILE_SIZE", "El tamaño de la imagen es demasiado grande!", value => value && value.size < 400 * 400)
+                    .test("FILE_TYPE", "Formato inválido", value => value && ['image/png', 'image/jpeg', 'image/jpg'].includes(value.type))
             })}
             onSubmit={async (values, { setSubmitting, setStatus }) => {
                 setSubmitting(true);
 
                 try {
-
                     const formData = new FormData();
-                    formData.append("file", values.offer_image)
-                    formData.append("cloud_name", "albertge")
-                    formData.append("upload_preset", "trip_nexus_upload_preset")
+                    formData.append("file", selectedFile);
+                    formData.append("cloud_name", "albertge");
+                    formData.append("upload_preset", "trip_nexus_upload_preset");
 
-                    const response = await axios.post("https://api.cloudinary.com/v1_1/albertge/image/upload", formData);
+                    const response = await axios.post(
+                        "https://api.cloudinary.com/v1_1/albertge/image/upload",
+                        formData
+                    );
+
                     const imgUrl = response.data.url;
 
-                    // Handle your imgUrl or status here
+                    await actions.createOffer({ ...values, offer_image: imgUrl });
 
-                    console.log("Form submitted:", values);
-                    await actions.createOffer(values);
                     console.log("Form submitted successfully!");
                     alert('Tu oferta se publicó correctamente');
                     setStatus({ success: true });
-
                 } catch (error) {
-
                     console.error("Error submitting form:", error);
                     alert("Alguna cosa salió mal");
-                    console.error('Error uploading file', error);
                     setStatus({ error: true });
-
                 } finally {
-
-                    setSubmitting(false); // Set submitting to false after submission is done
+                    setSubmitting(false);
                 }
             }}
-
         >
             {formik => (
                 <div>
@@ -85,43 +87,33 @@ const FormOffers = () => {
                             <Form onSubmit={formik.handleSubmit}>
                                 <div>
                                     <label htmlFor="offer_title">Título:</label>
-                                    <Field type="title" name='offer_title' value={formik.values.offer_title} />
-                                    <ErrorMessage name='offer_title' />
+                                    <Field type="text" name="offer_title" />
+                                    <ErrorMessage name="offer_title" />
                                 </div>
                                 <div>
                                     <label htmlFor="offer_description">Descripción de la oferta:</label>
-                                    <Field type="text" name='offer_description' value={formik.values.offer_description} />
-                                    <ErrorMessage name='offer_description' />
+                                    <Field type="text" name="offer_description" />
+                                    <ErrorMessage name="offer_description" />
                                 </div>
                                 <div>
                                     <label htmlFor="country">País:</label>
-                                    <Field type="text" name='country' value={formik.values.country} />
-                                    <ErrorMessage name='country' />
+                                    <Field type="text" name="country" />
+                                    <ErrorMessage name="country" />
                                 </div>
                                 <div>
                                     <label htmlFor="city">Ciudad:</label>
-                                    <Field type="text" name='city' value={formik.values.city} />
-                                    <ErrorMessage name='city' />
+                                    <Field type="text" name="city" />
+                                    <ErrorMessage name="city" />
                                 </div>
                                 <div>
                                     <label htmlFor="normal_user_price">Precio para Usuario:</label>
-                                    <Field type="number" name='normal_user_price' value={formik.values.normal_user_price} />
-                                    <ErrorMessage name='normal_user_price' />
+                                    <Field type="number" name="normal_user_price" />
+                                    <ErrorMessage name="normal_user_price" />
                                 </div>
-                                {/* <div>
-                                <label htmlFor="medium_user_price">Precio para Usuario Medio:</label>
-                                <Field type="number" name='medium_user_price' value={formik.values.medium_user_price} />
-                                <ErrorMessage name='medium_user_price' />
-                            </div>
-                            <div>
-                                <label htmlFor="high_user_price">Precio para Usuario Alto:</label>
-                                <Field type="number" name='high_user_price' value={formik.values.high_user_price} />
-                                <ErrorMessage name='high_user_price' />
-                            </div> */}
                                 <div>
                                     <label htmlFor="premium_user_price">Precio para Usuario Premium:</label>
-                                    <Field type="number" name='premium_user_price' value={formik.values.premium_user_price} />
-                                    <ErrorMessage name='premium_user_price' />
+                                    <Field type="number" name="premium_user_price" />
+                                    <ErrorMessage name="premium_user_price" />
                                 </div>
                                 <div>
                                     <label htmlFor="offer_image">Publica tu foto aquí:</label>
@@ -130,24 +122,23 @@ const FormOffers = () => {
                                         name="offer_image"
                                         onChange={(event) => {
                                             const selectedFile = event.target.files[0];
-                                            console.log("Selected File:", selectedFile);
-                                            setSelectedFile(selectedFile); // Set the selected file in state
+                                            setSelectedFile(selectedFile);
                                             formik.setFieldValue("offer_image", selectedFile);
                                         }}
                                     />
-                                    <ErrorMessage name='offer_image' />
+                                    <ErrorMessage name="offer_image" />
                                     {selectedFile && <ImagePreview file={selectedFile} />}
                                 </div>
-                                <button type="submit" className="btn btn-primary btn-signup" >Publicar mi oferta</button>
+                                <button type="submit" className="btn btn-primary btn-signup">
+                                    Publicar mi oferta
+                                </button>
                             </Form>
-
                         </div>
                     ) : null}
                 </div>
-            )
-            }
-        </Formik >
-    )
-}
+            )}
+        </Formik>
+    );
+};
 
-export default FormOffers
+export default FormOffers;

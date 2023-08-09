@@ -346,15 +346,15 @@ def get_token():
 def get_all_offers():
     offers = Offers.query.all()
     serialized_offers = [offer.serialize() for offer in offers]
-    return jsonify(offers=serialized_offers)
+    return jsonify(offers=serialized_offers), 200
 
 
 @api.route('/offer/<int:offer_id>', methods=['GET'])
 def get_offer(offer_id):
-    offer = Offers.query.get(offer_id)
+    offer = Offers.query.filter_by(id=offer_id).first()
     if not offer:
         return jsonify({"message": "Offer not found"}), 404
-    return jsonify(offer.serialize())
+    return jsonify(offer=offer.serialize()), 200
 
 
 @api.route('/offers', methods=['POST'])

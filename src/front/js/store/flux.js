@@ -323,6 +323,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         try {
           const response = await fetch(API_URL + "/api/offers", {
             method: "GET",
+            
           });
 
           if (response.ok) {
@@ -346,11 +347,15 @@ const getState = ({ getStore, getActions, setStore }) => {
       getOfferById: async (offerId) => {
         try {
           const response = await fetch(API_URL + `/api/offers/${offerId}`, {
-            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
           });
-
+          
+          console.log(response);
+      
           if (response.ok) {
-            const responseData = await response.json();
+            const responseData = await response.json(); // Parse the response body as JSON
             console.log(responseData);
             return responseData;
           } else if (response.status === 404) {
