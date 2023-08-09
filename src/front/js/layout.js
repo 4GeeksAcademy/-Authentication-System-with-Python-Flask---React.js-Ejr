@@ -15,6 +15,7 @@ import SignupGeneralView from "./pages/SignupGeneralView.jsx";
 import Reviews from "./pages/Reviews";
 import TermsConditions from "./pages/TermsConditions.jsx";
 import Favorites from "./pages/Favorites";
+import SingleOfferView from "./pages/SingleOfferView.jsx";
 
 import injectContext from "./store/appContext";
 
@@ -23,6 +24,7 @@ import Footer from "./component/Footer.jsx";
 import ContactForm from "./component/ContactForm";
 import ScrollToTop from "./component/scrollToTop";
 import { BackendURL } from "./component/backendURL";
+
 
 
 
@@ -53,6 +55,7 @@ const Layout = () => {
                         <Route element={<Favorites />} path="/favoritos" />
                         <Route element={<BusinessUserPrivate />} path="/business_user/private" />
                         <Route element={<Business_offers />} path="/business_offers" />
+                        <Route element={<SingleOfferView />} path="/single-offer/:offer_id" />
                         <Route element={<Trips />} path="/trips" />
                         <Route element={<Reviews />} path="/reviews" />
                         <Route element={<TermsConditions />} path="/terms" />

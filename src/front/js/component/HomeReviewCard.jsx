@@ -10,7 +10,12 @@ const HomeReviewCard = () => {
     }, []);
 
     return (
-        <div className='homeReviewCard'>
+        <div>
+            {/* <div>
+                <h1><strong>Lo que más gustó a otros clientes:</strong> revisa las últimas reseñas</h1>
+            </div> */}
+
+        <div className='homeReviewCard'>        
             {store.reviews.slice(0, 10).map((review) => (
                 <div key={review.id} className="card-home-review">
                     <div className="card bg-dark text-white my-4" style={{ height: "16rem", width: "20rem" }}>
@@ -25,7 +30,11 @@ const HomeReviewCard = () => {
                 </div>
             ))}
         </div>
+
+        </div>
+
     );
 };
 
 export default HomeReviewCard;
+
