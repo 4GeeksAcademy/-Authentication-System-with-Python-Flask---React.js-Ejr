@@ -1,8 +1,8 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Context } from "../store/appContext";
 import Moviestar from "../../img/Moviestar.png";
 import "../../styles/Login.css";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 
 export const Login = () => {
@@ -19,21 +19,12 @@ export const Login = () => {
 
     const onSubmit = async (e) => {
         e.preventDefault()
-        const apiUrl = `${process.env.BACKEND_URL}api/login`
-        console.log(form)
-        try {
-            const res = await fetch(apiUrl, {
-                method:"POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(form)
-            })
-            const data = await res.json()
-            localStorage.setItem("token", data?.token)
-            navigate("/")
-        } catch (error) {
-            console.error(error)
-        }
+        const login = await actions.login(form)
+        if (login === true){navigate("/")} 
     }
+    // useEffect(() => {
+    //     console.log(store.logged)
+    // }, []);
 
 	return (
 		<div className="text-center mt-5">
@@ -46,12 +37,12 @@ export const Login = () => {
             <div>
                 <input className="text-center" name="password" onChange={handleChange} type="password" id="password1" placeholder="Contraseña" value={form.password} required></input>
                 <br/>
-                <a id="ps" href="#aja">Restablecer Contraseña.</a>
+                <Link to={"/pass-recovery"} id="ps" href="#aja">Restablecer Contraseña.</Link>
             </div>
 			<br/>
             <button type="submit" id="login-button">Entrar</button>
             <br/>
-            <a id="sp" href="#aja">¿No tienes una cuenta?Registrate</a>
+            <Link to={"/sign-up"} id="sp" >¿No tienes una cuenta?Registrate</Link>
         </form>
 		</div>
 	);

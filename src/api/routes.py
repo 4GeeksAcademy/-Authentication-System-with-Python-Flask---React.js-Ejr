@@ -7,6 +7,12 @@ from api.utils import generate_sitemap, APIException
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
 import requests
 import os
+from flask_cors import CORS
+
+app = Flask(__name__)
+CORS(app)
+
+
 
 
 api = Blueprint('api/user', __name__)
@@ -57,7 +63,8 @@ def load_database():
 
         nueva_pelicula = Movie(
             name=result["title"],
-            description=result["overview"][:250],
+            image = result["poster_path"],
+            description=result["overview"],
             ranking=result["vote_average"],
             actors=actors,
             directors=directors
@@ -148,6 +155,16 @@ def get_users():
     return jsonify([user.serialize() for user in users]), 200
 
 
+@api.route('/movies', methods=['GET'])
+def get_movies():
+    movies = Movie.query.all()
+    return jsonify([movie.serialize() for movie in movies]), 200
+
+@api.route('/movies/<int:movie_id>', methods=['GET'])
+def get_movie(movie_id):
+    movie = Movie.query.get(movie_id)
+    return jsonify(movie.serialize()), 200
+
 @api.route('/users/<int:user_id>', methods=['GET'])
 @jwt_required()
 def get_user(user_id):
@@ -228,10 +245,13 @@ def create_new_user():
     password = request.json.get('password', None)
     confirm_password = request.json.get('confirm_password', None)
     secret_question = request.json.get('secret_question', None)
-    secret_answer = request.json.get('secret_answer', None)
+
+
+    secret_answer= request.json.get('secret_answer', None)
 
     if not name or not email or not password or not confirm_password or not secret_question or not secret_answer:
         return jsonify({"msg": "Please, complete all fields"}), 400
+
 
     if password != confirm_password:
         return jsonify({"msg": "Password and confirm_password do not match"}), 400
@@ -242,7 +262,10 @@ def create_new_user():
     if user:
         return jsonify({"msg": "User already exists"}), 400
 
-    new_user = User(name=name, email=email, password=password, is_active=True, secret_question=secret_question, secret_answer=secret_answer)
+
+    new_user = User(name=name, email=email, password=password, secret_question= secret_question, secret_answer=secret_answer, is_active=True)
+
+
     # new_user.set_password(password)
     db.session.add(new_user)
     db.session.commit()
@@ -270,3 +293,35 @@ def login():
     access_token = create_access_token(identity=user.id)
 
     return jsonify({"token": access_token, "user": user.serialize()}), 200
+
+
+@api.route('/pass-recovery', methods=['POST'])
+def passRecovery(): 
+
+    email = request.json.get("email", None)
+    secret_answer = request.json.get ("secret_answer", None)
+
+    if not email or not secret_answer:
+        return jsonify({"msg": "Email and secret_answer are required"}), 400
+            
+    user = User.query.filter_by(email=email).first()
+
+    if user is None or user.secret_answer != secret_answer:
+        return jsonify({"msg" : "Invalid email or secret_answer"}), 401
+
+
+    return jsonify ({"msg" : "ok"}), 200
+
+
+@api.route('/pass-change', methods=['PATCH'])
+def passChange(): 
+
+    new_password = request.json.get("new_password", None)
+    confirm_password = request.json.get ("confirm_password", None)
+
+    if not new_password or new_password != confirm_password:
+        return jsonify({"msg": "Las contraseñas no coinciden"}), 400
+            
+    if new_password == confirm_password :
+         return jsonify ({"msg" : "contrasaeña actualizada correctamente"}), 200
+    

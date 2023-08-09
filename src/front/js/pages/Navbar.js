@@ -1,13 +1,20 @@
-import React from "react";
+import React, { useContext } from "react";
 import Moviestar from "../../img/Moviestar.png";
 import "../../styles/Navbar.css";
 import { Link } from "react-router-dom";
+import { Context } from "../store/appContext";
+
+
 
 export const Navbar = () => {
+  const { store, actions } = useContext(Context);
+
+const logged = store.logged 
+
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
       <div id="custom-navbar" className="container-fluid">
-        <a id="logo" className="navbar-brand" href="#"><img id="imagenb" src={Moviestar} /></a>
+        <Link to={"/"} id="logo" className="navbar-brand" ><img id="imagenb" src={Moviestar} /></Link>
         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span className="navbar-toggler-icon"></span>
         </button>
@@ -24,12 +31,18 @@ export const Navbar = () => {
               <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
                 <li><a className="dropdown-item" href="#">Peliculas</a></li>
                 <li><a className="dropdown-item" href="#">Series</a></li>
-                <li><a className="dropdown-item" href="#">Acores y Directores</a></li>
+                <li><a className="dropdown-item" href="#">Actores y Directores</a></li>
               </ul>
             </li>
-            <li className="nav-item">
-              <a className="nav-link text-white" href="#">Iniciar Sesión</a>
-            </li>
+
+            {!logged ? (<li className="nav-item">
+              <Link to={"/login"} className="nav-link text-white">Iniciar Sesión</Link>
+            </li>)
+            :
+            (<li className="nav-item">
+              <Link to={"/login"} className="nav-link text-white">Cerrar Sesión</Link>
+            </li>)}
+
             <li className="nav-item dropdown">
               <a className="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 ES
