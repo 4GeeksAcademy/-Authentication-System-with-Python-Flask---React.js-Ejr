@@ -27,10 +27,11 @@ class User(db.Model):
 class Movie(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(180))
-    description = db.Column(db.String(1000))
+    description = db.Column(db.String(2000))
     ranking = db.Column(db.Integer)
     # Relación con la tabla Actor
     actors = relationship('Actor', secondary='movie_actor')
+    image = db.Column(db.String(180))
 
     # Relación con la tabla Director
     directors = relationship('Director', secondary='movie_director')    
@@ -47,6 +48,7 @@ class Movie(db.Model):
             "ranking": self.ranking,
             "actors": [actor.serialize() for actor in self.actors],  # Serializar los actores asociados
             "directors": [director.serialize() for director in self.directors],  # Serializar los directores asociados
+            "image" :self.image,
         }
 
 class Actor(db.Model):

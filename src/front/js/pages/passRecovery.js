@@ -19,7 +19,7 @@ export const PassRecovery = () => {
 
     const onSubmit = async (e) => {
         e.preventDefault()
-        const apiUrl = `${process.env.BACKEND_URL}/api/pass-recovery`
+        const apiUrl = `${process.env.BACKEND_URL}api/pass-recovery`
         try {
             console.log(apiUrl,form)
             const res = await fetch(apiUrl, {

@@ -7,6 +7,12 @@ from api.utils import generate_sitemap, APIException
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
 import requests
 import os
+from flask_cors import CORS
+
+app = Flask(__name__)
+CORS(app)
+
+
 
 
 api = Blueprint('api/user', __name__)
@@ -57,6 +63,7 @@ def load_database():
 
         nueva_pelicula = Movie(
             name=result["title"],
+            image = result["poster_path"],
             description=result["overview"][:250],
             ranking=result["vote_average"],
             actors=actors,
@@ -148,6 +155,11 @@ def get_users():
     return jsonify([user.serialize() for user in users]), 200
 
 
+@api.route('/movies', methods=['GET'])
+def get_movies():
+    movies = Movie.query.all()
+    return jsonify([movie.serialize() for movie in movies]), 200
+
 @api.route('/users/<int:user_id>', methods=['GET'])
 @jwt_required()
 def get_user(user_id):
@@ -227,9 +239,11 @@ def create_new_user():
     email = request.json.get('email', None)
     password = request.json.get('password', None)
     confirm_password = request.json.get('confirm_password', None)
+    secret_question = request.json.get('secret_question', None)
+    secret_answer= request.json.get('secret_answer', None)
 
-    if not name or not email or not password or not confirm_password:
-        return jsonify({"msg": "Missing name, email or password or confirm_password"}), 400
+    if not name or not email or not password or not confirm_password or not secret_question or not secret_answer:
+        return jsonify({"msg": "Please, complete all fields"}), 400
 
     if password != confirm_password:
         return jsonify({"msg": "Password and confirm_password do not match"}), 400
@@ -240,7 +254,7 @@ def create_new_user():
     if user:
         return jsonify({"msg": "User already exists"}), 400
 
-    new_user = User(name=name, email=email, password=password, is_active=True)
+    new_user = User(name=name, email=email, password=password, secret_question= secret_question, secret_answer=secret_answer, is_active=True)
     # new_user.set_password(password)
     db.session.add(new_user)
     db.session.commit()

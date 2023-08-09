@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { Context } from "../store/appContext";
 import "../../styles/Movie.css";
 
+
 export const Movie = () => {
     const { store, actions } = useContext(Context);
 

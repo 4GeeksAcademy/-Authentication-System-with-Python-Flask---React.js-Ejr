@@ -19,7 +19,7 @@ export const PassChange = () => {
 
     const onSubmit = async (e) => {
         e.preventDefault()
-        const apiUrl = `${process.env.BACKEND_URL}/api/pass-change`
+        const apiUrl = `${process.env.BACKEND_URL}api/pass-change`
         try {
             console.log(apiUrl,form)
             const res = await fetch(apiUrl, {
