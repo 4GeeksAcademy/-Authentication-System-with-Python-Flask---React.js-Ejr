@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Car, Saved
+from api.models import db, User, Car, Saved, Review
 from api.utils import generate_sitemap, APIException
 from flask_jwt_extended import jwt_required, get_jwt_identity, create_access_token, JWTManager
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -116,7 +116,7 @@ def show_saved_cars():
              'saved': list(map(lambda x: x.serialize(), saved_cars))
         }
 
-        return jsonify(response),200
+        return jsonify(response), 200
 
 # ALLOWING USERS TO CREATE A FAVORITE
 @api.route('/add_saved', methods=['POST'])
@@ -203,4 +203,31 @@ def add_user():
      db.session.commit()
      return jsonify("successfully created new user"), 201
 
+@api.route('/add_review', methods=['POST'])
+@jwt_required()
+def create_review(): 
+    current_user_id = get_jwt_identity()
+    data = request.json
+    rating = data.get("rating")
+    review = data.get("review_text")
+    car_id = data.get("car_id")
 
+    new_review = Review(rating=rating, review_text=review, user_id=current_user_id, car_id=car_id)
+    db.session.add(new_review)
+    db.session.commit()
+
+    return jsonify("Review created successfully"), 200
+
+@api.route('/reviews', methods=['GET'])
+def get_reviews():
+
+    reviews = Review.query.all()
+    request_body = list(map(lambda x:x.serialize(), reviews))
+
+    return jsonify(request_body), 200
+
+@api.route('/reviews/<int:car_id>', methods=['GET'])
+def show_reviews(car_id):
+    car_reviews = Review.query.filter_by(car_id=car_id).all()
+    serialized_reviews = [review.serialize() for review in car_reviews]
+    return jsonify(serialized_reviews)

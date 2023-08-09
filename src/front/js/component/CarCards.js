@@ -31,15 +31,15 @@ const CarCards = ({ cars }) => {
               <div className='w-100'>                
                   <div className='row justify-content-around border-bottom border-black bodyContainer'>
                     <h4 className="card-text col" style={{ color: "rgb(108,117,125)" }}>Model</h4>
-                    <p className='carFormatted card-text col'>{car.car_name}</p>
+                    <p className='carFormatted card-text col' style={{color : "#F2F2F2"}}>{car.car_name}</p>
                   </div>
                   <div className='row justify-content-around border-bottom border-black bodyContainer'>
                     <h4 className="card-text col " style={{ color: "rgb(108,117,125)" }}>Make</h4>
-                    <p className='carFormatted card-text col'>{car.brand}</p>
+                    <p className='carFormatted card-text col' style={{color : "#F2F2F2"}}>{car.brand}</p>
                   </div>
                   <div className='row justify-content-around border-bottom border-black bodyContainer'>
                     <h4 className="card-text col" style={{ color: "rgb(108,117,125)" }}>MSRP</h4>
-                    <p className='carFormatted card-text col'>{car.price}</p>
+                    <p className='carFormatted card-text col' style={{color : "#F2F2F2"}}>{car.price}</p>
                   </div>
                 <div className="buttonContainer d-flex justify-content-center pt-3">
                   <button href="#" className="btn btn-danger"
