@@ -27,7 +27,7 @@ class User(db.Model):
 class Movie(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(180))
-    description = db.Column(db.String(2000))
+    description = db.Column(db.Text)
     ranking = db.Column(db.Integer)
     # Relación con la tabla Actor
     actors = relationship('Actor', secondary='movie_actor')

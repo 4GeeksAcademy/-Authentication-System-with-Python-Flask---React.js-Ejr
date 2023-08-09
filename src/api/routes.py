@@ -64,7 +64,7 @@ def load_database():
         nueva_pelicula = Movie(
             name=result["title"],
             image = result["poster_path"],
-            description=result["overview"][:250],
+            description=result["overview"],
             ranking=result["vote_average"],
             actors=actors,
             directors=directors
@@ -159,6 +159,11 @@ def get_users():
 def get_movies():
     movies = Movie.query.all()
     return jsonify([movie.serialize() for movie in movies]), 200
+
+@api.route('/movies/<int:movie_id>', methods=['GET'])
+def get_movie(movie_id):
+    movie = Movie.query.get(movie_id)
+    return jsonify(movie.serialize()), 200
 
 @api.route('/users/<int:user_id>', methods=['GET'])
 @jwt_required()

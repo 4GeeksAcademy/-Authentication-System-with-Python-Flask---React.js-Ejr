@@ -14,6 +14,9 @@ export const Listadomovies = () => {
 		});
 	}, []);
 
+	console.log(movies)
+	
+
 	return (
 		<div className="container">
 			<div className="row">

@@ -3,7 +3,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 		store: {
 			message: null,
 			logged: false,
-			movies: []
+			movies: [],
+			movie: null,
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
@@ -60,11 +61,33 @@ const getState = ({ getStore, getActions, setStore }) => {
 					})
 					if (res.ok) {
 						const data = await res.json()
+						console.log(data)
 						setStore({ movies: data })
 						console.log(getStore().movies);
 						return data;
 					} else {
-						console.log("login failed", res.status)
+						console.log("Request failed", res.status)
+					}
+				} catch (error) {
+					console.error(error)
+					return null;
+				}
+			},
+
+			getMovieById: async (movieId) => {
+				const apiUrl = `${process.env.BACKEND_URL}api/movies/${movieId}`
+				try {
+					const res = await fetch(apiUrl, {
+						method: "GET",
+						headers: { "Content-Type": "application/json" }
+					})
+					if (res.ok) {
+						const data = await res.json()
+						setStore({ movie: data })
+						console.log(data);
+						return data;
+					} else {
+						console.log("Request failed", res.status)
 					}
 				} catch (error) {
 					console.error(error)
