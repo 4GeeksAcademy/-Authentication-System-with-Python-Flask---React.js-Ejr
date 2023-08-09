@@ -3,8 +3,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 		store: {
 			message: null,
 			logged: false,
+
 			movies: [],
 			movie: null,
+
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
@@ -30,11 +32,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 				console.log(form)
 				try {
 					const res = await fetch(apiUrl, {
+
 						method: "POST",
+
 						headers: { "Content-Type": "application/json" },
 						body: JSON.stringify(form)
 					})
 					if (res.ok) {
+
 						const data = await res.json()
 						localStorage.setItem("token", data?.token)
 						setStore({ logged: true })
@@ -43,6 +48,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					} else {
 						console.log("login failed", res.status)
 					}
+
 				} catch (error) {
 					console.error(error)
 					return false
@@ -51,6 +57,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			logout: () => {
 				localStorage.removeItem("token")
 				setStore({ logged: false })
+
 			},
 			getMovies: async () => {
 				const apiUrl = `${process.env.BACKEND_URL}api/movies`
@@ -94,6 +101,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return null;
 				}
 			}
+
 
 		}
 	};
