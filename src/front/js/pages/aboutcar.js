@@ -1,8 +1,7 @@
 import React, { useContext } from 'react'
 import { Context } from '../store/appContext'
 import "../../styles/cardata.css"
-import "slick-carousel/slick/slick.css";
-import 'slick-carousel/slick/slick-theme.css'
+
 
 
 const AboutCar = () => {
