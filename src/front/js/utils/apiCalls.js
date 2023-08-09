@@ -64,53 +64,94 @@ export async function validateToken(token) {
 }
 
 export async function createProduct(
-      name,
-      price,
-      description,
-      color,
-      type,
-      category_id,
-      // sizes,
-      image_url,
-      token
+  name,
+  price,
+  description,
+  color,
+  type,
+  category_id,
+  // sizes,
+  image_url,
+  token
 ) {
-  const response = await makeRequest('/products', 'POST', {
-    name: name,
-    price: price,
-    description: description,
-    color: color,
-    type: type,
-    category_id: category_id,
-    // sizes: sizes,
-    image_url: image_url,
-  } , token)
+  const response = await makeRequest(
+    '/products',
+    'POST',
+    {
+      name: name,
+      price: price,
+      description: description,
+      color: color,
+      type: type,
+      category_id: category_id,
+      // sizes: sizes,
+      image_url: image_url,
+    },
+    token
+  )
 
   return response
 }
 
-export async function getFavorites(
-  token
-) {
-const response = await makeRequest('/users/favorites', 'GET', 
-null, token)
+export async function getFavorites(token) {
+  const response = await makeRequest('/users/favorites', 'GET', null, token)
 
-return response
+  return response
 }
 
-export async function postFavorites(
-  token, product_id
-) {
-const response = await makeRequest('/users/favorites/'+product_id, 'POST', 
-null, token)
-
-return response
+export async function postFavorites(token, product_id) {
+  const response = await makeRequest(
+    '/users/favorites/' + product_id,
+    'POST',
+    null,
+    token
+  )
+  return response
 }
 
-export async function deleteFavorites(
-  token, product_id
-) {
-const response = await makeRequest('/users/favorites/'+product_id, 'DELETE', 
-null, token)
+export async function deleteFavorites(token, product_id) {
+  const response = await makeRequest(
+    '/users/favorites/' + product_id,
+    'DELETE',
+    null,
+    token
+  )
+  return response
+}
 
-return response
+export async function getProductByID(id) {
+  const response = await makeRequest(`/products/${id}`, 'GET', null)
+  return response
+}
+
+export async function postShoppingCart( product_id, quantity ,size_id,token) {
+  console.log("quantity",quantity)
+  const response = await makeRequest(
+    '/cart' ,
+    'POST',
+    {
+      product_id: product_id,
+      size_id: size_id,
+      quantity: quantity,
+      
+    },
+    token
+  )
+  
+  return response
+}
+
+export async function deleteShoppingCart(token, product_id,size_id) {
+  const response = await makeRequest(
+    '/cart/' + product_id + '/size/' + size_id,
+    'DELETE',
+    null,
+    token
+  )
+  return response
+}
+
+export async function getClothesTypes() {
+  const response = await makeRequest('/clothes/types', 'GET', null)
+  return response
 }

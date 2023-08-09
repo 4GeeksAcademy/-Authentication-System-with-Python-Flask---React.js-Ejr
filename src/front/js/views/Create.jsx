@@ -1,37 +1,19 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import React, { useContext } from 'react'
+import { Navigate } from 'react-router-dom'
 import Navbar from '../component/Navbar.jsx'
-import NewProduct from "../component/NewProduct.jsx";
-
+import NewProduct from '../component/NewProduct.jsx'
 
 import { Context } from '../store/appContext.js'
 
 const Create = () => {
-  const { actions, store } = useContext(Context)
-  let navigate = useNavigate()
-
-  const handleLogin = () => {
-    navigate('/login')
-  }
+  const { store } = useContext(Context)
+  
+  if (!store.user.is_admin) return <Navigate to='/' />
 
   return (
     <div>
-      <Navbar
-      />
-      {store.token && store.user.is_admin ? (<>
-        
-
-          <NewProduct/>
-       
-      </>
-      ) : (
-        <>
-          <h2>No puedes entrar</h2>
-          <button className='btn btn-success' onClick={handleLogin}>
-            Login
-          </button>
-        </>
-      )}
+      <Navbar />
+      <NewProduct />
     </div>
   )
 }

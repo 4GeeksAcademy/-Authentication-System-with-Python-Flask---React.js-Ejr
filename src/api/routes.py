@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint, Response
-from src.api.models import db, User, Product, Order , OrderItems, Category, Size, ShoppingCart, ProductSizeStock
+from src.api.models import db, User, Product, Order , OrderItems, Category, Size, ShoppingCart, ProductSizeStock, ProductsRating, ProductImage
 from src.api.utils import generate_sitemap, APIException
 from src.api.utils import save_new_product, update_product_by_id, update_category_by_id
 from src.api.utils import check_is_admin_by_user_id
@@ -13,27 +13,23 @@ from flask_jwt_extended import jwt_required
 
 api = Blueprint('api', __name__)
 
+@api.route('/hello', methods=['POST', 'GET'])
+def handle_hello():
 
+    response_body = {
+        "message": "Hello! I'm a message that came from the backend, check the network tab on the google inspector and you will see the GET request"
+    }
 
-# La clave secreta para firmar los tokens JWT
-api.secret_key = 'Our_Unique_Proyect'
+    return jsonify(response_body), 200
 
-# Función para generar un token JWT
-def generate_token(user_id):
-    # payload = {'user_id': user_id}
-    token = create_access_token(identity=user_id)
-    return token
-
-# Ruta para el registro de usuarios (signup)
+# Auth routes
 @api.route('/signup', methods=['POST'])
 def signup():
     data = request.json
 
-    # Verificar si el usuario ya existe por su dirección de correo electrónico
     if User.query.filter_by(email=data['email']).first():
-        return jsonify({'message': 'El usuario ya existe. Intente con otro correo electrónico.'}), 409
+        raise APIException(message='El usuario ya existe. Intente con otro correo electrónico.', status_code=409)
     
-    # Verificar si se proporcionó la contraseña
     if 'password' not in data or not data['password']:
         return jsonify({'message': 'El campo de contraseña es obligatorio.'}), 400
 
@@ -41,7 +37,6 @@ def signup():
     # Encriptar la contraseña antes de guardarla en la base de datos
     hashed_password = bcrypt.hashpw(data['password'].encode('utf-8'), bcrypt.gensalt())
 
-    # Crear un nuevo usuario
     new_user = User(
         first_name=data['first_name'],
         last_name=data['last_name'],
@@ -52,41 +47,41 @@ def signup():
         payment_method=data['payment_method'],
     )
 
-    # Agregar el usuario a la base de datos
     db.session.add(new_user)
     db.session.commit()
-
     return jsonify({'message': 'Usuario creado exitosamente.'}), 201
 
-# Ruta para el inicio de sesión de usuarios (login)
 @api.route('/login', methods=['POST'])
 def login():
     data = request.json
     email = data['email']
     password = data['password']
 
+    if not email or not password:
+        return jsonify({'message': 'Correo electrónico y contraseña son campos obligatorios.'}), 400
+
     user = User.query.filter_by(email=email).first()
 
     if user and bcrypt.checkpw(password.encode('utf-8'), user.password.encode('utf-8')):
-        # Generar un token JWT y devolverlo en la respuesta
-        token = generate_token(user.id)
+        token = create_access_token(identity=user.id)
         return jsonify({'message': 'Inicio de sesión exitoso.', 'token': token , 'user':user.serialize()}), 200
     else:
         return jsonify({'message': 'Credenciales inválidas. Por favor, intenta de nuevo.'}), 401
-
-# Ruta para cerrar sesión (logout)
-@api.route('/logout')
-def logout():
-    # Para cerrar sesión con JWT, simplemente se omite el token en el cliente.
-    return jsonify({'message': 'Cierre de sesión exitoso.'}), 200
 
 @api.route('/validate-token', methods=['POST'])
 @jwt_required()
 def validate_token():
     current_user_id = get_jwt_identity()
     user = User.query.get(current_user_id)
-    return jsonify(user.serialize())
+    response = {
+        'user': user.serialize(),
+        'favorites': [p.serialize() for p in user.favorites],
+        'shopping_cart': [p.serialize() for p in user.shopping_cart]
+    }
+    return jsonify(response), 200
+# End auth routes
 
+# User routes
 @api.route('/users', methods=['GET'])
 def get_all_users():
     users = User.query.all()
@@ -118,6 +113,16 @@ def update_user(user_id):
     db.session.commit()
     return jsonify({'message': 'Usuario modificado exitosamente'}), 200
 
+@api.route('/user/<int:user_id>', methods=['DELETE'])
+def delete_user(user_id):
+    user = User.query.get(user_id)
+    if not user:
+        return jsonify({'message': 'Usuario no encontrado'}), 404
+
+    db.session.delete(user)
+    db.session.commit()
+    return jsonify({'message': 'Usuario eliminado exitosamente'}), 200
+
 @api.route('/users/favorites', methods=['GET'])
 @jwt_required()
 def get_favorite():
@@ -131,6 +136,8 @@ def add_favorite(product_id):
     current_user_id = get_jwt_identity()
     user = User.query.get(current_user_id)
     product = Product.query.get(product_id)
+    if product is None:
+        raise APIException(message='Producto no encontrado', status_code=404)
     user.favorites.append(product)
     db.session.commit()
     return [p.serialize() for p in user.favorites], 200
@@ -141,22 +148,14 @@ def delete_favorite(product_id):
     current_user_id = get_jwt_identity()
     user = User.query.get(current_user_id)
     product = Product.query.get(product_id)
+    if product is None:
+        raise APIException(message='Producto no encontrado', status_code=404)
     user.favorites.remove(product)
     db.session.commit()
     return [p.serialize() for p in user.favorites], 200
+# Endp user routes
 
-
-# Ruta para eliminar un usuario por su ID
-@api.route('/user/<int:user_id>', methods=['DELETE'])
-def delete_user(user_id):
-    user = User.query.get(user_id)
-    if not user:
-        return jsonify({'message': 'Usuario no encontrado'}), 404
-
-    db.session.delete(user)
-    db.session.commit()
-    return jsonify({'message': 'Usuario eliminado exitosamente'}), 200
-
+# Order routes
 @api.route('/orders/<int:user_id>', methods=['GET'])
 def obtener_ordenes_usuario(user_id):
     user = User.query.get(user_id)
@@ -184,8 +183,6 @@ def obtener_ordenes_usuario(user_id):
         'ordenes_confirmadas': ordenes_confirmadas_data
     }
     return jsonify(response), 200
-
-
 
 @api.route('/orders/<int:user_id>/neworder', methods=['POST'])
 def crear_orden_confirmada(user_id):
@@ -220,17 +217,6 @@ def crear_orden_confirmada(user_id):
         'quantity': data['quantity']
     }
     return jsonify(response), 201
-
-
-
-@api.route('/hello', methods=['POST', 'GET'])
-def handle_hello():
-
-    response_body = {
-        "message": "Hello! I'm a message that came from the backend, check the network tab on the google inspector and you will see the GET request"
-    }
-
-    return jsonify(response_body), 200
 
 @api.route('/orders/<int:user_id>/<int:orden_id>', methods=['DELETE'])
 def borrar_orden_activa(user_id, orden_id):
@@ -278,9 +264,9 @@ def actualizar_orden_activa(user_id, orden_id):
 
     # Devolver una respuesta exitosa con un mensaje
     return jsonify({'message': 'Orden activa actualizada exitosamente'}), 200
+# End order routes
 
-
-# Rutas para Product
+# Product routes
 @api.route('/products', methods=['GET'])
 def all_products():
     products = Product.query.all()
@@ -301,6 +287,82 @@ def create_product():
     check_is_admin_by_user_id(current_user_id) 
     product = save_new_product(request_body)
     return jsonify(product.serialize()), 200
+
+@api.route('/products/<int:product_id>/images', methods=['GET'])
+def get_product_images(product_id):
+    product = Product.query.get(product_id)
+    if product is None:
+        raise APIException(message='Product not found', status_code=404)
+    return jsonify(product.serialize_sorted_images()), 200
+
+@api.route('/products/<int:product_id>/images/<int:image_id>', methods=['GET'])
+def get_product_image_by_id(product_id, image_id):
+    product = Product.query.get(product_id)
+    if product is None:
+        raise APIException(message='Product not found', status_code=404)
+    product_image = ProductImage.query.get(image_id)
+    if product_image is None:
+        raise APIException(message='Product image not found', status_code=404)
+    if product_image.product_id != product_id:
+        raise APIException(message='Product image not found', status_code=404)
+    
+    return jsonify(product_image.serialize()), 200
+
+@api.route('/products/<int:product_id>/images', methods=['POST'])
+@jwt_required()
+def upload_product_image(product_id):
+    request_body = request.get_json()
+    current_user_id = get_jwt_identity()
+    check_is_admin_by_user_id(current_user_id)
+    product = Product.query.get(product_id)
+    if product is None:
+        raise APIException(message='Product not found', status_code=404)
+    if 'image_url' not in request_body:
+        raise APIException(message='Image URL is required', status_code=422)
+    if 'order' not in request_body:
+        raise APIException(message='Order is required', status_code=422)
+    product_image = ProductImage(image_url=request_body['image_url'], order=request_body['order'], product=product)
+    db.session.add(product_image)
+    db.session.commit()
+    return jsonify(product_image.serialize()), 200
+
+@api.route('/products/<int:product_id>/images/<int:product_image_id>', methods=['PUT'])
+@jwt_required()
+def update_product_image(product_id, product_image_id):
+    request_body = request.get_json()
+    current_user_id = get_jwt_identity()
+    check_is_admin_by_user_id(current_user_id)
+    product = Product.query.get(product_id)
+    if product is None:
+        raise APIException(message='Product not found', status_code=404)
+    product_image = ProductImage.query.get(product_image_id)
+    if product_image is None:
+        raise APIException(message='Product image not found', status_code=404)
+    if product_image.product_id != product_id:
+        raise APIException(message='Product image not found', status_code=404)
+    if 'image_url' in request_body:
+        product_image.image_url = request_body['image_url']
+    if 'order' in request_body:
+        product_image.order = request_body['order']
+    db.session.commit()
+    return jsonify(product_image.serialize()), 200
+
+@api.route('/products/<int:product_id>/images/<int:product_image_id>', methods=['DELETE'])
+@jwt_required()
+def delete_product_image(product_id, product_image_id):
+    current_user_id = get_jwt_identity()
+    check_is_admin_by_user_id(current_user_id)
+    product = Product.query.get(product_id)
+    if product is None:
+        raise APIException(message='Product not found', status_code=404)
+    product_image = ProductImage.query.get(product_image_id)
+    if product_image is None:
+        raise APIException(message='Product image not found', status_code=404)
+    if product_image.product_id != product_id:
+        raise APIException(message='Product image not found', status_code=404)
+    db.session.delete(product_image)
+    db.session.commit()
+    return Response(status=204)
 
 @api.route('/products/clothing', methods=['GET'])
 def get_clothing_products():
@@ -340,9 +402,84 @@ def delete_product(product_id):
     db.session.delete(product)
     db.session.commit()
     return Response(status=204)
-# End rutas para products
 
-# Rutas para Category
+@api.route('/products/<int:product_id>/rating', methods=['GET'])
+def get_product_rating(product_id):
+    product = Product.query.get(product_id)
+    if product is None:
+        raise APIException(message='Product not found', status_code=404)
+    return jsonify(product.serialize_rating()), 200
+
+@api.route('/products/<int:product_id>/rating', methods=['POST'])
+@jwt_required()
+def create_product_rating(product_id):
+    request_body = request.get_json()
+    current_user_id = get_jwt_identity()
+    user = User.query.get(current_user_id)
+    product = Product.query.get(product_id)
+    if product is None:
+        raise APIException(message='Product not found', status_code=404)
+    
+    if request_body.get('rating') is None:
+        raise APIException(message='Rating is required', status_code=422)
+    
+    # check if rating already exists
+    for rating in product.users_ratings:
+        if rating.user_id == current_user_id:
+            raise APIException(message='You already rated this product', status_code=400)
+    
+    # chekcs is the user have a completed order with the product
+    for order in user.orders:
+        if order.status != 'completed':
+            continue
+        for order_item in order.products:
+            if order_item.product.id == product_id:
+                rating = ProductsRating(user=user, product=product, rating=request_body['rating'])
+                db.session.add(rating)
+                db.session.commit()
+                return jsonify(rating.serialize()), 200
+
+    raise APIException(message='You need to buy the product to rate it', status_code=400)
+
+@api.route('/products/<int:product_id>/rating', methods=['PUT'])
+@jwt_required()
+def update_product_rating(product_id):
+    request_body = request.get_json()
+    current_user_id = get_jwt_identity()
+    user = User.query.get(current_user_id)
+    product = Product.query.get(product_id)
+    if product is None:
+        raise APIException(message='Product not found', status_code=404)
+    if request_body.get('rating') is None:
+        raise APIException(message='Rating is required', status_code=422)
+    
+    rating = ProductsRating.query.filter_by(user=user, product=product).first()
+    if rating is None:
+        raise APIException(message='You need to rate the product first', status_code=400)
+    
+    rating.rating = request_body['rating']
+    db.session.commit()
+    return jsonify(rating.serialize()), 200
+
+@api.route('/products/<int:product_id>/rating', methods=['DELETE'])
+@jwt_required()
+def delete_product_rating(product_id):
+    current_user_id = get_jwt_identity()
+    user = User.query.get(current_user_id)
+    product = Product.query.get(product_id)
+    if product is None:
+        raise APIException(message='Product not found', status_code=404)
+    
+    rating = ProductsRating.query.filter_by(user=user, product=product).first()
+    if rating is None:
+        raise APIException(message='You need to rate the product first', status_code=400)
+    
+    db.session.delete(rating)
+    db.session.commit()
+    return Response(status=204)
+# End product roues
+
+# Category routes
 @api.route('/categories', methods=['GET'])
 def all_categories():
     categories = Category.query.all()
@@ -400,9 +537,9 @@ def delete_category(category_id):
     db.session.delete(category)
     db.session.commit()
     return Response(status=204)
-# End rutas para category
+# End category routes
 
-# Rutas size
+# Size routes
 @api.route('/sizes', methods=['GET'])
 def all_sizes():
     sizes = Size.query.all()
@@ -461,6 +598,7 @@ def delete_size(size_id):
     db.session.delete(size)
     db.session.commit()
     return Response(status=204)
+# End size routes
 
 # Cart routes
 @api.route('/cart', methods=['GET'])
@@ -523,5 +661,23 @@ def delete_from_cart(product_id, size_id):
         raise APIException(message='Product not found in cart', status_code=404)
     db.session.delete(product_in_cart)
     db.session.commit()
-    return Response(status=204)
+    return jsonify([p.serialize() for p in user.shopping_cart]), 200
+# End cart routes
 
+@api.route('/clothes/types', methods=['GET'])
+def all_clothing_types():
+    types = db.session.query(Product.type).filter_by(category_id=1).distinct().all()
+    types_as_string = [type[0] for type in types]
+    return jsonify(types_as_string), 200
+
+@api.route('/accessories/types', methods=['GET'])
+def all_accessories_types():
+    types = db.session.query(Product.type).filter_by(category_id=2).distinct().all()
+    types_as_string = [type[0] for type in types]
+    return jsonify(types_as_string), 200
+
+@api.route('/shoes/types', methods=['GET'])
+def all_shoes_types():
+    types = db.session.query(Product.type).filter_by(category_id=3).distinct().all()
+    types_as_string = [type[0] for type in types]
+    return jsonify(types_as_string), 200
