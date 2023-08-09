@@ -44,6 +44,7 @@ export const SignIn = () => {
         } catch (error) {
             console.error("An error occurred:", error);
         }
+
     }
     return (
         <div className="text-center mt-5">

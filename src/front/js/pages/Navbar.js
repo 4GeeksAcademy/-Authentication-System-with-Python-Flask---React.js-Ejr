@@ -34,6 +34,7 @@ const logged = store.logged
                 <li><a className="dropdown-item" href="#">Actores y Directores</a></li>
               </ul>
             </li>
+
             {!logged ? (<li className="nav-item">
               <Link to={"/login"} className="nav-link text-white">Iniciar Sesión</Link>
             </li>)
@@ -41,6 +42,7 @@ const logged = store.logged
             (<li className="nav-item">
               <Link to={"/login"} className="nav-link text-white">Cerrar Sesión</Link>
             </li>)}
+
             <li className="nav-item dropdown">
               <a className="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 ES
