@@ -217,6 +217,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
 
       createReview: async (rating, review_text, car_id) => {
+        const token = localStorage.getItem("token")
         try {
           const response = await fetch(`${process.env.BACKEND_URL}/add_review`, {
           method: "POST",
