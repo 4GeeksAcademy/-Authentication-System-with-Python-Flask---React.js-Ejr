@@ -7,12 +7,12 @@ export const LandingPage = () => {
 	const { store, actions } = useContext(Context);
 
 	return (
-		<div className="bg-image text-center d-flex flex-column justify-content-center align-items-center" style={{height: "85vh"}}>
-			<h1 className="text-light">Welcome to the Travel Site!</h1>
-			<Form className="w-50">
-				<FormControl type="text" placeholder="Search your destination..." className="mr-sm-2" />
-				<Button variant="outline-light">Search</Button>
+		<div className="welcome_text bg-image">
+			<Form className="">
+				<FormControl type="text" placeholder="Search your destination..." className="searchbar" />
 			</Form>
+			    <Button className="searchbutton">Search</Button>
+				<h1 className="">Welcome to the Travel Site!</h1>
 		</div>
 	);
 };
