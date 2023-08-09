@@ -7,6 +7,7 @@
 */
 
 
+
 .bg-image{
     margin: 0;
     height: 100vh;
@@ -55,7 +56,6 @@ label{
     -webkit-flow-into: calc(10%);
     font-family:fantasy, copperplate
 
-
 }
 h1{
     color: rgba(240, 248, 255, 0.378);
@@ -79,3 +79,16 @@ infinite;
 outline-color: aliceblue;
 border-top-right-radius: 30%;
 }
+
+.text-success {
+  color: #28a745;
+}
+
+.text-info {
+  color: #17a2b8;
+}
+
+.text-warning {
+  color: #ffc107;
+}
+
