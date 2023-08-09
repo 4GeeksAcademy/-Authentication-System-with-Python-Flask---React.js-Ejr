@@ -14,16 +14,13 @@ export const SignIn = () => {
         secret_answer: '',
         secret_question: '',
     });
-
     const handleChange = (e) => {
         setUser({
             ...user,
             [e.target.name]: e.target.value
         });
     }
-
     const navigate = useNavigate()
-
     const handleSubmit = async (e) => {
         e.preventDefault()
         const apiUrl = `${process.env.BACKEND_URL}api/signup`
@@ -49,7 +46,6 @@ export const SignIn = () => {
         }
 
     }
-
     return (
         <div className="text-center mt-5">
             <div>
