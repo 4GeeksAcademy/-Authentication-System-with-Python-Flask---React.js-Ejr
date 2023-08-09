@@ -1,10 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Context } from '../store/appContext'
 import "../../styles/cardata.css"
-<<<<<<< HEAD
-
-=======
->>>>>>> 58ec331ca2fb036e34ce956e37f931c108dc1321
 
 
 const AboutCar = () => {
