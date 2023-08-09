@@ -12,10 +12,10 @@ const Footer = () => {
                             <Link className="nav-link  text-white " to="/">Home</Link>
                         </li>
                         <li className="nav-item mb-2">
-                            <Link className="nav-link text-white " to="/">Features</Link>
+                            <Link className="nav-link text-white " to="/feactures">Features</Link>
                         </li>
                         <li className="nav-item mb-2">
-                            <Link className="nav-link  text-white" to="/">About us</Link>
+                            <Link className="nav-link  text-white" to="/aboutUs">About us</Link>
                         </li>
                     </ul>
                     <div className="container-fluid d-flex justify-content-between ">

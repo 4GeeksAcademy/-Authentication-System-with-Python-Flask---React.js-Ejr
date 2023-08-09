@@ -14,6 +14,8 @@ import Footwear from './views/Footwear.jsx'
 import Clothes from './views/Clothes.jsx'
 import ViewDetails from './views/ViewDetails.jsx'
 import Accessories from './views/Accessories.jsx'
+import AboutUs from './views/AboutUs.jsx'
+import Feactures from './views/Feactures.jsx'
 
 // import Navbar from "./component/Navbar.jsx";
 import Footer from './component/Footer.jsx'
@@ -48,6 +50,8 @@ const Layout = () => {
             <Route path='/viewDetails' element={<ViewDetails />} />
             <Route path='/accesories' element={<Accessories />} />
             <Route path='*' element={<h1>Not found!</h1>} />
+            <Route path='/aboutUs' element={<AboutUs />} />
+            <Route path='/feactures' element={<Feactures />} />
           </Routes>
           <Footer />
         </ScrollToTop>
