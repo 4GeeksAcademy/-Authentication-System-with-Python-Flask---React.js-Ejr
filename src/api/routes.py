@@ -284,13 +284,17 @@ def update_business_profile(business_id):
         data = request.get_json()
 
         # Update business profile data
-        business_user.business_name = data.get('name_business', business_user.business_name)
+        business_user.business_name = data.get(
+            'name_business', business_user.business_name)
         business_user.email = data.get('email', business_user.email)
-        business_user.prefix_telephone = data.get("prefix_telephone", business_user.prefix_telephone)
-        business_user.telephone = data.get("telephone", business_user.telephone)
+        business_user.prefix_telephone = data.get(
+            "prefix_telephone", business_user.prefix_telephone)
+        business_user.telephone = data.get(
+            "telephone", business_user.telephone)
         business_user.nif = data.get('nif', business_user.nif)
         business_user.address = data.get('address', business_user.address)
-        business_user.payment_method = data.get('payment_method', business_user.payment_method)
+        business_user.payment_method = data.get(
+            'payment_method', business_user.payment_method)
 
         db.session.commit()
 
@@ -644,12 +648,9 @@ def get_favorites_for_user():
     user = User.query.filter_by(email=current_user_id).first()
     if user is None:
         return jsonify({"error": "User not found"}), 404
-    user_favorites = Favorites.query.filter_by(user_id =user.id).all()
-    user_favorites = [favorite.serialize() for favorite in user_favorites ]
+    user_favorites = Favorites.query.filter_by(user_id=user.id).all()
+    user_favorites = [favorite.serialize() for favorite in user_favorites]
     return jsonify(user_favorites), 200
-
-
-
 
 
 @api.route('/reviews/favorites/<int:review_id>', methods=['POST'])

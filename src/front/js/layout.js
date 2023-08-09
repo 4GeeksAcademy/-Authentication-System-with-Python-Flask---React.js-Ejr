@@ -14,8 +14,9 @@ import Trips from "./pages/Trips.jsx";
 import SignupGeneralView from "./pages/SignupGeneralView.jsx";
 import Reviews from "./pages/Reviews";
 import TermsConditions from "./pages/TermsConditions.jsx";
-import Favorites from "./pages/Favorites";
+
 import SingleOfferView from "./pages/SingleOfferView.jsx";
+
 
 import injectContext from "./store/appContext";
 
@@ -52,7 +53,6 @@ const Layout = () => {
                         <Route element={<ForgotPassword />} path="/forgot_password" />
                         <Route element={<ContactForm />} path="/contact" />
                         <Route element={<UserPrivate />} path="/user/private" />
-                        <Route element={<Favorites />} path="/favoritos" />
                         <Route element={<BusinessUserPrivate />} path="/business_user/private" />
                         <Route element={<Business_offers />} path="/business_offers" />
                         <Route element={<SingleOfferView />} path="/single-offer/:offer_id" />
