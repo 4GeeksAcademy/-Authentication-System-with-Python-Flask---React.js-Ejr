@@ -90,7 +90,8 @@ const handleApplyFilters = () => {
   return (
     <div>
       <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-        <h5>Filter search</h5>
+      <i class="fas fa-search"></i> 
+        <h7>Filter</h7>
       </button>
       
       

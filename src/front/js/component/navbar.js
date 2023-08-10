@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import SearchBar from "./SearchBar";
 import Filters from "./FilterModal/Filters";
@@ -14,28 +14,26 @@ export const Navbar = () => {
   return (
     <nav className="navbar navbar-dark bg-dark">
       <div className="container-fluid m-0">
-        <div>
+        <div className="d-flex align-items-center">
           <Link to={"/"}>
             <img
               src="https://static.vecteezy.com/system/resources/previews/013/923/543/original/blue-car-logo-png.png"
               style={{ width: "7rem", height: "auto" }}
             />
+            
           </Link>
-        </div>
-        <div>
           <Link to="/catalog">
-            <button className="btn btn-primary">
-              <h5> Catalog</h5>
+            <button className="btn btn-primary ml-3">
+            <i className="fas fa-book fa-1x"></i>
+              <h7> Catalog</h7>
             </button>
           </Link>
         </div>
-        <div>
+        <div className="d-flex align-items-center">
           <SearchBar />
-        </div>
-        <div>
           <Filters />
         </div>
-        <div className="ml-auto d-flex justify-content-end">
+        <div className="ml-auto d-flex align-items-center">
           {token ? (
             <LogoutButton />
           ) : (
@@ -83,68 +81,75 @@ export const Navbar = () => {
             <div className="offcanvas-body">
               <ul className="navbar-nav justify-content-end flex-grow-1 pe-3">
                 <li className="nav-item">
-                <button className="btn navbar">
-             <Link to={"/"}>
-              <h5>Home</h5>
-              </Link>
-              </button>
+                  <Link to={"/"}>
+                    <button className="btn navbar">
+                    <i className="fas fa-home fa-2x"></i>
+                    
+                      
+                    </button>
+                  </Link>
                 </li>
-                {token ?
+                {token ? (
                   <div>
                     <li className="nav-item">
-                    <Link to={"/compare"}>
-                      <button className="btn btn-secondary">
-                        Compare added cars
-                      </button>
-                    </Link>
+                      <Link to={"/compare"}>
+                        <button className="btn btn-secondary">
+                          Compare added cars
+                        </button>
+                      </Link>
                     </li>
                     <li>
-                    <Link to={"/userpage"}>
-                      <button className="btn btn-secondary">
+                      <Link to={"/userpage"}>
+                        <button className="btn btn-secondary">
                           Profile
+                        </button>
+                      </Link>
+                    </li>
+                    <li className="nav-item dropdown">
+                      {/* "Saved Cars" as a dropdown button */}
+                      <button
+                        className="btn btn-secondary dropdown-toggle"
+                        data-bs-toggle="dropdown"
+                      >
+                        Saved Cars
                       </button>
-                    </Link>
-                  </li>
-                  <li className="nav-item dropdown">
-                    {/* "Saved Cars" as a dropdown button */}
-                    <button
-                      className="btn btn-secondary dropdown-toggle"
-                      data-bs-toggle="dropdown"
-                    >
-                      Saved Cars
-                    </button>
-                    <ul
-                    className="dropdown-menu dropdown-menu-dark"
-                    id="drop-down-menu"
-                    >
-                    {store.saved.map((item, index) => {
-                      const car = item.car;
-                      if (store.saved.includes(car)) alert("Car is already added");
-                      else if (!car || !car.car_name) {
-                        return null;
-                      }
-                      console.log("CAR NAME FROM SAVED: ", car.car_name);
-                      return (
-                        <div key={index} style={{ display: "flex" }}>
-                          <li className="carFormatted">{car.car_name}</li>
-                          <button
-                            type="button"
-                            onClick={(e) => {
-                              if (store.compareCars.includes(car)) {
-                                return alert("Car already added");
-                              } else {
-                                actions.addCarToCompare(car);
-                              }
-                            }}
-                          >
-                            Compare
-                          </button>
-                          <button onClick={() => actions.deleteSaved(car.id)}>
-                            Unsave
-                          </button>
-                        </div>
-                      );
-                    })}
+                      <ul
+                        className="dropdown-menu dropdown-menu-dark"
+                        id="drop-down-menu"
+                      >
+                        {store.saved.map((item, index) => {
+                          const car = item.car;
+                          if (store.saved.includes(car))
+                            alert("Car is already added");
+                          else if (!car || !car.car_name) {
+                            return null;
+                          }
+                          console.log("CAR NAME FROM SAVED: ", car.car_name);
+                          return (
+                            <div key={index} style={{ display: "flex" }}>
+                              <li className="carFormatted">
+                                {car.car_name}
+                              </li>
+                              <button
+                                type="button"
+                                onClick={(e) => {
+                                  if (store.compareCars.includes(car)) {
+                                    return alert("Car already added");
+                                  } else {
+                                    actions.addCarToCompare(car);
+                                  }
+                                }}
+                              >
+                                Compare
+                              </button>
+                              <button
+                                onClick={() => actions.deleteSaved(car.id)}
+                              >
+                                Unsave
+                              </button>
+                            </div>
+                          );
+                        })}
                         <li>
                           <hr className="dropdown-divider" />
                         </li>
@@ -158,7 +163,9 @@ export const Navbar = () => {
                       </ul>
                     </li>
                   </div>
-               : "" }
+                ) : (
+                  ""
+                )}
               </ul>
             </div>
           </div>
