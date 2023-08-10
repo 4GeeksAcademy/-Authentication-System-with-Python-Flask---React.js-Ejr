@@ -50,6 +50,9 @@ const UserPage = () => {
           <p className="data-label">
             Phone Number: <span className="data-value">{user.phone_number}</span>
           </p>
+          <p className="data-label">
+            Number Of Favorites: <span className="data-value">{store.saved.length}</span>
+          </p>
         </div>
         <div>
           <div className="favorite-cars">
