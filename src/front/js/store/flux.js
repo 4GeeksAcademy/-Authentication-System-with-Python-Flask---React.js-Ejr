@@ -166,6 +166,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       deleteSaved: (carId) => {
         let store = getStore();
         let token = localStorage.getItem("token");
+      
         fetch(`${process.env.BACKEND_URL}/delete_saved`, {
           method: "DELETE",
           headers: {
@@ -180,13 +181,15 @@ const getState = ({ getStore, getActions, setStore }) => {
           .then((data) => {
             if (data.Message === "Car successfully removed from saved list") {
               const updatedSaved = store.saved.filter((savedCar) => savedCar.car.id !== carId);
-              setStore({ ...store.saved, saved: updatedSaved });
+              setStore({ ...store, saved: updatedSaved });
               console.log("Saved cars by users: ", updatedSaved);
             } else {
               console.log("Error deleting saved car:", data.Message);
-          }})
+            }
+          })
           .catch((error) => console.log(error));
       },
+      
 
       retrieveData: () => {
         let store = getStore();

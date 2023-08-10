@@ -32,7 +32,7 @@ const UserPage = () => {
 
     fetchUserData();
     actions.retrieveData();
-  }, [store.token, store.saved]);
+  }, [store.token, actions]); // Include actions in the dependency array
 
   if (loading) {
     return <p className="login-title">Loading user data...</p>;
@@ -51,7 +51,7 @@ const UserPage = () => {
             Phone Number: <span className="data-value">{user.phone_number}</span>
           </p>
           <p className="data-label">
-            Number Of Favorites: <span className="data-value">{store.saved.length}</span>
+            Number Of Favorites: <span className="data-value">{savedCars.length}</span>
           </p>
         </div>
         <div>
