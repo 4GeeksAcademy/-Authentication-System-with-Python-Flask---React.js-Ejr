@@ -1,0 +1,21 @@
+.btn-payment-content {
+  width: 85%;
+  margin: 3rem auto;
+  text-align: center;
+
+}
+
+.btn-payment {
+  width: 100%;
+}
+
+.btn-paypal {
+  width: 15rem;
+  background-color: red;
+}
+
+.btn-google {
+  width: 15rem;
+  white-space: nowrap;
+  background-color: blue;
+}

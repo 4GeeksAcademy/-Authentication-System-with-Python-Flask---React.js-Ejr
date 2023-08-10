@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 
+
 import { Home } from "./pages/home";
 import { Demo } from "./pages/demo";
 import { Single } from "./pages/single";
@@ -22,6 +23,8 @@ import Footer from "./component/Footer.jsx";
 import ContactForm from "./component/ContactForm";
 import ScrollToTop from "./component/scrollToTop";
 import { BackendURL } from "./component/backendURL";
+import { PayPalScriptProvider } from "@paypal/react-paypal-js";
+import PaymentOptions from "./component/PaymentOptions";
 
 
 
@@ -37,28 +40,32 @@ const Layout = () => {
 
     return (
         <div>
-            <BrowserRouter basename={basename}>
-                <ScrollToTop>
-                    <Navbar />
-                    <Routes>
-                        <Route element={<Home />} path="/" />
-                        <Route element={<Demo />} path="/demo" />
-                        <Route element={<Single />} path="/single/:theid" />
-                        <Route element={<SignupGeneralView />} path="/signup" />
-                        <Route element={<LogIn />} path="/login" />
-                        <Route element={<ForgotPassword />} path="/forgot_password" />
-                        <Route element={<ContactForm />} path="/contact" />
-                        <Route element={<UserPrivate />} path="/user/private" />
-                        <Route element={<BusinessUserPrivate />} path="/business_user/private" />
-                        <Route element={<Business_offers />} path="/business_offers" />
-                        <Route element={<Trips />} path="/trips" />
-                        <Route element={<Reviews />} path="/reviews" />
-                        <Route element={<TermsConditions />} path="/terms" />
-                        <Route element={<h1>Not found!</h1>} />
-                    </Routes>
-                    <Footer />
-                </ScrollToTop>
-            </BrowserRouter>
+            <PayPalScriptProvider options={{ "client-id": "AUhavhSMBFBY08HaRDVYAVtP0_opyZj2sMf3E8iVWlf5lvPQSex2_n4YyP_-1kD6LonYzrY0crPXzjXP" }}>
+
+                <BrowserRouter basename={basename}>
+                    <ScrollToTop>
+                        <Navbar />
+                        <Routes>
+                            <Route element={<Home />} path="/" />
+                            <Route element={<Demo />} path="/demo" />
+                            <Route element={<Single />} path="/single/:theid" />
+                            <Route element={<SignupGeneralView />} path="/signup" />
+                            <Route element={<LogIn />} path="/login" />
+                            <Route element={<ForgotPassword />} path="/forgot_password" />
+                            <Route element={<ContactForm />} path="/contact" />
+                            <Route element={<UserPrivate />} path="/user/private" />
+                            <Route element={<BusinessUserPrivate />} path="/business_user/private" />
+                            <Route element={<Business_offers />} path="/business_offers" />
+                            <Route element={<Trips />} path="/trips" />
+                            <Route element={<Reviews />} path="/reviews" />
+                            <Route element={<PaymentOptions />} path="/opciones-de-pago" />
+                            <Route element={<TermsConditions />} path="/terms" />
+                            <Route element={<h1>Not found!</h1>} />
+                        </Routes>
+                        <Footer />
+                    </ScrollToTop>
+                </BrowserRouter>
+            </PayPalScriptProvider>
         </div>
     );
 };
