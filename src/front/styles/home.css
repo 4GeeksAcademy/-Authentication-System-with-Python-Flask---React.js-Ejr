@@ -11,9 +11,9 @@
 .bg-image{
     margin: 0;
     height: 100vh;
-    background: linear-gradient(45deg, #ffffff, #8dcbf7aa, #6565ef92);
+    background: linear-gradient(45deg, #ffffff, #8dcbf7aa, #12aba0ba);
     background-size: 600% 600%;
-    animation: gradientLoop 3s linear
+    animation: gradientLoop 10s linear
 infinite;
 }
 @keyframes gradientLoop{
@@ -31,9 +31,11 @@ infinite;
     padding-left: 50px;
     padding-top: 6%;
     padding-bottom: 1%;
-    height: 30px;
-    background: linear-gradient(45deg, #ffffff, #8dcbf7aa, #6565ef92);
-    animation: gradientLoop 10s linear
+    height: 80px;
+    font-weight: lighter;
+    font-size:x-large;
+    background: linear-gradient(45deg, #ffffff, #8dcbf7aa, #b8ecea);
+    animation: gradientLoop 9s linear
 infinite;
 }
 @keyframes gradientLoop{
@@ -58,10 +60,13 @@ label{
 
 }
 h1{
-    color: rgba(240, 248, 255, 0.378);
-    font-size: 1500%;
-    opacity: var(80%);
-    animation: opacityLoop 5s vertical
+    color: rgba(240, 248, 255, 0.296);
+   -webkit-text-stroke-color: #17a2b8;
+    text-align: center;
+    font-size: 750%;
+    font-weight: bolder;
+    opacity: var(30%);
+    animation: opacityLoop 7s vertical
 infinite;
 }
 @keyframes opacityLoop{
@@ -76,8 +81,14 @@ infinite;
         }
 }
 .searchbutton{
-outline-color: aliceblue;
-border-top-right-radius: 30%;
+background-color: rgba(128, 128, 128, 0.309);
+mask-border-width: 20px;
+border-color: rgba(128, 128, 128, 0.306);
+outline-color: #ffffff68;
+width: 95px;
+height: 45px;
+font-size:large;
+font-weight: bold;
 }
 
 .text-success {
@@ -92,3 +103,24 @@ border-top-right-radius: 30%;
   color: #ffc107;
 }
 
+about-section{
+border-top-color: crimson;
+border-bottom-color: darkgreen;
+border-left-color: #ffc107;
+border-right-color: blue;
+border-style:solid;
+border-width: thin;
+}
+h2{
+    color: darkgrey;
+    font-weight: lighter;
+    font-size: xx-large;
+}
+my-navbar{
+    background: linear-gradient(45deg, #ffffff, #8dcbf7aa, #b8ecea);
+}
+navbar-brand{
+    text-underline-position:above;
+    text-decoration-color: #ffffff;
+    align-content:start;
+}
