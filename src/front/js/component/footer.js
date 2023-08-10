@@ -63,10 +63,9 @@ export const Footer = () => (
           <div className="row d-flex justify-content-center">
             <div className="col-lg-8">
               <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt
-                distinctio earum repellat quaerat voluptatibus placeat nam,
-                commodi optio pariatur est quia magnam eum harum corrupti
-                dicta, aliquam sequi voluptate quas.
+                This is a project developed with time and dedication by a team of students from 4Geeks Academy!
+                We put plenty of time and effort into building this project and we are proud to present you with
+                CarFinder!
               </p>
             </div>
           </div>
@@ -97,12 +96,8 @@ export const Footer = () => (
         {/* Section: Social */}
       </div>
       {/* Grid container */}
-
-      {/* Copyright */}
-      <div className="text-center p-3" style={{ backgroundColor: "rgba(0, 0, 0, 0.2)" }}>
-        © 2020 Copyright:
-        <a className="text-white" href="https://mdbootstrap.com/">MDBootstrap.com</a>
-      </div>
+     
+  
       {/* Copyright */}
     </footer>
     {/* Footer */}

@@ -1,28 +1,28 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Context } from "../store/appContext";
 import "../../styles/userPageStyles.css";
+import CarCards from "../component/CarCards";
 
 const UserPage = () => {
-  const { store } = useContext(Context);
+  const { store, actions } = useContext(Context);
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchUser = async () => {
+    const fetchUserData = async () => {
       try {
         const response = await fetch(`${process.env.BACKEND_URL}/private`, {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`
-          }
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
         });
 
         if (!response.ok) {
           throw new Error("Failed to fetch user data");
         }
 
-        const data = await response.json();
-        console.log("User Data:", data); // For debugging (optional)
-        setUser(data);
+        const userData = await response.json();
+        setUser(userData);
         setLoading(false);
       } catch (error) {
         console.error("Error fetching user data", error);
@@ -30,27 +30,41 @@ const UserPage = () => {
       }
     };
 
-    fetchUser();
+    fetchUserData();
+    actions.retrieveData();
   }, [store.token]);
 
-  // Show loading message while fetching user data
   if (loading) {
     return <p className="login-title">Loading user data...</p>;
   }
 
-  // If user data is available, display it
   if (user) {
+    const savedCars = user.saved.map(savedCar => savedCar.car);
     return (
-      <div className="user-container">
-        <h2 className="user-title">Welcome, {user.user}</h2>
-        <p className="data-label">Email: <span className="data-value">{user.email}</span></p>
-        <p className="data-label">Phone Number: <span className="data-value">{user.phone_number}</span></p>
-        {/* Render other user data here */}
+      <div>
+        <div className="user-container">
+          <h2 className="user-title">Welcome, {user.user}</h2>
+          <p className="data-label">
+            Email: <span className="data-value">{user.email}</span>
+          </p>
+          <p className="data-label">
+            Phone Number: <span className="data-value">{user.phone_number}</span>
+          </p>
+          <p className="data-label">
+            Number Of Favorites: <span className="data-value">{store.saved.length}</span>
+          </p>
+        </div>
+        <div>
+          <div className="favorite-cars">
+            <center><h3>Saved Favorite Cars</h3></center>
+            <CarCards cars={savedCars} />
+          </div>
+          {/* Render other user data here */}
+        </div>
       </div>
     );
   }
 
-  // If user data is not available, show an error message
   return <p className="login-title">Error fetching user data</p>;
 };
 
