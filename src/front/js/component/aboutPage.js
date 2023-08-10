@@ -10,7 +10,7 @@ const AboutPage = () => {
         <div className="container py-5">
           <div className="row h-100 align-items-center py-5">
             <div className="col-lg-6">
-              <h1 className="display-4">About us page</h1>
+              <h2 className="display-4">About Us</h2>
               <p className="lead text-muted mb-0">
                 Find and compare cars you like! It makes it easier to purchase your next car with ease.
               </p>

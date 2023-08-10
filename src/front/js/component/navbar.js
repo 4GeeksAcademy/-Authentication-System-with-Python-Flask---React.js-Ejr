@@ -41,7 +41,7 @@ export const Navbar = () => {
           ) : (
             <div className="d-flex">
               <Link to={"/signup"}>
-                <button className="btn btn-success">
+                <button className="signup">
                   <h5>Sign Up</h5>
                 </button>
               </Link>

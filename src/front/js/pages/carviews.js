@@ -45,7 +45,7 @@ const CarViews = () => {
   return (
     <div>
       <div className="cardsTitleHolder text-light bg-opacity-50 p-3" style={{color: "#0D0D0D"}}>
-        <h1 className="descriptionTitle text-center m-0" style={{color: '#004f6d'}}>Cars Catalog</h1>
+        <h1 className="descriptionTitle text-center m-0" style={{color: 'white'}}>Cars Catalog</h1>
       </div>
       <div className="">
               <div>
