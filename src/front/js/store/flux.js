@@ -711,11 +711,11 @@ const getState = ({ getStore, getActions, setStore }) => {
             return responseData.review;
           } else if (response.status === 404) {
             // Handle offer not found error
-            console.log("Offer not found");
+            console.log("Review not found");
             return null;
           } else {
             // Handle other errors
-            console.log("Error in fetching offer");
+            console.log("Error in fetching review");
             return null;
           }
         } catch (err) {

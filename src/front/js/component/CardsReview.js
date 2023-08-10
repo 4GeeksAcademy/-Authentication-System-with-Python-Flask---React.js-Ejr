@@ -28,6 +28,9 @@ const CardsReview = ({ searchQuery }) => {
               className="card card-review text-white mt-4 container"
               style={{ height: "16rem", width: "20rem" }}
             >
+            <img src={review.review_image} className="card-img-top" alt="..."></img>
+
+
               <div className="div-title-review">
                 {editContentId === review.id ? (
                   <input

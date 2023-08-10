@@ -175,10 +175,9 @@ class Favorites(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
     trip_id = db.Column(db.Integer, db.ForeignKey('trip.id'), nullable=True)
-    offer_id = db.Column(db.Integer, db.ForeignKey(
-        'offers.id'), nullable=True)
-    review_id = db.Column(
-        db.Integer, db.ForeignKey('review.id'), nullable=True)
+    offer_id = db.Column(db.Integer, db.ForeignKey('offers.id'), nullable=True)
+    review_id = db.Column(db.Integer, db.ForeignKey('review.id'), nullable=True)
+
 
     def __repr__(self):
         return '<Favorites %r>' % self.id

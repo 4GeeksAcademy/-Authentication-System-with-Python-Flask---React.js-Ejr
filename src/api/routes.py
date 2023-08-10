@@ -542,7 +542,7 @@ def delete_trip(trip_id):
 def get_all_reviews():
     reviews = Review.query.all()
     serialized_reviews = [review.serialize() for review in reviews]
-    return jsonify(serialized_reviews)
+    return jsonify(serialized_reviews), 200
 
 
 @api.route('/review/<int:review_id>', methods=['GET'])
@@ -566,6 +566,7 @@ def create_review():
             user_id=user.id,
             title=data['title'],
             comment_text=data['comment_text'],
+            review_image=data['review_image'],
         )
         db.session.add(review)
         db.session.commit()
@@ -587,6 +588,8 @@ def update_review(review_id):
         review.trip_id = data['trip_id']
         review.title = data['title']
         review.comment_text = data['comment_text']
+        review.review_image=data['review_image'],
+
         db.session.commit()
         return jsonify(review.serialize()), 200
     except KeyError:
