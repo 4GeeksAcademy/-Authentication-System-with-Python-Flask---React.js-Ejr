@@ -20,29 +20,6 @@ export const Footer = () => (
             </div>
             {/* Grid column */}
 
-            {/* Grid column */}
-            <div className="col-md-2">
-              <h6 className="text-uppercase font-weight-bold">
-                <a href="#!" className="text-white">Products</a>
-              </h6>
-            </div>
-            {/* Grid column */}
-
-            {/* Grid column */}
-            <div className="col-md-2">
-              <h6 className="text-uppercase font-weight-bold">
-                <a href="#!" className="text-white">Awards</a>
-              </h6>
-            </div>
-            {/* Grid column */}
-
-            {/* Grid column */}
-            <div className="col-md-2">
-              <h6 className="text-uppercase font-weight-bold">
-                <a href="#!" className="text-white">Help</a>
-              </h6>
-            </div>
-            {/* Grid column */}
 
             {/* Grid column */}
             <div className="col-md-2">

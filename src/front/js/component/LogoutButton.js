@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { Context } from '../store/appContext';
 import { Link } from 'react-router-dom';
+import "../../styles/navbar.css";
 
 
 const LogoutButton = () => {
@@ -30,7 +31,7 @@ const LogoutButton = () => {
   return (
     <div>
       <Link to='/'>
-        <button className='btn btn-danger' onClick={handleLogout}>
+        <button className='logout' onClick={handleLogout}>
           Logout
         </button>
       </Link>
