@@ -3,21 +3,16 @@ import { Context } from '../store/appContext';
 import useReviewManagement from "../hooks/useReviewManagement";
 import Likes from './Likes';
 import FavoriteReview from './FavoriteReview';
-
-
 const AllFavoritesReviews = ({ searchQuery }) => {
   const { store, actions } = useContext(Context)
   const { handleUpdate, handleSave, handleDelete, favorites, reviews, editContent, editContentId, editTitle, handleEditContent } = useReviewManagement();
-
   useLayoutEffect(() => {
     actions.getFavoriteReview()
   }, [])
-
   return (
     <div>
       {/* Publicar las cartas que ya existen */}
       <div className="cards-review">
-
         {store.favorites && store.favorites.length >= 1 && store.favorites
           .filter(
             (favorite) =>
@@ -62,9 +57,7 @@ const AllFavoritesReviews = ({ searchQuery }) => {
               ) : (
                 <p className="card-text">{favorite.reviews.comment_text}</p>
               )}
-
               {store.user.id === favorite.user_id && (
-
                 <div className="btn-options d-flex justify-content-end">
                   <button
                     className="btn-up-review"
@@ -93,5 +86,4 @@ const AllFavoritesReviews = ({ searchQuery }) => {
     </div>
   );
 };
-
 export default AllFavoritesReviews;
