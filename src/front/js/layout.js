@@ -25,6 +25,7 @@ import Footer from "./component/Footer.jsx";
 import ContactForm from "./component/ContactForm";
 import ScrollToTop from "./component/scrollToTop";
 import { BackendURL } from "./component/backendURL";
+import SingleReviewView from "./pages/SingleReviewView.jsx";
 
 
 
@@ -54,11 +55,13 @@ const Layout = () => {
                         <Route element={<ContactForm />} path="/contact" />
                         <Route element={<UserPrivate />} path="/user/private" />
                         <Route element={<BusinessUserPrivate />} path="/business_user/private" />
-                        <Route element={<Business_offers />} path="/business_offers" />
-                        <Route element={<SingleOfferView />} path="/single-offer/:offer_id" />
+                        <Route element={<Business_offers />} path="/offers" />
+                        <Route element={<SingleOfferView />} path="/offer/:offer_id" />
+                        <Route element={<SingleReviewView />} path="/review/:review_id" />
                         <Route element={<Trips />} path="/trips" />
                         <Route element={<Reviews />} path="/reviews" />
                         <Route element={<TermsConditions />} path="/terms" />
+                        {/* <Route element={<PaymentOptions />} path="/opciones-de-pago" /> */}
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
                     <Footer />

@@ -346,7 +346,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       getOfferById: async (offerId) => {
         try {
-          const response = await fetch(API_URL + `/api/offers/${offerId}`, {
+          const response = await fetch(API_URL + `/api/offer/${offerId}`, {
             headers: {
               "Content-Type": "application/json",
             },
@@ -356,8 +356,8 @@ const getState = ({ getStore, getActions, setStore }) => {
       
           if (response.ok) {
             const responseData = await response.json(); // Parse the response body as JSON
-            console.log(responseData);
-            return responseData;
+            console.log(responseData.offer);
+            return responseData.offer;
           } else if (response.status === 404) {
             // Handle offer not found error
             console.log("Offer not found");
@@ -498,7 +498,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       getTripById: async (tripId) => {
         try {
-          const response = await fetch(API_URL + `/api/trips/${tripId}`, {
+          const response = await fetch(API_URL + `/api/trip/${tripId}`, {
             method: "GET",
           });
 
@@ -525,7 +525,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       createTrip: async (data) => {
         try {
-          const response = await fetch(API_URL + "/api/trip", {
+          const response = await fetch(API_URL + "/api/trips", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -694,6 +694,36 @@ const getState = ({ getStore, getActions, setStore }) => {
           return false;
         }
       },
+
+      getReviewById: async (reviewId) => {
+        try {
+          const response = await fetch(API_URL + `/api/review/${reviewId}`, {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          });
+          
+          console.log(response);
+      
+          if (response.ok) {
+            const responseData = await response.json(); // Parse the response body as JSON
+            console.log(responseData.offer);
+            return responseData.review;
+          } else if (response.status === 404) {
+            // Handle offer not found error
+            console.log("Offer not found");
+            return null;
+          } else {
+            // Handle other errors
+            console.log("Error in fetching offer");
+            return null;
+          }
+        } catch (err) {
+          console.log(err);
+          return null; // Handle other errors, return null by default
+        }
+      },
+
       create_review: async (formData) => {
         try {
           const token = localStorage.getItem("myToken");

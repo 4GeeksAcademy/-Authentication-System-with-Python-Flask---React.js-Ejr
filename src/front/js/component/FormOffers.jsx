@@ -5,11 +5,13 @@ import * as Yup from 'yup';
 import axios from 'axios';
 import ImagePreview from './ImagePreview.jsx';
 
+
 const FormOffers = () => {
     const { store, actions } = useContext(Context);
     const [selectedFile, setSelectedFile] = useState(null);
 
     return (
+        
         <Formik
             initialValues={{
                 offer_title: "",
@@ -23,11 +25,11 @@ const FormOffers = () => {
             validationSchema={Yup.object({
                 offer_title: Yup.string()
                     .min(10, 'Debe tener 10 caracteres o más')
-                    .matches(/^[A-ZÁÉÍÓÚÑ][A-Za-zÁÉÍÓÚáéíóúÑñ0-9,.*!¡?¿\s]*$/, 'Debe comenzar con una letra mayúscula')
+                    .matches(/^[A-ZÁÉÍÓÚÑ][A-Za-zÁÉÍÓÚáéíóúÑñ0-9,.*!¡?¿\s ]*$/, 'Debe comenzar con una letra mayúscula')
                     .required('Campo obligatorio!'),
                 offer_description: Yup.string()
                     .min(50, 'Debe tener 50 caracteres o más')
-                    .matches(/^[A-ZÁÉÍÓÚÑ][A-Za-zÁÉÍÓÚáéíóúÑñ0-9,.*!¡?¿\s]*$/, 'Debe comenzar con una letra mayúscula')
+                    .matches(/^[A-ZÁÉÍÓÚÑ][A-Za-zÁÉÍÓÚáéíóúÑñ0-9,.*!¡?¿\s ]*$/, 'Debe comenzar con una letra mayúscula')
                     .required('Campo obligatorio!'),
                 country: Yup.string()
                     .min(2, 'Debe tener 2 caracteres o más')
@@ -71,6 +73,9 @@ const FormOffers = () => {
                     console.log("Form submitted successfully!");
                     alert('Tu oferta se publicó correctamente');
                     setStatus({ success: true });
+                    setSelectedFile(null);
+                    window.location.reload();
+                    
                 } catch (error) {
                     console.error("Error submitting form:", error);
                     alert("Alguna cosa salió mal");

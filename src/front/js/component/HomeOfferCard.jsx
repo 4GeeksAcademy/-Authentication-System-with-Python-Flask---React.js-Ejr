@@ -17,9 +17,9 @@ const HomeOfferCard = () => {
             {store.offers
                 .slice(0, 10)
                 .map((offer) =>
-                    <div key={offer.id} className="card card-home-offer bg-dark text-white mt-4 container">
-                        <Link to={`/single-offer/${offer.id}`}>
-                        <img src={offer.offer_image} className="card-img" alt="..." style={{}}></img>
+                    <div key={offer.id} className="card card-home-offer bg-dark text-white mt-4 container" style={{maxWidth: "400px", maxHeight: "500px" }} >
+                        <Link to={`/offer/${offer.id}`}>
+                        <img src={offer.offer_image} className="card-img" alt="..." style={{maxWidth: "400px", maxHeight: "200px" }}></img>
                         <div className="card-img-overlay">
                             <h5 className="home-offer-title">{offer.offer_title}</h5>
                             {/* <p className="card-text">{offer.offer_description}</p> */}
