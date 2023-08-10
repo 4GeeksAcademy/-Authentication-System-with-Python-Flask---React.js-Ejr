@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useLayoutEffect } from 'react';
 import { Context } from '../store/appContext';
 import useReviewManagement from "../hooks/useReviewManagement";
 import Likes from './Likes';
@@ -18,7 +18,7 @@ const AllFavoritesReviews = ({ searchQuery }) => {
       {/* Publicar las cartas que ya existen */}
       <div className="cards-review">
 
-        {store.favorites
+        {store.favorites && store.favorites.length >= 1 && store.favorites
           .filter(
             (favorite) =>
               favorite.reviews.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
