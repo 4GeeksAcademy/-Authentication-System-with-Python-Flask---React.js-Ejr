@@ -24,9 +24,9 @@ export const Home = () => {
       <LitlleSlide />
       <FilterMenu />
       <PubSlide />
-      <HomeReviewCard />
       <HomeOfferCard />
-      <AboutUs />
+      <HomeReviewCard />
+      {/* <AboutUs /> */}
 
     </>
   );

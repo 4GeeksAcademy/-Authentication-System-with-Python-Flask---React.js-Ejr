@@ -13,7 +13,7 @@ const LitlleSlide = () => {
                             <h5 className='title-slide'>First slide label</h5>
                             <p className='desc'>Some representative placeholder content for the first slide.</p>
 
-                            <Slogan />
+                            {/* <Slogan /> */}
 
                         </div>
                     </div>
