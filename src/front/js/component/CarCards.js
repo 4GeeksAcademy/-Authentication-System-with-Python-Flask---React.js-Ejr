@@ -67,11 +67,9 @@ const CarCards = ({ cars }) => {
                         <button 
                         className='favoritesCards'
                         onClick={() => {
-                          if (!store.saved.includes(car.id)) {
-                            return alert("Car's not on Saved List");
-                          } else {
+
                             actions.deleteSaved(car.id);
-                          }
+                          
                         }}>
                           <i className="fa-solid fa-thumbs-down" style={{ color: "#ffd43b", padding: "0" }}/>
                         </button>

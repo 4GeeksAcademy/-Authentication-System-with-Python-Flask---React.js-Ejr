@@ -90,25 +90,34 @@ export const Navbar = () => {
                     </Link>
                   </button>
                 </li>
-                <li className="nav-item">
-                  <Link to={"/compare"}>
-                    <button className="btn btn-secondary">
-                      Compare added cars
+                {token ?
+                  <div>
+                    <li className="nav-item">
+                    <Link to={"/compare"}>
+                      <button className="btn btn-secondary">
+                        Compare added cars
+                      </button>
+                    </Link>
+                    </li>
+                    <li>
+                    <Link to={"/userpage"}>
+                      <button className="btn btn-secondary">
+                          Profile
+                      </button>
+                    </Link>
+                  </li>
+                  <li className="nav-item dropdown">
+                    {/* "Saved Cars" as a dropdown button */}
+                    <button
+                      className="btn btn-secondary dropdown-toggle"
+                      data-bs-toggle="dropdown"
+                    >
+                      Saved Cars
                     </button>
-                  </Link>
-                </li>
-                <li className="nav-item dropdown">
-                  {/* "Saved Cars" as a dropdown button */}
-                  <button
-                    className="btn btn-secondary dropdown-toggle"
-                    data-bs-toggle="dropdown"
-                  >
-                    Saved Cars
-                  </button>
-                  <ul
+                    <ul
                     className="dropdown-menu dropdown-menu-dark"
                     id="drop-down-menu"
-                  >
+                    >
                     {store.saved.map((item, index) => {
                       const car = item.car;
                       if (store.saved.includes(car)) alert("Car is already added");
@@ -137,18 +146,20 @@ export const Navbar = () => {
                         </div>
                       );
                     })}
-                    <li>
-                      <hr className="dropdown-divider" />
+                        <li>
+                          <hr className="dropdown-divider" />
+                        </li>
+                        <Link to={"/compare"}>
+                          <li className="dropdown-item" href="#">
+                            <button className="btn btn-success">
+                              Compare selected saved cars (3 MAX.)
+                            </button>
+                          </li>
+                        </Link>
+                      </ul>
                     </li>
-                    <Link to={"/compare"}>
-                      <li className="dropdown-item" href="#">
-                        <button className="btn btn-success">
-                          Compare selected saved cars (3 MAX.)
-                        </button>
-                      </li>
-                    </Link>
-                  </ul>
-                </li>
+                  </div>
+               : "" }
               </ul>
             </div>
           </div>
