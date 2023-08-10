@@ -29,7 +29,7 @@ const UserPage = () => {
         setLoading(false);
       }
     };
-
+    
     fetchUser();
   }, [store.token]);
 
