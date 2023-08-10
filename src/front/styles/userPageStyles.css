@@ -3,7 +3,7 @@ body {
   margin: 0;
   padding: 0;
   font-family: Arial, sans-serif;
-  background-color: #333; /* Added background color */
+  background-color: #333;
 }
 
 /* User Page Container */
@@ -12,14 +12,33 @@ body {
   margin: 50px auto;
   padding: 20px;
   border-radius: 25px;
-  box-shadow: 0 0 20px rgba(0, 251, 255, 0.551); /* Added shadow */
-  background-color: #0000005b; /* Changed background color */
-  color: #fff; /* Changed text color to white */
+  background-color: rgba(0, 0, 0, 0.36);
+  color: #fff;
+  position: relative; /* Add position relative for shadow animation */
+}
+
+/* Animation for pulsating glowing effect */
+@keyframes pulsate {
+  0% {
+    box-shadow: 0 0 25px rgba(0, 251, 255, 0.751);
+  }
+  50% {
+    box-shadow: 0 0 35px rgba(0, 251, 255, 0.951);
+  }
+  100% {
+    box-shadow: 0 0 25px rgba(0, 251, 255, 0.751);
+  }
+}
+
+/* Apply the animation to the user-container */
+.user-container {
+  animation: pulsate 2s infinite; /* Faster animation duration */
 }
 
 .favorite-cars h3 {
   color: white;
 }
+
 /* User Title */
 .user-title {
   text-align: center;
