@@ -5,6 +5,7 @@ import AllFavoritesReviews from './AllFavoritesReviews';
 
 
 const MenuReviews = ({ searchQuery }) => {
+
   return (
     <div className='container mt-5'>
       <ul className="nav nav-tabs menu-review" id="myTab" role="tablist">

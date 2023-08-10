@@ -12,7 +12,7 @@ const PaypalCheckoutButton = (props) => {
   }
 
   if (paidFor) {
-    alert("Thank You for purchasing from Eazy2Code");
+    alert("Disfruta del viaje!");
   }
 
   if (error) {
