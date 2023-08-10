@@ -11,9 +11,9 @@ body {
   max-width: 600px;
   margin: 50px auto;
   padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3); /* Added shadow */
-  background-color: #444; /* Changed background color */
+  border-radius: 25px;
+  box-shadow: 0 0 20px rgba(0, 251, 255, 0.551); /* Added shadow */
+  background-color: #0000005b; /* Changed background color */
   color: #fff; /* Changed text color to white */
 }
 
