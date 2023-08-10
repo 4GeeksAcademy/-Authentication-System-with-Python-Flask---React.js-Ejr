@@ -16,6 +16,8 @@ const CarCards = ({ cars }) => {
     navigate("/about/" + carId);
   };
 
+  console.log("saved cars", store.saved)
+
   return (
     <div className="container-fluid row m-0 w-100 justify-content-center" style={{ background: '#A6A4A4' }}>
       {cars.map((car, index) => {
@@ -65,11 +67,9 @@ const CarCards = ({ cars }) => {
                         <button 
                         className='favoritesCards'
                         onClick={() => {
-                          if (!store.saved.includes(car.id)) {
-                            return alert("Car's not on Saved List");
-                          } else {
+
                             actions.deleteSaved(car.id);
-                          }
+                          
                         }}>
                           <i className="fa-solid fa-thumbs-down" style={{ color: "#ffd43b", padding: "0" }}/>
                         </button>
