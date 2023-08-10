@@ -9,7 +9,7 @@ const AllFavoritesReviews = ({ searchQuery }) => {
   const { store, actions } = useContext(Context)
   const { handleUpdate, handleSave, handleDelete, favorites, reviews, editContent, editContentId, editTitle, handleEditContent } = useReviewManagement();
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     actions.getFavoriteReview()
   }, [])
 

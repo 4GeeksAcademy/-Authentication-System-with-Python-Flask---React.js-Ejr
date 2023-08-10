@@ -284,13 +284,17 @@ def update_business_profile(business_id):
         data = request.get_json()
 
         # Update business profile data
-        business_user.business_name = data.get('name_business', business_user.business_name)
+        business_user.business_name = data.get(
+            'name_business', business_user.business_name)
         business_user.email = data.get('email', business_user.email)
-        business_user.prefix_telephone = data.get("prefix_telephone", business_user.prefix_telephone)
-        business_user.telephone = data.get("telephone", business_user.telephone)
+        business_user.prefix_telephone = data.get(
+            "prefix_telephone", business_user.prefix_telephone)
+        business_user.telephone = data.get(
+            "telephone", business_user.telephone)
         business_user.nif = data.get('nif', business_user.nif)
         business_user.address = data.get('address', business_user.address)
-        business_user.payment_method = data.get('payment_method', business_user.payment_method)
+        business_user.payment_method = data.get(
+            'payment_method', business_user.payment_method)
 
         db.session.commit()
 
@@ -342,15 +346,15 @@ def get_token():
 def get_all_offers():
     offers = Offers.query.all()
     serialized_offers = [offer.serialize() for offer in offers]
-    return jsonify(offers=serialized_offers)
+    return jsonify(offers=serialized_offers), 200
 
 
 @api.route('/offer/<int:offer_id>', methods=['GET'])
 def get_offer(offer_id):
-    offer = Offers.query.get(offer_id)
+    offer = Offers.query.filter_by(id=offer_id).first()
     if not offer:
         return jsonify({"message": "Offer not found"}), 404
-    return jsonify(offer.serialize())
+    return jsonify(offer=offer.serialize()), 200
 
 
 @api.route('/offers', methods=['POST'])
@@ -424,7 +428,7 @@ def delete_offer(offer_id):
 
 # Trip routes
 
-@api.route('/trip', methods=['GET'])
+@api.route('/trips', methods=['GET'])
 def get_all_trips():
     trips = Trip.query.all()
     serialized_trips = [trip.serialize() for trip in trips]
@@ -439,7 +443,7 @@ def get_trip(trip_id):
     return jsonify(trip.serialize())
 
 
-@api.route('/trip', methods=['POST'])
+@api.route('/trips', methods=['POST'])
 @jwt_required()
 def create_trip():
     data = request.get_json()
@@ -543,10 +547,10 @@ def get_all_reviews():
 
 @api.route('/review/<int:review_id>', methods=['GET'])
 def get_review(review_id):
-    review = Review.query.get(review_id)
+    review = Review.query.filter_by(id=review_id).first()
     if not review:
         return jsonify({"message": "Review not found"}), 404
-    return jsonify(review.serialize())
+    return jsonify(review=review.serialize()), 200
 
 
 @api.route('/review', methods=['POST'])
@@ -644,12 +648,9 @@ def get_favorites_for_user():
     user = User.query.filter_by(email=current_user_id).first()
     if user is None:
         return jsonify({"error": "User not found"}), 404
-    user_favorites = Favorites.query.filter_by(user_id =user.id).all()
-    user_favorites = [favorite.serialize() for favorite in user_favorites ]
+    user_favorites = Favorites.query.filter_by(user_id=user.id).all()
+    user_favorites = [favorite.serialize() for favorite in user_favorites]
     return jsonify(user_favorites), 200
-
-
-
 
 
 @api.route('/reviews/favorites/<int:review_id>', methods=['POST'])

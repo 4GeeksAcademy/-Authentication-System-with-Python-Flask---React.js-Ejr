@@ -32,7 +32,7 @@ const SignUpBusiness = () => {
         nif: Yup.string().min(2, 'Debe tener 2 caracteres o más').required('Campo obligatorio'),
         address: Yup.string()
         .min(10, 'Debe tener 10 caracteres o más')
-        .matches(/^[A-ZÁÉÍÓÚÑ][A-Za-zÁÉÍÓÚáéíóúÑñ0-9,.*!¡?¿\s]*$/, 'Debe comenzar con una letra mayúscula')
+        .matches(/^[A-ZÁÉÍÓÚÑ][A-Za-zÁÉÍÓÚáéíóúÑñ0-9,.*!¡?¿\s- ]*$/, 'Debe comenzar con una letra mayúscula')
         .required('Campo obligatorio!'),
         payment_method: Yup.string().min(2, 'Debe tener 2 caracteres o más').required('Campo obligatorio'),
         acceptTerms: Yup.boolean()
@@ -89,10 +89,19 @@ const SignUpBusiness = () => {
               <Field name="address" type="text" className="form-control" />
               <ErrorMessage name="address" />
             </div>
-            <div className="mb-3">
+            <div className="mb-3" id="payment-radio" role="group" aria-labelledby="payment-radio">
               <label htmlFor="payment_method" className="form-label">Método de pago</label>
-              <Field name="payment_method" type="text" className="form-control" />
-              <ErrorMessage name="payment_method" />
+              <div>
+                <label>
+                  <Field type="radio" name="payment_method" value="Paypal" className="form-check-input" />
+                  Paypal
+                </label>
+                <label>
+                  <Field type="radio" name="payment_method" value="GooglePay" className="form-check-input ms-4" />
+                  Google Pay
+                </label>
+              </div>
+              <ErrorMessage name="payment_method" component="div" className="error-message" />
             </div>
             <div>
               <label>

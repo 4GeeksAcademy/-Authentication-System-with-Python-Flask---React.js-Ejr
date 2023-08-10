@@ -9,6 +9,7 @@ const useReviewManagement = () => {
 
   useEffect(() => {
     actions.getReviews();
+    actions.getFavoriteReview()
     console.log("Success fetch for CardsReview");
   }, []);
 
@@ -50,6 +51,7 @@ const useReviewManagement = () => {
     handleDelete,
     handleEditContent,
     reviews: store.reviews,
+    favorites: store.favorites
   };
 };
 

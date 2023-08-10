@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 
+
 import { Home } from "./pages/home";
 import { Demo } from "./pages/demo";
 import { Single } from "./pages/single";
@@ -14,7 +15,9 @@ import Trips from "./pages/Trips.jsx";
 import SignupGeneralView from "./pages/SignupGeneralView.jsx";
 import Reviews from "./pages/Reviews";
 import TermsConditions from "./pages/TermsConditions.jsx";
-import Favorites from "./pages/Favorites";
+import SingleReviewView from "./pages/SingleReviewView.jsx";
+import SingleOfferView from "./pages/SingleOfferView.jsx";
+
 
 import injectContext from "./store/appContext";
 
@@ -23,6 +26,9 @@ import Footer from "./component/Footer.jsx";
 import ContactForm from "./component/ContactForm";
 import ScrollToTop from "./component/scrollToTop";
 import { BackendURL } from "./component/backendURL";
+import PaymentOptions from "./component/PaymentOptions";
+import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
+
 
 
 
@@ -38,6 +44,8 @@ const Layout = () => {
 
     return (
         <div>
+
+      <PayPalScriptProvider options={{ "client-id": "AUhavhSMBFBY08HaRDVYAVtP0_opyZj2sMf3E8iVWlf5lvPQSex2_n4YyP_-1kD6LonYzrY0crPXzjXP" }}>
             <BrowserRouter basename={basename}>
                 <ScrollToTop>
                     <Navbar />
@@ -50,17 +58,20 @@ const Layout = () => {
                         <Route element={<ForgotPassword />} path="/forgot_password" />
                         <Route element={<ContactForm />} path="/contact" />
                         <Route element={<UserPrivate />} path="/user/private" />
-                        <Route element={<Favorites />} path="/favoritos" />
                         <Route element={<BusinessUserPrivate />} path="/business_user/private" />
-                        <Route element={<Business_offers />} path="/business_offers" />
+                        <Route element={<Business_offers />} path="/offers" />
+                        <Route element={<SingleOfferView />} path="/offer/:offer_id" />
+                        <Route element={<SingleReviewView />} path="/review/:review_id" />
                         <Route element={<Trips />} path="/trips" />
                         <Route element={<Reviews />} path="/reviews" />
                         <Route element={<TermsConditions />} path="/terms" />
+                        <Route element={<PaymentOptions />} path="/opciones-de-pago" />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
                     <Footer />
                 </ScrollToTop>
             </BrowserRouter>
+          </PayPalScriptProvider>
         </div>
     );
 };

@@ -21,14 +21,12 @@ export const Home = () => {
 
       {/* <Slogan /> */}
       {/* <AboutUs /> */}
-
-
       <LitlleSlide />
       <FilterMenu />
       <PubSlide />
-      <HomeReviewCard />
       <HomeOfferCard />
-      <AboutUs />
+      <HomeReviewCard />
+      {/* <AboutUs /> */}
 
     </>
   );
