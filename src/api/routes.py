@@ -428,7 +428,7 @@ def delete_offer(offer_id):
 
 # Trip routes
 
-@api.route('/trip', methods=['GET'])
+@api.route('/trips', methods=['GET'])
 def get_all_trips():
     trips = Trip.query.all()
     serialized_trips = [trip.serialize() for trip in trips]
@@ -443,7 +443,7 @@ def get_trip(trip_id):
     return jsonify(trip.serialize())
 
 
-@api.route('/trip', methods=['POST'])
+@api.route('/trips', methods=['POST'])
 @jwt_required()
 def create_trip():
     data = request.get_json()
@@ -547,10 +547,10 @@ def get_all_reviews():
 
 @api.route('/review/<int:review_id>', methods=['GET'])
 def get_review(review_id):
-    review = Review.query.get(review_id)
+    review = Review.query.filter_by(id=review_id).first()
     if not review:
         return jsonify({"message": "Review not found"}), 404
-    return jsonify(review.serialize())
+    return jsonify(review=review.serialize()), 200
 
 
 @api.route('/review', methods=['POST'])

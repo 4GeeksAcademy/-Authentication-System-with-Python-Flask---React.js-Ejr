@@ -15,7 +15,7 @@ import Trips from "./pages/Trips.jsx";
 import SignupGeneralView from "./pages/SignupGeneralView.jsx";
 import Reviews from "./pages/Reviews";
 import TermsConditions from "./pages/TermsConditions.jsx";
-
+import SingleReviewView from "./pages/SingleReviewView.jsx";
 import SingleOfferView from "./pages/SingleOfferView.jsx";
 
 
@@ -33,6 +33,7 @@ import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 
 
 
+
 //create your first component
 const Layout = () => {
     //the basename is used when your project is published in a subdirectory and not in the root of the domain
@@ -43,32 +44,34 @@ const Layout = () => {
 
     return (
         <div>
-            <PayPalScriptProvider options={{ "client-id": "AUhavhSMBFBY08HaRDVYAVtP0_opyZj2sMf3E8iVWlf5lvPQSex2_n4YyP_-1kD6LonYzrY0crPXzjXP" }}>
 
-                <BrowserRouter basename={basename}>
-                    <ScrollToTop>
-                        <Navbar />
-                        <Routes>
-                            <Route element={<Home />} path="/" />
-                            <Route element={<Demo />} path="/demo" />
-                            <Route element={<Single />} path="/single/:theid" />
-                            <Route element={<SignupGeneralView />} path="/signup" />
-                            <Route element={<LogIn />} path="/login" />
-                            <Route element={<ForgotPassword />} path="/forgot_password" />
-                            <Route element={<ContactForm />} path="/contact" />
-                            <Route element={<UserPrivate />} path="/user/private" />
-                            <Route element={<BusinessUserPrivate />} path="/business_user/private" />
-                            <Route element={<Business_offers />} path="/business_offers" />
-                            <Route element={<Trips />} path="/trips" />
-                            <Route element={<PaymentOptions />} path="/opciones-de-pago" />
-                            <Route element={<Reviews />} path="/reviews" />
-                            <Route element={<TermsConditions />} path="/terms" />
-                            <Route element={<h1>Not found!</h1>} />
-                        </Routes>
-                        <Footer />
-                    </ScrollToTop>
-                </BrowserRouter>
-            </PayPalScriptProvider>
+      <PayPalScriptProvider options={{ "client-id": "AUhavhSMBFBY08HaRDVYAVtP0_opyZj2sMf3E8iVWlf5lvPQSex2_n4YyP_-1kD6LonYzrY0crPXzjXP" }}>
+            <BrowserRouter basename={basename}>
+                <ScrollToTop>
+                    <Navbar />
+                    <Routes>
+                        <Route element={<Home />} path="/" />
+                        <Route element={<Demo />} path="/demo" />
+                        <Route element={<Single />} path="/single/:theid" />
+                        <Route element={<SignupGeneralView />} path="/signup" />
+                        <Route element={<LogIn />} path="/login" />
+                        <Route element={<ForgotPassword />} path="/forgot_password" />
+                        <Route element={<ContactForm />} path="/contact" />
+                        <Route element={<UserPrivate />} path="/user/private" />
+                        <Route element={<BusinessUserPrivate />} path="/business_user/private" />
+                        <Route element={<Business_offers />} path="/offers" />
+                        <Route element={<SingleOfferView />} path="/offer/:offer_id" />
+                        <Route element={<SingleReviewView />} path="/review/:review_id" />
+                        <Route element={<Trips />} path="/trips" />
+                        <Route element={<Reviews />} path="/reviews" />
+                        <Route element={<TermsConditions />} path="/terms" />
+                        <Route element={<PaymentOptions />} path="/opciones-de-pago" />
+                        <Route element={<h1>Not found!</h1>} />
+                    </Routes>
+                    <Footer />
+                </ScrollToTop>
+            </BrowserRouter>
+          </PayPalScriptProvider>
         </div>
     );
 };
