@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 
+
 import { Home } from "./pages/home";
 import { Demo } from "./pages/demo";
 import { Single } from "./pages/single";
@@ -25,7 +26,8 @@ import Footer from "./component/Footer.jsx";
 import ContactForm from "./component/ContactForm";
 import ScrollToTop from "./component/scrollToTop";
 import { BackendURL } from "./component/backendURL";
-
+import { PayPalScriptProvider } from "@paypal/react-paypal-js";
+import PaymentOptions from "./component/PaymentOptions";
 
 
 
@@ -55,7 +57,6 @@ const Layout = () => {
                         <Route element={<UserPrivate />} path="/user/private" />
                         <Route element={<BusinessUserPrivate />} path="/business_user/private" />
                         <Route element={<Business_offers />} path="/business_offers" />
-                        <Route element={<SingleOfferView />} path="/single-offer/:offer_id" />
                         <Route element={<Trips />} path="/trips" />
                         <Route element={<Reviews />} path="/reviews" />
                         <Route element={<TermsConditions />} path="/terms" />

@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Context } from '../store/appContext';
 import GooglePay from './GooglePay';
+import { Link } from 'react-router-dom';
 
 const BusinessOfferCard = ({ searchQuery }) => {
   const { store, actions } = useContext(Context);
@@ -45,6 +46,8 @@ const BusinessOfferCard = ({ searchQuery }) => {
     actions.deleteOfferById(id);
     window.location.reload();
   };
+
+
 
   return (
     <div className='cards-offer'>
@@ -120,7 +123,7 @@ const BusinessOfferCard = ({ searchQuery }) => {
                   }
 
                   {store.business_user.id === business_offer.business_id &&
-                  // || store.user.is_admin 
+                    // || store.user.is_admin 
                     <>
                       <button
                         className="btn-up-offer"
@@ -141,7 +144,9 @@ const BusinessOfferCard = ({ searchQuery }) => {
                   normalUserPrice={business_offer.normal_user_price}
                   premiumUserPrice={business_offer.premium_user_price}
                 /> */}
-                <GooglePay />
+                <Link to='/opciones-de-pago'>
+                  <button className='btn-buy'>Comprar</button>
+                </Link>
               </div>
             </div>
           )
