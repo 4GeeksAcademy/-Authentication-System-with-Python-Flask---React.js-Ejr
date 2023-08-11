@@ -6,7 +6,7 @@ import "../../styles/MyNavbar.css"; // Importing the CSS file
 
 export const MyNavbar = () => {
 	return (
-		<div style={{borderBottom: "100px solid #FFFFFF"}}>
+		<div>
 			<Navbar bg="light" expand="lg" className="my-navbar">
 			<Container>
 				<Navbar.Brand >
