@@ -61,13 +61,15 @@ def load_database():
         actors = get_actors_from_movie(result["id"])
         directors = get_directors_from_movie(result["id"]) 
 
+
+
         nueva_pelicula = Movie(
-            name=result["title"],
+            name = result["title"],
             image = result["poster_path"],
-            description=result["overview"],
-            ranking=result["vote_average"],
-            actors=actors,
-            directors=directors
+            description = result["overview"],
+            ranking = result["vote_average"],
+            actors = actors,
+            directors = directors
         )
 
         # Agregar la nueva película a la sesión de SQLAlchemy
@@ -103,10 +105,11 @@ def get_actors_from_movie(movie_id):
         actor = Actor.query.get(actor_data["id"])
         if actor is None:
             actor = Actor(
-                id=actor_data["id"],
-                name=actor_data["name"],
-                description=actor_data.get("known_for_department", ""),
-                other_movies=actor_data.get("character", "")
+                id = actor_data["id"],
+                name = actor_data["name"],
+                known_for_department = actor_data["known_for_department"],
+                character = actor_data["character"],
+                profile_path = actor_data["profile_path"]
             )
             db.session.add(actor)
         actors.append(actor)

@@ -19,6 +19,7 @@
     border-radius: 20px; 
     border: 1px solid white; 
     font-family: 'Roboto', sans-serif; 
+    font-size: 10px;
     padding: 10px 20px;    
     cursor: pointer;  
     margin-bottom: 10px;
@@ -31,14 +32,15 @@
 }
 
 .container-crew {
-  width: 70%; 
+  width: 100%; 
 }
 
-.card-title {
+.card-name {
   font-size: 18px;
+  margin-bottom: -5px;
 }
 
-.card-detail {
+.card-character {
   font-size: 14px; 
   color:rgb(217, 217, 217)
 }
@@ -52,3 +54,4 @@
 .card-title {
   margin-bottom: -5px; 
 }
+

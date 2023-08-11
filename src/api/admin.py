@@ -20,6 +20,7 @@ def setup_admin(app):
     admin.add_view(ModelView(Movie, db.session))
     admin.add_view(ModelView(Actor, db.session))
     admin.add_view(ModelView(Director, db.session))
+    # admin.add_view(ModelView(Genre, db.session))
     # admin.add_view(ModelView(Favorite, db.session))
 
     # You can duplicate that line to add mew models
