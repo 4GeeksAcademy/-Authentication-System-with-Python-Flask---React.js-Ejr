@@ -325,3 +325,12 @@ def passChange():
     if new_password == confirm_password :
          return jsonify ({"msg" : "contrasaeña actualizada correctamente"}), 200
     
+
+@api.route('/validate', methods=['GET'])
+@jwt_required()
+def validate(): 
+    current_user = get_jwt_identity()
+
+    if current_user == None:
+        return jsonify("Not authorizate"),405
+    return jsonify(logged_as=current_user),200

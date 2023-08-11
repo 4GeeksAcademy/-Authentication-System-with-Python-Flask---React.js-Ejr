@@ -3,6 +3,7 @@ import { Context } from "../store/appContext";
 import Moviestar from "../../img/Moviestar.png";
 import "../../styles/Login.css";
 import { Link, useNavigate } from "react-router-dom";
+import swal from "sweetalert";
 
 
 export const Login = () => {
@@ -20,12 +21,12 @@ export const Login = () => {
     const onSubmit = async (e) => {
         e.preventDefault()
         const login = await actions.login(form)
-        if (login === true){navigate("/")} 
+        if (login === true){
+            navigate("/")
+            swal({text: "Login successfully", icon: "success"})
+        }
     }
-    // useEffect(() => {
-    //     console.log(store.logged)
-    // }, []);
-
+   
 	return (
 		<div className="text-center mt-5">
 			<img id="image" src={Moviestar} />

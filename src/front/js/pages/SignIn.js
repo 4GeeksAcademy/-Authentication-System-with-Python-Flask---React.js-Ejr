@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import "../../styles/SignIn.css";
 import Moviestar from "../../img/Moviestar.png";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer } from 'react-toastify';
 
 
 export const SignIn = () => {
@@ -23,27 +24,33 @@ export const SignIn = () => {
     const navigate = useNavigate()
     const handleSubmit = async (e) => {
         e.preventDefault()
-        const apiUrl = `${process.env.BACKEND_URL}api/sign-ºup`
-        console.log(user)
-        try {
-            const res = await fetch(apiUrl, {
-                method:"POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(user)
-            })
-            console.log("Response status:", res.status);
-            const data = await res.json();
-            console.log("Response data:", data);
+
+        const signup = await actions.signup(user)
+        if (signup === true){navigate("/")} 
+
+
+
+        // const apiUrl = `${process.env.BACKEND_URL}api/signup`
+        // console.log(user)
+        // try {
+        //     const res = await fetch(apiUrl, {
+        //         method:"POST",
+        //         headers: { "Content-Type": "application/json" },
+        //         body: JSON.stringify(user)
+        //     })
+        //     console.log("Response status:", res.status);
+        //     const data = await res.json();
+        //     console.log("Response data:", data);
     
-            if (res.ok) {
-                localStorage.setItem("token", data?.token);
-                navigate("/");
-            } else {
-                console.error("Request was not successful:", data);
-            }
-        } catch (error) {
-            console.error("An error occurred:", error);
-        }
+        //     if (res.ok) {
+        //         localStorage.setItem("token", data?.token);
+        //         navigate("/");
+        //     } else {
+        //         console.error("Request was not successful:", data);
+        //     }
+        // } catch (error) {
+        //     console.error("An error occurred:", error);
+        // }
 
     }
     return (

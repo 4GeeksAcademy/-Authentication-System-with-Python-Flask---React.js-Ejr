@@ -24,7 +24,7 @@ app.url_map.strict_slashes = False
 app.config["JWT_SECRET_KEY"] = "secret-movie-stars" 
 jwt = JWTManager(app)
 
-
+app.config["JWT_ACCESS_TOKEN_EXPIRES"] = 10800
 
 # database condiguration
 db_url = os.getenv("DATABASE_URL")
