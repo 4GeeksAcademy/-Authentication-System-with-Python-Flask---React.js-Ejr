@@ -3,6 +3,7 @@ import { Context } from '../store/appContext';
 import useReviewManagement from "../hooks/useReviewManagement";
 import Likes from './Likes';
 import FavoriteReview from './FavoriteReview';
+
 const AllFavoritesReviews = ({ searchQuery }) => {
   const { store, actions } = useContext(Context)
   const { handleUpdate, handleSave, handleDelete, favorites, reviews, editContent, editContentId, editTitle, handleEditContent } = useReviewManagement();
