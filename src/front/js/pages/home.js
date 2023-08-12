@@ -10,6 +10,7 @@ import Slogan from "../component/Slogan";
 
 import FilterMenu from "../component/FilterMenu.js";
 import LitlleSlide from "../component/LitlleSlide.jsx";
+import DonationForm from "../component/DonationForm";
 
 
 export const Home = () => {
@@ -26,6 +27,7 @@ export const Home = () => {
       <PubSlide />
       <HomeOfferCard />
       <HomeReviewCard />
+      <DonationForm />
       {/* <AboutUs /> */}
 
     </>
