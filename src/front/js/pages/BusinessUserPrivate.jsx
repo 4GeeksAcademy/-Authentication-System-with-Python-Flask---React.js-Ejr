@@ -7,8 +7,8 @@ const BusinessUserPrivate = () => {
   const [businessName, setBusinessname] = useState(store.business_user?.business_name);
   const [email, setEmail] = useState(store.business_user?.email);
   const [nif, setNif] = useState(store.business_user?.nif);
-  const [prefixTelephone, setPrefixTelephone] = useState(store.business_user?.prefix_telephone);
-  const [telephone, setTelephone] = useState(store.business_user?.telephone);
+  const [prefixTelephone, setPrefixTelephone] = useState(store.business_user?.phone_prefix);
+  const [telephone, setTelephone] = useState(store.business_user?.phone_number);
   const [address, setAddress] = useState(store.business_user?.address);
   const [paymentMethod, setPaymentMethod] = useState(store.business_user?.payment_method);
 
@@ -16,8 +16,8 @@ const BusinessUserPrivate = () => {
     businessName: store.business_user?.business_name,
     email: store.business_user?.email,
     nif: store.business_user?.nif,
-    prefixTelephone: store.business_user?.prefix_telephone,
-    telephone: store.business_user?.telephone,
+    phone_prefix: store.business_user?.phone_prefix,
+    phone_number: store.business_user?.phone_number,
     address: store.business_user?.address,
     paymentMethod: store.business_user?.payment_method,
   });
@@ -39,8 +39,8 @@ const BusinessUserPrivate = () => {
         setBusinessname(unsavedData.businessName);
         setEmail(unsavedData.email);
         setNif(unsavedData.nif);
-        setPrefixTelephone(unsavedData.prefixTelephone);
-        setTelephone(unsavedData.telephone);
+        setPrefixTelephone(unsavedData.phone_prefix);
+        setTelephone(unsavedData.phone_number);
         setAddress(unsavedData.address);
         setPaymentMethod(unsavedData.paymentMethod);
       } else {
@@ -57,8 +57,8 @@ const BusinessUserPrivate = () => {
       businessName: store.business_user?.business_name,
       email: store.business_user?.email,
       nif: store.business_user?.nif,
-      prefixTelephone: store.business_user?.prefix_telephone,
-      telephone: store.business_user?.telephone,
+      phone_prefix: store.business_user?.phone_prefix,
+      phone_number: store.business_user?.phone_number,
       address: store.business_user?.address,
       paymentMethod: store.business_user?.payment_method,
     });
@@ -87,13 +87,13 @@ const BusinessUserPrivate = () => {
 
       <UpdateBusinessUserProfile
         label="Prefijo telefónico"
-        value={unsavedData.prefixTelephone}
+        value={unsavedData.phone_prefix}
         onChange={(e) => handleChange("Prefijo telefónico", e.target.value)}
       />
 
       <UpdateBusinessUserProfile
         label="Número de teléfono"
-        value={unsavedData.telephone}
+        value={unsavedData.phone_number}
         onChange={(e) => handleChange("Número de teléfono", e.target.value)}
       />
 
