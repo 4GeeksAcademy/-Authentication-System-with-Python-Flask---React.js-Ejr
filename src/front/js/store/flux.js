@@ -50,7 +50,6 @@ const getState = ({ getStore, getActions, setStore }) => {
           .then((res) => res.json())
           .then((data) => {
             setStore({ cars: data });
-            console.log("These are stored cars in database:", data);
           });
       },
       applyFilters: (filterArray) => {
@@ -198,9 +197,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           }})
           .then((res) => res.json())
           .then((data) => {
-            console.log("Response from PRIVATE GET: ",data);
             setStore({saved : data.saved});
-            console.log("SAVED FOR CURRENT USER", store.saved)
           })
           .catch((error) => console.log(error));
           getActions().getAllCars();

@@ -7,7 +7,6 @@ const CarViews = () => {
 
   // Filter the cars based on the selected filters
   const filteredCars = () => {
-    console.log("Filters value: ", store.filters)
     // If no filters are selected, return all cars
     if (
       !store.filters.some((filter) => filter.brand) &&

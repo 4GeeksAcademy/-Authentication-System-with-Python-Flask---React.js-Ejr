@@ -30,7 +30,7 @@ const AboutCar = () => {
 
     useEffect(() => {
       actions.getCarReviews(actualCar.id)
-    }, [actualCar, reviewText])
+    }, [actualCar, reviewText, rating])
 
 
   return (
@@ -82,6 +82,7 @@ const AboutCar = () => {
         <div className='reviewContainer' style={{background: '#212529', width: "101%"}}>
           <div className='border text-center border-light-subtle'>
             <h1 style={{color: '#60757d'}}>Car Reviews</h1>
+            { token ?
             <form onSubmit={(e) => { 
               if (!rating.length)
                 {handleSubmit(e);
@@ -110,7 +111,9 @@ const AboutCar = () => {
                   />
                 </div>
                 <button className="btn btn-success" type="submit">Submit Review</button>
-            </form>
+            </form> :
+            ""
+            }
           </div>
           <div>
             {store.carReviews.map((car, index) => {
