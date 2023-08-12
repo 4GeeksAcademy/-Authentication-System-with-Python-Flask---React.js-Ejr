@@ -20,6 +20,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       reviews: [],
       carReviews: [],
       token: null,
+      tokenTimeStamp: null,
       filters: [
         {
           brand: "",
@@ -94,23 +95,14 @@ const getState = ({ getStore, getActions, setStore }) => {
             const data = await response.json();
 
             // Save the authentication token to the store
-            setStore({ token: data.token });
+            setStore({ token: data.token, tokenTimeStamp: Date.now() });
             console.log(data.token);
 
             // Save the token to localStorage for persistent access
             localStorage.setItem("token", data.token);
 
             // Reset the error message (if any) after successful login
-            setStore({ errorMessage: null });
-
-            const tokenExpTime = 60*60*1000;
-            setTimeout(() => {
-              setStore({token : null});
-              localStorage.removeItem("token");
-              alert("Session Expired due to inactivity");
-            }, tokenExpTime);
-            // Redirect to the desired page or perform any necessary action
-            // Example: history.push("/dashboard");
+            setStore({ errorMessage: null });            
           } else {
             // Login failed
             throw new Error("Invalid email or password");
@@ -120,6 +112,12 @@ const getState = ({ getStore, getActions, setStore }) => {
           throw error;
         }
       },
+
+      isTokenExpired: (tokenTimestamp, expirationDuration) => {
+        const currentTime = Date.now();
+        return currentTime - tokenTimestamp > expirationDuration;
+      },
+
       addCarToCompare: (car) => {
         let compareCars = getStore().compareCars;
         compareCars.push(car);

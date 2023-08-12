@@ -212,6 +212,11 @@ def create_review():
     review = data.get("review_text")
     car_id = data.get("car_id")
 
+    if rating is None or car_id is None:
+        return jsonify({"error": "All fields must be provided"}), 400
+
+    
+
     new_review = Review(rating=rating, review_text=review, user_id=current_user_id, car_id=car_id)
     db.session.add(new_review)
     db.session.commit()
