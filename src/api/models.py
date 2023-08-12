@@ -17,6 +17,8 @@ class User(db.Model):
     pasaporte = db.Column(db.String(50), nullable=False)
     payment_method = db.Column(db.String(100), nullable=False)
     is_admin = db.Column(db.Boolean, default=False)
+    cliente_ID_paypal = db.Column(db.String(250))
+    secret_key_paypal = db.Column(db.String(250))
 
     # Relationship to User model
     reviews = db.relationship("Review", backref="user")
@@ -38,7 +40,10 @@ class User(db.Model):
             "address": self.address,
             "pasaporte": self.pasaporte,
             "payment_method": self.payment_method,
-            "is_admin": self.is_admin
+            "is_admin": self.is_admin,
+            "cliente_ID_paypal": self.cliente_ID_paypal,
+            "secret_key_paypal": self.secret_key_paypal,
+
         }
 
 
@@ -176,8 +181,8 @@ class Favorites(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
     trip_id = db.Column(db.Integer, db.ForeignKey('trip.id'), nullable=True)
     offer_id = db.Column(db.Integer, db.ForeignKey('offers.id'), nullable=True)
-    review_id = db.Column(db.Integer, db.ForeignKey('review.id'), nullable=True)
-
+    review_id = db.Column(
+        db.Integer, db.ForeignKey('review.id'), nullable=True)
 
     def __repr__(self):
         return '<Favorites %r>' % self.id
