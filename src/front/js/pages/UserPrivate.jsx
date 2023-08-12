@@ -9,10 +9,10 @@ const UserPrivate = () => {
     username: store.user?.username || '',
     firstName: store.user?.firstname || '',
     lastName: store.user?.lastname || '',
-    prefixTelephone: store.user?.prefix_telephone || '',
-    telephone: store.user?.telephone || '',
+    phone_prefix: store.user?.phone_prefix || '',
+    phone_number: store.user?.phone_number || '',
     address: store.user?.address || '',
-    passport: store.user?.pasaporte || '',
+    passport: store.user?.passport || '',
     paymentMethod: store.user?.payment_method || '',
   });
 
@@ -49,10 +49,10 @@ const UserPrivate = () => {
       username: store.user?.username,
       firstName: store.user?.firstname,
       lastName: store.user?.lastname,
-      prefixTelephone: store.user?.prefix_telephone,
-      telephone: store.user?.telephone,
+      phone_prefix: store.user?.phone_prefix,
+      phone_number: store.user?.phone_number,
       address: store.user?.address,
-      passport: store.user?.pasaporte,
+      passport: store.user?.passport,
       paymentMethod: store.user?.payment_method,
     });
   };
@@ -146,8 +146,8 @@ const UserPrivate = () => {
           {isEditingAll ? (
             <div>
               <textarea
-                value={userData.prefixTelephone}
-                onChange={(e) => handleChange("prefixTelephone", e.target.value)}
+                value={userData.phone_prefix}
+                onChange={(e) => handleChange("phone_prefix", e.target.value)}
                 rows="1"
                 cols="38"
                 maxLength="300"
@@ -156,7 +156,7 @@ const UserPrivate = () => {
             </div>
           ) : (
             <div>
-              <p>{userData.prefixTelephone}</p>
+              <p>{userData.phone_prefix}</p>
             </div>
           )}
         </div>
@@ -165,8 +165,8 @@ const UserPrivate = () => {
           {isEditingAll ? (
             <div>
               <textarea
-                value={userData.telephone}
-                onChange={(e) => handleChange("telephone", e.target.value)}
+                value={userData.phone_number}
+                onChange={(e) => handleChange("phone_number", e.target.value)}
                 rows="1"
                 cols="38"
                 maxLength="300"
@@ -175,7 +175,7 @@ const UserPrivate = () => {
             </div>
           ) : (
             <div>
-              <p>{userData.telephone}</p>
+              <p>{userData.phone_number}</p>
             </div>
           )}
         </div>

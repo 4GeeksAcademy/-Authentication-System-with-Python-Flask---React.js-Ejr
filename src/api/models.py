@@ -11,10 +11,10 @@ class User(db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False)
     firstname = db.Column(db.String(100), nullable=False)
     lastname = db.Column(db.String(100), nullable=False)
-    prefix_telephone = db.Column(db.Integer, nullable=True)
-    telephone = db.Column(db.Integer, nullable=True)
+    passport = db.Column(db.String(50), nullable=False)
+    phone_prefix = db.Column(db.Integer, nullable=True)
+    phone_number = db.Column(db.Integer, nullable=True)
     address = db.Column(db.String(200), nullable=False)
-    pasaporte = db.Column(db.String(50), nullable=False)
     payment_method = db.Column(db.String(100), nullable=False)
     is_admin = db.Column(db.Boolean, default=False)
     cliente_ID_paypal = db.Column(db.String(
@@ -37,10 +37,10 @@ class User(db.Model):
             "email": self.email,
             "firstname": self.firstname,
             "lastname": self.lastname,
-            "prefix_telephone": self.prefix_telephone,
-            "telephone": self.telephone,
-            "address": self.address,
-            "pasaporte": self.pasaporte,
+            "passport": self.passport,
+            "phone_prefix": self.phone_prefix,
+            "phone_number": self.phone_number,
+            "address": self.address,      
             "payment_method": self.payment_method,
             "is_admin": self.is_admin,
             "cliente_ID_paypal": self.cliente_ID_paypal,
@@ -54,9 +54,9 @@ class Business_user(db.Model):
     business_name = db.Column(db.String(50), unique=True, nullable=False)
     password = db.Column(db.String(250), unique=False, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
-    prefix_telephone = db.Column(db.Integer, nullable=True)
-    telephone = db.Column(db.Integer, nullable=True)
     nif = db.Column(db.String(120), nullable=False)
+    phone_prefix = db.Column(db.Integer, nullable=True)
+    phone_number = db.Column(db.Integer, nullable=True)
     address = db.Column(db.String(150), nullable=False)
     payment_method = db.Column(db.String(150), nullable=False)
 
@@ -69,10 +69,10 @@ class Business_user(db.Model):
         return {
             "id": self.id,
             "business_name": self.business_name,
-            "email": self.email,
-            "prefix_telephone": self.prefix_telephone,
-            "telephone": self.telephone,
+            "email": self.email,         
             "nif": self.nif,
+            "phone_prefix": self.phone_prefix,
+            "phone_number": self.phone_number,
             "address": self.address,
             "payment_method": self.payment_method
         }
