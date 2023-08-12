@@ -9,7 +9,10 @@ const useOfferManagement = () => {
 
     useEffect(() => {
         actions.getAllOffers();
-        actions.getFavoriteoffer()
+        if (store.favorites && store.favorites.length >= 1) {
+            actions.getFavoriteoffer()
+            console.log("Success fetch for Cardsofers");
+        }
         console.log("Success fetch for CardsOffer");
     }, []);
 

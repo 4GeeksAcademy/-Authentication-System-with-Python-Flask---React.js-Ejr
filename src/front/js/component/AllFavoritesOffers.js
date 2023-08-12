@@ -9,9 +9,7 @@ import { Link } from 'react-router-dom';
 const AllFavoritesOffers = ({ searchQuery }) => {
     const { store, actions } = useContext(Context)
     const { handleUpdate, handleSave, handleDelete, favorites, reviews, editContent, editContentId, editTitle, handleEditContent } = useOfferManagement();
-    useLayoutEffect(() => {
-        actions.getFavoriteoffer()
-    }, [])
+
     return (
         <div className='cards-offer'>
             {store.favorites && store.favorites.length >= 1 && store.favorites

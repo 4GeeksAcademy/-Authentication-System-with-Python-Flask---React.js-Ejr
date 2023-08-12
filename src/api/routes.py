@@ -98,6 +98,8 @@ def create_user():
         address = data.get('address')
         pasaporte = data.get('pasaporte')
         payment_method = data.get('payment_method')
+        cliente_ID_paypal = data.get('cliente_ID_paypal')
+        secret_key_paypal = data.get('secret_key_paypal')
 
         # Vérifier si l'email et le mot de passe sont fournis
         if not email or not password:
@@ -121,6 +123,8 @@ def create_user():
             address=address,
             pasaporte=pasaporte,
             payment_method=payment_method,
+            cliente_ID_paypal=cliente_ID_paypal,
+            secret_key_paypal=secret_key_paypal,
             is_admin=False  # Vous pouvez définir la valeur par défaut pour is_admin ici
         )
         db.session.add(new_user)
@@ -588,7 +592,7 @@ def update_review(review_id):
         review.trip_id = data['trip_id']
         review.title = data['title']
         review.comment_text = data['comment_text']
-        review.review_image=data['review_image'],
+        review.review_image = data['review_image'],
 
         db.session.commit()
         return jsonify(review.serialize()), 200
@@ -642,7 +646,8 @@ def like_review(review_id):
 
     return jsonify(message='Review liked successfully'), 200
 
-#Review favorites routes
+# Review favorites routes
+
 
 @api.route('/reviews/favorites', methods=['GET'])
 @jwt_required()
@@ -678,7 +683,29 @@ def add_favorite_for_review(review_id):
 
     return jsonify(message="Review added to favorites successfully"), 200
 
-#Offers favorites routes
+
+@api.route('/reviews/favorites/<int:review_id>', methods=['DELETE'])
+@jwt_required()
+def remove_favorite_for_review(review_id):
+    current_user = get_jwt_identity()
+    user = User.query.filter_by(email=current_user).first()
+
+    review = Review.query.get(review_id)
+    if review is None:
+        return jsonify(error="Review not found"), 404
+
+    favorite = Favorites.query.filter_by(
+        user_id=user.id, review_id=review_id).first()
+    if favorite is None:
+        return jsonify(error="Favorite not found"), 404
+
+    db.session.delete(favorite)
+    db.session.commit()
+
+    return jsonify(message="Favorite removed successfully"), 200
+
+
+# Offers favorites routes
 
 
 @api.route('/offers/favorites', methods=['GET'])
@@ -714,3 +741,24 @@ def add_favorite_for_offer(offer_id):
     db.session.commit()
 
     return jsonify(message="Offer added to favorites successfully"), 200
+
+
+@api.route('/offers/favorites/<int:offer_id>', methods=['DELETE'])
+@jwt_required()
+def remove_favorite_for_offer(offer_id):
+    current_user = get_jwt_identity()
+    user = User.query.filter_by(email=current_user).first()
+
+    offer = Offers.query.get(offer_id)
+    if offer is None:
+        return jsonify(error="Offer not found"), 404
+
+    favorite = Favorites.query.filter_by(
+        user_id=user.id, offer_id=offer_id).first()
+    if favorite is None:
+        return jsonify(error="Favorite not found"), 404
+
+    db.session.delete(favorite)
+    db.session.commit()
+
+    return jsonify(message="Favorite removed successfully"), 200

@@ -109,13 +109,13 @@ const BusinessOfferCard = ({ searchQuery }) => {
                 /> */}
                 {store.user.username && <>
                   <FavoriteOffer offerId={business_offer.id} />
-                                  <Link to='/opciones-de-pago'>
-                                    <button className='btn-buy'>Comprar</button>
-                                  </Link>
+                  <Link to={`/offer/${business_offer.id}`}>
+                    <button className='btn-buy'>Ver más</button>
+                  </Link>
 
-                
+
                 </>
-                            
+
                 }
 
               </div>

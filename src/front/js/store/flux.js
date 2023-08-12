@@ -4,13 +4,13 @@ const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
       user: {},
+      userById: {},
       business_user: {},
       auth: false,
       trip: [],
       reviews: [],
       offers: [],
-      favorites: []
-
+      favorites: [],
     },
     actions: {
       // Use getActions to call a function within a function
@@ -112,7 +112,7 @@ const getState = ({ getStore, getActions, setStore }) => {
               Authorization: "Bearer " + token,
             },
           };
-          
+
           const request = await fetch(API_URL + "/api/private", settings);
           if (request.ok) {
             const data = await request.json();
@@ -172,6 +172,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           if (response.ok) {
             const responseData = await response.json();
             console.log(responseData);
+            setStore({ userById: responseData })
             return responseData;
           } else if (response.status === 404) {
             // Handle user not found error
@@ -324,7 +325,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         try {
           const response = await fetch(API_URL + "/api/offers", {
             method: "GET",
-            
+
           });
 
           if (response.ok) {
@@ -352,9 +353,9 @@ const getState = ({ getStore, getActions, setStore }) => {
               "Content-Type": "application/json",
             },
           });
-          
+
           console.log(response);
-      
+
           if (response.ok) {
             const responseData = await response.json(); // Parse the response body as JSON
             console.log(responseData.offer);
@@ -703,9 +704,9 @@ const getState = ({ getStore, getActions, setStore }) => {
               "Content-Type": "application/json",
             },
           });
-          
+
           console.log(response);
-      
+
           if (response.ok) {
             const responseData = await response.json(); // Parse the response body as JSON
             console.log(responseData.offer);
@@ -891,7 +892,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
           if (response.ok) {
             const data = await response.json();
-            console.log("GET DATA FAVORITES:", data);
+            console.log("GET DATA REVIEWS FAVORITES:", data);
             const store = getStore()
             setStore({ ...store, favorites: data });
             return true;
@@ -958,7 +959,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
           if (response.ok) {
             const data = await response.json();
-            console.log("GET DATA FAVORITES:", data);
+            console.log("GET OFFERS DATA FAVORITES:", data);
             const store = getStore()
             setStore({ ...store, favorites: data });
             return true;

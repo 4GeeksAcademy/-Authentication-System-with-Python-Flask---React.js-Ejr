@@ -9,8 +9,10 @@ const useReviewManagement = () => {
 
   useEffect(() => {
     actions.getReviews();
-    actions.getFavoriteReview()
-    console.log("Success fetch for CardsReview");
+    if (store.favorites && store.favorites.length >= 1) {
+      actions.getFavoriteReview()
+      console.log("Success fetch for CardsReview");
+    }
   }, []);
 
   const handleEditContent = (content) => {

@@ -1,38 +1,27 @@
-import React, { useContext, useEffect } from 'react';
-import GooglePay from './GooglePay';
+import React, { useContext, useEffect, useState } from 'react';
 import PaypalCheckoutButton from './PayPalCheckoutButton';
-import { useParams } from 'react-router-dom';
+import PaymentComponent from './PaymentComponent';
 import { Context } from '../store/appContext';
+import { useParams } from 'react-router-dom';
 
 const PaymentOptions = () => {
-  const { store, actions } = useContext(Context)
-  const [offer, setOffer] = useParams({})
+  const { store, actions } = useContext(Context);
 
-  useEffect(() => {
-    const loadData = async () => {
-      setOffer(await actions.getOfferById(params.offer_id))
-    }
-    loadData()
-    console.log('Fetch data offer for paypal OK');
-  }, [])
 
   const product = {
-    description: "Learn how to build a website with React JS",
-    price: 29,
+    description: "LATAM Trekking Tour",
+    price: 2499.99,
   };
   return (
     <div className="content-offer-details">
       <div className="offer-payment">
+        <h2>Un paso más <span>{store.user.username}</span> y este viaje es tuyo  🥳🥳🥳🥳</h2>
+
 
       </div>
       <div className='btn-payment-content'>
-        <h1>Opciones de Pago:</h1>
+        <h2>Opciones de Pago:</h2>
         <div className="btn-payment">
-          <div className="btn-google">
-            <h3>GooglePay:</h3>
-            <GooglePay />
-          </div>
-          <hr />
           <div className="btn-paypal">
             <h3>PayPal:</h3>
             <PaypalCheckoutButton product={product} />
