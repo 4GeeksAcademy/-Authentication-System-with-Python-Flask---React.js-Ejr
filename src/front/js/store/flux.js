@@ -104,6 +104,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       isAuth: async () => {
         try {
           let token = localStorage.getItem("myToken");
+          console.log(token)
           const settings = {
             method: "GET",
             headers: {
@@ -111,7 +112,7 @@ const getState = ({ getStore, getActions, setStore }) => {
               Authorization: "Bearer " + token,
             },
           };
-
+          
           const request = await fetch(API_URL + "/api/private", settings);
           if (request.ok) {
             const data = await request.json();
@@ -903,6 +904,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
 
+
       addFavoriteReview: async (reviewId, userId) => {
         try {
           const token = localStorage.getItem("myToken");
@@ -937,7 +939,72 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
 
+      getFavoriteoffer: async () => {
+        try {
+          const token = localStorage.getItem("myToken");
+          if (!token) {
+            console.log("Token not found");
+            return false;
+          }
 
+          const response = await fetch(API_URL + `/api/offers/favorites`, {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          });
+          console.log(response);
+
+          if (response.ok) {
+            const data = await response.json();
+            console.log("GET DATA FAVORITES:", data);
+            const store = getStore()
+            setStore({ ...store, favorites: data });
+            return true;
+          } else {
+            return null;
+          }
+        } catch (error) {
+          console.log(error);
+          return null;
+        }
+      },
+
+
+      addFavoriteOffer: async (offerId, userId) => {
+        try {
+          const token = localStorage.getItem("myToken");
+          if (!token) {
+            console.log("Token not found");
+            return false;
+          }
+
+          const response = await fetch(API_URL + `/api/offers/favorites/${offerId}`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`,
+            },
+            body: JSON.stringify({ user_id: userId }),
+          });
+          console.log('FETCH POST FAV:', response);
+          if (response.ok) {
+            const res = await response.json();
+            console.log('reponse FAVORITES:', res);
+            const store = getStore()
+            setStore({ ...store, favorites: res })
+            const actions = getActions()
+            actions.getFavoriteReview()
+            return true;
+          } else {
+            return false;
+          }
+        } catch (error) {
+          console.log(error);
+          return false;
+        }
+      },
     },
   };
 };

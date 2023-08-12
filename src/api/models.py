@@ -101,8 +101,7 @@ class Trip(db.Model):
 class Offers(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     trip_id = db.Column(db.Integer, ForeignKey('trip.id'), nullable=True)
-    business_id = db.Column(db.Integer, ForeignKey(
-        'business_user.id'), nullable=True)
+    business_id = db.Column(db.Integer, ForeignKey('business_user.id'), nullable=True)
     offer_title = db.Column(db.String(75), nullable=False)
     offer_description = db.Column(db.String(250), nullable=False)
     country = db.Column(db.String(250), nullable=False)
@@ -115,6 +114,7 @@ class Offers(db.Model):
 
     favorites = db.relationship('Favorites', backref='offers')
 
+
     def __repr__(self):
         return '<Offers %r>' % self.id
 
@@ -122,7 +122,7 @@ class Offers(db.Model):
         return {
             "id": self.id,
             "trip_id": self.trip_id,
-            "business_id": self.business_id,
+            "business_id": Business_user.query.get(self.business_id).serialize(),
             "offer_title": self.offer_title,
             "offer_description": self.offer_description,
             "country": self.country,
@@ -145,6 +145,7 @@ class Review(db.Model):
 
     favorites = db.relationship('Favorites', backref='review')
     likes = db.relationship('Likes', backref='review')
+    
 
     def __repr__(self):
         return '<Review %r>' % self.id
@@ -192,6 +193,6 @@ class Favorites(db.Model):
             "id": self.id,
             "user_id": self.user_id,
             "trip_id": self.trip_id,
-            "offer_id": self.offer_id,
-            "reviews": Review.query.get(self.review_id).serialize()
+            "offer_id": Offers.query.get(self.offer_id).serialize(),
+            "reviews": Review.query.get(self.review_id).serialize(),
         }
