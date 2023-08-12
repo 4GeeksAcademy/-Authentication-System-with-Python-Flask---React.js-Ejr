@@ -68,3 +68,18 @@ class Destinations(db.Model):
         }    
 
 
+class Flights(db.Model): 
+    __tableName__ = "flights"
+    id = db.Column(db.Integer, primary_key=True)
+    price =  db.Column(db.String(120), unique=False, nullable=True) 
+    flightProvider = db.Column(db.String(120), unique=False, nullable=True) 
+    depatureDate = db.Column(db.String(120), unique=False, nullable=True) 
+    # favorites_id = db.Column( db.Integer, db.ForeignKey("favorites.id"))
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "price": self.price,
+            "flightProvider": self.flightProvider,
+            "depatureDate": self.depatureDate,
+        }    

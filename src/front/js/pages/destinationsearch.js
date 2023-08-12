@@ -6,11 +6,13 @@ const MySearch = () => {
   const [search, setSearch] = useState("");
   const [destinationResult, setDestinationResult] = useState([]);
   const [flightResult, setFlightResult] = useState([]);
+  const [secondFlight, setSecondFlight] = useState([]);
   const [airportResult, setAirportResult] = useState([]);
   const [input, setInput] = useState("");
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const [favorites, setFavorites] = useState([]);
+  const [flights, setFlights] = useState([]);
 
   useEffect(() => {
     setError(null);
@@ -63,12 +65,15 @@ const MySearch = () => {
       try {
         const response = await fetch(url, options);
         const result = await response.json();
-        console.log(result.data.flights, "flights");
-        return result.data.flights; // Adjust to match your API response structure
+        // console.log(result.data.flights, "flights");
+         console.log(result,"flights")
+         setFlights(result.data.flights);
+         console.log("flights") 
       } catch (error) {
         console.error(error);
       }
     };
+   
 
     const fetchBoth = async () => {
       const cities = await fetchCities();
@@ -81,7 +86,7 @@ const MySearch = () => {
           const airport = airports[0].airportCode;
           console.log(airports, "here");
           const flights = await fetchFlights(airport);
-          // console.log(flights, "flights")
+          //  console.log(flights, "flights")
           setDestinationResult(cities);
           setAirportResult(airports);
           setFlightResult(flights);
@@ -114,7 +119,15 @@ const MySearch = () => {
     setDestinationResult([]);
     setFlightResult([]);
   };
-
+  const getFlights =  () => {
+    fetch("https://sblaise123-fictional-barnacle-5wq5jw6pq4rfv6v9-3001.app.github.dev/api/flightinfo",{
+      method:"GET",
+      headers:{"Content-Type":"application/json"}
+    })
+    .then((res) => res.json())
+        .then((data) => console.log( data ))
+        .catch((error) => console.log("error", error));
+  };
   return (
     <div className="my-search-container">
       <div className="jumbotron">
@@ -174,18 +187,19 @@ const MySearch = () => {
             ))}
             <div className="my-flight-results">
               <h2>Flight Prices</h2>
-              {flightResult.length > 0 ? (
-                flightResult.map((flight, index) => (
+              {secondFlight.length > 0 ? (
+                secondFlight.map((flight, index) => (
                   <div key={index} className="card flight-item">
                     <div className="card-body">
-                      <p>Flight Provider: {flight.provider}</p>
+                      <p>Flight Provider: {flight.flightProvider}</p>
                       <p>Price: {flight.price}</p>
                       <p>Departure Date: {flight.departureDate}</p>
+                      <p>{getFlights()}</p>
                     </div>
                   </div>
                 ))
               ) : (
-                <p>No flight data available.</p>
+                <><p>No flight data available.</p><p>{getFlights()}</p></>
               )}
             </div>
           </div>
