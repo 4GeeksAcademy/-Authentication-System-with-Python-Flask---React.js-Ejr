@@ -16,7 +16,7 @@ const PaymentComponent = () => {
 
   const createOrder = async (data) => {
     // Order is created on the server and the order id is returned
-    const user_id = localStorage.getItem('userID')
+    const user_id = localStorage.getItem('user_id')
     const backendUrl = process.env.BACKEND_URL + `/api/payment/create-paypal-order/${user_id}`;
     return await fetch(backendUrl, {
       method: "POST",
@@ -28,7 +28,7 @@ const PaymentComponent = () => {
       body: JSON.stringify({
         orderID: orderID,
         articles: ['art1', 'art2'],
-        cost: '1111'
+        cost: '2.499.99'
       }),
     })
       .then((response) => response.json())

@@ -5,6 +5,11 @@
 
 }
 
+.offer-payment img {
+  width: 20rem;
+  height: 16rem;
+}
+
 .btn-payment {
   width: 100%;
 }

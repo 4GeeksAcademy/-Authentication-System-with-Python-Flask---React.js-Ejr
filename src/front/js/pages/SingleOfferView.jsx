@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Context } from '../store/appContext.js';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 const SingleOfferView = () => {
     const { store, actions } = useContext(Context);
@@ -56,6 +56,9 @@ const SingleOfferView = () => {
                 <div>
                     <h4>Comentarios</h4>
                 </div>
+                <Link to='/opciones-de-pago' >
+                    <button className='btn-buy'>Comprar</button>
+                </Link>
             </div>
         </div>
     );
