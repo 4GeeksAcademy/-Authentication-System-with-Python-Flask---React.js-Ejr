@@ -642,6 +642,7 @@ def like_review(review_id):
 
     return jsonify(message='Review liked successfully'), 200
 
+#Review favorites routes
 
 @api.route('/reviews/favorites', methods=['GET'])
 @jwt_required()
@@ -676,3 +677,40 @@ def add_favorite_for_review(review_id):
     db.session.commit()
 
     return jsonify(message="Review added to favorites successfully"), 200
+
+#Offers favorites routes
+
+
+@api.route('/offers/favorites', methods=['GET'])
+@jwt_required()
+def get_offerfavorites_for_user():
+    current_user_id = get_jwt_identity()
+
+    user = User.query.filter_by(email=current_user_id).first()
+    if user is None:
+        return jsonify({"error": "User not found"}), 404
+    user_favorites = Favorites.query.filter_by(user_id=user.id).all()
+    user_favorites = [favorite.serialize() for favorite in user_favorites]
+    return jsonify(user_favorites), 200
+
+
+@api.route('/offers/favorites/<int:offer_id>', methods=['POST'])
+@jwt_required()
+def add_favorite_for_offer(offer_id):
+    current_user = get_jwt_identity()
+    user = User.query.filter_by(email=current_user).first()
+
+    offer = Offers.query.get(offer_id)
+    if offer is None:
+        return jsonify(error="Offer not found"), 404
+
+    existing_favorite = Favorites.query.filter_by(
+        user_id=user.id, offer_id=offer_id).first()
+    if existing_favorite:
+        return jsonify(error="User has already added this review to favorites"), 400
+
+    favorite = Favorites(user_id=user.id, offer_id=offer.id)
+    db.session.add(favorite)
+    db.session.commit()
+
+    return jsonify(message="Offer added to favorites successfully"), 200

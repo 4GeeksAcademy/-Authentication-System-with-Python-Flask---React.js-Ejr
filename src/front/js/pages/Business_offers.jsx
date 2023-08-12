@@ -3,6 +3,7 @@ import BusinessOfferCard from '../component/BusinessOfferCard.jsx'
 import FormOffers from '../component/FormOffers.jsx'
 import { Context } from '../store/appContext.js'
 import SearchReview from '../component/SearchReview.js'
+import MenuOffers from '../component/MenuOffers.jsx'
 
 const Business_offers = () => {
   const { store, actions } = useContext(Context)
@@ -14,12 +15,10 @@ const Business_offers = () => {
   return (
     <>
       <SearchReview handleSearch={handleSearch} />
-
-
       {store.business_user.business_name  && <FormOffers />}
-      {/* || store.user.is_admin */}
+      <MenuOffers searchQuery={searchQuery} />
 
-      <BusinessOfferCard searchQuery={searchQuery} />
+      {/* <BusinessOfferCard searchQuery={searchQuery} /> */}
     </>
 
 
