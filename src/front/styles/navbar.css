@@ -8,7 +8,7 @@
 }
 
 .navbar-brand img {
-  height: 7rem;
+  height: 5rem;
   width: auto;
 }
 
@@ -19,7 +19,7 @@
 } */
 
 .navbar {
-  background-color: var(--color-3);
+  background-color: var(--color-1);
 }
 
 .navbar-light .navbar-nav .nav-link {
@@ -27,6 +27,6 @@
 }
 
 li .signup, .login {
-  background-color: var(--color-2);
+  background-color: #03a8e8;
   color: var(--color-4);
 }

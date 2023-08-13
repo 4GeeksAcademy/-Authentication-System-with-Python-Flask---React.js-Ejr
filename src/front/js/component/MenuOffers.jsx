@@ -40,4 +40,4 @@ const MenuOffer = ({ searchQuery }) => {
     );
 };
 
-export default MenuOffer
+export default MenuOffer

@@ -6,7 +6,7 @@ import axios from 'axios';
 import ImagePreview from './ImagePreview.jsx';
 
 
-const FormReview = () => {
+const FormReview = ({currentReviewModal}) => {
   const { store, actions } = useContext(Context);
   const [selectedFile, setSelectedFile] = useState(null);
 
@@ -15,6 +15,7 @@ const FormReview = () => {
       initialValues={{
         title: "",
         comment_text: "",
+        review_image: "",
       }}
       validationSchema={Yup.object({
         title: Yup.string()
@@ -25,6 +26,10 @@ const FormReview = () => {
           .min(50, 'Debe tener 50 caracteres o más')
           .matches(/^[A-ZÁÉÍÓÚÑ][A-Za-zÁÉÍÓÚáéíóúÑñ0-9,.*!¡?¿\s- ]*$/, 'Debe comenzar con una letra mayúscula')
           .required('Campo obligatorio!'),
+        review_image: Yup.mixed()
+          .required('Debes seleccionar al menos una imagen!')
+          .test("FILE_SIZE", "El tamaño de la imagen es demasiado grande!", value => value && value.size < 400 * 400)
+          .test("FILE_TYPE", "Formato inválido", value => value && ['image/png', 'image/jpeg', 'image/jpg'].includes(value.type))
       })}
       onSubmit={async (values, { setSubmitting, setStatus }) => {
         setSubmitting(true);
@@ -65,6 +70,7 @@ const FormReview = () => {
           {store.auth ? (
             <div className="div-form-review-content">
               <Form className="form-review-content" onSubmit={formik.handleSubmit}>
+                <>
                 <div className="title-form-review">
                   <label htmlFor="title">Títutlo:</label>
                   <Field type="text" name="title" value={formik.values.title} />
@@ -74,7 +80,8 @@ const FormReview = () => {
                   <label htmlFor="comment_text">Comentario:</label>
                   <Field type="text" name="comment_text" value={formik.values.comment_text} />
                   <ErrorMessage name='comment_text' />
-                </div>
+                </div></>
+                
                 <div>
                   <label htmlFor="review_image">Publica tu foto aquí:</label>
                   <input
@@ -90,7 +97,8 @@ const FormReview = () => {
                   {selectedFile && <ImagePreview file={selectedFile} />}
                 </div>
 
-                <button className='btn-review' type="submit">Publicar mi reseña</button>
+                <button className='btn btn-primary btn-signup' type="submit">Publicar mi reseña</button>
+              
               </Form>
             </div>
           ) : null}
