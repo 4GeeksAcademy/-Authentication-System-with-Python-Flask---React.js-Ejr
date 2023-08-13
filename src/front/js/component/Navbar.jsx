@@ -20,7 +20,9 @@ const Navbar = () => {
           <ul className="navbar-nav">
             {store.auth ? (
               <>
+
                 <h3 style={{ color: "white" }}>Bienvenido, <strong>{store.user?.username ? store.user.username : store.business_user?.business_name}! </strong></h3>
+
               </>
             ) : (
               <>
