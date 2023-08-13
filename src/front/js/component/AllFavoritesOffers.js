@@ -10,40 +10,48 @@ const AllFavoritesOffers = ({ searchQuery }) => {
     const { store, actions } = useContext(Context)
     const { handleUpdate, handleSave, handleDelete, favorites, reviews, editContent, editContentId, editTitle, handleEditContent } = useOfferManagement();
 
+
+    useEffect(() => {
+        actions.getFavoriteoffer();
+        console.log("Success fetch for Cardsofers");
+    }, []);
+
+
     return (
         <div className='cards-offer'>
             {store.favorites && store.favorites.length >= 1 && store.favorites
                 .filter(
-                    (business_offer) =>
-                        business_offer.offer_title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                        business_offer.offer_description
+                    (favorite) =>
+                        favorite?.offer_id?.offer_title
+                            .toLowerCase().includes(searchQuery.toLowerCase()) ||
+                        favorite?.offer_id?.offer_description
                             .toLowerCase()
-                            .includes(searchQuery.toLowerCase()) || business_offer.country.toLowerCase().includes(searchQuery.toLowerCase()) || business_offer.city.toLowerCase().includes(searchQuery.toLowerCase())
+                            .includes(searchQuery.toLowerCase()) || favorite?.offer_id?.country.toLowerCase().includes(searchQuery.toLowerCase()) || favorite?.offer_id?.city.toLowerCase().includes(searchQuery.toLowerCase())
                 )
                 .sort((a, b) => b.id - a.id)
-                .map((business_offer) => {
+                .map((favorite) => {
                     return (
                         <div
-                            key={business_offer.id}
+                            key={favorite?.offer_id?.id}
                             className="card card-offer mb-3 mt-4">
-                            <img src={business_offer.offer_image} className="card-img-top" alt="..."></img>
+                            <img src={favorite?.offer_id?.offer_image} className="card-img-top" alt="..."></img>
                             <div className="card-body">
                                 <div className="div-title-offer">
-                                    {editContentId === business_offer.id ? (
+                                    {editContentId === favorite?.offer_id?.id ? (
                                         <input
                                             type="text"
                                             value={editTitle}
                                             onChange={(e) => handleEditContent(e.target.value)}
                                         />
                                     ) : (
-                                        <h5 className="card-title offer-title">{business_offer.offer_title}</h5>
+                                        <h5 className="card-title offer-title">{favorite?.offer_id?.offer_title}</h5>
                                     )}
                                 </div>
                                 <div className='infos-country'>
-                                    <p className="card-text country-offer">{business_offer.country}</p>
-                                    <p className="card-text city-offer">{business_offer.city}</p>
+                                    <p className="card-text country-offer">{favorite?.offer_id?.country}</p>
+                                    <p className="card-text city-offer">{favorite?.offer_id?.city}</p>
                                 </div>
-                                {editContentId === business_offer.id ? (
+                                {editContentId === favorite?.offer_id?.id ? (
                                     <div className="comment-review">
                                         <textarea
                                             autoFocus={true}
@@ -56,19 +64,19 @@ const AllFavoritesOffers = ({ searchQuery }) => {
                                         ></textarea>
                                     </div>
                                 ) : (
-                                    <p className="card-text">{business_offer.offer_description}</p>
+                                    <p className="card-text">{favorite?.offer_id?.offer_description}</p>
                                 )}
                                 <div className='offer-price'>
-                                    {editContentId === business_offer.id ? (
+                                    {editContentId === favorite?.offer_id?.id ? (
                                         <input
                                             type="number"
                                             value={editContent}
                                             onChange={(e) => handleEditContent(e.target.value)}
                                         />
                                     ) : (
-                                        <p className="card-text price-user">Precio normal : <span className='price'>{business_offer.normal_user_price.toLocaleString()}$</span></p>
+                                        <p className="card-text price-user">Precio normal : <span className='price'>{favorite?.offer_id?.normal_user_price.toLocaleString()}$</span></p>
                                     )}
-                                    {editContentId === business_offer.id ? (
+                                    {editContentId === favorite?.offer_id?.id ? (
                                         <div >
                                             <input
                                                 type="number"
@@ -77,26 +85,26 @@ const AllFavoritesOffers = ({ searchQuery }) => {
 
                                             />
                                             <div>
-                                                <button onClick={() => handleSave(business_offer.id)}>Validar</button>
+                                                <button onClick={() => handleSave(favorite?.offer_id?.id)}>Validar</button>
                                             </div>
 
                                         </div>
                                     ) : (
-                                        <p className="card-text price-user">Precio premium : <span className='price'>{business_offer.premium_user_price.toLocaleString()}$</span></p>
+                                        <p className="card-text price-user">Precio premium : <span className='price'>{favorite?.offer_id?.premium_user_price.toLocaleString()}$</span></p>
                                     )}
                                 </div>
-                                {store.business_user.id === business_offer.business_id.id &&
-                                    // || store.user.is_admin 
+                                {store.business_user.id === favorite?.offer_id?.business_id.id &&
+                                    // || store.user.is_admin
                                     <>
                                         <button
                                             className="btn-up-offer"
-                                            onClick={() => handleUpdate(business_offer.id)}
+                                            onClick={() => handleUpdate(favorite?.offer_id?.id)}
                                         >
                                             &#9998;
                                         </button>
                                         <button
                                             className="btn-delete-offer"
-                                            onClick={() => handleDelete(business_offer.id)}
+                                            onClick={() => handleDelete(favorite?.offer_id?.id)}
                                         >
                                             &#10008;
                                         </button>
@@ -105,11 +113,11 @@ const AllFavoritesOffers = ({ searchQuery }) => {
                                 }
 
                                 {/* <GooglePayButton
-                    normalUserPrice={business_offer.normal_user_price}
-                    premiumUserPrice={business_offer.premium_user_price}
+                    normalUserPrice={favorite?.offer_id?.normal_user_price}
+                    premiumUserPrice={favorite?.offer_id?.premium_user_price}
                   /> */}
                                 {store.user.username && <>
-                                    <FavoriteOffer offerId={business_offer.id} />
+                                    <FavoriteOffer offerId={favorite?.offer_id?.id} />
                                     <Link to='/opciones-de-pago'>
                                         <button className='btn-buy'>Comprar</button>
                                     </Link>

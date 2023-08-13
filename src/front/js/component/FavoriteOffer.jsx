@@ -2,27 +2,44 @@ import React, { useContext, useState, useEffect } from "react";
 import { Context } from "../store/appContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faHeart } from "@fortawesome/free-regular-svg-icons";
-library.add(faHeart);
+import { faHeart, faTrashAlt } from "@fortawesome/free-regular-svg-icons";
+import { faHeartCrack } from "@fortawesome/free-solid-svg-icons";
+library.add(faHeart, faTrashAlt);
 
-const FavoriteOffer = ({offerId}) => {
-    const { store, actions } = useContext(Context);
+const FavoriteReview = ({ offerId }) => {
+  const { store, actions } = useContext(Context);
+  const [isFavorite, setIsFavorite] = useState(false);
 
-    const handleAddToFavorite = async () => {
-      await actions.addFavoriteOffer(offerId);
-    };
-  
-    // const handleDeleteFavorite = async () => {
-    //   await actions.deleteFavoriteReview(reviewId)
-    // }
-  
-    return (
-      <div>
+  useEffect(() => {
+    if (Array.isArray(store.favorites)) { // Vérification du type
+      setIsFavorite(store.favorites.some(favorite => favorite.offer_id?.id === offerId));
+    }
+  }, [store.favorites, offerId]);
+
+  const handleAddToFavorite = async () => {
+    await actions.addFavoriteOffer(offerId);
+    setIsFavorite(true);
+  };
+
+  const handleDeleteFavorite = async () => {
+    await actions.deleteFavoriteOffer(offerId);
+    window.location.reload()
+    setIsFavorite(false);
+  };
+
+  return (
+    <div>
+      {!isFavorite ? (
         <span onClick={handleAddToFavorite}>
           <FontAwesomeIcon icon={faHeart} size="lg" />
         </span>
-      </div>
-    );
-  };
+      ) : (
+        <span onClick={handleDeleteFavorite}>
+          <FontAwesomeIcon icon={faHeartCrack} size="lg" color="red" />
+        </span>
+      )}
+    </div>
+  );
+};
 
-export default FavoriteOffer
+export default FavoriteReview;

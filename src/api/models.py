@@ -40,7 +40,7 @@ class User(db.Model):
             "passport": self.passport,
             "phone_prefix": self.phone_prefix,
             "phone_number": self.phone_number,
-            "address": self.address,      
+            "address": self.address,
             "payment_method": self.payment_method,
             "is_admin": self.is_admin,
             "cliente_ID_paypal": self.cliente_ID_paypal,
@@ -69,7 +69,7 @@ class Business_user(db.Model):
         return {
             "id": self.id,
             "business_name": self.business_name,
-            "email": self.email,         
+            "email": self.email,
             "nif": self.nif,
             "phone_prefix": self.phone_prefix,
             "phone_number": self.phone_number,
@@ -190,10 +190,20 @@ class Favorites(db.Model):
         return '<Favorites %r>' % self.id
 
     def serialize(self):
-        return {
+        serialized_data = {
             "id": self.id,
             "user_id": self.user_id,
             "trip_id": self.trip_id,
-            "offer_id": Offers.query.get(self.offer_id).serialize(),
-            "review_id": Review.query.get(self.review_id).serialize(),
         }
+
+        if self.offer_id is not None:
+            offer = Offers.query.get(self.offer_id)
+            if offer:
+                serialized_data["offer_id"] = offer.serialize()
+
+        if self.review_id is not None:
+            review = Review.query.get(self.review_id)
+            if review:
+                serialized_data["review_id"] = review.serialize()
+
+        return serialized_data
