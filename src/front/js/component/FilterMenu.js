@@ -44,7 +44,7 @@ const FilterMenu = ({ handleSearch }) => {
             <option value="cultural discovery">Cultural</option>
           </select>
         </div>
-        <div className="filter-btn">
+        <div className="filter-btn ps-4">
           <button className='btn-search' type="submit" onClick={handleSubmit}>
             Buscar
           </button>

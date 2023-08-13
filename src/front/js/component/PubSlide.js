@@ -2,7 +2,7 @@ import React from "react";
 
 const PubSlide = () => {
   return (
-    <div className="pub-slide mt-5">
+    <div className="pub-slide my-5">
       <div
         id="carouselExampleCaptions"
         className="carousel slide"
@@ -37,7 +37,7 @@ const PubSlide = () => {
               className="d-block w-100"
               alt="First Slide"
             />
-            <div className="carousel-caption d-none d-md-block">
+            <div className="carousel-caption d-md-block">
               <h2 className="title-slide">Brasil</h2>
               <p className="trip-desc">
                 Come relax on the beaches of Brazil or dance to the rhythm of
@@ -54,7 +54,7 @@ const PubSlide = () => {
               className="d-block w-100"
               alt="Second Slide"
             />
-            <div className="carousel-caption d-none d-md-block">
+            <div className="carousel-caption d-md-block">
               <h2 className="title-slide">Peru</h2>
               <p className="trip-desc">
                 Come and discover the mysteries of the Inca civilization and the
@@ -71,11 +71,14 @@ const PubSlide = () => {
               className="d-block w-100"
               alt="Third Slide"
             />
-            <div className="carousel-caption d-none d-md-block">
+            <div className="carousel-caption d-md-block">
               <h2 className="title-slide">Colombia</h2>
               <p className="trip-desc">
                 Some representative placeholder content for the third slide.
               </p>
+              <span className="normal-price">Normal Price: 1 200.00$</span>
+              <br />
+              <span className="prenium-price">Prenium Price: 1 000.00$</span>
             </div>
           </div>
         </div>

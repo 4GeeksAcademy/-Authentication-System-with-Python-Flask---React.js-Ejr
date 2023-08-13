@@ -24,3 +24,7 @@
   white-space: nowrap;
   background-color: blue;
 }
+
+.don form img {
+  width: .5rem;
+}

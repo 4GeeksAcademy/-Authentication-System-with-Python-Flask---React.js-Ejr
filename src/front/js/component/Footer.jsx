@@ -5,10 +5,10 @@ import { Link } from 'react-router-dom';
 const Footer = () => {
 	return (
 
-		<div className="container-footer mt-5">
-			<footer className="py-5">
-				<div className="row">
-					<div className="col-2">
+		<div className="container-footer align-items-center mt-5">
+			<footer >
+				<div className="row footer-content">
+					<div className="col-2 footer-viajes">
 						<h5>Viajes</h5>
 						<ul className="nav flex-column">
 							<li className="nav-item mb-2"><Link to="/" className="nav-link p-0 text-muted" >Home</Link></li>
@@ -19,10 +19,10 @@ const Footer = () => {
 						</ul>
 					</div>
 
-					<div className="col-2">
+					<div className="col-2 footer-business">
 						<h5>Empresa</h5>
 						<ul className="nav flex-column">
-						<li className="nav-item mb-2"><Link to="#" className="nav-link p-0 text-muted" >Política de cookies</Link></li>
+							<li className="nav-item mb-2"><Link to="#" className="nav-link p-0 text-muted" >Política de cookies</Link></li>
 							<li className="nav-item mb-2"><Link to="#" className="nav-link p-0 text-muted" >Política de privacidad</Link></li>
 							<li className="nav-item mb-2"><Link to="/terms" className="nav-link p-0 text-muted" >Términos de servicio</Link></li>
 							<li className="nav-item mb-2"><Link to="#" className="nav-link p-0 text-muted" >Información de la empresa</Link></li>
@@ -41,8 +41,14 @@ const Footer = () => {
 						</ul>
 					</div> */}
 
+
 					<div className="col-6 offset-1">
-						<form>
+						<div className="div-donation mb-5">
+							<Link to='/donacion' >
+								<button className="btn-donation">Participar al desarrollo de la página!</button>
+							</Link>
+						</div>
+						<form className='mb-4'>
 							<h5>Suscríbete a nuestro Newsletter</h5>
 							<p>Recibe ofertas y promociones exclusivas.</p>
 							<div className="d-flex w-100 gap-2">
@@ -54,7 +60,7 @@ const Footer = () => {
 					</div>
 				</div>
 
-				<div className="d-flex justify-content-between py-4 my-4 border-top">
+				<div className="d-flex justify-content-between pt-2 my-2 border-top">
 					<p><strong>© 2023 TRIP NEXUS, S,L.</strong>Todos los derechos reservados.</p>
 					<ul className="list-unstyled d-flex">
 						{/* <li className="ms-3"><Link className="link-dark" to="#"><svg className="bi" width="24" height="24"><use xlinkHref="#twitter"></use></svg></Link></li>
