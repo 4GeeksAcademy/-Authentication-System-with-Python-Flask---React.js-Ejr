@@ -120,12 +120,12 @@ const MySearch = () => {
     setFlightResult([]);
   };
   const getFlights =  () => {
-    fetch("https://sblaise123-fictional-barnacle-5wq5jw6pq4rfv6v9-3001.app.github.dev/api/flightinfo",{
+    fetch("https://sblaise123-fictional-barnacle-5wq5jw6pq4rfv6v9-3001.app.github.dev/api/getflightinfo",{
       method:"GET",
       headers:{"Content-Type":"application/json"}
     })
     .then((res) => res.json())
-        .then((data) => console.log( data ))
+        .then((data) => console.log (setSecondFlight( data )))
         .catch((error) => console.log("error", error));
   };
   return (
@@ -194,12 +194,12 @@ const MySearch = () => {
                       <p>Flight Provider: {flight.flightProvider}</p>
                       <p>Price: {flight.price}</p>
                       <p>Departure Date: {flight.departureDate}</p>
-                      <p>{getFlights()}</p>
+                      {/* <p>{getFlights()}</p> */}
                     </div>
                   </div>
                 ))
               ) : (
-                <><p>No flight data available.</p><p>{getFlights()}</p></>
+                <><p>No flight data available.</p></>
               )}
             </div>
           </div>
