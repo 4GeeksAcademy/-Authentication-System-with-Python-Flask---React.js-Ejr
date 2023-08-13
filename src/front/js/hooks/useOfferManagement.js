@@ -41,7 +41,7 @@ const useOfferManagement = () => {
     };
 
     const handleDelete = (id) => {
-        actions.deleteoffer(id);
+        actions.deleteOfferById(id);
         window.location.reload();
     };
 

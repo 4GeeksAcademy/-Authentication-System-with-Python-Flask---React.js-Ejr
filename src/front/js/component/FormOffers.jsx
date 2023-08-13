@@ -6,12 +6,12 @@ import axios from 'axios';
 import ImagePreview from './ImagePreview.jsx';
 
 
-const FormOffers = () => {
+const FormOffers = ({ currentModal }) => {
     const { store, actions } = useContext(Context);
     const [selectedFile, setSelectedFile] = useState(null);
 
     return (
-        
+
         <Formik
             initialValues={{
                 offer_title: "",
@@ -75,7 +75,7 @@ const FormOffers = () => {
                     setStatus({ success: true });
                     setSelectedFile(null);
                     window.location.reload();
-                    
+
                 } catch (error) {
                     console.error("Error submitting form:", error);
                     alert("Alguna cosa salió mal");
@@ -90,36 +90,39 @@ const FormOffers = () => {
                     {store.auth ? (
                         <div>
                             <Form onSubmit={formik.handleSubmit}>
-                                <div>
-                                    <label htmlFor="offer_title">Título:</label>
-                                    <Field type="text" name="offer_title" />
-                                    <ErrorMessage name="offer_title" />
-                                </div>
-                                <div>
-                                    <label htmlFor="offer_description">Descripción de la oferta:</label>
-                                    <Field type="text" name="offer_description" />
-                                    <ErrorMessage name="offer_description" />
-                                </div>
-                                <div>
-                                    <label htmlFor="country">País:</label>
-                                    <Field type="text" name="country" />
-                                    <ErrorMessage name="country" />
-                                </div>
-                                <div>
-                                    <label htmlFor="city">Ciudad:</label>
-                                    <Field type="text" name="city" />
-                                    <ErrorMessage name="city" />
-                                </div>
-                                <div>
-                                    <label htmlFor="normal_user_price">Precio para Usuario:</label>
-                                    <Field type="number" name="normal_user_price" />
-                                    <ErrorMessage name="normal_user_price" />
-                                </div>
-                                <div>
-                                    <label htmlFor="premium_user_price">Precio para Usuario Premium:</label>
-                                    <Field type="number" name="premium_user_price" />
-                                    <ErrorMessage name="premium_user_price" />
-                                </div>
+
+                                <>
+                                    <div>
+                                        <label htmlFor="offer_title">Título:</label>
+                                        <Field type="text" name="offer_title" />
+                                        <ErrorMessage name="offer_title" />
+                                    </div>
+                                    <div>
+                                        <label htmlFor="offer_description">Descripción de la oferta:</label>
+                                        <Field type="text" name="offer_description" />
+                                        <ErrorMessage name="offer_description" />
+                                    </div>
+                                    <div>
+                                        <label htmlFor="country">País:</label>
+                                        <Field type="text" name="country" />
+                                        <ErrorMessage name="country" />
+                                    </div>
+                                    <div>
+                                        <label htmlFor="city">Ciudad:</label>
+                                        <Field type="text" name="city" />
+                                        <ErrorMessage name="city" />
+                                    </div>
+                                    <div>
+                                        <label htmlFor="normal_user_price">Precio para Usuario:</label>
+                                        <Field type="number" name="normal_user_price" />
+                                        <ErrorMessage name="normal_user_price" />
+                                    </div>
+                                    <div>
+                                        <label htmlFor="premium_user_price">Precio para Usuario Premium:</label>
+                                        <Field type="number" name="premium_user_price" />
+                                        <ErrorMessage name="premium_user_price" />
+                                    </div>
+                                </>
                                 <div>
                                     <label htmlFor="offer_image">Publica tu foto aquí:</label>
                                     <input
@@ -134,9 +137,11 @@ const FormOffers = () => {
                                     <ErrorMessage name="offer_image" />
                                     {selectedFile && <ImagePreview file={selectedFile} />}
                                 </div>
+
                                 <button type="submit" className="btn btn-primary btn-signup">
                                     Publicar mi oferta
                                 </button>
+
                             </Form>
                         </div>
                     ) : null}

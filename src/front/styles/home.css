@@ -12,16 +12,17 @@
 }
 
 :root {
-  --color-1: #f1445b;
-  --color-2: #65734b;
-  --color-3: #94a453;
-  --color-4: #d9c3b1;
-  --color-5: #f03625;
+  --color-1: #1f1641;
+  --color-2: #012272;
+  --color-3: #0486db;
+  --color-4: #05add3;
+  --color-5: #babf95;
 }
 
 body {
-  background-color: var(--color-4);
+  background-color: var(--color-5);
   height: 100vh;
+  
 }
 
 

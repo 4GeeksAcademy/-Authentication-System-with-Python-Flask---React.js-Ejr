@@ -102,34 +102,34 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 
       isAuth: async () => {
-        try {
-          let token = localStorage.getItem("myToken");
-          console.log(token)
-          const settings = {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: "Bearer " + token,
-            },
-          };
-
-          const request = await fetch(API_URL + "/api/private", settings);
-          if (request.ok) {
-            const data = await request.json();
-            const store = getStore();
-            if (data.user) {
-              setStore({ ...store, user: data.user })
-
+        let token = localStorage.getItem("myToken");
+        if(token) {
+          try {
+            let token = localStorage.getItem("myToken");
+            const settings = {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: "Bearer " + token,
+              },
+            };
+            
+            const request = await fetch(API_URL + "/api/private", settings);
+            if (request.ok) {
+              const data = await request.json();
+              const store = getStore();
+              if (data.user) {
+                setStore({ ...store, user: data.user })
+              }
+              if (data.business) {
+                setStore({ ...store, business_user: data.business })
+              }
+              setStore({ auth: true });
             }
-            if (data.business) {
-              setStore({ ...store, business_user: data.business })
-            }
-
-            setStore({ auth: true });
+          } catch (error) {
+            console.log("No se pudo cargar: ", error);
           }
-
-        } catch (error) {
-          console.log("No se pudo cargar: ", error);
+        } else {
         }
       },
 
