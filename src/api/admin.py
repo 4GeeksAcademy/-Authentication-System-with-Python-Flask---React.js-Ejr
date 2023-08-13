@@ -1,7 +1,7 @@
   
 import os
 from flask_admin import Admin
-from .models import db, User, Movie, Actor, Director
+from .models import db, User, Movie, Actor, Director, Genre
 from flask_admin.contrib.sqla import ModelView
 from flask import Flask
 from flask_cors import CORS
@@ -20,7 +20,7 @@ def setup_admin(app):
     admin.add_view(ModelView(Movie, db.session))
     admin.add_view(ModelView(Actor, db.session))
     admin.add_view(ModelView(Director, db.session))
-    # admin.add_view(ModelView(Genre, db.session))
+    admin.add_view(ModelView(Genre, db.session))
     # admin.add_view(ModelView(Favorite, db.session))
 
     # You can duplicate that line to add mew models

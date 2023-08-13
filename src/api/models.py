@@ -16,6 +16,25 @@ movie_director = db.Table('movie_director',
     db.Column('director_id', db.Integer, db.ForeignKey('director.id'), primary_key=True)
 )
 
+# Tabla de relación entre Movie y Genres
+movie_genres_association = db.Table('movie_genres',
+    db.Column('movie_id', db.Integer, db.ForeignKey('movie.id')),
+    db.Column('genre_id', db.Integer, db.ForeignKey('genre.id'))
+)
+
+class Genre(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(50))
+
+    def __repr__(self):
+        return f'<Genre {self.id} {self.name}>'
+
+    def serialize (self):
+        return {
+        "id": self.id,
+        "name": self.name,
+        }
+
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -40,15 +59,17 @@ class Movie(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(180))
     description = db.Column(db.Text)
-    ranking = db.Column(db.Integer)
-    # Relación con la tabla Actor
-    actors = relationship('Actor', secondary='movie_actor')
+    ranking = db.Column(db.Float)  # Puede representar números con decimales
     image = db.Column(db.String(180))
-    
+    trailer_key = db.Column(db.String(180))
+    trailer_type = db.Column(db.String(50))
+    trailer_id = db.Column(db.String(180))
 
+    # Relación con la tabla Actor
+    actors = db.relationship('Actor', secondary='movie_actor')
     # Relación con la tabla Director
-    directors = relationship('Director', secondary='movie_director')    
-
+    directors = db.relationship('Director', secondary='movie_director')
+    genres = db.relationship('Genre', secondary=movie_genres_association, backref='movie')
 
     def __repr__(self):
         return f'<Movie {self.id} {self.name}>'
@@ -62,6 +83,10 @@ class Movie(db.Model):
             "actors": [actor.serialize() for actor in self.actors],  # Serializar los actores asociados
             "directors": [director.serialize() for director in self.directors],  # Serializar los directores asociados
             "image": self.image,
+            "trailer_key": self.trailer_key,
+            "trailer_type": self.trailer_type,
+            "trailer_id": self.trailer_id,
+            "genres": [genre.serialize() for genre in self.genres], 
         }
 
 class Actor(db.Model):

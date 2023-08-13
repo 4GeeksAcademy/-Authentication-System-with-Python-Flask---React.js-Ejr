@@ -1,5 +1,5 @@
 .container {
-    font-family: 'Roboto', sans-serif; 
+  font-family: 'Roboto', sans-serif; 
   }
 
 .star-icon {
@@ -19,12 +19,14 @@
     border-radius: 20px; 
     border: 1px solid white; 
     font-family: 'Roboto', sans-serif; 
-    font-size: 10px;
+    font-size: 14px;
     padding: 10px 20px;    
     cursor: pointer;  
     margin-bottom: 10px;
     margin-right: 10px;
   }
+
+  
 
   .video-container {
     border-radius: 20px; 
@@ -33,6 +35,12 @@
 
 .container-crew {
   width: 100%; 
+  margin-top: 30px;
+  margin-bottom: 20px;
+}
+
+.act_direct {
+  margin-bottom: 50px;
 }
 
 .card-name {
@@ -55,3 +63,21 @@
   margin-bottom: -5px; 
 }
 
+.trailer-size {
+  width: 560px;
+  height: 315px;
+  border: 1px solid white;
+  border-radius: 5px; 
+  object-fit: cover;
+}
+
+
+.top-aligned {
+  align-items: flex-start;
+}
+
+
+.description {
+  text-align: justify;    
+  font-size: 14px;
+}
