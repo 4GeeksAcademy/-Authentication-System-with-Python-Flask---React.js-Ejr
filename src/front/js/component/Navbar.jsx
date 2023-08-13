@@ -16,16 +16,11 @@ const Navbar = () => {
         <Link className="navbar-brand" to='/'>
           <img src="https://res.cloudinary.com/albertge/image/upload/v1691882080/TRIP%20NEXUS/Texto_del_p%C3%A1rrafo_c411q0.png" width="70" height="65" alt="Logo"></img>
         </Link>
-        
-        {/* <div className="container-fluid">
-          <h3>¡Conéctate al mundo!</h3>
-          <h3>¡Viaja con ventaja con exlusivas actividades!</h3>
-        </div> */}
         <div className="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
           <ul className="navbar-nav">
             {store.auth ? (
               <>
-                <h3 style={{color: "white"}}>Bienvenido, <strong>{store.user?.username ? store.user.username : store.business_user?.business_name}! </strong></h3>
+                <h3 style={{color: "var(--color-3)"}}>Bienvenido, <strong>{store.user?.username ? store.user.username : store.business_user?.business_name}! </strong></h3>
                 {/* "var(--color-3)" */}
               </>
             ) : (
