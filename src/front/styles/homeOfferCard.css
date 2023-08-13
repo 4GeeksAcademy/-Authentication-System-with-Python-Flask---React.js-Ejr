@@ -5,9 +5,8 @@
   width: 85%;
   height: 16rem;
   margin: 0 auto;
-  margin-top: 30px;
+  margin-top: 4rem;
   overflow: hidden;
-  overflow-x: scroll;
 }
 
 .card-home-offer {
@@ -24,33 +23,4 @@
   display: flex;
   flex-wrap: nowrap;
   overflow: hidden;
-}
-
-*/
-
-/* ===== Scrollbar CSS ===== */
-/* Firefox */
-* {
-  scrollbar-width: 6px;
-  scrollbar-color: var(--color-1);
-}
-
-/* Chrome, Edge, and Safari */
-*::-webkit-scrollbar {
-  width: 6px;
-}
-
-*::-webkit-scrollbar-track {
-  background: var(--color-3);
-  width: 6px;
-  height: 6px;
-  border-radius: 6px;
-}
-
-*::-webkit-scrollbar-thumb {
-  background-color: var(--color-1);
-  border-radius: 6px;
-  border: 3px none var(--color-5);
-  height: 6px;
-  width: 6px;
 }

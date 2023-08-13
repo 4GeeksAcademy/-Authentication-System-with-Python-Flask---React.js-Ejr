@@ -28,6 +28,7 @@ import ScrollToTop from "./component/scrollToTop";
 import { BackendURL } from "./component/backendURL";
 import PaymentOptions from "./component/PaymentOptions";
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
+import DonationForm from "./component/DonationForm";
 
 
 
@@ -72,6 +73,7 @@ const Layout = () => {
                             <Route element={<Trips />} path="/trips" />
                             <Route element={<Reviews />} path="/reviews" />
                             <Route element={<TermsConditions />} path="/terms" />
+                            <Route element={<DonationForm />} path="/donacion" />
                             <Route element={<PaymentOptions />} path="/opciones-de-pago" />
                             <Route element={<h1>Not found!</h1>} />
                         </Routes>

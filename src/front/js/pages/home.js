@@ -11,6 +11,7 @@ import Slogan from "../component/Slogan";
 import FilterMenu from "../component/FilterMenu.js";
 import LitlleSlide from "../component/LitlleSlide.jsx";
 import DonationForm from "../component/DonationForm";
+import { Link } from "react-router-dom";
 
 
 export const Home = () => {
@@ -21,13 +22,11 @@ export const Home = () => {
 
 
       {/* <Slogan /> */}
-      {/* <AboutUs /> */}
       <LitlleSlide />
       <FilterMenu />
       <PubSlide />
       <HomeOfferCard />
       <HomeReviewCard />
-      <DonationForm />
       {/* <AboutUs /> */}
 
     </>
