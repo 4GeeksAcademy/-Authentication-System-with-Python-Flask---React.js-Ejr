@@ -7,9 +7,11 @@ import FavoriteReview from './FavoriteReview';
 const AllFavoritesReviews = ({ searchQuery }) => {
   const { store, actions } = useContext(Context)
   const { handleUpdate, handleSave, handleDelete, favorites, reviews, editContent, editContentId, editTitle, handleEditContent } = useReviewManagement();
-  useLayoutEffect(() => {
+
+  useEffect(() => {
     actions.getFavoriteReview()
   }, [])
+
   return (
     <div>
       {/* Publicar las cartas que ya existen */}
@@ -17,31 +19,31 @@ const AllFavoritesReviews = ({ searchQuery }) => {
         {store.favorites && store.favorites.length >= 1 && store.favorites
           .filter(
             (favorite) =>
-              favorite.reviews.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-              favorite.reviews.comment_text
+              favorite.review_id?.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+              favorite.review_id?.comment_text
                 .toLowerCase()
                 .includes(searchQuery.toLowerCase())
           )
           .sort((a, b) => b.id - a.id)
           .map((favorite) => (
             <div
-              key={favorite.reviews.id}
+              key={favorite.review_id?.id}
               className="card card-review text-white mt-4 container"
               style={{ height: "16rem", width: "20rem" }}
             >
-              <img src={review.review_image} className="card-img-top" alt="..."></img>
+              <img src={favorite.review_id?.review_image} className="card-img-top" alt="..."></img>
               <div className="div-title-review">
-                {editContentId === favorite.reviews.id ? (
+                {editContentId === favorite.review_id?.id ? (
                   <input
                     type="text"
                     value={editTitle}
                     onChange={(e) => handleEditContent(e.target.value)}
                   />
                 ) : (
-                  <h5 className="card-title title-review">{favorite.reviews.title}</h5>
+                  <h5 className="card-title title-review">{favorite.review_id?.title}</h5>
                 )}
               </div>
-              {editContentId === favorite.reviews.id ? (
+              {editContentId === favorite.review_id?.id ? (
                 <>
                   <div className="comment-review">
                     <textarea
@@ -54,22 +56,22 @@ const AllFavoritesReviews = ({ searchQuery }) => {
                       style={{ resize: "none" }}
                     ></textarea>
                   </div>
-                  <button onClick={() => handleSave(favorite.reviews.id)}>Validar</button>
+                  <button onClick={() => handleSave(favorite.review_id?.id)}>Validar</button>
                 </>
               ) : (
-                <p className="card-text">{favorite.reviews.comment_text}</p>
+                <p className="card-text">{favorite.review_id?.comment_text}</p>
               )}
               {store.user.id === favorite.user_id && (
                 <div className="btn-options d-flex justify-content-end">
                   <button
                     className="btn-up-review"
-                    onClick={() => handleUpdate(favorite.reviews.id)}
+                    onClick={() => handleUpdate(favorite.review_id?.id)}
                   >
                     &#9998;
                   </button>
                   <button
                     className="btn-delete-review"
-                    onClick={() => handleDelete(favorite.reviews.id)}
+                    onClick={() => handleDelete(favorite.review_id?.id)}
                   >
                     &#10008;
                   </button>
@@ -77,10 +79,10 @@ const AllFavoritesReviews = ({ searchQuery }) => {
               )}
               <div className="likes card-likes">
                 <span className="author-review">
-                  Escrito por : <span>{favorite.reviews.user.username}</span>{" "}
+                  Escrito por : <span>{favorite.review_id?.user.username}</span>{" "}
                 </span>
-                <FavoriteReview reviewId={favorite.reviews.id} />
-                <Likes reviewId={favorite.reviews.id} />
+                <FavoriteReview reviewId={favorite.review_id?.id} />
+                <Likes reviewId={favorite.review_id?.id} />
               </div>
             </div>
           ))}

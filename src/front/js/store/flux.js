@@ -939,7 +939,36 @@ const getState = ({ getStore, getActions, setStore }) => {
           return false;
         }
       },
+      deleteFavoriteReview: async (reviewId, userId) => {
+        try {
+          const token = localStorage.getItem("myToken");
+          if (!token) {
+            console.log("Token not found");
+            return false;
+          }
 
+          const response = await fetch(API_URL + `/api/reviews/favorites/${reviewId}`, {
+            method: 'DELETE',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`,
+            },
+            body: JSON.stringify({ user_id: userId }),
+          });
+
+          if (response.ok) {
+            const store = getStore();
+            const updatedFavorites = store.favorites.filter(favorite => favorite.review_id !== reviewId);
+            setStore({ ...store, favorites: updatedFavorites });
+            return true;
+          } else {
+            return false;
+          }
+        } catch (error) {
+          console.log(error);
+          return false;
+        }
+      },
       getFavoriteoffer: async () => {
         try {
           const token = localStorage.getItem("myToken");
@@ -971,8 +1000,6 @@ const getState = ({ getStore, getActions, setStore }) => {
           return null;
         }
       },
-
-
       addFavoriteOffer: async (offerId, userId) => {
         try {
           const token = localStorage.getItem("myToken");
@@ -1006,6 +1033,35 @@ const getState = ({ getStore, getActions, setStore }) => {
           return false;
         }
       },
+      deleteFavoriteOffer: async (offerId) => {
+        try {
+          const token = localStorage.getItem("myToken");
+          if (!token) {
+            console.log("Token not found");
+            return false;
+          }
+
+          const response = await fetch(API_URL + `/api/offers/favorites/${offerId}`, {
+            method: 'DELETE',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`,
+            },
+          });
+          if (response.ok) {
+            const store = getStore();
+            const updatedFavorites = store.favorites.filter(favorite => favorite.offer_id !== offerId);
+            setStore({ ...store, favorites: updatedFavorites });
+            return true;
+          } else {
+            return false;
+          }
+        } catch (error) {
+          console.log(error);
+          return false;
+        }
+      },
+
     },
   };
 };
