@@ -43,6 +43,7 @@ export const Login = () => {
 
           <label htmlFor="email">Email:</label>
           <input
+            className='searchbar'
             type="text"
             id="email"
             value={email}
@@ -55,6 +56,7 @@ export const Login = () => {
         <div className="form-group">
           <label htmlFor="password">Password:</label>
           <input
+            className='searchbar'
             type="password"
             id="password"
             value={password}

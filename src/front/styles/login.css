@@ -1,0 +1,66 @@
+login-container{
+    margin: 0;
+    height: 100vh;
+    background: linear-gradient(45deg, #ffffff, #8dcbf7aa, #12aba0ba);
+    background-size: 600% 600%;
+    animation: gradientLoop 10s linear
+infinite;
+}
+@keyframes gradientLoop{
+    0%{
+      background-position: 0% 50%;
+    }
+    50%{
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+.searchbar{
+    padding-left: 50px;
+    padding-top: 6%;
+    padding-bottom: 1%;
+    height: 80px;
+    font-weight: lighter;
+    font-size:x-large;
+    background: linear-gradient(45deg, #ffffff, #8dcbf7aa, #b8ecea);
+    animation: gradientLoop 9s linear
+infinite;
+}
+@keyframes gradientLoop{
+    0%{
+      background-position: 50% 50%;
+    }
+    50%{
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 80% 50%;
+    }
+}
+
+
+form-group{
+    padding-left: 50px;
+    padding-top: 6%;
+    padding-bottom: 1%;
+    height: 80px;
+    font-weight: lighter;
+    font-size:x-large;
+    background: linear-gradient(45deg, #ffffff, #8dcbf7aa, #b8ecea);
+    animation: gradientLoop 9s linear
+infinite;
+}
+@keyframes gradientLoop{
+    0%{
+      background-position: 50% 50%;
+    }
+    50%{
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 80% 50%;
+    }
+
+}
