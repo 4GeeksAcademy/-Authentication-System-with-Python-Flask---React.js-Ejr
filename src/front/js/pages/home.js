@@ -10,8 +10,8 @@ export const Home = () => {
 	useEffect(()=>{videoRef.current.play()},[])
 	return (
 		<div className="text-center">
-		
-	
+
+
 		<div className="home-container">
 			<div className="background">
 				<video width="100%" height="100%" loop muted ref={videoRef} autoPlay={true}> <source src={car_video}/> </video>
@@ -20,9 +20,9 @@ export const Home = () => {
 			<h1 style={{fontSize:48,zIndex:"1000"}} >Vehicles that drive the world</h1>
 				<p className="fs-5 py-2 ps-1">Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups.</p>
 			</section>
-			<AboutPage />
+			
 		</div>
-		
+
 		</div>	);
-		
+
 };
