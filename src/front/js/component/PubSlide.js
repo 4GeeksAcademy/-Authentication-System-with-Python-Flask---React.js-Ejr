@@ -5,7 +5,7 @@ const PubSlide = () => {
     <div className="pub-slide my-5">
       <div
         id="carouselExampleCaptions"
-        className="carousel slide"
+        className="carousel slide pub-slide-home"
         data-bs-ride="carousel"
       >
         <div className="carousel-indicators">

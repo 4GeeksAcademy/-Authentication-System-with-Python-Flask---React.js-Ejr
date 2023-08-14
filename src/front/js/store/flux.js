@@ -103,7 +103,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       isAuth: async () => {
         let token = localStorage.getItem("myToken");
-        if(token) {
+        if (token) {
           try {
             let token = localStorage.getItem("myToken");
             const settings = {
@@ -113,7 +113,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 Authorization: "Bearer " + token,
               },
             };
-            
+
             const request = await fetch(API_URL + "/api/private", settings);
             if (request.ok) {
               const data = await request.json();
@@ -302,11 +302,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 
           if (response.ok) {
             const updatedUser = await response.json();
-
-            setStore((prevStore) => ({
-              ...prevStore,
-              user: updatedUser,
-            }));
+            const store = getStore()
+            setStore({ ...store, user: updatedUser });
 
             return true;
           } else {

@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { Context } from "../store/appContext";
+import { Link } from 'react-router-dom';
 
 const UserPrivate = () => {
   const { store, actions } = useContext(Context);
@@ -249,6 +250,9 @@ const UserPrivate = () => {
         )}
         <button className='btn-up-cancel' onClick={() => handleCancelChanges()}>Cancelar</button>
       </div>
+      <Link to='/favoritos' >
+        <button className='btn-fav-user'>Ver mis favoritos</button>
+      </Link>
     </div>
   );
 

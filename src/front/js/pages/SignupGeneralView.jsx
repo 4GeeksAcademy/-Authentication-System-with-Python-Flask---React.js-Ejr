@@ -5,7 +5,7 @@ import ForgotPasswordForm from '../component/ForgotPasswordForm.jsx'
 
 const SignupGeneralView = () => {
     return (
-        <div className='container mt-5'>
+        <div className='container my-5'>
             <ul className="nav nav-tabs menu-review" id="myTab" role="tablist">
                 <li className="nav-item nav-review" role="presentation">
                     <button className="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">¿Eres viajero?</button>
