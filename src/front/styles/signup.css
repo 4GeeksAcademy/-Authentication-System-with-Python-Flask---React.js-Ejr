@@ -85,8 +85,8 @@ input {
   font-size: 12px;
 }
 
-.reset-button-password,
-.back-button-password {
+.reset-button-signup,
+.back-button-signup {
   padding: 8px 16px;
   font-size: 16px;
   border: none;
@@ -94,15 +94,32 @@ input {
   color: white;
   cursor: pointer;
   border-radius: 4px;
-  margin: 8px;
+  margin: auto;
+  width: 9rem;
 }
 
-.back-button-password {
+
+.reset-button-signup{
+  background-color: var(--color-3);
+  color: white;
+}
+
+.back-button-signup {
   background-color: #ccc;
+  width: 4.7rem;
+  
+
 }
 
 .error-text {
   color: red;
   font-size: 14px;
   margin-top: 5px;
+}
+
+.btn-outline-secondary {
+  background-color: var(--color-3);
+  color: white;
+
+
 }

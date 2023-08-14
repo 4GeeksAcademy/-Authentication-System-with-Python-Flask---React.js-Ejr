@@ -250,8 +250,8 @@ const SignUpUser = () => {
               
               </div>
               <ErrorMessage name="acceptTerms" />
-              <button type="submit" className="btn btn-primary reset-button-password mt-2">Crear mi cuenta</button>
-              <button type="button" onClick={handleRedirect} className='back-button-password'>Volver</button>
+              <button type="submit" className="btn btn-primary reset-button-signup mt-2">Crear mi cuenta</button>
+              <button type="button" onClick={handleRedirect} className='back-button-signup mt-2'>Volver</button>
 
             </Form>
           </div>
