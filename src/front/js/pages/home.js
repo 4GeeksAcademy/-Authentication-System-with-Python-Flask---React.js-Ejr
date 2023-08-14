@@ -12,6 +12,8 @@ import FilterMenu from "../component/FilterMenu.js";
 import LitlleSlide from "../component/LitlleSlide.jsx";
 import DonationForm from "../component/DonationForm";
 import GeneralInfoDiv from "../component/GeneralInfoDiv.jsx";
+import { Link } from "react-router-dom";
+
 
 
 export const Home = () => {
@@ -22,7 +24,6 @@ export const Home = () => {
 
 
       {/* <Slogan /> */}
-      {/* <AboutUs /> */}
       <LitlleSlide />
       <FilterMenu />
       <PubSlide />

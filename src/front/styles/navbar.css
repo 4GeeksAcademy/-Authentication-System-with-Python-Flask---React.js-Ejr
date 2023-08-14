@@ -1,32 +1,80 @@
-.navbar-nav {
-  margin-right: 3rem;
-}
-
-.navbar-brand, .navbar-nav {
-  margin-left: 7.5rem;
-  margin-right: 7rem;
-}
-
 .navbar-brand img {
-  height: 5rem;
+  height: 3rem;
   width: auto;
 }
 
-/* .navbar { 
-    position: fixed;
-    width: 100%;
-    top: 0;
-} */
-
 .navbar {
   background-color: var(--color-1);
+  width: 100vw;
+}
+
+.navbar-nav {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-nav h3 {
+  display: none;
 }
 
 .navbar-light .navbar-nav .nav-link {
   color: white;
 }
 
-li .signup, .login {
-  background-color: #03a8e8;
+li .signup,
+.login {
+  background-color: var(--color-4);
   color: var(--color-4);
+  padding: 10px;
+  font-size: .8rem;
+  margin-right: .5rem;
+}
+
+@media (min-width: 520px) {
+  .navbar-nav h3 {
+    display: block;
+  }
+
+  .navbar-nav {
+    margin-right: 3rem;
+  }
+
+  .navbar-brand {
+    margin-left: 1.5rem;
+  }
+
+  .navbar-brand img {
+    height: 5rem;
+    width: auto;
+  }
+}
+
+@media (min-width: 740px) {
+
+  li .signup,
+  .login {
+    background-color: var(--color-4);
+    color: var(--color-4);
+    padding: 10px;
+    font-size: 1.1rem;
+  }
+
+  .dropdown-menu {
+    height: 1.3rem;
+  }
+}
+
+@media (min-width: 1000px) {
+  .navbar-nav {
+    margin-right: 4rem;
+  }
+
+  .navbar-brand {
+    margin-left: 2rem;
+  }
+
+  .navbar-brand img {
+    height: 5rem;
+    width: auto;
+  }
 }
