@@ -37,6 +37,7 @@ const SearchBar = () => {
     
   }
 
+  console.log(filteredCars)
 
   return (
     <div className="parentDiv">
@@ -63,7 +64,7 @@ const SearchBar = () => {
                             <h4 className='text-secondary' key={car.id}>{car.car_name}</h4>
                           </div>
                           <div className='imagesDiv' style={{"width": "44rem", "height": "auto"}}>
-                            <img className="rounded w-100" src={car.images[0].image_url }/>
+                            {car.images.length ? <img className="rounded w-100" src={car.images[0].image_url }/>:""}
                           </div>
                     </div>
                 ))}

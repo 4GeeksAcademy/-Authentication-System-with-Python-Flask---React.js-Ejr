@@ -5,14 +5,18 @@
     height: 100vh;
 }
 .background{
-    background-image: url("https://wallpapercave.com/wp/wp7979734.jpg");
+    /* background-image: url("https://wallpapercave.com/wp/wp7979734.jpg");
     background-repeat: no-repeat;
-    background-size: cover;
-    filter: blur(5px);
+    background-size: cover; */
+    /* filter: blur(5px); */
     z-index: 1;
+    object-fit: cover;
     width: 100%;
     height: 100%;
     position: relative;
+}
+.background video{
+    object-fit: cover;
 }
 .sight-info{
     position: absolute;
