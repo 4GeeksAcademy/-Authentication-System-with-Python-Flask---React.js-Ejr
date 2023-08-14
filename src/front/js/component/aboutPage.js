@@ -15,10 +15,7 @@ const AboutPage = () => {
                 Find and compare cars you like! It makes it easier to purchase your next car with ease.
               </p>
               <p className="lead text-muted">
-                Snippet by{' '}
-                <a href="https://bootstrapious.com/snippets" className="text-muted">
-                  <u>CarfindersUSA</u>
-                </a>
+             
               </p>
             </div>
             <div className="col-lg-6 d-none d-lg-block">
