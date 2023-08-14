@@ -1,5 +1,4 @@
 import React, { useContext, useState } from 'react'
-import BusinessOfferCard from '../component/BusinessOfferCard.jsx'
 import { Context } from '../store/appContext.js'
 import SearchReview from '../component/SearchReview.js'
 import OffersDoubleModal from '../component/OffersDoubleModal.jsx'

@@ -11,14 +11,6 @@ import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 
 const ForgotPasswordForm = () => {
 
-    const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const { store, actions } = useContext(Context);
-  const [passwordsMatch, setPasswordsMatch] = useState(false);
-
-
-    let navigate = useNavigate();
-
     function handleRedirect() {
         window.history.back();
     }
@@ -83,8 +75,8 @@ const ForgotPasswordForm = () => {
                                 </label>
                                 <ErrorMessage name="emailOrPhone" className="error-text" />
                             </div>
-                            <button type='submit' className='reset-button-password'>Restablecer la contraseña</button>
-                            <button type='button' className='back-button-password' onClick={handleRedirect} >Volver</button>
+                            <button type='submit' className='reset-button-password mt-2'>Restablecer la contraseña</button>
+                            <button type='button' className='back-button-password mt-2' onClick={handleRedirect} >Volver</button>
                         </form>
                     </div>
                 </div>
