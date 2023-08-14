@@ -16,9 +16,9 @@
     position: relative;
 }
 
-.card-img-top {
-
-
+.card-offer img {
+    width: 100%;
+    height: 16rem;
 }
 
 

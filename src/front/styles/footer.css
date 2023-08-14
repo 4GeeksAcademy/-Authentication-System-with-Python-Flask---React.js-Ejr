@@ -4,96 +4,84 @@
     box-sizing: border-box;
 }
 
-
-.container-footer {
-    overflow: hidden;
+.container-footer::before {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 1px;
+    color: var(--color-1);
+    position: absolute;
+    top: 0;
 }
 
-.footer-viajes {
-    display: none;
-}
 
-.footer-content {
-    display: flex;
-    flex-direction: column;
-}
-
-.footer-business {
+.container-footer,
+.container-footer-fluid,
+.container-footer-lg,
+.container-footer-md,
+.container-footer-sm,
+.container-footer-xl,
+.container-footer-xxl {
+    max-width: 85%;
+    padding-right: var(--bs-gutter-x, .75rem);
+    padding-left: var(--bs-gutter-x, .75rem);
+    display: block;
     margin: auto;
 }
 
-.footer-business li {
-    margin: 2px;
+*,
+::after,
+::before {
+    box-sizing: border-box;
 }
 
-
-.offset-1 h5 {
-    font-size: 1.2rem;
+/* @media (min-width: 992px)
+.container-footer, .container-footer-lg, .container-footer-md, .container-footer-sm {
+    max-width: 960px;
 }
 
-.offset-1 input {
-    width: 6rem;
+@media (min-width: 768px)
+.container-footer-footer, .container-footer-md, .container-footer-sm {
+    max-width: 720px;
 }
-
-/* @media (min-width: 520px) {
-
-    .container-footer,
-    .container-footer-lg,
-    .container-footer-md,
-    .container-footer-sm {
-        max-width: 960px;
-    }
-
-    .footer-viajes {
-        display: block;
-    }
+@media (min-width: 576px)
+.container-footer-footer, .container-footer-sm {
+    max-width: 540px;
 } */
 
-@media (min-width: 520px) {
+@media (max-width: 520px) {
+    footer {
+        position: sticky;
+    }
 
-    .container-footer-footer,
-    .container-footer-md,
-    .container-footer-sm {
-        max-width: 720px;
+    .container-footer {
+        overflow: hidden;
+        position: relative;
     }
 
     .footer-viajes {
-        display: block;
+        display: none;
     }
 
     .footer-content {
-        flex-direction: row;
+        display: flex;
+        flex-direction: column;
     }
 
-    .footer-viajes h5,
-    .offset-1 form h5,
-    .footer-business h5 {
+    .footer-business {
+        margin: auto;
+    }
+
+    .footer-business li {
+        margin: 2px;
+    }
+
+
+    .offset-1 h5 {
         font-size: 1.2rem;
-    }
-
-    .offset-1 form {
-        overflow-wrap: break-word;
-        word-break: break-all;
-        white-space: break-spaces;
-        overflow: hidden;
-        text-overflow: ellipsis;
     }
 
     .offset-1 input {
         width: 6rem;
-    }
-
-    .container-footer,
-    .container-footer-fluid,
-    .container-footer-lg,
-    .container-footer-md,
-    .container-footer-sm,
-    .container-footer-xl,
-    .container-footer-xxl {
-        max-width: 85%;
-        padding-right: var(--bs-gutter-x, .75rem);
-        padding-left: var(--bs-gutter-x, .75rem);
-        display: block;
-        margin: auto;
     }
 }

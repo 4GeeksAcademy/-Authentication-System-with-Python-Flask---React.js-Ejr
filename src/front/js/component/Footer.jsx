@@ -43,11 +43,6 @@ const Footer = () => {
 
 
 					<div className="col-6 offset-1">
-						<div className="div-donation mb-5">
-							<Link to='/donacion' >
-								<button className="btn-donation">Participar al desarrollo de la página!</button>
-							</Link>
-						</div>
 						<form className='mb-4'>
 							<h5>Suscríbete a nuestro Newsletter</h5>
 							<p>Recibe ofertas y promociones exclusivas.</p>
@@ -57,6 +52,11 @@ const Footer = () => {
 								<button className="btn btn-primary" type="button">Subscribe</button>
 							</div>
 						</form>
+						<div className="div-donation mb-5">
+							<Link to='/donacion' >
+								<button className="btn-donation">Participar al desarrollo de la página!</button>
+							</Link>
+						</div>
 					</div>
 				</div>
 

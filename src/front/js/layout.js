@@ -29,6 +29,7 @@ import { BackendURL } from "./component/backendURL";
 import PaymentOptions from "./component/PaymentOptions";
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 import DonationForm from "./component/DonationForm";
+import Favorites from "./pages/Favorites";
 
 
 
@@ -75,6 +76,7 @@ const Layout = () => {
                             <Route element={<TermsConditions />} path="/terms" />
                             <Route element={<DonationForm />} path="/donacion" />
                             <Route element={<PaymentOptions />} path="/opciones-de-pago" />
+                            <Route element={<Favorites />} path="/favoritos" />
                             <Route element={<h1>Not found!</h1>} />
                         </Routes>
                         <Footer />

@@ -21,6 +21,10 @@
   color: white;
 }
 
+.navbar-light .navbar-nav .nav-link:hover {
+  color: white;
+}
+
 li .signup,
 .login {
   background-color: var(--color-4);
@@ -28,6 +32,7 @@ li .signup,
   padding: 10px;
   font-size: .8rem;
   margin-right: .5rem;
+  position: relative;
 }
 
 @media (min-width: 520px) {
@@ -59,9 +64,7 @@ li .signup,
     font-size: 1.1rem;
   }
 
-  .dropdown-menu {
-    height: 1.3rem;
-  }
+
 }
 
 @media (min-width: 1000px) {
