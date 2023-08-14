@@ -31,8 +31,7 @@ const UserPage = () => {
     };
 
     fetchUserData();
-    actions.retrieveData();
-  }, [store.saved]); // Include actions in the dependency array
+  }, [store.saved]);
 
   if (loading) {
     return <p className="login-title">Loading user data...</p>;

@@ -16,7 +16,6 @@ const CarCards = ({ cars }) => {
     navigate("/about/" + carId);
   };
 
-  console.log("carcardspage",cars);
 
   return (
     <div className="container-fluid row m-0 w-100 justify-content-center" style={{ background: '#A6A4A4' }}>
