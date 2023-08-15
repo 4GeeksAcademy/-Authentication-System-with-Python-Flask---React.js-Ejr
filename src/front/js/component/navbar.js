@@ -16,10 +16,12 @@ export const Navbar = () => {
       <div className="container-fluid m-0">
         <div className="d-flex align-items-center">
           <Link to={"/"}>
-            <img
-              src="https://static.vecteezy.com/system/resources/previews/013/923/543/original/blue-car-logo-png.png"
-              style={{ width: "7rem", height: "auto" }}
-            />
+          <img
+          className="logo" // Add the class name here
+          src="https://static.vecteezy.com/system/resources/previews/013/923/543/original/blue-car-logo-png.png"
+          style={{ width: "7rem", height: "auto" }}
+          alt="Logo"
+        />
             
           </Link>
           <Link to="/catalog">
