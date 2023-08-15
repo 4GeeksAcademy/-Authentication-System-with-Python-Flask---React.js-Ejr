@@ -85,7 +85,7 @@ const BusinessOfferCard = ({ searchQuery }) => {
                     <p className="card-text price-user">Precio premium : <span className='price'>{business_offer.premium_user_price.toLocaleString()}$</span></p>
                   )}
                 </div>
-                {store.business_user.id === business_offer.business_id.id &&
+                {store.business_user.id === business_offer.business_id.id || store.user.is_admin &&
                   // || store.user.is_admin 
                   
                   <div className="btn-options d-flex justify-content-end">

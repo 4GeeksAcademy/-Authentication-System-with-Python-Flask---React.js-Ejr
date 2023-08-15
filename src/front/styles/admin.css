@@ -1,0 +1,27 @@
+.content-infos {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  width: 90%;
+  margin: 0 auto;
+}
+
+.infos-users {
+  border: 3px solid red;
+  background: linear-gradient(30deg, #fff, #ddd, #bbb);
+  width: calc(30% - 20px);
+  margin-bottom: 20px;
+  position: relative;
+}
+
+@media (max-width: 1024px) {
+  .infos-users {
+    width: calc(50% - 20px);
+  }
+}
+
+@media (max-width: 768px) {
+  .infos-users {
+    width: calc(100% - 20px);
+  }
+}

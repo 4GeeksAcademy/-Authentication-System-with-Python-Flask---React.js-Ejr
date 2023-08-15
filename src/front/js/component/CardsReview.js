@@ -30,9 +30,13 @@ const CardsReview = ({ searchQuery }) => {
               className="card card-review text-white mt-4 container"
               style={{ height: "16rem", width: "20rem" }}
             >
+
               <Link to={`/review/${review.id}`} >
 
-                <img src={review.review_image} className="card-img-top" alt="..."></img>
+
+
+              <img src={review.review_image} className="card-img-top" alt="imagen de reseña"></img>
+
 
 
                 <div className="div-title-review">
@@ -65,7 +69,9 @@ const CardsReview = ({ searchQuery }) => {
                   <p className="card-text">{review.comment_text}</p>
                 )}
 
-                {store.user.id === review.user.id && (
+
+              {store.user.id === review.user.id || store.user.is_admin && (
+
 
                   <div className="btn-options d-flex justify-content-end">
                     <button

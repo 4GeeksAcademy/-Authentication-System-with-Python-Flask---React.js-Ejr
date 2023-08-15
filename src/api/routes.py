@@ -7,14 +7,13 @@ from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identi
 from flask_cors import CORS  # Import CORS from flask_cors
 from sqlalchemy import and_
 
+
 api = Blueprint('api', __name__)
 # Enable CORS for the 'api' Blueprint
 CORS(api)
 
 # Your existing code for JWTManager initialization and other configurations
 jwt = JWTManager()
-
-# Fonction d'initialisation de l'extension JWTManager avec l'application Flask
 
 
 def initialize_jwt(api):
@@ -23,13 +22,20 @@ def initialize_jwt(api):
 
 @api.route('/users', methods=['GET'])
 def get_all_users():
-    try:
-        users = User.query.all()
-        serialized_users = [user.serialize() for user in users]
-        return jsonify(users=serialized_users), 200
+    users = User.query.all()
+    serialized_users = [user.serialize() for user in users]
+    return jsonify(serialized_users), 200
 
-    except Exception as e:
-        return jsonify({'error': 'Error retrieving users: ' + str(e)}), 500
+
+@api.route('/users/<int:user_id>', methods=['DELETE'])
+def delete_user(user_id):
+    user = User.query.get(user_id)
+    if not user:
+        return jsonify({'message': 'User not found'}), 404
+
+    db.session.delete(user)
+    db.session.commit()
+    return jsonify({'message': 'User deleted successfully'}), 200
 
 
 @api.route('/users/<int:user_id>', methods=['GET'])
@@ -46,7 +52,7 @@ def get_all_business_users():
         business_users = Business_user.query.all()
         serialized_business_users = [
             business_user.serialize() for business_user in business_users]
-        return jsonify(business_users=serialized_business_users), 200
+        return jsonify(serialized_business_users), 200
 
     except Exception as e:
         return jsonify({'error': 'Error retrieving business users: ' + str(e)}), 500
@@ -63,8 +69,8 @@ def get_business_user(business_user_id):
 
 
 @api.route('/business_user/<int:business_user_id>', methods=['DELETE'])
-def delete_business_user(user_id):
-    user = Business_user.query.get(user_id)
+def delete_business_user(business_user_id):
+    user = Business_user.query.get(business_user_id)
     if not user:
         return jsonify({"message": "User not found"}), 404
 
@@ -167,7 +173,8 @@ def create_business_user():
 
         # Hacher le mot de passe et créer l'entreprise
         password_hash = bcrypt.generate_password_hash(password).decode('utf-8')
-        new_business = Business_user(business_name=business_name, email=email, password=password_hash, phone_prefix=phone_prefix, phone_number=phone_number, nif=nif, address=address, payment_method=payment_method)
+        new_business = Business_user(business_name=business_name, email=email, password=password_hash,
+                                     phone_prefix=phone_prefix, phone_number=phone_number, nif=nif, address=address, payment_method=payment_method)
 
         db.session.add(new_business)
         db.session.commit()
@@ -497,46 +504,6 @@ def delete_trip(trip_id):
     db.session.commit()
     return jsonify({"message": "Trip deleted successfully"}), 200
 
-
-# # Admin user route
-
-# @api.route('/admin_user', methods=['GET'])
-# @jwt_required()
-# def admin_dashboard():
-#     is_admin = get_jwt_identity().get('is_admin', False)
-#     if is_admin:
-#         users = Business_user.query.all()
-#         trips = Trip.query.all()
-#         return jsonify({
-#             'users': [user.serialize() for user in users],
-#             'trips': [trip.serialize() for trip in trips]
-#         }), 200
-#     else:
-#         return jsonify({'error': 'Unauthorized'}), 401
-
-# # Admin can delete users and trips
-
-
-# @api.route('/admin_user/delete/<string:resource>/<int:resource_id>', methods=['DELETE'])
-# @jwt_required()
-# def delete_resource(resource, resource_id):
-#     is_admin = get_jwt_identity().get('is_admin', False)
-#     if is_admin:
-#         if resource == 'users':
-#             resource_instance = Business_user.query.get(resource_id)
-#         elif resource == 'trips':
-#             resource_instance = Trip.query.get(resource_id)
-#         else:
-#             return jsonify({'error': 'Invalid resource type'}), 400
-
-#         if resource_instance:
-#             db.session.delete(resource_instance)
-#             db.session.commit()
-#             return jsonify({'message': f'{resource[:-1].capitalize()} deleted successfully'}), 200
-#         else:
-#             return jsonify({'error': f'{resource[:-1].capitalize()} not found'}), 404
-#     else:
-#         return jsonify({'error': 'Unauthorized'}), 401
 
 # Routes for review
 

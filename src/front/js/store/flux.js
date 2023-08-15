@@ -3,9 +3,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 
   return {
     store: {
+      users: [],
       user: {},
       userById: {},
       business_user: {},
+      business_users: [],
       auth: false,
       trip: [],
       reviews: [],
@@ -141,14 +143,15 @@ const getState = ({ getStore, getActions, setStore }) => {
       // get fetch  for all users
       getAllUsers: async () => {
         try {
-          const response = await fetch(API_URL + "/users", {
+          const response = await fetch(API_URL + "/api/users", {
             method: "GET",
           });
 
           if (response.ok) {
             const responseData = await response.json();
-            console.log(responseData);
-            return responseData.users;
+            console.log('GET ALL USERS', responseData);
+            setStore({ users: responseData })
+            return true;
           } else {
             // Handle other errors
             console.log("Error in fetching users");
@@ -174,7 +177,6 @@ const getState = ({ getStore, getActions, setStore }) => {
             setStore({ userById: responseData })
             return responseData;
           } else if (response.status === 404) {
-            // Handle user not found error
             console.log("User not found");
             return null;
           } else {
@@ -188,6 +190,31 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
 
+      deleteUser: async (userId) => {
+        try {
+          const token = localStorage.getItem("myToken");
+          if (!token) {
+            console.log("Token not found");
+            return;
+          }
+
+          const response = await fetch(API_URL + "/api/users/" + userId, {
+            method: "DELETE",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+
+          if (response.ok) {
+            actions.getAllUsers(); // Refresh the user list after deletion
+          } else {
+            console.error('Failed to delete user');
+          }
+        } catch (error) {
+          console.error('Error deleting user:', error);
+        }
+      },
+
       // get fetch for all business users
 
       getAllBusinessUsers: async () => {
@@ -198,8 +225,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 
           if (response.ok) {
             const responseData = await response.json();
-            console.log(responseData);
-            return responseData.business_users;
+            console.log('GET ALL BUSINESS', responseData);
+            setStore({ business_users: responseData })
+            return true;
           } else {
             // Handle other errors
             console.log("Error in fetching business users");
@@ -240,6 +268,30 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
 
+      deleteBusiness: async (businessId) => {
+        try {
+          const token = localStorage.getItem("myToken");
+          if (!token) {
+            console.log("Token not found");
+            return;
+          }
+
+          const response = await fetch(API_URL + "/api/business_user/" + businessId, {
+            method: "DELETE",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+
+          if (response.ok) {
+            actions.getAllBusiness(); // Refresh the user list after deletion
+          } else {
+            console.error('Failed to delete user');
+          }
+        } catch (error) {
+          console.error('Error deleting user:', error);
+        }
+      },
 
       // Update business_user profile information
 

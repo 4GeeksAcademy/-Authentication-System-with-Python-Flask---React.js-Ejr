@@ -7,7 +7,8 @@ const Footer = () => {
 
 		<div className="container-footer align-items-center mt-5">
 			<footer >
-				<div className="row footer-content">
+				<div className="line-above-footer"></div>
+				<div className="row footer-content pt-3">
 					<div className="col-2 footer-viajes">
 						<h5>Viajes</h5>
 						<ul className="nav flex-column">

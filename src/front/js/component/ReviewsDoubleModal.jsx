@@ -12,10 +12,12 @@ const ReviewsDoubleModal = () => {
     const { store, actions } = useContext(Context);
     const [selectedFile, setSelectedFile] = useState(null);
 
+
     useEffect(() => {
         actions.getAllTrips();
         console.log("Fetch for all trips is working")
     }, []);
+
 
 
 
