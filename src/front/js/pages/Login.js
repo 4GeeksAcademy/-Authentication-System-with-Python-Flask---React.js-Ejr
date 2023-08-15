@@ -37,12 +37,15 @@ export const Login = () => {
             <div>
                 <input className="text-center" name="password" onChange={handleChange} type="password" id="password1" placeholder="Contraseña" value={form.password} required></input>
                 <br/>
-                <Link to={"/pass-recovery"} id="ps" href="#aja">Restablecer Contraseña.</Link>
+                <Link to={"/pass-recovery"} id="ps" href="#aja">Restore password</Link>
             </div>
 			<br/>
-            <button type="submit" id="login-button">Entrar</button>
+            <button type="submit" id="login-button">Login</button>
             <br/>
-            <Link to={"/sign-up"} id="sp" >¿No tienes una cuenta?Registrate</Link>
+            <div class="text-center d-flex justify-content-center">
+                <p>You do not have an account?</p>
+                <Link to={"/sign-up"} id="sp" class="register-link">  Register</Link>
+            </div>
         </form>
 		</div>
 	);

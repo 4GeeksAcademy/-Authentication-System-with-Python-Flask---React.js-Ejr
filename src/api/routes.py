@@ -381,4 +381,3 @@ def passChange():
             
     if new_password == confirm_password :
          return jsonify ({"msg" : "contrasaeña actualizada correctamente"}), 200
-    
