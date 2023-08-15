@@ -38,7 +38,7 @@ export const Footer = () => {
             <div className="row text-center d-flex justify-content-center pt-5">
               {/* Grid column */}
               <div className="col-md-2">
-                <Link to="/aboutus">
+                <Link to="/aboutus" className="footer-link">
                   <h6 className="text-uppercase font-weight-bold" onClick={handleAboutUsClick}>
                     About us
                   </h6>

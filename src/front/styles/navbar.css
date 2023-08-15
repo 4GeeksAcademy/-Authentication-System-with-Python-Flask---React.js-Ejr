@@ -183,3 +183,7 @@
   box-shadow: inset 0px 0px 5px #028436; /* Inset red glow effect on click */
   transform: translateY(2px)
 }
+.footer-link {
+  
+  color: white;
+}
