@@ -3,6 +3,8 @@ import { Context } from "../store/appContext";
 import Likes from "./Likes";
 import useReviewManagement from "../hooks/useReviewManagement";
 import FavoriteReview from "./FavoriteReview";
+import { Link } from "react-router-dom";
+
 
 const CardsReview = ({ searchQuery }) => {
   const { store, actions } = useContext(Context)
@@ -28,63 +30,72 @@ const CardsReview = ({ searchQuery }) => {
               className="card card-review text-white mt-4 container"
               style={{ height: "16rem", width: "20rem" }}
             >
+
+              <Link to={`/review/${review.id}`} >
+
+
+
               <img src={review.review_image} className="card-img-top" alt="imagen de reseña"></img>
 
 
-              <div className="div-title-review">
-                {editContentId === review.id ? (
-                  <input
-                    type="text"
-                    value={editTitle}
-                    onChange={(e) => handleEditContent(e.target.value)}
-                  />
-                ) : (
-                  <h5 className="card-title title-review">{review.title}</h5>
-                )}
-              </div>
-              {editContentId === review.id ? (
-                <>
-                  <div className="comment-review">
-                    <textarea
-                      autoFocus={true}
-                      value={editContent}
+
+                <div className="div-title-review">
+                  {editContentId === review.id ? (
+                    <input
+                      type="text"
+                      value={editTitle}
                       onChange={(e) => handleEditContent(e.target.value)}
-                      rows="7"
-                      cols="38"
-                      maxLength="300"
-                      style={{ resize: "none" }}
-                    ></textarea>
-                  </div>
-                  <button onClick={() => handleSave(review.id)}>Validar</button>
-                </>
-              ) : (
-                <p className="card-text">{review.comment_text}</p>
-              )}
+                    />
+                  ) : (
+                    <h5 className="card-title title-review">{review.title}</h5>
+                  )}
+                </div>
+                {editContentId === review.id ? (
+                  <>
+                    <div className="comment-review">
+                      <textarea
+                        autoFocus={true}
+                        value={editContent}
+                        onChange={(e) => handleEditContent(e.target.value)}
+                        rows="7"
+                        cols="38"
+                        maxLength="300"
+                        style={{ resize: "none" }}
+                      ></textarea>
+                    </div>
+                    <button onClick={() => handleSave(review.id)}>Validar</button>
+                  </>
+                ) : (
+                  <p className="card-text">{review.comment_text}</p>
+                )}
+
 
               {store.user.id === review.user.id || store.user.is_admin && (
 
-                <div className="btn-options d-flex justify-content-end">
-                  <button
-                    className="btn-up-review"
-                    onClick={() => handleUpdate(review.id)}
-                  >
-                    &#9998;
-                  </button>
-                  <button
-                    className="btn-delete-review"
-                    onClick={() => handleDelete(review.id)}
-                  >
-                    &#10008;
-                  </button>
+
+                  <div className="btn-options d-flex justify-content-end">
+                    <button
+                      className="btn-up-review"
+                      onClick={() => handleUpdate(review.id)}
+                    >
+                      &#9998;
+                    </button>
+                    <button
+                      className="btn-delete-review"
+                      onClick={() => handleDelete(review.id)}
+                    >
+                      &#10008;
+                    </button>
+                  </div>
+                )}
+                <div className="likes card-likes">
+                  <span className="author-review">
+                    Escrito por : <span>{review.user.username}</span>{" "}
+                  </span>
+                  <FavoriteReview reviewId={review.id} />
+                  <Likes reviewId={review.id} />
                 </div>
-              )}
-              <div className="likes card-likes">
-                <span className="author-review">
-                  Escrito por : <span>{review.user.username}</span>{" "}
-                </span>
-                <FavoriteReview reviewId={review.id} />
-                <Likes reviewId={review.id} />
-              </div>
+                </Link>
             </div>
           ))}
       </div>

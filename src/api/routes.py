@@ -442,7 +442,7 @@ def delete_offer(offer_id):
 def get_all_trips():
     trips = Trip.query.all()
     serialized_trips = [trip.serialize() for trip in trips]
-    return jsonify(trips=serialized_trips)
+    return jsonify(serialized_trips)
 
 
 @api.route('/trip/<int:trip_id>', methods=['GET'])
@@ -537,6 +537,8 @@ def create_review():
             title=data['title'],
             comment_text=data['comment_text'],
             review_image=data['review_image'],
+            country = data['country'],
+            city = data['city'],
         )
         db.session.add(review)
         db.session.commit()
@@ -558,7 +560,10 @@ def update_review(review_id):
         review.trip_id = data['trip_id']
         review.title = data['title']
         review.comment_text = data['comment_text']
-        review.review_image = data['review_image'],
+        review.review_image = data['review_image']
+        review.country = data['country']
+        review.city = data['city']
+
 
         db.session.commit()
         return jsonify(review.serialize()), 200

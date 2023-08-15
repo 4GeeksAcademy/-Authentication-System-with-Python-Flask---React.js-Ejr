@@ -115,7 +115,6 @@ const getState = ({ getStore, getActions, setStore }) => {
                 Authorization: "Bearer " + token,
               },
             };
-
             const request = await fetch(API_URL + "/api/private", settings);
             if (request.ok) {
               const data = await request.json();
@@ -532,8 +531,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 
           if (response.ok) {
             const responseData = await response.json();
-            console.log(responseData);
-            return responseData.trips;
+            console.log("response data de GET ALL TRIPS:",responseData);
+            let store = getStore();
+            setStore({...store, trip: responseData})
+            return true
           } else {
             // Handle other errors
             console.log("Error in fetching trips");

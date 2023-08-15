@@ -82,7 +82,7 @@ class Trip(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     country = db.Column(db.String(40), nullable=False)
     city = db.Column(db.String(40), nullable=False)
-    activity = db.Column(db.String(100), nullable=False)
+    # activity = db.Column(db.String(100), nullable=True)
 
     offers = db.relationship("Offers", backref="trip")
     review = db.relationship("Review", backref="trip")
@@ -96,7 +96,7 @@ class Trip(db.Model):
             "id": self.id,
             "country": self.country,
             "city": self.city,
-            "activities": self.activities
+            # "activities": self.activities
         }
 
 
@@ -144,6 +144,8 @@ class Review(db.Model):
     title = db.Column(db.String(75), nullable=False)
     comment_text = db.Column(db.String(500), nullable=False)
     review_image = db.Column(db.String(1000), nullable=True)
+    country = db.Column(db.String(250), nullable=False)
+    city = db.Column(db.String(250), nullable=False)
 
     favorites = db.relationship('Favorites', backref='review')
     likes = db.relationship('Likes', backref='review')
@@ -159,6 +161,9 @@ class Review(db.Model):
             "title": self.title,
             "comment_text": self.comment_text,
             "review_image": self.review_image,
+            "country": self.country,
+            "city": self.city,
+
         }
 
 

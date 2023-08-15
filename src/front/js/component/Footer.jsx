@@ -55,7 +55,7 @@ const Footer = () => {
 						</form>
 						<div className="div-donation mb-5">
 							<Link to='/donacion' >
-								<button className="btn-donation">Participar al desarrollo de la página!</button>
+								<button className="btn-donation">Participa en el desarrollo de la página!</button>
 							</Link>
 						</div>
 					</div>

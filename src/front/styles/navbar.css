@@ -1,4 +1,33 @@
+.navbar-nav {
+  margin-right: 3rem;
+}
+
+.navbar-brand, .navbar-nav {
+  margin-left: 7.5rem;
+  margin-right: 7rem;
+}
+
 .navbar-brand img {
+  height: 5rem;
+  width: auto;
+}
+
+.navbar {
+  background-color: var(--color-1);
+}
+
+.navbar-light .navbar-nav .nav-link {
+  color: white;
+}
+
+li .signup, .login {
+  background-color: #03a8e8;
+  color: var(--color-4);
+}
+
+
+
+/* .navbar-brand img {
   height: 3rem;
   width: auto;
 }
@@ -80,4 +109,4 @@ li .signup,
     height: 5rem;
     width: auto;
   }
-}
+} */
