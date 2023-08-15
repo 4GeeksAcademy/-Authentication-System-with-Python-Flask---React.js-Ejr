@@ -125,9 +125,10 @@ const MySearch = () => {
       headers:{"Content-Type":"application/json"}
     })
     .then((res) => res.json())
-        .then((data) => console.log (setSecondFlight( data )))
+        .then((data) =>  setSecondFlight( data ))
         .catch((error) => console.log("error", error));
   };
+  getFlights()
   return (
     <div className="my-search-container">
       <div className="jumbotron">
