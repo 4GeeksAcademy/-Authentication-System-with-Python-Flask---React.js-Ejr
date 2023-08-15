@@ -14,13 +14,14 @@ export const Footer = () => (
           {/* Grid row */}
           <div className="row text-center d-flex justify-content-center pt-5">
             {/* Grid column */}
-            <Link to="/aboutus">
               <div className="col-md-2">
-                <h6 className="text-uppercase font-weight-bold">
+              <Link to="/aboutus">
+                <h6 className="text-uppercase font-weight-bold">                  
                   <a href="#!" className="text-white">About us</a>
                 </h6>
+                </Link>
               </div>
-            </Link>
+            
             {/* Grid column */}
 
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Footer } from './footer';
+
 
 
 const AboutPage = () => {
@@ -242,7 +242,7 @@ const AboutPage = () => {
           </p>
         </div>
       </footer> */}
-      <Footer></Footer>
+      
     </div>
 
   );
