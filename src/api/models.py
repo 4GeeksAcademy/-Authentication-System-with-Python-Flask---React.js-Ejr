@@ -95,7 +95,11 @@ class Actor(db.Model):
     known_for_department = db.Column(db.String(80))
     character = db.Column(db.String(200))
     profile_path  = db.Column(db.String(200))
-    
+    biography = db.Column(db.Text)  # Text porque una biografía puede ser larga
+    birthday = db.Column(db.Date)  # Usamos Date si es una fecha sin tiempo
+    deathday = db.Column(db.Date, nullable=True)  # Puede ser None, por lo que nullable=True
+    place_of_birth = db.Column(db.String(200))
+
     def __repr__(self):
         return f'<Actor {self.id} {self.name}>'
 
@@ -106,6 +110,11 @@ class Actor(db.Model):
         "known_for_department": self.known_for_department,
         "character": self.character, 
         "profile_path": self.profile_path,
+        "biography": self.biography, 
+        "birthday": self.birthday, 
+        "deathday":  self.deathday, 
+        "place_of_birth": self.place_of_birth, 
+
         }
 
 class Director(db.Model):

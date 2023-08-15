@@ -136,6 +136,25 @@ def get_movie_credits(movie_id):
 
     return response.json()
 
+def get_person_details(person_id):
+    url = f'https://api.themoviedb.org/3/person/{person_id}'
+    headers = {
+        "accept": "application/json",
+         "Authorization": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5NGVjZTYyODBhZjZiMGQ0YzY1MWRiOWViYTYwYzVlNSIsInN1YiI6IjY0YzNmNTRkZWMzNzBjMDExYzQ2YmFhMiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.DmLTYp48jRT5TkS8IG0FAEuFro5YNx6S6pO1WghQFOw"
+    }
+    response = requests.get(url, headers=headers)
+    data = response.json()
+
+    biography = data.get('biography')
+    birthday = data.get('birthday')
+    deathday = data.get('deathday')
+    place_of_birth = data.get('place_of_birth')
+    
+    return biography, birthday, deathday, place_of_birth
+
+
+
+
 def get_actors_from_movie(movie_id):
     """Obtiene los actores de una película por su ID."""
     # Obtener los créditos
@@ -146,17 +165,29 @@ def get_actors_from_movie(movie_id):
     actors = []
     for actor_data in credits["cast"]:
         actor = Actor.query.get(actor_data["id"])
+        
+        person_details = get_person_details(actor_data["id"])
+        if len(person_details) == 4:
+            biography, birthday, deathday, place_of_birth = person_details
+        else:
+            # Manejar el error como mejor te parezca
+            # Por ejemplo, podrías asignar valores predeterminados
+            biography, birthday, deathday, place_of_birth = None, None, None, None
+
         if actor is None:
             actor = Actor(
-                id = actor_data["id"],
-                name = actor_data["name"],
-                known_for_department = actor_data["known_for_department"],
-                character = actor_data["character"],
-                profile_path = actor_data["profile_path"]
+                id=actor_data["id"],
+                name=actor_data["name"],
+                known_for_department=actor_data["known_for_department"],
+                character=actor_data["character"],
+                profile_path=actor_data["profile_path"],
+                biography=biography,
+                birthday=birthday,
+                deathday=deathday,
+                place_of_birth=place_of_birth
             )
             db.session.add(actor)
         actors.append(actor)
-
         
     # Guardar los cambios en la base de datos
     db.session.commit()

@@ -35,6 +35,10 @@ export const ActorDetail = () => {
                             alt={actorDetail?.name}
                         />
                     </div>
+
+                    <div>
+                        <p>{}</p>
+                    </div>
                 </div>
             </div>
         </div>
