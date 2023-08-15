@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 
 
 
+
 const AllFavoritesOffers = ({ searchQuery }) => {
     const { store, actions } = useContext(Context)
     const { handleUpdate, handleSave, handleDelete, favorites, reviews, editContent, editContentId, editTitle, handleEditContent } = useOfferManagement();
@@ -15,6 +16,7 @@ const AllFavoritesOffers = ({ searchQuery }) => {
         actions.getFavoriteoffer();
         console.log("Success fetch for Cardsofers");
     }, []);
+    
 
 
     return (
@@ -31,9 +33,11 @@ const AllFavoritesOffers = ({ searchQuery }) => {
                 .sort((a, b) => b.id - a.id)
                 .map((favorite) => {
                     return (
+                        
                         <div
                             key={favorite?.offer_id?.id}
                             className="card card-offer mb-3 mt-4">
+                            <Link to={`/offer/${favorite?.offer_id?.id}`}>
                             <img src={favorite?.offer_id?.offer_image} className="card-img-top" alt="..."></img>
                             <div className="card-body">
                                 <div className="div-title-offer">
@@ -95,20 +99,20 @@ const AllFavoritesOffers = ({ searchQuery }) => {
                                 </div>
                                 {store.business_user.id === favorite?.offer_id?.business_id.id &&
                                     // || store.user.is_admin
-                                    <>
+                                    <div className="btn-options d-flex justify-content-end">
                                         <button
                                             className="btn-up-offer"
-                                            onClick={() => handleUpdate(favorite?.offer_id?.id)}
+                                            onClick={() => handleUpdate(business_offer.id)}
                                         >
                                             &#9998;
                                         </button>
                                         <button
                                             className="btn-delete-offer"
-                                            onClick={() => handleDelete(favorite?.offer_id?.id)}
+                                            onClick={() => handleDelete(business_offer.id)}
                                         >
                                             &#10008;
                                         </button>
-                                    </>
+                                    </div>
 
                                 }
 
@@ -128,6 +132,7 @@ const AllFavoritesOffers = ({ searchQuery }) => {
                                 }
 
                             </div>
+                            </Link>
                         </div>
                     )
                 })}

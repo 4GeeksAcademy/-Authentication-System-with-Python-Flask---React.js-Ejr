@@ -3,6 +3,7 @@ import { Context } from '../store/appContext';
 import useReviewManagement from "../hooks/useReviewManagement";
 import Likes from './Likes';
 import FavoriteReview from './FavoriteReview';
+import { Link } from 'react-router-dom';
 
 const AllFavoritesReviews = ({ searchQuery }) => {
   const { store, actions } = useContext(Context)
@@ -31,6 +32,8 @@ const AllFavoritesReviews = ({ searchQuery }) => {
               className="card card-review text-white mt-4 container"
               style={{ height: "16rem", width: "20rem" }}
             >
+                            <Link to={`/review/${favorite.review_id?.id}`} >
+
               <img src={favorite.review_id?.review_image} className="card-img-top" alt="..."></img>
               <div className="div-title-review">
                 {editContentId === favorite.review_id?.id ? (
@@ -84,6 +87,7 @@ const AllFavoritesReviews = ({ searchQuery }) => {
                 <FavoriteReview reviewId={favorite.review_id?.id} />
                 <Likes reviewId={favorite.review_id?.id} />
               </div>
+              </Link>
             </div>
           ))}
       </div>

@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { Context } from "../store/appContext";
 import useReviewManagement from "../hooks/useReviewManagement";
 import Likes from "./Likes";
+import { Link } from "react-router-dom";
 
 const MyReviews = ({ searchQuery }) => {
   const { store, actions } = useContext(Context)
@@ -27,6 +28,7 @@ const MyReviews = ({ searchQuery }) => {
             className="card card-review text-white mt-4 container"
             style={{ height: "16rem", width: "20rem" }}
           >
+            <Link to={`/review/${review.id}`} >
             <img src={review.review_image} className="card-img-top" alt="..."></img>
             <div className="div-title-review">
               {editContentId === review.id ? (
@@ -79,6 +81,7 @@ const MyReviews = ({ searchQuery }) => {
               </span>
               <Likes reviewId={review.id} />
             </div>
+            </Link>
           </div>
         ))}
     </div>

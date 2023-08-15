@@ -30,7 +30,7 @@ export const Home = () => {
       <HomeOfferCard />
       <HomeReviewCard />
       <GeneralInfoDiv />
-      <DonationForm />
+      {/* <DonationForm /> */}
       {/* <AboutUs /> */}
 
     </>

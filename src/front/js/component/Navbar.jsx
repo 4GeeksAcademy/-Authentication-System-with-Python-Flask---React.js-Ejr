@@ -21,7 +21,7 @@ const Navbar = () => {
             {store.auth ? (
               <>
 
-                <h3 style={{ color: "white" }}>Bienvenido, <strong>{store.user?.username ? store.user.username : store.business_user?.business_name}! </strong></h3>
+                <h3 style={{ color: "var(--color-3)" }}>Bienvenido, <strong>{store.user?.username ? store.user.username : store.business_user?.business_name}! </strong></h3>
 
               </>
             ) : (
@@ -42,7 +42,7 @@ const Navbar = () => {
                 <li><Link to='/offers' className="dropdown-item">Ofertas</Link></li>
                 <li><Link to='/trips' className="dropdown-item">Explora tu siguiente trip</Link></li>
                 <li><Link className="dropdown-item">Ayuda</Link></li>
-                <li><Link to='/contact' className="dropdown-item">Contacto</Link></li>
+                {/* <li><Link to='/contact' className="dropdown-item">Contacto</Link></li> */}
                 {store.user.username && (
                   <>
                     <li><Link to='/favoritos' className="dropdown-item">Favoritos</Link></li>
