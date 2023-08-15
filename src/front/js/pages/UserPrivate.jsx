@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { Context } from "../store/appContext";
 import { Link } from 'react-router-dom';
 
@@ -16,6 +16,7 @@ const UserPrivate = () => {
     passport: store.user?.passport || '',
     paymentMethod: store.user?.payment_method || '',
   });
+
 
 
   const handleEditAllClick = () => {

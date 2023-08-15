@@ -13,7 +13,7 @@ const ReviewsDoubleModal = () => {
     const { store, actions } = useContext(Context);
     const [selectedFile, setSelectedFile] = useState(null);
 
-    
+
 
     return (
         <Formik
@@ -73,13 +73,13 @@ const ReviewsDoubleModal = () => {
 
 
                 <div>
-                    
+
                     <Draggable>
-                    <button className="btn btn-primary floating-button" data-bs-toggle="modal" data-bs-target="#exampleModalToggle">
-                        Publica tu reseña
-                    </button>
+                        <button className="btn btn-primary floating-button" data-bs-toggle="modal" data-bs-target="#exampleModalToggle">
+                            Publica tu reseña
+                        </button>
                     </Draggable>
-                    
+
 
                     <Form className="form-review-content" onSubmit={formik.handleSubmit}>
 
