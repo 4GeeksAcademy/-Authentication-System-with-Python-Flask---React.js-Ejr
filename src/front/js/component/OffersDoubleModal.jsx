@@ -90,12 +90,12 @@ const OffersDoubleModal = () => {
                 <div>
                     <div>
                         <Draggable>
-                        <button className="btn btn-primary floating-button" data-bs-toggle="modal" data-bs-target="#exampleModalToggle">
-                            Publica tu oferta
-                        </button>
+                            <button className="btn btn-primary floating-button" data-bs-toggle="modal" data-bs-target="#exampleModalToggle">
+                                Publica tu oferta
+                            </button>
 
                         </Draggable>
-                        
+
 
                         <Form onSubmit={formik.handleSubmit}>
 
@@ -114,7 +114,7 @@ const OffersDoubleModal = () => {
                                             <div className='custom-input-password'>
                                                 <label htmlFor="offer_title" className={formik.values.offer_title ? 'input-label has-value' : 'input-label'}>Título:</label>
                                                 <Field type="text" name="offer_title" />
-                                                <ErrorMessage name="offer_title"  />
+                                                <ErrorMessage name="offer_title" />
                                             </div>
                                             <div className='custom-input-password'>
                                                 <label htmlFor="offer_description" className={formik.values.offer_description ? 'input-label has-value' : 'input-label'}>Descripción de la oferta:</label>

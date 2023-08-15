@@ -4,14 +4,16 @@
     box-sizing: border-box;
 }
 
-.container-footer::before {
+
+.line-above-footer {
     content: '';
     display: block;
     width: 100%;
     height: 1px;
-    color: var(--color-1);
+    background-color: var(--color-1);
     position: absolute;
     top: 0;
+    left: 0;
 }
 
 
@@ -27,12 +29,7 @@
     padding-left: var(--bs-gutter-x, .75rem);
     display: block;
     margin: auto;
-}
-
-*,
-::after,
-::before {
-    box-sizing: border-box;
+    position: relative;
 }
 
 /* @media (min-width: 992px)

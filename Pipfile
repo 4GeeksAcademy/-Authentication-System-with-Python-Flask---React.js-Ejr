@@ -20,6 +20,8 @@ flask-admin = "*"
 typing-extensions = "*"
 flask-bcrypt = "*"
 flask-jwt-extended = "*"
+flask-caching = "*"
+cachetools = "*"
 
 [requires]
 python_version = "3.11"
