@@ -46,7 +46,7 @@ const handleLogout = () => {
             </li>)
             :
             (<li className="nav-item">
-              <button onClick={handleLogout} className="nav-link text-white">Cerrar Sesión</button>
+              <button onClick={handleLogout} className="nav-link text-white btn">Cerrar Sesión</button>
             </li>)}
 
             <li className="nav-item dropdown">

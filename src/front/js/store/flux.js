@@ -1,3 +1,8 @@
+import Swal from 'sweetalert2'
+
+
+
+
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
@@ -25,9 +30,26 @@ const getState = ({ getStore, getActions, setStore }) => {
 						localStorage.setItem("token", data?.token)
 						setStore({ logged: true })
 						console.log(getStore().logged, "logged")
+						Swal.fire({
+							text: "Login successfully", 
+							icon: "success",
+							background: "#333",
+							iconColor: "#ECCE33",
+							confirmButtonColor: "#ECCE33",
+							color: "#ffffff",
+							confirmButtonStyle: "#ECCE33",
+						})
 						return true
 					} else {
 						console.log("login failed", res.status)
+						Swal.fire({
+							text: "Please, try again", 
+							icon: "error",
+							background: "#333",
+							confirmButtonColor: "#ECCE33",
+							color: "#ffffff",
+							confirmButtonStyle: "#ECCE33",
+						})
 						return false
 					}
 
@@ -41,9 +63,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({ logged: false })	
 			},
 
-			signup: async () => {
+			signup: async (user) => {
 				const apiUrl = `${process.env.BACKEND_URL}api/signup`
-				console.log(user)
+				console.log(user, apiUrl)
 				try {
 					const res = await fetch(apiUrl, {
 						method:"POST",
@@ -56,10 +78,27 @@ const getState = ({ getStore, getActions, setStore }) => {
 						localStorage.setItem("token", data?.token)
 						setStore({ logged: true })
 						console.log(getStore().logged, "logged")
+						Swal.fire({
+							text: "SignIn successfully", 
+							icon: "success",
+							background: "#333",
+							iconColor: "#ECCE33",
+							confirmButtonColor: "#ECCE33",
+							color: "#ffffff",
+							confirmButtonStyle: "#ECCE33",
+						})
 						return true
 					} else {
 						console.log("Signup failed", res.status)
-					}
+						Swal.fire({
+							text: "Please, try again", 
+							icon: "error",
+							background: "#333",
+							confirmButtonColor: "#ECCE33",
+							color: "#ffffff",
+							confirmButtonStyle: "#ECCE33",
+						})
+					}	return false
 
 				} catch (error) {
 					console.error(error)

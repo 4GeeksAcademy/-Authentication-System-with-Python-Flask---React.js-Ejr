@@ -3,7 +3,7 @@ import { Context } from "../store/appContext";
 import Moviestar from "../../img/Moviestar.png";
 import "../../styles/Login.css";
 import { Link, useNavigate } from "react-router-dom";
-import swal from "sweetalert";
+import Swal from "sweetalert2";
 
 
 export const Login = () => {
@@ -23,7 +23,6 @@ export const Login = () => {
         const login = await actions.login(form)
         if (login === true){
             navigate("/")
-            swal({text: "Login successfully", icon: "success"})
         }
     }
    

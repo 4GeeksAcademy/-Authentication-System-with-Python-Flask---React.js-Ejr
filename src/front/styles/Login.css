@@ -6,7 +6,6 @@
     on that page only (the ones not reused in other pages).
 */
 *{
-    background-color: black;
     font-family: 'Roboto', sans-serif;
 }
 
@@ -44,4 +43,9 @@
 #sp {
     font-size: 13px;
     color: rgba(246, 234, 234, 0.804); 
-  }
+}
+
+
+.swal2-confirm{
+    color: black !important; 
+}

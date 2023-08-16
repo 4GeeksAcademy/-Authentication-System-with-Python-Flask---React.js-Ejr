@@ -8,6 +8,7 @@ from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_requir
 import requests
 import os
 from flask_cors import CORS
+import bcrypt 
 
 app = Flask(__name__)
 CORS(app)
@@ -262,8 +263,9 @@ def create_new_user():
     if user:
         return jsonify({"msg": "User already exists"}), 400
 
+    hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
 
-    new_user = User(name=name, email=email, password=password, secret_question= secret_question, secret_answer=secret_answer, is_active=True)
+    new_user = User(name=name, email=email, password=hashed_password, secret_question= secret_question, secret_answer=secret_answer, is_active=True)
 
 
     # new_user.set_password(password)
@@ -286,8 +288,14 @@ def login():
         return jsonify({"msg": "Email and password are required"}), 400
         
     user = User.query.filter_by(email=email).first()
-   
-    if user is None or user.password != password:
+    if user is None : 
+        return jsonify({"msg": "Invalid email or password"}), 401
+    
+    unhashedPass = password.encode('utf-8')
+    hashedPass = user.password.encode('utf-8')
+    result = bcrypt.checkpw(unhashedPass, hashedPass)
+
+    if not result: 
         return jsonify({"msg": "Invalid email or password"}), 401
     
     access_token = create_access_token(identity=user.id)
