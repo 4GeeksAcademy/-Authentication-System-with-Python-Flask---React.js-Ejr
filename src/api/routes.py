@@ -173,8 +173,7 @@ def create_business_user():
 
         # Hacher le mot de passe et créer l'entreprise
         password_hash = bcrypt.generate_password_hash(password).decode('utf-8')
-        new_business = Business_user(business_name=business_name, email=email, password=password_hash,
-                                     phone_prefix=phone_prefix, phone_number=phone_number, nif=nif, address=address, payment_method=payment_method)
+        new_business = Business_user(business_name=business_name, email=email, password=password_hash, phone_prefix=phone_prefix, phone_number=phone_number, nif=nif, address=address, payment_method=payment_method)
 
         db.session.add(new_business)
         db.session.commit()
@@ -294,17 +293,13 @@ def update_business_profile(business_id):
         data = request.get_json()
 
         # Update business profile data
-        business_user.business_name = data.get(
-            'name_business', business_user.business_name)
+        business_user.business_name = data.get('name_business', business_user.business_name)
         business_user.email = data.get('email', business_user.email)
-        business_user.phone_prefix = data.get(
-            "phone_prefix", business_user.phone_prefix)
-        business_user.phone_number = data.get(
-            "phone_number", business_user.phone_number)
+        business_user.phone_prefix = data.get("phone_prefix", business_user.phone_prefix)
+        business_user.phone_number = data.get("phone_number", business_user.phone_number)
         business_user.nif = data.get('nif', business_user.nif)
         business_user.address = data.get('address', business_user.address)
-        business_user.payment_method = data.get(
-            'payment_method', business_user.payment_method)
+        business_user.payment_method = data.get('payment_method', business_user.payment_method)
 
         db.session.commit()
 
@@ -486,7 +481,10 @@ def update_trip(trip_id):
     try:
         trip.country = data['country']
         trip.city = data['city']
-        trip.activity = data['activity']
+        trip.city2 = data['city']
+        trip.city3 = data['city']
+        trip.city4 = data['city']
+
         db.session.commit()
         return jsonify(trip.serialize()), 200
     except KeyError:
@@ -537,8 +535,8 @@ def create_review():
             title=data['title'],
             comment_text=data['comment_text'],
             review_image=data['review_image'],
-            country = data['country'],
-            city = data['city'],
+            country=data['country'],
+            city=data['city'],
         )
         db.session.add(review)
         db.session.commit()
@@ -563,7 +561,6 @@ def update_review(review_id):
         review.review_image = data['review_image']
         review.country = data['country']
         review.city = data['city']
-
 
         db.session.commit()
         return jsonify(review.serialize()), 200
