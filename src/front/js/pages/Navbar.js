@@ -19,37 +19,37 @@ const logged = store.logged
           <span className="navbar-toggler-icon"></span>
         </button>
         <div id="search-container">
-          <input type="text" id="search-input" placeholder="Buscar una pelicula o serie..." />
+          <input type="text" id="search-input" placeholder="Search for a movie or series..." />
           <button className="btn bg-light" id="search-button"><i className="fas fa-search text-black bg-light"></i></button>
         </div>
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav mb-2 mb-lg-0">
             <li className="nav-item dropdown">
               <a className="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Menú
+                Menu
               </a>
               <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li><a className="dropdown-item" href="#">Peliculas</a></li>
+                <li><a className="dropdown-item" href="#">Movies</a></li>
                 <li><a className="dropdown-item" href="#">Series</a></li>
-                <li><a className="dropdown-item" href="#">Actores y Directores</a></li>
+                <li><a className="dropdown-item" href="#">Actors and Directors</a></li>
               </ul>
             </li>
 
             {!logged ? (<li className="nav-item">
-              <Link to={"/login"} className="nav-link text-white">Iniciar Sesión</Link>
+              <Link to={"/login"} className="nav-link text-white">Log in</Link>
             </li>)
             :
             (<li className="nav-item">
-              <Link to={"/login"} className="nav-link text-white">Cerrar Sesión</Link>
+              <Link to={"/login"} className="nav-link text-white">Sign off</Link>
             </li>)}
 
             <li className="nav-item dropdown">
               <a className="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                ES
+                EN
               </a>
               <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li><a className="dropdown-item" value="es" href="#">Español</a></li>
-                <li><a className="dropdown-item" value="en" href="#">Inglés</a></li>
+                <li><a className="dropdown-item" value="es" href="#">ES</a></li>
+                <li><a className="dropdown-item" value="en" href="#">EN</a></li>
               </ul>
             </li>
           </ul>

@@ -40,15 +40,15 @@ export const PassRecovery = () => {
 			<img id="image" src={Moviestar} />
 		<form onSubmit={onSubmit}>
             <div>
-                <input className="text-center" name="email" onChange={handleChange} type="text" id="username1" placeholder="Usuario" value={form.email} required></input>
+                <input className="text-center" name="email" onChange={handleChange} type="text" id="username1" placeholder="Email" value={form.email} required></input>
             </div>
             <br/>
             <div>
-                <input className="text-center" name="secret_answer" onChange={handleChange} type="password" id="secret_answer" placeholder="Respuesta secreta" value={form.secret_answer} required></input>
+                <input className="text-center" name="secret_answer" onChange={handleChange} type="password" id="secret_answer" placeholder="Secret Answer" value={form.secret_answer} required></input>
                 <br/>
             </div>
 			<br/>
-            <button type="submit" id="recovery-button">Enviar</button>
+            <button type="submit" id="recovery-button">Send</button>
             <br/>
         </form>
 		</div>

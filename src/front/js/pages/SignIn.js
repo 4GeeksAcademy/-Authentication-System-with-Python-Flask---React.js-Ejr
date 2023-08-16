@@ -53,27 +53,27 @@ export const SignIn = () => {
             </div>
             <form onSubmit={handleSubmit}>
                 <label>
-                    <input type="text" name="name" onChange={handleChange} value={user.name} placeholder="Nombre de usuario" required />
+                    <input type="text" name="name" onChange={handleChange} value={user.name} placeholder="Username" required />
                 </label>
                 <label>
                     <input type="email" name="email" onChange={handleChange} value={user.email} placeholder="Email" required />
                 </label>
                 <label>
-                    <input type="password" name="password" onChange={handleChange} value={user.password} placeholder="Contraseña" required />
+                    <input type="password" name="password" onChange={handleChange} value={user.password} placeholder="Password" required />
                 </label>
                 <label>
-                <input type="password" name="confirm_password" onChange={handleChange} value={user.confirm_password} placeholder="Confirmar Contraseña" required />
+                <input type="password" name="confirm_password" onChange={handleChange} value={user.confirm_password} placeholder="Confirm Password" required />
                 </label>
                 <label>
 
-                <input type="text" name="secret_question" onChange={handleChange} value={user.secret_question} placeholder="Pregunta Secreta" required />
+                <input type="text" name="secret_question" onChange={handleChange} value={user.secret_question} placeholder="Secret Question" required />
                 </label>
                 <label>
-                <input type="text" name="secret_answer" onChange={handleChange} value={user.secret_answer} placeholder="Respuesta Secreta" required />
+                <input type="text" name="secret_answer" onChange={handleChange} value={user.secret_answer} placeholder="Secret Answer" required />
 
                 </label>
-                <button type="submit">Registrate</button>
-                <p>¿Ya tienes una cuenta?, <Link to="/login" className="login-link">Login</Link></p>
+                <button type="submit">Register</button>
+                <p>Do you already have an account?, <Link to="/login" className="login-link">Login</Link></p>
             </form>
         </div>
     );

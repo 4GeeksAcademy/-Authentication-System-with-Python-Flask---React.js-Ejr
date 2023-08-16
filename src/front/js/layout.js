@@ -9,6 +9,7 @@ import injectContext from "./store/appContext";
 import { Login } from "./pages/Login";
 import { Listadomovies } from "./pages/Listadomovies.js";
 import { Movie } from "./pages/Movie";
+import { ActorDetail } from "./pages/ActorDetail";
 import { PassRecovery } from "./pages/passRecovery";
 import { PassChange } from "./pages/passChange";
 import { Footer } from "./pages/Footer";
@@ -31,6 +32,7 @@ const Layout = () => {
                     <Routes>
                         <Route element={<Listadomovies />} path="/" />
                         <Route element={<Movie />} path="/movie/:movieId" /> 
+                        <Route element={<ActorDetail />} path="/actors/:actorId" /> 
                         <Route element={<Login />} path="/login" />
                         <Route element={<SignIn />} path="/sign-up" />
                         <Route element={<Single />} path="/single/:theid" />

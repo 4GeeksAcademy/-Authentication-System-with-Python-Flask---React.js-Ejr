@@ -1,5 +1,5 @@
 .container {
-    font-family: 'Roboto', sans-serif; 
+  font-family: 'Roboto', sans-serif; 
   }
 
 .star-icon {
@@ -19,11 +19,14 @@
     border-radius: 20px; 
     border: 1px solid white; 
     font-family: 'Roboto', sans-serif; 
+    font-size: 14px;
     padding: 10px 20px;    
     cursor: pointer;  
     margin-bottom: 10px;
     margin-right: 10px;
   }
+
+  
 
   .video-container {
     border-radius: 20px; 
@@ -31,14 +34,21 @@
 }
 
 .container-crew {
-  width: 70%; 
+  width: 100%; 
+  margin-top: 30px;
+  margin-bottom: 20px;
 }
 
-.card-title {
+.act_direct {
+  margin-bottom: 50px;
+}
+
+.card-name {
   font-size: 18px;
+  margin-bottom: -5px;
 }
 
-.card-detail {
+.card-character {
   font-size: 14px; 
   color:rgb(217, 217, 217)
 }
@@ -51,4 +61,23 @@
 
 .card-title {
   margin-bottom: -5px; 
+}
+
+.trailer-size {
+  width: 560px;
+  height: 315px;
+  border: 1px solid white;
+  border-radius: 5px; 
+  object-fit: cover;
+}
+
+
+.top-aligned {
+  align-items: flex-start;
+}
+
+
+.description {
+  text-align: justify;    
+  font-size: 14px;
 }

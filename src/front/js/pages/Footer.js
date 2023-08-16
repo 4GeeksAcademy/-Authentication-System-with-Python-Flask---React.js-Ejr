@@ -8,6 +8,6 @@ export const Footer = () => (
     <a href="#"><i className="fab fa-twitter"></i></a>
     <a href="#"><i className="fab fa-instagram"></i></a>
   </div>
-  <p className="copyright">© 2023 Moviestar. Todos los derechos reservados.</p>
+  <p className="copyright">© 2023 Movie Star ★. All rights reserved.</p>
 </footer>
 );
