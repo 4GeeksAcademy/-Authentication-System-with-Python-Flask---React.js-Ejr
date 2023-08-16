@@ -7,20 +7,38 @@
     margin-top: 30px;
 }
 
+
 .card-review {
     background: var(--color-3);
     backdrop-filter: 10px;
-    height: 350px !important;
-    width: calc(25% - 20px);
+    height: 20rem !important;
+    width: calc(50% - 20px);
     margin-bottom: 20px;
     position: relative;
+    padding: 0;
+    display: flex;
+    flex-direction: row !important;
+    flex-wrap: nowrap;
 }
 
-.btn-options {
-    position: absolute;
-    top: .4rem;
-    right: 0;
+.img-review {
+    width: 70%;
+    height: 85%;
+    padding: 3px;
 }
+
+.img-review a img {
+    width: 13rem;
+    height: 100%;
+}
+
+.img-review a {
+    width: 100%;
+    height: 45%;
+    ;
+}
+
+
 
 .btn-up-review,
 .btn-delete-review {
@@ -55,14 +73,11 @@
     background-color: var(--color-1);
     overflow: hidden;
     overflow-y: scroll;
-    height: 200px;
+    height: 71%;
+    width: 12.2rem;
 }
 
 .card-likes {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
     padding: 10px;
     background-color: var(--color-2);
     color: white;
@@ -107,6 +122,15 @@
     font-size: 1.2rem;
 }
 
+.content-title-comment {
+    width: 100%;
+    height: 85%;
+}
+
+.card-text {
+    width: 100%;
+}
+
 .menu-review {
     display: flex;
     justify-content: space-between;
@@ -124,12 +148,14 @@
     display: block;
 }
 
-/* Media query */
-@media screen and (max-width: 1200px) {
-    .card-review {
-        width: calc(33.33% - 20px);
-    }
+.card-likes {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
 }
+
+
 
 @media screen and (max-width: 768px) {
     .card-review {
@@ -138,6 +164,10 @@
 }
 
 @media screen and (max-width: 576px) {
+    .cards-review {
+        flex-wrap: wrap;
+    }
+
     .card-review {
         width: 100%;
     }

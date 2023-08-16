@@ -3,6 +3,7 @@ import { Context } from "../store/appContext";
 import useReviewManagement from "../hooks/useReviewManagement";
 import Likes from "./Likes";
 import { Link } from "react-router-dom";
+import FavoriteReview from './FavoriteReview'
 
 const MyReviews = ({ searchQuery }) => {
   const { store, actions } = useContext(Context)
@@ -26,10 +27,10 @@ const MyReviews = ({ searchQuery }) => {
           <div
             key={review.id}
             className="card card-review text-white mt-4 container"
-            style={{ height: "16rem", width: "20rem" }}
           >
             <Link to={`/review/${review.id}`} >
-            <img src={review.review_image} className="card-img-top" alt="..."></img>
+              <img src={review.review_image} className="card-img-top" alt="..."></img>
+            </Link>
             <div className="div-title-review">
               {editContentId === review.id ? (
                 <input
@@ -79,9 +80,10 @@ const MyReviews = ({ searchQuery }) => {
               <span className="author-review">
                 Escrito por : <span>{review.user.username}</span>{" "}
               </span>
+              <FavoriteReview reviewId={review.id} />
               <Likes reviewId={review.id} />
             </div>
-            </Link>
+
           </div>
         ))}
     </div>

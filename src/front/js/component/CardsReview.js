@@ -5,11 +5,9 @@ import useReviewManagement from "../hooks/useReviewManagement";
 import FavoriteReview from "./FavoriteReview";
 import { Link } from "react-router-dom";
 
-
 const CardsReview = ({ searchQuery }) => {
-  const { store, actions } = useContext(Context)
+  const { store } = useContext(Context);
   const { handleUpdate, handleSave, handleDelete, reviews, editContent, editContentId, editTitle, handleEditContent } = useReviewManagement();
-
 
   return (
     <div>
@@ -19,26 +17,21 @@ const CardsReview = ({ searchQuery }) => {
           .filter(
             (review) =>
               review.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-              review.comment_text
-                .toLowerCase()
-                .includes(searchQuery.toLowerCase())
+              review.comment_text.toLowerCase().includes(searchQuery.toLowerCase())
           )
           .sort((a, b) => b.id - a.id)
           .map((review) => (
             <div
               key={review.id}
               className="card card-review text-white mt-4 container"
-              style={{ height: "16rem", width: "20rem" }}
             >
+              <div className="img-review">
+                <Link to={`/review/${review.id}`}>
+                  <img src={review.review_image} className="card-img-top" alt="imagen de reseña" />
+                </Link>
+              </div>
 
-              <Link to={`/review/${review.id}`} >
-
-
-
-              <img src={review.review_image} className="card-img-top" alt="imagen de reseña"></img>
-
-
-
+              <div className="content-title-comment">
                 <div className="div-title-review">
                   {editContentId === review.id ? (
                     <input
@@ -50,9 +43,9 @@ const CardsReview = ({ searchQuery }) => {
                     <h5 className="card-title title-review">{review.title}</h5>
                   )}
                 </div>
-                {editContentId === review.id ? (
-                  <>
-                    <div className="comment-review">
+                <div className="comment-review">
+                  {editContentId === review.id ? (
+                    <>
                       <textarea
                         autoFocus={true}
                         value={editContent}
@@ -62,40 +55,38 @@ const CardsReview = ({ searchQuery }) => {
                         maxLength="300"
                         style={{ resize: "none" }}
                       ></textarea>
-                    </div>
-                    <button onClick={() => handleSave(review.id)}>Validar</button>
-                  </>
-                ) : (
-                  <p className="card-text">{review.comment_text}</p>
-                )}
-
-
-              {store.user.id === review.user.id || store.user.is_admin && (
-
-
-                  <div className="btn-options d-flex justify-content-end">
-                    <button
-                      className="btn-up-review"
-                      onClick={() => handleUpdate(review.id)}
-                    >
-                      &#9998;
-                    </button>
-                    <button
-                      className="btn-delete-review"
-                      onClick={() => handleDelete(review.id)}
-                    >
-                      &#10008;
-                    </button>
-                  </div>
-                )}
-                <div className="likes card-likes">
-                  <span className="author-review">
-                    Escrito por : <span>{review.user.username}</span>{" "}
-                  </span>
-                  <FavoriteReview reviewId={review.id} />
-                  <Likes reviewId={review.id} />
+                      <button onClick={() => handleSave(review.id)}>Validar</button>
+                    </>
+                  ) : (
+                    <p className="card-text">{review.comment_text}</p>
+                  )}
                 </div>
-                </Link>
+              </div>
+
+              {store.user.id === review.user.id && (
+                <div className="btn-options d-flex justify-content-end">
+                  <button
+                    className="btn-up-review"
+                    onClick={() => handleUpdate(review.id)}
+                  >
+                    &#9998;
+                  </button>
+                  <button
+                    className="btn-delete-review"
+                    onClick={() => handleDelete(review.id)}
+                  >
+                    &#10008;
+                  </button>
+                </div>
+              )}
+
+              <div className="likes card-likes">
+                <span className="author-review">
+                  Escrito por : <span>{review.user.username}</span>{" "}
+                </span>
+                <FavoriteReview reviewId={review.id} />
+                <Likes reviewId={review.id} />
+              </div>
             </div>
           ))}
       </div>

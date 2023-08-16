@@ -30,11 +30,10 @@ const AllFavoritesReviews = ({ searchQuery }) => {
             <div
               key={favorite.review_id?.id}
               className="card card-review text-white mt-4 container"
-              style={{ height: "16rem", width: "20rem" }}
             >
-                            <Link to={`/review/${favorite.review_id?.id}`} >
-
-              <img src={favorite.review_id?.review_image} className="card-img-top" alt="..."></img>
+              <Link to={`/review/${favorite.review_id?.id}`} >
+                <img src={favorite.review_id?.review_image} className="card-img-top" alt="..."></img>
+              </Link>
               <div className="div-title-review">
                 {editContentId === favorite.review_id?.id ? (
                   <input
@@ -87,7 +86,6 @@ const AllFavoritesReviews = ({ searchQuery }) => {
                 <FavoriteReview reviewId={favorite.review_id?.id} />
                 <Likes reviewId={favorite.review_id?.id} />
               </div>
-              </Link>
             </div>
           ))}
       </div>
