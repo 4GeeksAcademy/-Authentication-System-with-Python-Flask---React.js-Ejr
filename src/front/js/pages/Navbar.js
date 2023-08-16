@@ -11,6 +11,12 @@ export const Navbar = () => {
 
 const logged = store.logged 
 
+const handleLogout = () => {
+
+  actions.logout()
+  navigate("/")
+}
+
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
       <div id="custom-navbar" className="container-fluid">
@@ -40,7 +46,7 @@ const logged = store.logged
             </li>)
             :
             (<li className="nav-item">
-              <Link to={"/login"} className="nav-link text-white">Sign off</Link>
+              <button onClick={handleLogout} className="nav-link text-white btn">Sign Off</button>
             </li>)}
 
             <li className="nav-item dropdown">

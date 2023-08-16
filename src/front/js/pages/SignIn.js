@@ -1,11 +1,14 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import "../../styles/SignIn.css";
 import Moviestar from "../../img/Moviestar.png";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer } from 'react-toastify';
+import { Context } from '../store/appContext';
 
 
 export const SignIn = () => {
+    const { actions } = useContext(Context)
     const [user, setUser] = useState({
         name: '',
         email: '',
@@ -20,63 +23,56 @@ export const SignIn = () => {
             [e.target.name]: e.target.value
         });
     }
+    const handleSuperChange = (e) => {
+        const { name, value } = e.target;
+
+        setUser((prevUser) => ({
+            ...prevUser,
+            [name]: value
+        }));
+    }
+
     const navigate = useNavigate()
     const handleSubmit = async (e) => {
         e.preventDefault()
-        const apiUrl = `${process.env.BACKEND_URL}api/sign-ºup`
-        console.log(user)
-        try {
-            const res = await fetch(apiUrl, {
-                method:"POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(user)
-            })
-            console.log("Response status:", res.status);
-            const data = await res.json();
-            console.log("Response data:", data);
-    
-            if (res.ok) {
-                localStorage.setItem("token", data?.token);
-                navigate("/");
-            } else {
-                console.error("Request was not successful:", data);
-            }
-        } catch (error) {
-            console.error("An error occurred:", error);
-        }
+
+        const signup = await actions.signup(user)
+        if (signup === true) { navigate("/") }
 
     }
+
     return (
         <div className="text-center mt-5">
             <div>
                 <img id="mo" src={Moviestar} />
             </div>
             <form onSubmit={handleSubmit}>
-                <label>
+                <div id="label">
                     <input type="text" name="name" onChange={handleChange} value={user.name} placeholder="Username" required />
-                </label>
-                <label>
+                </div>
+                <div id="label">
                     <input type="email" name="email" onChange={handleChange} value={user.email} placeholder="Email" required />
-                </label>
-                <label>
+                </div>
+                <div id="label">
                     <input type="password" name="password" onChange={handleChange} value={user.password} placeholder="Password" required />
-                </label>
-                <label>
-                <input type="password" name="confirm_password" onChange={handleChange} value={user.confirm_password} placeholder="Confirm Password" required />
-                </label>
-                <label>
-
-                <input type="text" name="secret_question" onChange={handleChange} value={user.secret_question} placeholder="Secret Question" required />
-                </label>
-                <label>
-                <input type="text" name="secret_answer" onChange={handleChange} value={user.secret_answer} placeholder="Secret Answer" required />
-
-                </label>
-                <button type="submit">Register</button>
-                <p>Do you already have an account?, <Link to="/login" className="login-link">Login</Link></p>
+                </div>
+                <div id="label">
+                    <input type="password" name="confirm_password" onChange={handleChange} value={user.confirm_password} placeholder="Confirm Password" required />
+                </div>
+                <select id="securityQuestion" name="secret_question" value={user.secret_question} onChange={handleSuperChange}>
+                    <option value="">Select a question...</option>
+                    <option value="Your favorite pet">What is the name of your favorite pet?</option>
+                    <option value="The city you were born in">In which city were you born?</option>
+                    <option value="Your favorite movie">What is your favorite movie or book?</option>
+                    <option value="Your mother's last name">What is your mother's maiden name?</option>
+                    <option value="Your favorite sport">What is your favorite sport?</option>
+                </select>
+                <div id="label">
+                    <input type="text" name="secret_answer" onChange={handleChange} value={user.secret_answer} placeholder="Secret Answer" required />
+                </div>
+                <button type="submit">Registrate</button>
+                <p>¿Ya tienes una cuenta?, <Link to="/login" className="login-link">Login</Link></p>
             </form>
         </div>
     );
-}
-
-// export default SignIn;
+};

@@ -31,10 +31,20 @@ button[type="submit"] {
   margin-bottom: 10px;
 }
 
-label {
+#label {
   display: block;
   margin-bottom: 20px; 
   font-family: 'Roboto', sans-serif; 
+}
+
+#securityQuestion{
+  background-color: white;
+  color: black;
+  padding: 10px 45px 10px;
+  font-size: 16px;
+  border-radius: 25px;
+  margin: 0px 0px 38px;
+  text-align: center;
 }
 
 #mo{
