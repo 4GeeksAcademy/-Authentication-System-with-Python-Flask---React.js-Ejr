@@ -4,7 +4,6 @@
 
 .eva-3-container {
     box-sizing: content-box;
-    /* max-width: 1920px; */
     margin: 0 auto;
     padding: 0 24px;
     width: 85%;
@@ -88,4 +87,10 @@
 
 .mi-color-link a:visited {
     color: black;
+}
+
+@media (max-width: 795px) {
+    .eva-3-card {
+        margin-left: 1rem;
+    }
 }

@@ -82,10 +82,14 @@ const CardsReview = ({ searchQuery }) => {
 
               <div className="likes card-likes">
                 <span className="author-review">
-                  Escrito por : <span>{review.user.username}</span>{" "}
+                  Publicado por : <span>{review.user.username}</span>{" "}
                 </span>
-                <FavoriteReview reviewId={review.id} />
-                <Likes reviewId={review.id} />
+                <div className="icons-review d-flex align-items-center justify-content-around">
+                  <span className="me-3">
+                    <FavoriteReview reviewId={review.id} />
+                  </span>
+                  <Likes reviewId={review.id} />
+                </div>
               </div>
             </div>
           ))}

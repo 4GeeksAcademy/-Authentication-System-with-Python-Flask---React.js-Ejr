@@ -16,7 +16,7 @@ const AdminUsers = () => {
         <table className='table'>
           <thead>
             <tr>
-              <th className='th-id'>ID usuario</th>
+              <th className='th-id'>ID</th>
               <th className='th-general'>Nombre de usuario</th>
               <th className='th-general'>Nombre</th>
               <th className='th-general'>Apellido</th>

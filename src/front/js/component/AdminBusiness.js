@@ -16,7 +16,7 @@ const AdminBusiness = () => {
         <table className='table'>
           <thead>
             <tr>
-              <th className='th-id'>ID empresa</th>
+              <th className='th-id'>ID</th>
               <th className='th-business-name th-general'>Nombre de empresa</th>
               <th className='th-email th-general'>Correo electrónico</th>
               <th className='th-actions'>Acciones</th>

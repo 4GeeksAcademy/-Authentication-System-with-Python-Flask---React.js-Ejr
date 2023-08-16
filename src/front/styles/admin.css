@@ -9,6 +9,22 @@
   margin: 0 auto;
 }
 
+table {
+  width: 90%;
+}
+
+.admin-offer-content table th.th-id {
+  width: 10% !important;
+}
+
+.admin-offer-content table th.th-general {
+  width: 35% !important;
+}
+
+.admin-offer-content table th.th-actions {
+  width: 5% !important;
+}
+
 .btn-home-admin {
   text-align: center;
   margin: 1.3rem;

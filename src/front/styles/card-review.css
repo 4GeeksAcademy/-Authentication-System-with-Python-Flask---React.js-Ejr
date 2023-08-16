@@ -9,10 +9,10 @@
 
 
 .card-review {
-    background: var(--color-3);
+    background: #fff;
     backdrop-filter: 10px;
     height: 20rem !important;
-    width: calc(50% - 20px);
+    width: calc(70% - 20px);
     margin-bottom: 20px;
     position: relative;
     padding: 0;
@@ -58,23 +58,28 @@
 
 .div-title-review {
     backdrop-filter: 10px;
-    height: 50px;
+    height: 3rem;
     border-bottom: 1px solid var(--color-4);
-    width: 100%;
+    text-overflow: ellipsis;
+    width: 12rem;
+    overflow: hidden;
 }
 
 .title-review {
-    font-size: 1.5rem;
-    padding-top: .6rem;
+    font-size: 1.3rem;
+    padding: .6rem;
+    color: var(--color-2);
+    text-align: left;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
 }
 
 .comment-review {
-    margin-top: 1.6rem;
-    background-color: var(--color-1);
     overflow: hidden;
-    overflow-y: scroll;
-    height: 71%;
+    height: 80.5%;
     width: 12.2rem;
+    color: var(--color-2);
 }
 
 .card-likes {
@@ -159,7 +164,7 @@
 
 @media screen and (max-width: 768px) {
     .card-review {
-        width: calc(50% - 20px);
+        width: 100%;
     }
 }
 
@@ -171,4 +176,54 @@
     .card-review {
         width: 100%;
     }
+}
+
+@media screen and (min-width: 992px) {
+    .card-review {
+        width: 80%;
+    }
+
+    .img-review {
+        width: 35rem;
+        height: 85%;
+        padding: 3px;
+    }
+
+    .img-review a img {
+        width: 100%;
+        height: 100%;
+    }
+
+    .img-review a {
+        width: 100%;
+        height: 45%;
+    }
+
+    .div-title-review {
+        backdrop-filter: 10px;
+        height: 3rem;
+        border-bottom: 1px solid var(--color-4);
+        text-overflow: ellipsis;
+        width: 22.6rem;
+        overflow: hidden;
+    }
+
+    .title-review {
+        font-size: 1.5rem;
+        color: var(--color-2);
+        text-align: left;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        width: 100%;
+
+    }
+
+    .comment-review {
+        text-align: left;
+        overflow: hidden;
+        height: 81.2%;
+        width: 22.6rem;
+        padding-left: .6rem;
+    }
+
 }

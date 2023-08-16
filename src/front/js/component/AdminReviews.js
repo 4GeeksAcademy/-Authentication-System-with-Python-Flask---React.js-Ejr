@@ -16,7 +16,7 @@ const AdminReviews = () => {
         <table className='table'>
           <thead>
             <tr>
-              <th className='th-id'>ID reseña</th>
+              <th className='th-id'>ID</th>
               <th className='th-title th-general'>Título de la reseña</th>
               <th className='th-comment th-general'>Comentario</th>
               <th className='th-actions' >Acciones</th>
