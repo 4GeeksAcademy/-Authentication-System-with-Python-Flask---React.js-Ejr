@@ -9,28 +9,29 @@ const HomeOfferCard = () => {
     }, []);
     return (
         <div>
-            {/* <div>
-                <h1><strong>Disfruta de las experiencias,</strong> encuentra excursiones y tours</h1>
-            </div> */}
+            <div className='home-offer-h1'>
+                <h4><strong>Disfruta de las experiencias,</strong> encuentra excursiones y tours</h4>
+            </div>
+
+
             <div className='home-offer-card'>
 
                 {store.offers
-                    .slice(0, 10)
+                    .slice(0, 3)
                     .map((offer) =>
-                        <div key={offer.id} className="card card-home-offer bg-dark text-white mt-" style={{ maxWidth: "400px", maxHeight: "500px" }} >
-                            <Link to={`/offer/${offer.id}`}>
-                                <img src={offer.offer_image} className="card-img" alt="..." style={{ maxWidth: "400px", maxHeight: "200px" }}></img>
-                                <div className="card-img-overlay">
-                                    <h5 className="home-offer-title">{offer.offer_title}</h5>
-                                    {/* <p className="card-text">{offer.offer_description}</p> */}
+                        <Link className='link' to={`/offer/${offer.id}`}>
+                        <div key={offer.id} className=" card-home-offer text-grey"  >  
+                                <img src={offer.offer_image} className="" alt="..." ></img>
+                                <div className="card-home-text">
+                                    <p>Actividades</p>
+                                    <h3 className="home-offer-title">{offer.offer_title}</h3>
                                     <div className='home-price'>
                                         <p className="card-text">{offer.normal_user_price.toLocaleString()}$</p>
                                         <p className="card-text">{offer.premium_user_price.toLocaleString()}$</p>
                                     </div>
-                                    {/* <p className="card-text">Last updated 3 mins ago</p> */}
                                 </div>
-                            </Link>
                         </div>
+                        </Link>
                     )}
             </div>
         </div>
@@ -38,5 +39,4 @@ const HomeOfferCard = () => {
     )
 }
 export default HomeOfferCard
-
 

@@ -82,6 +82,11 @@ class Trip(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     country = db.Column(db.String(40), nullable=False)
     city = db.Column(db.String(40), nullable=False)
+    city2 = db.Column(db.String(40), nullable=False)
+    city3 = db.Column(db.String(40), nullable=False)
+    city4 = db.Column(db.String(40), nullable=False)
+
+    
     # activity = db.Column(db.String(100), nullable=True)
 
     offers = db.relationship("Offers", backref="trip")
@@ -96,6 +101,9 @@ class Trip(db.Model):
             "id": self.id,
             "country": self.country,
             "city": self.city,
+            "city2": self.city2,
+            "city3": self.city3,
+            "city4": self.city4,
             # "activities": self.activities
         }
 

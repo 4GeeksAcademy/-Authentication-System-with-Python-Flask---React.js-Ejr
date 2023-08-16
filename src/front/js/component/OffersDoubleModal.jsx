@@ -208,7 +208,8 @@ const OffersDoubleModal = () => {
                                                 <button className="btn btn-primary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal" >Volver al formulario anterior</button>
                                                 <button type="submit" className="btn btn-primary btn-signup">
                                                     Publicar mi oferta
-                                                </button>                                            </div>
+                                                </button>                                            
+                                            </div>
 
                                         </div>
                                     </div>

@@ -28,9 +28,10 @@ const MyOffers = ({ searchQuery }) => {
                     return (
                         <div
                             key={business_offer.id}
-                            className="card card-offer mb-3 mt-4">
+                            className="card card-offer text-white mb-3 mt-4">
                             <Link to={`/offer/${business_offer.id}`}>
                             <img src={business_offer.offer_image} className="card-img-top" alt="..."></img>
+                            </Link>
                             <div className="card-body">
                                 <div className="div-title-offer">
                                     {editContentId === business_offer.id ? (
@@ -93,13 +94,13 @@ const MyOffers = ({ searchQuery }) => {
                                     // || store.user.is_admin 
                                     <div className="btn-options d-flex justify-content-end">
                                         <button
-                                            className="btn-up-offer"
+                                            className="btn-up-review"
                                             onClick={() => handleUpdate(business_offer.id)}
                                         >
                                             &#9998;
                                         </button>
                                         <button
-                                            className="btn-delete-offer"
+                                            className="btn-delete-review"
                                             onClick={() => handleDelete(business_offer.id)}
                                         >
                                             &#10008;
@@ -117,7 +118,7 @@ const MyOffers = ({ searchQuery }) => {
                                 </Link> */}
 
                             </div>
-                            </Link>
+                         
                         </div>
                    
     )

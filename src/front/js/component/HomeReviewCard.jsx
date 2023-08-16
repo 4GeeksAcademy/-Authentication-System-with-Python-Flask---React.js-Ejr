@@ -12,9 +12,9 @@ const HomeReviewCard = () => {
 
     return (
         <div>
-            {/* <div>
-                <h1><strong>Lo que más gustó a otros clientes:</strong> revisa las últimas reseñas</h1>
-            </div> */}
+            <div className="home-offer-h1">
+                <h4><strong>Lo que más gustó a otros clientes:</strong> revisa las últimas reseñas</h4>
+            </div>
 
                 <div className='homeReviewCard'>
 

@@ -4,18 +4,24 @@
   justify-content: space-between;
   width: 85%;
   height: 16rem;
+  width: 95rem;
   margin: 0 auto;
   margin-top: 4rem;
   overflow: hidden;
+  margin-top: 30px;
+  margin-bottom: 10px;
 }
 
 .card-home-offer {
-  display: flex;
-  justify-content: space-between;
+  display: flex!important;
+  /* justify-content: space-between; */
   width: 85%;
   margin: 0 20px;
-  margin-top: 30px;
-  margin-bottom: 10px;
+  background-color: white!important;
+  flex-direction: row;
+  border-radius: 2%;
+  height: 12rem;
+  margin-left: 2px;
 }
 
 .home-offer-title {
@@ -23,4 +29,28 @@
   display: flex;
   flex-wrap: nowrap;
   overflow: hidden;
+  color: black;
+  
+}
+
+.card-home-offer img {
+  width: 50% ;
+  height:  100%;
+}
+
+.home-offer-h1{
+  display: flex;
+  flex-wrap: nowrap;
+  /* justify-content: space-between; */
+  width: 85%;
+  /* height: 16rem; */
+  /* width: 95rem; */
+  margin: 0 auto;
+  margin-top: 4rem;
+  overflow: hidden;
+  /* margin-top: 30px; */
+  /* margin-bottom: 10px; */
+  font-size: 24px;
+  line-height: 32px;
+  font-weight: 500;
 }
