@@ -30,11 +30,11 @@ const FavoriteReview = ({ reviewId }) => {
   return (
     <div>
       {!isFavorite ? (
-        <span onClick={handleAddToFavorite}>
+        <span style={{ cursor: 'pointer' }} onClick={handleAddToFavorite}>
           <FontAwesomeIcon icon={faHeart} size="lg" />
         </span>
       ) : (
-        <span onClick={handleDeleteFavorite}>
+        <span style={{ cursor: 'pointer' }} onClick={handleDeleteFavorite}>
           <FontAwesomeIcon icon={faHeartCrack} size="lg" color="red" />
         </span>
       )}

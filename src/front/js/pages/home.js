@@ -24,7 +24,13 @@ export const Home = () => {
 
 
       {/* <Slogan /> */}
-      {store.user.is_admin && <button className="btn-admin">Lista Completa para Admin</button>}
+      {store.user.is_admin &&
+        <div className="btn-home-admin">
+          <Link to='/admin'>
+            <button className="btn-admin">Espacio Admin</button>
+          </Link>
+        </div>
+      }
 
       <LitlleSlide />
       <FilterMenu />

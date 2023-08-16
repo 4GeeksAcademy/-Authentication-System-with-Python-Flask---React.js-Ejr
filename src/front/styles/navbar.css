@@ -2,9 +2,10 @@
   margin-right: 3rem;
 }
 
-.navbar-brand, .navbar-nav {
-  margin-left: 7.5rem;
-  margin-right: 7rem;
+.navbar-brand,
+.navbar-nav {
+  margin-left: 1.5rem;
+  margin-right: 5.5rem;
 }
 
 .navbar-brand img {
@@ -20,14 +21,15 @@
   color: white;
 }
 
-li .signup, .login {
+li .signup,
+.login {
   background-color: #03a8e8;
   color: var(--color-4);
 }
 
 
 
-/* .navbar-brand img {
+.navbar-brand img {
   height: 3rem;
   width: auto;
 }
@@ -101,12 +103,15 @@ li .signup,
     margin-right: 4rem;
   }
 
-  .navbar-brand {
-    margin-left: 2rem;
+  .navbar-brand,
+  .navbar-nav {
+    margin-left: 7rem;
+    margin-right: 7.5rem;
   }
+
 
   .navbar-brand img {
     height: 5rem;
     width: auto;
   }
-} */
+}

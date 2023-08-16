@@ -19,7 +19,7 @@ const SearchReview = ({ handleSearch }) => {
   return (
     <div className="filter-content mt-5">
       <div className="filter-items">
-        <div className="filter-search filter-item">
+        <div className="filter-search filter-review filter-item">
           <input
             className="review-input-search"
             type="text"

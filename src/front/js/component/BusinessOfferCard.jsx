@@ -26,7 +26,9 @@ const BusinessOfferCard = ({ searchQuery }) => {
               key={business_offer.id}
               className="card card-offer mb-3 mt-4">
               <Link to={`/offer/${business_offer.id}`}>
-              <img src={business_offer.offer_image} className="card-img-top" alt="..."></img>
+                <img src={business_offer.offer_image} className="card-img-top" alt="..."></img>
+              </Link>
+
               <div className="card-body">
                 <div className="div-title-offer">
                   {editContentId === business_offer.id ? (
@@ -87,7 +89,7 @@ const BusinessOfferCard = ({ searchQuery }) => {
                 </div>
                 {store.business_user.id === business_offer.business_id.id || store.user.is_admin &&
                   // || store.user.is_admin 
-                  
+
                   <div className="btn-options d-flex justify-content-end">
                     <button
                       className="btn-up-offer"
@@ -121,7 +123,6 @@ const BusinessOfferCard = ({ searchQuery }) => {
                 }
 
               </div>
-              </Link>
             </div>
           )
         })}

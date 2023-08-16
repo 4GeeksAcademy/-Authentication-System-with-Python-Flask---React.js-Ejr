@@ -9,23 +9,23 @@
 }
 
 .btn-search:hover {
-  color: var(--color-3);
-  background: #fff;
+  color: var(--color-2);
+  background: #fff !important;
 }
 
 .btn-cancel-search {
-  background-color: var(--color-4);
+  background-color: red;
   padding: 0px 16px;
   height: 50px;
-  border-radius: 50px;
+  border-radius: 5px;
   border: none;
-  color: var(--color-5);
+  color: #fff;
   transition: all 0.5s;
 }
 
 
 .btn-cancel-search:hover {
-  color: var(--color-5);
+  color: red;
   background: #fff;
 }
 
@@ -37,4 +37,20 @@
 
 .review-input-search:hover {
   background: #ddd;
+}
+
+@media (min-width: 680px) {
+  .filter-review {
+    width: 30rem !important;
+  }
+}
+
+@media (min-width: 970px) {
+  .filter-review {
+    width: 43rem !important;
+  }
+
+  .review-input-search {
+    width: 42rem;
+  }
 }

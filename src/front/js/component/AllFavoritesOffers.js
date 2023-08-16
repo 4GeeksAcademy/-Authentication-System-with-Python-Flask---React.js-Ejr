@@ -16,7 +16,7 @@ const AllFavoritesOffers = ({ searchQuery }) => {
         actions.getFavoriteoffer();
         console.log("Success fetch for Cardsofers");
     }, []);
-    
+
 
 
     return (
@@ -33,12 +33,13 @@ const AllFavoritesOffers = ({ searchQuery }) => {
                 .sort((a, b) => b.id - a.id)
                 .map((favorite) => {
                     return (
-                        
+
                         <div
                             key={favorite?.offer_id?.id}
                             className="card card-offer mb-3 mt-4">
                             <Link to={`/offer/${favorite?.offer_id?.id}`}>
-                            <img src={favorite?.offer_id?.offer_image} className="card-img-top" alt="..."></img>
+                                <img src={favorite?.offer_id?.offer_image} className="card-img-top" alt="..."></img>
+                            </Link>
                             <div className="card-body">
                                 <div className="div-title-offer">
                                     {editContentId === favorite?.offer_id?.id ? (
@@ -132,7 +133,7 @@ const AllFavoritesOffers = ({ searchQuery }) => {
                                 }
 
                             </div>
-                            </Link>
+
                         </div>
                     )
                 })}
