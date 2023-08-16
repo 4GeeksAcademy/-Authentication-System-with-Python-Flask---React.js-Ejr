@@ -1,15 +1,18 @@
 const getState = ({ getStore, getActions, setStore }) => {
-  const API_URL =
-    "https://albertgescribano-obscure-train-j6x45w44rqqfp66v-3001.preview.app.github.dev";
+  const API_URL = process.env.BACKEND_URL;
 
   return {
     store: {
+      users: [],
       user: {},
+      userById: {},
       business_user: {},
+      business_users: [],
       auth: false,
       trip: [],
       reviews: [],
       offers: [],
+      favorites: [],
     },
     actions: {
       // Use getActions to call a function within a function
@@ -61,9 +64,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
 
       login: async (userEmail, userPassword) => {
-        console.log(userEmail, userPassword);
         try {
-          // let myToken = localStorage.getItem("myToken");
           const response = await fetch(API_URL + "/api/login", {
             method: "POST",
             headers: {
@@ -77,42 +78,59 @@ const getState = ({ getStore, getActions, setStore }) => {
 
           if (response.ok) {
             const data = await response.json();
+            console.log(data);
             const store = getStore();
             setStore({ ...store, auth: true });
-            setStore({ ...store, user: data.user_or_business });
+
+            if (data.type === "user") {
+              setStore({ ...store, user: data.user_or_business, business_user: {} });
+            } else if (data.type === "business") {
+              setStore({ ...store, business_user: data.user_or_business, user: {} });
+              const store2 = getStore()
+              console.log('info store business user ', store2.business_user);
+            }
+
             console.log("Clean data of response:", data.user_or_business);
             localStorage.setItem("myToken", data.access_token);
             return data;
-          } else response.status === 401;
-          return false;
+          } else if (response.status === 401) {
+            return false;
+          }
         } catch (err) {
           console.log(err);
           return false;
         }
       },
 
-      isAuth: async () => {
-        try {
-          let token = localStorage.getItem("myToken");
-          console.log(token);
-          const settings = {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: "Bearer " + token,
-            },
-          };
 
-          const request = await fetch(API_URL + "/api/private", settings);
-          if (request.ok) {
-            const json = await request.json();
-            const data = json;
-            console.log(data);
-            setStore({ user: data.user });
-            setStore({ auth: true });
+      isAuth: async () => {
+        let token = localStorage.getItem("myToken");
+        if (token) {
+          try {
+            let token = localStorage.getItem("myToken");
+            const settings = {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: "Bearer " + token,
+              },
+            };
+            const request = await fetch(API_URL + "/api/private", settings);
+            if (request.ok) {
+              const data = await request.json();
+              const store = getStore();
+              if (data.user) {
+                setStore({ ...store, user: data.user })
+              }
+              if (data.business) {
+                setStore({ ...store, business_user: data.business })
+              }
+              setStore({ auth: true });
+            }
+          } catch (error) {
+            console.log("No se pudo cargar: ", error);
           }
-        } catch (error) {
-          console.log("No se pudo cargar: ", error);
+        } else {
         }
       },
 
@@ -125,14 +143,15 @@ const getState = ({ getStore, getActions, setStore }) => {
       // get fetch  for all users
       getAllUsers: async () => {
         try {
-          const response = await fetch(API_URL + "/users", {
+          const response = await fetch(API_URL + "/api/users", {
             method: "GET",
           });
 
           if (response.ok) {
             const responseData = await response.json();
-            console.log(responseData);
-            return responseData.users;
+            console.log('GET ALL USERS', responseData);
+            setStore({ users: responseData })
+            return true;
           } else {
             // Handle other errors
             console.log("Error in fetching users");
@@ -155,9 +174,9 @@ const getState = ({ getStore, getActions, setStore }) => {
           if (response.ok) {
             const responseData = await response.json();
             console.log(responseData);
+            setStore({ userById: responseData })
             return responseData;
           } else if (response.status === 404) {
-            // Handle user not found error
             console.log("User not found");
             return null;
           } else {
@@ -171,6 +190,31 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
 
+      deleteUser: async (userId) => {
+        try {
+          const token = localStorage.getItem("myToken");
+          if (!token) {
+            console.log("Token not found");
+            return;
+          }
+
+          const response = await fetch(API_URL + "/api/users/" + userId, {
+            method: "DELETE",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+
+          if (response.ok) {
+            actions.getAllUsers(); // Refresh the user list after deletion
+          } else {
+            console.error('Failed to delete user');
+          }
+        } catch (error) {
+          console.error('Error deleting user:', error);
+        }
+      },
+
       // get fetch for all business users
 
       getAllBusinessUsers: async () => {
@@ -181,8 +225,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 
           if (response.ok) {
             const responseData = await response.json();
-            console.log(responseData);
-            return responseData.business_users;
+            console.log('GET ALL BUSINESS', responseData);
+            setStore({ business_users: responseData })
+            return true;
           } else {
             // Handle other errors
             console.log("Error in fetching business users");
@@ -223,10 +268,34 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
 
+      deleteBusiness: async (businessId) => {
+        try {
+          const token = localStorage.getItem("myToken");
+          if (!token) {
+            console.log("Token not found");
+            return;
+          }
+
+          const response = await fetch(API_URL + "/api/business_user/" + businessId, {
+            method: "DELETE",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+
+          if (response.ok) {
+            actions.getAllBusiness(); // Refresh the user list after deletion
+          } else {
+            console.error('Failed to delete user');
+          }
+        } catch (error) {
+          console.error('Error deleting user:', error);
+        }
+      },
 
       // Update business_user profile information
 
-      updateBusinessUserProfile: async (userId, updatedData) => {
+      updateBusinessUser: async (userId, updatedData) => {
         try {
           const token = localStorage.getItem("myToken");
           if (!token) {
@@ -265,6 +334,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       // Fonction pour modifier le profil utilisateur
       updateUserProfile: async (userId, updatedData) => {
+        console.log(userId, updatedData);
         try {
           const token = localStorage.getItem("myToken");
           if (!token) {
@@ -272,7 +342,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             return false;
           }
 
-          const response = await fetch(`/api/user/${userId}`, {
+          const response = await fetch(`${API_URL}/api/user/${userId}`, {
             method: "PUT",
             headers: {
               "Content-Type": "application/json",
@@ -283,11 +353,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 
           if (response.ok) {
             const updatedUser = await response.json();
-
-            setStore((prevStore) => ({
-              ...prevStore,
-              user: updatedUser,
-            }));
+            const store = getStore()
+            setStore({ ...store, user: updatedUser });
 
             return true;
           } else {
@@ -306,11 +373,13 @@ const getState = ({ getStore, getActions, setStore }) => {
         try {
           const response = await fetch(API_URL + "/api/offers", {
             method: "GET",
+
           });
 
           if (response.ok) {
             const responseData = await response.json();
             console.log(responseData);
+            setStore({ offers: responseData.offers });
             return responseData.offers;
           } else {
             // Handle other errors
@@ -327,14 +396,18 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       getOfferById: async (offerId) => {
         try {
-          const response = await fetch(API_URL + `/api/offers/${offerId}`, {
-            method: "GET",
+          const response = await fetch(API_URL + `/api/offer/${offerId}`, {
+            headers: {
+              "Content-Type": "application/json",
+            },
           });
 
+          console.log(response);
+
           if (response.ok) {
-            const responseData = await response.json();
-            console.log(responseData);
-            return responseData;
+            const responseData = await response.json(); // Parse the response body as JSON
+            console.log(responseData.offer);
+            return responseData.offer;
           } else if (response.status === 404) {
             // Handle offer not found error
             console.log("Offer not found");
@@ -352,7 +425,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       // create an offer
 
-      createOffer: async (data) => {
+      createOffer: async (formData) => {
         try {
           const token = localStorage.getItem("myToken");
           if (!token) {
@@ -366,30 +439,25 @@ const getState = ({ getStore, getActions, setStore }) => {
               "Content-Type": "application/json",
               Authorization: `Bearer ${token}`,
             },
-            body: JSON.stringify(data),
+            body: JSON.stringify(formData),
           });
 
           if (response.ok) {
-            const responseData = await response.json();
-            console.log(responseData);
+            const res = await response.json();
+            console.log(res);
             const actions = getActions();
-            actions.getAllOffers();
 
-            return responseData;
-          } else if (response.status === 422) {
-            // Handle 422 error (or any other error status codes you want to handle)
-            console.log("Error 422: Invalid data or client-side error");
-            return false;
+            actions.getAllOffers();
+            return true;
           } else {
-            // Handle other errors
-            console.log("Error in creating offer");
             return false;
           }
-        } catch (err) {
-          console.log(err);
-          return false; // Handle other errors, return false by default
+        } catch (error) {
+          console.log(error);
+          return false;
         }
       },
+
 
       // update an offer by id
 
@@ -463,8 +531,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 
           if (response.ok) {
             const responseData = await response.json();
-            console.log(responseData);
-            return responseData.trips;
+            console.log("response data de GET ALL TRIPS:",responseData);
+            let store = getStore();
+            setStore({...store, trip: responseData})
+            return true
           } else {
             // Handle other errors
             console.log("Error in fetching trips");
@@ -480,7 +550,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       getTripById: async (tripId) => {
         try {
-          const response = await fetch(API_URL + `/api/trips/${tripId}`, {
+          const response = await fetch(API_URL + `/api/trip/${tripId}`, {
             method: "GET",
           });
 
@@ -507,7 +577,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       createTrip: async (data) => {
         try {
-          const response = await fetch(API_URL + "/api/trip", {
+          const response = await fetch(API_URL + "/api/trips", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -632,7 +702,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         try {
           const response = await fetch(
             API_URL +
-              `/api/business_user/delete/business_users/${businessUserId}`,
+            `/api/business_user/delete/business_users/${businessUserId}`,
             {
               method: "DELETE",
               headers: {
@@ -665,7 +735,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           const response = await fetch(API_URL + "/api/review");
           if (response.ok) {
             const data = await response.json();
-            console.log(data);
+            console.log("reviews:", data);
             setStore({ reviews: data });
             return true;
           } else {
@@ -676,6 +746,36 @@ const getState = ({ getStore, getActions, setStore }) => {
           return false;
         }
       },
+
+      getReviewById: async (reviewId) => {
+        try {
+          const response = await fetch(API_URL + `/api/review/${reviewId}`, {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          });
+
+          console.log(response);
+
+          if (response.ok) {
+            const responseData = await response.json(); // Parse the response body as JSON
+            console.log(responseData.offer);
+            return responseData.review;
+          } else if (response.status === 404) {
+            // Handle offer not found error
+            console.log("Review not found");
+            return null;
+          } else {
+            // Handle other errors
+            console.log("Error in fetching review");
+            return null;
+          }
+        } catch (err) {
+          console.log(err);
+          return null; // Handle other errors, return null by default
+        }
+      },
+
       create_review: async (formData) => {
         try {
           const token = localStorage.getItem("myToken");
@@ -778,23 +878,42 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
 
-      incrementLikes: async (reviewId) => {
+      getLikes: async (reviewId) => {
+        try {
+          const response = await fetch(API_URL + `/api/reviews/${reviewId}/likes`);
+          if (response.ok) {
+            const data = await response.json();
+            return data
+          } else {
+            return null;
+          }
+        } catch (error) {
+          console.log(error);
+          return null;
+        }
+      },
+
+      likeReview: async (reviewId, userId) => {
         try {
           const token = localStorage.getItem("myToken");
-          const response = await fetch(
-            `${API_URL}/api/review/${reviewId}/like`,
-            {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`,
-              },
-            }
-          );
+          if (!token) {
+            console.log("Token not found");
+            return false;
+          }
+
+          const response = await fetch(API_URL + `/api/reviews/${reviewId}/likes`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`,
+            },
+            body: JSON.stringify({ user_id: userId }),
+          });
 
           if (response.ok) {
-            // Rechargez les avis pour mettre à jour le nombre de likes
-            getActions().getReviews();
+            const res = await response.json();
+            const actions = getActions()
+            actions.getLikes()
             return true;
           } else {
             return false;
@@ -804,6 +923,195 @@ const getState = ({ getStore, getActions, setStore }) => {
           return false;
         }
       },
+      getFavoriteReview: async () => {
+        try {
+          const token = localStorage.getItem("myToken");
+          if (!token) {
+            console.log("Token not found");
+            return false;
+          }
+
+          const response = await fetch(API_URL + `/api/reviews/favorites`, {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          });
+          console.log(response);
+
+          if (response.ok) {
+            const data = await response.json();
+            console.log("GET DATA REVIEWS FAVORITES:", data);
+            const store = getStore()
+            setStore({ ...store, favorites: data });
+            return true;
+          } else {
+            return null;
+          }
+        } catch (error) {
+          console.log(error);
+          return null;
+        }
+      },
+
+
+      addFavoriteReview: async (reviewId, userId) => {
+        try {
+          const token = localStorage.getItem("myToken");
+          if (!token) {
+            console.log("Token not found");
+            return false;
+          }
+
+          const response = await fetch(API_URL + `/api/reviews/favorites/${reviewId}`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`,
+            },
+            body: JSON.stringify({ user_id: userId }),
+          });
+          console.log('FETCH POST FAV:', response);
+          if (response.ok) {
+            const res = await response.json();
+            console.log('reponse FAVORITES:', res);
+            const store = getStore()
+            setStore({ ...store, favorites: res })
+            const actions = getActions()
+            actions.getFavoriteReview()
+            return true;
+          } else {
+            return false;
+          }
+        } catch (error) {
+          console.log(error);
+          return false;
+        }
+      },
+      deleteFavoriteReview: async (reviewId, userId) => {
+        try {
+          const token = localStorage.getItem("myToken");
+          if (!token) {
+            console.log("Token not found");
+            return false;
+          }
+
+          const response = await fetch(API_URL + `/api/reviews/favorites/${reviewId}`, {
+            method: 'DELETE',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`,
+            },
+            body: JSON.stringify({ user_id: userId }),
+          });
+
+          if (response.ok) {
+            const store = getStore();
+            const updatedFavorites = store.favorites.filter(favorite => favorite.review_id !== reviewId);
+            setStore({ ...store, favorites: updatedFavorites });
+            return true;
+          } else {
+            return false;
+          }
+        } catch (error) {
+          console.log(error);
+          return false;
+        }
+      },
+      getFavoriteoffer: async () => {
+        try {
+          const token = localStorage.getItem("myToken");
+          if (!token) {
+            console.log("Token not found");
+            return false;
+          }
+
+          const response = await fetch(API_URL + `/api/offers/favorites`, {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          });
+          console.log(response);
+
+          if (response.ok) {
+            const data = await response.json();
+            console.log("GET OFFERS DATA FAVORITES:", data);
+            const store = getStore()
+            setStore({ ...store, favorites: data });
+            return true;
+          } else {
+            return null;
+          }
+        } catch (error) {
+          console.log(error);
+          return null;
+        }
+      },
+      addFavoriteOffer: async (offerId, userId) => {
+        try {
+          const token = localStorage.getItem("myToken");
+          if (!token) {
+            console.log("Token not found");
+            return false;
+          }
+
+          const response = await fetch(API_URL + `/api/offers/favorites/${offerId}`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`,
+            },
+            body: JSON.stringify({ user_id: userId }),
+          });
+          console.log('FETCH POST FAV:', response);
+          if (response.ok) {
+            const res = await response.json();
+            console.log('reponse FAVORITES:', res);
+            const store = getStore()
+            setStore({ ...store, favorites: res })
+            const actions = getActions()
+            actions.getFavoriteReview()
+            return true;
+          } else {
+            return false;
+          }
+        } catch (error) {
+          console.log(error);
+          return false;
+        }
+      },
+      deleteFavoriteOffer: async (offerId) => {
+        try {
+          const token = localStorage.getItem("myToken");
+          if (!token) {
+            console.log("Token not found");
+            return false;
+          }
+
+          const response = await fetch(API_URL + `/api/offers/favorites/${offerId}`, {
+            method: 'DELETE',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`,
+            },
+          });
+          if (response.ok) {
+            const store = getStore();
+            const updatedFavorites = store.favorites.filter(favorite => favorite.offer_id !== offerId);
+            setStore({ ...store, favorites: updatedFavorites });
+            return true;
+          } else {
+            return false;
+          }
+        } catch (error) {
+          console.log(error);
+          return false;
+        }
+      },
+
     },
   };
 };

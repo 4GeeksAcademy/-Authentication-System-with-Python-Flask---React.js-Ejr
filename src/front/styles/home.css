@@ -12,14 +12,36 @@
 }
 
 :root {
-  --color-1: #f1445b;
-  --color-2: #65734b;
-  --color-3: #94a453;
-  --color-4: #d9c3b1;
-  --color-5: #f03625;
+  --color-1: #1f1641;
+  --color-2: #012272;
+  --color-3: #0486db;
+  --color-4: #05add3;
+  --color-5: #babf95;
 }
 
 body {
-  background-color: var(--color-4);
+  background-color: var(--color-5);
   height: 100vh;
+  overflow-x: hidden;
+}
+
+.div-donation {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.btn-donation {
+  background-color: var(--color-3);
+  padding: 5px 20px;
+  border-radius: 5px;
+  color: #fff;
+  border: 1px solid #fff;
+  overflow: hidden;
+  transition: all .5s ease;
+}
+
+.btn-donation:hover {
+  border: 1px solid var(--color-3);
+  color: var(--color-3);
+  background: #fff;
 }

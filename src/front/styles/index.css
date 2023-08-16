@@ -10,10 +10,18 @@
 @import './businessOfferCard.css';
 @import './filter-menu.css';
 @import './homeOfferCard.css';
-@import './forgotPassword.css'; 
+@import './forgotPasswordForm.css';
 @import './search-review.css';
 @import './form-review.css';
 @import './footer.css';
 @import './homeReviewCard.css';
-@import '/src/front/styles/card-review.css'
-
+@import './card-review.css';
+@import './about.css';
+@import './slogan.css';
+@import './litlleSlide.css';
+@import './private.css';
+@import './payment.css';
+@import'./reviewsDoubleModal.css';
+@import'./generalInfoDiv.css';
+@import './singleOfferView.css';
+@import './admin.css';

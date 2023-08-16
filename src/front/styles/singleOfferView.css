@@ -1,0 +1,25 @@
+.general{
+    background-color: white;
+    /* margin-top: 4rem; */
+    max-width: 85%;
+    height: auto;
+    width: auto;
+}
+
+.go-results{
+    cursor: pointer;
+}
+
+.up-card-buttons{
+    padding-top: 1rem;
+}
+
+/* .images {
+    height: auto;
+    width: 70%;
+} */
+
+img {
+    height: auto;
+    width: 60%;
+}

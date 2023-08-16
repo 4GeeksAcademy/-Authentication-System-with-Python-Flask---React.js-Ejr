@@ -17,7 +17,7 @@ const FilterMenu = ({ handleSearch }) => {
           <input
             type="text"
             id="country"
-            placeholder="Country"
+            placeholder="País"
             value={country}
             onChange={(e) => setCountry(e.target.value)}
           />
@@ -26,7 +26,7 @@ const FilterMenu = ({ handleSearch }) => {
           <input
             type="text"
             id="city"
-            placeholder="City"
+            placeholder="Ciudad"
             value={city}
             onChange={(e) => setCity(e.target.value)}
           />
@@ -38,13 +38,13 @@ const FilterMenu = ({ handleSearch }) => {
             value={tripType}
             onChange={(e) => setTripType(e.target.value)}
           >
-            <option value="">--Kind of trip--</option>
+            <option value="">--Tipo de experiéncia--</option>
             <option value="relax">Relax</option>
-            <option value="trek">Trek</option>
-            <option value="cultural discovery">Cultural discovery</option>
+            <option value="trek">Aventura</option>
+            <option value="cultural discovery">Cultural</option>
           </select>
         </div>
-        <div className="filter-btn">
+        <div className="filter-btn ps-4">
           <button className='btn-search' type="submit" onClick={handleSubmit}>
             Buscar
           </button>

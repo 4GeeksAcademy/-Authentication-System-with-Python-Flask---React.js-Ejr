@@ -1,9 +1,12 @@
-import React, {useState} from 'react'
-import CardsReview from '../component/CardsReview.js'
+import React, { useContext, useState } from 'react'
 import SearchReview from '../component/SearchReview.js'
+import { Context } from '../store/appContext.js'
+import MenuReviews from '../component/MenuReviews.js'
+import ReviewsDoubleModal from '../component/ReviewsDoubleModal.jsx'
 
 const Reviews = () => {
   const [searchQuery, setSearchQuery] = useState("");
+  const { store, actions } = useContext(Context)
 
   const handleSearch = (query) => {
     setSearchQuery(query);
@@ -12,7 +15,8 @@ const Reviews = () => {
   return (
     <div>
       <SearchReview handleSearch={handleSearch} />
-      <CardsReview searchQuery={searchQuery} />
+      {(store.user.username || store.user.is_admin) && <ReviewsDoubleModal />}
+      <MenuReviews searchQuery={searchQuery} />
     </div>
   );
 }

@@ -1,10 +1,92 @@
-.card {
-
-    width: 33%;
-    margin: auto;
-    height: 26rem;
+.cards-offer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 90%;
+    margin: 0 auto;
+    margin-top: 30px;
 }
 
-.card-img-top {
-    height: 17rem;
+.card-offer {
+    background: var(--color-2);
+    backdrop-filter: 10px;
+    height: 550px !important;
+    width: calc(50% - 10px);
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.card-offer img {
+    width: 100%;
+    height: 16rem;
+}
+
+
+.div-title-review {
+    backdrop-filter: 10px;
+    height: 50px;
+    border-bottom: 1px solid var(--color-4);
+    width: 100%;
+}
+
+.offer-title {
+    font-size: 1.9rem;
+    text-align: center;
+}
+
+.infos-country {
+    display: flex;
+    justify-content: space-between;
+}
+
+.country-offer,
+.city-offer {
+    font-weight: 600;
+    font-size: 1.6rem;
+}
+
+.offer-price {
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.btn-buy {
+    width: 90%;
+    background-color: var(--color-1);
+    text-align: center;
+    margin: 0 auto;
+    padding: 0;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin-bottom: .5rem;
+}
+
+.price-user {
+    font-weight: 600;
+}
+
+.price {
+    color: #fff;
+}
+
+/* Media query */
+@media screen and (max-width: 1200px) {
+    .card-offer {
+        width: calc(50% - 10px);
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .card-offer {
+        width: calc(50% - 10px);
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .card-offer {
+        width: 100%;
+    }
 }

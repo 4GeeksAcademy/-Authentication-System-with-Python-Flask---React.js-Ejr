@@ -1,33 +1,26 @@
-.homeOfferCard {
+.home-offer-card {
   display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  width: 85%;
   height: 16rem;
-  width: 20rem;
-  flex-wrap: nowrap !important;
-} */
-
-/* ===== Scrollbar CSS ===== */
-/* Firefox */
-* {
-  scrollbar-width: 10px;
-  scrollbar-color: var(--color-1);
+  margin: 0 auto;
+  margin-top: 4rem;
+  overflow: hidden;
 }
 
-/* Chrome, Edge, and Safari */
-*::-webkit-scrollbar {
-  width: 10px;
+.card-home-offer {
+  display: flex;
+  justify-content: space-between;
+  width: 85%;
+  margin: 0 20px;
+  margin-top: 30px;
+  margin-bottom: 10px;
 }
 
-*::-webkit-scrollbar-track {
-  background: var(--color-3);
-  width: 10px;
-  height: 10px;
-  border-radius: 10px;
-}
-
-*::-webkit-scrollbar-thumb {
-  background-color: var(--color-1);
-  border-radius: 10px;
-  border: 3px none var(--color-5);
-  height: 10px;
-  width: 10px;
+.home-offer-title {
+  font-size: 1.1rem;
+  display: flex;
+  flex-wrap: nowrap;
+  overflow: hidden;
 }
