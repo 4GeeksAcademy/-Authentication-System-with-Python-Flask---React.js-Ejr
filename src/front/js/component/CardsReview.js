@@ -64,7 +64,7 @@ const CardsReview = ({ searchQuery }) => {
               </div>
 
               {store.user.id === review.user.id && (
-                <div className="btn-options d-flex justify-content-end">
+                <div className="btn-review-options d-flex justify-content-end">
                   <button
                     className="btn-up-review"
                     onClick={() => handleUpdate(review.id)}

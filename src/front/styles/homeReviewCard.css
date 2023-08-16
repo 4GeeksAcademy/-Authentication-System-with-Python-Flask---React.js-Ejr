@@ -4,8 +4,8 @@
   justify-content: space-between;
   width: 85%;
   height: 15rem;
-  margin: 20px auto 0;
-  padding: .9rem 0 0;
+  margin: 20px auto;
+  padding: .5rem 0 0;
   overflow: hidden;
   overflow-x: scroll;
   position: relative;
@@ -14,7 +14,6 @@
 .nothing {
   height: 1.2rem;
   width: 100%;
-  background-color: red;
 }
 
 .card-home-review {
@@ -69,14 +68,14 @@
   word-break: break-word;
 }
 
-.author-review {
+.author-home-review {
   position: absolute;
   bottom: -.8rem;
   right: .4rem;
   font-size: 1rem !important;
 }
 
-.author-review span {
+.author-home-review span {
   font-size: 1rem;
   font-weight: 500;
 }
@@ -99,7 +98,7 @@
   height: 1.8rem;
   text-align: center;
   z-index: 2;
-  top: -.7rem;
+  top: -.5rem;
   right: 1rem;
   cursor: pointer;
 }

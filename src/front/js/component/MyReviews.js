@@ -13,7 +13,7 @@ const MyReviews = ({ searchQuery }) => {
 
 
   return (
-    <div className='cards-review  '>
+    <div className='cards-review'>
       {userReviews
         .filter(
           (review) =>
@@ -28,38 +28,44 @@ const MyReviews = ({ searchQuery }) => {
             key={review.id}
             className="card card-review text-white mt-4 container"
           >
-            <Link to={`/review/${review.id}`} >
-              <img src={review.review_image} className="card-img-top" alt="..."></img>
-            </Link>
-            <div className="div-title-review">
-              {editContentId === review.id ? (
-                <input
-                  type="text"
-                  value={editTitle}
-                  onChange={(e) => handleEditContent(e.target.value)}
-                />
-              ) : (
-                <h5 className="card-title title-review">{review.title}</h5>
-              )}
+            <div className="img-review">
+              <Link to={`/review/${review.id}`}>
+                <img src={review.review_image} className="card-img-top" alt="imagen de reseña" />
+              </Link>
             </div>
-            {editContentId === review.id ? (
-              <>
-                <div className="comment-review">
-                  <textarea
-                    autoFocus={true}
-                    value={editContent}
+            <div className="content-title-comment">
+              <div className="div-title-review">
+                {editContentId === review.id ? (
+                  <input
+                    type="text"
+                    value={editTitle}
                     onChange={(e) => handleEditContent(e.target.value)}
-                    rows="7"
-                    cols="38"
-                    maxLength="300"
-                    style={{ resize: "none" }}
-                  ></textarea>
-                </div>
-                <button onClick={() => handleSave(review.id)}>Validar</button>
-              </>
-            ) : (
-              <p className="card-text">{review.comment_text}</p>
-            )}
+                  />
+                ) : (
+                  <h5 className="card-title title-review break-word">{review.title}</h5>
+                )}
+              </div>
+              <div className="comment-review">
+                {editContentId === review.id ? (
+                  <>
+                    <div className="comment-review">
+                      <textarea
+                        autoFocus={true}
+                        value={editContent}
+                        onChange={(e) => handleEditContent(e.target.value)}
+                        rows="7"
+                        cols="38"
+                        maxLength="300"
+                        style={{ resize: "none" }}
+                      ></textarea>
+                    </div>
+                    <button onClick={() => handleSave(review.id)}>Validar</button>
+                  </>
+                ) : (
+                  <p className="card-text">{review.comment_text}</p>
+                )}
+              </div>
+            </div>
             {store.user.id === review.user.id && (
               <div className="btn-options d-flex justify-content-end">
                 <button
