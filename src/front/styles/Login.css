@@ -29,15 +29,19 @@
 }
 
 #ps{
-    font-size: 13px;
+    font-size: 15px;
     color: white;
-}
-
-#sp {
-    font-size: 13px;
-    color: rgba(246, 234, 234, 0.804); 
 }
 
 .swal2-confirm{
     color: black !important; 
+}
+
+.text-cente d-flex {
+    color: white; 
+    font-size: 15px; 
+}
+
+.register-link {
+    margin-left: 5px;
 }

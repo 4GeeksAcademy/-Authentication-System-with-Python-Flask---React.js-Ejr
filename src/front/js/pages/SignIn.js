@@ -48,16 +48,16 @@ export const SignIn = () => {
             </div>
             <form onSubmit={handleSubmit}>
                 <div id="label">
-                    <input type="text" name="name" onChange={handleChange} value={user.name} placeholder="Nombre de usuario" required />
+                    <input type="text" name="name" onChange={handleChange} value={user.name} placeholder="Username" required />
                 </div>
                 <div id="label">
                     <input type="email" name="email" onChange={handleChange} value={user.email} placeholder="Email" required />
                 </div>
                 <div id="label">
-                    <input type="password" name="password" onChange={handleChange} value={user.password} placeholder="Contraseña" required />
+                    <input type="password" name="password" onChange={handleChange} value={user.password} placeholder="Password" required />
                 </div>
                 <div id="label">
-                    <input type="password" name="confirm_password" onChange={handleChange} value={user.confirm_password} placeholder="Confirmar Contraseña" required />
+                    <input type="password" name="confirm_password" onChange={handleChange} value={user.confirm_password} placeholder="Confirm Password" required />
                 </div>
                 <select id="securityQuestion" name="secret_question" value={user.secret_question} onChange={handleSuperChange}>
                     <option value="">Select a question...</option>
@@ -68,7 +68,7 @@ export const SignIn = () => {
                     <option value="Your favorite sport">What is your favorite sport?</option>
                 </select>
                 <div id="label">
-                    <input type="text" name="secret_answer" onChange={handleChange} value={user.secret_answer} placeholder="Respuesta Secreta" required />
+                    <input type="text" name="secret_answer" onChange={handleChange} value={user.secret_answer} placeholder="Secret Answer" required />
                 </div>
                 <button type="submit">Registrate</button>
                 <p>¿Ya tienes una cuenta?, <Link to="/login" className="login-link">Login</Link></p>

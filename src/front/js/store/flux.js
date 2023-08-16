@@ -11,6 +11,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			movies: [],
 			movie: null,
+			actor: null,
 
 		},
 		actions: {
@@ -174,8 +175,30 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.error(error)
 					return null;
 				}
+			},
+
+			getActorById: async (actorId) => {
+				const apiUrl = `${process.env.BACKEND_URL}api/actors/${actorId}`;
+				try {
+					const res = await fetch(apiUrl, {
+						method: "GET",
+						headers: { "Content-Type": "application/json" }
+					});
+					if (res.ok) {
+						const data = await res.json();
+						setStore({ actor: data });
+						console.log(data);
+						return data;
+					} else {
+						console.log("Request failed", res.status);
+					}
+				} catch (error) {
+					console.error(error);
+					return null;
+				}
 			}
 
+	
 
 		}
 	};

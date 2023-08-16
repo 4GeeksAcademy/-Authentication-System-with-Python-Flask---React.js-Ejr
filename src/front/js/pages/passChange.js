@@ -40,15 +40,15 @@ export const PassChange = () => {
 			<img id="image" src={Moviestar} />
 		<form onSubmit={onSubmit}>
             <div>
-                <input className="text-center" name="new_password" onChange={handleChange} type="password" id="new_password" placeholder="Nueva contraseña" value={form.new_password} required></input>
+                <input className="text-center" name="new_password" onChange={handleChange} type="password" id="new_password" placeholder="New Password" value={form.new_password} required></input>
             </div>
             <br/>
             <div>
-                <input className="text-center" name="confirm_password" onChange={handleChange} type="password" id="confirm_password" placeholder="Confirmar contraseña" value={form.confirm_password} required></input>
+                <input className="text-center" name="confirm_password" onChange={handleChange} type="password" id="confirm_password" placeholder="Confirm Password" value={form.confirm_password} required></input>
                 <br/>
             </div>
 			<br/>
-            <button type="submit" id="recovery-button">Confirmar</button>
+            <button type="submit" id="recovery-button">Confirm</button>
             <br/>
             </form>
             </div>

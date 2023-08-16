@@ -4,6 +4,38 @@ from sqlalchemy.orm import relationship
 
 db = SQLAlchemy()
 
+# Tabla de relación entre Movie y Actor
+movie_actor = db.Table('movie_actor',
+    db.Column('movie_id', db.Integer, db.ForeignKey('movie.id'), primary_key=True),
+    db.Column('actor_id', db.Integer, db.ForeignKey('actor.id'), primary_key=True)
+)
+
+# Tabla de relación entre Movie y Director
+movie_director = db.Table('movie_director',
+    db.Column('movie_id', db.Integer, db.ForeignKey('movie.id'), primary_key=True),
+    db.Column('director_id', db.Integer, db.ForeignKey('director.id'), primary_key=True)
+)
+
+# Tabla de relación entre Movie y Genres
+movie_genres_association = db.Table('movie_genres',
+    db.Column('movie_id', db.Integer, db.ForeignKey('movie.id')),
+    db.Column('genre_id', db.Integer, db.ForeignKey('genre.id'))
+)
+
+class Genre(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(50))
+
+    def __repr__(self):
+        return f'<Genre {self.id} {self.name}>'
+
+    def serialize (self):
+        return {
+        "id": self.id,
+        "name": self.name,
+        }
+
+
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(30), nullable=True)
@@ -12,7 +44,6 @@ class User(db.Model):
     is_active = db.Column(db.Boolean(), unique=False, nullable=False)
     secret_question = db.Column(db.String(100), unique=False, nullable=False)
     secret_answer = db.Column(db.String(100), unique=False, nullable=False)
-    
 
     def __repr__(self):
         return f'<User {self.email}>'
@@ -28,14 +59,17 @@ class Movie(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(180))
     description = db.Column(db.Text)
-    ranking = db.Column(db.Integer)
-    # Relación con la tabla Actor
-    actors = relationship('Actor', secondary='movie_actor')
+    ranking = db.Column(db.Float)  # Puede representar números con decimales
     image = db.Column(db.String(180))
+    trailer_key = db.Column(db.String(180))
+    trailer_type = db.Column(db.String(50))
+    trailer_id = db.Column(db.String(180))
 
+    # Relación con la tabla Actor
+    actors = db.relationship('Actor', secondary='movie_actor')
     # Relación con la tabla Director
-    directors = relationship('Director', secondary='movie_director')    
-
+    directors = db.relationship('Director', secondary='movie_director')
+    genres = db.relationship('Genre', secondary=movie_genres_association, backref='movie')
 
     def __repr__(self):
         return f'<Movie {self.id} {self.name}>'
@@ -48,15 +82,24 @@ class Movie(db.Model):
             "ranking": self.ranking,
             "actors": [actor.serialize() for actor in self.actors],  # Serializar los actores asociados
             "directors": [director.serialize() for director in self.directors],  # Serializar los directores asociados
-            "image" :self.image,
+            "image": self.image,
+            "trailer_key": self.trailer_key,
+            "trailer_type": self.trailer_type,
+            "trailer_id": self.trailer_id,
+            "genres": [genre.serialize() for genre in self.genres], 
         }
 
 class Actor(db.Model):
     id = db.Column(db.Integer, primary_key= True)
     name = db.Column(db.String(80))
-    description = db.Column(db.String(800))
-    other_movies = db.Column(db.String(200))
-    
+    known_for_department = db.Column(db.String(80))
+    character = db.Column(db.String(200))
+    profile_path  = db.Column(db.String(200))
+    biography = db.Column(db.Text)  # Text porque una biografía puede ser larga
+    birthday = db.Column(db.Date)  # Usamos Date si es una fecha sin tiempo
+    deathday = db.Column(db.Date, nullable=True)  # Puede ser None, por lo que nullable=True
+    place_of_birth = db.Column(db.String(200))
+
     def __repr__(self):
         return f'<Actor {self.id} {self.name}>'
 
@@ -64,8 +107,14 @@ class Actor(db.Model):
         return {
         "id": self.id,
         "name": self.name,
-        "description": self.description,
-        "other_movies": self.other_movies, 
+        "known_for_department": self.known_for_department,
+        "character": self.character, 
+        "profile_path": self.profile_path,
+        "biography": self.biography, 
+        "birthday": self.birthday, 
+        "deathday":  self.deathday, 
+        "place_of_birth": self.place_of_birth, 
+
         }
 
 class Director(db.Model):
@@ -84,18 +133,11 @@ class Director(db.Model):
         "description": self.description,
         "other_movies": self.other_movies, 
         }
-    
-# Tabla de relación entre Movie y Actor
-movie_actor = db.Table('movie_actor',
-    db.Column('movie_id', db.Integer, db.ForeignKey('movie.id'), primary_key=True),
-    db.Column('actor_id', db.Integer, db.ForeignKey('actor.id'), primary_key=True)
-)
 
-# Tabla de relación entre Movie y Director
-movie_director = db.Table('movie_director',
-    db.Column('movie_id', db.Integer, db.ForeignKey('movie.id'), primary_key=True),
-    db.Column('director_id', db.Integer, db.ForeignKey('director.id'), primary_key=True)
-)
+
+    
+
+
     
 # faltara añadir series
 

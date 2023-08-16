@@ -2,101 +2,98 @@ import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../store/appContext";
 import "../../styles/Movie.css";
 import { useParams } from "react-router-dom";
-
+import no_trailer2 from "../../img/no_trailer2.png";
+import no_image from "../../img/no_image.png";
+import { Link } from 'react-router-dom';
 
 export const Movie = () => {
     const { store, actions } = useContext(Context);
-	const {movieId} = useParams();
+    const { movieId } = useParams();
     const [movie, setMovie] = useState(null);
-    const imageUrl = `https://image.tmdb.org/t/p/w500${movie?.image || "/path/to/default/image"}`;
- 
+    const imageUrl = movie?.image ? `https://image.tmdb.org/t/p/w500${movie?.image}` : no_image;
+    const trailerUrl = movie?.trailer_key    ? `https://www.youtube.com/embed/${movie.trailer_key}`    : null;
+
 
     useEffect(() => {
+        console.log("actions");
         actions.getMovieById(movieId).then(movie => {
-            setMovie(movie); 
+            console.log(movieId, movie);
+            setMovie(movie);
         });
     }, []);
-
-    console.log(movie)
-
 
     return (
         <div className="container">
             <div className="row">
-                <div className="col-md-6 mt-5">
+                <div className="col-md-6 mt-5 mb-3">
                     <h3>{movie?.name}</h3>
-                
-                    <h6>Harry Potter and the Philosopher's Stone</h6>
+
                 </div>
                 {/* <button className="mostrar-mas">Agregar a los favoritos</button> */}
             </div>
 
-            <div className="row align-items-center">
+            <div className="row">
                 <div className="col-md-2">
                     <div className="card mt-1">
-                        <img className="card-img-top" src={imageUrl} alt="Card image cap" />
+                        <img className="card-img-top" src={imageUrl} alt="Poster" />
                     </div>
                 </div>
-                <div className="col-md-5 d-flex flex-column">
+                <div className="col-md-4 d-flex flex-column top-aligned">
                     <div>
-                        <button className="gender">Cine de Aventura</button>
-                        <button className="gender">Fantasía</button>
+                         {movie?.genres?.map((genre, index) => (
+                             <button key={index} className="gender">{genre.name}</button>
+                            ))}
                         <i className="fa fa-star star-icon"></i>
-                        <span className="ranking">8</span>
+                        <span className="ranking">{movie?.ranking}/10</span>
                     </div>
-                    <div>
+                    <div className="description">
                         <p>{movie?.description}</p>
                     </div>
                 </div>
-                <div className="col-md-5 d-flex flex-column align-items-right">
-                    <div className="video-container">
-                        <iframe 
-                            width="560" 
-                            height="315" 
-                            src="https://www.youtube.com/embed/WE4AJuIvG1Y" 
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                            allowFullScreen>
-                        </iframe>
-                    </div>
+                <div className="col-md-6 d-flex flex-column align-items-right">
+                    {trailerUrl ? (
+                        <div className="video-container">
+                            <iframe
+                                width="640"
+                                height="360"
+                                src={trailerUrl} 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowFullScreen>
+                            </iframe>
+                        </div>
+                        ) : (
+                            <div className="image-container">
+                                 <img src={no_trailer2} alt="No trailer available" className="trailer-size" />
+                            </div>
+                        )}
                 </div>
             </div>
 
             <div className="container-crew">
-                <div className="d-flex justify-content-left title-container">
-                    <h5>Actores y Directores</h5>
-                    <button className="mostrar-mas">Mostrar más</button>
+                <div className="d-flex  align-items-center">
+                    <h4 className="act_direct">Actors and Directors</h4>
+                    <button className="mostrar-mas">Show more</button>
                 </div>
+                
 
                 <div className="row">
-                    
-                    <div className="col-md-2">
-                        <div className="card">
-                            <img className="card-img-top" src="https://m.media-amazon.com/images/M/MV5BZmE0NzNiNzQtYTVlYS00MjljLWE4MTgtYzYxNjU2NjZkM2M4XkEyXkFqcGdeQXVyNjY5NDgzNjQ@._V1_.jpg" alt="Daniel Radcliffe" />
+                    {movie?.actors?.map((actor) => (
+                        <div className="col-md-2" key={actor.id}>
+                            <Link to={`/actors/${actor.id}`}>
+                                <div className="card">
+                                    <img 
+                                        className="profile_path" 
+                                        src={actor.profile_path ? `https://image.tmdb.org/t/p/w185${actor.profile_path}` : no_image} 
+                                        alt={actor.name} />
+                                 </div>
+                                
+                                <p className="card-name">{actor.name}</p>
+                                <p className="card-character">{actor.character}</p>
+                            </Link>
                         </div>
-                        <p class="card-title">Daniel Radcliffe</p>
-                        <p class="card-detail">Harry Potter</p>
-                    </div>
-
-                    <div className="col-md-2">
-                        <div className="card">
-                            <img className="card-img-top" src="https://m.media-amazon.com/images/M/MV5BZmE0NzNiNzQtYTVlYS00MjljLWE4MTgtYzYxNjU2NjZkM2M4XkEyXkFqcGdeQXVyNjY5NDgzNjQ@._V1_.jpg" alt="Daniel Radcliffe" />
-                        </div>
-                        <p class="card-title">Daniel Radcliffe</p>
-                        <p class="card-detail">Harry Potter</p>
-                    </div>
-
-                    <div className="col-md-2">
-                        <div className="card">
-                            <img className="card-img-top" src="https://m.media-amazon.com/images/M/MV5BZmE0NzNiNzQtYTVlYS00MjljLWE4MTgtYzYxNjU2NjZkM2M4XkEyXkFqcGdeQXVyNjY5NDgzNjQ@._V1_.jpg" alt="Daniel Radcliffe" />
-                        </div>
-                        <p class="card-title">Daniel Radcliffe</p>
-                        <p class="card-detail">Harry Potter</p>
-                    </div>
-
-                    
+                    ))}
                 </div>
 
-              
 
 
 
