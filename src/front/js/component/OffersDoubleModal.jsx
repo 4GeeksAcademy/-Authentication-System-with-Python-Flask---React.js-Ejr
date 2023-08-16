@@ -96,7 +96,7 @@ const OffersDoubleModal = () => {
                 <div>
                     <div>
                         <Draggable>
-                            <button className="btn btn-primary floating-button" data-bs-toggle="modal" data-bs-target="#exampleModalToggle">
+                            <button className="btn floating-button" data-bs-toggle="modal" data-bs-target="#exampleModalToggle">
                                 Publica tu oferta
                             </button>
                         </Draggable>

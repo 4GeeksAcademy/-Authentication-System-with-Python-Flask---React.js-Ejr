@@ -19,8 +19,8 @@ const HomeOfferCard = () => {
                 {store.offers
                     .slice(0, 3)
                     .map((offer) =>
-                        <Link className='link' to={`/offer/${offer.id}`}>
                         <div key={offer.id} className=" card-home-offer text-grey"  >  
+                                <Link to={`/offer/${offer.id}`}>
                                 <img src={offer.offer_image} className="" alt="..." ></img>
                                 <div className="card-home-text">
                                     <p>Actividades</p>
@@ -28,10 +28,11 @@ const HomeOfferCard = () => {
                                     <div className='home-price'>
                                         <p className="card-text">{offer.normal_user_price.toLocaleString()}$</p>
                                         <p className="card-text">{offer.premium_user_price.toLocaleString()}$</p>
+                                        <span style={{color: 'purple'}}>Ver actividad > </span>
                                     </div>
                                 </div>
+                                </Link>
                         </div>
-                        </Link>
                     )}
             </div>
         </div>
