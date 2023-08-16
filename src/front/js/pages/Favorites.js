@@ -13,15 +13,20 @@ const Favorites = () => {
   return (
     <>
       <SearchReview />
-
-      <div className='fav-offers text-center mt-5'>
-        <h3>Mis ofertas favoritas:</h3>
-        <AllFavoritesOffers searchQuery={searchQuery} />
-      </div>
-      <div className='fav-reviews mt-5 text-center mt-5'>
-        <h3>Mis reseñas favoritas:</h3>
-        <AllFavoritesReviews searchQuery={searchQuery} />
-      </div>
+      {store.favorites.length >= 1 ? (
+        <>
+          <div className='fav-offers text-center mt-5'>
+            <h3>Mis ofertas favoritas:</h3>
+            <AllFavoritesOffers searchQuery={searchQuery} />
+          </div>
+          <div className='fav-reviews mt-5 text-center mt-5'>
+            <h3>Mis reseñas favoritas:</h3>
+            <AllFavoritesReviews searchQuery={searchQuery} />
+          </div>
+        </>
+      ) : (
+        <h2 className='text-center mt-5'>No tienes ningún favorito todavía!!</h2>
+      )}
     </>
   );
 };

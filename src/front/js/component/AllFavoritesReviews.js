@@ -31,38 +31,44 @@ const AllFavoritesReviews = ({ searchQuery }) => {
               key={favorite.review_id?.id}
               className="card card-review text-white mt-4 container"
             >
-              <Link to={`/review/${favorite.review_id?.id}`} >
-                <img src={favorite.review_id?.review_image} className="card-img-top" alt="..."></img>
-              </Link>
-              <div className="div-title-review">
-                {editContentId === favorite.review_id?.id ? (
-                  <input
-                    type="text"
-                    value={editTitle}
-                    onChange={(e) => handleEditContent(e.target.value)}
-                  />
-                ) : (
-                  <h5 className="card-title title-review">{favorite.review_id?.title}</h5>
-                )}
+              <div className="img-review">
+                <Link to={`/review/${favorites.review_id?.id}`}>
+                  <img src={favorites.review_id?.review_image} className="card-img-top" alt="imagen de reseña" />
+                </Link>
               </div>
-              {editContentId === favorite.review_id?.id ? (
-                <>
-                  <div className="comment-review">
-                    <textarea
-                      autoFocus={true}
-                      value={editContent}
+              <div className='content-title-comment'>
+                <div className="div-title-review">
+                  {editContentId === favorite.review_id?.id ? (
+                    <input
+                      type="text"
+                      value={editTitle}
                       onChange={(e) => handleEditContent(e.target.value)}
-                      rows="7"
-                      cols="38"
-                      maxLength="300"
-                      style={{ resize: "none" }}
-                    ></textarea>
-                  </div>
-                  <button onClick={() => handleSave(favorite.review_id?.id)}>Validar</button>
-                </>
-              ) : (
-                <p className="card-text">{favorite.review_id?.comment_text}</p>
-              )}
+                    />
+                  ) : (
+                    <h5 className="card-title title-review">{favorite.review_id?.title}</h5>
+                  )}
+                </div>
+                <div className='comment-review'>
+                  {editContentId === favorite.review_id?.id ? (
+                    <>
+                      <div className="comment-review">
+                        <textarea
+                          autoFocus={true}
+                          value={editContent}
+                          onChange={(e) => handleEditContent(e.target.value)}
+                          rows="7"
+                          cols="38"
+                          maxLength="300"
+                          style={{ resize: "none" }}
+                        ></textarea>
+                      </div>
+                      <button onClick={() => handleSave(favorite.review_id?.id)}>Validar</button>
+                    </>
+                  ) : (
+                    <p className="card-text">{favorite.review_id?.comment_text}</p>
+                  )}
+                </div>
+              </div>
               {store.user.id === favorite.user_id && (
                 <div className="btn-options d-flex justify-content-end">
                   <button
