@@ -67,10 +67,6 @@ export const SignIn = () => {
                     <option value="Your mother's last name">What is your mother's maiden name?</option>
                     <option value="Your favorite sport">What is your favorite sport?</option>
                 </select>
-                {/* <label>
-
-                  <input type="text" name="secret_question" onChange={handleChange} value={user.secret_question} placeholder="Pregunta Secreta" required />
-                   </label> */}
                 <div id="label">
                     <input type="text" name="secret_answer" onChange={handleChange} value={user.secret_answer} placeholder="Respuesta Secreta" required />
                 </div>
