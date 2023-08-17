@@ -15,15 +15,13 @@ const PaymentOptions = () => {
   return (
     <div className="content-offer-details">
       <div className="offer-payment">
-        <h2>Un paso más <span>{store.user.username}</span> y este viaje es tuyo  🥳🥳🥳🥳</h2>
+        <h2>Un paso más <span><b>{store.user.username}</b> </span> y este viaje es tuyo</h2>
 
 
       </div>
       <div className='btn-payment-content'>
-        <h2>Opciones de Pago:</h2>
         <div className="btn-payment">
           <div className="btn-paypal">
-            <h3>PayPal:</h3>
             <PaypalCheckoutButton product={product} />
           </div>
         </div>

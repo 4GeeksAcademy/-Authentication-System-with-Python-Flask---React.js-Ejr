@@ -24,6 +24,24 @@
 }
 
 
+.btn-op-offer {
+    padding: 4px;
+    border-radius: 5px;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.btn-up-offer {
+    background: var(--color-3);
+    right: 2rem;
+}
+
+.btn-delete-offer {
+    background: var(--color-5);
+    right: .2rem;
+}
+
 .div-title-review {
     backdrop-filter: 10px;
     height: 50px;
@@ -71,13 +89,31 @@
     font-size: 16px;
     /* z-index: 1000; */
     transform: translateY(50%);
-    border: 1px solid #fff;
+    border: 1px solid white;
     transition: background-color 0.3s ease, transform 0.2s ease;
+
+    z-index: 50;
+}
     margin-left: 2rem;
 
+
+.fav-offer-span {
+    position: absolute;
+    border-radius: 50%;
+    background-color: white;
+    width: 1.8rem;
+    height: 1.8rem;
+    text-align: center;
+    z-index: 2;
+    padding-top: .1rem;
+    bottom: -.9rem;
+    z-index: 1;
+    right: 46%;
+    cursor: pointer;
+    transition: transform 0.3s ease;
 }
 
-.btn-buy:hover{
+.btn-buy:hover {
     background-color: #ffc439;
     /* Cambia el color de fondo al hacer hover */
     cursor: pointer;
@@ -113,8 +149,8 @@
 
 }
 
-.btn-details:hover{
-    background-color:  #0486db;
+.btn-details:hover {
+    background-color: #0486db;
     /* Cambia el color de fondo al hacer hover */
     cursor: pointer;
     /* Cambia el cursor a una mano cerrada */

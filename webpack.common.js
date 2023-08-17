@@ -40,7 +40,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      favicon: '4geeks.ico',
+      favicon: './trip-nexus-logo.png',
       template: 'template.html'
     }),
     new Dotenv({ safe: true, systemvars: true })

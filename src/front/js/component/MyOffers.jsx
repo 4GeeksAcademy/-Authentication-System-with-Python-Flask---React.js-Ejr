@@ -92,15 +92,15 @@ const MyOffers = ({ searchQuery }) => {
                                 </div>
                                 {store.business_user.id === business_offer.business_id.id &&
                                     // || store.user.is_admin 
-                                    <div className="btn-options d-flex justify-content-end">
+                                    <div className="btn-options btn-op-offer-div  d-flex justify-content-end">
                                         <button
-                                            className="btn-up-review"
+                                            className="btn-op-offer btn-up-offer"
                                             onClick={() => handleUpdate(business_offer.id)}
                                         >
                                             &#9998;
                                         </button>
                                         <button
-                                            className="btn-delete-review"
+                                            className=" btn-op-offer btn-delete-offer"
                                             onClick={() => handleDelete(business_offer.id)}
                                         >
                                             &#10008;

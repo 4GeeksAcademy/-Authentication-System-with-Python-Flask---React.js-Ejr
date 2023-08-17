@@ -9,7 +9,7 @@
   overflow: hidden;
   overflow-x: auto;
   position: relative;
-  
+
 }
 
 
@@ -41,9 +41,11 @@
   justify-content: end;
 }
 
+
 .card-transition-review:hover {
   transform: translateY(-10px) scale(1.05); /* Desplazamiento hacia arriba y aumento de escala */
   /* box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);  */
+
 
 
 }
@@ -55,9 +57,12 @@
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0);
-  transition: background-color 0.3s ease; /* Transición de opacidad */
-  pointer-events: none; /* Evitar que interfiera con los elementos internos */
+  transition: background-color 0.3s ease;
+  /* Transición de opacidad */
+  pointer-events: none;
+  /* Evitar que interfiera con los elementos internos */
 }
+
 
 .homeReviewCard:hover::before {
   background-color: rgba(0, 0, 0, 0.1); /* Color con opacidad al pasar el cursor */
@@ -149,6 +154,6 @@
 }
 
 .fav-home-review:hover {
-  transform: scale(1.1); /* Escala un 10% más grande al pasar el cursor */
+  transform: scale(1);
+  /* Escala un 10% más grande al pasar el cursor */
 }
-
