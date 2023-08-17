@@ -5,6 +5,7 @@ import * as Yup from 'yup';
 import axios from 'axios';
 import ImagePreview from './ImagePreview.jsx';
 import Draggable from 'react-draggable';
+import Swal from 'sweetalert2';
 
 
 const OffersDoubleModal = () => {
@@ -84,15 +85,29 @@ const OffersDoubleModal = () => {
 
                     await actions.createOffer({ ...values, offer_image: imgUrl });
 
-                    // console.log("Form submitted successfully!");
-                    alert('Tu oferta se publicó correctamente');
+
+                    //console.log("Form submitted successfully!");
+                    Swal.fire({
+                        title: "¡Oferta publicada!",
+                        text: "Tu oferta se publicó correctamente",
+                        icon: "success",
+                        timer: 2000
+                    });
+
                     setStatus({ success: true });
                     setSelectedFile(null);
-                    window.location.reload();
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 2000);
 
                 } catch (error) {
                     console.error("Error submitting form:", error);
-                    alert("Alguna cosa salió mal");
+                    Swal.fire({
+                        title: "Error",
+                        text: "Algo salió mal.",
+                        icon: "error",
+                        timer: 2000
+                    });
                     setStatus({ error: true });
                 } finally {
                     setSubmitting(false);
@@ -143,8 +158,10 @@ const OffersDoubleModal = () => {
                                                             <option value="" label="Selecciona una ciudad" />
                                                             {store.trip && store.trip.length >= 1 && store.trip.map((city) => (
                                                                 city.country === formik.values.country && (
+
                                                                     <React.Fragment key={`${city.country}-${city.city}`}>
                                                                         <option value={city?.city}>
+
                                                                             {city?.city}
                                                                         </option>
                                                                         <option value={city?.city2}>

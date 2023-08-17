@@ -2,12 +2,21 @@ import React, { useContext, useState, useEffect } from "react";
 import LogIn from '../pages/LogIn.jsx';
 import { Link } from 'react-router-dom';
 import { Context } from "../store/appContext";
+import Swal from "sweetalert2";
 const Navbar = () => {
   const { store, actions } = useContext(Context);
   function handleLogout() {
-    alert('Cerraste sesión. Esperamos verte pronto!');
-    actions.logout();
-    window.location.href = '/';
+    Swal.fire({
+      title: 'Cerraste sesión.',
+      text: 'Esperamos verte pronto!',
+      icon: 'info',
+      timer: 5000
+    });
+
+    setTimeout(() => {
+      actions.logout();
+      window.location.href = '/';
+    }, 2000);
   }
   return (
     <nav className="navbar container-fluid navbar-expand navbar-light">
