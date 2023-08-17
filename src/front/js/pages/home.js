@@ -34,7 +34,7 @@ export const Home = () => {
 
       <LitlleSlide />
       <FilterMenu />
-      <PubSlide />
+      {/* <PubSlide /> */}
       <HomeOfferCard />
       <HomeReviewCard />
       <GeneralInfoDiv />

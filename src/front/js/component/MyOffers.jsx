@@ -87,7 +87,7 @@ const MyOffers = ({ searchQuery }) => {
 
                                         </div>
                                     ) : (
-                                        <p className="card-text price-user">Precio premium : <span className='price'>{business_offer.premium_user_price.toLocaleString()}$</span></p>
+                                        <p className="card-text price-user"><u>Precio premium : <span className='price'>{business_offer.premium_user_price.toLocaleString()}$</span></u></p>
                                     )}
                                 </div>
                                 {store.business_user.id === business_offer.business_id.id &&
@@ -106,19 +106,10 @@ const MyOffers = ({ searchQuery }) => {
                                             &#10008;
                                         </button>
                                     </div>
-
                                 }
 
-                                {/* <GooglePayButton
-                    normalUserPrice={business_offer.normal_user_price}
-                    premiumUserPrice={business_offer.premium_user_price}
-                  /> */}
-                                {/* <Link to='/opciones-de-pago'>
-                                    <button className='btn-buy'>Comprar</button>
-                                </Link> */}
-
                                 <Link to={`/offer/${business_offer.id}`}>
-                                    <button className='btn-buy'>Ver más</button>
+                                    <button className='btn-details'>Detalles</button>
                                 </Link>
 
                             </div>

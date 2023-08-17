@@ -95,7 +95,7 @@ const AllFavoritesOffers = ({ searchQuery }) => {
 
                                         </div>
                                     ) : (
-                                        <p className="card-text price-user">Precio premium : <span className='price'>{favorite?.offer_id?.premium_user_price.toLocaleString()}$</span></p>
+                                        <p className="card-text price-user"><u>Precio premium : <span className='price'>{favorite?.offer_id?.premium_user_price.toLocaleString()}$</span></u></p>
                                     )}
                                 </div>
                                 {store.business_user.id === favorite?.offer_id?.business_id.id &&
@@ -126,7 +126,7 @@ const AllFavoritesOffers = ({ searchQuery }) => {
                                     <Link to='/opciones-de-pago'>
                                         <button className='btn-buy'>Comprar</button>
                                     </Link>
-                                    <FavoriteOffer offerId={favorite?.offer_id?.id} />
+                                    <span><FavoriteOffer offerId={favorite?.offer_id?.id} /></span> 
 
 
                                 </>

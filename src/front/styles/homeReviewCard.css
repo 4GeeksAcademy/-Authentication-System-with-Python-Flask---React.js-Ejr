@@ -3,9 +3,9 @@
   flex-wrap: nowrap;
   justify-content: space-between;
   width: 85%;
-  height: 15rem;
-  margin: 20px auto;
-  padding: .5rem 0 0;
+  /* height: 15rem; */
+  margin: 0 auto;
+  /* padding: .5rem 0 0; */
   overflow: hidden;
   overflow-x: auto;
   position: relative;
@@ -23,19 +23,31 @@
   height: 13rem;
   width: 23rem;
   background-color: #fff;
+  flex-direction: row;
+  border-radius: 2%;
   margin: 0 20px;
   border-radius: 5px;
   position: relative;
+  /* transition: transform 0.3s ease, box-shadow 0.3s ease; */
+  margin-left: auto;
+}
+
+.card-transition-review{
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-
+  height: 16rem;
+  width: 25rem;
+  display: flex;
+  align-items: end;
+  justify-content: end;
 }
 
-.card-home-review:hover {
+.card-transition-review:hover {
   transform: translateY(-10px) scale(1.05); /* Desplazamiento hacia arriba y aumento de escala */
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3); /* Efecto de sombra */
-}
+  /* box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);  */
 
-.card-home-review::before {
+
+}
+.card-transition-review::before {
   content: "";
   position: absolute;
   top: 0;
@@ -47,10 +59,16 @@
   pointer-events: none; /* Evitar que interfiera con los elementos internos */
 }
 
-.card-home-review:hover::before {
+.homeReviewCard:hover::before {
   background-color: rgba(0, 0, 0, 0.1); /* Color con opacidad al pasar el cursor */
+  
 }
 
+
+.card-home-offer:hover {
+  background-color: rgba(0, 0, 0, 0.1); /* Color con opacidad al pasar el cursor */
+  z-index: 2;
+}
 
 
 .content-link a {
