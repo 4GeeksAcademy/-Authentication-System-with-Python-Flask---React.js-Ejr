@@ -15,7 +15,7 @@ const SingleReviewView = () => {
       setReview(await actions.getReviewById(params.review_id));
     }
     loadData()
-    console.log("Fetch for all reviews in single review view is working");
+    // console.log("Fetch for all reviews in single review view is working");
   }, []);
   return (
     <div className='content-single-review card-review'>

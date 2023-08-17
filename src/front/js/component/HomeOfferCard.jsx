@@ -5,7 +5,7 @@ const HomeOfferCard = () => {
     const { store, actions } = useContext(Context);
     useEffect(() => {
         actions.getAllOffers();
-        console.log("Fetch for all offers is working")
+        // console.log("Fetch for all offers is working")
     }, []);
     return (
         <div>

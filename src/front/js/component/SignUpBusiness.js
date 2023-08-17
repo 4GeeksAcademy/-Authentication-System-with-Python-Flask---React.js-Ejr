@@ -59,10 +59,10 @@ const SignUpBusiness = () => {
           .oneOf([true], 'Debes aceptar los términos y condiciones para registrarte'),
       })}
       onSubmit={(values, { setSubmitting }) => {
-        console.log("Form submitted:", values);
+        // console.log("Form submitted:", values);
         actions.signupBusiness(values)
           .then(() => {
-            console.log("Form submitted successfully!");
+            // console.log("Form submitted successfully!");
             alert("Tu registro fue todo un éxito!!! Revisa tu correo electrónico.");
             navigate("/reviews");
           })

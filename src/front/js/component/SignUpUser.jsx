@@ -78,12 +78,12 @@ const SignUpUser = () => {
 
       onSubmit={(values, { setSubmitting }) => {
         // Call your async submit function here (You can also use your handleSubmit function)
-        console.log("Form submitted:", values);
+        // console.log("Form submitted:", values);
 
         actions.signupUser(values)
           .then(() => {
             // Handle successful submission
-            console.log("Form submitted successfully!");
+            // console.log("Form submitted successfully!");
             alert("Tu registro fue todo un éxito!!! Revisa tu correo electrónico.");
             navigate("/business_offers");
           })

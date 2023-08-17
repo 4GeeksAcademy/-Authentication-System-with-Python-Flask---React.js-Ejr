@@ -23,7 +23,7 @@ const LogIn = () => {
       onSubmit={async (values, { setSubmitting }) => {
         try {
           let isLogged = await actions.login(values.email, values.password);
-          console.log("is Logged:", isLogged);
+          // console.log("is Logged:", isLogged);
           if (isLogged) {
             // Connexion réussie
             alert("Bienvenid@ de nuevo!");

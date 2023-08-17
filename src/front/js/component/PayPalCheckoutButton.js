@@ -52,13 +52,13 @@ const PaypalCheckoutButton = (props) => {
           }}
           onApprove={async (data, action) => {
             const order = await action.order.capture();
-            console.log("order", order);
+            // console.log("order", order);
             handleApprove(data.orderID);
           }}
           onCancel={() => { }}
           onError={(err) => {
             setError(err);
-            console.log("PayPal Checkout onError", err);
+            // console.log("PayPal Checkout onError", err);
           }}
         />
       </div>

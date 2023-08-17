@@ -34,7 +34,7 @@ const BusinessUserPrivate = () => {
       const updateUser = await actions.updateBusinessUser(store.business_user.id, unsavedData);
 
       if (updateUser) {
-        console.log("User profile updated successfully");
+        // console.log("User profile updated successfully");
         // Mettre à jour les états de base pour refléter les modifications sauvegardées       
         setBusinessname(unsavedData.businessName);
         setEmail(unsavedData.email);
@@ -44,10 +44,10 @@ const BusinessUserPrivate = () => {
         setAddress(unsavedData.address);
         setPaymentMethod(unsavedData.paymentMethod);
       } else {
-        console.log("Failed to update user profile");
+        // console.log("Failed to update user profile");
       }
     } catch (error) {
-      console.log("Error updating User private:", error);
+      // console.log("Error updating User private:", error);
     }
   };
 
