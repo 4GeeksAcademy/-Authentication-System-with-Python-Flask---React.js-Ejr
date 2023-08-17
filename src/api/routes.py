@@ -528,9 +528,17 @@ def get_review(review_id):
     return jsonify(review=review.serialize()), 200
 
 
-@api.route('/review', methods=['POST'])
+@api.route('/offer/<int:offer_id>/reviews/', methods=['GET'])
+def get_offer_reviews(offer_id):
+    reviews = Review.query.filter_by(offer_id=offer_id).all()
+    if len(reviews) <1:
+        return jsonify({"message": "No reviews for this offer"}), 404
+    serialized_reviews = [review.serialize() for review in reviews]
+    return jsonify(serialized_reviews), 200
+
+@api.route('/offer/<int:offer_id>/reviews/', methods=['POST'])
 @jwt_required()
-def create_review():
+def create_review(offer_id):
     data = request.get_json()
     current_user = get_jwt_identity()
     user = User.query.filter_by(email=current_user).first()
@@ -539,18 +547,43 @@ def create_review():
     try:
         review = Review(
             user_id=user.id,
-            offer_id=data['offer_id'],
+            offer_id=offer_id,
             title=data['title'],
             comment_text=data['comment_text'],
             review_image=data['review_image'],
-            country=data['country'],
-            city=data['city'],
+            country = data['country'],
+            city = data['city'],
         )
         db.session.add(review)
         db.session.commit()
         return jsonify(review.serialize()), 201
     except KeyError:
         return jsonify({"message": "Invalid data provided"}), 400
+
+
+# @api.route('/review', methods=['POST'])
+# @jwt_required()
+# def create_review():
+#     data = request.get_json()
+#     current_user = get_jwt_identity()
+#     user = User.query.filter_by(email=current_user).first()
+#     print(current_user)
+#     print(data)
+#     try:
+#         review = Review(
+#             user_id=user.id,
+#             offer_id=data['offer_id'],
+#             title=data['title'],
+#             comment_text=data['comment_text'],
+#             review_image=data['review_image'],
+#             country=data['country'],
+#             city=data['city'],
+#         )
+#         db.session.add(review)
+#         db.session.commit()
+#         return jsonify(review.serialize()), 201
+#     except KeyError:
+#         return jsonify({"message": "Invalid data provided"}), 400
 
 
 @api.route('/review/<int:review_id>', methods=['PUT'])

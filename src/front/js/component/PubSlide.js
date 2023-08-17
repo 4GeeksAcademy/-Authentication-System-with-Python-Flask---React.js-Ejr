@@ -30,7 +30,7 @@ const PubSlide = () => {
             aria-label="Slide 3"
           ></button>
         </div>
-        <div className="carousel-inner">
+        <div className="inner">
           <div className="carousel-item active">
             <img
               src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/Cidade_Maravilhosa.jpg/800px-Cidade_Maravilhosa.jpg"
@@ -40,12 +40,11 @@ const PubSlide = () => {
             <div className="carousel-caption d-md-block">
               <h2 className="title-slide">Brasil</h2>
               <p className="trip-desc">
-                Come relax on the beaches of Brazil or dance to the rhythm of
-                the waves
+                Ven a relajarte en las playas de Brasil y bailar al ritmo de las olas.
               </p>
-              <span className="normal-price">Normal Price: 1 200.00$</span>
+              <span className="normal-price">Precio normal:: 1 200.00$</span>
               <br />
-              <span className="prenium-price">Premium Price: 1 000.00$</span>
+              <span className="prenium-price">Precio premium: 1 000.00$</span>
             </div>
           </div>
           <div className="carousel-item">
@@ -57,12 +56,11 @@ const PubSlide = () => {
             <div className="carousel-caption d-md-block">
               <h2 className="title-slide">Peru</h2>
               <p className="trip-desc">
-                Come and discover the mysteries of the Inca civilization and the
-                immeasurable beauty of the Peruvian land
+                Ven a descubrir los misterios del Imperio Inca y la belleza de sus montañas y paisajes.
               </p>
-              <span className="normal-price">Normal Price: 1 200.00$</span>
+              <span className="normal-price">Precio normal: 1 200.00$</span>
               <br />
-              <span className="prenium-price">Prenium Price: 1 000.00$</span>
+              <span className="prenium-price">Precio premium: 1 000.00$</span>
             </div>
           </div>
           <div className="carousel-item">
@@ -74,11 +72,11 @@ const PubSlide = () => {
             <div className="carousel-caption d-md-block">
               <h2 className="title-slide">Colombia</h2>
               <p className="trip-desc">
-                Some representative placeholder content for the third slide.
+                Descubre las bellezas de Colombia y sus paisajes.
               </p>
-              <span className="normal-price">Normal Price: 1 200.00$</span>
+              <span className="normal-price">Precio normal: 1 200.00$</span>
               <br />
-              <span className="prenium-price">Prenium Price: 1 000.00$</span>
+              <span className="prenium-price">Precio premium: 1 000.00$</span>
             </div>
           </div>
         </div>
