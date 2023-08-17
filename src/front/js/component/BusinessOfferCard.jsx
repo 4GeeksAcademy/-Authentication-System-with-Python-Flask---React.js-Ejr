@@ -25,7 +25,7 @@ const BusinessOfferCard = ({ searchQuery }) => {
           return (
             <div
               key={business_offer.id}
-              className="card card-offer text-grey mb-3 mt-4">
+              className="card card-offer mb-3 mt-4">
               <Link to={`/offer/${business_offer.id}`}>
                 <img src={business_offer.offer_image} className="card-img-top" alt="..."></img>
               </Link>
@@ -43,8 +43,8 @@ const BusinessOfferCard = ({ searchQuery }) => {
                   )}
                 </div>
                 <div className='infos-country'>
-                  <p className="card-text country-offer">País: {business_offer.country}</p>
-                  <p className="card-text city-offer">Ciudad: {business_offer.city}</p>
+                  <p className="card-text country-offer">País:{business_offer.country}</p>
+                  <p className="card-text city-offer">Ciudad:{business_offer.city}</p>
                 </div>
                 {editContentId === business_offer.id ? (
                   <div className="comment-review">
@@ -85,7 +85,7 @@ const BusinessOfferCard = ({ searchQuery }) => {
 
                     </div>
                   ) : (
-                    <p className="card-text price-user">Precio premium : <span className='price'>{business_offer.premium_user_price.toLocaleString()}$</span></p>
+                    <p className="card-text price-user"><u>Precio premium : <span className='price'>{business_offer.premium_user_price.toLocaleString()}$</span></u></p>
                   )}
                 </div>
 
@@ -112,11 +112,10 @@ const BusinessOfferCard = ({ searchQuery }) => {
                     <button className='btn-details'>Detalles</button>
                   </Link>
                 {store.user.username && <>
-                  <FavoriteOffer offerId={business_offer.id} />
-
                   <Link to={`/offer/${business_offer.id}`}>
-                    <button className='btn-buy'>Publica tu reseña</button>
+                    <button className='btn-publish-review'>Publica tu reseña</button>
                   </Link>
+                  <span><FavoriteOffer offerId={business_offer.id} /></span>
                 </>
                 }
 

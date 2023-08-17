@@ -30,7 +30,7 @@
 }
 
 .prenium-price {
-  color: rgb(0, 255, 42);
+  color: black;
 }
 
 @media (min-width: 520px) {
@@ -41,16 +41,16 @@
 
 @media (min-width: 720px) {
 
-  .carousel-inner {
-    height: 20rem;
+  .inner {
+    height: 35rem;
   }
 
   .pub-slide {
-    height: 20rem;
+    height: 35rem;
   }
 
   .pub-slide img {
-    height: 20rem;
+    height: 35rem;
   }
 
   .trip-desc {

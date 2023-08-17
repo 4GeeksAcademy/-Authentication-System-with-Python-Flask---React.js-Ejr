@@ -28,7 +28,7 @@ const FavoriteReview = ({ offerId }) => {
   };
 
   return (
-    <div>
+    <div className="heart">
       {!isFavorite ? (
         <span style={{ cursor: 'pointer' }} onClick={handleAddToFavorite}>
           <FontAwesomeIcon icon={faHeart} size="lg" />
