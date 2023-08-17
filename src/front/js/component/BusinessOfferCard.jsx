@@ -108,11 +108,18 @@ const BusinessOfferCard = ({ searchQuery }) => {
 
                   </div>
                 }
-                                  <Link to={`/offer/${business_offer.id}`}>
-                    <button className='btn-details'>Detalles</button>
-                  </Link>
+                <Link to={`/offer/${business_offer.id}`}>
+                  <button className='btn-details'>Detalles</button>
+                </Link>
                 {store.user.username && <>
-                  <FavoriteOffer offerId={business_offer.id} />
+
+                  <div className="fav-offer-div">
+                    <div className="fav-offer-container">
+                      <span className="fav-offer-span">
+                        <FavoriteOffer offerId={business_offer.id} />
+                      </span>
+                    </div>
+                  </div>
 
                   <Link to={`/offer/${business_offer.id}`}>
                     <button className='btn-buy'>Publica tu reseña</button>

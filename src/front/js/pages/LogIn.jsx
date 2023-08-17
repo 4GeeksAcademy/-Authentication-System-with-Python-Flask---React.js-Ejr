@@ -28,7 +28,7 @@ const LogIn = () => {
           if (isLogged) {
             // Connexion réussie
             Swal.fire({
-              title: "Bienvenid@ de nuevo!",
+              title: `Bienvenid@ de nuevo, ${store.user.username}!`,
               text: "",
               icon: 'info',
               time: 2000
