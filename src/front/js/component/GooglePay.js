@@ -41,15 +41,15 @@ const GooglePay = () => {
           callbackIntents: ['SHIPPING_ADDRESS', 'PAYMENT_AUTHORIZATION'],
         }}
         onLoadPaymentData={paymentRequest => {
-          console.log('Success', paymentRequest);
+          // console.log('Success', paymentRequest);
         }}
         onPaymentAuthorized={paymentData => {
-          console.log('Payment Authorised Success', paymentData)
+          // console.log('Payment Authorised Success', paymentData)
           return { transactionState: 'SUCCESS' }
         }
         }
         onPaymentDataChanged={paymentData => {
-          console.log('On Payment Data Changed', paymentData)
+          // console.log('On Payment Data Changed', paymentData)
           return {}
         }
         }

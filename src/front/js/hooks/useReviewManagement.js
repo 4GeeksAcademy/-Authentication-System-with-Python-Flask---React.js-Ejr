@@ -11,7 +11,7 @@ const useReviewManagement = () => {
     actions.getReviews();
     if (store.favorites && store.favorites.length >= 1) {
       actions.getFavoriteReview()
-      console.log("Success fetch for CardsReview");
+      // console.log("Success fetch for CardsReview");
     }
   }, []);
 

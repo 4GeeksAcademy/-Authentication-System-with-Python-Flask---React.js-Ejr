@@ -29,13 +29,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 
           if (response.ok) {
             const res = await response.json();
-            console.log(res);
-            console.log("Todo perfecto");
+            //console.log(res);
+            //console.log("Todo perfecto");
             return response;
           }
           return false;
         } catch (err) {
-          console.log(err);
+          //console.log(err);
           return false; // Gérer les autres erreurs, renvoyer false par défaut
         }
       },
@@ -51,14 +51,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 
           if (response.ok) {
             const res = await response.json();
-            console.log(res);
-            console.log("Todo perfecto");
+            //console.log(res);
+            //console.log("Todo perfecto");
             return response;
           } else {
             return false;
           }
         } catch (err) {
-          console.log(err);
+          //console.log(err);
           return false;
         }
       },
@@ -78,7 +78,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
           if (response.ok) {
             const data = await response.json();
-            console.log(data);
+            //console.log(data);
             const store = getStore();
             setStore({ ...store, auth: true });
 
@@ -87,17 +87,17 @@ const getState = ({ getStore, getActions, setStore }) => {
             } else if (data.type === "business") {
               setStore({ ...store, business_user: data.user_or_business, user: {} });
               const store2 = getStore()
-              console.log('info store business user ', store2.business_user);
+              //console.log('info store business user ', store2.business_user);
             }
 
-            console.log("Clean data of response:", data.user_or_business);
+            //console.log("Clean data of response:", data.user_or_business);
             localStorage.setItem("myToken", data.access_token);
             return data;
           } else if (response.status === 401) {
             return false;
           }
         } catch (err) {
-          console.log(err);
+          //console.log(err);
           return false;
         }
       },
@@ -128,7 +128,7 @@ const getState = ({ getStore, getActions, setStore }) => {
               setStore({ auth: true });
             }
           } catch (error) {
-            console.log("No se pudo cargar: ", error);
+            //console.log("No se pudo cargar: ", error);
           }
         } else {
         }
@@ -149,16 +149,16 @@ const getState = ({ getStore, getActions, setStore }) => {
 
           if (response.ok) {
             const responseData = await response.json();
-            console.log('GET ALL USERS', responseData);
+            //console.log('GET ALL USERS', responseData);
             setStore({ users: responseData })
             return true;
           } else {
             // Handle other errors
-            console.log("Error in fetching users");
+            //console.log("Error in fetching users");
             return [];
           }
         } catch (err) {
-          console.log(err);
+          //console.log(err);
           return []; // Handle other errors, return an empty array by default
         }
       },
@@ -173,19 +173,19 @@ const getState = ({ getStore, getActions, setStore }) => {
 
           if (response.ok) {
             const responseData = await response.json();
-            console.log(responseData);
+            //console.log(responseData);
             setStore({ userById: responseData })
             return responseData;
           } else if (response.status === 404) {
-            console.log("User not found");
+            //console.log("User not found");
             return null;
           } else {
             // Handle other errors
-            console.log("Error in fetching user");
+            //console.log("Error in fetching user");
             return null;
           }
         } catch (err) {
-          console.log(err);
+          //console.log(err);
           return null; // Handle other errors, return null by default
         }
       },
@@ -194,7 +194,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         try {
           const token = localStorage.getItem("myToken");
           if (!token) {
-            console.log("Token not found");
+            //console.log("Token not found");
             return;
           }
 
@@ -225,16 +225,16 @@ const getState = ({ getStore, getActions, setStore }) => {
 
           if (response.ok) {
             const responseData = await response.json();
-            console.log('GET ALL BUSINESS', responseData);
+            //console.log('GET ALL BUSINESS', responseData);
             setStore({ business_users: responseData })
             return true;
           } else {
             // Handle other errors
-            console.log("Error in fetching business users");
+            //console.log("Error in fetching business users");
             return [];
           }
         } catch (err) {
-          console.log(err);
+          //console.log(err);
           return []; // Handle other errors, return an empty array by default
         }
       },
@@ -252,19 +252,19 @@ const getState = ({ getStore, getActions, setStore }) => {
 
           if (response.ok) {
             const responseData = await response.json();
-            console.log(responseData);
+            //console.log(responseData);
             return responseData;
           } else if (response.status === 404) {
             // Handle business user not found error
-            console.log("Business user not found");
+            //console.log("Business user not found");
             return null;
           } else {
             // Handle other errors
-            console.log("Error in fetching business user");
+            //console.log("Error in fetching business user");
             return null;
           }
         } catch (err) {
-          console.log(err);
+          //console.log(err);
         }
       },
 
@@ -272,7 +272,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         try {
           const token = localStorage.getItem("myToken");
           if (!token) {
-            console.log("Token not found");
+            //console.log("Token not found");
             return;
           }
 
@@ -299,7 +299,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         try {
           const token = localStorage.getItem("myToken");
           if (!token) {
-            console.log("Token not found");
+            //console.log("Token not found");
             return false;
           }
 
@@ -322,11 +322,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 
             return true;
           } else {
-            console.log("Failed to update user profile");
+            //console.log("Failed to update user profile");
             return false;
           }
         } catch (error) {
-          console.log("Fetch error after flux:", error);
+          //console.log("Fetch error after flux:", error);
           return false;
         }
       },
@@ -334,11 +334,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       // Fonction pour modifier le profil utilisateur
       updateUserProfile: async (userId, updatedData) => {
-        console.log(userId, updatedData);
+        //console.log(userId, updatedData);
         try {
           const token = localStorage.getItem("myToken");
           if (!token) {
-            console.log("Token not found");
+            //console.log("Token not found");
             return false;
           }
 
@@ -358,11 +358,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 
             return true;
           } else {
-            console.log("Failed to update user profile");
+            //console.log("Failed to update user profile");
             return false;
           }
         } catch (error) {
-          console.log("erreur fetch depuis Flux:", error);
+          //console.log("erreur fetch depuis Flux:", error);
           return false;
         }
       },
@@ -378,16 +378,16 @@ const getState = ({ getStore, getActions, setStore }) => {
 
           if (response.ok) {
             const responseData = await response.json();
-            console.log(responseData);
+            //console.log(responseData);
             setStore({ offers: responseData.offers });
             return responseData.offers;
           } else {
             // Handle other errors
-            console.log("Error in fetching offers");
+            //console.log("Error in fetching offers");
             return [];
           }
         } catch (err) {
-          console.log(err);
+          //console.log(err);
           return [];
         }
       },
@@ -402,23 +402,23 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
           });
 
-          console.log(response);
+          //console.log(response);
 
           if (response.ok) {
             const responseData = await response.json(); // Parse the response body as JSON
-            console.log(responseData.offer);
+            //console.log(responseData.offer);
             return responseData.offer;
           } else if (response.status === 404) {
             // Handle offer not found error
-            console.log("Offer not found");
+            //console.log("Offer not found");
             return null;
           } else {
             // Handle other errors
-            console.log("Error in fetching offer");
+            //console.log("Error in fetching offer");
             return null;
           }
         } catch (err) {
-          console.log(err);
+          //console.log(err);
           return null; // Handle other errors, return null by default
         }
       },
@@ -429,7 +429,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         try {
           const token = localStorage.getItem("myToken");
           if (!token) {
-            console.log("Token not found");
+            //console.log("Token not found");
             return false;
           }
 
@@ -444,7 +444,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
           if (response.ok) {
             const res = await response.json();
-            console.log(res);
+            //console.log(res);
             const actions = getActions();
 
             actions.getAllOffers();
@@ -453,7 +453,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             return false;
           }
         } catch (error) {
-          console.log(error);
+          //console.log(error);
           return false;
         }
       },
@@ -474,19 +474,19 @@ const getState = ({ getStore, getActions, setStore }) => {
 
           if (response.ok) {
             const responseData = await response.json();
-            console.log(responseData);
+            //console.log(responseData);
             return responseData;
           } else if (response.status === 404) {
             // Handle offer not found error
-            console.log("Offer not found");
+            //console.log("Offer not found");
             return null;
           } else {
             // Handle other errors
-            console.log("Error in updating offer");
+            //console.log("Error in updating offer");
             return false;
           }
         } catch (err) {
-          console.log(err);
+          //console.log(err);
           return false; // Handle other errors, return false by default
         }
       },
@@ -504,19 +504,19 @@ const getState = ({ getStore, getActions, setStore }) => {
           });
 
           if (response.ok) {
-            console.log("Offer deleted successfully");
+            //console.log("Offer deleted successfully");
             return true;
           } else if (response.status === 404) {
             // Handle offer not found error
-            console.log("Offer not found");
+            //console.log("Offer not found");
             return false;
           } else {
             // Handle other errors
-            console.log("Error in deleting offer");
+            //console.log("Error in deleting offer");
             return false;
           }
         } catch (err) {
-          console.log(err);
+          //console.log(err);
           return false; // Handle other errors, return false by default
         }
       },
@@ -531,17 +531,17 @@ const getState = ({ getStore, getActions, setStore }) => {
 
           if (response.ok) {
             const responseData = await response.json();
-            console.log("response data de GET ALL TRIPS:",responseData);
+            //console.log("response data de GET ALL TRIPS:",responseData);
             let store = getStore();
             setStore({...store, trip: responseData})
             return true
           } else {
             // Handle other errors
-            console.log("Error in fetching trips");
+            //console.log("Error in fetching trips");
             return [];
           }
         } catch (err) {
-          console.log(err);
+          //console.log(err);
           return []; // Handle other errors, return an empty array by default
         }
       },
@@ -556,19 +556,19 @@ const getState = ({ getStore, getActions, setStore }) => {
 
           if (response.ok) {
             const responseData = await response.json();
-            console.log(responseData);
+            //console.log(responseData);
             return responseData;
           } else if (response.status === 404) {
             // Handle trip not found error
-            console.log("Trip not found");
+            //console.log("Trip not found");
             return null;
           } else {
             // Handle other errors
-            console.log("Error in fetching trip");
+            //console.log("Error in fetching trip");
             return null;
           }
         } catch (err) {
-          console.log(err);
+          //console.log(err);
           return null; // Handle other errors, return null by default
         }
       },
@@ -588,15 +588,15 @@ const getState = ({ getStore, getActions, setStore }) => {
 
           if (response.ok) {
             const responseData = await response.json();
-            console.log(responseData);
+            //console.log(responseData);
             return responseData;
           } else {
             // Handle other errors
-            console.log("Error in creating trip");
+            //console.log("Error in creating trip");
             return false;
           }
         } catch (err) {
-          console.log(err);
+          //console.log(err);
           return false; // Handle other errors, return false by default
         }
       },
@@ -616,19 +616,19 @@ const getState = ({ getStore, getActions, setStore }) => {
 
           if (response.ok) {
             const responseData = await response.json();
-            console.log(responseData);
+            //console.log(responseData);
             return responseData;
           } else if (response.status === 404) {
             // Handle trip not found error
-            console.log("Trip not found");
+            //console.log("Trip not found");
             return null;
           } else {
             // Handle other errors
-            console.log("Error in updating trip");
+            //console.log("Error in updating trip");
             return false;
           }
         } catch (err) {
-          console.log(err);
+          //console.log(err);
           return false; // Handle other errors, return false by default
         }
       },
@@ -646,19 +646,19 @@ const getState = ({ getStore, getActions, setStore }) => {
           });
 
           if (response.ok) {
-            console.log("Trip deleted successfully");
+            //console.log("Trip deleted successfully");
             return true;
           } else if (response.status === 404) {
             // Handle trip not found error
-            console.log("Trip not found");
+            //console.log("Trip not found");
             return false;
           } else {
             // Handle other errors
-            console.log("Error in deleting trip");
+            //console.log("Error in deleting trip");
             return false;
           }
         } catch (err) {
-          console.log(err);
+          //console.log(err);
           return false; // Handle other errors, return false by default
         }
       },
@@ -679,19 +679,19 @@ const getState = ({ getStore, getActions, setStore }) => {
           );
 
           if (response.ok) {
-            console.log("User deleted successfully");
+            //console.log("User deleted successfully");
             return true;
           } else if (response.status === 404) {
             // Handle user not found error
-            console.log("User not found");
+            //console.log("User not found");
             return false;
           } else {
             // Handle other errors
-            console.log("Error in deleting user");
+            //console.log("Error in deleting user");
             return false;
           }
         } catch (err) {
-          console.log(err);
+          //console.log(err);
           return false; // Handle other errors, return false by default
         }
       },
@@ -713,19 +713,19 @@ const getState = ({ getStore, getActions, setStore }) => {
           );
 
           if (response.ok) {
-            console.log("Business user deleted successfully");
+            //console.log("Business user deleted successfully");
             return true;
           } else if (response.status === 404) {
             // Handle business user not found error
-            console.log("Business user not found");
+            //console.log("Business user not found");
             return false;
           } else {
             // Handle other errors
-            console.log("Error in deleting business user");
+            //console.log("Error in deleting business user");
             return false;
           }
         } catch (err) {
-          console.log(err);
+          //console.log(err);
           return false; // Handle other errors, return false by default
         }
       },
@@ -735,14 +735,14 @@ const getState = ({ getStore, getActions, setStore }) => {
           const response = await fetch(API_URL + "/api/review");
           if (response.ok) {
             const data = await response.json();
-            console.log("reviews:", data);
+            //console.log("reviews:", data);
             setStore({ reviews: data });
             return true;
           } else {
             return false;
           }
         } catch (error) {
-          console.log(error);
+          //console.log(error);
           return false;
         }
       },
@@ -755,23 +755,23 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
           });
 
-          console.log(response);
+          //console.log(response);
 
           if (response.ok) {
             const responseData = await response.json(); // Parse the response body as JSON
-            console.log(responseData.offer);
+            //console.log(responseData.offer);
             return responseData.review;
           } else if (response.status === 404) {
             // Handle offer not found error
-            console.log("Review not found");
+            //console.log("Review not found");
             return null;
           } else {
             // Handle other errors
-            console.log("Error in fetching review");
+            //console.log("Error in fetching review");
             return null;
           }
         } catch (err) {
-          console.log(err);
+          //console.log(err);
           return null; // Handle other errors, return null by default
         }
       },
@@ -780,7 +780,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         try {
           const token = localStorage.getItem("myToken");
           if (!token) {
-            console.log("Token not found");
+            //console.log("Token not found");
             return false;
           }
 
@@ -795,7 +795,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
           if (response.ok) {
             const res = await response.json();
-            console.log(res);
+            //console.log(res);
             const actions = getActions();
 
             actions.getReviews();
@@ -804,7 +804,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             return false;
           }
         } catch (error) {
-          console.log(error);
+          //console.log(error);
           return false;
         }
       },
@@ -813,7 +813,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         try {
           const token = localStorage.getItem("myToken");
           if (!token) {
-            console.log("Token not found");
+            //console.log("Token not found");
             return false;
           }
 
@@ -842,7 +842,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             return false;
           }
         } catch (error) {
-          console.log(error);
+          //console.log(error);
           return false;
         }
       },
@@ -850,7 +850,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         try {
           const token = localStorage.getItem("myToken");
           if (!token) {
-            console.log("Token not found");
+            //console.log("Token not found");
             return false;
           }
 
@@ -873,7 +873,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             return false;
           }
         } catch (error) {
-          console.log(error);
+          //console.log(error);
           return false;
         }
       },
@@ -888,7 +888,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             return null;
           }
         } catch (error) {
-          console.log(error);
+          //console.log(error);
           return null;
         }
       },
@@ -897,7 +897,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         try {
           const token = localStorage.getItem("myToken");
           if (!token) {
-            console.log("Token not found");
+            //console.log("Token not found");
             return false;
           }
 
@@ -919,7 +919,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             return false;
           }
         } catch (error) {
-          console.log(error);
+          //console.log(error);
           return false;
         }
       },
@@ -927,7 +927,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         try {
           const token = localStorage.getItem("myToken");
           if (!token) {
-            console.log("Token not found");
+            //console.log("Token not found");
             return false;
           }
 
@@ -938,11 +938,11 @@ const getState = ({ getStore, getActions, setStore }) => {
               Authorization: `Bearer ${token}`,
             },
           });
-          console.log(response);
+          //console.log(response);
 
           if (response.ok) {
             const data = await response.json();
-            console.log("GET DATA REVIEWS FAVORITES:", data);
+            //console.log("GET DATA REVIEWS FAVORITES:", data);
             const store = getStore()
             setStore({ ...store, favorites: data });
             return true;
@@ -950,7 +950,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             return null;
           }
         } catch (error) {
-          console.log(error);
+          //console.log(error);
           return null;
         }
       },
@@ -960,7 +960,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         try {
           const token = localStorage.getItem("myToken");
           if (!token) {
-            console.log("Token not found");
+            //console.log("Token not found");
             return false;
           }
 
@@ -972,10 +972,10 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
             body: JSON.stringify({ user_id: userId }),
           });
-          console.log('FETCH POST FAV:', response);
+          //console.log('FETCH POST FAV:', response);
           if (response.ok) {
             const res = await response.json();
-            console.log('reponse FAVORITES:', res);
+            //console.log('reponse FAVORITES:', res);
             const store = getStore()
             setStore({ ...store, favorites: res })
             const actions = getActions()
@@ -985,7 +985,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             return false;
           }
         } catch (error) {
-          console.log(error);
+          //console.log(error);
           return false;
         }
       },
@@ -993,7 +993,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         try {
           const token = localStorage.getItem("myToken");
           if (!token) {
-            console.log("Token not found");
+            //console.log("Token not found");
             return false;
           }
 
@@ -1015,7 +1015,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             return false;
           }
         } catch (error) {
-          console.log(error);
+          //console.log(error);
           return false;
         }
       },
@@ -1023,7 +1023,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         try {
           const token = localStorage.getItem("myToken");
           if (!token) {
-            console.log("Token not found");
+            //console.log("Token not found");
             return false;
           }
 
@@ -1034,11 +1034,11 @@ const getState = ({ getStore, getActions, setStore }) => {
               Authorization: `Bearer ${token}`,
             },
           });
-          console.log(response);
+          //console.log(response);
 
           if (response.ok) {
             const data = await response.json();
-            console.log("GET OFFERS DATA FAVORITES:", data);
+            //console.log("GET OFFERS DATA FAVORITES:", data);
             const store = getStore()
             setStore({ ...store, favorites: data });
             return true;
@@ -1046,7 +1046,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             return null;
           }
         } catch (error) {
-          console.log(error);
+          //console.log(error);
           return null;
         }
       },
@@ -1054,7 +1054,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         try {
           const token = localStorage.getItem("myToken");
           if (!token) {
-            console.log("Token not found");
+            //console.log("Token not found");
             return false;
           }
 
@@ -1066,10 +1066,10 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
             body: JSON.stringify({ user_id: userId }),
           });
-          console.log('FETCH POST FAV:', response);
+          //console.log('FETCH POST FAV:', response);
           if (response.ok) {
             const res = await response.json();
-            console.log('reponse FAVORITES:', res);
+            //console.log('reponse FAVORITES:', res);
             const store = getStore()
             setStore({ ...store, favorites: res })
             const actions = getActions()
@@ -1079,7 +1079,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             return false;
           }
         } catch (error) {
-          console.log(error);
+          //console.log(error);
           return false;
         }
       },
@@ -1087,7 +1087,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         try {
           const token = localStorage.getItem("myToken");
           if (!token) {
-            console.log("Token not found");
+            //console.log("Token not found");
             return false;
           }
 
@@ -1107,7 +1107,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             return false;
           }
         } catch (error) {
-          console.log(error);
+          //console.log(error);
           return false;
         }
       },

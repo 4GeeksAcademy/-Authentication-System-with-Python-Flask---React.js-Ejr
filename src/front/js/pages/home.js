@@ -18,7 +18,7 @@ import { Link } from "react-router-dom";
 
 export const Home = () => {
   const { store, actions } = useContext(Context);
-  console.log("User is auth:", store.auth);
+  // console.log("User is auth:", store.auth);
   return (
     <>
 

@@ -35,13 +35,13 @@ const UserPrivate = () => {
       const updatedUser = await actions.updateUserProfile(store.user.id, userData);
 
       if (updatedUser) {
-        console.log("User profile updated successfully");
+        // console.log("User profile updated successfully");
         setIsEditingAll(false);
       } else {
-        console.log("Failed to update user profile");
+        // console.log("Failed to update user profile");
       }
     } catch (error) {
-      console.log("Error updating User private:", error);
+      // console.log("Error updating User private:", error);
     }
   };
 

@@ -1,30 +1,68 @@
-import React from 'react'
-import Slogan from './Slogan'
+import React, { useRef, useState, useEffect } from 'react';
 
-const LitlleSlide = () => {
+const LittleSlide = () => {
+    const carouselRef = useRef(null);
+    const [videoEnded, setVideoEnded] = useState(false);
+
+    const handleVideoEnd = () => {
+        setVideoEnded(true);
+    };
+
+    const handleSlideChange = () => {
+        if (videoEnded) {
+            carouselRef.current.querySelector('.carousel-control-next').click();
+            setVideoEnded(false);
+        }
+    };
+
+    useEffect(() => {
+        // Attach slide event listener
+        const carousel = carouselRef.current;
+        carousel.addEventListener('slide.bs.carousel', handleSlideChange);
+
+        // Cleanup when component unmounts
+        return () => {
+            carousel.removeEventListener('slide.bs.carousel', handleSlideChange);
+        };
+    }, [videoEnded]);
+
     return (
         <div>
-            <div id="carouselExampleFade" className=" litleslide carousel slide carousel-fade mt-4" data-bs-ride="carousel">
-                <div className="carousel-inner">
-                    <div className="carousel-item active">
-                        <img src="https://picsum.photos/id/218/500/200" className=" litleslideimg d-block w-100" alt="..." />
+            <div
+                ref={carouselRef}
+                id="carouselExampleFade"
+                className="litleslide carousel slide carousel-slide mt-4"
+                data-bs-ride="carousel"
+            >
+                <div className={`carousel-inner`} data-bs-interval="5000">
+                    <div className={`carousel-item ${videoEnded ? '' : 'active'} justify-content-center`}>
+                        <video
+                            className="d-block w-100"
+                            autoPlay
+                            muted
+                            loop
+                            onEnded={handleVideoEnd}
+                        >
+                            <source src="https://res.cloudinary.com/albertge/video/upload/v1692288928/welcome_to_cujlyi.mp4" type="video/mp4" />
+                            Your browser does not support the video tag.
+                        </video>
                         <div className="carousel-caption d-md-block">
-                            <h5 className='title-slide'>First slide label</h5>
-                            <p className='desc'>Some representative placeholder content for the first slide.</p>
+                            {/* ... */}
                         </div>
                     </div>
-                    <div className="carousel-item">
-                        <img src="https://picsum.photos/id/231/500/200" className=" litleslideimg d-block w-100" alt="..." />
+                    <div className={`carousel-item ${videoEnded ? 'active' : ''} justify-content-center`}>
+                        <video
+                            className="d-block w-100"
+                            autoPlay
+                            muted
+                            loop
+                            onEnded={handleVideoEnd}
+                        >
+                            <source src="https://res.cloudinary.com/albertge/video/upload/v1692291371/adquiere_nuestra_membresia_premium_1_kq1ell.mp4" type="video/mp4" />
+                            Your browser does not support the video tag.
+                        </video>
                         <div className="carousel-caption d-md-block">
-                            <h5 className='title-slide'>First slide label</h5>
-                            <p className='desc'>Some representative placeholder content for the first slide.</p>
-                        </div>
-                    </div>
-                    <div className="carousel-item">
-                        <img src="https://picsum.photos/id/328/500/200" className="litleslideimg d-block w-100" alt="..." />
-                        <div className="carousel-caption d-md-block">
-                            <h5 className='title-slide'>First slide label</h5>
-                            <p className='desc'>Some representative placeholder content for the first slide.</p>
+                            {/* ... */}
                         </div>
                     </div>
                 </div>
@@ -38,7 +76,7 @@ const LitlleSlide = () => {
                 </button>
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default LitlleSlide
+export default LittleSlide;

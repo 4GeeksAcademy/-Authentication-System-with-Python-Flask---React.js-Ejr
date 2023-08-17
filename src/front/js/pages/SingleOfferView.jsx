@@ -18,7 +18,7 @@ const SingleOfferView = () => {
             setOffer(await actions.getOfferById(params.offer_id));
         }
         loadData()
-        console.log("Fetch for all offers in single offer view is working");
+        // console.log("Fetch for all offers in single offer view is working");
     }, []);
     return (
         <div className=' container'>
@@ -84,7 +84,7 @@ const SingleOfferView = () => {
 
                     <div>
                         <h4>Comentarios</h4>
-                        <div>{ }</div>
+                        <div>{}</div>
                         <div>{ }</div>
 
                     </div>

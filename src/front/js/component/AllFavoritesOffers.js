@@ -14,7 +14,7 @@ const AllFavoritesOffers = ({ searchQuery }) => {
 
     useEffect(() => {
         actions.getFavoriteoffer();
-        console.log("Success fetch for Cardsofers");
+        // console.log("Success fetch for Cardsofers");
     }, []);
 
 
@@ -53,8 +53,8 @@ const AllFavoritesOffers = ({ searchQuery }) => {
                                     )}
                                 </div>
                                 <div className='infos-country'>
-                                    <p className="card-text country-offer">{favorite?.offer_id?.country}</p>
-                                    <p className="card-text city-offer">{favorite?.offer_id?.city}</p>
+                                    <p className="card-text country-offer">País:{favorite?.offer_id?.country}</p>
+                                    <p className="card-text city-offer">Ciudad:{favorite?.offer_id?.city}</p>
                                 </div>
                                 {editContentId === favorite?.offer_id?.id ? (
                                     <div className="comment-review">
@@ -69,7 +69,7 @@ const AllFavoritesOffers = ({ searchQuery }) => {
                                         ></textarea>
                                     </div>
                                 ) : (
-                                    <p className="card-text">{favorite?.offer_id?.offer_description}</p>
+                                    <p className="card-text">{favorite?.offer_id?.offer_little_description}</p>
                                 )}
                                 <div className='offer-price'>
                                     {editContentId === favorite?.offer_id?.id ? (
@@ -117,23 +117,22 @@ const AllFavoritesOffers = ({ searchQuery }) => {
 
                                 }
 
-                                {/* <GooglePayButton
-                    normalUserPrice={favorite?.offer_id?.normal_user_price}
-                    premiumUserPrice={favorite?.offer_id?.premium_user_price}
-                  /> */}
+
                                 {store.user.username && <>
-                                    <FavoriteOffer offerId={favorite?.offer_id?.id} />
+                                    
+                                    <Link to={`/offer/${favorite?.offer_id?.id}`}>
+                                        <button className='btn-details'>Detalles</button>
+                                    </Link>
                                     <Link to='/opciones-de-pago'>
                                         <button className='btn-buy'>Comprar</button>
                                     </Link>
+                                    <FavoriteOffer offerId={favorite?.offer_id?.id} />
 
 
                                 </>
 
                                 }
-                                <Link to={`/offer/${favorite?.offer_id?.id}`}>
-                                    <button className='btn-buy'>Ver más</button>
-                                </Link>
+
 
                             </div>
 

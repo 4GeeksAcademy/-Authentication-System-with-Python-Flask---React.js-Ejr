@@ -28,7 +28,7 @@ const MyOffers = ({ searchQuery }) => {
                     return (
                         <div
                             key={business_offer.id}
-                            className="card card-offer text-white mb-3 mt-4">
+                            className="card card-offer mb-3 mt-4">
                             <Link to={`/offer/${business_offer.id}`}>
                                 <img src={business_offer.offer_image} className="card-img-top" alt="..."></img>
                             </Link>
@@ -45,8 +45,8 @@ const MyOffers = ({ searchQuery }) => {
                                     )}
                                 </div>
                                 <div className='infos-country'>
-                                    <p className="card-text country-offer">{business_offer.country}</p>
-                                    <p className="card-text city-offer">{business_offer.city}</p>
+                                    <p className="card-text country-offer">País:{business_offer.country}</p>
+                                    <p className="card-text city-offer">Ciudad:{business_offer.city}</p>
                                 </div>
                                 {editContentId === business_offer.id ? (
                                     <div className="comment-review">
@@ -61,7 +61,7 @@ const MyOffers = ({ searchQuery }) => {
                                         ></textarea>
                                     </div>
                                 ) : (
-                                    <p className="card-text">{business_offer.offer_description}</p>
+                                    <p className="card-text">{business_offer.offer_little_description}</p>
                                 )}
                                 <div className='offer-price'>
                                     {editContentId === business_offer.id ? (

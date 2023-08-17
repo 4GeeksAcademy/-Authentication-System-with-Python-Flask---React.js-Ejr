@@ -79,12 +79,14 @@ const SignUpUser = () => {
 
       onSubmit={(values, { setSubmitting }) => {
         // Call your async submit function here (You can also use your handleSubmit function)
-        console.log("Form submitted:", values);
+        // console.log("Form submitted:", values);
 
         actions.signupUser(values)
           .then(() => {
             // Handle successful submission
-            console.log("Form submitted successfully!");
+
+
+            //console.log("Form submitted successfully!");
             Swal.fire({
               title: "Registro exitoso",
               text: "Tu registro fue todo un éxito!!! Revisa tu correo electrónico.",
@@ -94,6 +96,7 @@ const SignUpUser = () => {
             setTimeout(() => {
               navigate("/business_offers");
             }, 2000);
+
           })
           .catch((error) => {
             // Handle submission error

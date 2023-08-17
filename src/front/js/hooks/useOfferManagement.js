@@ -11,9 +11,9 @@ const useOfferManagement = () => {
         actions.getAllOffers();
         if (store.favorites && store.favorites.length >= 1) {
             actions.getFavoriteoffer()
-            console.log("Success fetch for Cardsofers");
+            // console.log("Success fetch for Cardsofers");
         }
-        console.log("Success fetch for CardsOffer");
+        // console.log("Success fetch for CardsOffer");
     }, []);
 
     const handleEditContent = (content) => {

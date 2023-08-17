@@ -8,12 +8,14 @@
 }
 
 .card-offer {
-    background: var(--color-2);
+    background: white;
     backdrop-filter: 10px;
-    height: 550px !important;
+    height: 550px ;
     width: calc(50% - 10px);
     margin-bottom: 20px;
     position: relative;
+    color: black;
+    border-radius: 2%;
 }
 
 .card-offer img {
@@ -53,7 +55,7 @@
 
 .btn-buy {
     width: 90%;
-    background-color: var(--color-1);
+    background-color: var(--color-3);
     text-align: center;
     margin: 0 auto;
     padding: 0;
@@ -61,15 +63,71 @@
     bottom: 0;
     left: 0;
     right: 0;
-    margin-bottom: .5rem;
+    margin-bottom: 1.5rem;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-size: 16px;
+    /* z-index: 1000; */
+    transform: translateY(50%);
+    border: 1px solid #fff;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+
 }
+
+.btn-buy:hover{
+    background-color: #ffc439;
+    /* Cambia el color de fondo al hacer hover */
+    cursor: grabbing;
+    /* Cambia el cursor a una mano cerrada */
+    transform: translateY(50%) scale(1.1);
+    /* Desplazamiento más rápido y escala al hacer hover */
+    color: white;
+    border: 1px solid black;
+}
+
+.btn-details {
+    width: 90%;
+    background-color: #ffc439;    
+    text-align: center;
+    margin: 0 auto;
+    padding: 0;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin-bottom: 1.5rem;
+    color: black;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-size: 16px;
+    /* z-index: 1000; */
+    transform: translateY(50%);
+    border: 1px solid black;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+
+}
+
+.btn-details:hover{
+    background-color:  #0486db;
+    /* Cambia el color de fondo al hacer hover */
+    cursor: grabbing;
+    /* Cambia el cursor a una mano cerrada */
+    transform: translateY(50%) scale(1.1);
+    /* Desplazamiento más rápido y escala al hacer hover */
+    color: white;
+    border: 1px solid white;
+}
+
 
 .price-user {
     font-weight: 600;
 }
 
 .price {
-    color: #fff;
+    color: black;
 }
 
 /* Media query */

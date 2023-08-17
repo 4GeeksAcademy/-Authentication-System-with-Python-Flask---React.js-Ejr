@@ -8,7 +8,7 @@ const HomeReviewCard = () => {
 
     useEffect(() => {
         actions.getReviews();
-        console.log("Fetch for all reviews is working")
+        // console.log("Fetch for all reviews is working")
     }, []);
 
     return (

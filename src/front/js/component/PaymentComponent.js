@@ -49,10 +49,10 @@ const PaymentComponent = () => {
     })
       .then((response) => response.json())
       .then((responseData) => {
-        console.log('Successfully payment:', responseData);
+        // console.log('Successfully payment:', responseData);
       })
       .catch((error) => {
-        console.error('Error capturing payment:', error);
+        // console.error('Error capturing payment:', error);
       });
   };
 

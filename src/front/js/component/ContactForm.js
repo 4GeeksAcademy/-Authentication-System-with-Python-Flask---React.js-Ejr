@@ -19,7 +19,7 @@ export const ContactForm = () => {
       )
       .then(
         (result) => {
-          console.log(result.text);
+          // console.log(result.text);
           form.current.reset();
           formMessage.innerHTML = '<p className="success">Message send</p>';
 
@@ -28,7 +28,7 @@ export const ContactForm = () => {
           }, 2500);
         },
         (error) => {
-          console.log(error.text);
+          // console.log(error.text);
           formMessage.innerHTML =
             '<p className="error">Error! Message not send, please try again!</p>';
           setTimeout(() => {

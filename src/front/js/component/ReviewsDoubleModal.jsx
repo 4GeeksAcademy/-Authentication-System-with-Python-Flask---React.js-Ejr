@@ -16,7 +16,7 @@ const ReviewsDoubleModal = ({ offerId }) => {
 
     useEffect(() => {
         actions.getAllTrips();
-        console.log("Fetch for all trips is working")
+        // console.log("Fetch for all trips is working")
     }, []);
 
 
@@ -40,11 +40,11 @@ const ReviewsDoubleModal = ({ offerId }) => {
                     .required('Campo obligatorio!'),
                 title: Yup.string()
                     .min(10, 'Debe tener 10 caracteres o más')
-                    .matches(/^[A-ZÁÉÍÓÚÑ][A-Za-zÁÉÍÓÚáéíóúÑñ0-9,.*!¡?¿\s-: ]*$/, 'Debe comenzar con una letra mayúscula')
+                    .matches(/^[A-ZÁÉÍÓÚÑ][A-Za-zÁÉÍÓÚáéíóúÑñ0-9,.*!¡?¿\s-:() ]*$/, 'Debe comenzar con una letra mayúscula')
                     .required('Campo obligatorio!'),
                 comment_text: Yup.string()
                     .min(50, 'Debe tener 50 caracteres o más')
-                    .matches(/^[A-ZÁÉÍÓÚÑ][A-Za-zÁÉÍÓÚáéíóúÑñ0-9,.*!¡?¿\s-: ]*$/, 'Debe comenzar con una letra mayúscula')
+                    .matches(/^[A-ZÁÉÍÓÚÑ][A-Za-zÁÉÍÓÚáéíóúÑñ0-9,.*!¡?¿\s-:() ]*$/, 'Debe comenzar con una letra mayúscula')
                     .required('Campo obligatorio!'),
                 review_image: Yup.mixed()
                     .required('Debes seleccionar al menos una imagen!')
@@ -69,13 +69,15 @@ const ReviewsDoubleModal = ({ offerId }) => {
 
                     await actions.create_review({ ...values, review_image: imgUrl, offer_id: offerId });
 
-                    console.log("Form submitted successfully!");
+
+                    //console.log("Form submitted successfully!");
                     Swal.fire({
                         title: "Reseña publicada",
                         text: "Tu reseña se publicó correctamente",
                         icon: "success",
                         timer: 2000
                     });
+
                     setStatus({ success: true });
                     setSelectedFile(null);
                     setTimeout(() => {
@@ -127,15 +129,13 @@ const ReviewsDoubleModal = ({ offerId }) => {
                                                 <div className='custom-input-password'>
                                                     <label htmlFor="country" >País:</label><br />
                                                     <Field as="select" name="country">
-                                                        <option key={store.trip.id} value="" label="Selecciona un país" />
-                                                        {store.trip && store.trip.length >= 1 && store.trip?.map((country) => (<>
-
-                                                            <option key={country?.id} value={country?.country}>
-                                                                {country?.country}
-                                                            </option>
-                                                        </>
-                                                        ))}
-                                                    </Field>
+                                                            <option value="" label="Selecciona un país" />
+                                                            {store.trip && store.trip.length >= 1 && store.trip?.map((country) => (
+                                                                <option key={country?.id} value={country?.country}>
+                                                                    {country?.country}
+                                                                </option>
+                                                            ))}
+                                                        </Field>
                                                 </div>
 
                                                 <ErrorMessage name="country" />
@@ -143,28 +143,28 @@ const ReviewsDoubleModal = ({ offerId }) => {
                                                 <div>
                                                     <label htmlFor="city" >Ciudad:</label><br />
                                                     <Field as="select" name="city">
-                                                        <option key={store.trip.id} value="" label="Selecciona una ciudad" />
-                                                        {store.trip && store.trip.length >= 1 && store.trip.map((city) => (
-                                                            city.country === formik.values.country && (
 
-                                                                <>
-                                                                    <option value={city?.city} >
-                                                                        {city?.city}
-                                                                    </option>
-                                                                    <option value={city?.city2}>
-                                                                        {city?.city2}
-                                                                    </option>
-                                                                    <option value={city?.city3}>
-                                                                        {city?.city3}
-                                                                    </option>
-                                                                    <option value={city?.city4}>
-                                                                        {city?.city4}
-                                                                    </option>
-                                                                </>
+                                                            <option value="" label="Selecciona una ciudad" />
+                                                            {store.trip && store.trip.length >= 1 && store.trip.map((city) => (
+                                                                city.country === formik.values.country && (
+                                                                    <React.Fragment key={`${city.country}-${city.city}`}>
+                                                                        <option value={city?.city}>
+                                                                            {city?.city}
+                                                                        </option>
+                                                                        <option value={city?.city2}>
+                                                                            {city?.city2}
+                                                                        </option>
+                                                                        <option value={city?.city3}>
+                                                                            {city?.city3}
+                                                                        </option>
+                                                                        <option value={city?.city4}>
+                                                                            {city?.city4}
+                                                                        </option>
+                                                                    </React.Fragment>
+                                                                )
+                                                            ))}
+                                                        </Field>
 
-                                                            )
-                                                        ))}
-                                                    </Field>
 
                                                 </div>
                                                 <ErrorMessage name="city" />

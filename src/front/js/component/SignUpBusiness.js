@@ -60,10 +60,11 @@ const SignUpBusiness = () => {
           .oneOf([true], 'Debes aceptar los términos y condiciones para registrarte'),
       })}
       onSubmit={(values, { setSubmitting }) => {
-        console.log("Form submitted:", values);
+        // console.log("Form submitted:", values);
         actions.signupBusiness(values)
           .then(() => {
-            console.log("Form submitted successfully!");
+
+            //console.log("Form submitted successfully!");
             Swal.fire({
               title: "Exitoso",
               text: "Tu registro fue todo un éxito!!! Revisa tu correo electrónico.",
@@ -73,6 +74,7 @@ const SignUpBusiness = () => {
             setTimeout(() => {
               navigate("/reviews");
             }, 2000);
+
           })
           .catch((error) => {
             console.error("Error submitting form:", error);

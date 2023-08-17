@@ -14,7 +14,7 @@ const ImagePreview = ({ file }) => {
     }, [file]);
 
     return (
-        <div>
+        <div className='container text-center mt-4 mb-4'>
             <img style={{ width: "300px" }} src={preview} alt="" />
         </div>
     );
