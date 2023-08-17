@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Context } from '../store/appContext.js';
 import { Link, useParams } from 'react-router-dom';
 import GeneralInfoDiv from '../component/GeneralInfoDiv.jsx';
+import ReviewsDoubleModal from '../component/ReviewsDoubleModal.jsx'
 
 const SingleOfferView = () => {
     const { store, actions } = useContext(Context);
@@ -76,9 +77,9 @@ const SingleOfferView = () => {
 
                     <div>
                         <h4>Comentarios</h4>
-                        <div>{}</div>
-                        <div>{}</div>
-                        
+                        <div>{ }</div>
+                        <div>{ }</div>
+
                     </div>
 
                     <div>
@@ -86,7 +87,7 @@ const SingleOfferView = () => {
                             <button type="submit" className='btn-primary'>Comprar</button>
                         </Link>
                     </div>
-
+                    <ReviewsDoubleModal offerId={offer.id} />
                 </div>
 
             </div>

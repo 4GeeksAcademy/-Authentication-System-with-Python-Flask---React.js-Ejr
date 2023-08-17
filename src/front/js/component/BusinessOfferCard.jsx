@@ -4,6 +4,7 @@ import GooglePay from './GooglePay';
 import { Link } from 'react-router-dom';
 import useOfferManagement from '../hooks/useOfferManagement';
 import FavoriteOffer from './FavoriteOffer.jsx';
+import ReviewsDoubleModal from './ReviewsDoubleModal.jsx';
 
 const BusinessOfferCard = ({ searchQuery }) => {
   const { store, actions } = useContext(Context);
@@ -27,7 +28,7 @@ const BusinessOfferCard = ({ searchQuery }) => {
               className="card card-offer text-white mb-3 mt-4">
               <Link to={`/offer/${business_offer.id}`}>
                 <img src={business_offer.offer_image} className="card-img-top" alt="..."></img>
-                </Link>
+              </Link>
 
               <div className="card-body">
                 <div className="div-title-offer">
@@ -87,11 +88,11 @@ const BusinessOfferCard = ({ searchQuery }) => {
                     <p className="card-text price-user">Precio premium : <span className='price'>{business_offer.premium_user_price.toLocaleString()}$</span></p>
                   )}
                 </div>
-              
+
                 {store.business_user.id === business_offer.business_id.id || store.user.is_admin &&
                   // || store.user.is_admin 
 
-                  <div className="btn-options d-flex justify-content-end" style={{position: 'relative'}}>
+                  <div className="btn-options d-flex justify-content-end" style={{ position: 'relative' }}>
                     <button
                       className="btn-up-review"
                       onClick={() => handleUpdate(business_offer.id)}
@@ -104,26 +105,18 @@ const BusinessOfferCard = ({ searchQuery }) => {
                     >
                       &#10008;
                     </button>
-                    
                   </div>
-
                 }
-
-                {/* <GooglePayButton
-                  normalUserPrice={business_offer.normal_user_price}
-                  premiumUserPrice={business_offer.premium_user_price}
-                /> */}
                 {store.user.username && <>
                   <FavoriteOffer offerId={business_offer.id} />
                   <Link to={`/offer/${business_offer.id}`}>
                     <button className='btn-buy'>Ver más</button>
                   </Link>
-
-
+                  <Link to={`/offer/${business_offer.id}`}>
+                    <button className='btn-buy'>Publica tu reseña</button>
+                  </Link>
                 </>
-
                 }
-
               </div>
             </div>
           )

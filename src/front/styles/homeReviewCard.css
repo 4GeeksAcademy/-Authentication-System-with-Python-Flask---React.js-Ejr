@@ -7,7 +7,7 @@
   margin: 20px auto;
   padding: .5rem 0 0;
   overflow: hidden;
-  overflow-x: scroll;
+  overflow-x: auto;
   position: relative;
 }
 

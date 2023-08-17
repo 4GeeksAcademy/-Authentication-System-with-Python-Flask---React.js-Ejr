@@ -137,7 +137,7 @@ const OffersDoubleModal = () => {
                                                         <Field as="select" name="city">
                                                             <option key={store.trip.id} value="" label="Selecciona una ciudad" />
                                                             {store.trip && store.trip.length >= 1 && store.trip.map((city) => (
-                                                                city.country === formik.values.country && (
+                                                                city.countryz === formik.values.country && (
                                                                     <option key={city?.id} value={city?.city}>
                                                                         {city?.city}
                                                                     </option>
@@ -208,7 +208,7 @@ const OffersDoubleModal = () => {
                                                 <button className="btn btn-primary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal" >Volver al formulario anterior</button>
                                                 <button type="submit" className="btn btn-primary btn-signup">
                                                     Publicar mi oferta
-                                                </button>                                            
+                                                </button>
                                             </div>
 
                                         </div>

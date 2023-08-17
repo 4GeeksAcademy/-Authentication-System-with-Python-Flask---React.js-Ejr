@@ -10,14 +10,15 @@
   overflow: hidden;
   margin-top: 30px;
   /* margin-bottom: 10px; */
+  overflow-x: auto;
 }
 
 .card-home-offer {
-  display: flex!important;
+  display: flex !important;
   /* justify-content: space-between; */
   /* width: 85%; */
   margin: 0 20px;
-  background-color: white!important;
+  background-color: white !important;
   flex-direction: row;
   border-radius: 2%;
   height: 20rem;
@@ -34,9 +35,9 @@
   text-decoration: none;
 }
 
-.card-home-text{
-padding: 2px;
-}  
+.card-home-text {
+  padding: 2px;
+}
 
 
 
@@ -46,16 +47,16 @@ padding: 2px;
   flex-wrap: nowrap;
   overflow: hidden;
   color: black;
-  
+
 }
 
 .card-home-offer img {
-  width: 50% ;
-  height:  100%;
+  width: 50%;
+  height: 100%;
   padding: 3px;
 }
 
-.home-offer-h1{
+.home-offer-h1 {
   display: flex;
   flex-wrap: nowrap;
   /* justify-content: space-between; */
