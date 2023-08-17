@@ -26,7 +26,7 @@ const HomeReviewCard = () => {
                             <div className='nothing'></div>
                             <div>
                                 <span className='fav-home-review'>
-                                    <FavoriteReview />
+                                    <FavoriteReview reviewId={review.id} />
                                 </span>
                             </div>
                             <div className='content-link'>

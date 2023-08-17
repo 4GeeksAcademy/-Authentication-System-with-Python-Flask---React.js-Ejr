@@ -10,14 +10,15 @@
   overflow: hidden;
   margin-top: 30px;
   /* margin-bottom: 10px; */
+  overflow-x: auto;
 }
 
 .card-home-offer {
-  display: flex!important;
+  display: flex !important;
   /* justify-content: space-between; */
   /* width: 85%; */
   margin: 0 20px;
-  background-color: white!important;
+  background-color: white !important;
   flex-direction: row;
   border-radius: 2%;
   height: 20rem;
@@ -58,6 +59,7 @@
   text-decoration: none;
 }
 
+
 .home-prices {
   margin-left: 0.8rem;
   margin-top: 2rem;
@@ -71,6 +73,7 @@
 padding: 1px;
 }  
 
+
 .second-span{
   margin-bottom: 3.6rem;
 }
@@ -81,17 +84,19 @@ padding: 1px;
   flex-wrap: nowrap;
   overflow: hidden;
   color: black;
+
   margin-left: 0.8rem;
   
+
 }
 
 .card-home-offer img {
-  width: 50% ;
-  height:  100%;
+  width: 50%;
+  height: 100%;
   padding: 3px;
 }
 
-.home-offer-h1{
+.home-offer-h1 {
   display: flex;
   flex-wrap: nowrap;
   /* justify-content: space-between; */

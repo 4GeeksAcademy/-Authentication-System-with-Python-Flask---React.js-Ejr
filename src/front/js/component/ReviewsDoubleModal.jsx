@@ -7,7 +7,7 @@ import ImagePreview from './ImagePreview.jsx';
 import Draggable from 'react-draggable';
 
 
-const ReviewsDoubleModal = () => {
+const ReviewsDoubleModal = ({ offerId }) => {
 
     const { store, actions } = useContext(Context);
     const [selectedFile, setSelectedFile] = useState(null);
@@ -66,7 +66,7 @@ const ReviewsDoubleModal = () => {
 
                     const imgUrl = response.data.url;
 
-                    await actions.create_review({ ...values, review_image: imgUrl });
+                    await actions.create_review({ ...values, review_image: imgUrl, offer_id: offerId });
 
                     console.log("Form submitted successfully!");
                     alert('Tu reseña se publicó correctamente');
@@ -124,13 +124,16 @@ const ReviewsDoubleModal = () => {
                                                         ))}
                                                     </Field>
                                                 </div>
+
                                                 <ErrorMessage name="country" />
+
                                                 <div>
                                                     <label htmlFor="city" >Ciudad:</label><br />
                                                     <Field as="select" name="city">
                                                         <option key={store.trip.id} value="" label="Selecciona una ciudad" />
                                                         {store.trip && store.trip.length >= 1 && store.trip.map((city) => (
                                                             city.country === formik.values.country && (
+
                                                                 <>
                                                                 <option  value={city?.city} >
                                                                     {city?.city}
@@ -145,6 +148,7 @@ const ReviewsDoubleModal = () => {
                                                                     {city?.city4}
                                                                 </option>
                                                             </>
+
                                                             )
                                                         ))}
                                                     </Field>

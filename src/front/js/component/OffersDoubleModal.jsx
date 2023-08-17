@@ -144,6 +144,7 @@ const OffersDoubleModal = () => {
                                                         <Field as="select" name="city">
                                                             <option key={store.trip.id} value="" label="Selecciona una ciudad" />
                                                             {store.trip && store.trip.length >= 1 && store.trip.map((city) => (
+
                                                                 city.country === formik.values.country && (
                                                                     <>
                                                                         <option  value={city?.city} >
@@ -159,6 +160,7 @@ const OffersDoubleModal = () => {
                                                                             {city?.city4}
                                                                         </option>
                                                                     </>
+
                                                                 )
                                                             ))}
 

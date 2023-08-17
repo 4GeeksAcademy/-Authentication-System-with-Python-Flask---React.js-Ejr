@@ -4,6 +4,7 @@ import GooglePay from './GooglePay';
 import { Link } from 'react-router-dom';
 import useOfferManagement from '../hooks/useOfferManagement';
 import FavoriteOffer from './FavoriteOffer.jsx';
+import ReviewsDoubleModal from './ReviewsDoubleModal.jsx';
 
 const BusinessOfferCard = ({ searchQuery }) => {
   const { store, actions } = useContext(Context);
@@ -106,22 +107,18 @@ const BusinessOfferCard = ({ searchQuery }) => {
                     </button>
 
                   </div>
-
                 }
-
-                {/* <GooglePayButton
-                  normalUserPrice={business_offer.normal_user_price}
-                  premiumUserPrice={business_offer.premium_user_price}
-                /> */}
                 {store.user.username && <>
                   <FavoriteOffer offerId={business_offer.id} />
+
+                  <Link to={`/offer/${business_offer.id}`}>
+                    <button className='btn-buy'>Ver más</button>
+                  </Link>
+                  <Link to={`/offer/${business_offer.id}`}>
+                    <button className='btn-buy'>Publica tu reseña</button>
+                  </Link>
                 </>
-
-
                 }
-                <Link to={`/offer/${business_offer.id}`}>
-                  <button className='btn-buy'>Ver más</button>
-                </Link>
 
               </div>
             </div>
