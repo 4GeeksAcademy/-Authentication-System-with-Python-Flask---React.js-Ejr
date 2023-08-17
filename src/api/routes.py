@@ -8,24 +8,17 @@ from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_requir
 import requests
 import os
 from flask_cors import CORS
+# from schemas import ActorSchema
 
 app = Flask(__name__)
 CORS(app)
-
+# ma = Marshmallow(app)
 
 
 
 api = Blueprint('api/user', __name__)
 
 
-# @api.route('/hello', methods=['POST', 'GET'])
-# def handle_hello():
-
-#     response_body = {
-#         "message": "Hello! I'm a message that came from the backend, check the network tab on the google inspector and you will see the GET request"
-#     }
-
-#     return jsonify(response_body), 200
 
 @api.route("/current_user", methods = ["GET"])
 @jwt_required()
@@ -191,7 +184,12 @@ def get_actors_from_movie(movie_id):
         
     # Guardar los cambios en la base de datos
     db.session.commit()
-    return actors
+
+    return actor
+
+    # actor_schema = ActorSchema(many=True)
+    # serialized_actors = actor_schema.dump(actors)
+    # return serialized_actors
 
 
 def get_directors_from_movie(movie_id):

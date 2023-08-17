@@ -32,7 +32,8 @@ const Layout = () => {
                     <Routes>
                         <Route element={<Listadomovies />} path="/" />
                         <Route element={<Movie />} path="/movie/:movieId" /> 
-                        <Route element={<ActorDetail />} path="/actors/:actorId" /> 
+                        {/* <Route element={<ActorDetail />} path="/actors/:actorId" />  */}
+                        <Route element={<ActorDetail />} path="/:movieId/actors/:actorId" /> 
                         <Route element={<Login />} path="/login" />
                         <Route element={<SignIn />} path="/sign-up" />
                         <Route element={<Single />} path="/single/:theid" />

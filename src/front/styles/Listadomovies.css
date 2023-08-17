@@ -39,9 +39,9 @@
   }
 
   .card-img-top {
-    width: 100%; /* Ocupa todo el ancho del contenedor */
-    height: 300px; /* Puedes ajustar este valor según tus necesidades */
-    object-fit: cover; /* Mantendrá la proporción de la imagen sin distorsionarla */
+    width: 100%; 
+    height: 300px; 
+    object-fit: cover; 
   }
 
   .to-watch {

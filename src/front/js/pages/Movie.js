@@ -13,6 +13,8 @@ export const Movie = () => {
     const imageUrl = movie?.image ? `https://image.tmdb.org/t/p/w500${movie?.image}` : no_image;
     const trailerUrl = movie?.trailer_key    ? `https://www.youtube.com/embed/${movie.trailer_key}`    : null;
 
+    console.log(movieId)
+
 
     useEffect(() => {
         console.log("actions");
@@ -20,7 +22,7 @@ export const Movie = () => {
             console.log(movieId, movie);
             setMovie(movie);
         });
-    }, []);
+    }, [movieId]);
 
     return (
         <div className="container">
@@ -72,14 +74,15 @@ export const Movie = () => {
             <div className="container-crew">
                 <div className="d-flex  align-items-center">
                     <h4 className="act_direct">Actors and Directors</h4>
-                    <button className="mostrar-mas">Show more</button>
+                    {/* <button className="mostrar-mas">Show more</button> */}
                 </div>
                 
 
                 <div className="row">
                     {movie?.actors?.map((actor) => (
                         <div className="col-md-2" key={actor.id}>
-                            <Link to={`/actors/${actor.id}`}>
+                            
+                            <Link to={`/${movieId}/actors/${actor.id}`}>
                                 <div className="card">
                                     <img 
                                         className="profile_path" 
