@@ -5,6 +5,7 @@ import * as Yup from 'yup';
 import axios from 'axios';
 import ImagePreview from './ImagePreview.jsx';
 import Draggable from 'react-draggable';
+import Swal from 'sweetalert2';
 
 
 const ReviewsDoubleModal = ({ offerId }) => {
@@ -69,14 +70,26 @@ const ReviewsDoubleModal = ({ offerId }) => {
                     await actions.create_review({ ...values, review_image: imgUrl, offer_id: offerId });
 
                     console.log("Form submitted successfully!");
-                    alert('Tu reseña se publicó correctamente');
+                    Swal.fire({
+                        title: "Reseña publicada",
+                        text: "Tu reseña se publicó correctamente",
+                        icon: "success",
+                        timer: 2000
+                    });
                     setStatus({ success: true });
                     setSelectedFile(null);
-                    window.location.reload();
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 2000);
 
                 } catch (error) {
                     console.error("Error submitting form:", error);
-                    alert("Alguna cosa salió mal");
+                    Swal.fire({
+                        title: "Error",
+                        text: "Algo salió mal",
+                        icon: "error",
+                        timer: 2000
+                    });
                     setStatus({ error: true });
                 } finally {
                     setSubmitting(false);
@@ -135,19 +148,19 @@ const ReviewsDoubleModal = ({ offerId }) => {
                                                             city.country === formik.values.country && (
 
                                                                 <>
-                                                                <option  value={city?.city} >
-                                                                    {city?.city}
-                                                                </option>
-                                                                <option  value={city?.city2}>
-                                                                    {city?.city2}
-                                                                </option>
-                                                                <option  value={city?.city3}>
-                                                                    {city?.city3}
-                                                                </option>
-                                                                <option  value={city?.city4}>
-                                                                    {city?.city4}
-                                                                </option>
-                                                            </>
+                                                                    <option value={city?.city} >
+                                                                        {city?.city}
+                                                                    </option>
+                                                                    <option value={city?.city2}>
+                                                                        {city?.city2}
+                                                                    </option>
+                                                                    <option value={city?.city3}>
+                                                                        {city?.city3}
+                                                                    </option>
+                                                                    <option value={city?.city4}>
+                                                                        {city?.city4}
+                                                                    </option>
+                                                                </>
 
                                                             )
                                                         ))}

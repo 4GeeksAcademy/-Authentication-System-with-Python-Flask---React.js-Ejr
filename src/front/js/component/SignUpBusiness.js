@@ -6,6 +6,7 @@ import * as Yup from 'yup';
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
+import Swal from "sweetalert2";
 
 const SignUpBusiness = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -63,12 +64,24 @@ const SignUpBusiness = () => {
         actions.signupBusiness(values)
           .then(() => {
             console.log("Form submitted successfully!");
-            alert("Tu registro fue todo un éxito!!! Revisa tu correo electrónico.");
-            navigate("/reviews");
+            Swal.fire({
+              title: "Exitoso",
+              text: "Tu registro fue todo un éxito!!! Revisa tu correo electrónico.",
+              icon: "success",
+              timer: 2000
+            });
+            setTimeout(() => {
+              navigate("/reviews");
+            }, 2000);
           })
           .catch((error) => {
             console.error("Error submitting form:", error);
-            alert("Email already exists");
+            Swal.fire({
+              title: "Error",
+              text: "Email already exists",
+              icon: "error",
+              timer: 2000
+            });
           })
           .finally(() => {
             setSubmitting(false);
@@ -195,18 +208,18 @@ const SignUpBusiness = () => {
                 <ErrorMessage name="payment_method" component="div" className="error-message" />
               </div>
               <div className="d-flex">
-                  <div className="me-2">
+                <div className="me-2">
                   <Field type="checkbox" name="acceptTerms" />
-                  </div>
-                  <div>
-                    <span> Acepto los
+                </div>
+                <div>
+                  <span> Acepto los
                     <Link to="/terms">
                       <strong> términos y condiciones</strong>
                     </Link>
-                    </span>
-                  </div>
-  
-              
+                  </span>
+                </div>
+
+
               </div>
               <ErrorMessage name="acceptTerms" />
               <button type="submit" className="btn btn-primary reset-button-signup mt-2">Crear mi cuenta</button>
