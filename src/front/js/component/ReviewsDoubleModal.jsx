@@ -7,7 +7,7 @@ import ImagePreview from './ImagePreview.jsx';
 import Draggable from 'react-draggable';
 
 
-const ReviewsDoubleModal = () => {
+const ReviewsDoubleModal = ({ offerId }) => {
 
     const { store, actions } = useContext(Context);
     const [selectedFile, setSelectedFile] = useState(null);
@@ -66,7 +66,7 @@ const ReviewsDoubleModal = () => {
 
                     const imgUrl = response.data.url;
 
-                    await actions.create_review({ ...values, review_image: imgUrl });
+                    await actions.create_review({ ...values, review_image: imgUrl, offer_id: offerId });
 
                     console.log("Form submitted successfully!");
                     alert('Tu reseña se publicó correctamente');
@@ -110,39 +110,39 @@ const ReviewsDoubleModal = () => {
 
                                     <div className="modal-body">
                                         <div>
-                                        <div >
-                                                    <div className='custom-input-password'>
-                                                        <label htmlFor="country" >País:</label><br />
-                                                        <Field as="select" name="country">
-                                                            <option key={store.trip.id} value="" label="Selecciona un país" />
-                                                            {store.trip && store.trip.length >= 1 && store.trip?.map((country) => (<>
+                                            <div >
+                                                <div className='custom-input-password'>
+                                                    <label htmlFor="country" >País:</label><br />
+                                                    <Field as="select" name="country">
+                                                        <option key={store.trip.id} value="" label="Selecciona un país" />
+                                                        {store.trip && store.trip.length >= 1 && store.trip?.map((country) => (<>
 
-                                                                <option key={country?.id} value={country?.country}>
-                                                                    {country?.country}
-                                                                </option>
-                                                            </>
-                                                            ))}
-                                                        </Field>
-                                                        </div>
-
-                                                        <ErrorMessage name="country" />
-
-                                                        <div>
-                                                            <label htmlFor="city" >Ciudad:</label><br />
-                                                            <Field as="select" name="city">
-                                                                <option key={store.trip.id} value="" label="Selecciona una ciudad" />
-                                                                {store.trip && store.trip.length >= 1 && store.trip.map((city) => (
-                                                                    city.country === formik.values.country && (
-                                                                        <option key={city?.id} value={city?.city}>
-                                                                            {city?.city}
-                                                                        </option>
-                                                                    )
-                                                                ))}
-                                                            </Field>
-                                                            
-                                                        </div>
-                                                        <ErrorMessage name="city" />
+                                                            <option key={country?.id} value={country?.country}>
+                                                                {country?.country}
+                                                            </option>
+                                                        </>
+                                                        ))}
+                                                    </Field>
                                                 </div>
+
+                                                <ErrorMessage name="country" />
+
+                                                <div>
+                                                    <label htmlFor="city" >Ciudad:</label><br />
+                                                    <Field as="select" name="city">
+                                                        <option key={store.trip.id} value="" label="Selecciona una ciudad" />
+                                                        {store.trip && store.trip.length >= 1 && store.trip.map((city) => (
+                                                            city.country === formik.values.country && (
+                                                                <option key={city?.id} value={city?.city}>
+                                                                    {city?.city}
+                                                                </option>
+                                                            )
+                                                        ))}
+                                                    </Field>
+
+                                                </div>
+                                                <ErrorMessage name="city" />
+                                            </div>
 
                                         </div>
                                         <div className="custom-input-password mt-4">
@@ -162,39 +162,39 @@ const ReviewsDoubleModal = () => {
                                     </div>
                                 </div>
                             </div>
-                            </div>
+                        </div>
 
-                            {/* Segundo Modal */}
-                            <div className="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabIndex="-1">
-                                <div className="modal-dialog modal-dialog-centered">
-                                    <div className="modal-content content-signup">
-                                        <div className="modal-header">
-                                            <h5 className="modal-title" id="exampleModalToggleLabel2">Sube tus fotografias para publicar tu reseña:</h5>
-                                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        {/* Segundo Modal */}
+                        <div className="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabIndex="-1">
+                            <div className="modal-dialog modal-dialog-centered">
+                                <div className="modal-content content-signup">
+                                    <div className="modal-header">
+                                        <h5 className="modal-title" id="exampleModalToggleLabel2">Sube tus fotografias para publicar tu reseña:</h5>
+                                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div className="modal-body ">
+                                        <div>
+                                            <label htmlFor="review_image">Publica tu foto aquí:</label>
+                                            <input
+                                                type="file"
+                                                name="review_image"
+                                                onChange={(event) => {
+                                                    const selectedFile = event.target.files[0];
+                                                    setSelectedFile(selectedFile);
+                                                    formik.setFieldValue("review_image", selectedFile);
+                                                }}
+                                            />
+                                            <ErrorMessage name="review_image" />
+                                            {selectedFile && <ImagePreview file={selectedFile} />}
                                         </div>
-                                        <div className="modal-body ">
-                                            <div>
-                                                <label htmlFor="review_image">Publica tu foto aquí:</label>
-                                                <input
-                                                    type="file"
-                                                    name="review_image"
-                                                    onChange={(event) => {
-                                                        const selectedFile = event.target.files[0];
-                                                        setSelectedFile(selectedFile);
-                                                        formik.setFieldValue("review_image", selectedFile);
-                                                    }}
-                                                />
-                                                <ErrorMessage name="review_image" />
-                                                {selectedFile && <ImagePreview file={selectedFile} />}
-                                            </div>
-                                            <div className='modal-footer'>
-                                                <button type="button" className="btn btn-primary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal">Volver al formulario anterior</button>
-                                                <button className='btn btn-primary btn-signup' type="submit">Publicar mi reseña</button>
-                                            </div>
+                                        <div className='modal-footer'>
+                                            <button type="button" className="btn btn-primary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal">Volver al formulario anterior</button>
+                                            <button className='btn btn-primary btn-signup' type="submit">Publicar mi reseña</button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                        </div>
                     </Form >
                 </div >
             )}

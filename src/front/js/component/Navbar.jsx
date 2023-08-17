@@ -41,9 +41,7 @@ const Navbar = () => {
                 <li><Link to='/reviews' className="dropdown-item">Reseñas</Link></li>
                 <li><Link to='/offers' className="dropdown-item">Ofertas</Link></li>
                 <li><Link to='/trips' className="dropdown-item">Explora tu siguiente trip</Link></li>
-                <li><Link className="dropdown-item">Ayuda</Link></li>
-
-                {/* <li><Link to='/contact' className="dropdown-item">Contacto</Link></li> */}
+                <li><Link to='/contact' className="dropdown-item">Contacto</Link></li>
 
                 {store.user.is_admin && <li><Link to='/admin' className="dropdown-item">Espacio Administrador</Link></li>}
 

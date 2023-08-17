@@ -15,7 +15,7 @@ const Reviews = () => {
   return (
     <div>
       <SearchReview handleSearch={handleSearch} />
-      {(store.user.username || store.user.is_admin) && <ReviewsDoubleModal />}
+      {/* {(store.user.username || store.user.is_admin) && <ReviewsDoubleModal />} */}
       <MenuReviews searchQuery={searchQuery} />
     </div>
   );

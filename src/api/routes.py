@@ -173,7 +173,8 @@ def create_business_user():
 
         # Hacher le mot de passe et créer l'entreprise
         password_hash = bcrypt.generate_password_hash(password).decode('utf-8')
-        new_business = Business_user(business_name=business_name, email=email, password=password_hash, phone_prefix=phone_prefix, phone_number=phone_number, nif=nif, address=address, payment_method=payment_method)
+        new_business = Business_user(business_name=business_name, email=email, password=password_hash,
+                                     phone_prefix=phone_prefix, phone_number=phone_number, nif=nif, address=address, payment_method=payment_method)
 
         db.session.add(new_business)
         db.session.commit()
@@ -293,13 +294,17 @@ def update_business_profile(business_id):
         data = request.get_json()
 
         # Update business profile data
-        business_user.business_name = data.get('name_business', business_user.business_name)
+        business_user.business_name = data.get(
+            'name_business', business_user.business_name)
         business_user.email = data.get('email', business_user.email)
-        business_user.phone_prefix = data.get("phone_prefix", business_user.phone_prefix)
-        business_user.phone_number = data.get("phone_number", business_user.phone_number)
+        business_user.phone_prefix = data.get(
+            "phone_prefix", business_user.phone_prefix)
+        business_user.phone_number = data.get(
+            "phone_number", business_user.phone_number)
         business_user.nif = data.get('nif', business_user.nif)
         business_user.address = data.get('address', business_user.address)
-        business_user.payment_method = data.get('payment_method', business_user.payment_method)
+        business_user.payment_method = data.get(
+            'payment_method', business_user.payment_method)
 
         db.session.commit()
 
@@ -532,6 +537,7 @@ def create_review():
     try:
         review = Review(
             user_id=user.id,
+            offer_id=data['offer_id'],
             title=data['title'],
             comment_text=data['comment_text'],
             review_image=data['review_image'],
@@ -555,7 +561,6 @@ def update_review(review_id):
     data = request.get_json()
     try:
         review.user_id = data['user_id']
-        review.trip_id = data['trip_id']
         review.title = data['title']
         review.comment_text = data['comment_text']
         review.review_image = data['review_image']
