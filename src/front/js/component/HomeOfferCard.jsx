@@ -22,15 +22,17 @@ const HomeOfferCard = () => {
                         <div key={offer.id} className=" card-home-offer text-grey"  >  
                                 <Link to={`/offer/${offer.id}`}>
                                 <img src={offer.offer_image} className="" alt="..." ></img>
-                                <div className="card-home-text">
+                                <div className="card-home-text mt-1">
                                     <p>Actividades</p>
-                                    <h3 className="home-offer-title">{offer.offer_title}</h3>
-                                    <div className='home-price'>
-                                        <p className="card-text">{offer.normal_user_price.toLocaleString()}$</p>
-                                        <p className="card-text">{offer.premium_user_price.toLocaleString()}$</p>
-                                        <span style={{color: 'purple'}}>Ver actividad > </span>
-                                    </div>
+                                    <h2 className="home-offer-title">{offer.offer_title}</h2>
+                                    {/* <h5 style={{marginLeft: "0.8rem", marginBottom: "0.5rem"}}>{offer.offer_little_description}</h5> */}
+                                    <div className='home-prices'>
+                                    <p className="">Precio normal: {offer.normal_user_price.toLocaleString()}$</p>
+                                    <p className="second-span" >Precio premium: {offer.premium_user_price.toLocaleString()}$</p>
+                                    <span style={{color: 'purple'}}>Ver actividad &#10095; </span>
                                 </div>
+                                    </div>
+
                                 </Link>
                         </div>
                     )}

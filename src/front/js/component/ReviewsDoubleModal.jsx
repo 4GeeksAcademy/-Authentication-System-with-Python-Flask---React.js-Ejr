@@ -39,11 +39,11 @@ const ReviewsDoubleModal = ({ offerId }) => {
                     .required('Campo obligatorio!'),
                 title: Yup.string()
                     .min(10, 'Debe tener 10 caracteres o más')
-                    .matches(/^[A-ZÁÉÍÓÚÑ][A-Za-zÁÉÍÓÚáéíóúÑñ0-9,.*!¡?¿\s- ]*$/, 'Debe comenzar con una letra mayúscula')
+                    .matches(/^[A-ZÁÉÍÓÚÑ][A-Za-zÁÉÍÓÚáéíóúÑñ0-9,.*!¡?¿\s-: ]*$/, 'Debe comenzar con una letra mayúscula')
                     .required('Campo obligatorio!'),
                 comment_text: Yup.string()
                     .min(50, 'Debe tener 50 caracteres o más')
-                    .matches(/^[A-ZÁÉÍÓÚÑ][A-Za-zÁÉÍÓÚáéíóúÑñ0-9,.*!¡?¿\s- ]*$/, 'Debe comenzar con una letra mayúscula')
+                    .matches(/^[A-ZÁÉÍÓÚÑ][A-Za-zÁÉÍÓÚáéíóúÑñ0-9,.*!¡?¿\s-: ]*$/, 'Debe comenzar con una letra mayúscula')
                     .required('Campo obligatorio!'),
                 review_image: Yup.mixed()
                     .required('Debes seleccionar al menos una imagen!')
@@ -133,9 +133,22 @@ const ReviewsDoubleModal = ({ offerId }) => {
                                                         <option key={store.trip.id} value="" label="Selecciona una ciudad" />
                                                         {store.trip && store.trip.length >= 1 && store.trip.map((city) => (
                                                             city.country === formik.values.country && (
-                                                                <option key={city?.id} value={city?.city}>
+
+                                                                <>
+                                                                <option  value={city?.city} >
                                                                     {city?.city}
                                                                 </option>
+                                                                <option  value={city?.city2}>
+                                                                    {city?.city2}
+                                                                </option>
+                                                                <option  value={city?.city3}>
+                                                                    {city?.city3}
+                                                                </option>
+                                                                <option  value={city?.city4}>
+                                                                    {city?.city4}
+                                                                </option>
+                                                            </>
+
                                                             )
                                                         ))}
                                                     </Field>
@@ -152,9 +165,16 @@ const ReviewsDoubleModal = ({ offerId }) => {
                                         </div>
                                         <div className="custom-input-password">
                                             <label htmlFor="comment_text" className={formik.values.comment_text ? 'input-label has-value' : 'input-label'}>Comentario:</label>
-                                            <Field type="text" name="comment_text" value={formik.values.comment_text} />
+                                            <Field
+                                                as="textarea"
+                                                name="comment_text"
+                                                className={formik.values.comment_text ? 'expanding-textarea' : 'expanding-textarea input-placeholder'}
+                                                rows={4}
+                                                cols={40}
+                                            />
                                             <ErrorMessage name='comment_text' />
                                         </div>
+
                                         <div className='modal-footer'>
                                             <button type="button" className="btn btn-primary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" >Siguiente</button>
                                         </div>

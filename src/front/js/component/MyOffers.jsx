@@ -30,7 +30,7 @@ const MyOffers = ({ searchQuery }) => {
                             key={business_offer.id}
                             className="card card-offer text-white mb-3 mt-4">
                             <Link to={`/offer/${business_offer.id}`}>
-                            <img src={business_offer.offer_image} className="card-img-top" alt="..."></img>
+                                <img src={business_offer.offer_image} className="card-img-top" alt="..."></img>
                             </Link>
                             <div className="card-body">
                                 <div className="div-title-offer">
@@ -117,12 +117,16 @@ const MyOffers = ({ searchQuery }) => {
                                     <button className='btn-buy'>Comprar</button>
                                 </Link> */}
 
+                                <Link to={`/offer/${business_offer.id}`}>
+                                    <button className='btn-buy'>Ver más</button>
+                                </Link>
+
                             </div>
-                         
+
                         </div>
-                   
-    )
-})}
+
+                    )
+                })}
         </div >
     );
 };

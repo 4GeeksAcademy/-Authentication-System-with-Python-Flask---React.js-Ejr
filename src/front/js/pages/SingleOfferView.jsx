@@ -24,7 +24,7 @@ const SingleOfferView = () => {
         <div className=' container'>
             <div className='general container '>
                 <div className='d-flex justify-content-between up-card-buttons '>
-                    <span className="go-results" onClick={goBack}>Ir a resultados</span>
+                    <span className="go-results" onClick={goBack}>&#10094; Ir a resultados</span>
                     <Link to='/opciones-de-pago' >
                         <button type="submit" className='btn-primary upbutton'>Comprar</button>
                     </Link>
@@ -37,7 +37,12 @@ const SingleOfferView = () => {
                     <h3>{offer?.offer_title}</h3>
                 </div>
 
-                <div className=''>
+
+                <div>
+                    {offer?.offer_little_description}
+                </div>
+
+                <div className='mt-3'>
                     {offer?.offer_description}
                 </div>
 
@@ -59,7 +64,9 @@ const SingleOfferView = () => {
 
                     <div><h4>Política de cancelación
                     </h4>
-                        <p>Cancela gratis esta actividad hasta 1 día antes de realizarla. Podrás revisar las opciones de cambios y cancelaciones que tienes en nuestra sección Mis Viajes.</p>
+                        <p>Cancela gratis esta actividad hasta 1 día antes de realizarla. Podrás revisar las opciones de cambios y cancelaciones que tienes en nuestra sección <Link to="/terms">
+                    <strong> términos y condiciones</strong>
+                    </Link> </p>
                     </div>
 
                     {/* <div>

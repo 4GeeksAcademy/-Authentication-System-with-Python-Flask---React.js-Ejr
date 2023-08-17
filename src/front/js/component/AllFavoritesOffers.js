@@ -131,6 +131,9 @@ const AllFavoritesOffers = ({ searchQuery }) => {
                                 </>
 
                                 }
+                                <Link to={`/offer/${favorite?.offer_id?.id}`}>
+                                    <button className='btn-buy'>Ver más</button>
+                                </Link>
 
                             </div>
 

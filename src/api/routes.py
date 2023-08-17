@@ -380,6 +380,7 @@ def create_offer():
             # trip_id=data['trip_id'],
             business_id=business_user.id,
             offer_title=data['offer_title'],
+            offer_little_description=data['offer_little_description'],
             offer_description=data['offer_description'],
             country=data['country'],
             city=data['city'],
@@ -406,9 +407,10 @@ def update_offer(offer_id):
 
     data = request.get_json()
     try:
-        offer.trip_id = data['trip_id']
-        offer.business_id = data['business_id']
+        offer.trip_id = data['trip_id'],
+        offer.business_id = data['business_id'],
         offer.offer_title = data['offer_title'],
+        offer.offer_little_description=data['offer_little_description'],
         offer.offer_description = data['offer_description'],
         offer.country = data['country'],
         offer.city = data['city'],

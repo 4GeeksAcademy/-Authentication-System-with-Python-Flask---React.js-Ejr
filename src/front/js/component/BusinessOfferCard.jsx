@@ -59,7 +59,7 @@ const BusinessOfferCard = ({ searchQuery }) => {
                     ></textarea>
                   </div>
                 ) : (
-                  <p className="card-text">{business_offer.offer_description}</p>
+                  <p className="card-text">{business_offer.offer_little_description}</p>
                 )}
                 <div className='offer-price'>
                   {editContentId === business_offer.id ? (
@@ -105,10 +105,12 @@ const BusinessOfferCard = ({ searchQuery }) => {
                     >
                       &#10008;
                     </button>
+
                   </div>
                 }
                 {store.user.username && <>
                   <FavoriteOffer offerId={business_offer.id} />
+
                   <Link to={`/offer/${business_offer.id}`}>
                     <button className='btn-buy'>Ver más</button>
                   </Link>
@@ -117,6 +119,7 @@ const BusinessOfferCard = ({ searchQuery }) => {
                   </Link>
                 </>
                 }
+
               </div>
             </div>
           )
