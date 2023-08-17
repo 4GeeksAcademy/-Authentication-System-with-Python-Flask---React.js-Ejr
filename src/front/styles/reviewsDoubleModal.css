@@ -29,3 +29,24 @@
     color: white;
     border: 1px solid white;
 }
+
+.expanding-textarea {
+    resize: none;
+    overflow: hidden;
+    overflow-y: auto;
+    transition: height 0.3s;
+    height: 100px;
+    width: 305px;
+}
+
+.expanding-textarea:focus {
+    height: 200px;
+}
+
+.input-placeholder::placeholder {
+    opacity: 0.6;
+}
+
+ErrorMessage{
+    color: red;
+}

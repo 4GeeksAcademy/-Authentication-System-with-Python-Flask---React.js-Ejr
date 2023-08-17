@@ -114,7 +114,8 @@ class Offers(db.Model):
     business_id = db.Column(db.Integer, ForeignKey(
         'business_user.id'), nullable=True)
     offer_title = db.Column(db.String(75), nullable=False)
-    offer_description = db.Column(db.String(250), nullable=False)
+    offer_little_description = db.Column(db.String(100), nullable=True)
+    offer_description = db.Column(db.String(5000), nullable=False)
     country = db.Column(db.String(250), nullable=False)
     city = db.Column(db.String(250), nullable=False)
     normal_user_price = db.Column(db.Integer, nullable=False)
@@ -133,6 +134,7 @@ class Offers(db.Model):
             "id": self.id,
             "trip_id": self.trip_id,
             "business_id": Business_user.query.get(self.business_id).serialize(),
+            "offer_little_description": self.offer_little_description,
             "offer_title": self.offer_title,
             "offer_description": self.offer_description,
             "country": self.country,
