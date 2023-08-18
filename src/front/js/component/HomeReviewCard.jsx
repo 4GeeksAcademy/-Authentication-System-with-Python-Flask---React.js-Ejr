@@ -13,7 +13,7 @@ const HomeReviewCard = () => {
 
     return (
         <div>
-            <div className="home-offer-h1">
+            <div className="home-offer-h1-review">
                 <h4><strong>Lo que más gustó a otros clientes:</strong> revisa las últimas reseñas</h4>
             </div>
 
@@ -21,6 +21,7 @@ const HomeReviewCard = () => {
 
                 {store.reviews
                     .slice(0, 10)
+                    .sort(() => Math.random() - 0.5) // Orden aleatorio
                     .map((review) =>
 
                         <div className='card-transition-review'>

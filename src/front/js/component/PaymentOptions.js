@@ -15,9 +15,8 @@ const PaymentOptions = () => {
   return (
     <div className="content-offer-details">
       <div className="offer-payment">
-        <h2>Un paso más <span><b>{store.user.username}</b> </span> y este viaje es tuyo</h2>
-
-
+        <h2>Un paso más <span><b>{store.user.username},</b> </span> y esta oferta es tuya!</h2>
+        
       </div>
       <div className='btn-payment-content'>
         <div className="btn-payment">

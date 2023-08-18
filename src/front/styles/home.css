@@ -26,8 +26,9 @@ body {
 }
 
 .div-donation {
-  text-align: center;
   margin-top: 2rem;
+  text-align: center;
+  display: block;
 }
 
 .btn-donation {
@@ -38,6 +39,7 @@ body {
   border: 1px solid #fff;
   overflow: hidden;
   transition: all .5s ease;
+  /* margin-right: 4.8rem; */
 }
 
 .btn-donation:hover {
@@ -46,3 +48,4 @@ body {
   background-color:  #0486db;
   color: white;
 }
+
