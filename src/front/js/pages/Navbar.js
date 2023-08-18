@@ -1,13 +1,13 @@
 import React, { useContext } from "react";
 import Moviestar from "../../img/Moviestar.png";
 import "../../styles/Navbar.css";
-import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
-
+import { Link, useNavigate } from "react-router-dom";
 
 
 export const Navbar = () => {
   const { store, actions } = useContext(Context);
+  const navigate = useNavigate()
 
 const logged = store.logged 
 

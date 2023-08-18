@@ -9,7 +9,7 @@ export const PassRecovery = () => {
 	const { store, actions } = useContext(Context);
 
     const [form, setForm] = React.useState({ email: "", secret_answer: ""})
-    const navigate = useNavigate
+    const navigate = useNavigate();
 
     const handleChange = (e) => {
         const key = e.target.name 
@@ -28,6 +28,7 @@ export const PassRecovery = () => {
                 body: JSON.stringify(form)
             })
             const data = await res.json()
+            localStorage.setItem("token", JSON.stringify(data?.token))
             console.log(data)
             navigate("/pass-change")
         } catch (error) {
