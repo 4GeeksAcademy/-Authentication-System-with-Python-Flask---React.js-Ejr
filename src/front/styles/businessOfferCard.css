@@ -2,7 +2,7 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    width: 70%;
+    width: 100%;
     margin: 0 auto;
     margin-top: 30px;
 }
@@ -11,7 +11,7 @@
     background: white;
     backdrop-filter: 10px;
     height: 610px;
-    width: calc(50% - 10px);
+    width: calc(33.33% - 10px);
     margin-bottom: 20px;
     position: relative;
     color: black;
@@ -91,18 +91,17 @@
     transform: translateY(50%);
     border: 1px solid white;
     transition: background-color 0.3s ease, transform 0.2s ease;
-
+    margin-left: 2rem;
     z-index: 50;
 }
-    margin-left: 2rem;
 
 
 .fav-offer-span {
     position: absolute;
     border-radius: 50%;
     background-color: white;
-    width: 1.8rem;
-    height: 1.8rem;
+    width: 1.6rem;
+    height: 1.6rem;
     text-align: center;
     z-index: 2;
     padding-top: .1rem;
@@ -110,7 +109,11 @@
     z-index: 1;
     right: 46%;
     cursor: pointer;
-    transition: transform 0.3s ease;
+    transition: transform .5s ease;
+}
+
+.fav-offer-span:hover {
+    transform: scale(1.1);
 }
 
 .btn-buy:hover {
@@ -169,25 +172,6 @@
     color: black;
 }
 
-/* Media query */
-@media screen and (max-width: 1200px) {
-    .card-offer {
-        width: calc(50% - 10px);
-    }
-}
-
-@media screen and (max-width: 768px) {
-    .card-offer {
-        width: calc(50% - 10px);
-    }
-}
-
-@media screen and (max-width: 576px) {
-    .card-offer {
-        width: 100%;
-    }
-}
-
 .btn-publish-review {
     width: 40%;
     background-color: var(--color-3);
@@ -211,7 +195,7 @@
     margin-left: 2rem;
 }
 
-.btn-publish-review:hover{
+.btn-publish-review:hover {
     background-color: #ffc439;
     /* Cambia el color de fondo al hacer hover */
     cursor: pointer;
@@ -222,7 +206,41 @@
     border: 1px solid black;
 }
 
-.single-offer-view{
+.single-offer-view {
     width: 85%;
     margin: auto;
+}
+
+/* Media query */
+@media screen and (max-width: 1200px) {
+    .cards-offer {
+        width: 80%;
+    }
+
+    .card-offer {
+        width: calc(50% - 10px) !important;
+    }
+}
+
+@media screen and (max-width: 960px) {
+
+    .cards-offer {
+        width: 100%;
+    }
+
+    .card-offer {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 768px) {
+
+    .cards-offer {
+        width: 100%;
+        display: block;
+    }
+
+    .card-offer {
+        width: 22rem !important;
+    }
 }

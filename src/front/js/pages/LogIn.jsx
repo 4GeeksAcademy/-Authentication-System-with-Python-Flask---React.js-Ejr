@@ -27,24 +27,25 @@ const LogIn = () => {
           // console.log("is Logged:", isLogged);
           if (isLogged) {
             // Connexion réussie
-            Swal.fire({
-              title: `Bienvenid@ de nuevo, ${store.user.username}!`,
-              text: "",
-              icon: 'info',
-              time: 2000
-            });
-
             setTimeout(() => {
-              navigate("/");
-            }, 2000);
-          } else {
+              Swal.fire({
+                title: `Bienvenid@ de nuevo, ${store.user.username || store.business_user.business_name}!`,
+                text: "",
+                icon: 'info',
+                timer: 1000
+              });
+            }, 0); // Utilisez un délai de 0 millisecondes pour que le Swal.fire soit en attente
 
-            Swal.fire({
-              title: "Email and/or password are incorrect",
-              text: '',
-              icon: 'error',
-              time: 2000
-            });
+            navigate("/");
+          } else {
+            setTimeout(() => {
+              Swal.fire({
+                title: "Email and/or password are incorrect",
+                text: '',
+                icon: 'error',
+                timer: 2000
+              });
+            }, 1000);
           }
         } catch (error) {
           // Handle any errors that occurred during login

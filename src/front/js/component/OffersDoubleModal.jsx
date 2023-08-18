@@ -91,24 +91,27 @@ const OffersDoubleModal = () => {
                         title: "¡Oferta publicada!",
                         text: "Tu oferta se publicó correctamente",
                         icon: "success",
-                        timer: 2000
+                        timer: 1000
                     });
 
                     setStatus({ success: true });
                     setSelectedFile(null);
                     setTimeout(() => {
                         window.location.reload();
-                    }, 2000);
+                    }, 1000);
 
                 } catch (error) {
                     console.error("Error submitting form:", error);
-                    Swal.fire({
-                        title: "Error",
-                        text: "Algo salió mal.",
-                        icon: "error",
-                        timer: 2000
-                    });
                     setStatus({ error: true });
+
+                    setTimeout(() => {
+                        Swal.fire({
+                            title: "Error",
+                            text: "Algo salió mal.",
+                            icon: "error",
+                            timer: 1000
+                        });
+                    }, 1000);
                 } finally {
                     setSubmitting(false);
                 }
@@ -118,7 +121,7 @@ const OffersDoubleModal = () => {
                 <div>
                     <div>
                         <Draggable>
-                            <button  type="button"   className="btn floating-button" data-bs-toggle="modal" data-bs-target="#exampleModalToggle">
+                            <button type="button" className="btn floating-button" data-bs-toggle="modal" data-bs-target="#exampleModalToggle">
                                 Publica tu oferta
                             </button>
                         </Draggable>
@@ -255,7 +258,7 @@ const OffersDoubleModal = () => {
                                                 {selectedFile && <ImagePreview file={selectedFile} />}
                                             </div>
                                             <div className='modal-footer'>
-                                                <button type="button"className="btn btn-primary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal" >Volver al formulario anterior</button>
+                                                <button type="button" className="btn btn-primary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal" >Volver al formulario anterior</button>
                                                 <button type="submit" className="btn btn-primary btn-signup">
                                                     Publicar mi oferta
                                                 </button>

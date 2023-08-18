@@ -10,13 +10,13 @@ const Navbar = () => {
       title: 'Cerraste sesión.',
       text: 'Esperamos verte pronto!',
       icon: 'info',
-      timer: 5000
+      timer: 1000
     });
 
     setTimeout(() => {
       actions.logout();
       window.location.href = '/';
-    }, 2000);
+    }, 1000);
   }
   return (
     <nav className="navbar container-fluid navbar-expand navbar-light">

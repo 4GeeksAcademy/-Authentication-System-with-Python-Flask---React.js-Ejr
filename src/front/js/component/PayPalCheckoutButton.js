@@ -18,9 +18,9 @@ const PaypalCheckoutButton = (props) => {
         title: "¡Disfruta del viaje!",
         text: "Disfruta del viaje!",
         icon: "success",
-        timer: 2000
+        timer: 1000
       });
-    }, 2000);
+    }, 1000);
   }
 
   if (error) {
@@ -29,9 +29,9 @@ const PaypalCheckoutButton = (props) => {
         title: "Error",
         text: error,
         icon: "error",
-        timer: 2000
+        timer: 1000
       });
-    }, 2000);
+    }, 1000);
   }
 
   return (

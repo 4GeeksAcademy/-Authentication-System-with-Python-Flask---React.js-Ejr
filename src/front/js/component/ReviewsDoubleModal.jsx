@@ -75,24 +75,27 @@ const ReviewsDoubleModal = ({ offerId }) => {
                         title: "Reseña publicada",
                         text: "Tu reseña se publicó correctamente",
                         icon: "success",
-                        timer: 2000
+                        timer: 1000
                     });
 
                     setStatus({ success: true });
                     setSelectedFile(null);
                     setTimeout(() => {
                         window.location.reload();
-                    }, 2000);
+                    }, 1000);
 
                 } catch (error) {
                     console.error("Error submitting form:", error);
-                    Swal.fire({
-                        title: "Error",
-                        text: "Algo salió mal",
-                        icon: "error",
-                        timer: 2000
-                    });
                     setStatus({ error: true });
+
+                    setTimeout(() => {
+                        Swal.fire({
+                            title: "Error",
+                            text: "Algo salió mal.",
+                            icon: "error",
+                            timer: 1000
+                        });
+                    }, 1000);
                 } finally {
                     setSubmitting(false);
                 }
@@ -129,13 +132,13 @@ const ReviewsDoubleModal = ({ offerId }) => {
                                                 <div className='custom-input-password'>
                                                     <label htmlFor="country" >País:</label><br />
                                                     <Field as="select" name="country">
-                                                            <option value="" label="Selecciona un país" />
-                                                            {store.trip && store.trip.length >= 1 && store.trip?.map((country) => (
-                                                                <option key={country?.id} value={country?.country}>
-                                                                    {country?.country}
-                                                                </option>
-                                                            ))}
-                                                        </Field>
+                                                        <option value="" label="Selecciona un país" />
+                                                        {store.trip && store.trip.length >= 1 && store.trip?.map((country) => (
+                                                            <option key={country?.id} value={country?.country}>
+                                                                {country?.country}
+                                                            </option>
+                                                        ))}
+                                                    </Field>
                                                 </div>
 
                                                 <ErrorMessage name="country" />
@@ -144,26 +147,26 @@ const ReviewsDoubleModal = ({ offerId }) => {
                                                     <label htmlFor="city" >Ciudad:</label><br />
                                                     <Field as="select" name="city">
 
-                                                            <option value="" label="Selecciona una ciudad" />
-                                                            {store.trip && store.trip.length >= 1 && store.trip.map((city) => (
-                                                                city.country === formik.values.country && (
-                                                                    <React.Fragment key={`${city.country}-${city.city}`}>
-                                                                        <option value={city?.city}>
-                                                                            {city?.city}
-                                                                        </option>
-                                                                        <option value={city?.city2}>
-                                                                            {city?.city2}
-                                                                        </option>
-                                                                        <option value={city?.city3}>
-                                                                            {city?.city3}
-                                                                        </option>
-                                                                        <option value={city?.city4}>
-                                                                            {city?.city4}
-                                                                        </option>
-                                                                    </React.Fragment>
-                                                                )
-                                                            ))}
-                                                        </Field>
+                                                        <option value="" label="Selecciona una ciudad" />
+                                                        {store.trip && store.trip.length >= 1 && store.trip.map((city) => (
+                                                            city.country === formik.values.country && (
+                                                                <React.Fragment key={`${city.country}-${city.city}`}>
+                                                                    <option value={city?.city}>
+                                                                        {city?.city}
+                                                                    </option>
+                                                                    <option value={city?.city2}>
+                                                                        {city?.city2}
+                                                                    </option>
+                                                                    <option value={city?.city3}>
+                                                                        {city?.city3}
+                                                                    </option>
+                                                                    <option value={city?.city4}>
+                                                                        {city?.city4}
+                                                                    </option>
+                                                                </React.Fragment>
+                                                            )
+                                                        ))}
+                                                    </Field>
 
 
                                                 </div>

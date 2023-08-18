@@ -69,21 +69,24 @@ const SignUpBusiness = () => {
               title: "Exitoso",
               text: "Tu registro fue todo un éxito!!! Revisa tu correo electrónico.",
               icon: "success",
-              timer: 2000
+              timer: 1000
             });
             setTimeout(() => {
               navigate("/reviews");
-            }, 2000);
+            }, 1000);
 
           })
           .catch((error) => {
             console.error("Error submitting form:", error);
-            Swal.fire({
-              title: "Error",
-              text: "Email already exists",
-              icon: "error",
-              timer: 2000
-            });
+
+            setTimeout(() => {
+              Swal.fire({
+                title: "Error",
+                text: "Email already exists",
+                icon: "error",
+                timer: 1000
+              });
+            }, 1000);
           })
           .finally(() => {
             setSubmitting(false);

@@ -87,10 +87,14 @@ const AllFavoritesReviews = ({ searchQuery }) => {
               )}
               <div className="likes card-likes">
                 <span className="author-review">
-                  Escrito por : <span>{favorite.review_id?.user.username}</span>{" "}
+                  Publicado por : <span>{favorite.review_id?.user.username}</span>{" "}
                 </span>
-                <FavoriteReview reviewId={favorite.review_id?.id} />
-                <Likes reviewId={favorite.review_id?.id} />
+                <div className="icons-review d-flex align-items-center justify-content-around">
+                  <span className="me-3">
+                    <FavoriteReview reviewId={favorite.review_id?.id} />
+                  </span>
+                  <Likes reviewId={favorite.review_id?.id} />
+                </div>
               </div>
             </div>
           ))}
