@@ -20,22 +20,21 @@ export const Login = () => {
     const onSubmit = async (e) => {
         e.preventDefault()
         const login = await actions.login(form)
-        if (login === true){navigate("/")} 
+        if (login === true){
+            navigate("/")
+        }
     }
-    // useEffect(() => {
-    //     console.log(store.logged)
-    // }, []);
-
+   
 	return (
 		<div className="text-center mt-5">
 			<img id="image" src={Moviestar} />
 		<form onSubmit={onSubmit}>
             <div>
-                <input className="text-center" name="email" onChange={handleChange} type="text" id="username1" placeholder="Usuario" value={form.email} required></input>
+                <input className="text-center" name="email" onChange={handleChange} type="text" id="username1" placeholder="Username" value={form.email} required></input>
             </div>
             <br/>
             <div>
-                <input className="text-center" name="password" onChange={handleChange} type="password" id="password1" placeholder="Contraseña" value={form.password} required></input>
+                <input className="text-center" name="password" onChange={handleChange} type="password" id="password1" placeholder="Password" value={form.password} required></input>
                 <br/>
                 <Link to={"/pass-recovery"} id="ps" href="#aja">Restore password</Link>
             </div>

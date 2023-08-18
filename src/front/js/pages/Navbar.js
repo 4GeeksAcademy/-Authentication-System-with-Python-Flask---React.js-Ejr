@@ -1,15 +1,21 @@
 import React, { useContext } from "react";
 import Moviestar from "../../img/Moviestar.png";
 import "../../styles/Navbar.css";
-import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
-
+import { Link, useNavigate } from "react-router-dom";
 
 
 export const Navbar = () => {
   const { store, actions } = useContext(Context);
+  const navigate = useNavigate()
 
 const logged = store.logged 
+
+const handleLogout = () => {
+
+  actions.logout()
+  navigate("/")
+}
 
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -29,9 +35,9 @@ const logged = store.logged
                 Menu
               </a>
               <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li><a className="dropdown-item" href="#">Movies</a></li>
+                <li><a className="dropdown-item" href="/movie">Movies</a></li>
                 <li><a className="dropdown-item" href="#">Series</a></li>
-                <li><a className="dropdown-item" href="#">Actors and Directors</a></li>
+                <li><a className="dropdown-item" href="actors">Actors and Directors</a></li>
               </ul>
             </li>
 
@@ -39,10 +45,11 @@ const logged = store.logged
               <Link to={"/login"} className="nav-link text-white">Log in</Link>
             </li>)
             :
+
             (<div>
-                <li className="nav-item">
-                  <Link to={"/login"} className="nav-link text-white">Sign off</Link>
-                </li>
+                  <li className="nav-item">
+              <button onClick={handleLogout} className="nav-link text-white btn">Sign Off</button>
+            </li>
                 <div class="dropdown">
               <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Dropdown button
@@ -55,6 +62,7 @@ const logged = store.logged
             </div>
             </div>
             )}
+
 
             <li className="nav-item dropdown">
               <a className="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">

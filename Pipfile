@@ -20,9 +20,8 @@ flask-admin = "*"
 typing-extensions = "*"
 flask-jwt-extended = "*"
 requests = "*"
-marshmallow = "*"
-flask-marshmallow = "*"
-marshmallow-sqlalchemy = "*"
+bcrypt = "*"
+
 
 [requires]
 python_version = "3.10"
