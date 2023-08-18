@@ -25,7 +25,7 @@ const SingleOfferView = () => {
         // console.log("Fetch for all offers in single offer view is working");
     }, []);
 
-    console.log(reviews)
+    // console.log(reviews) 
 
     return (
         <div className='single-offer-view'>
@@ -91,22 +91,16 @@ const SingleOfferView = () => {
                     </div> */}
 
                         <div>
-                            <h4>Reseñas de otros viajeros:</h4>
+                            <h4>Reseñas:</h4>
+                            {/* 
+                        {reviews.map(review => (
 
-                            {reviews && reviews.length >= 1 && reviews.map(review => {
-                                return (
-                                    <Link to={`/review/${review.id}`} className='d-flex' style={{ color: 'black' }}>
-                                        <ul className='list-unstyled '>
-                                            <li><strong><i>"{review.title}" &nbsp;</i></strong></li>
-                                            <li>Escrita por: &nbsp;<strong>{review.user.username}</strong></li>
-                                        </ul>
-                                    </Link>
+                                    <div>{review.title}</div>,
+                                    <div>{}</div>
 
-                                )
-                            }
-                            )}
+                        ))} */}
+
                         </div>
-
                     </div>
                     <div className='d-flex justify-content-center'>
                         <Link to='/opciones-de-pago' >

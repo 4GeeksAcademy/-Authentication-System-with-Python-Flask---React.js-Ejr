@@ -23,10 +23,10 @@ const Footer = () => {
 					<div className="col-2 footer-business">
 						<h5>Empresa</h5>
 						<ul className="nav flex-column">
-							<li className="nav-item mb-2"><Link to="#" className="nav-link p-0 text-muted" >Política de cookies</Link></li>
-							<li className="nav-item mb-2"><Link to="#" className="nav-link p-0 text-muted" >Política de privacidad</Link></li>
+							<li className="nav-item mb-2"><Link to="/cookies" className="nav-link p-0 text-muted" >Política de cookies</Link></li>
+							<li className="nav-item mb-2"><Link to="/politica-privacidad" className="nav-link p-0 text-muted" >Política de privacidad</Link></li>
 							<li className="nav-item mb-2"><Link to="/terms" className="nav-link p-0 text-muted" >Términos de servicio</Link></li>
-							<li className="nav-item mb-2"><Link to="#" className="nav-link p-0 text-muted" >Información de la empresa</Link></li>
+							<li className="nav-item mb-2"><Link to="/about" className="nav-link p-0 text-muted" >Información de la empresa</Link></li>
 							<li className="nav-item mb-2"><Link to="/contact" className="nav-link p-0 text-muted">Contacto</Link></li>
 						</ul>
 					</div>
