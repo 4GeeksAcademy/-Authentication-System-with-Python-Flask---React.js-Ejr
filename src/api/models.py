@@ -1,6 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import relationship
-
+# from sqlalchemy.ext.hybrid import hybrid_property
 
 db = SQLAlchemy()
 
@@ -22,6 +22,7 @@ movie_genres_association = db.Table('movie_genres',
     db.Column('genre_id', db.Integer, db.ForeignKey('genre.id'))
 )
 
+# GENERE CLASS
 class Genre(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50))
@@ -35,7 +36,7 @@ class Genre(db.Model):
         "name": self.name,
         }
 
-
+# USER CLASS
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(30), nullable=True)
@@ -55,6 +56,7 @@ class User(db.Model):
             # do not serialize the password, security breach
         }
 
+# MOVIE CLASS
 class Movie(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(180))
@@ -64,10 +66,7 @@ class Movie(db.Model):
     trailer_key = db.Column(db.String(180))
     trailer_type = db.Column(db.String(50))
     trailer_id = db.Column(db.String(180))
-
-    # Relación con la tabla Actor
     actors = db.relationship('Actor', secondary='movie_actor')
-    # Relación con la tabla Director
     directors = db.relationship('Director', secondary='movie_director')
     genres = db.relationship('Genre', secondary=movie_genres_association, backref='movie')
 
@@ -80,24 +79,27 @@ class Movie(db.Model):
             "name": self.name,
             "description": self.description,
             "ranking": self.ranking,
-            "actors": [actor.serialize() for actor in self.actors],  # Serializar los actores asociados
-            "directors": [director.serialize() for director in self.directors],  # Serializar los directores asociados
+            "actors": [actor.serialize() for actor in self.actors],  
+            "directors": [director.serialize() for director in self.directors], 
             "image": self.image,
             "trailer_key": self.trailer_key,
             "trailer_type": self.trailer_type,
             "trailer_id": self.trailer_id,
             "genres": [genre.serialize() for genre in self.genres], 
         }
+   
 
+    
+# ACTOR CLASS
 class Actor(db.Model):
     id = db.Column(db.Integer, primary_key= True)
     name = db.Column(db.String(80))
     known_for_department = db.Column(db.String(80))
     character = db.Column(db.String(200))
     profile_path  = db.Column(db.String(200))
-    biography = db.Column(db.Text)  # Text porque una biografía puede ser larga
-    birthday = db.Column(db.Date)  # Usamos Date si es una fecha sin tiempo
-    deathday = db.Column(db.Date, nullable=True)  # Puede ser None, por lo que nullable=True
+    biography = db.Column(db.Text) 
+    birthday = db.Column(db.Date)  
+    deathday = db.Column(db.Date, nullable=True)  
     place_of_birth = db.Column(db.String(200))
 
     def __repr__(self):
@@ -114,14 +116,18 @@ class Actor(db.Model):
         "birthday": self.birthday, 
         "deathday":  self.deathday, 
         "place_of_birth": self.place_of_birth, 
-
         }
 
+# DIRECTOR CLASS
 class Director(db.Model):
     id = db.Column(db.Integer, primary_key= True)
     name = db.Column(db.String(80))
-    description = db.Column(db.String(800))
-    other_movies = db.Column(db.String(200))
+    known_for_department = db.Column(db.String(80))
+    profile_path  = db.Column(db.String(200))
+    biography = db.Column(db.Text) 
+    birthday = db.Column(db.Date)  
+    deathday = db.Column(db.Date, nullable=True)  
+    place_of_birth = db.Column(db.String(200))
     
     def __repr__(self):
         return f'<Director {self.id} {self.name}>'
@@ -130,38 +136,38 @@ class Director(db.Model):
         return {
         "id": self.id,
         "name": self.name,
-        "description": self.description,
-        "other_movies": self.other_movies, 
+        "known_for_department": self.known_for_department,
+        "profile_path": self.profile_path,
+        "biography": self.biography, 
+        "birthday": self.birthday, 
+        "deathday":  self.deathday, 
+        "place_of_birth": self.place_of_birth, 
         }
 
-
     
 
 
     
-# faltara añadir series
 
-# class Favorite(db.Model):
-#     id = db.Column(db.Integer, primary_key=True)
-#     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))  
-#     actor_id = db.Column(db.Integer, db.ForeignKey('actor.id')) 
-#     director_id = db.Column(db.Integer, db.ForeignKey('director.id'))
-#     movie_id = db.Column(db.Integer, db.ForeignKey('movie.id'))
-#     series_id = db.Column(db.Integer, db.ForeignKey('series.id'))
-#     user = db.relationship("User", backref="favorites")
-#     actor = db.relationship("Actor", backref="favorites")
+class Favorite(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)  
+    actor_id = db.Column(db.Integer, db.ForeignKey('actor.id'), nullable=True) 
+    director_id = db.Column(db.Integer, db.ForeignKey('director.id'), nullable=True)
+    movie_id = db.Column(db.Integer, db.ForeignKey('movie.id'), nullable=True)
+    user = db.relationship("User", backref="favorites")
+    actor = db.relationship("Actor", backref="favorites")
+    director = db.relationship("Director", backref="favorites")
+    movie = db.relationship("Movie", backref="favorites")
 
+    def __repr__(self):
+        return f'Favorite {self.id}'
 
-
-#     def __repr__(self):
-#         return f'Favorite {self.id}'
-
-#     def serialize(self):
-#         return {
-#             "id": self.id,
-#             "user_id": self.user_id,
-#             "actor_id": self.actor_id,
-#             "director_id": self.director_id,
-#             "movie_id": self.movie_id,
-#             "series_id": self.series_id
-#         }
+    def serialize(self):
+        return {
+            "id": self.id,
+            "user_id": self.user_id,
+            "actor_id": self.actor_id,
+            "director_id": self.director_id,
+            "movie_id": self.movie_id,
+        }

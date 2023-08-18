@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Movie, Actor, Director, Genre
+from api.models import db, User, Movie, Actor, Director, Genre, Favorite
 from api.utils import generate_sitemap, APIException
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
 import requests
@@ -11,31 +11,18 @@ from flask import request, jsonify
 from flask_cors import CORS
 import bcrypt 
 
+
 app = Flask(__name__)
 CORS(app)
-
+# ma = Marshmallow(app)
 
 
 
 api = Blueprint('api/user', __name__)
 
 
-# @api.route('/hello', methods=['POST', 'GET'])
-# def handle_hello():
 
-#     response_body = {
-#         "message": "Hello! I'm a message that came from the backend, check the network tab on the google inspector and you will see the GET request"
-#     }
-
-#     return jsonify(response_body), 200
-
-@api.route("/current_user", methods = ["GET"])
-@jwt_required()
-def current_user():
-    current_user_id = get_jwt_identity()
-    user = User.query.get(current_user_id)
-    return jsonify({"user": user.serialize()})
-
+# HARRY POTTER MOVIES LOAD 
 @api.route("/load_database", methods = ["GET"])
 def load_database():
     
@@ -86,11 +73,12 @@ def load_database():
 
     return jsonify(response_body), 200
 
+
+
 def get_genres_from_movie(movie_id):
     # URL de la API para obtener los detalles de una película por su ID
     url = f"https://api.themoviedb.org/3/movie/{movie_id}"
     
-    # Tus headers con la autorización
     headers = {
         "accept": "application/json",
         "Authorization": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5NGVjZTYyODBhZjZiMGQ0YzY1MWRiOWViYTYwYzVlNSIsInN1YiI6IjY0YzNmNTRkZWMzNzBjMDExYzQ2YmFhMiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.DmLTYp48jRT5TkS8IG0FAEuFro5YNx6S6pO1WghQFOw"
@@ -99,7 +87,6 @@ def get_genres_from_movie(movie_id):
     # Realizar la solicitud GET a la API
     response = requests.get(url, headers=headers)
 
-    # Si la respuesta es exitosa, extraer los géneros
     if response.status_code == 200:
         genres_data = response.json().get('genres', [])
         genres = [Genre(name=genre['name']) for genre in genres_data]
@@ -117,10 +104,8 @@ def get_movie_videos(movie_id):
     }
     response = requests.get(url, headers=headers)
 
-    # Extraer los datos 
     videos = response.json().get('results', [])
 
-    # Buscar el tráiler oficial
     trailer = next((video for video in videos if video['type'] == 'Trailer' and video['official']), None)
 
     return trailer
@@ -151,30 +136,34 @@ def get_person_details(person_id):
     birthday = data.get('birthday')
     deathday = data.get('deathday')
     place_of_birth = data.get('place_of_birth')
+    profile_path = data.get('profile_path')
     
-    return biography, birthday, deathday, place_of_birth
+    return {
+        'biography': biography, 
+        'birthday': birthday, 
+        'deathday': deathday, 
+        'place_of_birth': place_of_birth, 
+        'profile_path': profile_path
+    }
 
 
 
 
 def get_actors_from_movie(movie_id):
-    """Obtiene los actores de una película por su ID."""
-    # Obtener los créditos
     credits = get_movie_credits(movie_id)
 
     print(credits)
-    # Extraer los actores de los créditos
+
     actors = []
     for actor_data in credits["cast"]:
         actor = Actor.query.get(actor_data["id"])
         
         person_details = get_person_details(actor_data["id"])
-        if len(person_details) == 4:
-            biography, birthday, deathday, place_of_birth = person_details
-        else:
-            # Manejar el error como mejor te parezca
-            # Por ejemplo, podrías asignar valores predeterminados
-            biography, birthday, deathday, place_of_birth = None, None, None, None
+        biography = person_details.get('biography')
+        birthday = person_details.get('birthday')
+        deathday = person_details.get('deathday')
+        place_of_birth = person_details.get('place_of_birth')
+        profile_path = person_details.get('profile_path')
 
         if actor is None:
             actor = Actor(
@@ -193,45 +182,74 @@ def get_actors_from_movie(movie_id):
         
     # Guardar los cambios en la base de datos
     db.session.commit()
+
     return actors
 
-
 def get_directors_from_movie(movie_id):
-    """Obtiene los direcotres de una película por su ID."""
-    # Obtener los créditos
     credits = get_movie_credits(movie_id)
     print("Créditos completos:", credits)
 
-    # Extraer los directores de los créditos
     directors = []
-
     for crew_member in credits.get("crew", []):
         if crew_member.get("job") == "Director":
             print("Encontrado director:", crew_member)
+
             director = Director.query.get(crew_member["id"])
+            person_details = get_person_details(crew_member["id"])
+            biography = person_details.get('biography')
+            birthday = person_details.get('birthday')
+            deathday = person_details.get('deathday')
+            place_of_birth = person_details.get('place_of_birth')
+            profile_path = person_details.get('profile_path')
+
             if director is None:
                 director = Director(
                     id=crew_member["id"],
                     name=crew_member["name"],
-                    description=crew_member.get("known_for_department", ""),
-                    other_movies=crew_member.get("") 
+                    known_for_department=crew_member.get("known_for_department", ""),
+                    biography=biography,
+                    birthday=birthday,
+                    deathday=deathday,
+                    place_of_birth=place_of_birth,
+                    profile_path=profile_path
                 )
                 db.session.add(director)
             directors.append(director)
-
-        
-    # Guardar los cambios en la base de datos
+   
     db.session.commit()
     return directors
 
 
-    
 
-@api.route('/users', methods=['GET'])
-@jwt_required()
-def get_users():
-    users = User.query.all()
-    return jsonify([user.serialize() for user in users]), 200
+
+
+@app.route('/users/<int:user_id>/favorites', methods=['GET'])
+def get_user_favorites():
+    user_id = 1  
+
+    favorites = Favorite.query.filter_by(user_id=user_id).all()
+
+    fav_actors = []
+    fav_directors = []
+    fav_movies = []
+
+    for fav in favorites:
+        if fav.actor_id:
+            fav_actors.append(fav.actor.serialize())
+        if fav.director_id:
+            fav_directors.append(fav.director.serialize())
+        if fav.movie_id:
+            fav_movies.append(fav.movie.serialize())
+
+    response_body = {
+        "msg": "This is the list of favorites for the user",
+        "actors": fav_actors,
+        "directors": fav_directors,
+        "movies": fav_movies,
+    }
+
+    return jsonify(response_body), 200
+
 
 
 @api.route('/movies', methods=['GET'])
@@ -249,11 +267,41 @@ def get_actors():
     actors = Actor.query.all()
     return jsonify([actor.serialize() for actor in actors]), 200
 
-
 @api.route('/actors/<int:actor_id>', methods=['GET'])
 def get_actor(actor_id):
     actor = Actor.query.get(actor_id)
     return jsonify(actor.serialize()), 200
+
+@api.route('/directors', methods=['GET'])
+def get_directors():
+    directors = Director.query.all()
+    return jsonify([director.serialize() for director in directors]), 200
+
+@api.route('/directors/<int:director_id>', methods=['GET'])
+def get_director(director_id):
+    director = Director.query.get(director_id)
+    if director:
+        return jsonify(director.serialize()), 200
+    else:
+        return jsonify({"error": "Director not found"}), 404
+
+
+
+# USER ROUTES
+@api.route("/current_user", methods = ["GET"])
+@jwt_required()
+def current_user():
+    current_user_id = get_jwt_identity()
+    user = User.query.get(current_user_id)
+    return jsonify({"user": user.serialize()})    
+
+
+@api.route('/users', methods=['GET'])
+@jwt_required()
+def get_users():
+    users = User.query.all()
+    return jsonify([user.serialize() for user in users]), 200
+
 
 @api.route('/users/<int:user_id>', methods=['GET'])
 @jwt_required()
@@ -325,6 +373,10 @@ def delete_user(user_id):
     return jsonify({"msg": "User deleted"}), 200
 
 
+
+
+
+# SIGNE, PASS RECOVERY & LOGIN ROUTES
 @api.route('/signup', methods=['POST'])
 def create_new_user():
     if not request.is_json:
