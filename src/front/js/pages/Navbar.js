@@ -1,13 +1,13 @@
 import React, { useContext } from "react";
 import Moviestar from "../../img/Moviestar.png";
 import "../../styles/Navbar.css";
-import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
-
+import { Link, useNavigate } from "react-router-dom";
 
 
 export const Navbar = () => {
   const { store, actions } = useContext(Context);
+  const navigate = useNavigate()
 
 const logged = store.logged 
 
@@ -35,9 +35,9 @@ const handleLogout = () => {
                 Menu
               </a>
               <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li><a className="dropdown-item" href="#">Movies</a></li>
+                <li><a className="dropdown-item" href="/movie">Movies</a></li>
                 <li><a className="dropdown-item" href="#">Series</a></li>
-                <li><a className="dropdown-item" href="#">Actors and Directors</a></li>
+                <li><a className="dropdown-item" href="actors">Actors and Directors</a></li>
               </ul>
             </li>
 

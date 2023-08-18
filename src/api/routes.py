@@ -7,6 +7,7 @@ from api.utils import generate_sitemap, APIException
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
 import requests
 import os
+from flask import request, jsonify
 from flask_cors import CORS
 import bcrypt 
 
@@ -405,22 +406,32 @@ def passRecovery():
     if user is None or user.secret_answer != secret_answer:
         return jsonify({"msg" : "Invalid email or secret_answer"}), 401
 
-
-    return jsonify ({"msg" : "ok"}), 200
+    access_token = create_access_token(identity=user.id)
+    
+    return jsonify ({"token": access_token, "msg" : "ok"}), 200
 
 
 @api.route('/pass-change', methods=['PATCH'])
+@jwt_required()
 def passChange(): 
-
     new_password = request.json.get("new_password", None)
-    confirm_password = request.json.get ("confirm_password", None)
+    confirm_password = request.json.get("confirm_password", None)
 
     if not new_password or new_password != confirm_password:
-        return jsonify({"msg": "Las contraseñas no coinciden"}), 400
-            
-    if new_password == confirm_password :
-         return jsonify ({"msg" : "contrasaeña actualizada correctamente"}), 200
+        return jsonify({"msg": "Passwords don't match"}), 400
     
+    user_id = get_jwt_identity()
+    user = User.query.get(user_id)
+
+    if not user:
+        return jsonify({'msg': 'User not found'}), 404
+
+    hashed_password = bcrypt.hashpw(new_password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
+
+    user.password = hashed_password
+    db.session.commit()
+
+    return jsonify({"msg": "Password updated successfully"}), 200
 
 @api.route('/validate', methods=['GET'])
 @jwt_required()

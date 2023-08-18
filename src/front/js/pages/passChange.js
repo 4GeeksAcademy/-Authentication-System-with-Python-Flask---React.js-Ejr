@@ -1,7 +1,6 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from 'react';
 import { Context } from "../store/appContext";
 import Moviestar from "../../img/Moviestar.png";
-import "../../styles/Login.css";
 import { useNavigate } from "react-router-dom";
 
 
@@ -9,7 +8,7 @@ export const PassChange = () => {
 	const { store, actions } = useContext(Context);
 
     const [form, setForm] = React.useState({ new_password: "", confirm_password: ""})
-    const navigate = useNavigate
+    const navigate = useNavigate();
 
     const handleChange = (e) => {
         const key = e.target.name 
@@ -19,20 +18,12 @@ export const PassChange = () => {
 
     const onSubmit = async (e) => {
         e.preventDefault()
-        const apiUrl = `${process.env.BACKEND_URL}api/pass-change`
-        try {
-            console.log(apiUrl,form)
-            const res = await fetch(apiUrl, {
-                method:"PATCH",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(form)
-            })
-            const data = await res.json()
-            console.log("su contraseña se modificó correctamente")
+
+        const passchange = await actions.passchange(form)
+        if (passchange === true){
             navigate("/")
-        } catch (error) {
-            console.error("Las contraseñas no coinciden")
         }
+       
     }
 
 	return (

@@ -37,7 +37,8 @@ export const SignIn = () => {
         e.preventDefault()
 
         const signup = await actions.signup(user)
-        if (signup === true) { navigate("/") }
+        if (signup === true) { 
+            navigate("/") }
 
     }
 
@@ -70,8 +71,8 @@ export const SignIn = () => {
                 <div id="label">
                     <input type="text" name="secret_answer" onChange={handleChange} value={user.secret_answer} placeholder="Secret Answer" required />
                 </div>
-                <button type="submit">Registrate</button>
-                <p>¿Ya tienes una cuenta?, <Link to="/login" className="login-link">Login</Link></p>
+                <button type="submit">Register</button>
+                <p>¿You already have an account?, <Link to="/login" className="login-link">Login</Link></p>
             </form>
         </div>
     );
