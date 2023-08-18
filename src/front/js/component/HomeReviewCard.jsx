@@ -38,7 +38,7 @@ const HomeReviewCard = () => {
                                         </div>
                                         <div className="title-home-review">
                                             <div>
-                                                <h5 className="card-title break-word">"{review.title}"</h5>
+                                                <h5 className="card-title break-word"><i>"{review.title}"</i></h5>
                                             </div>
                                             <p className='author-home-review'>por <span>
                                                 {review.user.username}</span> </p>

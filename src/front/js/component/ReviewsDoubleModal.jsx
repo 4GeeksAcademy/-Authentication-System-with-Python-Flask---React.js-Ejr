@@ -32,12 +32,12 @@ const ReviewsDoubleModal = ({ offerId }) => {
                 review_image: "",
             }}
             validationSchema={Yup.object({
-                country: Yup.string()
-                    // .min(2, 'Debe tener 2 caracteres o más')
-                    .required('Campo obligatorio!'),
-                city: Yup.string()
-                    // .min(2, 'Debe tener 2 caracteres o más')
-                    .required('Campo obligatorio!'),
+                // country: Yup.string()
+                //     // .min(2, 'Debe tener 2 caracteres o más')
+                //     .required('Campo obligatorio!'),
+                // city: Yup.string()
+                //     // .min(2, 'Debe tener 2 caracteres o más')
+                //     .required('Campo obligatorio!'),
                 title: Yup.string()
                     .min(10, 'Debe tener 10 caracteres o más')
                     .matches(/^[A-ZÁÉÍÓÚÑ][A-Za-zÁÉÍÓÚáéíóúÑñ0-9,.*!¡?¿\s-:() ]*$/, 'Debe comenzar con una letra mayúscula')
@@ -128,7 +128,7 @@ const ReviewsDoubleModal = ({ offerId }) => {
 
                                     <div className="modal-body">
                                         <div>
-                                            <div >
+                                            {/* <div >
                                                 <div className='custom-input-password'>
                                                     <label htmlFor="country" >País:</label><br />
                                                     <Field as="select" name="country">
@@ -171,7 +171,7 @@ const ReviewsDoubleModal = ({ offerId }) => {
 
                                                 </div>
                                                 <ErrorMessage name="city" />
-                                            </div>
+                                            </div> */}
 
                                         </div>
                                         <div className="custom-input-password mt-4">
