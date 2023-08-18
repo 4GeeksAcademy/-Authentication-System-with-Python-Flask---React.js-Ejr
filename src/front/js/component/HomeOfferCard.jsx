@@ -19,9 +19,9 @@ const HomeOfferCard = () => {
                 {store.offers
                     .slice(0, 3)
                     .map((offer) =>
-                        <div className='card-transition'>
+                        <div key={offer.id} className='card-transition'>
 
-                            <div key={offer.id} className=" card-home-offer"  >
+                            <div  className=" card-home-offer"  >
                                 <Link to={`/offer/${offer.id}`}>
                                     <img src={offer.offer_image} className="" alt="..." ></img>
                                     <div className="card-home-text mt-1">
