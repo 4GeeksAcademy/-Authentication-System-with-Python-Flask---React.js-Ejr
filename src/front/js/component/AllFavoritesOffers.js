@@ -119,14 +119,22 @@ const AllFavoritesOffers = ({ searchQuery }) => {
 
 
                                 {store.user.username && <>
-                                    
+
+
+                                    <div className="fav-offer-div">
+                                        <div className="fav-offer-container">
+                                            <span className="fav-offer-span">
+                                                <FavoriteOffer offerId={favorite?.offer_id?.id} />
+                                            </span>
+                                        </div>
+                                    </div>
                                     <Link to={`/offer/${favorite?.offer_id?.id}`}>
                                         <button className='btn-details'>Detalles</button>
                                     </Link>
                                     <Link to='/opciones-de-pago'>
                                         <button className='btn-buy'>Comprar</button>
                                     </Link>
-                                    <span><FavoriteOffer offerId={favorite?.offer_id?.id} /></span> 
+                                    {/* <span><FavoriteOffer offerId={favorite?.offer_id?.id} /></span> */}
 
 
                                 </>

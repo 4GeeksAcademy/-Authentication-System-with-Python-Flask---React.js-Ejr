@@ -121,11 +121,13 @@ const BusinessOfferCard = ({ searchQuery }) => {
                       </span>
                     </div>
                   </div>
-
-                  <Link to={`/offer/${business_offer.id}`}>
-                    <button className='btn-publish-review'>Publica tu reseña</button>
+                  <Link to='/opciones-de-pago'>
+                    <button className='btn-buy'>Comprar</button>
                   </Link>
-                  
+                  {/* <Link to={`/offer/${business_offer.id}`}>
+                    <button className='btn-publish-review'>Publica tu reseña</button>
+                  </Link> */}
+
                 </>
                 }
 

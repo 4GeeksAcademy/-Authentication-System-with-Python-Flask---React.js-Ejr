@@ -32,9 +32,12 @@ const SingleOfferView = () => {
             <div className='general container '>
                 <div className='d-flex justify-content-between up-card-buttons '>
                     <span className="go-results" onClick={goBack}>&#10094; Ir a resultados</span>
-                    <Link to='/opciones-de-pago' >
-                        <button type="submit" className='btn-primary upbutton buy-home-up'>Comprar</button>
-                    </Link>
+                    {store.user.username ? (
+                        <Link to='/opciones-de-pago' >
+                            <button type="submit" className='btn-primary upbutton buy-home-up'>Comprar</button>
+                        </Link>
+                    ) : null}
+
                 </div>
                 <div className='images'>
                     <img className='single-image' src={offer?.offer_image} alt="" /><img src="" alt="" /><img src="" alt="" />
@@ -108,18 +111,22 @@ const SingleOfferView = () => {
                         </div>
 
                     </div>
-                    <div className='d-flex justify-content-center'>
-                        <Link to='/opciones-de-pago' >
-                            <button type="submit" className='btn-primary buy-home'>Comprar</button>
-                        </Link>
-                    </div>
-                    <ReviewsDoubleModal offerId={params.offer_id} />
+                    {store.user.username ? (
+                        <>
+                            <div className='d-flex justify-content-center'>
+                                <Link to='/opciones-de-pago' >
+                                    <button type="submit" className='btn-primary buy-home'>Comprar</button>
+                                </Link>
+                            </div>
+                            <ReviewsDoubleModal offerId={params.offer_id} />
+                        </>
+                    ) : null}
                 </div>
-
             </div>
             < GeneralInfoDiv />
         </div>
     );
+
 };
 
 export default SingleOfferView;

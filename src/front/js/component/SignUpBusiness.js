@@ -194,7 +194,7 @@ const SignUpBusiness = () => {
               </div>
               <div>
 
-                <ErrorMessage name="phone_prefix" /> <br />
+                <ErrorMessage className="ErrorMessage" name="phone_prefix" /> <br />
                 <ErrorMessage name="phone_number" />
               </div>
 

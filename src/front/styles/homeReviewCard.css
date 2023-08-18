@@ -30,12 +30,14 @@
   position: relative;
   /* transition: transform 0.3s ease, box-shadow 0.3s ease; */
   margin-left: auto;
+  margin: 0 .7rem 1rem;
+
 }
 
 .card-transition-review{
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  height: 16rem;
-  width: 25rem;
+  height: 15.5rem;
+  width: 26rem;
   display: flex;
   align-items: end;
   justify-content: end;
@@ -100,7 +102,7 @@
   padding: 0;
   margin: 0;
   width: 13rem;
-  height: 13rem;
+  height: 12rem;
   display: flex;
   flex-direction: column;
   justify-content: center;

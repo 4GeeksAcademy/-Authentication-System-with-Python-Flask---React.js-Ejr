@@ -65,6 +65,21 @@ const LittleSlide = () => {
                             {/* ... */}
                         </div>
                     </div>
+                    <div className={`carousel-item ${videoEnded ? 'active' : ''} justify-content-center`}>
+                        <video
+                            className="d-block w-100"
+                            autoPlay
+                            muted
+                            loop
+                            onEnded={handleVideoEnd}
+                        >
+                            <source src="https://res.cloudinary.com/albertge/video/upload/v1692387565/Dise%C3%B1o_sin_t%C3%ADtulo_2_gnrij6.mp4" type="video/mp4" />
+                            Your browser does not support the video tag.
+                        </video>
+                        <div className="carousel-caption d-md-block">
+                            {/* ... */}
+                        </div>
+                    </div>
                 </div>
                 <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
                     <span className="carousel-control-prev-icon" aria-hidden="true"></span>

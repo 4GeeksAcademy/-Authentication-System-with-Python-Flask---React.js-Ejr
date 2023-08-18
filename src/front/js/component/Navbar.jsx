@@ -23,7 +23,7 @@ const Navbar = () => {
 
       <div className="container-fluid">
         <Link className="navbar-brand" to='/'>
-          <img src="https://res.cloudinary.com/albertge/image/upload/v1691882080/TRIP%20NEXUS/Texto_del_p%C3%A1rrafo_c411q0.png" width="70" height="65" alt="Logo"></img>
+          <img src="https://res.cloudinary.com/albertge/image/upload/v1692380821/Texto_del_p%C3%A1rrafo_1_eic8kp.png" width="70" height="65" alt="Logo"></img>
         </Link>
         <div className="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
           <ul className="navbar-nav">
