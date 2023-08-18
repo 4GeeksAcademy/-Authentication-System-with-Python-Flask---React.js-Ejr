@@ -50,7 +50,14 @@
 
 .card-character {
   font-size: 14px; 
-  color:rgb(217, 217, 217)
+  color:rgb(217, 217, 217);
+  margin-bottom: -5px;
+}
+
+.card-department {
+  font-size: 12px; 
+  color:rgb(217, 217, 217);
+  font-style: italic;
 }
 
 

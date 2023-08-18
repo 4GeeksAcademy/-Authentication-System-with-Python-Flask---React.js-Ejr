@@ -89,9 +89,27 @@ export const Movie = () => {
                                         src={actor.profile_path ? `https://image.tmdb.org/t/p/w185${actor.profile_path}` : no_image} 
                                         alt={actor.name} />
                                  </div>
-                                
                                 <p className="card-name">{actor.name}</p>
-                                <p className="card-character">{actor.character}</p>
+                                <p className="card-character">Character: {actor.character}</p>
+                                <p className="card-department">Department: {actor.known_for_department}</p> 
+                            </Link>
+                        </div>
+                    ))}
+                </div>
+
+                <div className="row">
+                    {movie?.directors?.map((director) => (
+                        <div className="col-md-2" key={director.id}>
+                            
+                            <Link to={`/${movieId}/directors/${director.id}`}>
+                                <div className="card">
+                                    <img 
+                                        className="profile_path" 
+                                        src={director.profile_path ? `https://image.tmdb.org/t/p/w185${director.profile_path}` : no_image} 
+                                        alt={director.name} />
+                                 </div>
+                                <p className="card-name">{director.name}</p>
+                                <p className="card-department">Department: {director.known_for_department}</p> 
                             </Link>
                         </div>
                     ))}

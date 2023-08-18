@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 04d90cd7cf1d
+Revision ID: 1740d3f0418c
 Revises: 
-Create Date: 2023-08-16 17:31:03.809769
+Create Date: 2023-08-18 18:12:27.461859
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '04d90cd7cf1d'
+revision = '1740d3f0418c'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -33,8 +33,12 @@ def upgrade():
     op.create_table('director',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=80), nullable=True),
-    sa.Column('description', sa.String(length=800), nullable=True),
-    sa.Column('other_movies', sa.String(length=200), nullable=True),
+    sa.Column('known_for_department', sa.String(length=80), nullable=True),
+    sa.Column('profile_path', sa.String(length=200), nullable=True),
+    sa.Column('biography', sa.Text(), nullable=True),
+    sa.Column('birthday', sa.Date(), nullable=True),
+    sa.Column('deathday', sa.Date(), nullable=True),
+    sa.Column('place_of_birth', sa.String(length=200), nullable=True),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('genre',
@@ -64,6 +68,18 @@ def upgrade():
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('email')
     )
+    op.create_table('favorite',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('user_id', sa.Integer(), nullable=False),
+    sa.Column('actor_id', sa.Integer(), nullable=True),
+    sa.Column('director_id', sa.Integer(), nullable=True),
+    sa.Column('movie_id', sa.Integer(), nullable=True),
+    sa.ForeignKeyConstraint(['actor_id'], ['actor.id'], ),
+    sa.ForeignKeyConstraint(['director_id'], ['director.id'], ),
+    sa.ForeignKeyConstraint(['movie_id'], ['movie.id'], ),
+    sa.ForeignKeyConstraint(['user_id'], ['user.id'], ),
+    sa.PrimaryKeyConstraint('id')
+    )
     op.create_table('movie_actor',
     sa.Column('movie_id', sa.Integer(), nullable=False),
     sa.Column('actor_id', sa.Integer(), nullable=False),
@@ -92,6 +108,7 @@ def downgrade():
     op.drop_table('movie_genres')
     op.drop_table('movie_director')
     op.drop_table('movie_actor')
+    op.drop_table('favorite')
     op.drop_table('user')
     op.drop_table('movie')
     op.drop_table('genre')

@@ -14,6 +14,8 @@ import { PassRecovery } from "./pages/passRecovery";
 import { PassChange } from "./pages/passChange";
 import { Footer } from "./pages/Footer";
 import { Navbar } from "./pages/Navbar";
+import { DirectorDetail } from "./pages/DirectorDetail";
+import { Favorites } from "./pages/Favorites";
 
 
 //create your first component
@@ -32,8 +34,8 @@ const Layout = () => {
                     <Routes>
                         <Route element={<Listadomovies />} path="/" />
                         <Route element={<Movie />} path="/movie/:movieId" /> 
-                        {/* <Route element={<ActorDetail />} path="/actors/:actorId" />  */}
                         <Route element={<ActorDetail />} path="/:movieId/actors/:actorId" /> 
+                        <Route element={<DirectorDetail />} path="/:movieId/directors/:directorId" /> 
                         <Route element={<Login />} path="/login" />
                         <Route element={<SignIn />} path="/sign-up" />
                         <Route element={<Single />} path="/single/:theid" />

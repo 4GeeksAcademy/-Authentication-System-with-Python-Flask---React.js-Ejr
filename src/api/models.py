@@ -1,6 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import relationship
-
+# from sqlalchemy.ext.hybrid import hybrid_property
 
 db = SQLAlchemy()
 
@@ -87,6 +87,8 @@ class Movie(db.Model):
             "trailer_id": self.trailer_id,
             "genres": [genre.serialize() for genre in self.genres], 
         }
+   
+
     
 # ACTOR CLASS
 class Actor(db.Model):
@@ -120,8 +122,12 @@ class Actor(db.Model):
 class Director(db.Model):
     id = db.Column(db.Integer, primary_key= True)
     name = db.Column(db.String(80))
-    description = db.Column(db.String(800))
-    other_movies = db.Column(db.String(200))
+    known_for_department = db.Column(db.String(80))
+    profile_path  = db.Column(db.String(200))
+    biography = db.Column(db.Text) 
+    birthday = db.Column(db.Date)  
+    deathday = db.Column(db.Date, nullable=True)  
+    place_of_birth = db.Column(db.String(200))
     
     def __repr__(self):
         return f'<Director {self.id} {self.name}>'
@@ -130,38 +136,38 @@ class Director(db.Model):
         return {
         "id": self.id,
         "name": self.name,
-        "description": self.description,
-        "other_movies": self.other_movies, 
+        "known_for_department": self.known_for_department,
+        "profile_path": self.profile_path,
+        "biography": self.biography, 
+        "birthday": self.birthday, 
+        "deathday":  self.deathday, 
+        "place_of_birth": self.place_of_birth, 
         }
 
-
     
 
 
     
-# faltara añadir series
 
-# class Favorite(db.Model):
-#     id = db.Column(db.Integer, primary_key=True)
-#     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))  
-#     actor_id = db.Column(db.Integer, db.ForeignKey('actor.id')) 
-#     director_id = db.Column(db.Integer, db.ForeignKey('director.id'))
-#     movie_id = db.Column(db.Integer, db.ForeignKey('movie.id'))
-#     series_id = db.Column(db.Integer, db.ForeignKey('series.id'))
-#     user = db.relationship("User", backref="favorites")
-#     actor = db.relationship("Actor", backref="favorites")
+class Favorite(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)  
+    actor_id = db.Column(db.Integer, db.ForeignKey('actor.id'), nullable=True) 
+    director_id = db.Column(db.Integer, db.ForeignKey('director.id'), nullable=True)
+    movie_id = db.Column(db.Integer, db.ForeignKey('movie.id'), nullable=True)
+    user = db.relationship("User", backref="favorites")
+    actor = db.relationship("Actor", backref="favorites")
+    director = db.relationship("Director", backref="favorites")
+    movie = db.relationship("Movie", backref="favorites")
 
+    def __repr__(self):
+        return f'Favorite {self.id}'
 
-
-#     def __repr__(self):
-#         return f'Favorite {self.id}'
-
-#     def serialize(self):
-#         return {
-#             "id": self.id,
-#             "user_id": self.user_id,
-#             "actor_id": self.actor_id,
-#             "director_id": self.director_id,
-#             "movie_id": self.movie_id,
-#             "series_id": self.series_id
-#         }
+    def serialize(self):
+        return {
+            "id": self.id,
+            "user_id": self.user_id,
+            "actor_id": self.actor_id,
+            "director_id": self.director_id,
+            "movie_id": self.movie_id,
+        }

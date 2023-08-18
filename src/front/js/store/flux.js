@@ -7,6 +7,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			movies: [],
 			movie: null,
 			actor: null,
+			director: null, 
 
 		},
 		actions: {
@@ -14,20 +15,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			exampleFunction: () => {
 				getActions().changeColor(0, "green");
 			},
-
-			getMessage: async () => {
-				try {
-					// fetching data from the backend
-					const resp = await fetch(process.env.BACKEND_URL + "/api/hello")
-					const data = await resp.json()
-					setStore({ message: data.message })
-					// don't forget to return something, that is how the async resolves
-					return data;
-				} catch (error) {
-					console.log("Error loading message from backend", error)
-				}
-			},
-
+			
 			login: async (form) => {
 				const apiUrl = `${process.env.BACKEND_URL}api/login`
 				console.log(form)
@@ -113,6 +101,26 @@ const getState = ({ getStore, getActions, setStore }) => {
 					if (res.ok) {
 						const data = await res.json();
 						setStore({ actor: data });
+						console.log(data);
+						return data;
+					} else {
+						console.log("Request failed", res.status);
+					}
+				} catch (error) {
+					console.error(error);
+					return null;
+				}
+			},
+			getDirectorById: async (directorId) => {
+				const apiUrl = `${process.env.BACKEND_URL}api/directors/${directorId}`;
+				try {
+					const res = await fetch(apiUrl, {
+						method: "GET",
+						headers: { "Content-Type": "application/json" }
+					});
+					if (res.ok) {
+						const data = await res.json();
+						setStore({ director: data });
 						console.log(data);
 						return data;
 					} else {
