@@ -31,6 +31,9 @@ import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 import DonationForm from "./component/DonationForm";
 import Favorites from "./pages/Favorites";
 import AdminView from "./pages/AdminView";
+import AboutUs from "./pages/AboutUs"
+import Cookies from "./pages/Cookies";
+import PrivatePolitic from "./pages/PrivatePolitic";
 
 
 
@@ -80,6 +83,9 @@ const Layout = () => {
                             <Route element={<PaymentOptions />} path="/opciones-de-pago" />
                             <Route element={<Favorites />} path="/favoritos" />
                             <Route element={<AdminView />} path="/admin" />
+                            <Route element={<AboutUs />} path="/about" />
+                            <Route element={<Cookies />} path="/cookies" />
+                            <Route element={<PrivatePolitic />} path="/politica-privacidad" />
                             <Route element={<h1>Not found!</h1>} />
                         </Routes>
                         <Footer />
