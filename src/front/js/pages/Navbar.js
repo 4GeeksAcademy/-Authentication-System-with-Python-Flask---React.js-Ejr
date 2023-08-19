@@ -9,13 +9,13 @@ export const Navbar = () => {
   const { store, actions } = useContext(Context);
   const navigate = useNavigate()
 
-const logged = store.logged 
+  const logged = store.logged
 
-const handleLogout = () => {
+  const handleLogout = () => {
 
-  actions.logout()
-  navigate("/")
-}
+    actions.logout()
+    navigate("/")
+  }
 
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -30,24 +30,13 @@ const handleLogout = () => {
         </div>
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav mb-2 mb-lg-0">
-            <li className="nav-item dropdown">
-              <a className="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Menu
-              </a>
-              <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li><a className="dropdown-item" href="/movie">Movies</a></li>
-                <li><a className="dropdown-item" href="#">Series</a></li>
-                <li><a className="dropdown-item" href="actors">Actors and Directors</a></li>
-              </ul>
-            </li>
-
             {!logged ? (<li className="nav-item">
               <Link to={"/login"} className="nav-link text-white">Log in</Link>
             </li>)
-            :
-            (<li className="nav-item">
-              <button onClick={handleLogout} className="nav-link text-white btn">Sign Off</button>
-            </li>)}
+              :
+              (<li className="nav-item">
+                <button onClick={handleLogout} className="nav-link text-white btn">Sign Off</button>
+              </li>)}
 
             <li className="nav-item dropdown">
               <a className="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">

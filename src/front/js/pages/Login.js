@@ -56,7 +56,7 @@ export const Login = () => {
                     <br />
                     <div className="text-center d-flex justify-content-center">
                         <p>You do not have an account?</p>
-                        <Link to={"/sign-up"} id="sp" className="register-link">  Register</Link>
+                        <Link to={"/sign-up"} id="sp" className="register-link">Register</Link>
                     </div>
                 </form>
             </div>

@@ -40,11 +40,12 @@ button[type="submit"] {
 #securityQuestion{
   background-color: white;
   color: black;
-  padding: 10px 45px 10px;
+  padding: 9px 85px 15px 2px;
   font-size: 16px;
-  border-radius: 25px;
+  border-radius: 20px;
   margin: 0px 0px 38px;
   text-align: center;
+  font-family: 'Roboto', sans-serif; 
 }
 
 #mo{
@@ -55,5 +56,9 @@ button[type="submit"] {
 
 .login-link {
   color: #ffffff; 
-
+}
+.login-link:active,
+.login-link:focus,
+.login-link:hover {
+    color: rgb(236, 206, 51) !important;  
 }

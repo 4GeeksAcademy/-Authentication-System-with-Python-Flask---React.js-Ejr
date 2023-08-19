@@ -33,6 +33,12 @@
     color: white;
 }
 
+#ps:active,
+#ps:focus,
+#ps:hover {
+    color: rgb(236, 206, 51) !important;  
+}
+
 .swal2-confirm{
     color: black !important; 
 }
@@ -43,5 +49,12 @@
 }
 
 .register-link {
+    color: white;
     margin-left: 5px;
+}
+
+.register-link:active,
+.register-link:focus,
+.register-link:hover {
+    color: rgb(236, 206, 51) !important;  
 }
