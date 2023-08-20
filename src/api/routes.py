@@ -60,3 +60,22 @@ def get_user(id):
     if user is None:
          return jsonify(""), 404
     return jsonify(user.serialize()), 200
+
+@api.route("/user/<int:id>", methods=["DELETE"])
+def delete_user(id):
+    user = User.query.get(id)
+    if user is None:
+        return jsonify({
+            "message": "user does not exist"
+        }), 400
+    user = user.query.filter_by(id = user.id).first()
+    try:
+        db.session.delete(user)
+        db.session.commit()
+    except Exception as error:
+        db.session.rollback()
+        return jsonify({
+            "message": "internal error",
+            "error": error.args
+        }), 500
+    return jsonify({}), 201
