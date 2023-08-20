@@ -39,7 +39,7 @@ const Layout = () => {
             <Route element={<SuperAdminPage />} path="/superadminpage" />
             <Route element={<Demo />} path="/demo" />
             <Route element={<Single />} path="/single/:theid" />
-            <Route element={<h1>Not found!</h1>} />
+            <Route element={<h1>Not found!!</h1>} />
           </Routes>
           <Footer />
         </ScrollToTop>
