@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../store/appContext";
-// import "../../styles/ActorDetail.css";
-import { useParams } from "react-router-dom";
+import "../../styles/ActorDetail.css";
+import { useParams, Link } from "react-router-dom";
 import no_image from "../../img/no_image.png";
 import { Spinner } from "../component/Spinner";
 
@@ -48,8 +48,12 @@ export const ActorDetail = () => {
                                 <p>{/* Contenido del párrafo */}</p>
                             </div>
                         </div>
+
                     </div>
+                <div className="row">
+    
                 </div>
+
             )}
         </div>
     );

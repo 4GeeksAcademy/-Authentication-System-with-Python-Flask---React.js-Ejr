@@ -15,6 +15,8 @@ export const Movie = () => {
     const imageUrl = movie?.image ? `https://image.tmdb.org/t/p/w500${movie?.image}` : no_image;
     const trailerUrl = movie?.trailer_key ? `https://www.youtube.com/embed/${movie.trailer_key}` : null;
 
+    console.log(movieId)
+
 
     useEffect(() => {
         console.log("actions");
@@ -23,7 +25,7 @@ export const Movie = () => {
             setMovie(movie);
             setLoading(false)
         });
-    }, []);
+    }, [movieId]);
 
     return (
         <div>
@@ -83,6 +85,7 @@ export const Movie = () => {
                         </div>
 
 
+
                         <div className="row">
                             {movie?.actors?.map((actor) => (
                                 <div className="col-md-2" key={actor.id}>
@@ -99,6 +102,7 @@ export const Movie = () => {
                                     </Link>
                                 </div>
                             ))}
+
                         </div>
 
 

@@ -10,10 +10,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 			movies: [],
 			movie: null,
 			actor: null,
+			director: null, 
 
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
+
 			passchange: async (form) => {
 				const apiUrl = `${process.env.BACKEND_URL}api/pass-change`
 				console.log(form, apiUrl)
@@ -237,6 +239,26 @@ const getState = ({ getStore, getActions, setStore }) => {
 					if (res.ok) {
 						const data = await res.json();
 						setStore({ actor: data });
+						console.log(data);
+						return data;
+					} else {
+						console.log("Request failed", res.status);
+					}
+				} catch (error) {
+					console.error(error);
+					return null;
+				}
+			},
+			getDirectorById: async (directorId) => {
+				const apiUrl = `${process.env.BACKEND_URL}api/directors/${directorId}`;
+				try {
+					const res = await fetch(apiUrl, {
+						method: "GET",
+						headers: { "Content-Type": "application/json" }
+					});
+					if (res.ok) {
+						const data = await res.json();
+						setStore({ director: data });
 						console.log(data);
 						return data;
 					} else {
