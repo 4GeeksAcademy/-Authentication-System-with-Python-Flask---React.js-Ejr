@@ -96,18 +96,12 @@ export const Movie = () => {
                                                 src={actor.profile_path ? `https://image.tmdb.org/t/p/w185${actor.profile_path}` : no_image}
                                                 alt={actor.name} />
                                         </div>
-
                                         <p className="card-name">{actor.name}</p>
                                         <p className="card-character">{actor.character}</p>
                                     </Link>
                                 </div>
                             ))}
-
                         </div>
-
-
-
-
                     </div>
                 </div>
             )}
