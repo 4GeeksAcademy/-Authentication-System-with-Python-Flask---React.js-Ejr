@@ -5,7 +5,7 @@ import "../../styles/home.css";
 
 export const Home = () => {
 	const { store, actions } = useContext(Context);
-
+/* test PR  */
 	return (
 		<div className="text-center mt-5">
 			<h1>Hello Rigo!!</h1>
