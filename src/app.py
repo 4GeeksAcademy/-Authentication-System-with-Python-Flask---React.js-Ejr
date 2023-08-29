@@ -142,6 +142,7 @@ def login():
 
     return jsonify(response_body), 200
 
+print("holis")
 
 # this only runs if `$ python src/main.py` is executed
 if __name__ == '__main__':
