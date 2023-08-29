@@ -23,6 +23,11 @@ app = Flask(__name__)
 app.url_map.strict_slashes = False
 
 bcrypt = Bcrypt(app)
+
+app.config["JWT_SECRET_KEY"] = os.environ.get('JWS_SECRET')
+jwt = JWTManager(app)
+
+
 # database condiguration
 db_url = os.getenv("DATABASE_URL")
 if db_url is not None:
@@ -107,6 +112,37 @@ def add_user():
     
     return jsonify(response_body), 201
 
+
+@app.route('/login', methods=['POST'])
+def login():
+    request_body = request.get_json(force=True)
+
+    if "email" not in request_body:
+        raise APIException('The email is required', status_code=404)
+
+    if "password" not in request_body:
+        raise APIException('The password is required', status_code=404)
+
+    user = User.query.filter_by(
+        email= request_body['email']
+        ).first()    
+
+    if user is None:
+        raise APIException ('The email is not correct', status_code=404)
+
+    if bcrypt.check_password_hash(user.password, request_body['password']) is False:
+        raise APIException('The password is not correct', 401)    
+
+    access_token = create_access_token(identity = user.id)
+
+    response_body ={ 
+                    "msg": "ok",
+                    "token": access_token, 
+                    "user_id": user.id }
+
+    return jsonify(response_body), 200
+
+print("holis")
 
 # this only runs if `$ python src/main.py` is executed
 if __name__ == '__main__':
