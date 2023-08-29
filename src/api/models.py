@@ -18,10 +18,10 @@ class User(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String(250), nullable=False)
     last_name = db.Column(db.String(250), nullable=False)
-    id_document = db.Column(db.Integer, unique=True,  nullable=False)
+    document_id = db.Column(db.Integer, unique=True,  nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(80), unique=False, nullable=False)
-    
+    is_active = db.Column(db.Boolean(), unique=False, nullable=False)
 
 class Owner (db.Model, SerializerMixin):
    __tablename__ = 'owner'
@@ -33,7 +33,6 @@ class Keeper (db.Model, SerializerMixin):
    id = db.Column(db.Integer, primary_key=True)
    user= db.Column(db.Integer, ForeignKey('user.id'))  
    date_work= db.Column(db.Date, ForeignKey('datesRange.id'))
-   user= db.Column(db.Integer, ForeignKey('user.id'))  
    daily_pay= db.Column(db.Integer, nullable=False)
    
   
