@@ -25,10 +25,16 @@ def handle_hello():
 @api.route('/signup', methods=['POST'])
 def createUser():
     data = request.get_json(force=True)
+    email = data["email"].lower()
+    if User.query.filter_by(email=email).first() is not None:
+        return jsonify({"msg":"Email already registered"}), 400
     new_user=User()
+    new_user.email = email
     secure_password = bcrypt.generate_password_hash((data["password"]), 10).decode("utf-8")
-    new_user.email = data["email"]
     new_user.password = secure_password
+    new_user.dni = data["dni"]
+    new_user.name = data["name"]
+    new_user.lastname = data["lastname"]
     new_user.is_active = True
     db.session.add(new_user)
     db.session.commit()
@@ -43,5 +49,5 @@ def login_user():
     passwordCheck = bcrypt.check_password_hash(user.password, data["password"])
     if passwordCheck == False:
         return jsonify({"msg":"Wrong password"}), 401
-    token = create_access_token(identity = data["email"], additional_claims={"role":"admin"}) #cambiar por tipo de usuario de los modelos pendientes (Enum)
+    token = create_access_token(identity = data["dni"], additional_claims={"role":"admin"}) #cambiar por tipo de usuario de los modelos pendientes (Enum)
     return jsonify({"msg": "Login successful!", "token":token}),200
