@@ -7,10 +7,13 @@ from flask_migrate import Migrate
 from flask_swagger import swagger
 from flask_cors import CORS
 from api.utils import APIException, generate_sitemap
-from api.models import db
+from api.models import db, User
 from api.routes import api
 from api.admin import setup_admin
 from api.commands import setup_commands
+from flask_jwt_extended import jwt_required, get_jwt_identity, create_access_token, JWTManager
+from flask_bcrypt import Bcrypt
+
 
 #from models import Person
 
@@ -19,6 +22,7 @@ static_file_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), '../
 app = Flask(__name__)
 app.url_map.strict_slashes = False
 
+bcrypt = Bcrypt(app)
 # database condiguration
 db_url = os.getenv("DATABASE_URL")
 if db_url is not None:
@@ -62,6 +66,46 @@ def serve_any_other_file(path):
     response = send_from_directory(static_file_dir, path)
     response.cache_control.max_age = 0 # avoid cache memory
     return response
+
+@app.route('/signup', methods=['POST'])
+def add_user():
+    request_body = request.get_json(force=True)
+    
+    if "name" not in request_body:
+        raise APIException('The first name is required', 400)
+    
+    if "last_name" not in request_body:
+        raise APIException('The last name is required', 400)
+    
+    if "email" not in request_body:
+        raise APIException("The email is required", 400)
+    
+    if "password" not in request_body:
+        raise APIException('The password is required', 400)
+
+    exists_email = User.query.filter_by(email = request_body['email']).first()
+
+    
+    if exists_email:
+        raise APIException('Email is in use', 400)
+    
+    pw_hash = bcrypt.generate_password_hash(request_body['password']).decode('utf-8')
+
+    user = User(
+        name = request_body['name'],
+        last_name = request_body['last_name'],
+        email = request_body['email'],
+        password = pw_hash
+    )
+
+    user.save()
+
+    response_body = {
+        "msg" : "ok",
+        "msg2" : "Usuario creado correctamente"
+    }
+    
+    return jsonify(response_body), 201
 
 
 # this only runs if `$ python src/main.py` is executed
