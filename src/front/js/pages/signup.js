@@ -12,7 +12,7 @@ export const Signup = (props) => {
     e.preventDefault();
     const data = new FormData(e.target);
     const name = data.get("name");
-    const lastName = data.get("lastName");
+    const lastName = data.get("lastname");
     const email = data.get("email");
     const password = data.get("password");
     const dni = data.get("dni");
@@ -43,7 +43,7 @@ export const Signup = (props) => {
           <input
             type="text"
             className="form-control"
-            name="lastName"
+            name="lastname"
             id="exampleInputLastName"
           />
         </div>
