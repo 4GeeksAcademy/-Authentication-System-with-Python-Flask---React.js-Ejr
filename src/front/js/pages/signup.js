@@ -19,7 +19,7 @@ export const Signup = (props) => {
     const { signup } = actions;
     let resp = await signup(email, password, dni, name, lastName);
     console.log(resp);
-    navigate("/");
+    navigate("/login");
   }
   return (
     <div className="text-center container mt-5">
