@@ -30,3 +30,61 @@ class User(db.Model):
             "password": self.password
             # do not serialize the password, its a security breach
         }
+    
+
+class Tracker(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    follows = db.Column(db.Integer, unique=False, nullable=False)
+    scholarship_name = db.Column(db.String(120), unique=True, nullable=False)
+    dates = db.Column(db.String(120), unique=False, nullable=False)
+    institution = db.Column(db.String(120), unique=False, nullable=False)
+    
+
+    def __repr__(self):
+        return f'<Tracker {self.id}>'
+    
+    def save(self):
+        db.session.add(self)
+        db.session.commit()
+        
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "follows": self.follows,
+            "scholarship_name": self.scholarship_name,
+            "dates": self.dates,
+            "institution": self.institution
+        }
+    
+
+
+class Scholarships(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    scholarship_name = db.Column(db.String(120), unique=True, nullable=False)
+    dates = db.Column(db.String(120), unique=False, nullable=False)
+    institution = db.Column(db.String(120), unique=False, nullable=False)
+
+    def __repr__(self):
+        return f'<Scholarship {self.id}>'
+    
+    def save(self):
+        db.session.add(self)
+        db.session.commit()
+        
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "scholarship_name": self.scholarship_name,
+            "dates": self.dates,
+            "institution": self.institution
+        }    
+
+
