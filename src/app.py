@@ -7,7 +7,7 @@ from flask_migrate import Migrate
 from flask_swagger import swagger
 from flask_cors import CORS
 from api.utils import APIException, generate_sitemap
-from api.models import db, User
+from api.models import db, User, Tracker
 from api.routes import api
 from api.admin import setup_admin
 from api.commands import setup_commands
@@ -103,6 +103,47 @@ def add_user():
     response_body = {
         "msg" : "ok",
         "msg2" : "Usuario creado correctamente"
+    }
+    
+    return jsonify(response_body), 201
+
+
+@app.route('/tracker/save', methods=['POST'])
+def save_tracker():
+    request_body = request.get_json(force=True)
+    
+    if "follows" not in request_body:
+        raise APIException('Follows are required', 400)
+    
+    if "scholarship_name" not in request_body:
+        raise APIException('Scholarship name is required', 400)
+    
+    if "dates" not in request_body:
+        raise APIException("dates are required", 400)
+    
+    if "institution" not in request_body:
+        raise APIException('Institution is required', 400)
+
+    exists_tracker = User.query.filter_by(id = request_body['id']).first()
+
+    
+    if exists_tracker:
+        raise APIException('Tracker is in use', 400)
+    
+
+    tracker = Tracker(
+        follows = request_body['follows'],
+        scholarship_name = request_body['scholarship_name'],
+        dates = request_body['dates'],
+        institution = request_body['institution']
+        
+    )
+
+    tracker.save()
+
+    response_body = {
+        "msg" : "ok",
+        "msg2" : "Tracker creado correctamente"
     }
     
     return jsonify(response_body), 201
