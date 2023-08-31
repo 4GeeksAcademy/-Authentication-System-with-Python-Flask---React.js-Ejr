@@ -4,15 +4,18 @@ import "../../styles/RegistroEleccion.css";
 const RegistroEleccion = () => {
   return (
     <div
-      className="container d-flex justify-content-center align-items-center my-5"
+      className="container d-flex justify-content-center align-items-center"
       style={{
-        width: "18rem",
-        backgroundColor: "#1E3151",
+        width: "20rem",
+        height: "15rem",
+        backgroundColor: "#E0EDFF",
         borderRadius: "2rem",
+        marginTop: "4rem",
+        marginBottom: "5rem",
       }}
     >
       <div className="d-grid gap-2  mx-auto my-5">
-        <button className="btn btn-custom mb-3" type="button">
+        <button className="btn btn-custom mb-4" type="button">
           Registrarse como Usuario
         </button>
         <button className="btn btn-custom" type="button">
