@@ -2,7 +2,9 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import ContactForm from "./component/ContactForm.jsx";
+import ContactPage from "./pages/ContactPage.jsx";
+
 
 
 //render your react application
-ReactDOM.render(<ContactForm/>, document.querySelector("#app"));
+ReactDOM.render(<ContactPage/>, document.querySelector("#app"));
