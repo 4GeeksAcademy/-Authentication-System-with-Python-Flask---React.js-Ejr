@@ -142,7 +142,7 @@ def login():
 
     return jsonify(response_body), 200
 
-print("holis")
+
 @app.route('/tracker/save', methods=['POST'])
 def save_tracker():
     request_body = request.get_json(force=True)
