@@ -1,0 +1,26 @@
+.contact-form-container{
+    border: 2px solid black;
+    width: 35%;
+    height: 45%;
+}
+
+#name{
+    margin-right: 5px;
+}
+
+input{
+    margin-top: 7px
+}
+
+#submit-button{
+    margin-top: 5px;
+}
+
+textarea{
+    margin-top: 5px;
+    width: 384px;
+}
+
+#email{
+    width: 384px;
+}
