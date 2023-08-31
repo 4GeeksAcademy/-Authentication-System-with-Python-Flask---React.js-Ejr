@@ -1,5 +1,5 @@
 body {
-  background-image: url(https://images.unsplash.com/photo-1457144759132-40d119c2f120?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80);
+  background-image: url(https://images.unsplash.com/photo-1478098711619-5ab0b478d6e6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80);
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -12,8 +12,8 @@ body {
 
 .landing-content {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-gap: 20px;
+  grid-template-columns: 3fr 1fr;
+  grid-gap: 50px;
   margin-top: 300px;
   margin-left: 80px;
 }
@@ -22,12 +22,12 @@ body {
   font-size: 5rem;
 }
 
-.landin-description {
+.landing-description {
   font-size: 2rem;
-  padding-left: 15px;
 }
 
 .btn-carrusel {
+  display: grid;
   background-color: rgba(56, 55, 55, 0.103);
   margin-bottom: 8px;
   width: 25px;
@@ -38,4 +38,12 @@ body {
 
 .btn-carrusel:hover {
   box-shadow: 0 0 20px rgb(166, 173, 166);
+}
+
+.buttons-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-right: 20px;
 }
