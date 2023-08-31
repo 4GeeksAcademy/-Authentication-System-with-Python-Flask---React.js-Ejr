@@ -70,7 +70,7 @@ class Scholarship(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     trackers = db.relationship("Tracker", back_populates="scholarship" )
     scholarship_name = db.Column(db.String(120), unique=True, nullable=False)
-    dates = db.Column(db.String(120), unique=False, nullable=False)
+    dates = db.Column(db.String(150), unique=False, nullable=False)
     institution = db.Column(db.String(120), unique=False, nullable=False)
 
     def __repr__(self):
