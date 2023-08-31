@@ -5,10 +5,14 @@
     one more css for each page that will contain the selected used 
     on that page only (the ones not reused in other pages).
 */
-body {
+/* body {
     background-image: url("https://i.imgur.com/GHvSC5J.png");
     background-size: cover;
+    background-repeat: no-repeat;}
     /* Scale the image to cover the entire container */
+
+.first-big-chunk{
+    background-color: aquamarine;
 }
 
 .text-main {
@@ -16,14 +20,108 @@ body {
     font-family: "Inter", sans-serif;
     font-weight: 700;
     font-size: 4rem;
-    line-height: 6rem;
+    line-height: 5rem;
 }
 
-.first-img{
+.text-subtitle {
+    color: #074DB6;
+    font-family: "Inter", sans-serif;
+    font-size: 1.3rem;
+    font-weight: 500;
+    line-height: 1.8rem;
+    width: 25rem;
+    margin-top: 2rem;
+}
+
+.button-becas {
+    color: white;
+    font-family: "Inter", sans-serif;
+    font-weight: 400;
+    border-radius: 2rem;
+    background: #FD862C;
+    border: none;
+    padding: 0.7rem 1.5rem 0.7rem 1.5rem;
+    transition-duration: 0.9s;
+    margin-top: 2rem;
+}
+
+.button-becas:hover {
+    background-color: #f06901;
+}
+
+.first-img {
+    width: 35.3rem;
+    height: 37.1rem;
+    overflow: hidden;
+    object-fit: cover;
+    border-radius: 4rem;
+    margin-left: 4rem;
+}
+
+.second-block {
+    margin-top: 10rem;
+    margin-bottom: 5rem;
+   
+}
+
+.second-img {
     width: 31.3rem;
     height: 35.8rem;
     overflow: hidden;
-    object-fit: cover; 
+    object-fit: cover;
     border-radius: 4rem;
-    margin-left: 4rem;
+}
+
+.text-second {
+    color: #074DB6;
+    font-family: "Inter", sans-serif;
+    font-weight: 600;
+    font-size: 1.7rem;
+    line-height: 3rem;
+    margin-bottom: 2rem;
+  
+
+}
+
+.text-second-box {
+    margin-left: 9rem;
+}
+
+.text-second-subtitle {
+    color: #545454;
+    font-family: "Inter", sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 300;
+    text-align: justify;
+    line-height:2rem;
+}
+
+.button-nosotros {
+    color: white;
+    font-family: "Inter", sans-serif;
+    font-weight: 400;
+    border-radius: 2rem;
+    background: #FD862C;
+    border: none;
+    padding: 0.7rem 1.5rem 0.7rem 1.5rem;
+    transition-duration: 0.9s;
+    margin-top: 2rem;
+    margin-left: auto;
+}
+
+.button-nosotros:hover {
+    background-color: #f06901;
+}
+
+.third-block{
+    background-color: aqua;
+    padding-top: 5rem;
+    padding-bottom: 7rem;
+}
+.title-becas {
+    color: #074DB6;
+    font-family: "Inter", sans-serif;
+    font-weight: 600;
+    font-size: 2.5rem;
 }
