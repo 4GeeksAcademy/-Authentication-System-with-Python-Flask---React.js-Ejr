@@ -2,7 +2,7 @@ import React from "react";
 
 export const Footer = () => (
   <nav
-    className="navbar fixed-bottom navbar"
+    className="navbar"
     style={{ backgroundColor: "#161C28" }}
   >
     <div className="col-7  mt-4 mb-4" style={{ marginLeft: "5rem" }}>
