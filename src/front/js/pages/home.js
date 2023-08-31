@@ -40,7 +40,12 @@ export const Home = () => {
 			<div className="third-block">
 				<div className="container">
 					<h1 className="title-becas">Becas Disponibles</h1>
-					<div className="card-holder d-flex my-5">
+					<div className="card-holder my-5">
+					<CardBeca />
+					<CardBeca />
+					<CardBeca />
+					<CardBeca />
+					<CardBeca />
 					<CardBeca />
 					</div>
 				</div>

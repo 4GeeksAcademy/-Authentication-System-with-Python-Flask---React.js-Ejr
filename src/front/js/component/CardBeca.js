@@ -1,17 +1,25 @@
 import React from 'react'
+import "../../styles/CardBeca.css";
 
 const CardBeca = () => {
   return (
     <div>
-<div className="card" style={{ width: '18rem' }}>
+<div className="card">
       <div className="card-body">
-        <h5 className="card-title">Special title treatment</h5>
-        <p className="card-text">
-          With supporting text below as a natural lead-in to additional content.
+      <div className="container">
+        <button className="button-area">Ciencia</button>
+        <h5 className="card-title">Maestría en Ingeniería de Alimentos</h5>
+        <p className="card-text"><i className="fa-regular fa-circle-check"/>
+          Beca Completa
         </p>
-        <a href="#" className="btn btn-primary">
-          Go somewhere
-        </a>
+
+        <p className="card-text"><i className="fa-solid fa-location-dot"/>
+          Universidad de Madrid
+        </p>
+        <div className="button-container d-flex">
+          <button className="button-aplicar">Aplicar <i class="fa-solid fa-arrow-right" /></button>
+        </div>
+        </div>
       </div>
     </div>
     </div>

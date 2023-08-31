@@ -115,7 +115,7 @@
 }
 
 .third-block{
-    background: url("https://s3-alpha-sig.figma.com/img/aa8e/a240/74b7b2d02905e1cbce6e2695eb8f162a?Expires=1694390400&Signature=ZK3drLxxCEeULg9hz3LAECMWFxjct10ssTIEjpLmIlnYmOZGlqHi9IgwBslGq2m95yEuQwHokr8PNzNxRGz4HLnARMJtE7G6xqemfagYJfCW5BAFBPlXOBTioKogM~7NQthIf6b9i~JCVtJBHlkWQO8dFAUQ9ts4zTrWzhTGsi7XtBPeGsCXXrgAJH6hXnr0Wa09iu7jaaYQZT1cKyCanwJ6qRfcrKWTMmJPI0FoQKdomy3C3x2D~xsC-65qHqZXTKWXxQt2DJyqNaQwQ9kmeSBk9u3PXZEwuYJw4Q595cZAyUiMOMAwSMGqK-jMaKDyosBH4kIBvgE6R-vyOvgLCw__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4"); 
+    background: url("https://i.imgur.com/gImkaSr.png"); 
     padding-top: 5rem;
     padding-bottom: 7rem;
     
@@ -127,3 +127,9 @@
     font-weight: 600;
     font-size: 2.5rem;
 }
+
+.card-holder {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 1.5rem;
+  }
