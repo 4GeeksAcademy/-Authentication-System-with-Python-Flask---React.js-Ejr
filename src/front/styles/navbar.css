@@ -1,0 +1,18 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  padding: 10px 25px;
+}
+
+.navbar-logo {
+  flex: 1;
+}
+
+.navbar-nav {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+}

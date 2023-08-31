@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useContext } from "react";
-import { Footer } from "../component/footer";
+import React, { useContext } from "react";
 import { Navbar } from "../component/navbar";
+import "../../styles/landing.css";
 
 import { Context } from "../store/appContext";
 
@@ -11,9 +11,16 @@ export const Landing = () => {
     <>
       <Navbar />
       <div className="container">
-        <h1>Nuestra Landing Page</h1>
+        <div id="landing-wrap">
+          <h1>
+            Expert dog <br /> walking service
+          </h1>
+          <h4>
+            Exploring with a dog: <br />
+            Discovering beauty in every step.
+          </h4>
+        </div>
       </div>
-      <Footer />
     </>
   );
 };
