@@ -33,7 +33,10 @@ class User(db.Model):
     
 
 class Tracker(db.Model):
+    __tablename__ = 'trackers'
     id = db.Column(db.Integer, primary_key=True)
+    scholarship = db.relationship("Scholarship", back_populates="trackers" )
+    scholarship_id = db.Column(db.Integer, db.ForeignKey("scholarships.id"))
     follows = db.Column(db.Integer, unique=False, nullable=False)
     scholarship_name = db.Column(db.String(120), unique=True, nullable=False)
     dates = db.Column(db.String(120), unique=False, nullable=False)
@@ -62,8 +65,10 @@ class Tracker(db.Model):
     
 
 
-class Scholarships(db.Model):
+class Scholarship(db.Model):
+    __tablename__ = 'scholarships'
     id = db.Column(db.Integer, primary_key=True)
+    trackers = db.relationship("Tracker", back_populates="scholarship" )
     scholarship_name = db.Column(db.String(120), unique=True, nullable=False)
     dates = db.Column(db.String(120), unique=False, nullable=False)
     institution = db.Column(db.String(120), unique=False, nullable=False)
