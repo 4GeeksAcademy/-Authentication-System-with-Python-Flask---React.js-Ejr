@@ -344,6 +344,15 @@ def get_scholarships():
     return jsonify(response_body), 200
 
 
+@app.route("/tracker/delete-scholarship/<int:scholarship_id>", methods=['DELETE'])
+def delete_scholarship(scholarship_id):
+    single_scholarship = Scholarship.query.get(scholarship_id)
+    if single_scholarship is None:
+        raise APIException("La beca no existe", status_code=400)
+    db.session.delete(single_scholarship)
+    db.session.commit()
+
+    return jsonify({"msg": "Completed"})
 
 
 # this only runs if `$ python src/main.py` is executed
