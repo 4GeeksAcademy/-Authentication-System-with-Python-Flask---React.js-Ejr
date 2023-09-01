@@ -44,7 +44,7 @@ class Scholarship(db.Model):
     institution = db.Column(db.String(120), unique=False, nullable=False)
 
     def __repr__(self):
-        return f'<Scholarship {self.id}>'
+        return f'{self.scholarship_name}'
     
     def save(self):
         db.session.add(self)

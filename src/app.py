@@ -7,7 +7,7 @@ from flask_migrate import Migrate
 from flask_swagger import swagger
 from flask_cors import CORS
 from api.utils import APIException, generate_sitemap
-from api.models import db, User, Tracker, InstitutionalUser
+from api.models import db, User, Tracker, InstitutionalUser, Scholarship
 from api.routes import api
 from api.admin import setup_admin
 from api.commands import setup_commands
@@ -299,6 +299,37 @@ def institutional_login():
                     "institutional_user_id": insti_user.id }
 
     return jsonify(response_body), 200
+
+#Scholarship POST
+
+@app.route('/create-scholarship', methods=['POST'])
+def add_scholarship():
+    request_body = request.get_json(force=True)
+    
+    if "scholarship_name" not in request_body:
+        raise APIException('The scholarship name is required', 400)
+    
+    if "dates" not in request_body:
+        raise APIException('The deadline is required', 400)
+    
+    if "institution" not in request_body:
+        raise APIException("The institution name is required", 400)
+
+    scholarship = Scholarship(
+        scholarship_name = request_body['scholarship_name'],
+        dates = request_body['dates'],
+        institution = request_body['institution']
+    )
+
+    scholarship.save()
+
+    response_body = {
+        "msg" : "ok",
+        "msg2" : "Beca agregada correctamente"
+    }
+    
+    return jsonify(response_body), 201
+
 
 
 # this only runs if `$ python src/main.py` is executed
