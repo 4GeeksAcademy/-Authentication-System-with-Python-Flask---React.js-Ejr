@@ -7,7 +7,7 @@ from flask_migrate import Migrate
 from flask_swagger import swagger
 from flask_cors import CORS
 from api.utils import APIException, generate_sitemap
-from api.models import db, User, Tracker
+from api.models import db, User, Tracker, Scholarship
 from api.routes import api
 from api.admin import setup_admin
 from api.commands import setup_commands
@@ -182,6 +182,18 @@ def save_tracker(user_id):
     }
     
     return jsonify(response_body), 201
+
+
+@app.route("/scholarships", methods=["GET"])
+def get_scholarships():
+    scholarships = Scholarship.query.all()
+    scholarships_serialized = list(map(lambda x : x.serialize(), scholarships))
+    response_body = {
+        "msg": "Hello, this is your GET /scholarships response ",
+        "scholarships": scholarships_serialized
+    }
+
+    return jsonify(response_body), 200
 
 # this only runs if `$ python src/main.py` is executed
 if __name__ == '__main__':
