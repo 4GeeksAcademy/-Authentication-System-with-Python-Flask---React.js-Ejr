@@ -167,7 +167,7 @@ def login():
     return jsonify(response_body), 200
 
 
-@app.route('/tracker/save/<int:user_id>', methods=['POST'])
+@app.route('/tracker/save/<int:user_id>', methods=['PUT'])
 def save_tracker(user_id):
     request_body = request.get_json(force=True)
     
