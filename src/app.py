@@ -108,7 +108,7 @@ def add_user():
     return jsonify(response_body), 201
 
 
-@app.route('/tracker/save', methods=['PUT'])
+@app.route('/tracker/save/<int:user_id>', methods=['PUT'])
 def save_tracker():
     request_body = request.get_json(force=True)
     
