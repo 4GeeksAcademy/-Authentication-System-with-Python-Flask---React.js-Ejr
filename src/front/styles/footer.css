@@ -6,6 +6,7 @@
 }
 
 #suits {
+  cursor: pointer;
   margin-left: 10px;
   transition: box-shadow 0.3s ease-in-out;
   border-radius: 50%;

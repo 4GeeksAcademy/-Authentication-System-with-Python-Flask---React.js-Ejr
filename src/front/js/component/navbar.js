@@ -39,8 +39,8 @@ export const Navbar = () => {
               </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/about">
-                About us
+              <Link className="nav-link" to="/">
+                Logout
               </Link>
             </li>
           </ul>

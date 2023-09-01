@@ -12,6 +12,7 @@
   height: 100vh;
   background-position: center;
   background-repeat: no-repeat;
+  display: grid;
 }
 
 .background0 {
@@ -19,11 +20,11 @@
 }
 
 .background1 {
-  background-image: url(https://images.unsplash.com/photo-1517879288527-682ff596b022?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80);
+  background-image: url(https://images.unsplash.com/photo-1619326229465-1942c876e17c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80);
 }
 
 .background2 {
-  background-image: url(https://images.unsplash.com/photo-1498892156743-6d5da30bab8b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1365&q=80);
+  background-image: url(https://images.unsplash.com/photo-1506999658053-b9d6b4407658?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80);
 }
 
 .background3 {
@@ -35,6 +36,12 @@
   grid-template-columns: 3fr 1fr;
   grid-gap: 50px;
   margin-left: 80px;
+}
+
+.text-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .landing-title {
