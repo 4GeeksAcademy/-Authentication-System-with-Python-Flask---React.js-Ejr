@@ -183,7 +183,6 @@ def save_tracker(user_id):
     
     return jsonify(response_body), 201
 
-print("Hi")
 # this only runs if `$ python src/main.py` is executed
 if __name__ == '__main__':
     PORT = int(os.environ.get('PORT', 3001))
