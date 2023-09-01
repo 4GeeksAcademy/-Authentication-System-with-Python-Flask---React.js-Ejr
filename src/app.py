@@ -72,6 +72,30 @@ def serve_any_other_file(path):
     response.cache_control.max_age = 0 # avoid cache memory
     return response
 
+@app.route('/user', methods=['GET'])
+def get_users():
+    users = User.query.all()
+    users_serialized = list(map(lambda x: x.serialize(), users))
+    response_body = {
+        "msg": "Hello, this is your GET /user response",
+        "users" : users_serialized
+    }
+
+    return jsonify(response_body), 200
+
+@app.route('/user/<int:user_id>', methods=['GET'])
+def get_single_user(user_id):
+    single_user = User.query.get(user_id)
+    if single_user is None:
+        return jsonify({"msg": f"The id {user_id} user doesn't exist"}), 400
+    
+    response_body = {
+        "msg": "Hello, this is your GET /user response ",
+        "user_info" : single_user.serialize()
+    }
+
+    return jsonify(response_body), 200
+
 @app.route('/signup', methods=['POST'])
 def add_user():
     request_body = request.get_json(force=True)
