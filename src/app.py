@@ -355,6 +355,17 @@ def delete_scholarship(scholarship_id):
     return jsonify({"msg": "Completed"})
 
 
+@app.route("/tracker/scholarships/", methods=["GET"])
+def get_scholarships_in_tracker():
+    scholarships_in_tracker = Tracker.query.all()
+    scholarships_in_tracker_serialized = list(map(lambda x : x.serialize(), scholarships_in_tracker))
+    response_body = {
+        "msg": "Hello, this is your GET /scholarships in tracker response ",
+        "scholarships_in_tracker": scholarships_in_tracker_serialized
+    }
+
+    return jsonify(response_body), 200
+
 # this only runs if `$ python src/main.py` is executed
 if __name__ == '__main__':
     PORT = int(os.environ.get('PORT', 3001))
