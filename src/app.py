@@ -7,7 +7,7 @@ from flask_migrate import Migrate
 from flask_swagger import swagger
 from flask_cors import CORS
 from api.utils import APIException, generate_sitemap
-from api.models import db, User, Tracker
+from api.models import db, User, Tracker, InstitutionalUser
 from api.routes import api
 from api.admin import setup_admin
 from api.commands import setup_commands
@@ -87,7 +87,7 @@ def get_users():
 def get_single_user(user_id):
     single_user = User.query.get(user_id)
     if single_user is None:
-        return jsonify({"msg": f"The id {user_id} user doesn't exist"}), 400
+        return jsonify({"msg": f"The id {user_id} user doesn't exist"}), 404
     
     response_body = {
         "msg": "Hello, this is your GET /user response ",
@@ -206,6 +206,99 @@ def save_tracker():
     }
     
     return jsonify(response_body), 201
+
+# ROUTES FOR INSTITUTIONAL USERS
+
+@app.route('/institution-user', methods=['GET'])
+def get_institutional_users():
+    institutional_users = InstitutionalUser.query.all()
+    institutional_users_serialized = list(map(lambda x: x.serialize(), institutional_users))
+    response_body = {
+        "msg": "Hello, this is your GET /institutional users response",
+        "institutional_users" : institutional_users_serialized
+    }
+
+    return jsonify(response_body), 200
+
+@app.route('/institution-user/<int:institution_user_id>', methods=['GET'])
+def get_single_institutional_user(institution_user_id):
+    single_institutional_user = InstitutionalUser.query.get(institution_user_id)
+    if single_institutional_user is None:
+        return jsonify({"msg": f"The id {institution_user_id} user doesn't exist"}), 404
+    
+    response_body = {
+        "msg": "Hello, this is your GET /institutional user response ",
+        "institutional_user_info" : single_institutional_user.serialize()
+    }
+
+    return jsonify(response_body), 200
+
+
+@app.route('/signup-ins', methods=['POST'])
+def add_institutional_user():
+    request_body = request.get_json(force=True)
+    
+    if "institutional_name" not in request_body:
+        raise APIException('The institutional name is required', 400)
+    
+    if "email" not in request_body:
+        raise APIException("The email is required", 400)
+    
+    if "password" not in request_body:
+        raise APIException('The password is required', 400)
+
+    exists_institutional_email = InstitutionalUser.query.filter_by(email = request_body['email']).first()
+
+    
+    if exists_institutional_email:
+        raise APIException('Email is in use', 400)
+    
+    pw_hash = bcrypt.generate_password_hash(request_body['password']).decode('utf-8')
+
+    institutional_user = InstitutionalUser(
+        institutional_name = request_body['institutional_name'],
+        email = request_body['email'],
+        password = pw_hash
+    )
+
+    institutional_user.save()
+
+    response_body = {
+        "msg" : "ok",
+        "msg2" : "Usuario institucional creado correctamente"
+    }
+    
+    return jsonify(response_body), 201
+
+
+@app.route('/login-ins', methods=['POST'])
+def institutional_login():
+    request_body = request.get_json(force=True)
+
+    if "email" not in request_body:
+        raise APIException('The email is required', status_code=404)
+
+    if "password" not in request_body:
+        raise APIException('The password is required', status_code=404)
+
+    insti_user = InstitutionalUser.query.filter_by(
+        email= request_body['email']
+        ).first()    
+
+    if insti_user is None:
+        raise APIException ('The email or password is not correct', status_code=404)
+
+    if bcrypt.check_password_hash(insti_user.password, request_body['password']) is False:
+        raise APIException('The email or password is not correct', 401)    
+
+    access_token = create_access_token(identity = insti_user.id)
+
+    response_body ={ 
+                    "msg": "ok",
+                    "token": access_token, 
+                    "institutional_user_id": insti_user.id }
+
+    return jsonify(response_body), 200
 
 
 # this only runs if `$ python src/main.py` is executed
