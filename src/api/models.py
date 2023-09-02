@@ -1,6 +1,4 @@
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import  ForeignKey, Enum
-from sqlalchemy_serializer import SerializerMixin
 
 db = SQLAlchemy()
 
@@ -50,19 +48,9 @@ class Category (str, Enum):
    large = 'large 41-100 lbs'
    giant = 'giant 101+ lbs'
 
- 
-  
-
-class Pet(db.Model):
-   __tablename__ = 'pet'
-   id = db.Column(db.Integer, primary_key=True)
-   name = db.Column(db.String(250),  nullable=False)
-   photo = db.Column(db.String(250),  nullable=False)
-   description = db.Column(db.String(250),  nullable=False) 
-   size= db.Column(db.Enum, Category) 
-   owner= db.Column(db.Integer, ForeignKey('owner.id')) 
-
-
-
-
-   
+   def serialize(self):
+        return {
+            "id": self.id,
+            "email": self.email,
+            # do not serialize the password, its a security breach
+        }
