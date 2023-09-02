@@ -359,7 +359,7 @@ def delete_scholarship(scholarship_id):
 def get_scholarships_in_tracker(user_id):
     single_tracker = Tracker.query.get(user_id)
     if single_tracker is None:
-        raise APIException("No existe el tracker", status_code=400)
+        raise APIException("The scholarship does not exist", status_code=400)
     response_body = {
         "msg": "Hello, this is your GET /scholarships in tracker response ",
         "tracker_info": single_tracker.serialize()
