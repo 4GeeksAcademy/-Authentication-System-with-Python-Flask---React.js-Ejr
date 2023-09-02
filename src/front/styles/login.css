@@ -1,0 +1,52 @@
+#login-page,
+#signup-page {
+  font-family: serif;
+  font-size: 1.5rem;
+  font-weight: 600;
+  width: 100vw;
+  height: 100vh;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: url(https://images.unsplash.com/photo-1522276498395-f4f68f7f8454?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1169&q=80);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.wrap-loginSignup {
+  backdrop-filter: grayscale(0.8) blur(5px);
+  box-shadow: inset 0 0 0 200px rgba(165, 38, 38, 0.08);
+  border-top: 2px solid rgba(225, 225, 225, 0.3);
+  border-left: 2px solid rgba(225, 225, 225, 0.1);
+  border-right: 1px solid rgba(225, 225, 225, 0.2);
+}
+
+#inputEmail,
+#inputPassword,
+#inputName,
+#inputLastName,
+#inputEmail1,
+#inputDni,
+#inputPassword1 {
+  background-color: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 12px;
+  margin: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+#btn-login,
+#btn-signup {
+  border: 2px solid rgba(0, 0, 0, 0.563);
+  margin-bottom: 10px;
+  transition: background-color 0.3s ease;
+}
+
+#btn-login:hover {
+  background-color: rgba(7, 7, 7, 0.2);
+}
+#btn-signup:hover {
+  background-color: rgba(7, 7, 7, 0.2);
+}
