@@ -6,12 +6,20 @@ db = SQLAlchemy()
 
 
 
-class DatesRange (db.Model, SerializerMixin):
-   __tablename__ = 'datesRange'
+class Booking (db.Model, SerializerMixin):
+   __tablename__ = 'booking'
+   id = db.Column(db.Integer, primary_key=True)
+   owner= db.Column(db.Integer, ForeignKey('owner.id')) 
+   keeper= db.Column(db.Integer, ForeignKey('keeper.id')) 
+   
+class Schedule(db.Model, SerializerMixin):
+   __tablename__ = 'schedule'
    id = db.Column(db.Integer, primary_key=True)
    start_date =db.Column(db.Date, nullable =False)
    end_date =db.Column(db.Date, nullable =False)
-   
+   keeper= db.Column(db.Integer, ForeignKey('keeper.id')) 
+
+
 
 class User(db.Model, SerializerMixin):
     __tablename__ = 'user'
