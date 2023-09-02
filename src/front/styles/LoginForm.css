@@ -1,10 +1,11 @@
 .login-container{
-    border: 2px solid black;
     width: 35%;
     display: flex;
     flex-direction: column;
+    margin-top: -15px;
     align-items: center;
     justify-content: center;
+    height: 285px !important;
 }
 
 .input-box{
@@ -17,6 +18,7 @@
     display: flex;
     flex-direction: row-reverse;
     justify-content: space-around;
+    margin-left: -25px;
 }
 
 #checkboxx{
@@ -28,4 +30,22 @@
 
 #remember{
     margin-right: 5px;
+}
+
+.login-button{
+background-color: rgb(31, 31, 155);
+color: white;
+padding-top: 5px;
+padding-bottom: 5px;
+border-radius: 5px;
+}
+
+
+.lost-password{
+    text-decoration: none;
+    color: gray;
+}
+
+.lost-password-container{
+    margin-left: 5px;
 }
