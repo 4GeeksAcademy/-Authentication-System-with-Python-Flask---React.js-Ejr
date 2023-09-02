@@ -187,6 +187,8 @@ def save_tracker(user_id):
 @app.route("/scholarships", methods=["GET"])
 def get_scholarships():
     scholarships = Scholarship.query.all()
+    if scholarships is None:
+        return jsonify({"msg": "There are not scholarships"}), 404
     scholarships_serialized = list(map(lambda x : x.serialize(), scholarships))
     response_body = {
         "msg": "Hello, this is your GET /scholarships response ",
