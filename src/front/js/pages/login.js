@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import { Context } from "../store/appContext";
 import { useNavigate } from "react-router-dom";
-import "../../styles/home.css";
+import "../../styles/login.css";
 
 export const Login = () => {
   const { store, actions } = useContext(Context);
@@ -24,39 +24,39 @@ export const Login = () => {
     console.log(resp);
   }
   return (
-    <div className="text-center container mt-5">
-      <h1>Login</h1>
-      <form onSubmit={login}>
-        <div className="mb-3">
-          <label htmlFor="exampleInputEmail1" className="form-label">
-            Email address
-          </label>
-          <input
-            type="email"
-            className="form-control"
-            name="email"
-            id="exampleInputEmail1"
-            aria-describedby="emailHelp"
-          />
-          <div id="emailHelp" className="form-text">
-            We'll never share your email with anyone else.
+    <div id="login-page" className="text-center">
+      <div className="container wrap-loginSignup">
+        <h1>Login</h1>
+        <form onSubmit={login}>
+          <div className="mb-3">
+            <label htmlFor="inputEmail" className="form-label">
+              Email address
+            </label>
+            <input
+              type="email"
+              className="form-control"
+              name="email"
+              id="inputEmail"
+              aria-describedby="emailHelp"
+            />
+            <div id="emailHelp" className="form-text"></div>
           </div>
-        </div>
-        <div className="mb-3">
-          <label htmlFor="exampleInputPassword1" className="form-label">
-            Password
-          </label>
-          <input
-            type="password"
-            className="form-control"
-            name="password"
-            id="exampleInputPassword1"
-          />
-        </div>
-        <button type="submit" className="btn btn-primary">
-          Iniciar sesion
-        </button>
-      </form>
+          <div className="mb-3">
+            <label htmlFor="inputPassword" className="form-label">
+              Password
+            </label>
+            <input
+              type="password"
+              className="form-control"
+              name="password"
+              id="inputPassword"
+            />
+          </div>
+          <button id="btn-login" type="submit" className="btn">
+            Iniciar sesion
+          </button>
+        </form>
+      </div>
     </div>
   );
 };

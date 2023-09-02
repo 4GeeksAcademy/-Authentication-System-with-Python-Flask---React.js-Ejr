@@ -6,10 +6,11 @@ import { BackendURL } from "./component/backendURL";
 import { Login } from "./pages/login";
 import { Home } from "./pages/home";
 import { Signup } from "./pages/signup";
-import injectContext from "./store/appContext";
+import { Landing } from "./pages/landing";
 
-import { Navbar } from "./component/navbar";
+import injectContext from "./store/appContext";
 import { Footer } from "./component/footer";
+import { Navbar } from "./component/navbar";
 
 //create your first component
 const Layout = () => {
@@ -26,9 +27,10 @@ const Layout = () => {
         <ScrollToTop>
           <Navbar />
           <Routes>
-            <Route element={<Login />} path="/" />
-            <Route element={<Home />} path="/home" />
+            <Route element={<Landing />} path="/" />
             <Route element={<Signup />} path="/signup" />
+            <Route element={<Login />} path="/login" />
+            <Route element={<Home />} path="/home" />
             <Route element={<h1>Not found!</h1>} />
           </Routes>
           <Footer />

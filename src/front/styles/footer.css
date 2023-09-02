@@ -1,0 +1,17 @@
+.footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+}
+
+#suits {
+  cursor: pointer;
+  margin-left: 10px;
+  transition: box-shadow 0.3s ease-in-out;
+  border-radius: 50%;
+}
+
+#suits:hover {
+  box-shadow: 0 0 20px rgb(166, 173, 166);
+}
