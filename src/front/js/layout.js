@@ -7,8 +7,9 @@ import { Login } from "./pages/login";
 import { Home } from "./pages/home";
 import { Signup } from "./pages/signup";
 import { Landing } from "./pages/landing";
-
+import { Profile } from "./pages/profile";
 import injectContext from "./store/appContext";
+
 import { Footer } from "./component/footer";
 import { Navbar } from "./component/navbar";
 import { SignupKeeper } from "./pages/signupKeeper";
@@ -33,6 +34,7 @@ const Layout = () => {
             <Route element={<SignupKeeper />} path="/signup/keeper" />
             <Route element={<Login />} path="/login" />
             <Route element={<Home />} path="/home" />
+            <Route element={<Profile />} path="/profile" />
             <Route element={<h1>Not found!</h1>} />
           </Routes>
           <Footer />
