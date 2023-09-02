@@ -167,9 +167,14 @@ def login():
     return jsonify(response_body), 200
 
 
-@app.route('/tracker/save/<int:user_id>', methods=['PUT'])
+
+@app.route('/tracker/save/<int:user_id>', methods=['POST'])
 def save_tracker(user_id):
+    single_user = User.query.get(user_id)
     request_body = request.get_json(force=True)
+    
+    if single_user is None:
+        return jsonify({"msg": f"The id {user_id} user doesn't exist"}), 404
     
     if "follows" not in request_body:
         raise APIException('Follows are required', 400)
@@ -183,7 +188,7 @@ def save_tracker(user_id):
     if "institution" not in request_body:
         raise APIException('Institution is required', 400)
 
-    exists_tracker = Tracker.query.filter_by(id = request_body['id']).first()
+    exists_tracker = Tracker.query.filter_by(scholarship_name = request_body['scholarship_name']).first()
 
     
     if exists_tracker:
@@ -202,7 +207,8 @@ def save_tracker(user_id):
 
     response_body = {
         "msg" : "ok",
-        "msg2" : "Tracker creado correctamente"
+        "msg2" : "Tracker creado correctamente",
+        "user_info" : single_user.serialize()
     }
     
     return jsonify(response_body), 201
