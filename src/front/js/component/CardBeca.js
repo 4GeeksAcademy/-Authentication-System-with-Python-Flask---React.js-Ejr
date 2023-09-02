@@ -16,7 +16,7 @@ const CardBeca = () => {
         <p className="card-text"><i className="fa-solid fa-location-dot"/>
           Universidad de Madrid
         </p>
-        <div className="button-container d-flex">
+        <div className="button-container">
           <button className="button-aplicar">Aplicar <i class="fa-solid fa-arrow-right" /></button>
         </div>
         </div>

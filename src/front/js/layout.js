@@ -6,6 +6,7 @@ import { BackendURL } from "./component/backendURL";
 import { Home } from "./pages/home";
 import RegistroUsuario from "./pages/RegistroUsuario";
 import RegistroEleccion from "./pages/RegistroEleccion";
+import Nosotros from "./pages/Nosotros";
 import injectContext from "./store/appContext";
 
 import { Navbar } from "./component/navbar";
@@ -30,6 +31,7 @@ const Layout = () => {
             <Route element={<h1>Not found!</h1>} />
             <Route element={<RegistroUsuario />} path="/registroUsuario" />
             <Route element={<RegistroEleccion />} path="/registroEleccion" />
+            <Route element={<Nosotros />} path="/nosotros" />
           </Routes>
           <Footer />
         </ScrollToTop>

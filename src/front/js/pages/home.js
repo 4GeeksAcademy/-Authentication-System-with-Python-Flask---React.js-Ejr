@@ -47,6 +47,33 @@ export const Home = () => {
 					<CardBeca />
 					<CardBeca />
 					<CardBeca />
+					<CardBeca />
+					<CardBeca />
+					<CardBeca />
+					<CardBeca />
+					<CardBeca />
+					<CardBeca />
+					<CardBeca />
+					<CardBeca />
+					<CardBeca />
+					<CardBeca />
+					<CardBeca />
+					<CardBeca />
+					<CardBeca />
+					<CardBeca />
+					<CardBeca />
+					<CardBeca />
+					<CardBeca />
+					<CardBeca />
+					<CardBeca />
+					<CardBeca />
+					<CardBeca />
+					<CardBeca />
+					<CardBeca />
+					<CardBeca />
+
+			
+
 					</div>
 				</div>
 
