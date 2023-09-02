@@ -30,7 +30,7 @@ export const Navbar = () => {
             <button className="button-regular mx-1">Mi Perfil</button>
           </Link>
           <div className="buttons-right mx-2">
-            <Link to="/signup">
+            <Link to="/iniciarsesion">
               <button className="button-login">Iniciar sesión</button>
             </Link>
             <Link to="/registroEleccion">

@@ -1,0 +1,22 @@
+.RegistroUsuarioDiv {
+  font-weight: 500;
+  width: 25rem;
+  background-color: #e0edff;
+  color: #1e3151;
+  border-radius: 2rem;
+  margin-top: 4rem;
+  margin-bottom: 8rem;
+}
+
+.form-control {
+  width: 20rem;
+}
+
+.btn {
+  width: 20rem;
+}
+
+.tituloRegistro {
+  display: flex;
+  justify-content: center;
+}
