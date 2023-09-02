@@ -39,7 +39,7 @@ export const Home = () => {
 			</div>
 			<div className="third-block">
 				<div className="container">
-					<h1 className="title-becas">Becas Disponibles</h1>
+					<h1 className="title-becas">Becas Disponibles <i class="fa-solid fa-arrow-right" /></h1>
 					<div className="card-holder my-5">
 					<CardBeca />
 					<CardBeca />
