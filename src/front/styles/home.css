@@ -5,3 +5,22 @@
     one more css for each page that will contain the selected used 
     on that page only (the ones not reused in other pages).
 */
+.card-img-overlay {
+    width: 500px;
+    height: 350px;
+    margin-top: 120px;
+    background-color: black;
+    opacity: 0.75;
+    color:white;
+    text-shadow: black 2px 0 3px;
+}
+.divider-default {
+    background: linear-gradient(to right, #50e590 50%, #0D6EFD 120%);
+    display: inline-block;
+    border: 0;
+    font-size: 0;
+    line-height: 0;
+    height: 5px;
+    max-width: 300px;
+    width: 300%;
+}
