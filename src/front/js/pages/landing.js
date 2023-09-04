@@ -16,8 +16,7 @@ export const Landing = () => {
             Expert dog <br /> walking service
           </h1>
           <h4 className="landing-description">
-            {" "}
-            lo mismo para el settexto Exploring with a dog <br />
+            Exploring with a dog <br />
             Discovering beauty in every step.
           </h4>
         </div>
