@@ -10,7 +10,6 @@ import { Profile } from "./pages/profile"
 import injectContext from "./store/appContext";
 import { Landing } from "./pages/landing";
 
-import injectContext from "./store/appContext";
 import { Footer } from "./component/footer";
 import { Navbar } from "./component/navbar";
 
