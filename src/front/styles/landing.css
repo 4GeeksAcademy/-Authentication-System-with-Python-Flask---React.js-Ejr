@@ -1,14 +1,7 @@
-/* body {
-  background-position: center;
-
-  background-repeat: no-repeat;
-} */
-
 #landing {
   font-family: serif;
   color: white;
   background-size: cover;
-  width: 100vw;
   height: 100vh;
   background-position: center;
   background-repeat: no-repeat;
