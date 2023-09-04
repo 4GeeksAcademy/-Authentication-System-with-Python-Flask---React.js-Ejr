@@ -67,15 +67,20 @@
     background-color: rgb(254, 117, 12);
   }
   #in{
-    background-color: #e8e1e1;
+    background-color: rgb(216, 216, 216);
     
   }
   #img{
    margin-top: 6%; 
    
   }
+  #image{
+    height: 85%;
+    width: 250px;
+  }
+ 
   #card-header{
-    background-color: #938cf7;
+    background-color:rgb(254, 117, 12);
   }
   
   * {
