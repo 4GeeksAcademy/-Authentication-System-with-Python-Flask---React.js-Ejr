@@ -18,7 +18,7 @@ export const Navbar = () => {
           <Link to="/nosotros">
             <button className="button-regular mx-1">Nosotros</button>
           </Link>
-          <Link to="/faq">
+          <Link to="/preguntas-frecuentes">
             <button className="button-regular mx-1">
               Preguntas Frecuentes
             </button>

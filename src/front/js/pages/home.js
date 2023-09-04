@@ -72,7 +72,7 @@ export const Home = () => {
           <h1 className="title-becas">
             Becas Disponibles <i class="fa-solid fa-arrow-right" />
           </h1>
-          <div className="card-holder my-5">
+          <div className="card-holder my-4">
             <CardBeca />
             <CardBeca />
             <CardBeca />

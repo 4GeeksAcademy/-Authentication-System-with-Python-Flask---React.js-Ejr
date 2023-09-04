@@ -9,6 +9,7 @@ import RegistroEleccion from "./pages/RegistroEleccion";
 import RegistroInst from "./pages/RegistroInst";
 import IniciarSesion from "./pages/IniciarSesion";
 import Nosotros from "./pages/Nosotros";
+import PreguntasFrecuentes from "./pages/PreguntasFrecuentes";
 import injectContext from "./store/appContext";
 
 import { Navbar } from "./component/navbar";
@@ -36,6 +37,7 @@ const Layout = () => {
             <Route element={<RegistroInst />} path="/registroInst" />
             <Route element={<IniciarSesion />} path="/iniciarsesion" />
             <Route element={<Nosotros />} path="/nosotros" />
+            <Route element={<PreguntasFrecuentes />} path="/preguntas-frecuentes" />
           </Routes>
           <Footer />
         </ScrollToTop>
