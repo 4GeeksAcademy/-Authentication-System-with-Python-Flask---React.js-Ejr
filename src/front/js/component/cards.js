@@ -2,12 +2,18 @@ import React from "react";
 
 const Cards=(props)=>{
   return(
-    <div className="card mb-3">
+    <div id="in"className="card mb-3">
     <div className="row g-0">
       <div className="col-md-4">
-        <div  style={{ position:"absolute", width:"9%",height:"19%" ,top:"3%",left:"1%", backgroundColor:"black", opacity: "0.5" }} className={props.day}>
-           <p  style={{color:"white"}}> 25</p>
-           <p  style={{color:"white"}}> Dec</p>
+        <div  style={{ position:"absolute", width:"9%",height:"40%" ,top:"3%",left:"2%", backgroundColor:"black", opacity: "0.5" }} className={props.day}>
+          <div className="row">
+           <div className="col">
+           <h1  style={{color:"white",marginTop:"4%"}}> 25</h1>
+           <h2  style={{color:"white"}}> Dec</h2>
+           </div>
+            
+          </div>
+        
 
            
         </div>
@@ -19,7 +25,7 @@ const Cards=(props)=>{
           <p> <i className="bi bi-clock"></i>{props.time}<i className="bi bi-geo-alt-fill"></i>  {props.location}</p>
           <p className="ca rd-text">{props.description}</p>
           <p className="card-text"><small className="text-body-secondary">{props.lastUpdated}</small></p>
-          <button id="click">REGISTRO</button>
+          <button id="click" className="btn btn-lg btn-block btn-outline-primary">REGISTRO</button>
         </div>
       </div>
     </div>
