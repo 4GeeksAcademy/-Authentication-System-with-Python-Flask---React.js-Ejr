@@ -8,7 +8,7 @@ const Galeria=()=>{
             <div className="lightbox">
               <img
                 src={basket}
-                alt="Gallery image 1"
+                alt="Gallery image  1"
                 className="ecommerce-gallery-main-img active w-100"
               />
             </div>
