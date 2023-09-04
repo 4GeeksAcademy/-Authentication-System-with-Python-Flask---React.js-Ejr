@@ -6,10 +6,13 @@ import { BackendURL } from "./component/backendURL";
 import { Home } from "./pages/home";
 import { Servicios } from "./pages/servicios";
 import { Single } from "./pages/single";
+import  Payment  from "./pages/payment";
 import injectContext from "./store/appContext";
-
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
+import Eventos from "./pages/eventos";
+import Galeria from "./component/galeria";
+import Planes from "./pages/planes";
 
 //create your first component
 const Layout = () => {
@@ -29,6 +32,10 @@ const Layout = () => {
                         <Route element={<Servicios />} path="/servicios" />
                         <Route element={<Single />} path="/single/:theid" />
                         <Route element={<h1>Not found!</h1>} />
+                        <Route element={<Payment/>} path="/payment"/>
+                        <Route element={<Eventos/>} path="/eventos"/>
+                        <Route element={<Galeria/>} path="/galeria"/>
+                        <Route element={<Planes/>} path="/planes"/>
                     </Routes>
                     <Footer />
                 </ScrollToTop>
