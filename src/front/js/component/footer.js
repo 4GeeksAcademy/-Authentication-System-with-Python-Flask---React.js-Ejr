@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import "../../styles/footer.css";
 
 let menu = [
 	{label: 'Inicio', url: '/'},

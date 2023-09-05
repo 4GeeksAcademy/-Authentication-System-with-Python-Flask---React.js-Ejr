@@ -1,5 +1,5 @@
 import React from "react";
-import '../../styles/Contact.css'
+import '../../styles/contacto.css'
 
 function ContactForm(){ 
     return(
@@ -18,7 +18,7 @@ function ContactForm(){
       <div className="form-field">
         <textarea id="message" name="message" rows="4" placeholder="Mensaje" required></textarea>
       </div>
-      <button id="submit-button" type="submit">Contactanos</button>
+      <button className="btn btn-primary btn-lg m-2" id="submit-button" type="submit">Contactanos</button>
     </form>
   </div>
     )

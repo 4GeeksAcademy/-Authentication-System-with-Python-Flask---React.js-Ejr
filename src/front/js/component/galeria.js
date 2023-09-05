@@ -16,14 +16,8 @@ const Galeria = () => {
       <div className="ecommerce-gallery" data-mdb-zoom-effect="true" data-mdb-auto-height="true">
         <div className="row">
           <div style={{ textAlign: "center" }} className="col-12">
-
-            <h1 > <div style={{
-              borderBottom: "6px solid orange",
-              paddingBottom: "5px",
-              width: "119px",
-              marginLeft: "41%"
-            }}
-            >Galería</div></h1>
+            <h1>Galería</h1>
+            <div className="divider divider-default m-3"></div>
           </div>
         </div>
         <div className="row py-3 shadow-5">
