@@ -12,6 +12,7 @@ import Nosotros from "./pages/Nosotros";
 import PreguntasFrecuentes from "./pages/PreguntasFrecuentes";
 import Perfil from "./pages/Perfil";
 import Tracker from "./pages/Tracker";
+import FormularioBeca from "./pages/FormularioBeca";
 import injectContext from "./store/appContext";
 
 import { Navbar } from "./component/navbar";
@@ -40,10 +41,9 @@ const Layout = () => {
             <Route element={<IniciarSesion />} path="/iniciarsesion" />
             <Route element={<Nosotros />} path="/nosotros" />
             <Route element={<Tracker />} path="/tracker" />
-            <Route
-              element={<PreguntasFrecuentes />}
-              path="/preguntas-frecuentes"
-            />
+            <Route element={<Tracker />} path="/tracker" />
+            <Route element={<FormularioBeca />} path="/formulario" />
+            <Route element={<PreguntasFrecuentes />} path="/preguntas-frecuentes" />
             <Route element={<Perfil />} path="/perfil" />
           </Routes>
           <Footer />
