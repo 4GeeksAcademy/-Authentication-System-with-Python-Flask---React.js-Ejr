@@ -1,33 +1,45 @@
-.button-area {
+.button-area-appli {
   color: white;
-  font-family: "Inter", sans-serif;
-  font-weight: 400;
+  font-weight: 500;
   border-radius: 0.625rem;
-  background: #5c92e3;
+  background: #f38d3f;
   border: none;
-  padding: 0.1rem 1rem 0.1rem 1rem;
+  width: 8rem;
+  height: 2rem;
   margin-bottom: 1rem;
 }
-.card {
-  width: 19rem;
-  padding: 1rem 0rem 1rem 0rem;
-  height: flex;
-  display: flex;
+
+.button-check-appli {
+  color: white;
+  font-weight: 500;
+  border-radius: 0.625rem;
+  background: #acd968;
   border: none;
+  width: 8rem;
+  height: 2rem;
+  margin-bottom: 1rem;
+}
+.card-appli {
+  width: 55rem;
+  height: 9rem;
   border-radius: 1rem;
+  border: none;
+  margin-bottom: 0;
+  padding: 1rem;
+  margin: 1rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
-.card-title {
+.card-title-appli {
   color: #074db6;
   font-family: "Inter", sans-serif;
   font-weight: 500;
   font-size: 1.3rem;
   line-height: 1.8rem;
   margin-bottom: 1rem;
-  display: flex;
 }
 
-.card-text {
+.card-text-appli {
   color: #074db6;
   font-family: "Inter", sans-serif;
   font-weight: 400;
@@ -46,7 +58,7 @@
   margin-left: 0.2rem;
 }
 
-.button-aplicar {
+.button-aplicar-appli {
   color: white;
   font-family: "Inter", sans-serif;
   font-weight: 500;
@@ -57,14 +69,16 @@
   transition-duration: 0.9s;
 }
 
-.button-aplicar:hover {
+.button-aplicar-appli:hover {
   background-color: #f06901;
-}
-
-.button-container {
-  justify-content: end;
 }
 
 .fa-arrow-right {
   margin-left: 0.5rem;
+}
+
+.button-container-appli {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
 }

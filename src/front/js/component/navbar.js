@@ -23,7 +23,7 @@ export const Navbar = () => {
               Preguntas Frecuentes
             </button>
           </Link>
-          <Link to="/aplicaciones">
+          <Link to="/tracker">
             <button className="button-regular mx-1">Mis Aplicaciones</button>
           </Link>
           <Link to="/perfil">

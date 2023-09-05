@@ -1,10 +1,11 @@
 import React from "react";
 import "../../styles/perfil.css";
+import { Link } from "react-router-dom";
 
 const Perfil = () => {
   return (
     <div className="container d-flex justify-content-center align-items-center">
-      <div className="card">
+      <div className="card-perfil">
         <div className="upper">
           <img
             src="https://cdn.pixabay.com/photo/2023/03/06/17/02/ship-7833921_1280.jpg"
@@ -35,9 +36,11 @@ const Perfil = () => {
                 id="exampleInputPassword1"
                 placeholder="carlossainz@gmail.com"
               />
-              <button className="btn btn-primary btn-sm follow mb-3">
-                Ver mis aplicaciones
-              </button>
+              <Link to="/tracker">
+                <button className="btn btn-primary btn-sm follow mb-3">
+                  Ver mis aplicaciones
+                </button>
+              </Link>
             </div>
           </div>
         </div>
