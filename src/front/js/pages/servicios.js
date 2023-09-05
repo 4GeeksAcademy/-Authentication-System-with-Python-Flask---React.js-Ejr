@@ -13,6 +13,7 @@ export const Servicios = () => {
 	return (
 			<div className="container text-center">
 				<h1>Nuestros Servicios</h1>
+				<div className="divider divider-default m-3"></div>
 				<div className="row">
 					<div className="col-md-4 mb-4">
 						<div className="">

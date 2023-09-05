@@ -1,3 +1,6 @@
+.contacto {
+    margin-top: 120px;
+}
 .contact-form-container{
     width: 35%;
     height: 45%;
@@ -5,6 +8,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin-top: 120px;
 }
 
 #name{
@@ -22,11 +26,10 @@ textarea{
     padding: 5px;
     text-decoration: none;
 }
+
 #submit-button{
     margin-top: 5px;
     width: 384px;
-    background-color: rgb(252, 113, 0);
-    color: white;
 }
 
 textarea{

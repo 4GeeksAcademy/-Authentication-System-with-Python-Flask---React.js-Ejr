@@ -5,20 +5,13 @@ import Pricing from "../component/princing";
 const Planes = () => {
 	return (
 		<div className="App">
-
 			<div className="row">
 				<div style={{ textAlign: "center" }} className="col-12">
-
-					<h1 > <div style={{
-						borderBottom: "6px solid orange",
-						paddingBottom: "5px",
-						width: "119px",
-						marginLeft: "41%"
-					}}
-					>Planes</div></h1>
+					<h1>Planes</h1>
+					<div className="divider divider-default m-3"></div>
 				</div>
 			</div>
-			<div className="row">
+			<div className="row ">
 				<div className="col">
 					<Pricing
 						planes="Basic"

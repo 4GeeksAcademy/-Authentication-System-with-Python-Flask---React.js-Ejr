@@ -1,4 +1,5 @@
-li:hover {
+.navbar-nav li:hover {
     background-color: #0D6EFD;
     border-radius: 5px;
+    color: white;
 }

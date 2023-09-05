@@ -1,12 +1,12 @@
 //import react into the bundle
 import React from "react";
 import ReactDOM from "react-dom";
-import ContactForm from "./component/ContactForm.jsx";
-import ContactPage from "./pages/ContactPage.jsx";
-import AccountPage from "./pages/AccountPage.jsx";
-import { Home } from "./pages/home.js";
+//include your index.scss file into the bundle
+import "../styles/index.css";
 
+//import your own components
+import Layout from "./layout";
 
 
 //render your react application
-ReactDOM.render(<Home/>, document.querySelector("#app"));
+ReactDOM.render(<Layout />, document.querySelector("#app"));
