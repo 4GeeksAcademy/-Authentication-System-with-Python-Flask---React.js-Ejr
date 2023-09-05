@@ -1,6 +1,6 @@
 import React from "react";
 import ContactForm from "../component/ContactForm.jsx";
-import Navbar from "../component/NavBar.jsx";
+import navbar from "../component/navbar.js";
 import '../../styles/Contact.css'
 import Ubication from "../component/Ubication.jsx";
 

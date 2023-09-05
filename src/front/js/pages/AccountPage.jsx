@@ -1,5 +1,5 @@
 import React from "react";
-import Navbar from "../component/NavBar.jsx";
+import navbar from "../component/navbar.js";
 import LoginForm from "../component/LoginForm.jsx";
 import RegisterForm from "../component/RegisterForm.jsx";
 

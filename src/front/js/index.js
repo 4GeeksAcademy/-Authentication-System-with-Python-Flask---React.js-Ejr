@@ -4,8 +4,9 @@ import ReactDOM from "react-dom";
 import ContactForm from "./component/ContactForm.jsx";
 import ContactPage from "./pages/ContactPage.jsx";
 import AccountPage from "./pages/AccountPage.jsx";
+import { Home } from "./pages/home.js";
 
 
 
 //render your react application
-ReactDOM.render(<AccountPage/>, document.querySelector("#app"));
+ReactDOM.render(<Home/>, document.querySelector("#app"));
