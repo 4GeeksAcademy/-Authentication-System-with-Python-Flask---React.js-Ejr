@@ -1,0 +1,48 @@
+.navbar{
+    width: 98%;
+    margin-left: 10px;
+    box-shadow: 0px 4px 8px grey
+}
+
+.navbar-logo{
+    font-size: 32px;
+    color: rgb(252, 113, 0);
+    background-color: white;
+    border: none;
+}
+
+.navbar-links{
+    width: 45%;
+    display: flex;
+    justify-content: space-between;
+    margin-right: 8px;
+}
+
+.navbar-link{
+    text-decoration: none;
+    color: rgb(252, 113, 0);
+}
+
+.navbar-link:hover{
+    text-decoration: none;
+    color: white;
+    background-color: rgb(252, 113, 0);
+    border-radius: 7px;
+    padding: 2px;
+    transition: 0.5s;
+}
+
+.title-container{
+    height: 150px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.orange-line{
+    border: 2px solid rgb(252, 113, 0);
+    width: 75px;
+   
+
+}
