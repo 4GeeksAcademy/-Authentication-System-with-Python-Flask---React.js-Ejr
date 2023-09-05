@@ -7,7 +7,6 @@ let menu = [
 	{label: 'Galería', url: '/galeria'},
 	{label: 'Planes', url: '/planes'},
 	{label: 'Contacto', url: '/contacto'}
-    {label: 'Login', url: '/login'}
 ];
 
 export const Footer = () => (
