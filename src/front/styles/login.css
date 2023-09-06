@@ -7,9 +7,10 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-image: url(https://images.unsplash.com/photo-1522276498395-f4f68f7f8454?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1169&q=80);
+  background-image: url(https://images.unsplash.com/photo-1514064019862-23e2a332a6a6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2028&q=80);
   background-repeat: no-repeat;
   background-size: cover;
+  color: azure;
 }
 
 .wrap-loginSignup {
@@ -34,7 +35,9 @@
   border-radius: 8px;
   padding: 12px;
   margin: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 10px rgba(63, 211, 43, 0.3);
+  color: white;
+  transition: none;
 }
 
 #btn-login,
@@ -42,6 +45,7 @@
   border: 2px solid rgba(0, 0, 0, 0.563);
   margin-bottom: 10px;
   transition: background-color 0.3s ease;
+  color: white;
 }
 
 #btn-login:hover {
@@ -53,4 +57,5 @@
 
 #cat-suit {
   font-size: 5rem;
+  color: black;
 }
