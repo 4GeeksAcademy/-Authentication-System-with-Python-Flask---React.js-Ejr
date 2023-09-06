@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import "../../styles/landing.css";
 
 import { Context } from "../store/appContext";
@@ -20,26 +20,28 @@ let descriptions = [
 export const Landing = () => {
   const { store, actions } = useContext(Context);
   const [background, setBackground] = useState("background");
-  const [title, setTitle] = useState("title");
-  const [description, setDescription] = useState("description");
+  const [title, setTitle] = useState(titles[0]);
+  const [description, setDescription] = useState(descriptions[0]);
 
   const handleButtonClick = (index) => {
     setBackground(`background${index}`);
-    setTitle(`title${index}`);
-    setDescription(`description${index}`);
+    setTitle(titles[index - 1]);
+    setDescription(descriptions[index - 1]);
   };
+
+  useEffect(() => {
+    // Aquí puedes realizar cualquier acción adicional que necesites cuando se carga la página.
+  }, []);
 
   return (
     <div className={background} id="landing">
       <div className="landing-content">
         <div className="text-container">
-          <h1 className={title} id="landing-title">
-            Siempre sera un cuidado mutuo, somos un todo
-            {titles[parseInt(title.charAt(title.length - 1))]}
+          <h1 className="title" id="landing-title">
+            {title}
           </h1>
-          <h4 className={description} id="landing-description">
-            Love pray and eat
-            {descriptions[parseInt(description.charAt(description.length - 1))]}
+          <h4 className="description" id="landing-description">
+            {description}
           </h4>
         </div>
         <div className="buttons-container">
