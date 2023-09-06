@@ -11,11 +11,7 @@ const Cards=(props)=>{
            <h1  style={{color:"white",marginTop:"4%"}}> 25</h1>
            <h2  style={{color:"white"}}> Dec</h2>
            </div>
-            
           </div>
-        
-
-           
         </div>
         <img src={props.src} className="img-fluid rounded-start" alt="photo the basket"/>
       </div>
@@ -25,7 +21,7 @@ const Cards=(props)=>{
           <p> <i className="bi bi-clock"></i>{props.time}<i className="bi bi-geo-alt-fill"></i>  {props.location}</p>
           <p className="ca rd-text">{props.description}</p>
           <p className="card-text"><small className="text-body-secondary">{props.lastUpdated}</small></p>
-          <button id="click" className="btn btn-lg btn-block btn-outline-primary">REGISTRO</button>
+          <button id="click" className="btn btn-primary btn-lg m-2">REGISTRO</button>
         </div>
       </div>
     </div>
