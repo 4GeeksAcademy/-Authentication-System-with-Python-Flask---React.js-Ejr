@@ -8,13 +8,14 @@ let titles = [
   "Lavamos su pelo por ti",
   "Tu amigo incondicional",
   "Love and pets",
-  "El amor es eterno",
+  "Somos un todo",
 ];
 let descriptions = [
   "Discovering beauty in every step",
   "Grooming keeps pets looking great",
   "Regular exercise ensures happy pets",
   "Love and play daily together",
+  "La amistad y el cuidado",
 ];
 
 export const Landing = () => {
@@ -25,24 +26,16 @@ export const Landing = () => {
 
   const handleButtonClick = (index) => {
     setBackground(`background${index}`);
-    setTitle(titles[index - 1]);
-    setDescription(descriptions[index - 1]);
+    setTitle(titles[index + 1]);
+    setDescription(descriptions[index + 1]);
   };
-
-  useEffect(() => {
-    // Aquí puedes realizar cualquier acción adicional que necesites cuando se carga la página.
-  }, []);
 
   return (
     <div className={background} id="landing">
       <div className="landing-content">
         <div className="text-container">
-          <h1 className="title" id="landing-title">
-            {title}
-          </h1>
-          <h4 className="description" id="landing-description">
-            {description}
-          </h4>
+          <h1 className="landing-title">{title}</h1>
+          <h4 className="landing-description">{description}</h4>
         </div>
         <div className="buttons-container">
           <button

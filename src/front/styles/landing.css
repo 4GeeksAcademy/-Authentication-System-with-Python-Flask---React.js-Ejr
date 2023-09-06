@@ -10,18 +10,22 @@
 
 .background {
   background-image: url(https://images.unsplash.com/photo-1478098711619-5ab0b478d6e6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80);
+  transition: background 0.8s ease;
 }
 
 .background1 {
   background-image: url(https://images.unsplash.com/photo-1619326229465-1942c876e17c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80);
+  transition: background 0.8s ease;
 }
 
 .background2 {
   background-image: url(https://images.unsplash.com/photo-1506999658053-b9d6b4407658?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80);
+  transition: background 0.8s ease;
 }
 
 .background3 {
   background-image: url(https://images.unsplash.com/photo-1503431128871-cd250803fa41?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80);
+  transition: background 0.8s ease;
 }
 
 .landing-content {

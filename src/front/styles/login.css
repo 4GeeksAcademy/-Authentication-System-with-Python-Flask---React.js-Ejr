@@ -1,7 +1,6 @@
 #login-page,
 #signup-page {
-  font-family: serif;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   font-weight: 600;
   height: 100vh;
   background-position: center;
@@ -14,11 +13,13 @@
 }
 
 .wrap-loginSignup {
-  backdrop-filter: grayscale(0.8) blur(5px);
-  box-shadow: inset 0 0 0 200px rgba(165, 38, 38, 0.08);
-  border-top: 2px solid rgba(225, 225, 225, 0.3);
-  border-left: 2px solid rgba(225, 225, 225, 0.1);
-  border-right: 1px solid rgba(225, 225, 225, 0.2);
+  border-radius: 15px;
+  width: 40vw;
+  backdrop-filter: grayscale(0.8) blur(2px);
+  box-shadow: 0 0 15px rgb(255, 255, 255);
+  /* border-top: 1px solid rgba(225, 225, 225, 0.3);
+  border-left: 1px solid rgba(225, 225, 225, 0.1);
+  border-right: 1px solid rgba(225, 225, 225, 0.2); */
 }
 
 #inputEmail,
@@ -48,4 +49,8 @@
 }
 #btn-signup:hover {
   background-color: rgba(7, 7, 7, 0.2);
+}
+
+#cat-suit {
+  font-size: 5rem;
 }
