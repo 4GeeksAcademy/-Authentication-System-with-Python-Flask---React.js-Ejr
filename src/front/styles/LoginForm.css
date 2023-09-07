@@ -49,3 +49,9 @@ border-radius: 5px;
 .lost-password-container{
     margin-left: 5px;
 }
+
+.white-background-input{
+    background-color: white;
+    color: black;
+    border: 1px solid black;
+}
