@@ -83,3 +83,4 @@ __pycache__/
 
 # ignore vscode folder
 .vscode/
+.vscode/settings.json
