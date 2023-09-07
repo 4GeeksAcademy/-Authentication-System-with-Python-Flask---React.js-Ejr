@@ -16,17 +16,17 @@ export const Signup = (props) => {
     const lastName = data.get("lastname");
     const email = data.get("email");
     const password = data.get("password");
-    const dni = data.get("dni");
     const { signup } = actions;
-    let resp = await signup(email, password, dni, name, lastName);
+    let resp = await signup(email, password, name, lastName);
     console.log(resp);
     navigate("/login");
   }
   return (
     <div id="signup-page" className="text-center">
       <div className="container wrap-loginSignup">
+        <i id="cat-suit" className="fa-solid fa-cat"></i>
         <h1>Signup</h1>
-        <form onSubmit={signup}>
+        <form className="pe-3" onSubmit={signup}>
           <div className="mb-3">
             <label htmlFor="inputName" className="form-label">
               Name
@@ -61,17 +61,6 @@ export const Signup = (props) => {
               aria-describedby="emailHelp"
             />
             <div id="emailHelp" className="form-text"></div>
-          </div>
-          <div className="mb-3">
-            <label htmlFor="inputDni" className="form-label">
-              Dni
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              name="dni"
-              id="inputDni"
-            />
           </div>
           <div className="mb-3">
             <label htmlFor="inputPassword1" className="form-label">
