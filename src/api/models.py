@@ -97,4 +97,4 @@ class BookingPet (db.Model):
     booking_id = db.Column(db.Integer, db.ForeignKey(
         'booking.id'), primary_key=True)
     pet_id = db.Column(db.Integer, db.ForeignKey(
-        'pet.id'), primary_key=True, nullable=True)  #Nullable por opcion de PTO
+        'pet.id'), primary_key=True) #HACER PET DUMMY PARA PTO
