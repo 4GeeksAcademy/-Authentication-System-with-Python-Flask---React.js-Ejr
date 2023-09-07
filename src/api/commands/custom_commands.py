@@ -1,3 +1,4 @@
+# Created by alesanchezr (GitHub: https://github.com/alesanchezr) from 4GeeksAcademy
 import click
 from api.models import User
 from api.extensions import db

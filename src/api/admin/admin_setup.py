@@ -1,3 +1,4 @@
+# Created by alesanchezr (GitHub: https://github.com/alesanchezr) from 4GeeksAcademy
 import os
 from flask_admin import Admin
 from api.models import User
