@@ -65,7 +65,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				const actions = getActions()
 				try {
 					if (actions.isPropertyEmpty(store.login_user)) {
-						alert("Le falta llenar algunos datos");
+						alert("Le falta llenar algunos datos :S");
 						return;
 					}
 
