@@ -1,7 +1,15 @@
-import React from "react";
+import React, {useContext} from 'react'
+import { Context } from "../store/appContext";
+import { Link, useNavigate } from "react-router-dom";
 import "../../styles/Registros.css";
 
 const RegistroUsuario = () => {
+  const navigate = useNavigate()
+  const { store, actions } = useContext(Context);
+  store.signup ? navigate('/iniciarsesion') : null
+  const handleChangeSignIn =(e)=>{
+    actions.handleChange(e, "signup")
+  }
   return (
     <div
       className=" RegistroUsuarioDiv container d-flex justify-content-center align-items-center"
@@ -9,17 +17,19 @@ const RegistroUsuario = () => {
         height: "32rem",
       }}
     >
-      <form>
+      <form noValidate onSubmit={e=>{e.preventDefault(); actions.signUpUser(), e.target.reset()}}>
         <h2 className="tituloRegistro mb-4">Registrar Usuario</h2>
         <div class="mb-3">
           <label for="exampleInputEmail1" class="form-label">
             Nombre
           </label>
           <input
+            name='name'
             type="name"
             class="form-control"
             id="exampleInputEmail1"
             placeholder="Ingrese su Nombre"
+            onChange={handleChangeSignIn}
           />
         </div>
         <div class="mb-3">
@@ -27,10 +37,12 @@ const RegistroUsuario = () => {
             Apellido
           </label>
           <input
+            name="last_name"
             type="lastName"
             class="form-control"
             id="exampleInputEmail1"
             placeholder="Ingrese su Apellido"
+            onChange={handleChangeSignIn}
           />
         </div>
 
@@ -39,10 +51,12 @@ const RegistroUsuario = () => {
             Correo
           </label>
           <input
+            name='email'
             type="email"
             class="form-control"
             id="exampleInputPassword1"
             placeholder="Ingrese su correo"
+            onChange={handleChangeSignIn}
           />
         </div>
 
@@ -51,10 +65,12 @@ const RegistroUsuario = () => {
             Contraseña
           </label>
           <input
+            name='password'
             type="password"
             class="form-control"
             id="exampleInputPassword1"
             placeholder="Ingrese una contraseña"
+            onChange={handleChangeSignIn}
           />
         </div>
         <button type="submit" class="btn btn-primary">
