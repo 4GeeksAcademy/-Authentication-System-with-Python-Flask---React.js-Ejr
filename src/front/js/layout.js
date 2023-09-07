@@ -15,6 +15,7 @@ import Galeria from "./component/galeria";
 import Planes from "./pages/planes";
 import ContactPage from "./pages/contacto";
 import AccountPage from "./pages/cuenta";
+import Organizadores from "./pages/organizadores";
 
 //create your first component
 const Layout = () => {
@@ -37,7 +38,7 @@ const Layout = () => {
                         <Route element={<Payment />} path="/payment"/>
                         <Route element={<Eventos />} path="/eventos"/>
                         <Route element={<Galeria />} path="/galeria"/>
-                        <Route element={<Planes />} path="/planes"/>
+                        <Route element={<Organizadores />} path="/organizadores"/>
                         <Route element={<ContactPage />} path="/contacto"/>
                         <Route element={<AccountPage />} path="/cuenta"/>
                     </Routes>

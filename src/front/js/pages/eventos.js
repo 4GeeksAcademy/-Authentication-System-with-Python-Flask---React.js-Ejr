@@ -26,7 +26,7 @@ const Eventos=()=>{
 			<button id="button-event" type="button" className="btn btn-outline-primary">VER TODOS</button>
 		  </div>
 		</div>
-		<div className='container'>
+		<div className="container mt-3">
 		  <Cards
 			src={basket8}
 			day="10 "
