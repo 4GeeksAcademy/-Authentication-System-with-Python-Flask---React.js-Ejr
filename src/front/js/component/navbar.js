@@ -18,19 +18,19 @@ export const Navbar = () => {
           <Link to="/nosotros">
             <button className="button-regular mx-1">Nosotros</button>
           </Link>
-          <Link to="/faq">
+          <Link to="/preguntas-frecuentes">
             <button className="button-regular mx-1">
               Preguntas Frecuentes
             </button>
           </Link>
-          <Link to="/aplicaciones">
+          <Link to="/tracker">
             <button className="button-regular mx-1">Mis Aplicaciones</button>
           </Link>
           <Link to="/perfil">
             <button className="button-regular mx-1">Mi Perfil</button>
           </Link>
           <div className="buttons-right mx-2">
-            <Link to="/signup">
+            <Link to="/iniciarsesion">
               <button className="button-login">Iniciar sesión</button>
             </Link>
             <Link to="/registroEleccion">

@@ -1,10 +1,18 @@
-/* En tu archivo de estilos CSS */
 .btn-custom {
   background-color: #307fe2;
-  color: #fff; /* Cambiar el color del texto si es necesario para que sea legible en el nuevo fondo */
+  color: #fff;
 }
 
 .btn-custom:hover {
-  background-color: #074db6; /* Cambiar el color cuando se pase el ratón por encima si lo deseas */
+  background-color: #074db6;
   color: #fff;
+}
+
+.divRegsitroE {
+  margin-bottom: 6rem;
+  margin-top: 6rem;
+  width: 20rem;
+  height: 12rem;
+  background-color: #e0edff;
+  border-radius: 2rem;
 }

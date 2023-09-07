@@ -6,6 +6,13 @@ import { BackendURL } from "./component/backendURL";
 import { Home } from "./pages/home";
 import RegistroUsuario from "./pages/RegistroUsuario";
 import RegistroEleccion from "./pages/RegistroEleccion";
+import RegistroInst from "./pages/RegistroInst";
+import IniciarSesion from "./pages/IniciarSesion";
+import Nosotros from "./pages/Nosotros";
+import PreguntasFrecuentes from "./pages/PreguntasFrecuentes";
+import Perfil from "./pages/Perfil";
+import Tracker from "./pages/Tracker";
+import FormularioBeca from "./pages/FormularioBeca";
 import injectContext from "./store/appContext";
 
 import { Navbar } from "./component/navbar";
@@ -30,6 +37,14 @@ const Layout = () => {
             <Route element={<h1>Not found!</h1>} />
             <Route element={<RegistroUsuario />} path="/registroUsuario" />
             <Route element={<RegistroEleccion />} path="/registroEleccion" />
+            <Route element={<RegistroInst />} path="/registroInst" />
+            <Route element={<IniciarSesion />} path="/iniciarsesion" />
+            <Route element={<Nosotros />} path="/nosotros" />
+            <Route element={<Tracker />} path="/tracker" />
+            <Route element={<Tracker />} path="/tracker" />
+            <Route element={<FormularioBeca />} path="/formulario" />
+            <Route element={<PreguntasFrecuentes />} path="/preguntas-frecuentes" />
+            <Route element={<Perfil />} path="/perfil" />
           </Routes>
           <Footer />
         </ScrollToTop>

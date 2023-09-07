@@ -1,16 +1,16 @@
 import React from "react";
 import "../../styles/Registros.css";
 
-const RegistroUsuario = () => {
+const RegistroInst = () => {
   return (
     <div
       className=" RegistroUsuarioDiv container d-flex justify-content-center align-items-center"
       style={{
-        height: "32rem",
+        height: "30rem",
       }}
     >
       <form>
-        <h2 className="tituloRegistro mb-4">Registrar Usuario</h2>
+        <h2 className="tituloRegistro mb-4">Registrar Institución</h2>
         <div class="mb-3">
           <label for="exampleInputEmail1" class="form-label">
             Nombre
@@ -19,30 +19,19 @@ const RegistroUsuario = () => {
             type="name"
             class="form-control"
             id="exampleInputEmail1"
-            placeholder="Ingrese su Nombre"
-          />
-        </div>
-        <div class="mb-3">
-          <label for="exampleInputEmail1" class="form-label">
-            Apellido
-          </label>
-          <input
-            type="lastName"
-            class="form-control"
-            id="exampleInputEmail1"
-            placeholder="Ingrese su Apellido"
+            placeholder="Nombre de la Institución"
           />
         </div>
 
         <div class="mb-3">
           <label for="exampleInputPassword1" class="form-label">
-            Correo
+            Correo Institucional
           </label>
           <input
             type="email"
             class="form-control"
             id="exampleInputPassword1"
-            placeholder="Ingrese su correo"
+            placeholder="Ingrese correo Institucional"
           />
         </div>
 
@@ -65,4 +54,4 @@ const RegistroUsuario = () => {
   );
 };
 
-export default RegistroUsuario;
+export default RegistroInst;
