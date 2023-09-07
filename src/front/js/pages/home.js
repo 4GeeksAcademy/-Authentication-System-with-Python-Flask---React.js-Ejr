@@ -18,9 +18,9 @@ export const Home = () => {
 					<div className="divider divider-default"></div>
 					<p className="heading-5">Utiliza nuestra tecnología a tu favor. Estamos listos para dar a tus eventos una ventaja competitiva en la organización.</p>
 					<div className="group-md button-group">
-						<Link to="/planes">
-							<span className="btn btn-primary btn-lg m-2" href="#" role="button">
-								VER PLANES
+						<Link to="/organizadores">
+							<span className="btn btn-primary btn-lg mt-4" href="#" role="button">
+								VER MÁS
 							</span>
 						</Link>
 					</div>

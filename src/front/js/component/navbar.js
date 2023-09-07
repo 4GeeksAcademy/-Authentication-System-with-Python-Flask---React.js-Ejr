@@ -15,7 +15,7 @@ export const Navbar = () => {
 		{label: 'Servicios', url: '/servicios'},
 		{label: 'Eventos', url: '/eventos'},
 		{label: 'Galería', url: '/galeria'},
-		{label: 'Planes', url: '/planes'},
+		{label: 'Organizadores', url: '/organizadores'},
 		{label: 'Contacto', url: '/contacto'}
 	];
 
