@@ -1,0 +1,1 @@
+from .extensions import cors, db, bcrypt, migrate, jwt
