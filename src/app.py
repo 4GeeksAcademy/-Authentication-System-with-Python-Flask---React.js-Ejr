@@ -90,9 +90,9 @@ def get_single_user(user_id):
         return jsonify({"msg": f"The id {user_id} user doesn't exist"}), 404
     
     user_info = single_user.serialize()
-    query_scholarships = Scholarship.query.filter_by(trackers_id = single_user.tracker_id).all()
-    scholarships = [scholarship.serialize() for scholarship in query_scholarships]
-    user_info["scholarships_info"] = scholarships
+#    query_scholarships = Scholarship.query.filter_by(trackers_id = single_user.tracker_id).all()
+#    scholarships = [scholarship.serialize() for scholarship in query_scholarships]
+#    user_info["scholarships_info"] = scholarships
     response_body = {
         "msg": "Hello, this is your GET /user response ",
         "user_info" : user_info
@@ -189,9 +189,6 @@ def save_tracker(user_id):
     if single_user is None:
         return jsonify({"msg": f"The id {user_id} user doesn't exist"}), 404
     
-    if "tracker_name" not in request_body:
-        raise APIException('Tracker name is required', 400)
-    
     if "scholarship_name" not in request_body:
         raise APIException('Scholarship name is required', 400)
     
@@ -202,7 +199,6 @@ def save_tracker(user_id):
     tracker = Tracker(
         scholarship_name=request_body['scholarship_name'],
         email=request_body["email"],
-        tracker_name = request_body["tracker_name"]
     )
 
     # Asignar el Tracker al User
@@ -220,36 +216,6 @@ def save_tracker(user_id):
     
     return jsonify(response_body), 201
 
-@app.route('/tracker/update/<int:user_id>', methods=['PATCH'])
-def update_tracker(user_id):
-    single_user = User.query.get(user_id)
-    request_body = request.get_json(force=True)
-    
-    if single_user is None:
-        return jsonify({"msg": f"The id {user_id} user doesn't exist"}), 404
-    
-    # Buscar si ya existe un Tracker para este usuario
-    tracker = Tracker.query.filter(Tracker.user_email.contains(single_user)).first()
-    
-    if tracker:
-        # Actualizar solo los campos proporcionados en la solicitud PATCH
-        if "scholarship_name" in request_body:
-            tracker.scholarship_name = request_body['scholarship_name']
-        if "email" in request_body:
-            tracker.email = request_body['email']
-
-        # Guardar los cambios en la base de datos
-        db.session.commit()
-
-        response_body = {
-            "msg": "ok",
-            "msg2": "Tracker actualizado correctamente",
-            "user_info": single_user.serialize()
-        }
-    
-        return jsonify(response_body), 200
-    else:
-        return jsonify({"msg": "No se encontró un Tracker para este usuario"}), 404
 # ROUTES FOR INSTITUTIONAL USERS
 
 @app.route('/institution-user', methods=['GET'])
@@ -405,30 +371,70 @@ def get_scholarships():
 
     return jsonify(response_body), 200
 
-#borra trackers
-@app.route("/tracker/delete/<int:scholarship_id>", methods=['DELETE'])
-def delete_scholarship(scholarship_id):
-    single_scholarship = Tracker.query.get(scholarship_id)
-    if single_scholarship is None:
-        raise APIException("La beca no existe", status_code=400)
-    db.session.delete(single_scholarship)
+@app.route('/add_to_tracker/<int:scholarship_id>', methods=['POST'])
+@jwt_required()
+def add_to_tracker(scholarship_id):
+    user_id = get_jwt_identity()
+    beca = Scholarship.query.get(scholarship_id)
+
+    if not beca:
+        return jsonify({'error': 'Beca no encontrada'}), 404
+
+    # Comprueba si el usuario ya ha guardado esta beca en su tracker
+    if Tracker.query.filter_by(user_id=user_id, scholarship_id=scholarship_id).first():
+        return jsonify({'message': 'La beca ya está en tu tracker'}), 200
+
+    # Crea una nueva entrada en la tabla Tracker para guardar la beca
+    new_tracker_entry = Tracker(user_id=user_id, scholarship_id=scholarship_id)
+    db.session.add(new_tracker_entry)
     db.session.commit()
 
-    return jsonify({"msg": "Completed"})
+    return jsonify({'message': 'Beca añadida al tracker'}), 200
 
-#muestra en que trackers está la beca según el id de la BECA
-@app.route("/tracker/scholarships/<user_id>", methods=["GET"])
-def get_scholarships_in_tracker(user_id):
-    single_tracker = Tracker.query.get(user_id)
-    if single_tracker is None:
-        raise APIException("The scholarship does not exist", status_code=400)
-    response_body = {
-        "msg": "Hello, this is your GET /scholarships in tracker response ",
-        "tracker_info": single_tracker.serialize()
-    }
 
-    return jsonify(response_body), 200
+@app.route('/my_tracker', methods=['GET'])
+@jwt_required()
+def get_my_tracker():
+    # Obtén el ID del usuario autenticado a través del identity
+    user_id = get_jwt_identity()
 
+    # Busca todas las becas que el usuario ha guardado en su tracker
+    tracker_entries = Tracker.query.filter_by(user_id=user_id).all()
+
+    # Crea una lista de becas basada en las entradas del tracker
+    becas_guardadas = [entry.scholarship.serialize() for entry in tracker_entries]
+
+    return jsonify({'becas_guardadas': becas_guardadas}), 200
+
+
+
+
+
+
+#borra trackers
+#@app.route("/tracker/delete/<int:scholarship_id>", methods=['DELETE'])
+#def delete_scholarship(scholarship_id):
+#    single_scholarship = Tracker.query.get(scholarship_id)
+#    if single_scholarship is None:
+#        raise APIException("La beca no existe", status_code=400)
+#    db.session.delete(single_scholarship)
+#    db.session.commit()
+#
+#    return jsonify({"msg": "Completed"})
+#
+##muestra en que trackers está la beca según el id de la BECA
+#@app.route("/tracker/scholarships/<user_id>", methods=["GET"])
+#def get_scholarships_in_tracker(user_id):
+#    single_tracker = Tracker.query.get(user_id)
+#    if single_tracker is None:
+#        raise APIException("The scholarship does not exist", status_code=400)
+#    response_body = {
+#        "msg": "Hello, this is your GET /scholarships in tracker response ",
+#        "tracker_info": single_tracker.serialize()
+#    }
+#
+#    return jsonify(response_body), 200
+#
 # this only runs if `$ python src/main.py` is executed
 if __name__ == '__main__':
     PORT = int(os.environ.get('PORT', 3001))
