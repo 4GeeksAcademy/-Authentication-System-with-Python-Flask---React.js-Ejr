@@ -8,7 +8,10 @@ import { Single } from "./pages/single";
 import injectContext from "./store/appContext";
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
+import Card from "./component/reviewsLibros/Card";
+import Testimonio from "./component/reviewsLibros/Testimonio";
 import BookReviews from "./pages/BookReviews";
+
 import Intercambio from "./pages/Intercambio";
 
 //create your first component
