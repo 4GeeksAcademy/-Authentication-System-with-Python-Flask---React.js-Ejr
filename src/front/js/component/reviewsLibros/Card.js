@@ -10,9 +10,9 @@ const Card = () => {
           <p className="card-text">
             Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dicta nulla nesciunt molestiae error facilis veniam suscipit laboriosam reprehenderit ab! Quam alias ea repudiandae, vitae laudantium ducimus iure quae aliquam voluptates.
           </p>
-          <a href="#" className="btn btn-primary">
+          <Link  to="/demo" className="btn btn-primary">
             Contactar al vendedor
-          </a>
+          </Link>
         </div>
       </div>
     </div>

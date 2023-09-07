@@ -1,11 +1,12 @@
-import React from 'react'
-import Testimonio from '../components/reviews/Testimonio'
-import '../styles/bookReviews.css'
-import Card from '../components/reviews/Card'
+import React from "react";
+
+import Card from '../component/reviewsLibros/Card'
+import Testimonio from '../component/reviewsLibros/Testimonio'
+
 
 const BookReviews = () => {
   return (
-    <div className="div row m-3 mt-4">
+    <div className="row m-3 mt-4">
       <div className="col-md-6 d-flex justify-content-center text-center">
         <Card />
       </div>

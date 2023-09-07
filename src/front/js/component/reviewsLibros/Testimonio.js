@@ -1,5 +1,6 @@
 import React from 'react'
-import '../../styles/Intercambio.css'
+
+
 const Testimonio = () => {
   return (
     <div className="card mb-3 container-fluid shadow mb" >

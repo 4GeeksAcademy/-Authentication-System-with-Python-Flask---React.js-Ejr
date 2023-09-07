@@ -4,7 +4,6 @@ const BannerInverso = () => {
     return (
         <div className="card m-5 col-11  d-flex align-content-center p-0 shadow" >
             <div className="row g-0">
-
                 <div className="col-md-8 d-flex align-items-center">
                     <div className="card-body mb-3 ">
                         <h5 className="card-title mb-4 ">Los pasos que debes seguir son:</h5>
