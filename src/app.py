@@ -1,70 +1,78 @@
-"""
-This module takes care of starting the API Server, Loading the DB and Adding the endpoints
-"""
 import os
-from flask import Flask, request, jsonify, url_for, send_from_directory
-from flask_migrate import Migrate
-from flask_swagger import swagger
-from flask_cors import CORS
-from api.utils import APIException, generate_sitemap
-from api.models import db
-from api.routes import api
+from flask import Flask, jsonify
+from api.utils import APIException
+from api.routes import api, root  # Make sure to import the new Blueprint
 from api.admin import setup_admin
 from api.commands import setup_commands
+from api.extensions import cors, db, migrate, bcrypt, jwt
 
-#from models import Person
+from config import config_by_name  # Import the configurations
 
-ENV = "development" if os.getenv("FLASK_DEBUG") == "1" else "production"
-static_file_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), '../public/')
-app = Flask(__name__)
-app.url_map.strict_slashes = False
+def create_app(config_name='development'):
+    """
+    Create and configure the Flask application.
 
-# database condiguration
-db_url = os.getenv("DATABASE_URL")
-if db_url is not None:
-    app.config['SQLALCHEMY_DATABASE_URI'] = db_url.replace("postgres://", "postgresql://")
-else:
-    app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:////tmp/test.db"
+    :param config_name: The name of the configuration to use, default is 'development'.
+    :return: The configured Flask app.
+    """
+    app = Flask(__name__)
+    app.config.from_object(config_by_name[config_name])  # Use the corresponding configuration object
 
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-MIGRATE = Migrate(app, db, compare_type = True)
-db.init_app(app)
+    # Configuration to allow or disallow trailing slashes in URLs
+    app.url_map.strict_slashes = False
 
-# Allow CORS requests to this API
-CORS(app)
+    initialize_extensions(app)
+    register_blueprints(app)
+    setup_error_handlers(app)
 
-# add the admin
-setup_admin(app)
+    return app
 
-# add the admin
-setup_commands(app)
+def initialize_extensions(app):
+    """
+    Initialize various extensions for the Flask app.
 
-# Add all endpoints form the API with a "api" prefix
-app.register_blueprint(api, url_prefix='/api')
+    :param app: The Flask app instance.
+    """
+    # Configure CORS
+    cors.init_app(app)
 
-# Handle/serialize errors like a JSON object
-@app.errorhandler(APIException)
-def handle_invalid_usage(error):
-    return jsonify(error.to_dict()), error.status_code
+    # Configure the database
+    db.init_app(app)
+    migrate.init_app(app, db)
 
-# generate sitemap with all your endpoints
-@app.route('/')
-def sitemap():
-    if ENV == "development":
-        return generate_sitemap(app)
-    return send_from_directory(static_file_dir, 'index.html')
+    # Configure admin
+    setup_admin(app)
 
-# any other endpoint will try to serve it like a static file
-@app.route('/<path:path>', methods=['GET'])
-def serve_any_other_file(path):
-    if not os.path.isfile(os.path.join(static_file_dir, path)):
-        path = 'index.html'
-    response = send_from_directory(static_file_dir, path)
-    response.cache_control.max_age = 0 # avoid cache memory
-    return response
+    # Configure custom commands
+    setup_commands(app)
+    
+    # Configure bcrypt for password hashing
+    bcrypt.init_app(app)
 
+    # Configure JSON Web Tokens (JWT) for authentication
+    jwt.init_app(app)
 
-# this only runs if `$ python src/main.py` is executed
+def register_blueprints(app):
+    """
+    Register Flask Blueprints with the app.
+
+    :param app: The Flask app instance.
+    """
+    app.register_blueprint(api, url_prefix='/api')
+    app.register_blueprint(root)
+
+def setup_error_handlers(app):
+    """
+    Setup error handling for API exceptions.
+
+    :param app: The Flask app instance.
+    """
+    @app.errorhandler(APIException)
+    def handle_invalid_usage(error):
+        return jsonify(error.to_dict()), error.status_code
+
 if __name__ == '__main__':
-    PORT = int(os.environ.get('PORT', 3001))
-    app.run(host='0.0.0.0', port=PORT, debug=True)
+    config_name = os.getenv('FLASK_CONFIG', 'development')  # You can set the FLASK_CONFIG environment variable
+    app = create_app(config_name)
+    PORT = app.config.get('PORT', 3001)  # Use the PORT configuration from the app's configuration object
+    app.run(host='0.0.0.0', port=PORT, debug=app.config.get('DEBUG', True))
