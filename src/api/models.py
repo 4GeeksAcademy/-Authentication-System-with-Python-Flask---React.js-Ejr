@@ -2,19 +2,20 @@ from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 
+
 class Tracker(db.Model):
     __tablename__ = 'trackers'
     id = db.Column(db.Integer, primary_key=True)
-    scholarship = db.relationship("Scholarship", back_populates="trackers" )
-    scholarship_id = db.Column(db.Integer, db.ForeignKey("scholarships.id"))
-    follows = db.Column(db.Integer, unique=False, nullable=False)
-    scholarship_name = db.Column(db.String(120), unique=True, nullable=False)
-    dates = db.Column(db.String(120), unique=False, nullable=False)
-    institution = db.Column(db.String(120), unique=False, nullable=False)
+    tracker_name = db.Column(db.String(50), unique=False, nullable=True)
+    scholarship_name = db.Column(db.String(50), unique=False, nullable=True)
+    scholarship = db.relationship("Scholarship", back_populates="trackers")
+    email = db.Column(db.String(50), unique=False, nullable=True)
+    user_email = db.relationship("User", back_populates="tracker")
+
     
 
     def __repr__(self):
-        return f'<Tracker {self.id}>'
+        return f'{self.tracker_name}'
     
     def save(self):
         db.session.add(self)
@@ -27,10 +28,7 @@ class Tracker(db.Model):
     def serialize(self):
         return {
             "id": self.id,
-            "follows": self.follows,
-            "scholarship_name": self.scholarship_name,
-            "dates": self.dates,
-            "institution": self.institution
+            "tracker_name": self.tracker_name
         }
     
 
@@ -38,10 +36,16 @@ class Tracker(db.Model):
 class Scholarship(db.Model):
     __tablename__ = 'scholarships'
     id = db.Column(db.Integer, primary_key=True)
-    trackers = db.relationship("Tracker", back_populates="scholarship" )
+    trackers = db.relationship("Tracker", back_populates="scholarship")
+    trackers_id = db.Column(db.Integer, db.ForeignKey("trackers.id"))
     scholarship_name = db.Column(db.String(120), unique=True, nullable=False)
-    dates = db.Column(db.String(150), unique=False, nullable=False)
     institution = db.Column(db.String(120), unique=False, nullable=False)
+    deadline = db.Column(db.String(50), unique=False, nullable=False)
+    modality = db.Column(db.String(50), unique=False, nullable=False)
+    coverage = db.Column(db.String(50), unique=False, nullable=False)
+    description = db.Column(db.String(800), unique=False, nullable=False)
+    url_to = db.Column(db.String(250), unique=False, nullable=False)
+    
 
     def __repr__(self):
         return f'{self.scholarship_name}'
@@ -58,11 +62,16 @@ class Scholarship(db.Model):
         return {
             "id": self.id,
             "scholarship_name": self.scholarship_name,
-            "dates": self.dates,
-            "institution": self.institution
+            "institution": self.institution,
+            "deadline": self.deadline,
+            "modality": self.modality,
+            "coverage": self.coverage,
+            "description": self.description,
+            "url_to": self.url_to,
         }    
 
 class User(db.Model):
+    __tablename__ = 'user'
     id = db.Column(db.Integer, primary_key=True)
     tracker_id = db.Column(db.Integer, db.ForeignKey("trackers.id"))
     tracker = db.relationship(Tracker)
@@ -70,6 +79,7 @@ class User(db.Model):
     last_name = db.Column(db.String(120), unique=False, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(80), unique=False, nullable=False)
+
 
     def __repr__(self):
         return f'<User {self.email}>'
