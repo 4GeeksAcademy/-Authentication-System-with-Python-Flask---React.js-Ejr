@@ -1,24 +1,26 @@
 #login-page,
 #signup-page {
-  font-family: serif;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   font-weight: 600;
   height: 100vh;
   background-position: center;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-image: url(https://images.unsplash.com/photo-1522276498395-f4f68f7f8454?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1169&q=80);
+  background-image: url(https://images.unsplash.com/photo-1514064019862-23e2a332a6a6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2028&q=80);
   background-repeat: no-repeat;
   background-size: cover;
+  color: azure;
 }
 
 .wrap-loginSignup {
-  backdrop-filter: grayscale(0.8) blur(5px);
-  box-shadow: inset 0 0 0 200px rgba(165, 38, 38, 0.08);
-  border-top: 2px solid rgba(225, 225, 225, 0.3);
-  border-left: 2px solid rgba(225, 225, 225, 0.1);
-  border-right: 1px solid rgba(225, 225, 225, 0.2);
+  border-radius: 15px;
+  width: 40vw;
+  backdrop-filter: grayscale(0.8) blur(2px);
+  box-shadow: 0 0 15px rgb(255, 255, 255);
+  /* border-top: 1px solid rgba(225, 225, 225, 0.3);
+  border-left: 1px solid rgba(225, 225, 225, 0.1);
+  border-right: 1px solid rgba(225, 225, 225, 0.2); */
 }
 
 #inputEmail,
@@ -33,7 +35,9 @@
   border-radius: 8px;
   padding: 12px;
   margin: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 10px rgba(63, 211, 43, 0.3);
+  color: white;
+  transition: none;
 }
 
 #btn-login,
@@ -41,6 +45,7 @@
   border: 2px solid rgba(0, 0, 0, 0.563);
   margin-bottom: 10px;
   transition: background-color 0.3s ease;
+  color: white;
 }
 
 #btn-login:hover {
@@ -48,4 +53,9 @@
 }
 #btn-signup:hover {
   background-color: rgba(7, 7, 7, 0.2);
+}
+
+#cat-suit {
+  font-size: 5rem;
+  color: black;
 }
