@@ -2,11 +2,11 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User
+from api.models import db, User, Owner, Keeper
 from api.utils import generate_sitemap, APIException
 from flask_bcrypt import Bcrypt
 from flask_jwt_extended import create_access_token
-
+from flask_bcrypt import Bcrypt 
 
 api = Blueprint('api', __name__)
 #Agregado al boilerplate
@@ -22,32 +22,117 @@ def handle_hello():
 
     return jsonify(response_body), 200
 
-@api.route('/signup', methods=['POST'])
-def createUser():
+
+# @api.route('/login', methods=["POST"])
+# def login_user():
+#     data = request.get_json(force=True)
+#     user = User.query.filter_by(email=data["email"]).first()
+#     if user is None:
+#         return jsonify({"msg": "Incorrect user or password"}), 401
+#     passwordCheck = bcrypt.check_password_hash(user.password, data["password"])
+#     if passwordCheck == False:
+#         return jsonify({"msg":"Wrong password"}), 401
+#     token = create_access_token(identity = data["dni"], additional_claims={"role":"admin"}) #cambiar por tipo de usuario de los modelos pendientes (Enum)
+#     return jsonify({"msg": "Login successful!", "token":token}),200
+
+
+@api.route('/signup/owner', methods=['POST'])
+def create_owner():
     data = request.get_json(force=True)
     email = data["email"].lower()
-    if User.query.filter_by(email=email).first() is not None:
+    if Owner.query.filter_by(email=email).first() is not None:
         return jsonify({"msg":"Email already registered"}), 400
-    new_user=User()
-    new_user.email = email
-    secure_password = bcrypt.generate_password_hash((data["password"]), 10).decode("utf-8")
-    new_user.password = secure_password
-    new_user.dni = data["dni"]
-    new_user.name = data["name"]
-    new_user.lastname = data["lastname"]
-    new_user.is_active = True
-    db.session.add(new_user)
-    db.session.commit()
-    return jsonify({"msg": "User created successfully"}), 201
+    password = str(request.json.get('password'))
+    new_owner= Owner()
+    new_owner.first_name = data["first_name"]
+    new_owner.last_name =  data["last_name"]
+    new_owner.email = data["email"]
+    secure_password = bcrypt.generate_password_hash(password, 10).decode("utf-8")
+    new_owner.password = secure_password
+    new_owner.is_active = True
+    user_type = data.get("user_type")
+    if user_type == "owner":
+        db.session.add(new_owner)
+        db.session.commit()
+    return jsonify({"msg": "Owner created successfully"}), 201
 
-@api.route('/login', methods=["POST"])
-def login_user():
+
+@api.route('/signup/keeper', methods=['POST'])
+def create_keeper():
     data = request.get_json(force=True)
-    user = User.query.filter_by(email=data["email"]).first()
-    if user is None:
-        return jsonify({"msg": "Incorrect user or password"}), 401
-    passwordCheck = bcrypt.check_password_hash(user.password, data["password"])
-    if passwordCheck == False:
-        return jsonify({"msg":"Wrong password"}), 401
-    token = create_access_token(identity = data["dni"], additional_claims={"role":"admin"}) #cambiar por tipo de usuario de los modelos pendientes (Enum)
-    return jsonify({"msg": "Login successful!", "token":token}),200
+    email = data["email"].lower()
+    if Keeper.query.filter_by(email=email).first() is not None:
+        return jsonify({"msg":"Email already registered"}), 400
+    password = str(request.json.get('password'))
+    new_keeper= Keeper()
+    new_keeper.first_name = data["first_name"]
+    new_keeper.last_name =  data["last_name"]
+    new_keeper.email = data["email"]
+    secure_password = bcrypt.generate_password_hash(password, 10).decode("utf-8")
+    new_keeper.password = secure_password
+    new_keeper.hourly_pay = data["hourly_pay"]
+    new_keeper.is_active = True
+    user_type = data.get("user_type")
+    if user_type == "keeper":
+        db.session.add(new_keeper)
+        db.session.commit()
+    return jsonify({"msg": "Keeper created successfully"}), 201
+
+
+@api.route('/owner', methods=["GET"])
+def owners_list():
+    owners = Owner.query.all()
+    owners_data = [{"id": owner.id, "first_name": owner.first_name, "last_name": owner.last_name, "email": owner.email}
+                   for owner in owners]
+
+    return jsonify(owners_data), 200
+
+
+@api.route('/owner/<int:owner_id>', methods=['GET'])
+def get_owner(owner_id):
+    owner = Owner.query.get(owner_id)
+    owner_data = {
+        "id": owner.id,
+        "first_name": owner.first_name,
+        "last_name": owner.last_name,
+        "email": owner.email,
+    }
+    return jsonify(owner_data), 200
+
+
+@api.route('/owner/<int:owner_id>', methods=['DELETE'])
+def delete_owner(owner_id):
+    owner = Owner.query.get(owner_id)
+    db.session.delete(owner)
+    db.session.commit()
+    return jsonify({"msg": "Owner deleted successfully"}), 200
+
+
+
+@api.route('/keeper', methods=["GET"])
+def keepers_list():
+    keepers = Keeper.query.all()
+    keepers_data = [{"id": keeper.id, "first_name": keeper.first_name, "last_name": keeper.last_name, "email": keeper.email, "hourly_pay": keeper.hourly_pay}
+                   for keeper in keepers]
+
+    return jsonify(keepers_data), 200
+
+
+@api.route('/keeper/<int:keeper_id>', methods=['GET'])
+def get_keeper(keeper_id):
+    keeper = Keeper.query.get(keeper_id)
+    keeper_data = {
+        "id": keeper.id,
+        "first_name": keeper.first_name,
+        "last_name": keeper.last_name,
+        "email": keeper.email,
+    }
+    return jsonify(keeper_data), 200
+
+
+@api.route('/keeper/<int:keeper_id>', methods=['DELETE'])
+def delete_keeper(keeper_id):
+    keeper = Keeper.query.get(keeper_id)
+    db.session.delete(keeper)
+    db.session.commit()
+    return jsonify({"msg": "keeper deleted successfully"}), 200
