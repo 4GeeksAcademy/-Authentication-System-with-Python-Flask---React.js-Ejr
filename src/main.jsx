@@ -6,6 +6,7 @@ import BookDetails from './front/js/pages/book-details'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
+    
     <Support />
     <BookDetails />
 
