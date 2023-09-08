@@ -6,7 +6,7 @@ from api.models import db, User, Owner, Keeper
 from api.utils import generate_sitemap, APIException
 from flask_bcrypt import Bcrypt
 from flask_jwt_extended import create_access_token
-
+from flask_bcrypt import Bcrypt 
 
 api = Blueprint('api', __name__)
 #Agregado al boilerplate
@@ -42,11 +42,13 @@ def create_owner():
     email = data["email"].lower()
     if Owner.query.filter_by(email=email).first() is not None:
         return jsonify({"msg":"Email already registered"}), 400
+    password = str(request.json.get('password'))
     new_owner= Owner()
     new_owner.first_name = data["first_name"]
     new_owner.last_name =  data["last_name"]
     new_owner.email = data["email"]
-    new_owner.password = data["password"]
+    secure_password = bcrypt.generate_password_hash(password, 10).decode("utf-8")
+    new_owner.password = secure_password
     new_owner.is_active = True
     user_type = data.get("user_type")
     if user_type == "owner":
@@ -61,11 +63,13 @@ def create_keeper():
     email = data["email"].lower()
     if Keeper.query.filter_by(email=email).first() is not None:
         return jsonify({"msg":"Email already registered"}), 400
+    password = str(request.json.get('password'))
     new_keeper= Keeper()
     new_keeper.first_name = data["first_name"]
     new_keeper.last_name =  data["last_name"]
     new_keeper.email = data["email"]
-    new_keeper.password = data["password"]
+    secure_password = bcrypt.generate_password_hash(password, 10).decode("utf-8")
+    new_keeper.password = secure_password
     new_keeper.hourly_pay = data["hourly_pay"]
     new_keeper.is_active = True
     user_type = data.get("user_type")
