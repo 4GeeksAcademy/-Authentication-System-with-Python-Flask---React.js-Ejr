@@ -6,7 +6,7 @@ import "../../styles/Registros.css";
 const RegistroInst = () => {
   const navigate = useNavigate()
   const { store, actions } = useContext(Context);
-  store.insSignup ? navigate('/iniciarsesion') : null
+  store.insSignup ? navigate('/iniciarsesion_institucion') : null
   const handleChangeSignInInstitution = (e) => {
     actions.handleChange(e, "insSignup")
   }

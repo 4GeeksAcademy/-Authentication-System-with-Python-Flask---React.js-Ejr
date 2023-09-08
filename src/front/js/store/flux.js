@@ -12,7 +12,18 @@ const getState = ({ getStore, getActions, setStore }) => {
 			login_user: {
 				email: null,
 				password: null
-			}
+			},
+			insSignup: false,
+			insLoged: false,
+			institution_data: {
+				institutional_name: null,
+				email: null,
+				password: null
+			},
+			institutionalLogin: {
+				email: null,
+				password: null
+			},
 		},
 		actions: {
 			isPropertyEmpty: (obj) => {
@@ -105,8 +116,77 @@ const getState = ({ getStore, getActions, setStore }) => {
 					const newUserData = { ...store.user_data }
 					newUserData[e.target.name] = e.target.value
 					setStore({ user_data: newUserData })
+				} else if (type == "insSignup") {
+					const newUserData = { ...store.institution_data }
+					newUserData[e.target.name] = e.target.value
+					setStore({ institution_data: newUserData })
+				} else if (type == "insLogin") {
+					const newUserData = { ...store.institutionalLogin }
+					newUserData[e.target.name] = e.target.value
+					setStore({ institutionalLogin: newUserData })
 				}
-			}
+			},
+
+			signUpInstitution: async () => {
+				const store = getStore()
+				const actions = getActions()
+				try {
+					if (actions.isPropertyEmpty(store.institution_data)) {
+						alert("Le falta llenar algunos datos");
+						return;
+					}
+					const response = await fetch(process.env.BACKEND_URL + "/signup-ins", {
+						method: 'POST',
+						body: JSON.stringify(store.institution_data),
+						headers: {
+							'Content-Type': 'application/json'
+						}
+					})
+					const result = await response.json()
+					if (response.status == 400) {
+						setStore({ insSignup: false })
+						alert(result.message)
+					}
+					if (response.ok) {
+						setStore({ insSignup: true })
+						alert("Your account was created succesfully")
+					}
+				} catch (error) {
+					console.error(error + " Error loading message from backend");
+					setStore({ insSignup: false })
+				}
+			},
+			logInInstitution: async () => {
+				const store = getStore()
+				const actions = getActions()
+				try {
+					if (actions.isPropertyEmpty(store.institutionalLogin)) {
+						alert("Le falta llenar algunos datos :S");
+						return;
+					}
+					const response = await fetch(process.env.BACKEND_URL + "/login-ins", {
+						method: 'POST',
+						body: JSON.stringify(store.institutionalLogin),
+						headers: {
+							'Content-Type': 'application/json'
+						}
+					})
+					const result = await response.json()
+					console.log(result);
+					if (response.ok) {
+						localStorage.setItem("jwt-token", result.access_token);
+						alert("Welcome!");
+						setStore({ insLoged: true });
+						return true;
+					} else {
+						setStore({ insLoged: false })
+						alert(result.message)
+					}
+				} catch (error) {
+					console.log(error + " Error loading message from backend")
+					setStore({ insLoged: false })
+				}
+			},
 		}
 	};
 };
