@@ -32,7 +32,7 @@ export const Servicios = () => {
 								<p className="mt-3">Crea torneos, añade costos de inscripción, reglas del juego, categorías, staff, árbitros, sedes. Todo para que tu evento sea un éxito.</p>
 								<Link to="/planes">
 									<span className="btn btn-primary btn-lg m-2" href="#" role="button">
-										VER PLANES
+										Regístrate Gratis
 									</span>
 								</Link>
 							</div>

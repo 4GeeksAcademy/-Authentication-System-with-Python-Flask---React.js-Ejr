@@ -17,6 +17,8 @@ import ContactPage from "./pages/contacto";
 import AccountPage from "./pages/cuenta";
 import NextEvent from "./component/nextEvent";
 import Registrarse from "./component/registrarse";
+import Organizadores from "./pages/organizadores";
+
 //create your first component
 const Layout = () => {
     //the basename is used when your project is published in a subdirectory and not in the root of the domain
@@ -43,6 +45,9 @@ const Layout = () => {
                         <Route element={<AccountPage />} path="/cuenta" />
                         <Route element={<NextEvent />} path="/nextEvent" />
                         <Route element={<Registrarse />} path="/registrarse" />
+                        <Route element={<Organizadores />} path="/organizadores"/>
+                        <Route element={<ContactPage />} path="/contacto"/>
+                        <Route element={<AccountPage />} path="/cuenta"/>
                     </Routes>
                     <Footer />
                 </ScrollToTop>

@@ -11,8 +11,10 @@ function AccountPage(){
                     <div className="divider divider-default m-3"></div>
                 </div>
                 <div className="AccountPage-container">
+                    <div>
                     <LoginForm/>
-                    <RegisterForm/>
+                    </div>
+                    
                 </div>
         </div>
     )

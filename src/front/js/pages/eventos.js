@@ -16,56 +16,116 @@ import { Link } from "react-router-dom";
 const Eventos = () => {
 
 	return (
-		<div className="App">
-			<div className="row">
-				<div className="col-12">
-					<h1 id="title">Eventos</h1>
-					<div className="divider divider-default m-3"></div>
-				</div>
-			</div>
-			<div className="row">
-				<div className="col-12">
-					<Link to="/nextEvent">
-						<button id="button-event" type="button" className="btn btn-outline-primary">VER TODOS</button>
-					</Link>
-				</div>
-			</div>
-			<div className='container'>
-				<Cards
-					src={basket8}
-					day="10 "
+<>
+      <h3>Próximos Eventos</h3>
+      <div id="header" className="card">
+        <div className="card-body">
+          <div className="row">
+            <div className="col">
+              <h3><b>Title</b></h3>
+              <div className="row">
+                <div className="col">
+                  <p id="eventTitle">The colombian Game</p>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col">
+                  <p id="eventTitle">Torneo Juvenil Las Palmas</p>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col">
+                  <p id="eventTitle">The Last Game</p>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col">
+                  <p id="eventTitle">The Premium Tournament</p>
+                </div>
+              </div>
 
-					title="JAM ON IT"
-					time="10/09/2023 08:00 PM/ "
-					location="New York,NY,USA"
-					description="This event article, used for writing about and listing the events planned for the future on your website.You can edit all of this text from the Pages tab by clicking the edit button."
-				/>
-				<Cards
-					src={basket7}
-					day="25 Dec"
-					title="THE BIG GAME"
-					time="29/11/2023 08:00 PM/ "
-					location="2816 Cinamon Lane , San Antonio, Tx"
-					description="This event article, used for writing about and listing the events planned for the future on your website.You can edit all of this text from the Pages tab by clicking the edit button."
-				/>
-				<Cards
-					src={basket1}
-					day="25 Dec"
-					title="JAM ON IT"
-					time="10/09/2023 08:00 PM/ "
-					location="New York,NY,USA"
-					description="This event article, used for writing about and listing the events planned for the future on your website.You can edit all of this text from the Pages tab by clicking the edit button."
-				/>
-				<Cards
-					src={basket3}
-					day="25 Dec"
-					title="THE BIG GAME"
-					time="29/11/2023 08:00 PM/ "
-					location="2816 Cinamon Lane , San Antonio, Tx"
-					description="This event article, used for writing about and listing the events planned for the future on your website.You can edit all of this text from the Pages tab by clicking the edit button."
-				/>
-			</div>
-		</div>
+            </div>
+
+
+            <div className="col">
+              <h3>Fecha del evento</h3>
+              <div className="row">
+                <div className="col">
+                  <p>06 Oct 2023</p>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col">
+                  <p>13 Oct 2023</p>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col">
+                  <p>01 Nov 2023</p>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col">
+                  <p>03 Nov 2023</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="col">
+              <h3>Day</h3>
+              <div className="row">
+                <div className="col">
+                  <p>Friday</p>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col">
+                  <p>Friday</p>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col">
+                  <p>Wednesday</p>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col">
+                  <p>Friday</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="col">
+              <h3>Ubicación</h3>
+              <div className="row">
+                <div className="col">
+                  <p>Medellin,Abtioquia,Colombia</p>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col">
+                  <p>Mazatlán,sinaloa,Mexico</p>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col">
+                  <p>Los Mochis,Sinaloa,Mexico</p>
+                </div>
+
+              </div>
+              <div className="row">
+                <div className="col">
+                  <p>San José,Costa Rica</p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </>
+
 	);
 }
 
