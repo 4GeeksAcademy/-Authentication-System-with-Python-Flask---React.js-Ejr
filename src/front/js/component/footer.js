@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 
-export const Footer = () => (
-	<div className="mt-5 mb-5">
+
+export const Footer = () => {
+	return (<div className="mt-5 mb-5">
 		<footer class="py-5 bg-dark">
     <div class="row container">
       <div class="col-2">
@@ -56,3 +57,4 @@ export const Footer = () => (
   </footer>
   </div>
 );
+}
