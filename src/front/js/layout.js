@@ -8,6 +8,8 @@ import RegistroUsuario from "./pages/RegistroUsuario";
 import RegistroEleccion from "./pages/RegistroEleccion";
 import RegistroInst from "./pages/RegistroInst";
 import IniciarSesion from "./pages/IniciarSesion";
+import IniciarSesionInstitucion from "./pages/IniciarSesiónInst";
+import IniciarSesionEleccion from "./pages/InicioSesionEleccion";
 import Nosotros from "./pages/Nosotros";
 import PreguntasFrecuentes from "./pages/PreguntasFrecuentes";
 import Perfil from "./pages/Perfil";
@@ -39,6 +41,8 @@ const Layout = () => {
             <Route element={<RegistroEleccion />} path="/registroEleccion" />
             <Route element={<RegistroInst />} path="/registroInst" />
             <Route element={<IniciarSesion />} path="/iniciarsesion" />
+            <Route element={<IniciarSesionInstitucion />} path="/iniciarsesion_institucion" />
+            <Route element={<IniciarSesionEleccion />} path="/iniciarsesionEleccion" />
             <Route element={<Nosotros />} path="/nosotros" />
             <Route element={<Tracker />} path="/tracker" />
             <Route element={<Tracker />} path="/tracker" />

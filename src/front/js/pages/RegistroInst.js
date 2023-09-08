@@ -1,7 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
+import { Context } from "../store/appContext";
+import { Link, useNavigate } from "react-router-dom";
 import "../../styles/Registros.css";
 
 const RegistroInst = () => {
+  const navigate = useNavigate()
+  const { store, actions } = useContext(Context);
+  store.insSignup ? navigate('/iniciarsesion') : null
+  const handleChangeSignInInstitution = (e) => {
+    actions.handleChange(e, "insSignup")
+  }
   return (
     <div
       className=" RegistroUsuarioDiv container d-flex justify-content-center align-items-center"
@@ -9,41 +17,49 @@ const RegistroInst = () => {
         height: "30rem",
       }}
     >
-      <form>
+      <form noValidate onSubmit={e=>{e.preventDefault(); actions.signUpInstitution(), e.target.reset()}}>
         <h2 className="tituloRegistro mb-4">Registrar Institución</h2>
-        <div class="mb-3">
-          <label for="exampleInputEmail1" class="form-label">
+        <div className="mb-3">
+          <label htmlFor="exampleInputEmail1" className="form-label">
             Nombre
           </label>
           <input
+            name='institutional_name'
             type="name"
-            class="form-control"
+            className="form-control"
             id="exampleInputEmail1"
             placeholder="Nombre de la Institución"
+            onChange={handleChangeSignInInstitution}
           />
         </div>
 
         <div class="mb-3">
-          <label for="exampleInputPassword1" class="form-label">
+          <label htmlFor="exampleInputPassword1" className="form-label">
             Correo Institucional
           </label>
           <input
+            name='email'
             type="email"
-            class="form-control"
+            className="form-control"
             id="exampleInputPassword1"
             placeholder="Ingrese correo Institucional"
+            onChange={handleChangeSignInInstitution}
+
           />
         </div>
 
         <div class="mb-4">
-          <label for="exampleInputPassword1" class="form-label">
+          <label htmlFor="exampleInputPassword1" className="form-label">
             Contraseña
           </label>
           <input
+            name='password'
             type="password"
-            class="form-control"
+            className="form-control"
             id="exampleInputPassword1"
             placeholder="Ingrese una contraseña"
+            onChange={handleChangeSignInInstitution}
+
           />
         </div>
         <button type="submit" class="btn btn-primary">
