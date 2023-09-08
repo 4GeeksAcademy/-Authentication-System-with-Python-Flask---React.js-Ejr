@@ -68,9 +68,29 @@ def create_owner():
 
 
 @api.route('/owner', methods=["GET"])
-def get_owners():
-    owner = Owner.query.all()
-    owners_list = list(map(lambda x: x.to_dict(), owner))
-    return jsonify(owners_list)
+def owners_list():
+    owners = Owner.query.all()
+    owners_data = [{"id": owner.id, "first_name": owner.first_name, "last_name": owner.last_name, "email": owner.email}
+                   for owner in owners]
 
-    
+    return jsonify(owners_data), 200
+
+
+@api.route('/owner/<int:owner_id>', methods=['GET'])
+def get_owner(owner_id):
+    owner = Owner.query.get(owner_id)
+    owner_data = {
+        "id": owner.id,
+        "first_name": owner.first_name,
+        "last_name": owner.last_name,
+        "email": owner.email,
+    }
+    return jsonify(owner_data), 200
+
+
+@api.route('/owner/<int:owner_id>', methods=['DELETE'])
+def delete_owner(owner_id):
+    owner = Owner.query.get(owner_id)
+    db.session.delete(owner)
+    db.session.commit()
+    return jsonify({"msg": "Owner deleted successfully"}), 200
