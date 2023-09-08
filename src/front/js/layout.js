@@ -8,7 +8,7 @@ import RegistroUsuario from "./pages/RegistroUsuario";
 import RegistroEleccion from "./pages/RegistroEleccion";
 import RegistroInst from "./pages/RegistroInst";
 import IniciarSesion from "./pages/IniciarSesion";
-import IniciarSesionInstitucion from "./pages/IniciarSesiónInst";
+import IniciarSesionInstitucion from "./pages/IniciarSesionInst";
 import IniciarSesionEleccion from "./pages/InicioSesionEleccion";
 import Nosotros from "./pages/Nosotros";
 import PreguntasFrecuentes from "./pages/PreguntasFrecuentes";
