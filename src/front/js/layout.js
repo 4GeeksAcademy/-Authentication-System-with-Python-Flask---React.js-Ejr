@@ -9,6 +9,9 @@ import { Single } from "./pages/single";
 import injectContext from "./store/appContext";
 
 import { Navbar } from "./component/navbar";
+import { Banner } from "./component/banner";
+import { Categorias } from "./component/categorias";
+import { Reviews } from "./component/reviews";
 import { Footer } from "./component/footer";
 
 //create your first component
@@ -30,7 +33,7 @@ const Layout = () => {
                         <Route element={<Single />} path="/single/:theid" />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
-                    <Footer />
+                    <Footer/>
                 </ScrollToTop>
             </BrowserRouter>
         </div>
