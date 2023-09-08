@@ -51,16 +51,7 @@ def login_user():
         return jsonify({"msg":"Wrong password"}), 401
     token = create_access_token(identity = data["dni"], additional_claims={"role":"admin"}) #cambiar por tipo de usuario de los modelos pendientes (Enum)
     return jsonify({"msg": "Login successful!", "token":token}),200
-#########################################################################
-#EXPERIMENTAL. DELETE WHEN DONE
-@api.route('/owners', methods=['GET'])
-def getOwners():
-    owners = Owner.query.all()
-    owners_data = [{"id": owner.id, "first_name": owner.first_name, "last_name": owner.last_name, "email": owner.email, "pets": [{"id": pet.id, "name": pet.name, "size": pet.size, "category": pet.category, "owner_id": pet.owner_id, "bookings": pet.bookings}
-                   for pet in Pet.query.filter_by(owner_id=owner.id)]}
-                   for owner in owners]
-    return jsonify(owners_data), 200
-##########################################################################
+
 #AGREGAR EDAD A MODELO DE PETS
 @api.route('/pets', methods=['POST'])
 def createPet():
