@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Owner, Keeper
+from api.models import db, User, Owner, Keeper, Pet
 from api.utils import generate_sitemap, APIException
 from flask_bcrypt import Bcrypt
 from flask_jwt_extended import create_access_token
@@ -36,26 +36,25 @@ def handle_hello():
 #     return jsonify({"msg": "Login successful!", "token":token}),200
 
 
-@api.route('/signup/owner', methods=['POST'])
+def signup_by_type(new_user, data):
+    new_user.first_name = data["first_name"]
+    new_user.last_name =  data["last_name"]
+    new_user.email = data["email"]
+    new_user.password  = bcrypt.generate_password_hash(str(data["password"])).decode("utf-8")
+    new_user.is_active = True
+  
+
+@api.route('/signup', methods=['POST'])
 def create_owner():
     data = request.get_json(force=True)
     email = data["email"].lower()
     if Owner.query.filter_by(email=email).first() is not None:
         return jsonify({"msg":"Email already registered"}), 400
-    password = str(request.json.get('password'))
     new_owner= Owner()
-    new_owner.first_name = data["first_name"]
-    new_owner.last_name =  data["last_name"]
-    new_owner.email = data["email"]
-    secure_password = bcrypt.generate_password_hash(password, 10).decode("utf-8")
-    new_owner.password = secure_password
-    new_owner.is_active = True
-    user_type = data.get("user_type")
-    if user_type == "owner":
-        db.session.add(new_owner)
-        db.session.commit()
+    signup_by_type(new_owner,data)
+    db.session.add(new_owner)
+    db.session.commit()
     return jsonify({"msg": "Owner created successfully"}), 201
-
 
 @api.route('/signup/keeper', methods=['POST'])
 def create_keeper():
@@ -63,28 +62,20 @@ def create_keeper():
     email = data["email"].lower()
     if Keeper.query.filter_by(email=email).first() is not None:
         return jsonify({"msg":"Email already registered"}), 400
-    password = str(request.json.get('password'))
     new_keeper= Keeper()
-    new_keeper.first_name = data["first_name"]
-    new_keeper.last_name =  data["last_name"]
-    new_keeper.email = data["email"]
-    secure_password = bcrypt.generate_password_hash(password, 10).decode("utf-8")
-    new_keeper.password = secure_password
+    signup_by_type(new_keeper,data)
     new_keeper.hourly_pay = data["hourly_pay"]
-    new_keeper.is_active = True
-    user_type = data.get("user_type")
-    if user_type == "keeper":
-        db.session.add(new_keeper)
-        db.session.commit()
+    db.session.add(new_keeper)
+    db.session.commit()
     return jsonify({"msg": "Keeper created successfully"}), 201
 
 
 @api.route('/owner', methods=["GET"])
 def owners_list():
     owners = Owner.query.all()
-    owners_data = [{"id": owner.id, "first_name": owner.first_name, "last_name": owner.last_name, "email": owner.email}
+    owners_data = [{"id": owner.id, "first_name": owner.first_name, "last_name": owner.last_name, "email": owner.email, "pets": [{"id": pet.id, "name": pet.name, "size": pet.size, "category": pet.category, "owner_id": pet.owner_id, "bookings": pet.bookings}
+                   for pet in Pet.query.filter_by(owner_id=owner.id)]}
                    for owner in owners]
-
     return jsonify(owners_data), 200
 
 
@@ -96,6 +87,7 @@ def get_owner(owner_id):
         "first_name": owner.first_name,
         "last_name": owner.last_name,
         "email": owner.email,
+        "pets": owner.pets
     }
     return jsonify(owner_data), 200
 
