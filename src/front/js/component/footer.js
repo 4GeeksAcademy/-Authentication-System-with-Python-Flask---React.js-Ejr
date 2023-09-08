@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 
+
 export const Footer = () => {
 	return (<div className="mt-5 mb-5">
 		<footer class="py-5 bg-dark">
@@ -55,5 +56,5 @@ export const Footer = () => {
     </div>
   </footer>
   </div>
-	)
+);
 }

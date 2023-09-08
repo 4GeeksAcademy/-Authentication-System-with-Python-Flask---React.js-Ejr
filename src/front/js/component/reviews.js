@@ -103,5 +103,5 @@ export const Reviews = () => {
   </div>
 </section>
 </div>
-    )
+)
 }

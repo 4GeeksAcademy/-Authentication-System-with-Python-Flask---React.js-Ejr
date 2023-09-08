@@ -1,6 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Carta } from "./carta"
+
+//import { Carta } from "./carta"
+
 
 export const Categorias = () => {
   return (
