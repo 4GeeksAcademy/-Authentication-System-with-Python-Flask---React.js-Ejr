@@ -6,7 +6,7 @@ import "../../styles/Registros.css";
 const IniciarSesionInstitucion = () => {
   const navigate = useNavigate()
   const { store, actions } = useContext(Context);
-  const handleChangeLogin =(e)=>{
+  const handleChangeLoginInstitution =(e)=>{
     actions.handleChange(e, "insLogin")
   }
   //store.isloged ? navigate('/login') : navigate('/registroUsuario')
@@ -17,7 +17,7 @@ const IniciarSesionInstitucion = () => {
         height: "24rem",
       }}
     >
-      <form noValidate /* onSubmit={e=>{e.preventDefault(); actions.logInUser()}} */>
+      <form noValidate onSubmit={e=>{e.preventDefault(); actions.logInInstitution()}} >
         <h2 className="tituloRegistro mb-4">Iniciar Sesión</h2>
         <div class="mb-3">
           <label for="exampleInputPassword1" class="form-label">
@@ -29,7 +29,7 @@ const IniciarSesionInstitucion = () => {
             class="form-control"
             id="exampleInputPassword1"
             placeholder="Ingrese su correo"
-           /*  onChange={handleChangeLogin} */
+            onChange={handleChangeLoginInstitution} 
           />
         </div>
 
@@ -43,7 +43,7 @@ const IniciarSesionInstitucion = () => {
             class="form-control"
             id="exampleInputPassword1"
             placeholder="Ingrese su contraseña"
-            /* onChange={handleChangeLogin} */
+            onChange={handleChangeLoginInstitution} 
           />
         </div>
         <button type="submit" class="btn btn-primary">
