@@ -13,6 +13,7 @@ import IniciarSesionEleccion from "./pages/InicioSesionEleccion";
 import Nosotros from "./pages/Nosotros";
 import PreguntasFrecuentes from "./pages/PreguntasFrecuentes";
 import Perfil from "./pages/Perfil";
+import PerfilInstitucional from "./pages/PerfilInstitucional"
 import Tracker from "./pages/Tracker";
 import FormularioBeca from "./pages/FormularioBeca";
 import injectContext from "./store/appContext";
@@ -49,6 +50,8 @@ const Layout = () => {
             <Route element={<FormularioBeca />} path="/formulario" />
             <Route element={<PreguntasFrecuentes />} path="/preguntas-frecuentes" />
             <Route element={<Perfil />} path="/perfil" />
+            <Route element={<PerfilInstitucional />} path="/perfil_institucional" />
+
           </Routes>
           <Footer />
         </ScrollToTop>
