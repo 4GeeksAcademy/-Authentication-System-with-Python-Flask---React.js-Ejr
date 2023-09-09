@@ -24,7 +24,6 @@ export const KeeperForm = () => {
 
   return (
     <div className="container" id="calendar">
-      <hr className="mt-4 mb-2" />
       <div className="row">
         <div className="col-auto">
           {/* Dos columnas principales */}

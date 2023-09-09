@@ -3,14 +3,18 @@ import { Link, useParams } from "react-router-dom";
 import { Context } from "../store/appContext";
 import stock_avatar from "../../img/avatar.jpg"
 import { KeeperForm } from "../component/keeperForm";
+import  { Pets } from "../component/pets";
 
-export const Profile = props => {
+export const Profile = (props) => {
 	const { store, actions } = useContext(Context);
 	const params = useParams();
 
-    useEffect(()=>{
-        actions.getPets();
-      },[])
+    // useEffect(()=>{
+    //     actions.getPets();
+    // },[])
+    //TEST DATA
+    let owner_id = 1;
+    let user_type = "owner";
 
 	return (
 		<div className="text-center container w-75 my-2">
@@ -44,7 +48,9 @@ export const Profile = props => {
 
 I have had numerous cats since I was young and am definitely a cat lover. Through house and pet sitting, I have had the pleasure of looking after and loving many cats, from young kittens to 22 year olds, all with different personalities and some requiring medication; as well as different breeds of dogs, from Labradors to miniature cavoodles, all whose company I thoroughly enjoyed. I also had Beau, my budgie, for quite a few years and taught him to talk! Libby, my sister, who sometimes accompanies me on sits, has had dogs for pets, from a German shepherd to a silky terrier, a cat and a budgie.</p>
             </div>
-            < KeeperForm />
+            <hr className="mt-4 mb-2" />
+            {/* Componente condicional aqui, pasar user type por props */}
+            {(user_type == "owner"? < Pets owner_id={1} />:<KeeperForm />)}
 		</div>
 	);
 };
