@@ -2,8 +2,11 @@ import React from "react"
 import '../../styles/nextEvent.css'
 const nextEvent = () => {
   return (
-    <>
-      <h3>Próximos Eventos</h3>
+    <div id="nextEventWrapper">
+      <div id="titul" className="col-12">
+        <h1 >Eventos</h1>
+        <div className="divider divider-default m-3"></div>
+      </div>
       <div id="header" className="card">
         <div className="card-body">
           <div className="row">
@@ -110,7 +113,7 @@ const nextEvent = () => {
         </div>
 
       </div>
-    </>
+    </div>
 
   );
 }

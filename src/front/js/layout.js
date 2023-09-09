@@ -12,7 +12,7 @@ import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 import Eventos from "./pages/eventos";
 import Galeria from "./component/galeria";
-import Planes from "./pages/planes";
+import Perfil from "./pages/perfil";
 import ContactPage from "./pages/contacto";
 import AccountPage from "./pages/cuenta";
 import NextEvent from "./component/nextEvent";
@@ -40,14 +40,12 @@ const Layout = () => {
                         <Route element={<Payment />} path="/payment" />
                         <Route element={<Eventos />} path="/eventos" />
                         <Route element={<Galeria />} path="/galeria" />
-                        <Route element={<Planes />} path="/planes" />
+                        <Route element={<Perfil />} path="/perfil" />
                         <Route element={<ContactPage />} path="/contacto" />
                         <Route element={<AccountPage />} path="/cuenta" />
                         <Route element={<NextEvent />} path="/nextEvent" />
                         <Route element={<Registrarse />} path="/registrarse" />
-                        <Route element={<Organizadores />} path="/organizadores"/>
-                        <Route element={<ContactPage />} path="/contacto"/>
-                        <Route element={<AccountPage />} path="/cuenta"/>
+                        <Route element={<Organizadores />} path="/organizadores" />
                     </Routes>
                     <Footer />
                 </ScrollToTop>

@@ -2,7 +2,7 @@ import React from "react";
 import "../../styles/home.css";
 import Pricing from "../component/princing";
 
-const Planes = () => {
+const Perfil = () => {
 	return (
 		<div className="App">
 			<div className="row">
@@ -50,4 +50,4 @@ const Planes = () => {
 
 	);
 }
-export default Planes;
+export default Perfil; 
