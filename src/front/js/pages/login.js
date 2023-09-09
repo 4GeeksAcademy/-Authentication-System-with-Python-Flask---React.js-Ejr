@@ -26,8 +26,9 @@ export const Login = () => {
   return (
     <div id="login-page" className="text-center">
       <div className="container wrap-loginSignup">
-        <h1>Login</h1>
-        <form onSubmit={login}>
+        <i id="cat-suit" className="fa-solid fa-cat"></i>
+        <h2>Login</h2>
+        <form className="pe-3" onSubmit={login}>
           <div className="mb-3">
             <label htmlFor="inputEmail" className="form-label">
               Email address
