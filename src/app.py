@@ -312,7 +312,9 @@ def institutional_login():
 #Scholarship POST
 
 @app.route('/create-scholarship', methods=['POST'])
+@jwt_required()
 def add_scholarship():
+    insti_user = get_jwt_identity()
     request_body = request.get_json(force=True)
     
     if "scholarship_name" not in request_body:
