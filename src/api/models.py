@@ -52,7 +52,7 @@ class Book(db.Model):
     title = db.Column(db.String(120), nullable=False)
     author = db.Column(db.String(120), nullable=False)
     number_of_pages = db.Column(db.String(120))
-    description = db.Column(db.Text(250))
+    description = db.Column(db.String(250))
     price = db.Column(db.String(120))
     photo = db.Column(db.String(120), default="no-photo.png")
 
