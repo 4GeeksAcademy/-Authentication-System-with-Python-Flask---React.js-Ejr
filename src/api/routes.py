@@ -16,3 +16,19 @@ def handle_hello():
     }
 
     return jsonify(response_body), 200
+
+
+
+
+
+@api.route('/register', methods=['POST', 'GET'])
+
+def user_register():
+    
+    response = {
+        "mensage": "Usuario Registrado"
+    }
+    
+    return jsonify(response), 200
+
+# @api.route('/')
