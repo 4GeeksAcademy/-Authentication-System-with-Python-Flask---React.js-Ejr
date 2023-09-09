@@ -176,3 +176,10 @@ def getAllPets():
     pets_data = [{"id": pet.id, "name": pet.name, "size": pet.size, "category": pet.category, "owner_id": pet.owner_id, "bookings": pet.bookings, "owner": [{"id": owner.id, "first_name": owner.first_name, "last_name": owner.last_name, "email": owner.email} for owner in Owner.query.filter_by(id=pet.owner_id)]}
                    for pet in pets]
     return jsonify(pets_data), 200
+
+@api.route('/pets/owner/<int:owner_id>', methods=['GET'])
+def getPetsByOwner(owner_id):
+    pets = Pet.query.filter_by(owner_id=owner_id)
+    pets = [{"id": pet.id, "name": pet.name, "size": pet.size, "category": pet.category, "owner_id": pet.owner_id, "bookings": pet.bookings }
+                   for pet in pets]
+    return jsonify(pets), 200
