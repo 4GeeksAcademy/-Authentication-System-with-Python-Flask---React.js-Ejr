@@ -27,7 +27,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			scholarshipPost: {
 				scholarship_name: null,
 				institution: null,
-				deadline: null, 
+				deadline: null,
 				modality: null,
 				coverage: null,
 				description: null,
@@ -72,7 +72,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 					if (response.ok) {
 						setStore({ signup: true })
-						alert("User add success")
+						showAlert('success', "User add success")
 					}
 
 
