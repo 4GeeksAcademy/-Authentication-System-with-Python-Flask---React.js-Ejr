@@ -95,7 +95,7 @@
     transform: translate(15px);
     transition: transform 0.2s ease-in;
   }
-  
+  /* lo voy a dejar así por si se ocupa en un futuro
   .form-control {
     color: white;
     background-color: #223C60;
@@ -111,7 +111,7 @@
     border: 2px solid #2d4dda;
     box-shadow: none;
   }
-  
+  */
   .text {
     font-size: 14px;
     font-weight: 600;
@@ -120,4 +120,7 @@
   ::placeholder {
     font-size: 14px;
     font-weight: 600;
+  }
+  #bajarlo{
+    margin-top: 120px;
   }
