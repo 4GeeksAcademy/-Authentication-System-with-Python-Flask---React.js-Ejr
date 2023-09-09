@@ -8,8 +8,12 @@ export const Profile = props => {
 	const { store, actions } = useContext(Context);
 	const params = useParams();
 
+    useEffect(()=>{
+        actions.getPets();
+      },[])
+
 	return (
-		<div className="text-center container w-75">
+		<div className="text-center container w-75 my-2">
 			<div className="align-items-center justify-content-center row mb-2">
                 <img src={stock_avatar} style={{borderRadius:"50%", width:"auto", height:"35vh", objectFit:"contain"}}/>
             </div>
