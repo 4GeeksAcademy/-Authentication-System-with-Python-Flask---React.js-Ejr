@@ -31,4 +31,10 @@ def user_register():
     
     return jsonify(response), 200
 
-# @api.route('/')
+@api.route('/books', methods=['GET'])
+def books_route():
+    response_libro ={
+        "mesage": "libro encontrado, sos un krac!"
+    }
+    
+    return jsonify(response_libro), 200
