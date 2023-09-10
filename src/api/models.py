@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 db = SQLAlchemy()
 
 class User(db.Model):
+    __tablename__ = "user"
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(80), unique=False, nullable=False)
@@ -17,3 +18,9 @@ class User(db.Model):
             "email": self.email,
             # do not serialize the password, its a security breach
         }
+
+class TokenBlockedList(db.Model):
+    __tablename__ = "tokenblockedlist"
+    id = db.Column(db.Integer, primary_key=True)
+    token = db.Column(db.String(1000), unique=True, nullable=False)
+    created_at = db.Column(db.DateTime, nullable=False)
