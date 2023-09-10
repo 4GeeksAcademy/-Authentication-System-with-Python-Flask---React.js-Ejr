@@ -5,14 +5,30 @@ import { BackendURL } from "./component/backendURL";
 
 import { Home } from "./pages/home";
 import { Demo } from "./pages/demo";
-import { BookSale } from "./pages/bookSale";
-import { BestSellers } from "./pages/bestSellers";
-import { BookExchange } from "./pages/bookExchange";
+
+/* CATEGORIAS */
+import { LibroVenta } from "./pages/libroVenta";
+import { MasVendidos } from "./pages/masVendidos";
+import { LibrosIntercambio } from "./pages/librosIntercambio";
+import { DonacionesRealizadas } from "./pages/donacionesRalizadas";
+
+/* FOOTERS */
+import { GuiaCompra } from "./pages/guiaCompra";
+import { MetodoPago } from "./pages/metodoPago";
+import { MetodoEnvio } from "./pages/metodoEnvio";
+import { SobreNosotros } from "./pages/sobreNosotros";
+import { NuestraHistoria } from "./pages/nuestraHistoria";
+import { ComoDonar } from "./pages/comoDonar";
+
+
+
+
 import { Single } from "./pages/single";
 import injectContext from "./store/appContext";
 
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
+
 
 //create your first component
 const Layout = () => {
@@ -30,9 +46,16 @@ const Layout = () => {
                     <Routes>
                         <Route element={<Home />} path="/" />
                         <Route element={<Demo />} path="/demo" />
-                        <Route element={<BookSale />} path="/bookSale" />
-                        <Route element={<BestSellers />} path="/bestSellers" />
-                        <Route element={<BookExchange />} path="/bookExchange" />
+                        <Route element={<LibroVenta />} path="/libroVenta" />
+                        <Route element={<MasVendidos />} path="/masVendidos" />
+                        <Route element={<LibrosIntercambio />} path="/librosIntercambio" />
+                        <Route element={<GuiaCompra />} path="/guiaCompra" />
+                        <Route element={<MetodoPago />} path="/metodoPago" />
+                        <Route element={<MetodoEnvio />} path="/metodoEnvio" />
+                        <Route element={<SobreNosotros />} path="/sobreNosotros" />
+                        <Route element={<NuestraHistoria />} path="/nuestraHistoria" />
+                        <Route element={<DonacionesRealizadas />} path="/donacionesRalizadas" />
+                        <Route element={<ComoDonar />} path="/comoDonar" />
                         <Route element={<Single />} path="/single/:theid" />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>

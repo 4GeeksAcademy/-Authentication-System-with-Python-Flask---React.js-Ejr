@@ -3,20 +3,20 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 export const Navbar = () => {
-	return (<div>
+  return (<div>
     <nav className="navbar navbar-expand-lg bg-body-tertiary bg-dark">
       <div className="container-fluid">
-        <div className ="col d-flex">
+        <div className="col d-flex">
           <a className="navbar-brand text-white" href="#">Books Market</a>
-          <a className="nav-link active text-white" aria-current="page" href="#">Home</a>
+          <Link to="/" className="nav-link active text-white" aria-current="page">Home</Link>
         </div>
-        <div className ="col">
+        <div className="col">
           <form className="d-flex" role="search">
             <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
             <button className="btn btn-light" type="submit">Search</button>
           </form>
         </div>
-        <div className ="col">
+        <div className="col">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0 d-flex justify-content-end">
             <li className="nav-item">
               <a className="nav-link active text-white" aria-current="page" href="#">Cart</a>
@@ -39,20 +39,25 @@ export const Navbar = () => {
         </div>
       </div>
     </nav>
-    <div className="navbar-expand-lg">
-      <div className="row bg-dark text-center">
-        <div className="col">
-          <a className="nav-link active text-white" aria-current="page" href="#">Libros en Venta</a>
+
+    <nav className="navbar navbar-expand-lg bg-body-tertiary bg-dark">
+      <div className="container-fluid d-flex justify-content-around">
+        <div className="">
+          <Link to="/libroVenta" className="nav-link active text-white" aria-current="page">Libros en Venta</Link>
         </div>
-        <div className="col-5">
-          <a className="nav-link active text-white" aria-current="page" href="#">Libros para intercambio</a>
+        <div className="">
+          <Link to="/librosIntercambio" className="nav-link active text-white" aria-current="page">Libros para intercambio</Link>
         </div>
-        <div className="col">
-          <a className="nav-link active text-white" aria-current="page" href="#">Libros más vendidos</a>
+        <div className="">
+          <Link to="/masVendidos" className="nav-link active text-white" aria-current="page">Libros más vendidos</Link>
+        </div>
+        <div className="">
+          <Link to="/donacionesRalizadas" className="nav-link active text-white" aria-current="page">Donaciones realizadas</Link>
         </div>
       </div>
-    </div>
-	</div>
-	);
+    </nav>
+
+  </div>
+  );
 };
 
