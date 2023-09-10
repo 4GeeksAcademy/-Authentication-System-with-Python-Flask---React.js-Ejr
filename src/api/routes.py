@@ -4,6 +4,10 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, User
 from api.utils import generate_sitemap, APIException
+from flask_jwt_extended import JWTManager, get_jwt_identity, create_access_token, jwt_required
+from werkzeug.security import generate_password_hash, check_password_hash
+import datetime
+
 
 api = Blueprint('api', __name__)
 
@@ -23,14 +27,12 @@ def handle_hello():
 @api.route('/register', methods=['POST', 'GET'])
 
 def user_register():
-    
-    response_register = {
-        "mensage": "Usuario Registrado"
-    }
-    
-    return jsonify(response_register), 200
-
- # validacion de usuario
+    name= request.json.get("name")
+    lastname= request.json.get("lastname")
+    email= request.json.get("email")
+    password= request.json.get("password")
+    region= request.json.get("region")
+# validacion de usuario
     if not name:
         return jsonify({"error": "name is requare"}), 422
     
@@ -60,7 +62,7 @@ def user_register():
     
     return jsonify({"succes": "Registro exitoso, por favor inicie sesión"}), 200
 
-@app.route('/api/login', methods=['POST'])
+@api.route('/login', methods=['POST'])
 def login():
     
     email= request.json.get("email")
@@ -103,7 +105,7 @@ def login():
 
 
 # generando ruta privada
-@app.route('/api/profile', methods=['GET'])
+@api.route('/api/profile', methods=['GET'])
 @jwt_required()
 def profile():
     
