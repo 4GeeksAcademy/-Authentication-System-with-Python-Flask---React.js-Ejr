@@ -17,6 +17,7 @@ import ContactPage from "./pages/contacto";
 import AccountPage from "./pages/cuenta";
 import Organizadores from "./pages/organizadores";
 import UserProfile from "./component/perfil";
+import TeamList from "./pages/equiposparticipantes";
 
 //create your first component
 const Layout = () => {
@@ -32,6 +33,7 @@ const Layout = () => {
                 <ScrollToTop>
                     <Navbar />
                     <Routes>
+                        <Route element={<TeamList/>} path="/teams"/>
                         <Route element={<UserProfile />} path="/profile/:theid" />
                         <Route element={<Home />} path="/" />
                         <Route element={<Servicios />} path="/servicios" />
