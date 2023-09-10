@@ -305,58 +305,95 @@ def institutional_login():
     response_body ={ 
                     "msg": "ok",
                     "token": access_token, 
-                    "institutional_user_id": insti_user.id }
+                    "institutional_user_id": insti_user.id
+                     }
 
     return jsonify(response_body), 200
 
 #Scholarship POST
 
+#@app.route('/create-scholarship', methods=['POST'])
+#@jwt_required()
+#def add_scholarship():
+#    insti_user = get_jwt_identity()
+#    request_body = request.get_json(force=True)
+#    
+#    if "scholarship_name" not in request_body:
+#        raise APIException('A scholarship name is required', 400)
+#    
+#    if "deadline" not in request_body:
+#        raise APIException("A deadline are required", 400)
+#
+#    if "institution" not in request_body:
+#        raise APIException('An institution name is required', 400)
+#
+#    if "modality" not in request_body:
+#        raise APIException('A modality is required', 400)
+#    
+#    if "coverage" not in request_body:
+#        raise APIException('A coverage is required', 400)
+#    
+#    if "professional_field" not in request_body:
+#        raise APIException('A professional_field is required', 400)
+#
+#    if "description" not in request_body:
+#        raise APIException('A description is required', 400)
+#
+#    if "url_to" not in request_body:
+#        raise APIException('An url is required', 400)
+#    
+#
+#    scholarship = Scholarship(
+#        scholarship_name = request_body['scholarship_name'],
+#        deadline = request_body['deadline'],
+#        institution = request_body['institution'],
+#        modality = request_body["modality"],
+#        coverage = request_body["coverage"],
+#        professional_field = request_body["professional_field"],
+#        description = request_body["description"],
+#        url_to = request_body["url_to"]
+#    )
+#
+#    scholarship.save()
+#
+#    response_body = {
+#        "msg" : "ok",
+#        "msg2" : "Beca agregada correctamente"
+#    }
+#    
+#    return jsonify(response_body), 201
+#
+
 @app.route('/create-scholarship', methods=['POST'])
 @jwt_required()
 def add_scholarship():
-    insti_user = get_jwt_identity()
+    current_user_id = get_jwt_identity()
     request_body = request.get_json(force=True)
-    
-    if "scholarship_name" not in request_body:
-        raise APIException('Scholarship name is required', 400)
-    
-    if "deadline" not in request_body:
-        raise APIException("dates are required", 400)
 
-    if "institution" not in request_body:
-        raise APIException('Institution is required', 400)
+    # Validación de entrada
+    required_fields = ["scholarship_name", "deadline", "institution", "modality", "coverage", "professional_field", "description", "url_to"]
+    for field in required_fields:
+        if field not in request_body or not request_body[field]:
+            return jsonify({"error": f"El campo '{field}' es obligatorio"}), 400
 
-    if "modality" not in request_body:
-        raise APIException('modality is required', 400)
-    
-    if "coverage" not in request_body:
-        raise APIException('coverage is required', 400)
-    
-    if "description" not in request_body:
-        raise APIException('description is required', 400)
-
-    if "url_to" not in request_body:
-        raise APIException('url is required', 400)
-    
-
+    # Creación de la beca
     scholarship = Scholarship(
-        scholarship_name = request_body['scholarship_name'],
-        deadline = request_body['deadline'],
-        institution = request_body['institution'],
-        modality = request_body["modality"],
-        coverage = request_body["coverage"],
-        description = request_body["description"],
-        url_to = request_body["url_to"]
+        scholarship_name=request_body['scholarship_name'],
+        deadline=request_body['deadline'],
+        institution=request_body['institution'],
+        modality=request_body['modality'],
+        coverage=request_body['coverage'],
+        professional_field=request_body['professional_field'],
+        description=request_body['description'],
+        url_to=request_body['url_to']
     )
 
-    scholarship.save()
+    try:
+        scholarship.save()
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
-    response_body = {
-        "msg" : "ok",
-        "msg2" : "Beca agregada correctamente"
-    }
-    
-    return jsonify(response_body), 201
+    return jsonify({"message": "Beca agregada correctamente"}), 201
 
 
 

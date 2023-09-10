@@ -24,16 +24,23 @@ const getState = ({ getStore, getActions, setStore }) => {
 				email: null,
 				password: null
 			},
+			institutionName: null,
 			scholarshipPost: {
 				scholarship_name: null,
 				institution: null,
 				deadline: null,
 				modality: null,
 				coverage: null,
+				professional_field : null,
 				description: null,
 				url_to: null
 			},
 			scholarshipPosted: false,
+			hiddenMyProfile: true,
+			hiddenMyInsProfile: true,
+			hiddenLogin: false,
+			hiddenLogout: true,
+			hiddenSignup: false,
 		},
 		actions: {
 			isPropertyEmpty: (obj) => {
@@ -101,9 +108,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log(result);
 
 					if (response.ok) {
-						localStorage.setItem("jwt-token", result.access_token);
+						localStorage.setItem("jwt-token", result.token);
 						alert("Login success");
 						setStore({ isloged: true });
+						setStore({ hiddenLogin: true });
+						setStore({ hiddenMyProfile: false }); 
+						setStore({ hiddenSignup: true });
+						setStore({ hiddenLogout: false });
+
 						return true;
 					} else {
 						setStore({ isloged: false })
@@ -188,9 +200,16 @@ const getState = ({ getStore, getActions, setStore }) => {
 					const result = await response.json()
 					console.log(result);
 					if (response.ok) {
-						localStorage.setItem("jwt-token", result.access_token);
-						alert("Welcome!");
+						localStorage.setItem("jwt-token", result.token);
 						setStore({ insLoged: true });
+						setStore({ hiddenMyInsProfile: false }); 
+						setStore({ hiddenLogin: true });
+						setStore({ hiddenSignup: true });
+						setStore({ hiddenLogout: false });
+						alert("Welcome!");
+
+						console.log("Nombre de la institución:", result.institution_name); // Agrega esta línea para depurar
+
 						return true;
 					} else {
 						setStore({ insLoged: false })
@@ -232,8 +251,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 
 			postScholarship: async () => {
+				const myToken = localStorage.getItem("jwt-token");
 				const store = getStore()
 				const actions = getActions()
+				setStore({ tokenUser: myToken })
+
 				try {
 					if (actions.isPropertyEmpty(store.scholarshipPost)) {
 						alert("Le falta llenar algunos datos :S");
@@ -243,13 +265,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 						method: 'POST',
 						body: JSON.stringify(store.scholarshipPost),
 						headers: {
-							'Content-Type': 'application/json'
+							'Content-Type': 'application/json',
+							'Authorization': 'Bearer ' + myToken
 						}
 					})
 					const result = await response.json()
 					console.log(result);
 					if (response.ok) {
-						localStorage.setItem("jwt-token", result.access_token);
+						localStorage.setItem("jwt-token", result.token);
 						alert("Scholarship added succesfully");
 						setStore({ scholarshipPosted: true });
 						return true;
@@ -261,6 +284,38 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log(error + " Error loading message from backend")
 					setStore({ scholarshipPosted: false })
 				}
+			},
+			changeSignUpStatus: (value) => {
+				setStore({ signup: value })
+				setStore({ insSignup: value })
+
+			},
+			changeLogInStatus: (value) => {
+				setStore({ isloged: value })
+				setStore({ insLoged: value })
+				setStore({ hiddenLogin: value })
+
+				
+
+			},
+			changeMyProfileStatus: () => {
+				setStore({ isloged: true })
+			},
+
+			changeMyInstitutionalProfileStatus: () => {
+				setStore({ insLoged: true })
+			},
+
+			changeLogoutButton: (value) => {
+				setStore({ hiddenLogout: value })
+			},
+			logout: () => {
+				localStorage.clear();
+				setStore({ hiddenLogout: true })
+				setStore({ isloged: false })
+				setStore({ insLoged: false })
+				setStore({ signup: false })
+				setStore({ insSignup: false })
 			},
 		}
 	};

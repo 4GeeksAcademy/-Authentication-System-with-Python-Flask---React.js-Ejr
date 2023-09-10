@@ -1,8 +1,13 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import "../../styles/perfil.css";
 import { Link } from "react-router-dom";
+import { Context } from "../store/appContext";
+
 
 const PerfilInstitucional = () => {
+  const { store, actions } = useContext(Context);
+
+
   return (
     <div className="container d-flex justify-content-center align-items-center">
       <div className="card-perfil">
@@ -20,7 +25,7 @@ const PerfilInstitucional = () => {
         </div>
 
         <div className="mt-5 text-center">
-          <h4 className="mb-0">UCR</h4>
+          <h4 className="mb-0">{store.institutionName}</h4>
           <span className="text-muted d-block mb-2">
             Usuario activo Bexplora
           </span>

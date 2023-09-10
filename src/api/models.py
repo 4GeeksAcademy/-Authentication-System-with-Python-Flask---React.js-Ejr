@@ -10,12 +10,6 @@ class Tracker(db.Model):
     scholarship_id = db.Column(db.Integer, db.ForeignKey('scholarship.id'))
     user = db.relationship('User', back_populates='tracker')
     scholarship = db.relationship('Scholarship', back_populates='trackers')
-#    scholarship_name = db.Column(db.String(50), unique=False, nullable=True)
-#    scholarship = db.relationship("Scholarship", back_populates="trackers")
-#    email = db.Column(db.String(50), unique=False, nullable=True)
-#    user_email = db.relationship("User", back_populates="tracker")
-
-    
 
     def __repr__(self):
         return f'{self.user}'
@@ -43,10 +37,10 @@ class Scholarship(db.Model):
     deadline = db.Column(db.String(50), unique=False, nullable=False)
     modality = db.Column(db.String(50), unique=False, nullable=False)
     coverage = db.Column(db.String(50), unique=False, nullable=False)
+    professional_field = db.Column(db.String(50), unique=False, nullable=False)
     description = db.Column(db.String(800), unique=False, nullable=False)
     url_to = db.Column(db.String(250), unique=False, nullable=False)
     trackers = db.relationship('Tracker', back_populates='scholarship')
-
 
     def __repr__(self):
         return f'{self.scholarship_name}'
@@ -67,6 +61,7 @@ class Scholarship(db.Model):
             "deadline": self.deadline,
             "modality": self.modality,
             "coverage": self.coverage,
+            "professional_field": self.professional_field,
             "description": self.description,
             "url_to": self.url_to,
         }    
@@ -74,15 +69,11 @@ class Scholarship(db.Model):
 class User(db.Model):
     __tablename__ = 'user'
     id = db.Column(db.Integer, primary_key=True)
-#    tracker_id = db.Column(db.Integer, db.ForeignKey("trackers.id"))
-#    tracker = db.relationship(Tracker)
     name = db.Column(db.String(120), unique=False, nullable=False)
     last_name = db.Column(db.String(120), unique=False, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(80), unique=False, nullable=False)
     tracker = db.relationship('Tracker', back_populates='user')
-
-
 
     def __repr__(self):
         return f'<User {self.email}>'

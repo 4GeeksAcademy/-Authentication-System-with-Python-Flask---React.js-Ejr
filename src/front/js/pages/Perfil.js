@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useContext} from "react";
+import { Context } from "../store/appContext";
 import "../../styles/perfil.css";
 import { Link } from "react-router-dom";
 
 const Perfil = () => {
+  const { store, actions } = useContext(Context);
+
   return (
     <div className="container d-flex justify-content-center align-items-center">
       <div className="card-perfil">

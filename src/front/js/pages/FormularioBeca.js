@@ -43,7 +43,7 @@ const FormularioBeca = () => {
         <div className='row m-3 pt-3'>
           <div className='col-6'>
             <label htmlFor="areaBeca" className="form-label">Área Profesional a la que Pertenece la Beca </label>
-            <input type="areaProfesional" className="form-control" id="areaBeca" placeholder='Área Profesional de la Beca' />
+            <input name='professional_field' type="areaProfesional" className="form-control" id="areaBeca" placeholder='Área Profesional de la Beca' onChange={handleChangeScholarshipPost}/>
           </div>
           <div className='col-4'>
             <label htmlFor="coberturaBeca" className="form-label">Cobertura Financiera de la Beca</label>

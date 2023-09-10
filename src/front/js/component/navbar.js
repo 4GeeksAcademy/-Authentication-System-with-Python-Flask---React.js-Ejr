@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
+import { Context } from "../store/appContext";
 import { Link } from "react-router-dom";
 import "../../styles/navbar.css";
 
 export const Navbar = () => {
+  const { store, actions } = useContext(Context);
+
   return (
     <nav className="navbar">
       <div className="container my-4">
@@ -26,16 +29,39 @@ export const Navbar = () => {
           <Link to="/tracker">
             <button className="button-regular mx-1">Mis Aplicaciones</button>
           </Link>
-          <Link to="/perfil">
-            <button className="button-regular mx-1">Mi Perfil</button>
+          <Link to="/perfil_institucional">
+            {store.insLoged ? (
+              <button className="button-regular mx-1" onClick={() => actions.changeMyInstitutionalProfileStatus()}>
+                Mi Perfil Institucional
+              </button>
+            ) : null}
           </Link>
+
+          <Link to="/perfil">
+            {store.isloged ? (
+              <button className="button-regular mx-1" onClick={() => actions.changeMyProfileStatus()}>Mi Perfil</button>
+            ) : null}
+          </Link>
+
           <div className="buttons-right mx-2">
-            <Link to="/iniciarsesionEleccion">
-              <button className="button-login">Iniciar sesión</button>
+                <Link to="/iniciarsesionEleccion">
+                {!store.isloged && !store.insLoged && (
+                  <button className="button-login" onClick={() => actions.changeLogInStatus()}>Iniciar sesión</button>
+                  )}
+                </Link>
+
+              
+                <Link to="/registroEleccion">
+                {!store.isloged && !store.insLoged && (
+
+                  <button className="button-signup" onClick={() => actions.changeSignUpStatus()}>Registrarse</button>
+                  )}
+                </Link>
+
+            <Link to="/">
+              <button className="button-login" hidden={store.hiddenLogout} onClick={() => actions.logout()}>Cerrar sesión</button>
             </Link>
-            <Link to="/registroEleccion">
-              <button className="button-signup">Registrarse</button>
-            </Link>
+
           </div>
         </div>
       </div>

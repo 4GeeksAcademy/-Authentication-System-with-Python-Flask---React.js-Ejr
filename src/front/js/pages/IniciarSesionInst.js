@@ -10,7 +10,7 @@ const IniciarSesionInstitucion = () => {
     actions.handleChange(e, "insLogin")
   }
 
-  store.insLoged ? navigate('/perfil_institucional') : null
+  store.insLoged ? navigate('/') : null
   return (
     <div
       className=" RegistroUsuarioDiv container d-flex justify-content-center align-items-center"
