@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import '../../styles/LoginForm.css';
-import axios from 'axios'; // Importa Axios
+import '../../styles/LoginForm.css'
 
 function LoginForm() {
   const [activeTab, setActiveTab] = useState('login');
@@ -41,7 +40,13 @@ function LoginForm() {
     e.preventDefault();
 
     try {
-      const response = await axios.post('URL_DEL_BACKEND_LOGIN', loginFormData);
+      const response = await fetch('URL_DEL_BACKEND_LOGIN', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(loginFormData),
+      });
 
       if (response.status === 200) {
         // El inicio de sesión fue exitoso, puedes mostrar un mensaje de éxito al usuario
@@ -60,7 +65,13 @@ function LoginForm() {
     e.preventDefault();
 
     try {
-      const response = await axios.post('URL_DEL_BACKEND_REGISTRO', registerFormData);
+      const response = await fetch('URL_DEL_BACKEND_REGISTRO', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(registerFormData),
+      });
 
       if (response.status === 200) {
         // El registro fue exitoso, puedes mostrar un mensaje de éxito al usuario
@@ -76,236 +87,182 @@ function LoginForm() {
   };
 
   return (
-    <div>
-      <ul className="nav nav-pills nav-justified mb-3" id="ex1" role="tablist">
-        <li className="nav-item" role="presentation">
-          <a
-            className={`nav-link ${activeTab === 'login' ? 'active' : ''}`}
-            id="tab-login"
-            onClick={() => handleTabChange('login')}
-            role="tab"
-            aria-controls="pills-login"
-            aria-selected={activeTab === 'login'}
-          >
-            Login
-          </a>
-        </li>
-        <li className="nav-item" role="presentation">
-          <a
-            className={`nav-link ${activeTab === 'register' ? 'active' : ''}`}
-            id="tab-register"
-            onClick={() => handleTabChange('register')}
-            role="tab"
-            aria-controls="pills-register"
-            aria-selected={activeTab === 'register'}
-          >
-            Register
-          </a>
-        </li>
-      </ul>
-
-      <div className="tab-content">
-        <div
-          className={`tab-pane fade ${activeTab === 'login' ? 'show active' : ''}`}
-          id="pills-login"
-          role="tabpanel"
-        >
-          {/* Formulario de login */}
-          <form onSubmit={handleLoginSubmit}>
-            <div className="text-center mb-3">
-              <p>Ingresa con:</p>
-              <button type="button" className="btn btn-secondary btn-floating mx-1">
-                <i className="fab fa-facebook-f"></i>
+    <section className="vh-100">
+      <div className="container py-5 h-100" id='LoginForm'>
+        <div className="row d-flex align-items-center justify-content-center h-100" >
+          <div className="col-md-8 col-lg-7 col-xl-6" >
+            <img
+              src="https://ak-static.cms.nba.com/wp-content/themes/nba-global/images/international-league-pass/players.png"
+              className="img-fluid"
+              alt="Phone image"
+            />
+          </div>
+          <div className="col-md-7 col-lg-5 col-xl-5 offset-xl-1" id='LoginForm-Container'>
+            <div className="d-flex justify-content-between mb-4">
+              <button
+                className={`btn ${activeTab === 'login' ? 'btn-primary' : 'btn-secondary'}`}
+                onClick={() => handleTabChange('login')}
+              >
+                Login
               </button>
-
-              <button type="button" className="btn btn-secondary btn-floating mx-1">
-                <i className="fab fa-google"></i>
-              </button>
-
-              <button type="button" className="btn btn-secondary btn-floating mx-1">
-                <i className="fab fa-twitter"></i>
-              </button>
-
-              <button type="button" className="btn btn-secondary btn-floating mx-1">
-                <i className="fab fa-github"></i>
+              <button
+                className={`btn ${activeTab === 'register' ? 'btn-primary' : 'btn-secondary'}`}
+                onClick={() => handleTabChange('register')}
+              >
+                Register
               </button>
             </div>
+            <form>
+              {activeTab === 'login' && (
+                <div>
+                  <div className="form-outline mb-4">
+                    <label className="form-label" htmlFor="loginName">
+                      Email o nombre de usuario
+                    </label>
+                    <input
+                      type="email"
+                      id="loginName"
+                      name="loginName"
+                      className="form-control form-control-lg LoginForm "
+                      onChange={handleLoginChange}
+                    />
+                  </div>
 
-            <p className="text-center">O</p>
-            <label className="form-label" htmlFor="loginName">
-              Email o nombre de usuario
-            </label>
+                  <div className="form-outline mb-4">
+                    <label className="form-label" htmlFor="loginPassword">
+                      Contraseña
+                    </label>
+                    <input
+                      type="password"
+                      id="loginPassword"
+                      name="loginPassword"
+                      className="form-control form-control-lg LoginForm"
+                      onChange={handleLoginChange}
+                    />
+                  </div>
 
-            <div className="form-outline mb-4">
-              <input
-                type="email"
-                id="loginName"
-                name="loginName"
-                className="form-control white-background-input"
-                onChange={handleLoginChange}
-              />
-            </div>
+                  <div className="d-flex justify-content-around align-items-center mb-4" id='forgotcontainer'>
+                    <div className="form-check">
+                      <input
+                        className="form-check-input"
+                        type="checkbox"
+                        value=""
+                        id="loginCheck"
+                        name="loginCheck"
+                        defaultChecked
+                      />
+                      <label className="form-check-label" htmlFor="loginCheck">
+                        Recuérdame
+                      </label>
+                    </div>
+                    <a href="#!">Forgot password?</a>
+                  </div>
 
-            <div className="form-outline mb-4">
-              <label className="form-label" htmlFor="loginPassword">
-                Contraseña
-              </label>
-              <input
-                type="password"
-                id="loginPassword"
-                name="loginPassword"
-                className="form-control white-background-input"
-                onChange={handleLoginChange}
-              />
-            </div>
-
-            <div className="row mb-4">
-              <div className="col-md-6 d-flex justify-content-center">
-                <div className="form-check mb-3 mb-md-0">
-                  <label className="form-check-label" htmlFor="loginCheck">
-                    Recuérdame
-                  </label>
-                  <input
-                    className="form-check-input"
-                    type="checkbox"
-                    value=""
-                    id="loginCheck"
-                    name="loginCheck"
-                    defaultChecked
-                  />
+                  <button
+                    type="submit"
+                    className="btn btn-primary btn-lg btn-block"
+                    onClick={handleLoginSubmit}
+                  >
+                    Sign in
+                  </button>
                 </div>
-              </div>
+              )}
 
-              <div className="col-md-6 d-flex justify-content-center">
-                <a href="#!">¿Olvidaste la contraseña?</a>
-              </div>
-            </div>
+              {activeTab === 'register' && (
+                <div>
+                  <div className="form-outline mb-4">
+                    <label className="form-label" htmlFor="registerName">
+                      Nombre
+                    </label>
+                    <input
+                      type="text"
+                      id="registerName"
+                      name="registerName"
+                      className="form-control form-control-lg LoginForm"
+                      onChange={handleRegisterChange}
+                    />
+                  </div>
 
-            <button type="submit" className="btn btn-primary btn-block mb-4">
-              Iniciar Sesión
-            </button>
+                  <div className="form-outline mb-4">
+                    <label className="form-label" htmlFor="registerUsername">
+                      Nombre de usuario
+                    </label>
+                    <input
+                      type="text"
+                      id="registerUsername"
+                      name="registerUsername"
+                      className="form-control form-control-lg LoginForm"
+                      onChange={handleRegisterChange}
+                    />
+                  </div>
 
-            <div className="text-center">
-              <p>
-                ¿Todavía no eres miembro? <a href="#!">Regístrate</a>
-              </p>
-            </div>
-          </form>
-        </div>
-        <div
-          className={`tab-pane fade ${activeTab === 'register' ? 'show active' : ''}`}
-          id="pills-register"
-          role="tabpanel"
-        >
-          {/* Formulario de registro */}
-          <form onSubmit={handleRegisterSubmit}>
-            <div className="text-center mb-3">
-              <p>Regístrate con:</p>
-              <button type="button" className="btn btn-secondary btn-floating mx-1">
-                <i className="fab fa-facebook-f"></i>
-              </button>
+                  <div className="form-outline mb-4">
+                    <label className="form-label" htmlFor="registerEmail">
+                      Email
+                    </label>
+                    <input
+                      type="email"
+                      id="registerEmail"
+                      name="registerEmail"
+                      className="form-control form-control-lg LoginForm"
+                      onChange={handleRegisterChange}
+                    />
+                  </div>
 
-              <button type="button" className="btn btn-secondary btn-floating mx-1">
-                <i className="fab fa-google"></i>
-              </button>
+                  <div className="form-outline mb-4">
+                    <label className="form-label" htmlFor="registerPassword">
+                      Contraseña
+                    </label>
+                    <input
+                      type="password"
+                      id="registerPassword"
+                      name="registerPassword"
+                      className="form-control form-control-lg LoginForm"
+                      onChange={handleRegisterChange}
+                    />
+                  </div>
 
-              <button type="button" className="btn btn-secondary btn-floating mx-1">
-                <i className="fab fa-twitter"></i>
-              </button>
+                  <div className="form-outline mb-4">
+                    <label className="form-label" htmlFor="registerRepeatPassword">
+                      Confirmar contraseña
+                    </label>
+                    <input
+                      type="password"
+                      id="registerRepeatPassword"
+                      name="registerRepeatPassword"
+                      className="form-control form-control-lg LoginForm"
+                      onChange={handleRegisterChange}
+                    />
+                  </div>
 
-              <button type="button" className="btn btn-secondary btn-floating mx-1">
-                <i className="fab fa-github"></i>
-              </button>
-            </div>
+                  <div className="form-check d-flex justify-content-center mb-4" id='termscheck'>
+                    <input
+                      className="form-check-input me-2"
+                      type="checkbox"
+                      value=""
+                      id="registerCheck"
+                      name="registerCheck"
+                      defaultChecked
+                    />
+                    <label className="form-check-label" htmlFor="registerCheck" >
+                      He leído y estoy de acuerdo con los términos de servicio
+                    </label>
+                  </div>
 
-            <p className="text-center">O</p>
-
-            <div className="form-outline mb-4">
-              <label className="form-label" htmlFor="registerName">
-                Nombre
-              </label>
-              <input
-                type="text"
-                id="registerName"
-                name="registerName"
-                className="form-control white-background-input"
-                onChange={handleRegisterChange}
-              />
-            </div>
-
-            <div className="form-outline mb-4">
-              <label className="form-label" htmlFor="registerUsername">
-                Nombre de usuario
-              </label>
-              <input
-                type="text"
-                id="registerUsername"
-                name="registerUsername"
-                className="form-control white-background-input"
-                onChange={handleRegisterChange}
-              />
-            </div>
-
-            <div className="form-outline mb-4">
-              <label className="form-label" htmlFor="registerEmail">
-                Email
-              </label>
-              <input
-                type="email"
-                id="registerEmail"
-                name="registerEmail"
-                className="form-control white-background-input"
-                onChange={handleRegisterChange}
-              />
-            </div>
-
-            <div className="form-outline mb-4">
-              <label className="form-label" htmlFor="registerPassword">
-                Contraseña
-              </label>
-              <input
-                type="password"
-                id="registerPassword"
-                name="registerPassword"
-                className="form-control white-background-input"
-                onChange={handleRegisterChange}
-              />
-            </div>
-
-            <div className="form-outline mb-4">
-              <label className="form-label" htmlFor="registerRepeatPassword">
-                Confirmar contraseña
-              </label>
-              <input
-                type="password"
-                id="registerRepeatPassword"
-                name="registerRepeatPassword"
-                className="form-control white-background-input"
-                onChange={handleRegisterChange}
-              />
-            </div>
-
-            <div className="form-check d-flex justify-content-center mb-4">
-              <input
-                className="form-check-input me-2"
-                type="checkbox"
-                value=""
-                id="registerCheck"
-                name="registerCheck"
-                defaultChecked
-              />
-              <label className="form-check-label" htmlFor="registerCheck">
-                He leído y estoy de acuerdo con los términos de servicio
-              </label>
-            </div>
-
-            <button type="submit" className="btn btn-primary btn-block mb-3">
-              Registrarse
-            </button>
-          </form>
+                  <button
+                    type="submit"
+                    className="btn btn-primary btn-lg btn-block mb-3"
+                    onClick={handleRegisterSubmit}
+                  >
+                    Registrarse
+                  </button>
+                </div>
+              )}
+            </form>
+          </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 }
 
