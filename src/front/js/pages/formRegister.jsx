@@ -1,10 +1,12 @@
-import React from 'react'
+import React, { useState, useEffect, useContext } from "react";
+import { Link } from "react-router-dom";
 import { useNavigate } from 'react-router-dom'
-import { Context } from '../store/appContext'
 
-const FormRegister = () => {
-   
-    const {store, actions} = useContext(Context)
+import { Context } from "../store/appContext";
+
+export const FormRegister = () => {
+
+    const { store, actions } = useContext(Context)
     const navigate = useNavigate()
     return (
         <div className="container col-md-4 my-3 shadow p-0">
@@ -50,7 +52,6 @@ const FormRegister = () => {
                         required
                         pattern="[^@\s]+@[^@\s]+\.[^@\s]+"
                     //onChange={}
-
                     />
                 </div>
                 <div className="mb-3 password">
@@ -107,8 +108,7 @@ const FormRegister = () => {
                 </button>
             </form>
         </div>
-    )
+    );
 
-}
+};
 
-export default FormRegister
