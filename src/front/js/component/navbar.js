@@ -29,10 +29,18 @@ export const Navbar = () => {
                 Iniciar sesión/ Registrarse
               </a>
               <ul className="dropdown-menu">
-                <li><a className="dropdown-item" href="#">Action</a></li>
-                <li><a className="dropdown-item" href="#">Another action</a></li>
-                <li><hr className="dropdown-divider" /></li>
-                <li><a className="dropdown-item" href="#">Something else here</a></li>
+                <li>
+                  <Link to="/" className="dropdown-item">Iniciar sesión</Link>                  
+                </li>
+                <li>
+                  <Link to="/formularioRegistro" className="dropdown-item" >Registrar</Link>                  
+                </li>
+                <li>
+                  <hr className="dropdown-divider" />
+                </li>
+                <li>
+                  <a className="dropdown-item" href="#">Something else here</a>
+                </li>
               </ul>
             </li>
           </ul>
