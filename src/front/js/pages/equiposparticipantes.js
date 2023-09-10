@@ -1,4 +1,5 @@
 import React from 'react';
+import '../../styles/accountpage.css'
 
 function TeamList() {
   const teamsData = [
@@ -26,7 +27,7 @@ function TeamList() {
   ];
 
   return (
-    <table className="table align-middle mb-0 bg-white">
+    <table className="table align-middle mb-0 bg-white" id='teamstable'>
       <thead className="bg-light">
         <tr>
           <th>Nombre del equipo</th>
@@ -57,6 +58,13 @@ function TeamList() {
             </td>
             <td>{team.registrationDate}</td>
             <td>{team.cost}</td>
+            <td>
+            <td>
+          <button className="btn btn-primary">
+            Editar
+          </button>
+  </td>
+            </td>
           </tr>
         ))}
       </tbody>

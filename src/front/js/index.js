@@ -9,4 +9,4 @@ import Layout from "./layout";
 import UserProfile from "./component/perfil";
 
 //render your react application
-ReactDOM.render(<Layout/>, document.querySelector("#app"));
+ReactDOM.render(<UserProfile/>, document.querySelector("#app"));
