@@ -1,6 +1,35 @@
 import React from 'react';
 
 function UserProfile() {
+  const profileData = {
+    name: 'Jacobo Smith',
+    email: 'JacoboSmith@TechSports.com',
+    phone: '(097) 234-5678',
+    mobile: '(098) 765-4321',
+    address: 'Bay Area, San Francisco, CA',
+  };
+
+  const teamsData = [
+    {
+      teamName: 'Equipo juvenil',
+      tournament: 'Colombia',
+      registrationDate: '13/11/2023',
+      cost: '$75',
+    },
+    {
+      teamName: 'Equipo varonil 3',
+      tournament: 'Las vegas',
+      registrationDate: '13/11/2024',
+      cost: '$50',
+    },
+    {
+      teamName: 'Equipo campeones',
+      tournament: 'Costa Rica',
+      registrationDate: '13/11/2025',
+      cost: '$80',
+    },
+  ];
+
   return (
     <section style={{ backgroundColor: '#eee' }}>
       <div className="container py-5">
@@ -16,9 +45,9 @@ function UserProfile() {
                   className="rounded-circle img-fluid"
                   style={{ width: '150px' }}
                 />
-                <h5 className="my-3">John Smith</h5>
+                <h5 className="my-3">{profileData.name}</h5>
                 <p className="text-muted mb-1">Participante</p>
-                <p className="text-muted mb-4">Bay Area, San Francisco, CA</p>
+                <p className="text-muted mb-4">{profileData.address}</p>
                 <div className="d-flex justify-content-center mb-2">
                   <button type="button" className="btn btn-primary">
                     Configurar perfil
@@ -59,13 +88,12 @@ function UserProfile() {
           <div className="col-lg-8">
             <div className="card mb-4">
               <div className="card-body">
-                {/* Contenido del perfil */}
                 <div className="row">
                   <div className="col-sm-3">
                     <p className="mb-0">Nombre completo</p>
                   </div>
                   <div className="col-sm-9">
-                    <p className="text-muted mb-0">Johnatan Smith</p>
+                    <p className="text-muted mb-0">{profileData.name}</p>
                   </div>
                 </div>
                 <hr />
@@ -74,7 +102,7 @@ function UserProfile() {
                     <p className="mb-0">Email</p>
                   </div>
                   <div className="col-sm-9">
-                    <p className="text-muted mb-0">JohnSmith@TechSports.com</p>
+                    <p className="text-muted mb-0">{profileData.email}</p>
                   </div>
                 </div>
                 <hr />
@@ -83,7 +111,7 @@ function UserProfile() {
                     <p className="mb-0">Télefono</p>
                   </div>
                   <div className="col-sm-9">
-                    <p className="text-muted mb-0">(097) 234-5678</p>
+                    <p className="text-muted mb-0">{profileData.phone}</p>
                   </div>
                 </div>
                 <hr />
@@ -92,7 +120,7 @@ function UserProfile() {
                     <p className="mb-0">Móvil</p>
                   </div>
                   <div className="col-sm-9">
-                    <p className="text-muted mb-0">(098) 765-4321</p>
+                    <p className="text-muted mb-0">{profileData.mobile}</p>
                   </div>
                 </div>
                 <hr />
@@ -101,7 +129,7 @@ function UserProfile() {
                     <p className="mb-0">Dirección</p>
                   </div>
                   <div className="col-sm-9">
-                    <p className="text-muted mb-0">Bay Area, San Francisco, CA</p>
+                    <p className="text-muted mb-0">{profileData.address}</p>
                   </div>
                 </div>
               </div>
@@ -116,82 +144,29 @@ function UserProfile() {
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>
-                    <div className="d-flex align-items-center">
-                      <img
-                        src="https://mdbootstrap.com/img/new/avatars/8.jpg"
-                        alt=""
-                        style={{ width: '45px', height: '45px' }}
-                        className="rounded-circle"
-                      />
-                      <div className="ms-3">
-                        <p className="fw-bold mb-1">Equipo juvenil</p>
-                        <p className="text-muted mb-0">Colombia</p>
+                {teamsData.map((team, index) => (
+                  <tr key={index}>
+                    <td>
+                      <div className="d-flex align-items-center">
+                        <img
+                          src="https://mdbootstrap.com/img/new/avatars/8.jpg"
+                          alt=""
+                          style={{ width: '45px', height: '45px' }}
+                          className="rounded-circle"
+                        />
+                        <div className="ms-3">
+                          <p className="fw-bold mb-1">{team.teamName}</p>
+                          <p className="text-muted mb-0">{team.tournament}</p>
+                        </div>
                       </div>
-                    </div>
-                  </td>
-                  <td>
-                    <p className="fw-normal mb-1">Colombia</p>
-                
-                  </td>
-                  <td>
-                    13/11/2023
-                  </td>
-                 
-                  <td>$75</td>
-                 
-                </tr>
-                <tr>
-                  <td>
-                    <div className="d-flex align-items-center">
-                      <img
-                        src="https://mdbootstrap.com/img/new/avatars/6.jpg"
-                        className="rounded-circle"
-                        alt=""
-                        style={{ width: '45px', height: '45px' }}
-                      />
-                      <div className="ms-3">
-                        <p className="fw-bold mb-1">Equipo varonil 3</p>
-                        <p className="text-muted mb-0">Nevada</p>
-                      </div>
-                    </div>
-                  </td>
-                  <td>
-                    <p className="fw-normal mb-1">Las vegas</p>
-                  </td>
-                  <td>
-                   <p>13/11/2024</p>
-                  </td>
-                  <td>$50</td>
-                  
-                </tr>
-                <tr>
-                  <td>
-                    <div className="d-flex align-items-center">
-                      <img
-                        src="https://mdbootstrap.com/img/new/avatars/7.jpg"
-                        className="rounded-circle"
-                        alt=""
-                        style={{ width: '45px', height: '45px' }}
-                      />
-                      <div className="ms-3">
-                        <p className="fw-bold mb-1">Equipo campeones</p>
-                        <p className="text-muted mb-0">San José</p>
-                      </div>
-                    </div>
-                  </td>
-                  <td>
-                    <p className="fw-normal mb-1">Costa Rica</p>
-                   
-                  </td>
-                  <td>
-                    <p> 13/11/2025</p>
-               
-                  </td>
-                  <td>80$</td>
-                  
-                </tr>
+                    </td>
+                    <td>
+                      <p className="fw-normal mb-1">{team.tournament}</p>
+                    </td>
+                    <td>{team.registrationDate}</td>
+                    <td>{team.cost}</td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>

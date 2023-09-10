@@ -16,6 +16,7 @@ import Planes from "./pages/planes";
 import ContactPage from "./pages/contacto";
 import AccountPage from "./pages/cuenta";
 import Organizadores from "./pages/organizadores";
+import UserProfile from "./component/perfil";
 
 //create your first component
 const Layout = () => {
@@ -31,6 +32,7 @@ const Layout = () => {
                 <ScrollToTop>
                     <Navbar />
                     <Routes>
+                        <Route element={<UserProfile />} path="/profile/:theid" />
                         <Route element={<Home />} path="/" />
                         <Route element={<Servicios />} path="/servicios" />
                         <Route element={<Single />} path="/single/:theid" />
