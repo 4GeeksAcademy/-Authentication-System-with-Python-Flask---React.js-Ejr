@@ -47,12 +47,36 @@ const getState = ({ getStore, getActions, setStore }) => {
 				//reset the global store
 				setStore({ demo: demo });
 			},
-			signup: (firstName, lastName, email, password, phone, confpassword)=>{
+			signup: async (firstName, lastName, email, password, phone, confpassword)=>{
 				console.log(firstName, lastName,email,phone,password,confpassword);
+				try {
+					let data = await axios.post("https://bug-free-winner-5gqqjj4445w7fv69p-3001.app.github.dev/signup", {
+
+						"firstName": firstName,
+						"lastName": lastName,
+						"email": email,
+						"phone": phone,
+						"password": password,
+						"confpassword": confpassword
+
+					})
+					console.log(data);
+					return true;
+
+				} catch (error) {
+					
+					if (error.response.status === 404) {
+						alert (error.response.data.msg)
+						
+					}
+					return false;
+				}
+
+			},
 
 			}
 		}
 	};
-};
+
 
 export default getState;
