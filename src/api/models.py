@@ -9,10 +9,9 @@ class User(db.Model):
     lastname = db.Column(db.String(25), nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(80), unique=False, nullable=False)
-    phone_number = db.Column(db.String(30), nullable=True)
-    credit_card = db.Column(db.String(30), nullable=True)
+    phone_number = db.Column(db.String(30), nullable=False)
     account_creation_date = db.Column(db.String(40), nullable=False)
-    user_type = db.Column(db.String(10), nullable=False)
+    is_admin = db.Column(db.Boolean(), nullable=False)
 
     favoritos = db.relationship("Favorites")
     # house = db.relationship(Favorites, backref='favorites')
@@ -28,8 +27,7 @@ class User(db.Model):
             "email": self.email,
             "password": self.password,
             "phoneNumber": self.phone_number,
-            "creditCard": self.credit_card,
-            "userType": self.user_type,
+            "is_admin": self.is_admin,
             "accountCreationDate": self.account_creation_date,
             # do not serialize the password, its a security breach
         }
