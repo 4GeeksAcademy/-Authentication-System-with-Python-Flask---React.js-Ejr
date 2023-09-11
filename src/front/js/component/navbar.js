@@ -43,6 +43,11 @@ export const Navbar = () => {
                 Logout
               </Link>
             </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/signup/keeper">
+                Quieres ser cuidador?
+              </Link>
+            </li>
           </ul>
         </div>
       </div>

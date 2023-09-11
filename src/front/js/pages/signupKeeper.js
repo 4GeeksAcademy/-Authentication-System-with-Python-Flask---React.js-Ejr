@@ -4,7 +4,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { Context } from "../store/appContext";
 import "../../styles/login.css";
 
-export const Signup = (props) => {
+export const SignupKeeper = (props) => {
   const { store, actions } = useContext(Context);
   const params = useParams();
   const navigate = useNavigate();
@@ -12,8 +12,8 @@ export const Signup = (props) => {
   async function signup(e) {
     e.preventDefault();
     const data = new FormData(e.target);
-    const name = data.get("first_name");
-    const lastName = data.get("last_name");
+    const name = data.get("name");
+    const lastName = data.get("lastname");
     const email = data.get("email");
     const password = data.get("password");
     const { signup } = actions;
@@ -25,7 +25,7 @@ export const Signup = (props) => {
     <div id="signup-page" className="text-center">
       <div className="container wrap-loginSignup">
         <i id="cat-suit" className="fa-solid fa-cat"></i>
-        <h1>Welcome Owners</h1>
+        <h1>Bienvenido Cuidador</h1>
         <form className="pe-3" onSubmit={signup}>
           <div className="mb-3">
             <label htmlFor="inputName" className="form-label">
@@ -81,6 +81,6 @@ export const Signup = (props) => {
     </div>
   );
 };
-Signup.propTypes = {
+SignupKeeper.propTypes = {
   match: PropTypes.object,
 };
