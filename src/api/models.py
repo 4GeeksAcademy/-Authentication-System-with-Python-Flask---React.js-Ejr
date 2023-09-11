@@ -4,8 +4,6 @@ from sqlalchemy.orm import mapped_column
 from sqlalchemy.orm import relationship
 from datetime import datetime
 from enum import Enum
-from sqlalchemy import ForeignKey, Enum
-
 
 db = SQLAlchemy()
 
