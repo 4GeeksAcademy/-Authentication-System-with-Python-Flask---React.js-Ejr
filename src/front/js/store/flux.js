@@ -1,3 +1,6 @@
+let BACKEND_URL= "https://fantastic-goggles-7vrx5j6wvwrcr67v-3001.app.github.dev/"
+
+
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
@@ -52,9 +55,25 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			},
 
-			login:(email, contrasena)=>{
-				console.log({"email": email, "contraseña": contrasena});
-			}
+			login: async (email,password) => {
+				try {
+					let data = await axios.post(BACKEND_URL + '/login',
+					{
+						"email" : email,
+						"password" : password
+					})
+					console.log(data);
+					localStorage.setItem("token", data.data.access_token)
+					// setStore({ auth : true})
+					return true
+				} catch (error) {
+					console.log(error);
+					if (error.response.status === 404) {
+						alert(error.response.data.msg)
+					}
+					return false
+				}
+			},
 				
 		}
 	};
