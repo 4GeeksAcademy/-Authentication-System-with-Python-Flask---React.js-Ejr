@@ -22,7 +22,7 @@ def handle_hello():
     return jsonify(response_body), 200
 
 
-#-----<registrar usuario----->#
+#------< registrar usuario >-------------#
 
 @api.route('/register', methods=['POST'])
 
@@ -32,7 +32,8 @@ def user_register():
     email= request.json.get("email")
     password= request.json.get("password")
     region= request.json.get("region")
-# validacion de usuario
+    
+#-------< validacion de usuario >-------#
     if not name:
         return jsonify({"error": "name is requare"}), 422
     
@@ -49,13 +50,12 @@ def user_register():
         return jsonify({"error": "region is requare"}), 422
     
     
-    # creacion de usuario
+    #-----< creacion de usuario ------------------------------------------->
+    
     user_Faund = User.query.filter_by(email=email).first()
     
     if user_Faund:
         return jsonify({"message": "username is not available"}), 400
-    
-    
     
     user = User()
     user.name = name
@@ -67,39 +67,40 @@ def user_register():
     
     return jsonify({"succes": "Registro exitoso, por favor inicie sesión"}), 200
 
+
+
 @api.route('/login', methods=['POST'])
 def login():
     
     email= request.json.get("email")
     password= request.json.get("password")
+  
+#------< validacion de usuario, de datos ingresados >------#
 
-    # validacion de usuario, de datos ingresados
     if not email:
         return jsonify({"error": "email is requare"}), 422
     
     if not password:
         return jsonify({"error": "password is requare"}), 422
 
-# BUSCAMOS AL USUARIO
+#------< BUSCAMOS AL USUARIO
     user = User.query.filter_by(email=email).first()
+   
     
-# SI NO EXISTE EL USUARIO
+#------< SI NO EXISTE EL USUARIO
     if not user: 
         return jsonify({"error": "tu usuario o contraseña son incorrectos"}), 401
     
-# LAVIDAMOS LA CONTRASEÑA
+#------< LAVIDAMOS LA CONTRASEÑA
     if not check_password_hash(user.password, password):
         return jsonify({"error": "tu usuario o contraseña son incorrectos"}), 401 
         
 
-# generacion/creacion de token
-# antes de generar el token, genero una variable
-# expires = datetime.timedelta(days=6)
-# access_token = create_access_token(identity=user.id, expires_delta=expires)
-    access_token = create_access_token(identity=user.id)
     
+    access_token = create_access_token(identity=user.id)
+    print(access_token)
     data = {
-        "success": "inicio de sesion exitoso",
+        # "success": "inicio de sesion exitoso",
         "access_token": access_token,
         "type": "Bearer",
         "user": user.serialize()
@@ -110,7 +111,8 @@ def login():
 
 
 # generando ruta privada
-@api.route('/api/profile', methods=['GET'])
+
+@api.route('/profile', methods=['POST'])
 @jwt_required()
 def profile():
     
