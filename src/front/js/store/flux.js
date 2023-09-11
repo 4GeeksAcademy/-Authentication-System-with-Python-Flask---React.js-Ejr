@@ -46,7 +46,16 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				//reset the global store
 				setStore({ demo: demo });
+			},
+			signup: (firstName, lastName, email, password, phone, confpassword)=>{
+				console.log(firstName, lastName,email,phone,password,confpassword);
+
+			},
+
+			login:(email, contrasena)=>{
+				console.log({"email": email, "contraseña": contrasena});
 			}
+				
 		}
 	};
 };
