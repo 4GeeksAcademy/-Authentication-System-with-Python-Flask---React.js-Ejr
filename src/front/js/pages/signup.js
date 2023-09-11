@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Context } from "../store/appContext";
 import "../../styles/login.css";
 
@@ -12,12 +12,12 @@ export const Signup = (props) => {
   async function signup(e) {
     e.preventDefault();
     const data = new FormData(e.target);
-    const name = data.get("first_name");
-    const lastName = data.get("last_name");
+    const first_name = data.get("first_name");
+    const last_name = data.get("last_name");
     const email = data.get("email");
     const password = data.get("password");
     const { signup } = actions;
-    let resp = await signup(email, password, name, lastName);
+    let resp = await signup(first_name, last_name, email, password);
     console.log(resp);
     navigate("/login");
   }
@@ -34,7 +34,7 @@ export const Signup = (props) => {
             <input
               type="text"
               className="form-control"
-              name="name"
+              name="first_name"
               id="inputName"
             />
           </div>
@@ -45,7 +45,7 @@ export const Signup = (props) => {
             <input
               type="text"
               className="form-control"
-              name="lastname"
+              name="last_name"
               id="inputLastName"
             />
           </div>

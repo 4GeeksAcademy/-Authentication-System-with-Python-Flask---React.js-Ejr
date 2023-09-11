@@ -9,15 +9,22 @@ export const SignupKeeper = (props) => {
   const params = useParams();
   const navigate = useNavigate();
 
-  async function signup(e) {
+  async function signupKeeper(e) {
     e.preventDefault();
     const data = new FormData(e.target);
-    const name = data.get("name");
-    const lastName = data.get("lastname");
+    const first_name = data.get("first_name");
+    const last_name = data.get("last_name");
     const email = data.get("email");
     const password = data.get("password");
-    const { signup } = actions;
-    let resp = await signup(email, password, name, lastName);
+    const hourly_pay = data.get("hourly_pay");
+    const { signupKeeper } = actions;
+    let resp = await signupKeeper(
+      first_name,
+      last_name,
+      email,
+      password,
+      hourly_pay
+    );
     console.log(resp);
     navigate("/login");
   }
@@ -26,7 +33,7 @@ export const SignupKeeper = (props) => {
       <div className="container wrap-loginSignup">
         <i id="cat-suit" className="fa-solid fa-cat"></i>
         <h1>Bienvenido Cuidador</h1>
-        <form className="pe-3" onSubmit={signup}>
+        <form className="pe-3" onSubmit={signupKeeper}>
           <div className="mb-3">
             <label htmlFor="inputName" className="form-label">
               Name
@@ -34,7 +41,7 @@ export const SignupKeeper = (props) => {
             <input
               type="text"
               className="form-control"
-              name="name"
+              name="first_name"
               id="inputName"
             />
           </div>
@@ -45,7 +52,7 @@ export const SignupKeeper = (props) => {
             <input
               type="text"
               className="form-control"
-              name="lastname"
+              name="last_name"
               id="inputLastName"
             />
           </div>
@@ -71,6 +78,17 @@ export const SignupKeeper = (props) => {
               className="form-control"
               name="password"
               id="inputPassword1"
+            />
+          </div>
+          <div className="mb-3">
+            <label htmlFor="inputPayment" className="form-label">
+              Hourly Pay
+            </label>
+            <input
+              type="text"
+              className="form-control"
+              name="hourly_pay"
+              id="inputPayment"
             />
           </div>
           <button id="btn-signup" type="submit" className="btn">

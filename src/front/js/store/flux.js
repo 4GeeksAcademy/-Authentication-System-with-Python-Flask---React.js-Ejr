@@ -11,6 +11,8 @@ const getState = ({ getStore, getActions, setStore }) => {
       ],
       pets: [],
       singlePet: [],
+      signup: [],
+      signupKeeper: [],
     },
     actions: {
       //Get all pets from the database, including the owners inside the pet object.
@@ -161,13 +163,64 @@ const getState = ({ getStore, getActions, setStore }) => {
         getActions().changeColor(0, "green");
       },
 
+      apiFetch: async (endpoint, method = "GET", body = null) => {
+        var request;
+        if (method == "GET") {
+          request = await fetch(process.env.BACKEND_URL + "/api" + endpoint);
+        } else {
+          const params = {
+            method,
+            headers: {
+              "Content-Type": "application/json",
+            },
+          };
+          if (body) params.body = JSON.stringify(body);
+          request = fetch(process.env.BACKEND_URL + "/api" + endpoint, params);
+        }
+        const resp = await request;
+        const data = await resp.json();
+        return { code: resp.status, data };
+      },
+
+      signup: async (first_name, last_name, email, password) => {
+        const { apiFetch } = getActions();
+        const resp = await apiFetch("/signup", "POST", {
+          last_name,
+          first_name,
+          email,
+          password,
+        });
+        if (resp.code != 201) {
+          console.error("Signup error");
+          return resp;
+        }
+      },
+
+      signupKeeper: async (
+        first_name,
+        last_name,
+        email,
+        password,
+        hourly_pay
+      ) => {
+        const { apiFetch } = getActions();
+        const resp = await apiFetch("/signup/keeper", "POST", {
+          last_name,
+          first_name,
+          email,
+          password,
+          hourly_pay,
+        });
+        if (resp.code != 201) {
+          console.error("Signup error");
+          return resp;
+        }
+      },
+
       getMessage: async () => {
         try {
-          // fetching data from the backend
           const resp = await fetch(process.env.BACKEND_URL + "/api/hello");
           const data = await resp.json();
-          setStore({ message: data.message });
-          // don't forget to return something, that is how the async resolves
           return data;
         } catch (error) {
           console.log("Error loading message from backend", error);
