@@ -1,7 +1,10 @@
-/*
-    home.css: This website contains selectors only used in home.css
 
-    All pages share the styles on index.css but you should create 
-    one more css for each page that will contain the selected used 
-    on that page only (the ones not reused in other pages).
-*/
+.signup-form {
+    border: 2px solid hsl(40, 86%, 46%); /* Cambia el color y el grosor del borde según tus preferencias */
+    padding: 20px; /* Opcional: Agrega espacio interno alrededor del formulario */
+    border-radius: 15px; /* Opcional: Agrega esquinas redondeadas al borde del formulario */
+}
+
+.signup-form-bg {
+    background-color: #dba915; /* Cambia el color de fondo según tus preferencias */
+}
