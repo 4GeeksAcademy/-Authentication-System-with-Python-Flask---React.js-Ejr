@@ -79,7 +79,10 @@ const Registrarse = () => {
                                     <p>$75</p>
                                 </div>
                                 <div className="col-3">
-                                    <input className="formControl" type="number" />
+                                <button className="button" id="minusButton">-</button>
+                                 <span id="count"><button id="plusButton">0</button></span>  
+                                 <button className="button" id="plusButton">+</button>
+
                                 </div>
                                 <div className="col-3">
                                     <p>$0.00</p>
@@ -111,6 +114,8 @@ const Registrarse = () => {
 
 
             </div>
+            
+    
         </div >
 
     );
