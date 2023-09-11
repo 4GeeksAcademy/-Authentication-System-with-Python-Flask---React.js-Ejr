@@ -27,9 +27,9 @@ const PreguntasFrecuentes = () => {
           <div className="faq-content-container">
             <div className='title-container d-inline-flex'>
               <div className="plus">+</div>
-              <label className="panel-title">What is the meaning of life?</label>
+              <label className="panel-title">¿Cómo veo los requerimientos para aplicar a la beca de mi interés?</label>
             </div>
-            {q1Checked && <div className="panel-content">se publican en lugares difíciles de encontrar o que toma mucho tiempo investigar al respecto para llegar a la oportunidad ideal para nosotros. Queremos que más personas tengan acceso a esta información y puedan realmente tener a su alcance oportunidades que puede cambiar la vida.</div>}
+            {q1Checked && <div className="panel-content">Puedes acceder a la información dándole click al botón de "Aplicar" ya que te va a redirigir a la página con la información completa sobre esa específica beca. Si cumples todos los requisitos establecidos por la institución, no dudes en aplicar.</div>}
           </div>
         </div>
         {/* question and answer box finish */}
@@ -41,9 +41,9 @@ const PreguntasFrecuentes = () => {
           <div className="faq-content-container">
             <div className='title-container d-inline-flex'>
               <div className="plus">+</div>
-              <label className="panel-title">What is the meaning of life?</label>
+              <label className="panel-title">¿Puedo aplicar a todas las becas que desee?</label>
             </div>
-            {q2Checked && <div className="panel-content">se publican en lugares difíciles de encontrar o que toma mucho tiempo investigar al respecto para llegar a la oportunidad ideal para nosotros. Queremos que más personas tengan acceso a esta información y puedan realmente tener a su alcance oportunidades que puede cambiar la vida.</div>}
+            {q2Checked && <div className="panel-content">Puedes aplicar a todas las becas que desees mientras cumplas con los requerimientos mínimos que cada institución establece. No hay un límite establecido por Bexplora, puedes llevar registro de las becas a las que aplicaste en la sección de Mis Aplicaciones.</div>}
           </div>
         </div>
         {/* question and answer box finish */}
@@ -55,9 +55,9 @@ const PreguntasFrecuentes = () => {
           <div className="faq-content-container">
             <div className='title-container d-inline-flex'>
               <div className="plus">+</div>
-              <label className="panel-title">What is the meaning of life?</label>
+              <label className="panel-title">¿A quién van dirigidas estas becas? </label>
             </div>
-            {q3Checked && <div className="panel-content">se publican en lugares difíciles de encontrar o que toma mucho tiempo investigar al respecto para llegar a la oportunidad ideal para nosotros. Queremos que más personas tengan acceso a esta información y puedan realmente tener a su alcance oportunidades que puede cambiar la vida.</div>}
+            {q3Checked && <div className="panel-content">Estas becas van dirigidas a residentes de Costa Rica ya que las becas publicadas en Bexplora por las diferentes instituciones van para personas que conforman este grupo y es un requerimiento residir en dicho país. En Bexplora esperamos pronto extender esta plataforma a diferentes regiones.</div>}
           </div>
         </div>
         {/* question and answer box finish */}
@@ -69,9 +69,9 @@ const PreguntasFrecuentes = () => {
           <div className="faq-content-container">
             <div className='title-container d-inline-flex'>
               <div className="plus">+</div>
-              <label className="panel-title">What is the meaning of life?</label>
+              <label className="panel-title">¿Me debo registrar como usuario o institución?</label>
             </div>
-            {q4Checked && <div className="panel-content">se publican en lugares difíciles de encontrar o que toma mucho tiempo investigar al respecto para llegar a la oportunidad ideal para nosotros. Queremos que más personas tengan acceso a esta información y puedan realmente tener a su alcance oportunidades que puede cambiar la vida.</div>}
+            {q4Checked && <div className="panel-content">Si sos una persona interesada en aplicar a una de las becas que se ofrecen en Bexplora debes registrarte como Usuario. Cuando ya te hayas registrado como Usuario, tendras accesso a ver tu perfil y utilizar la sección de Mis Aplicaciones donde podrás ver el registro de las becas a donde has aplicado.</div>}
           </div>
         </div>
         {/* question and answer box finish */}
@@ -83,9 +83,9 @@ const PreguntasFrecuentes = () => {
           <div className="faq-content-container">
             <div className='title-container d-inline-flex'>
               <div className="plus">+</div>
-              <label className="panel-title">What is the meaning of life?</label>
+              <label className="panel-title">¿Bexplora es la institución/universidad que está dando la beca?</label>
             </div>
-            {q5Checked && <div className="panel-content">se publican en lugares difíciles de encontrar o que toma mucho tiempo investigar al respecto para llegar a la oportunidad ideal para nosotros. Queremos que más personas tengan acceso a esta información y puedan realmente tener a su alcance oportunidades que puede cambiar la vida.</div>}
+            {q5Checked && <div className="panel-content">No. Bexplora es la plataforma donde las diferentes instituciones publican las becas que tienen disponibles y estas instituciones son las que ofrecen el beneficio. Bexplora solamente se encarga de facilitar esta información para que tu puedas tener fácil acceso a las varias oportunidades que se ofrecen en diferentes instituciones sin tener que hacer una búsqueda exhaustiva.</div>}
           </div>
         </div>
         {/* question and answer box finish */}
