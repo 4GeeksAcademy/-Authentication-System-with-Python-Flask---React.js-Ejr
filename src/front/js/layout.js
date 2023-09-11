@@ -12,6 +12,11 @@ import { LibroVenta } from "./pages/libroVenta";
 import { MasVendidos } from "./pages/masVendidos";
 import { LibrosIntercambio } from "./pages/librosIntercambio";
 import { DonacionesRealizadas } from "./pages/donacionesRalizadas";
+import Card from "./component/reviewsLibros/Card";
+import Testimonio from "./component/reviewsLibros/Testimonio";
+import BookReviews from "./pages/BookReviews";
+
+import Intercambio from "./pages/Intercambio";
 
 /* FOOTERS */
 import { GuiaCompra } from "./pages/guiaCompra";
@@ -61,6 +66,8 @@ const Layout = () => {
                         <Route element={<NuestraHistoria />} path="/nuestraHistoria" />
                         <Route element={<DonacionesRealizadas />} path="/donacionesRalizadas" />
                         <Route element={<ComoDonar />} path="/comoDonar" />
+                        <Route element={<BookReviews />} path="/bookreviews" />
+                        <Route element={<Intercambio />} path="/intercambio" />
 
                         {/* <Route element={<FormularioRegistro />} path="/formularioRegistro" /> */}
 
@@ -71,8 +78,7 @@ const Layout = () => {
                             leave={() => setUseAlternateNavbar(false)}
                         />
 
-                        {/* <Route element={<Single />} path="/single/:theid" /> */}
-                        <Route element={<h1>Not found!</h1>} />
+                        {/* <Route element={<Single />} path="/single/:theid" /> */}                        <Route element={<h1>Not found!</h1>} />
                     </Routes>
                     <Footer />
                 </ScrollToTop>
