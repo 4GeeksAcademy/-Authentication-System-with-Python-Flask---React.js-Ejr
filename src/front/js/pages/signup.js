@@ -17,11 +17,17 @@ function Singup() {
   async function handleSubmit(e) {
     e.preventDefault()
     
-    let logged = await actions.signup(firstName, lastName, email, password, phone, confpassword)
-    // if (logged === true) {
-    //   navigate("/login")
-
-    // }
+    if (password !== confpassword) {
+      alert('La contraseña no coincide con la confirmacion')
+  }
+  else{
+    let logged= await actions.signup(firstName, lastName, email, password, phone, confpassword)
+      setFirstName("")
+      setLastName("")
+      setEmail("")
+      setPassword("")
+      setConfpassword("")
+  }
    }
     
 
