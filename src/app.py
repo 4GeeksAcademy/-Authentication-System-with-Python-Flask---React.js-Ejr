@@ -34,6 +34,9 @@ db.init_app(app)
 # Allow CORS requests to this API
 CORS(app)
 
+app.config["JWT_SECRET_KEY"] = "super-secret"  # Change this!
+jwt = JWTManager(app)
+
 # add the admin
 setup_admin(app)
 
