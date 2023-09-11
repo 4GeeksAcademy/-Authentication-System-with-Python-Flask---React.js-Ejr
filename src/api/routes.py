@@ -24,7 +24,7 @@ def handle_hello():
 
 #-----<registrar usuario----->#
 
-@api.route('/register', methods=['POST', 'GET'])
+@api.route('/register', methods=['POST'])
 
 def user_register():
     name= request.json.get("name")
@@ -50,14 +50,19 @@ def user_register():
     
     
     # creacion de usuario
-    userFaund = User.query.filter_by(email=email).first()
+    user_Faund = User.query.filter_by(email=email).first()
     
-    if not email:
-        return jsonify({"error": "username esta siendo usado"}), 400
+    if user_Faund:
+        return jsonify({"message": "username is not available"}), 400
     
-    user = User() 
-    user.email = email 
-    user.password = generate_password_hash(password) 
+    
+    
+    user = User()
+    user.name = name
+    user.lastname = lastname
+    user.email = email
+    user.password = generate_password_hash(password)
+    user.region = region
     user.save()
     
     return jsonify({"succes": "Registro exitoso, por favor inicie sesión"}), 200
