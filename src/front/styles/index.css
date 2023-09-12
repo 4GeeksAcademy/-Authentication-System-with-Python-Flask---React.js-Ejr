@@ -1,3 +1,25 @@
 /* 
     General Styles used on every website (Don't Repeat Yourself)
 */
+
+/* HOME CODE */
+
+
+/* BUTTONS CODE */
+.signup{
+    background-color: #f1844a;
+    margin: 0;
+}
+
+.login{
+    background-color: #b3d6a3;
+}
+
+/* JUMBOTRON CODE */
+.jumbotron {
+    background-image: url(https://images.pexels.com/photos/762686/pexels-photo-762686.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1);
+    background-size: cover;
+    padding-top: 100px;
+    text-shadow: 2px 2px 5px #ffffff
+}
+
