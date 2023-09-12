@@ -41,6 +41,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			hiddenLogin: false,
 			hiddenLogout: true,
 			hiddenSignup: false,
+
 		},
 		actions: {
 			isPropertyEmpty: (obj) => {
@@ -317,6 +318,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({ signup: false })
 				setStore({ insSignup: false })
 			},
+
+			
 		}
 	};
 };
