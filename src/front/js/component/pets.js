@@ -16,11 +16,12 @@ export const Pets = (props) => {
 
     function createPet(){
         let newPet = {
-            "name": document.getElementById('nameInput').value, 
-            "size":document.getElementById('sizeInput').value, 
-            "category": document.getElementById('categoryInput').value,
+            "name": document.getElementById('newPetNameInput').value, 
+            "size":document.getElementById('newPetSizeInput').value, 
+            "category": document.getElementById('newPetCategoryInput').value,
             "owner_id": "1"
         }
+        console.log({newPet})
         actions.createPet(newPet)
     }
 
@@ -143,12 +144,12 @@ export const Pets = (props) => {
                                         {/* FORM BODY */}
                                         <form>
                                             <div class="mb-3">
-                                                <label for="nameInput" class="form-label">Name</label>
-                                                <input type="text" class="form-control" id="nameInput" aria-describedby="nameHelp"/>
+                                                <label for="newPetNameInput" class="form-label">Name</label>
+                                                <input type="text" class="form-control" id="newPetNameInput" aria-describedby="nameHelp"/>
                                             </div>
                                             <div class="mb-3">
-                                                <label for="sizeInput" class="form-label">Size</label>
-                                                <select class="form-select" aria-label="Size by kilograms" id="sizeInput">
+                                                <label for="newPetSizeInput" class="form-label">Size</label>
+                                                <select class="form-select" aria-label="Size by kilograms" id="newPetSizeInput">
                                                     {/* <option selected>{currentPet.size}</option> */}
                                                     <option value="Small">Small (1-8kg)</option>
                                                     <option value="Medium">Medium (8-20kg)</option>
@@ -156,8 +157,8 @@ export const Pets = (props) => {
                                                 </select>
                                             </div>
                                             <div class="mb-3">
-                                                <label for="categoryInput" class="form-label">Category</label>
-                                                <input type="text" class="form-control" id="categoryInput"/>
+                                                <label for="newPetCategoryInput" class="form-label">Category</label>
+                                                <input type="text" class="form-control" id="newPetCategoryInput"/>
                                             </div>
                                         </form>
                                         {/* END OF FORM BODY */}
