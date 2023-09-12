@@ -1,10 +1,16 @@
-import React, { useState } from 'react';
-import '../../styles/LoginForm.css'
+import React, { useContext, useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Context } from "../store/appContext";
+import '../../styles/LoginForm.css';
+import axios from 'axios'; // Importa Axios
 
 function LoginForm() {
+
+const {store, actions} = useContext(Context);
+
   const [activeTab, setActiveTab] = useState('login');
   const [loginFormData, setLoginFormData] = useState({
-    loginName: '',
+    loginEmail: '',
     loginPassword: '',
   });
   const [registerFormData, setRegisterFormData] = useState({
@@ -36,30 +42,28 @@ function LoginForm() {
     });
   };
 
-  const handleLoginSubmit = async (e) => {
-    e.preventDefault();
-
-    try {
-      const response = await fetch('URL_DEL_BACKEND_LOGIN', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(loginFormData),
-      });
-
-      if (response.status === 200) {
-        // El inicio de sesión fue exitoso, puedes mostrar un mensaje de éxito al usuario
-        console.log('Inicio de sesión exitoso');
+  async function handleLoginSubmit(e){
+    e.preventDefault()
+    const data = new FormData(e.target)
+    const email = data.get("loginEmail")
+    const password = data.get("loginPassword")
+    if (email=="" || password==""){
+      //MODAL
+      alert("No debe de haber datos vacíos")
+    } else {
+      const {login} = actions
+      let resp = await login(email, password)
+      console.log({resp})
+      //si no existe el usuario enviamos un error
+      if (resp.code!=200){
+        //MODAL
+        alert("Credenciales inválidas, verifique nombre de usuario y contraseña")
       } else {
-        // Puedes manejar errores aquí
-        console.error('Credenciales incorrectas');
+        //entramos a la página de datos del usuario
+        alert("login successfull")
       }
-    } catch (error) {
-      // Puedes manejar errores aquí
-      console.error('Error al iniciar sesión', error);
     }
-  };
+  }
 
   const handleRegisterSubmit = async (e) => {
     e.preventDefault();
@@ -112,59 +116,49 @@ function LoginForm() {
                 Register
               </button>
             </div>
-            <form>
-              {activeTab === 'login' && (
-                <div>
-                  <div className="form-outline mb-4">
-                    <label className="form-label" htmlFor="loginName">
-                      Email o nombre de usuario
-                    </label>
-                    <input
-                      type="email"
-                      id="loginName"
-                      name="loginName"
-                      className="form-control form-control-lg LoginForm "
-                      onChange={handleLoginChange}
-                    />
-                  </div>
 
-                  <div className="form-outline mb-4">
-                    <label className="form-label" htmlFor="loginPassword">
-                      Contraseña
-                    </label>
-                    <input
-                      type="password"
-                      id="loginPassword"
-                      name="loginPassword"
-                      className="form-control form-control-lg LoginForm"
-                      onChange={handleLoginChange}
-                    />
-                  </div>
+            <p className="text-center">O</p>
+            <label className="form-label" htmlFor="loginEmail">
+              Email o nombre de usuario
+            </label>
 
-                  <div className="d-flex justify-content-around align-items-center mb-4" id='forgotcontainer'>
-                    <div className="form-check">
-                      <input
-                        className="form-check-input"
-                        type="checkbox"
-                        value=""
-                        id="loginCheck"
-                        name="loginCheck"
-                        defaultChecked
-                      />
-                      <label className="form-check-label" htmlFor="loginCheck">
-                        Recuérdame
-                      </label>
-                    </div>
-                    <a href="#!">Forgot password?</a>
-                  </div>
+            <div className="form-outline mb-4">
+              <input
+                type="email"
+                id="loginEmail"
+                name="loginEmail"
+                className="form-control white-background-input"
+                onChange={handleLoginChange}
+              />
+            </div>
 
-                  <button
-                    type="submit"
-                    className="btn btn-primary btn-lg btn-block"
-                    onClick={handleLoginSubmit}
-                  >
-                    Sign in
-                  </button>
+            <div className="form-outline mb-4">
+              <label className="form-label" htmlFor="loginPassword">
+                Contraseña
+              </label>
+              <input
+                type="password"
+                id="loginPassword"
+                name="loginPassword"
+                className="form-control white-background-input"
+                onChange={handleLoginChange}
+              />
+            </div>
+
+            <div className="row mb-4">
+              <div className="col-md-6 d-flex justify-content-center">
+                <div className="form-check mb-3 mb-md-0">
+                  <label className="form-check-label" htmlFor="loginCheck">
+                    Recuérdame
+                  </label>
+                  <input
+                    className="form-check-input"
+                    type="checkbox"
+                    value=""
+                    id="loginCheck"
+                    name="loginCheck"
+                    defaultChecked
+                  />
                 </div>
               )}
 
