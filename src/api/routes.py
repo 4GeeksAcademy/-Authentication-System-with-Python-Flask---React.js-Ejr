@@ -139,6 +139,39 @@ def crear_casa_favorita():
     return request_body, 200
 
 
+#   Eliminar casa de favorito
+
+@api.route('/favoritos/house/<int:casa_id>', methods=['DELETE'])
+def eliminar_casa_favorita(casa_id):
+
+    request_body = request.get_json(force=True) #obtiene el cuerpo que se envíe por el body desde el postman
+
+# validar que exista el usuario
+    user_query = User.query.filter_by(id=request_body["user_id"]).first()
+    if user_query is None:
+        return jsonify({"msg": "el usuario no está registrado"}), 404
+
+ #validamos que exista la casa
+    casa_query = House.query.filter_by(id = casa_id).first() #id es la propiedad de la tabla House y house_id es el valor que se pasa por URL
+    if casa_query is None:
+        return jsonify({"msg": "La casa no existe"}), 404
+
+#validamos que la casa ya existía como favorita
+    fav_query = Favorites.query.filter_by(user_id = request_body["user_id"]).filter_by(house_id =casa_id).first() #devuelve los valores que coinciden (del user_id la tabla Favoritos) con el body del postman
+    if fav_query is None:
+        return jsonify({"msg": "El favorito no existe"}), 404
+
+
+    db.session.delete(fav_query)
+    db.session.commit()
+
+    request_body = {
+        "msg": "Casa eliminada de favoritos"
+    }
+    
+    return jsonify(request_body), 200
+
+
 
 @api.route("/post", methods=['POST'])
 def save_post():
