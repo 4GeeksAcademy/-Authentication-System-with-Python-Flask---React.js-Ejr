@@ -1,3 +1,5 @@
+import showAlert from "../utilidades/alerts";
+
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
@@ -72,14 +74,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 					const result = await response.json()
 					if (response.status == 400) {
 						setStore({ signup: false })
-						alert(result.message)
-
 					}
 
 
 					if (response.ok) {
 						setStore({ signup: true })
-						showAlert('success', "User add success")
+						showAlert("success", "Usuario registrado")
 					}
 
 
@@ -218,35 +218,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 				} catch (error) {
 					console.log(error + " Error loading message from backend")
 					setStore({ insLoged: false })
-				}
-			},
-			signUpUser: async () => {
-				const store = getStore()
-				const actions = getActions()
-				try {
-					if (actions.isPropertyEmpty(store.user_data)) {
-						alert("Le falta llenar algunos datos");
-						return;
-					}
-					const response = await fetch(process.env.BACKEND_URL + "/signup", {
-						method: 'POST',
-						body: JSON.stringify(store.user_data),
-						headers: {
-							'Content-Type': 'application/json'
-						}
-					})
-					const result = await response.json()
-					if (response.status == 400) {
-						setStore({ signup: false })
-						alert(result.message)
-					}
-					if (response.ok) {
-						setStore({ signup: true })
-						alert("User add success")
-					}
-				} catch (error) {
-					console.error(error + " Error loading message from backend");
-					setStore({ signup: false })
 				}
 			},
 

@@ -10,3 +10,5 @@ const showAlert = (iconType, message) => {
         timer: 1500
     });
 }
+
+export default showAlert
