@@ -3,6 +3,7 @@ import { Context } from "../store/appContext";
 import rigoImageUrl from "../../img/rigo-baby.jpg";
 import "../../styles/home.css";
 import IntroView from '../pages/introview' 
+import LearnView from "./learnview";
 
 export const Home = () => {
 	const { store, actions } = useContext(Context);
@@ -10,6 +11,7 @@ export const Home = () => {
 	return (
 		<div className="text-center mt-5">
 			 <IntroView />
+			 <LearnView/>
 			{/* <h1>Hello Rigo!!</h1>
 			<p>
 				<img src={rigoImageUrl} />
