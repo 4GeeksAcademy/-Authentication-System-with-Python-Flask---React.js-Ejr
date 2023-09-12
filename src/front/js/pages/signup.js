@@ -6,17 +6,17 @@ const Signup = () => {
     const { store, actions } = useContext(Context);
 
     const [name, setName] = useState(""); // Nuevo estado para el nombre
-    const [username, setUsername] = useState("");
+    const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [repeatPassword, setRepeatPassword] = useState(""); // Nuevo estado para repetir la contraseña
+    // const [repeatPassword, setRepeatPassword] = useState(""); // Nuevo estado para repetir la contraseña
     const [isActive, setIsActive] = useState(false);
 
     const navigate = useNavigate();
 
     const handleSignup = (e) => {
         e.preventDefault();
-        actions.SignupUser(username, email, password, isActive, name, repeatPassword); // Agregar name y repeatPassword aquí
+        actions.SignupUser( name, lastName, email, password, isActive); // Agregar name y repeatPassword aquí
         navigate('/login');
     };
 
@@ -46,9 +46,9 @@ const Signup = () => {
                         type="text"
                         className="form-control"
                         id="username"
-                        placeholder="Your username"
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
+                        placeholder="Your Last Name"
+                        value={lastName}
+                        onChange={(e) =>  setLastName(e.target.value)}
                     />
                 </div>
 
@@ -77,7 +77,7 @@ const Signup = () => {
                     />
                 </div>
 
-                <div className="mb-3">
+                {/* <div className="mb-3">
                     <label htmlFor="repeatPassword" className="form-label"></label>
                     <input
                         type="password"
@@ -85,9 +85,13 @@ const Signup = () => {
                         id="repeatPassword"
                         placeholder="Repeat your password"
                         value={repeatPassword}
-                        onChange={(e) => setRepeatPassword(e.target.value)}
+                        onChange={(e) => {
+                            console.log(e.target.value);
+                            setRepeatPassword(e.target.value);
+                        }}
+                        
                     />
-                </div>
+                </div> */}
 
                 <div className="mb-3 form-check">
                     <input
