@@ -119,9 +119,35 @@ def delete_user(user_id):
 
 
 
+# # # # # Favorite 🔳🔳🔳🟧🟨🟩🟦
+
+# muestra todos los favoritos
+@api.route('/favorites', methods=['GET'])
+@jwt_required()
+def get_favorite():
+    # email=get_jwt_identity()
+    favorites = Favorite.query.all()
+    results = list(map(lambda favoritos: favoritos.serialize(), favorites))
+
+    if favorites is None: 
+        return jsonify({"msg": "no existen favoritos"}), 404
+    return jsonify(results), 200
 
 
 
+# # # # # Plans 🔳🔳🔳🟧🟨🟩🟦
+
+# muestra todos los plan
+@api.route('/plan', methods=['GET'])
+# @jwt_required()
+def get_plan():
+    # email=get_jwt_identity()
+    plan = Plan.query.all()
+    results = list(map(lambda plan: plan.serialize(), plan))
+
+    if plan is None: 
+        return jsonify({"msg": "no existen plan"}), 404
+    return jsonify(results), 200
 
 # # # # # COMPONENT 🔳🔳🔳🟧🟨🟩🟦
 
