@@ -134,7 +134,20 @@ def get_favorite():
     return jsonify(results), 200
 
 
-
+# Crea un  favorito
+@api.route('/favorites', methods=['POST'])
+# @jwt_required()
+def add_favorite():
+    body = json.loads(request.data)
+    new_favorite = Favorite(
+        id_user = body["id_user"],
+        id_component = body["id_component"]
+    )
+    
+    db.session.add(new_favorite)
+    db.session.commit()
+    return jsonify({"msg": "favorite Create"}), 200
+    
 # # # # # Plans 🔳🔳🔳🟧🟨🟩🟦
 
 # muestra todos los plan
