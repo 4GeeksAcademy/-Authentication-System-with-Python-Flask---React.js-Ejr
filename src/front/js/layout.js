@@ -20,6 +20,7 @@ import Registrarse from "./component/registrarse";
 import Organizadores from "./pages/organizadores";
 import UserProfile from "./component/perfil";
 import TeamList from "./pages/equiposparticipantes";
+import UserPage from "./pages/perfil";
 
 //create your first component
 const Layout = () => {
@@ -36,7 +37,7 @@ const Layout = () => {
                     <Navbar />
                     <Routes>
                         <Route element={<TeamList />} path="/teams" />
-                        <Route element={<UserProfile />} path="/profile/:theid" />
+                        <Route element={<UserPage />} path="/profile" />
                         <Route element={<Home />} path="/" />
                         <Route element={<Servicios />} path="/servicios" />
                         <Route element={<Single />} path="/single/:theid" />

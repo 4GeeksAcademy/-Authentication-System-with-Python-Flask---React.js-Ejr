@@ -32,7 +32,7 @@ function UserProfile() {
   ];
 
   return (
-    <Router>
+
       <section style={{ backgroundColor: '#eee' }}>
         <div className="container py-5">
           <div className="row"></div>
@@ -175,7 +175,6 @@ function UserProfile() {
           </div>
         </div>
       </section>
-    </Router>
   );
 }
 
