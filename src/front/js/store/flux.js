@@ -1,3 +1,5 @@
+import axios from "axios";
+
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
@@ -50,14 +52,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 			signup: async (firstName, lastName, email, password, phone, confpassword)=>{
 				console.log(firstName, lastName,email,phone,password,confpassword);
 				try {
-					let data = await axios.post("https://bug-free-winner-5gqqjj4445w7fv69p-3001.app.github.dev/signup", {
+					let data = await axios.post("https://bug-free-winner-5gqqjj4445w7fv69p-3001.app.github.dev/api/signup", {
 
-						"firstName": firstName,
-						"lastName": lastName,
+						"name": firstName,
+						"lastname": lastName,
 						"email": email,
-						"phone": phone,
+						"phone_number": phone,
 						"password": password,
-						"confpassword": confpassword
+						"is_admin": false
 
 					})
 					console.log(data);

@@ -73,6 +73,6 @@ def crear_registro():
     db.session.add(nuevo_usuario)
     db.session.commit()
 
-    return jsonify(nuevo_usuario.serialize())
+    return jsonify(nuevo_usuario.serialize()),200
     
 
