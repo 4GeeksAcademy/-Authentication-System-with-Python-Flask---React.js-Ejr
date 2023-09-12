@@ -1,5 +1,6 @@
 import showAlert from "../utilidades/alerts";
 
+
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
@@ -33,7 +34,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				deadline: null,
 				modality: null,
 				coverage: null,
-				professional_field : null,
+				professional_field: null,
 				description: null,
 				url_to: null
 			},
@@ -44,9 +45,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 			hiddenLogout: true,
 			hiddenSignup: false,
 
-			allScholarships:[]
+			allScholarships: []
 
-          
+
 		},
 		actions: {
 			isPropertyEmpty: (obj) => {
@@ -97,8 +98,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 				const actions = getActions()
 				try {
 					if (actions.isPropertyEmpty(store.login_user)) {
-						alert("Le falta llenar algunos datos :S");
-						return;
+						const customAlertElement = document.getElementById("customAlertLogIn"); {
+							customAlertElement.innerHTML = '<div class="alert alert-danger d-flex justify-content-center" role="alert">Le falta llenar algunos datos </div>';
+							return;
+						};
 					}
 
 					const response = await fetch(process.env.BACKEND_URL + "/login", {
@@ -116,7 +119,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						alert("Login success");
 						setStore({ isloged: true });
 						setStore({ hiddenLogin: true });
-						setStore({ hiddenMyProfile: false }); 
+						setStore({ hiddenMyProfile: false });
 						setStore({ hiddenSignup: true });
 						setStore({ hiddenLogout: false });
 
@@ -206,7 +209,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					if (response.ok) {
 						localStorage.setItem("jwt-token", result.token);
 						setStore({ insLoged: true });
-						setStore({ hiddenMyInsProfile: false }); 
+						setStore({ hiddenMyInsProfile: false });
 						setStore({ hiddenLogin: true });
 						setStore({ hiddenSignup: true });
 						setStore({ hiddenLogout: false });
@@ -270,7 +273,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({ insLoged: value })
 				setStore({ hiddenLogin: value })
 
-				
+
 
 			},
 			changeMyProfileStatus: () => {
@@ -292,19 +295,19 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({ signup: false })
 				setStore({ insSignup: false })
 			},
-           
+
 			getAllScholarShips: async () => {
 				const store = getStore()
 				const actions = getActions()
 				try {
-					
+
 					const response = await fetch(process.env.BACKEND_URL + "/scholarships", {
 						method: 'GET'
 					})
 					const result = await response.json()
 					console.log(result);
-                    setStore({allScholarships : result.scholarships}) 
-					
+					setStore({ allScholarships: result.scholarships })
+
 					if (response.status == 400) {
 						alert(result.message)
 						alert("NO ALL SCHOLARSHIPS")
@@ -322,7 +325,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log(error + " Error loading message from backend")
 				}
 			}
-			
+
 		}
 	};
 };
