@@ -12,7 +12,7 @@ export const Login = () => {
 
     async function handleSubmit(e) {
         e.preventDefault()
-        let logged = await actions.login(email, contrasena)
+        await actions.login(email, contrasena)
     }
 
     return (
