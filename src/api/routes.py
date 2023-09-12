@@ -76,3 +76,25 @@ def crear_registro():
     return jsonify(nuevo_usuario.serialize()),200
     
 
+@api.route("/post", methods=['POST'])
+def save_post():
+
+    house = House(
+        id = request.json.get("id", None),
+        title = request.json.get("title", None),
+        category = request.json.get("category", None),
+        image_id = request.json.get("image_id", None),
+        user_id = request.json.get("user_id", None),
+        location = request.json.get("location", None),
+        number_of_rooms = request.json.get("number_of_rooms", None),
+        number_of_bathrooms = request.json.get("number_of_bathrooms", None),
+        parking = request.json.get("parking", None),
+        wifi = request.json.get("wifi", None),
+        virified_account = request.json.get("virified_account", None),
+        price = request.json.get("price", None)
+    )
+
+    db.session.add(house)
+    db.session.commit()
+
+    return jsonify(house.serialize()), 200
