@@ -97,25 +97,25 @@ def protected():
 
 # # Obtener todos los Favoritos
 
-# @api.route('/favoritos', methods=['GET'])
-# def obtener_favoritos():
+@api.route('/favoritos', methods=['GET'])
+def obtener_favoritos():
 
-# # Hago una consulta a la tabla favoritos para que traiga todos los favoritos
-#     favoritos_query =Favorites.query.all ()
+# Hago una consulta a la tabla favoritos para que traiga todos los favoritos
+    favoritos_query =Favorites.query.all ()
 
 
-# # mapeamos para  convertir el array en un array de objetos
+# mapeamos para  convertir el array en un array de objetos
 
-#     results = list(map(lambda item: item.serialize(), favoritos_query))
-#     print(results)
+    results = list(map(lambda item: item.serialize(), favoritos_query))
+    print(results)
 
-# #    respondo si no hay favoritos 
-#     if results == [] :
-#         return jsonify ({"msg":"No hay favoritos"}), 404
+#    respondo si no hay favoritos 
+    if results == [] :
+        return jsonify ({"msg":"No hay favoritos"}), 404
 
-#     response_body = {
-#         "msg": "Hola, aquí están tus casas favoritas ",
-#         "results": results
-#     }
+    response_body = {
+        "msg": "Hola, aquí están tus casas favoritas ",
+        "results": results
+    }
 
-#     return jsonify(response_body), 200
+    return jsonify(response_body), 200
