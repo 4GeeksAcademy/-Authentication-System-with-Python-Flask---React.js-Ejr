@@ -6,16 +6,21 @@ import ScrollToTop from "./component/scrollToTop";
 import { Home } from "./pages/home";
 import { Servicios } from "./pages/servicios";
 import { Single } from "./pages/single";
-import  Payment  from "./pages/payment";
+import Payment from "./pages/payment";
 import injectContext from "./store/appContext";
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 import Eventos from "./pages/eventos";
 import Galeria from "./component/galeria";
-import Planes from "./pages/planes";
+import Perfil from "./pages/perfil";
 import ContactPage from "./pages/contacto";
 import AccountPage from "./pages/cuenta";
+import NextEvent from "./component/nextEvent";
+import Registrarse from "./component/registrarse";
 import Organizadores from "./pages/organizadores";
+import UserProfile from "./component/perfil";
+import TeamList from "./pages/equiposparticipantes";
+import UserPage from "./pages/perfil";
 
 //create your first component
 const Layout = () => {
@@ -31,16 +36,21 @@ const Layout = () => {
                 <ScrollToTop>
                     <Navbar />
                     <Routes>
+                        <Route element={<TeamList />} path="/teams" />
+                        <Route element={<UserPage />} path="/profile" />
                         <Route element={<Home />} path="/" />
                         <Route element={<Servicios />} path="/servicios" />
                         <Route element={<Single />} path="/single/:theid" />
                         <Route element={<h1>Not found!</h1>} />
-                        <Route element={<Payment />} path="/payment"/>
-                        <Route element={<Eventos />} path="/eventos"/>
-                        <Route element={<Galeria />} path="/galeria"/>
-                        <Route element={<Organizadores />} path="/organizadores"/>
-                        <Route element={<ContactPage />} path="/contacto"/>
-                        <Route element={<AccountPage />} path="/cuenta"/>
+                        <Route element={<Payment />} path="/payment" />
+                        <Route element={<Eventos />} path="/eventos" />
+                        <Route element={<Galeria />} path="/galeria" />
+                        <Route element={<Perfil />} path="/perfil" />
+                        <Route element={<ContactPage />} path="/contacto" />
+                        <Route element={<AccountPage />} path="/cuenta" />
+                        <Route element={<NextEvent />} path="/nextEvent" />
+                        <Route element={<Registrarse />} path="/registrarse" />
+                        <Route element={<Organizadores />} path="/organizadores" />
                     </Routes>
                     <Footer />
                 </ScrollToTop>
