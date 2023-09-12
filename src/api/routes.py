@@ -4,9 +4,7 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, User, House, Image, Booking, Favorites
 from api.utils import generate_sitemap, APIException
-# from flask_jwt_extended import create_access_token
-# from flask_jwt_extended import get_jwt_identity
-# from flask_jwt_extended import jwt_required
+
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required, JWTManager
 from datetime import datetime
 
@@ -47,6 +45,15 @@ def login():
     }   
 
     return jsonify(response_body), 200
+
+# validar ruta del token es una ruta protegida
+
+@api.route("/valid_token", methods=["GET"])
+@jwt_required()
+def validartoken():
+    # Accede a la identidad del usuario con get_jwt_identity
+    current_user = get_jwt_identity()
+    return jsonify({ "is_logged": True }), 200
 
 
 # endpoint registrarse signup
