@@ -7,18 +7,20 @@ import "../../styles/home.css";
 import Pricing from "../component/princing";
 
 
-const Userpage = ()=>{
+const UserPage = ()=>{
     return(
+        <body>
         <div>
             <header>
         </header>
-        <body>
+       
             <UserProfile/>
-        </body>
+        
         
         </div>
+        </body>
         
         )
 }
 
-export default Userpage
+export default UserPage
