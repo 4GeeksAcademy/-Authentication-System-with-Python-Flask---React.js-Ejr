@@ -76,6 +76,63 @@ def crear_registro():
     return jsonify(nuevo_usuario.serialize()),200
     
 
+
+# Ruta protegida de favoritos
+
+@api.route("/usuario/favorito", methods=["GET"])
+@jwt_required()
+def protected():
+    # Accede a la identidad del usuario con get_jwt_identity
+    current_user_email = get_jwt_identity()
+
+    user= User.query.filter_by(email=current_user_email).first()
+    favoritos=Favorites.query.filter_by(user_id = user.id).all()
+    response = list(map(lambda favoritos: favoritos.serialize(), favoritos))
+    if response == []:
+        return jsonify({"msg": "El usuario no tiene favoritos ingresados"})
+
+
+    return jsonify({"results": response}), 200
+
+#  Agregar casas a favorito
+
+@api.route('/favoritos/house', methods=['POST'])
+def crear_casa_favorita():
+
+    request_body = request.get_json(force=True) #obtiene el cuerpo que se envíe por el body desde el postman
+
+# validar que exista el usuario
+    user_query = User.query.filter_by(id=request_body["user_id"]).first()
+    if user_query is None:
+        return jsonify({"msg": "el usuario no está registrado"}), 404
+
+ #validamos que exista una casa
+    casa_query = House.query.filter_by(id = request_body["house_id"]).first() #id es la propiedad de la tabla House y house_id es el valor que se pasa por URL
+    if casa_query is None:
+        return jsonify({"msg": "Esta casa no existe"}), 404
+
+#validamos que la casa ya existía como fav
+    fav_query = Favorites.query.filter_by(user_id = request_body["user_id"]).filter_by(house_id =request_body["house_id"]).first() #devuelve los valores que coinciden (del user_id la tabla Favoritos) con el body del postman
+    if fav_query:    #la casa existe para ese usuario no se va a volver a agregar
+            return jsonify({"msg": "Esta casa ya existe en favoritos, no se volverá a agregar"}), 400
+        
+
+ #Si no se cumplen las condiciones anteriores, se agrega la casa a favoritos
+
+    nueva_casa_favorita=Favorites(user_id= request_body["user_id"], house_id =request_body["house_id"])
+
+    request_body = {
+        "msg": "Propiedad agregada a favoritos"
+    }
+
+
+    db.session.add(nueva_casa_favorita)
+    db.session.commit()
+
+    return request_body, 200
+
+
+
 @api.route("/post", methods=['POST'])
 def save_post():
 
