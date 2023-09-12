@@ -2,17 +2,17 @@ import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
 import { BackendURL } from "./component/backendURL";
+import injectContext from "./store/appContext";
 
 import { Login } from "./pages/login";
 import { Home } from "./pages/home";
 import { Signup } from "./pages/signup";
 import { Profile } from "./pages/profile";
-import injectContext from "./store/appContext";
 import { Landing } from "./pages/landing";
+import { SignupKeeper } from "./pages/signupKeeper";
 
 import { Footer } from "./component/footer";
 import { Navbar } from "./component/navbar";
-import { SignupKeeper } from "./pages/signupKeeper";
 
 //create your first component
 const Layout = () => {
