@@ -163,6 +163,22 @@ def save_post():
 
     return jsonify(house.serialize()), 200
 
+@api.route("/post/<int:id>", methods=['DELETE'])
+def deleteHouse(id):
+    house = House.query.filter_by(id = id).first()
+    is_removed = False
+    print(house)
+
+    if house == None:
+        return jsonify({ "msg": "The house dosen´t exist" }), 404
+
+    if house != []:
+        db.session.delete(house)
+        db.session.commit()
+        is_removed = True
+
+    return jsonify({ "is_removed": is_removed }), 200
+
 @api.route("/gethouses/rent", methods=['GET'])
 def getHousesToRent():
     alquiler = House.query.filter_by(category="Alquiler")
