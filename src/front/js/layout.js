@@ -29,7 +29,7 @@ import { ComoDonar } from "./pages/comoDonar";
 
 
 
-import { FormularioRegistro } from "./pages/formularioRegistro";
+import  FormularioRegistro  from "./pages/formularioRegistro";
 
 
 import injectContext from "./store/appContext";
@@ -52,10 +52,10 @@ const Layout = () => {
         <div>
             <BrowserRouter basename={basename}>
                 <ScrollToTop>
-                    {!useAlternateNavbar ? <Navbar /> : <Navbar2 />}
+                    {useAlternateNavbar ? <Navbar /> : <Navbar2 />}
 
                     <Routes>
-                        <Route element={<Home />} path="/" />
+                        <Route element={<Home />} path="/" />z
                         <Route element={<LibroVenta />} path="/libroVenta" />
                         <Route element={<MasVendidos />} path="/masVendidos" />
                         <Route element={<LibrosIntercambio />} path="/librosIntercambio" />
@@ -77,8 +77,8 @@ const Layout = () => {
                             enter={() => setUseAlternateNavbar(true)}                            
                             leave={() => setUseAlternateNavbar(false)}
                         />
-
-                        {/* <Route element={<Single />} path="/single/:theid" /> */}                        <Route element={<h1>Not found!</h1>} />
+                        {/* <Route element={<Single />} path="/single/:theid" /> */}                       
+                        <Route element={<h1>Not found!</h1>} />
                     </Routes>
                     <Footer />
                 </ScrollToTop>

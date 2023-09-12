@@ -53,7 +53,7 @@ const Registro = () => {
                         aria-describedby="emailHelp"
                         placeholder="Ingresa tu email"
                         required
-                        pattern="[^@\s]+@[^@\s]+\.[^@\s]+"
+                        pattern="/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/"
                         name={'email'}
                         value={store.newUser.email}
                         onChange={actions.handleChange}
@@ -68,7 +68,7 @@ const Registro = () => {
                     <input
                         type="password"
                         className="form-control"
-                        id="re_password"
+                        id="password"
                         placeholder="Contraseña"
                         required
                         name={'password'}
@@ -100,9 +100,22 @@ const Registro = () => {
                     <select className="form-select" required >
                         
                         <option selected="" >Selecciona region...</option>
-                        <option value={1}>One</option>
-                        <option value={2}>Two</option>
-                        <option value={3}>Three</option>
+                        <option value={1}>I</option>
+                        <option value={2}>II</option>
+                        <option value={3}>III</option>
+                        <option value={4}>IV</option>
+                        <option value={5}>V</option>
+                        <option value={6}>VI</option>
+                        <option value={7}>VII</option>
+                        <option value={8}>VIII</option>
+                        <option value={9}>IX</option>
+                        <option value={10}>X</option>
+                        <option value={11}>XI</option>
+                        <option value={12}>XII</option>
+                        <option value={13}>XIII</option>
+                        <option value={14}>XIV</option>
+                        <option value={15}>XV</option>
+                        <option value={16}>RM</option>
                     </select>
                 </div>
                 <div className="my-3 form-check">
@@ -124,3 +137,6 @@ const Registro = () => {
 }
 
 export default Registro
+
+
+//jssolar

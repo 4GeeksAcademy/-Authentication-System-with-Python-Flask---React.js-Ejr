@@ -43,7 +43,7 @@ class User(db.Model):
         db.session.delete(self)
         db.session.commit()
 
-# <--TABLA LIBRO-------------------------------------------------------------------------------------------------->
+# <--TABLA LIBRO-------------------------------------------->
 
 
 class Book(db.Model):

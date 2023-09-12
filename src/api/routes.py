@@ -25,8 +25,8 @@ def handle_hello():
 #------< registrar usuario >-------------#
 
 @api.route('/register', methods=['POST'])
-
 def user_register():
+    print(request.get_json())
     name= request.json.get("name")
     lastname= request.json.get("lastname")
     email= request.json.get("email")
