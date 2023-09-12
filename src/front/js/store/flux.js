@@ -1,28 +1,28 @@
-let BACKEND_URL= "https://bug-free-winner-5gqqjj4445w7fv69p-3001.app.github.dev/"
+
 import axios from "axios";
 
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
-			message: null,
-			demo: [
-				{
-					title: "FIRST",
-					background: "white",
-					initial: "white"
-				},
-				{
-					title: "SECOND",
-					background: "white",
-					initial: "white"
-				}
-			]
+			// message: null,
+			// demo: [
+			// 	{
+			// 		title: "FIRST",
+			// 		background: "white",
+			// 		initial: "white"
+			// 	},
+			// 	{
+			// 		title: "SECOND",
+			// 		background: "white",
+			// 		initial: "white"
+			// 	}
+			// ]
 		},
 		actions: {
-			// Use getActions to call a function within a fuction
-			exampleFunction: () => {
-				getActions().changeColor(0, "green");
-			},
+			
+			// exampleFunction: () => {
+			// 	getActions().changeColor(0, "green");
+			// },
 
 			getMessage: async () => {
 				try{
@@ -51,9 +51,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({ demo: demo });
 			},
 			signup: async (firstName, lastName, email, password, phone, confpassword)=>{
-				console.log(firstName, lastName,email,phone,password,confpassword);
+				
 				try {
-					let data = await axios.post("https://bug-free-winner-5gqqjj4445w7fv69p-3001.app.github.dev/api/signup", {
+					let data = await axios.post(process.env.BACKEND_URL + "/api/signup", {
 
 						"name": firstName,
 						"lastname": lastName,
@@ -63,7 +63,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						"is_admin": false
 
 					})
-					console.log(data);
+					
 					return true;
 
 				} catch (error) {
@@ -81,7 +81,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			login: async (email,password) => {
 				try {
-					let data = await axios.post(BACKEND_URL + 'api/login',
+					let data = await axios.post(process.env.BACKEND_URL + '/api/login',
 					{
 						"email" : email,
 						"password" : password
