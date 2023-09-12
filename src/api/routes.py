@@ -99,8 +99,16 @@ def save_post():
 
     return jsonify(house.serialize()), 200
 
-@api.route("/gethouses", methods=['GET'])
-def getPosts():
-    users = House.query.all()
-    response = list(map(lambda user: user.serialize(), users))
+@api.route("/gethouses/rent", methods=['GET'])
+def getHousesToRent():
+    alquiler = House.query.filter_by(category="Alquiler")
+    response = list(map(lambda user: user.serialize(), alquiler))
+    
+    return jsonify({ "results": response }), 200
+
+@api.route("/gethouses/sell", methods=['GET'])
+def getHousesToBuy():
+    alquiler = House.query.filter_by(category="Venta")
+    response = list(map(lambda user: user.serialize(), alquiler))
+    
     return jsonify({ "results": response }), 200
