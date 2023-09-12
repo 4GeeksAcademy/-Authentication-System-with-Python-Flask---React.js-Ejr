@@ -1,3 +1,6 @@
+let BACKEND_URL= "https://bug-free-winner-5gqqjj4445w7fv69p-3001.app.github.dev/"
+import axios from "axios";
+
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
@@ -30,7 +33,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					// don't forget to return something, that is how the async resolves
 					return data;
 				}catch(error){
-					console.log("Error loading message from backend", error)
+					// console.log("Error loading message from backend", error)
 				}
 			},
 			changeColor: (index, color) => {
@@ -47,12 +50,58 @@ const getState = ({ getStore, getActions, setStore }) => {
 				//reset the global store
 				setStore({ demo: demo });
 			},
-			signup: (firstName, lastName, email, password, phone, confpassword)=>{
+			signup: async (firstName, lastName, email, password, phone, confpassword)=>{
 				console.log(firstName, lastName,email,phone,password,confpassword);
+				try {
+					let data = await axios.post("https://bug-free-winner-5gqqjj4445w7fv69p-3001.app.github.dev/api/signup", {
 
-			}
+						"name": firstName,
+						"lastname": lastName,
+						"email": email,
+						"phone_number": phone,
+						"password": password,
+						"is_admin": false
+
+					})
+					console.log(data);
+					return true;
+
+				} catch (error) {
+					
+					if (error.response.status === 404) {
+						alert (error.response.data.msg)
+						
+					}
+					return false;
+				}
+
+			},
+
+			
+
+			login: async (email,password) => {
+				try {
+					let data = await axios.post(BACKEND_URL + 'api/login',
+					{
+						"email" : email,
+						"password" : password
+					})
+					console.log(data);
+					localStorage.setItem("token", data.data.access_token)
+					// setStore({ auth : true})
+					return true
+				} catch (error) {
+					console.log(error);
+					if (error.response.status === 404) {
+						alert(error.response.data.msg)
+					}
+					return false
+				}
+			},
+				
 		}
+	}
 	};
-};
+
 
 export default getState;
