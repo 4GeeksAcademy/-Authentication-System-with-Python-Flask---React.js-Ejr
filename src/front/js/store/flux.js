@@ -45,6 +45,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					}).then(data=> {
 						console.log(data)
 						setStore({pets:data})
+						return "ok"
 					})
 				} catch (error) {
 					console.error(error)
@@ -65,6 +66,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						return response.json()
 					}).then(data=>{
 						console.log("Successfully created pet: "+data)
+						getActions().getOwnerPets(obj.owner_id)
 					})
 				} catch (error) {
 					console.error(error)
@@ -84,6 +86,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 						return response.json()
 					}).then(data=>{
 						console.log("Successfully updated pet: "+data)
+						//Routes returns updated pet
+						getActions().getOwnerPets(obj.owner_id)
 					})
 				} catch (error) {
 					console.error(error)
@@ -119,6 +123,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					}).then(data=>{
 						console.log({data}+" Succesfully deleted pet from server")
 						//setStore({pets:data})
+						getActions().getOwnerPets(obj.owner_id)
 					})
 				} catch (error) {
 					console.error({error})
