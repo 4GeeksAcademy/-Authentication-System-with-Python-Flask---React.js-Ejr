@@ -88,7 +88,7 @@ class Plan(db.Model):
     def serialize(self):
         return {
             "id": self.id,
-            "plan_type_name": self.type,
+            "plan_type_name": self.plan_type_name,
             "price": self.price,
             "description": self.description       
             # do not serialize the password, its a security breach

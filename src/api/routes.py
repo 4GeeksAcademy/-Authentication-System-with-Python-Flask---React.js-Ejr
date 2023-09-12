@@ -27,25 +27,28 @@ def handle_hello():
 
 # # # # # USER 👨👨👨👨👨👨
 
+# Registro de Usuarios
 @api.route('/signup', methods=['POST'])
 def signup_user():
     body = json.loads(request.data)
     # pw_hash = current_app.bcrypt.generate_password_hash(body["password"]).decode('utf-8')
+    user = User.query.filter_by(email=body["email"]).first() # busca que el usuario no exista
 
-    new_user = User(
-        name = body["name"],
-        last_name = body["last_name"],
-        email = body["email"],
-        password = body["password"],
-        is_active= body["is_active"],
+    if user is None: # sino existe lo guarda en la base de datos 
+        new_user = User(
+            name = body["name"],
+            last_name = body["last_name"],
+            email = body["email"],
+            password = body["password"],
+            is_active= body["is_active"],
+        )
+        db.session.add(new_user)
+        db.session.commit()
 
-    )
-    db.session.add(new_user)
-    db.session.commit()
+        return jsonify({"msg": "usuario creado"}), 200 
+    return jsonify({"msg": "usuario ya existe"}), 400
 
-    return jsonify({"msg": "usuario creado"}), 200 
-
-
+# Inicio de Session de Usuarios
 @api.route('/login', methods=['POST'])
 def login_user():
     body = json.loads(request.data)
@@ -64,6 +67,87 @@ def login_user():
     access_token = create_access_token(identity=email)
     return jsonify(access_token=access_token), 200
 
+# muestra todos los usuarios
+@api.route('/user', methods=['GET'])
+@jwt_required()
+def get_users():
+    # email=get_jwt_identity()
+    user = User.query.all()
+    results = list(map(lambda usuarios: usuarios.serialize(), user))
+
+    if user is None: 
+        return jsonify({"msg": "no existen usuarios"}), 404
+    return jsonify(results), 200
+
+# Modifica  un Usuario por id
+@api.route('/user/<int:user_id>', methods=['PUT'])
+@jwt_required()
+def update_users(user_id):
+    body = json.loads(request.data)
+    user = User.query.filter_by(id=user_id).first() # busca que el usuario exista
+
+    if user is None: 
+        return jsonify({"msg": "no existe el usuario"}), 404
+
+    if "name" in body:
+        user.name = body["name"]
+
+    if "last_name" in body:
+        user.last_name = body["last_name"]
+
+    if "password" in body:
+        user.password = body["password"]
+
+    if "is_active" in body:
+        user.is_active= body["is_active"]
+
+    db.session.commit()
+    return jsonify({"msg": "usuario modificado"}), 200
+
+# Borra usuario por id
+@api.route('/user/<int:user_id>', methods=['DELETE'])
+@jwt_required()
+def delete_user(user_id):
+    
+    user = User.query.get(user_id)
+    if not user:
+        return jsonify({"msg": "User not found"}), 404
+    else:
+        db.session.delete(user)
+        db.session.commit()
+        return jsonify({"msg": "User deleted"}), 200
+
+
+
+# # # # # Favorite 🔳🔳🔳🟧🟨🟩🟦
+
+# muestra todos los favoritos
+@api.route('/favorites', methods=['GET'])
+@jwt_required()
+def get_favorite():
+    # email=get_jwt_identity()
+    favorites = Favorite.query.all()
+    results = list(map(lambda favoritos: favoritos.serialize(), favorites))
+
+    if favorites is None: 
+        return jsonify({"msg": "no existen favoritos"}), 404
+    return jsonify(results), 200
+
+
+
+# # # # # Plans 🔳🔳🔳🟧🟨🟩🟦
+
+# muestra todos los plan
+@api.route('/plan', methods=['GET'])
+# @jwt_required()
+def get_plan():
+    # email=get_jwt_identity()
+    plan = Plan.query.all()
+    results = list(map(lambda plan: plan.serialize(), plan))
+
+    if plan is None: 
+        return jsonify({"msg": "no existen plan"}), 404
+    return jsonify(results), 200
 
 # # # # # COMPONENT 🔳🔳🔳🟧🟨🟩🟦
 
@@ -155,3 +239,5 @@ def update_component(component_id):
 
     return jsonify({"msg": f"Component {component_id} has been updated",
                     "response": component.serialize() }), 200
+
+
