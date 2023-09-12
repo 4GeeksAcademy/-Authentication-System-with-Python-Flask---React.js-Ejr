@@ -8,6 +8,8 @@ from api.utils import generate_sitemap, APIException
 from flask_bcrypt import Bcrypt
 from flask_jwt_extended import create_access_token
 from flask_bcrypt import Bcrypt 
+from flask import Flask
+from flask_cors import CORS
 
 api = Blueprint('api', __name__)
 #Agregado al boilerplate
@@ -46,7 +48,7 @@ def create_owner():
     signup_by_type(new_owner,data)
     db.session.add(new_owner)
     db.session.commit()
-    return jsonify({"msg": "Owner created successfully"}), 201
+    return jsonify({"msg": "Owner created successfully"}), 201 #siempre devolver el nuevo estado del recurso que se ha modificado 
 
 @api.route('/signup/keeper', methods=['POST'])
 def create_keeper():
@@ -141,7 +143,7 @@ def createPet():
     new_pet.owner_id = owner_id
     db.session.add(new_pet)
     db.session.commit()
-    return jsonify({"msg": "Pet added successfully"}), 201
+    return jsonify({"msg": "Pet added successfully"}), 201 #retornar el objeto creado 
 
 @api.route('/pets/<int:pet_id>', methods=['GET', 'DELETE', 'PUT'])
 def getPet(pet_id):

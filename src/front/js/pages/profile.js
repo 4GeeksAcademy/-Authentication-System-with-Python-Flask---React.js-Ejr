@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Context } from "../store/appContext";
-import stock_avatar from "../../img/avatar.jpg"
+import stock_avatar from "../../img/avatar.jpg";
 import { KeeperForm } from "../component/keeperForm";
 import  { Pets } from "../component/pets";
 
