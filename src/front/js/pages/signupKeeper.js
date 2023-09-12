@@ -1,23 +1,30 @@
 import React, { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { Context } from "../store/appContext";
 import "../../styles/login.css";
 
-export const Signup = (props) => {
+export const SignupKeeper = (props) => {
   const { store, actions } = useContext(Context);
   const params = useParams();
   const navigate = useNavigate();
 
-  async function signup(e) {
+  async function signupKeeper(e) {
     e.preventDefault();
     const data = new FormData(e.target);
     const first_name = data.get("first_name");
     const last_name = data.get("last_name");
     const email = data.get("email");
     const password = data.get("password");
-    const { signup } = actions;
-    let resp = await signup(first_name, last_name, email, password);
+    const hourly_pay = data.get("hourly_pay");
+    const { signupKeeper } = actions;
+    let resp = await signupKeeper(
+      first_name,
+      last_name,
+      email,
+      password,
+      hourly_pay
+    );
     console.log(resp);
     navigate("/login");
   }
@@ -25,8 +32,8 @@ export const Signup = (props) => {
     <div id="signup-page" className="text-center">
       <div className="container wrap-loginSignup">
         <i id="cat-suit" className="fa-solid fa-cat"></i>
-        <h1>Welcome Owners</h1>
-        <form className="pe-3" onSubmit={signup}>
+        <h1>Bienvenido Cuidador</h1>
+        <form className="pe-3" onSubmit={signupKeeper}>
           <div className="mb-3">
             <label htmlFor="inputName" className="form-label">
               Name
@@ -73,6 +80,17 @@ export const Signup = (props) => {
               id="inputPassword1"
             />
           </div>
+          <div className="mb-3">
+            <label htmlFor="inputPayment" className="form-label">
+              Hourly Pay
+            </label>
+            <input
+              type="text"
+              className="form-control"
+              name="hourly_pay"
+              id="inputPayment"
+            />
+          </div>
           <button id="btn-signup" type="submit" className="btn">
             Registrarse
           </button>
@@ -81,6 +99,6 @@ export const Signup = (props) => {
     </div>
   );
 };
-Signup.propTypes = {
+SignupKeeper.propTypes = {
   match: PropTypes.object,
 };
