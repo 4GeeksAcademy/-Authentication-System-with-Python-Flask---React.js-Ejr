@@ -41,10 +41,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 			hiddenLogin: false,
 			hiddenLogout: true,
 			hiddenSignup: false,
-            
-			AllScholarships: {
 
-			}
+			allScholarships:[]
+
+          
 		},
 		actions: {
 			isPropertyEmpty: (obj) => {
@@ -328,22 +328,21 @@ const getState = ({ getStore, getActions, setStore }) => {
 				try {
 					
 					const response = await fetch(process.env.BACKEND_URL + "/scholarships", {
-						method: 'GET',
-						body: JSON.stringify(store.AllScholarships),
-						headers: {
-							'Content-Type': 'application/json'
-						}
+						method: 'GET'
 					})
 					const result = await response.json()
 					console.log(result);
-
+                    setStore({allScholarships : result.scholarships}) 
+					
 					if (response.status == 400) {
 						alert(result.message)
 						alert("NO ALL SCHOLARSHIPS")
+						console.log(result)
 					}
 
 					if (response.ok) {
 						alert("ALL SCHOLARSHIPS SUCCESS")
+						console.log(result)
 					} else {
 						alert(result.message)
 					}
