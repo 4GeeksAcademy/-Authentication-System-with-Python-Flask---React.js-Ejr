@@ -192,3 +192,8 @@ def getHousesToBuy():
     response = list(map(lambda user: user.serialize(), alquiler))
     
     return jsonify({ "results": response }), 200
+
+@api.route("/gethouse/<int:id>", methods=['GET'])
+def getOneSingleHouse(id):
+    house = House.query.filter_by(id = id).first()
+    return jsonify({ "results": house.serialize() }), 200
