@@ -94,28 +94,64 @@ def protected():
 
     return jsonify({"results": response}), 200
 
+#  Agregar casas a favorito
 
-# # # Obtener todos los Favoritos
+@api.route('/favoritos/house', methods=['POST'])
+def crear_casa_favorita():
 
-# @api.route('/favoritos', methods=['GET'])
-# def obtener_favoritos():
+    request_body = request.get_json(force=True) #obtiene el cuerpo que se envíe por el body desde el postman
 
-# # Hago una consulta a la tabla favoritos para que traiga todos los favoritos
-#     favoritos_query =Favorites.query.all ()
+# validar que exista el usuario
+    user_query = User.query.filter_by(id=request_body["user_id"]).first()
+    if user_query is None:
+        return jsonify({"msg": "el usuario no está registrado"}), 404
+
+ #validamos que exista una casa
+    casa_query = House.query.filter_by(id = request_body["house_id"]).first() #id es la propiedad de la tabla House y house_id es el valor que se pasa por URL
+    if casa_query is None:
+        return jsonify({"msg": "Esta casa no existe"}), 404
+
+#validamos que la casa ya existía como fav
+    fav_query = Favorites.query.filter_by(user_id = request_body["user_id"]).filter_by(house_id =request_body["house_id"]).first() #devuelve los valores que coinciden (del user_id la tabla Favoritos) con el body del postman
+    if fav_query:    #la casa existe para ese usuario no se va a volver a agregar
+            return jsonify({"msg": "Esta casa ya existe en favoritos, no se volverá a agregar"}), 400
+        
+
+ #Si no se cumplen las condiciones anteriores, se agrega la casa a favoritos
+
+    nueva_casa_favorita=Favorites(user_id= request_body["user_id"], house_id =request_body["house_id"])
+
+    request_body = {
+        "msg": "Propiedad agregada a favoritos"
+    }
 
 
-# # mapeamos para  convertir el array en un array de objetos
+    db.session.add(nueva_casa_favorita)
+    db.session.commit()
 
-#     results = list(map(lambda item: item.serialize(), favoritos_query))
-#     print(results)
+    return request_body, 200
 
-# #    respondo si no hay favoritos 
-#     if results == [] :
-#         return jsonify ({"msg":"No hay favoritos"}), 404
 
-#     response_body = {
-#         "msg": "Hola, aquí están tus casas favoritas ",
-#         "results": results
-#     }
 
-#     return jsonify(response_body), 200
+@api.route("/post", methods=['POST'])
+def save_post():
+
+    house = House(
+        id = request.json.get("id", None),
+        title = request.json.get("title", None),
+        category = request.json.get("category", None),
+        image_id = request.json.get("image_id", None),
+        user_id = request.json.get("user_id", None),
+        location = request.json.get("location", None),
+        number_of_rooms = request.json.get("number_of_rooms", None),
+        number_of_bathrooms = request.json.get("number_of_bathrooms", None),
+        parking = request.json.get("parking", None),
+        wifi = request.json.get("wifi", None),
+        virified_account = request.json.get("virified_account", None),
+        price = request.json.get("price", None)
+    )
+
+    db.session.add(house)
+    db.session.commit()
+
+    return jsonify(house.serialize()), 200
