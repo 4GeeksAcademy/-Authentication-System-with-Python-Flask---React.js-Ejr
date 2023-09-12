@@ -98,3 +98,9 @@ def save_post():
     db.session.commit()
 
     return jsonify(house.serialize()), 200
+
+@api.route("/gethouses", methods=['GET'])
+def getPosts():
+    users = House.query.all()
+    response = list(map(lambda user: user.serialize(), users))
+    return jsonify({ "results": response }), 200
