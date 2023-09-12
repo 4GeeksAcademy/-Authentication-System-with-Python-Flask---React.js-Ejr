@@ -41,6 +41,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 			hiddenLogin: false,
 			hiddenLogout: true,
 			hiddenSignup: false,
+            
+			AllScholarships: {
+
+			}
 		},
 		actions: {
 			isPropertyEmpty: (obj) => {
@@ -317,6 +321,38 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({ signup: false })
 				setStore({ insSignup: false })
 			},
+           
+			getAllScholarShips: async () => {
+				const store = getStore()
+				const actions = getActions()
+				try {
+					
+					const response = await fetch(process.env.BACKEND_URL + "/scholarships", {
+						method: 'GET',
+						body: JSON.stringify(store.AllScholarships),
+						headers: {
+							'Content-Type': 'application/json'
+						}
+					})
+					const result = await response.json()
+					console.log(result);
+
+					if (response.status == 400) {
+						alert(result.message)
+						alert("NO ALL SCHOLARSHIPS")
+					}
+
+					if (response.ok) {
+						alert("ALL SCHOLARSHIPS SUCCESS")
+					} else {
+						alert(result.message)
+					}
+
+				} catch (error) {
+					console.log(error + " Error loading message from backend")
+				}
+			}
+			
 		}
 	};
 };
