@@ -64,7 +64,7 @@ function Singup() {
       <label for="exampleInputPassword1" className="form-label">Confirmar contraseña</label>
       <input type="password" className="form-control" id="exampleInputPassword1" placeholder='Confrima tu contraseña'onChange={(e) => setConfpassword(e.target.value)}/>
     </div>
-    <button type="submit" className="bg-azul-oscuro d-grid gap-2 col-6 mx-auto">Continuar</button>
+    <button type="submit" className="text-white bg-azul-oscuro d-grid gap-2 col-6 mx-auto">Continuar</button>
     </div>
     <div className= "d-flex justify-content-center mt-4">
       <p>Ya tienes una cuenta?</p> <Link to={"/login"}><p className='texto-amarillo'> Ingresa</p></Link>

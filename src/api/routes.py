@@ -34,10 +34,10 @@ def login():
     print (email, password)
 
     if user_query is None:
-        return {"msg": "Este email no existe"}
+        return {"msg": "Este email no existe"}, 404
 
     if email != user_query.email or password != user_query.password:
-        return {"msg": "Email o contraseña incorrectos"}
+        return {"msg": "Email o contraseña incorrectos"}, 404
 
     access_token = create_access_token(identity=email)
 

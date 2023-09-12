@@ -1,3 +1,4 @@
+let BACKEND_URL= "https://bug-free-winner-5gqqjj4445w7fv69p-3001.app.github.dev/"
 import axios from "axios";
 
 const getState = ({ getStore, getActions, setStore }) => {
@@ -32,7 +33,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					// don't forget to return something, that is how the async resolves
 					return data;
 				}catch(error){
-					console.log("Error loading message from backend", error)
+					// console.log("Error loading message from backend", error)
 				}
 			},
 			changeColor: (index, color) => {
@@ -76,8 +77,30 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			},
 
-			}
+			
+
+			login: async (email,password) => {
+				try {
+					let data = await axios.post(BACKEND_URL + 'api/login',
+					{
+						"email" : email,
+						"password" : password
+					})
+					console.log(data);
+					localStorage.setItem("token", data.data.access_token)
+					// setStore({ auth : true})
+					return true
+				} catch (error) {
+					console.log(error);
+					if (error.response.status === 404) {
+						alert(error.response.data.msg)
+					}
+					return false
+				}
+			},
+				
 		}
+	}
 	};
 
 
