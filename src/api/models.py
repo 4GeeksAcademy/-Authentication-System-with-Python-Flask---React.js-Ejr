@@ -13,8 +13,6 @@ class User(db.Model):
     account_creation_date = db.Column(db.String(40), nullable=False)
     is_admin = db.Column(db.Boolean(), nullable=False)
 
-    favoritos = db.relationship("Favorites")
-    # house = db.relationship(Favorites, backref='favorites')
 
     def __repr__(self):
         return f'<User {self.email}>'
@@ -61,7 +59,6 @@ class House(db.Model):
     virified_account = db.Column(db.Boolean(), nullable=False)
     price = db.Column(db.Integer, nullable=False)
 
-#    user = db.relationship(User, backref='house')
 #    image = db.relationship(Image, backref='house')
 
     def __repr__(self):
@@ -92,8 +89,8 @@ class Booking(db.Model):
     date_of_admission = db.Column(db.String(100), nullable=False)
     date_of_delivery = db.Column(db.String(100), nullable=False)
 
-    user = db.relationship(User, backref='booking')
-    house = db.relationship(House, backref='booking')
+    user = db.relationship("User")
+    house = db.relationship("House")
 
     def __repr__(self):
         return f'<Booking {self.id}>'
@@ -113,6 +110,10 @@ class Favorites(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     house_id = db.Column(db.Integer, db.ForeignKey('house.id'))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+
+    userId = db.relationship("User")
+    houseId = db.relationship("House")
+
 
     def __repr__(self):
         return f'<Favorites {self.id}>'
