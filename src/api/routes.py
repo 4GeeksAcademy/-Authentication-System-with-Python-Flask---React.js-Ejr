@@ -74,5 +74,47 @@ def crear_registro():
     db.session.commit()
 
     return jsonify(nuevo_usuario.serialize())
-    
 
+
+# Ruta protegida de favoritos
+
+@api.route("/usuario/favorito", methods=["GET"])
+@jwt_required()
+def protected():
+    # Accede a la identidad del usuario con get_jwt_identity
+    current_user_email = get_jwt_identity()
+
+    user= User.query.filter_by(email=current_user_email).first()
+    favoritos=Favorites.query.filter_by(user_id = user.id).all()
+    response = list(map(lambda favoritos: favoritos.serialize(), favoritos))
+    if response == []:
+        return jsonify({"msg": "El usuario no tiene favoritos ingresados"})
+
+
+    return jsonify({"results": response}), 200
+
+
+# # Obtener todos los Favoritos
+
+# @api.route('/favoritos', methods=['GET'])
+# def obtener_favoritos():
+
+# # Hago una consulta a la tabla favoritos para que traiga todos los favoritos
+#     favoritos_query =Favorites.query.all ()
+
+
+# # mapeamos para  convertir el array en un array de objetos
+
+#     results = list(map(lambda item: item.serialize(), favoritos_query))
+#     print(results)
+
+# #    respondo si no hay favoritos 
+#     if results == [] :
+#         return jsonify ({"msg":"No hay favoritos"}), 404
+
+#     response_body = {
+#         "msg": "Hola, aquí están tus casas favoritas ",
+#         "results": results
+#     }
+
+#     return jsonify(response_body), 200
