@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useRef } from "react";
 import { Context } from "../store/appContext";
 import CardBeca from "../component/CardBeca";
 import "../../styles/home.css";
@@ -6,6 +6,15 @@ import { Link } from "react-router-dom";
 
 export const Home = () => {
   const { store, actions } = useContext(Context);
+
+   // Create a ref for the third-block div
+   const thirdBlockRef = useRef(null);
+
+   // Event handler to scroll to the third-block div
+   const scrollToThirdBlock = () => {
+     thirdBlockRef.current.scrollIntoView({ behavior: "smooth" });
+   };
+ 
 
   return (
     <>
@@ -20,7 +29,7 @@ export const Home = () => {
               Una sola plataforma que te facilita el proceso y te ayuda a
               cumplir tus sueños
             </h5>
-            <button className="button-becas">Ver Becas</button>
+            <button className="button-becas" onClick={scrollToThirdBlock}>Ver Becas</button>
           </div>
           <div className="image-side">
             <img
@@ -67,41 +76,12 @@ export const Home = () => {
           </div>
         </div>
       </div>
-      <div className="third-block">
+      <div className="third-block" ref={thirdBlockRef}>
         <div className="container">
           <h1 className="title-becas">
             Becas Disponibles <i class="fa-solid fa-arrow-right" />
           </h1>
           <div className="card-holder my-4">
-            <CardBeca />
-            <CardBeca />
-            <CardBeca />
-            <CardBeca />
-            <CardBeca />
-            <CardBeca />
-            <CardBeca />
-            <CardBeca />
-            <CardBeca />
-            <CardBeca />
-            <CardBeca />
-            <CardBeca />
-            <CardBeca />
-            <CardBeca />
-            <CardBeca />
-            <CardBeca />
-            <CardBeca />
-            <CardBeca />
-            <CardBeca />
-            <CardBeca />
-            <CardBeca />
-            <CardBeca />
-            <CardBeca />
-            <CardBeca />
-            <CardBeca />
-            <CardBeca />
-            <CardBeca />
-            <CardBeca />
-            <CardBeca />
             <CardBeca />
           </div>
         </div>
