@@ -104,7 +104,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 			getAlquileres: async () => {
 				try {
 					let data = await axios.get(process.env.BACKEND_URL + '/api/gethouses/rent')
-					console.log(data);
 					setStore({ alquileres: data.data.results });
 				} catch (error) {
 					console.log(error);
@@ -118,9 +117,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			getVentas: async () => {
 				try {
 					let data = await axios.get(process.env.BACKEND_URL + '/api/gethouses/sell')
-					console.log(data);
 					setStore({ ventas: data.data.results });
-
 				} catch (error) {
 					console.log(error);
 					// if (error.response.status === 404) {

@@ -15,8 +15,6 @@ export const Home = () => {
     useEffect(() => {
 		actions.getAlquileres()
 		actions.getVentas()
-        console.log(store.ventas);
-        console.log(store.alquileres);
 	}, [])
 
     
