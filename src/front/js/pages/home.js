@@ -83,35 +83,6 @@ export const Home = () => {
           </h1>
           <div className="card-holder my-4">
             <CardBeca />
-            <CardBeca />
-            <CardBeca />
-            <CardBeca />
-            <CardBeca />
-            <CardBeca />
-            <CardBeca />
-            <CardBeca />
-            <CardBeca />
-            <CardBeca />
-            <CardBeca />
-            <CardBeca />
-            <CardBeca />
-            <CardBeca />
-            <CardBeca />
-            <CardBeca />
-            <CardBeca />
-            <CardBeca />
-            <CardBeca />
-            <CardBeca />
-            <CardBeca />
-            <CardBeca />
-            <CardBeca />
-            <CardBeca />
-            <CardBeca />
-            <CardBeca />
-            <CardBeca />
-            <CardBeca />
-            <CardBeca />
-            <CardBeca />
           </div>
         </div>
       </div>
