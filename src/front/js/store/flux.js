@@ -1,4 +1,4 @@
-let BACKEND_URL= "https://fantastic-goggles-7vrx5j6wvwrcr67v-3001.app.github.dev/"
+let BACKEND_URL= "https://bug-free-winner-5gqqjj4445w7fv69p-3001.app.github.dev/"
 import axios from "axios";
 
 const getState = ({ getStore, getActions, setStore }) => {
@@ -50,10 +50,34 @@ const getState = ({ getStore, getActions, setStore }) => {
 				//reset the global store
 				setStore({ demo: demo });
 			},
-			signup: (firstName, lastName, email, password, phone, confpassword)=>{
+			signup: async (firstName, lastName, email, password, phone, confpassword)=>{
 				console.log(firstName, lastName,email,phone,password,confpassword);
+				try {
+					let data = await axios.post("https://bug-free-winner-5gqqjj4445w7fv69p-3001.app.github.dev/api/signup", {
+
+						"name": firstName,
+						"lastname": lastName,
+						"email": email,
+						"phone_number": phone,
+						"password": password,
+						"is_admin": false
+
+					})
+					console.log(data);
+					return true;
+
+				} catch (error) {
+					
+					if (error.response.status === 404) {
+						alert (error.response.data.msg)
+						
+					}
+					return false;
+				}
 
 			},
+
+			
 
 			login: async (email,password) => {
 				try {
@@ -76,7 +100,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 				
 		}
+	}
 	};
-};
+
 
 export default getState;

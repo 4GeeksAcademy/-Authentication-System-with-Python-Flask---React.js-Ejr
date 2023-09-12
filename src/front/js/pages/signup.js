@@ -22,12 +22,16 @@ function Singup() {
   }
   else{
     let logged= await actions.signup(firstName, lastName, email, password, phone, confpassword)
-      setFirstName("")
+    if (logged === true) {
+      navigate("/login")
+
+    }
+  }
+  setFirstName("")
       setLastName("")
       setEmail("")
       setPassword("")
       setConfpassword("")
-  }
    }
     
 
