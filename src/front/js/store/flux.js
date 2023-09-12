@@ -30,7 +30,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			// empieza cecilia línea 30
 			login: async (email, password) => {
 				try {
-					let data = await axios.post('https://glorious-trout-95xqqw47q4hxp5q-3001.app.github.dev/api/login',{
+					let data = await axios.post(process.env.BACKEND_URL + '/api/login',{
 						"email":email,
 						"password":password
 					})
