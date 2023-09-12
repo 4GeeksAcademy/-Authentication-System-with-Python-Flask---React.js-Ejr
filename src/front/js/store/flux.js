@@ -1,7 +1,9 @@
+import axios from "axios";
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
 			message: null,
+			auth:false,
 			demo: [
 				{
 					title: "FIRST",
@@ -16,6 +18,61 @@ const getState = ({ getStore, getActions, setStore }) => {
 			]
 		},
 		actions: {
+
+			
+
+
+
+
+
+
+
+			// empieza cecilia línea 30
+			login: async (email, password) => {
+				try {
+					let data = await axios.post('https://glorious-trout-95xqqw47q4hxp5q-3001.app.github.dev/api/login',{
+						"email":email,
+						"password":password
+					})
+					console.log(data);
+					localStorage.setItem("token", data.data.access_token);
+					setStore({auth:true})
+					return true;
+				} catch (error) {
+					console.log(error)
+					return false;
+				}
+			},
+
+
+
+
+			// empieza juan línea 50
+			/* código de juan 
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			*/
 			// Use getActions to call a function within a fuction
 			exampleFunction: () => {
 				getActions().changeColor(0, "green");
