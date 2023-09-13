@@ -19,6 +19,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			// ]
 			alquileres : [],
 			ventas : [],
+			casa: {},
 			auth : false
 		},
 		actions: {
