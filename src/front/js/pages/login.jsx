@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
 import { Context } from "../store/appContext";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import logoecasa from "../../img/logoe-casa.png";
 import googleLogo from "../../img/logo-google.png";
 
@@ -10,9 +10,15 @@ export const Login = () => {
     const [contrasena, setContrasena] = useState("")
     const { store, actions } = useContext(Context)
 
+    const navigate = useNavigate()
+
     async function handleSubmit(e) {
         e.preventDefault()
-        await actions.login(email, contrasena)
+        let logged = await actions.login(email, contrasena);
+        if (logged === true) {
+            navigate("/")
+            await actions.getPerfil(email, contrasena);
+        }
     }
 
     return (
