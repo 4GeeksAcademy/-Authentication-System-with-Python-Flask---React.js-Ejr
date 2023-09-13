@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from "react-router-dom";
 
 const IntroView = () => {
   return (
@@ -25,7 +24,7 @@ const IntroView = () => {
             </div>
           </div>
           <div className="col-md-6">
-            <img src="https://img.freepik.com/vector-gratis/ilustracion-abstracta-diseno_335657-5136.jpg?w=1380&t=st=1694535047~exp=1694535647~hmac=a042455731652a926d2084d147ef0b682bea07095fe7faa127140e3b75369eceN" alt="Descripción de la imagen" style={{ width: "100%" }} />
+            <img src="https://img.freepik.com/vector-gratis/ilustracion-concepto-equipo-ui-ux_114360-11703.jpg?w=2000&t=st=1694632172~exp=1694632772~hmac=ce191f67379da31d2830de1fd1823e9c38aadee48c13488b21f9915fcfa2bc23" alt="Descripción de la imagen" style={{ width: "120%" }} />
           </div>
         </div>
       </div>
