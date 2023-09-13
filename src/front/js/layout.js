@@ -8,6 +8,7 @@ import { Demo } from "./pages/demo";
 import { Single } from "./pages/single";
 import injectContext from "./store/appContext";
 import { Login } from "./pages/login.jsx";
+import Details from "./pages/detallesdecasas";
 
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
@@ -32,6 +33,7 @@ const Layout = () => {
                         <Route element={<Single />} path="/single/:theid" />
                         <Route element={<h1>Not found!</h1>} />
                         <Route element={<Singup />} path="/signup" />
+                        <Route element={<Details />} path="/details" />
                     </Routes>
                     <Footer />
                 </ScrollToTop>
