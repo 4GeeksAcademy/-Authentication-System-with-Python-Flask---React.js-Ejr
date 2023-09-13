@@ -30,7 +30,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			// empieza cecilia línea 30
 			login: async (email, password) => {
 				try {
-					let data = await axios.post('https://glorious-trout-95xqqw47q4hxp5q-3001.app.github.dev/api/login',{
+					let data = await axios.post(process.env.BACKEND_URL + '/api/login',{
 						"email":email,
 						"password":password
 					})
@@ -43,6 +43,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return false;
 				}
 			},
+			
 
 
 
@@ -77,6 +78,41 @@ const getState = ({ getStore, getActions, setStore }) => {
 					setStore({ auth: false });
 				}
 			},
+			logout: () => {
+				console.log("Funciona")
+				localStorage.removeItem("token")
+				setStore({auth:false})
+			},
+
+			/* empieza código de cecilia valid-token */
+			validToken: async () => {
+				let token = localStorage.getItem("token")
+				try {
+					if (token) {
+						let data = await axios.get(process.env.BACKEND_URL +'/valid-token',{
+							"headers":{'Authorization': 'Bearer '+token}
+						})
+						if (data.status === 200) {
+							console.log(data.status);
+							setStore({auth:true})
+							return true;
+						}
+					}else {
+						setStore({auth:false})
+							return false;
+					}
+					
+				} catch (error) {
+					console.log("errorrrrr:" + error)
+					if (error.response.status === 401) {
+						setStore({auth:false})
+					}
+					return false;
+				}
+			},
+			
+
+
 			
 			
 			
