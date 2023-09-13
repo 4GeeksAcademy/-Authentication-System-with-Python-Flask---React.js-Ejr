@@ -7,10 +7,8 @@ import { Link } from "react-router-dom";
 export const Home = () => {
   const { store, actions } = useContext(Context);
 
-   // Create a ref for the third-block div
    const thirdBlockRef = useRef(null);
 
-   // Event handler to scroll to the third-block div
    const scrollToThirdBlock = () => {
      thirdBlockRef.current.scrollIntoView({ behavior: "smooth" });
    };

@@ -1,5 +1,6 @@
 import showAlert from "../utilidades/alerts";
 
+
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
@@ -37,7 +38,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				deadline: null,
 				modality: null,
 				coverage: null,
-				professional_field : null,
+				professional_field: null,
 				description: null,
 				url_to: null
 			},
@@ -48,9 +49,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 			hiddenLogout: true,
 			hiddenSignup: false,
 
-			allScholarships:[]
+			allScholarships: []
 
-          
+
 		},
 		actions: {
 			isPropertyEmpty: (obj) => {
@@ -101,8 +102,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 				const actions = getActions()
 				try {
 					if (actions.isPropertyEmpty(store.login_user)) {
-						alert("Le falta llenar algunos datos :S");
-						return;
+						const customAlertElement = document.getElementById("customAlertLogIn"); {
+							customAlertElement.innerHTML = '<div class="alert alert-danger d-flex justify-content-center" role="alert">Le falta llenar algunos datos </div>';
+							return;
+						};
 					}
 
 					const response = await fetch(process.env.BACKEND_URL + "/login", {
@@ -119,7 +122,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						localStorage.setItem("jwt-token", result.token);
 						setStore({ isloged: true });
 						setStore({ hiddenLogin: true });
-						setStore({ hiddenMyProfile: false }); 
+						setStore({ hiddenMyProfile: false });
 						setStore({ hiddenSignup: true });
 						setStore({ hiddenLogout: false });
 						setStore({current_user : result}) 
@@ -214,7 +217,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					if (response.ok) {
 						localStorage.setItem("jwt-token", result.token);
 						setStore({ insLoged: true });
-						setStore({ hiddenMyInsProfile: false }); 
+						setStore({ hiddenMyInsProfile: false });
 						setStore({ hiddenLogin: true });
 						setStore({ hiddenSignup: true });
 						setStore({ hiddenLogout: false });
@@ -279,7 +282,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({ insLoged: value })
 				setStore({ hiddenLogin: value })
 
-				
+
 
 			},
 			changeMyProfileStatus: () => {
@@ -301,19 +304,19 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({ signup: false })
 				setStore({ insSignup: false })
 			},
-           
+
 			getAllScholarShips: async () => {
 				const store = getStore()
 				const actions = getActions()
 				try {
-					
+
 					const response = await fetch(process.env.BACKEND_URL + "/scholarships", {
 						method: 'GET'
 					})
 					const result = await response.json()
 					console.log(result);
-                    setStore({allScholarships : result.scholarships}) 
-					
+					setStore({ allScholarships: result.scholarships })
+
 					if (response.status == 400) {
 						alert(result.message)
 						alert("NO ALL SCHOLARSHIPS")
@@ -330,73 +333,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 				} catch (error) {
 					console.log(error + " Error loading message from backend")
 				}
-			},
-
-			getMyTracker: async () => {
-				const myToken = localStorage.getItem("jwt-token");
-				const store = getStore()
-				const actions = getActions()
-				try {
-					
-					const response = await fetch(process.env.BACKEND_URL + "/my_tracker", {
-						method: 'GET',
-						headers: {
-							'Authorization': 'Bearer ' + myToken
-						}
-					})
-					const result = await response.json()
-					console.log(result);
-					setStore({my_tracker : result.becas_guardadas})
-					
-					if (response.status == 400) {
-						alert(result.message)
-						alert("No scholarships found")
-						console.log(result)
-					}
-					if (response.ok) {
-						console.log("Becas actualizadas")
-					} else {
-						alert(result.message)
-					}
-				} catch (error) {
-					console.log(error + " Error loading message from backend")
-				}
-			},
-
-			setSelectedScholarshipId: (scholarshipId) => {
-				setStore({ selectedScholarshipId: scholarshipId });
-			  },
-
-			addToMyTracker: async () => {
-				const myToken = localStorage.getItem("jwt-token");
-				const store = getStore();
-				const actions = getActions();
-			  
-				try {
-					const response = await fetch(process.env.BACKEND_URL + "/add_to_tracker", {
-						method: 'POST',
-						headers: {
-						  'Authorization': 'Bearer ' + myToken,
-						  'Content-Type': 'application/json',
-						},
-      					body: JSON.stringify({ scholarship_id: store.selectedScholarshipId }), // Utiliza el ID almacenado en el estado
-					  });
-			  
-				  const result = await response.json();
-				  console.log(result);
-				  if (response.ok) {
-					alert("Beca guardada exitosamente");
-				  } else {
-					alert(result.error || result.message); // Muestra cualquier mensaje de error del servidor
-				  }
-				} 
-				  
-				catch (error) {
-				  console.log(error + " Error loading message from backend");
-				}
-			  }
-			
-		
 
 		}
 	};
