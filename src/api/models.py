@@ -109,7 +109,9 @@ class Payment(db.Model):
     def serialize(self):
         return {
             "id": self.id,
-            "plan_start_date": self.type,
-            "plan_end_date": self.price,     
+            "plan_start_date": self.plan_start_date,
+            "plan_end_date": self.plan_end_date,
+            "id_user": self.id_user,
+            "id_plan":self.id_plan,     
             # do not serialize the password, its a security breach
         }
