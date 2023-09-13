@@ -18,7 +18,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 			// 	}
 			// ]
 			alquileres : [],
-			ventas : []
+			ventas : [],
+			auth : false
 		},
 		actions: {
 
@@ -91,7 +92,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						})
 					console.log(data);
 					localStorage.setItem("token", data.data.access_token)
-					// setStore({ auth : true})
+					setStore({ auth : true})
 					return true
 				} catch (error) {
 					console.log(error);
@@ -102,9 +103,27 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
+			validToken: async () => {
+				try {
+					let data = await axios.get(process.env.BACKEND_URL + '/api/valid_token',
+					{
+						headers : {"Authorization" : "Bearer " + localStorage.getItem('token')}
+					})
+					setStore({ auth : true})
+					console.log(data);
+					return true
+				} catch (error) {
+					console.log(error);
+					// if (error.response.status === 404) {
+					// 	alert(error.response.data.msj)
+					// }
+					return false
+				}
+			},
+
 			getPerfil: async () => {
 				try {
-					let data = await axios.get('/api/valid_token',
+					let data = await axios.get(process.env.BACKEND_URL + '/api/perfil',
 					{
 						headers : {"Authorization" : "Bearer " + localStorage.getItem('token')}
 					})
