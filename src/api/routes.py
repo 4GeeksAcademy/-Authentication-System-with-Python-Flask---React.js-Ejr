@@ -138,6 +138,67 @@ def crear_casa_favorita():
 
     return request_body, 200
 
+# //editar posteos ruta protegida
+
+@api.route('/post', methods=['PUT'])
+@jwt_required()
+def editar_posteos():
+    
+    request_body = request.get_json(force=True) #obtiene el cuerpo que se envíe por el body desde el postman
+
+
+    # Accede a la identidad del usuario con get_jwt_identity
+    current_user_email = get_jwt_identity()
+    email = request.json.get("email", None)
+    password = request.json.get("password", None)
+
+    user_query = User.query.filter_by(email=email).first()
+    
+    # if user_query is None:
+    #     return {"msg": "Este email no existe"}, 404
+
+    # if email != user_query.email or password != user_query.password:
+    #     return {"msg": "Email o contraseña incorrectos"}, 404
+
+    # access_token = create_access_token(identity=email)
+
+    #validamos que exista una casa
+    casa_query = House.query.filter_by(id = request_body["house_id"]).first() #id es la propiedad de la tabla House y house_id es el valor que se pasa por URL
+    if casa_query is None:
+        return jsonify({"msg": "Esta casa no existe"}), 404
+    
+    #validamos que la casa ya existía para ese usuario
+    usuario_query = User.query.filter_by(user_id = request_body["user_id"]).filter_by(house_id =request_body["house_id"]).first() #devuelve los valores que coinciden (del user_id la tabla House)
+    if usuario_query:    #la casa existe para ese usuario 
+            return jsonify({"msg": "Tienes esta casa, puedes editarla"}), 400
+
+    # response_body = {
+    #     "access_token": access_token,
+    #     "user": user_query.serialize()
+    # }   
+
+    return jsonify("ok"), 200
+
+# documentacion para PUT
+# user1 = Person.query.get(person_id)
+# if user1 is None:
+#     raise APIException('User not found', status_code=404)
+
+# if "username" in body:
+#     user1.username = body["username"]
+# if "email" in body:
+#     user1.email = body["email"]
+# db.session.commit()
+
+
+# perfil de usuario
+@api.route("/perfil", methods=["GET"])
+@jwt_required()
+def perfil():
+    # Access the identity of the current user with get_jwt_identity
+    current_user = get_jwt_identity()
+    return jsonify(logged_in_as=current_user), 200
+
 
 
 @api.route("/post", methods=['POST'])
