@@ -83,6 +83,33 @@ const getState = ({ getStore, getActions, setStore }) => {
 				localStorage.removeItem("token")
 				setStore({auth:false})
 			},
+
+			/* empieza código de cecilia valid-token */
+			validToken: async () => {
+				let token = localStorage.getItem("token")
+				try {
+					if (token) {
+						let data = await axios.get(process.env.BACKEND_URL +'/valid-token',{
+							"headers":{'Authorization': 'Bearer '+token}
+						})
+						if (data.status === 200) {
+							console.log(data.status);
+							setStore({auth:true})
+							return true;
+						}
+					}else {
+						setStore({auth:false})
+							return false;
+					}
+					
+				} catch (error) {
+					console.log("errorrrrr:" + error)
+					if (error.response.status === 401) {
+						setStore({auth:false})
+					}
+					return false;
+				}
+			},
 			
 
 
