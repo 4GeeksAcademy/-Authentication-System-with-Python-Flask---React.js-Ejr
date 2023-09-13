@@ -158,6 +158,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					// fetching data from the backend
 					const {apiFetchPublic} = getActions()
 					const data = await apiFetchPublic("/hello")
+					console.log("DATA: ", data)
 					setStore({ message: data.data.message })
 					// don't forget to return something, that is how the async resolves
 					return data;
