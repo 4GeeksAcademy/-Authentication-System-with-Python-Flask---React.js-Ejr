@@ -125,6 +125,16 @@ def delete_user(user_id):
         db.session.commit()
         return jsonify({"msg": "User deleted"}), 200
 
+ # Validacion del Token
+
+@api.route("/valid-token", methods=["GET"])
+@jwt_required()
+def valid_token():
+    current_user = get_jwt_identity()
+    return jsonify({"is_login":True}), 200
+
+
+
 
 # # # # # Favorite 🔳🔳🔳🟧🟨🟩🟦
 
