@@ -15,9 +15,9 @@ const getState = ({ getStore, getActions, setStore }) => {
     },
 
     actions: {
-      //------------------------------< registro de usuario >------------------------------->>
+      //---------< registro de usuario >------------------------------->>
 
-      //------------------------------< funcion para  registro  de usuario >------------------------------------------->
+      //---------< funcion para  registro  de usuario >----------------->
 
       handleChangeRegister: (e) => {
         const { newUser } = getStore();

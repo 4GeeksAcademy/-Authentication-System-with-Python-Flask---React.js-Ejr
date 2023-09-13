@@ -15,8 +15,9 @@ import { DonacionesRealizadas } from "./pages/donacionesRalizadas";
 import Card from "./component/reviewsLibros/Card";
 import Testimonio from "./component/reviewsLibros/Testimonio";
 import BookReviews from "./pages/BookReviews";
-
+import Login from "./component/login/Login";
 import Intercambio from "./pages/Intercambio";
+import  FormularioRegistro  from "./pages/formularioRegistro";
 
 /* FOOTERS */
 import { GuiaCompra } from "./pages/guiaCompra";
@@ -25,17 +26,8 @@ import { MetodoEnvio } from "./pages/metodoEnvio";
 import { SobreNosotros } from "./pages/sobreNosotros";
 import { NuestraHistoria } from "./pages/nuestraHistoria";
 import { ComoDonar } from "./pages/comoDonar";
-
-
-
-
-import  FormularioRegistro  from "./pages/formularioRegistro";
-
-
 import injectContext from "./store/appContext";
-
 import { Navbar } from "./component/navbar";
-import { Navbar2 } from "./component/navbar2";
 import { Footer } from "./component/footer";
 
 
@@ -53,9 +45,8 @@ const Layout = () => {
             <BrowserRouter basename={basename}>
                 <ScrollToTop>
                     {useAlternateNavbar ? <Navbar /> : <Navbar2 />}
-
                     <Routes>
-                        <Route element={<Home />} path="/" />z
+                        <Route element={<Home />} path="/" />
                         <Route element={<LibroVenta />} path="/libroVenta" />
                         <Route element={<MasVendidos />} path="/masVendidos" />
                         <Route element={<LibrosIntercambio />} path="/librosIntercambio" />
@@ -67,6 +58,7 @@ const Layout = () => {
                         <Route element={<DonacionesRealizadas />} path="/donacionesRalizadas" />
                         <Route element={<ComoDonar />} path="/comoDonar" />
                         <Route element={<BookReviews />} path="/bookreviews" />
+                        <Route element={<Login />} path="login" />
                         <Route element={<Intercambio />} path="/intercambio" />
 
                         {/* <Route element={<FormularioRegistro />} path="/formularioRegistro" /> */}
