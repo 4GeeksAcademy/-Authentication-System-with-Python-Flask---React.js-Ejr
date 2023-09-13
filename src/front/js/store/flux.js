@@ -18,7 +18,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 			// 	}
 			// ]
 			alquileres : [],
-			ventas : []
+			ventas : [],
+			casa: {}
 		},
 		actions: {
 
@@ -127,11 +128,27 @@ const getState = ({ getStore, getActions, setStore }) => {
 					// }
 					return false
 				}
+			},
+
+			getDetalles: async (id)=>{
+				console.log(id);
+				try {
+					let data = await axios.get(process.env.BACKEND_URL + '/api/gethouse/' + id)
+					setStore({ casa: data.data.results });
+					console.log(data.data.results);
+				} catch (error) {
+					console.log(error);
+					// if (error.response.status === 404) {
+					// 	alert(error.response.data.msj)
+					// }
+					return false
+
+
 			}
 
 		}
 	}
-};
+}};
 
 
 export default getState;

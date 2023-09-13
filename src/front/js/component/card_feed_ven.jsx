@@ -14,7 +14,7 @@ export const CardFeedVen = (props) => {
                 </div>
                 <div className="d-flex justify-content-between px-1">
                     <i className="fa-regular fa-heart"></i>
-                    <i className="fa-solid fa-plus"></i>
+                    <Link to={"/detailsventas/" + props.id}><i className="fa-solid fa-plus"></i></Link>
                 </div>
             </div>
         </div>
@@ -25,5 +25,6 @@ CardFeedVen.propTypes = {
     
     ubicacion: PropTypes.string,
     precio: PropTypes.number,
+    id: PropTypes.number
 
 };
