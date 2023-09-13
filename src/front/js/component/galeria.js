@@ -12,7 +12,7 @@ import lebron17 from "../../img/lebron17.jpg";
 import basket6 from "../../img/basket6.jpeg";
 const Galeria = () => {
   return (
-    <div className="container">
+    <div className="contSuperior container">
       <div className="ecommerce-gallery" data-mdb-zoom-effect="true" data-mdb-auto-height="true">
         <div className="row">
           <div style={{ textAlign: "center" }} className="col-12">

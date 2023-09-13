@@ -18,6 +18,12 @@ def create_user():
     #recibir correo y password
     email = request.json.get("email")
     password = request.json.get("password")
+    name = request.json.get("name")
+    #buscar usuario en la bd, que me traiga el primer resultado
+    user = User.query.filter_by(email = email).first()
+    #si existe el usuario mostrar error
+    if user is not None:
+        return jsonify({"message": "User already exist"}), 401
     #definir secure_password que se va a guardar en el campo de la bd
     secure_password = bcrypt.generate_password_hash(password, 10).decode("utf-8")
     #crear nuevo usuario a partir de esta data
@@ -26,6 +32,7 @@ def create_user():
     new_user.email = email
     new_user.password = secure_password
     new_user.is_active = True
+    new_user.name = name
     db.session.add(new_user)
     db.session.commit()
     return jsonify({"msg":"Usuario registrado"}), 201
@@ -68,7 +75,10 @@ def hello_protected():
     response = {
         "userId": user_id,
         "claims": claims,
-        "isActive": user.is_active
+        "isActive": user.is_active,
+        "name": user.name,
+        "address": user.address,
+        "phone": user.phone,
     }
     return jsonify(response)
 

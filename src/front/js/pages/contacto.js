@@ -6,7 +6,7 @@ import Location from "../component/location.js";
 function ContactPage(){
     return(
         <div>
-            <div className="contacto text-center">
+            <div className="contSuperior text-center">
                 <h1>Contacto</h1>
                 <div className="divider divider-default m-3"></div>
             </div>
