@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { Context } from "../store/appContext";
 import { useParams, useLocation } from 'react-router-dom';
 import diego from "../../img/diego.jpg";
+import { Comentarios } from '../component/comentarios_casas.jsx';
 
 function Details() {
   const { store, actions } = useContext(Context)
@@ -52,13 +53,14 @@ function Details() {
       </ul>
       <h5 className='ms-3 mt-3'>Comentarios:</h5>
       <div className="d-flex " style={{ overflowX: 'scroll', scrollSnapType: 'x mandatory'}}>
-      <div className="d-flex "><img src={diego} style={{ width: "150px", height: "50px" }} className="rounded-circle me-3" alt="..." /> <p>Un lugar increíble, Armando estuvo pendiente de nosotros para que estemos como en Casa.</p></div>
-      <div className="d-flex "><img src={diego} style={{ width: "150px", height: "50px" }} className="rounded-circle me-3" alt="..." /> <p>Un lugar increíble, Armando estuvo pendiente de nosotros para que estemos como en Casa.</p></div>
-      <div className="d-flex "><img src={diego} style={{ width: "150px", height: "50px" }} className="rounded-circle me-3" alt="..." /> <p>Un lugar increíble, Armando estuvo pendiente de nosotros para que estemos como en Casa.</p></div>
-      <div className="d-flex "><img src={diego} style={{ width: "150px", height: "50px" }} className="rounded-circle me-3" alt="..." /> <p>Un lugar increíble, Armando estuvo pendiente de nosotros para que estemos como en Casa.</p></div>
-      <div className="d-flex "><img src={diego} style={{ width: "150px", height: "50px" }} className="rounded-circle me-3" alt="..." /> <p>Un lugar increíble, Armando estuvo pendiente de nosotros para que estemos como en Casa.</p></div>
-      <div className="d-flex "><img src={diego} style={{ width: "150px", height: "50px" }} className="rounded-circle me-3" alt="..." /> <p>Un lugar increíble, Armando estuvo pendiente de nosotros para que estemos como en Casa.</p></div>
-      <div className="d-flex "><img src={diego} style={{ width: "150px", height: "50px" }} className="rounded-circle me-3" alt="..." /> <p>Un lugar increíble, Armando estuvo pendiente de nosotros para que estemos como en Casa.</p></div>
+      <Comentarios/>
+      <Comentarios/>
+      <Comentarios/>
+      <Comentarios/>
+      <Comentarios/>
+      <Comentarios/>
+      <Comentarios/>
+      <Comentarios/>
 
       </div>
       
