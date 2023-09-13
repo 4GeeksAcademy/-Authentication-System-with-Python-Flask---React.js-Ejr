@@ -83,26 +83,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 
 
-			login: async (email, password) => {
-				try {
-					let data = await axios.post(process.env.BACKEND_URL + '/api/login',
-						{
-							"email": email,
-							"password": password
-						})
-					console.log(data);
-					localStorage.setItem("token", data.data.access_token)
-					setStore({ auth : true})
-					return true
-				} catch (error) {
-					console.log(error);
-					if (error.response.status === 404) {
-						alert(error.response.data.msg)
-					}
-					return false
-				}
-			},
-
+			
 			validToken: async () => {
 				try {
 					let data = await axios.get(process.env.BACKEND_URL + '/api/valid_token',
@@ -115,28 +96,53 @@ const getState = ({ getStore, getActions, setStore }) => {
 				} catch (error) {
 					console.log(error);
 					// if (error.response.status === 404) {
-					// 	alert(error.response.data.msj)
-					// }
-					return false
-				}
-			},
+						// 	alert(error.response.data.msj)
+						// }
+						return false
+					}
+				},
+				
+				getPerfil: async () => {
+					try {
+						let data = await axios.get(process.env.BACKEND_URL + '/api/perfil',
+						{
+							headers : {"Authorization" : "Bearer " + localStorage.getItem('token')}
+						})
+						console.log(data);
+						return true
+					} catch (error) {
+						console.log(error);
+						// if (error.response.status === 404) {
+							// 	alert(error.response.data.msj)
+							// }
+							return false
+						}
+					},
+					
+					login: async (email, password) => {
+						try {
+							let data = await axios.post(process.env.BACKEND_URL + '/api/login',
+								{
+									"email": email,
+									"password": password
+								})
+							console.log(data);
+							localStorage.setItem("token", data.data.access_token)
+							setStore({ auth : true})
+							return true
+						} catch (error) {
+							console.log(error);
+							if (error.response.status === 404) {
+								alert(error.response.data.msg)
+							}
+							return false
+						}
+					},
 
-			getPerfil: async () => {
-				try {
-					let data = await axios.get(process.env.BACKEND_URL + '/api/perfil',
-					{
-						headers : {"Authorization" : "Bearer " + localStorage.getItem('token')}
-					})
-					console.log(data);
-					return true
-				} catch (error) {
-					console.log(error);
-					// if (error.response.status === 404) {
-					// 	alert(error.response.data.msj)
-					// }
-					return false
-				}
-			},
+					logout: async () => {
+						localStorage.removeItem('token')
+						setStore({ auth : false})
+					},
 
 			getAlquileres: async () => {
 				try {
