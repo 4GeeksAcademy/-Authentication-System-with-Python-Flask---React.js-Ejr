@@ -43,6 +43,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return false;
 				}
 			},
+			
 
 
 
@@ -77,6 +78,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 					setStore({ auth: false });
 				}
 			},
+			logout: () => {
+				console.log("Funciona")
+				localStorage.removeItem("token")
+				setStore({auth:false})
+			},
+			
+
+
 			
 			
 			

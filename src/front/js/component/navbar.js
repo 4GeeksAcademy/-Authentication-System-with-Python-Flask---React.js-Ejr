@@ -1,11 +1,18 @@
 import React from "react";
 import { useContext } from "react";
 import { Context } from "../store/appContext";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ComponentifyLogo from "../../img/logo-componentify-2.png"
 
 export const Navbar = () => {
 	const { store, actions } = useContext(Context);
+	const navigate = useNavigate();
+	async function logout(event) { // al presionar el botón logout, redirecciona al home y tiene que aparecer el botón login en la barra
+        event.preventDefault()
+		actions.logout()
+            navigate("/")
+        }
+    
 	return (
 		<nav class="navbar bg-body-tertiary" style={{"background-color":"#FD5812"}}>
 			<div class="container-fluid">
@@ -31,7 +38,7 @@ export const Navbar = () => {
 							<li><a class="dropdown-item" href="#">Favorites</a></li>
 							<li><a class="dropdown-item" href="#">Payment method</a></li>
 							<li><hr class="dropdown-divider"/></li>
-							<li><a class="dropdown-item" href="#">Log Out</a></li>
+							<li><a onClick={logout} class="dropdown-item" href="#">Log Out</a></li>
 						</ul>
 					</div>:
       				<Link to="/login"class="btn btn-outline-light mx-2" type="submit">Login</Link>
