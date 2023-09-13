@@ -6,9 +6,6 @@ const Tracker = () => {
   return (
     <div className="container justify-content-column align-items-center">
       <CardAppli />
-      <CardAppli />
-      <CardAppli />
-      <CardAppli />
     </div>
   );
 };

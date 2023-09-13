@@ -16,6 +16,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 				email: null,
 				password: null
 			},
+			current_user: {},
+			current_insti_user: {},
+			my_tracker: [],
+			selectedScholarshipId: null,
 			insSignup: false,
 			insLoged: false,
 			institution_data: {
@@ -116,14 +120,16 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 					if (response.ok) {
 						localStorage.setItem("jwt-token", result.token);
-						alert("Login success");
 						setStore({ isloged: true });
 						setStore({ hiddenLogin: true });
 						setStore({ hiddenMyProfile: false });
 						setStore({ hiddenSignup: true });
 						setStore({ hiddenLogout: false });
+						setStore({current_user : result}) 
 
+						alert("Login success");
 						return true;
+
 					} else {
 						setStore({ isloged: false })
 						alert(result.message)
@@ -135,6 +141,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 
 			},
+
+			
 			handleChange: (e, type) => {
 				const store = getStore()
 				if (type == "login") {
@@ -213,6 +221,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						setStore({ hiddenLogin: true });
 						setStore({ hiddenSignup: true });
 						setStore({ hiddenLogout: false });
+						setStore({current_insti_user : result}) 
 						alert("Welcome!");
 
 						console.log("Nombre de la institución:", result.institution_name); // Agrega esta línea para depurar
@@ -324,7 +333,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 				} catch (error) {
 					console.log(error + " Error loading message from backend")
 				}
-			}
 
 		}
 	};

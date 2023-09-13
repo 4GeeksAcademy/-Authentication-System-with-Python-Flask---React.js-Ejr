@@ -26,9 +26,18 @@ export const Navbar = () => {
               Preguntas Frecuentes
             </button>
           </Link>
-          <Link to="/tracker">
-            <button className="button-regular mx-1">Mis Aplicaciones</button>
+
+          {/* en este apartado aseguramos que mis aplicaciones sea solamente visible para usuarios y funcional para usuarios registrados */}
+          <Link to={(!store.isloged || store.insLoged) ? "/iniciarsesionEleccion" : "/tracker"}>
+            {(!store.insLoged) && (
+              <button className="button-regular mx-1" onClick={() => actions.getMyTracker()}>
+                Mis Aplicaciones
+              </button>
+            )}
           </Link>
+
+          {/* las siguientes dos condiciones funcionan para poner a disposición el tipo de perfil según el tipo de user */}
+
           <Link to="/perfil_institucional">
             {store.insLoged ? (
               <button className="button-regular mx-1" onClick={() => actions.changeMyInstitutionalProfileStatus()}>
@@ -43,20 +52,22 @@ export const Navbar = () => {
             ) : null}
           </Link>
 
+          {/* las siguientes dos condiciones permiten hacer que aparezcan y desaparezcan los hyperlinks a conveniencia y utilidad */}
+
           <div className="buttons-right mx-2">
-                <Link to="/iniciarsesionEleccion">
-                {!store.isloged && !store.insLoged && (
-                  <button className="button-login" onClick={() => actions.changeLogInStatus()}>Iniciar sesión</button>
-                  )}
-                </Link>
+            <Link to="/iniciarsesionEleccion">
+              {!store.isloged && !store.insLoged && (
+                <button className="button-login" onClick={() => actions.changeLogInStatus()}>Iniciar sesión</button>
+              )}
+            </Link>
 
-              
-                <Link to="/registroEleccion">
-                {!store.isloged && !store.insLoged && (
 
-                  <button className="button-signup" onClick={() => actions.changeSignUpStatus()}>Registrarse</button>
-                  )}
-                </Link>
+            <Link to="/registroEleccion">
+              {!store.isloged && !store.insLoged && (
+
+                <button className="button-signup" onClick={() => actions.changeSignUpStatus()}>Registrarse</button>
+              )}
+            </Link>
 
             <Link to="/">
               <button className="button-login" hidden={store.hiddenLogout} onClick={() => actions.logout()}>Cerrar sesión</button>

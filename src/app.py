@@ -13,6 +13,8 @@ from api.admin import setup_admin
 from api.commands import setup_commands
 from flask_jwt_extended import jwt_required, get_jwt_identity, create_access_token, JWTManager
 from flask_bcrypt import Bcrypt
+from sqlalchemy.exc import IntegrityError
+
 
 
 #from models import Person
@@ -72,17 +74,19 @@ def serve_any_other_file(path):
     response.cache_control.max_age = 0 # avoid cache memory
     return response
 
+
 @app.route('/user', methods=['GET'])
-def get_users():
-    users = User.query.all()
-    users_serialized = list(map(lambda x: x.serialize(), users))
-    response_body = {
-        "msg": "Hello, this is your GET /user response",
-        "users" : users_serialized
-    }
-
-    return jsonify(response_body), 200
-
+@jwt_required()  # Requiere que el usuario esté autenticado con un token válido
+def get_user():
+    current_user_id = get_jwt_identity()
+    user = User.query.get(current_user_id)  # Suponiendo que tienes un modelo User con un campo 'id'
+    
+    if user:
+        user_data = user.serialize()  # Suponiendo que tienes un método serialize() en tu modelo User
+        return jsonify({"user": user_data}), 200
+    else:
+        return jsonify({"message": "Usuario no encontrado"}), 404
+    
 @app.route('/user/<int:user_id>', methods=['GET'])
 def get_single_user(user_id):
     single_user = User.query.get(user_id)
@@ -90,9 +94,6 @@ def get_single_user(user_id):
         return jsonify({"msg": f"The id {user_id} user doesn't exist"}), 404
     
     user_info = single_user.serialize()
-#    query_scholarships = Scholarship.query.filter_by(trackers_id = single_user.tracker_id).all()
-#    scholarships = [scholarship.serialize() for scholarship in query_scholarships]
-#    user_info["scholarships_info"] = scholarships
     response_body = {
         "msg": "Hello, this is your GET /user response ",
         "user_info" : user_info
@@ -140,7 +141,6 @@ def add_user():
     
     return jsonify(response_body), 201
 
-
 @app.route('/login', methods=['POST'])
 def login():
     request_body = request.get_json(force=True)
@@ -152,23 +152,30 @@ def login():
         raise APIException('The password is required', status_code=404)
 
     user = User.query.filter_by(
-        email= request_body['email']
-        ).first()    
+        email=request_body['email']
+    ).first()
 
     if user is None:
-        raise APIException ('The email is not correct', status_code=404)
+        raise APIException('The email is not correct', status_code=404)
 
     if bcrypt.check_password_hash(user.password, request_body['password']) is False:
-        raise APIException('The password is not correct', 401)    
+        raise APIException('The password is not correct', 401)
+    
+    access_token = create_access_token(identity=user.id)
 
-    access_token = create_access_token(identity = user.id)
+    # Aquí defines los campos que quieres incluir en la respuesta, excluyendo la contraseña
+    response_body = {
+        "msg": "ok",
+        "token": access_token,
+        "user_id": user.id,
+        "email": user.email,
+        "name": user.name,
+        "last_name": user.last_name,        # Agrega todos los campos necesarios aquí excepto la contraseña
+    }
 
-    response_body ={ 
-                    "msg": "ok",
-                    "token": access_token, 
-                    "user_id": user.id }
 
     return jsonify(response_body), 200
+
 
 @app.route('/tracker', methods=['GET'])
 def get_trackers():
@@ -304,65 +311,14 @@ def institutional_login():
 
     response_body ={ 
                     "msg": "ok",
+                    "email": insti_user.email,
                     "token": access_token, 
-                    "institutional_user_id": insti_user.id
+                    "institutional_user_id": insti_user.id,
+                    "institutional_name": insti_user.institutional_name
                      }
 
     return jsonify(response_body), 200
 
-#Scholarship POST
-
-#@app.route('/create-scholarship', methods=['POST'])
-#@jwt_required()
-#def add_scholarship():
-#    insti_user = get_jwt_identity()
-#    request_body = request.get_json(force=True)
-#    
-#    if "scholarship_name" not in request_body:
-#        raise APIException('A scholarship name is required', 400)
-#    
-#    if "deadline" not in request_body:
-#        raise APIException("A deadline are required", 400)
-#
-#    if "institution" not in request_body:
-#        raise APIException('An institution name is required', 400)
-#
-#    if "modality" not in request_body:
-#        raise APIException('A modality is required', 400)
-#    
-#    if "coverage" not in request_body:
-#        raise APIException('A coverage is required', 400)
-#    
-#    if "professional_field" not in request_body:
-#        raise APIException('A professional_field is required', 400)
-#
-#    if "description" not in request_body:
-#        raise APIException('A description is required', 400)
-#
-#    if "url_to" not in request_body:
-#        raise APIException('An url is required', 400)
-#    
-#
-#    scholarship = Scholarship(
-#        scholarship_name = request_body['scholarship_name'],
-#        deadline = request_body['deadline'],
-#        institution = request_body['institution'],
-#        modality = request_body["modality"],
-#        coverage = request_body["coverage"],
-#        professional_field = request_body["professional_field"],
-#        description = request_body["description"],
-#        url_to = request_body["url_to"]
-#    )
-#
-#    scholarship.save()
-#
-#    response_body = {
-#        "msg" : "ok",
-#        "msg2" : "Beca agregada correctamente"
-#    }
-#    
-#    return jsonify(response_body), 201
-#
 
 @app.route('/create-scholarship', methods=['POST'])
 @jwt_required()
@@ -410,26 +366,36 @@ def get_scholarships():
 
     return jsonify(response_body), 200
 
-@app.route('/add_to_tracker/<int:scholarship_id>', methods=['POST'])
+@app.route('/add_to_tracker', methods=['POST'])
 @jwt_required()
-def add_to_tracker(scholarship_id):
+def add_to_tracker():
     user_id = get_jwt_identity()
+    data = request.get_json()
+    scholarship_id = data.get('scholarship_id')
+
+    if not scholarship_id:
+        return jsonify({'error': 'ID de beca no proporcionado'}), 400
+
     beca = Scholarship.query.get(scholarship_id)
 
     if not beca:
         return jsonify({'error': 'Beca no encontrada'}), 404
 
     # Comprueba si el usuario ya ha guardado esta beca en su tracker
-    if Tracker.query.filter_by(user_id=user_id, scholarship_id=scholarship_id).first():
-        return jsonify({'message': 'La beca ya está en tu tracker'}), 200
+    tracker_entry = Tracker.query.filter_by(user_id=user_id, scholarship_id=scholarship_id).first()
+    if tracker_entry:
+        return jsonify({'message': 'La beca ya está en tu tracker'}), 409
 
     # Crea una nueva entrada en la tabla Tracker para guardar la beca
     new_tracker_entry = Tracker(user_id=user_id, scholarship_id=scholarship_id)
-    db.session.add(new_tracker_entry)
-    db.session.commit()
 
-    return jsonify({'message': 'Beca añadida al tracker'}), 200
-
+    try:
+        db.session.add(new_tracker_entry)
+        db.session.commit()
+        return jsonify({'message': 'Beca añadida al tracker'}), 200
+    except IntegrityError:
+        db.session.rollback()
+        return jsonify({'error': 'Error al guardar la beca'}), 500
 
 @app.route('/my_tracker', methods=['GET'])
 @jwt_required()
@@ -445,35 +411,14 @@ def get_my_tracker():
 
     return jsonify({'becas_guardadas': becas_guardadas}), 200
 
+@jwt.invalid_token_loader
+def invalid_token_callback(error):
+    return jsonify({'message': 'Debes iniciar sesión primero'}), 422
 
 
 
 
 
-#borra trackers
-#@app.route("/tracker/delete/<int:scholarship_id>", methods=['DELETE'])
-#def delete_scholarship(scholarship_id):
-#    single_scholarship = Tracker.query.get(scholarship_id)
-#    if single_scholarship is None:
-#        raise APIException("La beca no existe", status_code=400)
-#    db.session.delete(single_scholarship)
-#    db.session.commit()
-#
-#    return jsonify({"msg": "Completed"})
-#
-##muestra en que trackers está la beca según el id de la BECA
-#@app.route("/tracker/scholarships/<user_id>", methods=["GET"])
-#def get_scholarships_in_tracker(user_id):
-#    single_tracker = Tracker.query.get(user_id)
-#    if single_tracker is None:
-#        raise APIException("The scholarship does not exist", status_code=400)
-#    response_body = {
-#        "msg": "Hello, this is your GET /scholarships in tracker response ",
-#        "tracker_info": single_tracker.serialize()
-#    }
-#
-#    return jsonify(response_body), 200
-#
 # this only runs if `$ python src/main.py` is executed
 if __name__ == '__main__':
     PORT = int(os.environ.get('PORT', 3001))

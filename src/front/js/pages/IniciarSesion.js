@@ -9,7 +9,7 @@ const IniciarSesion = () => {
   const handleChangeLogin = (e) => {
     actions.handleChange(e, "login")
   }
-  //store.isloged ? navigate('/login') : navigate('/registroUsuario')
+  store.isloged ? navigate('/') : null
   return (
     <div>
       <div

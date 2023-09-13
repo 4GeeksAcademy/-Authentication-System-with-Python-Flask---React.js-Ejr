@@ -25,7 +25,7 @@ const PerfilInstitucional = () => {
         </div>
 
         <div className="mt-5 text-center">
-          <h4 className="mb-0">{store.institutionName}</h4>
+          <h4 className="mb-0">{store.current_insti_user.institutional_name}</h4>
           <span className="text-muted d-block mb-2">
             Usuario activo Bexplora
           </span>
@@ -37,9 +37,10 @@ const PerfilInstitucional = () => {
               </label>
               <input
                 type="email"
-                className="input form-control mb-3"
+                className="input form-control mb-3 text-center"
                 id="exampleInputPassword1"
                 placeholder="carlossainz@gmail.com"
+                value={store.current_insti_user.email}
               />
               <Link to="/formulario">
                 <button className="btn btn-primary btn-sm follow mb-3">
