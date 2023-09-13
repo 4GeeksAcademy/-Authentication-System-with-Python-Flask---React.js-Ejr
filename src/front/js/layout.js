@@ -21,6 +21,7 @@ import Organizadores from "./pages/organizadores";
 import UserProfile from "./component/perfil";
 import TeamList from "./pages/equiposparticipantes";
 import UserPage from "./pages/perfil";
+import PerfirOrganizador from "./pages/perfilorganizador";
 
 //create your first component
 const Layout = () => {
@@ -51,6 +52,7 @@ const Layout = () => {
                         <Route element={<NextEvent />} path="/nextEvent" />
                         <Route element={<Registrarse />} path="/registrarse" />
                         <Route element={<Organizadores />} path="/organizadores" />
+                        <Route element={<PerfirOrganizador />} path="/perfilorganizador" />
                     </Routes>
                     <Footer />
                 </ScrollToTop>

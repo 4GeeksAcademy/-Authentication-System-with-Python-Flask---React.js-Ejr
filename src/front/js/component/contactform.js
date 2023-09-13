@@ -39,14 +39,14 @@ function ContactForm() {
 
   return (
     <div>
-      <form onSubmit={handleSubmit}>
+      <form className="formContact" onSubmit={handleSubmit}>
         <div className="form-outline mb-4">
           <label className="form-label" htmlFor="name">Nombre</label>
-          <input
+          <input 
             type="text"
             id="name"
             name="name"
-            className="form-control white-background-input"
+            className="fcContact form-control white-background-input"
             value={formData.name}
             onChange={handleChange}
             required
@@ -59,7 +59,7 @@ function ContactForm() {
             type="email"
             id="email"
             name="email"
-            className="form-control white-background-input"
+            className="fcContact form-control white-background-input"
             value={formData.email}
             onChange={handleChange}
             required
@@ -69,7 +69,7 @@ function ContactForm() {
         <div className="form-outline mb-4">
           <label className="form-label" htmlFor="message">Mensaje</label>
           <textarea
-            className="form-control white-background-input"
+            className="fcContact form-control white-background-input"
             id="message"
             name="message"
             rows="4"

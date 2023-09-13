@@ -1,126 +1,70 @@
 
-.App {
-    margin-top: 120px;
-    text-align: center;
+.AppEventos {
+  margin-top: 100px;
+  text-align: center;
 }
 
-  .container{
-    align-items: left;
-    text-align: left;
-  }
-  #title{
-    color: rgb(11, 9, 9);
-  }
+.contEventos{
+  margin-top: 20px;
+  align-items: left;
+  text-align: left;
+}
+#title{
+  color: rgb(11, 9, 9);
+}
 
-  .white-mode {
-    text-decoration: none;
-    padding: 17px 40px;
-    background-color: yellow;
-    border-radius: 3px;
-    color: black;
-    transition: .35s ease-in-out;
-    position: absolute;
-    left: 15px;
-    bottom: 15px
-  }
-  .pricingTable:hover {
-    transform: scale(1.05);
-    z-index: 1
-  }
-  .pricingTable .pricingTable-header {
-    padding: 40px 0;
-    background: #f5f6f9;
-    border-radius: 10px 10px 50% 50%;
-    transition: all .5s ease 0s
-  }
-  .pricingTable:hover .pricingTable-header {
-    background: #ff9624
-  }
-  .pricingTable {
-      text-align: center;
-      background: #fff;
-      margin: 0 -15px;
-      box-shadow: 0 0 10px #ababab;
-      padding-bottom: 40px;
-      border-radius: 10px;
-      color: #cad0de;
-      transform: scale(1);
-      transition: all .5s ease 0s
-  }
-
-  #pay{
-    background-color: rgb(254, 117, 12);
-  }
-  #in{
-    background-color:  whitesmoke;
-    
-  }
-  #img{
-   margin-top: 6%; 
-   
-  }
-  #image{
-    height: 85%;
-    width: 250px;
-  }
- 
-  #card-header{
-    background-color:#0D6EFD
-  }
-  
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Montserrat', sans-serif;
-  }
-  
-  p {
-    margin: 0px;
-  }
-  
-  .container .h8 {
-    font-size: 30px;
-    font-weight: 800;
+.white-mode {
+  text-decoration: none;
+  padding: 17px 40px;
+  background-color: yellow;
+  border-radius: 3px;
+  color: black;
+  transition: .35s ease-in-out;
+  position: absolute;
+  left: 15px;
+  bottom: 15px
+}
+.pricingTable:hover {
+  transform: scale(1.05);
+  z-index: 1
+}
+.pricingTable .pricingTable-header {
+  padding: 40px 0;
+  background: #f5f6f9;
+  border-radius: 10px 10px 50% 50%;
+  transition: all .5s ease 0s
+}
+.pricingTable:hover .pricingTable-header {
+  background: #ff9624
+}
+.pricingTable {
     text-align: center;
-  }
-  
-  .btn.btn.btn-primary:hover {
-    background-position: right center;
-    color: #fff;
-    text-decoration: none;
-  }
+    background: #fff;
+    margin: 0 -15px;
+    box-shadow: 0 0 10px #ababab;
+    padding-bottom: 40px;
+    border-radius: 10px;
+    color: #cad0de;
+    transform: scale(1);
+    transition: all .5s ease 0s
+}
 
-  .btn.btn-primary:hover .fas.fa-arrow-right {
-    transform: translate(15px);
-    transition: transform 0.2s ease-in;
-  }
-  /* lo voy a dejar así por si se ocupa en un futuro
-  .form-control {
-    color: white;
-    background-color: #223C60;
-    border: 2px solid transparent;
-    height: 60px;
-    padding-left: 20px;
-    vertical-align: middle;
-  }
+#pay{
+  background-color: rgb(254, 117, 12);
+}
+#in{
+  background-color: rgb(216, 216, 216);
   
-  .form-control:focus {
-    color: white;
-    background-color: #0C4160;
-    border: 2px solid #2d4dda;
-    box-shadow: none;
-  }
-  */
-  .text {
-    font-size: 14px;
-    font-weight: 600;
-  }
-  
-  ::placeholder {
-    font-size: 14px;
-    font-weight: 600;
-  }
-  #bajarlo{
-    margin-top: 120px;
-  }
+}
+#img{
+ margin-top: 6%; 
+ 
+}
+#image{
+  height: 85%;
+  width: 250px;
+}
+
+#card-header{
+  background-color:#0D6EFD
+}
