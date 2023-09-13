@@ -2,11 +2,13 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User
+from api.models import db, User, Gallery
 from api.utils import generate_sitemap, APIException
 from flask_jwt_extended import JWTManager, get_jwt_identity, create_access_token, jwt_required
 from werkzeug.security import generate_password_hash, check_password_hash
 import datetime
+from cloudinary.uploader import upload
+
 
 
 api = Blueprint('api', __name__)
@@ -132,8 +134,33 @@ def books_route():
 
 
 @api.route('/upload', methods=['POST'])
-def upload_image_toute():
-    response_upload = {
-        "mesage": "imagen cargada con exito"
-    }
-    return jsonify(response_upload)
+def upload_image_route():
+    
+    
+    title=request.form['title']
+    
+    
+    if not title:
+        return jsonify({"msg": "debe agregar titulo"}), 400
+    
+    if not image in request.files:
+        return jsonify({"msg":" la imagen es requerida"}), 400
+        
+    image=request.form['image']
+    
+    #-----< ahora hago un fetche a Cloudinary >-----
+    public_id=image.filename
+    response_cloudinary=upload(image, fordel='galleries',public_id='public_id')
+    
+    if not response_cloudinary:
+        return jsonify({'msg': "error al cargar imagen"}), 400
+    print(response_cloudinary)
+    
+    gallery = Gallery
+    gallery.title = title
+    gallery.image = image
+    gallery.public_id = public_id
+    
+    gallery.save()
+    
+    return jsonify(gallery.serialize()), 201

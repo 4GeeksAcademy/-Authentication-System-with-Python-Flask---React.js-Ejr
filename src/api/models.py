@@ -3,14 +3,6 @@ db = SQLAlchemy()
 from sqlalchemy import ForeignKey
 
 
-
-# roles_users = db.Table(
-#     'roles_users',
-#     db.Column('roles_id', db.Integer, db.ForeignKey('roles.id'), nullable=False, primary_key=True),
-#     db.Column('user_id', db.Integer, db.ForeignKey('users.id'), nullable=False, primary_key=True)
-# )
-
-
 class User(db.Model):
     __tablename__ = 'user'
     id = db.Column(db.Integer, primary_key=True)
@@ -77,3 +69,33 @@ class Book(db.Model):
     def delete(self):
         db.session.delete(self)
         db.session.commit()
+
+class Gallery(db.Model):
+    __tablename__= 'gallery'
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(250), nullable=True)
+    image = db.Column(db.String(250), nullable=True)
+    
+    def serialize(self):
+        return{
+            "id": self.id,
+            "title": self.title,
+            "image": self.image
+        }
+        
+        
+    def save(self):
+        db.session.add(self)
+        db.session.commit(self)
+        
+        
+    def update(self):
+        db.session.commit(self)
+        
+        
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit(self)    
+    
+        
+    
