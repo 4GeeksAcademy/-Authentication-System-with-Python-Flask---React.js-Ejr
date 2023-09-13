@@ -37,8 +37,9 @@ function Perfil() {
 
 
     return (
-
+    
         <form className='container' onSubmit={handleSubmit}>
+            <Link to={"/"}><button type="submit" className="btn text-white bg-azul-oscuro  rounded-pill  my-4"><i class="fa-solid fa-xmark"></i></button></Link>
 
             <div className='ms-3 d-flex  justify-content-center me-4'>
 
