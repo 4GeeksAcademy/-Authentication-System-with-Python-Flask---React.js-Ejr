@@ -3,6 +3,8 @@ import { Context } from "../store/appContext";
 import { useParams, useLocation, Link } from 'react-router-dom';
 import diego from "../../img/diego.jpg";
 import { Comentarios } from '../component/comentarios_casas.jsx';
+import { PanelCtrl } from "../component/panel_control.jsx";
+
 
 function Details() {
   const { store, actions } = useContext(Context)
@@ -67,6 +69,7 @@ function Details() {
       </div>
       
     </div>
+    <PanelCtrl />
     </div>
   );
     };

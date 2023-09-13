@@ -4,20 +4,22 @@ import { Context } from "../store/appContext";
 import "../../styles/home.css";
 import { CardFeedVen } from "../component/card_feed_ven.jsx"
 import { CardFeedAlq } from "../component/card_feed_alq.jsx"
+import { PanelCtrl } from "../component/panel_control.jsx";
+
 
 export const Home = () => {
-	const { store, actions } = useContext(Context);
+    const { store, actions } = useContext(Context);
     const [login, setLogin] = useState("show active")
     const [loginST, setLoginST] = useState("active")
-	const [register, setRegister] = useState("")
+    const [register, setRegister] = useState("")
     const [registerST, setRegisterST] = useState("")
 
     useEffect(() => {
-		actions.getAlquileres()
-		actions.getVentas()
-	}, [])
+        actions.getAlquileres()
+        actions.getVentas()
+    }, [])
 
-    
+
     function alquileres() {
         if (login == "") {
             setLogin("show active")
@@ -50,24 +52,25 @@ export const Home = () => {
             </ul>
             <div className="tab-content">
                 <div className={"tab-pane fade " + login} id="pills-login" role="tabpanel" aria-labelledby="tab-login">
-                {store.alquileres.map((item, index) => {
-					return (
-                    <div key={index} className="row ">
-                        <CardFeedAlq className="col-4" ubicacion={item.location} precio={item.price} id={item.id}/>
-                    </div>
-                    )})}
+                    {store.alquileres.map((item, index) => {
+                        return (
+                            <div key={index} className="row ">
+                                <CardFeedAlq className="col-4" ubicacion={item.location} precio={item.price} id={item.id} />
+                            </div>
+                        )
+                    })}
                 </div>
                 <div className={"tab-pane fade " + register} id="pills-register" role="tabpanel" aria-labelledby="tab-register">
-                {store.ventas.map((item, index) => {
-					return (
-                    <div key={index} className="row">
-                        <CardFeedVen className="col-4" ubicacion={item.location} precio={item.price} id={item.id}/>
-                    </div>
-                    )})}
+                    {store.ventas.map((item, index) => {
+                        return (
+                            <div key={index} className="row">
+                                <CardFeedVen className="col-4" ubicacion={item.location} precio={item.price} id={item.id} />
+                            </div>
+                        )
+                    })}
                 </div>
             </div>
-
-
+            <PanelCtrl />
         </div>
     );
 };
