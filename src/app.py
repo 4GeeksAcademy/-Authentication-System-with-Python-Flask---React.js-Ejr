@@ -301,11 +301,17 @@ def add_institutional_user():
 
     institutional_user.save()
 
+    msg = Message("¡Bienvenido a tu aplicación!", sender="diianachm1802@gmail.com", recipients=[institutional_user.email])
+    msg.body = "¡Gracias por registrarte en nuestra aplicación! Esperamos que disfrutes de nuestros servicios."
+    try:
+        mail.send(msg)
+    except Exception as e:
+        # Maneja el error si no se pudo enviar el correo
+        return jsonify({"msg": "Usuario creado correctamente, pero hubo un error al enviar el correo de bienvenida."}), 201
     response_body = {
-        "msg" : "ok",
-        "msg2" : "Usuario institucional creado correctamente"
+        "msg" : "Usuario creado correctamente",
+        "msg2" : "¡Bienvenido a nuestra aplicación!"
     }
-    
     return jsonify(response_body), 201
 
 
