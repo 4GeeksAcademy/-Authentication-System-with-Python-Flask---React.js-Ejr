@@ -4,7 +4,7 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, User, House, Image, Booking, Favorites
 from api.utils import generate_sitemap, APIException
-
+import json
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required, JWTManager
 from datetime import datetime
 
@@ -29,7 +29,6 @@ def login():
     password = request.json.get("password", None)
 
     user_query = User.query.filter_by(email=email).first()
-    print (email, password)
 
     if user_query is None:
         return {"msg": "Este email no existe"}, 404
@@ -81,6 +80,27 @@ def crear_registro():
     db.session.commit()
 
     return jsonify(nuevo_usuario.serialize()),200
+
+# Obtener el perfil de un usuario
+
+@api.route('/user/<int:usuario_id>', methods=['GET'])
+def consulto_un_usuario(usuario_id):
+
+    # Hago una consulta a la tabla usuarios para que traiga un usuario
+    usuario_query = User.query.filter_by (id=usuario_id).first ()
+
+    # # Respondo si no existe el  usuario consultado
+
+    if usuario_query is None :
+        return jsonify ({"msg":"no existe usuario"}), 404
+
+    response_body = {
+        "msg": "Hola, aquí tienes el perfil de este usuario ",
+        "results": usuario_query.serialize()
+    }
+    # # Responde mostrando el usuario consultado
+
+    return jsonify(response_body), 200
     
 
 
@@ -140,58 +160,48 @@ def crear_casa_favorita():
 
 # //editar posteos ruta protegida
 
-@api.route('/post', methods=['PUT'])
+@api.route('/post/<int:house_id>', methods=['PUT'])
 @jwt_required()
-def editar_posteos():
-    
+def editar_posteos(house_id):
+        
     request_body = request.get_json(force=True) #obtiene el cuerpo que se envíe por el body desde el postman
-
-
     # Accede a la identidad del usuario con get_jwt_identity
     current_user_email = get_jwt_identity()
-    email = request.json.get("email", None)
-    password = request.json.get("password", None)
-
-    user_query = User.query.filter_by(email=email).first()
+   
+    post_query = House.query.filter_by(user_id=request_body["user_id"]).filter_by(id=house_id).first()
     
-    # if user_query is None:
-    #     return {"msg": "Este email no existe"}, 404
-
-    # if email != user_query.email or password != user_query.password:
-    #     return {"msg": "Email o contraseña incorrectos"}, 404
-
-    # access_token = create_access_token(identity=email)
-
-    #validamos que exista una casa
-    casa_query = House.query.filter_by(id = request_body["house_id"]).first() #id es la propiedad de la tabla House y house_id es el valor que se pasa por URL
-    if casa_query is None:
+     
+    #  #validamos que exista una casa
+    if post_query is None:
         return jsonify({"msg": "Esta casa no existe"}), 404
+
+    if "title" in request_body:
+        post_query.title = request_body["title"]
+    if "category" in request_body:
+        post_query.category = request_body["category"]
+    # if "image_id" in body:
+    #     casa_query.image_id = body["image_id"]
+    if "location" in request_body:
+        post_query.location = request_body["location"]
+    if "number_of_rooms" in request_body:
+        post_query.number_of_rooms = request_body["number_of_rooms"]
+    if "number_of_bathrooms" in request_body:
+        post_query.number_of_bathrooms = request_body["number_of_bathrooms"]
+    if "parking" in request_body:
+        post_query.parking = request_body["parking"]
+    if "wifi" in request_body:
+        post_query.wifi = request_body["wifi"]
+    if "price" in request_body:
+        post_query.price = request_body["price"]
+        
     
-    #validamos que la casa ya existía para ese usuario
-    usuario_query = User.query.filter_by(user_id = request_body["user_id"]).filter_by(house_id =request_body["house_id"]).first() #devuelve los valores que coinciden (del user_id la tabla House)
-    if usuario_query:    #la casa existe para ese usuario 
-            return jsonify({"msg": "Tienes esta casa, puedes editarla"}), 400
-
-    # response_body = {
-    #     "access_token": access_token,
-    #     "user": user_query.serialize()
-    # }   
-
-    return jsonify("ok"), 200
-
-# documentacion para PUT
-# user1 = Person.query.get(person_id)
-# if user1 is None:
-#     raise APIException('User not found', status_code=404)
-
-# if "username" in body:
-#     user1.username = body["username"]
-# if "email" in body:
-#     user1.email = body["email"]
-# db.session.commit()
+    
+    db.session.commit()
+    return jsonify({"msg": "Tus cambios ya quedaron"}), 200
 
 
-# perfil de usuario
+
+# perfil de usuario identificar a qué cuenta me loguee
 @api.route("/perfil", methods=["GET"])
 @jwt_required()
 def perfil():
@@ -261,7 +271,6 @@ def save_post():
 def deleteHouse(id):
     house = House.query.filter_by(id = id).first()
     is_removed = False
-    print(house)
 
     if house == None:
         return jsonify({ "msg": "The house dosen´t exist" }), 404
@@ -290,4 +299,8 @@ def getHousesToBuy():
 @api.route("/gethouse/<int:id>", methods=['GET'])
 def getOneSingleHouse(id):
     house = House.query.filter_by(id = id).first()
+
+    if house == None:
+        return jsonify({ "msg": "The house dosen´t exist" }), 404
+
     return jsonify({ "results": house.serialize() }), 200
