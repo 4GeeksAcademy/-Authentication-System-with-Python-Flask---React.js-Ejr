@@ -12,6 +12,8 @@ import Details from "./pages/detallesdecasas";
 import Detailsventas from "./pages/detalle_casas_venta";
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
+import Perfil from "./pages/perfilUsuario";
+
 
 //create your first component
 const Layout = () => {
@@ -35,6 +37,7 @@ const Layout = () => {
                         <Route element={<Singup />} path="/signup" />
                         <Route element={<Details />} path="/details/:id" />
                         <Route element={<Detailsventas />} path="/detailsventas/:id" />
+                        <Route element={<Perfil />} path="/perfil" />
                     </Routes>
                     <Footer />
                 </ScrollToTop>
