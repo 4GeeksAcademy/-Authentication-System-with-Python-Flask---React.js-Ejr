@@ -45,5 +45,8 @@ body{
     color: gray;
     text-decoration:underline;
 }
+.cuerpo{
+    justify-content: center;
+}
 
 
