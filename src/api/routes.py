@@ -81,16 +81,15 @@ def crear_registro():
 
     return jsonify(nuevo_usuario.serialize()),200
 
-# Obtener  un usuario
+# Obtener el perfil de un usuario
 
 @api.route('/user/<int:usuario_id>', methods=['GET'])
 def consulto_un_usuario(usuario_id):
 
-
     # Hago una consulta a la tabla usuarios para que traiga un usuario
     usuario_query = User.query.filter_by (id=usuario_id).first ()
 
-    # Respondo si no existe el  usuario consultado
+    # # Respondo si no existe el  usuario consultado
 
     if usuario_query is None :
         return jsonify ({"msg":"no existe usuario"}), 404
@@ -99,8 +98,7 @@ def consulto_un_usuario(usuario_id):
         "msg": "Hola, aquí tienes el perfil de este usuario ",
         "results": usuario_query.serialize()
     }
-
-    # Responde mostrando el usuario consultado
+    # # Responde mostrando el usuario consultado
 
     return jsonify(response_body), 200
     
