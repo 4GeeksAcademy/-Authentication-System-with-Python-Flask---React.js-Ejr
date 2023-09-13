@@ -199,7 +199,7 @@ def update_favorite(favorite_id):
 # @jwt_required()
 def get_payment():
     # email=get_jwt_identity()
-    payment = payment.query.all()
+    payment = Payment.query.all()
     results = list(map(lambda payment: payment.serialize(), payment))
 
     if payment is None:
@@ -207,19 +207,19 @@ def get_payment():
     return jsonify(results), 200
 
 
-# # Crea un  Payment
-# @api.route('/payment', methods=['POST'])
-# # @jwt_required()
-# def add_payment():
-#     body = json.loads(request.data)
-#     new_payment = Payment(
-#         id_user=body["id_user"],
-#         id_component=body["id_component"]
-#     )
+# Crea un  Payment
+@api.route('/payment', methods=['POST'])
+# @jwt_required()
+def add_payment():
+    body = json.loads(request.data)
+    new_payment = Payment(
+        id_user=body["id_user"],
+        id_component=body["id_component"]
+    )
 
-#     db.session.add(new_payment)
-#     db.session.commit()
-#     return jsonify({"msg": "Payment Create"}), 200
+    db.session.add(new_payment)
+    db.session.commit()
+    return jsonify({"msg": "Payment Create"}), 200
 
 
 
