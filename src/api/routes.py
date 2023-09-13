@@ -12,6 +12,8 @@ from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy 
 
 
+
+
 api = Blueprint('api', __name__)
 
 
@@ -19,7 +21,7 @@ api = Blueprint('api', __name__)
 def handle_hello():
 
     response_body = {
-        "message": "Hello! I'm a message that came from the backend, check the network tab on the google inspector and you will see the GET request"
+        "message": "Hello! I'm a message"
     }
 
     return jsonify(response_body), 200
@@ -134,6 +136,9 @@ def books_route():
     return jsonify(response_libro), 200
 
 
+
+
+
 @api.route('/upload', methods=['POST'])
 def upload_image_route():
     
@@ -144,24 +149,25 @@ def upload_image_route():
     if not title:
         return jsonify({"msg": "debe agregar titulo"}), 400
     
-    if not image in request.files:
+    image = request.files['image']
+    if not 'image' in request.files:
         return jsonify({"msg":" la imagen es requerida"}), 400
         
-    image=request.form['image']
     
-    #-----< ahora hago un fetche a Cloudinary >-----
+    #-----< ahora hago un "fetch" a Cloudinary >-----
     public_id=image.filename
-    response_cloudinary=upload(image, fordel='galleries',public_id='public_id')
+    resp=upload(image, fordel='galleries',public_id='public_id')
     
-    if not response_cloudinary:
+    if not resp:
         return jsonify({'msg': "error al cargar imagen"}), 400
-    print(response_cloudinary)
     
-    gallery = Gallery
+    print(resp)
+    
+    gallery = Gallery()
     gallery.title = title
-    gallery.image = image
-    gallery.public_id = public_id
-    
+    gallery.image = resp['secure_url']
+    gallery.public_id = public_id 
+
     gallery.save()
     
     return jsonify(gallery.serialize()), 201
