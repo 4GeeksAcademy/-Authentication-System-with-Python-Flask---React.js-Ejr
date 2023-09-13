@@ -12,7 +12,7 @@ const AboutUs = () => {
           />
         </div>
         <div className="col-md-6">
-          <h1 style={{ fontSize: '3rem' }}> <strong>About Us</strong></h1>
+          <h1 style={{ fontSize: '3rem' }}> <strong> About  <span style={{"color":"#FD5812"}}>Us</span> </strong> </h1>
           <p>
             Componentify is your gateway to simplified web development. Born out of a collective passion for technology, our mission is clear: to provide developers of all levels with high-quality components and templates.
           </p>

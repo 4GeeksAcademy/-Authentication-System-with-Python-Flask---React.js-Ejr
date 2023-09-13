@@ -4,11 +4,11 @@ const MembershipPlans = () => {
   return (
     <div className="container" id="plans">
       <h1 className="my-4" style={{ fontSize: '3.0rem' }}>
-        <strong>Membership Plans</strong>
+        <strong> Membership <span style={{"color":"#FD5812"}}>Plans</span></strong>
       </h1>
       <div className="row">
         <div className="col-md-4">
-          <div className="card" style={{ backgroundColor: '#FFDAB9' }}>
+          <div className="card shadow" style={{ backgroundColor: '#FFDAB9' }}>
             <div className="card-header">
               <h5>Free Componentify</h5>
             </div>
@@ -22,7 +22,7 @@ const MembershipPlans = () => {
           </div>
         </div>
         <div className="col-md-4">
-          <div className="card" style={{ backgroundColor: '#FFB93E' }}>
+          <div className="card shadow" style={{ backgroundColor: '#FFB93E' }}>
             <div className="card-header">
               <h5>Pro Componentify</h5>
             </div>
@@ -36,7 +36,7 @@ const MembershipPlans = () => {
           </div>
         </div>
         <div className="col-md-4">
-          <div className="card" style={{ backgroundColor: '#FFA55E' }}>
+          <div className="card shadow" style={{ backgroundColor: '#FFA55E' }}>
             <div className="card-header">
               <h5>Premium Componentify</h5>
             </div>
