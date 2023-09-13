@@ -15,6 +15,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 				email: null,
 				password: null
 			},
+			current_user: {},
+			current_insti_user: {},
+			my_tracker: [],
+			selectedScholarshipId: null,
 			insSignup: false,
 			insLoged: false,
 			institution_data: {
@@ -113,14 +117,16 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 					if (response.ok) {
 						localStorage.setItem("jwt-token", result.token);
-						alert("Login success");
 						setStore({ isloged: true });
 						setStore({ hiddenLogin: true });
 						setStore({ hiddenMyProfile: false }); 
 						setStore({ hiddenSignup: true });
 						setStore({ hiddenLogout: false });
+						setStore({current_user : result}) 
 
+						alert("Login success");
 						return true;
+
 					} else {
 						setStore({ isloged: false })
 						alert(result.message)
@@ -132,6 +138,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 
 			},
+
+			
 			handleChange: (e, type) => {
 				const store = getStore()
 				if (type == "login") {
@@ -210,6 +218,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						setStore({ hiddenLogin: true });
 						setStore({ hiddenSignup: true });
 						setStore({ hiddenLogout: false });
+						setStore({current_insti_user : result}) 
 						alert("Welcome!");
 
 						console.log("Nombre de la institución:", result.institution_name); // Agrega esta línea para depurar
@@ -321,8 +330,74 @@ const getState = ({ getStore, getActions, setStore }) => {
 				} catch (error) {
 					console.log(error + " Error loading message from backend")
 				}
-			}
+			},
+
+			getMyTracker: async () => {
+				const myToken = localStorage.getItem("jwt-token");
+				const store = getStore()
+				const actions = getActions()
+				try {
+					
+					const response = await fetch(process.env.BACKEND_URL + "/my_tracker", {
+						method: 'GET',
+						headers: {
+							'Authorization': 'Bearer ' + myToken
+						}
+					})
+					const result = await response.json()
+					console.log(result);
+					setStore({my_tracker : result.becas_guardadas})
+					
+					if (response.status == 400) {
+						alert(result.message)
+						alert("No scholarships found")
+						console.log(result)
+					}
+					if (response.ok) {
+						console.log("Becas actualizadas")
+					} else {
+						alert(result.message)
+					}
+				} catch (error) {
+					console.log(error + " Error loading message from backend")
+				}
+			},
+
+			setSelectedScholarshipId: (scholarshipId) => {
+				setStore({ selectedScholarshipId: scholarshipId });
+			  },
+
+			addToMyTracker: async () => {
+				const myToken = localStorage.getItem("jwt-token");
+				const store = getStore();
+				const actions = getActions();
+			  
+				try {
+					const response = await fetch(process.env.BACKEND_URL + "/add_to_tracker", {
+						method: 'POST',
+						headers: {
+						  'Authorization': 'Bearer ' + myToken,
+						  'Content-Type': 'application/json',
+						},
+      					body: JSON.stringify({ scholarship_id: store.selectedScholarshipId }), // Utiliza el ID almacenado en el estado
+					  });
+			  
+				  const result = await response.json();
+				  console.log(result);
+				  if (response.ok) {
+					alert("Beca guardada exitosamente");
+				  } else {
+					alert(result.error || result.message); // Muestra cualquier mensaje de error del servidor
+				  }
+				} 
+				  
+				catch (error) {
+				  console.log(error + " Error loading message from backend");
+				}
+			  }
 			
+		
+
 		}
 	};
 };
