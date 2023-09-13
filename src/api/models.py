@@ -43,7 +43,7 @@ class Book(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(120), nullable=False)
     author = db.Column(db.String(120), nullable=False)
-    cathegory = db.Column(db.String(120), nullable=False)
+    cathegory = db.Column(db.String(120),  default="sin categoria")
     number_of_pages = db.Column(db.String(120))
     description = db.Column(db.String(250))
     price = db.Column(db.String(120))
