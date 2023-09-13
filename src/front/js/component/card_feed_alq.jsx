@@ -13,7 +13,7 @@ export const CardFeedAlq = (props) => {
                 </div>
                 <div className="d-flex justify-content-between px-1">
                     <i className="fa-regular fa-heart"></i>
-                    <i className="fa-solid fa-plus"></i>
+                    <Link to={"/details/" + props.id}><i className="fa-solid fa-plus"></i></Link>
                 </div>
             </div>
         </div>
@@ -24,5 +24,5 @@ CardFeedAlq.propTypes = {
     
     ubicacion: PropTypes.string,
     precio: PropTypes.number,
-
+    id:PropTypes.number
 };
