@@ -125,6 +125,16 @@ def delete_user(user_id):
         db.session.commit()
         return jsonify({"msg": "User deleted"}), 200
 
+ # Validacion del Token
+
+@api.route("/valid-token", methods=["GET"])
+@jwt_required()
+def valid_token():
+    current_user = get_jwt_identity()
+    return jsonify({"is_login":True}), 200
+
+
+
 
 # # # # # Favorite 🔳🔳🔳🟧🟨🟩🟦
 
@@ -190,6 +200,106 @@ def update_favorite(favorite_id):
    
     db.session.commit()
     return jsonify({"msg": "Favorite Modificado"}), 200
+
+# # # # # Payment 🔳🔳🔳🟧🟨🟩🟦
+
+
+# muestra todos los pagos
+@api.route('/payment', methods=['GET'])
+# @jwt_required()
+def get_payment():
+    # email=get_jwt_identity()
+    payment = Payment.query.all()
+    results = list(map(lambda payment: payment.serialize(), payment))
+
+    if payment is None:
+        return jsonify({"msg": "no existen payment"}), 404
+    return jsonify(results), 200
+
+
+# Crea un  Payment
+@api.route('/payment', methods=['POST'])
+# @jwt_required()
+def add_payment():
+    body = json.loads(request.data)
+    new_payment = Payment(
+        id_user=body["id_user"],
+        plan_start_date =body["plan_start_date"],
+        plan_end_date =body["plan_end_date"],
+        id_plan =body["id_plan"]
+    )
+
+
+    db.session.add(new_payment)
+    db.session.commit()
+    return jsonify({"msg": "Payment Create"}), 200
+
+
+
+# # Modifica  el Payment por id
+@api.route('/payment/<int:payment_id>', methods=['PUT'])
+# @jwt_required()
+def update_Payment(payment_id):
+    body = json.loads(request.data)
+    # busca que el payment exista
+    payment= Payment.query.filter_by(id=payment_id).first()
+
+    if payment is None:
+        return jsonify({"msg": "no existe el Payment"}), 404
+
+    if "id_user" in body:
+        payment.id_user = body["id_user"]
+
+    if "id_plan" in body:
+        payment.id_plan = body["id_plan"]
+
+    if "plan_start_date" in body:
+        payment.plan_start_date = body["plan_start_date"]
+        
+    if "plan_end_date" in body:
+        payment.plan_end_date = body["plan_end_date"]
+
+   
+    db.session.commit()
+    return jsonify({"msg":"Payment Modificado"}), 200
+
+
+
+# # Borra un  payment por id
+@api.route('/payment/<int:payment_id>', methods=['DELETE'])
+# @jwt_required()
+def delete_payment(payment_id):
+
+    payment = Payment.query.get(payment_id)
+    if not payment:
+        return jsonify({"msg": "payment not found"}), 404
+    else:
+        db.session.delete(payment)
+        db.session.commit()
+        return jsonify({"msg": "payment  deleted"}), 200
+
+
+
+
+
+
+
+# @api.route('/favorites', methods=['POST'])
+# # @jwt_required()
+# def add_favorite():
+#     body = json.loads(request.data)
+#     new_favorite = Favorite(
+#         id_user=body["id_user"],
+#         id_component=body["id_component"]
+#     )
+
+#     db.session.add(new_favorite)
+#     db.session.commit()
+#     return jsonify({"msg": "favorite Create"}), 200
+
+
+
+
 
 
 # # # # # Plans 🔳🔳🔳🟧🟨🟩🟦
