@@ -333,9 +333,73 @@ const getState = ({ getStore, getActions, setStore }) => {
 				} catch (error) {
 					console.log(error + " Error loading message from backend")
 				}
+		},
+		getMyTracker: async () => {
+			const myToken = localStorage.getItem("jwt-token");
+			const store = getStore()
+			const actions = getActions()
+			try {
+				
+				const response = await fetch(process.env.BACKEND_URL + "/my_tracker", {
+					method: 'GET',
+					headers: {
+						'Authorization': 'Bearer ' + myToken
+					}
+				})
+				const result = await response.json()
+				console.log(result);
+				setStore({my_tracker : result.becas_guardadas})
+				
+				if (response.status == 400) {
+					alert(result.message)
+					alert("No scholarships found")
+					console.log(result)
+				}
+				if (response.ok) {
+					console.log("Becas actualizadas")
+				} else {
+					alert(result.message)
+				}
+			} catch (error) {
+				console.log(error + " Error loading message from backend")
+			}
+		},
 
-		}
-	};
+		setSelectedScholarshipId: (scholarshipId) => {
+			setStore({ selectedScholarshipId: scholarshipId });
+		  },
+
+		addToMyTracker: async () => {
+			const myToken = localStorage.getItem("jwt-token");
+			const store = getStore();
+			const actions = getActions();
+		  
+			try {
+				const response = await fetch(process.env.BACKEND_URL + "/add_to_tracker", {
+					method: 'POST',
+					headers: {
+					  'Authorization': 'Bearer ' + myToken,
+					  'Content-Type': 'application/json',
+					},
+					  body: JSON.stringify({ scholarship_id: store.selectedScholarshipId }), // Utiliza el ID almacenado en el estado
+				  });
+		  
+			  const result = await response.json();
+			  console.log(result);
+			  if (response.ok) {
+				alert("Beca guardada exitosamente");
+			  } else {
+				alert(result.error || result.message); // Muestra cualquier mensaje de error del servidor
+			  }
+			} 
+			  
+			catch (error) {
+			  console.log(error + " Error loading message from backend");
+			}
+		  }
+
+
+	}}
 };
 
 export default getState;
