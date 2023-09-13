@@ -14,6 +14,7 @@ from api.commands import setup_commands
 from flask_jwt_extended import jwt_required, get_jwt_identity, create_access_token, JWTManager
 from flask_bcrypt import Bcrypt
 from sqlalchemy.exc import IntegrityError
+from flask_mail import Mail, Message
 
 
 
@@ -24,11 +25,23 @@ static_file_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), '../
 app = Flask(__name__)
 app.url_map.strict_slashes = False
 
+
 bcrypt = Bcrypt(app)
 
 app.config["JWT_SECRET_KEY"] = os.environ.get('JWS_SECRET')
 jwt = JWTManager(app)
 
+app.config.update(dict(
+    DEBUG = False,
+    MAIL_SERVER = "smtp.gmail.com",
+    MAIL_PORT = 587,
+    MAIL_USE_TLS = True,
+    MAIL_USE_SSL = False,
+    MAIL_USERNAME = "diianachm1802@gmail.com",
+    MAIL_PASSWORD = "bxmrhjpmwwhrplny"
+))
+
+mail = Mail(app)
 
 # database condiguration
 db_url = os.getenv("DATABASE_URL")
@@ -134,11 +147,20 @@ def add_user():
 
     user.save()
 
+    msg = Message("¡Bienvenido a tu aplicación!", sender="diianachm1802@gmail.com", recipients=[user.email])
+    msg.body = "¡Gracias por registrarte en nuestra aplicación! Esperamos que disfrutes de nuestros servicios."
+
+    try:
+        mail.send(msg)
+    except Exception as e:
+        # Maneja el error si no se pudo enviar el correo
+        return jsonify({"msg": "Usuario creado correctamente, pero hubo un error al enviar el correo de bienvenida."}), 201
+
     response_body = {
-        "msg" : "ok",
-        "msg2" : "Usuario creado correctamente"
+        "msg" : "Usuario creado correctamente",
+        "msg2" : "¡Bienvenido a nuestra aplicación!"
     }
-    
+
     return jsonify(response_body), 201
 
 @app.route('/login', methods=['POST'])
@@ -416,7 +438,12 @@ def invalid_token_callback(error):
     return jsonify({'message': 'Debes iniciar sesión primero'}), 422
 
 
-
+@app.route('/api/send_email', methods=['GET'])
+def send_mail():
+    msg = Message(subject="test de mail", sender="diianachm1802@gmail.com", recipients=["diianachm1802@gmail.com"])
+    msg.body = "Hola desde la clase"
+    mail.send(msg)
+    return jsonify({"msg" : "Mail enviado"}), 200
 
 
 # this only runs if `$ python src/main.py` is executed
