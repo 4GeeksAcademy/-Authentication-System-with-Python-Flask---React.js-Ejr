@@ -8,7 +8,8 @@ from flask_jwt_extended import JWTManager, get_jwt_identity, create_access_token
 from werkzeug.security import generate_password_hash, check_password_hash
 import datetime
 from cloudinary.uploader import upload
-
+from flask_migrate import Migrate
+from flask_sqlalchemy import SQLAlchemy 
 
 
 api = Blueprint('api', __name__)
