@@ -12,6 +12,8 @@ class User(db.Model):
     phone_number = db.Column(db.String(30), nullable=False)
     account_creation_date = db.Column(db.String(40), nullable=False)
     is_admin = db.Column(db.Boolean(), nullable=False)
+    
+    houses = db.relationship('House', backref='user', lazy=True)
 
 
     def __repr__(self):
