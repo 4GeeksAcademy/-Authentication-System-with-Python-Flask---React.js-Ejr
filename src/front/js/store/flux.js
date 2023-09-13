@@ -52,6 +52,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 				//reset the global store
 				setStore({ demo: demo });
 			},
+
+
 			signup: async (firstName, lastName, email, password, phone, confpassword) => {
 
 				try {
@@ -80,7 +82,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 
 
-
 			login: async (email, password) => {
 				try {
 					let data = await axios.post(process.env.BACKEND_URL + '/api/login',
@@ -97,6 +98,23 @@ const getState = ({ getStore, getActions, setStore }) => {
 					if (error.response.status === 404) {
 						alert(error.response.data.msg)
 					}
+					return false
+				}
+			},
+
+			getPerfil: async () => {
+				try {
+					let data = await axios.get('/api/valid_token',
+					{
+						headers : {"Authorization" : "Bearer " + localStorage.getItem('token')}
+					})
+					console.log(data);
+					return true
+				} catch (error) {
+					console.log(error);
+					// if (error.response.status === 404) {
+					// 	alert(error.response.data.msj)
+					// }
 					return false
 				}
 			},
