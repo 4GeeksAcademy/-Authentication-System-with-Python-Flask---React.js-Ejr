@@ -12,6 +12,7 @@ const IniciarSesionInstitucion = () => {
 
   store.insLoged ? navigate('/') : null
   return (
+    <div>
     <div
       className=" RegistroUsuarioDiv container d-flex justify-content-center align-items-center"
       style={{
@@ -51,6 +52,8 @@ const IniciarSesionInstitucion = () => {
           Iniciar Sesión
         </button>
       </form>
+    </div>
+    <div id="customAlertLogInInst" class="alertMissing container justify-content-center align-items-center"></div>
     </div>
   );
 };
