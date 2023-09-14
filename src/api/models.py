@@ -3,14 +3,6 @@ db = SQLAlchemy()
 from sqlalchemy import ForeignKey
 
 
-
-# roles_users = db.Table(
-#     'roles_users',
-#     db.Column('roles_id', db.Integer, db.ForeignKey('roles.id'), nullable=False, primary_key=True),
-#     db.Column('user_id', db.Integer, db.ForeignKey('users.id'), nullable=False, primary_key=True)
-# )
-
-
 class User(db.Model):
     __tablename__ = 'user'
     id = db.Column(db.Integer, primary_key=True)
@@ -43,7 +35,7 @@ class User(db.Model):
         db.session.delete(self)
         db.session.commit()
 
-# <--TABLA LIBRO-------------------------------------------------------------------------------------------------->
+# <--TABLA LIBRO-------------------------------------------->
 
 
 class Book(db.Model):
@@ -51,6 +43,7 @@ class Book(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(120), nullable=False)
     author = db.Column(db.String(120), nullable=False)
+    cathegory = db.Column(db.String(120),  default="sin categoria")
     number_of_pages = db.Column(db.String(120))
     description = db.Column(db.String(250))
     price = db.Column(db.String(120))
@@ -61,6 +54,7 @@ class Book(db.Model):
             "id": self.id,
             "title": self.title,
             "author": self.author,
+            "cathegory": self.cathegory,
             "number_of_pages": self.number_of_pages,
             "description": self.description,
             "price": self.price,
@@ -77,3 +71,34 @@ class Book(db.Model):
     def delete(self):
         db.session.delete(self)
         db.session.commit()
+
+class Gallery(db.Model):
+    __tablename__= 'gallery'
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(250), nullable=True)
+    image = db.Column(db.String(250), nullable=True)
+    public_id = db.Column(db.String(250), nullable=True)
+    
+    def serialize(self):
+        return{
+            "id": self.id,
+            "title": self.title,
+            "image": self.image
+        }
+        
+        
+    def save(self):
+        db.session.add(self)
+        db.session.commit()
+        
+        
+    def update(self):
+        db.session.commit()
+        
+        
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()    
+    
+        
+    
