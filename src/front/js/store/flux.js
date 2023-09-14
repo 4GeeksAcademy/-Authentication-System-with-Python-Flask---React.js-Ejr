@@ -133,9 +133,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 							return true
 						} catch (error) {
 							console.log(error);
-							// if (error.response.status === 404) {
+							if (error.response.status === 404) {
 								alert(error.response.data.msg)
-							// }
+							}
 							return false
 						}
 					},
