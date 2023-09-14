@@ -17,6 +17,9 @@ export const Admin = () => {
   return (
     <div className="container">
     
+    <div className="m-5 p-3 border border-4 border-warning rounded text-light bg-dark">        
+    <strong>Alert!</strong> This is a dangerous section that directly affects the database and is exclusively for administrators.
+        </div>
 
     {components.map(component => (
         <form className="mt-5 shadow ps-4 pe-2 pt-4 pb-4 border-bottom border-4 border-warning">
