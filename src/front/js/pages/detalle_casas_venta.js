@@ -66,9 +66,10 @@ function Detailsventas() {
         </ul>
 
 
-      </div>
-      <PanelCtrl />
-    </div>
+      </div>{
+        store.auth ?
+          <PanelCtrl /> : null
+      }</div>
 
 
   );

@@ -69,8 +69,9 @@ export const Home = () => {
                         )
                     })}
                 </div>
-            </div>
-            <PanelCtrl />
-        </div>
+            </div>{
+                store.auth ?
+                    <PanelCtrl /> : null
+            }</div>
     );
 };
