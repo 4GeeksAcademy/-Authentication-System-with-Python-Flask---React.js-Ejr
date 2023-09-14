@@ -83,11 +83,11 @@ def crear_registro():
 
 # Obtener el perfil de un usuario
 
-@api.route('/user/<usuario_id>', methods=['GET'])
+@api.route('/user/<int:usuario_id>', methods=['GET'])
 def consulto_un_usuario(usuario_id):
 
     # Hago una consulta a la tabla usuarios para que traiga un usuario
-    usuario_query = User.query.filter_by (email=usuario_id).first ()
+    usuario_query = User.query.filter_by (id=usuario_id).first ()
 
     # # Respondo si no existe el  usuario consultado
 
@@ -103,17 +103,19 @@ def consulto_un_usuario(usuario_id):
     return jsonify(response_body), 200
 
 # # # Editar datos del perfil de un usuario
-# @api.route('/user/<int:user_id>', methods=['PUT'])
-# @jwt_required()
-# def editar_perfil(user_id):
+@api.route('/user/<int:user_id>', methods=['PUT'])
+@jwt_required()
+def editar_perfil(user_id):
 
-#     request_body = request.get_json(force=True)
-#     current_user_email = get_jwt_identity()
+    request_body = request.get_json(force=True)
+    current_user_email = get_jwt_identity()
+    perfil_query = User.query.filter_by(id=user_id).first()
 
-#     if "title" in request_body:
-#         post_query.title = request_body["title"]
+    if "name" in request_body:
+        perfil_query.title = request_body["name"]
 
-#     return ("ok"), 200
+    db.session.commit()
+    return jsonify({"msg": "Tu perfil fue editado con éxito"}), 200
     
 
 
@@ -218,7 +220,13 @@ def editar_posteos(house_id):
 def perfil():
     # Access the identity of the current user with get_jwt_identity
     current_user = get_jwt_identity()
-    return jsonify(logged_in_as=current_user), 200
+
+    perfil_query = User.query.filter_by(email=current_user).first()
+    
+    return jsonify(perfil_query.serialize()), 200
+
+
+    # return jsonify(logged_in_as=current_user), 200
 
 
 #   Eliminar casa de favorito
