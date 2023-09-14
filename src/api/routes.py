@@ -83,11 +83,11 @@ def crear_registro():
 
 # Obtener el perfil de un usuario
 
-@api.route('/user/<int:usuario_id>', methods=['GET'])
+@api.route('/user/<usuario_id>', methods=['GET'])
 def consulto_un_usuario(usuario_id):
 
     # Hago una consulta a la tabla usuarios para que traiga un usuario
-    usuario_query = User.query.filter_by (id=usuario_id).first ()
+    usuario_query = User.query.filter_by (email=usuario_id).first ()
 
     # # Respondo si no existe el  usuario consultado
 
@@ -101,6 +101,19 @@ def consulto_un_usuario(usuario_id):
     # # Responde mostrando el usuario consultado
 
     return jsonify(response_body), 200
+
+# # # Editar datos del perfil de un usuario
+# @api.route('/user/<int:user_id>', methods=['PUT'])
+# @jwt_required()
+# def editar_perfil(user_id):
+
+#     request_body = request.get_json(force=True)
+#     current_user_email = get_jwt_identity()
+
+#     if "title" in request_body:
+#         post_query.title = request_body["title"]
+
+#     return ("ok"), 200
     
 
 
@@ -128,23 +141,22 @@ def crear_casa_favorita():
 
     request_body = request.get_json(force=True) #obtiene el cuerpo que se envíe por el body desde el postman
 
-# validar que exista el usuario
+    # validar que exista el usuario
     user_query = User.query.filter_by(id=request_body["user_id"]).first()
     if user_query is None:
         return jsonify({"msg": "el usuario no está registrado"}), 404
 
- #validamos que exista una casa
+    #validamos que exista una casa
     casa_query = House.query.filter_by(id = request_body["house_id"]).first() #id es la propiedad de la tabla House y house_id es el valor que se pasa por URL
     if casa_query is None:
         return jsonify({"msg": "Esta casa no existe"}), 404
 
-#validamos que la casa ya existía como fav
+    #validamos que la casa ya existía como fav
     fav_query = Favorites.query.filter_by(user_id = request_body["user_id"]).filter_by(house_id =request_body["house_id"]).first() #devuelve los valores que coinciden (del user_id la tabla Favoritos) con el body del postman
     if fav_query:    #la casa existe para ese usuario no se va a volver a agregar
             return jsonify({"msg": "Esta casa ya existe en favoritos, no se volverá a agregar"}), 400
         
-
- #Si no se cumplen las condiciones anteriores, se agrega la casa a favoritos
+    #Si no se cumplen las condiciones anteriores, se agrega la casa a favoritos
 
     nueva_casa_favorita=Favorites(user_id= request_body["user_id"], house_id =request_body["house_id"])
 
@@ -193,8 +205,7 @@ def editar_posteos(house_id):
         post_query.wifi = request_body["wifi"]
     if "price" in request_body:
         post_query.price = request_body["price"]
-        
-    
+           
     
     db.session.commit()
     return jsonify({"msg": "Tus cambios ya quedaron"}), 200
