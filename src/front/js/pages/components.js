@@ -97,7 +97,7 @@ export const Components = () => {
 			<div class="row mt-5">
 				{component_category.map((item) => (
 					<div className="col-12 col-md-6 col-lg-3 mb-4">
-						<div class="card h-100 mx-1 border-2 shadow">
+						<div class="card h-100 mx-1 shadow">
 							<img src={item.image} class="card-img-top" alt={item.title}/>
 							<div class="card-body pt-2">
 								<h5 class="card-title text-warning">{item.title}</h5>

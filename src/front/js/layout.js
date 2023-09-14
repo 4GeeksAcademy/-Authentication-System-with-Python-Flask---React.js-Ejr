@@ -12,6 +12,7 @@ import Login from "./pages/login";
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 import { Components } from "./pages/components";
+import { Admin } from "./pages/admin";
 
 
 //create your first component
@@ -35,6 +36,7 @@ const Layout = () => {
                         <Route element={<Signup />} path="/signup" />
                         <Route element={<Login />} path="/login" />
                         <Route element={<Components />} path="/components" />
+                        <Route element={<Admin />} path="/admin" />
                     </Routes>
                     <Footer />
                 </ScrollToTop>

@@ -1,11 +1,11 @@
-import React, { Component } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React from "react";
+import { useNavigate } from "react-router-dom";
 
 export const ButtonAdmin = () => {
   const navigate = useNavigate();
 
   function handleButtonAdmin(event){
-    navigate("/home")
+    navigate("/admin")
   }
 
     return (
