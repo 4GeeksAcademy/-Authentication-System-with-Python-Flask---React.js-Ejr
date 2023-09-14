@@ -43,8 +43,8 @@ def signup_user():
         )
         db.session.add(new_user)
         db.session.commit()
-
         return jsonify({"msg": "usuario creado"}), 200
+    
     return jsonify({"msg": "usuario ya existe"}), 400
 
 # Inicio de Session de Usuarios
@@ -53,12 +53,9 @@ def signup_user():
 @api.route('/login', methods=['POST'])
 def login_user():
     body = json.loads(request.data)
-
     email = body["email"]
     password = body["password"]
-
     user = User.query.filter_by(email=email).first()
-
     if user is None:
         return jsonify({"msg": "not found"}), 404
 
@@ -69,9 +66,7 @@ def login_user():
     return jsonify(access_token=access_token), 200
 
 # muestra todos los usuarios
-
-
-@api.route('/user', methods=['GET'])
+@api.route('/users', methods=['GET'])
 @jwt_required()
 def get_users():
     # email=get_jwt_identity()
@@ -82,9 +77,21 @@ def get_users():
         return jsonify({"msg": "no existen usuarios"}), 404
     return jsonify(results), 200
 
-# Modifica  un Usuario por id
+# serch one user
+@api.route('/user/<int:user_id>', methods=['GET'])
+@jwt_required()
+def get_one_user(user_id):
+    user = User.query.get(user_id)
+    if not user:
+        return jsonify({"msg": "User not found"}), 404
+    
+    response_body = {"msg": "Component:",
+                     "results": user.serialize()}
+
+    return jsonify(response_body), 200
 
 
+# Modifica un Usuario por id
 @api.route('/user/<int:user_id>', methods=['PUT'])
 @jwt_required()
 def update_users(user_id):
@@ -94,16 +101,12 @@ def update_users(user_id):
 
     if user is None:
         return jsonify({"msg": "no existe el usuario"}), 404
-
     if "name" in body:
         user.name = body["name"]
-
     if "last_name" in body:
         user.last_name = body["last_name"]
-
     if "password" in body:
         user.password = body["password"]
-
     if "is_active" in body:
         user.is_active = body["is_active"]
 
@@ -111,8 +114,6 @@ def update_users(user_id):
     return jsonify({"msg": "usuario modificado"}), 200
 
 # Borra usuario por id
-
-
 @api.route('/user/<int:user_id>', methods=['DELETE'])
 @jwt_required()
 def delete_user(user_id):
