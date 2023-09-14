@@ -375,7 +375,7 @@ def delete_plan(plan_id):
 
 # # # # # COMPONENT 🔳🔳🔳🟧🟨🟩🟦
 
-@ api.route('/components', methods = ['GET'])
+@api.route('/components', methods = ['GET'])
 def get_components():
     # /components?page=1&per_page=10 #get first page, 10 components.
     # /components?page=2&per_page=10 #get second page, 10 components.
