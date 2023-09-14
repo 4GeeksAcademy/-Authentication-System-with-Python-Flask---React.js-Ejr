@@ -11,6 +11,7 @@ const RegistroInst = () => {
     actions.handleChange(e, "insSignup")
   }
   return (
+    <div>
     <div
       className=" RegistroUsuarioDiv container d-flex justify-content-center align-items-center"
       style={{
@@ -66,6 +67,8 @@ const RegistroInst = () => {
           Registrarse
         </button>
       </form>
+    </div>
+    <div id="customAlertLogInInst" class="alertMissing container justify-content-center align-items-center"></div>
     </div>
   );
 };

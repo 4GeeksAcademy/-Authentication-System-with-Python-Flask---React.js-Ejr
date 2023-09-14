@@ -178,9 +178,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 				const actions = getActions()
 				try {
 					if (actions.isPropertyEmpty(store.institution_data)) {
-						alert("Le falta llenar algunos datos");
-						return;
+						const customAlertElement = document.getElementById("customAlertLogInInst"); {
+							customAlertElement.innerHTML = '<div class="alert alert-danger d-flex justify-content-center" role="alert">Le falta llenar algunos datos </div>';
+							return;
+						};
 					}
+	
 					const response = await fetch(process.env.BACKEND_URL + "/signup-ins", {
 						method: 'POST',
 						body: JSON.stringify(store.institution_data),
@@ -195,7 +198,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 					}
 					if (response.ok) {
 						setStore({ insSignup: true })
-						alert("Your account was created succesfully")
+						// por que no sale bonito?
+						showAlert("success", "Usuario Institucional registrado")
 					}
 				} catch (error) {
 					console.error(error + " Error loading message from backend");
@@ -207,7 +211,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 				const actions = getActions()
 				try {
 					if (actions.isPropertyEmpty(store.institutionalLogin)) {
-						alert("Le falta llenar algunos datos :S");
+						const customAlertElement = document.getElementById("customAlertLogInInst");
+						{customAlertElement.innerHTML = `<div class="alert alert-danger" role="alert">Le falta llenar algunos datos.</div>`};
 						return;
 					}
 					const response = await fetch(process.env.BACKEND_URL + "/login-ins", {
@@ -234,7 +239,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 						return true;
 					} else {
 						setStore({ insLoged: false })
-						alert(result.message)
+						const customAlertElement = document.getElementById("customAlertLogInInst");
+						{customAlertElement.innerHTML = `<div class="alert alert-danger" role="alert">Su correo o contraseña son incorrectos. Por favor intente de nuevo.</div>`};
 					}
 				} catch (error) {
 					console.log(error + " Error loading message from backend")
