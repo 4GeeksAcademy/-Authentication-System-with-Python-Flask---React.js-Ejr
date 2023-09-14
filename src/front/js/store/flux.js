@@ -328,6 +328,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({ signup: false })
 				setStore({ insSignup: false })
 				setStore({ current_user: {} })
+				setStore({ current_insti_user: {} })
+
 			},
 
 			getAllScholarShips: async () => {
