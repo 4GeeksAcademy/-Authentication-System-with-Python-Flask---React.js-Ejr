@@ -58,7 +58,7 @@ export const UploadImages = () => {
     }, [])
 
     return (
-        <div>
+        <div className="mt-5">
             <form onSubmit={uploadImage}>
                 <input type="file" onChange={(e) => setFiles(e.target.files)} />
                 <button>Upload</button>
