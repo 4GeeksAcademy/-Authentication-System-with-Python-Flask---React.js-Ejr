@@ -11,6 +11,7 @@ const RegistroUsuario = () => {
     actions.handleChange(e, "signup")
   }
   return (
+    <div>
     <div
       className=" RegistroUsuarioDiv container d-flex justify-content-center align-items-center"
       style={{
@@ -77,6 +78,8 @@ const RegistroUsuario = () => {
           Registrarse
         </button>
       </form>
+    </div>
+    <div id="customAlertSignUp" class="alertMissing container justify-content-center align-items-center"></div>
     </div>
   );
 };

@@ -67,9 +67,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 				const actions = getActions()
 				try {
 
-					if (actions.isPropertyEmpty(store.user_data)) {
-						alert("Le falta llenar algunos datos");
-						return;
+					if (actions.isPropertyEmpty(store.user_data))  {
+						const customAlertElement = document.getElementById("customAlertSignUp"); {
+							customAlertElement.innerHTML = '<div class="alert alert-danger d-flex justify-content-center" role="alert">Le falta llenar algunos datos </div>';
+							return;
+						};
 					}
 
 					const response = await fetch(process.env.BACKEND_URL + "/signup", {
@@ -127,12 +129,15 @@ const getState = ({ getStore, getActions, setStore }) => {
 						setStore({ hiddenLogout: false });
 						setStore({ current_user: result })
 
-						alert("Login success");
+						{const customAlertElement = document.getElementById("customAlertLogInSuccess");
+						customAlertElement.innerHTML = '<div class="alert alert-success d-flex justify-content-center" role="alert"> Su inicio de sesión ha sido exitoso. </div>';}
+
 						return true;
 
 					} else {
 						setStore({ isloged: false })
-						alert(result.message)
+						const customAlertElement = document.getElementById("customAlertLogIn");
+						{customAlertElement.innerHTML = `<div class="alert alert-danger" role="alert">Su correo o contraseña son incorrectos. Por favor intente de nuevo.</div>`};
 					}
 
 				} catch (error) {

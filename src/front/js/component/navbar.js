@@ -11,7 +11,7 @@ export const Navbar = () => {
       <div className="container my-4">
         <div className="d-flex align-items-center">
           <Link to="/">
-            <img className="logo" src="https://i.imgur.com/J6XQNp5.png" />
+            <img className="logo" src="https://i.imgur.com/zheDLvP.png" />
           </Link>
           <Link to="/">
             <h1 className="title">Bexplora</h1>
