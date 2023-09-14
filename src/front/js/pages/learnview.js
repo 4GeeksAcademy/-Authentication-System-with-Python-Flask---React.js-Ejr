@@ -2,8 +2,8 @@ import React from 'react';
 
 const LearnView = () => {
     return (
-        <div className="container" id="learn" style={{ marginBottom: '150px', marginTop: '100px' }} >
-           <h1 className="my-4" style={{ fontSize: '3.0rem' }}>
+        <div className="container" id="learn" style={{ marginBottom: '150px', marginTop: '200px' }} >
+           <h1 className="my-4" style={{ fontSize: '3rem' }}>
                 <strong>How to use <span style={{ color: '#FD5812' }}>  <u>Componentify</u></span></strong>
             </h1>
             <div className="row">

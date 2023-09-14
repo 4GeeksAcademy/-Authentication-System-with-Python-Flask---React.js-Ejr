@@ -2,13 +2,13 @@ import React from 'react';
 
 const AboutUs = () => {
   return (
-    <div className="container my-5">
+    <div className="container  my-5" id="aboutus" style={{"marginBottom": "300px"}}>
       <div className="row">
         <div className="col-md-6">
           <img
             src="https://img.freepik.com/vector-gratis/ilustracion-concepto-equipo-creativo_114360-3894.jpg?w=2000&t=st=1694631605~exp=1694632205~hmac=9f415cfd8475fed46c92f650c6a3611a106efb5f6b3a196872d488eefcedb98b"
             alt="Illustration"
-            style={{ width: '115%' }}
+            style={{ width: '120%' }}
           />
         </div>
         <div className="col-md-6">

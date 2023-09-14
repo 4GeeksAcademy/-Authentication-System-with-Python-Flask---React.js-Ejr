@@ -2,8 +2,8 @@ import React from 'react';
 
 const MembershipPlans = () => {
   return (
-    <div className="container" id="plans">
-      <h1 className="my-4" style={{ fontSize: '3.0rem' }}>
+    <div className="container" id="plans" style={{ marginBottom: '150px', marginTop: '150px' }}>
+      <h1 className="my-4" style={{ fontSize: '3rem' }}>
         <strong> Membership <span style={{"color":"#FD5812"}}>Plans</span></strong>
       </h1>
       <div className="row">
