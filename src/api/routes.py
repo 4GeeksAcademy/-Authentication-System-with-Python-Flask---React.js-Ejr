@@ -7,6 +7,8 @@ from api.utils import generate_sitemap, APIException
 import json
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required, JWTManager
 from datetime import datetime
+import cloudinary
+import cloudinary.uploader
 
 api = Blueprint('api', __name__)
 
@@ -281,6 +283,26 @@ def deleteHouse(id):
         is_removed = True
 
     return jsonify({ "is_removed": is_removed }), 200
+
+@api.route("/upload/<int:house_id>", methods=['POST'])
+def handle_upload(house_id):
+    
+    result = cloudinary.uploader.upload(request.files['image'])
+    image = Image(url = result['secure_url'], house_id = house_id)
+
+    db.session.add(image)
+    db.session.commit()
+    return jsonify({ "img": image }), 200
+
+@api.route("/houses/images/<int:house_id>", methods=['GET'])
+def handle_call_house_images(house_id):
+    images_query = Image.query.filter_by(house_id = house_id).all()
+    if images_query == []:
+        return jsonify({ "msg": "There is not images" })
+    
+    response = list(map(lambda user: user.serialize(), images_query))
+
+    return jsonify({ "results": response })
 
 @api.route("/gethouses/rent", methods=['GET'])
 def getHousesToRent():
