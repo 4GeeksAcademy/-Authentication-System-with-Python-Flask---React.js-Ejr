@@ -4,6 +4,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 			accessToken: null,
 			userInfo: null,
 			message: null,
+			modalmsje: [
+				{
+					boton: "Click",
+					header: "headerok",
+					body: "bodyok",
+					footer: "footerok"
+				}
+			],
 			demo: [
 				{
 					title: "FIRST",
@@ -164,6 +172,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}catch(error){
 					console.log("Error loading message from backend", error)
 				}
+			},
+			dataModal: (dataMsje) => {
+				const store = getStore();
+				store.modalmsje.splice(0, 1, dataMsje);
+				setStore(store);
 			}
 		}
 	};
