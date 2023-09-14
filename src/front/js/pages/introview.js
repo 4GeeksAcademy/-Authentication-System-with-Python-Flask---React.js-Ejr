@@ -20,7 +20,7 @@ const IntroView = () => {
           
             <div className="d-flex">
               <a href="#learn" type="button" className="btn btn-info mx-3 text-white" > <strong>How to use it</strong></a>
-              <a href="#plans" type="button" className="btn btn-warning text-white"  style={{ backgroundColor: '#FD5812'}}> <strong>Pricin</strong></a>
+              <a href="#plans" type="button" className="btn btn-warning text-white"  style={{ backgroundColor: '#FD5812'}}> <strong>Pricing</strong></a>
             </div>
           </div>
           <div className="col-md-6">

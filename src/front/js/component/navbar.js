@@ -17,8 +17,8 @@ export const Navbar = () => {
 		<nav class="navbar bg-body-tertiary" style={{"background-color":"#FD5812"}}>
 			<div class="container-fluid">
 				<a class="navbar-brand" href="#">
-				<img src={ComponentifyLogo} alt="Logo" width="45" height="39" class="d-inline-block align-text-center" />
-				<span className="text-white">Componentify</span>
+				<img src={ComponentifyLogo} alt="Logo" width="45" height="39" class="d-inline-block align-text-center" style={{ marginTop: '-10px' }}  />
+				<span className="text-white"><strong>Componentify</strong></span>
 				</a>
 				<form class="d-flex justify-content-center" role="search">
 				<input class="form-control" type="search" placeholder="Search" aria-label="Search"/>
