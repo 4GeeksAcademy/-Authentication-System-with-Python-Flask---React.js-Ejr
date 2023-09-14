@@ -3,6 +3,8 @@ import { Context } from "../store/appContext";
 import { useParams, useLocation, Link } from 'react-router-dom';
 import diego from "../../img/diego.jpg";
 import { Comentarios } from '../component/comentarios_casas.jsx';
+import { PanelCtrl } from "../component/panel_control.jsx";
+
 
 
 function Detailsventas() {
@@ -21,14 +23,14 @@ function Detailsventas() {
 
     <div className='row d-flex cuerpo'>
 
-      
-      
-      
-      
 
 
-      <div className="col-12"  style={{ width: "90rem" }}>
-      <Link to={"/"}><button type="submit" className="btn text-white bg-azul-oscuro  rounded-pill w-25 my-4">Volver</button></Link>
+
+
+
+
+      <div className="col-12" style={{ width: "90rem" }}>
+        <Link to={"/"}><button type="submit" className="btn text-white bg-azul-oscuro  rounded-pill w-25 my-4">Volver</button></Link>
         <img src="https://www.decorablog.com/wp-content/2011/06/Casa-lujosa-Singapur-3.jpg" className="card-img-top" alt="..." />
         <div className="card-body">
           <h2 className="card-title">{store.casa.title}</h2>
@@ -62,12 +64,14 @@ function Detailsventas() {
 
             Alterno viviendo entre la capital Montevideo y Punta del Este en el departamento de Maldonado. Punta Ballena es uno de los lugares más bonitos de Sudamérica en Punta del Este.</li>
         </ul>
-       
 
-      </div>
 
-     </div>
-   
+      </div>{
+        store.auth ?
+          <PanelCtrl /> : null
+      }</div>
+
+
   );
 };
 
