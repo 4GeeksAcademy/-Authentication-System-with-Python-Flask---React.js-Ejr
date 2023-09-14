@@ -4,9 +4,17 @@ import { Context } from "../store/appContext";
 export const UploadImages = () => {
     const { store, actions } = useContext(Context)
     const [files, setFiles] = useState(null);
+    const [images, setImages] = useState([])
 
-    const getImages = () => {
-        fetch(process.env.BACKEND_URL)
+    const getImages = async () => {
+        try {
+            const data = await fetch(process.env.BACKEND_URL + "/houses/images/2")
+            const response = await data.json();
+            console.log(response.results);
+            setImages(response.results);
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     const uploadImage = evt => {
@@ -19,14 +27,22 @@ export const UploadImages = () => {
         const options = {
             body,
             method: "POST",
-
         }
 
-        fetch(process.env.BACKEND_URL + "/upload/1", options)
-            .then(res => res.json())
-            .then(data => console.log("Success!!!!"))
-            .then(error => console.error("ERROR!!!", error))
+        try {
+            const saveImage = async () => {
+                await fetch(process.env.BACKEND_URL + "/upload/2", options);
+                await getImages();
+            }
+            saveImage();
+        } catch (error) {
+            console.log(error);
+        }
     }
+
+    useEffect(() => {
+        getImages();
+    }, [])
 
     return (
         <div>
@@ -34,6 +50,9 @@ export const UploadImages = () => {
                 <input type="file" onChange={(e) => setFiles(e.target.files)} />
                 <button>Upload</button>
             </form>
+            <div>
+                {images.map(image => <img src={image.url} key={image.id} />)}
+            </div>
 
         </div>
     );

@@ -288,15 +288,26 @@ def deleteHouse(id):
 def handle_upload(house_id):
     
     result = cloudinary.uploader.upload(request.files['image'])
+
+    if result == "":
+        print("Hubo un error con la imagen")
+        return jsonify({ "msg": "Hubo un error con la imagen" })
+
+    house = House.query.filter_by(id = house_id).first()
+
+    if house == []:
+        print("La casa no existe")
+        return jsonify({ "msg": "La casa no existe" })
+
     image = Image(url = result['secure_url'], house_id = house_id)
 
     db.session.add(image)
     db.session.commit()
-    return jsonify({ "img": image }), 200
+    return jsonify({ "msg": "Imagen guardada" }), 200
 
 @api.route("/houses/images/<int:house_id>", methods=['GET'])
 def handle_call_house_images(house_id):
-    images_query = Image.query.filter_by(house_id = house_id).all()
+    images_query = Image.query.filter_by(house_id = house_id)
     if images_query == []:
         return jsonify({ "msg": "There is not images" })
     
