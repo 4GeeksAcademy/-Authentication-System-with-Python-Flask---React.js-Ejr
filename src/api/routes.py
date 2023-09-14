@@ -248,21 +248,28 @@ def eliminar_casa_favorita(casa_id):
 
 @api.route("/post", methods=['POST'])
 def save_post():
+    image = request.files.get('image')  # Obtén la imagen
+    json_data = json.loads(request.form.get('json_data'))  # Obtén la cadena JSON
+    print(json_data)
 
     house = House(
-        id = request.json.get("id", None),
-        title = request.json.get("title", None),
-        category = request.json.get("category", None),
-        image_id = request.json.get("image_id", None),
-        user_id = request.json.get("user_id", None),
-        location = request.json.get("location", None),
-        number_of_rooms = request.json.get("number_of_rooms", None),
-        number_of_bathrooms = request.json.get("number_of_bathrooms", None),
-        parking = request.json.get("parking", None),
-        wifi = request.json.get("wifi", None),
-        virified_account = request.json.get("virified_account", None),
-        price = request.json.get("price", None)
+        title=json_data.get("title", None),
+        category=json_data.get("category", None),
+        image_url="no image",
+        description=json_data.get("description", None),
+        user_id=json_data.get("user_id", None),
+        location=json_data.get("location", None),
+        number_of_rooms=json_data.get("number_of_rooms", None),
+        number_of_bathrooms=json_data.get("number_of_bathrooms", None),
+        parking=json_data.get("parking", None),
+        wifi=json_data.get("wifi", None),
+        virified_account=json_data.get("virified_account", None),
+        price=json_data.get("price", None),
     )
+
+    result = cloudinary.uploader.upload(image)
+
+    house.image_url = result['secure_url']
 
     db.session.add(house)
     db.session.commit()
@@ -283,25 +290,6 @@ def deleteHouse(id):
         is_removed = True
 
     return jsonify({ "is_removed": is_removed }), 200
-
-@api.route("/upload/<int:house_id>", methods=['POST'])
-def handle_upload(house_id):
-    
-    result = cloudinary.uploader.upload(request.files['image'])
-
-    if result == "":
-        return jsonify({ "msg": "Hubo un error con la imagen" })
-
-    house = House.query.filter_by(id = house_id).first()
-
-    if house == []:
-        return jsonify({ "msg": "La casa no existe" })
-
-    image = Image(url = result['secure_url'], house_id = house_id)
-
-    db.session.add(image)
-    db.session.commit()
-    return jsonify({ "msg": "Imagen guardada" }), 200
 
 @api.route("/houses/images/<int:house_id>", methods=['GET'])
 def handle_call_house_images(house_id):

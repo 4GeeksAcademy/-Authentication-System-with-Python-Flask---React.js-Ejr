@@ -21,17 +21,30 @@ export const UploadImages = () => {
         evt.preventDefault();
         console.log("This are the files", files)
 
-        let body = new FormData();
-        body.append("image", files[0])
+        const formData = new FormData();
+        formData.append('image', files[0]); // Agrega la imagen al FormData
+        formData.append('json_data', JSON.stringify({
+            title: "Casa",
+            category: "Alquiler",
+            description: "asd",
+            user_id: 1,
+            location: "pa",
+            number_of_rooms: 2,
+            number_of_bathrooms: 3,
+            parking: true,
+            wifi: true,
+            virified_account: true,
+            price: 200
+        }));
 
         const options = {
-            body,
+            body: formData,
             method: "POST",
         }
 
         try {
             const saveImage = async () => {
-                await fetch(process.env.BACKEND_URL + "/upload/2", options);
+                await fetch(process.env.BACKEND_URL + "/post", options);
                 await getImages();
             }
             saveImage();
