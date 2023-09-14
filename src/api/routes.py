@@ -350,6 +350,16 @@ def getHousesToBuy():
     
     return jsonify({ "results": response }), 200
 
+@api.route("/gethouses", methods=['GET'])
+def getAllTheHouses():
+    houses = House.query.all()
+    response = list(map(lambda user: user.serialize(), houses))
+
+    if response == None:
+        return jsonify({ "msg": "The house dosen´t exist" }), 404
+
+    return jsonify({ "results": response }), 200
+
 @api.route("/gethouse/<int:id>", methods=['GET'])
 def getOneSingleHouse(id):
     house = House.query.filter_by(id = id).first()

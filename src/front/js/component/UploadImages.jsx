@@ -7,6 +7,7 @@ export const UploadImages = () => {
     const [images, setImages] = useState([])
 
     const getImages = async () => {
+        console.log("cambiar id de la imagen a pedir")
         try {
             const data = await fetch(process.env.BACKEND_URL + "/gethouse/1")
             const response = await data.json();
@@ -20,6 +21,7 @@ export const UploadImages = () => {
     const uploadImage = evt => {
         evt.preventDefault();
         console.log("This are the files", files)
+        console.log("cambiar user_id: para agregar imagen")
 
         const acceptedFormats = ["png", "jpg", "jpeg"];
         let canBeUsed = false;
@@ -55,8 +57,8 @@ export const UploadImages = () => {
 
         try {
             const saveImage = async () => {
-                await fetch(process.env.BACKEND_URL + "/post", options);
-                await getImages();
+                await fetch(process.env.BACKEND_URL + "/api/post", options);
+                getImages();
             }
             saveImage();
         } catch (error) {
@@ -69,13 +71,13 @@ export const UploadImages = () => {
     }, [])
 
     return (
-        <div className="mt-5">
+        <div className='mt-5'>
             <form onSubmit={uploadImage}>
                 <input type="file" onChange={(e) => setFiles(e.target.files)} />
                 <button>Upload</button>
             </form>
             <div>
-                <img src={images} />
+                <img src={images != "" ? images : ""} />
             </div>
 
         </div>
