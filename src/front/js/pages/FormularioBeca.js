@@ -9,6 +9,19 @@ const FormularioBeca = () => {
   const handleChangeScholarshipPost =(e)=>{
     actions.handleChange(e, "createScholarship")
   }
+
+  const handleScholarshipPost = () => {
+    actions.postScholarship()
+  }
+
+  useEffect(() => {
+    if (store.scholarshipPosted) {
+      navigate('/');
+      actions.getAllScholarShips();
+    }
+  }, [store.scholarshipPosted]);
+
+
   return (
     <div className='container'>
       <h2 className='form-title'>Formulario Sobre Beca</h2>
@@ -17,7 +30,7 @@ const FormularioBeca = () => {
         <div className='row m-3'>
           <div className='col-9'>
             <label htmlFor="nombreInstitucion" className="form-label">Institución</label>
-            <input name='institution' type="email" className="form-control" id="nombreInstitucion" placeholder='Nombre de la institución' onChange={handleChangeScholarshipPost}/>
+            <input name='institution' type="email" className="form-control" id="nombreInstitucion" placeholder='Nombre de la institución' onChange={handleChangeScholarshipPost} />
           </div>
           <div className='col-3'>
             <label htmlFor="fechaLimite" className="form-label">Fecha Límite de Inscripción</label>
@@ -59,7 +72,7 @@ const FormularioBeca = () => {
           <div className='col-6'>
             <label htmlFor="urlBeca" className="form-label">URL para la Página de Inscripción</label>
             <input name='url_to' type="email" className="form-control" id="urlBeca" placeholder='https://' onChange={handleChangeScholarshipPost}/>
-            <button className='mt-4 button-post' onClick={()=>actions.postScholarship()} >Publicar</button>
+            <button className='mt-4 button-post' onClick={handleScholarshipPost} >Publicar</button>
           </div>
           <div className='col-6'>
             <label for="descripcionBeca" class="form-label" >Descripción de los Beneficios y Requerimientos para Participar</label>

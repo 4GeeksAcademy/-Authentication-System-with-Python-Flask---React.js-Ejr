@@ -5,7 +5,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
 			signup: false,
-			isloged: false,
+			isloged: !!localStorage.getItem("jwt-token"),
 			user_data: {
 				name: null,
 				last_name: null,
@@ -16,12 +16,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 				email: null,
 				password: null
 			},
-			current_user: {},
-			current_insti_user: {},
+			current_user: JSON.parse(localStorage.getItem("current_user")) || {},
+			current_insti_user: JSON.parse(localStorage.getItem("current_insti_user")) || {},
 			my_tracker: [],
 			selectedScholarshipId: null,
 			insSignup: false,
-			insLoged: false,
+			insLoged: !!localStorage.getItem("jwt-token2"),
 			institution_data: {
 				institutional_name: null,
 				email: null,
@@ -49,7 +49,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			hiddenLogout: true,
 			hiddenSignup: false,
 
-			allScholarships: []
+			allScholarships: [],
 
 
 		},
@@ -122,11 +122,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 					if (response.ok) {
 						localStorage.setItem("jwt-token", result.token);
+						localStorage.setItem("current_user", JSON.stringify(result));
 						setStore({ isloged: true });
-						setStore({ hiddenLogin: true });
-						setStore({ hiddenMyProfile: false });
-						setStore({ hiddenSignup: true });
-						setStore({ hiddenLogout: false });
+						setStore({ insLoged : false })
 						setStore({ current_user: result })
 
 						{const customAlertElement = document.getElementById("customAlertLogInSuccess");
@@ -136,13 +134,20 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 					} else {
 						setStore({ isloged: false })
+<<<<<<< HEAD
+						setStore({ insLoged : false })
+						alert(result.message)
+=======
 						const customAlertElement = document.getElementById("customAlertLogIn");
 						{customAlertElement.innerHTML = `<div class="alert alert-danger" role="alert">Su correo o contraseña son incorrectos. Por favor intente de nuevo.</div>`};
+>>>>>>> 0a5feb03126b09167c593fbb056777caf24c2804
 					}
 
 				} catch (error) {
 					console.log(error + " Error loading message from backend")
 					setStore({ isloged: false })
+					setStore({ insLoged: false })
+
 				}
 
 			},
@@ -224,13 +229,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 					})
 					const result = await response.json()
 					console.log(result);
+
 					if (response.ok) {
-						localStorage.setItem("jwt-token", result.token);
+						localStorage.setItem("jwt-token2", result.token);
+						localStorage.setItem("current_insti_user", JSON.stringify(result));
 						setStore({ insLoged: true });
-						setStore({ hiddenMyInsProfile: false });
-						setStore({ hiddenLogin: true });
-						setStore({ hiddenSignup: true });
-						setStore({ hiddenLogout: false });
+						setStore({ isloged : false })
 						setStore({ current_insti_user: result })
 						alert("Welcome!");
 
@@ -239,17 +243,26 @@ const getState = ({ getStore, getActions, setStore }) => {
 						return true;
 					} else {
 						setStore({ insLoged: false })
+<<<<<<< HEAD
+						setStore({ isloged : false })
+
+						alert(result.message)
+=======
 						const customAlertElement = document.getElementById("customAlertLogInInst");
 						{customAlertElement.innerHTML = `<div class="alert alert-danger" role="alert">Su correo o contraseña son incorrectos. Por favor intente de nuevo.</div>`};
+>>>>>>> 0a5feb03126b09167c593fbb056777caf24c2804
 					}
 				} catch (error) {
 					console.log(error + " Error loading message from backend")
 					setStore({ insLoged: false })
+					setStore({ isloged : false })
+
 				}
 			},
 
+
 			postScholarship: async () => {
-				const myToken = localStorage.getItem("jwt-token");
+				const myToken = localStorage.getItem("jwt-token2");
 				const store = getStore()
 				const actions = getActions()
 				setStore({ tokenUser: myToken })
@@ -270,7 +283,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					const result = await response.json()
 					console.log(result);
 					if (response.ok) {
-						localStorage.setItem("jwt-token", result.token);
+						localStorage.setItem("jwt-token2", result.token);
 						alert("Scholarship added succesfully");
 						setStore({ scholarshipPosted: true });
 						return true;
@@ -288,32 +301,54 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({ insSignup: value })
 
 			},
-			changeLogInStatus: (value) => {
-				setStore({ isloged: value })
-				setStore({ insLoged: value })
-				setStore({ hiddenLogin: value })
+			changeLogInStatus: () => {
+				
+				
+				if (localStorage.getItem("jwt-token")) {
+					setStore({ isloged: true });
+					setStore({ insLoged: false });
+					setStore({ hiddenLogout: false });
+				  } else if (localStorage.getItem("jwt-token2")) {
+					setStore({ isloged: false });
+					setStore({ insLoged: true });
+					setStore({ hiddenLogout: true });
+				  }
+				
 
 
 
 			},
 			changeMyProfileStatus: () => {
+				if (localStorage.getItem("jwt-token")) {
 				setStore({ isloged: true })
+				setStore({ insLoged: false })
+				}
 			},
 
 			changeMyInstitutionalProfileStatus: () => {
-				setStore({ insLoged: true })
+				if (localStorage.getItem("jwt-token2")) {
+					setStore({ insLoged: true });
+					setStore({ isloged: false });
+				  } else {
+					setStore({ insLoged: false });
+					setStore({ isloged: false });
+				  }
+
 			},
 
 			changeLogoutButton: (value) => {
 				setStore({ hiddenLogout: value })
 			},
+
 			logout: () => {
 				localStorage.clear();
-				setStore({ hiddenLogout: true })
 				setStore({ isloged: false })
 				setStore({ insLoged: false })
 				setStore({ signup: false })
 				setStore({ insSignup: false })
+				setStore({ current_user: {} })
+				setStore({ current_insti_user: {} })
+
 			},
 
 			getAllScholarShips: async () => {
