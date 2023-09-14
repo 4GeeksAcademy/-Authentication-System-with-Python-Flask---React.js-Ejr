@@ -2,11 +2,16 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User
+from api.models import db, User, Gallery
 from api.utils import generate_sitemap, APIException
 from flask_jwt_extended import JWTManager, get_jwt_identity, create_access_token, jwt_required
 from werkzeug.security import generate_password_hash, check_password_hash
 import datetime
+from cloudinary.uploader import upload
+from flask_migrate import Migrate
+from flask_sqlalchemy import SQLAlchemy 
+
+
 
 
 api = Blueprint('api', __name__)
@@ -16,7 +21,7 @@ api = Blueprint('api', __name__)
 def handle_hello():
 
     response_body = {
-        "message": "Hello! I'm a message that came from the backend, check the network tab on the google inspector and you will see the GET request"
+        "message": "Hello! I'm a message"
     }
 
     return jsonify(response_body), 200
@@ -25,8 +30,8 @@ def handle_hello():
 #------< registrar usuario >-------------#
 
 @api.route('/register', methods=['POST'])
-
 def user_register():
+    print(request.get_json())
     name= request.json.get("name")
     lastname= request.json.get("lastname")
     email= request.json.get("email")
@@ -131,9 +136,38 @@ def books_route():
     return jsonify(response_libro), 200
 
 
+
+
+
 @api.route('/upload', methods=['POST'])
-def upload_image_toute():
-    response_upload = {
-        "mesage": "imagen cargada con exito"
-    }
-    return jsonify(response_upload)
+def upload_image_route():
+    
+    
+    title=request.form['title']
+    
+    
+    if not title:
+        return jsonify({"msg": "debe agregar titulo"}), 400
+    
+    image = request.files['image']
+    if not 'image' in request.files:
+        return jsonify({"msg":" la imagen es requerida"}), 400
+        
+    
+    #-----< ahora hago un "fetch" a Cloudinary >-----
+    public_id=image.filename
+    resp=upload(image, fordel='galleries',public_id='public_id')
+    
+    if not resp:
+        return jsonify({'msg': "error al cargar imagen"}), 400
+    
+    print(resp)
+    
+    gallery = Gallery()
+    gallery.title = title
+    gallery.image = resp['secure_url']
+    gallery.public_id = public_id 
+
+    gallery.save()
+    
+    return jsonify(gallery.serialize()), 201

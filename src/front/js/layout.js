@@ -15,8 +15,9 @@ import { DonacionesRealizadas } from "./pages/donacionesRalizadas";
 import Card from "./component/reviewsLibros/Card";
 import Testimonio from "./component/reviewsLibros/Testimonio";
 import BookReviews from "./pages/BookReviews";
-
+import Login from "./component/login/Login";
 import Intercambio from "./pages/Intercambio";
+import  FormularioRegistro  from "./pages/formularioRegistro";
 
 /* FOOTERS */
 import { GuiaCompra } from "./pages/guiaCompra";
@@ -25,17 +26,8 @@ import { MetodoEnvio } from "./pages/metodoEnvio";
 import { SobreNosotros } from "./pages/sobreNosotros";
 import { NuestraHistoria } from "./pages/nuestraHistoria";
 import { ComoDonar } from "./pages/comoDonar";
-
-
-
-
-import { FormularioRegistro } from "./pages/formularioRegistro";
-
-
 import injectContext from "./store/appContext";
-
 import { Navbar } from "./component/navbar";
-import { Navbar2 } from "./component/navbar2";
 import { Footer } from "./component/footer";
 
 
@@ -52,7 +44,7 @@ const Layout = () => {
         <div>
             <BrowserRouter basename={basename}>
                 <ScrollToTop>
-                    <Navbar /> 
+                    {useAlternateNavbar ? <Navbar /> : <Navbar2 />}
                     <Routes>
                         <Route element={<Home />} path="/" />
                         <Route element={<LibroVenta />} path="/libroVenta" />
@@ -66,10 +58,20 @@ const Layout = () => {
                         <Route element={<DonacionesRealizadas />} path="/donacionesRalizadas" />
                         <Route element={<ComoDonar />} path="/comoDonar" />
                         <Route element={<BookReviews />} path="/bookreviews" />
+                        <Route element={<Login />} path="login" />
                         <Route element={<Intercambio />} path="/intercambio" />
                         <Route element={<FormularioRegistro />} path="/formularioRegistro" />
                         <Route element={<h1>Not found!</h1>} />
                         {/* <Route element={<FormularioRegistro />} path="/formularioRegistro" /> */}
+
+                        <Route
+                            path="/formularioRegistro"
+                            element={<FormularioRegistro />}                            
+                            enter={() => setUseAlternateNavbar(true)}                            
+                            leave={() => setUseAlternateNavbar(false)}
+                        />
+                        {/* <Route element={<Single />} path="/single/:theid" /> */}                       
+                        <Route element={<h1>Not found!</h1>} />
                     </Routes>
                     <Footer />
                 </ScrollToTop>
