@@ -23,9 +23,9 @@ export const Login = () => {
 
     return (
         <>
-        <div className="d-flex justify-content-center">
+        <Link to={"/"}><div className="d-flex justify-content-center">
             <img src={logoecasa} alt=":C" style={{width: "55px"}}/>
-        </div>
+        </div></Link>
             <p id="emailHelp" className="d-flex justify-content-center my-3">E-CASA</p>
         <form className="container my-5" onSubmit={handleSubmit}>
             <h1>Entrar</h1>
