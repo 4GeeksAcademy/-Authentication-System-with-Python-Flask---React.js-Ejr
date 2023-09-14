@@ -1,15 +1,20 @@
 
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import { Context } from "../store/appContext";
 
 export const Navbar = () => {
-  return (<div>
+  const {store} = useContext(Context)
+
+  return (
+  <div>
     <nav className="navbar navbar-expand-lg bg-body-tertiary bg-dark">
       <div className="container-fluid">
         <div className="col d-flex">
           <a className="navbar-brand text-white" href="#">Books Market</a>
           <Link to="/" className="nav-link active text-white" aria-current="page">Home</Link>
         </div>
+        
         <div className="col">
           <form className="d-flex" role="search">
             <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
@@ -21,9 +26,12 @@ export const Navbar = () => {
             <li className="nav-item">
               <a className="nav-link active text-white" aria-current="page" href="#">Cart</a>
             </li>
+            {store.registro ? 
             <li className="nav-item">
               <a className="nav-link text-white" href="#">Wish List</a>
             </li>
+            :<></>
+            }
             <li className="nav-item dropdown">
               <a className="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 Iniciar sesión/ Registrarse

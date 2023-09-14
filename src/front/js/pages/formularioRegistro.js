@@ -5,8 +5,12 @@ import { useNavigate } from 'react-router-dom'
 import { Context } from "../store/appContext";
 
 export const FormularioRegistro = () => {
-    const { store, actions } = useContext(Context);   
-    const navigate = useNavigate()
+    const { store, actions } = useContext(Context);
+    const navigate = useNavigate();
+    useEffect(() => {
+        actions.vistaRegistro()
+
+    }, [])
 
     return (
         <div className="container col-md-4 my-3 shadow p-0">
