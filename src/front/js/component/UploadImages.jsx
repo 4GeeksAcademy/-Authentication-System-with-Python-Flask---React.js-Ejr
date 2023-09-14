@@ -8,10 +8,10 @@ export const UploadImages = () => {
 
     const getImages = async () => {
         try {
-            const data = await fetch(process.env.BACKEND_URL + "/houses/images/2")
+            const data = await fetch(process.env.BACKEND_URL + "/gethouse/1")
             const response = await data.json();
-            console.log(response.results);
-            setImages(response.results);
+            console.log(response.results.image_url);
+            setImages(response.results.image_url);
         } catch (error) {
             console.log(error);
         }
@@ -20,6 +20,17 @@ export const UploadImages = () => {
     const uploadImage = evt => {
         evt.preventDefault();
         console.log("This are the files", files)
+
+        const acceptedFormats = ["png", "jpg", "jpeg"];
+        let canBeUsed = false;
+
+        acceptedFormats.forEach(format => {
+            if (files[0].type.includes(format)) {
+                canBeUsed = true;
+            }
+        })
+
+        if (canBeUsed == false) alert("El formato no es el correcto debe ser png, jpg o jpeg");
 
         const formData = new FormData();
         formData.append('image', files[0]); // Agrega la imagen al FormData
@@ -64,7 +75,7 @@ export const UploadImages = () => {
                 <button>Upload</button>
             </form>
             <div>
-                {images.map(image => <img src={image.url} key={image.id} />)}
+                <img src={images} />
             </div>
 
         </div>
