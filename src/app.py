@@ -37,8 +37,8 @@ app.config.update(dict(
     MAIL_PORT = 587,
     MAIL_USE_TLS = True,
     MAIL_USE_SSL = False,
-    MAIL_USERNAME = "diianachm1802@gmail.com",
-    MAIL_PASSWORD = "bxmrhjpmwwhrplny"
+    MAIL_USERNAME = "bexploraproject@gmail.com",
+    MAIL_PASSWORD = "xjsuoddagtfbvdet"
 ))
 
 mail = Mail(app)
@@ -146,9 +146,19 @@ def add_user():
     )
 
     user.save()
-
-    msg = Message("¡Bienvenido a tu aplicación!", sender="diianachm1802@gmail.com", recipients=[user.email])
-    msg.body = "¡Gracias por registrarte en nuestra aplicación! Esperamos que disfrutes de nuestros servicios."
+    msg = Message("¡Saludos Bexplorer!", sender="bexploraproject@gmail.com", recipients=[user.email])
+    msg.html = """
+    <html>
+        <body>
+            <h1 style="color: #FE5002;">¡Este es el inicio de tu expedición profesional! </h1>
+            <h3>¡Gracias por registrarte en nuestra página web! Nos complace que estés aquí y que disfrutes de nuestros servicios</h3>
+            <h3>Esperamos que encuentres nuevos horizontes profesionales de la mano de Bexplora</h3>
+            <img src="https://i.imgur.com/KiCU5ol.png" style="max-width: 20%; height: auto;"  alt="Logo de la aplicación">
+            <h3>¡Bexplora, explora tu potencial!</h3>
+            <p>Atentamente, tus guías bexplorers </p>
+        </body>
+    </html>
+    """
 
     try:
         mail.send(msg)
@@ -301,8 +311,19 @@ def add_institutional_user():
 
     institutional_user.save()
 
-    msg = Message("¡Bienvenido a tu aplicación!", sender="diianachm1802@gmail.com", recipients=[institutional_user.email])
-    msg.body = "¡Gracias por registrarte en nuestra aplicación! Esperamos que disfrutes de nuestros servicios."
+    msg = Message("¡Saludos Bexplorer!", sender="bexploraproject@gmail.com", recipients=[institutional_user.email])
+    msg.html = """
+    <html>
+        <body>
+            <h1>¡Este es el inicio de tu expedición profesional!</h1>
+            <p>¡Gracias por registrarte en nuestra página web! Nos complace que estés aquí y que disfrutes de nuestros servicios</p>
+            <p>Esperamos que encuentres nuevos horizontes profesionales de la mano de Bexplora</p>
+            <img src="https://i.imgur.com/KiCU5ol.png" alt="Logo de la aplicación">
+            <p>¡Bexplora, explora tu potencial!</p>
+            <p>Atentamente, tus guías bexplorers </p>
+        </body>
+    </html>
+    """
     try:
         mail.send(msg)
     except Exception as e:
@@ -446,7 +467,7 @@ def invalid_token_callback(error):
 
 @app.route('/api/send_email', methods=['GET'])
 def send_mail():
-    msg = Message(subject="test de mail", sender="diianachm1802@gmail.com", recipients=["diianachm1802@gmail.com"])
+    msg = Message(subject="test de mail", sender="bexploraproject@gmail.com", recipients=["bexploraproject@gmail.com"])
     msg.body = "Hola desde la clase"
     mail.send(msg)
     return jsonify({"msg" : "Mail enviado"}), 200

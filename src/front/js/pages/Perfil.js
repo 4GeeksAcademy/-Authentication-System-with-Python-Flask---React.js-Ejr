@@ -1,4 +1,4 @@
-import React, { useContext} from "react";
+import React, { useContext } from "react";
 import { Context } from "../store/appContext";
 import "../../styles/perfil.css";
 import { Link } from "react-router-dom";
@@ -41,7 +41,7 @@ const Perfil = () => {
                 value={store.current_user.email}
               />
               <Link to="/tracker">
-                <button className="btn btn-primary btn-sm follow mb-3" onClick={()=>actions.getMyTracker()}>
+                <button className="btn btn-primary btn-sm follow mb-3" onClick={() => actions.getMyTracker()}>
                   Ver mis aplicaciones
                 </button>
               </Link>
