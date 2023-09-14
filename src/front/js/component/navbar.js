@@ -4,7 +4,10 @@ import { Link } from "react-router-dom";
 import "../../styles/navbar.css";
 
 export const Navbar = () => {
+
   const { store, actions } = useContext(Context);
+
+  
 
   return (
     <nav className="navbar">
@@ -30,7 +33,7 @@ export const Navbar = () => {
           {/* en este apartado aseguramos que mis aplicaciones sea solamente visible para usuarios y funcional para usuarios registrados */}
           <Link to={(!store.isloged || store.insLoged) ? "/iniciarsesionEleccion" : "/tracker"}>
             {(!store.insLoged) && (
-              <button className="button-regular mx-1" onClick={() => actions.getMyTracker()}>
+              <button className="button-regular mx-1" hidden={(store.insLoged)} onClick={() => actions.getMyTracker()}>
                 Mis Aplicaciones
               </button>
             )}
@@ -39,17 +42,15 @@ export const Navbar = () => {
           {/* las siguientes dos condiciones funcionan para poner a disposición el tipo de perfil según el tipo de user */}
 
           <Link to="/perfil_institucional">
-            {store.insLoged ? (
-              <button className="button-regular mx-1" onClick={() => actions.changeMyInstitutionalProfileStatus()}>
+              <button className="button-regular mx-1" hidden={(!store.isloged && !store.insLoged) || store.isloged}  onClick={() => actions.changeMyInstitutionalProfileStatus()}>
                 Mi Perfil Institucional
               </button>
-            ) : null}
           </Link>
 
           <Link to="/perfil">
-            {store.isloged ? (
-              <button className="button-regular mx-1" onClick={() => actions.changeMyProfileStatus()}>Mi Perfil</button>
-            ) : null}
+            
+              <button className="button-regular mx-1" hidden={(!store.isloged && !store.insLoged) || store.insLoged} onClick={() => actions.changeMyProfileStatus()}>Mi Perfil</button>
+          
           </Link>
 
           {/* las siguientes dos condiciones permiten hacer que aparezcan y desaparezcan los hyperlinks a conveniencia y utilidad */}
@@ -60,17 +61,16 @@ export const Navbar = () => {
                 <button className="button-login" onClick={() => actions.changeLogInStatus()}>Iniciar sesión</button>
               )}
             </Link>
-
-
             <Link to="/registroEleccion">
               {!store.isloged && !store.insLoged && (
-
                 <button className="button-signup" onClick={() => actions.changeSignUpStatus()}>Registrarse</button>
               )}
             </Link>
 
             <Link to="/">
-              <button className="button-login" hidden={store.hiddenLogout} onClick={() => actions.logout()}>Cerrar sesión</button>
+              
+                <button className="button-login" hidden={!store.isloged && !store.insLoged} onClick={() => actions.logout()}>Cerrar sesión</button>
+              
             </Link>
 
           </div>
