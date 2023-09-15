@@ -33,7 +33,7 @@ class Tracker(db.Model):
 class Scholarship(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     scholarship_name = db.Column(db.String(120), unique=False, nullable=False)
-    institution = db.Column(db.String(120), unique=False, nullable=False)
+    institution = db.Column(db.String(130), unique=False, nullable=False)
     deadline = db.Column(db.String(50), unique=False, nullable=False)
     modality = db.Column(db.String(50), unique=False, nullable=False)
     coverage = db.Column(db.String(50), unique=False, nullable=False)
