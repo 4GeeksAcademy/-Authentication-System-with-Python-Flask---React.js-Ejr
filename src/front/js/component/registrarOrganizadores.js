@@ -43,7 +43,7 @@ const RegistrarOrganizadores = () => {
             <table className="table align-middle mb-0 bg-white" id='teamstable'>
                 <thead className="bg-light">
                     <tr>
-                        <th>Nombre del equipo</th>
+                        <th>Nombre del Evento</th>
                         <th>País</th>
                         <th>Fecha de registro</th>
                         <th>Costo</th>
@@ -98,9 +98,40 @@ const RegistrarOrganizadores = () => {
                         </div>
                         <div className="modal-body">
                             <div className="row">
-                                <div className="col">
-
+                                <div className="row">
+                                    <div className="col"> <b>Nombre</b> </div>
                                 </div>
+                                <div className="row">
+                                    <div className="col"> Descripción corta</div>
+                                </div>
+                                <div className="row">
+                                    <div className="col"> Fecha de Inicio </div>
+                                </div>
+                                <div className="row">
+                                    <div className="col"> Ubicación</div>
+                                </div>
+                                <div className="row">
+                                    <div className="col"> Logotipo (archivo) </div>
+                                </div>
+                                <div className="row">
+                                    <div className="col"> Descripción larga </div>
+                                </div>
+                                <div className="row">
+                                    <div className="col"> Reglas (archivo) </div>
+                                </div>
+                                <div className="row">
+                                    <div className="col"> Fecha límite de registro</div>
+                                </div>
+                                <div className="row">
+                                    <div className="col"> Status del registro</div>
+                                </div>
+                                <div className="row">
+                                    <div className="col"> Datos de contacto  </div>
+                                </div>
+                                <div className="row">
+                                    <div className="col"> Costo de inscripción </div>
+                                </div>
+                                <div className="col"> </div>
                             </div>
                             ...
                         </div>
