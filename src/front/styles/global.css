@@ -271,8 +271,9 @@
     color: var(--color-risk-txt); 
 }
 
-.c-btn-risk:hover {
-    opacity: 0.7;
+.c-btn-risk-hover:hover {
+    background-color: var(--color-risk-txt);
+    color: var(--color-risk-bg); 
 }
 
 .c-btn-caution {
@@ -280,9 +281,19 @@
     color: var(--color-caution-txt); 
 }
 
+.c-btn-caution-hover:hover {
+    background-color: var(--color-caution-txt);
+    color: var(--color-caution-bg); 
+}
+
 .c-btn-silver {
     background-color: var(--color-silver-bg);
     color: var(--color-silver-txt);  
+}
+
+.c-btn-silver-hover:hover {
+    background-color: var(--color-silver-txt);
+    color: var(--color-silver-bg); 
 }
 
 .c-btn-gold {
@@ -290,9 +301,19 @@
     color: var(--color-gold-txt); 
 }
 
+.c-btn-gold-hover:hover {
+    background-color: var(--color-gold-txt);
+    color: var(--color-gold-bg); 
+}
+
 .c-btn-lime {
     background-color: var(--color-lime-bg);
     color: var(--color-lime-txt); 
+}
+
+.c-btn-lime-hover:hover {
+    background-color: var(--color-lime-txt);
+    color: var(--color-lime-bg); 
 }
 
 .c-btn-azure {
@@ -300,9 +321,19 @@
     color: var(--color-azure-txt); 
 }
 
+.c-btn-azure-hover:hover {
+    background-color: var(--color-azure-txt);
+    color: var(--color-azure-bg); 
+}
+
 .c-btn-mocca {
     background-color: var(--color-mocca-bg);
     color: var(--color-mocca-txt); 
+}
+
+.c-btn-mocca-hover:hover {
+    background-color: var(--color-mocca-txt);
+    color: var(--color-mocca-bg); 
 }
 
 .c-btn-aqua {
@@ -310,9 +341,19 @@
     color: var(--color-aqua-txt); 
 }
 
+.c-btn-aqua-hover:hover {
+    background-color: var(--color-aqua-txt);
+    color: var(--color-aqua-bg); 
+}
+
 .c-btn-slate {
     background-color: var(--color-slate-bg);
     color: var(--color-slate-txt); 
+}
+
+.c-btn-slate-hover:hover {
+    background-color: var(--color-slate-txt);
+    color: var(--color-slate-bg); 
 }
 
 .c-btn-componentify {
@@ -320,9 +361,19 @@
     color: var(--color-componentify-txt); 
 }
 
+.c-btn-componentify-hover:hover {
+    background-color: var(--color-componentify-txt);
+    color: var(--color-componentify-bg); 
+}
+
 .c-btn-lollypop {
     background-color: var(--color-lollypop-bg);
     color: var(--color-lollypop-txt); 
+}
+
+.c-btn-lollypop-hover:hover {
+    background-color: var(--color-lollypop-txt);
+    color: var(--color-lollypop-bg); 
 }
 
 .c-btn-mint {
@@ -330,9 +381,19 @@
     color: var(--color-mint-txt); 
 }
 
+.c-btn-mint-hover:hover {
+    background-color: var(--color-mint-txt);
+    color: var(--color-mint-bg); 
+}
+
 .c-btn-gloomy {
     background-color: var(--color-gloomy-bg); 
     color: var(--color-gloomy-txt); 
+}
+
+.c-btn-gloomy-hover:hover {
+    background-color: var(--color-gloomy-txt);
+    color: var(--color-gloomy-bg); 
 }
 
 .c-btn-fog {
@@ -340,9 +401,19 @@
     color: var(--color-fog-txt); 
 }
 
+.c-btn-fog-hover:hover {
+    background-color: var(--color-fog-txt);
+    color: var(--color-fog-bg); 
+}
+
 .c-btn-dark {
     background-color: var(--color-dark-bg);
     color: var(--color-dark-txt); 
+}
+
+.c-btn-dark-hover:hover {
+    background-color: var(--color-dark-txt);
+    color: var(--color-dark-bg); 
 }
 
 .c-btn-win {
@@ -350,13 +421,28 @@
     color: var(--color-win-txt); 
 }
 
+.c-btn-win-hover:hover {
+    background-color: var(--color-win-txt);
+    color: var(--color-win-bg); 
+}
+
 .c-btn-lavender {
     background-color: var(--color-lavender-bg); 
     color: var(--color-lavender-txt); 
 }
 
+.c-btn-lavender-hover:hover {
+    background-color: var(--color-lavender-txt);
+    color: var(--color-lavender-bg); 
+}
+
 .c-btn-purple {
     background-color: var(--color-purple-bg); 
     color: var(--color-purple-txt); 
+}
+
+.c-btn-purple-hover:hover {
+    background-color: var(--color-purple-txt);
+    color: var(--color-purple-bg); 
 }
 
