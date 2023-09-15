@@ -1,19 +1,15 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext} from "react";
 import { Context } from "../store/appContext";
-import { Link, useNavigate } from "react-router-dom";
 
 import "../../styles/CardBeca.css";
 
 
 const CardBeca = () => {
-  const navigate = useNavigate()
   const { store, actions } = useContext(Context);
 
   const handleGuardarBeca = (scholarshipId) => {
     // Llama a la acción setSelectedScholarshipId con el ID de la beca que deseas guardar
     actions.setSelectedScholarshipId(scholarshipId);
-
-    // Luego, llama a la acción addToMyTracker para guardar la beca en el tracker del usuario logueado
     actions.addToMyTracker();
   };
 
@@ -34,7 +30,7 @@ const CardBeca = () => {
                   {value.institution}
                 </p>
 
-                {/* En este apartado aseguraremos que para aplicar y guardar su beca el usuario inicie sesión, sino recibirá alert */}
+                {/* En este apartado aseguraremos que para aplicar y guardar su beca el usuario inicie sesión, sino recibirá alert. Si es institucional solo podrá ingresar a los links */}
                 <div className="button-container d-flex">
                   {store.isloged ? (
                     <a href={value.url_to} target="_blank"><button className="button-aplicar"

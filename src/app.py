@@ -220,41 +220,6 @@ def get_trackers():
 
     return jsonify(response_body), 200
 
-@app.route('/tracker/save/<int:user_id>', methods=['POST'])
-def save_tracker(user_id):
-    single_user = User.query.get(user_id)
-    request_body = request.get_json(force=True)
-    
-    if single_user is None:
-        return jsonify({"msg": f"The id {user_id} user doesn't exist"}), 404
-    
-    if "scholarship_name" not in request_body:
-        raise APIException('Scholarship name is required', 400)
-    
-    if "email" not in request_body:
-        raise APIException("email is required", 400)    
-    
-    # Crear el Tracker
-    tracker = Tracker(
-        scholarship_name=request_body['scholarship_name'],
-        email=request_body["email"],
-    )
-
-    # Asignar el Tracker al User
-    single_user.tracker = tracker
-    db.session.add(single_user)
-
-    # Guardar los cambios en la base de datos
-    db.session.commit()
-
-    response_body = {
-        "msg": "ok",
-        "msg2": "Tracker creado correctamente",
-        "user_info": single_user.serialize()
-    }
-    
-    return jsonify(response_body), 201
-
 # ROUTES FOR INSTITUTIONAL USERS
 
 @app.route('/institution-user', methods=['GET'])

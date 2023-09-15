@@ -1,11 +1,9 @@
-import React, { useContext, useRef } from "react";
-import { Context } from "../store/appContext";
+import React, { useRef } from "react";
 import CardBeca from "../component/CardBeca";
 import "../../styles/home.css";
 import { Link } from "react-router-dom";
 
 export const Home = () => {
-  const { store, actions } = useContext(Context);
 
    const thirdBlockRef = useRef(null);
 

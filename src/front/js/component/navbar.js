@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { Context } from "../store/appContext";
 import { Link } from "react-router-dom";
 import "../../styles/navbar.css";
@@ -30,7 +30,7 @@ export const Navbar = () => {
             </button>
           </Link>
 
-          {/* en este apartado aseguramos que mis aplicaciones sea solamente visible para usuarios y funcional para usuarios registrados */}
+          {/* en este apartado aseguramos que mis aplicaciones sea solamente visibles para usuarios y funcional para usuarios registrados */}
           <Link to={(!store.isloged || store.insLoged) ? "/iniciarsesionEleccion" : "/tracker"}>
             {(!store.insLoged) && (
               <button className="button-regular mx-1" hidden={(store.insLoged)} onClick={() => actions.getMyTracker()}>
@@ -48,9 +48,7 @@ export const Navbar = () => {
           </Link>
 
           <Link to="/perfil">
-            
               <button className="button-regular mx-1" hidden={(!store.isloged && !store.insLoged) || store.insLoged} onClick={() => actions.changeMyProfileStatus()}>Mi Perfil</button>
-          
           </Link>
 
           {/* las siguientes dos condiciones permiten hacer que aparezcan y desaparezcan los hyperlinks a conveniencia y utilidad */}
@@ -68,9 +66,7 @@ export const Navbar = () => {
             </Link>
 
             <Link to="/">
-              
                 <button className="button-login" hidden={!store.isloged && !store.insLoged} onClick={() => actions.logout()}>Cerrar sesión</button>
-              
             </Link>
 
           </div>

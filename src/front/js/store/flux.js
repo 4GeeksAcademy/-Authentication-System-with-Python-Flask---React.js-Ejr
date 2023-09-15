@@ -35,19 +35,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 			institutionName: null,
 			scholarshipsPosted: [],
 			scholarshipPosted: false,
-			hiddenMyProfile: true,
-			hiddenMyInsProfile: true,
-			hiddenLogin: false,
-			hiddenLogout: true,
-			hiddenSignup: false,
-
 			allScholarships: [],
-
-			hideApply: false,
-
 
 		},
 		actions: {
+
+
 			isPropertyEmpty: (obj) => {
 				for (const key in obj) {
 					if (obj[key] === "" || obj[key] == null || obj[key] === undefined) {
@@ -56,6 +49,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 				return false;
 			},
+
+
 			signUpUser: async () => {
 				const store = getStore()
 				const actions = getActions()
@@ -81,12 +76,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 						setStore({ signup: false })
 					}
 
-
 					if (response.ok) {
 						setStore({ signup: true })
 						showAlert("success", "Usuario registrado")
 					}
-
 
 				} catch (error) {
 					console.error(error + " Error loading message from backend");
@@ -94,6 +87,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 					showAlert("error", "Error de servidor. Por favor intente más tarde.")
 				}
 			},
+
+
 			logInUser: async () => {
 				const store = getStore()
 				const actions = getActions()
@@ -127,7 +122,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 					} else {
 						setStore({ isloged: false })
-
 						setStore({ insLoged : false })
 		
 
@@ -204,6 +198,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 					showAlert("error","Error. Por favor inténtalo más tarde.")
 				}
 			},
+
+
 			logInInstitution: async () => {
 				const store = getStore()
 				const actions = getActions()
@@ -229,7 +225,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 						setStore({ insLoged: true });
 						setStore({ isloged : false })
 						setStore({ current_insti_user: result })
-						setStore({hideApply : true})
 						showAlert("success", "Inicio de sesión exitoso")
 
 						console.log("Nombre de la institución:", result.institution_name); // Agrega esta línea para depurar
@@ -237,10 +232,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						return true;
 					} else {
 						setStore({ insLoged: false })
-
 						setStore({ isloged : false })
-
-						alert(result.message)
 
 						const customAlertElement = document.getElementById("customAlertLogInInst");
 						{customAlertElement.innerHTML = `<div class="alert alert-danger" role="alert">Su correo o contraseña son incorrectos. Por favor intente de nuevo.</div>`};
@@ -266,7 +258,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 					if (actions.isPropertyEmpty(store.scholarshipPost)) {
 						const customAlertElement = document.getElementById("customAlertPost");
 						{customAlertElement.innerHTML = `<div class="alert alert-danger" role="alert">Le falta llenar algunos datos.</div>`};
-
 						return;
 					}
 
@@ -297,6 +288,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 					showAlert("error","Error. Por favor inténtalo más tarde.")
 				}
 			},
+
+
 			changeSignUpStatus: (value) => {
 				setStore({ signup: value })
 				setStore({ insSignup: value })
@@ -313,17 +306,16 @@ const getState = ({ getStore, getActions, setStore }) => {
 					setStore({ insLoged: true });
 					setStore({ hiddenLogout: true });
 				  }
-				
-
-
-
 			},
+
+
 			changeMyProfileStatus: () => {
 				if (localStorage.getItem("jwt-token")) {
 				setStore({ isloged: true })
 				setStore({ insLoged: false })
 				}
 			},
+
 
 			changeMyInstitutionalProfileStatus: () => {
 				if (localStorage.getItem("jwt-token2")) {
@@ -333,12 +325,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 					setStore({ insLoged: false });
 					setStore({ isloged: false });
 				  }
-
 			},
 
-			changeLogoutButton: (value) => {
-				setStore({ hiddenLogout: value })
-			},
 
 			logout: () => {
 				localStorage.clear();
@@ -348,8 +336,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({ insSignup: false })
 				setStore({ current_user: {} })
 				setStore({ current_insti_user: {} })
-
 			},
+
 
 			getAllScholarShips: async () => {
 				const store = getStore()
@@ -360,16 +348,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 						method: 'GET'
 					})
 					const result = await response.json()
-					console.log(result);
 					setStore({ allScholarships: result.scholarships })
 
 					if (response.status == 400) {
 						showAlert("error","Por favor inténtalo de nuevo.")
-						console.log(result)
 					}
 
 					if (response.ok) {
-						console.log(result)
+						console.log("Hola Bexplorer!")
 					} else {
 						showAlert("error","Por favor inténtalo de nuevo.")
 					}
@@ -379,6 +365,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 					showAlert("error","Error. Por favor inténtalo más tarde.")
 				}
 			},
+
+
 			getMyTracker: async () => {
 				const myToken = localStorage.getItem("jwt-token");
 				const store = getStore()
@@ -392,28 +380,32 @@ const getState = ({ getStore, getActions, setStore }) => {
 						}
 					})
 					const result = await response.json()
-					console.log(result);
 					setStore({ my_tracker: result.becas_guardadas })
+
+					if (response.ok) {
+						console.log("Becas actualizadas")
+					} 
 
 					if (response.status == 400) {
 						alert(result.message)
 						showAlert("info","No hay aplicaciones registradas.")
-						console.log(result)
+					} 
+					
+					if (response.status == 422) {
+						showAlert("info","Debes iniciar sesión como usuario.")
 					}
-					if (response.ok) {
-						console.log("Becas actualizadas")
-					} else {
-						showAlert("error","Por favor inténtalo de nuevo.")
-					}
+					
 				} catch (error) {
 					console.log(error + " Error loading message from backend")
 					showAlert("error","Error. Por favor inténtalo más tarde.")
 				}
 			},
 
+
 			setSelectedScholarshipId: (scholarshipId) => {
 				setStore({ selectedScholarshipId: scholarshipId });
 			},
+
 
 			addToMyTracker: async () => {
 				const myToken = localStorage.getItem("jwt-token");
@@ -434,12 +426,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log(result);
 					if (response.ok) {
 						showAlertLonger("success","Beca agregada a Mis Aplicaciones")
-					
 					} 
 					
 					else if (response.status == 422) {
 						showAlert("info","Debes iniciar sesión como Usuario.")
-						console.log(result)
 					}
 					
 					else {
