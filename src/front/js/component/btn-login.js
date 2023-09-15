@@ -6,3 +6,5 @@ export const Buttonlogin = () => (
         <button className="btn btn-lg login" type="button">Log in</button>
     </div>
 );
+
+export default Buttonlogin;
