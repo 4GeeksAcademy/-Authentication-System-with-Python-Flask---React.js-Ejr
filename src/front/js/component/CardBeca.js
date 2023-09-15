@@ -1,11 +1,14 @@
 import React, { useContext, useEffect } from "react";
 import { Context } from "../store/appContext";
 import { Link, useNavigate } from "react-router-dom";
+
 import "../../styles/CardBeca.css";
 
 
 const CardBeca = () => {
+  const navigate = useNavigate()
   const { store, actions } = useContext(Context);
+
   const handleGuardarBeca = (scholarshipId) => {
     // Llama a la acción setSelectedScholarshipId con el ID de la beca que deseas guardar
     actions.setSelectedScholarshipId(scholarshipId);
@@ -32,14 +35,21 @@ const CardBeca = () => {
                 </p>
 
                 {/* En este apartado aseguraremos que para aplicar y guardar su beca el usuario inicie sesión, sino recibirá alert */}
-                <div className="button-container d-flex" >
+                <div className="button-container d-flex">
                   {store.isloged ? (
                     <a href={value.url_to} target="_blank"><button className="button-aplicar"
-                      onClick={() => handleGuardarBeca(value.id)} hidden={store.hideApply}>
+                      onClick={() => handleGuardarBeca(value.id)}>
                       Aplicar <i className="fa-solid fa-arrow-right" /></button>
                     </a>
 
-                  ) : <button className="button-aplicar" onClick={() => handleGuardarBeca(value.id)}>Aplicar <i class="fa-solid fa-arrow-right" /></button>}
+                  ) : store.insLoged ? (
+                    <a href={value.url_to} target="_blank" className="button-aplicar">
+                      Ver sitio web <i className="fa-solid fa-arrow-right" />
+                    </a>
+                  ) : !store.isloged && !store.insLoged ? (<button className="button-aplicar"
+                  onClick={() => handleGuardarBeca(value.id)}>
+                  Aplicar <i className="fa-solid fa-arrow-right" /></button>): null}
+                    
 
                 </div>
               </div>
