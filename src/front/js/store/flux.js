@@ -1,4 +1,5 @@
 import showAlert from "../utilidades/alerts";
+import showAlertLonger from "../utilidades/alertslargos";
 
 
 const getState = ({ getStore, getActions, setStore }) => {
@@ -51,6 +52,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			allScholarships: [],
 
+			hideApply: false,
+
 
 		},
 		actions: {
@@ -97,6 +100,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				} catch (error) {
 					console.error(error + " Error loading message from backend");
 					setStore({ signup: false })
+					showAlert("error", "Error de servidor. Por favor intente más tarde.")
 				}
 			},
 			logInUser: async () => {
@@ -121,32 +125,31 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log(result);
 
 					if (response.ok) {
+						showAlert("success", "Inicio de sesión exitoso")
 						localStorage.setItem("jwt-token", result.token);
 						localStorage.setItem("current_user", JSON.stringify(result));
 						setStore({ isloged: true });
 						setStore({ insLoged : false })
 						setStore({ current_user: result })
 
-						{const customAlertElement = document.getElementById("customAlertLogInSuccess");
-						customAlertElement.innerHTML = '<div class="alert alert-success d-flex justify-content-center" role="alert"> Su inicio de sesión ha sido exitoso. </div>';}
-
 						return true;
 
 					} else {
 						setStore({ isloged: false })
-<<<<<<< HEAD
+
 						setStore({ insLoged : false })
-						alert(result.message)
-=======
+		
+
 						const customAlertElement = document.getElementById("customAlertLogIn");
 						{customAlertElement.innerHTML = `<div class="alert alert-danger" role="alert">Su correo o contraseña son incorrectos. Por favor intente de nuevo.</div>`};
->>>>>>> 0a5feb03126b09167c593fbb056777caf24c2804
+
 					}
 
 				} catch (error) {
 					console.log(error + " Error loading message from backend")
 					setStore({ isloged: false })
 					setStore({ insLoged: false })
+					showAlert("error", "Error de servidor. Por favor intente más tarde.")
 
 				}
 
@@ -199,16 +202,15 @@ const getState = ({ getStore, getActions, setStore }) => {
 					const result = await response.json()
 					if (response.status == 400) {
 						setStore({ insSignup: false })
-						alert(result.message)
 					}
 					if (response.ok) {
 						setStore({ insSignup: true })
-						// por que no sale bonito?
 						showAlert("success", "Usuario Institucional registrado")
 					}
 				} catch (error) {
 					console.error(error + " Error loading message from backend");
 					setStore({ insSignup: false })
+					showAlert("error","Error. Por favor inténtalo más tarde.")
 				}
 			},
 			logInInstitution: async () => {
@@ -236,26 +238,28 @@ const getState = ({ getStore, getActions, setStore }) => {
 						setStore({ insLoged: true });
 						setStore({ isloged : false })
 						setStore({ current_insti_user: result })
-						alert("Welcome!");
+						setStore({hideApply : true})
+						showAlert("success", "Inicio de sesión exitoso")
 
 						console.log("Nombre de la institución:", result.institution_name); // Agrega esta línea para depurar
 
 						return true;
 					} else {
 						setStore({ insLoged: false })
-<<<<<<< HEAD
+
 						setStore({ isloged : false })
 
 						alert(result.message)
-=======
+
 						const customAlertElement = document.getElementById("customAlertLogInInst");
 						{customAlertElement.innerHTML = `<div class="alert alert-danger" role="alert">Su correo o contraseña son incorrectos. Por favor intente de nuevo.</div>`};
->>>>>>> 0a5feb03126b09167c593fbb056777caf24c2804
+
 					}
 				} catch (error) {
 					console.log(error + " Error loading message from backend")
 					setStore({ insLoged: false })
 					setStore({ isloged : false })
+					showAlert("error","Error. Por favor inténtalo más tarde.")
 
 				}
 			},
@@ -269,7 +273,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				try {
 					if (actions.isPropertyEmpty(store.scholarshipPost)) {
-						alert("Le falta llenar algunos datos :S");
+						const customAlertElement = document.getElementById("customAlertPost");
+						{customAlertElement.innerHTML = `<div class="alert alert-danger" role="alert">Le falta llenar algunos datos.</div>`};
+
 						return;
 					}
 					const response = await fetch(process.env.BACKEND_URL + "/create-scholarship", {
@@ -284,16 +290,18 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log(result);
 					if (response.ok) {
 						localStorage.setItem("jwt-token2", result.token);
-						alert("Scholarship added succesfully");
+						showAlert("success", "Beca publicada exitosamente.")
 						setStore({ scholarshipPosted: true });
 						return true;
 					} else {
 						setStore({ scholarshipPosted: false })
-						alert(result.message)
+						showAlert("error","Por favor inténtalo de nuevo.")
+						
 					}
 				} catch (error) {
 					console.log(error + " Error loading message from backend")
 					setStore({ scholarshipPosted: false })
+					showAlert("error","Error. Por favor inténtalo más tarde.")
 				}
 			},
 			changeSignUpStatus: (value) => {
@@ -364,20 +372,19 @@ const getState = ({ getStore, getActions, setStore }) => {
 					setStore({ allScholarships: result.scholarships })
 
 					if (response.status == 400) {
-						alert(result.message)
-						alert("NO ALL SCHOLARSHIPS")
+						showAlert("error","Por favor inténtalo de nuevo.")
 						console.log(result)
 					}
 
 					if (response.ok) {
-						alert("ALL SCHOLARSHIPS SUCCESS")
 						console.log(result)
 					} else {
-						alert(result.message)
+						showAlert("error","Por favor inténtalo de nuevo.")
 					}
 
 				} catch (error) {
 					console.log(error + " Error loading message from backend")
+					showAlert("error","Error. Por favor inténtalo más tarde.")
 				}
 			},
 			getMyTracker: async () => {
@@ -398,16 +405,17 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 					if (response.status == 400) {
 						alert(result.message)
-						alert("No scholarships found")
+						showAlert("info","No hay aplicaciones registradas.")
 						console.log(result)
 					}
 					if (response.ok) {
 						console.log("Becas actualizadas")
 					} else {
-						alert(result.message)
+						showAlert("error","Por favor inténtalo de nuevo.")
 					}
 				} catch (error) {
 					console.log(error + " Error loading message from backend")
+					showAlert("error","Error. Por favor inténtalo más tarde.")
 				}
 			},
 
@@ -433,14 +441,23 @@ const getState = ({ getStore, getActions, setStore }) => {
 					const result = await response.json();
 					console.log(result);
 					if (response.ok) {
-						alert("Beca guardada exitosamente");
-					} else {
-						alert(result.error || result.message); // Muestra cualquier mensaje de error del servidor
+						showAlertLonger("success","Beca agregada a Mis Aplicaciones")
+					
+					} 
+					
+					else if (response.status == 422) {
+						showAlert("info","Debes iniciar sesión como Usuario.")
+						console.log(result)
+					}
+					
+					else {
+						showAlertLonger("info","Beca anteriormemte guardada en Mis Aplicaciones.")
 					}
 				}
 
 				catch (error) {
 					console.log(error + " Error loading message from backend");
+					showAlert("error","Error. Por favor inténtalo más tarde.")
 				}
 			}
 

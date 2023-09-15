@@ -41,8 +41,7 @@
 .profile img {
   height: 80px;
   width: 85px;
-  margin-top: 2px;
-  border-radius: 30%;
+  border-radius: 100%;
 }
 
 .backimage {
@@ -55,8 +54,8 @@
   left: 38%;
   height: 90px;
   width: 95px;
-  border: 2px solid #fff;
-  border-radius: 30%;
+  border: 5px solid #fff;
+  border-radius: 100%;
 }
 
 .follow {

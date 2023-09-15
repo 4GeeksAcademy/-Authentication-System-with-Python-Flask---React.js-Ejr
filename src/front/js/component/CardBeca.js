@@ -32,10 +32,10 @@ const CardBeca = () => {
                 </p>
 
                 {/* En este apartado aseguraremos que para aplicar y guardar su beca el usuario inicie sesión, sino recibirá alert */}
-                <div className="button-container d-flex">
+                <div className="button-container d-flex" >
                   {store.isloged ? (
                     <a href={value.url_to} target="_blank"><button className="button-aplicar"
-                      onClick={() => handleGuardarBeca(value.id)}>
+                      onClick={() => handleGuardarBeca(value.id)} hidden={store.hideApply}>
                       Aplicar <i className="fa-solid fa-arrow-right" /></button>
                     </a>
 
