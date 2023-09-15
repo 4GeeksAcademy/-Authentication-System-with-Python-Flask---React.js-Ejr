@@ -420,6 +420,7 @@ def get_one_component(component_id):
 @ api.route('/component/add', methods=['POST'])  # TODO >> only admin jwt
 def add_component():
     request_body = request.get_json(force=True)
+    
 
     new_component = Component(
                                 name = request_body["name"],
