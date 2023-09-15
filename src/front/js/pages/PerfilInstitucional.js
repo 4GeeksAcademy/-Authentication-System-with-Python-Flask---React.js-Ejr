@@ -20,7 +20,7 @@ const PerfilInstitucional = () => {
 
         <div className="user text-center">
           <div className="profile">
-            <img src="https://cdn.pixabay.com/photo/2016/02/10/16/37/cat-1192026_1280.jpg" />
+            <img src="https://cdn-icons-png.flaticon.com/512/9131/9131529.png" />
           </div>
         </div>
 

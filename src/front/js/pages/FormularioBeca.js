@@ -84,6 +84,7 @@ const FormularioBeca = () => {
 
 
       </div>
+      <div id="customAlertPost" class="alertMissing container justify-content-center align-items-center"></div>
     </div>
   );
 }
