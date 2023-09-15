@@ -51,19 +51,27 @@ const getState = ({ getStore, getActions, setStore }) => {
 			
 			// empieza juan línea 50 -  Falta agregar REPEATPASSWORD!!!!!
 			SignupUser: async (name, last_name, email, password, is_active) => {
-				console.log("FLUX USER SIGNUP: ", email, " >>>> ", password);
+				console.log("FLUX USER SIGNUP: ", name, last_name, email, password, is_active );
 			
 				try {
 					// if (password === repeatPassword) {
 						
 					
-						let data = await axios.post("https://effective-fortnight-pjrr4wjg9jrghrj96-3001.app.github.dev/api/signup",
+						// let data = await axios.post(process.env.BACKEND_URL + "/api/signup",
+						const data = await fetch(process.env.BACKEND_URL + "/api/signup" ,{method: "POST"}, 
+						
 						{
-							name: name, 
-							last_name: last_name,
-							email: email,
-							password: password,
-							is_active: is_active
+							// name: name, 
+							// last_name: last_name,
+							// email: email,
+							// password: password,
+							// is_active: is_active
+
+							"email":"ho12@hola.com",
+							"name":"as13",
+							"last_name":"a43ssd",
+							"password":"12345",
+							"is_active": true
 						}
 						)
 						console.log(data);
