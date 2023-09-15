@@ -15,6 +15,7 @@ import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 import { Components } from "./pages/components";
 import { Admin } from "./pages/admin";
+import { AdminSearch } from "./pages/adminSearch";
 
 
 //create your first component
@@ -39,11 +40,15 @@ const Layout = () => {
                         <Route element={<Login />} path="/login" />
                         <Route element={<Components />} path="/components" />
                         <Route element={<Admin />} path="/admin" />
+<<<<<<< HEAD
                         
 
 
                         <Route element={<AlertView />} path="/alert" />
                         <Route element={<ButtonView />} path="/button" />
+=======
+                        <Route element={<AdminSearch />} path="/adminsearch" />
+>>>>>>> e5222b17951cbc2c6c88889ea316bc39fe68246c
                     </Routes>
                     <Footer />
                 </ScrollToTop>

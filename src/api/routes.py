@@ -8,7 +8,9 @@ import json
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required
+from flask_bcrypt import Bcrypt
 
+bcrypt = Bcrypt() 
 
 api = Blueprint('api', __name__)
 
@@ -25,45 +27,49 @@ def handle_hello():
 
 # # # # # USER 👨👨👨👨👨👨
 
-# Registro de Usuarios
+# USER SIGNUP
 @api.route('/signup', methods=['POST'])
 def signup_user():
     body = json.loads(request.data)
-    # pw_hash = current_app.bcrypt.generate_password_hash(body["password"]).decode('utf-8')
-    # busca que el usuario no exista
-    user = User.query.filter_by(email=body["email"]).first()
+    #pw_hash = current_app.bcrypt.generate_password_hash(body["password"]).decode('utf-8') # NO
 
-    if user is None:  # sino existe lo guarda en la base de datos
+    # user exist ?
+    user = User.query.filter_by(email=body["email"]).first()
+    if user is None:  
+        # hashing the password
+        #hashed_password = bcrypt.hashpw(body["password"].encode('utf-8'), bcrypt.gensalt()) # NO
+        #hashed_password = api.bcrypt.generate_password_hash(body["password"]).decode('utf-8') # NO
+        hashed_password = bcrypt.generate_password_hash(body["password"]).decode('utf-8')
+
         new_user = User(
             name=body["name"],
             last_name=body["last_name"],
             email=body["email"],
-            password=body["password"],
+            #password=body["password"],
+            password= hashed_password,
             is_active=body["is_active"],
         )
         db.session.add(new_user)
         db.session.commit()
-        return jsonify({"msg": "usuario creado"}), 200
+        return jsonify({"msg": "User created."}), 200
     
-    return jsonify({"msg": "usuario ya existe"}), 400
-
-# Inicio de Session de Usuarios
+    return jsonify({"msg": "User already exists."}), 400
 
 
-@api.route('/login', methods=['POST'])
+# USER LOGIN
+@api.route('/login', methods=['POST'])  
 def login_user():
-    body = json.loads(request.data)
-    email = body["email"]
-    password = body["password"]
-    user = User.query.filter_by(email=email).first()
-    if user is None:
-        return jsonify({"msg": "not found"}), 404
 
-    if email != user.email or password != user.password:
-        return jsonify({"msg": "email or password are incorrect"}), 401
+  email = request.json.get('email', None)
+  password = request.json.get('password', None)
 
-    access_token = create_access_token(identity=email)
-    return jsonify(access_token=access_token), 200
+  user = User.query.filter_by(email=email).first()
+  if not user or not bcrypt.check_password_hash(user.password, password): #check hashed password
+    return jsonify({'msg': 'Invalid username/password'}), 401
+
+  access_token = create_access_token(identity=email)
+  return jsonify(access_token=access_token)
+
 
 # muestra todos los usuarios
 @api.route('/users', methods=['GET'])
@@ -77,7 +83,7 @@ def get_users():
         return jsonify({"msg": "no existen usuarios"}), 404
     return jsonify(results), 200
 
-# serch one user
+# SEARCH ONE USER
 @api.route('/user/<int:user_id>', methods=['GET'])
 @jwt_required()
 def get_one_user(user_id):
@@ -414,6 +420,7 @@ def get_one_component(component_id):
 @ api.route('/component/add', methods=['POST'])  # TODO >> only admin jwt
 def add_component():
     request_body = request.get_json(force=True)
+    
 
     new_component = Component(
                                 name = request_body["name"],
