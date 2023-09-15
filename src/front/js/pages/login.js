@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { Context } from "../store/appContext";
 import rigoImageUrl from "../../img/rigo-baby.jpg";
-import "../../styles/create_account.css";
+import "../../styles/forms.css";
 
 export const Login = () => {
 	const { store, actions } = useContext(Context);
@@ -30,7 +30,7 @@ export const Login = () => {
                         </div>
                     </div>
                     <div className="col-12 text-center">
-                        <button type="submit" className="btn createaccountbtn">Create Account</button>
+                        <button type="submit" className="btn loginbtn">Log in</button>
                         <div className="container">
                             <a href="#">Forfot your password?</a>
                         </div>
