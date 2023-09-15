@@ -103,4 +103,13 @@ def handle_hello():
 
     return jsonify(response_body), 200
 
+@api.route('/event', methods=['GET'])
+def handle_event():
+
+    response_body = {
+        "message": "Excellent, the request was succesfull"
+    }
+
+    return jsonify(response_body), 200
+
 

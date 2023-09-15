@@ -1,9 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import '../../styles/accountpage.css'
 import "../../styles/registrarOrganizadores.css";
 const RegistrarOrganizadores = () => {
-
-    console.log("alfsdjasld")
 
     const teamsData = [
         {
@@ -11,23 +9,53 @@ const RegistrarOrganizadores = () => {
             name: 'JAM ON IT',
             country: 'Colombia',
             registrationDate: '13/11/2023',
-            endDay: '16/11/2023',
+            endDate: '16/11/2023',
+            shortDescription: "",
+            startDate: "",
+            location: "",
+            logo: "",
+            longDescription: "",
+            rules: "",
+            registrationDate: "",
+            registrationStatus: ""
+
         },
         {
             id: 2,
             name: 'The Last Game',
             country: 'Las Vegas',
             registrationDate: '13/11/2024',
-            endDay: '16/11/2024',
+            endDate: '16/11/2023',
+            shortDescription: "",
+            startDate: "",
+            location: "",
+            logo: "",
+            longDescription: "",
+            rules: "",
+            registrationDate: "",
+            registrationStatus: "",
+
         },
         {
             id: 3,
             name: 'Costa Rica tournament',
             country: 'Costa Rica',
             registrationDate: '13/11/2025',
-            endDay: '16/11/2025',
+            endDate: '16/11/2023',
+            shortDescription: "",
+            startDate: "",
+            location: "",
+            logo: "",
+            longDescription: "",
+            rules: "",
+            registrationDate: "",
+            registrationStatus: "",
         },
     ];
+    const [selectedEvent, setSelectedEvent] = useState(teamsData[0]);
+    const handleEdit = (e) => {
+        setSelectedEvent(teamsData.find(t => t.id == e.target.id))
+    }
     return (
         <div className="fatherBody">
             <div className="row">
@@ -73,7 +101,7 @@ const RegistrarOrganizadores = () => {
                             <td>{team.cost}</td>
                             <td>
                                 <td>
-                                    <button className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                    <button id={team.id} onClick={(e) => handleEdit(e)} className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                                         Editar
                                     </button>
                                     <button className="btn btn-primary">
@@ -99,7 +127,7 @@ const RegistrarOrganizadores = () => {
                         <div className="modal-body">
                             <div className="row">
                                 <div className="row">
-                                    <div className="col"> <b>Nombre</b> </div>
+                                    <div className="col"> <b>Nombre: </b> <input type="text" value={selectedEvent.name} /> </div>
                                 </div>
                                 <div className="row">
                                     <div className="col"> Descripción corta</div>
