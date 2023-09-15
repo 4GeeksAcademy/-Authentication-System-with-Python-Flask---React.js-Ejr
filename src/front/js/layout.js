@@ -44,7 +44,7 @@ const Layout = () => {
         <div>
             <BrowserRouter basename={basename}>
                 <ScrollToTop>
-                    {useAlternateNavbar ? <Navbar /> : <Navbar2 />}
+                    <Navbar />
                     <Routes>
                         <Route element={<Home />} path="/" />
                         <Route element={<LibroVenta />} path="/libroVenta" />
