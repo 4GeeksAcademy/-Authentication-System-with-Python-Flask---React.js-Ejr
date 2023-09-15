@@ -12,12 +12,12 @@ const getState = ({ getStore, getActions, setStore }) => {
         region: "",
       },
       url: "http://localhost:3001",
-	  message: null,
-	  libros: [],
-	  librosDonados: [],
-	  usuarios: [],
-	  usuariosAdmin: [],
-	  registro: true,
+      message: null,
+      libros: [],
+      librosDonados: [],
+      usuarios: [],
+      usuariosAdmin: [],
+      registro: true,
     },
 
     actions: {
@@ -58,10 +58,10 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.log(error);
         }
       },
-//----------< Login usuario >---------------------------------------------->
+      //----------< Login usuario >---------------------------------------------->
 
 
-//---- funcion para  login  de usuario------------------------------------------->
+      //---- funcion para  login  de usuario------------------------------------------->
       logUser: async (e, navigate) => {
         e.preventDefault();
         try {
@@ -119,117 +119,121 @@ const getState = ({ getStore, getActions, setStore }) => {
           sessionStorage.removeItem("currentUser");
         }
       },
+      //---------< OBTENER LIBROS >------------------------------->>
+      getLibros: () => {
+        var requestOptions = {
+          method: "GET",
+          redirect: "follow",
+        };
+        fetch(
+          "URL",
+          requestOptions
+        )
+          .then((response) => response.json())
+          .then((result) => setStore({ libros: result }))
+          .catch((error) => console.log("error", error));
+      },
 
-	  getLibros: () => {
-		var requestOptions = {
-			method: "GET",
-			redirect: "follow",
-		};
-		fetch(
-			"URL",
-			requestOptions
-		)
-			.then((response) => response.json())
-			.then((result) => setStore({ libros: result }))
-			.catch((error) => console.log("error", error));
-	},
+      getLibrosDonados: () => {
+        var requestOptions = {
+          method: "GET",
+          redirect: "follow",
+        };
+        fetch(
+          "URL",
+          requestOptions
+        )
+          .then((response) => response.json())
+          .then((result) => setStore({ librosDonaods: result }))
+          .catch((error) => console.log("error", error));
+      },
+      //---------< OBTENER USUARIOS >------------------------------->>
+      getUsuarios: () => {
+        var requestOptions = {
+          method: "GET",
+          redirect: "follow",
+        };
+        fetch(
+          "URL",
+          requestOptions
+        )
+          .then((response) => response.json())
+          .then((result) => setStore({ usuarios: result }))
+          .catch((error) => console.log("error", error));
+      },
 
-	getLibrosDonados: () => {
-		var requestOptions = {
-			method: "GET",
-			redirect: "follow",
-		};
-		fetch(
-			"URL",
-			requestOptions
-		)
-			.then((response) => response.json())
-			.then((result) => setStore({ librosDonaods: result }))
-			.catch((error) => console.log("error", error));
-	},
+      getUsuariosAdmin: () => {
+        var requestOptions = {
+          method: "GET",
+          redirect: "follow",
+        };
+        fetch(
+          "URL",
+          requestOptions
+        )
+          .then((response) => response.json())
+          .then((result) => setStore({ usuarios: result }))
+          .catch((error) => console.log("error", error));
+      },
 
-	getUsuarios: () => {
-		var requestOptions = {
-			method: "GET",
-			redirect: "follow",
-		};
-		fetch(
-			"URL",
-			requestOptions
-		)
-			.then((response) => response.json())
-			.then((result) => setStore({ usuarios: result }))
-			.catch((error) => console.log("error", error));
-	},
+      //---------< PUBLICAR LIBROS >------------------------------->>
 
-	getUsuariosAdmin: () => {
-		var requestOptions = {
-			method: "GET",
-			redirect: "follow",
-		};
-		fetch(
-			"URL",
-			requestOptions
-		)
-			.then((response) => response.json())
-			.then((result) => setStore({ usuarios: result }))
-			.catch((error) => console.log("error", error));
-	},
+      postLibro: (nuevoLibro) => {
+        console.log(nuevoLibro)
+        const actions = getActions();
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
 
+        var raw = JSON.stringify(nuevoLibro);
 
+        var requestOptions = {
+          method: 'POST',
+          headers: myHeaders,
+          body: raw,
+          redirect: 'follow'
+        };
 
-	postLibro: (nuevoLibro) => {
-		console.log(nuevoLibro)
-		const actions = getActions();
-		var myHeaders = new Headers();
-		myHeaders.append("Content-Type", "application/json");
+        fetch("URL", requestOptions)
+          .then((response) => response.json())
+          .then((result) => {
+            actions.getlibros();
+            /* console.log(result); */
+          })
+          .catch((error) => console.log('error', error));
+      },
 
-		var raw = JSON.stringify(nuevoLibro);
+      //---------< ELIMINAR LIBROS >------------------------------->>
 
-		var requestOptions = {
-			method: 'POST',
-			headers: myHeaders,
-			body: raw,
-			redirect: 'follow'
-		};
+      deleteLibros: (index) => {
+        const actions = getActions();
+        const currentLibro = getStore().libros;
+        const selectedLibro = currentLibro[index];
 
-		fetch("URL", requestOptions)
-			.then((response) => response.json())
-			.then((result) => {
-				actions.getlibros();
-				/* console.log(result); */
-			})
-			.catch((error) => console.log('error', error));
-	},
+        const requestOptions = {
+          method: "DELETE",
+          redirect: "follow",
+        };
 
-	deleteLibros: (index) => {
-		const actions = getActions();
-		const currentLibro = getStore().libros;
-		const selectedLibro = currentLibro[index];
+        fetch(
+          `URL/${selectedLibro.id}`,
+          requestOptions
+        )
+          .then((response) => response.json())
+          .then((result) => {
+            console.log("Book deleted from API:", result);
+            actions.getLibros();
+          })
+          .catch((error) => console.log("Error deleting contact:", error));
+      },
 
-		const requestOptions = {
-			method: "DELETE",
-			redirect: "follow",
-		};
-
-		fetch(
-			`URL/${selectedLibro.id}`,
-			requestOptions
-		)
-			.then((response) => response.json())
-			.then((result) => {
-				console.log("Book deleted from API:", result);
-				actions.getLibros();
-			})
-			.catch((error) => console.log("Error deleting contact:", error));
-	},
-	vistaRegistro: () => {
-		setStore({ registro: false })
-		console.log(getStore().registro)
-	}
+      //---------< CAMBIO DE NAVBAR >------------------------------->>
+      vistaRegistro: () => {
+        setStore({ registro: false })
+        console.log(getStore().registro)
+      }
 
     },
-  };		
+  };
 };
 
 

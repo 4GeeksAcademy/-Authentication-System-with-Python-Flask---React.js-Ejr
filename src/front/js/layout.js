@@ -62,15 +62,7 @@ const Layout = () => {
                         <Route element={<Intercambio />} path="/intercambio" />
                         <Route element={<FormularioRegistro />} path="/formularioRegistro" />
                         <Route element={<h1>Not found!</h1>} />
-                        {/* <Route element={<FormularioRegistro />} path="/formularioRegistro" /> */}
-
-                        <Route
-                            path="/formularioRegistro"
-                            element={<FormularioRegistro />}                            
-                            enter={() => setUseAlternateNavbar(true)}                            
-                            leave={() => setUseAlternateNavbar(false)}
-                        />
-                        {/* <Route element={<Single />} path="/single/:theid" /> */}                       
+                        <Route element={<FormularioRegistro />} path="/formularioRegistro" />                                               
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
                     <Footer />
