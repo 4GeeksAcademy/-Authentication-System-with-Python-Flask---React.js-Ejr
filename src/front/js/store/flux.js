@@ -32,16 +32,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				password: null
 			},
 			institutionName: null,
-			scholarshipPost: {
-				scholarship_name: null,
-				institution: null,
-				deadline: null,
-				modality: null,
-				coverage: null,
-				professional_field: null,
-				description: null,
-				url_to: null
-			},
+			scholarshipsPosted: [],
 			scholarshipPosted: false,
 			hiddenMyProfile: true,
 			hiddenMyInsProfile: true,
@@ -127,20 +118,19 @@ const getState = ({ getStore, getActions, setStore }) => {
 						setStore({ insLoged : false })
 						setStore({ current_user: result })
 
-						{const customAlertElement = document.getElementById("customAlertLogInSuccess");
-						customAlertElement.innerHTML = '<div class="alert alert-success d-flex justify-content-center" role="alert"> Su inicio de sesión ha sido exitoso. </div>';}
+						 {const customAlertElement = document.getElementById("customAlertLogInSuccess");
+						 customAlertElement.innerHTML = '<div class="alert alert-success d-flex justify-content-center" role="alert"> Su inicio de sesión ha sido exitoso. </div>';}
 
 						return true;
 
 					} else {
 						setStore({ isloged: false })
-<<<<<<< HEAD
+
 						setStore({ insLoged : false })
 						alert(result.message)
-=======
+
 						const customAlertElement = document.getElementById("customAlertLogIn");
 						{customAlertElement.innerHTML = `<div class="alert alert-danger" role="alert">Su correo o contraseña son incorrectos. Por favor intente de nuevo.</div>`};
->>>>>>> 0a5feb03126b09167c593fbb056777caf24c2804
 					}
 
 				} catch (error) {
@@ -172,9 +162,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 					newUserData[e.target.name] = e.target.value
 					setStore({ institutionalLogin: newUserData })
 				} else if (type == "createScholarship") {
-					const newUserData = { ...store.scholarshipPost }
+					const newUserData = { ...store.scholarshipsPosted }
 					newUserData[e.target.name] = e.target.value
-					setStore({ scholarshipPost: newUserData })
+					setStore({ scholarshipsPosted: newUserData })
 				}
 			},
 
@@ -243,14 +233,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 						return true;
 					} else {
 						setStore({ insLoged: false })
-<<<<<<< HEAD
+
 						setStore({ isloged : false })
 
 						alert(result.message)
-=======
+
 						const customAlertElement = document.getElementById("customAlertLogInInst");
 						{customAlertElement.innerHTML = `<div class="alert alert-danger" role="alert">Su correo o contraseña son incorrectos. Por favor intente de nuevo.</div>`};
->>>>>>> 0a5feb03126b09167c593fbb056777caf24c2804
+
 					}
 				} catch (error) {
 					console.log(error + " Error loading message from backend")
@@ -272,9 +262,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 						alert("Le falta llenar algunos datos :S");
 						return;
 					}
+
+					
 					const response = await fetch(process.env.BACKEND_URL + "/create-scholarship", {
 						method: 'POST',
-						body: JSON.stringify(store.scholarshipPost),
+						body: JSON.stringify(store.scholarshipsPosted),
 						headers: {
 							'Content-Type': 'application/json',
 							'Authorization': 'Bearer ' + myToken
@@ -284,8 +276,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log(result);
 					if (response.ok) {
 						localStorage.setItem("jwt-token2", result.token);
-						alert("Scholarship added succesfully");
+						setStore((prevState) => ({
+							scholarshipsPosted: [...prevState.scholarshipsPosted, result.scholarship],
+						  }));
 						setStore({ scholarshipPosted: true });
+						alert("Scholarship added succesfully");
 						return true;
 					} else {
 						setStore({ scholarshipPosted: false })
@@ -301,9 +296,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({ insSignup: value })
 
 			},
-			changeLogInStatus: () => {
-				
-				
+
+			changeLogInStatus: () => {		
 				if (localStorage.getItem("jwt-token")) {
 					setStore({ isloged: true });
 					setStore({ insLoged: false });
