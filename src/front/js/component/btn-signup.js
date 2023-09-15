@@ -3,7 +3,7 @@ import "../../styles/index.css";
 
 export const Buttonsignup = () => (
 	<div className="container-fluid py-5">
-        <button className="btn btn-lg signup" type="button">Sign up</button>
+        <a href="/create-account" className="btn signup" role="button">Create Account</a>
     </div>
 );
 
