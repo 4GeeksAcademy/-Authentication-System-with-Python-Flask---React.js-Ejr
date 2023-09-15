@@ -6,6 +6,8 @@ import "../../styles/Formulario.css";
 const FormularioBeca = () => {
   const navigate = useNavigate()
   const { store, actions } = useContext(Context);
+
+  
   const handleChangeScholarshipPost =(e)=>{
     actions.handleChange(e, "createScholarship")
   }
@@ -16,8 +18,8 @@ const FormularioBeca = () => {
 
   useEffect(() => {
     if (store.scholarshipPosted) {
+      actions.getAllScholarShips(); // Actualiza las becas en la página principal
       navigate('/');
-      actions.getAllScholarShips();
     }
   }, [store.scholarshipPosted]);
 

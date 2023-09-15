@@ -33,16 +33,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				password: null
 			},
 			institutionName: null,
-			scholarshipPost: {
-				scholarship_name: null,
-				institution: null,
-				deadline: null,
-				modality: null,
-				coverage: null,
-				professional_field: null,
-				description: null,
-				url_to: null
-			},
+			scholarshipsPosted: [],
 			scholarshipPosted: false,
 			hiddenMyProfile: true,
 			hiddenMyInsProfile: true,
@@ -175,9 +166,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 					newUserData[e.target.name] = e.target.value
 					setStore({ institutionalLogin: newUserData })
 				} else if (type == "createScholarship") {
-					const newUserData = { ...store.scholarshipPost }
+					const newUserData = { ...store.scholarshipsPosted }
 					newUserData[e.target.name] = e.target.value
-					setStore({ scholarshipPost: newUserData })
+					setStore({ scholarshipsPosted: newUserData })
 				}
 			},
 
@@ -278,9 +269,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 						return;
 					}
+
+					
 					const response = await fetch(process.env.BACKEND_URL + "/create-scholarship", {
 						method: 'POST',
-						body: JSON.stringify(store.scholarshipPost),
+						body: JSON.stringify(store.scholarshipsPosted),
 						headers: {
 							'Content-Type': 'application/json',
 							'Authorization': 'Bearer ' + myToken
@@ -309,9 +302,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({ insSignup: value })
 
 			},
-			changeLogInStatus: () => {
-				
-				
+
+			changeLogInStatus: () => {		
 				if (localStorage.getItem("jwt-token")) {
 					setStore({ isloged: true });
 					setStore({ insLoged: false });
