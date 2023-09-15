@@ -14,6 +14,7 @@ import { Footer } from "./component/footer";
 import { Components } from "./pages/components";
 import { Admin } from "./pages/admin";
 import { AdminSearch } from "./pages/adminSearch";
+import { UserProfileData } from "./pages/userProfileData";
 
 
 //create your first component
@@ -39,6 +40,7 @@ const Layout = () => {
                         <Route element={<Components />} path="/components" />
                         <Route element={<Admin />} path="/admin" />
                         <Route element={<AdminSearch />} path="/adminsearch" />
+                        <Route element={<UserProfileData/>} path="/userprofiledata" />
                     </Routes>
                     <Footer />
                 </ScrollToTop>
