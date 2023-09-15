@@ -271,6 +271,10 @@
     color: var(--color-risk-txt); 
 }
 
+.c-btn-risk:hover {
+    opacity: 0.7;
+}
+
 .c-btn-caution {
     background-color: var(--color-caution-bg);
     color: var(--color-caution-txt); 
