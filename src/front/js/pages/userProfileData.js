@@ -1,36 +1,60 @@
 import React, { useEffect, useState } from "react"; 
 
 export const UserProfileData = () => {
-  const [userData, setUserData] = useState({
-    name: '',
-    last_name: '',
-    email: '',
-    change_password: '',
-  });
+  // const [userData, setUserData] = useState({
+  //   name: '',
+  //   last_name: '',
+  //   email: '',
+  //   change_password: '',
+  // });
+
+  const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [isActive, setIsActive] = useState();
+  //const [password, setPassword] = useState("");
+
+  const fetchUserData = async (id) => {
+    const response = await fetch(process.env.BACKEND_URL + "/api/user/" + id);
+    const data = await response.json();
+    console.log("DATAAAA A A AA  A :", data)
+    setName(data.results.name);
+    setEmail(data.results.email);
+    setLastName(data.results.last_name);
+    setIsActive(data.results.is_active);
+    //setPassword(data.results.password);
+
+  };
+  
+  // hay que guardar el id del user para traerlo para aca
+  // ERROR >>>>>> DATAAAA A A AA  A : {msg: 'Missing Authorization Header'} 
 
   useEffect(() => {
-    const fetchUserData = async (id) => {
-      try {
-        const response = await fetch(process.env.BACKEND_URL + "/api/user/" + id ); 
-        if (response.ok) {
-          const data = await response.json();
+    fetchUserData(1); // VA SIN EL 1
+  },)
 
-          setUserData({
-            name: data.name,
-            last_name: data.last_name,
-            email: data.email,
-            change_password: '', 
-          });
-        } else {
-          console.error('Error al obtener los datos del usuario');
-        }
-      } catch (error) {
-        console.error('Error al obtener los datos del usuario', error);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchUserData = async (id) => {
+  //     try {
+  //       const response = await fetch(process.env.BACKEND_URL + "/api/user/" + id ); 
+  //       if (response.ok) {
+  //         const data = await response.json();
+  //         setUserData({
+  //           name: data.name,
+  //           last_name: data.last_name,
+  //           email: data.email,
+  //           change_password: '', 
+  //         });
+  //       } else {
+  //         console.error('Error al obtener los datos del usuario');
+  //       }
+  //     } catch (error) {
+  //       console.error('Error al obtener los datos del usuario', error);
+  //     }
+  //   };
 
-    fetchUserData();
-  }, []);
+  //   fetchUserData();
+  // }, []);
 
   return (
     <div className="container mt-5">
@@ -45,8 +69,9 @@ export const UserProfileData = () => {
           id="name"
           autoComplete="given-name"
           className="form-control"
-          value={userData.name}
-          onChange={(e) => setUserData({ ...userData, name: e.target.value })}
+          //value={userData.name}
+          value={name}
+          //onChange={(e) => setUserData({ ...userData, name: e.target.value })}
         />
       </div>
 
@@ -58,8 +83,9 @@ export const UserProfileData = () => {
           id="last-name"
           autoComplete="family-name"
           className="form-control"
-          value={userData.last_name}
-          onChange={(e) => setUserData({ ...userData, last_name: e.target.value })}
+          //value={userData.last_name}
+          value={lastName}
+          //onChange={(e) => setUserData({ ...userData, last_name: e.target.value })}
         />
       </div>
 
@@ -71,8 +97,9 @@ export const UserProfileData = () => {
           type="email"
           autoComplete="email"
           className="form-control"
-          value={userData.email}
-          onChange={(e) => setUserData({ ...userData, email: e.target.value })}
+          //value={userData.email}
+          value={email}
+          //onChange={(e) => setUserData({ ...userData, email: e.target.value })}
         />
       </div>
 
@@ -83,8 +110,10 @@ export const UserProfileData = () => {
           name="change-password"
           id="change-password"
           className="form-control"
-          value={userData.change_password}
-          onChange={(e) => setUserData({ ...userData, change_password: e.target.value })}
+          //value={userData.change_password}
+          //value={password}
+          value= "*********************************************"
+          //onChange={(e) => setUserData({ ...userData, change_password: e.target.value })}
         />
       </div>
 

@@ -19,15 +19,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 		},
 		actions: {
 
-			
-
-
-
-
-
-
-
-			// empieza cecilia línea 30
 			login: async (email, password) => {
 				try {
 					let data = await axios.post(process.env.BACKEND_URL + '/api/login',{
@@ -44,48 +35,26 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 			
-
-
-
-
-			
-			// empieza juan línea 50 -  Falta agregar REPEATPASSWORD!!!!!
 			SignupUser: async (name, last_name, email, password, is_active) => {
 				console.log("FLUX USER SIGNUP: ", name, last_name, email, password, is_active );
 			
 				try {
-					// if (password === repeatPassword) {
-						
-					
-						// let data = await axios.post(process.env.BACKEND_URL + "/api/signup",
-						const data = await fetch(process.env.BACKEND_URL + "/api/signup" ,{method: "POST"}, 
-						
-						{
-							// name: name, 
-							// last_name: last_name,
-							// email: email,
-							// password: password,
-							// is_active: is_active
-
-							"email":"ho12@hola.com",
-							"name":"as13",
-							"last_name":"a43ssd",
-							"password":"12345",
-							"is_active": true
-						}
-						)
-						console.log(data);
-						setStore({ auth: true });
-						localStorage.setItem("token", data.data.access_token); 
-					
-				// }
-				// else {alert('Las contraseñas no coiciden')}
-					
+					let data = await axios.post(process.env.BACKEND_URL + '/api/signup',{
+						name: name, 
+						last_name: last_name,
+						email: email,
+						password: password,
+						is_active: is_active
+					})
+					console.log(data);
+					setStore({ auth: true });
+					localStorage.setItem("token", data.data.access_token); 
 				} catch (error) {
 					console.log(error);
 					setStore({ auth: false });
 				}
 			},
+
 			logout: () => {
 				console.log("Funciona")
 				localStorage.removeItem("token")
@@ -120,30 +89,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 			
 
-
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
 			
 			
 			// Use getActions to call a function within a fuction
