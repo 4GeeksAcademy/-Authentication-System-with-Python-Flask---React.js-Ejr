@@ -37,55 +37,55 @@ export const PerfilOrganizador = () => {
           <div className="tab-pane fade show active" id="pills-login" role="tabpanel" aria-labelledby="tab-login">
             <form className="formPerfil">
               <div className="form-group">
-                <label for="inputName">Nombre</label>
+                <label htmlFor="inputName">Nombre</label>
                 <input type="text" className="form-control" id="inputName" value="Nombre"></input>
               </div>
               <div className="form-row">
                 <div className="form-group col-md-6">
-                  <label for="inputEmail4">Email</label>
+                  <label htmlFor="inputEmail4">Email</label>
                   <input type="email" className="form-control" id="inputEmail4" value="Email"></input>
                 </div>
                 <div className="form-group col-md-6">
-                  <label for="inputPassword4">Password</label>
+                  <label htmlFor="inputPassword4">Password</label>
                   <input type="password" className="form-control" id="inputPassword4" value="Password"></input>
                 </div>
               </div>
               <div className="form-row">
                 <div className="form-group col-md-6">
-                  <label for="inputAddress">Dirección</label>
+                  <label htmlFor="inputAddress">Dirección</label>
                   <input type="text" className="form-control" id="inputAddress" value="1234 Main St"></input>
                 </div>
                 <div className="form-group col-md-6">
-                  <label for="inputTel">Teléfono</label>
+                  <label htmlFor="inputTel">Teléfono</label>
                   <input type="password" className="form-control" id="inputTel" value="Tel"></input>
                 </div>
               </div>
               <div className="form-row">
                 <div className="form-group col-md-6">
-                  <label for="inputCity">Ciudad</label>
+                  <label htmlFor="inputCity">Ciudad</label>
                   <input type="text" className="form-control" id="inputCity" value="Ciudad"></input>
                 </div>
                 <div className="form-group col-md-4">
-                  <label for="inputState">Estado</label>
+                  <label htmlFor="inputState">Estado</label>
                   <input type="text" className="form-control" id="inputState" value="Estado"></input>
                 </div>
                 <div className="form-group col-md-2">
-                  <label for="inputZip">C.P.</label>
+                  <label htmlFor="inputZip">C.P.</label>
                   <input type="text" className="form-control" id="inputZip" value="CP"></input>
                 </div>
               </div>
               <div className="form-row">
                 <fieldset disabled>
                   <div className="form-group col-md-4">
-                    <label for="inputCreados">Eventos Creados</label>
+                    <label htmlFor="inputCreados">Eventos Creados</label>
                     <input type="text" className="form-control" id="inputCreados" value="0"></input>
                   </div>
                   <div className="form-group col-md-4">
-                    <label for="inputAbiertos">Eventos Abiertos</label>
+                    <label htmlFor="inputAbiertos">Eventos Abiertos</label>
                     <input type="text" className="form-control" id="inputAbiertos" value="0"></input>
                   </div>
                   <div className="form-group col-md-4">
-                    <label for="inputCerrados">Eventos Cerrados</label>
+                    <label htmlFor="inputCerrados">Eventos Cerrados</label>
                     <input type="text" className="form-control" id="inputCerrados" value="0"></input>
                   </div>
                 </fieldset>

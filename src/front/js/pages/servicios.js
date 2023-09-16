@@ -30,7 +30,7 @@ export const Servicios = () => {
 							<div className="mt-4 text-center">
 								<h6 className="font-weight-medium">Operatividad Integral</h6>
 								<p className="mt-3">Crea torneos, añade costos de inscripción, reglas del juego, categorías, staff, árbitros, sedes. Todo para que tu evento sea un éxito.</p>
-								<Link to="/planes">
+								<Link to="/cuenta">
 									<span className="btn btn-primary btn-lg m-2" href="#" role="button">
 										Regístrate Gratis
 									</span>
