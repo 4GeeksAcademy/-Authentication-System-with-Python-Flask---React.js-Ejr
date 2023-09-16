@@ -15,9 +15,9 @@ function LoginForm() {
     //Si existe un token está iniciada la sesión
     if(store.accessToken){
       //ir a la página de los datos del usuario
-      console.log("IR A DEMO", store.accessToken)
+      //console.log("IR A DEMO", store.accessToken)
       //navigate("/demo")
-      navigate("/perfilorganizador")
+      navigate("/perfil")
     }
   }, [store.accessToken])
 
@@ -74,6 +74,7 @@ function LoginForm() {
       } else {
         //entramos a la página de datos del usuario
         alert("login successfull")
+        
         window.location.reload(false)
       }
     }
