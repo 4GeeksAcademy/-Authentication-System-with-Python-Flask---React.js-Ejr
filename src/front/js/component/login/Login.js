@@ -1,48 +1,54 @@
-import React, {  useContext } from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from "react-router-dom";
 import { Context } from "../../store/appContext";
 
 const Login = () => {
-
-  const {store, actions} = useContext(Context)
+  
+  
+  const { store, actions } = useContext(Context);
+  const navigate = useNavigate();
 
   return (
-    <div className="container bg-dark my-5">
+    <div className="container shadow my-5 rounded p-3">
+      <form className="form" onSubmit={(e) => actions.handleSubmitLogin(e, navigate)}>
+        <div className="container">
+          <label htmlFor="logForm" className="text-dark">
+            Email
+          </label>
+          <input
+            type="email"
+            className="form-control m-3"
+            id="correo"
+            placeholder="Email"
+            name="email"
+            value={store.currentUser ? store.currentUser.email : '' }
+            onChange={actions.handleChangeLogin}
+            autoComplete="off"
+          />
+        </div>
+        <div className="container">
+          <label htmlFor="inputPassword2" className=" text-dark">
+            Password
+          </label>
+          <input
+            type="password"
+            className="form-control m-3"
+            id="inputPassword2"
+            placeholder="Password"
+            name="password"
+            value={store.currentUser ? store.currentUser.password: ''}
+            onChange={actions.handleChangeLogin}
+          />
+        </div>
+        <div className="d-flex justify-content-center">
+          <button type="submit" className="btn btn-primary ">
+            Iniciar Sesión
+          </button>
+        </div>
+      </form>
+    </div>
+  );
+};
 
-    <form className="row g-3">
-  <div className="col-auto">
-    <label htmlFor="staticEmail2" className="visually-hidden">
-      Email
-    </label>
-    <input
-      type="text"
-      readOnly=""
-      className="form-control"
-      id="staticEmail2"
-      defaultValue="email@example.com"
-    />
-  </div>
-  <div className="col-auto">
-    <label htmlFor="inputPassword2" className="visually-hidden">
-      Password
-    </label>
-    <input
-      type="password"
-      className="form-control"
-      id="inputPassword2"
-      placeholder="Password"
-    />
-  </div>
-  <div className="col-auto">
-    <button type="submit" className="btn btn-primary mb-3">
-      Iniciar Sesión
-    </button>
-  </div>
-</form>
-</div>
-
-  )
-}
-
-export default Login
+export default Login;

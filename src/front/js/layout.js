@@ -29,6 +29,7 @@ import { ComoDonar } from "./pages/comoDonar";
 import injectContext from "./store/appContext";
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
+import Dashboard from "./pages/Dashboard";
 
 
 //create your first component
@@ -41,10 +42,14 @@ const Layout = () => {
     if (!process.env.BACKEND_URL || process.env.BACKEND_URL == "") return <BackendURL />;
 
     return (
-        <div>
+        <div >
             <BrowserRouter basename={basename}>
                 <ScrollToTop>
-                    {useAlternateNavbar ? <Navbar /> : <Navbar2 />}
+                    <Routes>
+                    <Route element={<Dashboard />} path="dashboard" />
+
+                    </Routes>
+                    <Navbar /> 
                     <Routes>
                         <Route element={<Home />} path="/" />
                         <Route element={<LibroVenta />} path="/libroVenta" />
@@ -66,10 +71,7 @@ const Layout = () => {
                         <Route
                             path="/formularioRegistro"
                             element={<FormularioRegistro />}                            
-                            enter={() => setUseAlternateNavbar(true)}                            
-                            leave={() => setUseAlternateNavbar(false)}
                         />
-                        {/* <Route element={<Single />} path="/single/:theid" /> */}                       
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
                     <Footer />
