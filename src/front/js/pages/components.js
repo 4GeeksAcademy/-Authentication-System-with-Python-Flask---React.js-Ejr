@@ -85,30 +85,103 @@ export const Components = () => {
 		}
 	]
 
+	const handleMouseOver = (e) => {
+		e.target.style.backgroundColor = 'lightblue';
+		e.target.style.borderRadius = '5px'; 
+		//e.target.style.padding = '1px'; 
+	  }
+	
+	  const handleMouseOut = (e) => {
+		e.target.style.backgroundColor = '';
+		e.target.style.borderRadius = '';
+		e.target.style.padding = '';
+	  }
+
 	return (
-		<div className="container">
-			<p className="text-warning fw-bolder mt-5">/Components</p>
-			<h2 className="fw-bolder" >Beautifully crafted UI components, ready for your next project.</h2>
-			<p>Over 500+ professionally designed, fully responsive, expertly crafted component examples you can drop into your Tailwind projects and customize to your heart’s content.	</p>
-			<p className="text-warning fw-bolder">Browse all components →</p>
+		
+			
+			<div>
 
-			<ButtonAdmin/>
+	{/* <ul>
+      <li onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>Item 1</li>
+      <li onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>Item 2</li>
+      <li onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>Item 3</li>
+    </ul> */}
 
-			<div class="row mt-5">
-				{component_category.map((item) => (
-					<div className="col-12 col-md-6 col-lg-3 mb-4">
-						<div class="card h-100 mx-1 shadow">
-							<img src={item.image} class="card-img-top" alt={item.title}/>
-							<div class="card-body pt-2">
-								<h5 class="card-title text-warning">{item.title}</h5>
-								<p class="card-text text-muted">{item.description}</p>
+
+
+
+
+
+
+
+
+
+
+
+
+{/* fill="currentColor" class="bi bi-boxes"
+width="18" height="18"
+viewBox="0 0 18 18" */}
+									<div class="container-fluid">
+						<div class="row">
+							<div class="col-2 bg-light">
+								<nav class="nav flex-column mt-3">			
+									<h5 className="fw-bolder">
+									<i className="bi bi-boxes" ></i>
+										  Components</h5>
+									<ul>
+									{component_category.map((item) => (
+									<li onMouseOver={handleMouseOver} onMouseOut={handleMouseOut} style={{listStyleType: "none", paddingLeft:"2px"}}>{item.title}</li>
+									))}
+									</ul>
+								</nav>
+							</div>
+
+							<div class="col-10">
+							
+
+															
+
+
+
+
 							</div>
 						</div>
-					</div>
-				))}
-				
+						</div>
 			</div>
-
-		</div>
+			
+			
+			
+		
 	);
 };
+
+
+
+
+
+{/* <div>
+<p className="text-warning fw-bolder mt-5">/Components</p>
+<h2 className="fw-bolder" >Beautifully crafted UI components, ready for your next project.</h2>
+<p>Over 500+ professionally designed, fully responsive, expertly crafted component examples you can drop into your Tailwind projects and customize to your heart’s content.	</p>
+<p className="text-warning fw-bolder">Browse all components →</p>
+
+<ButtonAdmin/>
+
+
+<div class="row mt-5">
+	{component_category.map((item) => (
+		<div className="col-12 col-md-6 col-lg-3 mb-4">
+			<div class="card h-100 mx-1 shadow">
+				<img src={item.image} class="card-img-top" alt={item.title}/>
+				<div class="card-body pt-2">
+					<h5 class="card-title text-warning">{item.title}</h5>
+					<p class="card-text text-muted">{item.description}</p>
+				</div>
+			</div>
+		</div>
+	))}
+	
+</div>
+</div> */}
