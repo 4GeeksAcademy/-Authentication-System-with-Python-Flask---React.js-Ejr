@@ -1,103 +1,85 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Link, Navigate } from "react-router-dom";
-import { Context } from "../store/appContext";
 import { useNavigate } from "react-router-dom";
 
 import imgSize from "../../img/240x120.png";
-import { ButtonAdmin } from "../component/buttonAdmin";
 
-export const Components = () => {
+export const SideBar = () => {
 	const navigate = useNavigate();
 
 	const component_category = [
 		{
 			title: 'Alerts',
 			description: 'Different types of alerts', 
-			image: imgSize,
 			path: "alert" 
 		},
 		{
 			title: 'Badges', 
 			description: 'Small count indicators',
-			image: imgSize,
 			path: "badges"
 		},
 		{
 			title: 'Breadcrumbs',
 			description: 'Indicates page location',
-			image: imgSize, 
 			path: "breadcrumbs"
 		},
 		{
 			title: 'Buttons',
 			description: 'Various button styles',
-			image: imgSize,
 			path: "buttons"
 		},
 		{
 			title: 'Button Groups',
 			description: 'Grouped buttons',
-			image: imgSize,
 			path: "button-groups"
 		},
 		{
 			title: 'Cards',
 			description: 'Flexible content containers',
-			image: imgSize,
 			path: "cards"
 		},
 		{
 			title: 'Carousels', 
 			description: 'Rotating content slides',
-			image: imgSize,
 			path: "carousels"
 		},
 		{
 			title: 'Collapses',
 			description: 'Toggleable content sections', 
-			image: imgSize,
 			path: "collapses"
 		},
 		{
 			title: 'Dropdowns',
 			description: 'Toggleable menu buttons',
-			image: imgSize,
 			path: "dropdowns"
 		},
 		{
 			title: 'List Groups',
 			description: 'List element styles', 
-			image: imgSize,
 			path: "list-groups" 
 		},
 		{
 			title: 'Modals',
 			description: 'Overlay pop up windows',
-			image: imgSize,
 			path: "modals"
 		},
 		{
 			title: 'Navs & Navbars',
 			description: 'Navigation components',
-			image: imgSize,
 			path: "navs-navbars"
 		},
 		{
 			title: 'Pagination', 
 			description: 'Page number indicators',
-			image: imgSize,
 			path: "pagination"
 		},
 		{
 			title: 'Popovers',
 			description: 'Small overlay content',
-			image: imgSize, 
 			path: "popovers"
 		},
 		{
 			title: 'Progress Bars',
 			description: 'Progress indicators',
-			image: imgSize,
 			path: "progress-bars"
 		}
 	]
@@ -183,9 +165,11 @@ export const Components = () => {
 			</nav>
 
 		</div>
-		
 	)
 }
+
+
+
 
 
 

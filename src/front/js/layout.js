@@ -13,7 +13,7 @@ import  AlertView  from "./pages/alertView";
 import { ButtonView } from "./pages/buttonView"
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
-import { Components } from "./pages/components";
+
 import { Admin } from "./pages/admin";
 import { AdminSearch } from "./pages/adminSearch";
 import { UserProfileData } from "./pages/userProfileData";
@@ -39,7 +39,7 @@ const Layout = () => {
                         <Route element={<h1>Not found!</h1>} />
                         <Route element={<Signup />} path="/signup" />
                         <Route element={<Login />} path="/login" />
-                        <Route element={<Components />} path="/components" />
+                        
                         <Route element={<Admin />} path="/admin" />
 
                         
