@@ -361,7 +361,7 @@ export const ButtonView = () => {
         </div>
 
         <div className="col-8">
-          <div className="container border border-secondary-subtle  py-4 rounded shadow p-3 mb-5 bg-body-tertiary rounded">
+          <div className="container border border-secondary-subtle px-4 py-4 rounded shadow p-3 mb-5 bg-body-tertiary rounded">
 
 
             <div className="c-btn">
