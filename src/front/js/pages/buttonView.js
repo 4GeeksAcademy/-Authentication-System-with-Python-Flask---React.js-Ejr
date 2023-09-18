@@ -1,5 +1,78 @@
 import React from "react";
 
+
+
+
+
+
+// <!DOCTYPE html>
+// <html lang="es">
+// <head>
+//     <meta charset="UTF-8">
+//     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+//     <title>Tabla de Componentes</title>
+//     <style>
+//         body {
+//             font-family: Arial, sans-serif;
+//         }
+
+//         table {
+//             width: 100%;
+//             border-collapse: collapse;
+//             margin-bottom: 20px;
+//         }
+
+//         th, td {
+//             border: 1px solid #ccc;
+//             padding: 10px;
+//             text-align: center;
+//         }
+
+//         .button-cell {
+//             width: 50%;
+//             background-color: #FFD700; /* Naranja pastel */
+//             padding: 20px;
+//         }
+
+//         .button-code {
+//             width: 50%;
+//             background-color: #FFF;
+//             padding: 20px;
+//         }
+
+//         .button {
+//             display: inline-block;
+//             background-color: #FFA500; /* Naranja vivo */
+//             color: #FFF;
+//             padding: 3px 9px; /* Tamaño modificado */
+//             font-size: 16px;
+//             border: none;
+//             cursor: pointer;
+//             border-radius: 5px;
+//         }
+
+//         .button:hover {
+//             background-color: #FF8C00; /* Naranja más intenso */
+//         }
+//     </style>
+// </head>
+// <body>
+
+//     <table>
+//         <tr>
+//             <td class="button-cell">
+//                 <button class="button">Mi Botón</button>
+//             </td>
+//             <td class="button-code">
+//                 <pre>&lt;button class="button"&gt;Mi Botón&lt;/button&gt;</pre>
+//             </td>
+//         </tr>
+//         <!-- Puedo añadir más filas según sea necesario -->
+//     </table>
+
+// </body>
+// </html>
+
 export const ButtonView = () => {
     return (
         <div className="container w-50">
@@ -47,6 +120,47 @@ export const ButtonView = () => {
                 <button type="button" class="c-btn c-btn-componentify c-btn-componentify-hover">Componentify</button>
                 <button type="button" class="c-btn c-btn-mocca c-btn-mocca-hover">Mocca</button>
             </div>
+            {/* const Componente = ({ nombre, codigo }) => {
+  return (
+    <tr>
+      <td>
+        <button>{nombre}</button>
+      </td>
+      <td>
+        <pre>{codigo}</pre>
+      </td>
+    </tr>
+  );
+};
+
+const VistaDeBotones = () => {
+  const botones = [
+    { nombre: "Botón 1", codigo: "<button>Botón 1</button>" },
+    { nombre: "Botón 2", codigo: "<button>Botón 2</button>" },
+    // Agrega más botones según sea necesario
+  ];
+
+  return (
+    <div>
+      <h1>Vista de Botones</h1>
+      <table>
+        <thead>
+          <tr>
+            <th>Botón</th>
+            <th>Código</th>
+          </tr>
+        </thead>
+        <tbody>
+          {botones.map((boton, index) => (
+            <Componente key={index} nombre={boton.nombre} codigo={boton.codigo} />
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}; */}
+
+{/* export default VistaDeBotones; */}
         </div>
     )
 }
