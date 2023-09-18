@@ -1,9 +1,9 @@
 import React from "react";
 import "../../styles/global.css"
 import "./global.js"
+import { SideBar } from "../component/sideBar";
 
-
-const AlertView = () => {
+const AlertsView = () => {
 
     return (
         <div className="container">
@@ -11,9 +11,10 @@ const AlertView = () => {
             <p className="fs-5 mt-2 mb-3">The <span style={{ "color": "#FD5812" }}>c-alert component</span> is used to convey important information to the user through the use of contextual types, icons, and colors.</p>
             <div className="row">
 
+                <SideBar/>
 
                 <div className="col-4">
-                    <div className="container border border-secondary-subtle px-4 py-4 rounded shadow p-3 mb-5 bg-body-tertiary rounded">
+                    <div className="border border-secondary-subtle px-4 py-4 rounded shadow p-3 mb-5 bg-body-tertiary rounded">
 
                         {/* CODIGO VISUAL DE LAS ALERTS */}
 
@@ -217,4 +218,4 @@ const AlertView = () => {
 
 
 
-export default AlertView;
+export default AlertsView;

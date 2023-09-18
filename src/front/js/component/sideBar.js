@@ -10,92 +10,92 @@ export const SideBar = () => {
 		{
 			title: 'Alerts',
 			description: 'Different types of alerts', 
-			path: "alert" 
+			path: "/component/alerts" 
 		},
 		{
 			title: 'Badges', 
 			description: 'Small count indicators',
-			path: "badges"
+			path: "/component/badges"
 		},
 		{
 			title: 'Breadcrumbs',
 			description: 'Indicates page location',
-			path: "breadcrumbs"
+			path: "/component/breadcrumbs"
 		},
 		{
 			title: 'Buttons',
 			description: 'Various button styles',
-			path: "buttons"
+			path: "/component/buttons"
 		},
 		{
 			title: 'Button Groups',
 			description: 'Grouped buttons',
-			path: "button-groups"
+			path: "/component/button-groups"
 		},
 		{
 			title: 'Cards',
 			description: 'Flexible content containers',
-			path: "cards"
+			path: "/component/cards"
 		},
 		{
 			title: 'Carousels', 
 			description: 'Rotating content slides',
-			path: "carousels"
+			path: "/component/carousels"
 		},
 		{
 			title: 'Collapses',
 			description: 'Toggleable content sections', 
-			path: "collapses"
+			path: "/component/collapses"
 		},
 		{
 			title: 'Dropdowns',
 			description: 'Toggleable menu buttons',
-			path: "dropdowns"
+			path: "/component/dropdowns"
 		},
 		{
 			title: 'List Groups',
 			description: 'List element styles', 
-			path: "list-groups" 
+			path: "/component/list-groups" 
 		},
 		{
 			title: 'Modals',
 			description: 'Overlay pop up windows',
-			path: "modals"
+			path: "/component/modals"
 		},
 		{
 			title: 'Navs & Navbars',
 			description: 'Navigation components',
-			path: "navs-navbars"
+			path: "/component/navs-navbars"
 		},
 		{
 			title: 'Pagination', 
 			description: 'Page number indicators',
-			path: "pagination"
+			path: "/component/pagination"
 		},
 		{
 			title: 'Popovers',
 			description: 'Small overlay content',
-			path: "popovers"
+			path: "/component/popovers"
 		},
 		{
 			title: 'Progress Bars',
 			description: 'Progress indicators',
-			path: "progress-bars"
+			path: "/component/progress-bars"
 		}
 	]
 
 	const getting_started =[
 		{
 			title: 'Introduction',
-			path: "introduction" 
+			path: "/component/introduction" 
 		},
 		{
 			title: 'Download',
-			path: "download" 
+			path: "/component/download" 
 		},
 		{
 			title: 'Contents',
-			path: "components" 
+			path: "/component/components" 
 		},
 		
 	]
@@ -121,7 +121,7 @@ export const SideBar = () => {
 	}
 
 	return (
-		<div className="col-2 rounded m-3" style={{backgroundColor: "rgb(255,243,218)"}}>
+		<div className="col-2 rounded " style={{backgroundColor: "rgb(255,243,218)"}}>
 
 			<nav className="nav flex-column mt-3">
 			<h5 className="fw-medium" style={{fontSize: '1.1rem'}}>

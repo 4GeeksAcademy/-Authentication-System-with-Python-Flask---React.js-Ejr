@@ -9,7 +9,7 @@ import { Single } from "./pages/single";
 import injectContext from "./store/appContext";
 import Signup from "./pages/signup";
 import Login from "./pages/login";
-import  AlertView  from "./pages/alertView";
+import  AlertsView  from "./pages/alertsView";
 import { ButtonView } from "./pages/buttonView"
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
@@ -45,7 +45,7 @@ const Layout = () => {
                         
 
 
-                        <Route element={<AlertView />} path="/alert" />
+                        <Route element={<AlertsView />} path="/component/alerts" />
                         <Route element={<ButtonView />} path="/button" />
 
                         <Route element={<AdminSearch />} path="/adminsearch" />
