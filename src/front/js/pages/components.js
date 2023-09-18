@@ -1,162 +1,192 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { Context } from "../store/appContext";
+import { useNavigate } from "react-router-dom";
 
 import imgSize from "../../img/240x120.png";
 import { ButtonAdmin } from "../component/buttonAdmin";
 
 export const Components = () => {
+	const navigate = useNavigate();
 
 	const component_category = [
 		{
-		  title: 'Alerts',
-		  description: 'Different types of alerts', 
-		  image: imgSize
+			title: 'Alerts',
+			description: 'Different types of alerts', 
+			image: imgSize,
+			path: "login" 
 		},
 		{
-		  title: 'Badges', 
-		  description: 'Small count indicators',
-		  image: imgSize
+			title: 'Badges', 
+			description: 'Small count indicators',
+			image: imgSize,
+			path: "badges"
 		},
 		{
-		  title: 'Breadcrumbs',
-		  description: 'Indicates page location',
-		  image: imgSize
+			title: 'Breadcrumbs',
+			description: 'Indicates page location',
+			image: imgSize, 
+			path: "breadcrumbs"
 		},
 		{
-		  title: 'Buttons',
-		  description: 'Various button styles',
-		  image: imgSize
+			title: 'Buttons',
+			description: 'Various button styles',
+			image: imgSize,
+			path: "buttons"
 		},
 		{
-		  title: 'Button Groups',
-		  description: 'Grouped buttons',
-		  image: imgSize
+			title: 'Button Groups',
+			description: 'Grouped buttons',
+			image: imgSize,
+			path: "button-groups"
 		},
 		{
-		  title: 'Cards',
-		  description: 'Flexible content containers',
-		  image: imgSize
+			title: 'Cards',
+			description: 'Flexible content containers',
+			image: imgSize,
+			path: "cards"
 		},
 		{
-		  title: 'Carousels',
-		  description: 'Rotating content slides',
-		  image: imgSize
+			title: 'Carousels', 
+			description: 'Rotating content slides',
+			image: imgSize,
+			path: "carousels"
 		},
 		{
-		  title: 'Collapses',
-		  description: 'Toggleable content sections',
-		  image: imgSize
+			title: 'Collapses',
+			description: 'Toggleable content sections', 
+			image: imgSize,
+			path: "collapses"
 		},
 		{
-		  title: 'Dropdowns',
-		  description: 'Toggleable menu buttons',
-		  image: imgSize
+			title: 'Dropdowns',
+			description: 'Toggleable menu buttons',
+			image: imgSize,
+			path: "dropdowns"
 		},
 		{
-		  title: 'List Groups', 
-		  description: 'List element styles',
-		  image: imgSize
+			title: 'List Groups',
+			description: 'List element styles', 
+			image: imgSize,
+			path: "list-groups" 
 		},
 		{
-		  title: 'Modals',
-		  description: 'Overlay pop up windows',
-		  image: imgSize
+			title: 'Modals',
+			description: 'Overlay pop up windows',
+			image: imgSize,
+			path: "modals"
 		},
 		{
-		  title: 'Navs & Navbars',
-		  description: 'Navigation components',
-		  image: imgSize
+			title: 'Navs & Navbars',
+			description: 'Navigation components',
+			image: imgSize,
+			path: "navs-navbars"
 		},
 		{
-		  title: 'Pagination',
-		  description: 'Page number indicators',
-		  image: imgSize
+			title: 'Pagination', 
+			description: 'Page number indicators',
+			image: imgSize,
+			path: "pagination"
 		},
 		{
-		  title: 'Popovers',
-		  description: 'Small overlay content',
-		  image: imgSize
+			title: 'Popovers',
+			description: 'Small overlay content',
+			image: imgSize, 
+			path: "popovers"
 		},
 		{
-		  title: 'Progress Bars',
-		  description: 'Progress indicators',
-		  image: imgSize
+			title: 'Progress Bars',
+			description: 'Progress indicators',
+			image: imgSize,
+			path: "progress-bars"
 		}
 	]
 
+	const getting_started =[
+		{
+			title: 'Introduction',
+			path: "introduction" 
+		},
+		{
+			title: 'Download',
+			path: "download" 
+		},
+		{
+			title: 'Contents',
+			path: "components" 
+		},
+		
+	]
+
 	const handleMouseOver = (e) => {
-		e.target.style.backgroundColor = 'lightblue';
-		e.target.style.borderRadius = '5px'; 
-		//e.target.style.padding = '1px'; 
-	  }
-	
-	  const handleMouseOut = (e) => {
+		e.target.style.backgroundColor = 'rgb(254,236,189)';
+		e.target.style.borderRadius = '5px';
+		e.target.style.cursor = 'pointer'; 
+	}
+		
+	const handleMouseOut = (e) => {
 		e.target.style.backgroundColor = '';
-		e.target.style.borderRadius = '';
-		e.target.style.padding = '';
-	  }
+		e.target.style.borderRadius = ''; 
+		e.target.style.cursor = 'default';
+		e.target.style.padding = ''; 
+	}
+
+	const handleClick = (e, path) => {
+		e.target.style.backgroundColor = 'rgb(254,236,189)';
+		e.target.style.borderRadius = '5px'; 
+		e.target.style.fontWeight = 'bold';
+		navigate(`/${path}`);
+	}
 
 	return (
+			
+		<div className="col-2 rounded m-3" style={{backgroundColor: "rgb(255,243,218)"}}>
+
+			<nav className="nav flex-column mt-3">
+			<h5 className="fw-medium" style={{fontSize: '1.1rem'}}>
+				<i className="bi bi-boxes"></i>
+				Getting started
+			</h5>
+
+			<ul className="list-unstyled">
+				{getting_started.map(item => (
+				<li 
+					className="ps-2 fw-lighter"
+					style={{fontSize: '0.95rem'}}
+					onMouseOver={handleMouseOver}  
+					onMouseOut={handleMouseOut}
+					onClick={e => handleClick(e, item.path)}
+				>
+					{item.title}
+				</li>
+				))}
+			</ul>
+			</nav>
+
+			<nav className="nav flex-column mt-3">
+			<h5 className="fw-medium" style={{fontSize: '1.1rem'}}>
+				Components
+			</h5>
+
+			<ul className="list-unstyled">
+				{component_category.map(item => (
+				<li
+					className="ps-2 fw-lighter" 
+					style={{fontSize: '0.95rem'}}
+					onMouseOver={handleMouseOver}
+					onMouseOut={handleMouseOut}
+					onClick={e => handleClick(e, item.path)}
+				>
+					{item.title}
+				</li>
+				))}
+			</ul>
+			</nav>
+
+		</div>
 		
-			
-			<div>
-
-	{/* <ul>
-      <li onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>Item 1</li>
-      <li onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>Item 2</li>
-      <li onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>Item 3</li>
-    </ul> */}
-
-
-
-
-
-
-
-
-
-
-
-
-
-{/* fill="currentColor" class="bi bi-boxes"
-width="18" height="18"
-viewBox="0 0 18 18" */}
-									<div class="container-fluid">
-						<div class="row">
-							<div class="col-2 bg-light">
-								<nav class="nav flex-column mt-3">			
-									<h5 className="fw-bolder">
-									<i className="bi bi-boxes" ></i>
-										  Components</h5>
-									<ul>
-									{component_category.map((item) => (
-									<li onMouseOver={handleMouseOver} onMouseOut={handleMouseOut} style={{listStyleType: "none", paddingLeft:"2px"}}>{item.title}</li>
-									))}
-									</ul>
-								</nav>
-							</div>
-
-							<div class="col-10">
-							
-
-															
-
-
-
-
-							</div>
-						</div>
-						</div>
-			</div>
-			
-			
-			
-		
-	);
-};
-
+	)
+}
 
 
 
@@ -185,3 +215,10 @@ viewBox="0 0 18 18" */}
 	
 </div>
 </div> */}
+
+
+	{/* <ul>
+      <li onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>Item 1</li>
+      <li onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>Item 2</li>
+      <li onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>Item 3</li>
+    </ul> */}
