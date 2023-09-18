@@ -1,17 +1,13 @@
 
-*{
+/* *{
     margin: 0px;
     padding: 0px;
-}
+} */
 
 .fondo-difuminado {
     background: linear-gradient(to bottom, #FD5812, rgba(218, 149, 21, 0));
     width: 100%;
-    height: 90vh; /* Ocupar toda la altura de la ventana */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    height: 100vh; /* Ocupar toda la altura de la ventana */
 }
   
   
@@ -33,9 +29,6 @@
 .area{
     background: #e4950d;  
     background: -webkit-linear-gradient(to left, #ff9900, #ff9100);  
-  
-    
-   
 }
 
 .circles{
