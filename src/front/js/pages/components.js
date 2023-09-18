@@ -14,7 +14,7 @@ export const Components = () => {
 			title: 'Alerts',
 			description: 'Different types of alerts', 
 			image: imgSize,
-			path: "login" 
+			path: "alert" 
 		},
 		{
 			title: 'Badges', 
@@ -139,7 +139,6 @@ export const Components = () => {
 	}
 
 	return (
-			
 		<div className="col-2 rounded m-3" style={{backgroundColor: "rgb(255,243,218)"}}>
 
 			<nav className="nav flex-column mt-3">
