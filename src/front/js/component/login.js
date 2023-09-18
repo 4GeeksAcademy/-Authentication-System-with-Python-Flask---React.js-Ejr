@@ -2,6 +2,9 @@ import React, { useContext, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Context } from "../store/appContext";
 import '../../styles/LoginForm.css';
+import { Link } from "react-router-dom";
+import ResetPass from '../pages/resetpass';
+
 
 function LoginForm() {
 
@@ -12,9 +15,9 @@ function LoginForm() {
     //Si existe un token está iniciada la sesión
     if(store.accessToken){
       //ir a la página de los datos del usuario
-      console.log("IR A DEMO", store.accessToken)
+      //console.log("IR A DEMO", store.accessToken)
       //navigate("/demo")
-      navigate("/perfilorganizador")
+      navigate("/perfil")
     }
   }, [store.accessToken])
 
@@ -71,6 +74,8 @@ function LoginForm() {
       } else {
         //entramos a la página de datos del usuario
         alert("login successfull")
+        
+        window.location.reload(false)
       }
     }
   }
@@ -218,8 +223,9 @@ function LoginForm() {
                           </div>
 
                           <div className="col-md-6 d-flex justify-content-center">
-                            <a href="#!">¿Olvidaste la contraseña?</a>
+                            <ResetPass/>
                           </div>
+
                         </div>
 
                         <button type="submit" className="btn btn-primary btn-block mb-4">

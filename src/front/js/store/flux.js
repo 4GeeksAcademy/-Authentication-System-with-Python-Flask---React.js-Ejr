@@ -4,16 +4,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 			accessToken: null,
 			userInfo: null,
 			message: null,
-			demo: [
+			modalmsje: [
 				{
-					title: "FIRST",
-					background: "white",
-					initial: "white"
-				},
-				{
-					title: "SECOND",
-					background: "white",
-					initial: "white"
+					boton: "Click",
+					header: "headerok",
+					body: "bodyok",
+					footer: "footerok"
 				}
 			]
 		},
@@ -40,7 +36,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					const resp = await request
 					//obtenemos los datos de la petición
 					const data = await resp.json()
-					console.log("PRUEBA2"+ JSON.stringify(data)+ resp.status)
+					console.log("PRUEBA_fetchpublic"+ JSON.stringify(data)+ resp.status)
 					return {code: resp.status, data}
 				}catch(error){
 					console.log("Error al solicitar los datos", error)
@@ -69,7 +65,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					const resp = await fetch(process.env.BACKEND_URL + "/api" + endpoint, params)
 					//obtenemos los datos de la petición
 					const data = await resp.json()
-					console.log("PRUEBA1"+ JSON.stringify(data)+ resp.status)
+					console.log("PRUEBA_fetchprotected"+ JSON.stringify(data)+ resp.status)
 					return {code: resp.status, data}
 				}catch(error){
 					console.log("Error al solicitar los datos", error)
@@ -99,7 +95,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						console.log("borramos el token")
 						localStorage.removeItem("accessToken")
 					}
-					console.log("PRUEBA 4", JSON.stringify(resp))
+					console.log("PRUEBA_login", JSON.stringify(resp))
 					
 					return resp
 				}catch(error){
@@ -125,7 +121,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						console.log("borramos el token")
 						localStorage.removeItem("accessToken")
 					}*/
-					console.log("PRUEBA 3", JSON.stringify(resp))
+					console.log("PRUEBA_signup", JSON.stringify(resp))
 					return resp
 				} catch(error){
 					console.log("Error al solicitar los datos")
@@ -136,7 +132,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					const {apiFetchProtected} = getActions()
 					const resp = await apiFetchProtected("/helloprotected")
 					///////////// extra
-					console.log("PRUEBA2", resp)
+					console.log("PRUEBA_getuserinfo", resp)
 					if (resp.code==200){
 						setStore({userInfo:resp.data})
 						return "Ok"
@@ -165,6 +161,15 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}catch(error){
 					console.log("Error loading message from backend", error)
 				}
+			},
+			dataModal: (dataMsje) => {
+				const store = getStore();
+				store.modalmsje.splice(0, 1, dataMsje);
+				setStore(store);
+			},
+			returnUserData:()=> {
+				const store = getStore();
+								
 			}
 		}
 	};

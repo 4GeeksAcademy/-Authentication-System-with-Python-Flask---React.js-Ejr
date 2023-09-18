@@ -5,8 +5,8 @@ import ScrollToTop from "./component/scrollToTop";
 
 import { Home } from "./pages/home";
 import { Servicios } from "./pages/servicios";
-import { Single } from "./pages/single";
-import Payment from "./pages/payment";
+//import { Single } from "./pages/single";
+//import Payment from "./pages/payment";
 import injectContext from "./store/appContext";
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
@@ -18,7 +18,7 @@ import AccountPage from "./pages/cuenta";
 import NextEvent from "./component/nextEvent";
 import Registrarse from "./component/registrarse";
 import Organizadores from "./pages/organizadores";
-import UserProfile from "./component/perfil";
+//import UserProfile from "./pages/perfil";
 import TeamList from "./pages/equiposparticipantes";
 import UserPage from "./pages/perfil";
 import PerfilOrganizador from "./pages/perfilorganizador";
@@ -39,12 +39,9 @@ const Layout = () => {
                     <Navbar />
                     <Routes>
                         <Route element={<TeamList />} path="/teams" />
-                        <Route element={<UserPage />} path="/profile" />
                         <Route element={<Home />} path="/" />
                         <Route element={<Servicios />} path="/servicios" />
-                        <Route element={<Single />} path="/single/:theid" />
                         <Route element={<h1>Not found!</h1>} />
-                        <Route element={<Payment />} path="/payment" />
                         <Route element={<Eventos />} path="/eventos" />
                         <Route element={<Galeria />} path="/galeria" />
                         <Route element={<Perfil />} path="/perfil" />
@@ -54,6 +51,7 @@ const Layout = () => {
                         <Route element={<Registrarse />} path="/registrarse" />
                         <Route element={<Organizadores />} path="/organizadores" />
                         <Route element={<PerfilOrganizador />} path="/perfilorganizador" />
+                        <Route element={<Perfil />} path="/perfil" />
                         <Route element={<RegistroDeOrganizadores />} path="/registrarorganizadores" />
                     </Routes>
                     <Footer />

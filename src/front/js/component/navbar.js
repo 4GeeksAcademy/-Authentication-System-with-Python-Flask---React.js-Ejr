@@ -7,6 +7,22 @@ export const Navbar = () => {
 
 	const { store, actions } = useContext(Context);
 
+	const [classIcon, setClassIcon] = useState("fa fa-fw fa-user");
+
+	useEffect(()=>{
+		//Si existe un token está iniciada la sesión
+		const userDatos = {...store.userInfo};
+		if(userDatos.name){
+		  	//cambiar clase de user icon
+			const name = userDatos.name;
+			console.log("NOMBRE:", name)
+			//setClassIcon("fa fa-fw fa-user")
+		  	setClassIcon("fa-solid fa-" + name.charAt(0))
+		} else {
+			setClassIcon("fa fa-fw fa-user")
+		}
+	  }, [])
+	
 	const location = useLocation();
 	const currentPath = location.pathname;
 
@@ -30,7 +46,6 @@ export const Navbar = () => {
 				<div className="collapse navbar-collapse" id="navbarMenu">
 					<ul className="navbar-nav ms-auto mx-2 mb-2 mb-lg-0">
 						{menu.map((item) => {
-							console.log("DOS");
 							return (
 								<li className="nav-item mx-2" key={item.label} >
 									<a className={`${currentPath === item.url ? "nav-link bg-primary text-white rounded-3" : "nav-link"}`}
@@ -41,7 +56,7 @@ export const Navbar = () => {
 						})}
 						<li>
 							<a className={`${currentPath === "/cuenta" ? "nav-link bg-primary text-white rounded-3" : "nav-link"}`}
-							 href="/cuenta"><i className="fa fa-fw fa-user"></i> Cuenta</a>
+							 href="/cuenta"><i className={classIcon}></i> Cuenta</a>
 						</li>
 					</ul>
 				</div>

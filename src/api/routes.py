@@ -33,6 +33,8 @@ def create_user():
     new_user.password = secure_password
     new_user.is_active = True
     new_user.name = name
+    new_user.address = ""
+    new_user.phone = ""
     db.session.add(new_user)
     db.session.commit()
     return jsonify({"msg":"Usuario registrado"}), 201
@@ -74,6 +76,7 @@ def hello_protected():
     user = User.query.get(user_id)
     response = {
         "userId": user_id,
+        "email" : user.email,
         "claims": claims,
         "isActive": user.is_active,
         "name": user.name,
