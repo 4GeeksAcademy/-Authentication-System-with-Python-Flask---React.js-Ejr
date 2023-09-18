@@ -33,14 +33,15 @@ const RegistrarOrganizadores = () => {
             longDescription: "",
             rules: "",
             registrationDate: "",
-            registrationStatus: "",
+            registrationStatus: ""
 
         },
+
         {
             id: 3,
             name: 'Costa Rica tournament',
             country: 'Costa Rica',
-            registrationDate: '13/11/2025',
+            registrationDate: '13/11/2024',
             endDate: '16/11/2023',
             shortDescription: "",
             startDate: "",
@@ -49,12 +50,22 @@ const RegistrarOrganizadores = () => {
             longDescription: "",
             rules: "",
             registrationDate: "",
-            registrationStatus: "",
+            registrationStatus: ""
         },
     ];
     const [selectedEvent, setSelectedEvent] = useState(teamsData[0]);
     const handleEdit = (e) => {
         setSelectedEvent(teamsData.find(t => t.id == e.target.id))
+    }
+
+    const deleteTodo = (id) => {
+        const newTodos = todoArray.filter(todo => todo.id == id)
+        setTodoArrays(newTodos)
+    }
+    const handleChange = (e, propertyName) => {
+        const currentEvent = Object.assign({}, selectedEvent);
+        currentEvent[propertyName] = e.target.value;
+        setSelectedEvent(currentEvent)
     }
     return (
         <div className="fatherBody">
@@ -101,15 +112,23 @@ const RegistrarOrganizadores = () => {
                             <td>{team.cost}</td>
                             <td>
                                 <td>
-                                    <button id={team.id} onClick={(e) => handleEdit(e)} className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                                        Editar
-                                    </button>
-                                    <button className="btn btn-primary">
-                                        Eliminar
-                                    </button>
-                                    <button className="btn btn-primary">
-                                        Participantes
-                                    </button>
+                                    <div className="row">
+                                        <div className="col-4">
+                                            <button id={team.id} onClick={(e) => handleEdit(e)} className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                                Editar
+                                            </button>
+                                        </div>
+                                        <div className="col-4">
+                                            <button className="btn btn-primary" onClick={() => deleteTodo(team.id)}>
+                                                Eliminar
+                                            </button>
+                                        </div>
+                                        <div className="col-4">
+                                            <button className="btn btn-primary">
+                                                Participantes
+                                            </button>
+                                        </div>
+                                    </div>
                                 </td>
                             </td>
                         </tr>
@@ -121,51 +140,101 @@ const RegistrarOrganizadores = () => {
                 <div className="modal-dialog">
                     <div className="modal-content">
                         <div className="modal-header">
-                            <h5 className="modal-title" id="staticBackdropLabel">Modal title</h5>
+                            <h5 className="modal-title" id="staticBackdropLabel">Editar</h5>
                             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div className="modal-body">
                             <div className="row">
                                 <div className="row">
-                                    <div className="col"> <b>Nombre: </b> <input type="text" value={selectedEvent.name} /> </div>
+                                    <form className="form-floating">
+                                        <input onChange={(e) => handleChange(e, "name")} type="text" className="form-control" id="eventName" placeholder="nombre" value={selectedEvent.name} />
+                                        <label for="eventName">Nombre:</label>
+                                    </form>
+
                                 </div>
                                 <div className="row">
-                                    <div className="col"> Descripción corta</div>
+
+                                    <form className="form-floating">
+                                        <input onChange={(e) => handleChange(e, "shortDescription")} type="text" className="form-control" id="eventDescription" placeholder="nombre" value={selectedEvent.shortDescription} />
+                                        <label for="eventDescription">Descripcion corta:</label>
+                                    </form>
+
                                 </div>
                                 <div className="row">
-                                    <div className="col"> Fecha de Inicio </div>
+                                    <form className="form-floating">
+                                        <input type="text" className="form-control" id="eventDate" placeholder="Fecha de inicio" value={selectedEvent.startDate} />
+                                        <label for="eventDate">Fecha de inicio:</label>
+                                    </form>
                                 </div>
                                 <div className="row">
-                                    <div className="col"> Ubicación</div>
+                                    <form className="form-floating">
+                                        <input type="text" className="form-control" id="eventDate" placeholder="fecha final" value={selectedEvent.endtDate} />
+                                        <label for="eventDate">Fecha de final:</label>
+                                    </form>
                                 </div>
                                 <div className="row">
-                                    <div className="col"> Logotipo (archivo) </div>
+                                    <form className="form-floating">
+                                        <input type="text" className="form-control" id="eventLocation" placeholder="Location" value={selectedEvent.location} />
+                                        <label for="eventName">Location:</label>
+                                    </form>
+
                                 </div>
                                 <div className="row">
-                                    <div className="col"> Descripción larga </div>
+                                    <form className="form-floating">
+                                        <input type="text" className="form-control" id="eventLogo" placeholder="Logo" value={selectedEvent.logo} />
+                                        <label for="eventName">Logo:</label>
+                                    </form>
+
                                 </div>
                                 <div className="row">
-                                    <div className="col"> Reglas (archivo) </div>
+                                    <form className="form-floating">
+                                        <input type="text" className="form-control" id="eventDecriptionLong" placeholder="Descripcion larga" value={selectedEvent.longDescription} />
+                                        <label for="eventDescriptionLong">Descripcion larga:</label>
+                                    </form>
+
                                 </div>
                                 <div className="row">
-                                    <div className="col"> Fecha límite de registro</div>
+                                    <form className="form-floating">
+                                        <input type="text" className="form-control" id="eventRule" placeholder="Reglas" value={selectedEvent.rules} />
+                                        <label for="eventRule">Reglas:</label>
+                                    </form>
+
                                 </div>
                                 <div className="row">
-                                    <div className="col"> Status del registro</div>
+                                    <form className="form-floating">
+                                        <input type="text" className="form-control" id="eventLimiteDate" placeholder="Fecha limite" value={selectedEvent.endDateDate} />
+                                        <label for="eventLimiteDate">Fecha limite:</label>
+                                    </form>
+
                                 </div>
                                 <div className="row">
-                                    <div className="col"> Datos de contacto  </div>
+                                    <form className="form-floating">
+                                        <input type="text" className="form-control" id="eventStatusRegister" placeholder="Status del registro" value={selectedEvent.registrationStatus} />
+                                        <label for="eventStatusRegister">Status del registro:</label>
+                                    </form>
+
                                 </div>
                                 <div className="row">
-                                    <div className="col"> Costo de inscripción </div>
+                                    <form className="form-floating">
+                                        <input type="text" className="form-control" id="eventContactData" placeholder="Datos de contacto" value={selectedEvent.name} />
+                                        <label for="eventContacData">Datos de contacto:</label>
+                                    </form>
+
                                 </div>
-                                <div className="col"> </div>
+                                <div className="row">
+                                    <form className="form-floating">
+                                        <input type="text" className="form-control" id="eventCost" placeholder="Costo de inscripcion" value={selectedEvent.name} />
+                                        <label for="eventCost">Costo de inscripcion:</label>
+                                    </form>
+
+                                </div>
+
                             </div>
-                            ...
+
                         </div>
                         <div className="modal-footer">
                             <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" className="btn btn-primary">Understood</button>
+                            <button type="button" className="btn btn-primary">Cambiar</button>
                         </div>
                     </div>
                 </div>
@@ -175,4 +244,6 @@ const RegistrarOrganizadores = () => {
     );
 }
 
-export default RegistrarOrganizadores
+export default RegistrarOrganizadores;
+
+
