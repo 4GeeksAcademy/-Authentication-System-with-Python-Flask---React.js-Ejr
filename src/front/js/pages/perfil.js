@@ -1,11 +1,34 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { BrowserRouter as Router, Link, useNavigate } from 'react-router-dom';
 import { Context } from "../store/appContext";
+import * as filestack from 'filestack-js';
 
 const Perfil = ()=>{
   const { store, actions } = useContext(Context);
   const [userData, setUserData] = useState(null);
+  const [profileImage, setProfileImage] = useState(
+    'https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp'
+  );
   const navigate = useNavigate()
+  const filestackClient = filestack.init('ApcaRKG5TSEuvL2v2O2Dnz');
+ // Manejar la selección de archivos y actualización de imagen de perfil
+ const handleFileUpload = async () => {
+  try {
+    const result = await filestackClient.picker({ accept: 'image/*' }).open();
+    if (result.filesUploaded.length > 0) {
+      // Actualizar la imagen de perfil en el estado local
+      const newProfileImage = result.filesUploaded[0].url;
+      setProfileImage(newProfileImage);
+
+      // Aquí puedes enviar la nueva URL de la imagen de perfil al servidor para actualizarla en la base de datos del usuario
+      // actions.updateProfileImage(newProfileImage); // Debes implementar esta función en tus acciones
+    }
+  } catch (error) {
+    console.error('Error al cargar la imagen:', error);
+  }
+};
+  
+
 
   //cuando cargue llamamos a getuserinfo y enviamos la data al userData
   useEffect(()=>{
@@ -41,6 +64,27 @@ const Perfil = ()=>{
     }
   ];
 
+    // Función para abrir el selector de archivos de Filestack
+    const handleOpenFilePicker = () => {
+      const pickerOptions = {
+        fromSources: ['local_file_system', 'url', 'imagesearch', 'facebook', 'instagram', 'googledrive', 'dropbox'],
+        accept: ['image/*'],
+        maxSize: 1024 * 1024 * 5, // Tamaño máximo de 5 MB
+        uploadInBackground: false, // Subir en primer plano
+        transformations: {
+          crop: true, // Permite recortar la imagen
+        },
+      };
+  
+      filestackClient.picker(pickerOptions).open().then(response => {
+        // Handle the response from Filestack here
+        console.log('Filestack response:', response);
+        // Puedes obtener la URL de la imagen seleccionada desde response.filesUploaded[0].url
+      }).catch(error => {
+        console.error('Filestack error:', error);
+      });
+    };
+
   return (
 
     <section style={{ backgroundColor: '#eee' }}>
@@ -52,7 +96,7 @@ const Perfil = ()=>{
             <div className="card mb-4">
               <div className="card-body text-center">
                 <img
-                  src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp"
+                  src={profileImage}
                   alt="avatar"
                   className="rounded-circle img-fluid"
                   style={{ width: '150px' }}
@@ -61,7 +105,11 @@ const Perfil = ()=>{
                 <h5 className="my-3">{profileData.name}</h5>
                 <p className="text-muted mb-1">Organizador</p>
                 <p className="text-muted mb-4">{profileData.address}</p>
+                <button type="button" className="btn btn-primary" onClick={handleOpenFilePicker}>
+                  Cambiar imagen de perfil
+                </button>
                 <div className="d-flex justify-content-center mb-2">
+                
                   <button type="button" className="btn btn-primary">
                     Configurar perfil
                   </button>
@@ -183,7 +231,11 @@ const Perfil = ()=>{
                 ))}
               </tbody>
             </table>
+            <button className='btn btn-outline-primary ms-1' onClick={() => actions.logout()}>
+  Salir
+</button>
           </div>
+        
         </div>
       </div>
     </section>
