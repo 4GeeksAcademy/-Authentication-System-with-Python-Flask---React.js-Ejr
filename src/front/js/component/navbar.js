@@ -1,13 +1,17 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import bookswaplogo from "../../img/logo-final-project.png";
+import { Buttonsignup } from "../component/btn-signup";
+import { Buttonlogin } from "../component//btn-login";
+import "../../styles/index.css";
 
 
 export const Navbar = () => {
 	return (
 		<nav className="navbar navbar-expand-lg bg-body-tertiary">
-			<div className="container-fluid">
+			<div className="container-fluid ">
 				<a class="navbar-brand" href="#">
-					<img src="/img/logo-final-project.png" alt="bookswap" width="30" height="24" />
+					<img className="align-middle" src={bookswaplogo} alt="bookswap" height="100" />
 				</a>
 				<button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 				<span className="navbar-toggler-icon"></span>
@@ -24,10 +28,10 @@ export const Navbar = () => {
 							<a className="nav-link" href="#">Reviews</a>
 						</li>
 						<li className="nav-item">
-							#button
+							<Buttonsignup />
 						</li>
 						<li className="nav-item">
-							#button
+							<Buttonlogin />
 						</li>
 					</ul>
 					<form className="d-flex" role="search">

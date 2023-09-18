@@ -79,7 +79,7 @@ export const Home = () => {
 			</div>
 
 			<div className="container mt-5">
-				<h2 className="fw-bold">The most rated books</h2>
+				<h2 className="fw-bold">The best rated books</h2>
 				#Reviews#
 				<div className="text-center">
 					<Buttonsignup />

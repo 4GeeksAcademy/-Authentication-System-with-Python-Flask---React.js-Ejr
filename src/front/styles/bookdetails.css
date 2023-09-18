@@ -1,0 +1,11 @@
+.bookdetails{
+    margin-top: 50px;
+}
+
+.bookcoverimg{
+    width: 50%;
+}
+
+* {
+    font-family: "inria serif";
+}

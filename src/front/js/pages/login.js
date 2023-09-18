@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Context } from "../store/appContext";
-import rigoImageUrl from "../../img/rigo-baby.jpg";
+import bookswaplogo from "../../img/logo-final-project.png";
 import "../../styles/forms.css";
 
 export const Login = () => {
@@ -8,6 +8,9 @@ export const Login = () => {
 
 	return (
 		<div className="container d-flex justify-content-center">
+            <div className="container justify-content-center">
+                <img src={bookswaplogo} alt="bookswap" height="200" />
+            </div>
             <div className="createaccountform col-md-6">
                 <form className="row g-3">
                     <div className="col-12">
