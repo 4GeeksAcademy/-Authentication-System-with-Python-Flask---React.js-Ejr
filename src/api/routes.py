@@ -9,7 +9,10 @@ from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required
 from flask_bcrypt import Bcrypt
+import mercadopago
 
+# Agrega credenciales
+sdk = mercadopago.SDK("APP_USR-2815099995655791-092911-c238fdac299eadc66456257445c5457d-1160950667")
 bcrypt = Bcrypt() 
 
 api = Blueprint('api', __name__)
@@ -23,6 +26,39 @@ def handle_hello():
     }
 
     return jsonify(response_body), 200
+
+# # # # # Mercado pago
+
+@api.route('/preference', methods=['POST'])
+def preference():
+    body = json.loads(request.data)
+
+    
+    # Crea un ítem en la preferencia
+    preference_data = {
+        "items": [
+            {
+                "title": "Componentify",
+                "quantity": 1,
+                "unit_price": 10,
+            }
+        ],
+        "payer":{
+            "email":"test_user_17805074@testuser.com" 
+        },                                                                                          
+        "back_urls": {
+            "success": "https://effective-rotary-phone-q7q7vxvwqq7gh974r-3000.app.github.dev",
+            "failure": "https://effective-rotary-phone-q7q7vxvwqq7gh974r-3000.app.github.dev",
+            "pending": "https://effective-rotary-phone-q7q7vxvwqq7gh974r-3000.app.github.dev"
+        },
+        "auto_return": "approved"
+
+    }
+
+    preference_response = sdk.preference().create(preference_data)
+    preference = preference_response["response"]
+
+    return preference,200
 
 
 # # # # # USER 👨👨👨👨👨👨

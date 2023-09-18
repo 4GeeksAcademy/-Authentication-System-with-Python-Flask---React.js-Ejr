@@ -76,6 +76,7 @@
 		"@stackblitz/sdk": "^1.9.0",
 		"axios": "^1.5.0",
 		"bootstrap": "^5.3.1",
+		"mercadopago": "^1.5.17",
 		"prop-types": "^15.6.1",
 		"react": "^16.8.4",
 		"react-bootstrap": "^2.8.0",
