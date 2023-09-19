@@ -39,11 +39,10 @@ db.init_app(app)
 CORS(app)
 
 import cloudinary
-          
 cloudinary.config( 
-  cloud_name = "dke9ovnuo", 
-  api_key = "431472729639739", 
-  api_secret = "NECJAp7syLC9BzdBaIINMfkWW7s" 
+cloud_name = "dke9ovnuo", 
+api_key = "431472729639739", 
+api_secret = "NECJAp7syLC9BzdBaIINMfkWW7s" 
 )
 # add the admin
 setup_admin(app)

@@ -1,11 +1,8 @@
-import React from "react";
-import Card from '../component/reviewsLibros/Card'
-import Testimonio from '../component/reviewsLibros/Testimonio'
-
+import React, { useContext } from "react";
+import Card from "../component/reviewsLibros/Card";
+import Testimonio from "../component/reviewsLibros/Testimonio";
 
 const BookReviews = () => {
-  const { store, actions } = useContext(Context);
-
   return (
     <div className="row m-3 mt-4">
       <div className="col-md-6 d-flex justify-content-center text-center">
@@ -20,7 +17,7 @@ const BookReviews = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default BookReviews
+export default BookReviews;

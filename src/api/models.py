@@ -2,7 +2,6 @@ from flask_sqlalchemy import SQLAlchemy
 db = SQLAlchemy()
 from sqlalchemy import ForeignKey
 
-
 class User(db.Model):
     __tablename__ = 'user'
     id = db.Column(db.Integer, primary_key=True)
@@ -12,7 +11,11 @@ class User(db.Model):
     password = db.Column(db.String(250), nullable=False)
     region = db.Column(db.String(120), nullable=False)
     photo = db.Column(db.String(120), default="no-photo.png")
+    messsage_from = db.relationship('Message', foreign_keys="[Message.user_from_id]", backref='user_from')
+    messsage_to = db.relationship('Message', foreign_keys='[Message.user_to_id]', backref='user_to')
     # roles = db.relationship('Role', secondary=roles_users)
+    # is_active = db.Column(db.Boolean(), unique=False, nullable=False)
+
 
     def serialize(self):
         return {
@@ -36,8 +39,6 @@ class User(db.Model):
         db.session.commit()
 
 # <--TABLA LIBRO-------------------------------------------->
-
-
 class Book(db.Model):
     __tablename__ = 'book'
     id = db.Column(db.Integer, primary_key=True)
@@ -48,6 +49,7 @@ class Book(db.Model):
     description = db.Column(db.String(250))
     price = db.Column(db.String(120))
     photo = db.Column(db.String(120), default="no-photo.png")
+    
 
     def serialize(self):
         return {
@@ -71,7 +73,8 @@ class Book(db.Model):
     def delete(self):
         db.session.delete(self)
         db.session.commit()
-
+        
+#-----< Tabla imagen >---------------------------------------->
 class Gallery(db.Model):
     __tablename__= 'gallery'
     id = db.Column(db.Integer, primary_key=True)
@@ -84,21 +87,51 @@ class Gallery(db.Model):
             "id": self.id,
             "title": self.title,
             "image": self.image
-        }
-        
+        }    
         
     def save(self):
         db.session.add(self)
         db.session.commit()
         
-        
     def update(self):
         db.session.commit()
-        
         
     def delete(self):
         db.session.delete(self)
         db.session.commit()    
     
-        
+#-----< Tabla imagen >---------------------------------------->
+class Message(db.Model):
+    __tablename__='message'
+    id = db.Column(db.Integer, primary_key= True)
+    message = db.Column(db.Text(), default=" ")
+    user_from_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    user_to_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    date = db.Column(db.DateTime(), default=db.func.now())
     
+    
+    def serialize(self):
+        return {
+            
+            "id":self.id,
+            "message": self.message,
+            "user_from_id": self.user_from_id,
+            "user_to_id": self.user_to_id,
+            "date": self.date,
+            "user_from":self.user_from.serialize(),
+            "user_to":self.user_to.serialize()
+            
+            
+        }
+    
+            
+    def save(self):
+        db.session.add(self)
+        db.session.commit()
+        
+    def update(self):
+        db.session.commit()
+        
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()    

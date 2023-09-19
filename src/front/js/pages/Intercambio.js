@@ -1,10 +1,9 @@
 import React from "react";
 
-import Banner from '../component/intercambio/Banner'
-import BannerInverso from '../component/intercambio/BannerInverso'
+import Banner from "../component/intercambio/Banner";
+import BannerInverso from "../component/intercambio/BannerInverso";
 
 const Intercambio = () => {
-
   return (
     <div className="div container-fluid">
       <div className="div row">
@@ -14,7 +13,7 @@ const Intercambio = () => {
         <BannerInverso />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Intercambio
+export default Intercambio;

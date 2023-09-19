@@ -4,6 +4,7 @@ from flask_admin import Admin
 from .models import db, User
 from .models import db, Book
 from .models import db, Gallery
+from .models import db, Message
 from flask_admin.contrib.sqla import ModelView
 
 
@@ -19,3 +20,4 @@ def setup_admin(app):
     # You can duplicate that line to add mew models
     admin.add_view(ModelView(Book, db.session))
     admin.add_view(ModelView(Gallery, db.session))
+    admin.add_view(ModelView(Message, db.session))
