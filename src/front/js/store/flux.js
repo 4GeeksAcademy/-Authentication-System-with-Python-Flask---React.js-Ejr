@@ -3,6 +3,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 		store: {
 			accessToken: null,
 			userInfo: null,
+			userEvent: null,
 			message: null,
 			modalmsje: [
 				{
@@ -167,9 +168,40 @@ const getState = ({ getStore, getActions, setStore }) => {
 				store.modalmsje.splice(0, 1, dataMsje);
 				setStore(store);
 			},
-			returnUserData:()=> {
-				const store = getStore();
-								
+			newEvent:async(eventData)=>{
+				try{
+					const {apiFetchPublic} = getActions()
+					//hacemos la petición
+					//trae de la API el code(resp.status) y data
+					//es decir, lo que regresa la función apiFetchPublic()
+					const resp = await apiFetchPublic("/newevent", "POST", {eventData})
+					console.log("PRUEBA_newEvent", JSON.stringify(resp))
+					return resp
+				} catch(error){
+					console.log("Error al crear el evento")
+				}
+			},
+			getUserEvent: async()=>{
+				try{
+					const {apiFetchProtected} = getActions()
+					const resp = await apiFetchProtected("/loadevents")
+					///////////// extra
+					console.log("PRUEBA_getuserEvent", resp)
+					if (resp.code==200){
+						setStore({userEvent:resp.data})
+						return "Ok"
+					}
+					//si el token expiró
+					//borramos token del almacenamiento local y del store
+					localStorage.removeItem("accessToken")
+					if (resp.code==401){
+						setStore({accessToken:null})
+						alert("Sesión expirada")
+					}
+					return "Sesión expirada"
+				}catch(error){
+					console.log("Error al solicitar los datos", error)
+				}
 			}
 		}
 	};

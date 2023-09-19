@@ -1,6 +1,9 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { BrowserRouter as Router, Link, useNavigate } from 'react-router-dom';
 import { Context } from "../store/appContext";
+import tournament from "../../img/perfil/tournament.jpg";
+import teamlist from "../../img/perfil/teamlist.jpg";
+import eventlist from "../../img/perfil/eventlist.jpg";
 
 const Perfil = ()=>{
   const { store, actions } = useContext(Context);
@@ -19,40 +22,17 @@ const Perfil = ()=>{
   }, [store.accessToken])
 
   const profileData = {...store.userInfo};
-  
-  const teamsData = [
-    {
-      teamName: 'Equipo juvenil',
-      tournament: 'Colombia',
-      registrationDate: '13/11/2023',
-      cost: '$75',
-    },
-    {
-      teamName: 'Equipo varonil 3',
-      tournament: 'Las vegas',
-      registrationDate: '13/11/2024',
-      cost: '$50',
-    },
-    {
-      teamName: 'Equipo campeones',
-      tournament: 'Costa Rica',
-      registrationDate: '13/11/2025',
-      cost: '$80',
-    }
-  ];
 
   return (
 
     <section style={{ backgroundColor: '#eee' }}>
       <div className="contSuperior">
-        <div className="row"></div>
-
         <div className="row">
           <div className="col-lg-4">
             <div className="card mb-4">
               <div className="card-body text-center">
                 <img
-                  src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp"
+                  src={"https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp"}
                   alt="avatar"
                   className="rounded-circle img-fluid"
                   style={{ width: '150px' }}
@@ -65,9 +45,6 @@ const Perfil = ()=>{
                   <button type="button" className="btn btn-primary">
                     Configurar perfil
                   </button>
-                  <Link to="/teams" className="btn btn-outline-primary ms-1">
-                    Administrar eventos
-                  </Link>
                 </div>
               </div>
             </div>
@@ -148,41 +125,37 @@ const Perfil = ()=>{
                 <hr />
               </div>
             </div>
-            <table className="table align-middle mb-0 bg-white">
-              <thead className="bg-light">
-                <tr>
-                  <th>Nombre del Evento</th>
-                  <th>Torneo</th>
-                  <th>Fecha de registro</th>
-                  <th>Costo</th>
-                </tr>
-              </thead>
-              <tbody>
-                {teamsData.map((team, index) => (
-                  <tr key={index}>
-                    <td>
-                      <div className="d-flex align-items-center">
-                        <img
-                          src="https://mdbootstrap.com/img/new/avatars/8.jpg"
-                          alt=""
-                          style={{ width: '45px', height: '45px' }}
-                          className="rounded-circle"
-                        />
-                        <div className="ms-3">
-                          <p className="fw-bold mb-1">{team.teamName}</p>
-                          <p className="text-muted mb-0">{team.tournament}</p>
-                        </div>
-                      </div>
-                    </td>
-                    <td>
-                      <p className="fw-normal mb-1">{team.tournament}</p>
-                    </td>
-                    <td>{team.registrationDate}</td>
-                    <td>{team.cost}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+            <div className="row row-cols-1 row-cols-md-3 g-4">
+              <div className="col">
+                <div className="col">
+                  <div className="card text-center" style={{width: "18rem"}}>
+                    <img src={tournament} className="card-img-top" alt="Eventos"/>
+                    <div className="card-body">  
+                      <p className="card-text">Crea, modifica o elimina tus eventos con sus datos.</p>
+                      <Link to="/teams" className="btn btn-primary">Administrar Eventos</Link>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="col">
+                <div className="card text-center" style={{width: "18rem"}}>
+                  <img src={teamlist} className="card-img-top" alt="Equipos"/>
+                  <div className="card-body">
+                    <p className="card-text">Consulta tus equipos registrados en los eventos.</p>
+                    <Link to="/teams" className="btn btn-primary">Administrar Equipos</Link>
+                  </div>
+                </div>
+              </div>
+              <div className="col">
+                <div className="card text-center" style={{width: "18rem"}}>
+                    <img src={eventlist} className="card-img-top" alt="Registro"/>
+                    <div className="card-body">
+                      <p className="card-text">Registra tus equipos a eventos vigentes.</p>
+                      <Link to="/nextevent" className="btn btn-primary">Registrar Equipos</Link>
+                    </div>
+                  </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

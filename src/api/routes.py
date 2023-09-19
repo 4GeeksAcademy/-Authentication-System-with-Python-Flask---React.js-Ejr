@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, TokenBlockedList
+from api.models import db, User, TokenBlockedList, Events
 from api.utils import generate_sitemap, APIException
 from flask_bcrypt import Bcrypt
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity, get_jwt
@@ -27,15 +27,15 @@ def create_user():
     #definir secure_password que se va a guardar en el campo de la bd
     secure_password = bcrypt.generate_password_hash(password, 10).decode("utf-8")
     #crear nuevo usuario a partir de esta data
-    #new_user = User(email=data.email, password=data.password)
-    new_user = User()
-    new_user.email = email
-    new_user.password = secure_password
-    new_user.is_active = True
-    new_user.name = name
-    new_user.address = ""
-    new_user.phone = ""
-    db.session.add(new_user)
+    #new_event = User(email=data.email, password=data.password)
+    new_event = User()
+    new_event.email = email
+    new_event.password = secure_password
+    new_event.is_active = True
+    new_event.name = name
+    new_event.address = ""
+    new_event.phone = ""
+    db.session.add(new_event)
     db.session.commit()
     return jsonify({"msg":"Usuario registrado"}), 201
 
@@ -106,4 +106,75 @@ def handle_hello():
 
     return jsonify(response_body), 200
 
+@api.route('/newevent', methods=['POST'])
+def create_event():
+    #recibir datos del evento
+    nombre_event= request.json.get("nombre_event")
+    descr_corta= request.json.get("descr_corta")
+    fecha_ini= request.json.get("fecha_ini")
+    fecha_fin= request.json.get("fecha_fin")
+    ubicacion= request.json.get("ubicacion")
+    logotipo= request.json.get("logotipo")
+    descr_larga= request.json.get("descr_larga")
+    reglas= request.json.get("reglas")
+    fecha_lim= request.json.get("fecha_lim")
+    email_contacto= request.json.get("email_contacto")
+    tel_contacto= request.json.get("tel_contacto")
+    nombre_contacto= request.json.get("nombre_contacto")
+    costo= request.json.get("costo")
+    id_user= request.json.get("id_user")
+    #buscar usuario en la bd, que me traiga el primer resultado
+    #user = User.query.filter_by(id = id_user).first()
+    #si no existe el usuario mostrar error
+    #if user is None:
+    #    return jsonify({"message": "User not exist"}), 401
+    #crear nuevo evento a partir de esta data
+    new_event = Events()
+    new_event.nombre_event = nombre_event
+    new_event.descr_corta = descr_corta
+    new_event.fecha_ini = fecha_ini
+    new_event.fecha_fin = fecha_fin
+    new_event.ubicacion = ubicacion
+    new_event.logotipo = logotipo
+    new_event.descr_larga = descr_larga
+    new_event.reglas = reglas
+    new_event.fecha_lim = fecha_lim
+    new_event.email_contacto = email_contacto
+    new_event.tel_contacto = tel_contacto
+    new_event.nombre_contacto = nombre_contacto
+    new_event.costo = costo
+    new_event.id_user = id_user
+    db.session.add(new_event)
+    db.session.commit()
+    return jsonify({"msg":"Evento registrado"}), 201
 
+@api.route('/loadevents', methods=['POST'])
+def load_events():
+    #recibir datos del cuerpo de la petición
+    user = request.json.get("userId")
+    #ubicar usuario en la bd, que me traiga todos los resultados
+    events = Events.query.filter(Events.id_user == user)
+    #si no se encontró el evento
+    if events is None:
+        return jsonify({"message": "Events not found"}), 401
+    #después de las validaciones enviar msje de confirmación
+    #pasando contenido
+    response = []
+    for item in events:
+        response.append ({
+            "nombre_evento" : item.nombre_evento,
+            "descr_corta" : item.descr_corta,
+            "fecha_ini" : item.fecha_ini,
+            "fecha_fin" : item.fecha_fin,
+            "ubicacion" : item.ubicacion,
+            "logotipo" : item.logotipo,
+            "descr_larga" : item.descr_larga,
+            "reglas" : item.reglas,
+            "fecha_lim" : item.fecha_lim,
+            "email_contacto" : item.email_contacto,
+            "tel_contacto" : item.tel_contacto,
+            "nombre_contacto" : item.nombre_contacto,
+            "costo" : item.costo,
+            "id_user" : item.id_user
+        })
+    return jsonify(response, 200)

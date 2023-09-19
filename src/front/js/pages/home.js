@@ -11,7 +11,7 @@ export const Home = () => {
 		<div className="mt-5">
 			<div className="card bg-dark text-white">
 				<img src={homeImageUrl} className="card-img img-fluid mw-100" alt="Regístrate ahora"></img>
-				<div className="card-img-overlay mx-5 float-left flex-row align-items-center">
+				<div className="cio card-img-overlay mx-5 float-left flex-row align-items-center">
 					<div className="heading-group">
 						<h1>Administra tus Eventos Deportivos</h1>
 						<p className="heading-3 text-light">Organiza tus torneos en un solo click</p>

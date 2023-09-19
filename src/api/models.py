@@ -53,12 +53,37 @@ class Events(db.Model):
     teams = db.relationship('Teams', secondary=events_teams, lazy='subquery',
         backref=db.backref('eventss', lazy=True))
 
+    def __repr__(self):
+        return f'<Events {self.id}>'
+
+    def serialize(self):
+        return {
+            "Nombre_Evento": self.nonbre_evento,
+            "Fecha_ini": self.fecha_ini,
+            "Fecha_fin": self.fecha_fin,
+            "email_contacto": self.email_contacto,
+            "costo": self.costo
+            # do not serialize the password, its a security breach
+        }
+
 class Teams(db.Model):
     __tablename__ = "teams"
     id = db.Column(db.Integer, primary_key=True)
     nombre_equipo= db.Column(db.String(50), unique=False, nullable=False)
     fecha_registro = db.Column(db.DateTime, unique=False, nullable=False)
     id_user = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+
+    def __repr__(self):
+        return f'<Teams {self.id}>'
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "equipo": self.nombre_equipo,
+            "fecha_registro": self.fecha_registro,
+            "id_user": self.id_user
+            # do not serialize the password, its a security breach
+        }
 
 
 class TokenBlockedList(db.Model):
