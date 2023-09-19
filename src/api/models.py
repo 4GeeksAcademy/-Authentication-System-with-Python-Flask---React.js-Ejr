@@ -51,7 +51,7 @@ class Events(db.Model):
     costo = db.Column(db.Integer, unique=False, nullable=False)
     id_user = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     teams = db.relationship('Teams', secondary=events_teams, lazy='subquery',
-        backref=db.backref('eventss', lazy=True))
+        backref=db.backref('events', lazy=True))
 
 class Teams(db.Model):
     __tablename__ = "teams"

@@ -17,8 +17,9 @@ const RegistrarOrganizadores = () => {
             longDescription: "",
             rules: "",
             registrationDate: "",
-            registrationStatus: ""
-
+            registrationStatus: "",
+            registrationFee:"",
+            contactInformation:""
         },
         {
             id: 2,
@@ -33,7 +34,9 @@ const RegistrarOrganizadores = () => {
             longDescription: "",
             rules: "",
             registrationDate: "",
-            registrationStatus: ""
+            registrationStatus: "",
+            registrationFee:"",
+            contactInformation:""
 
         },
 
@@ -50,7 +53,9 @@ const RegistrarOrganizadores = () => {
             longDescription: "",
             rules: "",
             registrationDate: "",
-            registrationStatus: ""
+            registrationStatus: "",
+            registrationFee:"",
+            contactInformation:""
         },
     ];
     const [selectedEvent, setSelectedEvent] = useState(teamsData[0]);
@@ -162,68 +167,68 @@ const RegistrarOrganizadores = () => {
                                 </div>
                                 <div className="row">
                                     <form className="form-floating">
-                                        <input type="text" className="form-control" id="eventDate" placeholder="Fecha de inicio" value={selectedEvent.startDate} />
+                                        <input onChange={(e) => handleChange(e, "startDate")} type="text" className="form-control" id="eventDate" placeholder="Fecha de inicio" value={selectedEvent.startDate} />
                                         <label for="eventDate">Fecha de inicio:</label>
                                     </form>
                                 </div>
                                 <div className="row">
                                     <form className="form-floating">
-                                        <input type="text" className="form-control" id="eventDate" placeholder="fecha final" value={selectedEvent.endtDate} />
+                                        <input onChange={(e) => handleChange(e, "endDate")} type="text" className="form-control" id="eventDate" placeholder="fecha final" value={selectedEvent.endDate} />
                                         <label for="eventDate">Fecha de final:</label>
                                     </form>
                                 </div>
                                 <div className="row">
                                     <form className="form-floating">
-                                        <input type="text" className="form-control" id="eventLocation" placeholder="Location" value={selectedEvent.location} />
+                                        <input onChange={(e) => handleChange(e, "location")} type="text" className="form-control" id="eventLocation" placeholder="Location" value={selectedEvent.location} />
                                         <label for="eventName">Location:</label>
                                     </form>
 
                                 </div>
                                 <div className="row">
                                     <form className="form-floating">
-                                        <input type="text" className="form-control" id="eventLogo" placeholder="Logo" value={selectedEvent.logo} />
+                                        <input onChange={(e) => handleChange(e, "logo")} type="text" className="form-control" id="eventLogo" placeholder="Logo" value={selectedEvent.logo} />
                                         <label for="eventName">Logo:</label>
                                     </form>
 
                                 </div>
                                 <div className="row">
                                     <form className="form-floating">
-                                        <input type="text" className="form-control" id="eventDecriptionLong" placeholder="Descripcion larga" value={selectedEvent.longDescription} />
+                                        <input onChange={(e) => handleChange(e, "longDescription")} type="text" className="form-control" id="eventDecriptionLong" placeholder="Descripcion larga" value={selectedEvent.longDescription} />
                                         <label for="eventDescriptionLong">Descripcion larga:</label>
                                     </form>
 
                                 </div>
                                 <div className="row">
                                     <form className="form-floating">
-                                        <input type="text" className="form-control" id="eventRule" placeholder="Reglas" value={selectedEvent.rules} />
+                                        <input onChange={(e) => handleChange(e, "rules")} type="text" className="form-control" id="eventRule" placeholder="Reglas" value={selectedEvent.rules} />
                                         <label for="eventRule">Reglas:</label>
                                     </form>
 
                                 </div>
                                 <div className="row">
                                     <form className="form-floating">
-                                        <input type="text" className="form-control" id="eventLimiteDate" placeholder="Fecha limite" value={selectedEvent.endDateDate} />
+                                        <input onChange={(e) => handleChange(e, "registrationDate")} type="text" className="form-control" id="eventLimiteDate" placeholder="Fecha limite" value={selectedEvent.registrationDate} />
                                         <label for="eventLimiteDate">Fecha limite:</label>
                                     </form>
 
                                 </div>
                                 <div className="row">
                                     <form className="form-floating">
-                                        <input type="text" className="form-control" id="eventStatusRegister" placeholder="Status del registro" value={selectedEvent.registrationStatus} />
+                                        <input onChange={(e) => handleChange(e, "registrationStatus")} type="text" className="form-control" id="eventStatusRegister" placeholder="Status del registro" value={selectedEvent.registrationStatus} />
                                         <label for="eventStatusRegister">Status del registro:</label>
                                     </form>
 
                                 </div>
                                 <div className="row">
                                     <form className="form-floating">
-                                        <input type="text" className="form-control" id="eventContactData" placeholder="Datos de contacto" value={selectedEvent.name} />
+                                        <input onChange={(e) => handleChange(e, "contactInformation")} type="text" className="form-control" id="eventContactData" placeholder="descriptionDate" value={selectedEvent.contactInformation} />
                                         <label for="eventContacData">Datos de contacto:</label>
                                     </form>
 
                                 </div>
                                 <div className="row">
                                     <form className="form-floating">
-                                        <input type="text" className="form-control" id="eventCost" placeholder="Costo de inscripcion" value={selectedEvent.name} />
+                                        <input input onChange={(e) => handleChange(e, "registrationFee")} type="text" className="form-control" id="eventCost" placeholder="Costo de inscripcion" value={selectedEvent.registrationFee} />
                                         <label for="eventCost">Costo de inscripcion:</label>
                                     </form>
 
