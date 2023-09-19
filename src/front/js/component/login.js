@@ -15,8 +15,6 @@ function LoginForm() {
     //Si existe un token está iniciada la sesión
     if(store.accessToken){
       //ir a la página de los datos del usuario
-      //console.log("IR A DEMO", store.accessToken)
-      //navigate("/demo")
       navigate("/perfil")
     }
   }, [store.accessToken])
