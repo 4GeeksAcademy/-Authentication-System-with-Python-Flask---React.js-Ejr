@@ -3,10 +3,10 @@ import '../../styles/nextEvent.css'
 const nextEvent = () => {
   return (
     <div id="nextEventWrapper">
-      <div id="titul" className="col-6">
-        <h1 >Eventos</h1>
-        <div className="divider divider-default m-3"></div>
-      </div>
+     <div style={{ textAlign: "center" }} className="col-12">
+            <h1>Eventos</h1>
+            <div className="divider divider-default m-3"></div>
+          </div>
       <div id="header" className="card">
         <div className="card-body">
           <div className="row">
