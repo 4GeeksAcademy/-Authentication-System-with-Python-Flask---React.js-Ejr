@@ -13,9 +13,8 @@ export const Home = () => {
 	return (
 		<div className="text-center">
 			<IntroView />
-			<LearnView />
-			<AboutUs />
-			<MembershipPlans />
+		
+			{/* <MembershipPlans /> */}
 			{/* <h1>Hello Rigo!!</h1>
 			<p>
 				<img src={rigoImageUrl} />
