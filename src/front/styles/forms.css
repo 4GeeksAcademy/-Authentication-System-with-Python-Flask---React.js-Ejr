@@ -7,6 +7,8 @@
 */
 
 .createaccountform{
+    margin-top: 30px;
+    margin-bottom: 50px;
     border: 1px solid;
     padding: 30px;
     border-radius: 30px;
@@ -19,4 +21,10 @@
 
 .loginbtn{
     background-color: #b3d6a3;
+}
+
+.form-control{
+    border-radius: 30px;
+    border-color: black;
+    box-shadow: 2px 2px 5px;
 }
