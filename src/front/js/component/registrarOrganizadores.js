@@ -1,9 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import '../../styles/accountpage.css'
 import "../../styles/registrarOrganizadores.css";
 const RegistrarOrganizadores = () => {
-
-    console.log("alfsdjasld")
 
     const teamsData = [
         {
@@ -11,23 +9,69 @@ const RegistrarOrganizadores = () => {
             name: 'JAM ON IT',
             country: 'Colombia',
             registrationDate: '13/11/2023',
-            endDay: '16/11/2023',
+            endDate: '16/11/2023',
+            shortDescription: "",
+            startDate: "",
+            location: "",
+            logo: "",
+            longDescription: "",
+            rules: "",
+            registrationDate: "",
+            registrationStatus: "",
+            registrationFee:"",
+            contactInformation:""
         },
         {
             id: 2,
             name: 'The Last Game',
             country: 'Las Vegas',
             registrationDate: '13/11/2024',
-            endDay: '16/11/2024',
+            endDate: '16/11/2023',
+            shortDescription: "",
+            startDate: "",
+            location: "",
+            logo: "",
+            longDescription: "",
+            rules: "",
+            registrationDate: "",
+            registrationStatus: "",
+            registrationFee:"",
+            contactInformation:""
+
         },
+
         {
             id: 3,
             name: 'Costa Rica tournament',
             country: 'Costa Rica',
-            registrationDate: '13/11/2025',
-            endDay: '16/11/2025',
+            registrationDate: '13/11/2024',
+            endDate: '16/11/2023',
+            shortDescription: "",
+            startDate: "",
+            location: "",
+            logo: "",
+            longDescription: "",
+            rules: "",
+            registrationDate: "",
+            registrationStatus: "",
+            registrationFee:"",
+            contactInformation:""
         },
     ];
+    const [selectedEvent, setSelectedEvent] = useState(teamsData[0]);
+    const handleEdit = (e) => {
+        setSelectedEvent(teamsData.find(t => t.id == e.target.id))
+    }
+
+    const deleteTodo = (id) => {
+        const newTodos = todoArray.filter(todo => todo.id == id)
+        setTodoArrays(newTodos)
+    }
+    const handleChange = (e, propertyName) => {
+        const currentEvent = Object.assign({}, selectedEvent);
+        currentEvent[propertyName] = e.target.value;
+        setSelectedEvent(currentEvent)
+    }
     return (
         <div className="fatherBody">
             <div className="row">
@@ -43,7 +87,7 @@ const RegistrarOrganizadores = () => {
             <table className="table align-middle mb-0 bg-white" id='teamstable'>
                 <thead className="bg-light">
                     <tr>
-                        <th>Nombre del equipo</th>
+                        <th>Nombre del Evento</th>
                         <th>País</th>
                         <th>Fecha de registro</th>
                         <th>Costo</th>
@@ -73,15 +117,23 @@ const RegistrarOrganizadores = () => {
                             <td>{team.cost}</td>
                             <td>
                                 <td>
-                                    <button className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                                        Editar
-                                    </button>
-                                    <button className="btn btn-primary">
-                                        Eliminar
-                                    </button>
-                                    <button className="btn btn-primary">
-                                        Participantes
-                                    </button>
+                                    <div className="row">
+                                        <div className="col-4">
+                                            <button id={team.id} onClick={(e) => handleEdit(e)} className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                                Editar
+                                            </button>
+                                        </div>
+                                        <div className="col-4">
+                                            <button className="btn btn-primary" onClick={() => deleteTodo(team.id)}>
+                                                Eliminar
+                                            </button>
+                                        </div>
+                                        <div className="col-4">
+                                            <button className="btn btn-primary">
+                                                Participantes
+                                            </button>
+                                        </div>
+                                    </div>
                                 </td>
                             </td>
                         </tr>
@@ -93,20 +145,101 @@ const RegistrarOrganizadores = () => {
                 <div className="modal-dialog">
                     <div className="modal-content">
                         <div className="modal-header">
-                            <h5 className="modal-title" id="staticBackdropLabel">Modal title</h5>
+                            <h5 className="modal-title" id="staticBackdropLabel">Editar</h5>
                             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div className="modal-body">
                             <div className="row">
-                                <div className="col">
+                                <div className="row">
+                                    <form className="form-floating">
+                                        <input onChange={(e) => handleChange(e, "name")} type="text" className="form-control" id="eventName" placeholder="nombre" value={selectedEvent.name} />
+                                        <label for="eventName">Nombre:</label>
+                                    </form>
 
                                 </div>
+                                <div className="row">
+
+                                    <form className="form-floating">
+                                        <input onChange={(e) => handleChange(e, "shortDescription")} type="text" className="form-control" id="eventDescription" placeholder="nombre" value={selectedEvent.shortDescription} />
+                                        <label for="eventDescription">Descripcion corta:</label>
+                                    </form>
+
+                                </div>
+                                <div className="row">
+                                    <form className="form-floating">
+                                        <input onChange={(e) => handleChange(e, "startDate")} type="text" className="form-control" id="eventDate" placeholder="Fecha de inicio" value={selectedEvent.startDate} />
+                                        <label for="eventDate">Fecha de inicio:</label>
+                                    </form>
+                                </div>
+                                <div className="row">
+                                    <form className="form-floating">
+                                        <input onChange={(e) => handleChange(e, "endDate")} type="text" className="form-control" id="eventDate" placeholder="fecha final" value={selectedEvent.endDate} />
+                                        <label for="eventDate">Fecha de final:</label>
+                                    </form>
+                                </div>
+                                <div className="row">
+                                    <form className="form-floating">
+                                        <input onChange={(e) => handleChange(e, "location")} type="text" className="form-control" id="eventLocation" placeholder="Location" value={selectedEvent.location} />
+                                        <label for="eventName">Location:</label>
+                                    </form>
+
+                                </div>
+                                <div className="row">
+                                    <form className="form-floating">
+                                        <input onChange={(e) => handleChange(e, "logo")} type="text" className="form-control" id="eventLogo" placeholder="Logo" value={selectedEvent.logo} />
+                                        <label for="eventName">Logo:</label>
+                                    </form>
+
+                                </div>
+                                <div className="row">
+                                    <form className="form-floating">
+                                        <input onChange={(e) => handleChange(e, "longDescription")} type="text" className="form-control" id="eventDecriptionLong" placeholder="Descripcion larga" value={selectedEvent.longDescription} />
+                                        <label for="eventDescriptionLong">Descripcion larga:</label>
+                                    </form>
+
+                                </div>
+                                <div className="row">
+                                    <form className="form-floating">
+                                        <input onChange={(e) => handleChange(e, "rules")} type="text" className="form-control" id="eventRule" placeholder="Reglas" value={selectedEvent.rules} />
+                                        <label for="eventRule">Reglas:</label>
+                                    </form>
+
+                                </div>
+                                <div className="row">
+                                    <form className="form-floating">
+                                        <input onChange={(e) => handleChange(e, "registrationDate")} type="text" className="form-control" id="eventLimiteDate" placeholder="Fecha limite" value={selectedEvent.registrationDate} />
+                                        <label for="eventLimiteDate">Fecha limite:</label>
+                                    </form>
+
+                                </div>
+                                <div className="row">
+                                    <form className="form-floating">
+                                        <input onChange={(e) => handleChange(e, "registrationStatus")} type="text" className="form-control" id="eventStatusRegister" placeholder="Status del registro" value={selectedEvent.registrationStatus} />
+                                        <label for="eventStatusRegister">Status del registro:</label>
+                                    </form>
+
+                                </div>
+                                <div className="row">
+                                    <form className="form-floating">
+                                        <input onChange={(e) => handleChange(e, "contactInformation")} type="text" className="form-control" id="eventContactData" placeholder="descriptionDate" value={selectedEvent.contactInformation} />
+                                        <label for="eventContacData">Datos de contacto:</label>
+                                    </form>
+
+                                </div>
+                                <div className="row">
+                                    <form className="form-floating">
+                                        <input input onChange={(e) => handleChange(e, "registrationFee")} type="text" className="form-control" id="eventCost" placeholder="Costo de inscripcion" value={selectedEvent.registrationFee} />
+                                        <label for="eventCost">Costo de inscripcion:</label>
+                                    </form>
+
+                                </div>
+
                             </div>
-                            ...
+
                         </div>
                         <div className="modal-footer">
                             <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" className="btn btn-primary">Understood</button>
+                            <button type="button" className="btn btn-primary">Cambiar</button>
                         </div>
                     </div>
                 </div>
@@ -116,4 +249,6 @@ const RegistrarOrganizadores = () => {
     );
 }
 
-export default RegistrarOrganizadores
+export default RegistrarOrganizadores;
+
+

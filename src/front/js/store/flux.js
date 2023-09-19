@@ -202,6 +202,35 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}catch(error){
 					console.log("Error al solicitar los datos", error)
 				}
+      },
+			logout: async () => {
+				const { apiFetchProtected } = getActions();
+
+				try {
+					// Llama a la API de logout protegida utilizando apiFetchProtected
+					const resp = await apiFetchProtected("/logout", "POST"); 
+
+					if (resp.code === 200) {
+						// Borra el token de acceso del almacenamiento local
+						localStorage.removeItem("accessToken");
+
+						// Borra el token de acceso del estado global
+						const store = getStore();
+						store.accessToken = null;
+						setStore(store);
+
+						// Redirige al usuario a la página de inicio de sesión
+						navigate('/'); 
+					} else {
+						// Maneja el caso en el que la API de logout devuelva un código de error
+						console.error("Error al realizar logout:", resp);
+						// Puedes mostrar un mensaje de error o realizar otra acción aquí
+					}
+				} catch (error) {
+					console.error("Error al realizar logout:", error);
+					// Maneja el caso en el que ocurra un error en la llamada a la API
+					// Puedes mostrar un mensaje de error o realizar otra acción aquí
+				}
 			}
 		}
 	};

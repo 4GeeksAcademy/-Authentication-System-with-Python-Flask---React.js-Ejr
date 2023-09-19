@@ -105,7 +105,7 @@ def handle_hello():
     }
 
     return jsonify(response_body), 200
-
+  
 @api.route('/newevent', methods=['POST'])
 def create_event():
     #recibir datos del evento

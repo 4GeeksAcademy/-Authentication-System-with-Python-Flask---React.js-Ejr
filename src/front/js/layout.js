@@ -20,6 +20,7 @@ import Registrarse from "./component/registrarse";
 import Organizadores from "./pages/organizadores";
 //import UserProfile from "./pages/perfil";
 import TeamList from "./pages/equiposparticipantes";
+import UserPage from "./pages/perfil";
 import PerfilOrganizador from "./pages/perfilorganizador";
 import RegistroDeOrganizadores from "./pages/registrarOrganizadores";
 
@@ -49,6 +50,7 @@ const Layout = () => {
                         <Route element={<NextEvent />} path="/nextEvent" />
                         <Route element={<Registrarse />} path="/registrarse" />
                         <Route element={<Organizadores />} path="/organizadores" />
+                        <Route element={<PerfilOrganizador />} path="/perfilorganizador" />
                         <Route element={<Perfil />} path="/perfil" />
                         <Route element={<RegistroDeOrganizadores />} path="/registrarorganizadores" />
                     </Routes>

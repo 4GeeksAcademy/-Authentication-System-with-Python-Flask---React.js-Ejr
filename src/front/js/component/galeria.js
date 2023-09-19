@@ -31,7 +31,7 @@ const Galeria = () => {
             </div>
           </div>
           <div className="col-3 mt-1">
-            <img id="image"
+            <img  id="image12"
               src={basket12}
 
               alt="Gallery image 1"
@@ -39,7 +39,7 @@ const Galeria = () => {
             />
           </div>
           <div className="col-3 mt-1">
-            <img id="image"
+            <img  id="image13"
               src={basket13}
 
               alt="Gallery image 1"
@@ -47,7 +47,7 @@ const Galeria = () => {
             />
           </div>
           <div className="col-3 mt-1">
-            <img id="image"
+            <img id="image14"
               src={basket14}
 
               alt="Gallery image 1"
