@@ -32,7 +32,7 @@ def handle_hello():
 @api.route('/preference', methods=['POST'])
 def preference():
     body = json.loads(request.data)
-
+    precio = body["precio"]
     
     # Crea un ítem en la preferencia
     preference_data = {
@@ -40,7 +40,7 @@ def preference():
             {
                 "title": "Componentify",
                 "quantity": 1,
-                "unit_price": 10,
+                "unit_price": precio,
             }
         ],
         "payer":{
