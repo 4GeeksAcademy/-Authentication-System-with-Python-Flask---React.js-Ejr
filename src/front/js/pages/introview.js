@@ -4,7 +4,7 @@ import "../../styles/home.css";
 
 const IntroView = () => {
   return (
-<div className="container-fluid fondo-difuminado" style={{ marginBottom: '105px' }} >
+<div className="container-fluid fondo-difuminado" style={{ marginBottom: '105rem' }} >
 <div className="context">
 
 <div className="area" >
