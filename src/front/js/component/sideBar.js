@@ -25,7 +25,7 @@ export const SideBar = () => {
 		{
 			title: 'Buttons',
 			description: 'Various button styles',
-			path: "buttons"
+			path: "button"
 		},
 		{
 			title: 'Button Groups',
@@ -121,7 +121,7 @@ export const SideBar = () => {
 	}
 
 	return (
-		<div className="col-2 rounded m-3" style={{backgroundColor: "rgb(255,243,218)"}}>
+		<div className="col-2 rounded mt-3" style={{backgroundColor: "rgb(255,243,218)"}}>
 
 			<nav className="nav flex-column mt-3">
 			<h5 className="fw-medium" style={{fontSize: '1.1rem'}}>

@@ -1,4 +1,5 @@
 import React from "react";
+import { SideBar } from "../component/sideBar"
 
 
 
@@ -16,7 +17,7 @@ export const ButtonView = () => {
 
 
       <div className="row">
-
+      <SideBar />
 
         <div className="col-2">
           <div className="container border border-secondary-subtle px-4 py-4 rounded shadow p-3 mb-5 bg-body-tertiary rounded">
@@ -117,7 +118,7 @@ export const ButtonView = () => {
 
         </div>
 
-        <div className="col-8">
+        <div className="col-6">
           <div className="container border border-secondary-subtle  py-4 rounded shadow p-3 mb-5 bg-body-tertiary rounded">
 
 
