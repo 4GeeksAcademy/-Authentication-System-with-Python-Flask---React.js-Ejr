@@ -37,31 +37,6 @@
     width: 95%;
     height: 45%;
 }
-.button {
-    width: 30px;
-    height: 30px;
-    font-size: 20px;
-    cursor: pointer;
-    text-align: center;
-    border: 1px solid #ccc;
-    background-color: #fff;
-}
-ul {
-    list-style-type: none;
-    padding: 0;
-}
-li {
-    margin: 5px 0;
-    display: flex;
-    align-items: center;
-}
-.task {
-    flex-grow: 1;
-}
-.delete-button {
-    background-color: #ff0000;
-    color: #fff;
-    border: none;
-    padding: 5px 10px;
-    cursor: pointer;
-}
+
+
+
