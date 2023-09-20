@@ -1,3 +1,108 @@
 /* 
     General Styles used on every website (Don't Repeat Yourself)
 */
+
+/* 
+    For all the elements same font family
+*/
+
+* {
+    font-family: "inria serif";
+}
+
+/* 
+    For the horizontal line
+*/
+
+.bold-hr {
+    border-width: 1px;
+    border-style: solid;
+    border-color: black;
+}
+
+/* 
+    For friends view
+*/
+
+
+.friends_box {
+    margin-bottom: 30px;
+    padding:24px;
+    border: 1px solid black;
+    box-shadow: 10px 10px 20px rgba(0,0,0,0.2);
+    border-radius: 40px;
+}
+
+.ms-n5 {
+    margin-left: -40px;
+}
+
+/* 
+    For wishlist view
+*/
+
+.card_wishlist {
+    border: none;
+    margin-left: 10px;
+    
+}
+
+.vertical-line {
+    border-left: 1px solid black;
+  }
+
+
+/* 
+    For ProfileSettings view
+*/
+
+
+h4 {
+    font-size: 30px;
+    font-weight: bold;
+    color: black;
+    padding-bottom: 10px;
+  }
+  
+
+  .nav-link {
+    font-weight: bold;
+    color: black;
+    margin-top: 10px;
+  }
+  
+  /* 
+    For Footer
+*/
+
+footer {
+    background-color: #d9d9d9;
+}
+
+  /* 
+    For carousel
+*/
+#custom-next-button.custom-carousel-control-next {
+    color: black !important;
+    background-color: transparent; 
+    border: none; 
+    font-size: 24px; 
+    line-height: 1; 
+}
+
+ /* 
+    public profile image
+*/
+
+.custom-position {
+    position: absolute;
+    top: 50%;
+    left: 13%; /* Adjust this value to position it between center and left */
+    transform: translate(-50%, -50%);
+  }
+  
+  
+  
+  
+  
+  

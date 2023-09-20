@@ -6,10 +6,18 @@ import { BackendURL } from "./component/backendURL";
 import { Home } from "./pages/home";
 import { Demo } from "./pages/demo";
 import { Single } from "./pages/single";
+import { ProfileSettings } from "./pages/ProfileSettings";
+import { Wishlist } from "./pages/Wishlist";
+import { Friends } from "./pages/Friends";
+import { PublicProfile } from "./pages/PublicProfile";
 import injectContext from "./store/appContext";
 
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
+import { BookCarousel } from "./component/BookCarousel";
+import { TargetCard } from "./component/targetCard";
+import { ProfileOne } from "./component/ProfileOne";
+import { ProfileTwo } from "./component/ProfileTwo";
 
 //create your first component
 const Layout = () => {
@@ -28,6 +36,14 @@ const Layout = () => {
                         <Route element={<Home />} path="/" />
                         <Route element={<Demo />} path="/demo" />
                         <Route element={<Single />} path="/single/:theid" />
+                        <Route element={<ProfileSettings />} path="/ProfileSettings" />
+                        <Route element={<Wishlist />} path="/Wishlist" />
+                        <Route element={<Friends />} path="/Friends" />
+                        <Route element={<PublicProfile />} path="/PublicProfile" />
+                        <Route element={<BookCarousel />} path="/carousel" />
+                        <Route element={<TargetCard />} path="/targetCard" />
+                        <Route element={<ProfileOne />} path="/profileOne" />
+                        <Route element={<ProfileTwo />} path="/profileTwo" />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
                     <Footer />
