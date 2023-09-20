@@ -4,14 +4,15 @@ import { useNavigate } from "react-router-dom";
 import { Context } from "../../store/appContext";
 
 const Login = () => {
-  
-  
   const { store, actions } = useContext(Context);
   const navigate = useNavigate();
 
   return (
     <div className="container shadow my-5 rounded p-3">
-      <form className="form" onSubmit={(e) => actions.handleSubmitLogin(e, navigate)}>
+      <form
+        className="form"
+        onSubmit={(e) => actions.handleSubmitLogin(e, navigate)}
+      >
         <div className="container">
           <label htmlFor="logForm" className="text-dark">
             Email
@@ -22,7 +23,7 @@ const Login = () => {
             id="correo"
             placeholder="Email"
             name="email"
-            value={store.currentUser ? store.currentUser.email : '' }
+            value={store.currentUser ? store.currentUser.email : ""}
             onChange={actions.handleChangeLogin}
             autoComplete="off"
           />
@@ -37,7 +38,7 @@ const Login = () => {
             id="inputPassword2"
             placeholder="Password"
             name="password"
-            value={store.currentUser ? store.currentUser.password: ''}
+            value={store.currentUser ? store.currentUser.password : ""}
             onChange={actions.handleChangeLogin}
           />
         </div>

@@ -14,7 +14,7 @@ from flask_sqlalchemy import SQLAlchemy
 
 api = Blueprint('api', __name__)
 
-# -----<listar todos los udiarios >------------------------------------------------------------
+# -----<listar todos los udiarios >------------------------------------------------------>
 @api.route('/usuarios', methods=['POST', 'GET'])
 def home():
     users = User.query.all()
@@ -25,9 +25,9 @@ def home():
     }), 200
 
 
-# ------< registrar usuario >------------------------------------------------------------------
+# ------< registrar usuario >------------------------------------------------------------>
 
-@api.route('/register_user', methods=['POST'])
+@api.route('/register', methods=['POST'])
 def user_register():
     print(request.get_json())
     name = request.json.get("name")
@@ -85,8 +85,7 @@ def update_user(id):
     return jsonify({
         "msg": "User updated", "user":user.serialize()
     }), 200
-    
-    
+        
 @api.route('delete_user/<int:id>', methods=['DELETE'])
 @jwt_required()
 def delete_user(id):
@@ -96,8 +95,8 @@ def delete_user(id):
     return jsonify({"msg": "User has been deleted", "user": {}}), 200
 
 
-#-----< Login User >-------------------------------------------------------------------
-@api.route('/login_user', methods=['POST'])
+#-----< Login User >------------------------------------------------------------------->
+@api.route('/login', methods=['POST'])
 def login():
     # data = request.get_json()
     email = request.json.get("email")
@@ -134,7 +133,7 @@ def login():
     return jsonify(data), 200
 
 
-# -----< generando ruta privada >---------------------------------------->
+# -----< generando ruta privada >----------------------------------------------------->
 
 @api.route('/profile', methods=['POST'])
 @jwt_required()
@@ -173,7 +172,6 @@ def get_books():
                 "data": books
             }), 200
 
-
 @api.route('/books/<int:id>', methods=['PUT'])
 @jwt_required()
 def update_book(id):
@@ -189,8 +187,7 @@ def update_book(id):
     book.photo = data['photo'] if data['photo'] else book.photo
     book.update()
     
-    return jsonify({"message": "book updated", "book": book.serielize()})
-
+    return jsonify({"message": "book updated", "book": book.serialize()})
 
 @api.route('/books/<int:id>', methods=['DELETE'])
 @jwt_required()
@@ -202,7 +199,7 @@ def delete_book(id):
     
     return jsonify({"message": "book deleted", "book": {}}), 200
     
-# ------------<  cloudinary >--------------------------------
+# ------------<  cloudinary >------------------------------------------------------------
 
 #-------------< CARGAR IMAGENES >-------------------------------------------------
 @api.route('/image_upload', methods=['POST'])
@@ -237,7 +234,6 @@ def upload_image_route():
 
     return jsonify(gallery.serialize()), 201
 
-
 @api.route('/image_get', methods=['GET'])
 @jwt_required()
 def image():
@@ -263,15 +259,13 @@ def image_update(id):
     img.update()
     
     return jsonify({"message": "img updated", "img": img.serielize()})
-
     
-#-----< MENSAJES >---------------------------------------------------------
-
+#-----< MENSAJES >-----------------------------------------------------------------------------------------
 # el modelo solo pide: el mensaje, el id del que envia, y el id dl que recibe
 
 @api.route("/messages", methods=['GET', 'POST'])
 @api.route("/messages/<int:id>", methods=['GET','POST'])
-# @jwt_required()
+@jwt_required()
 def messages(id = None):
     if request.method == 'GET':
         
@@ -301,7 +295,7 @@ def messages(id = None):
         
         return jsonify(msg.serialize()), 201
 @api.route('/messages_update/<int:id>', methods=['PUT'])
-# @jwt_required()
+@jwt_required()
 def message_update(id):
     
     data = request.get_json()
@@ -319,7 +313,6 @@ def message_update(id):
     }), 200
 
     
-    
 @api.route('messages_delete/<int:id>', methods=['DELETE'])
 @jwt_required()
 def message_delete(id):
@@ -327,42 +320,8 @@ def message_delete(id):
     message.delete()
     
     return jsonify({"msg": "Message has been deleted", "Message": {}}), 200
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-        
-    
-    
-    if request.method == 'DELETE':
-        pass
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
+
             #message = Message().find_by_id(id=id, user_id=current_identity.user["sub"])
 # def send_message():
 #     if request.method != "POST":
@@ -370,7 +329,3 @@ def message_delete(id):
 #     message=request.form["message"]
 #     receiverId=request.form["receiverID"]
 #     print("Message:",message,"Receiver ID:",receiverId,type(receiverId))
-
-
-
-    

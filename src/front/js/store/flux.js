@@ -1,7 +1,6 @@
 const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
-      
       users: [],
       newUser: {
         id: "",
@@ -12,11 +11,10 @@ const getState = ({ getStore, getActions, setStore }) => {
         rep_password: "",
         region: "",
       },
-      
+
       url: "http://localhost:3001",
 
       currentUser: [],
-      
     },
 
     actions: {
@@ -57,10 +55,9 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.log(error);
         }
       },
-//----------< Login usuario >---------------------------------------------->
+      //----------< Login usuario >---------------------------------------------->
 
-
-//---- funcion para  login  de usuario------------------------------------------->
+      //---- funcion para  login  de usuario------------------------------------------->
       handleSubmitLogin: async (e, navigate) => {
         e.preventDefault();
         try {

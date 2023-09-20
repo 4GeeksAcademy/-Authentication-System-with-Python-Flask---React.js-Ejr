@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
 import { BackendURL } from "./component/backendURL";
@@ -32,7 +33,7 @@ import ProfileUser from "./pages/ProfileUser";
 
 //create your first component
 const Layout = () => {
-  const basename = process.env.BASENAME || "";
+  const basename = process.env.BASENAME || "/";
   const [useAlternateNavbar, setUseAlternateNavbar] = useState(false); // Estado para controlar el Navbar alternativo
 
   if (!process.env.BACKEND_URL || process.env.BACKEND_URL == "")
@@ -40,7 +41,7 @@ const Layout = () => {
 
   return (
     <div>
-      <BrowserRouter basename={basename}>
+      <BrowserRouter>
         <ScrollToTop>
           <Routes>
             <Route element={<Dashboard />} path="dashboard" />
@@ -62,16 +63,10 @@ const Layout = () => {
             />
             <Route element={<ComoDonar />} path="/comoDonar" />
             <Route element={<BookReviews />} path="/bookreviews" />
-            <Route element={<Login />} path="login" />
+            <Route element={<FormularioRegistro />} path="/registro" />
+            <Route element={<Login />} path="/login" />
             <Route element={<Intercambio />} path="/intercambio" />
             <Route element={<ProfileUser />} path="/profile" />
-
-            {/* REGISTRO */}
-
-            <Route
-              path="/formularioRegistro"
-              element={<FormularioRegistro />}
-            />
             <Route element={<h1>Not found!</h1>} />
           </Routes>
           <Footer />

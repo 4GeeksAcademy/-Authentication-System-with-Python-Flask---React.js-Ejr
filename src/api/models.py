@@ -16,7 +16,6 @@ class User(db.Model):
     # roles = db.relationship('Role', secondary=roles_users)
     # is_active = db.Column(db.Boolean(), unique=False, nullable=False)
 
-
     def serialize(self):
         return {
             "id": self.id,
@@ -120,10 +119,8 @@ class Message(db.Model):
             "date": self.date,
             "user_from":self.user_from.serialize(),
             "user_to":self.user_to.serialize()
-            
-            
+
         }
-    
             
     def save(self):
         db.session.add(self)
