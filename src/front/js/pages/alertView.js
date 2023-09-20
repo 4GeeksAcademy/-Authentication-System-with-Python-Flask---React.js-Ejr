@@ -3,6 +3,7 @@ import "../../styles/global.css"
 import "./global.js"
 
 
+
 const AlertView = () => {
 
     return (
