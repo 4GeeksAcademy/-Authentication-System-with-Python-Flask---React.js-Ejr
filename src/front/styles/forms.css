@@ -1,0 +1,30 @@
+/*
+    create_account.css: This website contains selectors only used in create_account.css
+
+    All pages share the styles on index.css but you should create 
+    one more css for each page that will contain the selected used 
+    on that page only (the ones not reused in other pages).
+*/
+
+.createaccountform{
+    margin-top: 30px;
+    margin-bottom: 50px;
+    border: 1px solid;
+    padding: 30px;
+    border-radius: 30px;
+    box-shadow: 5px 5px 10px;
+}
+
+.createaccountbtn{
+    background-color: #f1844a;
+}
+
+.loginbtn{
+    background-color: #b3d6a3;
+}
+
+.form-control{
+    border-radius: 30px;
+    border-color: black;
+    box-shadow: 2px 2px 5px;
+}

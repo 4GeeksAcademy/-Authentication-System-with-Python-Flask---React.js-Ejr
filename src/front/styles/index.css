@@ -106,3 +106,11 @@ footer {
   
   
   
+/* GENERIC CODE */
+p{
+    font-size: 17px;
+}
+
+.navbar {
+    vertical-align: middle;
+  }

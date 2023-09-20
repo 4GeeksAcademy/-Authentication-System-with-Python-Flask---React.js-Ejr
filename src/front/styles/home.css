@@ -5,3 +5,51 @@
     one more css for each page that will contain the selected used 
     on that page only (the ones not reused in other pages).
 */
+
+/* HOME CODE */
+.ourcommunity{
+    height: 300px;
+}
+
+.communitylist{
+    padding-right: 30px;
+}
+
+li{
+    margin: 0.5em;
+}
+
+p{
+    font-size: 18px;
+}
+
+/* BUTTONS CODE */
+.signup{
+    background-color: #f1844a;
+    margin: 0;
+}
+
+.login{
+    background-color: #b3d6a3;
+}
+
+/* JUMBOTRON CODE */
+.jumbotron {
+    background-image: url(https://images.pexels.com/photos/683929/pexels-photo-683929.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2);
+    background-size: cover;
+    padding-top: 100px;
+    text-shadow: 2px 2px 5px #ffffff;
+    height: 500px;
+    align-items: center;
+}
+
+.rowjumbo{
+    margin-left: 50px;
+}
+
+/* INTRO CODE */
+.intro {
+    padding-top: 40px;
+}
+
+
