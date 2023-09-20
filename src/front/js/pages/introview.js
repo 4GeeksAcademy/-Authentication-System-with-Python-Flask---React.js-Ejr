@@ -1,10 +1,19 @@
 import React from 'react';
 import ComponentifyLogoOrange from "../../img/componentify-logo-orange.png";
 import "../../styles/home.css";
+import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 const IntroView = () => {
+
+    const textToCopy = '¡Texto para copiar!';
+  
+    const handleCopy = () => {
+      // Aquí puedes agregar lógica adicional después de copiar el texto
+      console.log('¡Texto copiado al portapapeles!');
+    };
+  
   return (
-<div className="container-fluid fondo-difuminado" style={{ marginBottom: '105rem' }} >
+<div className="container-fluid fondo-difuminado">
 {/* <div className="context">
 <div className="area" >
             <ul class="circles">
@@ -20,8 +29,14 @@ const IntroView = () => {
                     <li></li>
             </ul>
     </div > */}
+{/* <div>
+      <CopyToClipboard text={textToCopy} onCopy={handleCopy}>
+        <button> Copiar al portapapeles</button>
+      </CopyToClipboard>
+    </div> */}
+
   <div className="d-flex align-items-center justify-content-center vh-20">
-    <div className="jumbotron-content text-center" style={{ marginTop: '100px' }}>
+    <div className="jumbotron-content text-center" style={{ marginTop: '70px' }}>
     
     <img
   src={ComponentifyLogoOrange}
@@ -33,10 +48,10 @@ const IntroView = () => {
 />
 
 
-<div className="container"  style={{ width: '100%' }}>
+<div className="container"  style={{ width: '100%', marginTop: '20px' }}>
 
       <h1 style={{ fontSize: "5rem" }}>
-        <strong>Powerful components for your website</strong>
+        <strong>Powerful components for your website with Componentify</strong>
       </h1>
 
       <p style={{ fontSize: "1.3rem", marginTop: "20px" }}>
@@ -50,17 +65,18 @@ const IntroView = () => {
         <div
        class="c-alert c-alert-fog" role="alert"
 
-          style={{ height: '60px', fontSize: '17px' }}
+          style={{ height: '60px', fontSize: '20px',  marginRight: '13px' }}
+          // onClick={copyTextToClipboard}
         >
-          $ npm i componentify 5.3.2   .
+          $ npm i componentify 5.3.2 ..
 
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
+            width="30"
+            height="30"
             fill="currentColor"
             class="bi bi-clipboard-minus"
-            viewBox="0 0 16 16"
+            viewBox="0 0 20 20"
           >
             <path
               fill-rule="evenodd"
@@ -75,22 +91,27 @@ const IntroView = () => {
           </svg>
         </div>
 
-        <a 
-          href="#learn"
-          type="button"
-          className="btn btn-info mx-1 text-white"
-          style={{
-            height: '60px',
-            display: 'flex',
-            alignItems: 'center',
-            fontSize: '19px',
-          }}
-        >
+        <a
+  href="#learn"
+  type="button"
+  className="btn custom-btn mx-1 text-white" 
+  style={{
+    height: '60px',
+    display: 'flex',
+    alignItems: 'center',
+    fontSize: '20px',
+    color: '#FD5812',
+    justifyContent: 'center', 
+    color: '#FD5812',
+    width: '200px'
+  }}
+>
+  
           <strong>
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
+              width="20"
+              height="20"
               fill="currentColor"
               className="bi bi-book-half"
               viewBox="0 0 16 16"
@@ -98,15 +119,15 @@ const IntroView = () => {
               <path
                 d="M8.5 2.687c.654-.689 1.782-.886 3.112-.752 1.234.124 2.503.523 3.388.893v9.923c-.918-.350-2.107-.692-3.287-.810-1.094-.111-2.278-.039-3.213.492V2.687zM8 1.783C7.015.936 5.587.810 4.287.940c-1.514.153-3.042.672-3.994 1.105A.5.5 0 0 0 0 2.5v11a.5.5 0 0 0 .707.455c.882-.4 2.303-.881 3.68-1.020 1.409-.142 2.59.087 3.223.877a.5.5 0 0 0 .78 0c.633-.79 1.814-1.019 3.222-.877 1.378.139 2.8.62 3.681 1.020A.5.5 0 0 0 16 13.5v-11a.5.5 0 0 0-.293-.455c-.952-.433-2.48-.952-3.994-1.105C10.413.809 8.985.936 8 1.783z"
               />
-            </svg>{' '}
-            Read the docs
+            </svg>{' '} 
+             Read the docs
           </strong>
         </a>
         </div>
       </div>
     </div>
   </div>
-  <div className="container" id="learn" style={{ marginBottom: '100px', marginTop: '100px' }}>
+  <div className="container" id="learn" style={{ marginBottom: '130px', marginTop: '150px' }}>
   <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor" class="bi bi-code-square" viewBox="0 0 16 16">
   <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
   <path d="M6.854 4.646a.5.5 0 0 1 0 .708L4.207 8l2.647 2.646a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 0 1 .708 0zm2.292 0a.5.5 0 0 0 0 .708L11.793 8l-2.647 2.646a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708 0z"/>
