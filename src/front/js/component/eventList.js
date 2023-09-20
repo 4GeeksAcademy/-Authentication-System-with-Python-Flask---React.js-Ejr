@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import '../../styles/accountpage.css'
-import "../../styles/registrarOrganizadores.css";
-const RegistrarOrganizadores = () => {
+import "../../styles/eventList.css";
+const EventList = () => {
 
     const teamsData = [
         {
@@ -249,6 +249,6 @@ const RegistrarOrganizadores = () => {
     );
 }
 
-export default RegistrarOrganizadores;
+export default EventList;
 
 
