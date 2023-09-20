@@ -1,10 +1,20 @@
-import React from 'react';
+import React, { useState, useContext, useEffect } from 'react';
+import { Context } from '../store/appContext';
 
 const MembershipPlans = () => {
+  const { store, actions } = useContext(Context)
+
+  const pagar = async () => {
+    let precio = 100
+    await actions.pagoMercadoPago(precio)
+
+    let direccion = await store.mercadoPago.init_point
+    window.location.replace(direccion)
+  }
   return (
     <div className="container" id="plans" style={{ marginBottom: '150px', marginTop: '150px' }}>
       <h1 className="my-4" style={{ fontSize: '3rem' }}>
-        <strong> Membership <span style={{"color":"#FD5812"}}>Plans</span></strong>
+        <strong> Membership <span style={{ "color": "#FD5812" }}>Plans</span></strong>
       </h1>
       <div className="row">
         <div className="col-md-4">
@@ -17,7 +27,9 @@ const MembershipPlans = () => {
               <p>Access to basic content</p>
               <p>No support</p>
               <p>No ad-free experience</p>
-              <button className="btn btn-success">Subscribe</button>
+              <button className="btn btn-success" 
+              onClick={pagar}
+              >Subscribe</button>
             </div>
           </div>
         </div>

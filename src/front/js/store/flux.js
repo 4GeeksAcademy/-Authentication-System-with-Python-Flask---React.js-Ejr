@@ -15,7 +15,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 					background: "white",
 					initial: "white"
 				}
-			]
+			],
+			mercadoPago:{}
 		},
 		actions: {
 
@@ -88,7 +89,18 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 			
-
+			//mercado Pago 
+			pagoMercadoPago:async(precio)=>{
+				try{
+					let response = await axios.post(process.env.BACKEND_URL + '/api/preference',{
+						precio:precio
+					})
+					console.log(response.data)
+					setStore({mercadoPago: response.data})
+				} catch(error){
+					console.error(error)
+				}
+			},
 			
 			
 			// Use getActions to call a function within a fuction
