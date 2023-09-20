@@ -1,4 +1,4 @@
-*{
+ /* *{
     margin: 0px;
     padding: 0px;
 } 
@@ -10,11 +10,11 @@
 }   
   
 
-/* 
+ 
 body{
     font-family: 'Exo', sans-serif; 
 
-} */
+} 
 
 .context {
     width: 100%;
@@ -22,12 +22,11 @@ body{
     top:0vh;
     
 }
-
-/* .context h1{
+ .context h1{
     text-align: center;
     color: #fff;
     font-size: 50px;
-} */
+}
 
  .area{
     background: #e4950d65;  
@@ -150,11 +149,11 @@ body{
 }  
 
 .rotate-animation {
-    animation: rotate 30s infinite; /* Agrega una animación de balanceo */
+    animation: rotate 30s infinite; 
 }
   
 .logo-intro {
-        filter: drop-shadow(0px 4px 7px rgba(0, 0, 0, 0.42)); /* Ajusta los valores según tu preferencia */
+        filter: drop-shadow(0px 4px 7px rgba(0, 0, 0, 0.42)); 
 }
 
 
@@ -169,4 +168,4 @@ body{
       transform: rotate(0deg);
     }
   }
-    
+      */
