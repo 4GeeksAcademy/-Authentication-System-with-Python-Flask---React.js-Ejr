@@ -100,10 +100,24 @@ export const SideBar = () => {
 		
 	]
 
+	const utilities_category = [
+		{
+			title: 'Colors',
+			description: 'Different text colors', 
+			path: "colors" 
+		},
+		{
+			title: 'Background', 
+			description: 'Different type of background colors',
+			path: "bg-colors"
+		}
+	]
+
 	const handleMouseOver = (e) => {
-		e.target.style.backgroundColor = 'rgb(254,236,189)';
+		e.target.style.backgroundColor = '#ff9e60';
 		e.target.style.borderRadius = '5px';
 		e.target.style.cursor = 'pointer'; 
+		e.target.style.fontWeight = 'bolder';
 	}
 		
 	const handleMouseOut = (e) => {
@@ -111,6 +125,7 @@ export const SideBar = () => {
 		e.target.style.borderRadius = ''; 
 		e.target.style.cursor = 'default';
 		e.target.style.padding = ''; 
+		e.target.style.fontWeight = '';
 	}
 
 	const handleClick = (e, path) => {
@@ -121,7 +136,7 @@ export const SideBar = () => {
 	}
 
 	return (
-		<div className="col-2 rounded mt-3" style={{backgroundColor: "rgb(255,243,218)"}}>
+		<div className="col-2 mt-3 border-end" style={{backgroundColor: "#f8f9fa"}}>
 
 			<nav className="nav flex-column mt-3">
 			<h5 className="fw-medium" style={{fontSize: '1.1rem'}}>
@@ -133,12 +148,14 @@ export const SideBar = () => {
 				{getting_started.map(item => (
 				<li 
 					className="ps-2 fw-lighter"
-					style={{fontSize: '0.95rem'}}
+					style={{fontSize: '0.95rem', marginBottom:"5px"}}
+					
+				>
+					<span className="px-2"
 					onMouseOver={handleMouseOver}  
 					onMouseOut={handleMouseOut}
 					onClick={e => handleClick(e, item.path)}
-				>
-					{item.title}
+					>{item.title}</span>
 				</li>
 				))}
 			</ul>
@@ -153,12 +170,34 @@ export const SideBar = () => {
 				{component_category.map(item => (
 				<li
 					className="ps-2 fw-lighter" 
-					style={{fontSize: '0.95rem'}}
-					onMouseOver={handleMouseOver}
+					style={{fontSize: '0.95rem', marginBottom:"5px"}}
+				>
+					<span className="px-2"
+					onMouseOver={handleMouseOver}  
 					onMouseOut={handleMouseOut}
 					onClick={e => handleClick(e, item.path)}
+					>{item.title}</span>
+				</li>
+				))}
+			</ul>
+			</nav>
+
+			<nav className="nav flex-column mt-3">
+			<h5 className="fw-medium" style={{fontSize: '1.1rem'}}>
+				Utilities
+			</h5>
+
+			<ul className="list-unstyled">
+				{utilities_category.map(item => (
+				<li
+					className="ps-2 fw-lighter" 
+					style={{fontSize: '0.95rem', marginBottom:"5px"}}
 				>
-					{item.title}
+					<span className="px-2"
+					onMouseOver={handleMouseOver}  
+					onMouseOut={handleMouseOut}
+					onClick={e => handleClick(e, item.path)}
+					>{item.title}</span>
 				</li>
 				))}
 			</ul>
