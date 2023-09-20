@@ -1,7 +1,18 @@
 const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
+
+      // INICIO DE SESIÓN
+      email: "",
+      password: "",
+      currentUser: null,   
+
+      // VALIDACIÓN INICIO SESSIÓN
+      isLoggedIn: sessionStorage.getItem("currentUser") ? true : false,
+      currentUser: JSON.parse(sessionStorage.getItem("currentUser")),
+
       users: [],
+
       newUser: {
         id: "",
         name: "",
@@ -13,14 +24,100 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
       url: "http://localhost:3001",
       message: null,
-      libros: [],
-      librosDonados: [],
-      usuarios: [],
-      usuariosAdmin: [],
+      
       registro: true,
     },
 
     actions: {
+
+      // INICIO DE SESON
+      setEmail: (newEmail) => {
+        
+        setStore({ ...getStore(), email: newEmail });
+      },
+      
+      setPassword: (newPassword) => {
+        
+        setStore({ ...getStore(), password: newPassword });
+      },
+      
+      setCurrentUser: (newCurrentUser) => {
+        
+        setStore({ ...getStore(), currentUser: newCurrentUser });
+      },
+      
+
+      entrada: async (credenciales) => {
+        try {
+          const response = await fetch('http://localhost:3001/api/login', {
+            method: 'POST',
+            body: JSON.stringify(credenciales),
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          })
+          const data = await response.json();
+          console.log(data);
+    
+          if (data.fail) {
+    
+            console.log("error")
+            
+          } else{
+            console.log("exitoso");
+            store.setCurrentUser(data);
+            actions.setEmail("");
+            actions.setPassword("");
+    
+    
+          }
+        } catch (error) {
+          
+    
+        }
+      },
+
+      
+
+
+      
+      
+      handleLogin: async (navigate) => {
+        try {
+          const { url, local } = getStore();
+          const { email, password } = local;
+
+          let info = { email, password };
+          const response = await fetch(`${url}/api/login`, {
+            method: "POST",
+            body: JSON.stringify(info),
+            headers: {
+              "Content-Type": "application/json",
+            },
+          });
+          console.log(response);
+          const data = await response.json();
+          console.log(data);
+
+          if (data.token) {
+            setStore({ isLoggedIn: true, currentUser: data });
+            sessionStorage.setItem("currentUser", JSON.stringify(data));
+            navigate("/profile");
+          } else {
+            setStore({
+              alert: {
+                text: "Usuario no registrado",
+                show: true,
+                textbtn: "Registrarme",
+              },
+            });
+          }
+        } catch (error) {
+          console.log(error);
+          console.log("hay un error en el login");
+        }
+      },
+
       //---------< registro de usuario >------------------------------->>
 
       //---------< funcion para  registro  de usuario >----------------->
@@ -66,7 +163,9 @@ const getState = ({ getStore, getActions, setStore }) => {
         e.preventDefault();
         try {
           const { url, email, password, currentUser } = getStore();
+          console.log("Inicio de sesión iniciado"); // verificando inicio de sesión
           let info = { email, password };
+          console.log("Datos de inicio de sesión:", info); // verificando inicio de sesión
           const response = await fetch(`${url}/api/login`, {
             method: "POST",
             body: JSON.stringify(info),
@@ -79,9 +178,9 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.log(data);
 
           if (data.token) {
-            setStore({ currentUser: data });
+            setStore({ isLoggedIn: true, currentUser: data });
             sessionStorage.setItem("currentUser", JSON.stringify(data));
-            navigate("/galeria");
+            navigate("/profile");
           } else {
             setStore({
               alert: {
@@ -112,123 +211,30 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
 
       logout: () => {
+        // Limpia el currentUser de sessionStorage y actualiza isLoggedIn en el store
         if (sessionStorage.getItem("currentUser")) {
+          sessionStorage.removeItem("currentUser");
           setStore({
+            isLoggedIn: false,
             currentUser: null,
           });
-          sessionStorage.removeItem("currentUser");
         }
       },
       //---------< OBTENER LIBROS >------------------------------->>
-      getLibros: () => {
-        var requestOptions = {
-          method: "GET",
-          redirect: "follow",
-        };
-        fetch(
-          "URL",
-          requestOptions
-        )
-          .then((response) => response.json())
-          .then((result) => setStore({ libros: result }))
-          .catch((error) => console.log("error", error));
-      },
-
-      getLibrosDonados: () => {
-        var requestOptions = {
-          method: "GET",
-          redirect: "follow",
-        };
-        fetch(
-          "URL",
-          requestOptions
-        )
-          .then((response) => response.json())
-          .then((result) => setStore({ librosDonaods: result }))
-          .catch((error) => console.log("error", error));
-      },
+      
       //---------< OBTENER USUARIOS >------------------------------->>
-      getUsuarios: () => {
-        var requestOptions = {
-          method: "GET",
-          redirect: "follow",
-        };
-        fetch(
-          "URL",
-          requestOptions
-        )
-          .then((response) => response.json())
-          .then((result) => setStore({ usuarios: result }))
-          .catch((error) => console.log("error", error));
-      },
-
-      getUsuariosAdmin: () => {
-        var requestOptions = {
-          method: "GET",
-          redirect: "follow",
-        };
-        fetch(
-          "URL",
-          requestOptions
-        )
-          .then((response) => response.json())
-          .then((result) => setStore({ usuarios: result }))
-          .catch((error) => console.log("error", error));
-      },
-
+      
       //---------< PUBLICAR LIBROS >------------------------------->>
-
-      postLibro: (nuevoLibro) => {
-        console.log(nuevoLibro)
-        const actions = getActions();
-        var myHeaders = new Headers();
-        myHeaders.append("Content-Type", "application/json");
-
-        var raw = JSON.stringify(nuevoLibro);
-
-        var requestOptions = {
-          method: 'POST',
-          headers: myHeaders,
-          body: raw,
-          redirect: 'follow'
-        };
-
-        fetch("URL", requestOptions)
-          .then((response) => response.json())
-          .then((result) => {
-            actions.getlibros();
-            /* console.log(result); */
-          })
-          .catch((error) => console.log('error', error));
-      },
-
+      
       //---------< ELIMINAR LIBROS >------------------------------->>
-
-      deleteLibros: (index) => {
-        const actions = getActions();
-        const currentLibro = getStore().libros;
-        const selectedLibro = currentLibro[index];
-
-        const requestOptions = {
-          method: "DELETE",
-          redirect: "follow",
-        };
-
-        fetch(
-          `URL/${selectedLibro.id}`,
-          requestOptions
-        )
-          .then((response) => response.json())
-          .then((result) => {
-            console.log("Book deleted from API:", result);
-            actions.getLibros();
-          })
-          .catch((error) => console.log("Error deleting contact:", error));
-      },
-
+    
       //---------< CAMBIO DE NAVBAR >------------------------------->>
       vistaRegistro: () => {
         setStore({ registro: false })
+        console.log(getStore().registro)
+      },
+      vistaRegistro2: () => {
+        setStore({ registro: true })
         console.log(getStore().registro)
       }
 

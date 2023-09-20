@@ -1,8 +1,9 @@
 """
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
+
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Gallery
+from api.models import db, User, Gallery, Comentario
 from api.utils import generate_sitemap, APIException
 from flask_jwt_extended import JWTManager, get_jwt_identity, create_access_token, jwt_required
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -26,6 +27,13 @@ def handle_hello():
 
     return jsonify(response_body), 200
 
+# TODOS LOS USUARIOS CREADOS
+@api.route('/users', methods=['GET'])
+def get_users():
+    users = User.query.all()  # Obtén todos los usuarios de la base de datos
+    user_list = [user.serialize() for user in users]  # Serializa los usuarios en una lista de objetos JSON
+    return jsonify(user_list), 200  # Devuelve la lista de usuarios en formato JSON con código de estado 200
+
 
 #------< registrar usuario >-------------#
 
@@ -38,7 +46,7 @@ def user_register():
     password= request.json.get("password")
     region= request.json.get("region")
     
-#-------< validacion de usuario >-------#
+ #-------< validacion de usuario >-------#
     if not name:
         return jsonify({"error": "name is requare"}), 422
     
@@ -80,7 +88,7 @@ def login():
     email= request.json.get("email")
     password= request.json.get("password")
   
-#------< validacion de usuario, de datos ingresados >------#
+ #------< validacion de usuario, de datos ingresados >------#
 
     if not email:
         return jsonify({"error": "email is requare"}), 422
@@ -88,20 +96,18 @@ def login():
     if not password:
         return jsonify({"error": "password is requare"}), 422
 
-#------< BUSCAMOS AL USUARIO
+ #------< BUSCAMOS AL USUARIO
     user = User.query.filter_by(email=email).first()
    
     
-#------< SI NO EXISTE EL USUARIO
+ #------< SI NO EXISTE EL USUARIO
     if not user: 
         return jsonify({"error": "tu usuario o contraseña son incorrectos"}), 401
     
-#------< LAVIDAMOS LA CONTRASEÑA
+ #------< VALIDAMOS LA CONTRASEÑA
     if not check_password_hash(user.password, password):
         return jsonify({"error": "tu usuario o contraseña son incorrectos"}), 401 
-        
-
-    
+           
     access_token = create_access_token(identity=user.id)
     print(access_token)
     data = {
@@ -110,14 +116,12 @@ def login():
         "type": "Bearer",
         "user": user.serialize()
     }
-
-
     return jsonify(data), 200
 
 
 # generando ruta privada
 
-@api.route('/profile', methods=['POST'])
+@api.route('/profile', methods=['GET'])
 @jwt_required()
 def profile():
     
@@ -171,3 +175,34 @@ def upload_image_route():
     gallery.save()
     
     return jsonify(gallery.serialize()), 201
+
+# END POINT COMENTARIOS
+## AGREGAR COMENTARIO
+@api.route('/comentarios', methods=['POST'])
+@jwt_required()
+def crear_comentario():
+    user_id = get_jwt_identity()  # ID del usuario autenticado
+      
+    #book_id = request.json.get("book_id")
+    comentario = request.json.get("comentario")
+    
+    #if not book_id:
+    #    return jsonify({"error": "book_id is required"}), 422
+    
+    if not comentario:
+        return jsonify({"error": "comentario is required"}), 422
+    
+    comentario_obj = Comentario()
+    #comentario_obj.book_id = book_id
+    #comentario_obj.user_id = user_id
+    comentario_obj.comentario = comentario
+    comentario_obj.save()
+    
+    return jsonify({"message": "Comentario creado con éxito"}), 201
+
+# VER TODOS LOS COMENTARIOS
+@api.route('/comentarios', methods=['GET'])
+def get_comentarios():
+    comentarios = Comentario.query.all()  # Obtén todos los comentarios de la base de datos
+    comentarios_list = [comentario.serialize() for comentario in comentarios]  # Serializa los comentarios
+    return jsonify(comentarios_list), 200
