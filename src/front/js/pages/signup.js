@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useNavigate } from 'react-router-dom';
 import { Context } from "../store/appContext";
+import "../../styles/intro.css";
 
 const Signup = () => {
     const { store, actions } = useContext(Context);
