@@ -29,9 +29,6 @@ export const Footer = () => (
             </h5>
             <ul className="list-unstyled mb-4">
               <li>
-                <a href="#aboutus" className="text-dark">About us</a>
-              </li>
-              <li>
                 <a href="#!" className="text-dark">Collections</a>
               </li>
               <li>
