@@ -5,8 +5,7 @@ import "../../styles/home.css";
 const IntroView = () => {
   return (
 <div className="container-fluid fondo-difuminado" style={{ marginBottom: '105rem' }} >
-<div className="context">
-
+{/* <div className="context">
 <div className="area" >
             <ul class="circles">
                     <li></li>
@@ -20,7 +19,7 @@ const IntroView = () => {
                     <li></li>
                     <li></li>
             </ul>
-    </div >
+    </div > */}
   <div className="d-flex align-items-center justify-content-center vh-20">
     <div className="jumbotron-content text-center" style={{ marginTop: '100px' }}>
     
@@ -174,7 +173,7 @@ const IntroView = () => {
       </div>
     </div>
 </div>
-</div>
+
 
   );
 };
