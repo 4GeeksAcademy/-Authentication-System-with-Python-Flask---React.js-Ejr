@@ -10,7 +10,7 @@ export const SideBar = () => {
 		{
 			title: 'Alerts',
 			description: 'Different types of alerts', 
-			path: "alert" 
+			path: "docs/components/alerts" 
 		},
 		{
 			title: 'Badges', 
@@ -25,7 +25,7 @@ export const SideBar = () => {
 		{
 			title: 'Buttons',
 			description: 'Various button styles',
-			path: "button"
+			path: "docs/components/buttons"
 		},
 		{
 			title: 'Button Groups',
@@ -35,7 +35,7 @@ export const SideBar = () => {
 		{
 			title: 'Cards',
 			description: 'Flexible content containers',
-			path: "cards"
+			path: "docs/components/cards"
 		},
 		{
 			title: 'Carousels', 
@@ -104,12 +104,12 @@ export const SideBar = () => {
 		{
 			title: 'Colors',
 			description: 'Different text colors', 
-			path: "colors" 
+			path: "docs/utilities/colors" 
 		},
 		{
 			title: 'Background', 
 			description: 'Different type of background colors',
-			path: "bg-colors"
+			path: "docs/utilities/bg-colors"
 		}
 	]
 
@@ -125,7 +125,7 @@ export const SideBar = () => {
 		e.target.style.borderRadius = ''; 
 		e.target.style.cursor = 'default';
 		e.target.style.padding = ''; 
-		e.target.style.fontWeight = '';
+		e.target.style.fontWeight = 'light';
 	}
 
 	const handleClick = (e, path) => {

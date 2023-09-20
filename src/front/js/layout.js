@@ -45,8 +45,8 @@ const Layout = () => {
                         
 
 
-                        <Route element={<AlertView />} path="/alert" />
-                        <Route element={<ButtonView />} path="/button" />
+                        <Route element={<AlertView />} path="docs/components/alerts" />
+                        <Route element={<ButtonView />} path="docs/components/buttons" />
 
                         <Route element={<AdminSearch />} path="/adminsearch" />
 
