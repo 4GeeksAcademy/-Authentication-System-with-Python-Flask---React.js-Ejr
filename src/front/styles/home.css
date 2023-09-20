@@ -1,4 +1,4 @@
- /* *{
+/* *{
     margin: 0px;
     padding: 0px;
 } 
@@ -8,7 +8,7 @@
     width: 100%;
     height: 170vh; 
 }   
-  
+   */
 
  
 body{
@@ -16,19 +16,20 @@ body{
 
 } 
 
-.context {
+/* .context {
     width: 100%;
     position: absolute;
     top:0vh;
     
-}
- .context h1{
+} */
+
+/* .context h1{
     text-align: center;
     color: #fff;
     font-size: 50px;
 }
 
- .area{
+ /* .area{
     background: #e4950d65;  
     background: -webkit-linear-gradient(to left, #ff99007d, #ff910072);  
 }
@@ -146,7 +147,7 @@ body{
         border-radius: 50%;
     }
 
-}  
+}   */
 
 .rotate-animation {
     animation: rotate 30s infinite; 
@@ -168,4 +169,7 @@ body{
       transform: rotate(0deg);
     }
   }
-      */
+    
+  .custom-btn {
+    background-color: #FD5812;
+  }
