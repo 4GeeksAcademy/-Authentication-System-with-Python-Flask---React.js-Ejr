@@ -57,7 +57,7 @@ def user_register():
     user_found = User.query.filter_by(email=email).first()
 
     if user_found:
-        return jsonify({"message": "username is not available"}), 400
+        return jsonify({"message": "email is not available"}), 400
 
     user = User()
     user.name = name
@@ -69,8 +69,11 @@ def user_register():
 
     return jsonify({"succes": "Registro exitoso, por favor inicie sesión"}), 200
 
+
+#-----< actualizar user >-----------------------------
+
 @api.route('/update_user/<int:id>', methods=['PUT'])
-# @jwt_required()
+@jwt_required()
 def update_user(id):
     data = request.get_json()
     
@@ -87,7 +90,7 @@ def update_user(id):
     }), 200
         
 @api.route('delete_user/<int:id>', methods=['DELETE'])
-# @jwt_required()
+@jwt_required()
 def delete_user(id):
     user = User.query.get(id)
     user.delete()
@@ -98,7 +101,9 @@ def delete_user(id):
 #-----< Login User >------------------------------------------------------------------->
 @api.route('/login', methods=['POST'])
 def login():
-    # data = request.get_json()
+    
+    data = request.get_json()
+        
     email = request.json.get("email")
     password = request.json.get("password")
 
@@ -113,16 +118,19 @@ def login():
     user = User.query.filter_by(email=email).first()
 
 
-# ------< SI NO EXISTE EL USUARIO
+# ------< SI NO EXISTE EL USUARIO >--------------------------
     if not user:
         return jsonify({"error": "tu usuario o contraseña son incorrectos"}), 401
 
-# ------< LAVIDAMOS LA CONTRASEÑA
+# ------< LAVIDAMOS LA CONTRASEÑA >--------------------------
+    
     if not check_password_hash(user.password, password):
         return jsonify({"error": "tu usuario o contraseña son incorrectos"}), 401
+#-----< creacion de token >---------------------------------
 
     access_token = create_access_token(identity=user.id)
     print(access_token)
+
     data = {
         "success": "inicio de sesion exitoso",
         "access_token": access_token,
@@ -135,13 +143,13 @@ def login():
 
 # -----< generando ruta privada >---------------------------------------->
 
-@api.route('/profile', methods=['POST'])
-# @jwt_required()
+@api.route('/profile', methods=['GET'])
+@jwt_required()
 def profile():
 
     id = get_jwt_identity()
     user = User.query.get(id)
-    return jsonify({"message": "ruta  privada", "user": user.email}), 200
+    return jsonify({"message": "ruta  privada", "user": user.serialize()}), 200
 
 
 #=======< ruta lista LIBRO >===========================================
@@ -162,7 +170,7 @@ def post_book():
     return jsonify({"message": "Book created"}), 201
 
 @api.route('/books', methods=['GET'])
-# @jwt_required()
+@jwt_required()
 def get_books():
     if request.method == 'GET':
         books = Book.query.all()
@@ -173,7 +181,7 @@ def get_books():
             }), 200
 
 @api.route('/books/<int:id>', methods=['PUT'])
-# @jwt_required()
+@jwt_required()
 def update_book(id):
     data = request.get_json()
     
@@ -190,7 +198,7 @@ def update_book(id):
     return jsonify({"message": "book updated", "book": book.serialize()})
 
 @api.route('/books/<int:id>', methods=['DELETE'])
-# @jwt_required()
+@jwt_required()
 def delete_book(id):
     book= Book.query.get(id)
     book.delete_book()
@@ -203,7 +211,7 @@ def delete_book(id):
 
 #-------------< CARGAR IMAGENES >-------------------------------------------------
 @api.route('/image_upload', methods=['POST'])
-# @jwt_required()  
+@jwt_required()  
 def upload_image_route():
 
     title = request.form['title']
@@ -241,7 +249,7 @@ def upload_image_route():
 
 
 @api.route('/image_get', methods=['GET'])
-# @jwt_required()
+@jwt_required()
 def image():
     if request.method == 'GET':
         gallery = Gallery.query.all()
@@ -253,7 +261,7 @@ def image():
         
 #===================================================================================        
 @api.route('/image_update/<int:id>', methods=['PUT'])
-# @jwt_required()
+@jwt_required()
 def image_update(id):
     gallery = Gallery.query.get(id)
     if not gallery:
