@@ -4,6 +4,8 @@ import Testimonio from '../component/reviewsLibros/Testimonio'
 
 
 const BookReviews = () => {
+  const { store, actions } = useContext(Context);
+
   return (
     <div className="row m-3 mt-4">
       <div className="col-md-6 d-flex justify-content-center text-center">

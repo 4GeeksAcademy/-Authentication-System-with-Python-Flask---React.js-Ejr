@@ -1,7 +1,6 @@
 const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
-      
       users: [],
       newUser: {
         id: "",
@@ -12,10 +11,9 @@ const getState = ({ getStore, getActions, setStore }) => {
         rep_password: "",
         region: "",
       },
-      
+   
       url: "http://localhost:3001",
       currentUser: [],
-      
     },
 
     actions: {
@@ -60,6 +58,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 
 //---- funcion para  login  de usuario------------------------------------------->
+
       handleSubmitLogin: async (e, navigate) => {
         e.preventDefault();
         try {
@@ -79,6 +78,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           if (data.token) {
             setStore({ currentUser: data });
             sessionStorage.setItem("currentUser", JSON.stringify(data));
+
             navigate("/profile");
           } else {
             setStore({
@@ -94,6 +94,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.log("hay un error en el login");
         }
       },
+
 
       handleChangeLogin: (e) => {
         setStore({
