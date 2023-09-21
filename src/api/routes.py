@@ -181,7 +181,7 @@ def upload_image_route():
 @api.route('/comentarios', methods=['POST'])
 @jwt_required()
 def crear_comentario():
-    user_id = get_jwt_identity()  # ID del usuario autenticado
+    #user_id = get_jwt_identity()  # ID del usuario autenticado
       
     #book_id = request.json.get("book_id")
     comentario = request.json.get("comentario")

@@ -8,19 +8,8 @@ const Login = () => {
   const { store, actions } = useContext(Context);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    // Este efecto se ejecutará cada vez que 'currentUser' cambie.
-    // Puedes realizar acciones relacionadas con 'currentUser' aquí.
-    console.log("currentUser ha cambiado:", store.currentUser);
-  }, [store.currentUser]); // Agrega 'store.currentUser' como dependencia
-
-  
 
 
-  const manejoLogin = (e) => {
-    e.preventDefault();
-    actions.entrada({ email: store.email, password: store.password });
-  }
 
   return (
     <div className="container my-5">
@@ -28,42 +17,47 @@ const Login = () => {
         !!store.currentUser ? (
           <>
             <h1><strong>Bienvenido:</strong></h1>
-            <h1>{store.currentUser.user.email}</h1>
+            <h1>{store.currentUser?.user?.email}</h1>
           </>
         ) : (
-          <form className="row g-3" onSubmit={manejoLogin} >
-            <div className="col-auto">
-              <label htmlFor="inputEmail" className="visually-hidden">
+          <form
+            className="form"
+            onSubmit={(e) => {
+              e.preventDefault()
+              actions.handleSubmitLogin(e, navigate)
+            }}
+          >
+            <div className="container">
+              <label htmlFor="logForm" className="text-dark">
                 Email
               </label>
               <input
                 type="email"
-                className="form-control"
-                id="inputEmail"
-                name="email"
+                className="form-control m-3"
+                id="correo"
                 placeholder="Email"
-                required
+                name="email"
                 value={store.email}
-                onChange={e => actions.setEmail(e.target.value)}
+                onChange={(e) => actions.handleChangeLogin(e)}
+                autoComplete="off"
               />
             </div>
-            <div className="col-auto">
-              <label htmlFor="inputPassword" className="visually-hidden">
+            <div className="container">
+              <label htmlFor="inputPassword2" className=" text-dark">
                 Password
               </label>
               <input
                 type="password"
-                className="form-control"
-                id="inputPassword"
-                name="password"
+                className="form-control m-3"
+                id="inputPassword2"
                 placeholder="Password"
-                required
+                name="password"
                 value={store.password}
-                onChange={e => actions.setPassword(e.target.value)}
+                onChange={(e) => actions.handleChangeLogin(e)}
               />
             </div>
-            <div className="col-auto">
-              <button type="submit" className="btn btn-primary mb-3">
+            <div className="d-flex justify-content-center">
+              <button type="submit" className="btn btn-primary ">
                 Iniciar Sesión
               </button>
             </div>

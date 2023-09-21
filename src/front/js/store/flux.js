@@ -1,15 +1,9 @@
 const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
-
-      // INICIO DE SESIÓN
-      email: "",
+      
+      email:"",
       password: "",
-      currentUser: null,   
-
-      // VALIDACIÓN INICIO SESSIÓN
-      isLoggedIn: sessionStorage.getItem("currentUser") ? true : false,
-      currentUser: JSON.parse(sessionStorage.getItem("currentUser")),
 
       users: [],
 
@@ -24,99 +18,15 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
       url: "http://localhost:3001",
       message: null,
+      currentUser: null,
+
       
-      registro: true,
+      
     },
 
-    actions: {
-
-      // INICIO DE SESON
-      setEmail: (newEmail) => {
-        
-        setStore({ ...getStore(), email: newEmail });
-      },
-      
-      setPassword: (newPassword) => {
-        
-        setStore({ ...getStore(), password: newPassword });
-      },
-      
-      setCurrentUser: (newCurrentUser) => {
-        
-        setStore({ ...getStore(), currentUser: newCurrentUser });
-      },
-      
-
-      entrada: async (credenciales) => {
-        try {
-          const response = await fetch('http://localhost:3001/api/login', {
-            method: 'POST',
-            body: JSON.stringify(credenciales),
-            headers: {
-              'Content-Type': 'application/json'
-            }
-          })
-          const data = await response.json();
-          console.log(data);
-    
-          if (data.fail) {
-    
-            console.log("error")
-            
-          } else{
-            console.log("exitoso");
-            store.setCurrentUser(data);
-            actions.setEmail("");
-            actions.setPassword("");
-    
-    
-          }
-        } catch (error) {
-          
-    
-        }
-      },
-
-      
-
-
+    actions: {       
       
       
-      handleLogin: async (navigate) => {
-        try {
-          const { url, local } = getStore();
-          const { email, password } = local;
-
-          let info = { email, password };
-          const response = await fetch(`${url}/api/login`, {
-            method: "POST",
-            body: JSON.stringify(info),
-            headers: {
-              "Content-Type": "application/json",
-            },
-          });
-          console.log(response);
-          const data = await response.json();
-          console.log(data);
-
-          if (data.token) {
-            setStore({ isLoggedIn: true, currentUser: data });
-            sessionStorage.setItem("currentUser", JSON.stringify(data));
-            navigate("/profile");
-          } else {
-            setStore({
-              alert: {
-                text: "Usuario no registrado",
-                show: true,
-                textbtn: "Registrarme",
-              },
-            });
-          }
-        } catch (error) {
-          console.log(error);
-          console.log("hay un error en el login");
-        }
-      },
 
       //---------< registro de usuario >------------------------------->>
 
@@ -159,13 +69,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 
       //---- funcion para  login  de usuario------------------------------------------->
-      logUser: async (e, navigate) => {
+      handleSubmitLogin: async (e, navigate) => {
         e.preventDefault();
         try {
           const { url, email, password, currentUser } = getStore();
-          console.log("Inicio de sesión iniciado"); // verificando inicio de sesión
           let info = { email, password };
-          console.log("Datos de inicio de sesión:", info); // verificando inicio de sesión
           const response = await fetch(`${url}/api/login`, {
             method: "POST",
             body: JSON.stringify(info),
@@ -177,8 +85,8 @@ const getState = ({ getStore, getActions, setStore }) => {
           const data = await response.json();
           console.log(data);
 
-          if (data.token) {
-            setStore({ isLoggedIn: true, currentUser: data });
+          if (data.access_token) {
+            setStore({ currentUser: data });
             sessionStorage.setItem("currentUser", JSON.stringify(data));
             navigate("/profile");
           } else {
@@ -196,12 +104,12 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
 
-      handleChange: (e) => {
+      handleChangeLogin: (e) => {
         setStore({
           [e.target.name]: e.target.value,
         });
       },
-
+      // VERIFICA QUE EXISTA EL USUARIO 
       checkUser: () => {
         if (sessionStorage.getItem("currentUser")) {
           setStore({
@@ -211,33 +119,13 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
 
       logout: () => {
-        // Limpia el currentUser de sessionStorage y actualiza isLoggedIn en el store
         if (sessionStorage.getItem("currentUser")) {
-          sessionStorage.removeItem("currentUser");
           setStore({
-            isLoggedIn: false,
             currentUser: null,
           });
+          sessionStorage.removeItem("currentUser");
         }
       },
-      //---------< OBTENER LIBROS >------------------------------->>
-      
-      //---------< OBTENER USUARIOS >------------------------------->>
-      
-      //---------< PUBLICAR LIBROS >------------------------------->>
-      
-      //---------< ELIMINAR LIBROS >------------------------------->>
-    
-      //---------< CAMBIO DE NAVBAR >------------------------------->>
-      vistaRegistro: () => {
-        setStore({ registro: false })
-        console.log(getStore().registro)
-      },
-      vistaRegistro2: () => {
-        setStore({ registro: true })
-        console.log(getStore().registro)
-      }
-
     },
   };
 };

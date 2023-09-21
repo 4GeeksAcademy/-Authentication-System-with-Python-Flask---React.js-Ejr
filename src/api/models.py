@@ -108,7 +108,7 @@ class Comentario(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     comentario = db.Column(db.String(250), nullable=False)
     #book_id = db.Column(db.Integer, db.ForeignKey('book.id'), nullable=False)
-   # user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    #user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
     def serialize(self):
         return {

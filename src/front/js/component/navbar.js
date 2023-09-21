@@ -1,25 +1,29 @@
-import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import React, { useContext, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
 import { Context } from "../store/appContext";
 
 export const Navbar = () => {
   const { store, actions } = useContext(Context);
+  const location = useLocation(); // renderizar con ruta
+  console.log(location.pathname)
+
+
 
   return (
     <div>
       <nav className="navbar navbar-expand-lg bg-body-tertiary bg-dark">
         <div className="container-fluid">
           <div className="col d-flex">
-            <Link to="/" className="navbar-brand text-white" href="#" onClick={() => { actions.vistaRegistro2() }} >
+            <Link to="/" className="navbar-brand text-white" href="#"  >
               Books Market
-            </Link>            
-            <Link to="/" className="nav-link active text-white" aria-current="page" onClick={() => { actions.vistaRegistro2() }}>
-              Home 
+            </Link>
+            <Link to="/" className="nav-link active text-white" aria-current="page" >
+              Home
             </Link>
           </div>
 
 
-          {store.registro ? (
+          {location.pathname !== "/formularioRegistro" && location.pathname !== "/login" && (
             <div className="col">
               <form className="d-flex" role="search">
                 <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
@@ -28,65 +32,63 @@ export const Navbar = () => {
                 </button>
               </form>
             </div>
-          ) : (
-            <></>
           )}
           <div className="col">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0 d-flex justify-content-end">
 
-              {store.registro ? (
+              {location.pathname !== "/formularioRegistro" && location.pathname !== "/login" && (
                 <li className="nav-item">
                   <a className="nav-link active text-white" aria-current="page" href="#">
                     Cart
                   </a>
                 </li>
-              ) : (
-                <></>
               )}
-              {store.registro ? (
+              {location.pathname !== "/formularioRegistro" && location.pathname !== "/login" && (
                 <li className="nav-item">
                   <a className="nav-link text-white" href="#">
                     Wish List
                   </a>
                 </li>
-              ) : (
-                <></>
               )}
+
               {!!store.currentUser ? (
-                <>
-                  <li className="nav-item">
-                    <span className="nav-link active text-white">{store.currentUser.email}</span>
-                  </li>
-                  <li>
-                    <hr className="dropdown-divider" />
-                  </li>
-                  <li>
-                    <Link to="/profile" className="dropdown-item">
-                      Mi Perfil
-                    </Link>
-                  </li>
-                  <li>
-                    <Link to="/profile" className="dropdown-item">
-                      Publicar Libro
-                    </Link>
-                  </li>
-                  <li className="nav-item" /* onClick={() => actions.logout()} */>
-                    Cerrar sesión
-                  </li>
-                </>
+
+                <li className="nav-item dropdown">
+                  <a className="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    {store.currentUser?.user?.email} // operador de encadenamiento opcional
+                  </a>
+                  <ul className="dropdown-menu dropdown-menu-end">
+                    <li>
+                      <Link to="/profile" className="dropdown-item">
+                        Mi Perfil
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/profile" className="dropdown-item">
+                        Publicar Libro
+                      </Link>
+                    </li>
+                    <li>
+                      <hr className="dropdown-divider" />
+                    </li>
+                    <li className="nav-item" onClick={() => actions.logout()}>
+                      Cerrar sesión
+                    </li>
+                  </ul>
+                </li>
               ) : (
                 <li className="nav-item dropdown">
                   <a className="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    {store.registro ? "Iniciar sesión/Registrarse" : "Iniciar sesión"}
+                    Iniciar sesión/Registrarse
                   </a>
                   <ul className="dropdown-menu">
                     <li>
-                      <Link to="/login" className="dropdown-item" onClick={() => { actions.vistaRegistro() }}>
+                      <Link to="/login" className="dropdown-item" >
                         Iniciar sesión
                       </Link>
                     </li>
                     <li>
-                      <Link to="/formularioRegistro" className="dropdown-item" onClick={() => { actions.vistaRegistro() }}>
+                      <Link to="/formularioRegistro" className="dropdown-item" >
                         Registrar
                       </Link>
                     </li>
@@ -106,7 +108,7 @@ export const Navbar = () => {
           </div>
         </div>
       </nav>
-      {store.registro ? (
+      {location.pathname !== "/formularioRegistro" && location.pathname !== "/login" && (
         <nav className="navbar navbar-expand-lg bg-body-tertiary bg-dark">
           <div className="container-fluid d-flex justify-content-around">
             <div className="">
@@ -131,9 +133,6 @@ export const Navbar = () => {
             </div>
           </div>
         </nav>
-
-      ) : (
-        <></>
       )}
 
     </div>
