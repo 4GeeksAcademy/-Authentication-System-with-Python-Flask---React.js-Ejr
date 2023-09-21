@@ -21,7 +21,9 @@ const injectContext = PassedComponent => {
 		);
 
 		useEffect(() => {
-			state.actions.checkUser()
+			state.actions.checkUser();
+			state.actions.getLibros();
+			
 	 
 		}, []);
 

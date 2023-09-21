@@ -1,12 +1,12 @@
 const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
-      
-      email:"",
+      //VARIABLES PARA GUARDAR EL INICIO DE SESIÓN
+      email: "",
       password: "",
-
+      //VARIABLE PARA GUARDAR LOS USUARIOS QUE SE CREAN
       users: [],
-
+      //SE GUARDA EL REGISTRO DE USUARIO
       newUser: {
         id: "",
         name: "",
@@ -16,19 +16,96 @@ const getState = ({ getStore, getActions, setStore }) => {
         rep_password: "",
         region: "",
       },
+      //URL DE LA API
       url: "http://localhost:3001",
-      message: null,
-      currentUser: null,
 
-      
-      
+      message: null,
+      //USUARIO QUE INICIO SESIÓN
+      currentUser: null,
+      //VARIABLE PARA PUBLICAR EL NUEVO LIBRO
+      newBook: {
+        id: "",
+        title: "",
+        author: "",
+        cathegory: "",
+        number_of_pages: "",
+        description: "",
+        type: "",
+        price: "",
+        photo: "",
+      },
+      //VARIABLE PARA GUARDAR LISTA DE LIBROS
+      showBook: [],
+      //VARIABLE PARA GUARDAR DETALLE DE UN LIBRO
+      oneBook: [],
     },
 
-    actions: {       
-      
-      
+    actions: {
+      //PUBLICACIÓN DE LIBRO      
+      ////FUNC. GUARDAR VALOR INPUT
+      handleChangeBook: (e) => {
+        const { newBook } = getStore();
+        e.preventDefault();
+        newBook[e.target.name] = e.target.value;
+        setStore({ newBook });
+        console.log("newBook:", getStore().newBook);
+      },
+      ////FUNC. PARA GUARDAR LIBRO
+      saveBook: async (navigate) => {
+        try {
+          const { url, newBook } = getStore();
+          const response = await fetch(`${url}/api/registerBook`, {
+            method: "POST",
+            body: JSON.stringify(newBook),
+            headers: { "Content-Type": "application/json" },
+          });
+          const data = await response.json();
+          console.log("data", data);
+          navigate("/");
+        } catch (error) {
+          console.log(error);
+        }
+      },
+      ////FUNC. ENVIAR REGISTRO
+      submitBook: (e, navigate) => {
+        e.preventDefault();
+        getActions().saveBook(navigate);
+      },
+      ////FUNC LISTA DE LIBROS  
+      getLibros: () => {
+        var requestOptions = {
+          method: 'GET',
+          redirect: 'follow'
+        };
+        
+        fetch("http://localhost:3001/api/libroVenta", requestOptions)
+        .then(response => response.json())
+        .then(data => {
+          getStore().showBook = data;
+          console.log("conseguí los libros");
+          console.log("showBook:", data);
+        })
+        .catch(error => console.log('error', error));
+      },
 
-      //---------< registro de usuario >------------------------------->>
+      ////FUNC DETALLE UN LIBRO
+      getOneBook: () => {
+        var requestOptions = {
+          method: 'GET',
+          redirect: 'follow'
+        };
+        
+        fetch("http://localhost:3001/api/detalle-libro/${id}", requestOptions)
+        .then(response => response.json())
+        .then(data => {
+          getStore().oneBook = data;
+          console.log("conseguí el libro");
+          console.log("oneBook:", data);
+        })
+        .catch(error => console.log('error', error));
+      },
+
+      
 
       //---------< funcion para  registro  de usuario >----------------->
 

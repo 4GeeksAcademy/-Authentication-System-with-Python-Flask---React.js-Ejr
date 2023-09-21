@@ -17,8 +17,10 @@ import Testimonio from "./component/reviewsLibros/Testimonio";
 import BookReviews from "./pages/BookReviews";
 import Login from "./component/login/Login";
 import Intercambio from "./pages/Intercambio";
-import  FormularioRegistro  from "./pages/formularioRegistro";
+import FormularioRegistro from "./pages/formularioRegistro";
+import RegistroLibro from "./pages/registroLibro";
 import { Profile } from "./pages/profile";
+import { DetalleLibro } from "./pages/detalleLibro";
 
 
 
@@ -32,6 +34,7 @@ import { ComoDonar } from "./pages/comoDonar";
 import injectContext from "./store/appContext";
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
+
 
 
 //create your first component
@@ -65,11 +68,10 @@ const Layout = () => {
                         <Route element={<Intercambio />} path="/intercambio" />
                         <Route element={<FormularioRegistro />} path="/formularioRegistro" />
                         <Route element={<h1>Not found!</h1>} />
-                        <Route element={<FormularioRegistro />} path="/formularioRegistro" /> 
-                        {/* <Route element={<Profile />} path="/profile" />  */}
-                        <Route path="/profile" render={() => store.isLoggedIn ? <Profile /> : <Redirect to="/login" />
-  }
-/>                                             
+                        <Route element={<FormularioRegistro />} path="/formularioRegistro" />
+                        <Route element={<RegistroLibro />} path="/registroLibro" />
+                        <Route element={<DetalleLibro />} path="/detalleLibro/:id" />
+                        <Route element={<Profile />} path="/profile" />                         
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
                     <Footer />

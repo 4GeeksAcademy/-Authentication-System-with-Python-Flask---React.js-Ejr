@@ -3,7 +3,7 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 """
 
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Gallery, Comentario
+from api.models import db, User, Gallery, Comentario, Book
 from api.utils import generate_sitemap, APIException
 from flask_jwt_extended import JWTManager, get_jwt_identity, create_access_token, jwt_required
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -27,7 +27,7 @@ def handle_hello():
 
     return jsonify(response_body), 200
 
-# TODOS LOS USUARIOS CREADOS
+# LISTA TODOS LOS USUARIOS CREADOS
 @api.route('/users', methods=['GET'])
 def get_users():
     users = User.query.all()  # Obtén todos los usuarios de la base de datos
@@ -163,21 +163,19 @@ def upload_image_route():
     resp=upload(image, fordel='galleries',public_id='public_id')
     
     if not resp:
-        return jsonify({'msg': "error al cargar imagen"}), 400
-    
+        return jsonify({'msg': "error al cargar imagen"}), 400    
     print(resp)
     
     gallery = Gallery()
     gallery.title = title
     gallery.image = resp['secure_url']
     gallery.public_id = public_id 
-
     gallery.save()
     
     return jsonify(gallery.serialize()), 201
 
 # END POINT COMENTARIOS
-## AGREGAR COMENTARIO
+### AGREGAR COMENTARIO
 @api.route('/comentarios', methods=['POST'])
 @jwt_required()
 def crear_comentario():
@@ -200,9 +198,102 @@ def crear_comentario():
     
     return jsonify({"message": "Comentario creado con éxito"}), 201
 
-# VER TODOS LOS COMENTARIOS
+### VER TODOS LOS COMENTARIOS
 @api.route('/comentarios', methods=['GET'])
 def get_comentarios():
     comentarios = Comentario.query.all()  # Obtén todos los comentarios de la base de datos
     comentarios_list = [comentario.serialize() for comentario in comentarios]  # Serializa los comentarios
     return jsonify(comentarios_list), 200
+
+
+# END POINT LIBRO
+### AGREGAR LIBRO
+@api.route('/registerBook', methods=['POST'])
+def register_Book():
+    print(request.get_json())
+    title= request.json.get("title")
+    author= request.json.get("author")
+    cathegory= request.json.get("cathegory")
+    number_of_pages= request.json.get("number_of_pages")
+    description= request.json.get("description")
+    type= request.json.get("type")
+    price= request.json.get("price")
+    photo= request.json.get("photo")    
+    
+ ## VALIDACIÓN LIBRO
+    if not title:
+        return jsonify({"error": "Title is required"}), 422
+    
+    if not author:
+        return jsonify({"error": "Author is required"}), 422
+    
+    if not cathegory:
+        return jsonify({"error": "Cathegory is required"}), 422
+    
+    if not number_of_pages:
+        return jsonify({"error": "Number of pages is required"}), 422
+    
+    if not description:
+        return jsonify({"error": "Description is required"}), 422
+    
+    if not type:
+        return jsonify({"error": "Type is required"}), 422
+    
+    if not price:
+        return jsonify({"error": "Price is required"}), 422
+    
+    if not photo:
+        return jsonify({"error": "Photo is required"}), 422
+        
+ ## CREACION LIBRO         
+    
+    book = Book()
+    book.title = title
+    book.author = author
+    book.cathegory = cathegory
+    book.number_of_pages = number_of_pages
+    book.description = description
+    book.type = type
+    book.price = price
+    book.photo = photo
+    book.save() 
+    
+    return jsonify({"succes": "Publiación de libro exitosa"}), 200
+
+###LISTAR TODOS LOS LIBROS
+@api.route('/libroVenta', methods=['GET'])
+def get_book():
+    books = Book.query.all()  
+    book_list = [book.serialize() for book in books]  
+    return jsonify(book_list), 200 
+
+###LISTAR DETALLE POR LIBRO
+@api.route('/detalle-libro/<int:id>', methods=['GET'])
+def get_book_details(id):
+    try:
+        # Busca el libro en función del ID proporcionado
+        book = Book.query.get(id)
+
+        if book is None:
+            # Si no se encuentra el libro, devuelve un código de estado 404 (no encontrado)
+            return jsonify({'error': 'Libro no encontrado'}), 404
+
+        # Convierte el libro encontrado en un formato serializable (por ejemplo, un diccionario)
+        book_details = {
+            'id': book.id,
+            'title': book.title,
+            'author': book.author,
+            'cathegory': book.cathegory,
+            'number_of_pages': book.number_of_pages,
+            'description': book.description,
+            'type': book.type,
+            'price': book.price,
+            'photo': book.photo
+        }
+
+        # Devuelve los detalles del libro como una respuesta JSON con un código de estado 200 (éxito)
+        return jsonify(book_details), 200
+
+    except Exception as e:
+        # Maneja cualquier excepción que pueda ocurrir (por ejemplo, problemas de base de datos) y devuelve un error 500
+        return jsonify({'error': str(e)}), 500

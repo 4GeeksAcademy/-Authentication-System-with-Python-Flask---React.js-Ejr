@@ -43,10 +43,11 @@ class Book(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(120), nullable=False)
     author = db.Column(db.String(120), nullable=False)
-    cathegory = db.Column(db.String(120),  default="sin categoria")
+    cathegory = db.Column(db.String(120), nullable=False)
     number_of_pages = db.Column(db.String(120))
-    description = db.Column(db.String(250))
-    price = db.Column(db.String(120))
+    description = db.Column(db.String(250), nullable=False)
+    type = db.Column(db.String(120), nullable=False)
+    price = db.Column(db.String(120), nullable=False)    
     photo = db.Column(db.String(120), default="no-photo.png")
 
     def serialize(self):
@@ -57,6 +58,7 @@ class Book(db.Model):
             "cathegory": self.cathegory,
             "number_of_pages": self.number_of_pages,
             "description": self.description,
+            "type": self.type,
             "price": self.price,
             "photo": self.photo
         }

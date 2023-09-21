@@ -55,7 +55,7 @@ export const Navbar = () => {
 
                 <li className="nav-item dropdown">
                   <a className="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    {store.currentUser?.user?.email} // operador de encadenamiento opcional
+                    {store.currentUser?.user?.email} {/* operador de encadenamiento opcional */}
                   </a>
                   <ul className="dropdown-menu dropdown-menu-end">
                     <li>
@@ -64,15 +64,17 @@ export const Navbar = () => {
                       </Link>
                     </li>
                     <li>
-                      <Link to="/profile" className="dropdown-item">
+                      <Link to="/registroLibro" className="dropdown-item">
                         Publicar Libro
                       </Link>
                     </li>
                     <li>
                       <hr className="dropdown-divider" />
                     </li>
-                    <li className="nav-item" onClick={() => actions.logout()}>
-                      Cerrar sesión
+                    <li  onClick={() => actions.logout()}>
+                      <Link to="/" className="dropdown-item">
+                        Cerra sesión
+                      </Link>                      
                     </li>
                   </ul>
                 </li>
