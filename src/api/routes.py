@@ -70,7 +70,7 @@ def user_register():
     return jsonify({"succes": "Registro exitoso, por favor inicie sesión"}), 200
 
 @api.route('/update_user/<int:id>', methods=['PUT'])
-@jwt_required()
+# @jwt_required()
 def update_user(id):
     data = request.get_json()
     
@@ -87,7 +87,7 @@ def update_user(id):
     }), 200
         
 @api.route('delete_user/<int:id>', methods=['DELETE'])
-@jwt_required()
+# @jwt_required()
 def delete_user(id):
     user = User.query.get(id)
     user.delete()
@@ -136,7 +136,7 @@ def login():
 # -----< generando ruta privada >---------------------------------------->
 
 @api.route('/profile', methods=['POST'])
-@jwt_required()
+# @jwt_required()
 def profile():
 
     id = get_jwt_identity()
@@ -162,7 +162,7 @@ def post_book():
     return jsonify({"message": "Book created"}), 201
 
 @api.route('/books', methods=['GET'])
-@jwt_required()
+# @jwt_required()
 def get_books():
     if request.method == 'GET':
         books = Book.query.all()
@@ -173,7 +173,7 @@ def get_books():
             }), 200
 
 @api.route('/books/<int:id>', methods=['PUT'])
-@jwt_required()
+# @jwt_required()
 def update_book(id):
     data = request.get_json()
     
@@ -190,7 +190,7 @@ def update_book(id):
     return jsonify({"message": "book updated", "book": book.serialize()})
 
 @api.route('/books/<int:id>', methods=['DELETE'])
-@jwt_required()
+# @jwt_required()
 def delete_book(id):
     book= Book.query.get(id)
     book.delete_book()
@@ -203,7 +203,7 @@ def delete_book(id):
 
 #-------------< CARGAR IMAGENES >-------------------------------------------------
 @api.route('/image_upload', methods=['POST'])
-@jwt_required()  
+# @jwt_required()  
 def upload_image_route():
 
     title = request.form['title']
@@ -217,8 +217,9 @@ def upload_image_route():
         return jsonify({"msg": " la imagen es requerida"}), 400
 
 # -----< ahora hago un "fetch" a Cloudinary para agregar un archivo en la capeta galleries >-----
+    
     public_id = image.filename
-    resp = upload(image, fordel='galleries', public_id='public_id')
+    resp = upload(image, folder='galleries', public_id=public_id)
 
     if not resp:
         return jsonify({'msg': "error al cargar imagen"}), 400
@@ -234,8 +235,13 @@ def upload_image_route():
 
     return jsonify(gallery.serialize()), 201
 
+
+
+
+
+
 @api.route('/image_get', methods=['GET'])
-@jwt_required()
+# @jwt_required()
 def image():
     if request.method == 'GET':
         gallery = Gallery.query.all()
@@ -245,19 +251,45 @@ def image():
                 "data": gallery
             }), 200
         
+#===================================================================================        
 @api.route('/image_update/<int:id>', methods=['PUT'])
-@jwt_required()
+# @jwt_required()
 def image_update(id):
+    gallery = Gallery.query.get(id)
+    if not gallery:
+        return jsonify({"msg": "Gallery no encontrada"}), 404
     
-    data = request.get_json()
     
-    img = Gallery()
-    img.title =  data['title'] if data['title'] else img.title
-    img.image = data['image'] if data['image'] else img.image
+    title = request.form['title']
+
+    if not title:
+        return jsonify({"msg": "debe agregar titulo"}), 400
+
+    image = request.files['image']
     
-    img.update()
+    if not 'image' in request.files:
+        return jsonify({"msg": " la imagen es requerida"}), 400
     
-    return jsonify({"message": "img updated", "img": img.serielize()})
+    public_id = image.filename
+
+    resp = upload(image, folder='galleries', public_id=gallery.public_id)
+
+    if not resp:
+        return jsonify({'msg': "error al cargar imagen"}), 400
+
+    print(resp)
+
+    gallery.title = title
+    gallery.image = resp['secure_url']
+
+    gallery.update()
+
+    return jsonify(gallery.serialize()), 201
+    
+    
+    
+    
+    
     
 #-----< MENSAJES >-----------------------------------------------------------------------------------------
 # el modelo solo pide: el mensaje, el id del que envia, y el id dl que recibe

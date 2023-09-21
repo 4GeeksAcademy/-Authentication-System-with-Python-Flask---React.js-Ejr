@@ -30,11 +30,11 @@ import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 import Dashboard from "./pages/Dashboard";
 import ProfileUser from "./pages/ProfileUser";
+import BookForm from "./component/uploadBook/BookForm";
 
 //create your first component
 const Layout = () => {
   const basename = process.env.BASENAME || "/";
-  // const [useAlternateNavbar, setUseAlternateNavbar] = useState(false); // Estado para controlar el Navbar alternativo
 
   if (!process.env.BACKEND_URL || process.env.BACKEND_URL == "")
     return <BackendURL />;
@@ -68,6 +68,7 @@ const Layout = () => {
             <Route element={<Intercambio />} path="/intercambio" />
             <Route element={<ProfileUser />} path="/profile" />
             <Route element={<h1>Not found!</h1>} />
+            <Route element={<BookForm />} path="libro" />
           </Routes>
           <Footer />
         </ScrollToTop>

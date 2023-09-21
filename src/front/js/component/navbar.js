@@ -5,7 +5,7 @@ import { Context } from "../store/appContext";
 export const Navbar = () => {
   const { store, actions } = useContext(Context);
   const location = useLocation();
-  // console.log(location.pathname);
+  console.log(location.pathname);
 
   return (
     <div>
