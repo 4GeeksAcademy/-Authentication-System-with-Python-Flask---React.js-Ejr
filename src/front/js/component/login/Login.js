@@ -10,7 +10,7 @@ const Login = () => {
   return (
     <div className="container bg-dark my-5">
 
-    <form className="row g-3">
+    <form className="row g-3" onSubmit={(e) => actions.submitLogin(e, navigate)}>
   <div className="col-auto">
     <label htmlFor="staticEmail2" className="visually-hidden">
       Email

@@ -11,7 +11,9 @@ const getState = ({ getStore, getActions, setStore }) => {
         rep_password: "",
         region: "",
       },
+   
       url: "http://localhost:3001",
+      currentUser: [],
     },
 
     actions: {
@@ -56,11 +58,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 
 //---- funcion para  login  de usuario------------------------------------------->
-      logUser: async (e, navigate) => {
+
+      handleSubmitLogin: async (e, navigate) => {
         e.preventDefault();
         try {
           const { url, email, password, currentUser } = getStore();
-          let info = { email, password };
+          let info = { email, password, currentUser };
           const response = await fetch(`${url}/api/login`, {
             method: "POST",
             body: JSON.stringify(info),
@@ -75,7 +78,8 @@ const getState = ({ getStore, getActions, setStore }) => {
           if (data.token) {
             setStore({ currentUser: data });
             sessionStorage.setItem("currentUser", JSON.stringify(data));
-            navigate("/galeria");
+
+            navigate("/profile");
           } else {
             setStore({
               alert: {
@@ -91,7 +95,8 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
 
-      handleChange: (e) => {
+
+      handleChangeLogin: (e) => {
         setStore({
           [e.target.name]: e.target.value,
         });
