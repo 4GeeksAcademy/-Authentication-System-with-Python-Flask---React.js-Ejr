@@ -14,12 +14,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       url: "http://localhost:3001",
 
-      currentUser: [],
+      currentUser: null,
+      email: "",
+      password: "",
     },
 
     actions: {
       //---------< registro de usuario >------------------------------->>
-
       //---------< funcion para  registro  de usuario >----------------->
 
       handleChangeRegister: (e) => {
@@ -74,7 +75,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           const data = await response.json();
           console.log(data);
 
-          if (data.token) {
+          if (data.access_token) {
             setStore({ currentUser: data });
             sessionStorage.setItem("currentUser", JSON.stringify(data));
             navigate("/profile");
@@ -114,6 +115,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           });
           sessionStorage.removeItem("currentUser");
         }
+        navigate("/");
       },
     },
   };

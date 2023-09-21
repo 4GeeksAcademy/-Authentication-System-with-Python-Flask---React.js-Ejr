@@ -1,71 +1,182 @@
-
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useContext, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { Context } from "../store/appContext";
 
 export const Navbar = () => {
-  return (<div>
-    <nav className="navbar navbar-expand-lg bg-body-tertiary bg-dark">
-      <div className="container-fluid">
-        <div className="col d-flex">
-          <a className="navbar-brand text-white" href="#">Books Market</a>
-          <Link to="/" className="nav-link active text-white" aria-current="page">Home</Link>
-        </div>
-        <div className="col">
-          <form className="d-flex" role="search">
-            <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-            <button className="btn btn-light" type="submit">Search</button>
-          </form>
-        </div>
-        <div className="col">
-          <ul className="navbar-nav me-auto mb-2 mb-lg-0 d-flex justify-content-end">
-            <li className="nav-item">
-              <a className="nav-link active text-white" aria-current="page" href="#">Cart</a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link text-white" href="#">Wish List</a>
-            </li>
-            <li className="nav-item dropdown">
-              <a className="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Iniciar sesión/ Registrarse
-              </a>
-              <ul className="dropdown-menu">
-                <li>
-                  <Link to="/" className="dropdown-item">Iniciar sesión</Link>                  
-                </li>
-                <li>
-                  <Link to="/formularioRegistro" className="dropdown-item" >Registrar</Link>                  
-                </li>
-                <li>
-                  <hr className="dropdown-divider" />
-                </li>
-                <li>
-                  <a className="dropdown-item" href="#">Something else here</a>
-                </li>
-              </ul>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
+  const { store, actions } = useContext(Context);
+  const location = useLocation();
+  // console.log(location.pathname);
 
-    <nav className="navbar navbar-expand-lg bg-body-tertiary bg-dark">
-      <div className="container-fluid d-flex justify-content-around">
-        <div className="">
-          <Link to="/libroVenta" className="nav-link active text-white" aria-current="page">Libros en Venta</Link>
-        </div>
-        <div className="">
-          <Link to="/librosIntercambio" className="nav-link active text-white" aria-current="page">Libros para intercambio</Link>
-        </div>
-        <div className="">
-          <Link to="/masVendidos" className="nav-link active text-white" aria-current="page">Libros más vendidos</Link>
-        </div>
-        <div className="">
-          <Link to="/donacionesRalizadas" className="nav-link active text-white" aria-current="page">Donaciones realizadas</Link>
-        </div>
-      </div>
-    </nav>
+  return (
+    <div>
+      <nav className="navbar navbar-expand-lg bg-body-tertiary bg-dark">
+        <div className="container-fluid">
+          <div className="col d-flex">
+            <Link to="/" className="navbar-brand text-white" href="#">
+              Books Market
+            </Link>
+            <Link
+              to="/"
+              className="nav-link active text-white"
+              aria-current="page"
+            >
+              Home
+            </Link>
+          </div>
 
-  </div>
+          {location.pathname !== "/registro" && location.pathname !== "/login" && (
+            <div className="col">
+              <form className="d-flex" role="search">
+                <input
+                  className="form-control me-2"
+                  type="search"
+                  placeholder="Search"
+                  aria-label="Search"
+                />
+                <button className="btn btn-light" type="submit">
+                  Search
+                </button>
+              </form>
+            </div>
+          )}
+          <div className="col">
+            <ul className="navbar-nav me-auto mb-2 mb-lg-0 d-flex justify-content-end">
+              {location.pathname !== "/registro" &&
+                location.pathname !== "/login" && (
+                  <li className="nav-item">
+                    <a
+                      className="nav-link active text-white"
+                      aria-current="page"
+                      href="#"
+                    >
+                      Cart
+                    </a>
+                  </li>
+                )}
+              {location.pathname !== "/registro" &&
+                location.pathname !== "/login" && (
+                  <li className="nav-item">
+                    <a className="nav-link text-white" href="#">
+                      Wish List
+                    </a>
+                  </li>
+                )}
+
+              {!!store.currentUser ? (
+                <li className="nav-item dropdown">
+                  <a
+                    className="nav-link dropdown-toggle text-white"
+                    href="#"
+                    role="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    {store.currentUser?.user?.email}
+                  </a>
+                  <ul className="dropdown-menu dropdown-menu-end">
+                    <li>
+                      <Link to="/profile" className="dropdown-item">
+                        Mi Perfil
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/profile" className="dropdown-item">
+                        Publicar Libro
+                      </Link>
+                    </li>
+                    <li>
+                      <hr className="dropdown-divider" />
+                    </li>
+                    <li
+                      className="dropdown-item"
+                      onClick={() => actions.logout()}
+                    >
+                      <Link to="/" className="dropdown-item">
+                        Cerrar sesión
+                      </Link>
+                    </li>
+                  </ul>
+                </li>
+              ) : (
+                <li className="nav-item dropdown">
+                  <a
+                    className="nav-link dropdown-toggle text-white"
+                    href="#"
+                    role="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    Iniciar sesión
+                  </a>
+                  <ul className="dropdown-menu">
+                    <li>
+                      <Link to="/login" className="dropdown-item">
+                        Iniciar sesión
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/registro" className="dropdown-item">
+                        Registrar
+                      </Link>
+                    </li>
+                    <li>
+                      <hr className="dropdown-divider" />
+                    </li>
+                    <li>
+                      <a className="dropdown-item" href="#">
+                        Something else here
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+              )}
+            </ul>
+          </div>
+        </div>
+      </nav>
+      {location.pathname !== "/formularioRegistro" &&
+        location.pathname !== "/login" && (
+          <nav className="navbar navbar-expand-lg bg-body-tertiary bg-dark">
+            <div className="container-fluid d-flex justify-content-around">
+              <div className="">
+                <Link
+                  to="/libroVenta"
+                  className="nav-link active text-white"
+                  aria-current="page"
+                >
+                  Libros en Venta
+                </Link>
+              </div>
+              <div className="">
+                <Link
+                  to="/librosIntercambio"
+                  className="nav-link active text-white"
+                  aria-current="page"
+                >
+                  Libros para intercambio
+                </Link>
+              </div>
+              <div className="">
+                <Link
+                  to="/masVendidos"
+                  className="nav-link active text-white"
+                  aria-current="page"
+                >
+                  Libros más vendidos
+                </Link>
+              </div>
+              <div className="">
+                <Link
+                  to="/donacionesRalizadas"
+                  className="nav-link active text-white"
+                  aria-current="page"
+                >
+                  Donaciones realizadas
+                </Link>
+              </div>
+            </div>
+          </nav>
+        )}
+    </div>
   );
 };
-

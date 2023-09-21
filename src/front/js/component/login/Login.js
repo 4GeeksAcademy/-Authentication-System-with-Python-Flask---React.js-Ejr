@@ -23,7 +23,9 @@ const Login = () => {
             id="correo"
             placeholder="Email"
             name="email"
-            value={store.currentUser ? store.currentUser.email : ""}
+            /* value={store.currentUser ? store.currentUser.email : ""} //value={store.email} */
+            value={store.email}
+            // onChange={() => actions.handleChangeLogin}
             onChange={actions.handleChangeLogin}
             autoComplete="off"
           />
@@ -38,8 +40,10 @@ const Login = () => {
             id="inputPassword2"
             placeholder="Password"
             name="password"
-            value={store.currentUser ? store.currentUser.password : ""}
-            onChange={actions.handleChangeLogin}
+            value={store.password}
+            // value={store.currentUser ? store.currentUser.password : ""} //value={store.password}
+            // onChange={() => actions.handleChangeLogin()}
+            onChange={actions.handleChangeLogin} //onChange={()=>actions.handleChangeLogin()}
           />
         </div>
         <div className="d-flex justify-content-center">

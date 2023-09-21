@@ -34,7 +34,7 @@ import ProfileUser from "./pages/ProfileUser";
 //create your first component
 const Layout = () => {
   const basename = process.env.BASENAME || "/";
-  const [useAlternateNavbar, setUseAlternateNavbar] = useState(false); // Estado para controlar el Navbar alternativo
+  // const [useAlternateNavbar, setUseAlternateNavbar] = useState(false); // Estado para controlar el Navbar alternativo
 
   if (!process.env.BACKEND_URL || process.env.BACKEND_URL == "")
     return <BackendURL />;

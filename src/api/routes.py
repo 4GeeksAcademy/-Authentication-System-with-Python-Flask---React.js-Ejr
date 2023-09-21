@@ -133,7 +133,7 @@ def login():
     return jsonify(data), 200
 
 
-# -----< generando ruta privada >----------------------------------------------------->
+# -----< generando ruta privada >---------------------------------------->
 
 @api.route('/profile', methods=['POST'])
 @jwt_required()
@@ -245,7 +245,6 @@ def image():
                 "data": gallery
             }), 200
         
-
 @api.route('/image_update/<int:id>', methods=['PUT'])
 @jwt_required()
 def image_update(id):
@@ -278,14 +277,11 @@ def messages(id = None):
             messages = Message.query.all()
             messages = list(map(lambda msg: msg.selialize(), messages))
             return jsonify({'data' : messages}), 200
-        
-        
-        
+            
     if request.method == 'POST':
         message = request.json.get('message')
         user_from_id = request.json.get('user_from_id')
         user_to_id = request.json.get('user_to_id')
-        
         msg = Message()
         msg.message = message
         msg.user_from_id = user_from_id
