@@ -43,10 +43,11 @@ class Book(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(120), nullable=False)
     author = db.Column(db.String(120), nullable=False)
-    cathegory = db.Column(db.String(120),  default="sin categoria")
+    cathegory = db.Column(db.String(120), nullable=False)
     number_of_pages = db.Column(db.String(120))
-    description = db.Column(db.String(250))
-    price = db.Column(db.String(120))
+    description = db.Column(db.String(250), nullable=False)
+    type = db.Column(db.String(120), nullable=False)
+    price = db.Column(db.String(120), nullable=False)    
     photo = db.Column(db.String(120), default="no-photo.png")
     
 
@@ -58,6 +59,7 @@ class Book(db.Model):
             "cathegory": self.cathegory,
             "number_of_pages": self.number_of_pages,
             "description": self.description,
+            "type": self.type,
             "price": self.price,
             "photo": self.photo
         }
@@ -132,3 +134,33 @@ class Message(db.Model):
     def delete(self):
         db.session.delete(self)
         db.session.commit()    
+        
+# TABLA COMETARIOS
+
+class Comentario(db.Model):
+    __tablename__ = 'comentario'
+    id = db.Column(db.Integer, primary_key=True)
+    comentario = db.Column(db.String(250), nullable=False)
+    #book_id = db.Column(db.Integer, db.ForeignKey('book.id'), nullable=False)
+    #user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "comentario": self.comentario,
+            #"book_id": self.book_id,
+            #"user_id": self.user_id
+        }
+
+    def save(self):
+        db.session.add(self)
+        db.session.commit()
+
+    def update(self):
+        db.session.commit()
+
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()
+
+ 

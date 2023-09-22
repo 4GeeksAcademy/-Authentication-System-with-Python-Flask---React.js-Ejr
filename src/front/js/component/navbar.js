@@ -4,7 +4,7 @@ import { Context } from "../store/appContext";
 
 export const Navbar = () => {
   const { store, actions } = useContext(Context);
-  const location = useLocation();
+  const location = useLocation(); // renderizar con ruta
   console.log(location.pathname);
 
   return (
@@ -24,24 +24,25 @@ export const Navbar = () => {
             </Link>
           </div>
 
-          {location.pathname !== "/registro" && location.pathname !== "/login" && (
-            <div className="col">
-              <form className="d-flex" role="search">
-                <input
-                  className="form-control me-2"
-                  type="search"
-                  placeholder="Search"
-                  aria-label="Search"
-                />
-                <button className="btn btn-light" type="submit">
-                  Search
-                </button>
-              </form>
-            </div>
-          )}
+          {location.pathname !== "/formularioRegistro" &&
+            location.pathname !== "/login" && (
+              <div className="col">
+                <form className="d-flex" role="search">
+                  <input
+                    className="form-control me-2"
+                    type="search"
+                    placeholder="Search"
+                    aria-label="Search"
+                  />
+                  <button className="btn btn-light" type="submit">
+                    Search
+                  </button>
+                </form>
+              </div>
+            )}
           <div className="col">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0 d-flex justify-content-end">
-              {location.pathname !== "/registro" &&
+              {location.pathname !== "/formularioRegistro" &&
                 location.pathname !== "/login" && (
                   <li className="nav-item">
                     <a
@@ -53,7 +54,7 @@ export const Navbar = () => {
                     </a>
                   </li>
                 )}
-              {location.pathname !== "/registro" &&
+              {location.pathname !== "/formularioRegistro" &&
                 location.pathname !== "/login" && (
                   <li className="nav-item">
                     <a className="nav-link text-white" href="#">
@@ -71,7 +72,8 @@ export const Navbar = () => {
                     data-bs-toggle="dropdown"
                     aria-expanded="false"
                   >
-                    {store.currentUser?.user?.email}
+                    {store.currentUser?.user?.email}{" "}
+                    {/* operador de encadenamiento opcional */}
                   </a>
                   <ul className="dropdown-menu dropdown-menu-end">
                     <li>
@@ -80,19 +82,16 @@ export const Navbar = () => {
                       </Link>
                     </li>
                     <li>
-                      <Link to="/profile" className="dropdown-item">
+                      <Link to="/registroLibro" className="dropdown-item">
                         Publicar Libro
                       </Link>
                     </li>
                     <li>
                       <hr className="dropdown-divider" />
                     </li>
-                    <li
-                      className="dropdown-item"
-                      onClick={() => actions.logout()}
-                    >
+                    <li onClick={() => actions.logout()}>
                       <Link to="/" className="dropdown-item">
-                        Cerrar sesión
+                        Cerra sesión
                       </Link>
                     </li>
                   </ul>
@@ -106,7 +105,7 @@ export const Navbar = () => {
                     data-bs-toggle="dropdown"
                     aria-expanded="false"
                   >
-                    Iniciar sesión
+                    Iniciar sesión/Registrarse
                   </a>
                   <ul className="dropdown-menu">
                     <li>
@@ -115,7 +114,7 @@ export const Navbar = () => {
                       </Link>
                     </li>
                     <li>
-                      <Link to="/registro" className="dropdown-item">
+                      <Link to="/formularioRegistro" className="dropdown-item">
                         Registrar
                       </Link>
                     </li>
