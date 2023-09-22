@@ -22,6 +22,7 @@ import {Support} from "./pages/support";
 import RegistroLibro from "./pages/registroLibro";
 import { Profile } from "./pages/profile";
 import { DetalleLibro } from "./pages/detalleLibro";
+import { PersonalInfoProfile } from "./component/personal-Info";
 
 
 
@@ -35,6 +36,7 @@ import { ComoDonar } from "./pages/comoDonar";
 import injectContext from "./store/appContext";
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
+import { SectionProfile } from "./pages/sectionProfile";
 
 
 
@@ -68,6 +70,8 @@ const Layout = () => {
                         <Route element={<Login />} path="/login" />
                         <Route element={<Intercambio />} path="/intercambio" />
                         <Route element={<Support />} path="/support" />
+                        <Route element={<SectionProfile />} path="/sectionProfile" />
+                        
 
                         {/* <Route element={<FormularioRegistro />} path="/formularioRegistro" /> */}
 

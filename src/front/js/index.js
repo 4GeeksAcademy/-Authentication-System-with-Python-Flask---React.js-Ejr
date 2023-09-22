@@ -12,12 +12,4 @@ import "../styles/index.css";
 
 //render your react application
 ReactDOM.render(<Layout />, document.querySelector("#app"));
-ReactDOM.createRoot(document.getElementById('root')).render(
-  
-  <React.StrictMode>
-    
-    <Support />
-    {/* <BookDetails /> */}
 
-  </React.StrictMode>,
-)

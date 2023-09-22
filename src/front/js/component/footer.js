@@ -50,7 +50,7 @@ export const Footer = () => {
                 <Link to="/metodoEnvio" className="nav-link p-0 text-white" aria-current="page">Contactanos</Link>
               </li>
               <li className="nav-item mb-2">
-                <Link to="/metodoEnvio" className="nav-link p-0 text-white" aria-current="page">Preguntas frecuentes</Link>
+                <Link to="/Support" className="nav-link p-0 text-white" aria-current="page">Preguntas frecuentes</Link>
               </li>              
             </ul>
           </div>
