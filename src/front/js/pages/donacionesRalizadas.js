@@ -48,8 +48,8 @@ export const DonacionesRealizadas = () => {
                     </p>
                 </div>
             </div>
-            <div class="d-grid gap-2">
-                <button class="btn btn-dark" type="button">Realizar Donaciones</button>
+            <div className="d-grid gap-2">
+                <button className="btn btn-dark" type="button">Realizar Donaciones</button>
 
             </div>
         </div>
