@@ -18,6 +18,7 @@ import BookReviews from "./pages/BookReviews";
 import Login from "./component/login/Login";
 import Intercambio from "./pages/Intercambio";
 import  FormularioRegistro  from "./pages/formularioRegistro";
+import {Support} from "./component/support";
 
 /* FOOTERS */
 import { GuiaCompra } from "./pages/guiaCompra";
@@ -29,6 +30,7 @@ import { ComoDonar } from "./pages/comoDonar";
 import injectContext from "./store/appContext";
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
+
 
 
 //create your first component
@@ -60,6 +62,7 @@ const Layout = () => {
                         <Route element={<BookReviews />} path="/bookreviews" />
                         <Route element={<Login />} path="login" />
                         <Route element={<Intercambio />} path="/intercambio" />
+                        <Route element={<Support />} path="/support" />
 
                         {/* <Route element={<FormularioRegistro />} path="/formularioRegistro" /> */}
 
