@@ -2,7 +2,7 @@
 import React, { useContext } from "react";
 import { Context } from "../store/appContext";
 
-import "../../styles/home.css";
+// import "../../styles/home.css";
 import { Banner } from "../component/banner";
 import { Categorias } from "../component/categorias";
 import { Reviews } from "../component/reviews";

@@ -1,8 +1,9 @@
 //import react into the bundle
 import React from "react";
 import ReactDOM from "react-dom";
-import Support from './pages/support'
-import BookDetails from './front/js/pages/book-details'
+import {Support} from './pages/support'
+import Layout from "./layout";
+// import BookDetails from './front/js/pages/book-details'
 
 //include your index.scss file into the bundle
 import "../styles/index.css";
@@ -16,7 +17,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     
     <Support />
-    <BookDetails />
+    {/* <BookDetails /> */}
 
   </React.StrictMode>,
 )

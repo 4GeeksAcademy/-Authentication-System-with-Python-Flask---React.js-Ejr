@@ -18,7 +18,7 @@ import BookReviews from "./pages/BookReviews";
 import Login from "./component/login/Login";
 import Intercambio from "./pages/Intercambio";
 import FormularioRegistro from "./pages/formularioRegistro";
-import {Support} from "./component/support";
+import {Support} from "./pages/support";
 import RegistroLibro from "./pages/registroLibro";
 import { Profile } from "./pages/profile";
 import { DetalleLibro } from "./pages/detalleLibro";
