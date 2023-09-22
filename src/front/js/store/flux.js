@@ -150,7 +150,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         e.preventDefault();
         try {
           const { url, email, password, currentUser } = getStore();
-          let info = { email, password };
+          let info = { email, password, currentUser };
           const response = await fetch(`${url}/api/login`, {
             method: "POST",
             body: JSON.stringify(info),
