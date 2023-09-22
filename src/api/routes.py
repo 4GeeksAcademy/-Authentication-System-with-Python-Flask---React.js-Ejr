@@ -14,7 +14,7 @@ from flask_sqlalchemy import SQLAlchemy
 
 api = Blueprint('api', __name__)
 
-# -----<listar todos los udiarios >------------------------------------------------------>
+# -----<listar todos los usuiarios >------------------------------------------------------>
 @api.route('/usuarios', methods=['POST', 'GET'])
 def home():
     users = User.query.all()
@@ -141,7 +141,7 @@ def login():
     return jsonify(data), 200
 
 
-# -----< generando ruta privada >---------------------------------------->
+# -----< generando ruta privada, datos de usuario, perfil >---------------------------------------->
 
 @api.route('/profile', methods=['GET'])
 @jwt_required()
