@@ -22,12 +22,12 @@ app = Flask(__name__)
 app.url_map.strict_slashes = False
 
 # database condiguration
-db_url = os.getenv("DATABASE_URL")
+db_url = "postgres://postgres:iemd818181@localhost:5432/postgres"
 print (db_url)
 if db_url is not None:
     app.config['SQLALCHEMY_DATABASE_URI'] = db_url.replace("postgres://", "postgresql://")
 else:
-    app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:////test.db"
+    app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///test.db"
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
@@ -80,4 +80,6 @@ def serve_any_other_file(path):
 # this only runs if `$ python src/main.py` is executed
 if __name__ == '__main__':
     PORT = int(os.environ.get('PORT', 3001))
+    import sqlite3
+    sqlite3.connect("test.db")
     app.run(host='0.0.0.0', port=PORT, debug=True)
