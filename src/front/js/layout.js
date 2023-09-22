@@ -17,8 +17,13 @@ import Testimonio from "./component/reviewsLibros/Testimonio";
 import BookReviews from "./pages/BookReviews";
 import Login from "./component/login/Login";
 import Intercambio from "./pages/Intercambio";
-import  FormularioRegistro  from "./pages/formularioRegistro";
+import FormularioRegistro from "./pages/formularioRegistro";
 import {Support} from "./component/support";
+import RegistroLibro from "./pages/registroLibro";
+import { Profile } from "./pages/profile";
+import { DetalleLibro } from "./pages/detalleLibro";
+
+
 
 /* FOOTERS */
 import { GuiaCompra } from "./pages/guiaCompra";
@@ -46,7 +51,7 @@ const Layout = () => {
         <div>
             <BrowserRouter basename={basename}>
                 <ScrollToTop>
-                    {useAlternateNavbar ? <Navbar /> : <Navbar2 />}
+                    <Navbar />
                     <Routes>
                         <Route element={<Home />} path="/" />
                         <Route element={<LibroVenta />} path="/libroVenta" />
@@ -60,9 +65,8 @@ const Layout = () => {
                         <Route element={<DonacionesRealizadas />} path="/donacionesRalizadas" />
                         <Route element={<ComoDonar />} path="/comoDonar" />
                         <Route element={<BookReviews />} path="/bookreviews" />
-                        <Route element={<Login />} path="login" />
+                        <Route element={<Login />} path="/login" />
                         <Route element={<Intercambio />} path="/intercambio" />
-                        <Route element={<Support />} path="/support" />
 
                         {/* <Route element={<FormularioRegistro />} path="/formularioRegistro" /> */}
 
