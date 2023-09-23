@@ -8,51 +8,44 @@ import { Context } from "../store/appContext";
 export const DetalleLibro = () => {
     const { store, actions } = useContext(Context);
     const { id } = useParams();
-    const [libro, setLibro] = useState([]);
+    
 
 
     useEffect(() => {
-        var requestOptions = {
-            method: 'GET',
-            redirect: 'follow'
-        };
-
-        fetch("http://localhost:3001/api/detalle-libro/${id}", requestOptions)
-            .then(response => response.json())
-            .then(data => {
-                setLibro(data);
-                console.log("conseguí el libro");
-                console.log("oneBook:", data);
-            })
-            .catch(error => console.log('error', error));
+        actions.getOneBook(id)
     }, [id]);
 
     return (
         <div>
             <div className="container-fluid d-flex">
-                <div className="card shadow-sm p-3 m-3" style={{ width: "300px", height: "400px" }}>
-                    <img src="" className="card-img-top" alt="Hollywood Sign on The Hill" />
+                <div className="card shadow-sm m-3" style={{ width: "300px", height: "100%" }}>
+                    <img src={store.oneBook?.photo} className="card-img-top" alt="Hollywood Sign on The Hill"  style={{ width: "100%", height: "400px" }} />
                 </div>
                 <div className="m-3 mt-5 mb-5">
-                    <h1>LIBROS EN VENTA</h1>
+                    <h1>{store.oneBook?.title}</h1>
                     <hr className="dropdown-divider" />
                     <br></br>
-                    <div className="row">
-                        <div className="col-3">
-                            <h5 className="text-dark mb-3">Autor</h5>
+                    <div className="d-flex  "   >
+                        <div className="p-0 " >
+                            <p className="text-dark mb-3">Autor</p>
                             <p className="text-dark mb-3">Descripción</p>
                             <p className="text-dark mb-3">Categoria</p>
                             <p className="text-dark mb-3">Páginas</p>
                             <p className="text-dark mb-3">Precio</p>
                         </div>
-                        <div className="col-3 ms-3">
-                            <h5 className="text-dark mb-3">:{libro.title}</h5>
-                            <p className="text-dark mb-3">:</p>
-                            <p className="text-dark mb-3">:</p>
-                            <p className="text-dark mb-3">:</p>
-                            <p className="text-dark mb-3">:</p>
+                        <div className=" ms-3 " >
+                            <p className="text-dark mb-3">:{store.oneBook?.author}</p>
+                            <p className="text-dark mb-3">:{store.oneBook?.description}</p>
+                            <p className="text-dark mb-3">:{store.oneBook?.cathegory}</p>
+                            <p className="text-dark mb-3">:{store.oneBook?.number_of_pages}</p>
+                            <p className="text-dark mb-3">:{store.oneBook?.price}</p>
                         </div>
                     </div>
+                    <div className="mt-4">
+                        <div className="btn btn-success">Comprar</div>
+                        <div className="btn btn-dark mx-3">Agregar favoritos</div>
+                    </div>
+                    
                 </div>
             </div>
         </div>

@@ -19,6 +19,7 @@ import Login from "./component/login/Login";
 import Intercambio from "./pages/Intercambio";
 import FormularioRegistro from "./pages/formularioRegistro";
 import RegistroLibro from "./pages/registroLibro";
+import RegistroLibro2 from "./pages/registroLibro2";
 import { Profile } from "./pages/profile";
 import { DetalleLibro } from "./pages/detalleLibro";
 
@@ -70,6 +71,7 @@ const Layout = () => {
                         <Route element={<h1>Not found!</h1>} />
                         <Route element={<FormularioRegistro />} path="/formularioRegistro" />
                         <Route element={<RegistroLibro />} path="/registroLibro" />
+                        <Route element={<RegistroLibro2 />} path="/registroLibro2" />
                         <Route element={<DetalleLibro />} path="/detalleLibro/:id" />
                         <Route element={<Profile />} path="/profile" />                         
                         <Route element={<h1>Not found!</h1>} />

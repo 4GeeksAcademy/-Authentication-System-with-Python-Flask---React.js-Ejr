@@ -35,9 +35,8 @@ class User(db.Model):
         db.session.delete(self)
         db.session.commit()
 
+
 # <--TABLA LIBRO-------------------------------------------->
-
-
 class Book(db.Model):
     __tablename__ = 'book'
     id = db.Column(db.Integer, primary_key=True)
@@ -49,6 +48,8 @@ class Book(db.Model):
     type = db.Column(db.String(120), nullable=False)
     price = db.Column(db.String(120), nullable=False)    
     photo = db.Column(db.String(120), default="no-photo.png")
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False) # libro con id del usaurio
+    user = db.relationship('User', backref=db.backref('books', lazy=True)) # definicion de realcion con usaurio
 
     def serialize(self):
         return {
@@ -73,6 +74,8 @@ class Book(db.Model):
     def delete(self):
         db.session.delete(self)
         db.session.commit()
+
+
 
 class Gallery(db.Model):
     __tablename__= 'gallery'

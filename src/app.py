@@ -12,6 +12,7 @@ from api.routes import api
 from api.admin import setup_admin
 from api.commands import setup_commands
 from flask_jwt_extended import JWTManager
+import cloudinary
 
 
 #from models import Person
@@ -38,13 +39,17 @@ db.init_app(app)
 # Allow CORS requests to this API
 CORS(app)
 
+###CLAUDINARY          
 import cloudinary
           
 cloudinary.config( 
-  cloud_name = "dke9ovnuo", 
-  api_key = "431472729639739", 
-  api_secret = "NECJAp7syLC9BzdBaIINMfkWW7s" 
+  cloud_name = "dxaialbs0", 
+  api_key = "285143936135796", 
+  api_secret = "kOSbRfhF-sS6DVozmP3uz9riOoA" 
 )
+
+          
+
 # add the admin
 setup_admin(app)
 

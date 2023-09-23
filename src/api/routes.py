@@ -10,7 +10,8 @@ from werkzeug.security import generate_password_hash, check_password_hash
 import datetime
 from cloudinary.uploader import upload
 from flask_migrate import Migrate
-from flask_sqlalchemy import SQLAlchemy 
+from flask_sqlalchemy import SQLAlchemy
+import cloudinary
 
 
 
@@ -81,14 +82,14 @@ def user_register():
     return jsonify({"succes": "Registro exitoso, por favor inicie sesión"}), 200
 
 
-
+#------< validacion de usuario, de datos ingresados >------#
 @api.route('/login', methods=['POST'])
 def login():
     
     email= request.json.get("email")
     password= request.json.get("password")
   
- #------< validacion de usuario, de datos ingresados >------#
+ 
 
     if not email:
         return jsonify({"error": "email is requare"}), 422
@@ -128,19 +129,6 @@ def profile():
     id = get_jwt_identity()
     user = User.query.get(id)
     return jsonify({"message": "ruta  privada", "user": user.email}), 200
-
-#-----<ruta libro----->#
-
-@api.route('/books', methods=['GET'])
-def books_route():
-    response_libro ={
-        "mesage": "libro encontrado, sos un krac!"
-    }
-    
-    return jsonify(response_libro), 200
-
-
-
 
 
 @api.route('/upload', methods=['POST'])
@@ -206,59 +194,85 @@ def get_comentarios():
     return jsonify(comentarios_list), 200
 
 
+
 # END POINT LIBRO
 ### AGREGAR LIBRO
 @api.route('/registerBook', methods=['POST'])
+@jwt_required() #solo usuario logeado publica
 def register_Book():
-    print(request.get_json())
-    title= request.json.get("title")
-    author= request.json.get("author")
-    cathegory= request.json.get("cathegory")
-    number_of_pages= request.json.get("number_of_pages")
-    description= request.json.get("description")
-    type= request.json.get("type")
-    price= request.json.get("price")
-    photo= request.json.get("photo")    
+
+    title= None
+    author= None
+    cathegory= None
+    number_of_pages= None
+    description= None
+    type= None
+    price= None
+    photo= None 
+    user_id = get_jwt_identity() 
+
+
+### VALIDANDO DATOS
+    if 'title' in request.form:
+        title =request.form["title"]
+    else:
+        return jsonify({"error": "Title is required"}), 400
+
+    if 'author' in request.form:
+        author =request.form["author"]
+    else:
+        return jsonify({"error": "Author is required"}), 400  
+
+    if 'cathegory' in request.form:
+        cathegory =request.form["cathegory"]
+    else:
+        return jsonify({"error": "Cathegory is required"}), 400  
+
+    if 'number_of_pages' in request.form:
+        number_of_pages =request.form["number_of_pages"]
+    else:
+        return jsonify({"error": "Number_of_pages is required"}), 400  
+
+    if 'description' in request.form:
+        description =request.form["description"]
+    else:
+        return jsonify({"error": "Description is required"}), 400  
+
+    if 'type' in request.form:
+        type =request.form["type"]
+    else:
+        return jsonify({"error": "Type is required"}), 400  
+
+    if 'price' in request.form:
+        price =request.form["price"]
+    else:
+        return jsonify({"error": "Price is required"}), 400    
+
+    if 'photo' in request.files:
+        photo =request.files["photo"]
+    else:
+        return jsonify({"error": "Photo is required"}), 400  
     
- ## VALIDACIÓN LIBRO
-    if not title:
-        return jsonify({"error": "Title is required"}), 422
+    response = upload(photo, folder="market_image")
     
-    if not author:
-        return jsonify({"error": "Author is required"}), 422
-    
-    if not cathegory:
-        return jsonify({"error": "Cathegory is required"}), 422
-    
-    if not number_of_pages:
-        return jsonify({"error": "Number of pages is required"}), 422
-    
-    if not description:
-        return jsonify({"error": "Description is required"}), 422
-    
-    if not type:
-        return jsonify({"error": "Type is required"}), 422
-    
-    if not price:
-        return jsonify({"error": "Price is required"}), 422
-    
-    if not photo:
-        return jsonify({"error": "Photo is required"}), 422
-        
+      
  ## CREACION LIBRO         
+    if response:
+        book = Book()
+        book.title = title
+        book.author = author
+        book.cathegory = cathegory
+        book.number_of_pages = number_of_pages
+        book.description = description
+        book.type = type
+        book.price = price
+        book.photo = response['secure_url']
+        book.user_id = user_id  # Asociar el libro con el usuario actual
+        book.save()
+        return jsonify(book.serialize()), 200
     
-    book = Book()
-    book.title = title
-    book.author = author
-    book.cathegory = cathegory
-    book.number_of_pages = number_of_pages
-    book.description = description
-    book.type = type
-    book.price = price
-    book.photo = photo
-    book.save() 
-    
-    return jsonify({"succes": "Publiación de libro exitosa"}), 200
+    return jsonify({"succes": "Publiación de libro exitosa"}), 201
+
 
 ###LISTAR TODOS LOS LIBROS
 @api.route('/libroVenta', methods=['GET'])
@@ -268,7 +282,7 @@ def get_book():
     return jsonify(book_list), 200 
 
 ###LISTAR DETALLE POR LIBRO
-@api.route('/detalle-libro/<int:id>', methods=['GET'])
+@api.route('/detalleLibro/<int:id>', methods=['GET'])
 def get_book_details(id):
     try:
         # Busca el libro en función del ID proporcionado
@@ -297,3 +311,16 @@ def get_book_details(id):
     except Exception as e:
         # Maneja cualquier excepción que pueda ocurrir (por ejemplo, problemas de base de datos) y devuelve un error 500
         return jsonify({'error': str(e)}), 500
+
+###LISTAR LIBRO POR USUARIO
+@api.route('/user_books/<int:user_id>', methods=['GET'])
+def get_user_books(user_id):
+    user = User.query.get(user_id)
+    
+    if user is None:
+        return jsonify({"error": "Usuario no encontrado"}), 404
+    
+    user_books = Book.query.filter_by(user_id=user_id).all()
+    user_books_list = [book.serialize() for book in user_books]
+    
+    return jsonify(user_books_list), 200

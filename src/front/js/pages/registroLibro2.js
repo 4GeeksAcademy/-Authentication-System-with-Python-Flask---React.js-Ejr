@@ -5,16 +5,16 @@ import { Context } from "../store/appContext";
 
 
 
-const RegistroLibro = () => {
+const RegistroLibro2 = () => {
     
     const {store, actions} = useContext(Context)    
     const navigate = useNavigate()
     
     return (
         <div className="container col-md-4 my-3 shadow p-0">
-            <form className="form-control shadow p-3 " onSubmit={(e) => actions.submitBook(e, navigate)}>
+            <form className="form-control shadow p-3 " onSubmit={(e)=>{actions.submitBookImage(e, navigate)}}>
                 <div className="mb-3">
-                    <label htmlFor="form" className="form-label">
+                    <label htmlFor="title" className="form-label">
                         Titulo 
                     </label>
                     <input
@@ -24,12 +24,11 @@ const RegistroLibro = () => {
                         aria-describedby="emailHelp"
                         placeholder="Ingresa el titulo"                       
                         required
-                        name={'title'}
-                        value={store.newBook.title}
-                        onChange={actions.handleChangeBook}
-                    
+                        name="title"
+                        value={store.title}
+                        onChange={actions.inputBookValue}
                     />
-                    <label htmlFor="exampleInputEmail1" className="form-label">
+                    <label htmlFor="author" className="form-label">
                         Autor
                     </label>
                     <input
@@ -39,11 +38,11 @@ const RegistroLibro = () => {
                         aria-describedby="emailHelp"
                         placeholder="Ingresa el autor"                        
                         required
-                        name={'author'}
-                        value={store.newBook.author}
-                        onChange={actions.handleChangeBook}
+                        name="author"
+                        value={store.author}
+                        onChange={actions.inputBookValue}
                     />
-                    <label htmlFor="exampleInputEmail1" className="form-label">
+                    <label htmlFor="cathegory" className="form-label">
                         Categoria
                     </label>
                     <input
@@ -53,15 +52,13 @@ const RegistroLibro = () => {
                         aria-describedby="emailHelp"
                         placeholder="Ingresa la categoria"
                         required                         
-                        name={'cathegory'}
-                        value={store.newBook.cathegory}
-                        onChange={actions.handleChangeBook}
-                    
-
+                        name="cathegory"
+                        value={store.cathegory}
+                        onChange={actions.inputBookValue}
                     />
                 </div>
                 <div className="mb-3 password">
-                    <label htmlFor="exampleInputPassword1" className="form-label">
+                    <label htmlFor="number_of_pages" className="form-label">
                         Numero de páginas
                     </label>
                     <input
@@ -70,14 +67,13 @@ const RegistroLibro = () => {
                         id="number_of_pages"
                         placeholder="Numero de páginas"
                         required
-                        name={'number_of_pages'}
-                        value={store.newBook.number_of_pages}
-                        onChange={actions.handleChangeBook}
-                    
+                        name="number_of_pages"
+                        value={store.number_of_pages}
+                        onChange={actions.inputBookValue}                    
                     />
                 </div>
                 <div className="mb-3 password">
-                    <label htmlFor="exampleInputPassword1" className="form-label">
+                    <label htmlFor="description" className="form-label">
                         Descripción
                     </label>
                     <input
@@ -86,14 +82,13 @@ const RegistroLibro = () => {
                         id="description"
                         placeholder="Descripción"
                         required
-                        name={'description'}
-                        value={store.newBook.description}
-                        onChange={actions.handleChangeBook}
-                    
+                        name="description"
+                        value={store.description}
+                        onChange={actions.inputBookValue}
                     />
                 </div>
                 <div className="mb-3 password">
-                    <label htmlFor="exampleInputPassword1" className="form-label">
+                    <label htmlFor="price" className="form-label">
                         Precio
                     </label>
                     <input
@@ -102,41 +97,43 @@ const RegistroLibro = () => {
                         id="price"
                         placeholder="Ingresa precio"
                         required
-                        name={'price'}
-                        value={store.newBook.price}
-                        onChange={actions.handleChangeBook}
+                        name="price"
+                        value={store.price}
+                        onChange={actions.inputBookValue}
                     
                     />
                 </div>
                 <div className="mb-3 password">
-                    <label htmlFor="exampleInputPassword1" className="form-label">
+                    <label htmlFor="photo" className="form-label">
                         Foto
+                    </label>
+                    <input
+                        type="file"
+                        className="form-control"
+                        id="photo"
+                        placeholder="Ingresa foto"                        
+                        name="photo"                        
+                        onChange={(e) => actions.inputBookImage(e.target.files[0])}
+                    
+                    />
+                </div>
+                <div className="mb-3 password">
+                    <label htmlFor="type" className="form-label">
+                        Tipo
                     </label>
                     <input
                         type="text"
                         className="form-control"
-                        id="photo"
-                        placeholder="Ingresa foto"                        
-                        name={'photo'}
-                        value={store.newBook.photo}
-                        onChange={actions.handleChangeBook}
+                        id="type"
+                        placeholder="Ingresa tipo"
+                        required
+                        name="type"
+                        value={store.type}
+                        onChange={actions.inputBookValue}
                     
                     />
-                </div>
-                <div className="input-group mb-3">
-                    <label className="input-group-text" htmlFor="inputGroupSelect01">
-                        Tipo
-                    </label>
-                    <select className="form-select"  name="type" required value={store.newBook.type}
-                        onChange={actions.handleChangeBook}>
-                        
-                        <option value="" >Libro para...</option>
-                        <option value="Venta">Venta</option>
-                        <option value="Intercambio">Intercambio</option>
-                        <option value="Donacion">Donación</option>                        
-                    </select>
                 </div>                
-                <button type="submit" className="btn btn-primary my-3">
+                <button type="" className="btn btn-primary my-3" >
                     Publicar
                 </button>
             </form>
@@ -144,4 +141,4 @@ const RegistroLibro = () => {
     )
 
 };
-export default RegistroLibro
+export default RegistroLibro2

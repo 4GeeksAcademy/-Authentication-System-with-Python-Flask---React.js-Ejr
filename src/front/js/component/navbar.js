@@ -23,7 +23,7 @@ export const Navbar = () => {
           </div>
 
 
-          {location.pathname !== "/formularioRegistro" && location.pathname !== "/login" && (
+          {location.pathname !== "/formularioRegistro" && location.pathname !== "/login" && location.pathname !== "/registroLibro" && (
             <div className="col">
               <form className="d-flex" role="search">
                 <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
@@ -36,14 +36,14 @@ export const Navbar = () => {
           <div className="col">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0 d-flex justify-content-end">
 
-              {location.pathname !== "/formularioRegistro" && location.pathname !== "/login" && (
+              {location.pathname !== "/formularioRegistro" && location.pathname !== "/login" && location.pathname !== "/registroLibro" && (
                 <li className="nav-item">
                   <a className="nav-link active text-white" aria-current="page" href="#">
                     Cart
                   </a>
                 </li>
               )}
-              {location.pathname !== "/formularioRegistro" && location.pathname !== "/login" && (
+              {location.pathname !== "/formularioRegistro" && location.pathname !== "/login" && location.pathname !== "/registroLibro" && (
                 <li className="nav-item">
                   <a className="nav-link text-white" href="#">
                     Wish List
@@ -64,7 +64,7 @@ export const Navbar = () => {
                       </Link>
                     </li>
                     <li>
-                      <Link to="/registroLibro" className="dropdown-item">
+                      <Link to="/registroLibro2" className="dropdown-item">
                         Publicar Libro
                       </Link>
                     </li>
@@ -110,7 +110,7 @@ export const Navbar = () => {
           </div>
         </div>
       </nav>
-      {location.pathname !== "/formularioRegistro" && location.pathname !== "/login" && (
+      {location.pathname !== "/formularioRegistro" && location.pathname !== "/login" && location.pathname !== "/registroLibro" && (
         <nav className="navbar navbar-expand-lg bg-body-tertiary bg-dark">
           <div className="container-fluid d-flex justify-content-around">
             <div className="">

@@ -14,17 +14,19 @@ export const LibroVenta = () => {
                     <h1>LIBROS EN VENTA</h1>
                 </div>
                 <div className="d-flex flex-wrap justify-content-center">
-                    {store.showBook.map((libro, i) => (
-                        <div className="card shadow-sm p-3 m-3" style={{ width: "300px", height: "400px" }} key={i}>
-                            {/* <img  className="card-img-top" alt={store.showBook.title} /> */}
+                    {store.showBooks.map((libro, i) => (
+                        <div className="card shadow-sm  m-3" style={{ width: "220px", height: "300" }} key={i}>
+                            <div className="d-flex justify-content-center">
+                                <img className="card-img-top" style={{ maxWidth: "100%", maxHeight: "300px" }} src={libro.photo} alt={`Portada de ${libro.title}`} />
+                            </div>
                             <div className="card-body">
-                                <h5 className="card-title">Titulo: {libro.title}</h5>
-                                <p className="card-text">Descripción: {libro.description}</p>
-                                <p className="card-text">Autor: {libro.author}</p>
-                                <p className="card-text">Categoria: {libro.cathegory}</p>
-                                <p className="card-text">Páginas: {libro.number_of_pages}</p>
-                                <p className="card-text">Precio: {libro.price}</p>
-                                <Link to={`/detalle-libro/${libro.id}`} className="btn btn-dark">Ver detalles</Link>
+                                <h6 className="card-title">{libro.title}</h6>
+                                <p className="card-text">{libro.author}</p>
+                                <p className="card-text">${libro.price}</p>
+                            </div>
+                            <div className="d-flex justify-content-between align-items-center m-1">
+                                <Link to={`/detalleLibro/${libro.id}`} className="btn btn-dark">Ver detalles</Link>
+                                <i className="fa-regular fa-heart fa-2x"></i>
                             </div>
                         </div>
                     ))}
