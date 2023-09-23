@@ -2,7 +2,7 @@ import React from "react"
 import '../../styles/nextEvent.css'
 const nextEvent = () => {
   return (
-    <div id="nextEventWrapper">
+    <div className="contSuperior" style={{minHeight:"400px"}}>
      <div style={{ textAlign: "center" }} className="col-12">
             <h1>Eventos</h1>
             <div className="divider divider-default m-3"></div>
@@ -32,10 +32,7 @@ const nextEvent = () => {
                   <p id="eventTitle">The Premium Tournament</p>
                 </div>
               </div>
-
             </div>
-
-
             <div className="col">
               <h3>Fecha del evento</h3>
               <div className="row">
@@ -59,7 +56,6 @@ const nextEvent = () => {
                 </div>
               </div>
             </div>
-
             <div className="col">
               <h3>Day</h3>
               <div className="row">
@@ -83,7 +79,6 @@ const nextEvent = () => {
                 </div>
               </div>
             </div>
-
             <div className="col">
               <h3>Ubicación</h3>
               <div className="row">
@@ -100,7 +95,6 @@ const nextEvent = () => {
                 <div className="col">
                   <p>Los Mochis,Sinaloa,Mexico</p>
                 </div>
-
               </div>
               <div className="row">
                 <div className="col">
@@ -108,13 +102,10 @@ const nextEvent = () => {
                 </div>
               </div>
             </div>
-
           </div>
         </div>
-
       </div>
     </div>
-
   );
 }
 

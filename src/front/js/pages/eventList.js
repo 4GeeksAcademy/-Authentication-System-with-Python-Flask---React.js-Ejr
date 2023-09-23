@@ -1,12 +1,10 @@
 import React from "react";
 import '../../styles/accountpage.css';
-import RegistrarOrganizadores from '../component/registrarOrganizadores';
+import EventList from '../component/eventList';
 
 const RegistroDeOrganizadores=()=>{
-    console.log("sssssss")
-
     return(
-<RegistrarOrganizadores/>
-);
+        <EventList />
+    );
 }
 export default RegistroDeOrganizadores

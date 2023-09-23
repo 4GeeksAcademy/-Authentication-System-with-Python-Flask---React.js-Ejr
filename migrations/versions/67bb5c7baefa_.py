@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 69f22bab10ef
+Revision ID: 67bb5c7baefa
 Revises: 
-Create Date: 2023-09-19 01:25:32.398867
+Create Date: 2023-09-23 19:29:27.231782
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '69f22bab10ef'
+revision = '67bb5c7baefa'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -33,6 +33,7 @@ def upgrade():
     sa.Column('name', sa.String(length=120), nullable=False),
     sa.Column('address', sa.String(length=250), nullable=True),
     sa.Column('phone', sa.String(length=20), nullable=True),
+    sa.Column('url_perfil', sa.String(length=150), nullable=True),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('email')
     )
@@ -64,10 +65,11 @@ def upgrade():
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('events_teams',
-    sa.Column('events_id', sa.Integer(), nullable=True),
-    sa.Column('teams_id', sa.Integer(), nullable=True),
+    sa.Column('events_id', sa.Integer(), nullable=False),
+    sa.Column('teams_id', sa.Integer(), nullable=False),
     sa.ForeignKeyConstraint(['events_id'], ['events.id'], ),
-    sa.ForeignKeyConstraint(['teams_id'], ['teams.id'], )
+    sa.ForeignKeyConstraint(['teams_id'], ['teams.id'], ),
+    sa.PrimaryKeyConstraint('events_id', 'teams_id')
     )
     # ### end Alembic commands ###
 

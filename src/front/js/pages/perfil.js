@@ -68,9 +68,7 @@ const Perfil = ()=>{
     };
 
   return (
-
-    <section style={{ backgroundColor: '#eee' }}>
-      <div className="contSuperior">
+<div className="contSuperior">
         <div className="row">
           <div className="col-lg-4">
             <div className="card mb-4">
@@ -83,7 +81,9 @@ const Perfil = ()=>{
                 />
                 {/*<h5 className="my-3">{JSON.stringify(store.userInfo)}</h5>*/}
                 <h5 className="my-3">{profileData.name}</h5>
-                <p className="text-muted mb-1">Organizador</p>
+                <button className='btn btn-outline-primary ms-1' onClick={() => actions.logout()}>
+                  Cerrar Sesión
+                </button>
                 <p className="text-muted mb-4">{profileData.address}</p>
                 <button type="button" className="btn btn-primary" onClick={handleOpenFilePicker}>
                   Cambiar imagen de perfil
@@ -174,20 +174,21 @@ const Perfil = ()=>{
               </div>
             </div>
 
+        <div className="row">
             <div className="row row-cols-1 row-cols-md-3 g-4">
               <div className="col">
-                <div className="col">
-                  <div className="card text-center" style={{width: "18rem"}}>
-                    <img src={tournament} className="card-img-top" alt="Eventos"/>
-                    <div className="card-body">  
-                      <p className="card-text">Crea, modifica o elimina tus eventos con sus datos.</p>
-                      <Link to="/teams" className="btn btn-primary">Administrar Eventos</Link>
-                    </div>
+                <div className="card text-center" style={{width: "17.5rem"}}>
+                  <img src={tournament} className="card-img-top" alt="Eventos"/>
+                  <div className="card-body">  
+                    <p className="card-text">Crea, modifica o elimina tus eventos con sus datos.</p>
+                    <Link to={"/eventolista/"+profileData.userId}>
+                      <button className="btn btn-primary">Administrar Eventos</button>
+                    </Link>
                   </div>
                 </div>
               </div>
               <div className="col">
-                <div className="card text-center" style={{width: "18rem"}}>
+                <div className="card text-center" style={{width: "17.5rem"}}>
                   <img src={teamlist} className="card-img-top" alt="Equipos"/>
                   <div className="card-body">
                     <p className="card-text">Consulta tus equipos registrados en los eventos.</p>
@@ -196,7 +197,7 @@ const Perfil = ()=>{
                 </div>
               </div>
               <div className="col">
-                <div className="card text-center" style={{width: "18rem"}}>
+                <div className="card text-center" style={{width: "17.5rem"}}>
                     <img src={eventlist} className="card-img-top" alt="Registro"/>
                     <div className="card-body">
                       <p className="card-text">Registra tus equipos a eventos vigentes.</p>
@@ -205,16 +206,12 @@ const Perfil = ()=>{
                   </div>
               </div>
             </div>
-
-            <button className='btn btn-outline-primary ms-1' onClick={() => actions.logout()}>
-  Salir
-</button>
-
           </div>
         
         </div>
+
+        </div>
       </div>
-    </section>
   );
 }
 
