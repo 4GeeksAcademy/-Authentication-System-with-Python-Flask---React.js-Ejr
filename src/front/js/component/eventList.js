@@ -64,7 +64,6 @@ const EventList = () => {
                 <div className="col-3"> </div>
             </div>
 
-
             <table className="table align-middle mb-0 bg-white" id='theEventstable'>
                 <thead className="bg-light">
                     <tr>
@@ -75,6 +74,7 @@ const EventList = () => {
                     </tr>
                 </thead>
                 <tbody>
+
                     {eventData.map((theEvent) => (
                         <tr key={theEvent.id}>
                             <td>
