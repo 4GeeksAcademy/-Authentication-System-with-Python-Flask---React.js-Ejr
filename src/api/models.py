@@ -11,11 +11,13 @@ class User(db.Model):
     password = db.Column(db.String(250), nullable=False)
     region = db.Column(db.String(120), nullable=False)
     photo = db.Column(db.String(120), default="no-photo.png")
-    messsage_from = db.relationship('Message', foreign_keys="[Message.user_from_id]", backref='user_from')
-    messsage_to = db.relationship('Message', foreign_keys='[Message.user_to_id]', backref='user_to')
-    # roles = db.relationship('Role', secondary=roles_users)
-    # is_active = db.Column(db.Boolean(), unique=False, nullable=False)
+    message_from = db.relationship('Message', foreign_keys="[Message.user_from_id]", backref='user_from')
+    message_to = db.relationship('Message', foreign_keys='[Message.user_to_id]', backref='user_to')
+    books_user = db.relationship('Book', backref='user', lazy=True)
+    is_active = db.Column(db.Boolean(), default=True)
 
+
+    
     def serialize(self):
         return {
             "id": self.id,
@@ -23,7 +25,11 @@ class User(db.Model):
             "lastname": self.lastname,
             "email": self.email,
             "region": self.region,
-            "photo": self.photo
+            "photo": self.photo,
+            "message_from": self.message_from,
+            "message_to": self.message_to,
+            "books_user": self.books_user,
+            "is_active": self.is_active
         }
 
     def save(self):
@@ -46,9 +52,11 @@ class Book(db.Model):
     cathegory = db.Column(db.String(120), nullable=False)
     number_of_pages = db.Column(db.String(120))
     description = db.Column(db.String(250), nullable=False)
-    type = db.Column(db.String(120), nullable=False)
+    sell_trade = db.Column(db.String(120), nullable=False)
     price = db.Column(db.String(120), nullable=False)    
-    photo = db.Column(db.String(120), default="no-photo.png")
+    cover = db.Column(db.String(120), default="no-photo.png")
+    user_book_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    
     
 
     def serialize(self):
@@ -59,10 +67,14 @@ class Book(db.Model):
             "cathegory": self.cathegory,
             "number_of_pages": self.number_of_pages,
             "description": self.description,
-            "type": self.type,
+            "sell_trade": self.sell_trade,
             "price": self.price,
-            "photo": self.photo
+            "cover": self.cover
         }
+
+    
+        
+        
 
     def save(self):
         db.session.add(self)
@@ -82,6 +94,9 @@ class Gallery(db.Model):
     title = db.Column(db.String(250), nullable=True)
     image = db.Column(db.String(250), nullable=True)
     public_id = db.Column(db.String(250), nullable=True)
+    book_id = db.Column(db.Integer, db.ForeignKey('book.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    use_id = db.relationship('User', backref='galleries')
     
     def serialize(self):
         return{
@@ -134,33 +149,4 @@ class Message(db.Model):
     def delete(self):
         db.session.delete(self)
         db.session.commit()    
-        
-# TABLA COMETARIOS
 
-class Comentario(db.Model):
-    __tablename__ = 'comentario'
-    id = db.Column(db.Integer, primary_key=True)
-    comentario = db.Column(db.String(250), nullable=False)
-    #book_id = db.Column(db.Integer, db.ForeignKey('book.id'), nullable=False)
-    #user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-
-    def serialize(self):
-        return {
-            "id": self.id,
-            "comentario": self.comentario,
-            #"book_id": self.book_id,
-            #"user_id": self.user_id
-        }
-
-    def save(self):
-        db.session.add(self)
-        db.session.commit()
-
-    def update(self):
-        db.session.commit()
-
-    def delete(self):
-        db.session.delete(self)
-        db.session.commit()
-
- 

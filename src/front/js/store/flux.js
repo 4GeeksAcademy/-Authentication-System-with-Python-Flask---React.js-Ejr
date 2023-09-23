@@ -1,12 +1,7 @@
 const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
-      //VARIABLES PARA GUARDAR EL INICIO DE SESIÓN
-      email: "",
-      password: "",
-      //VARIABLE PARA GUARDAR LOS USUARIOS QUE SE CREAN
       users: [],
-      //SE GUARDA EL REGISTRO DE USUARIO
       newUser: {
         id: "",
         name: "",
@@ -16,13 +11,9 @@ const getState = ({ getStore, getActions, setStore }) => {
         rep_password: "",
         region: "",
       },
-
       url: "http://localhost:3001",
-
-      message: null,
-      //USUARIO QUE INICIO SESIÓN
       currentUser: null,
-      //VARIABLE PARA PUBLICAR EL NUEVO LIBRO
+      message: null,
       newBook: {
         id: "",
         title: "",
@@ -34,15 +25,102 @@ const getState = ({ getStore, getActions, setStore }) => {
         price: "",
         photo: "",
       },
-      //VARIABLE PARA GUARDAR LISTA DE LIBROS
       showBook: [],
-      //VARIABLE PARA GUARDAR DETALLE DE UN LIBRO
       oneBook: [],
     },
 
     actions: {
-      //PUBLICACIÓN DE LIBRO
-      ////FUNC. GUARDAR VALOR INPUT
+      //---------< funcion para  registro  de usuario >------------------------->
+      handleChangeRegister: (e) => {
+        const { newUser } = getStore();
+        e.preventDefault();
+        newUser[e.target.name] = e.target.value;
+        setStore({ newUser });
+        console.log("newUser:", getStore().newUser);
+      },
+      submitRegister: (e, navigate) => {
+        e.preventDefault();
+        if (getStore().newUser.password === getStore().newUser.rep_password) {
+          getActions().saveUser(navigate);
+        } else {
+          alert("las contraseñas no coinciden");
+        }
+      },
+      saveUser: async (navigate) => {
+        try {
+          const { url, newUser } = getStore();
+          const response = await fetch(`${url}/api/register`, {
+            method: "POST",
+            body: JSON.stringify(newUser),
+            headers: { "Content-Type": "application/json" },
+          });
+          const data = await response.json();
+          console.log("data", data);
+          navigate("/login");
+        } catch (error) {
+          console.log(error);
+        }
+      },
+      //----------< Login usuario >-------------------------------------------------------->
+      //-----< funcion para  login  de usuario >------------------------------------------->
+      handleSubmitLogin: async (e, navigate) => {
+        e.preventDefault();
+        try {
+          const { url, email, password, currentUser } = getStore();
+          let info = { email, password, currentUser };
+          const response = await fetch(`${url}/api/login`, {
+            method: "POST",
+            body: JSON.stringify(info),
+            headers: {
+              "Content-Type": "application/json",
+            },
+          });
+          console.log(response);
+          const data = await response.json();
+          console.log(data);
+
+          if (data.access_token) {
+            setStore({ currentUser: data });
+            sessionStorage.setItem("currentUser", JSON.stringify(data));
+            navigate("/profile");
+          } else {
+            setStore({
+              alert: {
+                text: "Usuario no registrado",
+                show: true,
+                textbtn: "Registrarme",
+              },
+            });
+          }
+        } catch (error) {
+          console.log(error);
+          console.log("hay un error en el login");
+        }
+      },
+      handleChangeLogin: (e) => {
+        setStore({
+          [e.target.name]: e.target.value,
+        });
+      },
+      checkUser: () => {
+        if (sessionStorage.getItem("currentUser")) {
+          setStore({
+            currentUser: JSON.parse(sessionStorage.getItem("currentUser")),
+          });
+        }
+      },
+      logout: () => {
+        if (sessionStorage.getItem("currentUser")) {
+          setStore({
+            currentUser: null,
+          });
+          sessionStorage.removeItem("currentUser");
+        }
+        navigate("/");
+      },
+      //----favor de no intervenir mi codigo-----//
+
+      //------------josé--------------------------
       handleChangeBook: (e) => {
         const { newBook } = getStore();
         e.preventDefault();
@@ -95,7 +173,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           redirect: "follow",
         };
 
-        fetch("http://localhost:3001/api/detalle-libro/${id}", requestOptions)
+        fetch(`http://localhost:3001/api/detalle-libro/${id}`, requestOptions)
           .then((response) => response.json())
           .then((data) => {
             getStore().oneBook = data;
@@ -103,103 +181,6 @@ const getState = ({ getStore, getActions, setStore }) => {
             console.log("oneBook:", data);
           })
           .catch((error) => console.log("error", error));
-      },
-
-      //---------< funcion para  registro  de usuario >----------------->
-
-      handleChangeRegister: (e) => {
-        const { newUser } = getStore();
-        e.preventDefault();
-        newUser[e.target.name] = e.target.value;
-        setStore({ newUser });
-        console.log("newUser:", getStore().newUser);
-      },
-
-      submitRegister: (e, navigate) => {
-        e.preventDefault();
-
-        if (getStore().newUser.password === getStore().newUser.rep_password) {
-          getActions().saveUser(navigate);
-        } else {
-          alert("las contraseñas no coinciden");
-        }
-      },
-
-      saveUser: async (navigate) => {
-        try {
-          const { url, newUser } = getStore();
-          const response = await fetch(`${url}/api/register`, {
-            method: "POST",
-            body: JSON.stringify(newUser),
-            headers: { "Content-Type": "application/json" },
-          });
-          const data = await response.json();
-          console.log("data", data);
-          navigate("/login");
-        } catch (error) {
-          console.log(error);
-        }
-      },
-      //----------< Login usuario >---------------------------------------------->
-
-      //---- funcion para  login  de usuario------------------------------------------->
-      handleSubmitLogin: async (e, navigate) => {
-        e.preventDefault();
-        try {
-          const { url, email, password, currentUser } = getStore();
-          let info = { email, password, currentUser };
-          const response = await fetch(`${url}/api/login`, {
-            method: "POST",
-            body: JSON.stringify(info),
-            headers: {
-              "Content-Type": "application/json",
-            },
-          });
-          console.log(response);
-          const data = await response.json();
-          console.log(data);
-
-          if (data.access_token) {
-            setStore({ currentUser: data });
-            sessionStorage.setItem("currentUser", JSON.stringify(data));
-            navigate("/profile");
-          } else {
-            setStore({
-              alert: {
-                text: "Usuario no registrado",
-                show: true,
-                textbtn: "Registrarme",
-              },
-            });
-          }
-        } catch (error) {
-          console.log(error);
-          console.log("hay un error en el login");
-        }
-      },
-
-      handleChangeLogin: (e) => {
-        setStore({
-          [e.target.name]: e.target.value,
-        });
-      },
-      // VERIFICA QUE EXISTA EL USUARIO
-      checkUser: () => {
-        if (sessionStorage.getItem("currentUser")) {
-          setStore({
-            currentUser: JSON.parse(sessionStorage.getItem("currentUser")),
-          });
-        }
-      },
-
-      logout: () => {
-        if (sessionStorage.getItem("currentUser")) {
-          setStore({
-            currentUser: null,
-          });
-          sessionStorage.removeItem("currentUser");
-        }
-        navigate("/");
       },
     },
   };
