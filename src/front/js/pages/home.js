@@ -3,6 +3,7 @@ import { Context } from "../store/appContext";
 import { Jumbotron } from "../component/jumbotronhome";
 import { Buttonsignup } from "../component/btn-signup";
 import { Buttonlogin } from "../component//btn-login";
+import { BestRated } from "../component//best-rated-home";
 
 import "../../styles/home.css";
 
@@ -19,8 +20,8 @@ export const Home = () => {
 				</div>
 				<div>
 					<h2 className="display-7 fw-bold py-5">Our Books</h2>
-					# carroussel #
-				</div> 
+					<BestRated />
+				</div>
 			</div>
 
 			<div className="container py-5">
@@ -33,10 +34,10 @@ export const Home = () => {
 						<p>At BookSwap & ReadTrack, we've created a vibrant community of book enthusiasts just like you. Whether you're an avid reader, a casual bookworm, or someone looking to expand your reading horizons, our platform is designed with you in mind.</p>
 						<div className="row align-items-start">
 							<div className="col">
-							<Buttonsignup />
+								<Buttonsignup />
 							</div>
 							<div className="col">
-							<Buttonlogin />
+								<Buttonlogin />
 							</div>
 						</div>
 					</div>
@@ -45,7 +46,7 @@ export const Home = () => {
 
 			<div className="container py-5">
 				<div className="row align-items-start">
-				<div className="col px-5">
+					<div className="col px-5">
 						<h2 className="display-7 fw-bold">Imagine a place where you can:</h2>
 						<ul className="communitylist">
 							<li>Create your own virtual library and track your reading progress effortlessly.</li>

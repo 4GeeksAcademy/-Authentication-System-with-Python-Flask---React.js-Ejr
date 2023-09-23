@@ -1,0 +1,12 @@
+.rating-form {
+    max-width: 400px;
+    margin: auto;
+    text-align: center;
+  }
+  
+  .star-rating {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+  }
+  

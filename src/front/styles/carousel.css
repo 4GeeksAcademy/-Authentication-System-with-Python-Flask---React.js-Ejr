@@ -1,0 +1,44 @@
+.carousel {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+  }
+  
+  .carousel-container {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+  }
+  
+  .carousel-group {
+    display: flex;
+  }
+  
+  .carousel-item {
+    min-width: 25%; /* 4 items at a time */
+    box-sizing: border-box;
+  }
+  
+  .carousel-item img {
+    width: 100%;
+    display: block;
+  }
+  
+  #prevBtn,
+  #nextBtn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: #fff;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+  }
+  
+  #prevBtn {
+    left: 0;
+  }
+  
+  #nextBtn {
+    right: 0;
+  }
+  

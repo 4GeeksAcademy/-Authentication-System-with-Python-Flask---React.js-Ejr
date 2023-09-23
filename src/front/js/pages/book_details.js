@@ -3,6 +3,7 @@ import { Context } from "../store/appContext";
 import { Buttonsignup } from "../component/btn-signup";
 import { Buttonlogin } from "../component//btn-login";
 import { Review } from "../component/review";
+import { ModalReview } from "../component/modal-review";
 
 
 import "../../styles/bookdetails.css";
@@ -14,7 +15,7 @@ export const BookDetails = () => {
 		<div className="container bookdetails">
 			<div className="container d-flex justify-content-center">
 				<div className="bookcover col-md-6 text-center">
-					<img className="bookcoverimg" src="https://images.pexels.com/photos/4153146/pexels-photo-4153146.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"/>
+					<img className="bookcoverimg" src="https://images.pexels.com/photos/4153146/pexels-photo-4153146.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" />
 				</div>
 
 				<div className="bookdetails col-md-6">
@@ -26,6 +27,7 @@ export const BookDetails = () => {
 					<div className="d-flex col-8 justify-content-center">
 						<Buttonsignup />
 						<Buttonlogin />
+						<ModalReview />
 					</div>
 				</div>
 			</div>
