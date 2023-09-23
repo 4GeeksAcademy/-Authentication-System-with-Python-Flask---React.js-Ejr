@@ -7,12 +7,12 @@ let menu = [
 	{label: 'Eventos', url: '/eventos'},
 	{label: 'Galería', url: '/galeria'},
 	{label: 'Organizadores', url: '/organizadores'},
-	{label: 'Contacto', url: '/contacto'}
+	{label: 'Contacto', url: '/contacto'},
+	{label: 'Cuenta', url: '/cuenta'}
 ];
 
 export const Footer = () => (
-<div className="container">
-	<footer className="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+	<footer className="pie d-flex flex-wrap justify-content-between align-items-center m-2 border-top">
 		<p className="col-md-3 mb-0 text-body-secondary">© 2023 TechSports, Inc</p>
 		<ul className="nav col-md-5 justify-content-end">
 			{menu.map((item) => {
@@ -24,5 +24,4 @@ export const Footer = () => (
 			})}
 		</ul>
 	</footer>
-</div>
 );

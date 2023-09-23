@@ -28,14 +28,15 @@ def create_user():
     secure_password = bcrypt.generate_password_hash(password, 10).decode("utf-8")
     #crear nuevo usuario a partir de esta data
     #new_event = User(email=data.email, password=data.password)
-    new_event = User()
-    new_event.email = email
-    new_event.password = secure_password
-    new_event.is_active = True
-    new_event.name = name
-    new_event.address = ""
-    new_event.phone = ""
-    db.session.add(new_event)
+    new_user = User()
+    new_user.email = email
+    new_user.password = secure_password
+    new_user.is_active = True
+    new_user.name = name
+    new_user.address = ""
+    new_user.phone = ""
+    new_user.url_perfil = ""
+    db.session.add(new_user)
     db.session.commit()
     return jsonify({"msg":"Usuario registrado"}), 201
 
@@ -82,6 +83,7 @@ def hello_protected():
         "name": user.name,
         "address": user.address,
         "phone": user.phone,
+        "url_perfil": user.url_perfil
     }
     return jsonify(response)
 
@@ -148,33 +150,35 @@ def create_event():
     db.session.commit()
     return jsonify({"msg":"Evento registrado"}), 201
 
-@api.route('/loadevents', methods=['POST'])
+@api.route('/loadevents', methods=['GET'])
+@jwt_required()
 def load_events():
     #recibir datos del cuerpo de la petición
-    user = request.json.get("userId")
+    user = get_jwt_identity()
     #ubicar usuario en la bd, que me traiga todos los resultados
-    events = Events.query.filter(Events.id_user == user)
+    lista = Events.query.filter_by(id_user = user).all()
     #si no se encontró el evento
-    if events is None:
+    if lista is None:
         return jsonify({"message": "Events not found"}), 401
+    response=[]
+    for item in lista:
+    #    response.append({item})
+        response.append({
+        "id": item.id,
+        "nombre_evento": item.nombre_evento,
+        "descr_corta": item.descr_corta,
+        "fecha_ini": item.fecha_ini,
+        "fecha_fin": item.fecha_fin,
+        "ubicacion": item.ubicacion,
+        "logotipo": item.logotipo,
+        "descr_larga": item.descr_larga,
+        "reglas": item.reglas,
+        "fecha_lim": item.fecha_lim,
+        "email_contacto": item.email_contacto,
+        "tel_contacto": item.tel_contacto,
+        "nombre_contacto": item.nombre_contacto,
+        "costo": item.costo,
+        "id_user": item.id_user})
     #después de las validaciones enviar msje de confirmación
     #pasando contenido
-    response = []
-    for item in events:
-        response.append ({
-            "nombre_evento" : item.nombre_evento,
-            "descr_corta" : item.descr_corta,
-            "fecha_ini" : item.fecha_ini,
-            "fecha_fin" : item.fecha_fin,
-            "ubicacion" : item.ubicacion,
-            "logotipo" : item.logotipo,
-            "descr_larga" : item.descr_larga,
-            "reglas" : item.reglas,
-            "fecha_lim" : item.fecha_lim,
-            "email_contacto" : item.email_contacto,
-            "tel_contacto" : item.tel_contacto,
-            "nombre_contacto" : item.nombre_contacto,
-            "costo" : item.costo,
-            "id_user" : item.id_user
-        })
-    return jsonify(response, 200)
+    return jsonify({"eventos":response}), 200
