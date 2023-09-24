@@ -16,8 +16,9 @@ from flask_sqlalchemy import SQLAlchemy
 api = Blueprint('api', __name__)
 
 # -----<listar todos los usuiarios >------------------------------------------------------>
-@api.route('/usuarios', methods=['POST', 'GET'])
+@api.route('/users', methods=[ 'GET', 'POST'])
 def home():
+    
     users = User.query.all()
     users = list(map(lambda user: user.serialize(), users))
 
@@ -29,6 +30,7 @@ def home():
 
 @api.route('/register', methods=['POST'])
 def user_register():
+    
     print(request.get_json())
     name = request.json.get("name")
     lastname = request.json.get("lastname")
@@ -114,21 +116,22 @@ def login():
     if not password:
         return jsonify({"error": "password is requare"}), 422
 
-# ------< BUSCAMOS AL USUARIO
+# ------< BUSCAMOS AL USUARIO >------------------------------------->
     user = User.query.filter_by(email=email).first()
 
     
-#------< SI NO EXISTE EL USUARIO
+#------< SI NO EXISTE EL USUARIO >------------------------------------->
     if not user: 
         return jsonify({"error": "tu usuario o contraseña son incorrectos"}), 401
     
-#------< LAVIDAMOS LA CONTRASEÑA
+#------< LAVIDAMOS LA CONTRASEÑA >------------------------------------->
     if not check_password_hash(user.password, password):
         return jsonify({"error": "tu usuario o contraseña son incorrectos"}), 401 
-        
-
     
-    access_token = create_access_token(identity=user.id)
+        
+    expires=datetime.timedelta(days=5)
+    
+    access_token = create_access_token(identity=user.id, expires_delta=expires)
     print(access_token)
 
     data = {
@@ -145,7 +148,7 @@ def login():
 # -----< generando ruta privada, datos de usuario, perfil >---------------------------------------->
 
 
-@api.route('/profile', methods=['GET'])
+@api.route('/profile', methods=['GET', 'POST'])
 @jwt_required()
 def profile():
 
@@ -157,8 +160,10 @@ def profile():
 
 #=======< ruta lista LIBRO >===========================================
 @api.route('/books', methods=['POST'])
+@jwt_required()
 def post_book():
     data = request.get_json()
+    id = get_jwt_identity()    # corregido sabado en CWeekend
 
     book = Book()
     book.title = data["title"] 
@@ -166,8 +171,10 @@ def post_book():
     book.cathegory = data['cathegory']
     book.number_of_pages = data['number_of_pages']
     book.description = data['description']
+    book.sell_trade = data['sell_trade']
     book.price = data['price']
-    book.photo = data['photo']
+    book.cover = data['cover']
+    book.user_book_id = id
     book.save()
 
     return jsonify({"message": "Book created"}), 201
@@ -175,6 +182,7 @@ def post_book():
 @api.route('/books', methods=['GET'])
 @jwt_required()
 def get_books():
+    
     if request.method == 'GET':
         books = Book.query.all()
         books = list(map(lambda books: books.serialize(), books))
@@ -219,22 +227,30 @@ def delete_book(id):
 def upload_image_route():
 
     title = request.form['title']
-
+    book_id = request.form['book_id']
+    # data = request.get_json()
+    id = get_jwt_identity() 
+    
     if not title:
         return jsonify({"msg": "debe agregar titulo"}), 400
+    if not book_id:
+        return jsonify({"msg": "debe agregar libro"}), 400
 
     image = request.files['image']
     
     if not 'image' in request.files:
-        return jsonify({"msg": " la imagen es requerida"}), 400
+        return jsonify({"msg": " la imagen es requerida"}), 400 
 
 # -----< ahora hago un "fetch" a Cloudinary para agregar un archivo en la capeta galleries >-----
     
     public_id = image.filename
+    
     resp = upload(image, folder='galleries', public_id=public_id)
 
     if not resp:
         return jsonify({'msg': "error al cargar imagen"}), 400
+    
+
     
     print(resp)
 
@@ -242,6 +258,8 @@ def upload_image_route():
     gallery.title = title
     gallery.image = resp['secure_url']
     gallery.public_id = public_id 
+    gallery.user_id = id
+    gallery.book_id = book_id
 
     gallery.save()
 
@@ -297,12 +315,7 @@ def image_update(id):
     gallery.update()
 
     return jsonify(gallery.serialize()), 201
-    
-    
-    
-    
-    
-    
+        
 #-----< MENSAJES >-----------------------------------------------------------------------------------------
 # el modelo solo pide: el mensaje, el id del que envia, y el id dl que recibe
 
@@ -310,6 +323,7 @@ def image_update(id):
 @api.route("/messages/<int:id>", methods=['GET','POST'])
 @jwt_required()
 def messages(id = None):
+    current_user = get_jwt_identity()
     if request.method == 'GET':
         
         if id is not None:
@@ -320,7 +334,7 @@ def messages(id = None):
         else: 
             messages = Message.query.all()
             messages = list(map(lambda msg: msg.selialize(), messages))
-            return jsonify({'data' : messages}), 200
+            return jsonify(messages), 200
             
     if request.method == 'POST':
         message = request.json.get('message')
@@ -334,6 +348,7 @@ def messages(id = None):
         msg.save()
         
         return jsonify(msg.serialize()), 201
+    
 @api.route('/messages_update/<int:id>', methods=['PUT'])
 @jwt_required()
 def message_update(id):

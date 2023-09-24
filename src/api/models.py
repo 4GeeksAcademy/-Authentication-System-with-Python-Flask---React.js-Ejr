@@ -96,7 +96,7 @@ class Gallery(db.Model):
     public_id = db.Column(db.String(250), nullable=True)
     book_id = db.Column(db.Integer, db.ForeignKey('book.id'), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    use_id = db.relationship('User', backref='galleries')
+    user_gallery = db.relationship('User', backref='galleries')
     
     def serialize(self):
         return{
