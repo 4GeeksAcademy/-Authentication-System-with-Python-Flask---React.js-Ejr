@@ -10,26 +10,13 @@ const Perfil = ()=>{
   const { store, actions } = useContext(Context);
   const [userData, setUserData] = useState(null);
   const [profileImage, setProfileImage] = useState(
-    'https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp'
+    `${(res) => setProfileImage(res.filesUploaded[0].url )}`
   );
   const navigate = useNavigate()
+  const [selectedImage, setSelectedImage] = useState(null); // Estado para la nueva imagen seleccionada
   const filestackClient = filestack.init('ApcaRKG5TSEuvL2v2O2Dnz');
  // Manejar la selección de archivos y actualización de imagen de perfil
- const handleFileUpload = async () => {
-  try {
-    const result = await filestackClient.picker({ accept: 'image/*' }).open();
-    if (result.filesUploaded.length > 0) {
-      // Actualizar la imagen de perfil en el estado local
-      const newProfileImage = result.filesUploaded[0].url;
-      setProfileImage(newProfileImage);
 
-      // Aquí puedes enviar la nueva URL de la imagen de perfil al servidor para actualizarla en la base de datos del usuario
-      // actions.updateProfileImage(newProfileImage); // Debes implementar esta función en tus acciones
-    }
-  } catch (error) {
-    console.error('Error al cargar la imagen:', error);
-  }
-};
   
 
 
@@ -40,7 +27,7 @@ const Perfil = ()=>{
       //{userData=="Ok"? JSON.stringify(store.userInfo):userData}
       //console.log("DESPLEGANDO DATA:", store.userInfo)
     } else {
-      navigate("/cuenta")
+    navigate("/cuenta")
     }
   }, [store.accessToken])
 
@@ -48,25 +35,33 @@ const Perfil = ()=>{
 
     // Función para abrir el selector de archivos de Filestack
     const handleOpenFilePicker = () => {
-      const pickerOptions = {
-        fromSources: ['local_file_system', 'url', 'imagesearch', 'facebook', 'instagram', 'googledrive', 'dropbox'],
-        accept: ['image/*'],
-        maxSize: 1024 * 1024 * 5, // Tamaño máximo de 5 MB
-        uploadInBackground: false, // Subir en primer plano
-        transformations: {
-          crop: true, // Permite recortar la imagen
-        },
-      };
-  
-      filestackClient.picker(pickerOptions).open().then(response => {
-        // Handle the response from Filestack here
-        console.log('Filestack response:', response);
-        // Puedes obtener la URL de la imagen seleccionada desde response.filesUploaded[0].url
+      const options = {
+        onUploadDone: (res) => setProfileImage(res.filesUploaded[0].url )   
+        
+        
+      }
+    
+     
+      filestackClient.picker(options).open().then(response => {
+        // Verifica si se seleccionó una imagen antes de continuar
+        if (response.filesUploaded && response.filesUploaded.length > 0) {
+          // Obtén la URL de la imagen seleccionada
+          const imageUrl = response.filesUploaded[0].url;
+          // Actualiza el estado con la nueva imagen
+          setSelectedImage(imageUrl);
+        }
       }).catch(error => {
         console.error('Filestack error:', error);
       });
     };
-
+  
+    useEffect(() => {
+      if (selectedImage) {
+        setProfileImage(selectedImage);
+        // Puedes enviar la nueva URL de la imagen de perfil al servidor para actualizarla en la base de datos del usuario
+        actions.updateProfileImage(selectedImage);
+      }
+    }, [selectedImage, actions]);
   return (
 
     <section style={{ backgroundColor: '#eee' }}>
@@ -88,6 +83,7 @@ const Perfil = ()=>{
                 <button type="button" className="btn btn-primary" onClick={handleOpenFilePicker}>
                   Cambiar imagen de perfil
                 </button>
+              
                 <div className="d-flex justify-content-center mb-2">
                 
                   <button type="button" className="btn btn-primary">

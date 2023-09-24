@@ -16,6 +16,55 @@ const getState = ({ getStore, getActions, setStore }) => {
 		},
 		actions: {
 			//endpoint es la página
+			apiFetchProtected: async (endpoint, method = "GET", body = null) => {
+				try {
+				  const { getStore, setStore } = getActions();
+				  const { accessToken } = getStore();
+			  
+				  if (!accessToken || accessToken === null) {
+					return "No token";
+				  }
+			  
+				  const params = {
+					method,
+					headers: {
+					  Authorization: "Bearer " + accessToken,
+					  "Content-Type": "application/json", // Asegúrate de configurar el encabezado adecuadamente
+					},
+				  };
+			  
+				  if (body) {
+					params.body = JSON.stringify(body);
+				  }
+			  
+				  const resp = await fetch(process.env.BACKEND_URL + "/api" + endpoint, params);
+				  const data = await resp.json();
+			  
+				  console.log("PRUEBA_fetchprotected" + JSON.stringify(data) + resp.status);
+			  
+				  if (resp.code === 200) {
+					// Actualiza el estado global con la nueva URL de la imagen si es necesario
+					if (data.profileImage) {
+					  setStore((prevStore) => ({
+						...prevStore,
+						userInfo: {
+						  ...prevStore.userInfo,
+						  profileImage: data.profileImage,
+						},
+					  }));
+					}
+				  } else if (resp.code === 401) {
+					// Borra el token de acceso si ha expirado
+					localStorage.removeItem("accessToken");
+					setStore({ accessToken: null });
+					alert("Sesión expirada");
+				  }
+			  
+				  return { code: resp.status, data };
+				} catch (error) {
+				  console.log("Error al solicitar los datos", error);
+				}
+			  },
 			apiFetchPublic: async(endpoint, method="GET", body=null)=>{
 				try{
 					var request
