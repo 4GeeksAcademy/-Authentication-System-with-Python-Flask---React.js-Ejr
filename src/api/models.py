@@ -39,6 +39,7 @@ class User(db.Model):
 
 
 class Book(db.Model):
+    
     __tablename__ = 'book'
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(120), nullable=False)
@@ -50,8 +51,11 @@ class Book(db.Model):
     price = db.Column(db.String(120), nullable=False)    
     photo = db.Column(db.String(120), default="no-photo.png")
 
+    
+
     def serialize(self):
         return {
+            
             "id": self.id,
             "title": self.title,
             "author": self.author,

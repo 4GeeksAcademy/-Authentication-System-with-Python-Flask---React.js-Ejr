@@ -7,7 +7,11 @@ export const Navbar = () => {
   const location = useLocation(); // renderizar con ruta
   console.log(location.pathname)
 
+const handleInput = (e) => {
+        books.push("Hola Mundo")
+}
 
+const books = []
 
   return (
     <div>
@@ -26,7 +30,16 @@ export const Navbar = () => {
           {location.pathname !== "/formularioRegistro" && location.pathname !== "/login" && (
             <div className="col">
               <form className="d-flex" role="search">
-                <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
+                <input onInput={handleInput.bind(this)} className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
+                <datalist>
+                  
+                  {
+                    books.map(book => {
+                      return <option value={book.title} />
+                    })
+                  }
+                  
+                  </datalist>
                 <button className="btn btn-light" type="submit">
                   Search
                 </button>

@@ -133,8 +133,15 @@ def profile():
 
 @api.route('/books', methods=['GET'])
 def books_route():
+    query= request.args.get("q")
+    if query is not None:
+        books = Book.query.filter(Book.title.contains(query)).all()
+
+    else :
+        books = Book.query.all()
+        
     response_libro ={
-        "mesage": "libro encontrado, sos un krac!"
+        "data": [book.serialize() for book in books]
     }
     
     return jsonify(response_libro), 200
