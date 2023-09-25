@@ -3,7 +3,7 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 """
 
 from flask import Flask, request, jsonify, url_for, Blueprint, redirect
-from api.models import db, User, Book, Gallery, Message, Book
+from api.models import db, User, Book, Gallery, Message, Book, Role
 from api.utils import generate_sitemap, APIException
 from flask_jwt_extended import JWTManager, get_jwt_identity, create_access_token, jwt_required
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -32,11 +32,12 @@ def home():
 def user_register():
     
     print(request.get_json())
-    name = request.json.get("name")
-    lastname = request.json.get("lastname")
-    email = request.json.get("email")
-    password = request.json.get("password")
-    region = request.json.get("region")
+    name= request.json.get("name")
+    lastname= request.json.get("lastname")
+    email= request.json.get("email")
+    password= request.json.get("password")
+    region= request.json.get("region")
+    # photo = request.files['photo']
 
 # -------< validacion de usuario >------------------------------------------------------------
     if not name:
@@ -53,6 +54,11 @@ def user_register():
     
     if not region:
         return jsonify({"error": "region is requare"}), 422
+    
+    # if not photo in request.files:
+    #     return jsonify({"error": "photo is requare"}), 422
+
+    # print(image.filename)
 
 # -----< creacion de usuario --------------------------------------------------------------->
 
@@ -67,13 +73,20 @@ def user_register():
     user.email = email
     user.password = generate_password_hash(password)
     user.region = region
+    # user.photo = photo
+    roles = request.json.get('roles')
+    
+    if len(roles) > 0:
+        for roles_id in roles:
+            role = Role.query.get(roles_id)
+            user.roles.append(role)
+
     user.save()
 
     return jsonify({"succes": "Registro exitoso, por favor inicie sesión"}), 200
     # return redirect('/')
 
 #-----< actualizar user >-----------------------------
-
 @api.route('/update_user/<int:id>', methods=['PUT'])
 @jwt_required()
 def update_user(id):
@@ -120,16 +133,16 @@ def login():
     user = User.query.filter_by(email=email).first()
 
     
-#------< SI NO EXISTE EL USUARIO >------------------------------------->
+#------< si no existe el usuario >------------------------------------->
     if not user: 
         return jsonify({"error": "tu usuario o contraseña son incorrectos"}), 401
     
-#------< LAVIDAMOS LA CONTRASEÑA >------------------------------------->
+#------< validamos la contraseña >------------------------------------->
     if not check_password_hash(user.password, password):
         return jsonify({"error": "tu usuario o contraseña son incorrectos"}), 401 
     
         
-    expires=datetime.timedelta(days=5)
+    expires=datetime.timedelta(days=30)
     
     access_token = create_access_token(identity=user.id, expires_delta=expires)
     print(access_token)
@@ -177,7 +190,7 @@ def post_book():
     book.user_book_id = id
     book.save()
 
-    return jsonify({"message": "Book created"}), 201
+    return jsonify({"message": "Book created", "book": book.serialize()}), 201
 
 @api.route('/books', methods=['GET'])
 @jwt_required()
@@ -249,8 +262,6 @@ def upload_image_route():
 
     if not resp:
         return jsonify({'msg': "error al cargar imagen"}), 400
-    
-
     
     print(resp)
 

@@ -2,6 +2,13 @@ from flask_sqlalchemy import SQLAlchemy
 db = SQLAlchemy()
 from sqlalchemy import ForeignKey
 
+
+roles_user = db.Table(
+    'roles_user', 
+    db.Column('roles_id', db.Integer, db.ForeignKey('roles.id'), nullable=False, primary_key=True),
+    db.Column('user_id', db.Integer, db.ForeignKey('user.id'), nullable=False, primary_key=True)
+)
+
 class User(db.Model):
     __tablename__ = 'user'
     id = db.Column(db.Integer, primary_key=True)
@@ -15,9 +22,10 @@ class User(db.Model):
     message_to = db.relationship('Message', foreign_keys='[Message.user_to_id]', backref='user_to')
     books_user = db.relationship('Book', backref='user', lazy=True)
     is_active = db.Column(db.Boolean(), default=True)
+    roles = db.relationship('Role', secondary=roles_user)  # secondary es la tabla intermedia entres usuarios y roles
 
 
-    
+
     def serialize(self):
         return {
             "id": self.id,
@@ -41,7 +49,33 @@ class User(db.Model):
 
     def delete(self):
         db.session.delete(self)
+        db.session.commit()    
+
+class Role(db.Model):
+    __tablename__ = 'roles'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(150), nullable=False, unique=True)
+    users = db.relationship('User', secondary=roles_user, overlaps="roles")
+    
+    def serialize(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+        }
+
+    def save(self):
+        db.session.add(self)
         db.session.commit()
+
+    def update(self):
+        db.session.commit()
+
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()   
+        
+        
+
 
 # <--TABLA LIBRO-------------------------------------------->
 class Book(db.Model):
@@ -58,6 +92,7 @@ class Book(db.Model):
     user_book_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     
     
+    
 
     def serialize(self):
         return {
@@ -71,10 +106,7 @@ class Book(db.Model):
             "price": self.price,
             "cover": self.cover
         }
-
     
-        
-        
 
     def save(self):
         db.session.add(self)
@@ -97,6 +129,8 @@ class Gallery(db.Model):
     book_id = db.Column(db.Integer, db.ForeignKey('book.id'), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     user_gallery = db.relationship('User', backref='galleries')
+    books = db.relationship('Book', backref='gallery', lazy=True)
+    
     
     def serialize(self):
         return{
@@ -120,7 +154,7 @@ class Gallery(db.Model):
 class Message(db.Model):
     __tablename__='message'
     id = db.Column(db.Integer, primary_key= True)
-    message = db.Column(db.Text(), default=" ")
+    message = db.Column(db.String(500), default=" ")
     user_from_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     user_to_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     date = db.Column(db.DateTime(), default=db.func.now())
@@ -150,3 +184,6 @@ class Message(db.Model):
         db.session.delete(self)
         db.session.commit()    
 
+
+
+    

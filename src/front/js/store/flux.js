@@ -46,6 +46,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           alert("las contraseñas no coinciden");
         }
       },
+
       saveUser: async (navigate) => {
         try {
           const { url, newUser } = getStore();
