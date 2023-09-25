@@ -1,6 +1,7 @@
 import React,{useState} from "react";
 import "../../styles/registrarse.css";
 import basket from "../../img/basket7.jpeg"
+import PayPal from "./paypal";
 
 
 
@@ -121,6 +122,7 @@ const Registrarse = () => {
                             <div className="col-3"></div>
                             <div className="col-3">
                                 <button className="btn btn-primary btn-md ">REGISTRARSE</button>
+                                <PayPal/>
                             </div>
                         </div>
                     </div>
