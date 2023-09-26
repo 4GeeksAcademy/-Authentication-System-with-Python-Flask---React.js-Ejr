@@ -20,6 +20,7 @@ function LoginForm() {
   }, [store.accessToken])
 
   const [activeTab, setActiveTab] = useState('login');
+  const formulario = document.getElementById("formRegister");
   const [loginFormData, setLoginFormData] = useState({
     loginEmail: '',
     loginPassword: '',
@@ -69,11 +70,6 @@ function LoginForm() {
       if (resp.code!=200){
         //MODAL
         alert("Credenciales inválidas, verifique nombre de usuario y contraseña")
-      } else {
-        //entramos a la página de datos del usuario
-        alert("login successfull")
-        
-        window.location.reload(false)
       }
     }
   }
@@ -107,25 +103,26 @@ function LoginForm() {
           //MODAL
           alert("El usuario ya está registrado")
         } else {
-          //entramos a la página de datos del usuario
           alert("Signup successfull")
         }
+        formulario.reset();
+        window.location.reload(false)
     }
   };
 
   return (
-              <div className="row d-flex align-items-center justify-content-center h-100">
+              <div className="row d-flex h-100">
                 <div className="col-md-8 col-lg-7 col-xl-6">
                   <img src="https://ak-static.cms.nba.com/wp-content/themes/nba-global/images/international-league-pass/players.png"
                     className="img-fluid" alt="Phone image"></img>
                 </div>
-                <div className="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
+                <div className="col-md-7 col-lg-5 col-xl-5 offset-xl-1 img-login justify-content-center">
                 <div>
                   <ul className="nav nav-pills nav-justified" id="ex1" role="tablist">
                     <li className="nav-item" role="presentation">
                       <a
                         className={`nav-link ${activeTab === 'login' ? 'active' : ''}`}
-                        id="tab-login"
+                        id="tab-loginregister"
                         onClick={() => handleTabChange('login')}
                         role="tab"
                         aria-controls="pills-login"
@@ -137,7 +134,7 @@ function LoginForm() {
                     <li className="nav-item" role="presentation">
                       <a
                         className={`nav-link ${activeTab === 'register' ? 'active' : ''}`}
-                        id="tab-register"
+                        id="tab-loginregister"
                         onClick={() => handleTabChange('register')}
                         role="tab"
                         aria-controls="pills-register"
@@ -156,7 +153,7 @@ function LoginForm() {
                     >
                       {/* Formulario de login */}
                       <form onSubmit={handleLoginSubmit}>
-                        <div className="text-center mb-3">
+                        {/*<div className="text-center mb-3">
                           <p>Ingresa con:</p>
                           <button type="button" className="btn btn-secondary btn-floating mx-1">
                             <i className="fab fa-facebook-f"></i>
@@ -173,9 +170,7 @@ function LoginForm() {
                           <button type="button" className="btn btn-secondary btn-floating mx-1">
                             <i className="fab fa-github"></i>
                           </button>
-                        </div>
-
-                        <p className="text-center">O</p>
+                        </div> */}
                         <label className="form-label" htmlFor="loginEmail">
                           Email
                         </label>
@@ -225,14 +220,23 @@ function LoginForm() {
                           </div>
 
                         </div>
-
-                        <button type="submit" className="btn btn-primary btn-block mb-4">
-                          Iniciar Sesión
-                        </button>
-
+                        <div className='text-center'>
+                          <button type="submit" className="btn btn-primary btn-block mb-4">
+                            Iniciar Sesión
+                          </button>
+                        </div>
                         <div className="text-center">
                           <p>
-                            ¿Todavía no eres miembro? <a href="#!">Regístrate</a>
+                            ¿Todavía no eres miembro? 
+                            <a
+                              className={`nav-link ${activeTab === 'register' ? 'active' : ''}`}
+                              id="tab-loginregister"
+                              onClick={() => handleTabChange('register')}
+                              role="tab"
+                              aria-controls="pills-register"
+                              aria-selected={activeTab === 'register'}
+                            >
+                            Regístrate</a>
                           </p>
                         </div>
                       </form>
@@ -243,8 +247,8 @@ function LoginForm() {
                       role="tabpanel"
                     >
                       {/* Formulario de registro */}
-                      <form onSubmit={handleRegisterSubmit}>
-                        <div className="text-center mb-3">
+                      <form onSubmit={handleRegisterSubmit} id="formRegister">
+                        {/*<div className="text-center mb-3">
                           <p>Regístrate con:</p>
                           <button type="button" className="btn btn-secondary btn-floating mx-1">
                             <i className="fab fa-facebook-f"></i>
@@ -262,9 +266,8 @@ function LoginForm() {
                             <i className="fab fa-github"></i>
                           </button>
                         </div>
-
                         <p className="text-center">O</p>
-
+                      */}
                         <label className="form-label" htmlFor="registerName">
                               Nombre
                         </label>
@@ -330,10 +333,11 @@ function LoginForm() {
                             He leído y estoy de acuerdo con los términos
                           </label>
                         </div>
-
-                        <button type="submit" className="btn btn-primary btn-block mb-3">
-                          Registrarse
-                        </button>
+                        <div className='text-center'>
+                          <button type="submit" className="btn btn-primary btn-block mb-3">
+                            Registrarse
+                          </button>
+                        </div>
                       </form>
                     </div>
                   </div>

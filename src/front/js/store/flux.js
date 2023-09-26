@@ -3,7 +3,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 		store: {
 			accessToken: null,
 			userInfo: null,
-			userEvent: null,
+			userEvent: [],
 			message: null,
 			modalmsje: [
 				{
@@ -217,7 +217,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 					///////////// extra
 					console.log("PRUEBA_getuserEvent", resp)
 					if (resp.code==200){
-						setStore({userEvent:resp.data})
+						//setStore({userEvent:resp.data["eventos"]})
+						setStore({userEvent:resp.data.eventos})
 						return "Ok"
 					}
 					//si el token expiró

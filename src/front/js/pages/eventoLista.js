@@ -2,44 +2,17 @@ import React, { useContext, useState, useEffect } from "react";
 import '../../styles/accountpage.css'
 import "../../styles/eventList.css";
 import { Context } from "../store/appContext";
-import { useLocation } from "react-router-dom";
-const EventList = () => {
+
+import { Link } from "react-router-dom";
+const EventoLista = () => {
 
     const { store, actions } = useContext(Context)
-    const [userEvents, setUserEvents] = useState(null);
-    const params = useLocation();
 
-    let eventData =[]
     useEffect(()=>{
-        console.log("ID USUARIO:", params.state.id)
-        if (params){
-            actions.getUserEvent(params.state.id).then(data=>setUserEvents(data))
-            eventData = [...userEvents]
-        }
-      }, [])
+            actions.getUserEvent()
+      }, []);
 
-      
-      if (!eventData){
-          eventData = [
-              {
-                "id": 1,
-                "nombre_evento": 'JAM ON IT',
-                "descr_corta":  "",
-                "fecha_ini": '13/11/2023',
-                "fecha_fin": '13/11/2024',
-                "ubicacion": 'Colombia',
-                "logotipo":  "",
-                "descr_larga":  "",
-                "reglas":  "",
-                "fecha_lim":  "",
-                "email_contacto":  "",
-                "tel_contacto":  "",
-                "nombre_contacto":  "",
-                "costo": 0
-              }
-          ];
-      }
-    const [selectedEvent, setSelectedEvent] = useState(eventData[0]);
+    const [selectedEvent, setSelectedEvent] = useState(0);
     const handleEdit = (e) => {
         setSelectedEvent(eventData.find(t => t.id == e.target.id))
     }
@@ -49,21 +22,20 @@ const EventList = () => {
         setTodoArrays(newTodos)
     }
     const handleChange = (e, propertyName) => {
-        const currentEvent = Object.assign({}, selectedEvent);
+        /*const currentEvent = Object.assign({}, selectedEvent);
         currentEvent[propertyName] = e.target.value;
-        setSelectedEvent(currentEvent)
+        setSelectedEvent(currentEvent)*/
     }
     return (
-        <div className="fatherBody">
-            <div className="row">
-                <div className="col-3"> </div>
-                <div className="col-3"> </div>
-                <div className="col-3"> <button id="buttonNew" className="btn btn-primary">
-                    Nuevo
-                </button> </div>
-                <div className="col-3"> </div>
+        <div className="contSuperior fatherBody" style={{minHeight:"500px"}}>
+            <div className="row text-center mb-3">
+                <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+                    <Link to="/cuenta">
+                        <button class="btn btn-primary me-md-2" type="button">Volver a Perfil</button>
+                    </Link>
+                    <button class="btn btn-primary" type="button">Crear Evento</button>
+                </div>
             </div>
-
             <table className="table align-middle mb-0 bg-white" id='theEventstable'>
                 <thead className="bg-light">
                     <tr>
@@ -74,8 +46,7 @@ const EventList = () => {
                     </tr>
                 </thead>
                 <tbody>
-
-                    {eventData.map((theEvent) => (
+                    {store.userEvent.map((theEvent) => (
                         <tr key={theEvent.id}>
                             <td>
                                 <div className="d-flex align-items-center">
@@ -87,7 +58,7 @@ const EventList = () => {
                                     />
                                     <div className="ms-3">
                                         <p className="fw-bold mb-1"></p>
-                                        <p className="text-muted mb-0">{theEvent.ubicacion}</p>
+                                        <p className="text-muted mb-0">{theEvent.nombre_evento}</p>
                                     </div>
                                 </div>
                             </td>
@@ -128,6 +99,7 @@ const EventList = () => {
                             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div className="modal-body">
+                            {/*
                             <div className="row">
                                 <div className="row">
                                     <form className="form-floating">
@@ -140,7 +112,6 @@ const EventList = () => {
                                         <input onChange={(e) => handleChange(e, "descr_corta")} type="text" className="form-control" id="eventDescription" placeholder="nombre" value={selectedEvent.descr_corta} />
                                         <label htmlFor="eventDescription">Descripcion corta:</label>
                                     </form>
-
                                 </div>
                                 <div className="row">
                                     <form className="form-floating">
@@ -187,7 +158,6 @@ const EventList = () => {
                                         <input onChange={(e) => handleChange(e, "fecha_lim")} type="text" className="form-control" id="eventLimiteDate" placeholder="Fecha limite" value={selectedEvent.fecha_lim} />
                                         <label htmlFor="eventLimiteDate">Fecha limite:</label>
                                     </form>
-
                                 </div>
                                 <div className="row">
                                     <form className="form-floating">
@@ -216,7 +186,7 @@ const EventList = () => {
                                 </div>
 
                             </div>
-
+                        */}
                         </div>
                         <div className="modal-footer">
                             <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -230,6 +200,6 @@ const EventList = () => {
     );
 }
 
-export default EventList;
+export default EventoLista;
 
 
