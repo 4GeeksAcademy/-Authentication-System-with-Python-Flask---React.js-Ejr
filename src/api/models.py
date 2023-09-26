@@ -23,10 +23,10 @@ class User(db.Model):
     books_user = db.relationship('Book', backref='user', lazy=True)
     is_active = db.Column(db.Boolean(), default=True)
     roles = db.relationship('Role', secondary=roles_user)  # secondary es la tabla intermedia entres usuarios y roles
+    role_id = db.Column(db.Integer, default=1)
 
 
-
-    def serialize(self):
+    def serialize_user(self):
         return {
             "id": self.id,
             "name": self.name,
@@ -34,11 +34,34 @@ class User(db.Model):
             "email": self.email,
             "region": self.region,
             "photo": self.photo,
-            "message_from": self.message_from,
-            "message_to": self.message_to,
-            "books_user": self.books_user,
             "is_active": self.is_active
         }
+    def serialize_User_gallery(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            "lastname": self.lastname,
+            "email": self.email,
+            "region": self.region,
+            "image": self.image
+            
+        }
+
+    def serialize_with_message(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            "message_from": list(map(lambda msg: msg.serialize, self.message_from)),
+            "message_to": list(map(lambda msg: msg.serialize, self.message_to)),
+            "is_active": self.is_active
+        }
+    def serialize_with_books(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            "books_user": self.books_user,
+        }
+
 
     def save(self):
         db.session.add(self)
@@ -162,14 +185,13 @@ class Message(db.Model):
     
     def serialize(self):
         return {
-            
             "id":self.id,
             "message": self.message,
             "user_from_id": self.user_from_id,
             "user_to_id": self.user_to_id,
             "date": self.date,
-            "user_from":self.user_from.serialize(),
-            "user_to":self.user_to.serialize()
+            # "user_from":self.user_from.serialize(),
+            # "user_to":self.user_to.serialize()
 
         }
             

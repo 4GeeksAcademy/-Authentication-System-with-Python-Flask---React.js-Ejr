@@ -20,7 +20,7 @@ api = Blueprint('api', __name__)
 def home():
     
     users = User.query.all()
-    users = list(map(lambda user: user.serialize(), users))
+    users = list(map(lambda user: user.serialize_user(), users))
 
     return jsonify({
         "data": users
@@ -32,6 +32,7 @@ def home():
 def user_register():
     
     print(request.get_json())
+
     name= request.json.get("name")
     lastname= request.json.get("lastname")
     email= request.json.get("email")
@@ -74,12 +75,13 @@ def user_register():
     user.password = generate_password_hash(password)
     user.region = region
     # user.photo = photo
-    roles = request.json.get('roles')
+    roles = request.json.get('roles', [])
+    
     
     if len(roles) > 0:
         for roles_id in roles:
-            role = Role.query.get(roles_id)
-            user.roles.append(role)
+            roles = Role.query.get(roles_id)
+            user.roles.append(roles)
 
     user.save()
 
@@ -103,6 +105,7 @@ def update_user(id):
     return jsonify({
         "msg": "User updated", "user":user.serialize()
     }), 200
+    
         
 @api.route('delete_user/<int:id>', methods=['DELETE'])
 @jwt_required()
@@ -131,7 +134,6 @@ def login():
 
 # ------< BUSCAMOS AL USUARIO >------------------------------------->
     user = User.query.filter_by(email=email).first()
-
     
 #------< si no existe el usuario >------------------------------------->
     if not user: 
@@ -151,7 +153,7 @@ def login():
         "success": "inicio de sesion exitoso",
         "access_token": access_token,
         "type": "Bearer",
-        "user": user.serialize()
+        "user": user.serialize_user()
     }
 
 
@@ -159,15 +161,14 @@ def login():
 
 
 # -----< generando ruta privada, datos de usuario, perfil >---------------------------------------->
-
-
 @api.route('/profile', methods=['GET', 'POST'])
 @jwt_required()
 def profile():
 
     id = get_jwt_identity()
     user = User.query.get(id)
-    return jsonify({"message": "ruta  privada", "user": user.serialize()}), 200
+    return jsonify({"msg": "ruta  privada", "user": user.serialize_user()
+                    }), 200
 
 
 
@@ -277,10 +278,6 @@ def upload_image_route():
     return jsonify(gallery.serialize()), 201
 
 
-
-
-
-
 @api.route('/image_get', methods=['GET'])
 @jwt_required()
 def image():
@@ -336,16 +333,39 @@ def image_update(id):
 def messages(id = None):
     current_user = get_jwt_identity()
     if request.method == 'GET':
-        
         if id is not None:
-            message = Message.query.get(id)
+            message = Message.query.filter_by(id=id, user_from_id=current_user).first()
             if not message:
-                return jsonify({"msg": "Message not found"}), 404
-            return jsonify(message.serialize()), 200
+                return jsonify({"msg": "No hay mensajes"}), 404
+            return jsonify(message.serialize())
         else: 
-            messages = Message.query.all()
-            messages = list(map(lambda msg: msg.selialize(), messages))
-            return jsonify(messages), 200
+            messages = Message.query.filter_by(user_from_id=current_user)
+            messages = list(map(lambda msg: msg.serialize(), messages))
+            
+            return jsonify(messages)
+        
+    # if request.method== 'POST':
+    #     message = request.json.get('message')
+    #     user_from_id = request.json.get('user_form_id')
+    #     user_to_id = request.json.get('user_to_id')
+        
+    #     msg = Message()
+    #     msg.message = message
+    #     msg.user_from_id = user_from_id
+    #     msg.user_to_id = user_to_id
+        
+    #     msg.save()
+    #     return  jsonify(msg.serialize()), 201
+        
+        # if id is not None:
+        #     message = Message.query.get(id)
+        #     if not message:
+        #         return jsonify({"msg": "Message not found"}), 404
+        #     return jsonify(message.serialize()), 200
+        # else: 
+        #     messages = Message.query.all()
+        #     messages = list(map(lambda msg: msg.selialize(), messages))
+        #     return jsonify(messages), 200
             
     if request.method == 'POST':
         message = request.json.get('message')
