@@ -5,10 +5,6 @@ const modalEvent = () => {
 
     const { store, actions } = useContext(Context)
 
-    useEffect(()=>{
-            actions.getUserEvent()
-      }, []);
-
     return(
                 <div>
                     <div className="modal-body">
@@ -103,8 +99,8 @@ const modalEvent = () => {
 
                         </div>
                         <div className="modal-footer">
-                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" className="btn btn-primary">Cambiar</button>
+                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="button" className="btn btn-primary">Guardar</button>
                         </div>
                 </div>
     );
