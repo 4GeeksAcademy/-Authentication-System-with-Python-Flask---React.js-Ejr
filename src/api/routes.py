@@ -13,7 +13,7 @@ api = Blueprint('api', __name__)
 app=Flask(__name__)
 bcrypt = Bcrypt(app)
 @api.route('/update-profile-image', methods=['POST'])
-  # Middleware para verificar la autenticación
+# Middleware para verificar la autenticación
 def update_profile_image():
     # Obtener el ID del usuario autenticado desde el token
     user_id = get_jwt_identity()
@@ -40,7 +40,18 @@ def update_profile_image():
     # Guardar la imagen
     profile_image.save(os.path.join(upload_folder, filename))
 
-    # Puedes guardar la información de la imagen en la base de datos si es necesario
+    # Generar la URL completa de la imagen
+    base_url = 'https://tu-sitio-web.com'  # Reemplaza con la URL de tu sitio web
+    profile_image_url = f'{base_url}/{upload_folder}/{filename}'
+
+    # Actualizar la URL de la imagen en la base de datos
+    user = User.query.get(user_id)
+    user.profile_image_url = profile_image_url
+    db.session.commit()
+
+    # Ejemplo de respuesta exitosa:
+    return jsonify({"message": "Imagen de perfil actualizada correctamente"}), 200
+
 
     # Ejemplo de respuesta exitosa:
     return jsonify({"message": "Imagen de perfil actualizada correctamente"}), 200

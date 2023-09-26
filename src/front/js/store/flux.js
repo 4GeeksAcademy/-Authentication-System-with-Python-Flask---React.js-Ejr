@@ -15,54 +15,34 @@ const getState = ({ getStore, getActions, setStore }) => {
 			]
 		},
 		actions: {
-			//endpoint es la página
-			apiFetchProtected: async (endpoint, method = "GET", body = null) => {
+			updateProfileImage: async (newImageUrl) => {
 				try {
-				  const { getStore, setStore } = getActions();
-				  const { accessToken } = getStore();
-			  
-				  if (!accessToken || accessToken === null) {
-					return "No token";
-				  }
-			  
-				  const params = {
-					method,
-					headers: {
-					  Authorization: "Bearer " + accessToken,
-					  "Content-Type": "application/json", // Asegúrate de configurar el encabezado adecuadamente
-					},
-				  };
-			  
-				  if (body) {
-					params.body = JSON.stringify(body);
-				  }
-			  
-				  const resp = await fetch(process.env.BACKEND_URL + "/api" + endpoint, params);
-				  const data = await resp.json();
-			  
-				  console.log("PRUEBA_fetchprotected" + JSON.stringify(data) + resp.status);
-			  
+				  const { apiFetchProtected } = getActions();
+		  
+				  // Hace una solicitud al servidor para actualizar la imagen de perfil
+				  const resp = await apiFetchProtected("/updateProfileImage", "POST", { profileImage: newImageUrl });
+		  
 				  if (resp.code === 200) {
-					// Actualiza el estado global con la nueva URL de la imagen si es necesario
-					if (data.profileImage) {
-					  setStore((prevStore) => ({
-						...prevStore,
-						userInfo: {
-						  ...prevStore.userInfo,
-						  profileImage: data.profileImage,
-						},
-					  }));
-					}
-				  } else if (resp.code === 401) {
-					// Borra el token de acceso si ha expirado
-					localStorage.removeItem("accessToken");
-					setStore({ accessToken: null });
-					alert("Sesión expirada");
+					// La imagen de perfil se actualizó con éxito en el servidor
+					// Actualiza el estado global con la nueva URL de la imagen
+					setStore((prevStore) => ({
+					  ...prevStore,
+					  userInfo: {
+						...prevStore.userInfo,
+						profileImage: newImageUrl,
+					  },
+					}));
+				  } else {
+					// Maneja el caso en el que la API de actualización de la imagen de perfil devuelva un código de error
+					console.error("Error al actualizar la imagen de perfil:", resp);
+					// Puedes mostrar un mensaje de error o realizar otra acción aquí
 				  }
-			  
-				  return { code: resp.status, data };
+		  
+				  return resp;
 				} catch (error) {
-				  console.log("Error al solicitar los datos", error);
+				  console.error("Error al actualizar la imagen de perfil:", error);
+				  // Maneja el caso en el que ocurra un error en la llamada a la API
+				  // Puedes mostrar un mensaje de error o realizar otra acción aquí
 				}
 			  },
 			apiFetchPublic: async(endpoint, method="GET", body=null)=>{

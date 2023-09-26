@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import axios from "axios"; // Importa Axios para realizar solicitudes HTTP
 import '../../styles/contacto.css';
 
 function ContactForm() {
@@ -22,9 +21,15 @@ function ContactForm() {
     e.preventDefault();
 
     try {
-      const response = await axios.post("URL_DEL_BACKEND", formData);
+      const response = await fetch("URL_DEL_BACKEND", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json", // Indica que estás enviando datos en formato JSON
+        },
+        body: JSON.stringify(formData), // Convierte el objeto formData a JSON
+      });
 
-      if (response.status === 200) {
+      if (response.ok) {
         // El envío fue exitoso, puedes mostrar un mensaje de éxito al usuario
         console.log("Mensaje enviado con éxito");
       } else {

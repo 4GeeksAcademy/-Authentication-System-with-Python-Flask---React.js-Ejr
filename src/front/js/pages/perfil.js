@@ -10,10 +10,9 @@ const Perfil = ()=>{
   const { store, actions } = useContext(Context);
   const [userData, setUserData] = useState(null);
   const [profileImage, setProfileImage] = useState(
-    `${(res) => setProfileImage(res.filesUploaded[0].url )}`
+    null
   );
   const navigate = useNavigate()
-  const [selectedImage, setSelectedImage] = useState(null); // Estado para la nueva imagen seleccionada
   const filestackClient = filestack.init('ApcaRKG5TSEuvL2v2O2Dnz');
  // Manejar la selección de archivos y actualización de imagen de perfil
 
@@ -21,26 +20,37 @@ const Perfil = ()=>{
 
 
   //cuando cargue llamamos a getuserinfo y enviamos la data al userData
-  useEffect(()=>{
-    if ((store.accessToken)){
-      actions.getUserInfo().then(data=>setUserData(data))
-      //{userData=="Ok"? JSON.stringify(store.userInfo):userData}
-      //console.log("DESPLEGANDO DATA:", store.userInfo)
+  useEffect(() => {
+    if (store.accessToken) {
+      actions.getUserInfo().then(data => {
+        setUserData(data);
+        // Verificar si el usuario tiene una imagen de perfil y establecerla
+        if (data && data.profileImage) {
+          setProfileImage(data.profileImage);
+        }
+      });
     } else {
-    navigate("/cuenta")
+      navigate("/cuenta");
     }
-  }, [store.accessToken])
+  }, [store.accessToken, actions, navigate]);
 
   const profileData = {...store.userInfo};
 
-    // Función para abrir el selector de archivos de Filestack
-    const handleOpenFilePicker = () => {
-      const options = {
-        onUploadDone: (res) => setProfileImage(res.filesUploaded[0].url )   
-        
+  const handleOpenFilePicker = () => {
+    const options = {
+      onUploadDone: (res) => {
+        const newImageUrl = res.filesUploaded[0].url;
+
+        actions.updateProfileImage(newImageUrl).then(()=>{
+
+          setProfileImage(newImageUrl);
+        }).catch(error=>{
+          console.error('error')
+        })
         
       }
-    
+    };
+  
      
       filestackClient.picker(options).open().then(response => {
         // Verifica si se seleccionó una imagen antes de continuar
@@ -55,13 +65,7 @@ const Perfil = ()=>{
       });
     };
   
-    useEffect(() => {
-      if (selectedImage) {
-        setProfileImage(selectedImage);
-        // Puedes enviar la nueva URL de la imagen de perfil al servidor para actualizarla en la base de datos del usuario
-        actions.updateProfileImage(selectedImage);
-      }
-    }, [selectedImage, actions]);
+   
   return (
 
     <section style={{ backgroundColor: '#eee' }}>
