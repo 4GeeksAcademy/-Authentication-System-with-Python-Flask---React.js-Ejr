@@ -53,7 +53,7 @@ const Registrarse = () => {
                         </div>
                         <div className="row">
                             <div id="center" className="col">
-                                <b><h2>Location:</h2></b>
+                                <b><h2>Ubicación</h2></b>
                                 <p>New York, NY, USA(MAP)</p>
                             </div>
                         </div>
@@ -62,7 +62,7 @@ const Registrarse = () => {
                         </div>
                         <div className="row">
                             <div classsName="col">
-                                <b><h1>Description</h1></b>
+                                <b><h1>Descripción</h1></b>
                                 <hr style={{ height: "2px", width: "100%", borderWidth: "0", color: "gray", }}></hr>
                                 <p>This event article, used for writing about and listing the events planned for the future on your website.You can edit all of this text from the Pages tab by clicking the edit button.</p>
                             </div>
@@ -79,10 +79,10 @@ const Registrarse = () => {
                                 <b><h5>Evento</h5></b>
                             </div>
                             <div className="col-3">
-                                <b><h5>Price</h5></b>
+                                <b><h5>Costo</h5></b>
                             </div>
                             <div className="col-3">
-                                <b><h5>Qty</h5></b>
+                                <b><h5>Cant.</h5></b>
                             </div>
                             <div className="col-3">
                                 <b><h5>Total</h5></b>
@@ -121,7 +121,7 @@ const Registrarse = () => {
                             <div className="col-3"></div>
                             <div className="col-3"></div>
                             <div className="col-3">
-                                <button className="btn btn-primary btn-md ">REGISTRARSE</button>
+                                <button className="btn btn-primary btn-md ">PAGAR</button>
                                 <PayPal/>
                             </div>
                         </div>

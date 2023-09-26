@@ -9,15 +9,18 @@ import * as filestack from 'filestack-js';
 const Perfil = ()=>{
   const { store, actions } = useContext(Context);
   const [userData, setUserData] = useState(null);
+  const profileData = {...store.userInfo};
   const [profileImage, setProfileImage] = useState(
-    null
+   null
   );
   const navigate = useNavigate()
   const filestackClient = filestack.init('ApcaRKG5TSEuvL2v2O2Dnz');
  // Manejar la selección de archivos y actualización de imagen de perfil
-
+ useEffect(()=>{
+  setProfileImage(profileData.url_perfil)
+}, [profileData.url_perfil]);
   
-
+ 
 
   //cuando cargue llamamos a getuserinfo y enviamos la data al userData
   useEffect(() => {
@@ -25,27 +28,27 @@ const Perfil = ()=>{
       actions.getUserInfo().then(data => {
         setUserData(data);
         // Verificar si el usuario tiene una imagen de perfil y establecerla
-        if (data && data.profileImage) {
-          setProfileImage(data.profileImage);
-        }
+        //if (data && data.profileImage) {
+         // setProfileImage(data.profileImage);
+      //  }
       });
     } else {
       navigate("/cuenta");
     }
-  }, [store.accessToken, actions, navigate]);
+  }, [store.accessToken]);
 
-  const profileData = {...store.userInfo};
+
 
   const handleOpenFilePicker = () => {
     const options = {
       onUploadDone: (res) => {
         const newImageUrl = res.filesUploaded[0].url;
-
+        console.log('la URL de la imagen es:', newImageUrl)
         actions.updateProfileImage(newImageUrl).then(()=>{
 
           setProfileImage(newImageUrl);
         }).catch(error=>{
-          console.error('error')
+          console.error(error)
         })
         
       }
@@ -87,13 +90,6 @@ const Perfil = ()=>{
                 <button type="button" className="btn btn-primary" onClick={handleOpenFilePicker}>
                   Cambiar imagen de perfil
                 </button>
-              
-                <div className="d-flex justify-content-center mb-2">
-                
-                  <button type="button" className="btn btn-primary">
-                    Configurar perfil
-                  </button>
-                </div>
               </div>
             </div>
             <div className="card mb-4 mb-lg-0">
@@ -171,10 +167,15 @@ const Perfil = ()=>{
                   </div>
                 </div>
                 <hr />
+                <div className='text-center'>
+                  <button type="button" className="btn btn-primary">
+                    Editar Datos
+                  </button>
+                </div>
               </div>
             </div>
 
-        <div className="row">
+        <div className="row">          
             <div className="row row-cols-1 row-cols-md-3 g-4">
               <div className="col">
                 <div className="card text-center" style={{width: "17.5rem"}}>
