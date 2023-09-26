@@ -10,63 +10,62 @@ const Perfil = ()=>{
   const { store, actions } = useContext(Context);
   const [userData, setUserData] = useState(null);
   const [profileImage, setProfileImage] = useState(
-    'https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp'
+    null
   );
   const navigate = useNavigate()
   const filestackClient = filestack.init('ApcaRKG5TSEuvL2v2O2Dnz');
  // Manejar la selección de archivos y actualización de imagen de perfil
- const handleFileUpload = async () => {
-  try {
-    const result = await filestackClient.picker({ accept: 'image/*' }).open();
-    if (result.filesUploaded.length > 0) {
-      // Actualizar la imagen de perfil en el estado local
-      const newProfileImage = result.filesUploaded[0].url;
-      setProfileImage(newProfileImage);
 
-      // Aquí puedes enviar la nueva URL de la imagen de perfil al servidor para actualizarla en la base de datos del usuario
-      // actions.updateProfileImage(newProfileImage); // Debes implementar esta función en tus acciones
-    }
-  } catch (error) {
-    console.error('Error al cargar la imagen:', error);
-  }
-};
   
 
 
   //cuando cargue llamamos a getuserinfo y enviamos la data al userData
-  useEffect(()=>{
-    if ((store.accessToken)){
-      actions.getUserInfo().then(data=>setUserData(data))
-      //{userData=="Ok"? JSON.stringify(store.userInfo):userData}
-      //console.log("DESPLEGANDO DATA:", store.userInfo)
+  useEffect(() => {
+    if (store.accessToken) {
+      actions.getUserInfo().then(data => {
+        setUserData(data);
+        // Verificar si el usuario tiene una imagen de perfil y establecerla
+        if (data && data.profileImage) {
+          setProfileImage(data.profileImage);
+        }
+      });
     } else {
-      navigate("/cuenta")
+      navigate("/cuenta");
     }
-  }, [store.accessToken])
+  }, [store.accessToken, actions, navigate]);
 
   const profileData = {...store.userInfo};
 
-    // Función para abrir el selector de archivos de Filestack
-    const handleOpenFilePicker = () => {
-      const pickerOptions = {
-        fromSources: ['local_file_system', 'url', 'imagesearch', 'facebook', 'instagram', 'googledrive', 'dropbox'],
-        accept: ['image/*'],
-        maxSize: 1024 * 1024 * 5, // Tamaño máximo de 5 MB
-        uploadInBackground: false, // Subir en primer plano
-        transformations: {
-          crop: true, // Permite recortar la imagen
-        },
-      };
+  const handleOpenFilePicker = () => {
+    const options = {
+      onUploadDone: (res) => {
+        const newImageUrl = res.filesUploaded[0].url;
+
+        actions.updateProfileImage(newImageUrl).then(()=>{
+
+          setProfileImage(newImageUrl);
+        }).catch(error=>{
+          console.error('error')
+        })
+        
+      }
+    };
   
-      filestackClient.picker(pickerOptions).open().then(response => {
-        // Handle the response from Filestack here
-        console.log('Filestack response:', response);
-        // Puedes obtener la URL de la imagen seleccionada desde response.filesUploaded[0].url
+     
+      filestackClient.picker(options).open().then(response => {
+        // Verifica si se seleccionó una imagen antes de continuar
+        if (response.filesUploaded && response.filesUploaded.length > 0) {
+          // Obtén la URL de la imagen seleccionada
+          const imageUrl = response.filesUploaded[0].url;
+          // Actualiza el estado con la nueva imagen
+          setSelectedImage(imageUrl);
+        }
       }).catch(error => {
         console.error('Filestack error:', error);
       });
     };
-
+  
+   
   return (
 <div className="contSuperior">
         <div className="row">
@@ -88,6 +87,7 @@ const Perfil = ()=>{
                 <button type="button" className="btn btn-primary" onClick={handleOpenFilePicker}>
                   Cambiar imagen de perfil
                 </button>
+              
                 <div className="d-flex justify-content-center mb-2">
                 
                   <button type="button" className="btn btn-primary">

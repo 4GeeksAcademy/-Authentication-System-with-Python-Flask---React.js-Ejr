@@ -15,7 +15,36 @@ const getState = ({ getStore, getActions, setStore }) => {
 			]
 		},
 		actions: {
-			//endpoint es la página
+			updateProfileImage: async (newImageUrl) => {
+				try {
+				  const { apiFetchProtected } = getActions();
+		  
+				  // Hace una solicitud al servidor para actualizar la imagen de perfil
+				  const resp = await apiFetchProtected("/updateProfileImage", "POST", { profileImage: newImageUrl });
+		  
+				  if (resp.code === 200) {
+					// La imagen de perfil se actualizó con éxito en el servidor
+					// Actualiza el estado global con la nueva URL de la imagen
+					setStore((prevStore) => ({
+					  ...prevStore,
+					  userInfo: {
+						...prevStore.userInfo,
+						profileImage: newImageUrl,
+					  },
+					}));
+				  } else {
+					// Maneja el caso en el que la API de actualización de la imagen de perfil devuelva un código de error
+					console.error("Error al actualizar la imagen de perfil:", resp);
+					// Puedes mostrar un mensaje de error o realizar otra acción aquí
+				  }
+		  
+				  return resp;
+				} catch (error) {
+				  console.error("Error al actualizar la imagen de perfil:", error);
+				  // Maneja el caso en el que ocurra un error en la llamada a la API
+				  // Puedes mostrar un mensaje de error o realizar otra acción aquí
+				}
+			  },
 			apiFetchPublic: async(endpoint, method="GET", body=null)=>{
 				try{
 					var request

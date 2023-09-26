@@ -12,7 +12,49 @@ api = Blueprint('api', __name__)
 #estandar para toda la inicialización de bcrypt
 app=Flask(__name__)
 bcrypt = Bcrypt(app)
+@api.route('/update-profile-image', methods=['POST'])
+# Middleware para verificar la autenticación
+def update_profile_image():
+    # Obtener el ID del usuario autenticado desde el token
+    user_id = get_jwt_identity()
 
+    # Comprobar si se ha enviado un archivo en la solicitud
+    if 'profile_image' not in request.files:
+        return jsonify({"error": "No se ha enviado un archivo de imagen"}), 400
+
+    profile_image = request.files['profile_image']
+
+    # Verificar que el archivo sea una imagen (puedes agregar más validaciones según tus necesidades)
+    allowed_extensions = {'jpg', 'jpeg', 'png', 'gif'}
+    if not profile_image.filename.lower().endswith(tuple(allowed_extensions)):
+        return jsonify({"error": "Tipo de archivo no permitido"}), 400
+
+    # Guardar la imagen en el sistema de archivos (ajusta la ubicación según tu preferencia)
+    upload_folder = 'profile_images'
+    if not os.path.exists(upload_folder):
+        os.makedirs(upload_folder)
+
+    # Generar un nombre único para la imagen
+    filename = f"user_{user_id}_profile.jpg"  # Puedes cambiar la extensión según el tipo de archivo
+
+    # Guardar la imagen
+    profile_image.save(os.path.join(upload_folder, filename))
+
+    # Generar la URL completa de la imagen
+    base_url = 'https://tu-sitio-web.com'  # Reemplaza con la URL de tu sitio web
+    profile_image_url = f'{base_url}/{upload_folder}/{filename}'
+
+    # Actualizar la URL de la imagen en la base de datos
+    user = User.query.get(user_id)
+    user.profile_image_url = profile_image_url
+    db.session.commit()
+
+    # Ejemplo de respuesta exitosa:
+    return jsonify({"message": "Imagen de perfil actualizada correctamente"}), 200
+
+
+    # Ejemplo de respuesta exitosa:
+    return jsonify({"message": "Imagen de perfil actualizada correctamente"}), 200
 @api.route('/signup', methods=['POST'])
 def create_user():
     #recibir correo y password
