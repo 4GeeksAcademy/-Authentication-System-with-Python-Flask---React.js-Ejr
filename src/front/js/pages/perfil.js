@@ -90,13 +90,6 @@ const Perfil = ()=>{
                 <button type="button" className="btn btn-primary" onClick={handleOpenFilePicker}>
                   Cambiar imagen de perfil
                 </button>
-              
-                <div className="d-flex justify-content-center mb-2">
-                
-                  <button type="button" className="btn btn-primary">
-                    Configurar perfil
-                  </button>
-                </div>
               </div>
             </div>
             <div className="card mb-4 mb-lg-0">
@@ -174,10 +167,15 @@ const Perfil = ()=>{
                   </div>
                 </div>
                 <hr />
+                <div className='text-center'>
+                  <button type="button" className="btn btn-primary">
+                    Editar Datos
+                  </button>
+                </div>
               </div>
             </div>
 
-        <div className="row">
+        <div className="row">          
             <div className="row row-cols-1 row-cols-md-3 g-4">
               <div className="col">
                 <div className="card text-center" style={{width: "17.5rem"}}>
