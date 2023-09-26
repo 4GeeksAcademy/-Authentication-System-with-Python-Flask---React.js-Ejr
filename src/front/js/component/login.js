@@ -19,7 +19,7 @@ function LoginForm() {
     }
   }, [store.accessToken])
 
-  const [activeTab, setActiveTab] = useState('login');
+  const [activeTab, setActiveTab] = useState('register');
   const formulario = document.getElementById("formRegister");
   const [loginFormData, setLoginFormData] = useState({
     loginEmail: '',
@@ -85,8 +85,8 @@ function LoginForm() {
     if (email=="" || password=="" || pass2=="" || name==""){
       //MODAL
       alert("No debe de haber datos vacíos")
-    } else if (name.length <10) {
-      alert("El nombre debe tener al menos 10 caracteres")
+    } else if (name.length <3) {
+      alert("El nombre debe tener al menos 2 caracteres")
     } else if (password.length < 5){
       alert("La contraseña debe debe tener al menos 5 caracteres")
     } else if (!checkData){
