@@ -21,26 +21,24 @@ function ContactForm() {
     e.preventDefault();
 
     try {
-      const response = await fetch("URL_DEL_BACKEND", {
+      const response = await fetch("/enviar-correo", { // Cambia "URL_DEL_BACKEND" por "/enviar-correo"
         method: "POST",
         headers: {
-          "Content-Type": "application/json", // Indica que estás enviando datos en formato JSON
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData), // Convierte el objeto formData a JSON
+        body: JSON.stringify(formData),
       });
 
       if (response.ok) {
-        // El envío fue exitoso, puedes mostrar un mensaje de éxito al usuario
         console.log("Mensaje enviado con éxito");
       } else {
-        // Puedes manejar errores aquí
         console.error("Error al enviar el mensaje");
       }
     } catch (error) {
-      // Puedes manejar errores aquí
       console.error("Error al enviar el mensaje", error);
     }
   };
+
 
   return (
     <div>

@@ -20,19 +20,21 @@ const getState = ({ getStore, getActions, setStore }) => {
 				  const { apiFetchProtected } = getActions();
 		  
 				  // Hace una solicitud al servidor para actualizar la imagen de perfil
-				  const resp = await apiFetchProtected("/updateProfileImage", "POST", { profileImage: newImageUrl });
+				  const resp = await apiFetchProtected("/updateimage", "POST", { newImageUrl });
 		  
 				  if (resp.code === 200) {
 					// La imagen de perfil se actualizó con éxito en el servidor
 					// Actualiza el estado global con la nueva URL de la imagen
-					setStore((prevStore) => ({
+					console.log('la respuesta es' + resp)
+					/*setStore((prevStore) => ({
 					  ...prevStore,
 					  userInfo: {
 						...prevStore.userInfo,
 						profileImage: newImageUrl,
 					  },
-					}));
+					})); */
 				  } else {
+
 					// Maneja el caso en el que la API de actualización de la imagen de perfil devuelva un código de error
 					console.error("Error al actualizar la imagen de perfil:", resp);
 					// Puedes mostrar un mensaje de error o realizar otra acción aquí
@@ -40,7 +42,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 		  
 				  return resp;
 				} catch (error) {
-				  console.error("Error al actualizar la imagen de perfil:", error);
+				  console.error("Error al actualizar la imagen:", error);
 				  // Maneja el caso en el que ocurra un error en la llamada a la API
 				  // Puedes mostrar un mensaje de error o realizar otra acción aquí
 				}
@@ -55,7 +57,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 						const params={
 							method,
 							headers:{
-								"Content-Type":"application/json"
+								"Content-Type":"application/json",
+								"Access-Control-Allow-Origin": "*"
+
 							}
 						}
 						//si hay body lo agregamos a los params
@@ -83,7 +87,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 					const params={
 						method,
 						headers:{
-							"Authorization": "Bearer " + accessToken
+							"Authorization": "Bearer " + accessToken,
+							"Access-Control-Allow-Origin": "*"
 						}
 					}
 					//si hay body lo agregamos a los params
