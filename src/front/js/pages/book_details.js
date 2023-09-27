@@ -1,7 +1,5 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Context } from "../store/appContext";
-import { Buttonsignup } from "../component/btn-signup";
-import { Buttonlogin } from "../component//btn-login";
 import { Review } from "../component/review";
 import ModalReview from "../component/modal-review";
 
@@ -21,16 +19,21 @@ export const BookDetails = () => {
 
 				<div className="bookdetails col-md-6">
 					<h1>Book Title</h1>
-					<h2>Book Author</h2>
+					<h5>Book Author</h5>
+					<p>5 Stars - Total Reviews</p>
 					<p>Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen.</p>
-					<h3>Genre category</h3>
+					<h5>Genre category</h5>
 
 					<div className="d-flex col-12 justify-content-center">
 						<div className="container-fluid py-5">
-							<a href="/create-account" className="btn signup" role="button">Create Account</a>
+							<a href="/create-account" className="btn btn-request-swap" role="button"><i class="far fa-paper-plane"></i> Request Swap</a>
 						</div>
-						<Buttonlogin />
-						<button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">Open modal for @mdo</button>
+						<div className="container-fluid py-5">
+							<a href="/create-account" className="btn btn-add-wishlist" role="button"><i class="far fa-heart"></i> Add to Wishlist</a>
+						</div>
+						<div className="container-fluid py-5">
+							<button type="button" className="btn btn-review-book" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo"><i class="far fa-star"></i> Review Book</button>
+						</div>
 					</div>
 				</div>
 			</div>

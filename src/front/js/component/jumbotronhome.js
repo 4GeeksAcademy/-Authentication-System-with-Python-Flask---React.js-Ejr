@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import { Buttonsignup } from "./btn-signup";
 import { Buttonlogin } from "./btn-login";
 import "../../styles/home.css";

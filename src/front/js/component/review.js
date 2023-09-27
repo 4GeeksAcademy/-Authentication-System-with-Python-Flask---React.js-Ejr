@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import "../../styles/review.css";
 
 export const Review = () => (

@@ -1,4 +1,4 @@
-import React, { Componentm, useState } from "react";
+import React, { Componentm, useState, useState } from "react";
 
 
 import "../../styles/ratingform.css";
