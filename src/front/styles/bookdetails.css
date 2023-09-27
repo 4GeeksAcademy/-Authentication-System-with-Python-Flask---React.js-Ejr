@@ -9,3 +9,16 @@
 * {
     font-family: "inria serif";
 }
+
+.btn-request-swap{
+    background-color: #f1844a;
+}
+
+.btn-add-wishlist{
+    background-color: #b3d6a3;
+}
+
+.btn-review-book{
+    border-radius: 1px;
+    border-color: #b3d6a3;
+}
