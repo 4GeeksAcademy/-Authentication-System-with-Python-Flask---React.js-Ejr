@@ -9,15 +9,18 @@ export const Navbar = () => {
 
   return (
     <div>
-      <nav className="navbar navbar-expand-lg bg-body-tertiary bg-dark">
+      <nav
+        className="navbar navbar-expand-lg bg-body-tertiary "
+        style={{ backgroundColor: "rgb(146, 197, 211)" }}
+      >
         <div className="container-fluid">
           <div className="col d-flex">
-            <Link to="/" className="navbar-brand text-white" href="#">
+            <Link to="/" className="navbar-brand text-dark" href="#">
               Books Market
             </Link>
             <Link
               to="/"
-              className="nav-link active text-white"
+              className="nav-link active text-dark"
               aria-current="page"
             >
               Home
@@ -46,7 +49,7 @@ export const Navbar = () => {
                 location.pathname !== "/login" && (
                   <li className="nav-item">
                     <a
-                      className="nav-link active text-white"
+                      className="nav-link active text-dark"
                       aria-current="page"
                       href="#"
                     >
@@ -57,7 +60,7 @@ export const Navbar = () => {
               {location.pathname !== "/formularioRegistro" &&
                 location.pathname !== "/login" && (
                   <li className="nav-item">
-                    <a className="nav-link text-white" href="#">
+                    <a className="nav-link text-dark" href="#">
                       Wish List
                     </a>
                   </li>
@@ -66,7 +69,7 @@ export const Navbar = () => {
               {!!store.currentUser ? (
                 <li className="nav-item dropdown">
                   <a
-                    className="nav-link dropdown-toggle text-white"
+                    className="nav-link dropdown-toggle text-dark"
                     href="#"
                     role="button"
                     data-bs-toggle="dropdown"
@@ -99,7 +102,7 @@ export const Navbar = () => {
               ) : (
                 <li className="nav-item dropdown">
                   <a
-                    className="nav-link dropdown-toggle text-white"
+                    className="nav-link dropdown-toggle text-dark"
                     href="#"
                     role="button"
                     data-bs-toggle="dropdown"
@@ -140,7 +143,7 @@ export const Navbar = () => {
               <div className="">
                 <Link
                   to="/libroVenta"
-                  className="nav-link active text-white"
+                  className="nav-link active text-dark"
                   aria-current="page"
                 >
                   Libros en Venta
@@ -149,7 +152,7 @@ export const Navbar = () => {
               <div className="">
                 <Link
                   to="/librosIntercambio"
-                  className="nav-link active text-white"
+                  className="nav-link active text-dark"
                   aria-current="page"
                 >
                   Libros para intercambio
@@ -158,7 +161,7 @@ export const Navbar = () => {
               <div className="">
                 <Link
                   to="/masVendidos"
-                  className="nav-link active text-white"
+                  className="nav-link active text-dark"
                   aria-current="page"
                 >
                   Libros más vendidos
@@ -167,7 +170,7 @@ export const Navbar = () => {
               <div className="">
                 <Link
                   to="/donacionesRalizadas"
-                  className="nav-link active text-white"
+                  className="nav-link active text-dark"
                   aria-current="page"
                 >
                   Donaciones realizadas

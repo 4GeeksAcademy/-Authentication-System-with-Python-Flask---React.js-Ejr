@@ -25,6 +25,19 @@ def home():
     return jsonify({
         "data": users
     }), 200
+    
+# -----< traer solo un usuario >----------------------->
+@api.route('/users/<int:user_id>', methods=['GET'])
+def get_user(user_id):
+    user = User.query.get(user_id)
+    if user:
+        return jsonify({
+            "data": user.serialize_user()
+        }), 200
+    else:
+        return jsonify({
+            "message": "User not found"
+        }), 404
 
 # ------< registrar usuario >------------------------------------------------------------>
 
@@ -171,11 +184,14 @@ def profile():
                     }), 200
 
 
+    
+    
+    
 
 #=======< ruta lista LIBRO >===========================================
-@api.route('/books', methods=['POST'])
+@api.route('/books/<int:id>', methods=['POST'])
 @jwt_required()
-def post_book():
+def post_book(id):
     data = request.get_json()
     id = get_jwt_identity()    # corregido sabado en CWeekend
 
@@ -327,86 +343,62 @@ def image_update(id):
 #-----< MENSAJES >-----------------------------------------------------------------------------------------
 # el modelo solo pide: el mensaje, el id del que envia, y el id dl que recibe
 
-@api.route("/messages", methods=['GET', 'POST'])
-@api.route("/messages/<int:id>", methods=['GET','POST'])
-@jwt_required()
-def messages(id = None):
-    current_user = get_jwt_identity()
-    if request.method == 'GET':
-        if id is not None:
-            message = Message.query.filter_by(id=id, user_from_id=current_user).first()
-            if not message:
-                return jsonify({"msg": "No hay mensajes"}), 404
-            return jsonify(message.serialize())
-        else: 
-            messages = Message.query.filter_by(user_from_id=current_user)
-            messages = list(map(lambda msg: msg.serialize(), messages))
+# @api.route("/messages", methods=['GET', 'POST'])
+# @api.route("/messages/<int:id>", methods=['GET','POST'])
+# @jwt_required()
+# def messages(id=None):
+#     current_user = get_jwt_identity()
+#     if request.method == 'GET':
+#         if id is not None:
+#             message = Message.query.filter_by(id=id, user_from_id=current_user).first()
+#             if not message:
+#                 return jsonify({"msg": "No hay mensajes"}), 404
+#             return jsonify(message.serialize())
+#         else: 
+#             messages = Message.query.filter_by(user_from_id=current_user)
+#             messages = list(map(lambda msg: msg.serialize(), messages))
             
-            return jsonify(messages)
+#             return jsonify(messages)
         
-    # if request.method== 'POST':
-    #     message = request.json.get('message')
-    #     user_from_id = request.json.get('user_form_id')
-    #     user_to_id = request.json.get('user_to_id')
+#     if request.method == 'POST':
+#         message = request.json.get('message')
+#         user_from_id = request.json.get('user_from_id')
+#         user_to_id = request.json.get('user_to_id')
+#         msg = Message()
+#         msg.message = message
+#         msg.user_from_id = user_from_id
+#         msg.user_to_id= user_to_id
         
-    #     msg = Message()
-    #     msg.message = message
-    #     msg.user_from_id = user_from_id
-    #     msg.user_to_id = user_to_id
+#         msg.save()
         
-    #     msg.save()
-    #     return  jsonify(msg.serialize()), 201
-        
-        # if id is not None:
-        #     message = Message.query.get(id)
-        #     if not message:
-        #         return jsonify({"msg": "Message not found"}), 404
-        #     return jsonify(message.serialize()), 200
-        # else: 
-        #     messages = Message.query.all()
-        #     messages = list(map(lambda msg: msg.selialize(), messages))
-        #     return jsonify(messages), 200
-            
-    if request.method == 'POST':
-        message = request.json.get('message')
-        user_from_id = request.json.get('user_from_id')
-        user_to_id = request.json.get('user_to_id')
-        msg = Message()
-        msg.message = message
-        msg.user_from_id = user_from_id
-        msg.user_to_id= user_to_id
-        
-        msg.save()
-        
-        return jsonify(msg.serialize()), 201
+#         return jsonify(msg.serialize()), 201
     
-@api.route('/messages_update/<int:id>', methods=['PUT'])
-@jwt_required()
-def message_update(id):
+# @api.route('/messages_update/<int:id>', methods=['PUT'])
+# @jwt_required()
+# def message_update(id):
     
-    data = request.get_json()
+#     data = request.get_json()
     
-    message = Message.query.get(id)
+#     message = Message.query.get(id)
     
-    message.message = data["message"] if "message" in data else message.message
-    message.user_from_id = data["user_from_id"] if "user_from_id" in data else message.user_from_id
-    message.user_to_id = data["user_to_id"] if "user_to_id" in data else message.user_to_id
+#     message.message = data["message"] if "message" in data else message.message
+#     message.user_from_id = data["user_from_id"] if "user_from_id" in data else message.user_from_id
+#     message.user_to_id = data["user_to_id"] if "user_to_id" in data else message.user_to_id
     
-    message.update()
+#     message.update()
     
-    return jsonify({
-        "msg": "mensaje actualizado", "mensaje": message.serialize()
-    }), 200
+#     return jsonify({
+#         "msg": "mensaje actualizado", "mensaje": message.serialize()
+#     }), 200
 
     
-@api.route('messages_delete/<int:id>', methods=['DELETE'])
-@jwt_required()
-def message_delete(id):
-    message = Message.query.get(id)
-    message.delete()
+# @api.route('messages_delete/<int:id>', methods=['DELETE'])
+# @jwt_required()
+# def message_delete(id):
+#     message = Message.query.get(id)
+#     message.delete()
     
-    return jsonify({"msg": "Message has been deleted", "Message": {}}), 200
-
+#     return jsonify({"msg": "Message has been deleted", "Message": {}}), 200
 
 #message = Message().find_by_id(id=id, user_id=current_identity.user["sub"])
 # def send_message():
@@ -415,3 +407,89 @@ def message_delete(id):
 #     message=request.form["message"]
 #     receiverId=request.form["receiverID"]
 #     print("Message:",message,"Receiver ID:",receiverId,type(receiverId))
+
+
+#-----< mensajes >------------------------------------------------------>
+@api.route('/messages', methods=['GET'])
+def get_all_messages():
+    messages = Message.query.all()
+    serialized_messages = [message.serialize() for message in messages]
+
+    return jsonify(serialized_messages), 200
+
+@api.route('/messages/<int:message_id>', methods=['GET'])
+def get_message(message_id):
+    message = Message.query.get(message_id)
+
+    if message:
+        return jsonify(message.serialize()), 200
+    else:
+        return jsonify({"message": "Message not found"}), 404
+
+@api.route('/messages', methods=['POST'])
+def create_message():
+    data = request.get_json()
+
+    message = Message(
+        message=data['message'],
+        user_from_id=data['user_from_id'],
+        user_to_id=data['user_to_id']
+    )
+
+    message.save()
+
+    return jsonify(message.serialize()), 201
+
+@api.route('/messages/<int:message_id>', methods=['PUT'])
+def update_message(message_id):
+    message = Message.query.get(message_id)
+
+    if not message:
+        return jsonify({"message": "Message not found"}), 404
+
+    data = request.get_json()
+
+    message.message = data['message']
+    message.user_from_id = data['user_from_id']
+    message.user_to_id = data['user_to_id']
+
+    message.update()
+
+    return jsonify(message.serialize()), 200
+
+@api.route('/messages/<int:message_id>', methods=['DELETE'])
+def delete_message(message_id):
+    message = Message.query.get(message_id)
+
+    if not message:
+        return jsonify({"message": "Message not found"}), 404
+
+    message.delete()
+
+    return jsonify({"message": "Message deleted"}), 200
+
+
+
+#-----< mensajes recibidos >----------------------------------------> 
+@api.route('/users/<int:user_id>/received_messages', methods=['GET'])
+def get_received_messages(user_id):
+    user = User.query.get(user_id)
+    if not user:
+        return jsonify({"message": "User not found"}), 404
+    
+    received_messages = Message.query.filter_by(user_to_id=user_id).all()
+    serialized_messages = [message.serialize() for message in received_messages]
+    
+    return jsonify(serialized_messages), 200
+
+#-----< mensajes enviados >----------------------------------------->
+@api.route('/users/<int:user_id>/sent_messages', methods=['GET'])
+def get_sent_messages(user_id):
+    user = User.query.get(user_id)
+    if not user:
+        return jsonify({"message": "User not found"}), 404
+    
+    sent_messages = Message.query.filter_by(user_to_id=user_id).all()
+    serialized_messages = [message.serialize() for message in sent_messages]
+    
+    return jsonify(serialized_messages), 200

@@ -190,8 +190,6 @@ class Message(db.Model):
             "user_from_id": self.user_from_id,
             "user_to_id": self.user_to_id,
             "date": self.date,
-            # "user_from":self.user_from.serialize(),
-            # "user_to":self.user_to.serialize()
 
         }
             
