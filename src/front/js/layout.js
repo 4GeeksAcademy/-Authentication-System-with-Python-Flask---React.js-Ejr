@@ -31,6 +31,8 @@ import { ComoDonar } from "./pages/comoDonar";
 import injectContext from "./store/appContext";
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
+import Messages from "./component/messages/Messages";
+import SendMessages from "./component/messages/SendMessages";
 
 //create your first component
 const Layout = () => {
@@ -74,6 +76,9 @@ const Layout = () => {
             <Route element={<RegistroLibro />} path="/registroLibro" />
             <Route element={<DetalleLibro />} path="/detalleLibro/:id" />
             <Route element={<Profile />} path="/profile" />
+            <Route element={<Messages />} path="/messages" />
+            <Route element={<SendMessages />} path="/send-messages" />
+
             <Route element={<h1>Not found!</h1>} />
           </Routes>
           <Footer />

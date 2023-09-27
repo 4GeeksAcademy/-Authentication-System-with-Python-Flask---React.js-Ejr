@@ -13,20 +13,26 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
       url: "http://localhost:3001",
       currentUser: null,
-      message: null,
-      newBook: {
-        id: "",
-        title: "",
-        author: "",
-        cathegory: "",
-        number_of_pages: "",
-        description: "",
-        type: "",
-        price: "",
-        photo: "",
+      // message: null,
+      // newBook: {
+      //   id: "",
+      //   title: "",
+      //   author: "",
+      //   cathegory: "",
+      //   number_of_pages: "",
+      //   description: "",
+      //   type: "",
+      //   price: "",
+      //   photo: "",
+      // },
+      // showBook: [],
+      // oneBook: [],
+      message: {
+        message: "",
+        user_from_id: "",
+        user_to_id: "",
       },
-      showBook: [],
-      oneBook: [],
+      user: [],
     },
 
     actions: {
@@ -83,6 +89,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           if (data.access_token) {
             setStore({ currentUser: data });
             sessionStorage.setItem("currentUser", JSON.stringify(data));
+            console.log("currentUser", currentUser);
             navigate("/profile");
           } else {
             setStore({
@@ -119,23 +126,97 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
         navigate("/");
       },
-      //----favor de no intervenir mi codigo-----//
 
-      //------------josé--------------------------
-      handleChangeBook: (e) => {
-        const { newBook } = getStore();
+      // //------------josé--------------------------
+      // handleChangeBook: (e) => {
+      //   const { newBook } = getStore();
+      //   e.preventDefault();
+      //   newBook[e.target.name] = e.target.value;
+      //   setStore({ newBook });
+      //   console.log("newBook:", getStore().newBook);
+      // },
+      // ////FUNC. PARA GUARDAR LIBRO
+      // saveBook: async (navigate) => {
+      //   try {
+      //     const { url, newBook } = getStore();
+      //     const response = await fetch(`${url}/api/registerBook`, {
+      //       method: "POST",
+      //       body: JSON.stringify(newBook),
+      //       headers: { "Content-Type": "application/json" },
+      //     });
+      //     const data = await response.json();
+      //     console.log("data", data);
+      //     navigate("/");
+      //   } catch (error) {
+      //     console.log(error);
+      //   }
+      // },
+      // ////FUNC. ENVIAR REGISTRO
+      // submitBook: (e, navigate) => {
+      //   e.preventDefault();
+      //   getActions().saveBook(navigate);
+      // },
+      // ////FUNC LISTA DE LIBROS
+      // getLibros: () => {
+      //   var requestOptions = {
+      //     method: "GET",
+      //     redirect: "follow",
+      //   };
+
+      //   fetch("http://localhost:3001/api/libroVenta", requestOptions)
+      //     .then((response) => response.json())
+      //     .then((data) => {
+      //       getStore().showBook = data;
+      //       console.log("conseguí los libros");
+      //       console.log("showBook:", data);
+      //     })
+      //     .catch((error) => console.log("error", error));
+      // },
+
+      // ////FUNC DETALLE UN LIBRO
+      // getOneBook: () => {
+      //   var requestOptions = {
+      //     method: "GET",
+      //     redirect: "follow",
+      //   };
+
+      //   fetch(`http://localhost:3001/api/detalle-libro/${id}`, requestOptions)
+      //     .then((response) => response.json())
+      //     .then((data) => {
+      //       getStore().oneBook = data;
+      //       console.log("conseguí el libro");
+      //       console.log("oneBook:", data);
+      //     })
+      //     .catch((error) => console.log("error", error));
+      // },
+
+      //-----< mensages >--------------------->
+
+      //-----< enviar mensaje >--------------->
+
+      handleChangeMessage: (e) => {
+        const { message } = getStore();
         e.preventDefault();
-        newBook[e.target.name] = e.target.value;
-        setStore({ newBook });
-        console.log("newBook:", getStore().newBook);
+        const updatedMessage = { ...message };
+        updatedMessage[e.target.name] = e.target.value;
+        // message[e.target.name] = e.target.value;
+        setStore({ message: updatedMessage });
+        console.log("newMessage:", getStore().message);
       },
-      ////FUNC. PARA GUARDAR LIBRO
-      saveBook: async (navigate) => {
+      //*************************************************************** */
+      handleSubmitMessage: (e, navigate) => {
+        const { message } = getStore();
+        e.preventDefault();
+        console.log("variable", message);
+
+        getActions().saveMessage(navigate);
+      },
+      saveMessage: async (navigate) => {
         try {
-          const { url, newBook } = getStore();
-          const response = await fetch(`${url}/api/registerBook`, {
+          const { url, message } = getStore();
+          const response = await fetch(`${url}/api/messages`, {
             method: "POST",
-            body: JSON.stringify(newBook),
+            body: JSON.stringify(message),
             headers: { "Content-Type": "application/json" },
           });
           const data = await response.json();
@@ -144,44 +225,6 @@ const getState = ({ getStore, getActions, setStore }) => {
         } catch (error) {
           console.log(error);
         }
-      },
-      ////FUNC. ENVIAR REGISTRO
-      submitBook: (e, navigate) => {
-        e.preventDefault();
-        getActions().saveBook(navigate);
-      },
-      ////FUNC LISTA DE LIBROS
-      getLibros: () => {
-        var requestOptions = {
-          method: "GET",
-          redirect: "follow",
-        };
-
-        fetch("http://localhost:3001/api/libroVenta", requestOptions)
-          .then((response) => response.json())
-          .then((data) => {
-            getStore().showBook = data;
-            console.log("conseguí los libros");
-            console.log("showBook:", data);
-          })
-          .catch((error) => console.log("error", error));
-      },
-
-      ////FUNC DETALLE UN LIBRO
-      getOneBook: () => {
-        var requestOptions = {
-          method: "GET",
-          redirect: "follow",
-        };
-
-        fetch(`http://localhost:3001/api/detalle-libro/${id}`, requestOptions)
-          .then((response) => response.json())
-          .then((data) => {
-            getStore().oneBook = data;
-            console.log("conseguí el libro");
-            console.log("oneBook:", data);
-          })
-          .catch((error) => console.log("error", error));
       },
     },
   };

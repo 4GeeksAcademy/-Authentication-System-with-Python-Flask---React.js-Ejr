@@ -88,7 +88,7 @@ def user_register():
     user.password = generate_password_hash(password)
     user.region = region
     # user.photo = photo
-    roles = request.json.get('roles', [])
+    roles = request.json.get('roles', )
     
     
     if len(roles) > 0:
@@ -183,10 +183,6 @@ def profile():
     return jsonify({"msg": "ruta  privada", "user": user.serialize_user()
                     }), 200
 
-
-    
-    
-    
 
 #=======< ruta lista LIBRO >===========================================
 @api.route('/books/<int:id>', methods=['POST'])
@@ -305,9 +301,9 @@ def image():
                 "data": gallery
             }), 200
         
-#===================================================================================        
+#---------------------------        
 @api.route('/image_update/<int:id>', methods=['PUT'])
-@jwt_required()
+# @jwt_required()
 def image_update(id):
     gallery = Gallery.query.get(id)
     if not gallery:
@@ -416,7 +412,7 @@ def get_all_messages():
     serialized_messages = [message.serialize() for message in messages]
 
     return jsonify(serialized_messages), 200
-
+#-----< buscar mensaje por id >----------------------------------------->
 @api.route('/messages/<int:message_id>', methods=['GET'])
 def get_message(message_id):
     message = Message.query.get(message_id)
@@ -425,6 +421,7 @@ def get_message(message_id):
         return jsonify(message.serialize()), 200
     else:
         return jsonify({"message": "Message not found"}), 404
+
 
 @api.route('/messages', methods=['POST'])
 def create_message():
