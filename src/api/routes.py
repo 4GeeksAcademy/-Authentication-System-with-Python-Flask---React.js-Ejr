@@ -152,6 +152,23 @@ def books_route():
     
     return jsonify(response_libro), 200
 
+@api.route('/update_user/<int:id>', methods=['PUT'])
+@jwt_required()
+def update_user(id):
+    data = request.get_json()
+    
+    user = User.query.get(id)
+    user.name = data["name"] if data['name'] else user.name
+    user.lastname = data["lastname"] if data['lastname'] else user.lastname
+    user.email = data["email"] if data['email'] else user.email
+    user.password = data["password"] if data['password'] else user.password
+    user.region = data["region"] if data['region'] else user.region
+    user.update()
+    
+    return jsonify({
+        "msg": "User updated", "user":user.serialize()
+    }), 200
+
 
 
 
