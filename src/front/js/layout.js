@@ -14,6 +14,7 @@ import { ProfileSettings } from "./pages/ProfileSettings";
 import { Wishlist } from "./pages/Wishlist";
 import { Friends } from "./pages/Friends";
 import { PublicProfile } from "./pages/PublicProfile";
+import { OurBooks } from "./pages/OurBooks";
 import injectContext from "./store/appContext";
 
 import { Navbar } from "./component/navbar";
@@ -22,6 +23,7 @@ import { BookCarousel } from "./component/BookCarousel";
 import { TargetCard } from "./component/targetCard";
 import { ProfileOne } from "./component/ProfileOne";
 import { ProfileTwo } from "./component/ProfileTwo";
+
 
 //create your first component
 const Layout = () => {
@@ -45,6 +47,7 @@ const Layout = () => {
                         <Route element={<Single />} path="/single/:theid" />
                         <Route element={<ProfileSettings />} path="/ProfileSettings" />
                         <Route element={<Wishlist />} path="/Wishlist" />
+                        <Route element={<OurBooks />} path="/OurBooks" />
                         <Route element={<Friends />} path="/Friends" />
                         <Route element={<PublicProfile />} path="/PublicProfile" />
                         <Route element={<BookCarousel />} path="/carousel" />

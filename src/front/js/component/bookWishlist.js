@@ -16,11 +16,6 @@ export const BookWishlist = () => {
                             <p className="card-author" style={{ margin: "10px 0" }}>Book Author</p>
                             <div className="mb-3 row">
                                 <div className="col">
-                                    <a href="#" className="check"><i className="fas fa-check"></i> I've read this one</a>
-                                </div>
-                            </div>
-                            <div className="mb-3 row">
-                                <div className="col">
                                     <a href="#" className="paper_plane"><i className="far fa-paper-plane"></i> Request Swap</a>
                                 </div>
                             </div>

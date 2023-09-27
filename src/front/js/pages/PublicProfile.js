@@ -4,20 +4,29 @@ import { TargetCard } from "../component/targetCard";
 import { BookCarousel } from "../component/BookCarousel";
 import { ProfileOne } from "../component/ProfileOne";
 import { ProfileTwo } from "../component/ProfileTwo";
+import { Link } from "react-router-dom";
+import { ModalBio } from "../component/modalBio";
 
 export const PublicProfile = () => {
+    const [bio, setBio] = useState("Hello, fellow book lovers! I'm absolutely passionate about the written word. My life revolves around the magic of literature, and you'll often find me lost in the pages of a good book, sipping on a cup of tea.");
+
+    const updateBio = (newBio) => {
+        setBio(newBio);
+    };
+
+
     return (
         <div className="container">
             <div className="image">
-                <div className="jumbotron jumbotron-fluid">
+                <div className="jumbotron-profile jumbotron-fluid">
                     <div className="container">
-                        <img src="https://images.pexels.com/photos/2648230/pexels-photo-2648230.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" className="card-img-top" style={{height:"350px"}} alt="..." />
+                        <img src="https://i.pinimg.com/564x/80/4f/5a/804f5aef48a44508d52b9d3b329ba146.jpg" className="card-img-top" style={{ height: "350px" }} alt="..." />
                     </div>
                     <div className="position-relative">
-                    <div className="custom-position">
-                        <img src="https://icon-library.com/images/default-profile-icon/default-profile-icon-16.jpg" alt="Profile Icon" style={{ width: "10rem", height: "10rem" }} className="rounded-circle" />
+                        <div className="custom-position">
+                            <img src="https://icon-library.com/images/default-profile-icon/default-profile-icon-16.jpg" alt="Profile Icon" style={{ width: "10rem", height: "10rem" }} className="rounded-circle" />
+                        </div>
                     </div>
-            </div>
                 </div>
             </div>
             <div className="row">
@@ -26,10 +35,10 @@ export const PublicProfile = () => {
                         <ProfileOne />
                     </div>
                     <div className="my-5">
-                        <ProfileTwo  />
+                        <ProfileTwo />
                     </div>
                     <div className="my-5">
-                        <TargetCard  />
+                        <TargetCard />
                     </div>
                 </div>
                 <div className="col-md-8">
@@ -54,21 +63,25 @@ export const PublicProfile = () => {
                                                 </div>
                                             </div>
                                             <div className="col-md-2">
-                                                <i className="fas fa-cog"></i>
+                                                <Link to="/ProfileSettings" className="card-text-settings-icon">
+                                                    <i className="fas fa-cog"></i>
+                                                </Link>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div className="row">
                                     <div className="col-md-3">
-                                        <button type="button" className="btn btn-primary mb-4"><i class="fas fa-user-plus mx-2"></i>Follow</button>
+                                        <button type="button" className="btn btn-primary mb-4 alert-info-decline"><i class="fas fa-user-plus mx-2"></i>Follow</button>
                                     </div>
                                 </div>
                                 <div className="row g-3">
                                     <div className="col-12">
-                                        <p className="form-label mb-5">
-                                            “Hello, fellow book lovers! I'm absolutely passionate about the written word. My life revolves around the magic of literature, and you'll often find me lost in the pages of a good book, sipping on a cup of tea.”
+                                        <p className="your-bio mb-5">
+                                            {bio}
+                                            <button type="button" className="edit-bio" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fas fa-plus fa-xs"></i></button>
                                         </p>
+                                        <ModalBio bio={bio} updateBio={updateBio} />
                                     </div>
                                     <div className="col-12 mt-5">
                                         <h3>My Swaps</h3>
@@ -87,4 +100,3 @@ export const PublicProfile = () => {
         </div>
     );
 };
-

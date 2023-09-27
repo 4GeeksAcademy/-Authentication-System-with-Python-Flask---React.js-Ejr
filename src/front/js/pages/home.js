@@ -69,7 +69,7 @@ export const Home = () => {
 			<div className="container">
 				<div className="row align-items-start">
 					<div className="col-3 px-5"></div>
-					<div className="col-6 text-center px-5">
+					<div className="col-6 text-center px-5" id="genres-section">
 						<h2 className="fw-bold">All Genres</h2>
 						<p>Mystery - Fantasy - Horror - SciFi - Thriller - Historical Fiction - Romance - Graphic Novel - Children’s - Travel - Adventure - Business & Economics - Humor - Sports - Music - Westerns - Poetry - Classics</p>
 						<h4>And many more</h4>

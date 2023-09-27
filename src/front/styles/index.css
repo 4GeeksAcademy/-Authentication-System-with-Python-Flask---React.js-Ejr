@@ -1,6 +1,3 @@
-/* 
-    General Styles used on every website (Don't Repeat Yourself)
-*/
 
 /* 
     For all the elements same font family
@@ -64,6 +61,12 @@ h4 {
     padding-bottom: 10px;
   }
   
+.settings a:hover {
+    color:black;
+    background-color:rgba(173, 247, 173, 0.4); ;
+    border-radius: 30px;
+    transition: background-color 0.3s;
+}
 
   .nav-link {
     font-weight: bold;
@@ -71,6 +74,55 @@ h4 {
     margin-top: 10px;
   }
   
+  .custom-update {
+    background-color: #b3d6a3;
+    border-color: #b3d6a3;
+    color: black;
+  }
+
+  .custom-update:hover {
+    background-color: #b3d6a3;
+    border-color: #b3d6a3;
+    color: black;
+  }
+
+  .alert-info-accept {
+    background-color: #b3d6a3;
+    color: black;
+  }
+
+  .alert-info-decline {
+    background-color: white;
+    border-color: #b3d6a3;
+    border-width: 2px;
+    color: black;
+    transition: background-color 0.3s ease; 
+}
+
+.alert-info-decline:hover {
+    background-color: #b3d6a3; 
+    border-color: #b3d6a3;
+}
+
+.card-text-box-public {
+    color: black;
+    font-size: 22px;
+    text-decoration: none;
+    
+}
+
+.card-text-box-public:hover{
+    color:#d9d9d9
+}
+
+.card-text-settings-icon {
+    font-size: 20px;
+    color: black;
+}
+
+.card-text-settings-icon:hover{
+    color: #d9d9d9;
+}
   /* 
     For Footer
 */
@@ -101,7 +153,11 @@ footer {
     transform: translate(-50%, -50%);
   }
   
-  
+.edit-bio {
+    background-color: none;
+    border: none;
+    margin-left: 20px;
+}
   
   
   
