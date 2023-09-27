@@ -1,8 +1,13 @@
 import React, { Component, useState } from "react";
+import ReactStars from "react-rating-stars-component";
 import { Buttonsignup } from "../component/btn-signup";
 import "../../styles/modalreview.css";
 
 const ModalReview = () => {
+
+    const ratingChanged = (newRating) => {
+        console.log(newRating);
+    };
 
     return (
         <div className="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -15,11 +20,17 @@ const ModalReview = () => {
                     <div className="modal-body">
                         <form>
                             <div className="mb-3">
-                                <label for="recipient-name" className="col-form-label">Recipient:</label>
-                                <input type="text" className="form-control" id="recipient-name" />
+                                <label for="ReactStars" className="col-form-label">Rate this book:</label>
+                                <ReactStars
+                                    count={5}
+                                    onChange={ratingChanged}
+                                    edit={true}
+                                    size={24}
+                                    activeColor="#ffd700"
+                                />
                             </div>
                             <div className="mb-3">
-                                <label for="message-text" className="col-form-label">Message:</label>
+                                <label for="message-text" className="col-form-label">What do you think about the book?</label>
                                 <textarea className="form-control" id="message-text"></textarea>
                             </div>
                         </form>
