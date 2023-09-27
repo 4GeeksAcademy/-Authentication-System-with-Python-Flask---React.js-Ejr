@@ -127,21 +127,27 @@ def profile():
     
     id = get_jwt_identity()
     user = User.query.get(id)
-    return jsonify({"message": "ruta  privada", "user": user.email}), 200
+    return jsonify({"message": "ruta  privada", "user": user.serialize()}), 200
 
 #-----<ruta libro----->#
 
 @api.route('/books', methods=['GET'])
 def books_route():
     query= request.args.get("q")
+    message= ""
     if query is not None:
         books = Book.query.filter(Book.title.contains(query)).all()
-
+        message = "El resultado de la busqueda es:"
+        if len(books) == 0:
+            books = Book.query.all()
+            message = "La busqueda no ha dado resultado, por favor ingresar nuevamente"
+            
     else :
         books = Book.query.all()
         
     response_libro ={
-        "data": [book.serialize() for book in books]
+        "results": [book.serialize() for book in books] ,
+        "message": message
     }
     
     return jsonify(response_libro), 200

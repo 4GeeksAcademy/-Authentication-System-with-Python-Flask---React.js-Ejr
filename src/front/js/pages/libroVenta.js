@@ -6,6 +6,17 @@ import { Context } from "../store/appContext";
 
 export const LibroVenta = () => {
     const { store, actions } = useContext(Context);
+    const [showBook, setShowBook] = useState([]);
+   console.log(actions)
+   try {
+    actions.searchLibros(window.location.search.replace("?q=", ""), (e) => {setShowBook(e)})
+    // setshowBook(actions.showBook)
+    // if(window.location.search)
+    // window.location.href = "/libroVenta"
+   }
+  catch(e) {
+
+  }
 
     return (
         <div>
@@ -14,7 +25,7 @@ export const LibroVenta = () => {
                     <h1>LIBROS EN VENTA</h1>
                 </div>
                 <div className="d-flex flex-wrap justify-content-center">
-                    {store.showBook.map((libro, i) => (
+                    {showBook.map((libro, i) => (
                         <div className="card shadow-sm p-3 m-3" style={{ width: "300px", height: "400px" }} key={i}>
                             {/* <img  className="card-img-top" alt={store.showBook.title} /> */}
                             <div className="card-body">

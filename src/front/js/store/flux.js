@@ -88,6 +88,9 @@ const getState = ({ getStore, getActions, setStore }) => {
         .catch(error => console.log('error', error));
       },
 
+
+      
+
       ////FUNC DETALLE UN LIBRO
       getOneBook: () => {
         var requestOptions = {
@@ -179,6 +182,23 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.log(error);
           console.log("hay un error en el login");
         }
+      },
+
+      searchLibros: (title, callback) => {
+        var requestOptions = {
+          method: 'GET',
+          redirect: 'follow'
+        };
+        
+        fetch("http://localhost:3001/api/books?q="+title, requestOptions)
+        .then(response => response.json())
+        .then(data => {
+          getStore().showBook = data.results;
+          console.log("conseguí los libros");
+          callback(data.results)
+          console.log("showBook:", data);
+        })
+        .catch(error => console.log('error', error));
       },
 
       handleChangeLogin: (e) => {

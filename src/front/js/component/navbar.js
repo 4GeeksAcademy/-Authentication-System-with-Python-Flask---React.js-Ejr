@@ -1,14 +1,17 @@
 import React, { useContext, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
 
 export const Navbar = () => {
   const { store, actions } = useContext(Context);
   const location = useLocation(); // renderizar con ruta
   console.log(location.pathname)
-
-const handleInput = (e) => {
-        books.push("Hola Mundo")
+  const title = ""
+  const searchBook = (e) => {
+    const navigate = useNavigate();
+    console.log(" /libroVenta?q=" + document.getElementById("search").value)
+        // window.location.href = "/libroVenta?q=" + document.getElementById("search").value
+        
 }
 
 const books = []
@@ -30,19 +33,11 @@ const books = []
           {location.pathname !== "/formularioRegistro" && location.pathname !== "/login" && (
             <div className="col">
               <form className="d-flex" role="search">
-                <input onInput={handleInput.bind(this)} className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-                <datalist>
-                  
-                  {
-                    books.map(book => {
-                      return <option value={book.title} />
-                    })
-                  }
-                  
-                  </datalist>
-                <button className="btn btn-light" type="submit">
+                <input id="search" className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
+                
+                <a onClick={()=>{window.location.href = "/libroVenta?q=" + document.getElementById("search").value}} className="btn btn-light">
                   Search
-                </button>
+                </a>
               </form>
             </div>
           )}
