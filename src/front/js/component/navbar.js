@@ -35,11 +35,11 @@ export const Navbar = () => {
 						</li>
 					</ul>
 					<form className="d-flex justify-content-end mx-5">
-						<div class="input-group" style={{ width: "230px" }}>
-							<input class="form-control border-end-0 border" type="search" value="search" id="example-search-input" />
-							<span class="input-group-append">
-								<button class="btn btn-outline-secondary border-start-0 border-bottom-0 border ms-n5" type="button">
-									<i class="fa fa-search"></i>
+						<div className="input-group" style={{ width: "230px" }}>
+							<input className="form-control border-end-0 border" type="search" value="search" id="example-search-input" />
+							<span className="input-group-append">
+								<button className="btn btn-outline-secondary border-start-0 border-bottom-0 border ms-n5" type="button">
+									<i className="fa fa-search"></i>
 								</button>
 							</span>
 						</div>
