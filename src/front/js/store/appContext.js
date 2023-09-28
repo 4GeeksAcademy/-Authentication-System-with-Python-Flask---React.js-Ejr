@@ -24,6 +24,8 @@ const injectContext = PassedComponent => {
 			state.actions.checkUser();
 			state.actions.getLibros();
 			
+			/* state.actions.getOneBook(); */
+			
 	 
 		}, []);
 

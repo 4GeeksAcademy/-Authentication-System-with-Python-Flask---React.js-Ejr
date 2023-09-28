@@ -3,14 +3,16 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 """
 
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Gallery, Comentario, Book
+from api.models import db, User, Gallery, Comentario, Book,  Mensaje
 from api.utils import generate_sitemap, APIException
 from flask_jwt_extended import JWTManager, get_jwt_identity, create_access_token, jwt_required
 from werkzeug.security import generate_password_hash, check_password_hash
 import datetime
 from cloudinary.uploader import upload
 from flask_migrate import Migrate
-from flask_sqlalchemy import SQLAlchemy 
+from flask_sqlalchemy import SQLAlchemy
+import cloudinary
+from flask_mail import Mail, Message
 
 
 
@@ -39,57 +41,77 @@ def get_users():
 
 @api.route('/register', methods=['POST'])
 def user_register():
-    print(request.get_json())
-    name= request.json.get("name")
-    lastname= request.json.get("lastname")
-    email= request.json.get("email")
-    password= request.json.get("password")
-    region= request.json.get("region")
     
- #-------< validacion de usuario >-------#
-    if not name:
-        return jsonify({"error": "name is requare"}), 422
+    name= None
+    lastname= None
+    email= None
+    password= None
+    region= None    
+    userImage= None
+
+#-------< validacion de usuario >-------#
+
+    if 'name' in request.form:
+        name =request.form["name"]
+    else:
+        return jsonify({"error": "Name is required"}), 400 
+
+    if 'lastname' in request.form:
+        lastname =request.form["lastname"]
+    else:
+        return jsonify({"error": "Last name is required"}), 400
     
-    if not lastname:
-        return jsonify({"error": "username is requare"}), 422
+    if 'email' in request.form:
+        email =request.form["email"]
+    else:
+        return jsonify({"error": "E-mail is required"}), 400
     
-    if not email:
-        return jsonify({"error": "email is requare"}), 422
+    if 'password' in request.form:
+        password =request.form["password"]
+    else:
+        return jsonify({"error": "Password is required"}), 400
     
-    if not password:
-        return jsonify({"error": "password is requare"}), 422
+    if 'region' in request.form:
+        region =request.form["region"]
+    else:
+        return jsonify({"error": "Region is required"}), 400
+        
+    if 'userImage' in request.files:
+        userImage =request.files["userImage"]
+    else:
+        return jsonify({"error": "User image is required"}), 400
     
-    if not region:
-        return jsonify({"error": "region is requare"}), 422
-    
-    
+    response = upload(userImage, folder="user_image")
+
     #-----< creacion de usuario ------------------------------------------->
     
-    user_Faund = User.query.filter_by(email=email).first()
+    email_Found = User.query.filter_by(email=email).first()
     
-    if user_Faund:
-        return jsonify({"message": "username is not available"}), 400
-    
-    user = User()
-    user.name = name
-    user.lastname = lastname
-    user.email = email
-    user.password = generate_password_hash(password)
-    user.region = region
-    user.save()
-    
+    if email_Found:
+        return jsonify({"message": "E-mail is not available"}), 400  
+
+    if response:
+        user = User()
+        user.name = name
+        user.lastname = lastname
+        user.email = email
+        user.password = generate_password_hash(password)
+        user.region = region        
+        user.userImage = response['secure_url'] 
+        user.save()            
+          
+        return jsonify(user.serialize()), 200
+        
     return jsonify({"succes": "Registro exitoso, por favor inicie sesión"}), 200
 
 
-
+#------< validacion de usuario, de datos ingresados >------#
 @api.route('/login', methods=['POST'])
 def login():
     
     email= request.json.get("email")
-    password= request.json.get("password")
-  
- #------< validacion de usuario, de datos ingresados >------#
-
+    password= request.json.get("password") 
+ 
     if not email:
         return jsonify({"error": "email is requare"}), 422
     
@@ -128,19 +150,6 @@ def profile():
     id = get_jwt_identity()
     user = User.query.get(id)
     return jsonify({"message": "ruta  privada", "user": user.email}), 200
-
-#-----<ruta libro----->#
-
-@api.route('/books', methods=['GET'])
-def books_route():
-    response_libro ={
-        "mesage": "libro encontrado, sos un krac!"
-    }
-    
-    return jsonify(response_libro), 200
-
-
-
 
 
 @api.route('/upload', methods=['POST'])
@@ -206,79 +215,108 @@ def get_comentarios():
     return jsonify(comentarios_list), 200
 
 
+
 # END POINT LIBRO
 ### AGREGAR LIBRO
 @api.route('/registerBook', methods=['POST'])
+@jwt_required() #solo usuario logeado publica
 def register_Book():
-    print(request.get_json())
-    title= request.json.get("title")
-    author= request.json.get("author")
-    cathegory= request.json.get("cathegory")
-    number_of_pages= request.json.get("number_of_pages")
-    description= request.json.get("description")
-    type= request.json.get("type")
-    price= request.json.get("price")
-    photo= request.json.get("photo")    
+
+    title= None
+    author= None
+    cathegory= None
+    number_of_pages= None
+    description= None
+    type= None
+    price= None
+    photo= None
+    available= True 
+    user_id = get_jwt_identity() 
+
+
+### VALIDANDO DATOS
+    if 'title' in request.form:
+        title =request.form["title"]
+    else:
+        return jsonify({"error": "Title is required"}), 400
+
+    if 'author' in request.form:
+        author =request.form["author"]
+    else:
+        return jsonify({"error": "Author is required"}), 400  
+
+    if 'cathegory' in request.form:
+        cathegory =request.form["cathegory"]
+    else:
+        return jsonify({"error": "Cathegory is required"}), 400  
+
+    if 'number_of_pages' in request.form:
+        number_of_pages =request.form["number_of_pages"]
+    else:
+        return jsonify({"error": "Number_of_pages is required"}), 400  
+
+    if 'description' in request.form:
+        description =request.form["description"]
+    else:
+        return jsonify({"error": "Description is required"}), 400  
+
+    if 'type' in request.form:
+        type =request.form["type"]
+    else:
+        return jsonify({"error": "Type is required"}), 400  
+
+    if 'price' in request.form:
+        price =request.form["price"]
+    else:
+        return jsonify({"error": "Price is required"}), 400    
+
+    if 'photo' in request.files:
+        photo =request.files["photo"]
+    else:
+        return jsonify({"error": "Photo is required"}), 400  
     
- ## VALIDACIÓN LIBRO
-    if not title:
-        return jsonify({"error": "Title is required"}), 422
+    response = upload(photo, folder="market_image")
     
-    if not author:
-        return jsonify({"error": "Author is required"}), 422
-    
-    if not cathegory:
-        return jsonify({"error": "Cathegory is required"}), 422
-    
-    if not number_of_pages:
-        return jsonify({"error": "Number of pages is required"}), 422
-    
-    if not description:
-        return jsonify({"error": "Description is required"}), 422
-    
-    if not type:
-        return jsonify({"error": "Type is required"}), 422
-    
-    if not price:
-        return jsonify({"error": "Price is required"}), 422
-    
-    if not photo:
-        return jsonify({"error": "Photo is required"}), 422
-        
+      
  ## CREACION LIBRO         
-    
-    book = Book()
-    book.title = title
-    book.author = author
-    book.cathegory = cathegory
-    book.number_of_pages = number_of_pages
-    book.description = description
-    book.type = type
-    book.price = price
-    book.photo = photo
-    book.save() 
+    if response:
+        book = Book()
+        book.title = title
+        book.author = author
+        book.cathegory = cathegory
+        book.number_of_pages = number_of_pages
+        book.description = description
+        book.type = type
+        book.price = price
+        book.photo = response['secure_url'] # Forma de creación con archivo
+        book.user_id = user_id  # Asociar el libro con el usuario actual
+        book.available = True # Se establece inicialemente como true
+        book.save()
+        return jsonify(book.serialize()), 200
     
     return jsonify({"succes": "Publiación de libro exitosa"}), 200
 
-###LISTAR TODOS LOS LIBROS
+
+###LISTAR TODOS LOS LIBROS DISOPNIBLES
 @api.route('/libroVenta', methods=['GET'])
 def get_book():
-    books = Book.query.all()  
+    books = Book.query.filter_by(available=True).all()  # Filtrar libros disponibles  
     book_list = [book.serialize() for book in books]  
-    return jsonify(book_list), 200 
+    return jsonify(book_list), 200     
+    
 
 ###LISTAR DETALLE POR LIBRO
-@api.route('/detalle-libro/<int:id>', methods=['GET'])
+@api.route('/detalleLibro/<int:id>', methods=['GET'])
 def get_book_details(id):
     try:
         # Busca el libro en función del ID proporcionado
         book = Book.query.get(id)
 
         if book is None:
-            # Si no se encuentra el libro, devuelve un código de estado 404 (no encontrado)
-            return jsonify({'error': 'Libro no encontrado'}), 404
+            # Si no se encuentra el libro, devuelve un código de estado 400
+            return jsonify({'error': 'Libro no encontrado'}), 400
 
-        # Convierte el libro encontrado en un formato serializable (por ejemplo, un diccionario)
+        # Convierte el libro encontrado en un formato serializable 
         book_details = {
             'id': book.id,
             'title': book.title,
@@ -288,12 +326,91 @@ def get_book_details(id):
             'description': book.description,
             'type': book.type,
             'price': book.price,
-            'photo': book.photo
+            'photo': book.photo,
+            'user_id': book.user_id,
+            'user_name': book.user.name
         }
 
-        # Devuelve los detalles del libro como una respuesta JSON con un código de estado 200 (éxito)
+        # Devuelve los detalles del libro como una respuesta JSON
         return jsonify(book_details), 200
 
     except Exception as e:
-        # Maneja cualquier excepción que pueda ocurrir (por ejemplo, problemas de base de datos) y devuelve un error 500
+        # Maneja cualquier excepción que pueda ocurrir y devuelve un error 500
         return jsonify({'error': str(e)}), 500
+    
+###CAMBIO DE DISPONIBLE A VENDIDO
+@api.route('/comprar/<int:id>', methods=['PUT'])
+def actualizar_disponibilidad(id):
+           
+    book = Book.query.get(id)
+    if book is None:
+           
+        return jsonify({'error': 'Libro no encontrado'}), 400
+    
+                
+    book.available = False
+    book.update() 
+        
+    return jsonify({'message': 'Disponibilidad actualizada exitosamente'}), 200
+
+  
+
+###LISTAR LIBRO POR USUARIO
+@api.route('/user_books/<int:user_id>', methods=['GET'])
+def get_user_books(user_id):
+    user = User.query.get(user_id)
+    
+    if user is None:
+        return jsonify({"error": "Usuario no encontrado"}), 404
+    
+    user_books = Book.query.filter_by(user_id=user_id).all()
+    user_books_list = [book.serialize() for book in user_books]
+    
+    return jsonify(user_books_list), 200
+    
+###MENSAJES ENTRE USUARIOS
+#CREAR MENSAJE
+@api.route('/messages', methods=['POST'])
+def create_message():
+    data = request.get_json()
+    
+    sender_id = request.json.get('sender_id')
+    receiver_id = request.json.get('receiver_id')
+    book_id = request.json.get('book_id')
+    message_text = request.json.get('message_text')
+    
+    # Verificar usuarios y libro
+    sender = User.query.get(sender_id)
+    receiver = User.query.get(receiver_id)
+    book = Book.query.get(book_id)
+    
+    if not sender or not receiver or not book:
+        return jsonify({'error': 'Usuarios o libro no encontrados'}), 400
+    
+    # Crea el mensaje
+    mensaje = Mensaje()
+    mensaje.sender_id = sender_id
+    mensaje.receiver_id = receiver_id
+    mensaje.book_id = book_id
+    mensaje.message_text = message_text
+    mensaje.save()   
+        
+    return jsonify({'message': 'Mensaje creado correctamente'}), 200
+
+#OBTENER MENSAJE POR LIBRO ESPECIFICO
+@api.route('/messages/<int:book_id>', methods=['GET'])
+def get_messages_book(book_id):
+   mensaje = Mensaje.query.filter_by(book_id=book_id).all()
+   return jsonify([mensaje.serialize() for mensaje in mensaje])
+
+#OBTENER MENSAJE POR USUARIO ESPECIFICO
+@api.route('/messages/sender/<int:sender_id>', methods=['GET'])
+def get_messages_sender(sender_id):
+   mensaje = Mensaje.query.filter_by(sender_id=sender_id).all()
+   return jsonify([mensaje.serialize() for mensaje in mensaje])
+
+#OBTENER TODOS LOS MENSAJES
+@api.route('/messages', methods=['GET'])
+def get_messages():
+   mensajes = Mensaje.query.all()
+   return jsonify([mensaje.serialize() for mensaje in mensajes])
