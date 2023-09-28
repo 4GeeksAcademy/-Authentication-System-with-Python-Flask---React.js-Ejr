@@ -17,7 +17,7 @@ class User(db.Model):
     email = db.Column(db.String(120), nullable=False, unique=True)
     password = db.Column(db.String(250), nullable=False)
     region = db.Column(db.String(120), nullable=False)
-    photo = db.Column(db.String(120), default="no-photo.png")
+    #photo = db.Column(db.String(120), default="no-photo.png")
     message_from = db.relationship('Message', foreign_keys="[Message.user_from_id]", backref='user_from')
     message_to = db.relationship('Message', foreign_keys='[Message.user_to_id]', backref='user_to')
     books_user = db.relationship('Book', backref='user', lazy=True)
@@ -109,7 +109,7 @@ class Book(db.Model):
     cathegory = db.Column(db.String(120), nullable=False)
     number_of_pages = db.Column(db.String(120))
     description = db.Column(db.String(250), nullable=False)
-    sell_trade = db.Column(db.String(120), nullable=False)
+    sell_trade = db.Column(db.String(120), nullable=False)#type
     price = db.Column(db.String(120), nullable=False)    
     cover = db.Column(db.String(120), default="no-photo.png")
     user_book_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
@@ -181,6 +181,7 @@ class Message(db.Model):
     user_from_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     user_to_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     date = db.Column(db.DateTime(), default=db.func.now())
+    book = db.relationship('Book', backref='Message', lazy=True )
     
     
     def serialize(self):
@@ -190,7 +191,18 @@ class Message(db.Model):
             "user_from_id": self.user_from_id,
             "user_to_id": self.user_to_id,
             "date": self.date,
+            "book": self.book.id
 
+
+        }
+        
+        
+        
+    def serialize_msg(self):
+        return {
+            "id":self.id,
+            "message": self.message,
+            
         }
             
     def save(self):

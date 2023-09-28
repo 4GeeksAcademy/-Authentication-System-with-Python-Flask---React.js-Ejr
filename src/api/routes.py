@@ -407,13 +407,15 @@ def image_update(id):
 
 #-----< mensajes >------------------------------------------------------>
 @api.route('/messages', methods=['GET'])
+# @jwt_required()
 def get_all_messages():
     messages = Message.query.all()
-    serialized_messages = [message.serialize() for message in messages]
+    serialized_messages = [message.serialize_msg() for message in messages] # agregué _msg, eliminar antes de viernes
 
     return jsonify(serialized_messages), 200
 #-----< buscar mensaje por id >----------------------------------------->
 @api.route('/messages/<int:message_id>', methods=['GET'])
+# @jwt_required()
 def get_message(message_id):
     message = Message.query.get(message_id)
 
@@ -424,6 +426,7 @@ def get_message(message_id):
 
 
 @api.route('/messages', methods=['POST'])
+# @jwt_required()
 def create_message():
     data = request.get_json()
 
@@ -435,9 +438,10 @@ def create_message():
 
     message.save()
 
-    return jsonify(message.serialize()), 201
+    return jsonify(message.serialize_msg()), 201
 
 @api.route('/messages/<int:message_id>', methods=['PUT'])
+# @jwt_required()
 def update_message(message_id):
     message = Message.query.get(message_id)
 
@@ -455,6 +459,7 @@ def update_message(message_id):
     return jsonify(message.serialize()), 200
 
 @api.route('/messages/<int:message_id>', methods=['DELETE'])
+# @jwt_required()
 def delete_message(message_id):
     message = Message.query.get(message_id)
 
@@ -469,6 +474,7 @@ def delete_message(message_id):
 
 #-----< mensajes recibidos >----------------------------------------> 
 @api.route('/users/<int:user_id>/received_messages', methods=['GET'])
+# @jwt_required()
 def get_received_messages(user_id):
     user = User.query.get(user_id)
     if not user:
@@ -481,6 +487,7 @@ def get_received_messages(user_id):
 
 #-----< mensajes enviados >----------------------------------------->
 @api.route('/users/<int:user_id>/sent_messages', methods=['GET'])
+# @jwt_required()
 def get_sent_messages(user_id):
     user = User.query.get(user_id)
     if not user:

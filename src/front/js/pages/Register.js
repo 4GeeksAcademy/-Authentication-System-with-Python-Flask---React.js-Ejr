@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
 import "../../styles/login_register.css";
 
-const FormularioRegistro = () => {
+const Register = () => {
   const { store, actions } = useContext(Context);
 
   const navigate = useNavigate();
@@ -324,4 +324,4 @@ const FormularioRegistro = () => {
   //   </div>
   // );
 };
-export default FormularioRegistro;
+export default Register;

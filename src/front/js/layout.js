@@ -1,25 +1,31 @@
 import React, { useState } from "react";
-
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
 import { BackendURL } from "./component/backendURL";
 
 import { Home } from "./pages/home";
 
+/* REGISTROS */
+import Login from "./component/login/Login";
+import Register from "./pages/Register";
+import RegisterBook from "./pages/registerBook";
+
 /* CATEGORIAS */
-import { LibroVenta } from "./pages/libroVenta";
+
+import { BookDetails } from "./pages/bookDetails";
+import { AllBooks } from "./pages/AllBooks";
+
 import { MasVendidos } from "./pages/masVendidos";
 import { LibrosIntercambio } from "./pages/librosIntercambio";
 import { DonacionesRealizadas } from "./pages/donacionesRalizadas";
 // import Card from "./component/reviewsLibros/Card";
 // import Testimonio from "./component/reviewsLibros/Testimonio";
 import BookReviews from "./pages/BookReviews";
-import Login from "./component/login/Login";
 import Intercambio from "./pages/Intercambio";
-import FormularioRegistro from "./pages/formularioRegistro";
-import RegistroLibro from "./pages/registroLibro";
+//import RegistroLibro from "./pages/registroLibro";
 import { Profile } from "./pages/profile";
-import { DetalleLibro } from "./pages/detalleLibro";
+//import { DetalleLibro } from "./pages/detalleLibro";
+import Enviar_formulario from "./pages/enviar_formulario"; //revisar
 
 /* FOOTERS */
 import { GuiaCompra } from "./pages/guiaCompra";
@@ -31,13 +37,14 @@ import { ComoDonar } from "./pages/comoDonar";
 import injectContext from "./store/appContext";
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
-import Messages from "./component/messages/Messages";
-import SendMessages from "./component/messages/SendMessages";
+import PurchasedBooks from "./pages/purchasedBooks";
+//import Messages from "./component/messages/Messages";
+//import SendMessages from "./component/messages/SendMessages";
 
 //create your first component
 const Layout = () => {
   const basename = process.env.BASENAME || "/";
-
+  const [useAlternateNavbar, setUseAlternateNavbar] = useState(false); // Estado para controlar el Navbar alternativo
   if (!process.env.BACKEND_URL || process.env.BACKEND_URL == "")
     return <BackendURL />;
 
@@ -48,7 +55,8 @@ const Layout = () => {
           <Navbar />
           <Routes>
             <Route element={<Home />} path="/" />
-            <Route element={<LibroVenta />} path="/libroVenta" />
+            <Route element={<AllBooks />} path="/allBooks" />
+            <Route element={<BookDetails />} path="/allBooks/bookDetails/:id" />
             <Route element={<MasVendidos />} path="/masVendidos" />
             <Route element={<LibrosIntercambio />} path="/librosIntercambio" />
             <Route element={<GuiaCompra />} path="/guiaCompra" />
@@ -64,21 +72,11 @@ const Layout = () => {
             <Route element={<BookReviews />} path="/bookreviews" />
             <Route element={<Login />} path="/login" />
             <Route element={<Intercambio />} path="/intercambio" />
-            <Route
-              element={<FormularioRegistro />}
-              path="/formularioRegistro"
-            />
-            <Route element={<h1>Not found!</h1>} />
-            <Route
-              element={<FormularioRegistro />}
-              path="/formularioRegistro"
-            />
-            <Route element={<RegistroLibro />} path="/registroLibro" />
-            <Route element={<DetalleLibro />} path="/detalleLibro/:id" />
+            <Route element={<Register />} path="/register" />
+            <Route element={<RegisterBook />} path="/registerBook" />
+            <Route element={<PurchasedBooks />} path="/purchasedBooks" />
             <Route element={<Profile />} path="/profile" />
-            <Route element={<Messages />} path="/messages" />
-            <Route element={<SendMessages />} path="/send-messages" />
-
+            <Route element={<Enviar_formulario />} path="/enviar_formulario" />
             <Route element={<h1>Not found!</h1>} />
           </Routes>
           <Footer />
