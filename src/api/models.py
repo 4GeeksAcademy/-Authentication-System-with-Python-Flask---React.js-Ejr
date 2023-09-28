@@ -11,7 +11,7 @@ class User(db.Model):
     email = db.Column(db.String(120), nullable=False, unique=True)
     password = db.Column(db.String(250), nullable=False)
     region = db.Column(db.String(120), nullable=False)
-    photo = db.Column(db.String(120), default="no-photo.png")
+    userImage = db.Column(db.String(120), default="no-userImage.png")
     # roles = db.relationship('Role', secondary=roles_users)
 
     def serialize(self):
@@ -21,7 +21,7 @@ class User(db.Model):
             "lastname": self.lastname,
             "email": self.email,
             "region": self.region,
-            "photo": self.photo
+            "userImage": self.userImage
         }
 
     def save(self):
@@ -45,8 +45,9 @@ class Book(db.Model):
     cathegory = db.Column(db.String(120), nullable=False)
     number_of_pages = db.Column(db.String(120))
     description = db.Column(db.String(250), nullable=False)
-    type = db.Column(db.String(120), nullable=False)
-    price = db.Column(db.String(120), nullable=False)    
+    type = db.Column(db.String(120), nullable=False) #venta o intercambio
+    price = db.Column(db.String(120), nullable=False) 
+    available = db.Column(db.Boolean, default=True) #disponibilidad del libro        
     photo = db.Column(db.String(120), default="no-photo.png")
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False) # libro con id del usaurio
     user = db.relationship('User', backref=db.backref('books', lazy=True)) # definicion de realcion con usaurio
@@ -61,7 +62,8 @@ class Book(db.Model):
             "description": self.description,
             "type": self.type,
             "price": self.price,
-            "photo": self.photo
+            "photo": self.photo,
+            "available": self.available
         }
 
     def save(self):
@@ -134,4 +136,36 @@ class Comentario(db.Model):
         db.session.delete(self)
         db.session.commit()
 
+class Mensaje(db.Model):
+    __tablename__ = 'Mensajes'    
+    id = db.Column(db.Integer, primary_key=True)
+    sender_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    receiver_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    book_id = db.Column(db.Integer, db.ForeignKey('book.id'), nullable=False)
+    message_text = db.Column(db.String(250), nullable=False)
+    
+    sender = db.relationship('User', foreign_keys=[sender_id], backref=db.backref('sent_messages', lazy=True))
+    receiver = db.relationship('User', foreign_keys=[receiver_id], backref=db.backref('received_messages', lazy=True))
+    book = db.relationship('Book', foreign_keys=[book_id], backref=db.backref('related_messages', lazy=True)) 
+    
+    def serialize(self):
+        return {
+            "id": self.id,
+            "sender_id": self.sender_id,
+            "receiver_id": self.receiver_id,
+            "book_id": self.book_id,
+            "message_text": self.message_text,
+            "book": self.book.serialize()          
+        }
+
+    def save(self):
+        db.session.add(self)
+        db.session.commit()
+
+    def update(self):
+        db.session.commit()
+
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()
  

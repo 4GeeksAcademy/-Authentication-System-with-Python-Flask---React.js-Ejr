@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
 
 
-export const LibroVenta = () => {
+export const AllBooks = () => {
     const { store, actions } = useContext(Context);
 
     return (
@@ -25,7 +25,7 @@ export const LibroVenta = () => {
                                 <p className="card-text">${libro.price}</p>
                             </div>
                             <div className="d-flex justify-content-between align-items-center m-1">
-                                <Link to={`/detalleLibro/${libro.id}`} className="btn btn-dark">Ver detalles</Link>
+                                <Link to={`/allBooks/bookDetails/${libro.id}`} className="btn btn-dark">Ver detalles</Link>
                                 <i className="fa-regular fa-heart fa-2x"></i>
                             </div>
                         </div>

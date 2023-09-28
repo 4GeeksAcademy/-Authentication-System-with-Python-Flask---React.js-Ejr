@@ -13,6 +13,8 @@ from api.admin import setup_admin
 from api.commands import setup_commands
 from flask_jwt_extended import JWTManager
 import cloudinary
+from flask_mail import Mail, Message
+
 
 
 #from models import Person
@@ -85,3 +87,13 @@ def serve_any_other_file(path):
 if __name__ == '__main__':
     PORT = int(os.environ.get('PORT', 3001))
     app.run(host='0.0.0.0', port=PORT, debug=True)
+
+# Flask-Mail
+app.config['MAIL_SERVER'] = 'smtp.elasticemail.com'
+app.config['MAIL_PORT'] = 2525
+app.config['MAIL_USERNAME'] = 'contacto@booksmarket.cl'
+app.config['MAIL_PASSWORD'] = '1D17A73AADBF87D90B6F1F0F4915E2375F58'
+app.config['MAIL_USE_TLS'] = False
+app.config['MAIL_USE_SSL'] = True
+
+mail = Mail(app)

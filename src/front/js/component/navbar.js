@@ -23,7 +23,7 @@ export const Navbar = () => {
           </div>
 
 
-          {location.pathname !== "/formularioRegistro" && location.pathname !== "/login" && location.pathname !== "/registroLibro" && (
+          {location.pathname !== "/register" && location.pathname !== "/login" && location.pathname !== "/registroLibro" && (
             <div className="col">
               <form className="d-flex" role="search">
                 <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
@@ -35,15 +35,8 @@ export const Navbar = () => {
           )}
           <div className="col">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0 d-flex justify-content-end">
-
-              {location.pathname !== "/formularioRegistro" && location.pathname !== "/login" && location.pathname !== "/registroLibro" && (
-                <li className="nav-item">
-                  <a className="nav-link active text-white" aria-current="page" href="#">
-                    Cart
-                  </a>
-                </li>
-              )}
-              {location.pathname !== "/formularioRegistro" && location.pathname !== "/login" && location.pathname !== "/registroLibro" && (
+              
+              {location.pathname !== "/register" && location.pathname !== "/login" && location.pathname !== "/registroLibro" && (
                 <li className="nav-item">
                   <a className="nav-link text-white" href="#">
                     Wish List
@@ -64,8 +57,8 @@ export const Navbar = () => {
                       </Link>
                     </li>
                     <li>
-                      <Link to="/registroLibro2" className="dropdown-item">
-                        Publicar Libro
+                      <Link to="/registerBook" className="dropdown-item">
+                        Publica tu libro
                       </Link>
                     </li>
                     <li>
@@ -90,17 +83,17 @@ export const Navbar = () => {
                       </Link>
                     </li>
                     <li>
-                      <Link to="/formularioRegistro" className="dropdown-item" >
-                        Registrar
+                      <Link to="/register" className="dropdown-item" >
+                        Registrarse
                       </Link>
                     </li>
                     <li>
                       <hr className="dropdown-divider" />
                     </li>
                     <li>
-                      <a className="dropdown-item" href="#">
-                        Something else here
-                      </a>
+                      <Link to="/register2" className="dropdown-item" >
+                      Something else here
+                      </Link>                      
                     </li>
                   </ul>
                 </li>
@@ -110,26 +103,26 @@ export const Navbar = () => {
           </div>
         </div>
       </nav>
-      {location.pathname !== "/formularioRegistro" && location.pathname !== "/login" && location.pathname !== "/registroLibro" && (
+      {location.pathname !== "/register" && location.pathname !== "/login" && location.pathname !== "/registroLibro" && (
         <nav className="navbar navbar-expand-lg bg-body-tertiary bg-dark">
           <div className="container-fluid d-flex justify-content-around">
             <div className="">
-              <Link to="/libroVenta" className="nav-link active text-white" aria-current="page">
-                Libros en Venta
+              <Link to="/allBooks" className="nav-link active text-white" aria-current="page">
+                Libros disponibles
               </Link>
             </div>
             <div className="">
-              <Link to="/librosIntercambio" className="nav-link active text-white" aria-current="page">
-                Libros para intercambio
+              <Link to="/purchasedBooks" className="nav-link active text-white" aria-current="page">
+                Intercambio
               </Link>
             </div>
             <div className="">
               <Link to="/masVendidos" className="nav-link active text-white" aria-current="page">
-                Libros más vendidos
+                Venta
               </Link>
             </div>
             <div className="">
-              <Link to="/donacionesRalizadas" className="nav-link active text-white" aria-current="page">
+              <Link to="/enviar_formulario" className="nav-link active text-white" aria-current="page">
                 Donaciones realizadas
               </Link>
             </div>
