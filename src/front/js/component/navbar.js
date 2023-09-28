@@ -112,12 +112,12 @@ export const Navbar = () => {
               </Link>
             </div>
             <div className="">
-              <Link to="/purchasedBooks" className="nav-link active text-white" aria-current="page">
+              <Link to="/exchangeBooks" className="nav-link active text-white" aria-current="page">
                 Intercambio
               </Link>
             </div>
             <div className="">
-              <Link to="/masVendidos" className="nav-link active text-white" aria-current="page">
+              <Link to="/saleBooks" className="nav-link active text-white" aria-current="page">
                 Venta
               </Link>
             </div>

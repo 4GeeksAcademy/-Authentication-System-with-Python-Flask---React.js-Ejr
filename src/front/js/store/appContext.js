@@ -23,6 +23,9 @@ const injectContext = PassedComponent => {
 		useEffect(() => {
 			state.actions.checkUser();
 			state.actions.getLibros();
+			state.actions.getExchangeBooks();
+			state.actions.getSaleBooks();
+			state.actions.getMySaleBooks(state.store.currentUser?.user?.user_id);
 			
 			/* state.actions.getOneBook(); */
 			

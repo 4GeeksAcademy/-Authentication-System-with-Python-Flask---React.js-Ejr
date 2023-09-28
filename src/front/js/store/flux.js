@@ -34,8 +34,16 @@ const getState = ({ getStore, getActions, setStore }) => {
         price: "",
         photo: "",
       },
-      //ESTADO PARA GUARDAR LISTA DE LIBROS
+      //ESTADO PARA GUARDAR TODO LOS LIBROS
       showBooks: [],
+      //ESTADO PARA GUARDAR LIBROS INTERCAMBIO
+      exchangeBooks: [],
+      //ESTADO PARA GUARDAR LIBROS VENTA
+      saleBooks: [],
+      //ESTADO PARA GUARDAR MIS LIBROS EN VENTA
+      mySaleBooks: [],
+      //ESTADO PARA GUARDAR MIS LIBROS EN INTERCAMBIO
+      myExchangeBooks: [],
       //ESTADO PARA GUARDAR DETALLE DE UN LIBRO
       oneBook: [],
       //ESTADOS INPUT REGISTRO LIBRO CON FOTOS
@@ -67,7 +75,9 @@ const getState = ({ getStore, getActions, setStore }) => {
       allMessagesUser: [],
       booksIdBuy: [],
       ///LIBROS QUE COMPRASTE
-      myBooks:[],
+      myBooks: [],
+
+      iPosition: [],
 
 
 
@@ -116,12 +126,80 @@ const getState = ({ getStore, getActions, setStore }) => {
           redirect: 'follow'
         };
 
-        fetch("http://localhost:3001/api/libroVenta", requestOptions)
+        fetch("http://localhost:3001/api/all_books", requestOptions)
           .then(response => response.json())
           .then(data => {
             setStore({ showBooks: data });
             console.log("conseguí los libros");
             console.log("showBooks:", data);
+          })
+          .catch(error => console.log('error', error));
+      },
+
+      ////LISTA LIBROS EN INTERCAMBIO  
+      getExchangeBooks: () => {
+        var requestOptions = {
+          method: 'GET',
+          redirect: 'follow'
+        };
+
+        fetch("http://localhost:3001/api/exchange_books", requestOptions)
+          .then(response => response.json())
+          .then(data => {
+            setStore({ exchangeBooks: data });
+            console.log("libros intercambio");
+            console.log("exchangeBook:", data);
+          })
+          .catch(error => console.log('error', error));
+      },
+
+      ////LISTA LIBROS EN VENTA  
+      getSaleBooks: () => {
+        var requestOptions = {
+          method: 'GET',
+          redirect: 'follow'
+        };
+
+        fetch("http://localhost:3001/api/sale_books", requestOptions)
+          .then(response => response.json())
+          .then(data => {
+            setStore({ saleBooks: data });
+            console.log("libros venta");
+            console.log("saleBook:", data);
+          })
+          .catch(error => console.log('error', error));
+      },
+
+      ///MIS LIBROS EN VENTA
+      getMySaleBooks: (id) => {
+        var requestOptions = {
+          method: 'GET',
+          redirect: 'follow'
+        };
+
+        fetch(`http://localhost:3001/api/sale_books/${id}`, requestOptions)
+          .then(response => response.json())
+          .then(data => {
+            setStore({ mySaleBooks: data });
+            console.log("mis libros en venta");
+            console.log("mySalesBooks:", data);
+          })
+          .catch(error => console.log('error', error));
+      },
+
+      ///MIS LIBROS EN INTERCAMBIO
+      getMyExchangeBooks: (id) => {
+        var requestOptions = {
+          method: 'GET',
+          redirect: 'follow'
+        };
+
+        fetch(`http://localhost:3001/api/exchange_books/${id}`, requestOptions)
+          .then(response => response.json())
+          .then(data => {
+            setStore({ myExchangeBooks: data });
+            console.log("mis libros en intercambio");
+            console.log("myExchangeBooks:", data);
           })
           .catch(error => console.log('error', error));
       },
@@ -133,7 +211,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           redirect: 'follow'
         };
 
-        fetch(`http://localhost:3001/api/detalleLibro/${id}`, requestOptions)
+        fetch(`http://localhost:3001/api/book_details/${id}`, requestOptions)
           .then(response => response.json())
           .then(data => {
 
@@ -472,6 +550,10 @@ const getState = ({ getStore, getActions, setStore }) => {
         const { allMessagesUser } = getStore();
         const bookIds = allMessagesUser.map(e => e.book_id);
         setStore({ booksIdBuy: bookIds });
+      },
+
+      getIPosition: (i) => {
+        setStore({ iPosition: i });
       }
 
     },

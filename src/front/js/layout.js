@@ -13,8 +13,8 @@ import RegisterBook from "./pages/registerBook";
 /* CATEGORIAS */
 import { AllBooks } from "./pages/allBooks";
 import { BookDetails } from "./pages/bookDetails";
-import { MasVendidos } from "./pages/masVendidos";
-import { LibrosIntercambio } from "./pages/librosIntercambio";
+import { SaleBooks } from "./pages/saleBooks";
+import { ExchangeBooks } from "./pages/exchangeBooks";
 import { DonacionesRealizadas } from "./pages/donacionesRalizadas";
 import Card from "./component/reviewsLibros/Card";
 import Testimonio from "./component/reviewsLibros/Testimonio";
@@ -32,9 +32,9 @@ import Enviar_formulario from "./pages/enviar_formulario";
 
 
 /* FOOTERS */
-import { GuiaCompra } from "./pages/guiaCompra";
-import { MetodoPago } from "./pages/metodoPago";
-import { MetodoEnvio } from "./pages/metodoEnvio";
+import { MySaleBooks } from "./pages/mySaleBooks";
+import { MyExchangeBooks } from "./pages/myExchangeBooks";
+import { MyBuyDetails } from "./pages/myBuyDetails";
 import { SobreNosotros } from "./pages/sobreNosotros";
 import { NuestraHistoria } from "./pages/nuestraHistoria";
 import { ComoDonar } from "./pages/comoDonar";
@@ -63,11 +63,11 @@ const Layout = () => {
                         <Route element={<Home />} path="/" />
                         <Route element={<AllBooks />} path="/allBooks" />
                         <Route element={<BookDetails />} path="/allBooks/bookDetails/:id" />
-                        <Route element={<MasVendidos />} path="/masVendidos" />
-                        <Route element={<LibrosIntercambio />} path="/librosIntercambio" />
-                        <Route element={<GuiaCompra />} path="/guiaCompra" />
-                        <Route element={<MetodoPago />} path="/metodoPago" />
-                        <Route element={<MetodoEnvio />} path="/metodoEnvio" />
+                        <Route element={<SaleBooks />} path="/saleBooks" />
+                        <Route element={<ExchangeBooks />} path="/exchangeBooks" />
+                        <Route element={<MySaleBooks />} path="/mySaleBooks" />
+                        <Route element={<MyExchangeBooks />} path="/myExchangeBooks" />
+                        <Route element={<MyBuyDetails />} path="/myBuyDetails/:id" />
                         <Route element={<SobreNosotros />} path="/sobreNosotros" />
                         <Route element={<NuestraHistoria />} path="/nuestraHistoria" />
                         <Route element={<DonacionesRealizadas />} path="/donacionesRalizadas" />

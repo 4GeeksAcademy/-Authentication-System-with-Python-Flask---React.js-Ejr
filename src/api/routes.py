@@ -13,6 +13,8 @@ from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 import cloudinary
 from flask_mail import Mail, Message
+from sqlalchemy import and_
+
 
 
 
@@ -298,15 +300,45 @@ def register_Book():
 
 
 ###LISTAR TODOS LOS LIBROS DISOPNIBLES
-@api.route('/libroVenta', methods=['GET'])
+@api.route('/all_books', methods=['GET'])
 def get_book():
     books = Book.query.filter_by(available=True).all()  # Filtrar libros disponibles  
     book_list = [book.serialize() for book in books]  
-    return jsonify(book_list), 200     
+    return jsonify(book_list), 200
+
+###LISTAR LIBROS PARA INTERCAMBIO
+@api.route('/exchange_books', methods=['GET'])
+def get_exchange_book():
+    
+    books = Book.query.filter(and_(Book.type == "Intercambio", Book.available == True)).all()  
+    book_list = [book.serialize() for book in books]  
+    return jsonify(book_list), 200
+
+###LISTAR LIBROS PARA VENTA
+@api.route('/sale_books', methods=['GET'])
+def get_sale_book():
+    books = Book.query.filter(and_(Book.type == "Venta", Book.available == True)).all()     
+    book_list = [book.serialize() for book in books]  
+    return jsonify(book_list), 200 
+
+###LISTAR MIS LIBROS PARA VENTA
+@api.route('/sale_books/<int:user_id>', methods=['GET'])
+def get_my_sale_books(user_id):
+    books = Book.query.filter_by(user_id=user_id, type="Venta").all()
+    book_list = [book.serialize() for book in books]
+    return jsonify(book_list), 200
+
+###LISTAR MIS LIBROS PARA INTERCAMBIO
+@api.route('/exchange_books/<int:user_id>', methods=['GET'])
+def get_my_exchange_books(user_id):
+    books = Book.query.filter_by(user_id=user_id, type="Intercambio").all()
+    book_list = [book.serialize() for book in books]
+    return jsonify(book_list), 200
+       
     
 
 ###LISTAR DETALLE POR LIBRO
-@api.route('/detalleLibro/<int:id>', methods=['GET'])
+@api.route('/book_details/<int:id>', methods=['GET'])
 def get_book_details(id):
     try:
         # Busca el libro en función del ID proporcionado

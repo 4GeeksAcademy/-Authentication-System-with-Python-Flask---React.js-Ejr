@@ -4,17 +4,22 @@ import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
 
 
-export const AllBooks = () => {
+export const MySaleBooks = () => {
     const { store, actions } = useContext(Context);
+
+    useEffect(() => {
+        
+        
+    }, []);
 
     return (
         <div>
             <div className="container-fluid">
                 <div className="text-center m-3 mt-5 mb-5">
-                    <h1>TODOS LOS LIBROS</h1>
+                    <h1>MIS LOS LIBROS EN VENTA</h1>
                 </div>
                 <div className="d-flex flex-wrap justify-content-center">
-                    {store.showBooks.map((libro, i) => (
+                    {store.mySaleBooks.map((libro, i) => (
                         <div className="card shadow-sm  m-3" style={{ width: "220px", height: "300" }} key={i}>
                             <div className="d-flex justify-content-center">
                                 <img className="card-img-top" style={{ maxWidth: "100%", maxHeight: "300px" }} src={libro.photo} alt={`Portada de ${libro.title}`} />
