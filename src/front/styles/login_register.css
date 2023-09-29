@@ -77,21 +77,34 @@ label {
   padding: 10px;
   background-color: rgb(146, 197, 211);
   font-family: "Roboto", sans-serif;
+  height: auto;
 }
 .card0 {
   margin-top: 3rem !important;
   margin-bottom: 3rem !important;
   border: 0;
-  height: 40rem;
+  height: auto;
   box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px,
     rgba(0, 0, 0, 0.22) 0px 15px 12px;
 }
 .card2 {
   margin: 0;
   background-color: rgb(146, 197, 211);
-  height: 40rem;
+  height: auto;
 }
 .buttonRegister {
   border-radius: 2rem;
   border: none;
+}
+img {
+  object-fit: cover;
+  height: 773px;
+  width: 320px;
+  border-top-left-radius: 1rem;
+  border-bottom-left-radius: 1rem;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.seleccion-region {
+  border-radius: 2rem;
 }

@@ -19,7 +19,7 @@ const Register = () => {
                 <img
                   src="https://cdn.pixabay.com/photo/2021/01/21/15/54/books-5937716_1280.jpg"
                   className="imagenEegister"
-                  style={{
+                  /* style={{
                     objectFit: "cover",
                     height: "640px",
                     width: "320px",
@@ -27,7 +27,7 @@ const Register = () => {
                     borderBottomLeftRadius: "1rem",
                     borderTopRightRadius: "0",
                     borderBottomRightRadius: "0",
-                  }}
+                  }} */
                   alt=""
                 />
               </div>
@@ -140,10 +140,10 @@ const Register = () => {
                       />
                     </div>
                   </div>
-                  <div className="col-md-10">
-                    <label>Region</label>
+                  <div className="seleccion-region">
+                    <label htmlFor="form">Region</label>
                     <select
-                      className="form-select m-2 p-2 ps-3"
+                      className="seleccion-region form-select m-2 p-2 ps-3 "
                       id="region"
                       required
                       name="region"
@@ -151,7 +151,9 @@ const Register = () => {
                       onChange={actions.inputUserValue}
                       multiple={false}
                     >
-                      <option value="">Seleccionar Región</option>
+                      <option value="" className="seleccion-region">
+                        Seleccionar Región
+                      </option>
                       <option value="Arica y Parinacota">
                         Arica y Parinacota
                       </option>
@@ -172,13 +174,13 @@ const Register = () => {
                       <option value="Metropolitana">Metropolitana</option>
                     </select>
 
-                    <div className="mb-3 ">
-                      <label htmlFor="photo" className="form-label">
+                    <div className="">
+                      <label htmlFor="form" className="form-label">
                         Foto de perfil
                       </label>
                       <input
                         type="file"
-                        className="form-control"
+                        className="form-control ms-2"
                         id="userImage"
                         placeholder="Sube foto"
                         name="userImage"
@@ -191,6 +193,7 @@ const Register = () => {
                   <div className="row my-3 form-check">
                     <input
                       type="checkbox"
+                      htmlFor="form"
                       className="form-check-input col-2 col-md-1 p-0"
                       id="Check1"
                       required

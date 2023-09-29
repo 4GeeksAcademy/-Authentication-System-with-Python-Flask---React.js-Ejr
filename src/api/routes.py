@@ -186,15 +186,20 @@ def login():
  #------< VALIDAMOS LA CONTRASEÑA
     if not check_password_hash(user.password, password):
         return jsonify({"error": "tu usuario o contraseña son incorrectos"}), 401 
-           
-    access_token = create_access_token(identity=user.id)
+        
+                
+    expires=datetime.timedelta(days=30)
+    
+    access_token = create_access_token(identity=user.id, expires_delta=expires)
     print(access_token)
+
     data = {
-        # "success": "inicio de sesion exitoso",
+        "success": "inicio de sesion exitoso",
         "access_token": access_token,
         "type": "Bearer",
         "user": user.serialize()
     }
+        
     return jsonify(data), 200
 
 #-----< actualizar user >-----------------------------
@@ -345,93 +350,95 @@ def delete_book(id): """
 # ------------<  cloudinary >------------------------------------------------------------
 
 #-------------< CARGAR IMAGENES >-------------------------------------------------
-# @api.route('/image_upload', methods=['POST'])
-# @jwt_required()  
-# def upload_image_route():
+""" 
+@api.route('/image_upload', methods=['POST'])
+@jwt_required()  
+def upload_image_route():
 
-#     title = request.form['title']
-#     book_id = request.form['book_id']
-#     # data = request.get_json()
-#     id = get_jwt_identity() 
+    title = request.form['title']
+    book_id = request.form['book_id']
+    # data = request.get_json()
+    id = get_jwt_identity() 
     
-#     if not title:
-#         return jsonify({"msg": "debe agregar titulo"}), 400
-#     if not book_id:
-#         return jsonify({"msg": "debe agregar libro"}), 400
+    if not title:
+        return jsonify({"msg": "debe agregar titulo"}), 400
+    if not book_id:
+        return jsonify({"msg": "debe agregar libro"}), 400
 
-#     image = request.files['image']
+    image = request.files['image']
     
-#     if not 'image' in request.files:
-#         return jsonify({"msg": " la imagen es requerida"}), 400 
+    if not 'image' in request.files:
+        return jsonify({"msg": " la imagen es requerida"}), 400 
 
 # -----< ahora hago un "fetch" a Cloudinary para agregar un archivo en la capeta galleries >-----
     
-#     public_id = image.filename
+    public_id = image.filename
     
-#     resp = upload(image, folder='galleries', public_id=public_id)
+    resp = upload(image, folder='galleries', public_id=public_id)
 
-#     if not resp:
-#         return jsonify({'msg': "error al cargar imagen"}), 400
+    if not resp:
+        return jsonify({'msg': "error al cargar imagen"}), 400
     
-#     print(resp)
+    print(resp)
 
-#     gallery = Gallery()
-#     gallery.title = title
-#     gallery.image = resp['secure_url']
-#     gallery.public_id = public_id 
-#     gallery.user_id = id
-#     gallery.book_id = book_id
+    gallery = Gallery()
+    gallery.title = title
+    gallery.image = resp['secure_url']
+    gallery.public_id = public_id 
+    gallery.user_id = id
+    gallery.book_id = book_id
 
-#     gallery.save()
+    gallery.save()
 
-#     return jsonify(gallery.serialize()), 201
+    return jsonify(gallery.serialize()), 201 
+    """
 
 
-# @api.route('/image_get', methods=['GET'])
-# @jwt_required()
-# def image():
-#     if request.method == 'GET':
-#         gallery = Gallery.query.all()
-#         gallery = list(map(lambda image: image.serialize(), gallery))
+@api.route('/image_get', methods=['GET'])
+@jwt_required()
+def image():
+    if request.method == 'GET':
+        gallery = Gallery.query.all()
+        gallery = list(map(lambda image: image.serialize(), gallery))
         
-#         return jsonify({
-#                 "data": gallery
-#             }), 200
+        return jsonify({
+                "data": gallery
+            }), 200
         
-# #---------------------------        
-# @api.route('/image_update/<int:id>', methods=['PUT'])
-# @jwt_required()
-# def image_update(id):
-#     gallery = Gallery.query.get(id)
-#     if not gallery:
-#         return jsonify({"msg": "Gallery no encontrada"}), 404
+#---------------------------        
+@api.route('/image_update/<int:id>', methods=['PUT'])
+@jwt_required()
+def image_update(id):
+    gallery = Gallery.query.get(id)
+    if not gallery:
+        return jsonify({"msg": "Gallery no encontrada"}), 404
     
     
-#     title = request.form['title']
+    title = request.form['title']
 
-#     if not title:
-#         return jsonify({"msg": "debe agregar titulo"}), 400
+    if not title:
+        return jsonify({"msg": "debe agregar titulo"}), 400
 
-#     image = request.files['image']
+    image = request.files['image']
     
-#     if not 'image' in request.files:
-#         return jsonify({"msg": " la imagen es requerida"}), 400
+    if not 'image' in request.files:
+        return jsonify({"msg": " la imagen es requerida"}), 400
     
-#     public_id = image.filename
+    public_id = image.filename
 
-#     resp = upload(image, folder='galleries', public_id=gallery.public_id)
+    resp = upload(image, folder='galleries', public_id=gallery.public_id)
 
-#     if not resp:
-#         return jsonify({'msg': "error al cargar imagen"}), 400
+    if not resp:
+        return jsonify({'msg': "error al cargar imagen"}), 400
 
-#     print(resp)
+    print(resp)
 
-#     gallery.title = title
-#     gallery.image = resp['secure_url']
+    gallery.title = title
+    gallery.image = resp['secure_url']
 
-#     gallery.update()
+    gallery.update()
 
-#     return jsonify(gallery.serialize()), 201
+    return jsonify(gallery.serialize()), 201
         
         
 #------< cóodigo josé >------------------------------>
@@ -518,6 +525,7 @@ def register_Book():
     photo= None
     available= True 
     user_id = get_jwt_identity() 
+
 
 
 ### VALIDANDO DATOS
@@ -731,7 +739,8 @@ def get_messages():
     return jsonify([mensaje.serialize() for mensaje in mensajes])
 
 #-----< MENSAJES >------------------------------------>
-""" # el modelo solo pide: el mensaje, el id del que envia, y el id dl que recibe
+"""
+# el modelo solo pide: el mensaje, el id del que envia, y el id dl que recibe
 
 # @api.route("/messages", methods=['GET', 'POST'])
 # @api.route("/messages/<int:id>", methods=['GET','POST'])
@@ -796,7 +805,8 @@ def get_messages():
 #         return {"status":"fail","message":"bad method"},500
 #     message=request.form["message"]
 #     receiverId=request.form["receiverID"]
-#     print("Message:",message,"Receiver ID:",receiverId,type(receiverId)) """
+#     print("Message:",message,"Receiver ID:",receiverId,type(receiverId))
+# """
 
 
 #-----< mensajes >------------------------------------------------------>
