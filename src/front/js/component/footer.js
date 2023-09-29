@@ -62,35 +62,23 @@ export const Footer = () => {
               </form>
             </div>
             <div className="col-sm-2 col-md col-2 col text-end">
-              <h5 className="headin5_amrc pt2 tituloFooter">¿Cómo comprar?</h5>
+              <h5 className="headin5_amrc pt2 tituloFooter"></h5>
               <ul className="footer_ul_amrc">
                 <li>
-                  <Link
+                  {/*                 <Link
                     to="/guiaCompra"
                     className="nav-link p-0 text-white"
                     aria-current="page"
-                  >
-                    Guía de compra
-                  </Link>
+                  ></Link> */}
                 </li>
                 <li>
                   <Link
                     to="/metodoPago"
                     className="nav-link p-0 text-white"
                     aria-current="page"
-                  >
-                    Métodos de pago
-                  </Link>
+                  ></Link>
                 </li>
-                <li>
-                  <Link
-                    to="/metodoEnvio"
-                    className="nav-link p-0 text-white"
-                    aria-current="page"
-                  >
-                    Envíos
-                  </Link>
-                </li>
+                <li></li>
               </ul>
             </div>
             <div className="col-sm-2 col-md col-2 col text-end">
@@ -172,28 +160,28 @@ export const Footer = () => {
             </div>
           </div>
         </div>
-        <div className="container m-3">
+        <div className="container m-1">
           <p className="text-end">
             Copyright @2023 | Designed With by Books Market
           </p>
           <ul className="social_footer_ul">
             <li>
-              <a className="circulo" href="http://webenlance.com">
+              <a className="circulo" href="http://facebook.com">
                 <i className="fab fa-facebook-f"></i>
               </a>
             </li>
             <li>
-              <a className="circulo" href="http://webenlance.com">
+              <a className="circulo" href="http://twitter.com">
                 <i className="fab fa-twitter"></i>
               </a>
             </li>
             <li>
-              <a className="circulo" href="http://webenlance.com">
+              <a className="circulo" href="http://linkedin.com">
                 <i className="fab fa-linkedin"></i>
               </a>
             </li>
             <li>
-              <a className="circulo" href="http://webenlance.com">
+              <a className="circulo" href="http://instagram.com">
                 <i className="fab fa-instagram"></i>
               </a>
             </li>

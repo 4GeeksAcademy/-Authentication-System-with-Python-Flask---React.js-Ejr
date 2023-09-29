@@ -15,7 +15,7 @@ const Register = () => {
         <div className="col-md-6">
           <div className="card card0 ">
             <div className="row rowForm">
-              <div className="col-md-5 d-md-block d-none p-0 box">
+              <div className="col-md-5 d-md-block d-none p-0">
                 <img
                   src="https://cdn.pixabay.com/photo/2021/01/21/15/54/books-5937716_1280.jpg"
                   className="imagenEegister"
@@ -34,7 +34,7 @@ const Register = () => {
 
               <div
                 className="card border-0 card2 col-md-7 col-sm-12 p-3  pe-4 mb-0 box"
-                id="paypage"
+                id=""
                 style={{
                   borderTopLeftRadius: "0",
                   borderBottomLeftRadius: "0",
@@ -44,7 +44,7 @@ const Register = () => {
               >
                 <form
                   className="form-control form-card"
-                  onSubmit={(e) => actions.submitRegister(e, navigate)}
+                  onSubmit={(e) => actions.submitUserImage(e, navigate)}
                 >
                   <label htmlFor="form" className="form-label mt-1">
                     Nombre
@@ -59,8 +59,10 @@ const Register = () => {
                     minLength="3"
                     required
                     name={"name"}
-                    value={store.newUser.name}
-                    onChange={actions.handleChangeRegister}
+                    value={store.name}
+                    onChange={actions.inputUserValue}
+                    // value={store.newUser.name}
+                    // onChange={actions.handleChangeRegister}
                   />
                   <label htmlFor="exampleInputEmail1" className="form-label ">
                     Apellido
@@ -75,8 +77,10 @@ const Register = () => {
                     minLength="3"
                     required
                     name={"lastname"}
-                    value={store.newUser.lastname}
-                    onChange={actions.handleChangeRegister}
+                    // value={store.newUser.lastname}
+                    // onChange={actions.handleChangeRegister}
+                    value={store.lastname}
+                    onChange={actions.inputUserValue}
                   />
                   <label htmlFor="exampleInputEmail1" className="form-label">
                     Email
@@ -89,8 +93,10 @@ const Register = () => {
                     placeholder="Ingresa tu email"
                     required
                     name={"email"}
-                    value={store.newUser.email}
-                    onChange={actions.handleChangeRegister}
+                    /* value={store.newUser.email}
+                    onChange={actions.handleChangeRegister} */
+                    value={store.email}
+                    onChange={actions.inputUserValue}
                   />
                   <div className="row mb-2">
                     <div className="col-8 col-md-6">
@@ -107,8 +113,10 @@ const Register = () => {
                         placeholder="Contraseña"
                         required
                         name={"password"}
-                        value={store.newUser.password}
-                        onChange={actions.handleChangeRegister}
+                        /* value={store.newUser.password}
+                        onChange={actions.handleChangeRegister} */
+                        value={store.password}
+                        onChange={actions.inputUserValue}
                       />
                     </div>
                     <div className="col-4 col-md-6">
@@ -125,8 +133,10 @@ const Register = () => {
                         placeholder="Repita contraseña"
                         required
                         name={"rep_password"}
-                        value={store.newUser.rep_password}
-                        onChange={actions.handleChangeRegister}
+                        /* value={store.newUser.rep_password}
+                        onChange={actions.handleChangeRegister} */
+                        value={store.rep_password}
+                        onChange={actions.inputUserValue}
                       />
                     </div>
                   </div>
@@ -134,29 +144,49 @@ const Register = () => {
                     <label>Region</label>
                     <select
                       className="form-select m-2 p-2 ps-3"
-                      name="region"
+                      id="region"
                       required
-                      value={store.newUser.region}
-                      onChange={actions.handleChangeRegister}
+                      name="region"
+                      value={store.region.toString()}
+                      onChange={actions.inputUserValue}
+                      multiple={false}
                     >
-                      <option value="">Selecciona region...</option>
-                      <option value={1}>I</option>
-                      <option value={2}>II</option>
-                      <option value={3}>III</option>
-                      <option value={4}>IV</option>
-                      <option value={5}>V</option>
-                      <option value={6}>VI</option>
-                      <option value={7}>VII</option>
-                      <option value={8}>VIII</option>
-                      <option value={9}>IX</option>
-                      <option value={10}>X</option>
-                      <option value={11}>XI</option>
-                      <option value={12}>XII</option>
-                      <option value={13}>XIII</option>
-                      <option value={14}>XIV</option>
-                      <option value={15}>XV</option>
-                      <option value={16}>RM</option>
+                      <option value="">Seleccionar Región</option>
+                      <option value="Arica y Parinacota">
+                        Arica y Parinacota
+                      </option>
+                      <option value="Tarapacá">Tarapacá</option>
+                      <option value="Antofagasta">Antofagasta</option>
+                      <option value="Atacama">Atacama</option>
+                      <option value="Coquimbo">Coquimbo</option>
+                      <option value="Valparaíso">Valparaíso</option>
+                      <option value="O'Higgins">O'Higgins</option>
+                      <option value="Maule">Maule</option>
+                      <option value="Ñuble">Ñuble</option>
+                      <option value="Biobío">Biobío</option>
+                      <option value="La Araucanía">La Araucanía</option>
+                      <option value="Los Ríos">Los Ríos</option>
+                      <option value="Los Lagos">Los Lagos</option>
+                      <option value="Aysén">Aysén</option>
+                      <option value="Magallanes">Magallanes</option>
+                      <option value="Metropolitana">Metropolitana</option>
                     </select>
+
+                    <div className="mb-3 ">
+                      <label htmlFor="photo" className="form-label">
+                        Foto de perfil
+                      </label>
+                      <input
+                        type="file"
+                        className="form-control"
+                        id="userImage"
+                        placeholder="Sube foto"
+                        name="userImage"
+                        onChange={(e) =>
+                          actions.inputUserImage(e.target.files[0])
+                        }
+                      />
+                    </div>
                   </div>
                   <div className="row my-3 form-check">
                     <input
@@ -186,142 +216,5 @@ const Register = () => {
       </div>
     </div>
   );
-
-  // const { store, actions } = useContext(Context);
-
-  // const navigate = useNavigate();
-
-  // return (
-  //   <div className="container col-md-4 my-3 shadow p-0">
-  //     <form
-  //       className="form-control shadow p-3 "
-  //       onSubmit={(e) => actions.submitRegister(e, navigate)}
-  //     >
-  //       <div className="mb-3">
-  //         <label htmlFor="form" className="form-label">
-  //           Nombre
-  //         </label>
-  //         <input
-  //           type="text"
-  //           className="form-control"
-  //           id="nombre"
-  //           aria-describedby="emailHelp"
-  //           placeholder="Ingresa tu nombre"
-  //           maxLength="12"
-  //           minLength="3"
-  //           required
-  //           name={"name"}
-  //           value={store.newUser.name}
-  //           onChange={actions.handleChangeRegister}
-  //         />
-  //         <label htmlFor="exampleInputEmail1" className="form-label">
-  //           Apellido
-  //         </label>
-  //         <input
-  //           type="text"
-  //           className="form-control"
-  //           id="apellido"
-  //           aria-describedby="emailHelp"
-  //           placeholder="Ingresa tu apellido"
-  //           maxLength="12"
-  //           minLength="3"
-  //           required
-  //           name={"lastname"}
-  //           value={store.newUser.lastname}
-  //           onChange={actions.handleChangeRegister}
-  //         />
-  //         <label htmlFor="exampleInputEmail1" className="form-label">
-  //           Email
-  //         </label>
-  //         <input
-  //           type="email"
-  //           className="form-control"
-  //           id="inputEmail1"
-  //           aria-describedby="emailHelp"
-  //           placeholder="Ingresa tu email"
-  //           required
-  //           //validacion email
-  //           name={"email"}
-  //           value={store.newUser.email}
-  //           onChange={actions.handleChangeRegister}
-  //         />
-  //       </div>
-  //       <div className="mb-3 password">
-  //         <label htmlFor="exampleInputPassword1" className="form-label">
-  //           Contraseña
-  //         </label>
-  //         <input
-  //           type="password"
-  //           className="form-control"
-  //           id="password"
-  //           placeholder="Contraseña"
-  //           required
-  //           name={"password"}
-  //           value={store.newUser.password}
-  //           onChange={actions.handleChangeRegister}
-  //         />
-  //       </div>
-  //       <div className="mb-3 password">
-  //         <label htmlFor="exampleInputPassword1" className="form-label">
-  //           Repetir Contraseña
-  //         </label>
-  //         <input
-  //           type="password"
-  //           className="form-control"
-  //           id="re_password"
-  //           placeholder="Repita contraseña"
-  //           required
-  //           name={"rep_password"}
-  //           value={store.newUser.rep_password}
-  //           onChange={actions.handleChangeRegister}
-  //         />
-  //       </div>
-  //       <div className="input-group mb-3">
-  //         <label className="input-group-text" htmlFor="inputGroupSelect01">
-  //           Region
-  //         </label>
-  //         <select
-  //           className="form-select"
-  //           name="region"
-  //           required
-  //           value={store.newUser.region}
-  //           onChange={actions.handleChangeRegister}
-  //         >
-  //           <option value="">Selecciona region...</option>
-  //           <option value={1}>I</option>
-  //           <option value={2}>II</option>
-  //           <option value={3}>III</option>
-  //           <option value={4}>IV</option>
-  //           <option value={5}>V</option>
-  //           <option value={6}>VI</option>
-  //           <option value={7}>VII</option>
-  //           <option value={8}>VIII</option>
-  //           <option value={9}>IX</option>
-  //           <option value={10}>X</option>
-  //           <option value={11}>XI</option>
-  //           <option value={12}>XII</option>
-  //           <option value={13}>XIII</option>
-  //           <option value={14}>XIV</option>
-  //           <option value={15}>XV</option>
-  //           <option value={16}>RM</option>
-  //         </select>
-  //       </div>
-  //       <div className="my-3 form-check">
-  //         <input
-  //           type="checkbox"
-  //           className="form-check-input"
-  //           id="Check1"
-  //           required
-  //         />
-  //         <label className="form-check-label" htmlFor="exampleCheck1">
-  //           Acepto términos y condiciones
-  //         </label>
-  //       </div>
-  //       <button type="submit" className="btn btn-primary my-3">
-  //         Registrarse
-  //       </button>
-  //     </form>
-  //   </div>
-  // );
 };
 export default Register;

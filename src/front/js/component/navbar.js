@@ -68,9 +68,7 @@ export const Navbar = () => {
                       className="nav-link active text-dark mx-2"
                       aria-current="page"
                       to="#"
-                    >
-                      CARRO
-                    </Link>
+                    ></Link>
                   </li>
                 )}
 

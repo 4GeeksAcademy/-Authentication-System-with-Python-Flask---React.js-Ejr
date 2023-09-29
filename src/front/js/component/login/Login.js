@@ -35,7 +35,7 @@ const Login = () => {
                 name="email"
                 autoComplete="off"
                 value={store.email}
-                onChange={actions.handleChangeLogin}
+                onChange={(e) => actions.handleChangeLogin(e)}
               />
             </div>
             <div className="container">
@@ -49,7 +49,7 @@ const Login = () => {
                 placeholder="Password"
                 name="password"
                 value={store.password}
-                onChange={actions.handleChangeLogin}
+                onChange={(e) => actions.handleChangeLogin(e)}
               />
             </div>
             <div className="d-flex justify-content-center align-items-center">
@@ -59,6 +59,9 @@ const Login = () => {
               >
                 Iniciar Sesión
               </button>
+            </div>
+            <div className="text-center mt-2">
+              <Link to="/register">Registrarse</Link>
             </div>
           </form>
         </div>
