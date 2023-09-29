@@ -33,12 +33,10 @@ export const MyBuyDetails = () => {
                         <div className="p-0 " >
                             <p className="text-dark mb-3">{store.allMessagesUser[selectedBookIndex]?.book.author}</p>
                             <p className="text-dark mb-3">{store.allMessagesUser[selectedBookIndex]?.book.description}</p>
-                            <p className="text-dark mb-3">{store.allMessagesUser[selectedBookIndex]?.book_id}</p>
+                            <p className="text-dark mb-3">{store.allMessagesUser[selectedBookIndex]?.book.user_name}</p>
 
                         </div>
                     </div>
-                    {/* <button onClick={(e) => { actions.allBookIdBuyUser }}>boton 1</button>
-                    <button onClick={(e) => { actions.getMensajesLibro(store.allMessagesUser[0]?.book_id) }}>boton 2</button> */}
                 </div>
                 <div>
 
@@ -48,9 +46,9 @@ export const MyBuyDetails = () => {
                         <div className="border rounded m-2 d-flex flex-column" style={{ width: "500px" }}>
                             {store.buyChat.map((message, index) => (
                                 <div className="d-flex flex-column" key={index}>
-                                    {message.sender_id === 11 ? (
+                                    {message.sender_id === store.currentUser.user.id ? (
                                         <div className="align-self-start text-primary m-2">
-                                            <p>{message.message_text}</p>
+                                            <p><strong>Tú:</strong> {message.message_text}</p>
                                         </div>
                                     ) : (
                                         <div className="align-self-end text-success m-2">
@@ -63,22 +61,24 @@ export const MyBuyDetails = () => {
                     </div>
                     <div>
                         <form className="form-control" /* onSubmit={submitMessage} */>
-                            <textarea
+
+                            <input
+                                type="text"
                                 className="form-control mb-0"
                                 id="message_text"
                                 aria-describedby="emailHelp"
                                 placeholder="Ingresa el mensaje"
-                                /* required */
+                                required
                                 name="message_text"
-                            /* value={store.message_text}
-                            onChange={actions.inputMessage1} */
+                                value={store.message_text}
+                                onChange={actions.inputTextArea}
                             />
-                            <input
-                                type="submit"
-                                className="form-control mt-1"
-                            /* onClick={(e) => { e.preventDefault(), actions.getMensajesUsuario() }} */
-                            />
+
+                            <div className="btn btn-dark mx-3" onClick={() => { actions.inputMessage1(store.currentUser?.user?.id, store.allMessagesUser[selectedBookIndex]?.receiver_id, store.allMessagesUser[selectedBookIndex]?.book_id, store.message_text) }}>Enviar</div>
                         </form>
+                    </div>
+                    <div>
+
                     </div>
                 </div>
             </div>

@@ -7,7 +7,7 @@ import { Context } from "../store/appContext";
 
 
 
-const PurchasedBooks = () => {
+const SoldBooks = () => {
 
     const { store, actions } = useContext(Context)
     const navigate = useNavigate()
@@ -23,7 +23,7 @@ const PurchasedBooks = () => {
         <div>
             <div className="container-fluid">
                 <div className="text-center m-3 mt-5 mb-5">
-                    <h1>Tus Compras e Intercambios</h1>
+                    <h1>MIS VENTAS</h1>
                 </div>
                 <div className="d-flex flex-wrap justify-content-center">
                     {/* Crear un conjunto para almacenar los IDs de los libros ya mostrados */}
@@ -31,8 +31,8 @@ const PurchasedBooks = () => {
 
                     {store.allMessagesUser.map((libro, i) => {
                         // Verificar si el ID del libro ya se mostró
-                        if (!displayedBookIds.has(libro.book.id) && libro.book.user_id !== store.currentUser?.user?.id) {
-                            // Si no se ha mostrado y el usuario no es el propietario, agrega el ID al conjunto y muestra el libro
+                        if (!displayedBookIds.has(libro.book.id) && libro.book.user_id === store.currentUser?.user?.id) {
+                            // Si no se ha mostrado y el usuario es el propietario, agrega el ID al conjunto y muestra el libro
                             displayedBookIds.add(libro.book.id);
 
                             return (
@@ -64,4 +64,4 @@ const PurchasedBooks = () => {
     );
 
 };
-export default PurchasedBooks
+export default SoldBooks

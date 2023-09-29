@@ -46,27 +46,12 @@ export const BookDetails = () => {
                         </div>
                     </div>
                     <div className="mt-4">
-                        <button type="button" className="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                            Comprar
-                        </button>
-                        <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div className="modal-dialog">
-                                <div className="modal-content">
-                                    <div className="modal-header bg-black text-white">
-                                        <h1 className="modal-title fs-5" id="exampleModalLabel">Confirmación de Compra</h1>
-                                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div className="modal-body">
-                                    <p>"Estas comprando <strong>"{store.oneBook?.title}"</strong>, por <strong>"{store.oneBook?.price}"</strong>"</p>
-                                    </div>
-                                    <div className="modal-footer">
-                                        <button type="button" className="btn btn-dark" data-bs-dismiss="modal">Volver</button>
-                                        <button type="button" className="btn btn-success" onClick={(e)=>{actions.putAvailableBook(store.oneBook?.id, navigate)}}>Confirmar</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>                        
-                        <div className="btn btn-dark mx-3" onClick={(e)=>{actions.inputMessage1(store.currentUser?.user?.id, store.oneBook?.user_id, store.oneBook?.id, "Quiero comprar tu libro")}}>comprar prueba</div>
+                        <button type="button" className="btn btn-success" onClick={() => {
+                            actions.putAvailableBook(store.oneBook?.id, navigate);
+                            actions.inputMessage1(store.currentUser?.user?.id, store.oneBook?.user_id, store.oneBook?.id, "Hola quisiera comprar tu libro")
+                        }}>Confirmar</button>
+
+                        
                     </div>
                 </div>
             </div>

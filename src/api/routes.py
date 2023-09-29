@@ -51,7 +51,7 @@ def user_register():
     region= None    
     userImage= None
 
-#-------< validacion de usuario >-------#
+    #-------< validacion de usuario >-------#
 
     if 'name' in request.form:
         name =request.form["name"]

@@ -60,7 +60,10 @@ export const Profile = () => {
                             </Link>
                         </div>
                         <div className="col d-flex justify-content-center border">
-                            <button className="btn btn-dark w-75">Mis Ventas</button>
+                            <Link to="/soldBooks" className="btn btn-dark w-75">
+                                Mis Ventas
+                            </Link>
+                            
                         </div>
                     </div>
                     <div className="row border mb-3">

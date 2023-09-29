@@ -501,6 +501,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       //GUARDA DATA EN PARAMETROS PARA EL MENSAJE
       inputMessage1: (sender_id, receiver_id, book_id, message_text) => {
+        
         // Actualiza el estado global con los argumentos recibidos
         setStore({
           ...getStore(),
@@ -510,6 +511,8 @@ const getState = ({ getStore, getActions, setStore }) => {
           message_text: message_text
         });
         getActions().postMensaje();
+        getActions().getMensajesLibro();
+        
       },
 
       ///MUESTRO TODOS LOS MENSAJES POR USUARIO
@@ -554,7 +557,16 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       getIPosition: (i) => {
         setStore({ iPosition: i });
-      }
+      },
+
+      inputTextArea: (e) => {
+        const { name, value } = e.target;
+
+        setStore({
+          ...getStore(),
+          [name]: value
+        });
+      },
 
     },
   };

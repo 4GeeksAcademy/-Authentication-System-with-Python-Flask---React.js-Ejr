@@ -63,7 +63,8 @@ class Book(db.Model):
             "type": self.type,
             "price": self.price,
             "photo": self.photo,
-            "available": self.available
+            "available": self.available,
+            "user_id": self.user_id
         }
 
     def save(self):

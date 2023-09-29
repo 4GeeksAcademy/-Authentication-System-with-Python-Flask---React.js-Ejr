@@ -27,7 +27,7 @@ import PurchasedBooks from "./pages/purchasedBooks";
 
 import { Profile } from "./pages/profile";
 
-import Enviar_formulario from "./pages/enviar_formulario";
+import SoldBooks from "./pages/soldBooks";
 
 
 
@@ -80,7 +80,7 @@ const Layout = () => {
                         <Route element={<PurchasedBooks />} path="/purchasedBooks" />
                         
                         <Route element={<Profile />} path="/profile" />
-                        <Route element={<Enviar_formulario />} path="/enviar_formulario" />                         
+                        <Route element={<SoldBooks />} path="/soldBooks" />                         
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
                     <Footer />
