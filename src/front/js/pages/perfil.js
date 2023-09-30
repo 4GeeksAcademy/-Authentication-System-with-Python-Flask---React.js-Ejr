@@ -4,6 +4,7 @@ import { Context } from "../store/appContext";
 import tournament from "../../img/perfil/tournament.jpg";
 import teamlist from "../../img/perfil/teamlist.jpg";
 import eventlist from "../../img/perfil/eventlist.jpg";
+import imgLogo from "../../img/LogoTS.jpg";
 import * as filestack from 'filestack-js';
 
 const Perfil = ()=>{
@@ -20,8 +21,6 @@ const Perfil = ()=>{
   setProfileImage(profileData.url_perfil)
 }, [profileData.url_perfil]);
   
- 
-
   //cuando cargue llamamos a getuserinfo y enviamos la data al userData
   useEffect(() => {
     if (store.accessToken) {
@@ -36,8 +35,6 @@ const Perfil = ()=>{
       navigate("/cuenta");
     }
   }, [store.accessToken]);
-
-
 
   const handleOpenFilePicker = () => {
     const options = {
@@ -76,7 +73,7 @@ const Perfil = ()=>{
             <div className="card mb-4">
               <div className="card-body text-center">
                 <img
-                  src={profileImage}
+                  src={profileImage==""? imgLogo: profileImage}
                   alt="avatar"
                   className="rounded-circle img-fluid"
                   style={{ width: '150px' }}

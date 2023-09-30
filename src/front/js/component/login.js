@@ -5,11 +5,10 @@ import '../../styles/LoginForm.css';
 import { Link } from "react-router-dom";
 import ResetPass from '../pages/resetpass';
 
-
 function LoginForm() {
 
   const {store, actions} = useContext(Context);
-  const navigate =useNavigate()
+  const navigate =useNavigate();
 
   useEffect(()=>{
     //Si existe un token está iniciada la sesión
@@ -153,24 +152,6 @@ function LoginForm() {
                     >
                       {/* Formulario de login */}
                       <form onSubmit={handleLoginSubmit}>
-                        {/*<div className="text-center mb-3">
-                          <p>Ingresa con:</p>
-                          <button type="button" className="btn btn-secondary btn-floating mx-1">
-                            <i className="fab fa-facebook-f"></i>
-                          </button>
-
-                          <button type="button" className="btn btn-secondary btn-floating mx-1">
-                            <i className="fab fa-google"></i>
-                          </button>
-
-                          <button type="button" className="btn btn-secondary btn-floating mx-1">
-                            <i className="fab fa-twitter"></i>
-                          </button>
-
-                          <button type="button" className="btn btn-secondary btn-floating mx-1">
-                            <i className="fab fa-github"></i>
-                          </button>
-                        </div> */}
                         <label className="form-label" htmlFor="loginEmail">
                           Email
                         </label>
@@ -180,8 +161,10 @@ function LoginForm() {
                             type="email"
                             id="loginEmail"
                             name="loginEmail"
+                            maxLength="120"
                             className="form-control white-background-input"
                             onChange={handleLoginChange}
+                            required
                           />
                         </div>
 
@@ -193,8 +176,10 @@ function LoginForm() {
                             type="password"
                             id="loginPassword"
                             name="loginPassword"
+                            maxLength="80"
                             className="form-control white-background-input"
                             onChange={handleLoginChange}
+                            required
                           />
                         </div>
 
@@ -248,26 +233,6 @@ function LoginForm() {
                     >
                       {/* Formulario de registro */}
                       <form onSubmit={handleRegisterSubmit} id="formRegister">
-                        {/*<div className="text-center mb-3">
-                          <p>Regístrate con:</p>
-                          <button type="button" className="btn btn-secondary btn-floating mx-1">
-                            <i className="fab fa-facebook-f"></i>
-                          </button>
-
-                          <button type="button" className="btn btn-secondary btn-floating mx-1">
-                            <i className="fab fa-google"></i>
-                          </button>
-
-                          <button type="button" className="btn btn-secondary btn-floating mx-1">
-                            <i className="fab fa-twitter"></i>
-                          </button>
-
-                          <button type="button" className="btn btn-secondary btn-floating mx-1">
-                            <i className="fab fa-github"></i>
-                          </button>
-                        </div>
-                        <p className="text-center">O</p>
-                      */}
                         <label className="form-label" htmlFor="registerName">
                               Nombre
                         </label>
@@ -276,6 +241,7 @@ function LoginForm() {
                             type="text"
                             id="registerName"
                             name="registerName"
+                            maxLength="120"
                             className="form-control white-background-input"
                             onChange={handleRegisterChange}
                           />
@@ -289,8 +255,10 @@ function LoginForm() {
                             type="email"
                             id="registerEmail"
                             name="registerEmail"
+                            maxLength="120"
                             className="form-control white-background-input"
                             onChange={handleRegisterChange}
+                            required
                           />
                         </div>
 
@@ -302,8 +270,10 @@ function LoginForm() {
                             type="password"
                             id="registerPassword"
                             name="registerPassword"
+                            maxLength="80"
                             className="form-control white-background-input"
                             onChange={handleRegisterChange}
+                            required
                           />
                         </div>
 
@@ -317,6 +287,7 @@ function LoginForm() {
                             name="registerRepeatPassword"
                             className="form-control white-background-input"
                             onChange={handleRegisterChange}
+                            required
                           />
                         </div>
 

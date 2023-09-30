@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 67bb5c7baefa
+Revision ID: c469cc0fdfaf
 Revises: 
-Create Date: 2023-09-23 19:29:27.231782
+Create Date: 2023-09-30 02:01:56.064030
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '67bb5c7baefa'
+revision = 'c469cc0fdfaf'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -41,17 +41,18 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('nombre_evento', sa.String(length=50), nullable=False),
     sa.Column('descr_corta', sa.String(length=100), nullable=False),
-    sa.Column('fecha_ini', sa.DateTime(), nullable=False),
-    sa.Column('fecha_fin', sa.DateTime(), nullable=False),
+    sa.Column('fecha_ini', sa.String(length=50), nullable=False),
+    sa.Column('fecha_fin', sa.String(length=50), nullable=False),
     sa.Column('ubicacion', sa.String(length=100), nullable=False),
     sa.Column('logotipo', sa.String(length=150), nullable=False),
     sa.Column('descr_larga', sa.String(length=250), nullable=False),
     sa.Column('reglas', sa.String(length=150), nullable=False),
-    sa.Column('fecha_lim', sa.DateTime(), nullable=False),
+    sa.Column('fecha_lim', sa.String(length=50), nullable=False),
+    sa.Column('hora_lim', sa.String(length=10), nullable=False),
     sa.Column('email_contacto', sa.String(length=50), nullable=False),
     sa.Column('tel_contacto', sa.String(length=15), nullable=False),
     sa.Column('nombre_contacto', sa.String(length=150), nullable=False),
-    sa.Column('costo', sa.Integer(), nullable=False),
+    sa.Column('costo', sa.Float(), nullable=False),
     sa.Column('id_user', sa.Integer(), nullable=False),
     sa.ForeignKeyConstraint(['id_user'], ['user.id'], ),
     sa.PrimaryKeyConstraint('id')

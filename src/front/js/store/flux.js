@@ -130,8 +130,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 						console.log("borramos el token")
 						localStorage.removeItem("accessToken")
 					}
-					console.log("PRUEBA_login", JSON.stringify(resp))
-					
 					return resp
 				}catch(error){
 					console.log("Error al solicitar los datos", error)
@@ -204,13 +202,80 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 			newEvent:async(eventData)=>{
 				try{
-					const {apiFetchPublic} = getActions()
+					const {apiFetchProtected} = getActions()
 					//hacemos la petición
 					//trae de la API el code(resp.status) y data
 					//es decir, lo que regresa la función apiFetchPublic()
-					const resp = await apiFetchPublic("/newevent", "POST", {eventData})
+					console.log("DATOSDELEVENTO: ", {eventData})
+					const resp = await apiFetchProtected("/newevent", "POST", {eventData})
 					console.log("PRUEBA_newEvent", JSON.stringify(resp))
-					return resp
+					if (resp.code==201){
+						//setStore({userInfo:resp.data})
+						const store = getStore();
+						store.userEvent.push(resp.data);
+						setStore(store);
+						return "Ok"
+					}
+					//si el token expiró
+					//borramos token del almacenamiento local y del store
+					localStorage.removeItem("accessToken")
+					if (resp.code==401){
+						setStore({accessToken:null})
+						alert("Sesión expirada")
+					}
+					return "Sesión expirada"
+					//return resp
+				} catch(error){
+					console.log("Error al crear el evento")
+				}
+			},
+			editEvent:async(eventData, index)=>{
+				try{
+					const {apiFetchProtected} = getActions()
+					console.log("DATOSDELEVENTO: ", {eventData})
+					const resp = await apiFetchProtected("/editevent", "POST", {eventData})
+					console.log("PRUEBA_editEvent", JSON.stringify(resp))
+					if (resp.code==201){
+						//setStore({userInfo:resp.data})
+						const store = getStore();
+						store.userEvent.splice(index, 1, resp.data);
+						setStore(store);
+						return "Ok"
+					}
+					//si el token expiró
+					//borramos token del almacenamiento local y del store
+					localStorage.removeItem("accessToken")
+					if (resp.code==401){
+						setStore({accessToken:null})
+						alert("Sesión expirada")
+					}
+					return "Sesión expirada"
+					//return resp
+				} catch(error){
+					console.log("Error al crear el evento")
+				}
+			},
+			deleteEvent:async(eventId, index)=>{
+				try{
+					const {apiFetchProtected} = getActions()
+					console.log("Id del evento a borrar: ", eventId)
+					const resp = await apiFetchProtected("/deleteevent", "POST", {eventId})
+					console.log("PRUEBA_DeleteEvent", JSON.stringify(resp))
+					//si el token expiró borramos token del almacenamiento local y del store
+					if (resp.code==201){
+						const store = getStore();
+						store.userEvent.splice(index, 1);
+						setStore(store);
+						alert("Evento eliminado exitosamente");
+						return "Ok"
+					}
+					localStorage.removeItem("accessToken")
+					if (resp.code==401){
+						setStore({accessToken:null})
+						return ("Sesión expirada")
+					}
+					return "Sesión expirada"
+					//return resp
 				} catch(error){
 					console.log("Error al crear el evento")
 				}
@@ -237,7 +302,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}catch(error){
 					console.log("Error al solicitar los datos", error)
 				}
-      },
+      		},
 			logout: async () => {
 				const { apiFetchProtected } = getActions();
 

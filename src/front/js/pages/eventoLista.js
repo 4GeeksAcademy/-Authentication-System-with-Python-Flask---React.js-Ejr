@@ -2,24 +2,48 @@ import React, { useContext, useState, useEffect } from "react";
 import '../../styles/accountpage.css'
 import "../../styles/eventList.css";
 import { Context } from "../store/appContext";
-
-import { Link } from "react-router-dom";
+import ModalEvent from "../component/modalevent"
+import { Link, useNavigate } from "react-router-dom";
 const EventoLista = () => {
 
     const { store, actions } = useContext(Context)
+    const navigate = useNavigate();
 
     useEffect(()=>{
-            actions.getUserEvent()
-      }, []);
+        if (!store.accessToken) {
+            navigate("/");
+          }
+      }, [store.accessToken]);
 
     const [selectedEvent, setSelectedEvent] = useState(0);
-    const handleEdit = (e) => {
-        setSelectedEvent(eventData.find(t => t.id == e.target.id))
+    const [operation, setOperation] = useState("Evento Nuevo");
+    const [indice, setIndice] = useState(null);
+    const [idEvento, setIdEvento] = useState(0);
+    const [eventToDelete, setEventToDelete] = useState(null);
+    const [eventIdDelete, setEventIdDelete] = useState(null);
+
+    useEffect(()=>{
+        actions.getUserEvent()
+        setOperation("Evento Nuevo");
+      }, []);
+
+    const handleEdit = (e, index, id_evento) => {
+        //setSelectedEvent(eventData.find(t => t.id == e.target.id))
+        setOperation("Editar Evento");
+        setIndice(index);
+        setIdEvento(id_evento);
     }
 
-    const deleteTodo = (id) => {
-        const newTodos = todoArray.filter(todo => todo.id == id)
-        setTodoArrays(newTodos)
+    const deleteEvento = (id, nombre, index) => {
+        /*const newTodos = todoArray.filter(todo => todo.id == id)
+        setTodoArrays(newTodos)*/
+        setEventIdDelete(id);
+        setEventToDelete(nombre);
+        setIndice(index);
+    }
+    const createEvento = () => {
+        setOperation("Evento Nuevo");
+        setIndice("n");
     }
     const handleChange = (e, propertyName) => {
         /*const currentEvent = Object.assign({}, selectedEvent);
@@ -29,24 +53,26 @@ const EventoLista = () => {
     return (
         <div className="contSuperior fatherBody" style={{minHeight:"500px"}}>
             <div className="row text-center mb-3">
-                <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+                <div className="d-grid gap-2 d-md-flex justify-content-md-center">
                     <Link to="/cuenta">
-                        <button class="btn btn-primary me-md-2" type="button">Volver a Perfil</button>
+                        <button className="btn btn-primary me-md-2" type="button">Volver a Perfil</button>
                     </Link>
-                    <button class="btn btn-primary" type="button">Crear Evento</button>
+                    <button className="btn btn-primary" onClick={() => createEvento()} data-bs-toggle="modal" data-bs-target="#staticBackdrop" type="button">Crear Evento</button>
                 </div>
             </div>
             <table className="table align-middle mb-0 bg-white" id='theEventstable'>
                 <thead className="bg-light">
                     <tr>
                         <th>Nombre del Evento</th>
-                        <th>Ubicación</th>
+                        <th>Dirección</th>
+                        <th>Fecha de Inicio</th>
+                        <th>Fecha de Término</th>
                         <th>Fecha límite</th>
                         <th>Costo</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {store.userEvent.map((theEvent) => (
+                    {store.userEvent.map((theEvent, index) => (
                         <tr key={theEvent.id}>
                             <td>
                                 <div className="d-flex align-items-center">
@@ -65,17 +91,19 @@ const EventoLista = () => {
                             <td>
                                 <p className="fw-normal mb-1">{theEvent.ubicacion}</p>
                             </td>
+                            <td>{theEvent.fecha_ini}</td>
+                            <td>{theEvent.fecha_fin}</td>
                             <td>{theEvent.fecha_lim}</td>
                             <td>{theEvent.costo}</td>
                                 <td>
                                     <div className="row">
                                         <div className="col-4">
-                                            <button id={theEvent.id} onClick={(e) => handleEdit(e)} className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                            <button id={theEvent.id} onClick={(e) => handleEdit(e, index, theEvent.id)} className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                                                 Editar
                                             </button>
                                         </div>
                                         <div className="col-4">
-                                            <button className="btn btn-primary" onClick={() => deleteTodo(theEvent.id)}>
+                                            <button className="btn btn-primary" onClick={() => deleteEvento(theEvent.id, theEvent.nombre_evento, index)} data-bs-toggle="modal" data-bs-target="#staticBackdrop1">
                                                 Eliminar
                                             </button>
                                         </div>
@@ -90,107 +118,38 @@ const EventoLista = () => {
                     ))}
                 </tbody>
             </table>
-
-            <div className="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            
+           <div className="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div className="modal-dialog">
                     <div className="modal-content">
                         <div className="modal-header">
-                            <h5 className="modal-title" id="staticBackdropLabel">Editar</h5>
+                            <h5 className="modal-title" id="staticBackdropLabel">{operation}</h5>
                             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div className="modal-body">
-                            {/*
-                            <div className="row">
-                                <div className="row">
-                                    <form className="form-floating">
-                                        <input onChange={(e) => handleChange(e, "nombre_evento")} type="text" className="form-control" id="eventName" placeholder="nombre" value={selectedEvent.nombre_evento} />
-                                        <label htmlFor="eventName">Nombre:</label>
-                                    </form>
-                                </div>
-                                <div className="row">
-                                    <form className="form-floating">
-                                        <input onChange={(e) => handleChange(e, "descr_corta")} type="text" className="form-control" id="eventDescription" placeholder="nombre" value={selectedEvent.descr_corta} />
-                                        <label htmlFor="eventDescription">Descripcion corta:</label>
-                                    </form>
-                                </div>
-                                <div className="row">
-                                    <form className="form-floating">
-                                        <input onChange={(e) => handleChange(e, "fecha_ini")} type="text" className="form-control" id="eventDate" placeholder="Fecha de inicio" value={selectedEvent.fecha_ini} />
-                                        <label htmlFor="eventDate">Fecha de inicio:</label>
-                                    </form>
-                                </div>
-                                <div className="row">
-                                    <form className="form-floating">
-                                        <input onChange={(e) => handleChange(e, "fecha_fin")} type="text" className="form-control" id="eventEndDate" placeholder="fecha final" value={selectedEvent.fecha_fin} />
-                                        <label htmlFor="eventEndDate">Fecha de final:</label>
-                                    </form>
-                                </div>
-                                <div className="row">
-                                    <form className="form-floating">
-                                        <input onChange={(e) => handleChange(e, "ubicacion")} type="text" className="form-control" id="eventLocation" placeholder="Ubicacion" value={selectedEvent.ubicacion} />
-                                        <label htmlFor="eventLocation">Location:</label>
-                                    </form>
-
-                                </div>
-                                <div className="row">
-                                    <form className="form-floating">
-                                        <input onChange={(e) => handleChange(e, "logotipo")} type="text" className="form-control" id="eventLogo" placeholder="Logotipo" value={selectedEvent.logotipo} />
-                                        <label htmlFor="eventLogo">Logo:</label>
-                                    </form>
-
-                                </div>
-                                <div className="row">
-                                    <form className="form-floating">
-                                        <input onChange={(e) => handleChange(e, "descr_larga")} type="text" className="form-control" id="eventDecriptionLong" placeholder="Descripcion larga" value={selectedEvent.descr_larga} />
-                                        <label htmlFor="eventDescriptionLong">Descripción larga:</label>
-                                    </form>
-
-                                </div>
-                                <div className="row">
-                                    <form className="form-floating">
-                                        <input onChange={(e) => handleChange(e, "reglas")} type="text" className="form-control" id="eventRules" placeholder="Reglas" value={selectedEvent.reglas} />
-                                        <label htmlFor="eventRules">Reglas:</label>
-                                    </form>
-
-                                </div>
-                                <div className="row">
-                                    <form className="form-floating">
-                                        <input onChange={(e) => handleChange(e, "fecha_lim")} type="text" className="form-control" id="eventLimiteDate" placeholder="Fecha limite" value={selectedEvent.fecha_lim} />
-                                        <label htmlFor="eventLimiteDate">Fecha limite:</label>
-                                    </form>
-                                </div>
-                                <div className="row">
-                                    <form className="form-floating">
-                                        <input onChange={(e) => handleChange(e, "nombre_contacto")} type="text" className="form-control" id="eventContactName" placeholder="Nombre de contacto" value={selectedEvent.nombre_contacto} />
-                                        <label htmlFor="eventContactName">Nombre de contacto:</label>
-                                    </form>
-                                </div>
-                                <div className="row">
-                                    <form className="form-floating">
-                                        <input onChange={(e) => handleChange(e, "email_contacto")} type="text" className="form-control" id="eventContactEmail" placeholder="Email de contacto" value={selectedEvent.email_contacto} />
-                                        <label htmlFor="eventContactEmail">Email de contacto:</label>
-                                    </form>
-                                </div>
-                                <div className="row">
-                                    <form className="form-floating">
-                                        <input onChange={(e) => handleChange(e, "tel_contacto")} type="text" className="form-control" id="eventContactTel" placeholder="Tel de contacto" value={selectedEvent.tel_contacto} />
-                                        <label htmlFor="eventContactTel">Teléfono de contacto:</label>
-                                    </form>
-                                </div>
-                                <div className="row">
-                                    <form className="form-floating">
-                                        <input input onChange={(e) => handleChange(e, "costo")} type="text" className="form-control" id="eventCost" placeholder="Costo de inscripcion" value={selectedEvent.costo} />
-                                        <label htmlFor="eventCost">Costo de inscripción:</label>
-                                    </form>
-
-                                </div>
-
-                            </div>
-                        */}
+                            <ModalEvent operacion={operation} indice={indice} idEvent={idEvento}/>
                         </div>
                         <div className="modal-footer">
-                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" className="btn btn-primary">Cambiar</button>
+                            {/*<button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="button" className="btn btn-primary">Guardar</button>*/}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div className="modal fade" id="staticBackdrop1" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdrop1Label" aria-hidden="true">
+                <div className="modal-dialog">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h5 className="modal-title" id="staticBackdrop1Label">Eliminar Evento</h5>
+                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div className="modal-body">
+                            ¿Estás seguro que quieres eliminar el evento {eventToDelete}?
+                        </div>
+                        <div className="modal-footer">
+                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="button" className="btn btn-primary" onClick={() => actions.deleteEvent(eventIdDelete, indice)} data-bs-dismiss="modal">Eliminar</button>
                         </div>
                     </div>
                 </div>
