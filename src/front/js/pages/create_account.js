@@ -1,62 +1,56 @@
-import React, { useContext, useState } from "react";
+import React, { useState, useContext } from "react";
 import { Context } from "../store/appContext";
 import bookswaplogo from "../../img/logo-final-project.png";
 import "../../styles/forms.css";
 
 export const CreateAccount = () => {
-	const { store, actions } = useContext(Context);
+    const { store, actions } = useContext(Context);
 
-	return (
-		<div className="container text-center">
+    const [username, setUsername] = useState("");
+    const [profileimg, setProfileimg] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+
+    const signUpFunction = (e) => {
+        e.preventDefault();
+        
+        actions.createAccount(username, profileimg, email, password);
+    }
+
+    return (
+        <div className="container text-center">
             <img src={bookswaplogo} alt="bookswap" height="100" />
             <div className="row justify-content-center">
                 <div className="createaccountform  col-md-6">
-                    <form className="row g-3 text-start">
+
+                    <form className="row g-3 text-start" onSubmit={signUpFunction}>
+
                         <div className="col-md-6">
-                            <label className="form-label" for="autoSizingInputGroup">Choose Your Username</label>
+                            <label className="form-label" for="username">Choose Your Username</label>
                             <div className="input-group">
-                            <div className="input-group-text">@</div>
-                            <input type="text" className="form-control" id="autoSizingInputGroup" placeholder="Username" />
+                                <div className="input-group-text">@</div>
+                                <input type="text" onChange={(e) => setUsername(e.target.value)} className="form-control" id="username" placeholder="Username" required />
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <label for="formFile" className="form-label">Choose your profile photo</label>
-                            <input className="form-control" type="file" id="formFile" />
-                        </div>
+
+                       
+
                         <div className="col-12">
-                            <label for="inputEmail4" className="form-label">Email</label>
-                            <input type="email" className="form-control" id="inputEmail4" />
+                            <label for="email" className="form-label">Email</label>
+                            <input type="email" onChange={(e) => setEmail(e.target.value)} className="form-control" id="email" required />
                         </div>
-                        <div className="col-md-6">
-                            <label for="inputPassword4" className="form-label">Password</label>
-                            <input type="password" className="form-control" id="inputPassword4" />
-                        </div>
-                        <div className="col-md-6">
-                            <label for="inputPassword4" className="form-label">Confirm Password</label>
-                            <input type="password" className="form-control" id="inputPassword4" />
+
+                        <div className="col-md-12">
+                            <label for="password" className="form-label">Password</label>
+                            <input type="password" onChange={(e) => setPassword(e.target.value)} className="form-control" id="password" required />
                         </div>
 
                         <div className="col-12">
-                            <label for="form-check" className="form-label">Choose your privacy</label>
                             <div className="form-check">
-                                <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked />
-                                <label className="form-check-label" for="flexRadioDefault2">
-                                    Public Profile
+                                <input className="form-check-input" type="checkbox" id="privacypolicy" required />
+                                <label className="form-check-label" for="privacypolicy">
+                                    I accept the privacy policy
                                 </label>
-                            </div>
-                            <div className="form-check">
-                                <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" />
-                                <label className="form-check-label" for="flexRadioDefault1">
-                                    Private Profile
-                                </label>
-                            </div>
-                        </div>
-                        <div className="col-12">
-                            <div className="form-check">
-                            <input className="form-check-input" type="checkbox" id="gridCheck" />
-                            <label className="form-check-label" for="gridCheck">
-                                I accept the privacy policy
-                            </label>
                             </div>
                         </div>
                         <div className="col-12 text-center">
@@ -65,8 +59,8 @@ export const CreateAccount = () => {
                     </form>
                 </div>
             </div>
-		</div>
-	);
+        </div>
+    );
 };
 
 export default CreateAccount; 

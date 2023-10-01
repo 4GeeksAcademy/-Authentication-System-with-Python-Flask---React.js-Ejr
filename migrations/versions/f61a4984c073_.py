@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 64818c7b39b2
+Revision ID: f61a4984c073
 Revises: 
-Create Date: 2023-09-29 18:52:07.660430
+Create Date: 2023-10-01 21:21:05.787117
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '64818c7b39b2'
+revision = 'f61a4984c073'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -28,8 +28,6 @@ def upgrade():
     sa.Column('email', sa.String(length=120), nullable=False),
     sa.Column('username', sa.String(length=20), nullable=False),
     sa.Column('password', sa.String(length=80), nullable=False),
-    sa.Column('profile_picture', sa.String(length=250), nullable=False),
-    sa.Column('public_profile', sa.Boolean(), nullable=True),
     sa.Column('is_active', sa.Boolean(), nullable=True),
     sa.PrimaryKeyConstraint('user_id'),
     sa.UniqueConstraint('email'),
@@ -51,8 +49,8 @@ def upgrade():
     sa.Column('genre', sa.Integer(), nullable=False),
     sa.Column('avg_rating', sa.Float(), nullable=False),
     sa.Column('total_ratings', sa.Integer(), nullable=False),
-    sa.Column('cover_img', sa.String(length=400), nullable=False),
-    sa.Column('status', sa.Enum('Available', 'Not Available', name='status_name'), nullable=False),
+    sa.Column('cover_img', sa.String(length=500), nullable=False),
+    sa.Column('status', sa.Enum('Available', 'Not Available', name='status_type'), nullable=False),
     sa.ForeignKeyConstraint(['genre'], ['genres.genre_id'], ),
     sa.PrimaryKeyConstraint('book_id'),
     sa.UniqueConstraint('isbn')
@@ -61,7 +59,7 @@ def upgrade():
     sa.Column('friendship_id', sa.Integer(), nullable=False),
     sa.Column('user1_id', sa.Integer(), nullable=False),
     sa.Column('user2_id', sa.Integer(), nullable=False),
-    sa.Column('friendship_status', sa.Enum('Accepted', 'Pending', 'Rejected', name='friendship_name'), nullable=False),
+    sa.Column('friendship_status', sa.Enum('Accepted', 'Pending', 'Rejected', name='friendship_type'), nullable=False),
     sa.ForeignKeyConstraint(['user1_id'], ['user.user_id'], ),
     sa.ForeignKeyConstraint(['user2_id'], ['user.user_id'], ),
     sa.PrimaryKeyConstraint('friendship_id')
@@ -89,7 +87,7 @@ def upgrade():
     sa.Column('sender_user_id', sa.Integer(), nullable=False),
     sa.Column('receiver_user_id', sa.Integer(), nullable=False),
     sa.Column('book_id', sa.Integer(), nullable=False),
-    sa.Column('request_status', sa.Enum('Accepted', 'Pending', 'Rejected', name='request_name'), nullable=False),
+    sa.Column('request_status', sa.Enum('Accepted', 'Pending', 'Rejected', name='request_type'), nullable=False),
     sa.ForeignKeyConstraint(['book_id'], ['books.book_id'], ),
     sa.ForeignKeyConstraint(['receiver_user_id'], ['user.user_id'], ),
     sa.ForeignKeyConstraint(['sender_user_id'], ['user.user_id'], ),
