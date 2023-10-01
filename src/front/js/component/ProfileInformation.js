@@ -77,36 +77,6 @@ export const ProfileInformation = () => {
                         </button>
                     </div>
                 </div>
-                <h5>Update your privacy</h5>
-                <div className="row g-3 mt-2">
-                    <div className="col-md-3">
-                        <div className="form-check">
-                            <input
-                                className="form-check-input"
-                                type="radio"
-                                name="flexRadioDefault"
-                                id="flexRadioDefault1"
-                            />
-                            <label className="form-check-label" htmlFor="flexRadioDefault1">
-                                Public Profile
-                            </label>
-                        </div>
-                    </div>
-                    <div className="col-md-3">
-                        <div className="form-check">
-                            <input
-                                className="form-check-input"
-                                name="flexRadioDefault"
-                                type="radio"
-                                id="flexRadioDefault2"
-                                checked
-                            />
-                            <label className="form-check-label" htmlFor="flexRadioDefault2">
-                                Private Profile
-                            </label>
-                        </div>
-                    </div>
-                </div>
                 <h5>Delete account</h5>
                 <p>
                     Would you like to delete this account? You won’t be able to

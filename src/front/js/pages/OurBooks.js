@@ -6,15 +6,13 @@ export const OurBooks = () => {
     const { store, actions } = useContext(Context);
     const [genres, setGenres] = useState([]);
     const [books, setBooks] = useState([]);
-    const [allBooks, setAllBooks] = useState([]); // Declare allBooks
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10;
 
     useEffect(() => {
-        // Fetch books and store in allBooks
+
         actions.getAllBooks(booksData => {
-            setAllBooks(booksData);
-            setBooks(booksData); // Set books for the current page
+            setBooks(booksData);
         });
         actions.getGenres(setGenres);
     }, []);
@@ -22,7 +20,7 @@ export const OurBooks = () => {
     const getCurrentPageBooks = () => {
         const startIndex = (currentPage - 1) * itemsPerPage;
         const endIndex = startIndex + itemsPerPage;
-        return books.slice(0, 10);
+        return books.slice(startIndex, endIndex);
     };
 
     return (
