@@ -7,12 +7,12 @@ export const ProfileOne = () => {
             <div className="row mt-2">
                 <div className="col-5 my-5">
                     <a className="nav-link active" aria-current="page" href="#" >
-                        230 ratings
+                        0 ratings
                     </a>
                 </div>
                 <div className="col-5 my-5">
                     <a className="nav-link" href="#">
-                        150 reviews
+                        0 reviews
                     </a>
                 </div>
             </div>

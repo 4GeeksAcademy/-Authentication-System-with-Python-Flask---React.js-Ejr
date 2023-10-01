@@ -13,11 +13,11 @@ class User(db.Model):
     is_active = db.Column(db.Boolean, default=True)  
 
     def __repr__(self):
-        return f'<User {self.email}>'
+        return f'<user {self.email}>'
 
     def serialize(self):
         return {
-            "id": self.id,
+            "user_id": self.id,
             "email": self.email,
             # Do not serialize the password; it's a security breach
         }
@@ -27,7 +27,7 @@ class Books(db.Model):
     title = db.Column(db.String(150), nullable=False)
     author = db.Column(db.String(150), nullable=False)
     isbn = db.Column(db.String(13), unique=True, nullable=False) 
-    genre = db.Column(db.Integer, nullable=False ForeignKey("genre.id"))
+    genre = db.Column(db.Integer, db.ForeignKey("genres.genre_id"), nullable=False)
     avg_rating = db.Column(db.Float, nullable=False) 
     total_ratings = db.Column(db.Integer, nullable=False) 
     cover_img = db.Column(db.Enum('jpg', 'png', 'gif', 'other'), nullable=False)
@@ -51,8 +51,7 @@ class Books(db.Model):
 
 class BookGoals(db.Model):
     book_goal_id = db.Column(db.Integer, primary_key=True)
-    goal_id = db.Column(db.Integer, nullable=False ForeignKey("goal.id")) 
-    user_id = db.Column(db.Integer, nullable=False ForeignKey("user.id"))
+    user_id = db.Column(db.Integer, db.ForeignKey("user.user_id"), nullable=False)
     number_of_books = db.Column (db.Integer, nullable=False)
     percentage = db.Column(db.Float, nullable=False )
 
@@ -62,7 +61,6 @@ class BookGoals(db.Model):
     def serialize(self):
         return {
             "book_goal_id": self.book_goal_id,
-            "goal_id": self.goal_id,
             "user_id": self.user_id,
             "number_of_books": self.number_of_books,
             "percentage": self.percentage
@@ -72,8 +70,8 @@ class BookGoals(db.Model):
 
 class Reviews(db.Model):
     review_id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, nullable=False ForeignKey("user.id"))
-    book_id = db.Column (db.Integer, nullable=False ForeignKey("book.id"))
+    user_id = db.Column(db.Integer, db.ForeignKey("user.user_id"), nullable=False)
+    book_id = db.Column (db.Integer, db.ForeignKey("books.book_id"), nullable=False)
     review = db.Column (db.String(200))
     rating = db.Column (db.Integer, nullable=False)
 
@@ -91,9 +89,9 @@ class Reviews(db.Model):
 
 class BookRecommendations(db.Model):
     recommendation_id = db.Column(db.Integer, primary_key=True)
-    user1_id = db.Column(db.Integer, nullable=False ForeignKey("user.id"))
-    user2_id = db.Column(db.Integer, nullable=False ForeignKey("user.id"))
-    recommended_book_id = db.Column (db.Integer, nullable=False ForeignKey("book.id"))
+    user1_id = db.Column(db.Integer, db.ForeignKey("user.user_id"), nullable=False)
+    user2_id = db.Column(db.Integer, db.ForeignKey("user.user_id"), nullable=False)
+    recommended_book_id = db.Column (db.Integer, db.ForeignKey("books.book_id"), nullable=False)
 
     def __repr__(self):
         return f'<BookRecommendations {self.recommendation_id}>'
@@ -108,9 +106,9 @@ class BookRecommendations(db.Model):
 
 class BookSwapRequest(db.Model):
     request_id = db.Column(db.Integer, primary_key=True)
-    sender_user_id = db.Column (db.Integer, nullable=False ForeignKey("user.id"))
-    receiver_user_id = db.Column (db.Integer, nullable=False ForeignKey("user.id"))
-    book_id = db.Column (db.Integer, nullable=False ForeignKey("book.id"))
+    sender_user_id = db.Column (db.Integer, db.ForeignKey("user.user_id"), nullable=False)
+    receiver_user_id = db.Column (db.Integer, db.ForeignKey("user.user_id"), nullable=False)
+    book_id = db.Column (db.Integer, db.ForeignKey("books.book_id"), nullable=False)
     request_status = db.Column (db.Enum('Accepted', 'Pending', 'Rejected'), nullable=False)
     
     def __repr__(self):
@@ -128,8 +126,8 @@ class BookSwapRequest(db.Model):
 
 class Friendship(db.Model):
     friendship_id = db.Column(db.Integer, primary_key=True)
-    user1_id = db.Column (db.Integer, nullable=False ForeignKey("user.id"))
-    user2_id = db.Column (db.Integer, nullable=False ForeignKey("user.id"))
+    user1_id = db.Column (db.Integer, db.ForeignKey("user.user_id"), nullable=False)
+    user2_id = db.Column (db.Integer, db.ForeignKey("user.user_id"), nullable=False)
     friendship_status = db.Column (db.Enum('Accepted', 'Pending', 'Rejected'), nullable=False)
 
     def __repr__(self):
@@ -145,8 +143,8 @@ class Friendship(db.Model):
 
 class Wishlist(db.Model):
     wishlist_id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column (db.Integer, nullable=False ForeignKey("user.id"))
-    book_id = db.Column (db.Integer, nullable=False ForeignKey("book.id"))
+    user_id = db.Column (db.Integer, db.ForeignKey("user.user_id"), nullable=False)
+    book_id = db.Column (db.Integer, db.ForeignKey("books.book_id"), nullable=False)
 
     def __repr__(self):
         return f'<Wishlist {self.wishlist_id}>'
@@ -160,8 +158,8 @@ class Wishlist(db.Model):
 
 class BookOwner(db.Model):
     book_owner_id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column (db.Integer, nullable=False ForeignKey("user.id"))
-    book_id = db.Column (db.Integer, nullable=False ForeignKey("book.id"))
+    user_id = db.Column (db.Integer, db.ForeignKey("user.user_id"), nullable=False)
+    book_id = db.Column(db.Integer, db.ForeignKey("books.book_id"), nullable=False)
 
     def __repr__(self):
         return f'<BookOwner {self.book_owner_id}>'

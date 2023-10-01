@@ -1,22 +1,19 @@
 """
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
-from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User , Books, BookGoals, BookOwner, BookRecommendations, BookSwapRequest, Friendship, Wishlist, Genres, Reviews
+from flask import Flask, request, jsonify, Blueprint
+from api.models import db, user, Books, BookGoals, BookOwner, BookRecommendations, BookSwapRequest, Friendship, Wishlist, Genres, Reviews
 from api.utils import generate_sitemap, APIException
-from flask_jwt_extended import get_jwt_identity
-from flask_jwt_extended import create_access_token
-from flask_jwt_extended import jwt_required
-from flask_jwt_extended import JWTManager
+from flask_jwt_extended import get_jwt_identity, create_access_token, jwt_required, JWTManager
+from flask_sqlalchemy import SQLAlchemy
 
 api = Blueprint('api', __name__)
 
 app = Flask(__name__)
 jwt = JWTManager(app)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///your_database.db'  # Change this to your database URL
-app.config['SECRET_KEY'] = 'your_secret_key'  # Change this to your secret key
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///your_database.db'
+app.config['SECRET_KEY'] = 'your_secret_key'
 db = SQLAlchemy(app)
-api = Api(app)
 
 
 # Route to register user
@@ -28,16 +25,17 @@ def create_user():
         return jsonify({"message": "Invalid request data"}), 400
 
     # Check if the provided email already exists in the database
-    existing_user = User.query.filter_by(email=data.get("email")).first()
+    existing_user = user.query.filter_by(email=data.get("email")).first()
     if existing_user:
-        return jsonify({"message": "Email already registered"}), 400
+        return jsonify({"message": "Email already registered"}), 401
 
-    new_user = User(
+    new_user = user(
         email=data.get("email"),
         username=data.get("username"),
         password=data.get("password"),
         profile_picture=data.get("profile_picture"),
         public_profile=data.get("public_profile", False)
+        is_active=True
     )
 
     db.session.add(new_user)
@@ -57,67 +55,66 @@ def generate_token():
     email = data.get("email")
     password = data.get("password")
 
-    user = User.query.filter_by(email=email).first()
+    User = user.query.filter_by(email=email).first()
 
-    if not user or not user.check_password(password):
+    if not User or not User.check_password(password):
         return jsonify({"message": "Invalid email or password"}), 401
 
-    access_token = create_access_token(identity=user.user_id)
+    access_token = create_access_token(identity=User.user_id)
 
     return jsonify({"access_token": access_token}), 200
 
 
-#adicionar @jwt_required() a todos os endpoints daqui para baixo
 
 # GET all users
 @api.route('/users', methods=['GET'])
 @jwt_required()
 def get_all_users():
     
-    users = User.query.all()
+    Users = user.query.all()
 
-    user_list = [user.serialize() for user in users]
+    user_list = [User.serialize() for User in Users]
 
     return jsonify(user_list), 200
 
 
 # GET one user public version
-@app.route('/users/<int:user_id>', methods=['GET'])
+@api.route('/users/<int:user_id>', methods=['GET'])
 @jwt_required()
 def get_user(user_id):
-    user = User.query.get(user_id)
-    if user:
-        return jsonify(user.serialize()), 200
+    User = user.query.get(user_id)
+    if User:
+        return jsonify(User.serialize()), 200
     else:
         return jsonify({"User not found"}), 404
     
 # GET user info 
-@app.route('/user_information', methods=['GET'])
+@api.route('/user_information', methods=['GET'])
 @jwt_required()
 def get_user_information():
     user_id = get_jwt_identity()
     if user_id is None:
         return jsonify({"User not authenticated"}), 401
-    user = User.query.get(user_id)
-    if user is None:
+    User = user.query.get(user_id)
+    if User is None:
         return jsonify({"User not found"}), 404
-    return jsonify(user), 200
+    return jsonify(User), 200
 
 # DELETE user
-@app.route('/users/<int:user_id>', methods=['DELETE'])
+@api.route('/users/<int:user_id>', methods=['DELETE'])
 @jwt_required()
 def delete_user(user_id):
-    user = User.query.get(user_id)
+    User = user.query.get(user_id)
     
-    if user:
-        db.session.delete(user)
+    if User:
+        db.session.delete(User)
         db.session.commit()
         return jsonify({"User deleted successfully"}), 200
     else:
         return jsonify({"User not found"}), 404
 
 # GET all books
-@app.route('/books', methods=['GET'])
+@api.route('/books', methods=['GET'])
 @jwt_required()
 def get_all_books():
     books = Books.query.all()
@@ -125,7 +122,7 @@ def get_all_books():
     return jsonify(results), 200
 
 # GET a specific book
-@app.route('/books/<int:book_id>', methods=['GET'])
+@api.route('/books/<int:book_id>', methods=['GET'])
 @jwt_required()
 def get_book(book_id):
     book = Books.query.get(book_id)
@@ -135,7 +132,7 @@ def get_book(book_id):
         return jsonify({"Book not found"}), 404
 
 # GET all the favorites/wishlist that belong to a current user
-@app.route('/users/wishlist', methods=['GET'])
+@api.route('/users/wishlist', methods=['GET'])
 @jwt_required()
 def get_user_wishlist():
     user_id = get_jwt_identity()
@@ -146,7 +143,7 @@ def get_user_wishlist():
     return jsonify(serialized_wishlist), 200
 
 # POST to add a book to the wishlist
-@app.route('/wishlist/book/<int:book_id>', methods=['POST'])
+@api.route('/wishlist/book/<int:book_id>', methods=['POST'])
 @jwt_required()
 def add_wishlist_book(book_id):
     user_id = get_jwt_identity()
@@ -170,7 +167,7 @@ def add_wishlist_book(book_id):
     return jsonify({"Book planet added"}), 201
  
 # DELETE to remove a specific book from the wishlist
-@app.route('/wishlist/book/<int:book_id>', methods=['DELETE'])
+@api.route('/wishlist/book/<int:book_id>', methods=['DELETE'])
 @jwt_required()
 def delete_wishlist_book(book_id):
     user_id = get_jwt_identity()
@@ -187,7 +184,7 @@ def delete_wishlist_book(book_id):
         return jsonify({"Wishlist book not found"}), 404
 
 # POST to accept book swap request
-@app.route('/book_swap_requests/<int:request_id>/accept', methods=['POST'])
+@api.route('/book_swap_requests/<int:request_id>/accept', methods=['POST'])
 @jwt_required()
 def accept_book_swap_request(request_id):
     user_id = get_jwt_identity()
@@ -207,7 +204,7 @@ def accept_book_swap_request(request_id):
     return jsonify({"Book swap request accepted"}), 200
 
 # DELETE to decline book swap request
-@app.route('/book_swap_requests/<int:request_id>/decline', methods=['DELETE'])
+@api.route('/book_swap_requests/<int:request_id>/decline', methods=['DELETE'])
 @jwt_required()
 def decline_book_swap_request(request_id):
     user_id = get_jwt_identity()
@@ -235,7 +232,7 @@ def get_all_friendships():
     return jsonify(results), 200
 
 # POST to accept friend request
-@app.route('/friend_requests/<int:request_id>/accept', methods=['POST'])
+@api.route('/friend_requests/<int:request_id>/accept', methods=['POST'])
 @jwt_required()
 def accept_friend_request(request_id):
     user_id = get_jwt_identity()
@@ -255,7 +252,7 @@ def accept_friend_request(request_id):
     return jsonify({"Friend request accepted"}), 200
 
 # DELETE to decline friend request
-@app.route('/friend_requests/<int:request_id>/decline', methods=['DELETE'])
+@api.route('/friend_requests/<int:request_id>/decline', methods=['DELETE'])
 @jwt_required()
 def decline_friend_request(request_id):
     user_id = get_jwt_identity()
@@ -275,7 +272,7 @@ def decline_friend_request(request_id):
     return jsonify({"message": "Friend request declined"}), 200
 
 # POST to add recommendation to wishlist
-@app.route('/recommendations/<int:recommendation_id>/accept', methods=['POST'])
+@api.route('/recommendations/<int:recommendation_id>/accept', methods=['POST'])
 @jwt_required()
 def accept_book_recommendation(recommendation_id):
     user_id = get_jwt_identity()
@@ -306,7 +303,7 @@ def accept_book_recommendation(recommendation_id):
     return jsonify({"Book added to wishlist from recommendation"}), 200
 
 # DELETE to decline recommendation
-@app.route('/recommendations/<int:recommendation_id>/decline', methods=['DELETE'])
+@api.route('/recommendations/<int:recommendation_id>/decline', methods=['DELETE'])
 @jwt_required()
 def decline_book_recommendation(recommendation_id):
     user_id = get_jwt_identity()

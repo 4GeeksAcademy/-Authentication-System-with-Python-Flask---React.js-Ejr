@@ -57,8 +57,7 @@ export const PublicProfile = () => {
                                                         <i className="fas fa-chevron-down"></i>
                                                     </a>
                                                     <ul className="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                                        <li><a className="dropdown-item" href="#">Message User</a></li>
-                                                        <li><a className="dropdown-item" href="#">Report User</a></li>
+                                                        <li><a className="dropdown-item" href="https://en.wikipedia.org/wiki/Wikipedia:Disruptive_user" target="_blank">Report User</a></li>
                                                     </ul>
                                                 </div>
                                             </div>
