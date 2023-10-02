@@ -96,7 +96,7 @@ label {
   border-radius: 2rem;
   border: none;
 }
-img {
+.imagenEegister {
   object-fit: cover;
   height: 773px;
   width: 320px;
