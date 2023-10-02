@@ -56,11 +56,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({ demo: demo });
 			},
 
-			createAccount: (username, profileimg, email, password) => {
+			createAccount: (username, profileimg, name, lastname, email, password) => {
 				var options = {
 					method: 'POST',
 					headers: { "Content-Type": "application/json" },
-					body: JSON.stringify({ username: username, profileimg: profileimg, email: email, password: password })
+					body: JSON.stringify({ username: username, profileimg: profileimg, name: name, lastname: lastname, email: email, password: password })
+					
 				}
 				fetch(process.env.BACKEND_URL + 'api/register', options)
 
