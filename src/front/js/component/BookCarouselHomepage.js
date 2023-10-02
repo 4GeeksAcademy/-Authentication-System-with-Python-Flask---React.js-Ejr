@@ -39,8 +39,8 @@ export const BookCarouselHomepage = () => {
                                                 className="d-block"
                                                 alt={`Book ${index + 1}`}
                                                 style={{
-                                                    width: "100px", // Adjust the width as needed
-                                                    height: "150px", // Adjust the height as needed
+                                                    width: "100px", 
+                                                    height: "150px", 
                                                 }}
                                             />
                                         ))}
