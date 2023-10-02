@@ -2,22 +2,28 @@ from flask_sqlalchemy import SQLAlchemy
 db = SQLAlchemy()
 
 class User(db.Model):
-  user_id = db.Column(db.Integer, primary_key=True)
-  email = db.Column(db.String(120), unique=True, nullable=False)
-  username = db.Column(db.String(20), unique=True, nullable=False)
-  password = db.Column(db.String(80), nullable=False)
-  is_active = db.Column(db.Boolean, default=True)
-  def __repr__(self):
-    return f'<user {self.email}>'
-  def serialize(self):
-    return {
-      "user_id": self.id,
-      "email": self.email,
-      # Do not serialize the password; it's a security breach
-    }
-  def check_password(self,password):
-    return self.password == password
-
+    user_id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String(120), unique=True, nullable=False)
+    username = db.Column(db.String(20), unique=True, nullable=False)
+    name = db.Column(db.String(50), unique=True, nullable=False)
+    lastname = db.Column(db.String(100), unique=True, nullable=False)
+    password = db.Column(db.String(80), nullable=False)
+    profileimg = db.Column(db.String(64), nullable=False, default='rigo-baby.jpg')
+    is_active = db.Column(db.Boolean, default=True) 
+    def __repr__(self):
+        return f'<user {self.email}>'
+    def serialize(self):
+        return {
+            "user_id": self.id,
+            "email": self.email,
+            "name": self.name,
+            "lastname": self.lastname,
+            "profileimg": self.profileimg,
+            # Do not serialize the password; it's a security breach
+        }
+    def check_password(self,password):
+      return self.password == password
+    
 class Books(db.Model):
   book_id = db.Column(db.Integer, primary_key=True)
   title = db.Column(db.String(150), nullable=False)
