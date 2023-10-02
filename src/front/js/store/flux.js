@@ -62,7 +62,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 					headers: { "Content-Type": "application/json" },
 					body: JSON.stringify({ username: username, profileimg: profileimg, email: email, password: password })
 				}
-				
 				fetch(process.env.BACKEND_URL + 'api/register', options)
 
 					.then(response => {

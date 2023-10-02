@@ -29,7 +29,10 @@ def create_user():
     new_user = User(
         email=data.get("email"),
         username=data.get("username"),
+        name=data.get("name"),
+        lastname=data.get("lastname"),
         password=data.get("password"),
+        profileimg=data.get("profileimg"),
         is_active=True
     )
 
@@ -92,7 +95,6 @@ def delete_user(user_id):
         return jsonify({"User deleted successfully"}), 200
     else:
         return jsonify({"User not found"}), 404
-    
 # GET all books
 @api.route('/books', methods=['GET'])
 @jwt_required()
