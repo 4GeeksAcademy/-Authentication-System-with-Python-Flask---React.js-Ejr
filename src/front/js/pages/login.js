@@ -2,7 +2,8 @@ import React, { useState, useContext } from "react";
 import { Context } from "../store/appContext";
 import bookswaplogo from "../../img/logo-final-project.png";
 import "../../styles/forms.css";
-import { redirect } from "react-router-dom";
+import { Navigate } from "react-router-dom"
+
 
 export const Login = () => {
     const { store, actions } = useContext(Context);
@@ -16,9 +17,13 @@ export const Login = () => {
         actions.login(email, password);
         
     }
-
-
+   
     return (
+        actions.isLoggedIn() ? (
+            <Navigate
+            to="/PublicProfile"
+          />
+        ) : 
         <div className="container text-center">
             <img src={bookswaplogo} alt="bookswap" height="100" />
             <div className="row justify-content-center">

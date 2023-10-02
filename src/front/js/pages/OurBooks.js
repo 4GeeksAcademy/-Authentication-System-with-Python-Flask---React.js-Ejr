@@ -71,10 +71,9 @@ export const OurBooks = () => {
                 </div>
                 <hr className="my-4 bold-hr" />
             </div>
-            {getCurrentPageBooks().map((list, index) => (
+            {getCurrentPageBooks().map((book, index) => (
                 <div key={index}>
-                    {list.books.map((book, index) => (
-                        <div className="books" style={{ width: "50rem" }} key={index}>
+                        <div className="books" style={{ width: "50rem" }}>
                             <div className="card_wishlist">
                                 <div className="row g-0">
                                     <div className="col-md-4">
@@ -107,7 +106,6 @@ export const OurBooks = () => {
                                 </div>
                             </div>
                         </div>
-                    ))}
                 </div>
             ))}
 

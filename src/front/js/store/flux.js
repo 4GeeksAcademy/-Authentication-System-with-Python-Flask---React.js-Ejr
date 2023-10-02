@@ -106,6 +106,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 					})
 			},
 
+			isLoggedIn: () => {
+				//get the store
+				const store = getStore();
+			return store.token !=null
+			},
+
 			loadAllFriends: () => {
 				fetch('https://jsonplaceholder.typicode.com/users')
 					.then(response => {
@@ -146,12 +152,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 						else throw Error('Something went wrong');
 					})
 					.then(data => {
-						console.log(data)
-						if (data && data.results && data.results.lists) setBooks(data.results.lists);
+						if (data && data.results && data.results.lists) {
+							const books = data.results.lists.map(list => list.books).flat();
+							setBooks(books);
+						}
 					})
 					.catch(error => {
 						alert("ERROR: Something went wrong");
-					})
+					});
 			},
 
 			getGenres: (setGenres) => {

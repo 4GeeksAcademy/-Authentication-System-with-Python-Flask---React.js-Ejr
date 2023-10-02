@@ -3,6 +3,7 @@ import { Context } from "../store/appContext";
 import { Jumbotron } from "../component/jumbotronhome";
 import { Buttonsignup } from "../component/btn-signup";
 import { Buttonlogin } from "../component//btn-login";
+import { BookCarouselHomepage } from "../component/BookCarouselHomepage";
 
 import "../../styles/home.css";
 
@@ -19,7 +20,9 @@ export const Home = () => {
 				</div>
 				<div>
 					<h2 className="display-7 fw-bold py-5">Our Books</h2>
-					carousel
+					<div className="" style={{ }}>
+						<BookCarouselHomepage />
+					</div>
 				</div>
 			</div>
 
