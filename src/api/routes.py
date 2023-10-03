@@ -266,12 +266,7 @@ def register_Book():
         type =request.form["type"]
     else:
         return jsonify({"error": "Type is required"}), 400  
-
-    if 'price' in request.form:
-        price =request.form["price"]
-    else:
-        return jsonify({"error": "Price is required"}), 400    
-
+      
     if 'photo' in request.files:
         photo =request.files["photo"]
     else:

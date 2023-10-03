@@ -1,5 +1,5 @@
 
-import React, { useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Context } from "../store/appContext";
 
 import "../../styles/home.css";
@@ -9,12 +9,19 @@ import { Reviews } from "../component/reviews";
 
 export const Home = () => {
 	const { store, actions } = useContext(Context);
+	useEffect(() => {
+
+		actions.getLibros();
+		actions.getExchangeBooks();
+		actions.getSaleBooks();
+	}, []);
+
 
 	return (
-			<div>
-				<Banner></Banner>
-				<Categorias></Categorias>
-				<Reviews></Reviews>
-			</div>
+		<div>
+			<Banner></Banner>
+			<Categorias></Categorias>
+			<Reviews></Reviews>
+		</div>
 	);
 };

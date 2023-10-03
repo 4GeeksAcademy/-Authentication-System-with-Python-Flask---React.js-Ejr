@@ -17,7 +17,7 @@ export const MyBuyDetails = () => {
     useEffect(() => {
         actions.getMensajesLibro(store.allMessagesUser[selectedBookIndex]?.book_id);
 
-    }, []);
+    }, [store.buyChat]);
 
     return (
         <div>

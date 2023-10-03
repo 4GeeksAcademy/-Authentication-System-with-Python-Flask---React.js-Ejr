@@ -7,6 +7,14 @@ import { Context } from "../store/appContext";
 export const ExchangeBooks = () => {
     const { store, actions } = useContext(Context);
 
+    useEffect(() => {
+
+        actions.getLibros();
+        actions.getExchangeBooks();
+        actions.getSaleBooks();
+    }, []);
+
+
     return (
         <div>
             <div className="container-fluid">
@@ -22,7 +30,7 @@ export const ExchangeBooks = () => {
                             <div className="card-body">
                                 <h6 className="card-title">{libro.title}</h6>
                                 <p className="card-text">{libro.author}</p>
-                                <p className="card-text">${libro.price}</p>
+                                <p className="card-text">{libro.price}</p>
                             </div>
                             <div className="d-flex justify-content-between align-items-center m-1">
                                 <Link to={`/allBooks/bookDetails/${libro.id}`} className="btn btn-dark">Ver detalles</Link>

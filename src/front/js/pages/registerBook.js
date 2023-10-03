@@ -10,6 +10,8 @@ const RegisterBook = () => {
     const { store, actions } = useContext(Context)
     const navigate = useNavigate()
 
+
+
     return (
         <div className="container my-3  p-0">
             <div className="row align-items-center">
@@ -71,7 +73,7 @@ const RegisterBook = () => {
                                     Numero de páginas
                                 </label>
                                 <input
-                                    type="text"
+                                    type="number"
                                     className="form-control"
                                     id="number_of_pages"
                                     placeholder="Numero de páginas"
@@ -79,6 +81,8 @@ const RegisterBook = () => {
                                     name="number_of_pages"
                                     value={store.number_of_pages}
                                     onChange={actions.inputBookValue}
+                                    min="0" // Establecer un valor mínimo
+
                                 />
                             </div>
                             <div className="mb-3 ">
@@ -97,22 +101,6 @@ const RegisterBook = () => {
                                 />
                             </div>
                             <div className="mb-3 ">
-                                <label htmlFor="price" className="form-label">
-                                    Precio
-                                </label>
-                                <input
-                                    type="text"
-                                    className="form-control"
-                                    id="price"
-                                    placeholder="Ingresa precio"
-                                    required
-                                    name="price"
-                                    value={store.price}
-                                    onChange={actions.inputBookValue}
-
-                                />
-                            </div>
-                            <div className="mb-3 ">
                                 <label htmlFor="photo" className="form-label">
                                     Foto
                                 </label>
@@ -120,6 +108,7 @@ const RegisterBook = () => {
                                     type="file"
                                     className="form-control"
                                     id="photo"
+                                    required
                                     placeholder="Ingresa foto"
                                     name="photo"
                                     onChange={(e) => actions.inputBookImage(e.target.files[0])}
@@ -144,6 +133,25 @@ const RegisterBook = () => {
                                     <option value="Intercambio">Intercambio</option>
                                     <option value="Donación">Donación</option>
                                 </select>
+                            </div>
+                            <div className="mb-3 ">
+                                <label htmlFor="price" className="form-label">
+                                    Precio
+                                </label>
+                                <input
+                                    type="number"
+                                    className="form-control"
+                                    id="price"
+                                    placeholder="Ingresa precio"
+                                    required
+                                    name="price"
+                                    value={store.price}
+                                    onChange={actions.inputBookValue}
+                                    disabled={store.type === 'Intercambio' || store.type === 'Donación'}
+                                    min="0" // Establecer un valor mínimo
+
+
+                                />
                             </div>
                             <button type="" className="btn btn-success my-3" >
                                 Publicar

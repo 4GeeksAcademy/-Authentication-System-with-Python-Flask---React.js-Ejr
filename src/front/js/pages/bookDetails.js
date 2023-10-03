@@ -48,10 +48,13 @@ export const BookDetails = () => {
                     <div className="mt-4">
                         <button type="button" className="btn btn-success" onClick={() => {
                             actions.putAvailableBook(store.oneBook?.id, navigate);
-                            actions.inputMessage1(store.currentUser?.user?.id, store.oneBook?.user_id, store.oneBook?.id, "Hola quisiera comprar tu libro")
+                            actions.inputMessage1(store.currentUser?.user?.id, store.oneBook?.user_id, store.oneBook?.id, "Hola quisiera comprar tu libro");
+                            actions.getLibros();
+                            actions.getExchangeBooks();
+                            actions.getSaleBooks();                            
                         }}>Confirmar</button>
 
-                        
+
                     </div>
                 </div>
             </div>

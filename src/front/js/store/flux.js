@@ -362,9 +362,20 @@ const getState = ({ getStore, getActions, setStore }) => {
           formData.append('photo', photo)
           formData.append('type', type)
           getActions().postBook(formData, navigate)
-          e.target.reset()
+          setStore({
+            title: "",
+            author: "",
+            cathegory: "",
+            number_of_pages: "",
+            description: "",
+            price: "",
+            type: "",
+            userImage: null, // Establecer la imagen en null
+          });
+          e.target.reset(),
 
-          console.log("SUBMIT")
+
+            console.log("SUBMIT")
         } catch (error) {
           console.log(error)
 
@@ -421,6 +432,15 @@ const getState = ({ getStore, getActions, setStore }) => {
             formData.append('region', region)
             formData.append('userImage', userImage)
             getActions().postUser(formData, navigate)
+            setStore({
+              name: "",
+              lastname: "",
+              email: "",
+              password: "",
+              rep_password: "",
+              region: "",
+              userImage: null, // Establecer la imagen en null
+            });
             e.target.reset()
             console.log("SUBMIT USER REGISTER")
           } else {
@@ -501,7 +521,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       //GUARDA DATA EN PARAMETROS PARA EL MENSAJE
       inputMessage1: (sender_id, receiver_id, book_id, message_text) => {
-        
+
         // Actualiza el estado global con los argumentos recibidos
         setStore({
           ...getStore(),
@@ -512,7 +532,10 @@ const getState = ({ getStore, getActions, setStore }) => {
         });
         getActions().postMensaje();
         getActions().getMensajesLibro();
-        
+        setStore({
+          message_text: "",
+        });
+
       },
 
       ///MUESTRO TODOS LOS MENSAJES POR USUARIO

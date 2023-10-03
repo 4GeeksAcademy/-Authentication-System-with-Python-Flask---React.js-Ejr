@@ -149,6 +149,7 @@ const Register = () => {
                                 className="form-control"
                                 id="userImage"
                                 placeholder="Sube foto"
+                                required
                                 name="userImage"
                                 onChange={(e) => actions.inputUserImage(e.target.files[0])}
                             />

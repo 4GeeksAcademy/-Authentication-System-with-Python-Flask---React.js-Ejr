@@ -43,10 +43,10 @@ class Book(db.Model):
     title = db.Column(db.String(120), nullable=False)
     author = db.Column(db.String(120), nullable=False)
     cathegory = db.Column(db.String(120), nullable=False)
-    number_of_pages = db.Column(db.String(120))
+    number_of_pages = db.Column(db.Integer)
     description = db.Column(db.String(250), nullable=False)
     type = db.Column(db.String(120), nullable=False) #venta o intercambio
-    price = db.Column(db.String(120), nullable=False) 
+    price = db.Column(db.Integer, nullable=True) 
     available = db.Column(db.Boolean, default=True) #disponibilidad del libro        
     photo = db.Column(db.String(120), default="no-photo.png")
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False) # libro con id del usaurio
@@ -137,6 +137,7 @@ class Comentario(db.Model):
         db.session.delete(self)
         db.session.commit()
 
+# TABLA PARA CAT ENTRE USUARIOS
 class Mensaje(db.Model):
     __tablename__ = 'Mensajes'    
     id = db.Column(db.Integer, primary_key=True)
@@ -169,4 +170,42 @@ class Mensaje(db.Model):
     def delete(self):
         db.session.delete(self)
         db.session.commit()
+
+# TABLA PARA REGISTAR COMPRAS
+class Purchase(db.Model):
+    __tablename__ = 'purchase'
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    book_id = db.Column(db.Integer, db.ForeignKey('book.id'), nullable=False)
+    purchase_date = db.Column(db.DateTime, nullable=False)
+    message_id = db.Column(db.Integer, db.ForeignKey('mensajes.id'), nullable=True)
+
+    # Relación con la tabla de mensajes (uselist=True para múltiples mensajes por compra)
+    messages = db.relationship('Mensaje', backref='purchase', lazy=True)
+
+    user = db.relationship('User', backref=db.backref('purchases', lazy=True))
+    book = db.relationship('Book', backref=db.backref('purchases', lazy=True))
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "user_id": self.user_id,
+            "book_id": self.book_id,
+            "purchase_date": self.purchase_date,
+            "message_id": self.message_id,
+            # Otros campos relacionados con la compra
+        }
+
+    def save(self):
+        db.session.add(self)
+        db.session.commit()
+
+    def update(self):
+        db.session.commit()
+
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()
+
+
  

@@ -7,6 +7,14 @@ import { Context } from "../store/appContext";
 export const SaleBooks = () => {
     const { store, actions } = useContext(Context);
 
+    useEffect(() => {
+        
+        actions.getLibros();
+        actions.getExchangeBooks();
+        actions.getSaleBooks();
+    }, []);
+
+
     return (
         <div>
             <div className="container-fluid">
