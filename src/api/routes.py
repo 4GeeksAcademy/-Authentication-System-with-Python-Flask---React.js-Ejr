@@ -83,7 +83,7 @@ def get_user_information():
     user = User.query.get(user_id)
     if user is None:
         return jsonify({"User not found"}), 404
-    return jsonify(user), 200
+    return jsonify(user.serialize()), 200
 
 # DELETE user
 @api.route('/users/<int:user_id>', methods=['DELETE'])

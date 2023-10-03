@@ -79,7 +79,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			verifyIfUserLoggedIn: () => {
 				const token = localStorage.getItem('token');
-
+				
 				if (token) setStore({ token: token });
 
 			},
@@ -112,6 +112,37 @@ const getState = ({ getStore, getActions, setStore }) => {
 			return store.token !=null
 			},
 
+			getUserInformation: () => {
+				const store = getStore();
+				const token = store.token;
+				const headers = {
+					"Content-Type": "application/json",
+					"Authorization": `Bearer ${token}`,
+				};
+			
+				var options = {
+					headers: headers,
+				};
+				
+				return fetch(process.env.BACKEND_URL + 'api/user_information', options)
+					.then(response => {
+						if (!response.ok) {
+							throw new Error('Something went wrong getting user details');
+						}
+						return response.json();
+					})
+					.then(data => {
+						console.log(data);
+						localStorage.setItem("userData", JSON.stringify(data));
+						setStore({ userData: data });
+						return data
+					})
+					.catch(error => {
+						console.error(error);
+					});
+			},
+			
+
 			loadAllFriends: () => {
 				fetch('https://jsonplaceholder.typicode.com/users')
 					.then(response => {
@@ -127,6 +158,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						console.log(error);
 					});
 			},
+			
 
 			loadDataFriend: (id, setFriend) => {
 				fetch(`https://jsonplaceholder.typicode.com/users/${id}`)

@@ -1,7 +1,16 @@
 import React, { useState } from "react";
 import { Context } from "../store/appContext";
 
-export const ProfileInformation = () => {
+export const ProfileInformation = (props) => {
+    const [userInformation, setUserInformation] = useState({
+        user_id: props.user_id,
+        email: props.email,
+        name: props.name,
+        lastname: props.lastname,
+        profileimg: props.profileimg,
+    });
+
+
     return (
         <div className="Profile_information">
             <nav className="nav flex-column">
@@ -10,7 +19,7 @@ export const ProfileInformation = () => {
                 </a>
                 <div className="row align-items-center">
                     <div className="col-md-2">
-                        <img src="https://icon-library.com/images/default-profile-icon/default-profile-icon-16.jpg" alt="Profile Icon" style={{ width: "5rem", height: "5rem" }} className="rounded-circle" />
+                        <img src={props.profileimg} alt="Profile Icon" style={{ width: "5rem", height: "5rem" }} className="rounded-circle" />
                     </div>
                     <div className="col-md-7">
                         <div class="input-group mb-3">

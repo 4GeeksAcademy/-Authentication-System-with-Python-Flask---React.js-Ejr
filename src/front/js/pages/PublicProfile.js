@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Context } from "../store/appContext";
 import { TargetCard } from "../component/targetCard";
 import { BookCarousel } from "../component/BookCarousel";
@@ -6,16 +6,34 @@ import { ProfileOne } from "../component/ProfileOne";
 import { ProfileTwo } from "../component/ProfileTwo";
 import { Link } from "react-router-dom";
 import { ModalBio } from "../component/modalBio";
+import { Navigate } from "react-router-dom";
 
 export const PublicProfile = () => {
+    const { store, actions } = useContext(Context);
     const [bio, setBio] = useState("Hello, fellow book lovers! I'm absolutely passionate about the written word. My life revolves around the magic of literature, and you'll often find me lost in the pages of a good book, sipping on a cup of tea.");
+    const [userInformation, setUserInformation] = useState({
+        user_id: null,
+        email: "",
+        name: "",
+        lastname: "",
+        profileimg: "",
+    });
+
 
     const updateBio = (newBio) => {
         setBio(newBio);
     };
 
+    useEffect(() => {
+        actions.verifyIfUserLoggedIn();
+        actions.getUserInformation().then((data) => {
+            console.log("data", data)
+            setUserInformation(data);
+            
+        });
+    }, []);
 
-    return (
+    return userInformation.user_id ? (
         <div className="container">
             <div className="image">
                 <div className="jumbotron-profile jumbotron-fluid">
@@ -24,7 +42,7 @@ export const PublicProfile = () => {
                     </div>
                     <div className="position-relative">
                         <div className="custom-position">
-                            <img src="https://icon-library.com/images/default-profile-icon/default-profile-icon-16.jpg" alt="Profile Icon" style={{ width: "10rem", height: "10rem" }} className="rounded-circle" />
+                            <img src={userInformation.profileimg} alt="Profile Icon" style={{ width: "10rem", height: "10rem" }} className="rounded-circle" />
                         </div>
                     </div>
                 </div>
@@ -47,7 +65,7 @@ export const PublicProfile = () => {
                             <div className="nav flex-column">
                                 <div className="row align-items-center">
                                     <div className="col-md-5">
-                                        <h4 className="name_surname">Name Surname</h4>
+                                        <h4 className="name_surname">{userInformation.name} {userInformation.lastname}</h4>
                                     </div>
                                     <div className="col-md-7 text-end">
                                         <div className="row">
@@ -97,5 +115,5 @@ export const PublicProfile = () => {
                 </div>
             </div>
         </div>
-    );
+    ) : <div>Loading</div>;
 };
