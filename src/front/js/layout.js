@@ -7,7 +7,7 @@ import { Home } from "./pages/home";
 
 /* REGISTROS */
 import Login from "./component/login/Login";
-import Register from "./pages/Register";
+import Register from "../js/pages/Register";
 import RegisterBook from "./pages/registerBook";
 
 /* CATEGORIAS */
