@@ -180,6 +180,60 @@ const getState = ({ getStore, getActions, setStore }) => {
 					});
 			},
 			
+			getUserById: (id) => {
+				const store = getStore();
+				const token = store.token;
+				const headers = {
+					"Content-Type": "application/json",
+					"Authorization": `Bearer ${token}`,
+				};
+			
+				var options = {
+					headers: headers,
+				};
+				
+				return fetch(process.env.BACKEND_URL + `api/users/${id}`, options)
+					.then(response => {
+						if (!response.ok) {
+							throw new Error('Something went wrong getting user details');
+						}
+						return response.json();
+					})
+					.then(data => {
+						console.log(data);
+						return data
+					})
+					.catch(error => {
+						console.error(error);
+					});
+			},
+
+			friendshipRequest: (userId) => {
+				const store = getStore();
+				const token = store.token;
+				const headers = {
+					"Content-Type": "application/json",
+					"Authorization": `Bearer ${token}`,
+				};
+				var options = {
+					method: 'POST',
+					headers: headers,
+				}
+				fetch(process.env.BACKEND_URL + `api/friend_requests/${userId}`, options)
+
+					.then(response => {
+						if (response.ok) return response.json()
+						else throw Error('Something went wrong creating the account')
+					})
+					.then(data => {
+						console.log(data)
+						return data
+					})
+					.catch(error => {
+						console.log(error)
+					})
+			},
+
 
 			loadAllFriends: () => {
 				fetch('https://jsonplaceholder.typicode.com/users')

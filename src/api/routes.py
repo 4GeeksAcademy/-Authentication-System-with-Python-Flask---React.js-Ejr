@@ -227,6 +227,29 @@ def get_all_friendships():
     results = [friendship.serialize() for friendship in friendships]
     return jsonify(results), 200
 
+# POST to add friend
+@api.route('/friend_requests/<int:user_id>', methods=['POST'])
+@jwt_required()
+def add_friend_request(user_id):
+    request_user_id = get_jwt_identity()
+    if request_user_id is None:
+        return jsonify({"User not authenticated"}), 401
+    request_user = User.query.get(request_user_id)
+    user = User.query.get(user_id)
+    if user is None:
+        return jsonify({"User not found"}), 404
+    existing_friendship = Friendship.query.filter_by(user1_id=request_user_id, user2_id=user_id).first()
+    if existing_friendship:
+        return jsonify({"Friendship already requested"}), 400
+    new_request = Friendship(
+        user1_id= request_user_id,
+        user2_id= user_id,
+        friendship_status="Pending",
+    )
+    db.session.add(new_request)
+    db.session.commit()
+    return jsonify(new_request.serialize()), 201
+
 # POST to accept friend request
 @api.route('/friend_requests/<int:request_id>/accept', methods=['POST'])
 @jwt_required()

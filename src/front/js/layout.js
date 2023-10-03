@@ -50,6 +50,7 @@ const Layout = () => {
                         <Route element={<OurBooks />} path="/OurBooks" />
                         <Route element={<Friends />} path="/Friends" />
                         <Route element={<PublicProfile />} path="/PublicProfile" />
+                        <Route element={<PublicProfile />} path="/PublicProfile/:id" />
                         <Route element={<BookCarousel />} path="/carousel" />
                         <Route element={<TargetCard />} path="/targetCard" />
                         <Route element={<ProfileOne />} path="/profileOne" />

@@ -4,13 +4,15 @@ import { TargetCard } from "../component/targetCard";
 import { BookCarousel } from "../component/BookCarousel";
 import { ProfileOne } from "../component/ProfileOne";
 import { ProfileTwo } from "../component/ProfileTwo";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { ModalBio } from "../component/modalBio";
-import { Navigate } from "react-router-dom";
+
 
 export const PublicProfile = () => {
     const { store, actions } = useContext(Context);
+    const params = useParams();
     const [bio, setBio] = useState("Hello, fellow book lovers! I'm absolutely passionate about the written word. My life revolves around the magic of literature, and you'll often find me lost in the pages of a good book, sipping on a cup of tea.");
+    const [friendStatus, setFriendStatus] = useState("unknown")
     const [userInformation, setUserInformation] = useState({
         user_id: null,
         email: "",
@@ -18,20 +20,39 @@ export const PublicProfile = () => {
         lastname: "",
         profileimg: "",
     });
-
+    const isOwnProfile = params.id === userInformation.user_id || params.id === undefined 
 
     const updateBio = (newBio) => {
         setBio(newBio);
     };
 
     useEffect(() => {
-        actions.verifyIfUserLoggedIn();
-        actions.getUserInformation().then((data) => {
-            console.log("data", data)
-            setUserInformation(data);
-            
-        });
+        console.log("params", params)
+        const { id } = params
+        if (id) {
+            actions.verifyIfUserLoggedIn();
+            actions.getUserById(id).then((data) => {
+                console.log("data", data)
+                setUserInformation(data);
+
+            });
+        } else {
+            actions.verifyIfUserLoggedIn();
+            actions.getUserInformation().then((data) => {
+                console.log("data", data)
+                setUserInformation(data);
+
+            });
+        }
     }, []);
+
+    const handleFriendRequest = () => {
+        actions.friendshipRequest(params.id).then((data) =>{
+            if (data) {
+                setFriendStatus(data.friendship_status)
+            }
+        })
+    }
 
     return userInformation.user_id ? (
         <div className="container">
@@ -89,7 +110,7 @@ export const PublicProfile = () => {
                                 </div>
                                 <div className="row">
                                     <div className="col-md-3">
-                                        <button type="button" className="btn btn-primary mb-4 alert-info-decline"><i class="fas fa-user-plus mx-2"></i>Follow</button>
+                                        {isOwnProfile ? <></> : <button onClick={handleFriendRequest} type="button" className="btn btn-primary mb-4 alert-info-decline"><i class="fas fa-user-plus mx-2"></i>Follow</button> }
                                     </div>
                                 </div>
                                 <div className="row g-3">
