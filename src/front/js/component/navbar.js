@@ -1,15 +1,42 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import bookswaplogo from "../../img/logo-final-project.png";
 import { Buttonsignup } from "../component/btn-signup";
 import { Buttonlogin } from "../component/btn-login";
 import "../../styles/index.css";
+import { Context } from "../store/appContext";
+import { Buttonlogout } from "../component/btn-logout";
+import { ButtonMyProfile } from "../component/btn-myprofile";
+
 
 export const Navbar = () => {
+  const { store, actions } = useContext(Context);
+  const loggedOutActions = (
+    <>
+      <li className="nav-item">
+        <Buttonsignup />
+      </li>
+      <li className="nav-item">
+        <Buttonlogin />
+      </li>
+    </>
+  )
+
+  const loggedInActions = (
+    <>
+      <li className="nav-item">
+        <ButtonMyProfile />
+      </li>
+      <li className="nav-item">
+        <Buttonlogout />
+      </li>
+    </>
+  )
+
   return (
     <nav className="navbar navbar-expand-lg bg-body-tertiary">
       <div className="container-fluid">
-        <a className="navbar-brand mx-5" href="#">
+        <a className="navbar-brand mx-5" href="/">
           <img className="align-middle" src={bookswaplogo} alt="bookswap" height="100" />
         </a>
         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -29,12 +56,7 @@ export const Navbar = () => {
             </li>
           </ul>
           <ul className="navbar-nav ml-auto">
-            <li className="nav-item">
-              <Buttonsignup />
-            </li>
-            <li className="nav-item">
-              <Buttonlogin />
-            </li>
+            {store.token ? loggedInActions : loggedOutActions}
           </ul>
           <form className="d-flex justify-content-end mx-5">
             <div className="input-group" style={{ width: "230px" }}>

@@ -80,7 +80,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 			verifyIfUserLoggedIn: () => {
 				const token = localStorage.getItem('token');
 				
-				if (token) setStore({ token: token });
+				if (token) { 
+					setStore({ token: token });
+					return true
+				}
+				setStore({ token: null });
+				return false
 
 			},
 
@@ -110,6 +115,39 @@ const getState = ({ getStore, getActions, setStore }) => {
 				//get the store
 				const store = getStore();
 			return store.token !=null
+			},
+
+			logout: () => {
+                localStorage.removeItem("token");
+                console.log("Logged out");
+                setStore({ token: null });
+            },
+
+			updateUser: (userInformation) => {
+				const store = getStore();
+				const token = store.token;
+				const headers = {
+					"Content-Type": "application/json",
+					"Authorization": `Bearer ${token}`,
+				};
+				var options = {
+					method: 'PUT',
+					headers: headers,
+					body: JSON.stringify(userInformation)
+					
+				}
+				fetch(process.env.BACKEND_URL + 'api/update_user', options)
+
+					.then(response => {
+						if (response.ok) return response.json()
+						else throw Error('Something went wrong creating the account')
+					})
+					.then(data => {
+						console.log(data)
+					})
+					.catch(error => {
+						console.log(error)
+					})
 			},
 
 			getUserInformation: () => {

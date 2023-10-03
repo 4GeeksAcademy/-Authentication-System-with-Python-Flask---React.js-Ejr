@@ -33,7 +33,7 @@ export const ProfileSettings = () => {
   return userInformation.user_id ? (
     <div className="container">
       <div className="mt-5 mb-5">
-        <h1>Welcome Back Name!</h1>
+        <h1>Welcome Back {userInformation.name}!</h1>
       </div>
       <div className="row">
         <div className="settings col-md-3">

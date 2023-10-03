@@ -41,6 +41,33 @@ def create_user():
     db.session.commit()
     return jsonify({"message": "User created successfully"}), 201
 
+# Route to update user
+@api.route('/update_user', methods=['PUT'])
+@jwt_required()
+def update_user():
+    data = request.get_json()
+    print(data)
+    user_id = get_jwt_identity()
+    if user_id is None:
+        return jsonify({"User not authenticated"}), 401
+    user = User.query.get(user_id)
+    if not data:
+        return jsonify({"message": "Invalid request data"}), 400
+    if data.get("email", None): 
+        user.email=data["email"]
+    if data.get("name", None): 
+        user.name=data["name"]
+    if data.get("lastname", None): 
+        user.lastname=data["lastname"]
+    if data.get("profileimg", None): 
+        user.profileimg=data["profileimg"]
+    if data.get("currentpassword", None) and data.get("newpassword", None):
+        if user.password == data["currentpassword"]:
+            user.password=data["newpassword"]
+    print(data)
+    db.session.commit()
+    return jsonify({"message": "User updated successfully"}), 201
+
 # Route for token
 @api.route('/token', methods=['POST'])
 def generate_token():
