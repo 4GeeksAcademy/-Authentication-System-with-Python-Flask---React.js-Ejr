@@ -33,6 +33,8 @@ export const Navbar = () => {
     </>
   )
 
+  useEffect(() => { console.log(store.token) }, [])
+  
   return (
     <nav className="navbar navbar-expand-lg bg-body-tertiary">
       <div className="container-fluid">

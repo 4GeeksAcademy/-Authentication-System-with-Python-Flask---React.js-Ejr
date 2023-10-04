@@ -113,19 +113,17 @@ def get_user_information():
     return jsonify(user.serialize()), 200
 
 # DELETE user
-@api.route('/users/<int:user_id>', methods=['DELETE'])
+@api.route('/users', methods=['DELETE'])
 @jwt_required()
-def delete_user(user_id):
+def delete_user():
     token_user_id = get_jwt_identity()
-    if token_user_id != user_id:
-        return jsonify({"Not allowed to delete"}), 403
-    user = User.query.get(user_id)
+    user = User.query.get(token_user_id)
     if user:
         db.session.delete(user)
         db.session.commit()
-        return jsonify({"User deleted successfully"}), 200
+        return jsonify({"message":"User deleted successfully"}), 200
     else:
-        return jsonify({"User not found"}), 404
+        return jsonify({"message":"User not found"}), 404
 
 # GET all books
 @api.route('/books', methods=['GET'])

@@ -117,7 +117,9 @@ export const PublicProfile = () => {
                                     <div className="col-12">
                                         <p className="your-bio mb-5">
                                             {bio}
+                                            {isOwnProfile ?
                                             <button type="button" className="edit-bio" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fas fa-plus fa-xs"></i></button>
+                                            : <></>}
                                         </p>
                                         <ModalBio bio={bio} updateBio={updateBio} />
                                     </div>

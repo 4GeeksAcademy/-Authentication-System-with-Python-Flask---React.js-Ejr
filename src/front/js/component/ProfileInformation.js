@@ -96,7 +96,7 @@ export const ProfileInformation = (props) => {
                     </p>
                     <div className="row g-3">
                         <div className="col-md-3">
-                            <button className="btn" style={{ color: "red", textDecoration: "underline", border: "none" }}>Delete account</button>
+                            <button className="btn" onClick={() => actions.deleteAccount()} style={{ color: "red", textDecoration: "underline", border: "none" }}>Delete account</button>
                         </div>
                     </div>
                 </form>
