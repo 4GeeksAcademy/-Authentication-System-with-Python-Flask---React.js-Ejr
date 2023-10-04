@@ -61,7 +61,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					method: 'POST',
 					headers: { "Content-Type": "application/json" },
 					body: JSON.stringify({ username: username, profileimg: profileimg, name: name, lastname: lastname, email: email, password: password })
-					
+
 				}
 				fetch(process.env.BACKEND_URL + 'api/register', options)
 
@@ -70,17 +70,22 @@ const getState = ({ getStore, getActions, setStore }) => {
 						else throw Error('Something went wrong creating the account')
 					})
 					.then(data => {
-						console.log(data)
+						if (data && data.message == "User created successfully") window.location.replace('/login')
+
 					})
 					.catch(error => {
-						console.log(error)
+						alert(error)
 					})
 			},
-
 			verifyIfUserLoggedIn: () => {
 				const token = localStorage.getItem('token');
 
-				if (token) setStore({ token: token });
+				if (token) {
+					setStore({ token: token });
+					return true
+				}
+				setStore({ token: null });
+				return false
 
 			},
 
@@ -90,7 +95,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					headers: { "Content-Type": "application/json" },
 					body: JSON.stringify({ email: email, password: password })
 				}
-				
+
 				fetch(process.env.BACKEND_URL + 'api/token', options)
 
 					.then(response => {
@@ -109,8 +114,126 @@ const getState = ({ getStore, getActions, setStore }) => {
 			isLoggedIn: () => {
 				//get the store
 				const store = getStore();
-			return store.token !=null
+				return store.token != null
 			},
+
+			logout: () => {
+				localStorage.removeItem("token");
+				console.log("Logged out");
+				setStore({ token: null });
+			},
+
+			updateUser: (userInformation) => {
+				const store = getStore();
+				const token = store.token;
+				const headers = {
+					"Content-Type": "application/json",
+					"Authorization": `Bearer ${token}`,
+				};
+				var options = {
+					method: 'PUT',
+					headers: headers,
+					body: JSON.stringify(userInformation)
+
+				}
+				fetch(process.env.BACKEND_URL + 'api/update_user', options)
+
+					.then(response => {
+						if (response.ok) return response.json()
+						else throw Error('Something went wrong creating the account')
+					})
+					.then(data => {
+						console.log(data)
+					})
+					.catch(error => {
+						console.log(error)
+					})
+			},
+
+			getUserInformation: () => {
+				const store = getStore();
+				const token = store.token;
+				const headers = {
+					"Content-Type": "application/json",
+					"Authorization": `Bearer ${token}`,
+				};
+
+				var options = {
+					headers: headers,
+				};
+
+				return fetch(process.env.BACKEND_URL + 'api/user_information', options)
+					.then(response => {
+						if (!response.ok) {
+							throw new Error('Something went wrong getting user details');
+						}
+						return response.json();
+					})
+					.then(data => {
+						console.log(data);
+						localStorage.setItem("userData", JSON.stringify(data));
+						setStore({ userData: data });
+						return data
+					})
+					.catch(error => {
+						console.error(error);
+					});
+			},
+
+			getUserById: (id) => {
+				const store = getStore();
+				const token = store.token;
+				const headers = {
+					"Content-Type": "application/json",
+					"Authorization": `Bearer ${token}`,
+				};
+
+				var options = {
+					headers: headers,
+				};
+
+				return fetch(process.env.BACKEND_URL + `api/users/${id}`, options)
+					.then(response => {
+						if (!response.ok) {
+							throw new Error('Something went wrong getting user details');
+						}
+						return response.json();
+					})
+					.then(data => {
+						console.log(data);
+						return data
+					})
+					.catch(error => {
+						console.error(error);
+					});
+			},
+
+			friendshipRequest: (userId) => {
+				const store = getStore();
+				const token = store.token;
+				const headers = {
+					"Content-Type": "application/json",
+					"Authorization": `Bearer ${token}`,
+				};
+				var options = {
+					method: 'POST',
+					headers: headers,
+				}
+				fetch(process.env.BACKEND_URL + `api/friend_requests/${userId}`, options)
+
+					.then(response => {
+						if (response.ok) return response.json()
+						else throw Error('Something went wrong creating the account')
+					})
+					.then(data => {
+						console.log(data)
+						return data
+					})
+					.catch(error => {
+						console.log(error)
+					})
+			},
+
 
 			loadAllFriends: () => {
 				fetch('https://jsonplaceholder.typicode.com/users')
@@ -127,6 +250,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						console.log(error);
 					});
 			},
+
 
 			loadDataFriend: (id, setFriend) => {
 				fetch(`https://jsonplaceholder.typicode.com/users/${id}`)
@@ -176,34 +300,37 @@ const getState = ({ getStore, getActions, setStore }) => {
 					})
 			},
 
-			addWishlist: (wishlist) => {
-				//get the store
-				const store = getStore();
+			deleteAccount: () => {
+				const store = getStore()
+				if (store.token) {
+					const headers = {
+						"Content-Type": "application/json",
+						"Authorization": `Bearer ${store.token}`,
+					};
+					var options = {
+						method: 'DELETE',
+						headers: headers,
+					}
+					fetch(process.env.BACKEND_URL + `api/users`, options)
 
-				//we have to loop the entire demo array to look for the respective index
-				//and add new favorite
-
-				const newWishlist = [...store.wishlist, wishlist];
-
-
-				//reset the global store
-				setStore({ wishlist: newWishlist });
-
-			},
-
-			deleteWishlist: (index) => {
-				//get the store
-				const store = getStore();
-
-				//we have to loop the entire demo array to look for the respective index
-				//and remove the favorite
-				const newWishlist = store.wishlist.filter((wishlist, i) => {
-					return index !== i;
-				});
-
-				//reset the global store
-				setStore({ wishlist: newWishlist });
+						.then(response => {
+							if (response.ok) return response.json()
+							else throw Error('Something went wrong creating the account')
+						})
+						.then(data => {
+							if (data && data.message == "User deleted successfully") {
+								setStore({token : null})
+								localStorage.removeItem('token')
+								window.location.replace("/")
+							}
+						})
+						.catch(error => {
+							alert(error)
+						})
+				}
 			}
+
+
 
 		}
 	};

@@ -36,7 +36,7 @@ export const CreateAccount = () => {
 
                         <div class="col-md-6">
                             <label for="profileimg" className="form-label">Choose your profile photo</label>
-                            <input className="form-control" type="file" onChange={(e) => setProfileimg(e.target.value)} id="profileimg" required />
+                            <input className="form-control" type="text" onChange={(e) => setProfileimg(e.target.value)} id="profileimg" required />
                         </div>
 
                         <div className="col-md-6">

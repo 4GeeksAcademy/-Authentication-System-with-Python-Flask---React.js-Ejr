@@ -41,6 +41,33 @@ def create_user():
     db.session.commit()
     return jsonify({"message": "User created successfully"}), 201
 
+# Route to update user
+@api.route('/update_user', methods=['PUT'])
+@jwt_required()
+def update_user():
+    data = request.get_json()
+    print(data)
+    user_id = get_jwt_identity()
+    if user_id is None:
+        return jsonify({"User not authenticated"}), 401
+    user = User.query.get(user_id)
+    if not data:
+        return jsonify({"message": "Invalid request data"}), 400
+    if data.get("email", None): 
+        user.email=data["email"]
+    if data.get("name", None): 
+        user.name=data["name"]
+    if data.get("lastname", None): 
+        user.lastname=data["lastname"]
+    if data.get("profileimg", None): 
+        user.profileimg=data["profileimg"]
+    if data.get("currentpassword", None) and data.get("newpassword", None):
+        if user.password == data["currentpassword"]:
+            user.password=data["newpassword"]
+    print(data)
+    db.session.commit()
+    return jsonify({"message": "User updated successfully"}), 201
+
 # Route for token
 @api.route('/token', methods=['POST'])
 def generate_token():
@@ -83,22 +110,20 @@ def get_user_information():
     user = User.query.get(user_id)
     if user is None:
         return jsonify({"User not found"}), 404
-    return jsonify(user), 200
+    return jsonify(user.serialize()), 200
 
 # DELETE user
-@api.route('/users/<int:user_id>', methods=['DELETE'])
+@api.route('/users', methods=['DELETE'])
 @jwt_required()
-def delete_user(user_id):
+def delete_user():
     token_user_id = get_jwt_identity()
-    if token_user_id != user_id:
-        return jsonify({"Not allowed to delete"}), 403
-    user = User.query.get(user_id)
+    user = User.query.get(token_user_id)
     if user:
         db.session.delete(user)
         db.session.commit()
-        return jsonify({"User deleted successfully"}), 200
+        return jsonify({"message":"User deleted successfully"}), 200
     else:
-        return jsonify({"User not found"}), 404
+        return jsonify({"message":"User not found"}), 404
 
 # GET all books
 @api.route('/books', methods=['GET'])
@@ -199,6 +224,29 @@ def get_all_friendships():
     friendships = Friendship.query.all()
     results = [friendship.serialize() for friendship in friendships]
     return jsonify(results), 200
+
+# POST to add friend
+@api.route('/friend_requests/<int:user_id>', methods=['POST'])
+@jwt_required()
+def add_friend_request(user_id):
+    request_user_id = get_jwt_identity()
+    if request_user_id is None:
+        return jsonify({"User not authenticated"}), 401
+    request_user = User.query.get(request_user_id)
+    user = User.query.get(user_id)
+    if user is None:
+        return jsonify({"User not found"}), 404
+    existing_friendship = Friendship.query.filter_by(user1_id=request_user_id, user2_id=user_id).first()
+    if existing_friendship:
+        return jsonify({"Friendship already requested"}), 400
+    new_request = Friendship(
+        user1_id= request_user_id,
+        user2_id= user_id,
+        friendship_status="Pending",
+    )
+    db.session.add(new_request)
+    db.session.commit()
+    return jsonify(new_request.serialize()), 201
 
 # POST to accept friend request
 @api.route('/friend_requests/<int:request_id>/accept', methods=['POST'])

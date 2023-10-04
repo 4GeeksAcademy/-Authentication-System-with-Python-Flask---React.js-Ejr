@@ -5,16 +5,16 @@ class User(db.Model):
     user_id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(120), unique=True, nullable=False)
     username = db.Column(db.String(20), unique=True, nullable=False)
-    name = db.Column(db.String(50), unique=True, nullable=False)
-    lastname = db.Column(db.String(100), unique=True, nullable=False)
+    name = db.Column(db.String(50), nullable=False)
+    lastname = db.Column(db.String(100), nullable=False)
     password = db.Column(db.String(80), nullable=False)
-    profileimg = db.Column(db.String(64), nullable=False, default='rigo-baby.jpg')
+    profileimg = db.Column(db.String(400), nullable=False, default='rigo-baby.jpg')
     is_active = db.Column(db.Boolean, default=True) 
     def __repr__(self):
         return f'<user {self.email}>'
     def serialize(self):
         return {
-            "user_id": self.id,
+            "user_id": self.user_id,
             "email": self.email,
             "name": self.name,
             "lastname": self.lastname,
