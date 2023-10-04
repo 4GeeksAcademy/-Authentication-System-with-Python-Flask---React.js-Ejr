@@ -14,8 +14,15 @@ const PurchasedBooks = () => {
     const displayedBookIds = new Set();
 
     useEffect(() => {
-        actions.getAllMyPurchasedBooks(store.currentUser?.user?.id)
-    }, []);
+        actions.getMySaleBooks(store.currentUser?.user?.id);
+        actions.getMyExchangeBooks(store.currentUser?.user?.id);
+        actions.getAllMyPurchasedBooks(store.currentUser?.user?.id);
+        actions.getAllMySoldBooks(store.currentUser?.user?.id);
+
+
+
+
+    }, [store.currentUser?.user?.id]);
 
     return (
         <div>
@@ -33,6 +40,7 @@ const PurchasedBooks = () => {
                                 <h6 className="card-title">{compra.book.title}</h6>
                                 <p className="card-text">{compra.book.author}</p>
                                 <p className="card-text">{compra.book.price}</p>
+                                <p>id libro: {compra.book.id}</p>
                             </div>
                             <div className="d-flex justify-content-between align-items-center m-1">
                                 <Link to={`/myBuyDetails/${compra.book.id}`} className="btn btn-dark">Ver detalles</Link>

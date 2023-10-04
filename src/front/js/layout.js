@@ -19,21 +19,20 @@ import { DonacionesRealizadas } from "./pages/donacionesRalizadas";
 import Card from "./component/reviewsLibros/Card";
 import Testimonio from "./component/reviewsLibros/Testimonio";
 import BookReviews from "./pages/BookReviews";
-
 import Intercambio from "./pages/Intercambio";
-
 import PurchasedBooks from "./pages/purchasedBooks";
 
 
 import { Profile } from "./pages/profile";
-
 import SoldBooks from "./pages/soldBooks";
 
 
 
-/* FOOTERS */
+
 import { MySaleBooks } from "./pages/mySaleBooks";
+import { MySaleBookDetails } from "./pages/mySaleBookDetails";
 import { MyExchangeBooks } from "./pages/myExchangeBooks";
+import { MyExchangeBookDetails } from "./pages/myExchangeBookDetails";
 import { MyBuyDetails } from "./pages/myBuyDetails";
 import { MySoldDetails } from "./pages/mySoldDetails";
 import { SobreNosotros } from "./pages/sobreNosotros";
@@ -80,6 +79,8 @@ const Layout = () => {
                         <Route element={<Register />} path="/register" />
                         <Route element={<RegisterBook />} path="/registerBook" />
                         <Route element={<PurchasedBooks />} path="/purchasedBooks" />
+                        <Route element={<MySaleBookDetails />} path="/mySaleBooks/mySaleBookDetails/:id" />
+                        <Route element={<MyExchangeBookDetails />} path="/myExchangeBooks/myExchangeBookDetails/:id" />
 
                         <Route element={<Profile />} path="/profile" />
                         <Route element={<SoldBooks />} path="/soldBooks" />

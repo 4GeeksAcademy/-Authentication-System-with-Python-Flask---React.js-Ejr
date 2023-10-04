@@ -8,9 +8,15 @@ export const MySaleBooks = () => {
     const { store, actions } = useContext(Context);
 
     useEffect(() => {
-        
-        
-    }, []);
+        actions.getMySaleBooks(store.currentUser?.user?.id);
+        actions.getMyExchangeBooks(store.currentUser?.user?.id);
+        actions.getAllMyPurchasedBooks(store.currentUser?.user?.id);
+        actions.getAllMySoldBooks(store.currentUser?.user?.id);
+
+
+
+
+    }, [store.currentUser?.user?.id]);
 
     return (
         <div>
@@ -30,7 +36,7 @@ export const MySaleBooks = () => {
                                 <p className="card-text">${libro.price}</p>
                             </div>
                             <div className="d-flex justify-content-between align-items-center m-1">
-                                <Link to={`/allBooks/bookDetails/${libro.id}`} className="btn btn-dark">Ver detalles</Link>
+                                <Link to={`/mySaleBooks/mySaleBookDetails/${libro.id}`} className="btn btn-dark">Ver detalles</Link>
                                 <i className="fa-regular fa-heart fa-2x"></i>
                             </div>
                         </div>

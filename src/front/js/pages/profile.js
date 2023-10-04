@@ -12,10 +12,10 @@ export const Profile = () => {
         actions.getMyExchangeBooks(store.currentUser?.user?.id);
         actions.getAllMyPurchasedBooks(store.currentUser?.user?.id);
         actions.getAllMySoldBooks(store.currentUser?.user?.id);
-        actions.getAllMensajesUser(store.currentUser?.user?.id);
-        actions.allBookIdBuyUser();
 
-    }, []);
+
+
+    }, [store.currentUser?.user?.id]);
 
     return (
         <div className="container-fluid">

@@ -148,9 +148,7 @@ const RegisterBook = () => {
                                     value={store.price}
                                     onChange={actions.inputBookValue}
                                     disabled={store.type === 'Intercambio' || store.type === 'Donación'}
-                                    min="0" // Establecer un valor mínimo
-
-
+                                    min="0"
                                 />
                             </div>
                             <button type="" className="btn btn-success my-3" >

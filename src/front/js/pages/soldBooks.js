@@ -14,8 +14,15 @@ const SoldBooks = () => {
     const displayedBookIds = new Set();
 
     useEffect(() => {
+        actions.getMySaleBooks(store.currentUser?.user?.id);
+        actions.getMyExchangeBooks(store.currentUser?.user?.id);
+        actions.getAllMyPurchasedBooks(store.currentUser?.user?.id);
         actions.getAllMySoldBooks(store.currentUser?.user?.id);
-    }, []);
+
+
+
+
+    }, [store.currentUser?.user?.id]);
 
     return (
 

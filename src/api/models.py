@@ -46,7 +46,7 @@ class Book(db.Model):
     number_of_pages = db.Column(db.Integer)
     description = db.Column(db.String(250), nullable=False)
     type = db.Column(db.String(120), nullable=False) #venta o intercambio
-    price = db.Column(db.Integer, nullable=True) 
+    price = db.Column(db.Integer,) 
     available = db.Column(db.Boolean, default=True) #disponibilidad del libro        
     photo = db.Column(db.String(120), default="no-photo.png")
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False) # libro con id del usaurio

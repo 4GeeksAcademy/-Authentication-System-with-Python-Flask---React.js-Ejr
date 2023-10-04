@@ -54,21 +54,16 @@ const getState = ({ getStore, getActions, setStore }) => {
       receiver_id: [],
       book_id: [],
       message_text: [],
-      ///CHAT ENTRE USUARIOS
-      buyChat: [],
-      ///TODOS LOS USUARIOS
-      allMessagesUser: [],
-      booksIdBuy: [],
-      ///LIBROS QUE COMPRASTE
-      myBooks: [],
-
-      iPosition: [],
 
       ///ESTADOS DE COMPRA
       purchase_id: [],
       seller_id: [],
       buyer_id: [],
       purchase_date: [],
+
+      //ESTADOS PARA CHAT
+      idForChat: "",
+      idForPurchasedChat: "",
 
 
 
@@ -79,42 +74,8 @@ const getState = ({ getStore, getActions, setStore }) => {
     },
 
     actions: {
-      //PUBLICACIÓN DE LIBRO      
-      ////FUNC. GUARDAR VALOR INPUT
-      handleChangeBook: (e) => {
-        const { newBook } = getStore();
-        e.preventDefault();
-        newBook[e.target.name] = e.target.value;
-        setStore({ newBook });
-        console.log("newBook:", getStore().newBook);
-      },
-      ////FUNC. PARA GUARDAR LIBRO
-      saveBook: async (navigate) => {
-        try {
-          const { url, newBook, currentUser } = getStore();
-          const token = currentUser ? currentUser.access_token : '';
-          const response = await fetch(`${url}/api/registerBook`, {
-            method: "POST",
-            body: JSON.stringify(newBook),
-            headers: {
-              "Content-Type": "application/json",
-              "Authorization": `Bearer ${token}`
-            },
-          });
-          const data = await response.json();
-          console.log("data", data);
-          navigate("/");
-        } catch (error) {
-          console.log(error);
-        }
-      },
-      ////FUNC. ENVIAR REGISTRO
-      submitBook: (e, navigate) => {
-        e.preventDefault();
-        //agregar verificación de usuario 
-        getActions().saveBook(navigate);
-      },
-      ////FUNC LISTA DE LIBROS  
+      //PUBLICACIÓN DE LIBRO    
+      ////FUNC LISTA DE LIBROS DISPONIBLES VENTA E INTERCAMBIO  
       getLibros: () => {
         var requestOptions = {
           method: 'GET',
@@ -218,8 +179,6 @@ const getState = ({ getStore, getActions, setStore }) => {
           .catch(error => console.log('error', error));
       },
 
-
-
       //---------< funcion para  registro  de usuario >----------------->
 
       handleChangeRegister: (e) => {
@@ -300,6 +259,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           [e.target.name]: e.target.value,
         });
       },
+
       // VERIFICA QUE EXISTA EL USUARIO 
       checkUser: () => {
         if (sessionStorage.getItem("currentUser")) {
@@ -345,18 +305,25 @@ const getState = ({ getStore, getActions, setStore }) => {
       ///SUBMIT FORM LIBRO CON FOTO
       submitBookImage: (e, navigate) => {
         try {
-          e.preventDefault()
+          e.preventDefault();
           const { title, author, cathegory, number_of_pages, description, price, photo, type } = getStore();
-          const formData = new FormData()
-          formData.append('title', title)
-          formData.append('author', author)
-          formData.append('cathegory', cathegory)
-          formData.append('number_of_pages', number_of_pages)
-          formData.append('description', description)
-          formData.append('price', price)
-          formData.append('photo', photo)
-          formData.append('type', type)
-          getActions().postBook(formData, navigate)
+          const formData = new FormData();
+          formData.append('title', title);
+          formData.append('author', author);
+          formData.append('cathegory', cathegory);
+          formData.append('number_of_pages', number_of_pages);
+          formData.append('description', description);
+          formData.append('photo', photo);
+          formData.append('type', type);
+
+          // Verificar si price tiene un valor antes de agregarlo al FormData
+          if (price) {
+            formData.append('price', price);
+          } else {
+            formData.append('price', null);
+          }
+
+          getActions().postBook(formData, navigate);
           setStore({
             title: "",
             author: "",
@@ -367,15 +334,14 @@ const getState = ({ getStore, getActions, setStore }) => {
             type: "",
             userImage: null, // Establecer la imagen en null
           });
-          e.target.reset(),
+          e.target.reset();
 
-
-            console.log("SUBMIT")
+          console.log("SUBMIT");
         } catch (error) {
-          console.log(error)
-
+          console.log(error);
         }
       },
+
 
       ///GUARDAR VALOR INPUT IMAGEN LIBRO
       inputBookImage: (file) => {
@@ -392,10 +358,38 @@ const getState = ({ getStore, getActions, setStore }) => {
         });
       },
 
+      ////EDITAR UN LIBRO
+      updateBook: async (id, editedBook, navigate) => {
+        try {
+          const { url, currentUser } = getStore();
+          const token = currentUser ? currentUser.access_token : '';
+          const formData = new FormData();
 
+          // Agrega los campos editados al FormData
+          for (const key in editedBook) {
+            formData.append(key, editedBook[key]);
+          }
+
+          const response = await fetch(`${url}/api/edit_book/${id}`, {
+            method: "PUT",
+            body: formData,
+            headers: {
+              "Authorization": `Bearer ${token}`
+            },
+          })
+            .then(response => response.text())
+            .then(result => {
+              navigate("/");
+              getActions().getLibros();
+              console.log(result);
+            })
+            .catch(error => alert(error));
+        } catch (error) {
+          console.log(error);
+        }
+      },
 
       //REGISTRO DE USUARIO CON FOTO
-
       ///GUARDAR VALOR INPUT IMAGEN USUARIO
       inputUserImage: (file) => {
         setStore({ userImage: file });
@@ -478,7 +472,6 @@ const getState = ({ getStore, getActions, setStore }) => {
             body: formdata,
             redirect: 'follow'
           };
-
           fetch(`http://localhost:3001/api/comprar/${id}`, requestOptions)
             .then(response => response.text())
             .then(result => {
@@ -506,6 +499,8 @@ const getState = ({ getStore, getActions, setStore }) => {
           })
             .then(response => response.text())
             .then(result => {
+              getActions().getMyOnePurchasedBook(getStore().idForPurchasedChat);
+              getActions().getMyMessageForBook(getStore().idForChat);
               console.log('Mensaje creado:', result);
             })
             .catch(error => alert(error));
@@ -515,69 +510,26 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
 
       //GUARDA DATA EN PARAMETROS PARA EL MENSAJE
-      inputMessage1: (sender_id, receiver_id, book_id, message_text, purchase_id) => {
-
+      inputMessage1: (sender_id, receiver_id, book_id, message_text, purchase_id, idForPurchasedChat, idForChat, e) => {
         // Actualiza el estado global con los argumentos recibidos
+        e.preventDefault();
         setStore({
           ...getStore(),
           sender_id: sender_id,
           receiver_id: receiver_id,
           book_id: book_id,
           message_text: message_text,
-          purchase_id: purchase_id
+          purchase_id: purchase_id,
+          idForPurchasedChat: idForPurchasedChat,
+          idForChat: idForChat,
         });
         getActions().postMensaje();
-        getActions().getMensajesLibro();
         setStore({
           message_text: "",
         });
-
       },
 
-      ///MUESTRO TODOS LOS MENSAJES POR USUARIO
-      getAllMensajesUser: (id) => {
-        var requestOptions = {
-          method: 'GET',
-          redirect: 'follow'
-        };
-
-        fetch(`http://localhost:3001/api/messages/sender/${id}`, requestOptions)
-          .then(response => response.json())
-          .then(data => {
-            setStore({ allMessagesUser: data });
-            console.log("mensaje por usuario");
-            console.log("allMessagesUser:", data);
-          })
-          .catch(error => console.log('error', error));
-      },
-
-      ///TODO LOS MENSAJES POR LIBRO
-      getMensajesLibro: (id) => {
-        var requestOptions = {
-          method: 'GET',
-          redirect: 'follow'
-        };
-
-        fetch(`http://localhost:3001/api/messages/${id}`, requestOptions)
-          .then(response => response.json())
-          .then(data => {
-            setStore({ buyChat: data });
-            console.log("mensaje por libro");
-            console.log("buyChat:", data);
-          })
-          .catch(error => console.log('error', error));
-      },
-
-      allBookIdBuyUser: () => {
-        const { allMessagesUser } = getStore();
-        const bookIds = allMessagesUser.map(e => e.book_id);
-        setStore({ booksIdBuy: bookIds });
-      },
-
-      getIPosition: (i) => {
-        setStore({ iPosition: i });
-      },
-
+      ///CAPTURA MENSAJE
       inputTextArea: (e) => {
         const { name, value } = e.target;
 
@@ -611,7 +563,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       ///CAPTURA INFO PARA LA COMPRA     
       inputShopping: (seller_id, buyer_id, book_id, purchase_date) => {
-
         setStore({
           ...getStore(),
           seller_id: seller_id,
