@@ -3,7 +3,7 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 """
 
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Gallery, Comentario, Book,  Mensaje
+from api.models import db, User, Gallery, Comentario, Book,  Mensaje, Purchase
 from api.utils import generate_sitemap, APIException
 from flask_jwt_extended import JWTManager, get_jwt_identity, create_access_token, jwt_required
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -404,25 +404,35 @@ def create_message():
     sender_id = request.json.get('sender_id')
     receiver_id = request.json.get('receiver_id')
     book_id = request.json.get('book_id')
+    purchase_id = request.json.get('purchase_id')
     message_text = request.json.get('message_text')
     
     # Verificar usuarios y libro
     sender = User.query.get(sender_id)
     receiver = User.query.get(receiver_id)
     book = Book.query.get(book_id)
+    purchase = Purchase.query.get(purchase_id)
     
-    if not sender or not receiver or not book:
-        return jsonify({'error': 'Usuarios o libro no encontrados'}), 400
+    if not sender or not receiver or not book  or not purchase:
+        return jsonify({'error': 'Usuarios, libro o compra no encontrados'}), 400
     
     # Crea el mensaje
     mensaje = Mensaje()
     mensaje.sender_id = sender_id
     mensaje.receiver_id = receiver_id
     mensaje.book_id = book_id
+    mensaje.purchase_id = purchase_id
     mensaje.message_text = message_text
     mensaje.save()   
         
     return jsonify({'message': 'Mensaje creado correctamente'}), 200
+
+#OBTENER MENSAJE POR COMPRA
+@api.route('/messages/purchase/<int:purchase_id>', methods=['GET'])
+def get_messages_by_purchase(purchase_id):
+    mensajes = Mensaje.query.filter_by(purchase_id=purchase_id).all()
+    return jsonify([mensaje.serialize() for mensaje in mensajes])
+
 
 #OBTENER MENSAJE POR LIBRO ESPECIFICO
 @api.route('/messages/<int:book_id>', methods=['GET'])
@@ -441,3 +451,55 @@ def get_messages_sender(sender_id):
 def get_messages():
    mensajes = Mensaje.query.all()
    return jsonify([mensaje.serialize() for mensaje in mensajes])
+
+
+#### REGISTROS DE COMPRA
+@api.route('/purchases', methods=['POST'])
+def create_purchase():
+    data = request.get_json()
+    
+    seller_id = data.get('seller_id')
+    buyer_id = data.get('buyer_id')
+    book_id = data.get('book_id')
+    purchase_date = data.get('purchase_date')
+    
+    # Verificar que el usuario y el libro existan
+    seller = User.query.get(seller_id)
+    buyer = User.query.get(buyer_id)
+    book = Book.query.get(book_id)
+    
+    if not seller or not buyer or not book:
+        return jsonify({'error': 'Vendedor, comprador o libro no encontrado'}), 400
+    
+    # Crea la compra
+    compra = Purchase()
+    compra.seller_id = seller_id
+    compra.buyer_id = buyer_id
+    compra.book_id = book_id
+    compra.purchase_date = purchase_date
+    compra.save()   
+        
+    return jsonify({'message': 'Compra creada correctamente'}), 200
+
+#COMPRAS POR USUARIO ESPECIFICO
+@api.route('/purchases/buyer/<int:buyer_id>', methods=['GET'])
+def get_user_purchases(buyer_id):
+    # Buscamos todas las compras donde el buyer_id coincida con el ID del usuario actual
+    purchases = Purchase.query.filter_by(buyer_id=buyer_id).all()
+    # Serializamos las compras en formato JSON
+    purchases_data = [purchase.serialize() for purchase in purchases]
+    return jsonify(purchases_data), 200
+
+#VENTAS POR USUARIO ESPECIFICO
+@api.route('/purchases/seller/<int:seller_id>', methods=['GET'])
+def get_purchases_by_seller(seller_id):
+    purchases = Purchase.query.filter_by(seller_id=seller_id).all()  
+    purchases_data = [purchase.serialize() for purchase in purchases]
+    return jsonify(purchases_data), 200
+
+#COMPRA O VENTA POR LIBRO ESPECIFICO
+@api.route('/purchases/book/<int:book_id>', methods=['GET'])
+def get_purchases_by_book(book_id):
+    purchases = Purchase.query.filter_by(book_id=book_id).all()
+    purchases_data = [purchase.serialize() for purchase in purchases]
+    return jsonify(purchases_data), 200

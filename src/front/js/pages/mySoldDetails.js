@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom'
 
 import { Context } from "../store/appContext";
 
-export const MyBuyDetails = () => {
+export const MySoldDetails = () => {
     const { store, actions } = useContext(Context);
     const navigate = useNavigate();
     const { id } = useParams();
@@ -15,7 +15,7 @@ export const MyBuyDetails = () => {
         actions.getMyMessageForBook(store.myOneBook[0]?.id)
 
 
-    }, [id, store.myOneBook[0]?.id], store.myChat);
+    }, [id, store.myOneBook[0]?.id]);
 
     return (
         <div>
@@ -32,7 +32,7 @@ export const MyBuyDetails = () => {
                             <p className="text-dark mb-3">{store.myOneBook[0]?.book?.author}</p>
                             <p className="text-dark mb-3">{store.myOneBook[0]?.book?.description}</p>
                             <p className="text-dark mb-3">{store.myOneBook[0]?.book?.user_name}</p>
-                            <p>receiver: {store.myChat[0]?.receiver_id}</p>
+                            <p>receiver: {store.myChat[0]?.sender_id}</p>
                         </div>
                     </div>
                 </div>
@@ -73,12 +73,12 @@ export const MyBuyDetails = () => {
                             <div className="btn btn-dark mx-3" onClick={() => {
                                 actions.inputMessage1(
                                     store.currentUser?.user?.id,
-                                    store.myChat[0]?.receiver_id,
+                                    store.myChat[0]?.sender_id,
                                     store.myChat[0]?.book_id,
                                     store.message_text,
-                                    store.myChat[0]?.purchase_id,
-
-                                )
+                                    store.myChat[0]?.purchase_id
+                                );
+                                actions.getMyMessageForBook(store.myOneBook[0]?.id)
                             }}>Enviar</div>
                         </form>
 

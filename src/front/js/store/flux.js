@@ -1,49 +1,34 @@
 const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
-      //VARIABLES PARA GUARDAR EL INICIO DE SESIÓN
+      //INICIO DE SESIÓN
       email: "",
       password: "",
+      currentUser: null,
+
       //VARIABLE PARA GUARDAR LOS USUARIOS QUE SE CREAN
       users: [],
-      //SE GUARDA EL REGISTRO DE USUARIO
-      newUser: {
-        id: "",
-        name: "",
-        lastname: "",
-        email: "",
-        password: "",
-        rep_password: "",
-        region: "",
-      },
+
       //URL DE LA API
       url: "http://localhost:3001",
 
       message: null,
-      //USUARIO QUE INICIO SESIÓN
-      currentUser: null,
-      //VARIABLE PARA PUBLICAR EL NUEVO LIBRO
-      newBook: {
-        id: "",
-        title: "",
-        author: "",
-        cathegory: "",
-        number_of_pages: "",
-        description: "",
-        type: "",
-        price: "",
-        photo: "",
-      },
-      //ESTADO PARA GUARDAR TODO LOS LIBROS
-      showBooks: [],
-      //ESTADO PARA GUARDAR LIBROS INTERCAMBIO
-      exchangeBooks: [],
-      //ESTADO PARA GUARDAR LIBROS VENTA
-      saleBooks: [],
-      //ESTADO PARA GUARDAR MIS LIBROS EN VENTA
-      mySaleBooks: [],
-      //ESTADO PARA GUARDAR MIS LIBROS EN INTERCAMBIO
-      myExchangeBooks: [],
+
+      //NAVBAR    
+      showBooks: [],      //TODOS LOS LIBROS DISPONILBES (VENTA E INTERCAMBIO)
+      exchangeBooks: [],  //TODOS LOS LIBROS PARA INTERCAMBIO DISPONIBLES
+      saleBooks: [],      //TODOS LOS LIBROS PARA VENTA DISPONIBLES
+
+      //PROFILE      
+      mySaleBooks: [],      //MIS LIBROS PARA VENTA
+      myExchangeBooks: [],  //MIS LIBROS PARA INTERCAMBIO
+      myBooksPurchased: [], //MIS LIBROS COMPRADOS
+      myBooksSold: [],      //MIS LIBROS VENDIDOS
+      myOneBook: [],        //DETALLE DE MI LIBRO COMPRADO
+
+      //CHAT DE COMPRA VENTA E INTERCAMBIO
+      myChat: [],
+
       //ESTADO PARA GUARDAR DETALLE DE UN LIBRO
       oneBook: [],
       //ESTADOS INPUT REGISTRO LIBRO CON FOTOS
@@ -78,6 +63,16 @@ const getState = ({ getStore, getActions, setStore }) => {
       myBooks: [],
 
       iPosition: [],
+
+      ///ESTADOS DE COMPRA
+      purchase_id: [],
+      seller_id: [],
+      buyer_id: [],
+      purchase_date: [],
+
+
+
+
 
 
 
@@ -439,7 +434,7 @@ const getState = ({ getStore, getActions, setStore }) => {
               password: "",
               rep_password: "",
               region: "",
-              userImage: null, // Establecer la imagen en null
+              userImage: null,
             });
             e.target.reset()
             console.log("SUBMIT USER REGISTER")
@@ -500,8 +495,8 @@ const getState = ({ getStore, getActions, setStore }) => {
       ///ENVIO DE MENSAJE
       postMensaje: async () => {
         try {
-          const { url, sender_id, receiver_id, book_id, message_text } = getStore();
-          let infoMessage = { sender_id, receiver_id, book_id, message_text, };
+          const { url, sender_id, receiver_id, book_id, message_text, purchase_id } = getStore();
+          let infoMessage = { sender_id, receiver_id, book_id, message_text, purchase_id };
           const response = await fetch(`${url}/api/messages`, {
             method: "POST",
             body: JSON.stringify(infoMessage),
@@ -520,7 +515,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
 
       //GUARDA DATA EN PARAMETROS PARA EL MENSAJE
-      inputMessage1: (sender_id, receiver_id, book_id, message_text) => {
+      inputMessage1: (sender_id, receiver_id, book_id, message_text, purchase_id) => {
 
         // Actualiza el estado global con los argumentos recibidos
         setStore({
@@ -528,7 +523,8 @@ const getState = ({ getStore, getActions, setStore }) => {
           sender_id: sender_id,
           receiver_id: receiver_id,
           book_id: book_id,
-          message_text: message_text
+          message_text: message_text,
+          purchase_id: purchase_id
         });
         getActions().postMensaje();
         getActions().getMensajesLibro();
@@ -590,6 +586,107 @@ const getState = ({ getStore, getActions, setStore }) => {
           [name]: value
         });
       },
+
+      ///ENVIO DE MENSAJE
+      postShpopping: async () => {
+        try {
+          const { url, seller_id, buyer_id, book_id, purchase_date } = getStore();
+          let infoShopping = { seller_id, buyer_id, purchase_date, book_id };
+          const response = await fetch(`${url}/api/purchases`, {
+            method: "POST",
+            body: JSON.stringify(infoShopping),
+            headers: {
+              "Content-Type": "application/json",
+            },
+          })
+            .then(response => response.text())
+            .then(result => {
+              console.log('Compra creada:', result);
+            })
+            .catch(error => alert(error));
+        } catch (error) {
+          console.log(error);
+        }
+      },
+
+      ///CAPTURA INFO PARA LA COMPRA     
+      inputShopping: (seller_id, buyer_id, book_id, purchase_date) => {
+
+        setStore({
+          ...getStore(),
+          seller_id: seller_id,
+          buyer_id: buyer_id,
+          book_id: book_id,
+          purchase_date: purchase_date
+        });
+        getActions().postShpopping();
+      },
+
+      ///COMPRAS POR USUARIO
+      getAllMyPurchasedBooks: (id) => {
+        var requestOptions = {
+          method: 'GET',
+          redirect: 'follow'
+        };
+
+        fetch(`http://localhost:3001/api/purchases/buyer/${id}`, requestOptions)
+          .then(response => response.json())
+          .then(data => {
+            setStore({ myBooksPurchased: data });
+            console.log("myBooksPurchased:", data);
+          })
+          .catch(error => console.log('error', error));
+      },
+
+      //VENTAS POR USUARIOS
+      getAllMySoldBooks: (id) => {
+        var requestOptions = {
+          method: 'GET',
+          redirect: 'follow'
+        };
+
+        fetch(`http://localhost:3001/api/purchases/seller/${id}`, requestOptions)
+          .then(response => response.json())
+          .then(data => {
+            setStore({ myBooksSold: data });
+            console.log("myBooksSold:", data);
+          })
+          .catch(error => console.log('error', error));
+      },
+
+      //DETALLE DE UNA COMPRA POR ID LIBRO
+      getMyOnePurchasedBook: (id) => {
+        var requestOptions = {
+          method: 'GET',
+          redirect: 'follow'
+        };
+
+        fetch(`http://localhost:3001/api/purchases/book/${id}`, requestOptions)
+          .then(response => response.json())
+          .then(data => {
+            setStore({ myOneBook: data });
+            console.log("myOneBook:", data);
+          })
+          .catch(error => console.log('error', error));
+      },
+
+      //MENSAJES POR VENTA
+      getMyMessageForBook: (id) => {
+        var requestOptions = {
+          method: 'GET',
+          redirect: 'follow'
+        };
+
+        fetch(`http://localhost:3001/api/messages/purchase/${id}`, requestOptions)
+          .then(response => response.json())
+          .then(data => {
+            setStore({ myChat: data });
+            console.log("myChat:", data);
+          })
+          .catch(error => console.log('error', error));
+      },
+
+
 
     },
   };

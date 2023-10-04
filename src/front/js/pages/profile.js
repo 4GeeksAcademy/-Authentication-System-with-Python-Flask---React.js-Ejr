@@ -9,7 +9,9 @@ export const Profile = () => {
 
     useEffect(() => {
         actions.getMySaleBooks(store.currentUser?.user?.id);
-        actions.getMyExchangeBooks(store.currentUser?.user?.id)
+        actions.getMyExchangeBooks(store.currentUser?.user?.id);
+        actions.getAllMyPurchasedBooks(store.currentUser?.user?.id);
+        actions.getAllMySoldBooks(store.currentUser?.user?.id);
         actions.getAllMensajesUser(store.currentUser?.user?.id);
         actions.allBookIdBuyUser();
 
@@ -63,7 +65,7 @@ export const Profile = () => {
                             <Link to="/soldBooks" className="btn btn-dark w-75">
                                 Mis Ventas
                             </Link>
-                            
+
                         </div>
                     </div>
                     <div className="row border mb-3">

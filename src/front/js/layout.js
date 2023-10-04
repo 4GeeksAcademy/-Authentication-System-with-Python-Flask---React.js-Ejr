@@ -35,6 +35,7 @@ import SoldBooks from "./pages/soldBooks";
 import { MySaleBooks } from "./pages/mySaleBooks";
 import { MyExchangeBooks } from "./pages/myExchangeBooks";
 import { MyBuyDetails } from "./pages/myBuyDetails";
+import { MySoldDetails } from "./pages/mySoldDetails";
 import { SobreNosotros } from "./pages/sobreNosotros";
 import { NuestraHistoria } from "./pages/nuestraHistoria";
 import { ComoDonar } from "./pages/comoDonar";
@@ -68,19 +69,20 @@ const Layout = () => {
                         <Route element={<MySaleBooks />} path="/mySaleBooks" />
                         <Route element={<MyExchangeBooks />} path="/myExchangeBooks" />
                         <Route element={<MyBuyDetails />} path="/myBuyDetails/:id" />
+                        <Route element={<MySoldDetails />} path="/mySoldDetails/:id" />
                         <Route element={<SobreNosotros />} path="/sobreNosotros" />
                         <Route element={<NuestraHistoria />} path="/nuestraHistoria" />
                         <Route element={<DonacionesRealizadas />} path="/donacionesRalizadas" />
                         <Route element={<ComoDonar />} path="/comoDonar" />
                         <Route element={<BookReviews />} path="/bookreviews" />
                         <Route element={<Login />} path="/login" />
-                        <Route element={<Intercambio />} path="/intercambio" /> 
-                        <Route element={<Register />} path="/register" />                        
+                        <Route element={<Intercambio />} path="/intercambio" />
+                        <Route element={<Register />} path="/register" />
                         <Route element={<RegisterBook />} path="/registerBook" />
                         <Route element={<PurchasedBooks />} path="/purchasedBooks" />
-                        
+
                         <Route element={<Profile />} path="/profile" />
-                        <Route element={<SoldBooks />} path="/soldBooks" />                         
+                        <Route element={<SoldBooks />} path="/soldBooks" />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
                     <Footer />
