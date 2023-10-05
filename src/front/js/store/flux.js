@@ -64,13 +64,6 @@ const getState = ({ getStore, getActions, setStore }) => {
       //ESTADOS PARA CHAT
       idForChat: "",
       idForPurchasedChat: "",
-
-
-
-
-
-
-
     },
 
     actions: {

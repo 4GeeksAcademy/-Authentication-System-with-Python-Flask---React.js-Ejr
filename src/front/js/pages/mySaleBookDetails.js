@@ -8,7 +8,7 @@ export const MySaleBookDetails = () => {
     const navigate = useNavigate();
     const { id } = useParams();
     const [isEditing, setIsEditing] = useState(false); // Estado para controlar si estamos en modo edición
-    const [editedBook, setEditedBook] = useState({}); // Estado para almacenar los cambios en el libro editado
+    const [editedBook, setEditedBook] = useState({}); // Estado para mostar los datos del libro
 
     useEffect(() => {
         actions.getOneBook(id)
@@ -32,10 +32,8 @@ export const MySaleBookDetails = () => {
     };
 
     const handleSaveClick = () => {
-        // Envía los cambios al servidor o realiza las acciones necesarias para guardar la edición.
-        // Puedes usar la función actions para enviar los cambios.
-        actions.updateBook(id, editedBook, navigate); // Asume que tienes una función actions.updateBook para actualizar el libro.
 
+        actions.updateBook(id, editedBook, navigate);
         // Desactiva el modo de edición
         setIsEditing(false);
     };
@@ -142,9 +140,15 @@ export const MySaleBookDetails = () => {
                         </div>
                     )}
                     <div className="mt-4">
-                        <button type="button" className="btn btn-primary" onClick={handleEditClick}>
-                            {isEditing ? "Cancelar Edición" : "Editar"}
-                        </button>
+                        {isEditing ? (
+                            <></>
+                        ) : (
+                            <button type="button" className="btn btn-primary" onClick={handleEditClick}>
+                                Editar"
+                            </button>
+                        )
+                        }
+
                     </div>
                 </div>
             </div>
