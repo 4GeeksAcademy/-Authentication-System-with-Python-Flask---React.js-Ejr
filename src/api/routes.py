@@ -327,3 +327,70 @@ def get_book_details(id):
     except Exception as e:
         # Maneja cualquier excepción que pueda ocurrir (por ejemplo, problemas de base de datos) y devuelve un error 500
         return jsonify({'error': str(e)}), 500
+    
+
+
+#     @api.route('/register', methods=['POST'])
+# def user_register():
+    
+#     name= None
+#     lastname= None
+#     email= None
+#     password= None
+#     region= None    
+#     userImage= None
+
+#     #-------< validacion de usuario >-------#
+
+#     if 'name' in request.form:
+#         name =request.form["name"]
+#     else:
+#         return jsonify({"error": "Name is required"}), 400 
+
+#     if 'lastname' in request.form:
+#         lastname =request.form["lastname"]
+#     else:
+#         return jsonify({"error": "Last name is required"}), 400
+    
+#     if 'email' in request.form:
+#         email =request.form["email"]
+#     else:
+#         return jsonify({"error": "E-mail is required"}), 400
+    
+#     if 'password' in request.form:
+#         password =request.form["password"]
+#     else:
+#         return jsonify({"error": "Password is required"}), 400
+    
+#     if 'region' in request.form:
+#         region =request.form["region"]
+#     else:
+#         return jsonify({"error": "Region is required"}), 400
+        
+#     if 'userImage' in request.files:
+#         userImage =request.files["userImage"]
+#     else:
+#         return jsonify({"error": "User image is required"}), 400
+    
+#     response = upload(userImage, folder="user_image")
+
+#     #-----< creacion de usuario ------------------------------------------->
+    
+#     email_Found = User.query.filter_by(email=email).first()
+    
+#     if email_Found:
+#         return jsonify({"message": "E-mail is not available"}), 400  
+
+#     if response:
+#         user = User()
+#         user.name = name
+#         user.lastname = lastname
+#         user.email = email
+#         user.password = generate_password_hash(password)
+#         user.region = region        
+#         user.userImage = response['secure_url'] 
+#         user.save()            
+          
+#         return jsonify(user.serialize()), 200
+        
+#     return jsonify({"succes": "Registro exitoso, por favor inicie sesión"}), 200
