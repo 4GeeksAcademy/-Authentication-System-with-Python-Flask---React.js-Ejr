@@ -13,9 +13,7 @@ def handle_hello():
 
     :return: A JSON response with a welcome message.
     """
-    users = [user.serialize() for user in User.query.all()]
     response_body = {
-        "users": users,
         "message": "Hello! I'm a message that came from the backend. Check the network tab in your browser's inspector to see the GET request."
     }
     return jsonify(response_body), 200
