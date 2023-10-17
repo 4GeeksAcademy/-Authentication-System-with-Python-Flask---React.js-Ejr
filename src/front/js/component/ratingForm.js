@@ -1,4 +1,6 @@
-import React, { Componentm, useState, useState } from "react";
+import { useContext, useState, useEffect } from "react";
+import { Context } from "../store/appContext";
+const { store, actions } = useContext(Context);
 
 
 import "../../styles/ratingform.css";
@@ -7,14 +9,19 @@ const RatingForm = () => {
   const [rating, setRating] = useState(0);
   const [opinion, setOpinion] = useState('');
 
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Replace with your handling logic
-    alert(`Submitted! Rating: ${rating}, Opinion: ${opinion}`);
+
+    // Assuming you have access to the bookId from the page or via props
+    const bookId = props.bookId;
+
+    actions.submitReview(bookId, rating, opinion);
   };
 
   return (
     <form onSubmit={handleSubmit} className="rating-form">
+      <RatingForm bookId={someBookId} />
       <div className="star-rating mb-3">
         {[...Array(5)].map((star, i) => {
           const ratingValue = i + 1;

@@ -18,6 +18,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			],
 
 			token: null,
+			books: [],
 			//user: {},
 			//friendship: [],
 			//wishlist: [],
@@ -55,6 +56,36 @@ const getState = ({ getStore, getActions, setStore }) => {
 				//reset the global store
 				setStore({ demo: demo });
 			},
+
+			deleteAccount: () => {
+				const store = getStore();
+				if (store.token) {
+				  const headers = {
+					"Content-Type": "application/json",
+					"Authorization": `Bearer ${store.token}`,
+				  };
+				  var options = {
+					method: 'DELETE',
+					headers: headers,
+				  };
+				  fetch(process.env.BACKEND_URL + `api/users`, options)
+					.then(response => {
+					  if (response.ok) return response.json();
+					  else throw Error('Something went wrong deleting the account');
+					})
+					.then(data => {
+					  if (data && data.message == "User deleted successfully") {
+						setStore({ token: null });
+						localStorage.removeItem('token');
+						window.location.replace("/");
+					  }
+					})
+					.catch(error => {
+					  alert(error);
+					});
+				}
+			  },
+			  
 
 			createAccount: (username, profileimg, name, lastname, email, password) => {
 				var options = {
@@ -234,41 +265,58 @@ const getState = ({ getStore, getActions, setStore }) => {
 					})
 			},
 
+			allFriendshipRequests: () => {
+				const store = getStore();
+				const token = store.token;
+				const headers = {
+					"Content-Type": "application/json",
+					"Authorization": `Bearer ${token}`,
+				};
+				var options = {
+					method: 'GET',
+					headers: headers,
+				}
+				fetch(process.env.BACKEND_URL + `api/friend_requests`, options)
 
-			loadAllFriends: () => {
-				fetch('https://jsonplaceholder.typicode.com/users')
 					.then(response => {
-						if (!response.ok) {
-							throw Error("Failed to fetch users");
-						}
-						return response.json();
+						if (response.ok) return response.json()
+						else throw Error('Something went wrong creating the account')
 					})
 					.then(data => {
-						setStore({ users: data });
+						console.log(data)
+						return data
+					})
+					.catch(error => {
+						console.log(error)
+					})
+			},
+			
+			UserWishlist: (userId) => {
+				const store = getStore();
+				const token = store.token;
+				const headers = {
+					"Content-Type": "application/json",
+					"Authorization": `Bearer ${token}`,
+				};
+				const options = {
+					method: 'GET', 
+					headers: headers,
+				};
+				return fetch(process.env.BACKEND_URL + `api/users/wishlist/${userId}`, options)
+					.then(response => {
+						if (response.ok) return response.json();
+						else throw Error('Failed to fetch user\'s wishlist');
+					})
+					.then(data => {
+						console.log(data);
+						return data;
 					})
 					.catch(error => {
 						console.log(error);
+						throw error;
 					});
 			},
-
-
-			loadDataFriend: (id, setFriend) => {
-				fetch(`https://jsonplaceholder.typicode.com/users/${id}`)
-					.then(response => {
-						if (!response.ok) {
-							throw Error("User not found");
-						}
-						return response.json();
-					})
-					.then(data => {
-						setFriend(data);
-					})
-					.catch(error => {
-						console.log(error);
-					});
-			},
-
-
+			
 			getAllBooks: (setBooks) => {
 				fetch(`https://api.nytimes.com/svc/books/v3/lists/overview.json?api-key=${process.env.BOOK_API_KEY}`)
 					.then(response => {
@@ -278,10 +326,33 @@ const getState = ({ getStore, getActions, setStore }) => {
 					.then(data => {
 						if (data && data.results && data.results.lists) {
 							const books = data.results.lists.map(list => list.books).flat();
+							const store = getStore()
+							setStore({ books: store.books.concat(books) })
 							setBooks(books);
 						}
 					})
 					.catch(error => {
+						alert("ERROR: Something went wrong");
+					});
+			},
+
+			getBookInformationById: (isbn, setBookInfo) => {
+				fetch(`https://api.nytimes.com/svc/books/v3/lists/best-sellers/history.json?api-key=${process.env.BOOK_API_KEY} & isbn=${isbn}`)
+					.then(response => {
+						if (response.ok) return response.json();
+						else throw Error('Something went wrong');
+					})
+					.then(data => {
+						console.log(data)
+						if (data && data.results && data.results.length > 0) {
+							const store = getStore()
+							let currentBook = store.books.find(b => { return b.title.toLowerCase() == data.results[0].title.toLowerCase() })
+							if (currentBook && currentBook.book_image) data.results[0].book_image = currentBook.book_image
+							setBookInfo(data.results[0])
+						}
+					})
+					.catch(error => {
+						console.log(error)
 						alert("ERROR: Something went wrong");
 					});
 			},
@@ -300,34 +371,92 @@ const getState = ({ getStore, getActions, setStore }) => {
 					})
 			},
 
-			deleteAccount: () => {
-				const store = getStore()
-				if (store.token) {
-					const headers = {
-						"Content-Type": "application/json",
-						"Authorization": `Bearer ${store.token}`,
-					};
-					var options = {
-						method: 'DELETE',
-						headers: headers,
-					}
-					fetch(process.env.BACKEND_URL + `api/users`, options)
 
-						.then(response => {
-							if (response.ok) return response.json()
-							else throw Error('Something went wrong creating the account')
-						})
-						.then(data => {
-							if (data && data.message == "User deleted successfully") {
-								setStore({token : null})
-								localStorage.removeItem('token')
-								window.location.replace("/")
-							}
-						})
-						.catch(error => {
-							alert(error)
-						})
+			submitReview: (bookId, rating, opinion) => {
+				const reviewData = {
+					rating: rating,
+					comment: opinion
+				};
+
+				const options = {
+					method: 'POST',
+					headers: {
+						"Content-Type": "application/json",
+						"Authorization": `Bearer ${getStore().token}`
+					},
+					body: JSON.stringify(reviewData)
+				};
+
+				fetch(`${process.env.BACKEND_URL}/books/${bookId}/review`, options)
+					.then(response => {
+						if (response.ok) return response.json()
+						else throw Error('Something went wrong submitting the review')
+					})
+					.then(data => {
+						console.log(data);  // Do something with the data, e.g., show a success message to the user.
+					})
+					.catch(error => {
+						console.log(error);
+					});
+			},
+
+			getAverageRating: (bookId, setAverageRating) => {
+				fetch(`${process.env.BACKEND_URL}/books/${bookId}/average_rating`)
+					.then(response => {
+						if (response.ok) return response.json()
+						else throw Error('Failed to fetch average rating')
+					})
+					.then(data => {
+						if (data && data.average_rating) setAverageRating(data.average_rating);
+					})
+					.catch(error => {
+						console.log(error);
+					});
+			},
+
+			sendForgotPasswordEmail: (email, alert) => {
+				var options = {
+					method: 'POST',
+					headers: { "Content-Type": "application/json" },
+					body: JSON.stringify({ email: email })
 				}
+
+				fetch(process.env.BACKEND_URL + 'api/sendemail', options)
+
+					.then(response => {
+						if (response.ok) return response.json()
+						else throw Error('Something went wrong')
+					})
+					.then(data => {
+						if (data && data.msg == "success") alert("Check your inbox")
+					})
+					.catch(error => {
+						alert("Error: Something went wrong")
+					})
+			},
+
+			resetPassword: (token, password, alert) => {
+				var options = {
+					method: 'POST',
+					headers: {
+						"Content-Type": "application/json",
+						"Authorization": `Bearer ${token}`
+					},
+					body: JSON.stringify({ password: password })
+				}
+
+				fetch(process.env.BACKEND_URL + 'api/resetpassword', options)
+
+					.then(response => {
+						if (response.ok) return response.json()
+						else throw Error('Something went wrong')
+					})
+					.then(data => {
+						if (data && data.msg == "success") alert("Password updated successfully")
+					})
+					.catch(error => {
+						alert("Error: Something went wrong")
+					})
 			}
 
 

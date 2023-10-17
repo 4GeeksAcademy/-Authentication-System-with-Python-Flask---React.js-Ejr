@@ -75,4 +75,3 @@ export const Navbar = () => {
     </nav>
   );
 };
-

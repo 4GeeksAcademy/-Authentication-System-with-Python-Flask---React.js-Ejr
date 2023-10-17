@@ -1,28 +1,41 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../store/appContext";
 import { Review } from "../component/review";
 import ModalReview from "../component/modal-review";
+import { useParams } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 
 import "../../styles/bookdetails.css";
 
 export const BookDetails = () => {
 	const { store, actions } = useContext(Context);
+	const params = useParams();
+	const [bookInfo, setBookInfo] = useState({});
+
+	useEffect(() => {
+		actions.getBookInformationById(params.id, setBookInfo)
+	}, [])
+
+	console.log('id', params.id)
 
 	return (
 		<div className="container bookdetails">
 			<ModalReview />
 			<div className="container d-flex justify-content-center">
 				<div className="bookcover col-md-6 text-center">
-					<img className="bookcoverimg" src="https://images.pexels.com/photos/4153146/pexels-photo-4153146.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" />
+					<img className="bookcoverimg" src={bookInfo.book_image} />
 				</div>
 
 				<div className="bookdetails col-md-6">
-					<h1>Book Title</h1>
-					<h5>Book Author</h5>
-					<p>5 Stars - Total Reviews</p>
-					<p>Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen.</p>
-					<h5>Genre category</h5>
+					<div className="book">
+						<h1>{bookInfo.title}</h1>
+						<h5>{bookInfo.author}</h5>
+						<p>5 Stars - Total Reviews</p>
+						<p>{bookInfo.description}</p>
+						<h5>{bookInfo.display_name}</h5>
+					</div>
+
 
 					<div className="d-flex col-12 justify-content-center">
 						<div className="container-fluid py-5">

@@ -77,6 +77,7 @@ class Reviews(db.Model):
       "review": self.review,
       "rating": self.rating
     }
+  
 class BookRecommendations(db.Model):
   recommendation_id = db.Column(db.Integer, primary_key=True)
   user1_id = db.Column(db.Integer, db.ForeignKey("user.user_id"), nullable=False)
@@ -91,6 +92,7 @@ class BookRecommendations(db.Model):
       "user2_id": self.user2_id,
       "recommended_book_id": self.recommended_book_id,
     }
+  
 class BookSwapRequest(db.Model):
   request_id = db.Column(db.Integer, primary_key=True)
   sender_user_id = db.Column (db.Integer, db.ForeignKey("user.user_id"), nullable=False)
@@ -107,6 +109,7 @@ class BookSwapRequest(db.Model):
       "book_id": self.book_id,
       "request_status": self.request_status
     }
+  
 class Friendship(db.Model):
   friendship_id = db.Column(db.Integer, primary_key=True)
   user1_id = db.Column (db.Integer, db.ForeignKey("user.user_id"), nullable=False)
@@ -121,6 +124,7 @@ class Friendship(db.Model):
       "user2_id": self.user2_id,
       "friendship_status": self.friendship_status,
     }
+  
 class Wishlist(db.Model):
   wishlist_id = db.Column(db.Integer, primary_key=True)
   user_id = db.Column (db.Integer, db.ForeignKey("user.user_id"), nullable=False)
@@ -133,6 +137,7 @@ class Wishlist(db.Model):
       "user_id": self.user_id,
       "book_id": self.book_id,
     }
+  
 class BookOwner(db.Model):
   book_owner_id = db.Column(db.Integer, primary_key=True)
   user_id = db.Column (db.Integer, db.ForeignKey("user.user_id"), nullable=False)
@@ -145,6 +150,7 @@ class BookOwner(db.Model):
       "user_id": self.user_id,
       "book_id": self.book_id,
     }
+  
 class Genres(db.Model):
   genre_id = db.Column(db.Integer, primary_key=True)
   genre_name = db.Column(db.String(150), nullable=False)

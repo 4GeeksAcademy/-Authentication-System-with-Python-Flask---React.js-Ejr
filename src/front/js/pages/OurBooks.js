@@ -1,11 +1,13 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../store/appContext";
 import { Link } from "react-router-dom";
+import { SearchBar } from "../component/SearchBar";
 
 export const OurBooks = () => {
     const { store, actions } = useContext(Context);
     const [genres, setGenres] = useState([]);
     const [books, setBooks] = useState([]);
+    const [selectedGenre, setSelectedGenre] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10;
 
@@ -20,7 +22,16 @@ export const OurBooks = () => {
     const getCurrentPageBooks = () => {
         const startIndex = (currentPage - 1) * itemsPerPage;
         const endIndex = startIndex + itemsPerPage;
-        return books.slice(startIndex, endIndex);
+        // Filter books based on the selected genre
+        const filteredBooks = selectedGenre
+            ? books.filter(book => book.genre === selectedGenre)
+            : books;
+
+        return filteredBooks.slice(startIndex, endIndex);
+    };
+    const handleGenreSelect = (genre) => {
+        // Update the selected genre when a genre is selected
+        setSelectedGenre(genre);
     };
 
     return (
@@ -49,7 +60,7 @@ export const OurBooks = () => {
                                     <ul className="dropdown-menu overflow-scroll" aria-labelledby="genreDropdown" style={{ height: "250px" }}>
                                         {genres.map((genre, index) => (
                                             <li key={index}>
-                                                <a className="dropdown-item" href="#">
+                                                <a className="dropdown-item" href="#" onClick={() => handleGenreSelect(genre.display_name)}>
                                                     {genre.display_name}
                                                 </a>
                                             </li>
@@ -73,39 +84,39 @@ export const OurBooks = () => {
             </div>
             {getCurrentPageBooks().map((book, index) => (
                 <div key={index}>
-                        <div className="books" style={{ width: "50rem" }}>
-                            <div className="card_wishlist">
-                                <div className="row g-0">
-                                    <div className="col-md-4">
-                                        <img src={book.book_image} className="card-img-top my-2" alt="..." style={{ height: "40", width: "10rem" }} />
-                                    </div>
-                                    <div className="col-md-8">
-                                        <div className="card-body">
-                                            <h5 className="card-title" style={{ margin: "20px 0" }}>
-                                                {book.title}
-                                            </h5>
-                                            <p className="card-author" style={{ margin: "10px 0" }}>
-                                                {book.author}
-                                            </p>
-                                            <div className="my-4 row">
-                                                <div className="col">
-                                                    <a href="#" className="paper_plane">
-                                                        <i className="far fa-paper-plane"></i> Request Swap
-                                                    </a>
-                                                </div>
+                    <div className="books" style={{ width: "50rem" }}>
+                        <div className="card_wishlist">
+                            <div className="row g-0">
+                                <div className="col-md-4">
+                                    <img src={book.book_image} className="card-img-top my-2" alt="..." style={{ height: "40", width: "10rem" }} />
+                                </div>
+                                <div className="col-md-8">
+                                    <div className="card-body">
+                                        <h5 className="card-title" style={{ margin: "20px 0" }}>
+                                            {book.title}
+                                        </h5>
+                                        <p className="card-author" style={{ margin: "10px 0" }}>
+                                            {book.author}
+                                        </p>
+                                        <div className="my-4 row">
+                                            <div className="col">
+                                                <a href="#" className="paper_plane">
+                                                    <i className="far fa-paper-plane"></i> Request Swap
+                                                </a>
                                             </div>
-                                            <div className="row">
-                                                <div className="col">
-                                                    <Link to="/book_details" className="view_more">
-                                                        <i className="fas fa-plus"></i> View More
-                                                    </Link>
-                                                </div>
+                                        </div>
+                                        <div className="row">
+                                            <div className="col">
+                                                <Link to={`/book-details/${book.primary_isbn13}`} className="view_more">
+                                                    <i className="fas fa-plus"></i> View More
+                                                </Link>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                    </div>
                 </div>
             ))}
 

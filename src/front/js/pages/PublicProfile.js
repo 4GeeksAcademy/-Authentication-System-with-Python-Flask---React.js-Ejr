@@ -27,10 +27,12 @@ export const PublicProfile = () => {
     };
 
     useEffect(() => {
-        console.log("params", params)
         const { id } = params
         if (id) {
             actions.verifyIfUserLoggedIn();
+            actions.allFriendshipRequests().then((data2) =>{
+                console.log("friendships", data2)
+            })
             actions.getUserById(id).then((data) => {
                 console.log("data", data)
                 setUserInformation(data);

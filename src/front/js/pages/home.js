@@ -20,7 +20,7 @@ export const Home = () => {
 				</div>
 				<div>
 					<h2 className="display-7 fw-bold py-5">Our Books</h2>
-					<div className="" style={{ }}>
+					<div className="" style={{}}>
 						<BookCarouselHomepage />
 					</div>
 				</div>
@@ -34,14 +34,6 @@ export const Home = () => {
 					<div className="col px-5">
 						<h2 className="display-7 fw-bold">Our Community</h2>
 						<p>At BookSwap & ReadTrack, we've created a vibrant community of book enthusiasts just like you. Whether you're an avid reader, a casual bookworm, or someone looking to expand your reading horizons, our platform is designed with you in mind.</p>
-						<div className="row align-items-start">
-							<div className="col">
-								<Buttonsignup />
-							</div>
-							<div className="col">
-								<Buttonlogin />
-							</div>
-						</div>
 					</div>
 				</div>
 			</div>
@@ -66,7 +58,6 @@ export const Home = () => {
 			<div className="container text-center py-5">
 				<h2 className="display-7 fw-bold">Ready to embark on your reading adventure?</h2>
 				<p>Join our community today by creating your account. It's quick, easy, and opens the door to a world of literary possibilities.</p>
-				<Buttonsignup />
 			</div>
 
 			<div className="container">

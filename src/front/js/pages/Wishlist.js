@@ -1,7 +1,9 @@
-import React, { useContext, useState } from "react";
+import React, { useState, useContext } from "react";
+import { useParams } from "react-router-dom";
 import { Context } from "../store/appContext";
 
 export const Wishlist = () => {
+
     return (
         <div className="container mt-5">
             <div className="container">
