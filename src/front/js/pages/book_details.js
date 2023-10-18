@@ -24,14 +24,14 @@ export const BookDetails = () => {
 			<ModalReview />
 			<div className="container d-flex justify-content-center">
 				<div className="bookcover col-md-6 text-center">
-					<img className="bookcoverimg" src={bookInfo.book_image} />
+					<img className="bookcoverimg" src={bookInfo.cover_img} />
 				</div>
 
 				<div className="bookdetails col-md-6">
 					<div className="book">
 						<h1>{bookInfo.title}</h1>
 						<h5>{bookInfo.author}</h5>
-						<p>5 Stars - Total Reviews</p>
+						<p>{bookInfo.avg_rating} Stars - Total Reviews({bookInfo.total_ratings})</p>
 						<p>{bookInfo.description}</p>
 						<h5>{bookInfo.display_name}</h5>
 					</div>

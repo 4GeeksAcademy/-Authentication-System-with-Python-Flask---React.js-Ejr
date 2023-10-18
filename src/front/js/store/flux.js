@@ -60,32 +60,32 @@ const getState = ({ getStore, getActions, setStore }) => {
 			deleteAccount: () => {
 				const store = getStore();
 				if (store.token) {
-				  const headers = {
-					"Content-Type": "application/json",
-					"Authorization": `Bearer ${store.token}`,
-				  };
-				  var options = {
-					method: 'DELETE',
-					headers: headers,
-				  };
-				  fetch(process.env.BACKEND_URL + `api/users`, options)
-					.then(response => {
-					  if (response.ok) return response.json();
-					  else throw Error('Something went wrong deleting the account');
-					})
-					.then(data => {
-					  if (data && data.message == "User deleted successfully") {
-						setStore({ token: null });
-						localStorage.removeItem('token');
-						window.location.replace("/");
-					  }
-					})
-					.catch(error => {
-					  alert(error);
-					});
+					const headers = {
+						"Content-Type": "application/json",
+						"Authorization": `Bearer ${store.token}`,
+					};
+					var options = {
+						method: 'DELETE',
+						headers: headers,
+					};
+					fetch(process.env.BACKEND_URL + `api/users`, options)
+						.then(response => {
+							if (response.ok) return response.json();
+							else throw Error('Something went wrong deleting the account');
+						})
+						.then(data => {
+							if (data && data.message == "User deleted successfully") {
+								setStore({ token: null });
+								localStorage.removeItem('token');
+								window.location.replace("/");
+							}
+						})
+						.catch(error => {
+							alert(error);
+						});
 				}
-			  },
-			  
+			},
+
 
 			createAccount: (username, profileimg, name, lastname, email, password) => {
 				var options = {
@@ -290,7 +290,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						console.log(error)
 					})
 			},
-			
+
 			UserWishlist: (userId) => {
 				const store = getStore();
 				const token = store.token;
@@ -299,7 +299,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					"Authorization": `Bearer ${token}`,
 				};
 				const options = {
-					method: 'GET', 
+					method: 'GET',
 					headers: headers,
 				};
 				return fetch(process.env.BACKEND_URL + `api/users/wishlist/${userId}`, options)
@@ -316,40 +316,36 @@ const getState = ({ getStore, getActions, setStore }) => {
 						throw error;
 					});
 			},
-			
-			getAllBooks: (setBooks) => {
-				fetch(`https://api.nytimes.com/svc/books/v3/lists/overview.json?api-key=${process.env.BOOK_API_KEY}`)
+
+			getAllBooks: (setBooks, searchTerm='', genre= '') => {
+				fetch(process.env.BACKEND_URL + `api/books?q=${searchTerm}&genre=${genre}`)
 					.then(response => {
 						if (response.ok) return response.json();
 						else throw Error('Something went wrong');
 					})
 					.then(data => {
-						if (data && data.results && data.results.lists) {
-							const books = data.results.lists.map(list => list.books).flat();
-							const store = getStore()
-							setStore({ books: store.books.concat(books) })
-							setBooks(books);
-						}
+
+						//const books = data.results.lists.map(list => list.books).flat();
+						const books = data;
+						const store = getStore()
+						setStore({ books: store.books.concat(books) })
+						setBooks(books);
+
 					})
 					.catch(error => {
 						alert("ERROR: Something went wrong");
 					});
 			},
 
-			getBookInformationById: (isbn, setBookInfo) => {
-				fetch(`https://api.nytimes.com/svc/books/v3/lists/best-sellers/history.json?api-key=${process.env.BOOK_API_KEY} & isbn=${isbn}`)
+			getBookInformationById: (id, setBookInfo) => {
+				fetch(process.env.BACKEND_URL +`api/books/${id}`)
 					.then(response => {
 						if (response.ok) return response.json();
 						else throw Error('Something went wrong');
 					})
 					.then(data => {
 						console.log(data)
-						if (data && data.results && data.results.length > 0) {
-							const store = getStore()
-							let currentBook = store.books.find(b => { return b.title.toLowerCase() == data.results[0].title.toLowerCase() })
-							if (currentBook && currentBook.book_image) data.results[0].book_image = currentBook.book_image
-							setBookInfo(data.results[0])
-						}
+						setBookInfo(data)
 					})
 					.catch(error => {
 						console.log(error)
@@ -357,14 +353,42 @@ const getState = ({ getStore, getActions, setStore }) => {
 					});
 			},
 
-			getGenres: (setGenres) => {
-				fetch(`https://api.nytimes.com/svc/books/v3/lists/names.json?api-key=${process.env.BOOK_API_KEY}`)
+			getAllBooksSearchBar: (setBooks, searchTerm) => {
+				fetch(`https://api.nytimes.com/svc/books/v3/lists/overview.json?api-key=${process.env.BOOK_API_KEY}&q=${searchTerm}`)
 					.then(response => {
 						if (response.ok) return response.json();
 						else throw Error('Something went wrong');
 					})
 					.then(data => {
-						if (data && data.results) setGenres(data.results);
+						if (data && data.results && data.results.lists) {
+							const books = data.results.lists.map(list => list.books).flat();
+
+
+							const filteredBooks = books.filter(book =>
+								book.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+								book.author.toLowerCase().includes(searchTerm.toLowerCase())
+							);
+
+							const store = getStore();
+							setStore({ books: store.books.concat(filteredBooks) });
+							setBooks(filteredBooks);
+						}
+					})
+					.catch(error => {
+						alert("ERROR: Something went wrong");
+					});
+			},
+
+
+
+			getGenres: (setGenres) => {
+				fetch(process.env.BACKEND_URL +`api/genres`)
+					.then(response => {
+						if (response.ok) return response.json();
+						else throw Error('Something went wrong');
+					})
+					.then(data => {
+						setGenres(data);
 					})
 					.catch(error => {
 						alert("ERROR: Something went wrong");

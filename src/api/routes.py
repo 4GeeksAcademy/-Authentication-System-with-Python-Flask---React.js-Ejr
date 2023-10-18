@@ -136,21 +136,37 @@ def delete_user():
     else:
         return jsonify({"message": "User not found"}), 404
 
-# GET all books
+# GET all books public
 
 
 @api.route('/books', methods=['GET'])
-@jwt_required()
+#@jwt_required()
 def get_all_books():
-    books = Books.query.all()
+    search_term = request.args.get('q', '')
+    genre = request.args.get('genre', '')
+    if genre:
+        books = Books.query.filter(Books.genre==genre ).filter(Books.author.ilike(f'%{search_term}%')|Books.title.ilike(f'%{search_term}%'))
+    else:
+        books = Books.query.filter(Books.author.ilike(f'%{search_term}%')|Books.title.ilike(f'%{search_term}%'))
     results = [book.serialize() for book in books]
     return jsonify(results), 200
 
-# GET a specific book
+# GET all genres public
+
+
+@api.route('/genres', methods=['GET'])
+#@jwt_required()
+def get_all_genres():
+    search_term = request.args.get('q', '')
+    queryset = Genres.query.filter(Genres.genre_name.ilike(f'%{search_term}%'))
+    results = [obj.serialize() for obj in queryset]
+    return jsonify(results), 200
+
+# GET a specific book public
 
 
 @api.route('/books/<int:book_id>', methods=['GET'])
-@jwt_required()
+#@jwt_required()
 def get_book(book_id):
     book = Books.query.get(book_id)
     if book:
@@ -286,16 +302,20 @@ def add_friend_request(user_id):
 
 # GET my friendships requests
 
+
 @api.route('/friend_requests', methods=['GET'])
 @jwt_required()
 def friend_request():
     request_user_id = get_jwt_identity()
     if request_user_id is None:
         return jsonify({"User not authenticated"}), 401
-    friendship_requests = Friendship.query.filter_by(user1_id=request_user_id)
+    friendship_requests = Friendship.query.join(User, Friendship.user2_id == User.user_id).filter(
+        Friendship.user1_id == request_user_id).all()
+    for g in friendship_requests:
+        print(g.serialize())
+        print(g.user2.serialize())
     results = [friendship.serialize() for friendship in friendship_requests]
     return jsonify(results), 200
-   
 
 
 # POST to accept friend request
