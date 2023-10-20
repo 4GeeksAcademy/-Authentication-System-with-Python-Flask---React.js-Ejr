@@ -75,6 +75,44 @@ def setup_commands(app):
                 db.session.add(genre)
             db.session.commit()
                 
+    @app.cli.command("insert-users")
+    def insert_users():
+        users_data = [
+            {
+                'email': 'user1@example.com',
+                'username': 'user1',
+                'name': 'User1',
+                'lastname': 'Lastname1',
+                'password': 'password1',
+                'profileimg': 'user1.jpg',
+            },
+        ]
+
+        for user_data in users_data:
+            existing_user = User.query.filter(User.email == user_data['email']).first()
+
+            if existing_user:
+                existing_user.email = user_data['email']
+                existing_user.username = user_data['username']
+                existing_user.name = user_data['name']
+                existing_user.lastname = user_data['lastname']
+                existing_user.password = user_data['password']
+                existing_user.profileimg = user_data['profileimg']
+            else:
+                print(user_data)
+                new_user = User(
+                    email=user_data['email'],
+                    username=user_data['username'],
+                    name=user_data['name'],
+                    lastname=user_data['lastname'],
+                    password=user_data['password'],
+                    profileimg=user_data['profileimg']
+                )
+                db.session.add(new_user)
+        db.session.commit()
+        print(user_data)
+        
+    
 
 
 
@@ -83,20 +121,4 @@ def setup_commands(app):
     by typing: $ flask insert-test-users 5
     Note: 5 is the number of users to add
     """
-    @app.cli.command("insert-test-users")  # name of our command
-    @click.argument("count")  # argument of out command
-    def insert_test_users(count):
-        print("Creating test users")
-        for x in range(1, int(count) + 1):
-            User = User()
-            User.email = "test_user" + str(x) + "@test.com"
-            User.password = "123456"
-            User.is_active = True
-            db.session.add(User)
-            db.session.commit()
-            print("User: ", User.email, " created.")
-        print("All test users created")
-
-    @app.cli.command("insert-test-data")
-    def insert_test_data():
-        pass
+   

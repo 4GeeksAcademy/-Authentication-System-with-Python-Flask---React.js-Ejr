@@ -250,7 +250,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					method: 'POST',
 					headers: headers,
 				}
-				fetch(process.env.BACKEND_URL + `api/friend_requests/${userId}`, options)
+				return fetch(process.env.BACKEND_URL + `api/friend_requests/${userId}`, options)
 
 					.then(response => {
 						if (response.ok) return response.json()
@@ -276,7 +276,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					method: 'GET',
 					headers: headers,
 				}
-				fetch(process.env.BACKEND_URL + `api/friend_requests`, options)
+				return fetch(process.env.BACKEND_URL + `api/friend_requests`, options)
 
 					.then(response => {
 						if (response.ok) return response.json()
