@@ -30,7 +30,6 @@ export const OurBooks = () => {
         return filteredBooks.slice(startIndex, endIndex);
     };
     const handleGenreSelect = (genre) => {
-        // Update the selected genre when a genre is selected
         setSelectedGenre(genre);
         actions.getAllBooks(booksData => {
             setBooks(booksData);

@@ -13,6 +13,7 @@ export const Wishlist = () => {
                             <h1>My Wishlist</h1>
                         </div>
                     </div>
+                    {/* Commented out the search bar section
                     <div className="col-6">
                         <div className="search_bar_wishlist">
                             <form className="d-flex justify-content-end">
@@ -27,6 +28,7 @@ export const Wishlist = () => {
                             </form>
                         </div>
                     </div>
+                    */}
                 </div>
                 <hr className="my-4 bold-hr" />
             </div>
@@ -47,7 +49,7 @@ export const Wishlist = () => {
                                 </div>
                                 <div className="row">
                                     <div className="col">
-                                        <a href="#" className="trash"><i className="far fa-trash-alt"></i>Remove</a>
+                                        <a href="#" className="trash"><i className="far fa-trash-alt"></i> Remove</a>
                                     </div>
                                 </div>
                             </div>
@@ -59,7 +61,7 @@ export const Wishlist = () => {
                 <span>Next Page</span>
             </div>
         </div>
-
-    )
+    );
 }
+
 

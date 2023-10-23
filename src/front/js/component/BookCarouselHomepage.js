@@ -7,7 +7,7 @@ export const BookCarouselHomepage = () => {
     const itemsPerSlide = 7; 
 
     useEffect(() => {
-        actions.getAllBooks(booksData => {
+        actions.getAllBooksCaroussel(booksData => {
             setBooks(booksData);
         });
     }, []);

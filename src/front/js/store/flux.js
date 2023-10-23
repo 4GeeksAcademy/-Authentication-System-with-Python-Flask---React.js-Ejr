@@ -57,6 +57,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({ demo: demo });
 			},
 
+			// delete your account, option in profile settings
 			deleteAccount: () => {
 				const store = getStore();
 				if (store.token) {
@@ -86,7 +87,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
-
+			// sign up to book swap app 
 			createAccount: (username, profileimg, name, lastname, email, password) => {
 				var options = {
 					method: 'POST',
@@ -108,6 +109,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						alert(error)
 					})
 			},
+			//  Used in the publicProfile view, checks if user is logged in to display user data
 			verifyIfUserLoggedIn: () => {
 				const token = localStorage.getItem('token');
 
@@ -120,6 +122,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			},
 
+			//login action, self explanatory 
 			login: (email, password) => {
 				var options = {
 					method: 'POST',
@@ -141,19 +144,19 @@ const getState = ({ getStore, getActions, setStore }) => {
 						console.log(error)
 					})
 			},
-
+			// is used in the login view
 			isLoggedIn: () => {
 				//get the store
 				const store = getStore();
 				return store.token != null
 			},
-
+			// logout action, self explanatory
 			logout: () => {
 				localStorage.removeItem("token");
 				console.log("Logged out");
 				setStore({ token: null });
 			},
-
+			// action used in the component profile information, for user to update personal data 
 			updateUser: (userInformation) => {
 				const store = getStore();
 				const token = store.token;
@@ -180,7 +183,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						console.log(error)
 					})
 			},
-
+			// fetch user data, used on profileSettings and publicProfile views
 			getUserInformation: () => {
 				const store = getStore();
 				const token = store.token;
@@ -210,7 +213,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						console.error(error);
 					});
 			},
-
+			// action that it will run after the verifyIfUserLoggedIn and retrieve user data
 			getUserById: (id) => {
 				const store = getStore();
 				const token = store.token;
@@ -238,7 +241,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						console.error(error);
 					});
 			},
-
+			// action linked to button follow, to add friend
 			friendshipRequest: (userId) => {
 				const store = getStore();
 				const token = store.token;
@@ -264,7 +267,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						console.log(error)
 					})
 			},
-
+			// Retrieve friend requests from that user in profileSettings tab friendRequest
 			allFriendshipRequests: () => {
 				const store = getStore();
 				const token = store.token;
@@ -290,7 +293,62 @@ const getState = ({ getStore, getActions, setStore }) => {
 						console.log(error)
 					})
 			},
+			// used on friendRequest component, on the click button accept friend from profileSettings
+			acceptFriendRequest: (requestId) => {
+				const store = getStore();
+				const token = store.token;
+				const headers = {
+					"Content-Type": "application/json",
+					"Authorization": `Bearer ${token}`,
+				};
+				const options = {
+					method: 'POST',
+					headers: headers,
+				};
 
+				return fetch(process.env.BACKEND_URL + `api/friend_requests/${requestId}/accept`, options)
+
+					.then(response => {
+						if (response.ok) return response.json()
+						else throw Error('Something went wrong accepting friend')
+					})
+					.then(data => {
+						console.log(data);
+						return data;
+					})
+					.catch(error => {
+						console.log(error)
+					})
+			},
+			// action to retrieve all friends from a user, used in the view Friends
+			getFriendsList: () => {
+				const store = getStore();
+				const token = store.token;
+				const headers = {
+					"Content-Type": "application/json",
+					"Authorization": `Bearer ${token}`,
+				};
+
+				const options = {
+					method: 'GET',
+					headers: headers,
+				};
+
+				return fetch(process.env.BACKEND_URL + 'api/friends', options)
+					.then((response) => {
+						if (response.ok) return response.json();
+						else throw Error('Failed to fetch friends');
+					})
+					.then(data => {
+						console.log(data);
+						return data;
+					})
+					.catch((error) => {
+						console.error(error);
+					});
+			},
+
+			// still not used anywhere
 			UserWishlist: (userId) => {
 				const store = getStore();
 				const token = store.token;
@@ -316,8 +374,36 @@ const getState = ({ getStore, getActions, setStore }) => {
 						throw error;
 					});
 			},
+			//add to wishlist once the button is clicked on book-details view
+			addToWishlist: (userId) => {
+				const store = getStore();
+				const token = store.token;
+				const headers = {
+					"Content-Type": "application/json",
+					"Authorization": `Bearer ${token}`,
+				};
+				const options = {
+					method: 'POST',
+					headers: headers,
+				};
+				return fetch(process.env.BACKEND_URL + `api/wishlist/book/${userId}`, options)
+					.then(response => {
+						if (response.ok) return response.json();
+						else throw Error('Failed to fetch user\'s wishlist');
+					})
+					.then(data => {
+						console.log(data);
+						return data;
+					})
+					.catch(error => {
+						console.log(error);
+						throw error;
+					});
+			},
 
-			getAllBooks: (setBooks, searchTerm='', genre= '') => {
+
+			// used to retrieve books, used in ourbooks view for search bar(genre and all), carousselhomepage
+			getAllBooks: (setBooks, searchTerm = '', genre = '') => {
 				fetch(process.env.BACKEND_URL + `api/books?q=${searchTerm}&genre=${genre}`)
 					.then(response => {
 						if (response.ok) return response.json();
@@ -336,9 +422,30 @@ const getState = ({ getStore, getActions, setStore }) => {
 						alert("ERROR: Something went wrong");
 					});
 			},
+			//get books for the homepage caroussel
+			getAllBooksCaroussel: (setBooks) => {
+				fetch(`https://api.nytimes.com/svc/books/v3/lists/overview.json?api-key=${process.env.BOOK_API_KEY}`)
+					.then(response => {
+						if (response.ok) return response.json();
+						else throw Error('Something went wrong');
+					})
+					.then(data => {
+						if (data && data.results && data.results.lists) {
+							const books = data.results.lists.map(list => list.books).flat();
+							const store = getStore()
+							setStore({ books: store.books.concat(books) })
+							setBooks(books);
+						}
+					})
+					.catch(error => {
+						alert("ERROR: Something went wrong");
+					});
+			},
 
+
+			// Used in the book-detail view
 			getBookInformationById: (id, setBookInfo) => {
-				fetch(process.env.BACKEND_URL +`api/books/${id}`)
+				fetch(process.env.BACKEND_URL + `api/books/${id}`)
 					.then(response => {
 						if (response.ok) return response.json();
 						else throw Error('Something went wrong');
@@ -352,37 +459,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 						alert("ERROR: Something went wrong");
 					});
 			},
-
-			getAllBooksSearchBar: (setBooks, searchTerm) => {
-				fetch(`https://api.nytimes.com/svc/books/v3/lists/overview.json?api-key=${process.env.BOOK_API_KEY}&q=${searchTerm}`)
-					.then(response => {
-						if (response.ok) return response.json();
-						else throw Error('Something went wrong');
-					})
-					.then(data => {
-						if (data && data.results && data.results.lists) {
-							const books = data.results.lists.map(list => list.books).flat();
-
-
-							const filteredBooks = books.filter(book =>
-								book.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-								book.author.toLowerCase().includes(searchTerm.toLowerCase())
-							);
-
-							const store = getStore();
-							setStore({ books: store.books.concat(filteredBooks) });
-							setBooks(filteredBooks);
-						}
-					})
-					.catch(error => {
-						alert("ERROR: Something went wrong");
-					});
-			},
-
-
-
+			// used on the view ourbooks, for the dropdown genre
 			getGenres: (setGenres) => {
-				fetch(process.env.BACKEND_URL +`api/genres`)
+				fetch(process.env.BACKEND_URL + `api/genres`)
 					.then(response => {
 						if (response.ok) return response.json();
 						else throw Error('Something went wrong');

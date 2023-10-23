@@ -158,6 +158,8 @@ class Friendship(db.Model):
         "user.user_id"), nullable=False)
     user2 = db.relationship('User', backref='friendship',
                             foreign_keys=[user2_id])
+    user1 = db.relationship('User', backref='friendship1',
+                            foreign_keys=[user1_id])
     friendship_status = db.Column(db.Enum(
         'Accepted', 'Pending', 'Rejected', name='friendship_type'), nullable=False)
 
@@ -170,7 +172,8 @@ class Friendship(db.Model):
             "user1_id": self.user1_id,
             "user2_id": self.user2_id,
             "friendship_status": self.friendship_status,
-            "user2": self.user2.serialize()
+            "user2": self.user2.serialize(),
+            "user1": self.user1.serialize()
         }
 
 

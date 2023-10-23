@@ -3,10 +3,11 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 """
 from flask import Flask, request, jsonify, Blueprint, redirect, url_for
 from api.models import db, User, Books, BookGoals, BookOwner, BookRecommendations, BookSwapRequest, Friendship, Wishlist, Genres, Reviews
-from flask import Flask, request, jsonify, Blueprint, redirect, url_for
 from api.utils import generate_sitemap, APIException
 from flask_jwt_extended import get_jwt_identity, create_access_token, jwt_required, JWTManager
 from io import BytesIO
+from sqlalchemy import or_
+
 
 api = Blueprint('api', __name__)
 
@@ -121,7 +122,7 @@ def get_user_information():
         return jsonify({"User not found"}), 404
     return jsonify(user.serialize()), 200
 
-# DELETE user
+# DELETE user, action deleteAccount
 
 
 @api.route('/users', methods=['DELETE'])
@@ -136,37 +137,39 @@ def delete_user():
     else:
         return jsonify({"message": "User not found"}), 404
 
-# GET all books public
+# GET all books public, action getAllBooks
 
 
 @api.route('/books', methods=['GET'])
-#@jwt_required()
+# @jwt_required()
 def get_all_books():
     search_term = request.args.get('q', '')
     genre = request.args.get('genre', '')
     if genre:
-        books = Books.query.filter(Books.genre==genre ).filter(Books.author.ilike(f'%{search_term}%')|Books.title.ilike(f'%{search_term}%'))
+        books = Books.query.filter(Books.genre == genre).filter(
+            Books.author.ilike(f'%{search_term}%') | Books.title.ilike(f'%{search_term}%'))
     else:
-        books = Books.query.filter(Books.author.ilike(f'%{search_term}%')|Books.title.ilike(f'%{search_term}%'))
+        books = Books.query.filter(Books.author.ilike(
+            f'%{search_term}%') | Books.title.ilike(f'%{search_term}%'))
     results = [book.serialize() for book in books]
     return jsonify(results), 200
 
-# GET all genres public
+# GET all genres public, action getGenres
 
 
 @api.route('/genres', methods=['GET'])
-#@jwt_required()
+# @jwt_required()
 def get_all_genres():
     search_term = request.args.get('q', '')
     queryset = Genres.query.filter(Genres.genre_name.ilike(f'%{search_term}%'))
     results = [obj.serialize() for obj in queryset]
     return jsonify(results), 200
 
-# GET a specific book public
+# GET a specific book public, action getBookInformationById
 
 
 @api.route('/books/<int:book_id>', methods=['GET'])
-#@jwt_required()
+# @jwt_required()
 def get_book(book_id):
     book = Books.query.get(book_id)
     if book:
@@ -202,13 +205,14 @@ def add_wishlist_book(book_id):
     if book is None:
         return jsonify({"Book not found"}), 404
     valid_wishlist = Wishlist.query.filter_by(
-        user_id=user_id, item_type='book', item_id=book_id).first()
+        user_id=user_id, book_id=book_id).first()
     if valid_wishlist:
         return jsonify({"Book is already a favorite"}), 400
-    new_wishlist = Wishlist(user_id=user_id, item_type='book', item_id=book_id)
+    new_wishlist = Wishlist(user_id=user_id, book_id=book_id)
     db.session.add(new_wishlist)
     db.session.commit()
-    return jsonify({"Book planet added"}), 201
+    return jsonify({"Book added to wishlist"}), 201
+
 
 # DELETE to remove a specific book from the wishlist
 
@@ -262,19 +266,10 @@ def decline_book_swap_request(request_id):
         return jsonify({"Unauthorized to decline this request"}), 403
     book_swap_request.request_status = 'Rejected'
     db.session.commit()
-    return jsonify({"Book swap request declined"}), 20
-
-# GET all friends
+    return jsonify({"Book swap request declined"}), 200
 
 
-@api.route('/friendships', methods=['GET'])
-@jwt_required()
-def get_all_friendships():
-    friendships = Friendship.query.all()
-    results = [friendship.serialize() for friendship in friendships]
-    return jsonify(results), 200
-
-# POST to add friend
+# POST to add friend, action friendshipRequest
 
 
 @api.route('/friend_requests/<int:user_id>', methods=['POST'])
@@ -300,7 +295,7 @@ def add_friend_request(user_id):
     db.session.commit()
     return jsonify(new_request.serialize()), 201
 
-# GET my friendships requests
+# GET my friendships requests, action allFriendshipRequests
 
 
 @api.route('/friend_requests', methods=['GET'])
@@ -309,8 +304,8 @@ def friend_request():
     request_user_id = get_jwt_identity()
     if request_user_id is None:
         return jsonify({"User not authenticated"}), 401
-    friendship_requests = Friendship.query.join(User, Friendship.user2_id == User.user_id).filter(
-        Friendship.user1_id == request_user_id).all()
+    friendship_requests = Friendship.query.filter(
+        Friendship.user1_id == request_user_id, Friendship.friendship_status == 'Pending').all()
     for g in friendship_requests:
         print(g.serialize())
         print(g.user2.serialize())
@@ -318,7 +313,7 @@ def friend_request():
     return jsonify(results), 200
 
 
-# POST to accept friend request
+# POST to accept friend request, action acceptFriendRequest
 @api.route('/friend_requests/<int:request_id>/accept', methods=['POST'])
 @jwt_required()
 def accept_friend_request(request_id):
@@ -328,11 +323,33 @@ def accept_friend_request(request_id):
     friend_request = Friendship.query.get(request_id)
     if friend_request is None:
         return jsonify({"Friend request not found"}), 404
-    if friend_request.user2_id != user_id:
+    if friend_request.user1_id != user_id:
         return jsonify({"Unauthorized to accept this request"}), 403
     friend_request.friendship_status = 'Accepted'
     db.session.commit()
-    return jsonify({"Friend request accepted"}), 200
+    return jsonify(
+        message="Friend Request Accepted",
+        category="Success",
+        status=200
+    )
+
+# GET my friends list, action getFriendsList
+
+
+@api.route('/friends', methods=['GET'])
+@jwt_required()
+def get_friends():
+    user_id = get_jwt_identity()
+    if user_id is None:
+        return jsonify({"User not authenticated"}), 401
+
+    friends = Friendship.query.filter(
+        or_((Friendship.user1_id == user_id), (Friendship.user2_id == user_id)),
+        Friendship.friendship_status == 'Accepted'
+    ).all()
+    print(friends)
+    results = [friendship.serialize() for friendship in friends]
+    return jsonify(results), 200
 
 # DELETE to decline friend request
 
@@ -352,50 +369,6 @@ def decline_friend_request(request_id):
     db.session.commit()
     return jsonify({"message": "Friend request declined"}), 200
 
-# POST to add recommendation to wishlist
-
-
-@api.route('/recommendations/<int:recommendation_id>/accept', methods=['POST'])
-@jwt_required()
-def accept_book_recommendation(recommendation_id):
-    user_id = get_jwt_identity()
-    if user_id is None:
-        return jsonify({"User not authenticated"}), 401
-    recommendation = BookRecommendations.query.get(recommendation_id)
-    if recommendation is None:
-        return jsonify({"Book recommendation not found"}), 404
-    if recommendation.user2_id != user_id:
-        return jsonify({"Unauthorized to accept this recommendation"}), 403
-    # Add the recommended book to the user's wishlist
-    book_id = recommendation.recommended_book_id
-    valid_wishlist = Wishlist.query.filter_by(
-        user_id=user_id, item_type='book', item_id=book_id).first()
-    if valid_wishlist:
-        return jsonify({"Book is already a favorite"}), 400
-    new_wishlist = Wishlist(user_id=user_id, item_type='book', item_id=book_id)
-    db.session.add(new_wishlist)
-    # Delete the recommendation after adding the book to the wishlist
-    db.session.delete(recommendation)
-    db.session.commit()
-    return jsonify({"Book added to wishlist from recommendation"}), 200
-
-# DELETE to decline recommendation
-
-
-@api.route('/recommendations/<int:recommendation_id>/decline', methods=['DELETE'])
-@jwt_required()
-def decline_book_recommendation(recommendation_id):
-    user_id = get_jwt_identity()
-    if user_id is None:
-        return jsonify({"User not authenticated"}), 401
-    recommendation = BookRecommendations.query.get(recommendation_id)
-    if recommendation is None:
-        return jsonify({"Book recommendation not found"}), 404
-    if recommendation.user2_id != user_id:
-        return jsonify({"Unauthorized to decline this recommendation"}), 403
-    db.session.delete(recommendation)
-    db.session.commit()
-    return jsonify({"Book recommendation declined"}), 200
 
 # POST to get review in the database
 
