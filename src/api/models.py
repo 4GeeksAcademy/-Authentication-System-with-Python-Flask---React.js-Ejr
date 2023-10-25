@@ -33,19 +33,19 @@ class User(db.Model):
         return self.password == password
 
 
-
 class Books(db.Model):
     book_id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(150), nullable=False)
     author = db.Column(db.String(150), nullable=False)
     isbn = db.Column(db.String(13), unique=True, nullable=False)
     genre = db.Column(db.Integer, db.ForeignKey(
-       "genres.genre_id"), nullable=False)
+        "genres.genre_id"), nullable=False)
     description = db.Column(db.String(1000), nullable=False, server_default='')
     avg_rating = db.Column(db.Float, nullable=False)
     total_ratings = db.Column(db.Integer, nullable=False)
     cover_img = db.Column(db.String(500), nullable=False)
-    status = db.Column(db.Enum('Available', 'Not Available', name='status_type'), nullable=False)
+    status = db.Column(db.Enum('Available', 'Not Available',
+                       name='status_type'), nullable=False)
 
     def __repr__(self):
         return f'<Book {self.title}>'
@@ -161,7 +161,7 @@ class Friendship(db.Model):
     user1 = db.relationship('User', backref='friendship1',
                             foreign_keys=[user1_id])
     friendship_status = db.Column(db.Enum(
-        'Accepted', 'Pending', 'Rejected', name='friendship_type'), nullable=False)
+        'Accepted', 'Pending', 'Deleted', name='friendship_type'), nullable=False, default='Pending')
 
     def __repr__(self):
         return f'<Friendship {self.friendship_id}>'

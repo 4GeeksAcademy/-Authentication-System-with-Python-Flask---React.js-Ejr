@@ -7,15 +7,15 @@ export const Friends = () => {
   const [userInformation, setUserInformation] = useState(null)
 
   useEffect(() => {
-    actions.getFriendsList().then((data) => {
+    actions.getUserInformation().then((data) => {
       if (data) {
+        setUserInformation(data);
+        actions.getFriendsList().then((data) => {
         setFriendsList(data);
+        });
       }
     });
-    actions.getUserInformation().then((data) => {
-      console.log("data", data)
-      setUserInformation(data);
-    });
+
   }, [])
 
 
@@ -48,7 +48,7 @@ export const Friends = () => {
           friendsList.map((friend) => {
             let user = friend.user2;
             if (userInformation.user_id == friend.user2_id)
-              user =  friend.user1;
+              user = friend.user1;
             return (
               <div className="friends_list" key={friend.friendship_id} >
                 <div className="card mb-3" style={{ border: "none" }}>
@@ -61,7 +61,7 @@ export const Friends = () => {
                         <h5 className="card-title">{user.name}{user.lastname}</h5>
                         <div className="row">
                           <div className="col">
-                            <a href="#" className="trash">Delete Friend</a>
+                            <button className="btn" onClick={() => actions.deleteFriend(friend.friendship_id)} style={{ color: "red", textDecoration: "underline", border: "none" }}>Delete Friend</button>
                           </div>
                         </div>
                       </div>

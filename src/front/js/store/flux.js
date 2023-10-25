@@ -348,7 +348,35 @@ const getState = ({ getStore, getActions, setStore }) => {
 					});
 			},
 
-			// still not used anywhere
+			// delete a friend from your list
+			deleteFriend: (friendship_id) => {
+				const store = getStore();
+				const token = store.token;
+				const headers = {
+				  "Content-Type": "application/json",
+				  "Authorization": `Bearer ${token}`,
+				};
+			  
+				const options = {
+				  method: 'DELETE',
+				  headers: headers,
+				};
+			  
+				return fetch(process.env.BACKEND_URL + `api/friend_list/${friendship_id}/delete`, options)
+				  .then((response) => {
+					if (response.ok) return response.json();
+					else throw Error('Something went wrong deleting the friend');
+				  })
+				  .then(data => {
+					console.log(data);
+					return data;
+				  })
+				  .catch((error) => {
+					console.error(error);
+				  });
+			},
+
+			// still not used anywhere, will be in wishlist view 
 			UserWishlist: (userId) => {
 				const store = getStore();
 				const token = store.token;
@@ -400,7 +428,37 @@ const getState = ({ getStore, getActions, setStore }) => {
 						throw error;
 					});
 			},
-
+			// delete book from wishlist, will go on the view wishlist
+			deleteBookWishlist: (bookId) => {
+				const store = getStore();
+				const token = store.token;
+				const headers = {
+				  "Content-Type": "application/json",
+				  "Authorization": `Bearer ${token}`,
+				};
+			  
+				const options = {
+				  method: 'DELETE',
+				  headers: headers,
+				};
+			  
+				return fetch(process.env.BACKEND_URL + `api/wishlist/book/${bookId}`, options)
+				  .then((response) => {
+					if (response.ok) {
+					  return response.json();
+					} else {
+					  throw Error('Something went wrong deleting the book from the wishlist');
+					}
+				  })
+				  .then((data) => {
+					console.log(data);
+					return data;
+				  })
+				  .catch((error) => {
+					console.error(error);
+				  });
+			  },
+			  
 
 			// used to retrieve books, used in ourbooks view for search bar(genre and all), carousselhomepage
 			getAllBooks: (setBooks, searchTerm = '', genre = '') => {

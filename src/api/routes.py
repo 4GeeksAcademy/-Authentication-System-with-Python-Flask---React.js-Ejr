@@ -177,7 +177,7 @@ def get_book(book_id):
     else:
         return jsonify({"Book not found"}), 404
 
-# GET all the favorites/wishlist that belong to a current user
+# GET all the books from wishlist that belong to a current user, action UserWishlist
 
 
 @api.route('/users/wishlist/<int:user_id>', methods=['GET'])
@@ -192,7 +192,7 @@ def get_user_wishlist_by_id(user_id):
     serialized_wishlist = [book.serialize() for book in wishlist]
     return jsonify(serialized_wishlist), 200
 
-# POST to add a book to the wishlist
+# POST to add a book to the wishlist, action addToWishlist
 
 
 @api.route('/wishlist/book/<int:book_id>', methods=['POST'])
@@ -214,7 +214,7 @@ def add_wishlist_book(book_id):
     return jsonify({"Book added to wishlist"}), 201
 
 
-# DELETE to remove a specific book from the wishlist
+# DELETE to remove a specific book from the wishlist, action deleteBookWishlist
 
 
 @api.route('/wishlist/book/<int:book_id>', methods=['DELETE'])
@@ -231,42 +231,6 @@ def delete_wishlist_book(book_id):
         return jsonify({"Wishlist book deleted"}), 200
     else:
         return jsonify({"Wishlist book not found"}), 404
-
-# POST to accept book swap request
-
-
-@api.route('/book_swap_requests/<int:request_id>/accept', methods=['POST'])
-@jwt_required()
-def accept_book_swap_request(request_id):
-    user_id = get_jwt_identity()
-    if user_id is None:
-        return jsonify({"User not authenticated"}), 401
-    book_swap_request = BookSwapRequest.query.get(request_id)
-    if book_swap_request is None:
-        return jsonify({"Book swap request not found"}), 404
-    if book_swap_request.receiver_user_id != user_id:
-        return jsonify({"Unauthorized to accept this request"}), 403
-    book_swap_request.request_status = 'Accepted'
-    db.session.commit()
-    return jsonify({"Book swap request accepted"}), 200
-
-# DELETE to decline book swap request
-
-
-@api.route('/book_swap_requests/<int:request_id>/decline', methods=['DELETE'])
-@jwt_required()
-def decline_book_swap_request(request_id):
-    user_id = get_jwt_identity()
-    if user_id is None:
-        return jsonify({"User not authenticated"}), 401
-    book_swap_request = BookSwapRequest.query.get(request_id)
-    if book_swap_request is None:
-        return jsonify({"Book swap request not found"}), 404
-    if book_swap_request.receiver_user_id != user_id:
-        return jsonify({"Unauthorized to decline this request"}), 403
-    book_swap_request.request_status = 'Rejected'
-    db.session.commit()
-    return jsonify({"Book swap request declined"}), 200
 
 
 # POST to add friend, action friendshipRequest
@@ -351,23 +315,24 @@ def get_friends():
     results = [friendship.serialize() for friendship in friends]
     return jsonify(results), 200
 
-# DELETE to decline friend request
+# DELETE to delete friend from list, action deleteFriend
 
 
-@api.route('/friend_requests/<int:request_id>/decline', methods=['DELETE'])
+@api.route('/friend_list/<int:friendship_id>/delete', methods=['DELETE'])
 @jwt_required()
-def decline_friend_request(request_id):
+def delete_friend(friendship_id):
     user_id = get_jwt_identity()
     if user_id is None:
         return jsonify({"message": "User not authenticated"}), 401
-    friend_request = Friendship.query.get(request_id)
-    if friend_request is None:
-        return jsonify({"message": "Friend request not found"}), 404
-    if friend_request.user2_id != user_id:
-        return jsonify({"message": "Unauthorized to decline this request"}), 403
-    friend_request.friendship_status = 'Rejected'
-    db.session.commit()
-    return jsonify({"message": "Friend request declined"}), 200
+    friend_list = Friendship.query.get(friendship_id)
+    if friend_list is None:
+        return jsonify({"message": "Friend not found"}), 404
+    if (friend_list.user2_id == user_id or friend_list.user1_id == user_id):
+        friend_list.friendship_status = 'Rejected'
+        db.session.commit()
+        return jsonify({"message": "Friend deleted"}), 200
+    else:
+        return jsonify({"message": "Unauthorized to delete this request"}), 403
 
 
 # POST to get review in the database

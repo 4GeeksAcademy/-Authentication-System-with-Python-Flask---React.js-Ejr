@@ -101,13 +101,6 @@ export const OurBooks = () => {
                                         <p className="card-author" style={{ margin: "10px 0" }}>
                                             {book.author}
                                         </p>
-                                        <div className="my-4 row">
-                                            <div className="col">
-                                                <a href="#" className="paper_plane">
-                                                    <i className="far fa-paper-plane"></i> Request Swap
-                                                </a>
-                                            </div>
-                                        </div>
                                         <div className="row">
                                             <div className="col">
                                                 <Link to={`/book-details/${book.book_id}`} className="view_more">
