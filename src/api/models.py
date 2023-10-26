@@ -161,7 +161,7 @@ class Friendship(db.Model):
     user1 = db.relationship('User', backref='friendship1',
                             foreign_keys=[user1_id])
     friendship_status = db.Column(db.Enum(
-        'Accepted', 'Pending', 'Deleted', name='friendship_type'), nullable=False, default='Pending')
+        'Accepted', 'Pending', 'Rejected', name='friendship_type'), nullable=False, default='Pending')
 
     def __repr__(self):
         return f'<Friendship {self.friendship_id}>'

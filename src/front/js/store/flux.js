@@ -403,7 +403,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					});
 			},
 			//add to wishlist once the button is clicked on book-details view
-			addToWishlist: (userId) => {
+			addToWishlist: (book_id) => {
 				const store = getStore();
 				const token = store.token;
 				const headers = {
@@ -414,7 +414,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					method: 'POST',
 					headers: headers,
 				};
-				return fetch(process.env.BACKEND_URL + `api/wishlist/book/${userId}`, options)
+				return fetch(process.env.BACKEND_URL + `api/wishlist/book/${book_id}`, options)
 					.then(response => {
 						if (response.ok) return response.json();
 						else throw Error('Failed to fetch user\'s wishlist');

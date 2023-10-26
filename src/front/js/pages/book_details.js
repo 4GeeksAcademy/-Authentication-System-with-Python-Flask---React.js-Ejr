@@ -3,7 +3,7 @@ import { Context } from "../store/appContext";
 import { Review } from "../component/review";
 import ModalReview from "../component/modal-review";
 import { useParams } from "react-router-dom";
-import { useHistory } from "react-router-dom";
+
 
 
 import "../../styles/bookdetails.css";
@@ -19,8 +19,8 @@ export const BookDetails = () => {
 
 	console.log('id', params.id)
 
-	const handleAddWishlist = () => {
-        actions.addToWishlist()
+	const handleAddWishlist = (book_id) => {
+        actions.addToWishlist(book_id)
     }
 
 	return (
@@ -46,7 +46,7 @@ export const BookDetails = () => {
 							<a href="/create-account" className="btn btn-request-swap" role="button"><i class="far fa-paper-plane"></i> Request Swap</a>
 						</div>
 						<div className="container-fluid py-5">
-							<a href="..." className="btn btn-add-wishlist" role="button"><i class="far fa-heart" onClick={handleAddWishlist}></i> Add to Wishlist</a>
+							<button type="button" className="btn btn-add-wishlist" onClick={() => handleAddWishlist(bookInfo.book_id)}><i class="far fa-heart"></i> Add to Wishlist</button>
 						</div>
 						<div className="container-fluid py-5">
 							<button type="button" className="btn btn-review-book" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo"><i class="far fa-star"></i> Review Book</button>

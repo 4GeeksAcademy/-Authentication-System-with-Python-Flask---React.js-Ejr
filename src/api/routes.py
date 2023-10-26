@@ -200,18 +200,19 @@ def get_user_wishlist_by_id(user_id):
 def add_wishlist_book(book_id):
     user_id = get_jwt_identity()
     if user_id is None:
-        return jsonify({"User not authenticated"}), 401
+        return jsonify({"message": "User not authenticated"}), 401
     book = Books.query.get(book_id)
     if book is None:
-        return jsonify({"Book not found"}), 404
+        return jsonify({"message": "Book not found"}), 404
     valid_wishlist = Wishlist.query.filter_by(
         user_id=user_id, book_id=book_id).first()
+    print(valid_wishlist)
     if valid_wishlist:
-        return jsonify({"Book is already a favorite"}), 400
+        return jsonify({"message": "Book is already a favorite"}), 400
     new_wishlist = Wishlist(user_id=user_id, book_id=book_id)
     db.session.add(new_wishlist)
     db.session.commit()
-    return jsonify({"Book added to wishlist"}), 201
+    return jsonify({"message": "Book added to Wishlist"}), 201
 
 
 # DELETE to remove a specific book from the wishlist, action deleteBookWishlist
