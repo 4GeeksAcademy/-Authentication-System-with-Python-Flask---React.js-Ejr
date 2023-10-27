@@ -183,6 +183,8 @@ class Wishlist(db.Model):
         "user.user_id"), nullable=False)
     book_id = db.Column(db.Integer, db.ForeignKey(
         "books.book_id"), nullable=False)
+    book = db.relationship('Books', backref='wishlist',
+                            foreign_keys=[book_id])
 
     def __repr__(self):
         return f'<Wishlist {self.wishlist_id}>'
@@ -192,6 +194,7 @@ class Wishlist(db.Model):
             "wishlist_id": self.wishlist_id,
             "user_id": self.user_id,
             "book_id": self.book_id,
+            "book": self.book.serialize()
         }
 
 
