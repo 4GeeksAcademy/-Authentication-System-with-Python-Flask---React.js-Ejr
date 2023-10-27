@@ -1,4 +1,4 @@
-import { redirect } from "react-router-dom";
+
 
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
@@ -19,7 +19,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			token: null,
 			books: [],
-			//user: {},
+			user: null,
 			//friendship: [],
 			//wishlist: [],
 			//book: [],
@@ -112,12 +112,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 			//  Used in the publicProfile view, checks if user is logged in to display user data
 			verifyIfUserLoggedIn: () => {
 				const token = localStorage.getItem('token');
-
+				const user = localStorage.getItem('user')
 				if (token) {
-					setStore({ token: token });
+					setStore({ token: token, user: JSON.parse(user) });
 					return true
 				}
-				setStore({ token: null });
+				setStore({ token: null, user: null });
 				return false
 
 			},
@@ -139,6 +139,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 					.then(data => {
 						localStorage.setItem("token", data.access_token);
 						setStore({ token: data.access_token });
+						getActions().getUserInformation().then(data => {
+							localStorage.setItem("user", JSON.stringify(data));
+							setStore({ user: data })
+						})
 					})
 					.catch(error => {
 						console.log(error)
@@ -204,9 +208,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 						return response.json();
 					})
 					.then(data => {
-						console.log(data);
-						localStorage.setItem("userData", JSON.stringify(data));
-						setStore({ userData: data });
 						return data
 					})
 					.catch(error => {
@@ -353,27 +354,27 @@ const getState = ({ getStore, getActions, setStore }) => {
 				const store = getStore();
 				const token = store.token;
 				const headers = {
-				  "Content-Type": "application/json",
-				  "Authorization": `Bearer ${token}`,
+					"Content-Type": "application/json",
+					"Authorization": `Bearer ${token}`,
 				};
-			  
+
 				const options = {
-				  method: 'DELETE',
-				  headers: headers,
+					method: 'DELETE',
+					headers: headers,
 				};
-			  
+
 				return fetch(process.env.BACKEND_URL + `api/friend_list/${friendship_id}/delete`, options)
-				  .then((response) => {
-					if (response.ok) return response.json();
-					else throw Error('Something went wrong deleting the friend');
-				  })
-				  .then(data => {
-					console.log(data);
-					return data;
-				  })
-				  .catch((error) => {
-					console.error(error);
-				  });
+					.then((response) => {
+						if (response.ok) return response.json();
+						else throw Error('Something went wrong deleting the friend');
+					})
+					.then(data => {
+						console.log(data);
+						return data;
+					})
+					.catch((error) => {
+						console.error(error);
+					});
 			},
 
 			// still not used anywhere, will be in wishlist view 
@@ -433,32 +434,32 @@ const getState = ({ getStore, getActions, setStore }) => {
 				const store = getStore();
 				const token = store.token;
 				const headers = {
-				  "Content-Type": "application/json",
-				  "Authorization": `Bearer ${token}`,
+					"Content-Type": "application/json",
+					"Authorization": `Bearer ${token}`,
 				};
-			  
+
 				const options = {
-				  method: 'DELETE',
-				  headers: headers,
+					method: 'DELETE',
+					headers: headers,
 				};
-			  
+
 				return fetch(process.env.BACKEND_URL + `api/wishlist/book/${bookId}`, options)
-				  .then((response) => {
-					if (response.ok) {
-					  return response.json();
-					} else {
-					  throw Error('Something went wrong deleting the book from the wishlist');
-					}
-				  })
-				  .then((data) => {
-					console.log(data);
-					return data;
-				  })
-				  .catch((error) => {
-					console.error(error);
-				  });
-			  },
-			  
+					.then((response) => {
+						if (response.ok) {
+							return response.json();
+						} else {
+							throw Error('Something went wrong deleting the book from the wishlist');
+						}
+					})
+					.then((data) => {
+						console.log(data);
+						return data;
+					})
+					.catch((error) => {
+						console.error(error);
+					});
+			},
+
 
 			// used to retrieve books, used in ourbooks view for search bar(genre and all), carousselhomepage
 			getAllBooks: (setBooks, searchTerm = '', genre = '') => {

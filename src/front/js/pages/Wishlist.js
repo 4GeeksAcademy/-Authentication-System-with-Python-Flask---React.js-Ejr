@@ -3,25 +3,20 @@ import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
 
 export const Wishlist = () => {
-    const { actions } = useContext(Context);
-    const [books, setBooks] = useState([]);
-    const [userInformation, setUserInformation] = useState(null)
+    const { store, actions } = useContext(Context);
     const [userWishlist, setUserWishlist] = useState([])
 
+
+    useEffect(()=> {
+        actions.verifyIfUserLoggedIn();
+    },[])
+
     useEffect(() => {
-        actions.getUserInformation().then((data) => {
-            if (data) {
-                setUserInformation(data);
-                actions.UserWishlist(data.user_id).then((data) => {
-                    setUserWishlist(data);
-                    actions.getAllBooks(booksData => {
-                        setBooks(booksData);
-                    });
-                });
-            }
+        actions.UserWishlist(store.user.user_id).then((data) => {
+            setUserWishlist(data);
         });
 
-    }, [])
+    }, [store.user])
 
 
     return (
