@@ -4,6 +4,7 @@ import ScrollToTop from "./component/scrollToTop";
 import { BackendURL } from "./component/backendURL";
 
 import { Home } from "./pages/home";
+import { Users } from "./pages/Users";
 import { CreateAccount } from "./pages/create_account";
 import { Login } from "./pages/login"
 import { Reset } from "./pages/reset_password";
@@ -51,6 +52,7 @@ const Layout = () => {
                         <Route element={<Wishlist />} path="/Wishlist" />
                         <Route element={<OurBooks />} path="/OurBooks" />
                         <Route element={<Friends />} path="/Friends" />
+                        <Route element={<Users />} path="/Users" />
                         <Route element={<PublicProfile />} path="/PublicProfile" />
                         <Route element={<PublicProfile />} path="/PublicProfile/:id" />
                         <Route element={<BookCarousel />} path="/carousel" />

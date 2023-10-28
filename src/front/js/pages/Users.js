@@ -1,21 +1,30 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../store/appContext";
+import { useNavigate } from "react-router-dom";
 
-export const Friends = () => {
+export const Users = () => {
   const { store, actions } = useContext(Context);
-  const [friendsList, setFriendsList] = useState([]);
+  const [usersList, setUsersList] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    actions.verifyIfUserLoggedIn();
+    console.log(actions.verifyIfUserLoggedIn())
+    if (actions.verifyIfUserLoggedIn() === false) {
+      navigate("/")
+    }
   }, [])
 
 
   useEffect(() => {
-    actions.getFriendsList().then((data) => {
-      setFriendsList(data);
+    actions.getUsersList().then((data) => {
+      setUsersList(data);
     });
 
   }, [store.user])
+
+  const handleProfileClick = (userId) => {
+    navigate("/publicprofile/" + userId);
+  }
 
   return (
     <div className="friends_box container mt-5" style={{ width: "50rem" }}>
@@ -23,7 +32,7 @@ export const Friends = () => {
         <div className="row">
           <div className="col-6">
             <div className="title">
-              <h1>My Friends</h1>
+              <h1>Network Users</h1>
             </div>
           </div>
           <div className="col-6">
@@ -42,13 +51,10 @@ export const Friends = () => {
           </div>
         </div>
         <hr className="my-4 bold-hr" />
-        {friendsList && friendsList.length > 0 ? (
-          friendsList.map((friend) => {
-            let user = friend.user2;
-            if (store.user.user_id == friend.user2_id)
-              user = friend.user1;
+        {usersList && usersList.length > 0 ? (
+          usersList.map((user) => {
             return (
-              <div className="friends_list" key={friend.friendship_id} >
+              <div className="friends_list" key={user.user_id} >
                 <div className="card mb-3" style={{ border: "none" }}>
                   <div className="row g-0">
                     <div className="col-md-2 mx-auto">
@@ -59,7 +65,7 @@ export const Friends = () => {
                         <h5 className="card-title">{user.name}{user.lastname}</h5>
                         <div className="row">
                           <div className="col">
-                            <button className="btn" onClick={() => actions.deleteFriend(friend.friendship_id)} style={{ color: "red", textDecoration: "underline", border: "none" }}>Delete Friend</button>
+                            <button className="btn" onClick={() => handleProfileClick(user.user_id)} style={{ color: "red", textDecoration: "underline", border: "none" }}>View Profile</button>
                           </div>
                         </div>
                       </div>
@@ -70,7 +76,7 @@ export const Friends = () => {
             )
           })
         ) : (
-          <div>No friends to display.</div>
+          <div>No User to display.</div>
         )}
       </div>
     </div>

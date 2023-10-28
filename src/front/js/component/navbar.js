@@ -34,7 +34,7 @@ export const Navbar = () => {
   )
 
   useEffect(() => { console.log(store.token) }, [])
-  
+
   return (
     <nav className="navbar navbar-expand-lg bg-body-tertiary">
       <div className="container-fluid">
@@ -49,6 +49,11 @@ export const Navbar = () => {
             <li className="nav-item">
               <Link className="nav-link active" to="/OurBooks">
                 Our Books
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link active" to="/Users">
+                Users
               </Link>
             </li>
             <li className="nav-item">

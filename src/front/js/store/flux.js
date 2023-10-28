@@ -122,6 +122,20 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			},
 
+			getToken: () => {
+				const store = getStore();
+				let token = store.token;
+				if (!token) {
+					token = localStorage.getItem('token');
+					const user = localStorage.getItem('user')
+					if (token) {
+						setStore({ token: token, user: JSON.parse(user) });
+						return token
+					}
+				}
+				return null;
+			},
+
 			//login action, self explanatory 
 			login: (email, password) => {
 				var options = {
@@ -239,6 +253,34 @@ const getState = ({ getStore, getActions, setStore }) => {
 						return data
 					})
 					.catch(error => {
+						console.error(error);
+					});
+			},
+
+			getUsersList: () => {
+				//const token = getActions().getToken()
+				const store = getStore();
+				const token = store.token;
+				const headers = {
+					"Content-Type": "application/json",
+					"Authorization": `Bearer ${token}`,
+				};
+
+				const options = {
+					method: 'GET',
+					headers: headers,
+				};
+
+				return fetch(process.env.BACKEND_URL + 'api/users', options)
+					.then((response) => {
+						if (response.ok) return response.json();
+						else throw Error('Failed to fetch users');
+					})
+					.then(data => {
+						console.log(data);
+						return data;
+					})
+					.catch((error) => {
 						console.error(error);
 					});
 			},
