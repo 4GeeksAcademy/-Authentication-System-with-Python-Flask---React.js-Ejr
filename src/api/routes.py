@@ -223,15 +223,16 @@ def add_wishlist_book(book_id):
 def delete_wishlist_book(book_id):
     user_id = get_jwt_identity()
     if user_id is None:
-        return jsonify({"User not authenticated"}), 401
-    wishlist = Wishlist.query.filter_by(
-        user_id=user_id, item_type='book', item_id=book_id).first()
-    if wishlist:
-        db.session.delete(wishlist)
+        return jsonify({"message": "User not authenticated"}), 401
+
+    wishlist_item = Wishlist.query.filter_by(user_id=user_id, book_id=book_id).first()
+
+    if wishlist_item:
+        db.session.delete(wishlist_item)
         db.session.commit()
-        return jsonify({"Wishlist book deleted"}), 200
+        return jsonify({"message": "Book removed from wishlist"}), 200
     else:
-        return jsonify({"Wishlist book not found"}), 404
+        return jsonify({"message": "Book not found in the wishlist"}), 404
 
 
 # POST to add friend, action friendshipRequest

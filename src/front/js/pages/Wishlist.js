@@ -67,7 +67,7 @@ export const Wishlist = () => {
                                     </div>
                                     <div className="row">
                                         <div className="col">
-                                            <a href="#" className="trash"><i className="far fa-trash-alt"></i> Remove</a>
+                                            <a href="#" className="trash" onClick={() => actions.deleteBookWishlist(item.book_id)} ><i className="far fa-trash-alt"></i> Remove</a>
                                         </div>
                                     </div>
                                 </div>

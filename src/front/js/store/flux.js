@@ -429,7 +429,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						throw error;
 					});
 			},
-			// delete book from wishlist, will go on the view wishlist
+			// delete book from wishlist, will go on the view wishlist, delete button
 			deleteBookWishlist: (bookId) => {
 				const store = getStore();
 				const token = store.token;
