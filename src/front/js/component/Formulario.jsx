@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const Formulario = ({ onRegister, onReturn }) => {
+export const Formulario = ({ onRegister, onReturn }) => {
   const [formData, setFormData] = useState({
     nombre: '',
     apellido: '',
@@ -91,3 +91,4 @@ const Formulario = ({ onRegister, onReturn }) => {
 };
 
 export default Formulario;
+
