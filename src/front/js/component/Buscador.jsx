@@ -5,6 +5,8 @@ import './elbuscador.css';
 export const Buscador = () => {
    return (
       <Container className="buttons-container">
+        <h3> Selecciona tu busqueda</h3>
+        <br/>
         <Row className="justify-content-center">
           <Col md="auto">
             <Button variant="dark">
