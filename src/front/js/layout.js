@@ -12,7 +12,7 @@ import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 import { Formulario } from "./component/Formulario.jsx";
 import { OtroFormulario } from "./component/OtroFormulario.jsx";
-
+import { Buscador } from "./component/Buscador.jsx";
 
 
 
@@ -36,6 +36,7 @@ const Layout = () => {
                         <Route path="/single" element={<Single />} />
                         <Route path="/Formulario" element={<Formulario />} />
                         <Route path="/OtroFormulario" element={<OtroFormulario />} />
+                        <Route path="/Buscador" element={<Buscador />} />
                         <Route path="*" element={<h1>Not found!</h1>} />     
                     </Routes>
                     <Footer />

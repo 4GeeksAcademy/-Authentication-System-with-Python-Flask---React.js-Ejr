@@ -4,7 +4,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
 			Formulario:[],
-			OtroFormulario:[]
+			OtroFormulario:[],
+			Buscador:[]
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
