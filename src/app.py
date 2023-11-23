@@ -6,6 +6,7 @@ import datetime
 from flask import Flask, request, jsonify, url_for, send_from_directory
 from flask_migrate import Migrate
 from flask_jwt_extended import JWTManager, create_access_token, get_jwt_identity, jwt_required
+from flask_cors import CORS
 from api.utils import APIException, generate_sitemap
 from api.models import db, User
 from api.routes import api
@@ -25,9 +26,7 @@ app.url_map.strict_slashes = False
 # database condiguration
 db_url = os.getenv("DATABASE_URL")
 if db_url is not None:
-    app.config['SQLALCHEMY_DATABASE_URI'] = "postgres://postgres:postgres@localhost:5433/dbp4g"
-else:
-    app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:////tmp/test.db"
+    app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://postgres:postgres@localhost:5433/dbp4g"
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 MIGRATE = Migrate(app, db, compare_type=True)
@@ -46,6 +45,7 @@ app.register_blueprint(api, url_prefix='/api')
 
 
 jwt = JWTManager (app)
+CORS(app)
 
 app.config['JWT_SECRET_KEY'] = os.getenv('SECRET_KEY')
 
@@ -80,7 +80,7 @@ def login():
     password = request.json.get("password") # None
     
     if not email:
-        return jsonify({ "error": "Username es obligatorio"}), 400
+        return jsonify({ "error": "email es obligatorio"}), 400
     
     if not password:
         return jsonify({ "error": "Password es obligatorio"}), 400
@@ -88,10 +88,10 @@ def login():
     userFound = User.query.filter_by(email=email).first()
     
     if not userFound:
-        return jsonify({ "error": "username/password son incorrectos!!"}), 401
+        return jsonify({ "error": "email/password son incorrectos!!"}), 401
     
     if not check_password_hash(userFound.password, password):
-        return jsonify({ "error": "username/password son incorrectos!!"}), 401
+        return jsonify({ "error": "email/password son incorrectos!!"}), 401
     
     expires = datetime.timedelta(days=3)
     access_token = create_access_token(identity=userFound.id, expires_delta=expires)
@@ -106,22 +106,22 @@ def login():
 @app.route('/api/register', methods=['POST'])
 def register():
     
-    username = request.json.get("username") # None
+    email = request.json.get("email") # None
     password = request.json.get("password") # None
     
-    if not username:
-        return jsonify({ "error": "Username es obligatorio"}), 400
+    if not email:
+        return jsonify({ "error": "email es obligatorio"}), 400
     
     if not password:
         return jsonify({ "error": "Password es obligatorio"}), 400
     
-    userFound = User.query.filter_by(username=username).first()
+    userFound = User.query.filter_by(email=email).first()
     
     if userFound:
-        return jsonify({ "error": "Username already exists"}), 400
+        return jsonify({ "error": "email already exists"}), 400
     
     user = User()
-    user.username = username
+    user.email = email
     user.password = generate_password_hash(password)
     
     db.session.add(user)
