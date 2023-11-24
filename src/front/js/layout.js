@@ -6,6 +6,7 @@ import { BackendURL } from "./component/backendURL";
 import { Home } from "./pages/home";
 import { Demo } from "./pages/demo";
 import { Single } from "./pages/single";
+import { Login } from "./pages/login";
 import injectContext from "./store/appContext";
 
 import { Navbar } from "./component/navbar";
@@ -13,6 +14,7 @@ import { Footer } from "./component/footer";
 import { Formulario } from "./component/Formulario.jsx";
 import { OtroFormulario } from "./component/OtroFormulario.jsx";
 import { Buscador } from "./component/Buscador.jsx";
+
 
 
 
@@ -38,6 +40,10 @@ const Layout = () => {
                         <Route path="/OtroFormulario" element={<OtroFormulario />} />
                         <Route path="/Buscador" element={<Buscador />} />
                         <Route path="*" element={<h1>Not found!</h1>} />     
+                        <Route element={<Home />} path="/" />
+                        <Route element={<Demo />} path="/demo" />
+                        <Route element={<Single />} path="/single/:theid" />
+                        <Route element={<Login />} path="/login" />
                     </Routes>
                     <Footer />
                 </ScrollToTop>

@@ -1,52 +1,96 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { Component } from 'react';
+import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 
-export const OtroFormulario= () => {
-	return (
-    <div className="container">
-        <h1 class="my-4">Haro 3 Regresar</h1>
-        <form>
-            <div className="mb-3">
-                <label for="nombre" className="form-label">Nombre</label>
-                <input type="text" className="form-control" id="nombre" required/>
-            </div>
-            <div classNAme="mb-3">
-                <label for="apellido" className="form-label">Apellido</label>
-                <input type="text" className="form-control" id="apellido" required/>
-            </div>
-            <div className="mb-3">
-                <label for="rut" className="form-label">Rut</label>
-                <input type="text" className="form-control" id="rut" required/>
-            </div>
-            <div className="mb-3">
-                <label for="email" className="form-label">Correo electronico</label>
-                <input type="email" className="form-control" id="email" required/>
-            </div>
-            <div className="mb-3">
-                <label for="telefono" className="form-label">Teléfono</label>
-                <input type="text" className="form-control" id="telefono" required/>
-            </div>
-            <div className="mb-3">
-                <label for="fecha_nacimiento" className="form-label">Fecha de nacimiento</label>
-                <input type="date" className="form-control" id="fecha_nacimiento" required/>
-            </div>
-            <div className="mb-3">
-                <label for="rubro" className="form-label">Rubro</label>
-                <select className="form-select" id="rubro" required>
-                    <option value="">Seleccione un rubro</option>
-                    <option value="carpinteria">Carpinteria</option>
-                    <option value="electricista">Electricista</option>
-                    <option value="gasfiteria">Gasfitería</option>
-                    <option value="pintor">Pintor</option>
-                    <option value="aseo">Aseo</option>
-                </select>
-            </div>
-            <div className="mb-3 form-check">
-                <input type="checkbox" className="form-check-input" id="terms_conditions" required/>
-                <label className="form-check-label" for="terms_conditions">Acepto los Términos y Condiciones</label>
-            </div>
-            <button type="submit" className="btn btn-primary">Enviar</button>
-        </form>
-    </div>
-	);
-};
+export class OtroFormulario extends Component {
+ render() {
+    return (
+      <Container>
+        <Row>
+          <Col>
+            <Form>
+              <h2>Bienvenido, Por favor rellene los campos, para ofrecer sus Servicios</h2>
+              <Form.Group controlId="formNombre">
+                <Form.Label>Nombre</Form.Label>
+                <Form.Control type="text" placeholder="Ingrese su nombre" />
+              </Form.Group>
+
+              <Form.Group controlId="formApellido">
+                <Form.Label>Apellido</Form.Label>
+                <Form.Control type="text" placeholder="Ingrese su apellido" />
+              </Form.Group>
+
+              <Form.Group controlId="formRut">
+                <Form.Label>Rut</Form.Label>
+                <Form.Control type="text" placeholder="Ingrese su rut" />
+              </Form.Group>
+
+              <Form.Group controlId="formEmail">
+                <Form.Label>Correo electronico</Form.Label>
+                <Form.Control type="email" placeholder="Ingrese su correo electronico" />
+              </Form.Group>
+
+              <Form.Group controlId="formTelefono">
+                <Form.Label>Teléfono</Form.Label>
+                <Form.Control type="text" placeholder="Ingrese su telefono" />
+              </Form.Group>
+
+              <Form.Group controlId="formFechaNacimiento">
+                <Form.Label>Fecha de nacimiento</Form.Label>
+                <Form.Control type="date" />
+              </Form.Group>
+
+              <Form.Group controlId="formComuna">
+                <Form.Label>Comuna</Form.Label>
+                <Form.Control as="select">
+                 <option>La Florida</option>
+                 <option>La Reina</option>
+                 <option>Providencia</option>
+                 <option>Santiago Centro</option>
+                 <option>Independencia</option>
+                </Form.Control>
+              </Form.Group>
+
+              <Form.Group controlId="formRubro">
+                <Form.Label>Rubro</Form.Label>
+                <Form.Control as="select">
+                 <option>Carpinteria</option>
+                 <option>Electricista</option>
+                 <option>Gasfitería</option>
+                 <option>Pintor</option>
+                 <option>Aseo</option>
+                </Form.Control>
+              </Form.Group>
+
+
+
+              <Form.Group controlId="formTerminosCondiciones">
+                <h4>Terms and Conditions:</h4>
+                <input type="text">
+                  
+                  
+                  
+                  
+                </input>
+                
+              <Form.Check type="checkbox" label="Acepto los términos y condiciones" />
+              <br/>
+              <Button variant="primary" type="submit">
+              Aceptar
+              </Button>   <Button variant="secondary" type="reset">
+                Cancelar
+              </Button>
+              </Form.Group>
+              <br/>
+             
+              <Button variant="primary" type="submit">
+                Regresar
+              </Button>
+            </Form>
+          </Col>
+        </Row>
+      </Container>
+    );
+ }
+}
+
+export default OtroFormulario;
