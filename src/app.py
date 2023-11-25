@@ -25,13 +25,11 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 MIGRATE = Migrate(app, db, compare_type=True)
 db.init_app(app)
 
-# Agregar el admin
+
 setup_admin(app)
 
-# Agregar los comandos
 setup_commands(app)
 
-# Registrar todas las rutas de la API con el prefijo "api"
 app.register_blueprint(api, url_prefix='/api')
 
 
@@ -88,7 +86,6 @@ def login():
 
     return jsonify(data), 200
 
-# Endpoint de registro
 @app.route('/api/register', methods=['POST'])
 def register():
 
@@ -100,8 +97,10 @@ def register():
     telefono = request.json.get ("telefono")
     fecha_de_nacimiento = request.json.get ("fecha de nacimiento")
 
-    if not email or not password:
-        return jsonify({ "error": "Email y contraseña son obligatorios"}), 400
+    if not email:
+        return jsonify(("error: email obligatorio")), 400
+    if not password:
+        return jsonify(("error: password obligatorio")), 400
     if not nombre:
         return jsonify(("error: nombre obligatorio")), 400
     if not apellido:
@@ -127,6 +126,11 @@ def register():
 
     new_user.email = email
     new_user.password = generate_password_hash(password)
+    new_user.nombre = nombre
+    new_user.apellido = apellido
+    new_user.rut = rut
+    new_user.telefono = telefono
+    new_user.fecha_de_nacimiento = fecha_de_nacimiento
 
     db.session.add(new_user)
     db.session.commit()
@@ -141,7 +145,6 @@ def register():
 
     return jsonify(data), 200
 
-# Endpoint del perfil del usuario
 @app.route('/api/profile', methods=['GET'])
 @jwt_required()
 def profile():
