@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "74f92d76f687bb774828613a3a513123fe2ffdb429b95b351d29721dddfd3fb8"
+            "sha256": "7a20289fdddf004a551a0c5ee12be0b5cb17457041a30e5ae2bb3572af73e410"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -54,8 +54,19 @@
             ],
             "index": "pypi",
             "version": "==1.36.0"
+<<<<<<< HEAD
 
 
+=======
+        },
+        "colorama": {
+            "hashes": [
+                "sha256:08695f5cb7ed6e0531a20572697297273c47b8cae5a63ffc6d6ed5c201be6e44",
+                "sha256:4f1d9991f5acc0ca119f9d443620b77f9d6b33703e51011c16baf57afb285fc6"
+            ],
+            "markers": "platform_system == 'Windows'",
+            "version": "==0.4.6"
+>>>>>>> catalina
         },
         "flask": {
             "hashes": [
@@ -79,6 +90,7 @@
             "hashes": [
                 "sha256:bc3492bfd6368d27cfe79c7821df5a8a319e1a6d5eab277a3794be19bdc51783",
                 "sha256:f268522fcb2f73e2ecdde1ef45e2fd5c71cc48fe03cffb4b441c6d1b40684eb0"
+<<<<<<< HEAD
             ],
             "index": "pypi",
             "version": "==4.0.0"
@@ -92,6 +104,11 @@
             "markers": "python_version >= '3.7' and python_version < '4'",
             "version": "==4.5.3"
 
+=======
+            ],
+            "index": "pypi",
+            "version": "==4.0.0"
+>>>>>>> catalina
         },
         "flask-migrate": {
             "hashes": [
@@ -179,7 +196,11 @@
                 "sha256:f89e21afe925fcfa655965ca8ea10f24773a1791400989ff32f467badfe4a064",
                 "sha256:fa24255ae3c0ab67e613556375a4341af04a084bd58764731972bcbc8baeba36"
             ],
+<<<<<<< HEAD
             "markers": "python_version >= '3' and (platform_machine == 'aarch64' or (platform_machine == 'ppc64le' or (platform_machine == 'x86_64' or (platform_machine == 'amd64' or (platform_machine == 'AMD64' or (platform_machine == 'win32' or platform_machine == 'WIN32'))))))",
+=======
+            "markers": "python_version >= '3' and platform_machine == 'aarch64' or (platform_machine == 'ppc64le' or (platform_machine == 'x86_64' or (platform_machine == 'amd64' or (platform_machine == 'AMD64' or (platform_machine == 'win32' or platform_machine == 'WIN32')))))",
+>>>>>>> catalina
             "version": "==3.0.1"
         },
         "gunicorn": {
@@ -367,6 +388,7 @@
             "index": "pypi",
             "markers": "python_version >= '3.7'",
             "version": "==2.9.9"
+<<<<<<< HEAD
 
         },
         "pyjwt": {
@@ -377,6 +399,8 @@
             "markers": "python_version >= '3.7'",
             "version": "==2.8.0"
 
+=======
+>>>>>>> catalina
         },
         "python-dotenv": {
             "hashes": [

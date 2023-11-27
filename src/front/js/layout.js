@@ -11,9 +11,13 @@ import injectContext from "./store/appContext";
 
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
+<<<<<<<
 import { Formulario } from "./component/Formulario.jsx";
 import { OtroFormulario } from "./component/OtroFormulario.jsx";
 import { Buscador } from "./component/Buscador.jsx";
+=======
+import { Carrousel } from "./component/carousel";
+>>>>>>>
 
 
 
