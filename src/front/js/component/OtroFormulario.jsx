@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Form, Button, Container, Row, Col } from 'react-bootstrap';
-
+import '../../styles/elotroformulario.css';
 export class OtroFormulario extends Component {
  render() {
     return (
@@ -8,39 +8,39 @@ export class OtroFormulario extends Component {
         <Row>
           <Col>
             <Form>
-              <h2>Bienvenido, Por favor rellene los campos, para ofrecer sus Servicios</h2>
+              <h1>Bienvenido, Por favor rellene los campos, para ofrecer sus Servicios</h1>
               <Form.Group controlId="formNombre">
-                <Form.Label>Nombre</Form.Label>
+                <Form.Label><h3>Nombre</h3></Form.Label>
                 <Form.Control type="text" placeholder="Ingrese su nombre" />
               </Form.Group>
 
               <Form.Group controlId="formApellido">
-                <Form.Label>Apellido</Form.Label>
+                <Form.Label><h3>Apellido</h3></Form.Label>
                 <Form.Control type="text" placeholder="Ingrese su apellido" />
               </Form.Group>
 
               <Form.Group controlId="formRut">
-                <Form.Label>Rut</Form.Label>
+                <Form.Label><h3>Rut</h3></Form.Label>
                 <Form.Control type="text" placeholder="Ingrese su rut" />
               </Form.Group>
 
               <Form.Group controlId="formEmail">
-                <Form.Label>Correo electronico</Form.Label>
+                <Form.Label><h3>Correo electronico</h3></Form.Label>
                 <Form.Control type="email" placeholder="Ingrese su correo electronico" />
               </Form.Group>
 
               <Form.Group controlId="formTelefono">
-                <Form.Label>Teléfono</Form.Label>
+                <Form.Label><h3>Teléfono</h3></Form.Label>
                 <Form.Control type="text" placeholder="Ingrese su telefono" />
               </Form.Group>
 
               <Form.Group controlId="formFechaNacimiento">
-                <Form.Label>Fecha de nacimiento</Form.Label>
+                <Form.Label><h3>Fecha de nacimiento</h3></Form.Label>
                 <Form.Control type="date" />
               </Form.Group>
 
               <Form.Group controlId="formComuna">
-                <Form.Label>Comuna</Form.Label>
+                <Form.Label><h3>Comuna</h3></Form.Label>
                 <Form.Control as="select">
                  <option>La Florida</option>
                  <option>La Reina</option>
@@ -51,7 +51,7 @@ export class OtroFormulario extends Component {
               </Form.Group>
 
               <Form.Group controlId="formRubro">
-                <Form.Label>Rubro</Form.Label>
+                <Form.Label><h3>Rubro</h3></Form.Label>
                 <Form.Control as="select">
                  <option>Carpinteria</option>
                  <option>Electricista</option>
@@ -64,7 +64,7 @@ export class OtroFormulario extends Component {
 
 
               <Form.Group controlId="formTerminosCondiciones">
-                <h4>Terms and Conditions:</h4>
+                <h3>Terms and Conditions:</h3>
                 <input type="text">
                   
                   
