@@ -1,50 +1,51 @@
 import React from 'react';
 import { Button, Col, Container, Row } from 'react-bootstrap';
-import './elbuscador.css';
+import '../../styles/elbuscador.css';
 
 export const Buscador = () => {
    return (
       <Container className="buttons-container">
-        <h3> Selecciona tu busqueda</h3>
+        <h1> SELECCIONA TU BUSQUEDA </h1>
         <br/>
         <Row className="justify-content-center">
           <Col md="auto">
             <Button variant="dark">
-              Carpintería
+            <h2>Carpintería</h2>
             </Button>
           </Col>
         </Row>
         <Row className="justify-content-center mt-3">
           <Col md="auto">
             <Button variant="dark">
-              Electricista
+            <h2>Electricista</h2>
             </Button>
           </Col>
         </Row>
         <Row className="justify-content-center mt-3">
           <Col md="auto">
-            <Button variant="success">
-           Gasfistería
+            <Button variant="dark">
+            <h2>Gasfistería</h2>
             </Button>
           </Col>
         </Row>
         <Row className="justify-content-center mt-3">
           <Col md="auto">
-            <Button variant="success">
-             Pintor
+            <Button variant="dark">
+            <h2>Pintor</h2>
             </Button>
           </Col>
         </Row>
         <Row className="justify-content-center mt-3">
           <Col md="auto">
-            <Button variant="success">
-             Aseo
+            <Button variant="dark">
+            <h2>Aseo</h2>
             </Button>
           </Col>
         </Row>
         <br/>
         <br/>
-        <button type="submit" className="submit btn btn-secundary">Regresar</button>
+        
+        <button type="submit" className="submit btn btn-success">VOLVER ATRAS</button>
       </Container>
    );     
  };
