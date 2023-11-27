@@ -7,7 +7,7 @@ export const SegundoPerfil = () => {
 		{
 		  nombre: 'Gasfiter',
 		  calificacion: 4.5,
-		  comentarios: ['Excelente trabajo!', 'Lo recomiendo.']
+		  comentarios: ['Excelente trabajo!', 'Lo recomiendo']
 		},
 		{
 		  nombre: 'Electricista',

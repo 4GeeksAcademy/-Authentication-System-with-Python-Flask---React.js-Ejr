@@ -7,7 +7,7 @@ export const Perfil = () => {
     firstName: "",
     lastName: "",
     email: "",
-    region: "",
+    region: " ",
     comuna: "",
     birthDate: "",
   });

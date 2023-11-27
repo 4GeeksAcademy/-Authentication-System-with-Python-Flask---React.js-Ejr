@@ -9,7 +9,7 @@
   
   /* Estilos para el contenedor .content-section */
   .landing-page .content-section {
-    gap: 20px; /* Reducción del espacio entre elementos */
+    gap: 20px; 
     padding: 80px 60px; /* Ajuste del relleno */
     width: 100%;
     max-width: 1200px; /* Limitar el ancho máximo */
