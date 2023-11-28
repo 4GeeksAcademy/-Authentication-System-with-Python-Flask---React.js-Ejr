@@ -2,6 +2,8 @@ import React from "react";
 import {ProfesionCard}  from "../component/ProfesionCard";
 import "../../styles/SegundoPerfil.css";
 
+
+
 export const SegundoPerfil = () => {
 	  const profesiones = [
 		{

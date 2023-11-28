@@ -1,5 +1,6 @@
 import React from 'react';
 
+
 export const ProfesionCard = ({ nombre, calificacion, comentarios }) => {
   return (
     <div className="card mb-3" style={{ maxWidth: "540px" }}>
