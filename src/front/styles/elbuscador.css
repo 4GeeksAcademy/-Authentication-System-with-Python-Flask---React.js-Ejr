@@ -5,7 +5,7 @@
     color: black;
     padding: 30px;
     border-radius: 15px;
-
+    display: inline-block;
 }
 
 .col-md-auto {
