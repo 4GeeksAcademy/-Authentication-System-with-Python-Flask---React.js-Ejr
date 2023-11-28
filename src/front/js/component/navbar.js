@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import "../../styles/home.css";
 
 export const Navbar = () => {
+
   return (
     <nav className="navbar navbar-light bg-light">
       <div className="container text-center">
@@ -22,8 +23,9 @@ export const Navbar = () => {
           <Link to="/demo">
             <button className="btn btn-primary">Entrar</button>
           </Link>
+
         </div>
       </div>
     </nav>
   );
-};
+  }
