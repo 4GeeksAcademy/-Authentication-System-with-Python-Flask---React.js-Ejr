@@ -4,9 +4,11 @@
     font-weight: bold;
     border: 3px solid black;
     color: black;
+    background-color: rgb(203, 210, 210);
     padding: 30px;
     border-radius: 15px;
     display: inline-block;
+    margin-top: 8%;
 }
 
 .col-md-auto {
@@ -19,7 +21,7 @@
 
    
    .buttons-container .btn:hover {
-    background-color:rgb(17, 107, 57);
+    background-color:rgb(17, 88, 107);
     color: white;
    }
 
@@ -28,7 +30,7 @@ h1{
     justify-content: center;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     font-size: 2.5rem;
-    color:grey;
+    color:rgb(123, 113, 113);
     margin-top: 10px;
     padding: 5px;
 }
@@ -37,6 +39,6 @@ h1{
     font-size: 14px;
     padding: 10px 15px;
     border-radius: 5px;
-    background-color: rgb(4, 99, 4); /* Cambia el color de fondo */
+    background-color: rgb(243, 22, 22); /* Cambia el color de fondo */
     color: #000; /* Cambia el color del texto */
 }

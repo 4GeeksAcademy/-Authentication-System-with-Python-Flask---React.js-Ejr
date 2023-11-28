@@ -9,8 +9,8 @@ export class Formulario extends Component {
           <Col>
             <Form>
               <h1>
-                Bienvenido, Por favor rellene los campos para realizar su
-                busqueda
+                Bienvenido, Por favor rellene los campos, para ofrecer sus
+                Servicios
               </h1>
               <Form.Group controlId="formNombre">
                 <Form.Label>
@@ -19,7 +19,7 @@ export class Formulario extends Component {
                 <Form.Control
                   type="text"
                   placeholder="Ingrese su nombre"
-                  style={{ borderWidth: "3px", borderColor: "green" }}
+                  style={{ borderWidth: "3px", borderColor: "darkcyan" }}
                 />
               </Form.Group>
 
@@ -30,7 +30,7 @@ export class Formulario extends Component {
                 <Form.Control
                   type="text"
                   placeholder="Ingrese su apellido"
-                  style={{ borderWidth: "3px", borderColor: "green" }}
+                  style={{ borderWidth: "3px", borderColor: "darkcyan" }}
                 />
               </Form.Group>
 
@@ -41,7 +41,7 @@ export class Formulario extends Component {
                 <Form.Control
                   type="text"
                   placeholder="Ingrese su rut"
-                  style={{ borderWidth: "3px", borderColor: "green" }}
+                  style={{ borderWidth: "3px", borderColor: "darkcyan" }}
                 />
               </Form.Group>
 
@@ -52,7 +52,7 @@ export class Formulario extends Component {
                 <Form.Control
                   type="email"
                   placeholder="Ingrese su correo electronico"
-                  style={{ borderWidth: "3px", borderColor: "green" }}
+                  style={{ borderWidth: "3px", borderColor: "darkcyan" }}
                 />
               </Form.Group>
 
@@ -63,7 +63,7 @@ export class Formulario extends Component {
                 <Form.Control
                   type="text"
                   placeholder="Ingrese su telefono"
-                  style={{ borderWidth: "3px", borderColor: "green" }}
+                  style={{ borderWidth: "3px", borderColor: "darkcyan" }}
                 />
               </Form.Group>
 
@@ -73,7 +73,7 @@ export class Formulario extends Component {
                 </Form.Label>
                 <Form.Control
                   type="date"
-                  style={{ borderWidth: "3px", borderColor: "green" }}
+                  style={{ borderWidth: "3px", borderColor: "darkcyan" }}
                 />
               </Form.Group>
 
@@ -81,41 +81,103 @@ export class Formulario extends Component {
                 <Form.Label>
                   <h3>Comuna</h3>
                 </Form.Label>
-                <Form.Control
-                  as="select"
-                  style={{ borderWidth: "3px", borderColor: "green" }}
-                >
-                  <option>La Florida</option>
-                  <option>La Reina</option>
-                  <option>Providencia</option>
-                  <option>Santiago Centro</option>
-                  <option>Independencia</option>
-                </Form.Control>
+
+                <div class="dropdown">
+                  <button
+                    class="btn btn-white dropdown-toggle"
+                    type="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                    style={{ borderWidth: "3px", borderColor: "darkcyan" }}
+                  >
+                    Comuna
+                  </button>
+                  <ul
+                    class="dropdown-menu"
+                    style={{ borderWidth: "3px", borderColor: "darkcyan" }}
+                  >
+                    <li>
+                      <a class="dropdown-item" href="#">
+                        La Florida
+                      </a>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="#">
+                        La Reina
+                      </a>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="#">
+                        Providencia
+                      </a>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="#">
+                        Santiago Centro
+                      </a>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="#">
+                        Independencia
+                      </a>
+                    </li>
+                  </ul>
+                </div>
               </Form.Group>
 
               <Form.Group controlId="formRubro">
                 <Form.Label>
                   <h3>Rubro</h3>
                 </Form.Label>
-                <Form.Control
-                  as="select"
-                  style={{ borderWidth: "3px", borderColor: "green" }}
-                >
-                  <option>Carpinteria</option>
-                  <option>Electricista</option>
-                  <option>Gasfitería</option>
-                  <option>Pintor</option>
-                  <option>Aseo</option>
-                </Form.Control>
+                <div class="dropdown">
+                  <button
+                    class="btn btn-white dropdown-toggle"
+                    type="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                    style={{ borderWidth: "3px", borderColor: "darkcyan" }}
+                  >
+                    Rubro
+                  </button>
+                  <ul class="dropdown-menu" style={{ borderWidth: "3px" }}>
+                    <li>
+                      <a class="dropdown-item" href="#">
+                        Carpinteria
+                      </a>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="#">
+                        Electricista
+                      </a>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="#">
+                        Gasfitería
+                      </a>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="#">
+                        Pintor
+                      </a>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="#">
+                        Aseo
+                      </a>
+                    </li>
+                  </ul>
+                </div>
               </Form.Group>
-              <br />
+
               <Form.Group controlId="formTerminosCondiciones">
-                <h3>Terminos y Condiciones</h3>
+                <h3>
+                  <strong>Terminos y Condiciones</strong>
+                </h3>
                 <br />
                 <div
                   className="Terms"
                   type="text"
-                  style={{ borderWidth: "3px", borderColor: "green" }}
+                  style={{ borderWidth: "3px", borderColor: "darkcyan" }}
                 >
                   {" "}
                   <p>
@@ -128,26 +190,26 @@ export class Formulario extends Component {
                     del sitio. Los Términos y Condiciones de Uso constituyen un
                     documento que se ha vuelto cada vez más habitual y necesario
                     para cualquier persona que sea propietaria de un Sitio Web,
-                    o bien que utilice algún servicio o host proporcionado por
-                    un proveedor (como las plataformas de blogging,
-                    microblogging y algunas redes sociales). Aunque en Chile no
-                    existe una regulación extensiva en la materia, este
-                    documento se ha elaborado teniendo en consideración la
-                    incipiente legislación aplicable y las recomendaciones
-                    realizadas por organismos públicos y no gubernamentales. Es
-                    por lo anterior que este modelo de Términos y Condiciones
-                    contiene una lista extensa de menciones que se consideran
-                    importantes para el correcto funcionamiento de todo sitio
-                    web, generando la confianza que incentive en los usuarios la
-                    interacción con la página y con los productos y servicios
-                    ofrecidos en ella. En relación a los sitios Web que entregan
-                    servicios o productos para que las personas usuarias puedan
-                    comprar o contratar deben respetar la normativa aplicable a
-                    las páginas de internet, así como entregar un acceso a la
-                    información claro y conciso, velando por la seguridad de las
-                    transacciones y el manejo de los datos personales,
-                    especialmente aquellos relacionados con información bancaria
-                    o financiera.
+                    o bien que utilice algún tipo de servicio o host
+                    proporcionado por un proveedor (como las plataformas de
+                    blogging, microblogging y algunas redes sociales). Aunque en
+                    Chile no existe una regulación extensiva en la misma
+                    materia, este documento se ha elaborado teniendo en
+                    consideración la incipiente legislación aplicable y las
+                    recomendaciones realizadas por organismos públicos y no
+                    gubernamentales. Es por lo anterior que este modelo de
+                    Términos y Condiciones contiene una lista extensa de
+                    menciones que se consideran importantes para el correcto
+                    funcionamiento de todo sitio web, generando la confianza que
+                    incentive en los usuarios la interacción con la página y con
+                    los productos y servicios ofrecidos en ella. En relación a
+                    los sitios Web que entregan servicios o productos para que
+                    las personas usuarias puedan comprar o contratar deben
+                    respetar la normativa aplicable a las páginas de internet,
+                    así como entregar un acceso a la información claro y
+                    conciso, velando por la seguridad de las transacciones y el
+                    manejo de los datos personales, especialmente aquellos
+                    relacionados con información bancaria o financiera.
                   </p>
                 </div>
                 <Form.Check
@@ -155,18 +217,14 @@ export class Formulario extends Component {
                   label="Acepto los términos y condiciones"
                 />
                 <br />
-                <Button variant="success" type="submit">
-                  Aceptar
-                </Button>{" "}
-                <Button variant="secondary" type="reset">
+                <Button className="buttonright" type="submit">Aceptar</Button>{" "}
+                <Button className="buttonright" variant="secondary" type="reset">
                   Cancelar
                 </Button>
               </Form.Group>
               <br />
 
-              <Button variant="success" type="submit">
-               Regresar
-              </Button>
+              <Button type="submit">Regresar</Button>
             </Form>
           </Col>
         </Row>
@@ -175,8 +233,4 @@ export class Formulario extends Component {
   }
 }
 
-
 export default Formulario;
-
-
-

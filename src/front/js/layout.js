@@ -16,7 +16,6 @@ import { OtroFormulario } from "./component/OtroFormulario.jsx";
 import { Buscador } from "./component/Buscador.jsx";
 import { Carrousel } from "./component/carousel";
 
-
 //create your first component
 const Layout = () => {
   //the basename is used when your project is published in a subdirectory and not in the root of the domain
@@ -33,17 +32,17 @@ const Layout = () => {
           <Navbar />
           <Routes>
             <Route element={<Home />} path="/" />
-            <Route  element={<Demo />} path="/demo"/>
-            <Route element={<Single />}  path="/single"/>
+            <Route element={<Demo />} path="/demo" />
+            <Route element={<Single />} path="/single" />
             <Route element={<Formulario />} path="/Formulario" />
-            <Route element={<OtroFormulario />}  path="/OtroFormulario"/>
-            <Route element={<h1>Not found!</h1>}  path="*"/>
+            <Route element={<OtroFormulario />} path="/OtroFormulario" />
+            <Route element={<Buscador />} path="/buscador" />
+            <Route element={<h1>Not found!</h1>} path="*" />
             <Route element={<Home />} path="/" />
             <Route element={<Demo />} path="/demo" />
             <Route element={<Single />} path="/single/:theid" />
             <Route element={<Login />} path="/login" />
             <Route element={<Footer />} path="/footer" />
-            <Route element={<Buscador />} path="/buscador" />
           </Routes>
           <Footer />
         </ScrollToTop>
