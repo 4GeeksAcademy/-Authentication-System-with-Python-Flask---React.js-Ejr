@@ -3,7 +3,7 @@ import {ProfesionCard}  from "../component/ProfesionCard";
 import "../../styles/SegundoPerfil.css";
 
 
-git
+
 export const SegundoPerfil = () => {
 	  const profesiones = [
 		{

@@ -20,7 +20,7 @@ import { Footer } from "./component/footer";
 import { Formulario } from "./component/Formulario.jsx";
 import { OtroFormulario } from "./component/OtroFormulario.jsx";
 import { Buscador } from "./component/Buscador.jsx";
-import { Carrousel } from "./component/carousel";
+import { Carousel } from "./component/carousel.js";
 
 
 //create your first component
@@ -52,7 +52,7 @@ const Layout = () => {
                         <Route element={<Login />} path="/login" />
                         <Route element={<Footer />} path="/footer" />
                         <Route element={<Buscador />} path="/buscador" />
-                        <Route element={<Carrousel />} path="/carrousel" />
+                        <Route element={<Carousel />} path="/carrousel" />
                         
 
                         <Route element={<Perfil />} path="/perfil" />

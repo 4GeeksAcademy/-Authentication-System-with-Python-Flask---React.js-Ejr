@@ -1,11 +1,7 @@
 {
     "_meta": {
         "hash": {
-
-            "sha256": "d793e084e97dc81492403789ea817f62055f3b44673e1a723b280d0d86fdad07"
-
-           
-
+            "sha256": "9bcc97b29c1774f1b58e90e52427f2b9a5847f0daa91d5a342ac85880d3357b6"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -58,7 +54,6 @@
             ],
             "index": "pypi",
             "version": "==1.36.0"
-
         },
         "colorama": {
             "hashes": [
@@ -67,7 +62,6 @@
             ],
             "markers": "platform_system == 'Windows'",
             "version": "==0.4.6"
-
         },
         "flask": {
             "hashes": [
@@ -91,7 +85,6 @@
             "hashes": [
                 "sha256:bc3492bfd6368d27cfe79c7821df5a8a319e1a6d5eab277a3794be19bdc51783",
                 "sha256:f268522fcb2f73e2ecdde1ef45e2fd5c71cc48fe03cffb4b441c6d1b40684eb0"
-
             ],
             "index": "pypi",
             "version": "==4.0.0"
@@ -104,7 +97,6 @@
             "index": "pypi",
             "markers": "python_version >= '3.7' and python_version < '4'",
             "version": "==4.5.3"
-
         },
         "flask-migrate": {
             "hashes": [
@@ -192,11 +184,7 @@
                 "sha256:f89e21afe925fcfa655965ca8ea10f24773a1791400989ff32f467badfe4a064",
                 "sha256:fa24255ae3c0ab67e613556375a4341af04a084bd58764731972bcbc8baeba36"
             ],
-
-
             "markers": "python_version >= '3' and platform_machine == 'aarch64' or (platform_machine == 'ppc64le' or (platform_machine == 'x86_64' or (platform_machine == 'amd64' or (platform_machine == 'AMD64' or (platform_machine == 'win32' or platform_machine == 'WIN32')))))",
-
-
             "version": "==3.0.1"
         },
         "gunicorn": {
@@ -384,7 +372,6 @@
             "index": "pypi",
             "markers": "python_version >= '3.7'",
             "version": "==2.9.9"
-
         },
         "pyjwt": {
             "hashes": [
@@ -393,7 +380,6 @@
             ],
             "markers": "python_version >= '3.7'",
             "version": "==2.8.0"
-
         },
         "python-dotenv": {
             "hashes": [
@@ -465,7 +451,7 @@
                 "sha256:1e61c37477a1626458e36f7b1d82aa5c9b094fa4802892072e49de9c60c4c926",
                 "sha256:8abb2f1d86890a2dfb989f9a77cfcfd3e47c2a354b01111771326f8aa26e0254"
             ],
-            "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2'",
+            "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'",
             "version": "==1.16.0"
         },
         "sqlalchemy": {
