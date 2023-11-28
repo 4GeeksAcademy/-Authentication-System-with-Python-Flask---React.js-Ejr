@@ -43,6 +43,7 @@
 .image-container img {
   width: 100%;
   height: 520px;
+  padding: 0;
   width: 520px;
   border-radius: 20px;
   /* Otros estilos de imagen según tus preferencias */
@@ -74,27 +75,59 @@
 
 .button-container button:hover {
   background-color: #ccc;
-  
 }
 
 .carousel-container {
-  display: flex;
-  overflow-x: auto;
-  white-space: nowrap;
+  overflow: hidden;
+  position: relative;
+  width: auto; /* Ajusta según sea necesario */
+  margin: 0 auto; /* Centra el contenedor */
 }
 
-.carousel-box {
-  width: 300px;
-  height: 200px;
-  margin: 10px;
-  border: 1px solid #ccc;
+.carousel-wrapper {
+  margin-top: 10px;
   text-align: center;
-  line-height: 200px;
+  display: flex;
+  justify-content: space-between;
+  transition: transform 0.5s ease-in-out;
+}
+.carousel-box {
+  border: px solid darkblue;
+  border-radius: 10px;
+  margin: 5px;
+  height: 240px;
+  width: 240px;  
+  box-shadow: 2px 1px 5px #333;
+}
+.carousel-box h2 {
+  font-size: 1.5rem;
+}
+.carousel-box img {
+  border: px solid darkblue;
+  border-radius: 10px;
+  height: 200px;
+  width: 100%;
+  object-fit: cover;
+  object-position: top;
 }
 
-.carousel-oficios {
-text-align: center;
+.carousel-controls {
+  margin-top: 10px;
 }
+
+.arrow {
+  cursor: pointer;
+  font-size: 12px;
+  margin: 0 10px;
+}
+.carousel-oficios {
+  margin-top: 10px 10px 10px 10px;
+  display: box;
+  text-align: center;
+  width: 1140px;
+  height: 15px;
+}
+
 /*
     home.css: This website contains selectors only used in home.css
 
