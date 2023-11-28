@@ -3,6 +3,8 @@ import { Context } from "../store/appContext";
 import easyJobUrl from "../../img/Easy-Job.jpg";
 import "../../styles/home.css";
 import Carousel from "../component/carousel";
+import { Link } from "react-router-dom";
+
 
 export const Home = () => {
   const { store, actions } = useContext(Context);
@@ -31,9 +33,11 @@ export const Home = () => {
             <button onClick={handleButtonClick1}>
               Registrate acá como cliente
             </button>
+            <Link to= "/Formulario" >
             <button className="blue" onClick={handleButtonClick2}>
               Conviérte en Prestador
             </button>
+            </Link>
           </div>
         </div>
         <div className="image-container">

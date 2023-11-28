@@ -7,6 +7,7 @@ import { Home } from "./pages/home";
 
 import { Demo } from "./pages/demo";
 import { Single } from "./pages/single";
+import { Carousel } from "./component/carousel";
 import { Login } from "./pages/login";
 
 import { Perfil } from "./pages/perfil";
@@ -15,12 +16,12 @@ import { SegundoPerfil } from "./pages/SegundoPerfil";
 import injectContext from "./store/appContext";
 
 import { Navbar } from "./component/navbar";
-import { Footer } from "./component/footer";
 
 import { Formulario } from "./component/Formulario.jsx";
 import { OtroFormulario } from "./component/OtroFormulario.jsx";
 import { Buscador } from "./component/Buscador.jsx";
-import { Carousel } from "./component/carousel.js";
+import { Footer } from "./component/footer.jsx"; 
+
 
 
 //create your first component
@@ -39,8 +40,6 @@ const Layout = () => {
                     <Navbar />
                     <Routes>
                         <Route path="/" element={<Home />} />
-                        <Route path="/demo" element={<Demo />} />
-                        <Route path="/single" element={<Single />} />
                         <Route path="/Formulario" element={<Formulario />} />
                         <Route path="/OtroFormulario" element={<OtroFormulario />} />
                         <Route path="/Buscador" element={<Buscador />} />
@@ -50,14 +49,14 @@ const Layout = () => {
                         <Route element={<Demo />} path="/demo" />
                         <Route element={<Single />} path="/single/:theid" />
                         <Route element={<Login />} path="/login" />
-                        <Route element={<Footer />} path="/footer" />
                         <Route element={<Buscador />} path="/buscador" />
-                        <Route element={<Carousel />} path="/carrousel" />
+                        <Route element={<Carousel />} path="/carousel" />
                         
 
                         <Route element={<Perfil />} path="/perfil" />
                         <Route element={<SegundoPerfil />} path="/single/:theid" />
                         <Route element={<h1>Not found!</h1>} />
+                        <Route element={<Footer />} path="/footer" />
 
                     </Routes>
                 </ScrollToTop>
