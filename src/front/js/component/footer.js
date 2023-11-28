@@ -9,4 +9,14 @@ const Footer = () => {
   );
 };
 
+<<<<<<< HEAD
 export { Footer};
+=======
+export const Footer = () => (
+	<footer className="footer mt-auto py-3 text-center">
+		<p>
+			
+		</p>
+	</footer>
+);
+>>>>>>> 3634d6de7717d3e4560b02e1b0b99afc44a4268c
