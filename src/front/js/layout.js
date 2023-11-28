@@ -16,23 +16,21 @@ import injectContext from "./store/appContext";
 
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
-import { Buscador } from "./component/buscador.js";
 
 import { Formulario } from "./component/Formulario.jsx";
 import { OtroFormulario } from "./component/OtroFormulario.jsx";
 import { Buscador } from "./component/Buscador.jsx";
-
 import { Carrousel } from "./component/carousel";
-
 
 
 //create your first component
 const Layout = () => {
-    //the basename is used when your project is published in a subdirectory and not in the root of the domain
-    // you can set the basename on the .env file located at the root of this project, E.g: BASENAME=/react-hello-webapp/
-    const basename = process.env.BASENAME || "";
+  //the basename is used when your project is published in a subdirectory and not in the root of the domain
+  // you can set the basename on the .env file located at the root of this project, E.g: BASENAME=/react-hello-webapp/
+  const basename = process.env.BASENAME || "";
 
-    if(!process.env.BACKEND_URL || process.env.BACKEND_URL == "") return <BackendURL/ >;
+  if (!process.env.BACKEND_URL || process.env.BACKEND_URL == "")
+    return <BackendURL />;
 
     return (
         <div>
@@ -54,6 +52,7 @@ const Layout = () => {
                         <Route element={<Login />} path="/login" />
                         <Route element={<Footer />} path="/footer" />
                         <Route element={<Buscador />} path="/buscador" />
+                        <Route element={<Carrousel />} path="/carrousel" />
                         
 
                         <Route element={<Perfil />} path="/perfil" />
@@ -65,6 +64,8 @@ const Layout = () => {
             </BrowserRouter>
         </div>
     );
+
+
 };
 
 export default injectContext(Layout);

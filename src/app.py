@@ -11,6 +11,10 @@ from api.admin import setup_admin
 from api.commands import setup_commands
 from werkzeug.security import generate_password_hash, check_password_hash
 
+
+
+# from models import Person
+
 ENV = "development" if os.getenv("FLASK_DEBUG") == "1" else "production"
 static_file_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), '../public/')
 app = Flask(__name__)
