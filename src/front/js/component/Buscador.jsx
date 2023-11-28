@@ -4,6 +4,7 @@ import '../../styles/elbuscador.css';
 
 export const Buscador = () => {
    return (
+    <div className='container'>
       <Container className="buttons-container">
         <h1> SELECCIONA TU BUSQUEDA </h1>
         <br/>
@@ -45,8 +46,9 @@ export const Buscador = () => {
         <br/>
         <br/>
         
-        <button type="submit" className="submit btn btn-success">VOLVER ATRAS</button>
+        <button type="submit" className="submit btn btn-success">REGRESAR</button>
       </Container>
+    </div>
    );     
  };
    export default Buscador;
