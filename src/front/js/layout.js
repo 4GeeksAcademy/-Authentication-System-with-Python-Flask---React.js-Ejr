@@ -13,6 +13,13 @@ import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 import { Buscador } from "./component/buscador.js";
 
+import { Formulario } from "./component/Formulario.jsx";
+import { OtroFormulario } from "./component/OtroFormulario.jsx";
+import { Buscador } from "./component/Buscador.jsx";
+
+import { Carrousel } from "./component/carousel";
+
+
 
 //create your first component
 const Layout = () => {
@@ -28,6 +35,13 @@ const Layout = () => {
                 <ScrollToTop>
                     <Navbar />
                     <Routes>
+                        <Route path="/" element={<Home />} />
+                        <Route path="/demo" element={<Demo />} />
+                        <Route path="/single" element={<Single />} />
+                        <Route path="/Formulario" element={<Formulario />} />
+                        <Route path="/OtroFormulario" element={<OtroFormulario />} />
+                        <Route path="/Buscador" element={<Buscador />} />
+                        <Route path="*" element={<h1>Not found!</h1>} />     
                         <Route element={<Home />} path="/" />
                         <Route element={<Demo />} path="/demo" />
                         <Route element={<Single />} path="/single/:theid" />

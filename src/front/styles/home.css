@@ -1,3 +1,71 @@
+.container {
+    display: flex;
+         /* Esto asegura que la altura sea del 100% del viewport */
+  }
+  
+  .text-container,
+  .image-container {
+    flex: 1; /* Esto hace que ambos ocupen la misma cantidad de espacio */
+    padding: 20px; /* Puedes ajustar el relleno según sea necesario */
+    box-sizing: border-box; /* Incluye el relleno en el ancho/altura total */
+    
+  }
+      
+  .text-container h1,
+  .text-container p {
+    text-align: left;
+    /* Otros estilos de texto según tus preferencias */
+  }
+  
+  .image-container img {
+    width: 100%;
+    height: 520px;
+    width: 520px;
+    border-radius: 20px;
+    /* Otros estilos de imagen según tus preferencias */
+  }
+  
+  .button-container {
+    display: flex;
+    justify-content: space-between;
+    margin: 250px;
+  }
+  
+  .button-container button {
+    padding: 10px;
+    border: 1px solid #fff;
+    background-color: #fff;
+    color: #333;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  
+  .button-container button.blue {
+    border: 1px solid #007bff;
+    background-color: #007bff;
+    color: #fff;
+  }
+  
+  .button-container button:hover {
+    background-color: #ccc;
+  }
+
+  .carousel-container {
+    display: flex;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+  
+  .carousel-box {
+    width: 300px;
+    height: 200px;
+    margin: 10px;
+    border: 1px solid #ccc;
+    text-align: center;
+    line-height: 200px;
+  }
+  
 /*
     home.css: This website contains selectors only used in home.css
 
