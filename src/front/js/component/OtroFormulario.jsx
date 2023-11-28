@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 import React, { Component } from 'react';
 import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 import '../../styles/elotroformulario.css';
@@ -96,4 +94,4 @@ export class OtroFormulario extends Component {
 }
 
 export default OtroFormulario;
->>>>>>> 61fc8034c0219d9aa4c75624bd96c2d2f89571d5
+

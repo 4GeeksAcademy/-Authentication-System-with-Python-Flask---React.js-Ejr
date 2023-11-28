@@ -52,7 +52,7 @@ const Layout = () => {
                         <Route element={<Login />} path="/login" />
                         <Route element={<Footer />} path="/footer" />
                         <Route element={<Buscador />} path="/buscador" />
-                        <Route element={<Carrousel />} path="/carrousel" />
+                        <Route element={<Carousel />} path="/carrousel" />
                         
 
                         <Route element={<Perfil />} path="/perfil" />
