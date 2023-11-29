@@ -4,7 +4,7 @@
     padding: 80px 60px; /* Ajuste del relleno */
     width: 100%;
     max-width: 1200px; /* Limitar el ancho máximo */
-    text-align: center; /* Alinear contenido al centro */
+    text-align: center; 
   }
   
   .landing-page .content-section .text-wrapper {

@@ -2,6 +2,7 @@ import React from "react";
 import "../../styles/SegundoPerfil.css";
 import "bootstrap/dist/css/bootstrap.min.css"; 
 
+
 export const SegundoPerfil = () => {
   const profileData = {
     name: "Nombre Prestador",

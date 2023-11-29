@@ -3,6 +3,7 @@ import { ProfesionCard } from './ProfesionCard';
 import "../../styles/home.css";
 
 
+
 export const Landing = () => {
   const profesiones = [
     {
