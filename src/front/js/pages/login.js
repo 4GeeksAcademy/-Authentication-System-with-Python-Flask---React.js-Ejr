@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 const Login = () => {
   const [usuario, setUsuario] = useState("");
@@ -66,13 +67,16 @@ const Login = () => {
               onChange={(e) => setContraseña(e.target.value)}
             />
           </div>
+          <Link to="/Formulario">
+
           <button
             type="button"
             className="btn btn-primary"
             onClick={handleLogin}
-          >
+            >
             Iniciar sesión
           </button>
+            </Link>
         </form>
       </div>
     </div>

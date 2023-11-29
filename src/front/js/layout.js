@@ -20,8 +20,7 @@ import { Footer } from "./component/footer";
 import { Formulario } from "./component/Formulario.jsx";
 import { OtroFormulario } from "./component/OtroFormulario.jsx";
 import { Buscador } from "./component/Buscador.jsx";
-import  Carousel  from "./component/carousel.js";
-
+import Carousel from "./component/carousel.js";
 
 //create your first component
 const Layout = () => {
@@ -32,40 +31,36 @@ const Layout = () => {
   if (!process.env.BACKEND_URL || process.env.BACKEND_URL == "")
     return <BackendURL />;
 
-    return (
-        <div>
-            <BrowserRouter basename={basename}>
-                <ScrollToTop>
-                    <Navbar />
-                    <Routes>
-                        <Route path="/" element={<Home />} />
-                        <Route path="/demo" element={<Demo />} />
-                        <Route path="/single" element={<Single />} />
-                        <Route path="/Formulario" element={<Formulario />} />
-                        <Route path="/OtroFormulario" element={<OtroFormulario />} />
-                        <Route path="/Buscador" element={<Buscador />} />
-                        <Route path="*" element={<h1>Not found!</h1>} />     
-                        <Route element={<Home />} path="/" />
+  return (
+    <div>
+      <BrowserRouter basename={basename}>
+        <ScrollToTop>
+          <Navbar />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/demo" element={<Demo />} />
+            <Route path="/single" element={<Single />} />
+            <Route path="/Formulario" element={<Formulario />} />
+            <Route path="/OtroFormulario" element={<OtroFormulario />} />
+            <Route path="/Buscador" element={<Buscador />} />
+            <Route path="*" element={<h1>Not found!</h1>} />
+            <Route element={<Home />} path="/" />
 
-                        <Route element={<Demo />} path="/demo" />
-                        <Route element={<Single />} path="/single/:theid" />
-                        <Route element={<Login />} path="/login" />
-                        <Route element={<Footer />} path="/footer" />
-                        <Route element={<Buscador />} path="/buscador" />
-                        <Route element={<Carousel />} path="/carousel" />
-                        
+            <Route element={<Demo />} path="/demo" />
+            <Route element={<Single />} path="/single/:theid" />
+            <Route element={<Login />} path="/login" />
+            <Route element={<Footer />} path="/footer" />
+            <Route element={<Buscador />} path="/buscador" />
+            <Route element={<Carousel />} path="/carousel" />
 
-                        <Route element={<Perfil />} path="/perfil" />
-                        <Route element={<SegundoPerfil />} path="/single/:theid" />
-                        <Route element={<h1>Not found!</h1>} />
-
-                    </Routes>
-                </ScrollToTop>
-            </BrowserRouter>
-        </div>
-    );
-
-
+            <Route element={<Perfil />} path="/perfil" />
+            <Route element={<SegundoPerfil />} path="/single/:theid" />
+            <Route element={<h1>Not found!</h1>} />
+          </Routes>
+        </ScrollToTop>
+      </BrowserRouter>
+    </div>
+  );
 };
 
 export default injectContext(Layout);

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import "../../styles/home.css";
 import easyJobUrl1 from "../../img/electricista.jpg";
 import easyJobUrl2 from "../../img/gasfiteria.jpg";
@@ -19,8 +20,8 @@ const Carousel = () => {
 
   return (
     <div className="carousel-oficios">
-      <h1>
-        <strong>O f i c i o s</strong>
+      <h1>        
+          <strong>O f i c i o s</strong>        
       </h1>
 
       <div className="carousel-container">
