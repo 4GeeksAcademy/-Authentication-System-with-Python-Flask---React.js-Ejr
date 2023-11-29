@@ -1,66 +1,69 @@
+
 import React from "react";
-import {ProfesionCard}  from "../component/ProfesionCard";
-import "../../styles/SegundoPerfil.css";
+import "../../styles/segundoperfil.css";
+import "bootstrap/dist/css/bootstrap.min.css"; 
 
-
-git
 export const SegundoPerfil = () => {
-	  const profesiones = [
-		{
-		  nombre: 'Gasfiter',
-		  calificacion: 4.5,
-		  comentarios: ['Excelente trabajo!', 'Lo recomiendo']
-		},
-		{
-		  nombre: 'Electricista',
-		  calificacion: 4.8,
-		  comentarios: ['excelente persona.', 'Siempre cumple.']
-		},
-		{
-		  nombre: 'Electricista',
-		  calificacion: 4.8,
-		  comentarios: ['excelente persona.', 'Siempre cumple.']
-		}
-	  ];
-	
-	  return (
-		<div className="landing-page">
-		  <div className="container">
-			<h1>Nosotros</h1>
-			<div className="row">
-			  <div className="col-md-6">
-				<div className="card mb-4">
-				  <img src="..." className="card-img-top" alt="..." />
-				  <div className="card-body">
-					<h5 className="card-title">Card title</h5>
-					<p className="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-				  </div>
-				</div>
-			  </div>
-			  <div className="col-md-6">
-				<div className="card mb-4">
-				  <img src="..." className="card-img-top" alt="..." />
-				  <div className="card-body">
-					<h5 className="card-title">Card title</h5>
-					<p className="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-				  </div>
-				</div>
-			  </div>
-			</div>
-			{/* anexa las tarjetas de profesiones */}
-			<div className="row">
-			  {profesiones.map((profesion, index) => (
-				<div className="col-md-4" key={index}>
-				 <ProfesionCard
-					nombre={profesion.nombre}
-					calificacion={profesion.calificacion}
-					comentarios={profesion.comentarios}
-				  />
-				</div>
-			  ))}
-			</div>
-		  </div>
-		</div>
-	  );
-	}
-	
+  const profileData = {
+    name: "Nombre Prestador",
+    jobs: ["Trabajo 1", "Trabajo 2", "Trabajo 3"],
+    description: "Descripción/Experiencia/Comuna",
+    ratings: [
+      {
+        comment: "¡Gran trabajo! Muy profesional.",
+        rating: 5,
+      },
+      {
+        comment: "Buen servicio, lo recomiendo.",
+        rating: 4,
+      },
+      // Puedes agregar más comentarios y calificaciones según sea necesario
+    ],
+  };
+
+  return (<div className="container profile-container">
+  <div className="row">
+    <div className="col-md-6">
+      <div className="photo text-center">
+        <div className="photo-text">FOTO</div>
+      </div>
+      <div className="provider-name text-center">
+        <div className="provider-name-text">{profileData.name}</div>
+      </div>
+      <div className="jobs">
+        {profileData.jobs.map((job, index) => (
+          <div className={`job job-${index + 1}`} key={index}>
+            <div className="job-text">{job}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+    <div className="col-md-6">
+      <div className="description-wrapper">
+        <div className="description">{profileData.description}</div>
+      </div>
+      <div className="ratings-section">
+        <div className="comments-ratings text-center">COMENTARIOS Y CALIFICACIONES</div>
+        <div className="ratings-list">
+          {profileData.ratings.map((item, index) => (
+            <div className="rating-item" key={index}>
+              <div className="comment">{item.comment}</div>
+              <div className="rating">Calificación: {item.rating}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div className="action-buttons text-center">
+        <div className="logout">
+          <button className="btn btn-danger logout-text">Salir</button>
+        </div>
+        <div className="job-search">
+          <button className="btn btn-primary job-search-text">Buscar Trabajo</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  );
+};
