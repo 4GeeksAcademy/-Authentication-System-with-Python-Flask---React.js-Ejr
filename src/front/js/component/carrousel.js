@@ -20,7 +20,7 @@ export const Carrousel = () => {
   return (
     <div className="carousel-oficios">
       <h1>
-        <strong>Prestadores & Oficios</strong>
+        <strong>O f i c i o s</strong>
       </h1>
 
       <div className="carousel-container">
