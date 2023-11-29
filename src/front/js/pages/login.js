@@ -67,8 +67,8 @@ const Login = () => {
               onChange={(e) => setContraseña(e.target.value)}
             />
           </div>
-          <Link to="/Formulario">
 
+          <Link to="/Formulario">
           <button
             type="button"
             className="btn btn-primary"
@@ -76,6 +76,15 @@ const Login = () => {
             >
             Iniciar sesión
           </button>
+            </Link>
+            <Link to="/Home">
+            <button
+            type="button"
+            className="btn btn-danger"
+            onClick={() => window.close()}>
+            Cerrar
+
+            </button>
             </Link>
         </form>
       </div>

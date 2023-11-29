@@ -7,6 +7,7 @@ import easyJobUrl4 from "../../img/aseo.jpg";
 import easyJobUrl5 from "../../img/maestro-pintor.jpg";
 
 export const Carrousel = () => {
+ 
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const handleNext = () => {

@@ -92,6 +92,7 @@ export class OtroFormulario extends Component {
                   >
                     Comuna
                   </button>
+                  
                   <ul
                     class="dropdown-menu"
                     style={{ borderWidth: "3px", borderColor: "darkcyan" }}

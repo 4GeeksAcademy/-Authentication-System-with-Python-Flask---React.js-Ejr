@@ -15,9 +15,10 @@ import { Footer } from "./component/footer";
 import { Formulario } from "./component/Formulario.jsx";
 import { OtroFormulario } from "./component/OtroFormulario.jsx";
 import { Buscador } from "./component/Buscador.jsx";
+import { Task } from "./component/task";
 
 
-import  Carousel  from "./component/carousel.js";
+import  Carrousel  from "./component/carrousel.js";
 
 
 
@@ -50,9 +51,9 @@ const Layout = () => {
             <Route element={<Footer />} path="/footer" />
             <Route element={<Carrousel />} path="/carousel" />
             
-            <Route element={<Perfil />} path="/perfil" />
-                        <Route element={<SegundoPerfil />} path="/single/:theid" />
-                        <Route element={<h1>Not found!</h1>} />
+            
+            <Route element={<h1>Not found!</h1>} />
+            <Route element={<Task />} path="/task" />
 
 
           </Routes>
