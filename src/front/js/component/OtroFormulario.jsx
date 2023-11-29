@@ -78,24 +78,34 @@ export class OtroFormulario extends Component {
               </Form.Group>
 
               <Form.Group controlId="formComuna">
-                <Form.Label><h3>Comuna</h3></Form.Label>
-                <Form.Control as="select" style={{ borderWidth: "3px",borderColor: 'darkcyan' }}>
-                 <option>La Florida</option>
-                 <option>La Reina</option>
-                 <option>Providencia</option>
-                 <option>Santiago Centro</option>
-                 <option>Independencia</option>
+                <Form.Label>
+                  <h3>Comuna</h3>
+                </Form.Label>
+                <Form.Control
+                  as="select"
+                  style={{ borderWidth: "3px", borderColor: "darkcyan" }}
+                >
+                  <option>La Florida</option>
+                  <option>La Reina</option>
+                  <option>Providencia</option>
+                  <option>Santiago Centro</option>
+                  <option>Independencia</option>
                 </Form.Control>
               </Form.Group>
 
               <Form.Group controlId="formRubro">
-                <Form.Label><h3>Rubro</h3></Form.Label>
-                <Form.Control as="select" style={{ borderWidth: "3px",borderColor: 'darkcyan' }}>
-                 <option>Carpinteria</option>
-                 <option>Electricista</option>
-                 <option>Gasfitería</option>
-                 <option>Pintor</option>
-                 <option>Aseo</option>
+                <Form.Label>
+                  <h3>Rubro</h3>
+                </Form.Label>
+                <Form.Control
+                  as="select"
+                  style={{ borderWidth: "3px", borderColor: "darkcyan" }}
+                >
+                  <option>Carpinteria</option>
+                  <option>Electricista</option>
+                  <option>Gasfitería</option>
+                  <option>Pintor</option>
+                  <option>Aseo</option>
                 </Form.Control>
               </Form.Group>
 
@@ -147,8 +157,14 @@ export class OtroFormulario extends Component {
                   label="Acepto los términos y condiciones"
                 />
                 <br />
-                <Button className="buttonright" type="submit">Aceptar</Button>{" "}
-                <Button className="buttonright" variant="secondary" type="reset">
+                <Button className="buttonright" type="submit">
+                  Aceptar
+                </Button>{" "}
+                <Button
+                  className="buttonright"
+                  variant="secondary"
+                  type="reset"
+                >
                   Cancelar
                 </Button>
               </Form.Group>

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Form, Button, Container, Row, Col } from "react-bootstrap";
 import "../../styles/elotroformulario.css";
+import { Link } from "react-router-dom";
 export class Formulario extends Component {
   render() {
     return (
