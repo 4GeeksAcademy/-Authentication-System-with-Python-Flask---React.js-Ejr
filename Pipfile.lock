@@ -1,10 +1,7 @@
 {
     "_meta": {
         "hash": {
-
-            "sha256": "9bcc97b29c1774f1b58e90e52427f2b9a5847f0daa91d5a342ac85880d3357b6"
-
-
+            "sha256": "28d11edc315c9b9e725c037957827bff006567bedca303187ccfbb2262804aa1"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -187,9 +184,7 @@
                 "sha256:f89e21afe925fcfa655965ca8ea10f24773a1791400989ff32f467badfe4a064",
                 "sha256:fa24255ae3c0ab67e613556375a4341af04a084bd58764731972bcbc8baeba36"
             ],
-
-            "markers": "python_version >= '3' and platform_machine == 'aarch64' or (platform_machine == 'ppc64le' or (platform_machine == 'x86_64' or (platform_machine == 'amd64' or (platform_machine == 'AMD64' or (platform_machine == 'win32' or platform_machine == 'WIN32')))))",
-
+            "markers": "platform_machine == 'aarch64' or (platform_machine == 'ppc64le' or (platform_machine == 'x86_64' or (platform_machine == 'amd64' or (platform_machine == 'AMD64' or (platform_machine == 'win32' or platform_machine == 'WIN32')))))",
             "version": "==3.0.1"
         },
         "gunicorn": {

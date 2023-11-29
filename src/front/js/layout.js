@@ -9,14 +9,13 @@ import { Single } from "./pages/single";
 import { Login } from "./pages/login";
 import injectContext from "./store/appContext";
 
-import { Navbar } from "./component/navbar";
+import { Navbar } from "./component/navbar.js";
 
 import { Footer } from "./component/footer";
 import { Formulario } from "./component/Formulario.jsx";
 import { OtroFormulario } from "./component/OtroFormulario.jsx";
 import { Buscador } from "./component/Buscador.jsx";
-import { Carrousel } from "./component/carousel";
-
+import { Carrousel}  from "./component/carrousel.js";
 
 //create your first component
 const Layout = () => {
@@ -26,7 +25,6 @@ const Layout = () => {
 
   if (!process.env.BACKEND_URL || process.env.BACKEND_URL == "")
     return <BackendURL />;
-
 
   return (
     <div>
@@ -46,13 +44,13 @@ const Layout = () => {
             <Route element={<Single />} path="/single/:theid" />
             <Route element={<Login />} path="/login" />
             <Route element={<Footer />} path="/footer" />
+            <Route element={<Carrousel />} path="/carousel" />
           </Routes>
           <Footer />
         </ScrollToTop>
       </BrowserRouter>
     </div>
   );
-
 };
 
 export default injectContext(Layout);
