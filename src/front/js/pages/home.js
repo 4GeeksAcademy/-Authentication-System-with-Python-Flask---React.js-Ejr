@@ -29,9 +29,11 @@ export const Home = () => {
           </p>
 
           <div className="button-container my-5">
+            <Link to="/OtroFormulario">
             <button onClick={handleButtonClick1}>
               Registrate acá como cliente
             </button>
+            </Link>
             <Link to="/Formulario">
               <button className="blue" onClick={handleButtonClick2}>
                 Conviérte en Prestador

@@ -83,9 +83,9 @@ export class Formulario extends Component {
                   <h3>Comuna</h3>
                 </Form.Label>
 
-                <div class="dropdown">
+                <div className="dropdown">
                   <button
-                    class="btn btn-white dropdown-toggle"
+                    className="btn btn-white dropdown-toggle"
                     type="button"
                     data-bs-toggle="dropdown"
                     aria-expanded="false"
@@ -94,31 +94,31 @@ export class Formulario extends Component {
                     Comuna
                   </button>
                   <ul
-                    class="dropdown-menu"
+                    className="dropdown-menu"
                     style={{ borderWidth: "3px", borderColor: "darkcyan" }}
                   >
                     <li>
-                      <a class="dropdown-item" href="#">
+                      <a className="dropdown-item" href="#">
                         La Florida
                       </a>
                     </li>
                     <li>
-                      <a class="dropdown-item" href="#">
+                      <a className="dropdown-item" href="#">
                         La Reina
                       </a>
                     </li>
                     <li>
-                      <a class="dropdown-item" href="#">
+                      <a className="dropdown-item" href="#">
                         Providencia
                       </a>
                     </li>
                     <li>
-                      <a class="dropdown-item" href="#">
+                      <a className="dropdown-item" href="#">
                         Santiago Centro
                       </a>
                     </li>
                     <li>
-                      <a class="dropdown-item" href="#">
+                      <a className="dropdown-item" href="#">
                         Independencia
                       </a>
                     </li>
@@ -130,9 +130,9 @@ export class Formulario extends Component {
                 <Form.Label>
                   <h3>Rubro</h3>
                 </Form.Label>
-                <div class="dropdown">
+                <div className="dropdown">
                   <button
-                    class="btn btn-white dropdown-toggle"
+                    className="btn btn-white dropdown-toggle"
                     type="button"
                     data-bs-toggle="dropdown"
                     aria-expanded="false"
@@ -140,29 +140,29 @@ export class Formulario extends Component {
                   >
                     Rubro
                   </button>
-                  <ul class="dropdown-menu" style={{ borderWidth: "3px" }}>
+                  <ul className="dropdown-menu" style={{ borderWidth: "3px" }}>
                     <li>
-                      <a class="dropdown-item" href="#">
+                      <a className="dropdown-item" href="#">
                         Carpinteria
                       </a>
                     </li>
                     <li>
-                      <a class="dropdown-item" href="#">
+                      <a className="dropdown-item" href="#">
                         Electricista
                       </a>
                     </li>
                     <li>
-                      <a class="dropdown-item" href="#">
+                      <a className="dropdown-item" href="#">
                         Gasfitería
                       </a>
                     </li>
                     <li>
-                      <a class="dropdown-item" href="#">
+                      <a className="dropdown-item" href="#">
                         Pintor
                       </a>
                     </li>
                     <li>
-                      <a class="dropdown-item" href="#">
+                      <a className="dropdown-item" href="#">
                         Aseo
                       </a>
                     </li>
