@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { Context } from "../store/appContext";
 import easyJobUrl from "../../img/Easy-Job.jpg";
 import "../../styles/home.css";
-import Carousel from "../component/carousel";
+import Carousel from "../component/carrousel";
 import { Link } from "react-router-dom";
 
 
