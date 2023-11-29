@@ -82,92 +82,33 @@ export class OtroFormulario extends Component {
                   <h3>Comuna</h3>
                 </Form.Label>
 
-                <div class="dropdown">
-                  <button
-                    class="btn btn-white dropdown-toggle"
-                    type="button"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                    style={{ borderWidth: "3px", borderColor: "darkcyan" }}
-                  >
-                    Comuna
-                  </button>
-                  
-                  <ul
-                    class="dropdown-menu"
-                    style={{ borderWidth: "3px", borderColor: "darkcyan" }}
-                  >
-                    <li>
-                      <a class="dropdown-item" href="#">
-                        La Florida
-                      </a>
-                    </li>
-                    <li>
-                      <a class="dropdown-item" href="#">
-                        La Reina
-                      </a>
-                    </li>
-                    <li>
-                      <a class="dropdown-item" href="#">
-                        Providencia
-                      </a>
-                    </li>
-                    <li>
-                      <a class="dropdown-item" href="#">
-                        Santiago Centro
-                      </a>
-                    </li>
-                    <li>
-                      <a class="dropdown-item" href="#">
-                        Independencia
-                      </a>
-                    </li>
-                  </ul>
-                </div>
+                <Form.Control
+                  as="select"
+                  style={{ borderWidth: "3px", borderColor: "darkcyan" }}
+                >
+                  <option>La Florida</option>
+                  <option>La Reina</option>
+                  <option>Providencia</option>
+                  <option>Santiago Centro</option>
+                  <option>Independencia</option>
+                </Form.Control>
+
               </Form.Group>
 
               <Form.Group controlId="formRubro">
                 <Form.Label>
                   <h3>Rubro</h3>
                 </Form.Label>
-                <div class="dropdown">
-                  <button
-                    class="btn btn-white dropdown-toggle"
-                    type="button"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                    style={{ borderWidth: "3px", borderColor: "darkcyan" }}
-                  >
-                    Rubro
-                  </button>
-                  <ul class="dropdown-menu" style={{ borderWidth: "3px" }}>
-                    <li>
-                      <a class="dropdown-item" href="#">
-                        Carpinteria
-                      </a>
-                    </li>
-                    <li>
-                      <a class="dropdown-item" href="#">
-                        Electricista
-                      </a>
-                    </li>
-                    <li>
-                      <a class="dropdown-item" href="#">
-                        Gasfitería
-                      </a>
-                    </li>
-                    <li>
-                      <a class="dropdown-item" href="#">
-                        Pintor
-                      </a>
-                    </li>
-                    <li>
-                      <a class="dropdown-item" href="#">
-                        Aseo
-                      </a>
-                    </li>
-                  </ul>
-                </div>
+                <Form.Control
+                  as="select"
+                  style={{ borderWidth: "3px", borderColor: "darkcyan" }}
+                >
+                  <option>Carpinteria</option>
+                  <option>Electricista</option>
+                  <option>Gasfitería</option>
+                  <option>Pintor</option>
+                  <option>Aseo</option>
+                </Form.Control>
               </Form.Group>
 
               <Form.Group controlId="formTerminosCondiciones">
@@ -218,8 +159,14 @@ export class OtroFormulario extends Component {
                   label="Acepto los términos y condiciones"
                 />
                 <br />
-                <Button className="buttonright" type="submit">Aceptar</Button>{" "}
-                <Button className="buttonright" variant="secondary" type="reset">
+                <Button className="buttonright" type="submit">
+                  Aceptar
+                </Button>{" "}
+                <Button
+                  className="buttonright"
+                  variant="secondary"
+                  type="reset"
+                >
                   Cancelar
                 </Button>
               </Form.Group>
