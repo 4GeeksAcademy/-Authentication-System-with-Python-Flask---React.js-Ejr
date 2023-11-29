@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Form, Button, Container, Row, Col } from "react-bootstrap";
 import "../../styles/elotroformulario.css";
+import { Link } from "react-router-dom";
 export class Formulario extends Component {
   render() {
     return (
@@ -217,14 +218,19 @@ export class Formulario extends Component {
                   label="Acepto los términos y condiciones"
                 />
                 <br />
+                <Link>
                 <Button className="buttonright" type="submit">Aceptar</Button>{" "}
-                <Button className="buttonright" variant="secondary" type="reset">
+                </Link>
+                <Link to="/home"> 
+      |           <Button className="buttonright" variant="secondary" type="reset">
                   Cancelar
-                </Button>
+                  </Button>
+                </Link>
               </Form.Group>
-              <br />
+              <Link to="/home">
 
               <Button type="submit">Regresar</Button>
+              </Link>
             </Form>
           </Col>
         </Row>
