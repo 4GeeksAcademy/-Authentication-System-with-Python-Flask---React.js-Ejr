@@ -6,7 +6,7 @@ import easyJobUrl3 from "../../img/carpintero.jpg";
 import easyJobUrl4 from "../../img/aseo.jpg";
 import easyJobUrl5 from "../../img/maestro-pintor.jpg";
 
-const Carrousel = () => {
+export const Carrousel = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const handleNext = () => {

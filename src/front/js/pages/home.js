@@ -2,9 +2,8 @@ import React, { useContext } from "react";
 import { Context } from "../store/appContext";
 import easyJobUrl from "../../img/Easy-Job.jpg";
 import "../../styles/home.css";
-import Carousel from "../component/carousel";
+import { Carrousel } from "../component/carrousel.js";
 import { Link } from "react-router-dom";
-
 
 export const Home = () => {
   const { store, actions } = useContext(Context);
@@ -30,13 +29,15 @@ export const Home = () => {
           </p>
 
           <div className="button-container my-5">
+            <Link to="/OtroFormulario">
             <button onClick={handleButtonClick1}>
               Registrate acá como cliente
             </button>
-            <Link to= "/Formulario" >
-            <button className="blue" onClick={handleButtonClick2}>
-              Conviérte en Prestador
-            </button>
+            </Link>
+            <Link to="/Formulario">
+              <button className="blue" onClick={handleButtonClick2}>
+                Conviérte en Prestador
+              </button>
             </Link>
           </div>
         </div>
@@ -45,7 +46,7 @@ export const Home = () => {
         </div>
       </div>
       <div className="container">
-        <Carousel />
+        <Carrousel />
       </div>
     </>
   );
