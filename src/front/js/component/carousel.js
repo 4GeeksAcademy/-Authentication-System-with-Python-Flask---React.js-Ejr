@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import "../../styles/home.css";
 import easyJobUrl1 from "../../img/electricista.jpg";
 import easyJobUrl2 from "../../img/gasfiteria.jpg";
@@ -6,8 +7,9 @@ import easyJobUrl3 from "../../img/carpintero.jpg";
 import easyJobUrl4 from "../../img/aseo.jpg";
 import easyJobUrl5 from "../../img/maestro-pintor.jpg";
 
-export const Carrousel = () => {
- 
+
+const Carousel = () => {
+
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const handleNext = () => {
@@ -20,8 +22,8 @@ export const Carrousel = () => {
 
   return (
     <div className="carousel-oficios">
-      <h1>
-        <strong>O f i c i o s</strong>
+      <h1>        
+          <strong>O f i c i o s</strong>        
       </h1>
 
       <div className="carousel-container">
@@ -64,4 +66,4 @@ export const Carrousel = () => {
   );
 };
 
-export default Carrousel;
+export default Carousel;
