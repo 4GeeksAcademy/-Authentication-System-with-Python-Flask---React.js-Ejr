@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "../../styles/perfil.css";
 import "bootstrap/dist/css/bootstrap.min.css"; 
 
+
 export const Perfil = () => {
   const [formData, setFormData] = useState({
     firstName: "",

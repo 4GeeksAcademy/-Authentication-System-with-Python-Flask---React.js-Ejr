@@ -9,8 +9,7 @@ import { Single } from "./pages/single";
 import { Login } from "./pages/login";
 import injectContext from "./store/appContext";
 
-import { Navbar } from "./component/navbar.js";
-
+import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 import { Formulario } from "./component/Formulario.jsx";
 import { OtroFormulario } from "./component/OtroFormulario.jsx";
