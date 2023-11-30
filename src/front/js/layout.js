@@ -21,6 +21,7 @@ import { Formulario } from "./component/Formulario.jsx";
 import { OtroFormulario } from "./component/OtroFormulario.jsx";
 import { Buscador } from "./component/Buscador.jsx";
 import Carousel from "./component/carousel.js";
+import PrestadorCv from "./component/prestadorCv";
 
 //create your first component
 const Layout = () => {
@@ -52,6 +53,7 @@ const Layout = () => {
             <Route element={<Footer />} path="/footer" />
             <Route element={<Buscador />} path="/buscador" />
             <Route element={<Carousel />} path="/carousel" />
+            <Route element={<PrestadorCv />} path="/prestadorCV" />
 
             <Route element={<Perfil />} path="/perfil" />
             <Route element={<SegundoPerfil />} path="/single/:theid" />
