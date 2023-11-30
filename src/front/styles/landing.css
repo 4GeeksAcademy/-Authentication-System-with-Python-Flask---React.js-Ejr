@@ -1,19 +1,13 @@
 
-.landing-page {
-    background-color: #d1efea; 
-    padding-bottom: 50px; 
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* Centrar elementos */
-  }
-  
-  /* Estilos para el contenedor .content-section */
-  .landing-page .content-section {
+ /* Estilos para el contenedor .content-section */
+ .landing-page .content-section {
     gap: 20px; 
     padding: 80px 60px; /* Ajuste del relleno */
     width: 100%;
     max-width: 1200px; /* Limitar el ancho máximo */
+
     text-align: center; /* Alinear contenido al centro */
+
   }
   
   .landing-page .content-section .text-wrapper {

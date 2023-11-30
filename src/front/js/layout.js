@@ -20,14 +20,12 @@ import { Footer } from "./component/footer";
 import { Formulario } from "./component/Formulario.jsx";
 import { OtroFormulario } from "./component/OtroFormulario.jsx";
 import { Buscador } from "./component/Buscador.jsx";
-<<<<<<< HEAD
+
 import { Task } from "./component/task.js";
 
 import { Carrousel}  from "./component/carrousel.js";
 
-=======
-import Carousel from "./component/carousel.js";
->>>>>>> 980cfb3cbebe2c28132a86bf751ca1701eb5b8c3
+
 
 //create your first component
 const Layout = () => {
@@ -57,18 +55,15 @@ const Layout = () => {
             <Route element={<Single />} path="/single/:theid" />
             <Route element={<Login />} path="/login" />
             <Route element={<Footer />} path="/footer" />
-<<<<<<< HEAD
-            <Route element={<Carrousel />} path="/carousel" />
-            <Route element={<Task />} path="/task" />
-
-=======
+¿
             <Route element={<Buscador />} path="/buscador" />
-            <Route element={<Carousel />} path="/carousel" />
+            <Route element={<Carrousel />} path="/carousel" />
 
             <Route element={<Perfil />} path="/perfil" />
             <Route element={<SegundoPerfil />} path="/single/:theid" />
             <Route element={<h1>Not found!</h1>} />
->>>>>>> 980cfb3cbebe2c28132a86bf751ca1701eb5b8c3
+            <Route element={<Task />} path="/task" />
+
           </Routes>
         </ScrollToTop>
       </BrowserRouter>

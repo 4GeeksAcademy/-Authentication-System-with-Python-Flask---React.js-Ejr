@@ -1,4 +1,5 @@
 
+
 import React from "react";
 import "../../styles/segundoperfil.css";
 import "bootstrap/dist/css/bootstrap.min.css"; 
@@ -44,7 +45,7 @@ export const SegundoPerfil = () => {
       </div>
       <div className="ratings-section">
         <div className="comments-ratings text-center">COMENTARIOS Y CALIFICACIONES</div>
-        
+
         <div className="ratings-list">
           {profileData.ratings.map((item, index) => (
             <div className="rating-item" key={index}>
@@ -69,5 +70,7 @@ export const SegundoPerfil = () => {
 </div>
 
   );
+
 };
+
 

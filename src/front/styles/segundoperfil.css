@@ -1,39 +1,49 @@
-/* Estilos adaptados del primer código al segundo código */
 
-
+/* Contenedor principal */
 .profile-container {
-  background-color: #f7fef9;
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  background-color: #f2f2f2;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  /* Propiedades del primer código */
   height: 1185px;
   width: 1430px;
   font-family: Arial, sans-serif;
-  padding: 20px;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Estilos para .style-filled */
-.photo {
-  align-items: center;
-  background-color: #dc300e;
-  border: 1px solid var(--neutral-10);
-  border-radius: 50px;
-  display: flex;
-  gap: 10px;
-  height: 48px;
-  justify-content: center;
-  width: 123px;
-  margin: 0 auto 20px;
+/* Estilos para los elementos específicos dentro del contenedor */
+
+.logout,
+.job-search {
+  margin-bottom: 20px;
 }
 
-/* Estilos para .div-wrapper */
-.provider-name-text {
+.photo {
+  text-align: center;
+  border: 2px solid #ccc;
+  padding: 15px;
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  margin: 0 auto 20px;
+  /* Propiedades del primer código */
+  align-items: center;
+  background-color: #dc300e;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.provider-name {
   font-size: 20px;
   font-weight: bold;
   text-align: center;
   margin-bottom: 20px;
 }
 
-/* Estilos para .overlap-3, .overlap-4, .overlap-5 (trabajos) */
 .job-1,
 .job-2,
 .job-3 {
@@ -43,15 +53,24 @@
   border-radius: 5px;
 }
 
-/* Estilos para .descripción-wrapper */
 .description-wrapper {
   text-align: center;
   margin-bottom: 20px;
 }
 
-/* Estilos para .text-wrapper-6 */
 .comments-ratings {
   font-style: italic;
   text-align: center;
   margin-top: 20px;
 }
+
+.landing-page {
+    background-color: #d1efea; 
+    padding-bottom: 50px; 
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+  }
+  
+ 
+
