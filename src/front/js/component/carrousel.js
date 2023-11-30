@@ -8,7 +8,7 @@ import easyJobUrl4 from "../../img/aseo.jpg";
 import easyJobUrl5 from "../../img/maestro-pintor.jpg";
 
 
-const Carousel = () => {
+export const Carrousel = () => {
 
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -66,4 +66,4 @@ const Carousel = () => {
   );
 };
 
-export default Carousel;
+
