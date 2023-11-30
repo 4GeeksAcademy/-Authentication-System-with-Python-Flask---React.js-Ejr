@@ -41,10 +41,7 @@ class UserBuscador(db.Model):
 class PrestadorPublicacion(db.Model):
     __tablename__ = 'prestador_publicacion'
     idPrestadorPublicacion = db.Column(db.Integer, primary_key=True)
-    nombre = db.Column(db.String(200), default='', nullable=True)
-    apellido = db.Column(db.String(200), default='', nullable=False)
-    rut = db.Column(db.Integer, unique=True, nullable=True)
-    email = db.Column(db.String(200), unique=True, nullable=False)
+    idUser = db.Column(db.Integer, db.ForeignKey('user.idUser'))
     
 
     def __repr__(self):
