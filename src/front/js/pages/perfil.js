@@ -19,17 +19,12 @@ export const Perfil = () => {
       [e.target.name]: e.target.value,
     });
   };
-  const handleSubmit = async (e) => {
+
+  const handleSubmit = (e) => {
     e.preventDefault();
-    try {
-      await axios.post('http://localhost:3001/api/Perfil', formData);
-      console.log('Profile created successfully');
-    } catch (error) {
-      console.error(error);
-    }
+    // Aquí puedes realizar acciones con los datos del formulario
+    console.log(formData);
   };
-
-
 
   return (
     <div className="profile-container">
