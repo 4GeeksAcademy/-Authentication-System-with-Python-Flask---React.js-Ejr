@@ -10,7 +10,7 @@ import { Single } from "./pages/single";
 import { Login } from "./pages/login";
 
 import { Perfil } from "./pages/perfil";
-import { SegundoPerfil } from "./pages/SegundoPerfil";
+import { SegundoPerfil } from "./pages/segundoperfil";
 
 import injectContext from "./store/appContext";
 
@@ -20,8 +20,10 @@ import { Footer } from "./component/footer";
 import { Formulario } from "./component/Formulario.jsx";
 import { OtroFormulario } from "./component/OtroFormulario.jsx";
 import { Buscador } from "./component/Buscador.jsx";
+import { Task } from "./component/task.js";
+import { FormularioServicios } from "./component/formularioServicios.js";
 
-import Carousel from "./component/carousel.js";
+import Carrousel from "./component/carrousel.js";
 import PrestadorCv from "./component/prestadorCv";
 import GeneradorPublicacion from "./component/generadorPublicacion";
 
@@ -56,7 +58,7 @@ const Layout = () => {
             <Route element={<Footer />} path="/footer" />
 ¿
             <Route element={<Buscador />} path="/buscador" />
-            <Route element={<Carousel />} path="/carousel" />
+            <Route element={<Carrousel />} path="/carousel" />
             <Route element={<PrestadorCv />} path="/prestadorCV" />
             <Route element={<GeneradorPublicacion />} path="/generadorPublicacion" />
 
