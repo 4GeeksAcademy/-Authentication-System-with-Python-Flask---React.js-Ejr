@@ -10,7 +10,7 @@ const Login = () => {
     setContraseña("");
   
     // Aquí puedes realizar la lógica de autenticación
-    console.log("Usuario:", email, "Contraseña:", password);
+    console.log("Usuario:", usuario, "Contraseña:", contraseña);
   
     // Ejemplo de solicitud POST usando fetch
     fetch("http://localhost:3001/api/login", {
@@ -19,26 +19,25 @@ const Login = () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        email: email,
-        password: password,
+        email: usuario,
+        password: contraseña,
       }),
     })
       .then((response) => response.json())
       .then((data) => {
         // Manejar la respuesta del servidor
         console.log("Respuesta del servidor:", data);
-  
-        // Puedes realizar acciones adicionales según la respuesta del servidor
-  
-        // Si la autenticación fue exitosa, imprime "Usuario encontrado"
+    
+        // Si la autenticación fue exitosa, almacenar información del usuario
         if (data.access_token) {
           console.log("Usuario encontrado");
-        }
-  
-        // Reiniciar los datos después de la acción de inicio de sesión
-        setUsuario("");
-        setContraseña("");
-      })
+    
+          // Almacena información del usuario en localStorage
+          localStorage.setItem("user", JSON.stringify(data.user));
+          
+          // Redirige al usuario a la página de perfil
+          history.push("/perfil");
+   } })
       .catch((error) => {
         console.error("Error al enviar la solicitud:", error);
       });
