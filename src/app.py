@@ -12,9 +12,6 @@ from api.commands import setup_commands
 from werkzeug.security import generate_password_hash, check_password_hash
 
 
-
-# from models import Person
-
 ENV = "development" if os.getenv("FLASK_DEBUG") == "1" else "production"
 static_file_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), '../public/')
 app = Flask(__name__)
@@ -99,7 +96,8 @@ def register():
     password = request.json.get("password")
     rut = request.json.get ("rut")
     telefono = request.json.get ("telefono")
-    fecha_de_nacimiento = request.json.get ("fecha de nacimiento")
+    comuna = request.json.get("comuna")
+    fecha_de_nacimiento = request.json.get("fecha_de_nacimiento")
 
     if not email:
         return jsonify(("error: email obligatorio")), 400
@@ -115,6 +113,8 @@ def register():
         return jsonify(("error: rut obligatorio")), 400
     if not fecha_de_nacimiento:
         return jsonify(("error: fecha de nacimiento obligatorio")), 400
+    if not comuna:
+        return jsonify(("error: comuna obligatorio")), 400
 
     user_found = User.query.filter_by(email=email).first()
     buscador_found = UserBuscador.query.filter_by(email=email).first()
@@ -134,6 +134,7 @@ def register():
     new_user.apellido = apellido
     new_user.rut = rut
     new_user.telefono = telefono
+    new_user.comuna = comuna
     new_user.fecha_de_nacimiento = fecha_de_nacimiento
 
     db.session.add(new_user)

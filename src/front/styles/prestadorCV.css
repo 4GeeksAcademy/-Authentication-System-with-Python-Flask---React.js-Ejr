@@ -1,0 +1,12 @@
+.prestadores-cv-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+}
+.btn.btn-primary.btn-lg {
+  width: 250px; /* Puedes ajustar el ancho según tus preferencias */
+  background-color: green; /* Cambia el color de fondo */
+  color: black; /* Cambia el color del texto */
+  margin: 0 2px; /* Elimina el margen interno */
+}
