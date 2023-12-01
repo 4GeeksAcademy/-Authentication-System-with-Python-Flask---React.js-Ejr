@@ -12,9 +12,6 @@ from api.commands import setup_commands
 from werkzeug.security import generate_password_hash, check_password_hash
 
 
-
-# from models import Person
-
 ENV = "development" if os.getenv("FLASK_DEBUG") == "1" else "production"
 static_file_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), '../public/')
 app = Flask(__name__)
@@ -23,7 +20,7 @@ app.url_map.strict_slashes = False
 
 db_url = os.getenv("DATABASE_URL")
 if db_url is not None:
-    app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://postgres:postgres@localhost:5433/dbp4g"
+    app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://postgres:postgres@localhost:5432/dbp4g"
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 MIGRATE = Migrate(app, db, compare_type=True)
@@ -99,7 +96,8 @@ def register():
     password = request.json.get("password")
     rut = request.json.get ("rut")
     telefono = request.json.get ("telefono")
-    fecha_de_nacimiento = request.json.get ("fecha de nacimiento")
+    comuna = request.json.get("comuna")
+    fecha_de_nacimiento = request.json.get("fecha_de_nacimiento")
 
     if not email:
         return jsonify(("error: email obligatorio")), 400
@@ -115,6 +113,8 @@ def register():
         return jsonify(("error: rut obligatorio")), 400
     if not fecha_de_nacimiento:
         return jsonify(("error: fecha de nacimiento obligatorio")), 400
+    if not comuna:
+        return jsonify(("error: comuna obligatorio")), 400
 
     user_found = User.query.filter_by(email=email).first()
     buscador_found = UserBuscador.query.filter_by(email=email).first()
@@ -134,6 +134,7 @@ def register():
     new_user.apellido = apellido
     new_user.rut = rut
     new_user.telefono = telefono
+    new_user.comuna = comuna
     new_user.fecha_de_nacimiento = fecha_de_nacimiento
 
     db.session.add(new_user)
@@ -154,8 +155,46 @@ def register():
 def profile():
     id = get_jwt_identity()
     user = User.query.get(id)
-
     return jsonify({ "data": "Hola Mundo", "user": user.serialize() })
+
+@app.route('/api/perfil', methods=['GET'])
+def get_profil():
+    profil_data = {
+        "name": "Nombre Cliente",
+        "jobs": ["Aviso 1", "Aviso 2", "Aviso 3", "Aviso 4", "Aviso 5"],
+        "description": "Descripción/Experiencia/Comuna",
+        "ratings": [
+            {
+                "comment": "¡Gran trabajo! Muy profesional.",
+                "rating": 5,
+            },
+            {
+                "comment": "Buen servicio, lo recomiendo.",
+                "rating": 4,
+            }
+        ]
+    }
+    return jsonify(profil_data)
+
+@app.route('/api/SegundoPerfil')
+def get_profile():
+    profile_data = {
+        "name": "Nombre Prestador",
+        "jobs": ["Trabajo 1", "Trabajo 2", "Trabajo 3"],
+        "description": "Descripción/Experiencia/Comuna",
+        "ratings": [
+            {
+                "comment": "¡Gran trabajo! Muy profesional.",
+                "rating": 5,
+            },
+            {
+                "comment": "Buen servicio, lo recomiendo.",
+                "rating": 4,
+            }
+        ]
+    }
+    return jsonify(profile_data)
+
 
 
 if __name__ == '__main__':

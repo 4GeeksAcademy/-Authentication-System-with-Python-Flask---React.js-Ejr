@@ -8,27 +8,33 @@ const Login = () => {
   const handleLogin = () => {
     setUsuario("");
     setContraseña("");
-
+  
     // Aquí puedes realizar la lógica de autenticación
-    console.log("Usuario:", usuario, "Contraseña:", contraseña);
-
+    console.log("Usuario:", email, "Contraseña:", password);
+  
     // Ejemplo de solicitud POST usando fetch
-    fetch("url_del_servidor/iniciar-sesion", {
+    fetch("http://localhost:3001/api/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        usuario: usuario,
-        contraseña: contraseña,
+        email: email,
+        password: password,
       }),
     })
       .then((response) => response.json())
       .then((data) => {
         // Manejar la respuesta del servidor
         console.log("Respuesta del servidor:", data);
+  
         // Puedes realizar acciones adicionales según la respuesta del servidor
-
+  
+        // Si la autenticación fue exitosa, imprime "Usuario encontrado"
+        if (data.access_token) {
+          console.log("Usuario encontrado");
+        }
+  
         // Reiniciar los datos después de la acción de inicio de sesión
         setUsuario("");
         setContraseña("");
@@ -67,7 +73,6 @@ const Login = () => {
               onChange={(e) => setContraseña(e.target.value)}
             />
           </div>
-          <Link to="/Formulario">
 
           <button
             type="button"
@@ -76,6 +81,14 @@ const Login = () => {
             >
             Iniciar sesión
           </button>
+            <Link to="/Home">
+            <button
+            type="button"
+            className="btn btn-danger"
+            onClick={() => window.close()}>
+            Cerrar
+
+            </button>
             </Link>
         </form>
       </div>

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "../../styles/perfil.css";
 import "bootstrap/dist/css/bootstrap.min.css"; 
 
+
 export const Perfil = () => {
   const [formData, setFormData] = useState({
     firstName: "",
@@ -18,12 +19,17 @@ export const Perfil = () => {
       [e.target.name]: e.target.value,
     });
   };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Aquí puedes realizar acciones con los datos del formulario
-    console.log(formData);
+    try {
+      await axios.post('http://localhost:3001/api/Perfil', formData);
+      console.log('Profile created successfully');
+    } catch (error) {
+      console.error(error);
+    }
   };
+
+
 
   return (
     <div className="profile-container">
