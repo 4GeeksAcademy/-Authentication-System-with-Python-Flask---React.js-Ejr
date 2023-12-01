@@ -10,7 +10,7 @@ import { Single } from "./pages/single";
 import { Login } from "./pages/login";
 
 import { Perfil } from "./pages/perfil";
-import { SegundoPerfil } from "./pages/segundoperfil";
+import { SegundoPerfil } from "./pages/SegundoPerfil";
 
 import injectContext from "./store/appContext";
 
@@ -20,12 +20,11 @@ import { Footer } from "./component/footer";
 import { Formulario } from "./component/Formulario.jsx";
 import { OtroFormulario } from "./component/OtroFormulario.jsx";
 import { Buscador } from "./component/Buscador.jsx";
-import { Task } from "./component/task.js";
-import { FormularioServicios } from "./component/formularioServicios.js";
 
-import Carrousel from "./component/carrousel.js";
-import PrestadorCv from "./component/prestadorCv";
-import GeneradorPublicacion from "./component/generadorPublicacion";
+import { Task } from "./component/task.js";
+
+import { Carrousel}  from "./component/carrousel.js";
+
 
 
 //create your first component
@@ -59,15 +58,11 @@ const Layout = () => {
 ¿
             <Route element={<Buscador />} path="/buscador" />
             <Route element={<Carrousel />} path="/carousel" />
-            <Route element={<PrestadorCv />} path="/prestadorCV" />
-            <Route element={<GeneradorPublicacion />} path="/generadorPublicacion" />
-
 
             <Route element={<Perfil />} path="/perfil" />
             <Route element={<SegundoPerfil />} path="/single/:theid" />
             <Route element={<h1>Not found!</h1>} />
             <Route element={<Task />} path="/task" />
-            <Route element={<FormularioServicios />} path="/formularioServicios" />
 
           </Routes>
         </ScrollToTop>
