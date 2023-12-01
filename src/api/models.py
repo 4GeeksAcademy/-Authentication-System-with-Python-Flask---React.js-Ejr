@@ -52,3 +52,4 @@ class PrestadorPublicacion(db.Model):
             "id": self.id,
             "email": self.email,
         }
+    

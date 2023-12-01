@@ -22,8 +22,9 @@ import { OtroFormulario } from "./component/OtroFormulario.jsx";
 import { Buscador } from "./component/Buscador.jsx";
 
 import { Task } from "./component/task.js";
-
+import { FormularioServicios } from "./component/formularioServicios";
 import { Carrousel}  from "./component/carrousel.js";
+
 
 
 
@@ -63,6 +64,7 @@ const Layout = () => {
             <Route element={<SegundoPerfil />} path="/single/:theid" />
             <Route element={<h1>Not found!</h1>} />
             <Route element={<Task />} path="/task" />
+            <Route element={<FormularioServicios />} path="/formularioServicios" />
 
           </Routes>
         </ScrollToTop>
