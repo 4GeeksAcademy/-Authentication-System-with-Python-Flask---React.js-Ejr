@@ -35,12 +35,7 @@ export const Navbar = () => {
         <div className="ml-auto">
           <Link to="/login">
             <button className="btn btn-primary">Entrar</button>
-          </Link>
-          <Link to="/formularioServicios">
-          <button>
-            servicios
-          </button>
-          </Link>
+          </Link>          
         </div>
       </div>
     </nav>
