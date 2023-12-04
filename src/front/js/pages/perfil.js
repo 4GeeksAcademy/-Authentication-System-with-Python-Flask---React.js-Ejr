@@ -1,32 +1,45 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../../styles/perfil.css";
-import "bootstrap/dist/css/bootstrap.min.css"; 
-
+import "bootstrap/dist/css/bootstrap.min.css";
 
 export const Perfil = () => {
-  const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    region: "",
-    comuna: "",
-    birthDate: "",
-  });
-
-  const handleInputChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
+    const [formData, setFormData] = useState({
+        nombre: "",
+        apellido: "",
+        email: "",
+        comuna: "",
+        birthDate: "",
     });
-  };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Aquí puedes realizar acciones con los datos del formulario
-    console.log(formData);
-  };
+    useEffect(() => {
+        // Cargar información del usuario desde localStorage
+        const user = JSON.parse(localStorage.getItem("user"));
 
-  return (
+        if (user) {
+            setFormData({
+                nombre: user.nombre,
+                apellido: user.apellido,
+                email: user.email,
+                comuna: user.comuna || "",
+                birthDate: user.fecha_de_nacimiento || "",
+            });
+        }
+    }, []);
+
+    const handleInputChange = (e) => {
+        setFormData({
+            ...formData,
+            [e.target.name]: e.target.value,
+        });
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        // Aquí puedes realizar acciones con los datos del formulario
+        console.log(formData);
+    };
+
+    return (
     <div className="profile-container">
       <div className="header">
         <h1 className="profile-name">Nombre Cliente</h1>
