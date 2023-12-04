@@ -28,13 +28,6 @@ import PrestadorCv from "./component/prestadorCv";
 
 import GeneradorPublicacion from "./component/generadorPublicacion";
 
-
-import { Carrousel}  from "./component/carrousel.js";
-
-
-
-import { Carrousel } from "./component/carrousel.js";
-
 //create your first component
 const Layout = () => {
   //the basename is used when your project is published in a subdirectory and not in the root of the domain
@@ -70,14 +63,10 @@ const Layout = () => {
               element={<GeneradorPublicacion />}
               path="/generadorPublicacion"
             />
-
-
-
             <Route element={<Perfil />} path="/perfil" />
             <Route element={<SegundoPerfil />} path="/single/:theid" />
             <Route element={<h1>Not found!</h1>} />
             <Route element={<Task />} path="/task" />
-
           </Routes>
         </ScrollToTop>
       </BrowserRouter>
