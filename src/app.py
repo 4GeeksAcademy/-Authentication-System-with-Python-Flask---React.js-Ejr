@@ -150,13 +150,6 @@ def register():
 
     return jsonify(data), 200
 
-@app.route('/api/profile', methods=['GET'])
-@jwt_required()
-def profile():
-    id = get_jwt_identity()
-    user = User.query.get(id)
-
-    return jsonify({ "data": "Hola Mundo", "user": user.serialize() })
 
 
 if __name__ == '__main__':
