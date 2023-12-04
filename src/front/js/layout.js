@@ -23,6 +23,8 @@ import { Buscador } from "./component/Buscador.jsx";
 
 import { Task } from "./component/task.js";
 
+
+
 import { Carrousel } from "./component/carrousel.js";
 
 //create your first component
@@ -55,10 +57,12 @@ const Layout = () => {
             ¿
             <Route element={<Buscador />} path="/buscador" />
             <Route element={<Carrousel />} path="/carousel" />
+
             <Route element={<Perfil />} path="/perfil" />
             <Route element={<SegundoPerfil />} path="/single/:theid" />
             <Route element={<h1>Not found!</h1>} />
             <Route element={<Task />} path="/task" />
+
           </Routes>
         </ScrollToTop>
       </BrowserRouter>
