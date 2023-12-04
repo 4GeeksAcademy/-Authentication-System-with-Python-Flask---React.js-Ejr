@@ -150,12 +150,14 @@ def register():
 
     return jsonify(data), 200
 
+
 @app.route('/api/profile', methods=['GET'])
 @jwt_required()
 def profile():
     id = get_jwt_identity()
     user = User.query.get(id)
     return jsonify({ "data": "Hola Mundo", "user": user.serialize() })
+
 
 @app.route('/api/perfil', methods=['GET'])
 def get_profil():
