@@ -155,8 +155,46 @@ def register():
 def profile():
     id = get_jwt_identity()
     user = User.query.get(id)
-
     return jsonify({ "data": "Hola Mundo", "user": user.serialize() })
+
+@app.route('/api/perfil', methods=['GET'])
+def get_profil():
+    profil_data = {
+        "name": "Nombre Cliente",
+        "jobs": ["Aviso 1", "Aviso 2", "Aviso 3", "Aviso 4", "Aviso 5"],
+        "description": "Descripción/Experiencia/Comuna",
+        "ratings": [
+            {
+                "comment": "¡Gran trabajo! Muy profesional.",
+                "rating": 5,
+            },
+            {
+                "comment": "Buen servicio, lo recomiendo.",
+                "rating": 4,
+            }
+        ]
+    }
+    return jsonify(profil_data)
+
+@app.route('/api/SegundoPerfil')
+def get_profile():
+    profile_data = {
+        "name": "Nombre Prestador",
+        "jobs": ["Trabajo 1", "Trabajo 2", "Trabajo 3"],
+        "description": "Descripción/Experiencia/Comuna",
+        "ratings": [
+            {
+                "comment": "¡Gran trabajo! Muy profesional.",
+                "rating": 5,
+            },
+            {
+                "comment": "Buen servicio, lo recomiendo.",
+                "rating": 4,
+            }
+        ]
+    }
+    return jsonify(profile_data)
+
 
 
 if __name__ == '__main__':

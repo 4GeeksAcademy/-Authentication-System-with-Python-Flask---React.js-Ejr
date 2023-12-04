@@ -14,7 +14,7 @@ export const Navbar = () => {
 
         </Link>
         <Link
-          to="/trabajos"
+          to="/Buscador"
           className="navbar-brand mb-0 h1 navbar-brand-custom"
         >
           Trabajos
@@ -35,6 +35,11 @@ export const Navbar = () => {
         <div className="ml-auto">
           <Link to="/login">
             <button className="btn btn-primary">Entrar</button>
+          </Link>
+          <Link to="/formularioServicios">
+          <button>
+            servicios
+          </button>
           </Link>
         </div>
       </div>
