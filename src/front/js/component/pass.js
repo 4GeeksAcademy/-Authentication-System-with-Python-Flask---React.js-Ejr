@@ -10,4 +10,4 @@ function pass() {
   );
 }
 
-export default Pass;
+export default pass;
