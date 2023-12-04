@@ -29,11 +29,11 @@ import PrestadorCv from "./component/prestadorCv";
 import GeneradorPublicacion from "./component/generadorPublicacion";
 
 
-import { Carrousel}  from "./component/carrousel.js";
 
 
 
-import { Carrousel } from "./component/carrousel.js";
+
+
 
 //create your first component
 const Layout = () => {
