@@ -23,9 +23,20 @@ import { Buscador } from "./component/Buscador.jsx";
 
 import { Task } from "./component/task.js";
 
+<<<<<<< HEAD
+=======
+import Carrousel from "./component/carrousel.js";
+import PrestadorCv from "./component/prestadorCv";
+
+import GeneradorPublicacion from "./component/generadorPublicacion";
 
 
-import { Carrousel } from "./component/carrousel.js";
+
+
+
+>>>>>>> f0b8028795cea55c58b25a2df0c339628a712b20
+
+
 
 //create your first component
 const Layout = () => {
@@ -57,6 +68,15 @@ const Layout = () => {
             ¿
             <Route element={<Buscador />} path="/buscador" />
             <Route element={<Carrousel />} path="/carousel" />
+
+            <Route element={<PrestadorCv />} path="/prestadorCV" />
+            <Route
+              element={<GeneradorPublicacion />}
+              path="/generadorPublicacion"
+            />
+
+
+
 
             <Route element={<Perfil />} path="/perfil" />
             <Route element={<SegundoPerfil />} path="/single/:theid" />
