@@ -14,7 +14,7 @@ export const Navbar = () => {
 
         </Link>
         <Link
-          to="/trabajos"
+          to="/Buscador"
           className="navbar-brand mb-0 h1 navbar-brand-custom"
         >
           Trabajos
