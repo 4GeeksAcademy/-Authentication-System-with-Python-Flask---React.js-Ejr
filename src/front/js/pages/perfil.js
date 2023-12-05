@@ -99,7 +99,6 @@ export const Perfil = () => {
         </button>
       </form>
 
-   
       <div className="notices-section">
         <div className="notice">Agenda 1</div>
         <div className="notice">Aviso 2</div>
@@ -109,16 +108,11 @@ export const Perfil = () => {
       </div>
       <div className="services-history">
         <h2>Historial de servicios</h2>
-       
       </div>
       <div className="provider-comments">
         <h3>Comentario Prestador 1</h3>
-      
       </div>
-      <div className="additional-info">
-        
-   
-      </div>
+      <div className="additional-info"></div>
       <div className="actions">
         <button className="action-button">Salir</button>
         <button className="action-button">Buscar Trabajo</button>
