@@ -23,6 +23,8 @@ class User(db.Model):
             "email": self.email,
         }
 
+    def get_id(self):
+        return str(self.idUser)
 
 class UserBuscador(db.Model):
     __tablename__ = 'user_buscador'  

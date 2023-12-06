@@ -64,21 +64,26 @@ def login():
     password = request.json.get("password")
 
     if not email:
-        return jsonify({ "error": "Email es obligatorio"}), 400
+        return jsonify({"error": "Email es obligatorio"}), 400
 
     if not password:
-        return jsonify({ "error": "Contraseña es obligatoria"}), 400
+        return jsonify({"error": "Contraseña es obligatoria"}), 400
 
+    # Intenta encontrar al usuario en la tabla User
     user_found = User.query.filter_by(email=email).first()
 
+    # Si no se encuentra en la tabla User, intenta en la tabla UserBuscador
     if not user_found:
-        return jsonify({ "error": "Email/contraseña son incorrectos"}), 401
+        user_found = UserBuscador.query.filter_by(email=email).first()
+
+    if not user_found:
+        return jsonify({"error": "Email/contraseña son incorrectos"}), 401
 
     if not check_password_hash(user_found.password, password):
-        return jsonify({ "error": "Email/contraseña son incorrectos"}), 401
+        return jsonify({"error": "Email/contraseña son incorrectos"}), 401
 
     expires = datetime.timedelta(days=3)
-    access_token = create_access_token(identity=user_found.id, expires_delta=expires)
+    access_token = create_access_token(identity=str(user_found.idUser), expires_delta=expires)
 
     data = {
         "access_token": access_token,
@@ -86,7 +91,7 @@ def login():
     }
 
     return jsonify(data), 200
-
+    
 @app.route('/api/register', methods=['POST'])
 def register():
 
