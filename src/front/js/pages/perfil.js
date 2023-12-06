@@ -20,12 +20,30 @@ export const Perfil = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Aquí puedes realizar acciones con los datos del formulario
-    console.log(formData);
-  };
 
+    try {
+      const response = await fetch('http://localhost:3001/api/perfil', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        // Manejar la respuesta exitosa del servidor
+        const data = await response.json();
+        console.log('Registro exitoso:', data);
+      } else {
+        // Manejar errores
+        console.error('Error al registrar usuario');
+      }
+    } catch (error) {
+      console.error('Error de red:', error);
+    }
+  };
   return (
     <div className="profile-container">
       <div className="header">
