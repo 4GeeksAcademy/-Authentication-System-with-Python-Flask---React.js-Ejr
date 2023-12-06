@@ -163,25 +163,38 @@ def profile():
     user = User.query.get(id)
     return jsonify({ "data": "Hola Mundo", "user": user.serialize() })
 
+# Datos de ejemplo para simular una base de datos
+perfil_data = {
+    "firstName": "",
+    "lastName": "",
+    "email": "",
+    "region": "",
+    "comuna": "",
+    "birthDate": "",
+}
 
+# Ruta para manejar las solicitudes POST desde React
+@app.route('/api/perfil', methods=['POST'])
+def actualizar_perfil():
+    global perfil_data
+    
+    # Obtener los datos enviados desde React
+    data = request.json
+    
+    # Actualizar los datos del perfil con los nuevos datos recibidos
+    perfil_data.update(data)
+    
+    # Devolver una respuesta
+    return jsonify({'message': 'Datos de perfil actualizados correctamente'})
+
+# Ruta para obtener los datos del perfil (solo para demostración)
 @app.route('/api/perfil', methods=['GET'])
-def get_profil():
-    profil_data = {
-        "name": "Nombre Cliente",
-        "jobs": ["Aviso 1", "Aviso 2", "Aviso 3", "Aviso 4", "Aviso 5"],
-        "description": "Descripción/Experiencia/Comuna",
-        "ratings": [
-            {
-                "comment": "¡Gran trabajo! Muy profesional.",
-                "rating": 5,
-            },
-            {
-                "comment": "Buen servicio, lo recomiendo.",
-                "rating": 4,
-            }
-        ]
-    }
-    return jsonify(profil_data)
+def obtener_perfil():
+    global perfil_data
+    
+    # Devolver los datos actuales del perfil
+    return jsonify(perfil_data)
+
 
 @app.route('/api/SegundoPerfil')
 def get_profile():

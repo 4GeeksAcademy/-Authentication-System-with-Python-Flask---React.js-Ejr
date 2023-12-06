@@ -4,6 +4,7 @@ import easyJobUrl from "../../img/Easy-Job.jpg";
 import "../../styles/home.css";
 import { Carrousel } from "../component/carrousel.js";
 import { Link } from "react-router-dom";
+import { Landing } from "../component/landing2";
 
 export const Home = () => {
   const { store, actions } = useContext(Context);
@@ -30,9 +31,9 @@ export const Home = () => {
 
           <div className="button-container my-5">
             <Link to="/OtroFormulario">
-            <button onClick={handleButtonClick1}>
-              Registrate acá como cliente
-            </button>
+              <button onClick={handleButtonClick1}>
+                Registrate acá como cliente
+              </button>
             </Link>
             <Link to="/Formulario">
               <button className="blue" onClick={handleButtonClick2}>
@@ -47,6 +48,9 @@ export const Home = () => {
       </div>
       <div className="container">
         <Carrousel />
+      </div>
+      <div className="container">
+        <Landing />
       </div>
     </>
   );
