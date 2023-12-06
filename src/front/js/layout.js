@@ -23,11 +23,7 @@ import { Buscador } from "./component/Buscador.jsx";
 
 import { Task } from "./component/task.js";
 
-import Carrousel from "./component/carrousel.js";
-import PrestadorCv from "./component/prestadorCv";
-
-import GeneradorPublicacion from "./component/generadorPublicacion";
-
+import { Carrousel}  from "./component/carrousel.js";
 
 
 
@@ -54,17 +50,20 @@ const Layout = () => {
             <Route path="/Buscador" element={<Buscador />} />
             <Route path="*" element={<h1>Not found!</h1>} />
             <Route element={<Home />} path="/" />
+
             <Route element={<Demo />} path="/demo" />
             <Route element={<Single />} path="/single/:theid" />
             <Route element={<Login />} path="/login" />
             <Route element={<Footer />} path="/footer" />
-            ¿
+¿
             <Route element={<Buscador />} path="/buscador" />
             <Route element={<Carrousel />} path="/carousel" />
+
             <Route element={<Perfil />} path="/perfil" />
             <Route element={<SegundoPerfil />} path="/single/:theid" />
             <Route element={<h1>Not found!</h1>} />
             <Route element={<Task />} path="/task" />
+
           </Routes>
         </ScrollToTop>
       </BrowserRouter>

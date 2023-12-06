@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Button, Col, Container, Row, Card } from "react-bootstrap";
+import { Button, Col, Container, Row } from "react-bootstrap";
 import "../../styles/elbuscador.css";
 
 export const Buscador = () => {
@@ -46,6 +46,12 @@ export const Buscador = () => {
         </Row>
         <br />
         <br />
+
+        <Link to="/">
+          <button type="button" className="submit btn btn-success">
+            REGRESAR
+          </button>
+        </Link>
 
         <Link to="/">
           <button type="button" className="submit btn btn-">
