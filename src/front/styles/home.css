@@ -22,11 +22,6 @@
   margin-bottom: 0; /* Elimina el margen inferior predeterminado de las etiquetas h1 */
 }
 
-.container {
-  display: flex;
-  /* Esto asegura que la altura sea del 100% del viewport */
-}
-
 .text-container,
 .image-container {
   flex: 1; /* Esto hace que ambos ocupen la misma cantidad de espacio */

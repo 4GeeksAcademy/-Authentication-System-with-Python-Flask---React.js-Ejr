@@ -23,9 +23,10 @@ import { Buscador } from "./component/Buscador.jsx";
 
 import { Task } from "./component/task.js";
 
-import { Carrousel}  from "./component/carrousel.js";
+import Carrousel from "./component/carrousel.js";
+import PrestadorCv from "./component/prestadorCv";
 
-
+import GeneradorPublicacion from "./component/generadorPublicacion";
 
 //create your first component
 const Layout = () => {
@@ -42,28 +43,33 @@ const Layout = () => {
         <ScrollToTop>
           <Navbar />
           <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/demo" element={<Demo />} />
-            <Route path="/single" element={<Single />} />
-            <Route path="/Formulario" element={<Formulario />} />
-            <Route path="/OtroFormulario" element={<OtroFormulario />} />
-            <Route path="/Buscador" element={<Buscador />} />
+            <Route element={<Home />} path="/" />
+            <Route element={<Demo />} path="/demo" />
+            <Route element={<Single />} path="/single" />
+
             <Route path="*" element={<h1>Not found!</h1>} />
             <Route element={<Home />} path="/" />
-
             <Route element={<Demo />} path="/demo" />
             <Route element={<Single />} path="/single/:theid" />
             <Route element={<Login />} path="/login" />
             <Route element={<Footer />} path="/footer" />
-¿
+
             <Route element={<Buscador />} path="/buscador" />
+            <Route element={<OtroFormulario />} path="/OtroFormulario" />
+            <Route element={<Formulario />} path="/Formulario" />
+
             <Route element={<Carrousel />} path="/carousel" />
 
+            <Route element={<PrestadorCv />} path="/prestadorCV" />
+            <Route
+              element={<GeneradorPublicacion />}
+              path="/generadorPublicacion"
+            />
+
             <Route element={<Perfil />} path="/perfil" />
-            <Route element={<SegundoPerfil />} path="/single/:theid" />
+            <Route element={<SegundoPerfil />} path="/SegundoPerfil" />
             <Route element={<h1>Not found!</h1>} />
             <Route element={<Task />} path="/task" />
-
           </Routes>
         </ScrollToTop>
       </BrowserRouter>

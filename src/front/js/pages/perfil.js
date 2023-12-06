@@ -19,18 +19,31 @@ export const Perfil = () => {
       [e.target.name]: e.target.value,
     });
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
-      await axios.post('http://localhost:3001/api/Perfil', formData);
-      console.log('Profile created successfully');
+      const response = await fetch('http://localhost:3001/api/perfil', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        // Manejar la respuesta exitosa del servidor
+        const data = await response.json();
+        console.log('Registro exitoso:', data);
+      } else {
+        // Manejar errores
+        console.error('Error al registrar usuario');
+      }
     } catch (error) {
-      console.error(error);
+      console.error('Error de red:', error);
     }
   };
-
-
-
   return (
     <div className="profile-container">
       <div className="header">
@@ -104,7 +117,6 @@ export const Perfil = () => {
         </button>
       </form>
 
-   
       <div className="notices-section">
         <div className="notice">Agenda 1</div>
         <div className="notice">Aviso 2</div>
@@ -114,16 +126,11 @@ export const Perfil = () => {
       </div>
       <div className="services-history">
         <h2>Historial de servicios</h2>
-       
       </div>
       <div className="provider-comments">
         <h3>Comentario Prestador 1</h3>
-      
       </div>
-      <div className="additional-info">
-        
-   
-      </div>
+      <div className="additional-info"></div>
       <div className="actions">
         <button className="action-button">Salir</button>
         <button className="action-button">Buscar Trabajo</button>
