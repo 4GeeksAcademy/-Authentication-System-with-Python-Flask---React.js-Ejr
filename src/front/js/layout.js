@@ -23,8 +23,7 @@ import { Buscador } from "./component/Buscador.jsx";
 
 import { Task } from "./component/task.js";
 
-<<<<<<< HEAD
-=======
+
 import Carrousel from "./component/carrousel.js";
 import PrestadorCv from "./component/prestadorCv";
 
@@ -34,7 +33,7 @@ import GeneradorPublicacion from "./component/generadorPublicacion";
 
 
 
->>>>>>> f0b8028795cea55c58b25a2df0c339628a712b20
+
 
 
 
