@@ -23,7 +23,13 @@ import { Buscador } from "./component/Buscador.jsx";
 
 import { Task } from "./component/task.js";
 
-import { Carrousel } from "./component/carrousel.js";
+import Carrousel from "./component/carrousel.js";
+import PrestadorCv from "./component/prestadorCv";
+
+import GeneradorPublicacion from "./component/generadorPublicacion";
+
+
+
 
 //create your first component
 const Layout = () => {
