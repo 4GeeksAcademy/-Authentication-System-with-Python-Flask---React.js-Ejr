@@ -53,12 +53,6 @@ export const Buscador = () => {
           </button>
         </Link>
 
-        <Link to="/">
-          <button type="button" className="submit btn btn-">
-            REGRESAR
-          </button>
-        </Link>
-
         <div
           style={{ backgroundColor: "aliceblue", padding: "30px" }}
           class="card"
@@ -76,7 +70,7 @@ export const Buscador = () => {
               }}
             >
               <p style={{ width: "40%", margin: "0" }}>
-                CONSIGUE NUEVAS OPORTUNIDADES
+                CONSIGUE NUEVAS OPORTUNIDADE
               </p>
 
               <div
