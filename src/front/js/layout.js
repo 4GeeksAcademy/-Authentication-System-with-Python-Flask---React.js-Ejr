@@ -27,6 +27,7 @@ import Carrousel from "./component/carrousel.js";
 import PrestadorCv from "./component/prestadorCv";
 
 import GeneradorPublicacion from "./component/generadorPublicacion";
+import { Landing } from "./component/landing2.js";
 
 //create your first component
 const Layout = () => {
@@ -67,6 +68,7 @@ const Layout = () => {
             />
 
             <Route element={<Perfil />} path="/perfil" />
+            <Route element={<Landing/>} path="/landing2" />
             <Route element={<SegundoPerfil />} path="/SegundoPerfil" />
             <Route element={<Nosotros />} path="/nosotros" />
             <Route element={<h1>Not found!</h1>} />
