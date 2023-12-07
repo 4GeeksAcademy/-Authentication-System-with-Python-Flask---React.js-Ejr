@@ -18,6 +18,7 @@ export const Nosotros = () => {
         color: '#555',
         fontSize: '1.1em',
         lineHeight: '1.6',
+        textAlign: 'center',
       };
     
       return (

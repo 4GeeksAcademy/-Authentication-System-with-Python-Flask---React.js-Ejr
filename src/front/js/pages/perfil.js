@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import "../../styles/perfil.css";
 import "bootstrap/dist/css/bootstrap.min.css"; 
+import { Link } from "react-router-dom";
+import "./../component/Buscador.jsx"
 
 
 export const Perfil = () => {
@@ -132,8 +134,8 @@ export const Perfil = () => {
       </div>
       <div className="additional-info"></div>
       <div className="actions">
-        <button className="action-button">Salir</button>
-        <button className="action-button">Buscar Trabajo</button>
+       <Link to="/"> <button className="action-button">Salir</button></Link>
+       <Link to= "/Buscador"><button className="action-button">Buscar Trabajo</button></Link> 
       </div>
     </div>
   );
