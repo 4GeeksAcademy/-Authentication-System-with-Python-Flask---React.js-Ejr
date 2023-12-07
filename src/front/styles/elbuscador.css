@@ -7,8 +7,8 @@
   background-color: rgb(203, 210, 210);
   padding: 30px;
   border-radius: 15px;
-  display: inline-block;
   margin-top: 8%;
+  width: 100%;
 }
 
 .col-md-auto {
@@ -38,6 +38,37 @@ h1 {
   font-size: 14px;
   padding: 10px 15px;
   border-radius: 5px;
-  background-color: rgb(243, 22, 22); /* Cambia el color de fondo */
+  /* Cambia el color de fondo */
   color: #000; /* Cambia el color del texto */
+}
+.submitbutton1 {
+  background-color: red;
+}
+
+.submitbutton2 {
+  background-color: green;
+  border-radius: 35px;
+}
+
+
+.card {
+  background-color: aliceblue;
+  padding: 38px;
+  margin-top: 30px;
+}
+
+.card-body{
+  padding: 10px 30px;
+  justify-content: space-between;
+  gap: 90px;
+  align-items: center;
+}
+
+.card-body2{
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  gap: 120px;
+  align-items: center;
+  margin-bottom: 30px;
 }
