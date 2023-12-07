@@ -20,7 +20,7 @@ import { Footer } from "./component/footer";
 import { Formulario } from "./component/Formulario.jsx";
 import { OtroFormulario } from "./component/OtroFormulario.jsx";
 import { Buscador } from "./component/Buscador.jsx";
-
+import {Nosotros} from "./component/nosotros.js";
 import { Task } from "./component/task.js";
 
 import Carrousel from "./component/carrousel.js";
@@ -68,6 +68,7 @@ const Layout = () => {
 
             <Route element={<Perfil />} path="/perfil" />
             <Route element={<SegundoPerfil />} path="/SegundoPerfil" />
+            <Route element={<Nosotros />} path="/nosotros" />
             <Route element={<h1>Not found!</h1>} />
             <Route element={<Task />} path="/task" />
           </Routes>
