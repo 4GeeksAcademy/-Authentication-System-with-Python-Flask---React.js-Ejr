@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Button, Col, Container, Row } from "react-bootstrap";
-import "../../styles/elbuscador.css";
+
 
 export const Buscador = () => {
   return (
