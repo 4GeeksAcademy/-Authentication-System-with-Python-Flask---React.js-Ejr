@@ -1,8 +1,6 @@
 import React from 'react';
 import { ProfesionCard } from './ProfesionCard';
-import "../../styles/home.css";
-
-
+import "../../styles/landing2.css";
 
 export const Landing = () => {
   const profesiones = [
@@ -24,16 +22,7 @@ export const Landing = () => {
   ];
 
   return (
-    <div className="landing-page">
-      <div className="landing-page__header">
-        <div className="container">
-          <h1>Trabaja Con Nosotros</h1>
-          <p>Some inspiring subheading goes here.</p>
-          <a href="#" className="btn btn-primary btn-lg custom-button">¡Comienza ahora!</a>
-        </div>
-      </div>
-
-      <div className="container">
+      <div className="container2">
         <h1>Nosotros</h1>
         <div className="row">
           <div className="col-md-6">
@@ -68,7 +57,7 @@ export const Landing = () => {
           ))}
         </div>
       </div>
-    </div>
+    
   );
 }
 

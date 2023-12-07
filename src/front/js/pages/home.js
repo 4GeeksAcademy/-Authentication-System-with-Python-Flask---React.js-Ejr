@@ -4,7 +4,9 @@ import easyJobUrl from "../../img/Easy-Job.jpg";
 import "../../styles/home.css";
 import { Carrousel } from "../component/carrousel.js";
 import { Link } from "react-router-dom";
-import { Landing } from "../component/landing2";
+
+import { ProfesionCard } from "../component/ProfesionCard.js";
+
 
 export const Home = () => {
   const { store, actions } = useContext(Context);
@@ -18,6 +20,23 @@ export const Home = () => {
     // Lógica para el segundo botón
     console.log("Botón 2 clickeado");
   };
+  const profesiones = [
+    {
+      nombre: 'Gasfiter',
+      calificacion: 4.5,
+      comentarios: ['Excelente trabajo!', 'Lo recomiendo.']
+    },
+    {
+      nombre: 'Electricista',
+      calificacion: 4.8,
+      comentarios: ['excelente persona.', 'Siempre cumple.']
+    },
+    {
+      nombre: 'Electricista',
+      calificacion: 4.8,
+      comentarios: ['excelente persona.', 'Siempre cumple.']
+    }
+  ];
 
   return (
     <>
@@ -49,8 +68,42 @@ export const Home = () => {
       <div className="container">
         <Carrousel />
       </div>
-      <div className="container">
-        <Landing />
+
+      <div className="container2">
+        <h1>Nosotros</h1>
+        <div className="row">
+          <div className="col-md-6">
+            <div className="card mb-4">
+              <img src="https://thumbs.dreamstime.com/b/electricista-30694651.jpg" className="card-img-top" alt="..." />
+              <div className="card-body">
+                
+                <p className="card-text"> Somos una plataforma dedicada a conectar a profesionales de diversos oficios como gasfitería, electricidad, pintura y más, con personas y empresas que requieren sus servicios. Nuestra misión es facilitar la contratación de trabajadores capacitados y confiables para cualquier tipo de proyecto o reparación..</p>
+              </div>
+            </div>
+          </div>
+          <div className="col-md-6">
+            <div className="card mb-4">
+              <img src="https://thumbs.dreamstime.com/b/electricista-89764045.jpg" className="card-img-top" alt="..." />
+              <div className="card-body">
+                
+                <p className="card-text"> nuestra marketplace, podrás encontrar una amplia variedad de profesionales verificados y calificados. Ofrecemos un entorno seguro y fácil de usar donde podrás publicar trabajos, recibir presupuestos, comparar perfiles y seleccionar al experto que mejor se adapte a tus necesidades..</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        {/* anexa las tarjetas de profesiones */}
+        <div className="row">
+          {profesiones.map((profesion, index) => (
+            <div className="col-md-4" key={index}>
+              <ProfesionCard
+                nombre={profesion.nombre}
+                calificacion={profesion.calificacion}
+                comentarios={profesion.comentarios}
+              />
+            </div>
+          ))}
+        </div>
+
       </div>
     </>
   );
