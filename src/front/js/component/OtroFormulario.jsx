@@ -82,8 +82,7 @@ export class OtroFormulario extends Component {
           <Col>
             <Form onSubmit={this.handleSubmit}>
               <h1>
-                Bienvenido, Por favor rellene los campos, para ofrecer sus
-                Servicios
+                Bienvenido! Por favor rellene sus datos para realizar su búsqueda 
               </h1>
               <Form.Group controlId="formNombre">
                 <Form.Label>
@@ -193,6 +192,7 @@ export class OtroFormulario extends Component {
                   onChange={this.handleChange}
                   style={{ borderWidth: "3px", borderColor: "darkcyan" }}
                 >
+                  <option value="" hidden>Seleccione su Comuna</option>
                   <option>La Florida</option>
                   <option>La Reina</option>
                   <option>Providencia</option>

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Form, Button, Container, Row, Col } from "react-bootstrap";
+import { Form, Button, Container, Row, Col, Modal } from "react-bootstrap";
 import "../../styles/elotroformulario.css";
 import { Link } from "react-router-dom";
 export class Formulario extends Component {
@@ -16,6 +16,7 @@ export class Formulario extends Component {
       fecha_de_nacimiento: "",
       rubro: "",
       aceptoTerminos: false,
+      showModal: false
     };
   }
 
@@ -24,6 +25,10 @@ export class Formulario extends Component {
     this.setState({
       [name]: type === "checkbox" ? checked : value,
     });
+  };
+
+  handleModalToggle = () => {
+    this.setState((prevState) => ({ showModal: !prevState.showModal }));
   };
 
   handleSubmit = async (event) => {
@@ -86,8 +91,8 @@ export class Formulario extends Component {
           <Col>
             <Form onSubmit={this.handleSubmit}>
               <h1>
-                Bienvenido, Por favor rellene los campos, para ofrecer sus
-                Servicios
+                Bienvenido! Por favor rellene los campos para ofrecer sus
+                servicios
               </h1>
               <Form.Group controlId="formNombre">
                 <Form.Label>
@@ -195,8 +200,10 @@ export class Formulario extends Component {
                   name="comuna"
                   value={this.state.comuna}
                   onChange={this.handleChange}
+                  placeholder="Ingrese su comuna"
                   style={{ borderWidth: "3px", borderColor: "darkcyan" }}
-                >
+                > 
+                  <option value="" hidden>Seleccione su Comuna</option>
                   <option>La Florida</option>
                   <option>La Reina</option>
                   <option>Providencia</option>
@@ -217,6 +224,7 @@ export class Formulario extends Component {
                   onChange={this.handleChange}
                   style={{ borderWidth: "3px", borderColor: "darkcyan" }}
                 >
+                  <option value="" hidden>Seleccione su rubro</option>
                   <option>Carpinteria</option>
                   <option>Electricista</option>
                   <option>Gasfitería</option>
@@ -224,8 +232,6 @@ export class Formulario extends Component {
                   <option>Aseo</option>
                 </Form.Control>
               </Form.Group>
-
-              <Form.Group controlId="formTerminosCondiciones">
                 <h3>
                   <strong>Terminos y Condiciones</strong>
                 </h3>
@@ -268,6 +274,7 @@ export class Formulario extends Component {
                     relacionados con información bancaria o financiera.
                   </p>
                 </div>
+                <Form.Group>
                 <Form.Check
                   type="checkbox"
                   name="aceptoTerminos"
