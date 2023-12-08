@@ -1,6 +1,8 @@
 import React from "react";
 import "../../styles/generadorPublicacion.css";
 
+
+
 const GeneradorPublicacion = () => {
   return (
     <>
@@ -35,6 +37,14 @@ const GeneradorPublicacion = () => {
           className="form-control"
           id="exampleFormControlInput2"
         />
+      </div>
+      <div>
+        <button>
+          <p>
+            Publicar
+          </p>
+
+        </button>
       </div>
     </>
   );
