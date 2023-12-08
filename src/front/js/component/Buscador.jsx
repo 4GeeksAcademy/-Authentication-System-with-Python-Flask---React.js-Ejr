@@ -1,12 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Button, Col, Container, Row } from "react-bootstrap";
+import { Button, Col, Row } from "react-bootstrap";
 import "../../styles/elbuscador.css";
 
 export const Buscador = () => {
   return (
     <div className="container">
-      <Container className="buttons-container">
+      <div className="buttons-container">
         <h1> SELECCIONA TU BUSQUEDA </h1>
         <br />
         <Row className="justify-content-center">
@@ -48,37 +48,26 @@ export const Buscador = () => {
         <br />
 
         <Link to="/">
-          <button type="button" className="submit btn btn-success">
+          <button type="button" className="submitbutton1 btn btn-">
             REGRESAR
           </button>
         </Link>
 
-        <div
-          style={{ backgroundColor: "aliceblue", padding: "30px" }}
-          class="card"
-        >
+        <div className="card" style={{maxWidth: "1000px", margin: "30px auto 0"}}>
           {" "}
           {/*EN ESTA LINEA COLOR DE BACKGROUND*/}
-          <div className="card-body" style={{ padding: "10px 30px" }}>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                gap: "120px",
-                alignItems: "center",
-                marginBottom: "30px",
-              }}
-            >
+          <div className="card-body">
+            <div className="card-body2">
               <p style={{ width: "40%", margin: "0" }}>
-                CONSIGUE NUEVAS OPORTUNIDADE
+                CONSIGUE NUEVAS OPORTUNIDADES
               </p>
 
               <div
                 style={{
-                  width: "30%",
+                  width: "40%",
                   height: "70%",
                   padding: "10px",
-                  background: "#88888E33",
+                  background: "#99fffd",
                   borderRadius: "6px",
                   justifyContent: "center",
                   alignItems: "center",
@@ -90,10 +79,9 @@ export const Buscador = () => {
                   style={{
                     width: "100px",
                     height: "96px",
-                    background: "#88888E33",
+                    background: "#99fffd",
                   }}
                 >
-                  {" "}
                   IMAGEN
                 </div>
               </div>
@@ -104,14 +92,14 @@ export const Buscador = () => {
               style={{ display: "flex", justifyContent: "flex-end" }}
             >
               <Link to="/Formulario">
-                <button type="button" className="submitbutton btn btn">
+                <button type="button" className="submitbutton2 btn btn success">
                   Conviertete en Prestador
                 </button>
               </Link>
             </div>
           </div>
         </div>
-      </Container>
+      </div>
     </div>
   );
 };

@@ -64,21 +64,26 @@ def login():
     password = request.json.get("password")
 
     if not email:
-        return jsonify({ "error": "Email es obligatorio"}), 400
+        return jsonify({"error": "Email es obligatorio"}), 400
 
     if not password:
-        return jsonify({ "error": "Contraseña es obligatoria"}), 400
+        return jsonify({"error": "Contraseña es obligatoria"}), 400
 
+    # Intenta encontrar al usuario en la tabla User
     user_found = User.query.filter_by(email=email).first()
 
+    # Si no se encuentra en la tabla User, intenta en la tabla UserBuscador
     if not user_found:
-        return jsonify({ "error": "Email/contraseña son incorrectos"}), 401
+        user_found = UserBuscador.query.filter_by(email=email).first()
+
+    if not user_found:
+        return jsonify({"error": "Email/contraseña son incorrectos"}), 401
 
     if not check_password_hash(user_found.password, password):
-        return jsonify({ "error": "Email/contraseña son incorrectos"}), 401
+        return jsonify({"error": "Email/contraseña son incorrectos"}), 401
 
     expires = datetime.timedelta(days=3)
-    access_token = create_access_token(identity=user_found.id, expires_delta=expires)
+    access_token = create_access_token(identity=str(user_found.idUser), expires_delta=expires)
 
     data = {
         "access_token": access_token,
@@ -86,7 +91,7 @@ def login():
     }
 
     return jsonify(data), 200
-
+    
 @app.route('/api/register', methods=['POST'])
 def register():
 
@@ -150,6 +155,82 @@ def register():
 
     return jsonify(data), 200
 
+@app.route("/user/<string:name>", methods=["GET"])
+def get_user_by_name(name):
+    return jsonify({"name": name}), 200
+
+
+# enviar datos en la url como query string
+@app.route("/user/publicacion/<int:id>", methods=["GET"])
+def get_user_by_id():
+    query = request.args
+    id = query["id"]
+    name = query["name"]
+    publicacion = query["publicacion"]
+    fecha = query["fecha"]
+
+    return jsonify({"id":id, "name": name, "publicacion": publicacion, "fecha": fecha}), 200
+
+
+@app.route("/user/publicacion/<int:id>", methods=["POST"])
+def enviar_datos_de_publicacion(id):
+    # Capturamos todo el body en un diccionario
+    body = request.get_json(name)
+
+    if not "name" in body:
+        return jsonify({"msg": "Name is required!"}), 400
+
+    # Capturamos los datos de manera individual
+    id = body["id"]
+    name = request.json.get("name")
+    publicacion = request.json.get("publicacion")
+    date = request.json.get("date")
+
+    return (
+        jsonify({"body": body, "id":id,  "name": name, "publicacion": publicacion, "date": date}),
+        200,
+    )
+
+
+@app.route("/user/publicacion", methods=["PUT"])
+def actualizar_datos_de_publicacion():
+    if not "username" in request.form:
+        return jsonify({"msg": "username is required!"}), 422
+
+    # Enviando datos mediante un formulario con archivo adjunto
+    username = request.form["username"]
+    password = request.form["password"]
+
+    # Recibiendo un archivo adjunto
+    avatar = request.files["avatar"]
+
+    return (
+        jsonify(
+            {"username": username, "password": password, "avatar": avatar.filename}
+        ),
+        200,
+    )
+
+
+@app.route("/publicacion", methods=["GET", "POST"])
+@app.route("/publicacion/<int:id>", methods=["GET", "PUT", "DELETE"])
+def publicacion(id=None):
+    if request.method == "GET":
+        if id is not None:
+            return jsonify({"message": "Buscando con id "}), 200
+        else:
+            return jsonify({"message": "Buscando todas las publicaciones "}), 200
+
+    if request.method == "POST":
+        return jsonify({"message": "creando una publicacion"}), 200
+
+    if request.method == "PUT":
+        return jsonify({"message": "actualizando una publicacion"}), 200
+
+    if request.method == "DELETE":
+        return jsonify({"message": "eliminando una publicacion"}), 200
+
+
 
 @app.route('/api/profile', methods=['GET'])
 @jwt_required()
@@ -158,25 +239,41 @@ def profile():
     user = User.query.get(id)
     return jsonify({ "data": "Hola Mundo", "user": user.serialize() })
 
+# Datos de ejemplo para simular una base de datos
+perfil_data = {
+    "firstName": "",
+    "lastName": "",
+    "email": "",
+    "region": "",
+    "comuna": "",
+    "birthDate": "",
+}
 
+
+@app.route('/api/perfil', methods=['POST'])
+
+# Ruta para manejar las solicitudes POST desde React
+@app.route('/api/perfil', methods=['POST'])
+def actualizar_perfil():
+    global perfil_data
+    
+    # Obtener los datos enviados desde React
+    data = request.json
+    
+    # Actualizar los datos del perfil con los nuevos datos recibidos
+    perfil_data.update(data)
+    
+    # Devolver una respuesta
+    return jsonify({'message': 'Datos de perfil actualizados correctamente'})
+
+# Ruta para obtener los datos del perfil (solo para demostración)
 @app.route('/api/perfil', methods=['GET'])
-def get_profil():
-    profil_data = {
-        "name": "Nombre Cliente",
-        "jobs": ["Aviso 1", "Aviso 2", "Aviso 3", "Aviso 4", "Aviso 5"],
-        "description": "Descripción/Experiencia/Comuna",
-        "ratings": [
-            {
-                "comment": "¡Gran trabajo! Muy profesional.",
-                "rating": 5,
-            },
-            {
-                "comment": "Buen servicio, lo recomiendo.",
-                "rating": 4,
-            }
-        ]
-    }
-    return jsonify(profil_data)
+def obtener_perfil():
+    global perfil_data
+    
+    # Devolver los datos actuales del perfil
+    return jsonify(perfil_data)
+
 
 @app.route('/api/SegundoPerfil')
 def get_profile():

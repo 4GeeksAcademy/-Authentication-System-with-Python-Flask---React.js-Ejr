@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "../../styles/home.css";
 import  Carrousel  from "../component/carrousel.js";
+import ".././component/nosotros.js"
 
 export const Navbar = () => {
 
