@@ -11,15 +11,15 @@ export const Navbar = () => {
       <div className="container text-center">
         <Link to="/" className="navbar-brand mb-0 h1 navbar-brand-custom">
           <strong>EasyJob</strong>
-
-
         </Link>
+
         <Link
           to="/Buscador"
           className="navbar-brand mb-0 h1 navbar-brand-custom"
-        >
-          Trabajos
+        > Trabajos
         </Link>
+      
+
         <Link
           to="/nosotros"
           className="navbar-brand mb-0 h1 navbar-brand-custom"
