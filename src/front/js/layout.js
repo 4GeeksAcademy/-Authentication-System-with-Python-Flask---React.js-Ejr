@@ -52,8 +52,8 @@ const Layout = () => {
             <Route element={<Footer />} path="/footer" />
 
             <Route element={<Buscador />} path="/buscador" />
-            <Route element={<OtroFormulario />} path="/Cliente" />
-            <Route element={<Formulario />} path="/Prestador" />
+            <Route element={<OtroFormulario />} path="/RegistroCliente" />
+            <Route element={<Formulario />} path="/RegistroPrestador" />
 
             <Route element={<Carrousel />} path="/carousel" />
 
