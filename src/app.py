@@ -192,7 +192,7 @@ def enviar_datos_de_publicacion(id):
     )
 
 
-@app.route("/user/publicacion", methods=["PUT"])
+@app.route("/user/publicacion/<int:id>", methods=["PUT"])
 def actualizar_datos_de_publicacion():
     if not "username" in request.form:
         return jsonify({"msg": "username is required!"}), 422
