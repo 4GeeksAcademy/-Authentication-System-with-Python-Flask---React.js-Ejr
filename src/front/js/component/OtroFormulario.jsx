@@ -1,6 +1,8 @@
 import React, { Component } from "react";
-import { Form, Button, Container, Row, Col } from "react-bootstrap";
+import { Form, Button, Container, Row, Col, Modal } from "react-bootstrap";
 import "../../styles/elotroformulario.css";
+import { Link } from "react-router-dom";
+
 export class OtroFormulario extends Component {
   constructor(props) {
     super(props);
@@ -11,71 +13,100 @@ export class OtroFormulario extends Component {
       password: "",
       rut: "",
       telefono: "",
-      comuna: "", 
+      comuna: "",
       fecha_de_nacimiento: "",
       aceptoTerminos: false,
+      errores: {},
     };
   }
 
   handleChange = (event) => {
     const { name, value, type, checked } = event.target;
-    this.setState({
+
+
+    let error = null;
+    if (type === "checkbox" && !checked) {
+      error = "Debe aceptar los términos y condiciones";
+    } else if (type !== "checkbox" && !value.trim()) {
+      error = "Este campo es obligatorio";
+    }
+    if (type === "checkbox" && !checked) {
+      error = "Debe aceptar los términos y condiciones";
+    } else if (type !== "checkbox" && !value.trim()) {
+      error = "Este campo es obligatorio";
+    } else if (name === "password" && (value.length < 8 || value.length > 12)) {
+      error = "La contraseña debe tener entre 8 y 12 caracteres";
+    } else if (name === "email" && !this.validateEmail(value)) {
+      error = "El correo electrónico no es válido";
+    } else if (name === "telefono" && !/^\d{9}$/.test(value)) {
+      error = "El teléfono debe tener 9 dígitos";
+    }
+
+    this.setState((prevState) => ({
       [name]: type === "checkbox" ? checked : value,
-    });
+      errores: {
+        ...prevState.errores,
+        [name]: error,
+      },
+    }));
   };
 
   handleSubmit = async (event) => {
     event.preventDefault();
-  
-    const {
-      nombre,
-      apellido,
-      email,
-      password,
-      rut,
-      telefono,
-      comuna,
-      fecha_de_nacimiento,
-      aceptoTerminos,
-    } = this.state;
-  
-    if (!aceptoTerminos) {
-      console.error("Debes aceptar los términos y condiciones.");
+
+    const { nombre, apellido, email, password, rut, telefono, comuna, fecha_de_nacimiento } = this.state;
+
+    const errores = {};
+    if (!nombre.trim()) {
+      errores.nombre = "El nombre es obligatorio";
+    }
+
+    if (!email.trim()) {
+      errores.email = "El correo electrónico es obligatorio";
+    } else if (!this.validateEmail(email)) {
+      errores.email = "El correo electrónico no es válido";
+    }
+
+    if (!apellido.trim()) {
+      errores.apellido = "El apellido es obligatorio";
+    }
+    if (!password.trim()) {
+      errores.password = "La contraseña es obligatoria";
+    }
+    if (!rut.trim()) {
+      errores.rut   = "El Rut es obligatorio";
+    }
+    if (!fecha_de_nacimiento.trim()) {
+      errores.fecha_de_nacimiento = "La fecha de nacimiento es obligatoria";
+    }
+    if (!telefono.trim()) {
+      errores.telefono = "El telefono es obligatorio";
+    }
+    if (!comuna.trim()) {
+      errores.comuna = "Su comuna es obligatoria";
+    }
+
+
+    
+    if (Object.keys(errores).length > 0) {
+      this.setState({ errores });
       return;
     }
-  
-    try {
-      const response = await fetch("http://localhost:3001/api/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          nombre,
-          apellido,
-          email,  
-          password,
-          rut,
-          telefono,
-          comuna,
-          fecha_de_nacimiento
-        }),
-      });
-  
-      if (response.ok) {
-        const data = await response.json();
-      } else {
 
-        const errorData = await response.json();
-        console.error("Error al enviar los datos al servidor:", errorData);
-      }
+
+    try {
+
     } catch (error) {
       console.error("Error de red:", error);
     }
   };
-  
-  
+
+  validateEmail = (email) => {
+    return true;
+  };
+
   render() {
+    const { errores } = this.state;
     return (
       <Container>
         <Row>
@@ -95,6 +126,9 @@ export class OtroFormulario extends Component {
                   onChange={this.handleChange}
                   style={{ borderWidth: "3px", borderColor: "darkcyan" }}
                 />
+                {errores.nombre && (
+                  <Form.Text className="text-danger">{errores.nombre}</Form.Text>
+                )}
               </Form.Group>
 
               <Form.Group controlId="formApellido">
@@ -108,7 +142,11 @@ export class OtroFormulario extends Component {
                   onChange={this.handleChange}
                   placeholder="Ingrese su apellido"
                   style={{ borderWidth: "3px", borderColor: "darkcyan" }}
+                  
                 />
+                {errores.apellido && (
+                  <Form.Text className="text-danger">{errores.apellido}</Form.Text>
+                )}
               </Form.Group>
 
               <Form.Group controlId="formRut">
@@ -123,6 +161,9 @@ export class OtroFormulario extends Component {
                   placeholder="Ingrese su rut"
                   style={{ borderWidth: "3px", borderColor: "darkcyan" }}
                 />
+                {errores.rut && (
+                  <Form.Text className="text-danger">{errores.rut}</Form.Text>
+                )}
               </Form.Group>
 
               <Form.Group controlId="formEmail">
@@ -132,11 +173,14 @@ export class OtroFormulario extends Component {
                 <Form.Control
                     type="email"
                     name="email"  
-                    value={this.state.email}  
+                    value={this.state.email} 
                     placeholder="Ingrese su correo electronico"
                     style={{ borderWidth: "3px", borderColor: "darkcyan" }}
-                    onChange={this.handleChange} 
+                    onChange={this.handleChange}  
                 />
+                {errores.email && (
+                  <Form.Text className="text-danger">{errores.email}</Form.Text>
+                )}
               </Form.Group>
 
              < Form.Group controlId="formContraseña">
@@ -145,12 +189,15 @@ export class OtroFormulario extends Component {
                 </Form.Label>
                 <Form.Control
                     type="password"
-                    name="password" 
+                    name="password"  
                     value={this.state.password} 
-                    placeholder="password"
+                    placeholder="Ingrese su contraseña. Debe ser entre 8 y 12 carácteres"
                     style={{ borderWidth: "3px", borderColor: "darkcyan" }}
-                    onChange={this.handleChange} 
+                    onChange={this.handleChange}                 
                 />
+                {errores.password && (
+                      <Form.Text className="text-danger">{errores.password}</Form.Text>
+                    )}
               </Form.Group>
 
               <Form.Group controlId="formTelefono">
@@ -165,6 +212,9 @@ export class OtroFormulario extends Component {
                   placeholder="Ingrese su telefono"
                   style={{ borderWidth: "3px", borderColor: "darkcyan" }}
                 />
+                {errores.telefono && (
+                      <Form.Text className="text-danger">{errores.telefono}</Form.Text>
+                    )}
               </Form.Group>
 
               <Form.Group controlId="formFechaNacimiento">
@@ -178,6 +228,9 @@ export class OtroFormulario extends Component {
                   onChange={this.handleChange}
                   style={{ borderWidth: "3px", borderColor: "darkcyan" }}
                 />
+                {errores.fecha_de_nacimiento && (
+                      <Form.Text className="text-danger">{errores.fecha_de_nacimiento}</Form.Text>
+                    )}
               </Form.Group>
 
               <Form.Group controlId="formComuna">
@@ -190,8 +243,9 @@ export class OtroFormulario extends Component {
                   name="comuna"
                   value={this.state.comuna}
                   onChange={this.handleChange}
+                  placeholder="Ingrese su comuna"
                   style={{ borderWidth: "3px", borderColor: "darkcyan" }}
-                >
+                > 
                   <option value="" hidden>Seleccione su Comuna</option>
                   <option>La Florida</option>
                   <option>La Reina</option>
@@ -199,8 +253,12 @@ export class OtroFormulario extends Component {
                   <option>Santiago Centro</option>
                   <option>Independencia</option>
                 </Form.Control>
+                {errores.comuna && (
+                      <Form.Text className="text-danger">{errores.comuna}</Form.Text>
+                    )}
 
               </Form.Group>
+
 
 
               <Form.Group controlId="formTerminosCondiciones">

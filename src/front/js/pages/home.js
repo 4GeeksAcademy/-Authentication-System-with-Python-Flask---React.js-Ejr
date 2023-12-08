@@ -49,12 +49,12 @@ export const Home = () => {
           </p>
 
           <div className="button-container my-5">
-            <Link to="/OtroFormulario">
+            <Link to="/Cliente">
               <button onClick={handleButtonClick1}>
                 Registrate acá como cliente
               </button>
             </Link>
-            <Link to="/Formulario">
+            <Link to="/Prestador">
               <button className="blue" onClick={handleButtonClick2}>
                 Conviérte en Prestador
               </button>
