@@ -155,6 +155,82 @@ def register():
 
     return jsonify(data), 200
 
+@app.route("/user/<string:name>", methods=["GET"])
+def get_user_by_name(name):
+    return jsonify({"name": name}), 200
+
+
+# enviar datos en la url como query string
+@app.route("/user/publicacion/<int:id>", methods=["GET"])
+def get_user_by_id():
+    query = request.args
+    id = query["id"]
+    name = query["name"]
+    publicacion = query["publicacion"]
+    fecha = query["fecha"]
+
+    return jsonify({"id":id, "name": name, "publicacion": publicacion, "fecha": fecha}), 200
+
+
+@app.route("/user/publicacion/<int:id>", methods=["POST"])
+def enviar_datos_de_publicacion(id):
+    # Capturamos todo el body en un diccionario
+    body = request.get_json(name)
+
+    if not "name" in body:
+        return jsonify({"msg": "Name is required!"}), 400
+
+    # Capturamos los datos de manera individual
+    id = body["id"]
+    name = request.json.get("name")
+    publicacion = request.json.get("publicacion")
+    date = request.json.get("date")
+
+    return (
+        jsonify({"body": body, "id":id,  "name": name, "publicacion": publicacion, "date": date}),
+        200,
+    )
+
+
+@app.route("/user/publicacion", methods=["PUT"])
+def actualizar_datos_de_publicacion():
+    if not "username" in request.form:
+        return jsonify({"msg": "username is required!"}), 422
+
+    # Enviando datos mediante un formulario con archivo adjunto
+    username = request.form["username"]
+    password = request.form["password"]
+
+    # Recibiendo un archivo adjunto
+    avatar = request.files["avatar"]
+
+    return (
+        jsonify(
+            {"username": username, "password": password, "avatar": avatar.filename}
+        ),
+        200,
+    )
+
+
+@app.route("/publicacion", methods=["GET", "POST"])
+@app.route("/publicacion/<int:id>", methods=["GET", "PUT", "DELETE"])
+def publicacion(id=None):
+    if request.method == "GET":
+        if id is not None:
+            return jsonify({"message": "Buscando con id "}), 200
+        else:
+            return jsonify({"message": "Buscando todas las publicaciones "}), 200
+
+    if request.method == "POST":
+        return jsonify({"message": "creando una publicacion"}), 200
+
+    if request.method == "PUT":
+        return jsonify({"message": "actualizando una publicacion"}), 200
+
+    if request.method == "DELETE":
+        return jsonify({"message": "eliminando una publicacion"}), 200
+
+
 
 @app.route('/api/profile', methods=['GET'])
 @jwt_required()
@@ -172,6 +248,9 @@ perfil_data = {
     "comuna": "",
     "birthDate": "",
 }
+
+
+@app.route('/api/perfil', methods=['POST'])
 
 # Ruta para manejar las solicitudes POST desde React
 @app.route('/api/perfil', methods=['POST'])
