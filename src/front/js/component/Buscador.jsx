@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Button, Col, Container, Row } from "react-bootstrap";
-
+import { Button, Col, Row } from "react-bootstrap";
+import "../../styles/elbuscador.css";
 
 export const Buscador = () => {
   return (
@@ -53,7 +53,7 @@ export const Buscador = () => {
           </button>
         </Link>
 
-        <div className="card">
+        <div className="card" style={{maxWidth: "1000px", margin: "30px auto 0"}}>
           {" "}
           {/*EN ESTA LINEA COLOR DE BACKGROUND*/}
           <div className="card-body">
