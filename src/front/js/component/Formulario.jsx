@@ -99,11 +99,35 @@ export class Formulario extends Component {
 
 
     try {
-
+      const response = await fetch("http://localhost:3001/api/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          nombre,
+          apellido,
+          email,
+          password,
+          rut,
+          telefono,
+          comuna,
+          fecha_de_nacimiento,
+          rubro,
+        }),
+      });
+  
+      if (response.ok) {
+        const data = await response.json();
+        // Puedes manejar la respuesta del servidor aquí
+        console.log("Datos enviados correctamente:", data);
+      } else {
+        const errorData = await response.json();
+        console.error("Error al enviar los datos al servidor:", errorData);
+      }
     } catch (error) {
       console.error("Error de red:", error);
-    }
-  };
+    }}
 
   validateEmail = (email) => {
     return true;
