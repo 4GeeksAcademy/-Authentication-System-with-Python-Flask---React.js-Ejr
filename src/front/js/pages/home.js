@@ -24,16 +24,19 @@ export const Home = () => {
       nombre: "Gasfiter",
       calificacion: 4.5,
       comentarios: ["Excelente trabajo!", "Lo recomiendo."],
+      imagen: "https://img.freepik.com/vector-premium/icono-marco-fotos-foto-vacia-blanco-vector-sobre-fondo-transparente-aislado-eps-10_399089-1290.jpg?w=740", // Reemplaza con la URL correcta
     },
     {
       nombre: "Electricista",
       calificacion: 4.8,
       comentarios: ["excelente persona.", "Siempre cumple."],
+      //imagen: "https://img.freepik.com/vector-premium/icono-marco-fotos-foto-vacia-blanco-vector-sobre-fondo-transparente-aislado-eps-10_399089-1290.jpg?w=740", // Reemplaza con la URL correcta
     },
     {
-      nombre: "Electricista",
+      nombre: "Carpintero",
       calificacion: 4.8,
       comentarios: ["excelente persona.", "Siempre cumple."],
+      //imagen: "https://img.freepik.com/vector-premium/icono-marco-fotos-foto-vacia-blanco-vector-sobre-fondo-transparente-aislado-eps-10_399089-1290.jpg?w=740", // Reemplaza con la URL correcta
     },
   ];
 
@@ -41,76 +44,78 @@ export const Home = () => {
     <>
       <div className="container">
         <div className="text-container d-flex flex-column">
-        <h1 style={{ fontFamily:"fantasy", 
-      color: '#001F3F',  // Azul oscuro
-    // Borde inferior // Hace que el borde inferior se ajuste al contenido
-  paddingBottom: '5px',  // Espacio entre el texto y el borde inferior
-}}>
-  <strong>EASY JOBS</strong>
-</h1>
-          <p  style={{color: "#616161" }}className="mb-5">
+          <h1
+            style={{
+              fontFamily: "fantasy",
+              color: "#001F3F", // Azul oscuro
+              // Borde inferior // Hace que el borde inferior se ajuste al contenido
+              paddingBottom: "5px", // Espacio entre el texto y el borde inferior
+            }}
+          >
+            <strong>EASY JOBS</strong>
+          </h1>
+          <p style={{ color: "#616161" }} className="mb-5">
             Busca de forma sencilla y conecta con Prestadores para encontrar una
-            solución a tu medida, siempre tendrás un buen contacto en EasyJob.
+            solución a tu medida para tu casa o empresa. Siempre tendrás un buen
+            contacto en EasyJob.
           </p>
 
           <div className="button-container my-5">
-          <Link to="/OtroFormulario">
-  <button
-    style={{
-      color: "#000000",
-      fontWeight: 'bold',
-      borderColor: '#fff5ba',
-      background: "#dd9e26",
-      borderRadius: "30px",
-      margin: "5px",
-      padding: "13px",
-      transition: 'background-color 0.3s ease, color 0.3s ease', // Transición suave para color de fondo y texto
-    }}
-    className="mb-5"
-    onClick={handleButtonClick1}
-    onMouseOver={(e) => {
-      e.target.style.backgroundColor = '#ffc966'; // Cambio de color al pasar el ratón a un tono más claro
-      e.target.style.color = '#333333'; // Cambio de color de texto al pasar el ratón a un tono más oscuro
-    }}
-    onMouseOut={(e) => {
-      e.target.style.backgroundColor = '#dd9e26'; // Vuelve al color original al salir el ratón
-      e.target.style.color = '#000000'; // Vuelve al color original de las letras al salir el ratón
-    }}
-  >
-    Regístrate aquí como cliente
-  </button>
-</Link>
+            <Link to="/OtroFormulario">
+              <button
+                style={{
+                  color: "#000000",
+                  fontWeight: "bold",
+                  borderColor: "#fff5ba",
+                  background: "#dd9e26",
+                  borderRadius: "30px",
+                  margin: "5px",
+                  padding: "13px",
+                  transition: "background-color 0.3s ease, color 0.3s ease", // Transición suave para color de fondo y texto
+                }}
+                className="mb-5"
+                onClick={handleButtonClick1}
+                onMouseOver={(e) => {
+                  e.target.style.backgroundColor = "#ffc966"; // Cambio de color al pasar el ratón a un tono más claro
+                  e.target.style.color = "#333333"; // Cambio de color de texto al pasar el ratón a un tono más oscuro
+                }}
+                onMouseOut={(e) => {
+                  e.target.style.backgroundColor = "#dd9e26"; // Vuelve al color original al salir el ratón
+                  e.target.style.color = "#000000"; // Vuelve al color original de las letras al salir el ratón
+                }}
+              >
+                Regístrate aquí como cliente
+              </button>
+            </Link>
 
-<Link to="/Formulario">
-  <button
-    style={{
-      color: "#ffffff",
-      fontWeight: 'bold',
-      borderColor: '#006b47',
-      background: "#006b47",
-      transition: 'background-color 0.3s ease, color 0.3s ease',
-      borderRadius: "30px",
-      margin: "5px",
-      padding: "13px",
-    }}
-    className="blue"
-    onClick={handleButtonClick2}
-    onMouseOver={(e) => {
-      e.target.style.backgroundColor = '#3bd7ba'; // Cambio de color al pasar el ratón
-      e.target.style.color = '#000000'; // Letras negras al pasar el ratón
-      e.target.style.borderColor = 'transparent'; // Quita el borde al pasar el ratón
-    }}
-    onMouseOut={(e) => {
-      e.target.style.backgroundColor = '#006b47'; // Vuelve al color original al salir el ratón
-      e.target.style.color = '#ffffff'; // Vuelve al color original de las letras al salir el ratón
-      e.target.style.borderColor = '#006b47'; // Vuelve al color original del borde al salir el ratón
-    }}
-  >
-    Conviértete en Prestador
-  </button>
-</Link>
-
-
+            <Link to="/Formulario">
+              <button
+                style={{
+                  color: "#ffffff",
+                  fontWeight: "bold",
+                  borderColor: "#006b47",
+                  background: "#006b47",
+                  transition: "background-color 0.3s ease, color 0.3s ease",
+                  borderRadius: "30px",
+                  margin: "5px",
+                  padding: "13px",
+                }}
+                className="blue"
+                onClick={handleButtonClick2}
+                onMouseOver={(e) => {
+                  e.target.style.backgroundColor = "#3bd7ba"; // Cambio de color al pasar el ratón
+                  e.target.style.color = "#000000"; // Letras negras al pasar el ratón
+                  e.target.style.borderColor = "transparent"; // Quita el borde al pasar el ratón
+                }}
+                onMouseOut={(e) => {
+                  e.target.style.backgroundColor = "#006b47"; // Vuelve al color original al salir el ratón
+                  e.target.style.color = "#ffffff"; // Vuelve al color original de las letras al salir el ratón
+                  e.target.style.borderColor = "#006b47"; // Vuelve al color original del borde al salir el ratón
+                }}
+              >
+                Conviértete en Prestador
+              </button>
+            </Link>
           </div>
         </div>
         <div className="image-container">
@@ -134,12 +139,11 @@ export const Home = () => {
               <div className="card-body">
                 <p className="card-text">
                   {" "}
-                  Somos una plataforma dedicada a conectar a profesionales de
-                  diversos oficios como gasfitería, electricidad, pintura y más,
-                  con personas y empresas que requieren sus servicios. Nuestra
-                  misión es facilitar la contratación de trabajadores
-                  capacitados y confiables para cualquier tipo de proyecto o
-                  reparación..
+                  Somos una plataforma dedicada a conectar con técnicos en
+                  oficios tales como: Carpintería, Electricidad, Gasfitería,
+                  Pintura y Aseo. Buscamos solucionar problemas de tu hogar o
+                  empresa. Podrás comparar perfiles y seleccionar al experto que
+                  mejor se adapte a tus necesidades.
                 </p>
               </div>
             </div>
@@ -154,11 +158,12 @@ export const Home = () => {
               <div className="card-body">
                 <p className="card-text">
                   {" "}
-                  nuestra marketplace, podrás encontrar una amplia variedad de
-                  profesionales verificados y calificados. Ofrecemos un entorno
-                  seguro y fácil de usar donde podrás publicar trabajos, recibir
-                  presupuestos, comparar perfiles y seleccionar al experto que
-                  mejor se adapte a tus necesidades..
+                  Nuestra misión es facilitar la búsqueda de técnicos o
+                  trabajador(es) capacitados y confiables en los Oficios que
+                  ofrecemos. Como prestador tendrás un entorno seguro y fácil de
+                  usar, podrás publicar tu Oficio (trabajo) de manera fácil y
+                  rápida. Podrás recibir notificaciones cada vez que alguien
+                  solicite tu oficio y/o servicio.
                 </p>
               </div>
             </div>
