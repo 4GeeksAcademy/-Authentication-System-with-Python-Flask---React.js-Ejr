@@ -1,4 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import func
 
 db = SQLAlchemy()
 
@@ -10,14 +11,43 @@ class User(db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False)
     pathologies = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(80), unique=False, nullable=False)
-    id_routine = db.Column(db.Integer, db.ForeignKey('routines.id'), nullable=False)
-    id_diets = db.Column(db.Integer, db.ForeignKey('diets.id'), nullable=False)
+    id_routine = db.relationship('Routines', backref='user', lazy=True)
+    id_diets = db.relationship('Diets', backref='user', lazy=True)
+    id_trainer = db.relationship('Trainer', backref='user', lazy=True)
+    create_at = db.Column(db.DateTime(timezone=True), server_default=func.now())
     
 
-class Admin(db.Model):
+def __repr__(self):
+        return f'<User {self.id}>'
+
+def serialize(self):
+        return {
+            "id": self.id,
+            "email": self.email,
+            "first_name": self.first_name,
+            "last_name": self.last_name,
+            "date_of_birth": self.date_of_birth,
+            "routine": self.routine,
+            "diet": self.diet,
+            "pathologies": self.pathologies
+           
+        }
+    
+
+class Admins(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(80), unique=False, nullable=False)
+    
+def __repr__(self):
+        return f'<Admins {self.id}>'
+
+def serialize(self):
+        return {
+            "id": self.id,
+            "email": self.email,
+            
+        }
 
 
 class Trainer(db.Model):
@@ -26,6 +56,23 @@ class Trainer(db.Model):
     last_name = db.Column(db.String(120), unique=False, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(80), unique=False, nullable=False)
+    id_user = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    id_diets = db.relationship('Diets', backref='trainer', lazy=True)
+    id_routine = db.relationship('Routines', backref='trainer', lazy=True)
+    create_at = db.Column(db.DateTime(timezone=True), server_default=func.now())
+    
+def __repr__(self):
+        return f'<Trainer {self.id}>'
+
+def serialize(self):
+        return {
+            "id": self.id,
+            "first_name": self.first_name,
+            "last_name": self.last_name,
+            "email": self.email,
+            
+        }
+    
     
 
 class Routines(db.Model):
@@ -36,6 +83,20 @@ class Routines(db.Model):
     legs = db.Column(db.String(120), unique=False, nullable=False)
     id_user = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     id_trainer = db.Column(db.Integer, db.ForeignKey('trainer.id'), nullable=False)
+    
+def __repr__(self):
+        return f'<Routines {self.id}>'
+
+def serialize(self):
+        return {
+            "id": self.id,
+            "Chest": self.Chest,
+            "shoulders": self.shoulders,
+            "arms": self.arms,
+            "legs": self.legs,
+            "id_user": self.get_user_serialized(),  # Serializar usuario si existe
+            "id_trainer": self.get_trainer_serialized()  # Serializar entrenador si existe
+        }
 
 
 class Diets(db.Model):
@@ -48,66 +109,10 @@ class Diets(db.Model):
     id_trainer = db.Column(db.Integer, db.ForeignKey('trainer.id'), nullable=False)
     id_user = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
-
-
-
-
-    def __repr__(self):
-        return f'<User {self.email}>'
-
-    def serialize(self):
-        return {
-            "id": self.id,
-            "email": self.email,
-            "first_name": self.first_name,
-            "last_name": self.last_name,
-            "date_of_birth": self.date_of_birth,
-            "routine": self.routine,
-            "diet": self.diet,
-            "pathologies": self.pathologies
-            # No se serializa la contraseña por razones de seguridad
-        }
-    
-    def __repr__(self):
-        return f'<Admin {self.email}>'
-
-    def serialize(self):
-        return {
-            "id": self.id,
-            "email": self.email,
-            # No se serializa la contraseña por razones de seguridad
-        }
-    
-    def __repr__(self):
-        return f'<Trainer {self.email}>'
-
-    def serialize(self):
-        return {
-            "id": self.id,
-            "first_name": self.first_name,
-            "last_name": self.last_name,
-            "email": self.email,
-            # No serializar la contraseña por razones de seguridad
-        }
-    
-    def __repr__(self):
-        return f'<Routines {self.id}>'
-
-    def serialize(self):
-        return {
-            "id": self.id,
-            "Chest": self.Chest,
-            "shoulders": self.shoulders,
-            "arms": self.arms,
-            "legs": self.legs,
-            "id_user": self.get_user_serialized(),  # Serializar usuario si existe
-            "id_trainer": self.get_trainer_serialized()  # Serializar entrenador si existe
-        }
-
-    def __repr__(self):
+def __repr__(self):
         return f'<Diets {self.id}>'
 
-    def serialize(self):
+def serialize(self):
         return {
             "id": self.id,
             "breakfast": self.breakfast,
@@ -118,3 +123,16 @@ class Diets(db.Model):
             "id_trainer": self.get_trainer_serialized(),  # Serializar entrenador si existe
             "id_user": self.get_user_serialized()  # Serializar usuario si existe
         }
+
+
+
+
+    
+    
+    
+    
+    
+    
+    
+
+    
