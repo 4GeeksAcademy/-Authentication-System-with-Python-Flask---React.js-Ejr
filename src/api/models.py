@@ -43,6 +43,7 @@ class userPublicacion(db.Model):
     __tablename__ = 'user_publicacion'
     id = db.Column(db.Integer, primary_key=True)
     nombre = db.Column(db.String(200), default='', nullable=True)
+    apellido = db.Column(db.String(200), default='', nullable=False)
     descripcion = db.Column(db.String(200), default='', nullable=False)
     fecha = db.Column(db.String(200), unique=True, nullable=True)
     

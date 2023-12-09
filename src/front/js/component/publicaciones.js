@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-const Home = () => {
+const Publicacion = () => {
   const [tareas, setTareas] = useState([]);
 
   useEffect(() => {
@@ -116,4 +116,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Publicacion;
