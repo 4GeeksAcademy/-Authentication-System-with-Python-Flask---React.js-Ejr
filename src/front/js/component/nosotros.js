@@ -3,10 +3,13 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 export const Nosotros = () => {
     const containerStyle = {
-        backgroundColor: '#d1efea',
-        padding: '30px',
-        borderRadius: '8px',
-        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+      display: 'flex',
+      textAlign: 'center',
+      backgroundColor: '#d1efea',
+      padding: '20px',
+      borderRadius: '8px',
+      boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+      margin: 'auto',
       };
     
       const headingStyle = {
