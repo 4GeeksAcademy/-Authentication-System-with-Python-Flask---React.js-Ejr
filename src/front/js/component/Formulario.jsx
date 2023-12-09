@@ -1,8 +1,7 @@
 import React, { Component } from "react";
-import { Form, Button, Container, Row, Col, Modal } from "react-bootstrap";
+import { Form, Button, Container, Row, Col } from "react-bootstrap";
 import "../../styles/elotroformulario.css";
 import { Link } from "react-router-dom";
-
 export class Formulario extends Component {
   constructor(props) {
     super(props);
@@ -13,37 +12,16 @@ export class Formulario extends Component {
       password: "",
       rut: "",
       telefono: "",
-      comuna: "",
+      comuna: "", 
       fecha_de_nacimiento: "",
       rubro: "",
       aceptoTerminos: false,
-      errores: {},
     };
   }
 
-  handleChange = (event) => {
+  const handleChange = (event) => {
     const { name, value, type, checked } = event.target;
-
-
-    let error = null;
-    if (type === "checkbox" && !checked) {
-      error = "Debe aceptar los términos y condiciones";
-    } else if (type !== "checkbox" && !value.trim()) {
-      error = "Este campo es obligatorio";
-    }
-    if (type === "checkbox" && !checked) {
-      error = "Debe aceptar los términos y condiciones";
-    } else if (type !== "checkbox" && !value.trim()) {
-      error = "Este campo es obligatorio";
-    } else if (name === "password" && (value.length < 8 || value.length > 12)) {
-      error = "La contraseña debe tener entre 8 y 12 caracteres";
-    } else if (name === "email" && !this.validateEmail(value)) {
-      error = "El correo electrónico no es válido";
-    } else if (name === "telefono" && !/^\d{9}$/.test(value)) {
-      error = "El teléfono debe tener 9 dígitos";
-    }
-
-    this.setState((prevState) => ({
+    this.setState({
       [name]: type === "checkbox" ? checked : value,
       errores: {
         ...prevState.errores,
@@ -52,52 +30,27 @@ export class Formulario extends Component {
     }));
   };
 
-  handleSubmit = async (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-
-    const { nombre, apellido, email, password, rut, telefono, comuna, fecha_de_nacimiento, rubro } = this.state;
-
-    const errores = {};
-    if (!nombre.trim()) {
-      errores.nombre = "El nombre es obligatorio";
-    }
-
-    if (!email.trim()) {
-      errores.email = "El correo electrónico es obligatorio";
-    } else if (!this.validateEmail(email)) {
-      errores.email = "El correo electrónico no es válido";
-    }
-
-    if (!apellido.trim()) {
-      errores.apellido = "El apellido es obligatorio";
-    }
-    if (!password.trim()) {
-      errores.password = "La contraseña es obligatoria";
-    }
-    if (!rut.trim()) {
-      errores.rut   = "El Rut es obligatorio";
-    }
-    if (!fecha_de_nacimiento.trim()) {
-      errores.fecha_de_nacimiento = "La fecha de nacimiento es obligatoria";
-    }
-    if (!telefono.trim()) {
-      errores.telefono = "El telefono es obligatorio";
-    }
-    if (!comuna.trim()) {
-      errores.comuna = "Su comuna es obligatoria";
-    }
-    if (!rubro.trim()) {
-      errores.rubro = "Su rubro es obligatorio";
-    }
-
-
-    
-    if (Object.keys(errores).length > 0) {
-      this.setState({ errores });
+  
+    const {
+      nombre,
+      apellido,
+      email,
+      password,
+      rut,
+      telefono,
+      comuna,
+      fecha_de_nacimiento,
+      rubro,
+      aceptoTerminos,
+    } = this.state;
+  
+    if (!aceptoTerminos) {
+      console.error("Debes aceptar los términos y condiciones.");
       return;
     }
-
-
+  
     try {
       const response = await fetch("http://localhost:3001/api/register", {
         method: "POST",
@@ -113,14 +66,13 @@ export class Formulario extends Component {
           telefono,
           comuna,
           fecha_de_nacimiento,
+          tipoUsuario,
           rubro,
         }),
       });
-  
+
       if (response.ok) {
         const data = await response.json();
-        // Puedes manejar la respuesta del servidor aquí
-        console.log("Datos enviados correctamente:", data);
       } else {
         const errorData = await response.json();
         console.error("Error al enviar los datos al servidor:", errorData);
@@ -132,15 +84,14 @@ export class Formulario extends Component {
   validateEmail = (email) => {
     return true;
   };
-
+  
+  
   render() {
-    const { errores } = this.state;
-
     return (
       <Container>
         <Row>
           <Col>
-            <Form onSubmit={this.handleSubmit}>
+            <Form onSubmit={e=>{ handleSubmit(e)}}>
               <h1>
                 Bienvenido! Por favor rellene los campos para ofrecer sus
                 servicios
@@ -153,7 +104,7 @@ export class Formulario extends Component {
                   type="text"
                   name="nombre"
                   placeholder="Ingrese su nombre"
-                  onChange={this.handleChange}
+                  onChange={handleChange}
                   style={{ borderWidth: "3px", borderColor: "darkcyan" }}
                 />
                 {errores.nombre && (
@@ -168,8 +119,8 @@ export class Formulario extends Component {
                 <Form.Control
                   type="text"
                   name="apellido"
-                  value={this.state.apellido}
-                  onChange={this.handleChange}
+                  value={state.apellido}
+                  onChange={handleChange}
                   placeholder="Ingrese su apellido"
                   style={{ borderWidth: "3px", borderColor: "darkcyan" }}
                   
@@ -186,8 +137,8 @@ export class Formulario extends Component {
                 <Form.Control
                   type="text"
                   name="rut"
-                  value={this.state.rut}
-                  onChange={this.handleChange}
+                  value={state.rut}
+                  onChange={handleChange}
                   placeholder="Ingrese su rut"
                   style={{ borderWidth: "3px", borderColor: "darkcyan" }}
                 />
@@ -203,10 +154,10 @@ export class Formulario extends Component {
                 <Form.Control
                     type="email"
                     name="email"  
-                    value={this.state.email} 
+                    value={state.email} 
                     placeholder="Ingrese su correo electronico"
                     style={{ borderWidth: "3px", borderColor: "darkcyan" }}
-                    onChange={this.handleChange}  
+                    onChange={handleChange}  
                 />
                 {errores.email && (
                   <Form.Text className="text-danger">{errores.email}</Form.Text>
@@ -221,9 +172,9 @@ export class Formulario extends Component {
                     type="password"
                     name="password"  
                     value={this.state.password} 
-                    placeholder="Ingrese su contraseña. Debe ser entre 8 y 12 carácteres"
+                    placeholder="password"
                     style={{ borderWidth: "3px", borderColor: "darkcyan" }}
-                    onChange={this.handleChange}                 
+                    onChange={this.handleChange}  
                 />
                 {errores.password && (
                       <Form.Text className="text-danger">{errores.password}</Form.Text>
@@ -237,8 +188,8 @@ export class Formulario extends Component {
                 <Form.Control
                   type="text"
                   name="telefono"
-                  value={this.state.telefono}
-                  onChange={this.handleChange} 
+                  value={state.telefono}
+                  onChange={handleChange} 
                   placeholder="Ingrese su telefono"
                   style={{ borderWidth: "3px", borderColor: "darkcyan" }}
                 />
@@ -254,8 +205,8 @@ export class Formulario extends Component {
                 <Form.Control
                   type="date"
                   name="fecha_de_nacimiento"
-                  value={this.state.fecha_de_nacimiento}
-                  onChange={this.handleChange}
+                  value={state.fecha_de_nacimiento}
+                  onChange={handleChange}
                   style={{ borderWidth: "3px", borderColor: "darkcyan" }}
                 />
                 {errores.fecha_de_nacimiento && (
@@ -273,7 +224,6 @@ export class Formulario extends Component {
                   name="comuna"
                   value={this.state.comuna}
                   onChange={this.handleChange}
-                  placeholder="Ingrese su comuna"
                   style={{ borderWidth: "3px", borderColor: "darkcyan" }}
                 > 
                   <option value="" hidden>Seleccione su Comuna</option>
@@ -289,6 +239,25 @@ export class Formulario extends Component {
 
               </Form.Group>
 
+              <Form.Group controlId="formTipoUsuario">
+              <Form.Label>
+                <h3>Tipo de Usuario</h3>
+              </Form.Label>
+              <Form.Control
+                as="select"
+                name="tipoUsuario"
+                value={state.tipoUsuario}
+                onChange={handleChange}
+                style={{ borderWidth: "3px", borderColor: "darkcyan" }}
+              >
+                <option value="">Seleccione...</option>
+                <option value="cliente">Cliente</option>
+                <option value="prestador">Prestador de Servicio</option>
+              </Form.Control>
+            </Form.Group>
+
+            {/* Campo rubro visible si el tipo de usuario es "prestador" */}
+            {state.tipoUsuario === "prestador" && (
               <Form.Group controlId="formRubro">
                 <Form.Label>
                   <h3>Rubro</h3>
@@ -296,11 +265,10 @@ export class Formulario extends Component {
                 <Form.Control
                   as="select"
                   name="rubro"
-                  value={this.state.rubro}
-                  onChange={this.handleChange}
+                  value={state.rubro}
+                  onChange={handleChange}
                   style={{ borderWidth: "3px", borderColor: "darkcyan" }}
                 >
-                  <option value="" hidden>Seleccione su rubro</option>
                   <option>Carpinteria</option>
                   <option>Electricista</option>
                   <option>Gasfitería</option>
@@ -311,6 +279,8 @@ export class Formulario extends Component {
                       <Form.Text className="text-danger">{errores.rubro}</Form.Text>
                     )}
               </Form.Group>
+
+              <Form.Group controlId="formTerminosCondiciones">
                 <h3>
                   <strong>Terminos y Condiciones</strong>
                 </h3>
@@ -357,13 +327,14 @@ export class Formulario extends Component {
                 <Form.Check
                   type="checkbox"
                   name="aceptoTerminos"
-                  checked={this.state.aceptoTerminos}
-                  onChange={this.handleChange}
+                  checked={state.aceptoTerminos}
+                  onChange={handleChange}
                   label="Acepto los términos y condiciones"
                 />
                 <br />
                 <Button className="buttonright" type="submit">
-                  Aceptar
+                  
+                  Aceptar 
                 </Button>{" "}
                 <Button
                   className="buttonright"
@@ -381,7 +352,6 @@ export class Formulario extends Component {
         </Row>
       </Container>
     );
-  }
+  
 }
 
-export default Formulario;
