@@ -28,6 +28,7 @@ import PrestadorCv from "./component/prestadorCv";
 import GeneradorPublicacion from "./component/generadorPublicacion";
 import { Landing } from "./component/landing2.js";
 
+
 //create your first component
 const Layout = () => {
   //the basename is used when your project is published in a subdirectory and not in the root of the domain
@@ -64,6 +65,7 @@ const Layout = () => {
             <Route element={<Nosotros />} path="/nosotros" />
             <Route element={<h1>Not found!</h1>} />
             <Route element={<Task />} path="/task" />
+
           </Routes>
         </ScrollToTop>
       </BrowserRouter>

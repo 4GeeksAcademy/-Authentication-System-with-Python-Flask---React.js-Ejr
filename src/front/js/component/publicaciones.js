@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-const generadorPublicacion = () => {
+const Home = () => {
   const [tareas, setTareas] = useState([]);
 
   useEffect(() => {
@@ -82,56 +82,38 @@ const generadorPublicacion = () => {
 
   return (
     <div className="container mt-5">
-      <div className="row">
-        <div className="col text-center">
-          <h1 className="mb-4">Publicar </h1>
-        </div>
+      <h1 className="text-center mb-4">Publicar trabajos</h1>
+      <div className="input-group mb-3">
+        <input
+          type="text"
+          className="form-control"
+          placeholder="Nueva tarea"
+          onKeyPress={agregarTarea}
+        />
       </div>
-      <div className="row">
-        <div className="col">
-          <div className="input-group mb-3">
-            <input
-              type="text"
-              className="form-control"
-              placeholder="Nueva tarea"
-              onKeyPress={agregarTarea}
-            />
-          </div>
-        </div>
-      </div>
-      <div className="row">
-        <div className="col">
-          {tareas.length > 0 ? (
-            <ul className="list-group">
-              {tareas.map((tarea, index) => (
-                <li
-                  key={index}
-                  className="list-group-item d-flex justify-content-between align-items-center"
-                >
-                  {tarea.label}
-                  <span
-                    className="badge bg-danger rounded-pill cursor-pointer"
-                    onClick={() => eliminarTarea(index)}
-                  >
-                    X
-                  </span>
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p className="mt-3 text-center">No hay publicaciones</p>
-          )}
-             <Link to="/Perfil">
-      <button type="button">
-        <h4>Publicar</h4>
-      </button>
-        </Link>
-        </div>
-      </div>
-     
+      {tareas.length > 0 ? (
+        <ul className="list-group">
+          {tareas.map((tarea, index) => (
+            <li
+              key={index}
+              className="list-group-item d-flex justify-content-between align-items-center"
+            >
+              {tarea.label}
+              <span
+                className="badge bg-danger rounded-pill cursor-pointer"
+                onClick={() => eliminarTarea(index)}
+              >
+                X
+              </span>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p>Noy hay Publicaciones activas, añadir publicaciones
+        </p>
+      )}
     </div>
   );
-  
 };
 
-export default generadorPublicacion;
+export default Home;
