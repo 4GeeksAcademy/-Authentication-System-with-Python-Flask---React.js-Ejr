@@ -5,40 +5,40 @@ const getState = ({ getStore, getActions, setStore }) => {
 		store: {
 			Formulario:[],
 			OtroFormulario:[],
-			Buscador:[]
+			ususario:{},
+			ususario2:{},
+			Buscador:[],
+			id: null
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
-			exampleFunction: () => {
-				getActions().changeColor(0, "green");
+			guardarperfil(datos){
+				setStore({usuario:datos})
+				console.log(getStore().usuario)
 			},
-
-			getMessage: async () => {
-				try{
-					// fetching data from the backend
-					const resp = await fetch(process.env.BACKEND_URL + "/api/hello")
-					const data = await resp.json()
-					setStore({ message: data.message })
-					// don't forget to return something, that is how the async resolves
-					return data;
-				}catch(error){
-					console.log("Error loading message from backend", error)
-				}
+			guardarsegundoperfil(datos){
+				setStore({usuario2:datos})
 			},
-			changeColor: (index, color) => {
-				//get the store
-				const store = getStore();
+			async cargarPerfil(id){
+				let perfil = null
+				let res = await fetch("http://localhost:3001/api/perfil/"+getStore().id,{
+					headers: {
+						"Content-Type": "application/json"
+					},
+					method: "GET", 
+				})
+				let data = await res.json()
+				perfil = data 
 
-				//we have to loop the entire demo array to look for the respective index
-				//and change its color
-				const demo = store.demo.map((elm, i) => {
-					if (i === index) elm.background = color;
-					return elm;
-				});
+			
+				return perfil;
+			},
+			guardarid(id){
+				setStore({id:id});
 
-				//reset the global store
-				setStore({ demo: demo });
 			}
+
+
 		}
 	};
 };
