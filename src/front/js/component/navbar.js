@@ -1,14 +1,20 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "../../styles/home.css";
-import  Carrousel  from "../component/carrousel.js";
-import ".././component/nosotros.js"
+import Carrousel from "../component/carrousel.js";
+import ".././component/nosotros.js";
 
 export const Navbar = () => {
-
   return (
-    <nav className="navbar navbar-light bg-light">
+    <nav className="navbar navbar-dark bg-dark p-2">
       <div className="container text-center">
+        <style>
+          {`
+    .navbar-brand-custom:hover {
+      box-shadow: 0 0 10px 5px #ffd700; /* Glow dorado al pasar el ratón */
+    }
+  `}
+        </style>
         <Link to="/" className="navbar-brand mb-0 h1 navbar-brand-custom">
           <strong>EasyJob</strong>
         </Link>
@@ -16,15 +22,15 @@ export const Navbar = () => {
         <Link
           to="/Buscador"
           className="navbar-brand mb-0 h1 navbar-brand-custom"
-        > Trabajos
+        >
+          {" "}
+          Trabajos
         </Link>
-      
 
         <Link
           to="/nosotros"
           className="navbar-brand mb-0 h1 navbar-brand-custom"
         >
-
           Nosotros
         </Link>
         <Link
@@ -36,7 +42,7 @@ export const Navbar = () => {
         <div className="ml-auto">
           <Link to="/login">
             <button className="btn btn-primary">Entrar</button>
-          </Link>          
+          </Link>
         </div>
       </div>
     </nav>

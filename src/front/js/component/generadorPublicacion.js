@@ -121,11 +121,11 @@ const generadorPublicacion = () => {
           ) : (
             <p className="mt-3 text-center">No hay publicaciones</p>
           )}
-             <Link to="/Perfil">
+             
       <button type="button">
         <h4>Publicar</h4>
       </button>
-        </Link>
+       
         </div>
       </div>
      

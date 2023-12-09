@@ -22,33 +22,36 @@ export const Carrousel = () => {
 
   return (
     <div className="carousel-oficios">
-      <h1>        
-          <strong>O f i c i o s</strong>        
-      </h1>
-
+      <h1 style={{ fontFamily:"fantasy", 
+      color: '#001F3F',  // Azul oscuro
+    // Borde inferior // Hace que el borde inferior se ajuste al contenido
+  paddingBottom: '5px',  // Espacio entre el texto y el borde inferior
+}}>
+  <strong>OFICIOS</strong>
+</h1>
       <div className="carousel-container">
         <div
           className="carousel-wrapper"
           style={{ transform: `translateX(-${currentIndex * 33.33}%)` }}
         >
-          <div className="carousel-box">
-            <h2>Electricista</h2>
+          <div className="carousel-box" style={{ marginLeft: "95px",marginRight: "36px" }}>
+            <h2 style={{ fontWeight: 'bold' }} >Electricista</h2>
             <img className="img-fluid" src={easyJobUrl1} />
           </div>
-          <div className="carousel-box">
-            <h2>Carpintero</h2>
+          <div className="carousel-box"  style={{marginRight: "36px"}}>
+            <h2 style={{ fontWeight: 'bold' }}>Carpintero</h2>
             <img className="img-fluid" src={easyJobUrl3} />
           </div>
-          <div className="carousel-box">
-            <h2>Aseo</h2>
+          <div className="carousel-box" style={{marginRight: "36px"}}>
+            <h2 style={{ fontWeight: 'bold' }}>Aseo</h2>
             <img className="img-fluid" src={easyJobUrl4} />
           </div>
-          <div className="carousel-box">
-            <h2>Gasfiteria</h2>
+          <div className="carousel-box" style={{marginRight: "36px"}}>
+            <h2 style={{ fontWeight: 'bold' }}>Gasfiteria</h2>
             <img className="img-fluid" src={easyJobUrl2} />
           </div>
-          <div className="carousel-box">
-            <h2>Maestro Pintor</h2>
+          <div className="carousel-box" style={{marginRight: "36px"}}>
+            <h2 style={{ fontWeight: 'bold' }}>Pintor</h2>
             <img className="img-fluid" src={easyJobUrl5} />
           </div>
         </div>

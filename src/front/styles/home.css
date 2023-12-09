@@ -18,7 +18,8 @@
   align-items: center;
 }
 .container {
-  display: flex;}
+  display: flex;
+}
 .navbar-brand.mb-0.h1 {
   margin-bottom: 0; /* Elimina el margen inferior predeterminado de las etiquetas h1 */
 }
@@ -30,9 +31,11 @@
   box-sizing: border-box; /* Incluye el relleno en el ancho/altura total */
 }
 
-.text-container h1,
+
 .text-container p {
-  text-align: left;
+  text-align: center;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-size: 25px;
   /* Otros estilos de texto según tus preferencias */
 }
 
@@ -41,8 +44,9 @@
   height: 520px;
   padding: 0;
   width: 520px;
-  border-radius: 20px;
+  border-radius: 15px;
   border: 1px solid #dddcdc;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
   /* Otros estilos de imagen según tus preferencias */
 }
 
