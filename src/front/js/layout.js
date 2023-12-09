@@ -22,17 +22,17 @@ import { OtroFormulario } from "./component/OtroFormulario.jsx";
 import { Buscador } from "./component/Buscador.jsx";
 import {Nosotros} from "./component/nosotros.js";
 import { Task } from "./component/task.js";
-
 import Carrousel from "./component/carrousel.js";
 import PrestadorCv from "./component/prestadorCv";
 
 import GeneradorPublicacion from "./component/generadorPublicacion";
 import { Landing } from "./component/landing2.js";
 
+
 //create your first component
 const Layout = () => {
   //the basename is used when your project is published in a subdirectory and not in the root of the domain
-  // you can set the basename on the .env file located at the root of this project, E.g: BASENAME=/react-hello-webapp/
+  // you can set the basename on the .env file located at the root of this project, E.g:: BASENAME=/react-hello-webapp/
   const basename = process.env.BASENAME || "";
 
   if (!process.env.BACKEND_URL || process.env.BACKEND_URL == "")
@@ -50,25 +50,23 @@ const Layout = () => {
             <Route element={<Single />} path="/single/:theid" />
             <Route element={<Login />} path="/login" />
             <Route element={<Footer />} path="/footer" />
-
             <Route element={<Buscador />} path="/buscador" />
             <Route element={<OtroFormulario />} path="/RegistroCliente" />
             <Route element={<Formulario />} path="/RegistroPrestador" />
 
             <Route element={<Carrousel />} path="/carousel" />
-
             <Route element={<PrestadorCv />} path="/prestadorCV" />
             <Route
               element={<GeneradorPublicacion />}
               path="/generadorPublicacion"
             />
-
             <Route element={<Perfil />} path="/perfil" />
             <Route element={<Landing/>} path="/landing2" />
             <Route element={<SegundoPerfil />} path="/SegundoPerfil" />
             <Route element={<Nosotros />} path="/nosotros" />
             <Route element={<h1>Not found!</h1>} />
             <Route element={<Task />} path="/task" />
+
           </Routes>
         </ScrollToTop>
       </BrowserRouter>

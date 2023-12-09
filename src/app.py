@@ -175,7 +175,7 @@ def get_user_by_id():
 @app.route("/user/publicacion/<int:id>", methods=["POST"])
 def enviar_datos_de_publicacion(id):
     # Capturamos todo el body en un diccionario
-    body = request.get_json(name)
+    body = request.get_json(id)
 
     if not "name" in body:
         return jsonify({"msg": "Name is required!"}), 400
@@ -192,7 +192,7 @@ def enviar_datos_de_publicacion(id):
     )
 
 
-@app.route("/user/publicacion", methods=["PUT"])
+@app.route("/user/publicacion/<int:id>", methods=["PUT"])
 def actualizar_datos_de_publicacion():
     if not "username" in request.form:
         return jsonify({"msg": "username is required!"}), 422

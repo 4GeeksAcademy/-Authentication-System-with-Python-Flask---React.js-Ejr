@@ -17,7 +17,8 @@
   display: flex;
   align-items: center;
 }
-
+.container {
+  display: flex;}
 .navbar-brand.mb-0.h1 {
   margin-bottom: 0; /* Elimina el margen inferior predeterminado de las etiquetas h1 */
 }
