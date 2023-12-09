@@ -6,34 +6,31 @@ import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
 import "./../pages/perfil"
 
- export const Formulario =  (props) => {
- const navigate = useNavigate()
-   const [ state, setState] = useState( {
-      nombre: "",
-      apellido: "",
-      email: "",
-      password: "",
-      rut: "",
-      telefono: "",
-      comuna: "", 
-      fecha_de_nacimiento: "",
-      rubro: "",
-      aceptoTerminos: false,
-    });
-  
-  const {actions} = useContext(Context)
+export const Formulario = (props) => {
+  const [state, setState] = useState({
+    nombre: "",
+    apellido: "",
+    email: "",
+    password: "",
+    rut: "",
+    telefono: "",
+    comuna: "",
+    fecha_de_nacimiento: "",
+    tipoUsuario: "", // Nuevo campo para almacenar la elección del usuario
+    rubro: "",
+    aceptoTerminos: false,
+  });
+
   const handleChange = (event) => {
     const { name, value, type, checked } = event.target;
     setState({
       ...state,
       [name]: type === "checkbox" ? checked : value,
     });
-   
   };
 
- const handleSubmit = async (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-   
     const {
       nombre,
       apellido,
@@ -43,15 +40,16 @@ import "./../pages/perfil"
       telefono,
       comuna,
       fecha_de_nacimiento,
+      tipoUsuario,
       rubro,
       aceptoTerminos,
     } = state;
-  
+
     if (!aceptoTerminos) {
       console.error("Debes aceptar los términos y condiciones.");
       return;
     }
- 
+console.log(state.tipoUsuario)
     try {
       const response = await fetch("http://localhost:3001/api/register", {
         method: "POST",
@@ -61,30 +59,30 @@ import "./../pages/perfil"
         body: JSON.stringify({
           nombre,
           apellido,
-          email,  
+          email,
           password,
           rut,
           telefono,
           comuna,
           fecha_de_nacimiento,
+          tipoUsuario,
           rubro,
         }),
       });
-  
+
       if (response.ok) {
         const data = await response.json();
-actions.guardarid(data?.user?.id)
-     navigate("/perfil")
+        actions.guardarid(data?.user?.id);
+        navigate("/perfil");
       } else {
-
         const errorData = await response.json();
         console.error("Error al enviar los datos al servidor:", errorData);
       }
     } catch (error) {
       console.error("Error de red:", error);
-    } 
-   
+    }
   };
+
   
   
  
@@ -217,6 +215,25 @@ actions.guardarid(data?.user?.id)
 
               </Form.Group>
 
+              <Form.Group controlId="formTipoUsuario">
+              <Form.Label>
+                <h3>Tipo de Usuario</h3>
+              </Form.Label>
+              <Form.Control
+                as="select"
+                name="tipoUsuario"
+                value={state.tipoUsuario}
+                onChange={handleChange}
+                style={{ borderWidth: "3px", borderColor: "darkcyan" }}
+              >
+                <option value="">Seleccione...</option>
+                <option value="cliente">Cliente</option>
+                <option value="prestador">Prestador de Servicio</option>
+              </Form.Control>
+            </Form.Group>
+
+            {/* Campo rubro visible si el tipo de usuario es "prestador" */}
+            {state.tipoUsuario === "prestador" && (
               <Form.Group controlId="formRubro">
                 <Form.Label>
                   <h3>Rubro</h3>
@@ -228,6 +245,7 @@ actions.guardarid(data?.user?.id)
                   onChange={handleChange}
                   style={{ borderWidth: "3px", borderColor: "darkcyan" }}
                 >
+                  <option value="">Seleccione...</option>
                   <option>Carpinteria</option>
                   <option>Electricista</option>
                   <option>Gasfitería</option>
@@ -235,6 +253,7 @@ actions.guardarid(data?.user?.id)
                   <option>Aseo</option>
                 </Form.Control>
               </Form.Group>
+            )}
 
               <Form.Group controlId="formTerminosCondiciones">
                 <h3>
