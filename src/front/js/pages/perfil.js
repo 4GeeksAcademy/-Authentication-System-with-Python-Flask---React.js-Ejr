@@ -12,6 +12,7 @@ export const Perfil = () => {
     email: "",
     region: "",
     comuna: "",
+    tipoUsuario: "" ,
     birthDate: ""
   });
 
@@ -58,6 +59,31 @@ export const Perfil = () => {
       console.error("Error de red:", error);
     }
   };
+  const [image, setImage] = useState(null);
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        setImage(event.target.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  // Calificaciones del SegundoPerfil
+  const ratings = [
+    {
+      comment: "¡Gran trabajo! Muy profesional.",
+      rating: 5,
+    },
+    {
+      comment: "Buen servicio, lo recomiendo.",
+      rating: 4,
+    },
+    // Puedes agregar más comentarios y calificaciones según sea necesario
+  ];
   return (
     <div className="profile-container">
      
@@ -66,6 +92,36 @@ export const Perfil = () => {
           {formData.firstName}
             {handleInputChange}</h1>
             </div>
+            
+      <div className="photo text-center">
+        <label htmlFor="upload-photo" className="photo-text">
+          {image ? (
+            <img src={image} alt="uploaded" className="uploaded-image" />
+          ) : (
+            "FOTO"
+          )}
+        </label>
+        <input
+          type="file"
+          id="upload-photo"
+          accept="image/*"
+          onChange={handleImageChange}
+          style={{ display: "none" }}
+        />
+      </div>
+
+      {/* Mostrar calificaciones */}
+      <div className="ratings-section">
+        <div className="comments-ratings text-center">COMENTARIOS Y CALIFICACIONES</div>
+        <div className="ratings-list">
+          {ratings.map((item, index) => (
+            <div className="rating-item" key={index}>
+              <div className="comment">{item.comment}</div>
+              <div className="rating">Calificación: {item.rating}</div>
+            </div>
+          ))}
+        </div>
+      </div>
 
       {/* Formulario de datos */}
       <form className="data-form" onSubmit={handleSubmit}>
@@ -120,6 +176,18 @@ export const Perfil = () => {
             onChange={handleInputChange}
           />
         </div>
+        {formData.tipoUsuario === "prestador" && (
+        <div className="form-group">
+          <label htmlFor="rubro">Rubro:</label>
+          <input
+            type="text"
+            id="rubro"
+            name="rubro"
+            value={formData.rubro}
+            onChange={handleInputChange}
+          />
+        </div>
+      )}
         <button className="action-button" type="submit">
           Guardar
         </button>
