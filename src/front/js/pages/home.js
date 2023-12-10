@@ -19,6 +19,8 @@ export const Home = () => {
     // Lógica para el segundo botón
     console.log("Botón 2 clickeado");
   };
+
+  
   const profesiones = [
     {
       nombre: "Gasfiter",
@@ -41,76 +43,82 @@ export const Home = () => {
     <>
       <div className="container">
         <div className="text-container d-flex flex-column">
-        <h1 style={{ fontFamily:"fantasy", 
-      color: '#001F3F',  // Azul oscuro
-    // Borde inferior // Hace que el borde inferior se ajuste al contenido
-  paddingBottom: '5px',  // Espacio entre el texto y el borde inferior
-}}>
-  <strong>EASY JOBS</strong>
-</h1>
-          <p  style={{color: "#616161" }}className="mb-5">
+          <h1
+            style={{
+              fontFamily: "fantasy",
+              color: "#001F3F", // Azul oscuro
+              // Borde inferior // Hace que el borde inferior se ajuste al contenido
+              paddingBottom: "5px", // Espacio entre el texto y el borde inferior
+            }}
+          >
+            <strong>EASY JOBS</strong>
+          </h1>
+          <p style={{ color: "#616161", opacity: 0.9 }} className="mb-5">
             Busca de forma sencilla y conecta con Prestadores para encontrar una
             solución a tu medida, siempre tendrás un buen contacto en EasyJob.
           </p>
 
-          <div className="button-container my-5">
-          <Link to="/OtroFormulario">
-  <button
-    style={{
-      color: "#000000",
-      fontWeight: 'bold',
-      borderColor: '#fff5ba',
-      background: "#dd9e26",
-      borderRadius: "30px",
-      margin: "5px",
-      padding: "13px",
-      transition: 'background-color 0.3s ease, color 0.3s ease', // Transición suave para color de fondo y texto
-    }}
-    className="mb-5"
-    onClick={handleButtonClick1}
-    onMouseOver={(e) => {
-      e.target.style.backgroundColor = '#ffc966'; // Cambio de color al pasar el ratón a un tono más claro
-      e.target.style.color = '#333333'; // Cambio de color de texto al pasar el ratón a un tono más oscuro
-    }}
-    onMouseOut={(e) => {
-      e.target.style.backgroundColor = '#dd9e26'; // Vuelve al color original al salir el ratón
-      e.target.style.color = '#000000'; // Vuelve al color original de las letras al salir el ratón
-    }}
-  >
-    Regístrate aquí como cliente
-  </button>
-</Link>
+          <div
+            className="button-container my-5"
+            style={{
+              backgroundImage: "img src={easyJobUrl}",
+            }}
+          >
+            <Link to="/OtroFormulario">
+              <button
+                style={{
+                  color: "#000000",
+                  fontWeight: "bold",
+                  borderColor: "#fff5ba",
+                  background: "#dd9e26",
+                  borderRadius: "30px",
+                  margin: "5px",
+                  padding: "13px",
+                  transition: "background-color 0.3s ease, color 0.3s ease", // Transición suave para color de fondo y texto
+                }}
+                className="mb-5"
+                onClick={handleButtonClick1}
+                onMouseOver={(e) => {
+                  e.target.style.backgroundColor = "#ffc966"; // Cambio de color al pasar el ratón a un tono más claro
+                  e.target.style.color = "#333333"; // Cambio de color de texto al pasar el ratón a un tono más oscuro
+                }}
+                onMouseOut={(e) => {
+                  e.target.style.backgroundColor = "#dd9e26"; // Vuelve al color original al salir el ratón
+                  e.target.style.color = "#000000"; // Vuelve al color original de las letras al salir el ratón
+                }}
+              >
+                Regístrate aquí como cliente
+              </button>
+            </Link>
 
-<Link to="/Formulario">
-  <button
-    style={{
-      color: "#ffffff",
-      fontWeight: 'bold',
-      borderColor: '#006b47',
-      background: "#006b47",
-      transition: 'background-color 0.3s ease, color 0.3s ease',
-      borderRadius: "30px",
-      margin: "5px",
-      padding: "13px",
-    }}
-    className="blue"
-    onClick={handleButtonClick2}
-    onMouseOver={(e) => {
-      e.target.style.backgroundColor = '#3bd7ba'; // Cambio de color al pasar el ratón
-      e.target.style.color = '#000000'; // Letras negras al pasar el ratón
-      e.target.style.borderColor = 'transparent'; // Quita el borde al pasar el ratón
-    }}
-    onMouseOut={(e) => {
-      e.target.style.backgroundColor = '#006b47'; // Vuelve al color original al salir el ratón
-      e.target.style.color = '#ffffff'; // Vuelve al color original de las letras al salir el ratón
-      e.target.style.borderColor = '#006b47'; // Vuelve al color original del borde al salir el ratón
-    }}
-  >
-    Conviértete en Prestador
-  </button>
-</Link>
-
-
+            <Link to="/Formulario">
+              <button
+                style={{
+                  color: "#ffffff",
+                  fontWeight: "bold",
+                  borderColor: "#006b47",
+                  background: "#006b47",
+                  transition: "background-color 0.3s ease, color 0.3s ease",
+                  borderRadius: "30px",
+                  margin: "5px",
+                  padding: "13px",
+                }}
+                className="blue"
+                onClick={handleButtonClick2}
+                onMouseOver={(e) => {
+                  e.target.style.backgroundColor = "#3bd7ba"; // Cambio de color al pasar el ratón
+                  e.target.style.color = "#000000"; // Letras negras al pasar el ratón
+                  e.target.style.borderColor = "transparent"; // Quita el borde al pasar el ratón
+                }}
+                onMouseOut={(e) => {
+                  e.target.style.backgroundColor = "#006b47"; // Vuelve al color original al salir el ratón
+                  e.target.style.color = "#ffffff"; // Vuelve al color original de las letras al salir el ratón
+                  e.target.style.borderColor = "#006b47"; // Vuelve al color original del borde al salir el ratón
+                }}
+              >
+                Conviértete en Prestador
+              </button>
+            </Link>
           </div>
         </div>
         <div className="image-container">

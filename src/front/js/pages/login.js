@@ -45,53 +45,59 @@ const Login = () => {
 
   return (
     <div className="container mt-5">
-      <div className="col-md-6 offset-md-3">
-        <h2 className="mb-4">Iniciar sesión</h2>
-        <form>
-          <div className="mb-3">
-            <label htmlFor="usuario" className="form-label">
-              Usuario:
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              id="usuario"
-              value={usuario}
-              onChange={(e) => setUsuario(e.target.value)}
-            />
-          </div>
-          <div className="mb-3">
-            <label htmlFor="contraseña" className="form-label">
-              Contraseña:
-            </label>
-            <input
-              type="password"
-              className="form-control"
-              id="contraseña"
-              value={contraseña}
-              onChange={(e) => setContraseña(e.target.value)}
-            />
-          </div>
-
+   <div className="col-md-5 offset-md-3 max-width-form text-center" style={{ border: "1px solid #616161", borderRadius: "10px", background: "#D1EFEA", margin: "auto", padding: "20px"}}>
+      <h2 style={{
+          fontFamily: "fantasy",
+          color: "#001F3F",
+          marginTop:"5px",
+          background: "#D1EFEA",
+          boxShadow: "initial"}}>Iniciar sesión</h2>
+      <form>
+        <div className="mb-6 mt-3">
+          <label htmlFor="usuario mt-5" className="form-label">
+            <strong>Usuario:</strong>
+          </label>
+          <input
+            type="text"
+            className="form-control"
+            id="usuario"
+            value={usuario}
+            onChange={(e) => setUsuario(e.target.value)}
+          />
+        </div>
+        <div className="mb-6 mt-3">
+          <label htmlFor="contraseña mt-5" className="form-label">
+            <strong>Contraseña:</strong>
+          </label>
+          <input
+            type="password"
+            className="form-control"
+            id="contraseña"
+            value={contraseña}
+            onChange={(e) => setContraseña(e.target.value)}
+          />
+        </div>
+  
+        <button
+          type="button"
+          className="btn btn-primary mt-5 me-5" style={{ width: "35%" }}
+          onClick={handleLogin}
+        >
+          Iniciar sesión
+        </button>
+  
+        <Link to="/Home">
           <button
             type="button"
-            className="btn btn-primary"
-            onClick={handleLogin}
-            >
-            Iniciar sesión
-          </button>
-            <Link to="/Home">
-            <button
-            type="button"
-            className="btn btn-danger"
-            onClick={() => window.close()}>
+            className="btn btn-danger mt-5 me-2" style={{ width: "35%" }}
+            onClick={() => window.close()}
+          >
             Cerrar
-
-            </button>
-            </Link>
-        </form>
-      </div>
+          </button>
+        </Link>
+      </form>
     </div>
+  </div>
   );
 };
 

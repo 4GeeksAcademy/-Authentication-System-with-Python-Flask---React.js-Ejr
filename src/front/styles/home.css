@@ -17,9 +17,7 @@
   display: flex;
   align-items: center;
 }
-.container {
-  display: flex;
-}
+
 .navbar-brand.mb-0.h1 {
   margin-bottom: 0; /* Elimina el margen inferior predeterminado de las etiquetas h1 */
 }
@@ -30,7 +28,6 @@
   padding: 20px; /* Puedes ajustar el relleno según sea necesario */
   box-sizing: border-box; /* Incluye el relleno en el ancho/altura total */
 }
-
 
 .text-container p {
   text-align: center;
@@ -128,7 +125,7 @@
   margin: 10px auto 0;
   display: box;
   text-align: center;
-  width: 90%;
+  width: 80%;
   height: 15px;
 }
 

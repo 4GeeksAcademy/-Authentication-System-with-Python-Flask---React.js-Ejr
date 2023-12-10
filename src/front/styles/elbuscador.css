@@ -42,12 +42,11 @@ h1 {
   color: #000; /* Cambia el color del texto */
 }
 .submitbutton1 {
-  background-color: rgb(246, 25, 25);
-  
+  background-color: #d74338;
 }
 
 .submitbutton2 {
-  background-color: rgb(13, 87, 13);
+  background-color: #006b47;
   border-radius: 35px;
 }
 
