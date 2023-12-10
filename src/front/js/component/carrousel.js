@@ -21,38 +21,74 @@ export const Carrousel = () => {
   };
 
   return (
+    
     <div className="carousel-oficios">
       <h1 style={{ fontFamily:"fantasy", 
-      color: '#001F3F',  // Azul oscuro
-    // Borde inferior // Hace que el borde inferior se ajuste al contenido
-  paddingBottom: '5px',  // Espacio entre el texto y el borde inferior
-}}>
-  <strong>OFICIOS</strong>
-</h1>
+            color: '#001F3F',  // Azul oscuro
+          // Borde inferior // Hace que el borde inferior se ajuste al contenido
+        paddingBottom: '5px',  // Espacio entre el texto y el borde inferior
+        }}>
+        OFICIOS
+      </h1>
       <div className="carousel-container">
-        <div
-          className="carousel-wrapper"
-          style={{ transform: `translateX(-${currentIndex * 33.33}%)` }}
-        >
-          <div className="carousel-box" style={{ marginLeft: "95px",marginRight: "36px" }}>
-            <h2 style={{ fontWeight: 'bold' }} >Electricista</h2>
-            <img className="img-fluid" src={easyJobUrl1} />
+      <div
+        className="carousel-wrapper"
+        style={{
+          display: "flex",
+          transition: "transform 0.2s ease-in-out",
+          transform: `translateX(-${currentIndex * 25}%)`,
+          backgroundColor: "#D1EFEA",
+          padding: "10px",
+          borderColor: '#000', // Color del borde
+          border: '2px solid', // Grosor del borde
+          borderRadius: '10px', // Radio de las esquinas
+          boxShadow: '0 4px 15px rgba(50, 60, 0, 25)', // Sombra
+        }}
+      >
+          <div className="carousel-box" style={{ marginRight: "3%" }}>
+            <h2 style={{ fontWeight: "bold" }}>Electricista</h2>
+            <img
+              className="img-fluid"
+              style={{ minWidth: "100px", width: "100%" }}
+              src={easyJobUrl1}
+              alt="Electricista"
+            />
           </div>
-          <div className="carousel-box"  style={{marginRight: "36px"}}>
-            <h2 style={{ fontWeight: 'bold' }}>Carpintero</h2>
-            <img className="img-fluid" src={easyJobUrl3} />
+          <div className="carousel-box" style={{ marginRight: "3%" }}>
+            <h2 style={{ fontWeight: "bold" }}>Carpintero</h2>
+            <img
+              className="img-fluid"
+              style={{ minWidth: "100px", width: "100%" }}
+              src={easyJobUrl3}
+              alt="Carpintero"
+            />
           </div>
-          <div className="carousel-box" style={{marginRight: "36px"}}>
-            <h2 style={{ fontWeight: 'bold' }}>Aseo</h2>
-            <img className="img-fluid" src={easyJobUrl4} />
+          <div className="carousel-box" style={{ marginRight: "3%" }}>
+            <h2 style={{ fontWeight: "bold" }}>Aseo</h2>
+            <img
+              className="img-fluid"
+              style={{ minWidth: "100px", width: "100%" }}
+              src={easyJobUrl4}
+              alt="Aseo"
+            />
           </div>
-          <div className="carousel-box" style={{marginRight: "36px"}}>
-            <h2 style={{ fontWeight: 'bold' }}>Gasfiteria</h2>
-            <img className="img-fluid" src={easyJobUrl2} />
+          <div className="carousel-box" style={{ marginRight: "3%" }}>
+            <h2 style={{ fontWeight: "bold" }}>Gasfiteria</h2>
+            <img
+              className="img-fluid"
+              style={{ minWidth: "100px", width: "100%" }}
+              src={easyJobUrl2}
+              alt="Gasfiteria"
+            />
           </div>
-          <div className="carousel-box" style={{marginRight: "36px"}}>
-            <h2 style={{ fontWeight: 'bold' }}>Pintor</h2>
-            <img className="img-fluid" src={easyJobUrl5} />
+          <div className="carousel-box" style={{ marginRight: "3%" }}>
+            <h2 style={{ fontWeight: "bold" }}>Pintor</h2>
+            <img
+              className="img-fluid"
+              style={{ minWidth: "100px", width: "100%" }}
+              src={easyJobUrl5}
+              alt="Pintor"
+            />
           </div>
         </div>
       </div>

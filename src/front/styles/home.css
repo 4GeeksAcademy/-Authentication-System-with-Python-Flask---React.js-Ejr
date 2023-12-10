@@ -79,13 +79,16 @@
 }
 
 .carousel-container {
-  overflow: hidden;
-  position: relative;
-  width: auto; /* Ajusta según sea necesario */
+  overflow: auto;
+  /* position: relative; */
+  width: 95%; /* Ajusta según sea necesario */
   margin: 0 auto; /* Centra el contenedor */
+  padding: 20px;
 }
 
 .carousel-wrapper {
+  display: flex;
+  justify-content: center;
   margin-top: 10px;
   text-align: center;
   display: flex;
@@ -93,7 +96,7 @@
   transition: transform 0.5s ease-in-out;
 }
 .carousel-box {
-  border: px solid darkblue;
+  border: 1px solid darkblue;
   border-radius: 10px;
   margin: 5px;
   height: 240px;
@@ -122,10 +125,10 @@
   margin: 0 10px;
 }
 .carousel-oficios {
-  margin-top: 10px 10px 10px 10px;
+  margin: 10px auto 0;
   display: box;
   text-align: center;
-  width: 1140px;
+  width: 90%;
   height: 15px;
 }
 

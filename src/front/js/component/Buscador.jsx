@@ -61,30 +61,6 @@ export const Buscador = () => {
               <p style={{ width: "70%", margin: "10px"}}>
                 CONSIGUE NUEVAS OPORTUNIDADES
               </p>
-
-              {/* <div
-                style={{
-                  width: "40%",
-                  height: "70%",
-                  padding: "10px",
-                  background: "#99fffd",
-                  borderRadius: "6px",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  gap: "10px",
-                  display: "inline-flex",
-                }}
-              >
-                <div
-                  style={{
-                    width: "100px",
-                    height: "96px",
-                    background: "#99fffd",
-                  }}
-                >
-                  IMAGEN
-                </div>
-              </div> */}
             </div>
 
             <div

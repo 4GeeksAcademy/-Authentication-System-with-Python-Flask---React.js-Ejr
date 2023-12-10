@@ -3,8 +3,8 @@
 .container2 {
   padding: 80px 30px; /* Ajuste del relleno */
   max-width: 1200px;
-  margin: 255px; /* Centrar el contenedor horizontalmente */
-  margin-top: 367px;
+  margin: 255px auto; /* Centrar el contenedor horizontalmente */
+  margin-top: 434px;
   
 
 }

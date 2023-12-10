@@ -3,32 +3,39 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 export const Nosotros = () => {
     const containerStyle = {
+      margin: 'auto',
+      justifyContent: 'center',
       display: 'flex',
       textAlign: 'center',
-      backgroundColor: '#d1efea',
-      padding: '20px',
-      borderRadius: '8px',
-      boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-      margin: 'auto',
+      backgroundColor: 'rgb(203, 210, 210)',
+      borderRadius: '16px',
+      boxShadow: '0 4px 8px rgba(0, 0, 0, 0.3)',
+      border: '2px solid black',
+      paddingBottom:'10px',
+
+     
       };
     
-      const headingStyle = {
-        color: '#333',
-        textAlign: 'center',
-      };
+     
     
       const paragraphStyle = {
-        color: '#555',
+        color:'black',
         fontSize: '1.1em',
-        lineHeight: '1.6',
         textAlign: 'center',
+        fontFamily: 'fantasy',
+        justifyContent:'center',
+        marginTop: '8px',
+        padding:'5px',
+       
       };
     
       return (
-        <div className="container mt-4" style={containerStyle}>
-          <div className="row">
-            <div className="col-md-8 offset-md-2">
-              <h1 style={headingStyle}>Nosotros</h1>
+        <div className="container mt-4" style={containerStyle} >
+          <div className="row" >
+            <div className="col-md-10 ">
+              <h1 style={{ fontFamily:"fantasy", 
+      color: '#001F3F', textAlign: 'center', justifyContent:'center', margin: '35px',// Azul oscuro
+}}>NOSOTROS</h1>
               <p style={paragraphStyle}>
                 Somos una plataforma dedicada a conectar a profesionales de diversos oficios como gasfitería, electricidad, pintura y más, con personas y empresas que requieren sus servicios. Nuestra misión es facilitar la contratación de trabajadores capacitados y confiables para cualquier tipo de proyecto o reparación.
               </p>
