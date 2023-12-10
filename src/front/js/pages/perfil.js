@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import "./../component/Buscador.jsx"
 
 
+
 export const Perfil = () => {
   const [formData, setFormData] = useState({
     firstName: "",
