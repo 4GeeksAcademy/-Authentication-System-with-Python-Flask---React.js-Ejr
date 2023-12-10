@@ -7,9 +7,7 @@ import easyJobUrl3 from "../../img/carpintero.jpg";
 import easyJobUrl4 from "../../img/aseo.jpg";
 import easyJobUrl5 from "../../img/maestro-pintor.jpg";
 
-
 export const Carrousel = () => {
-
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const handleNext = () => {
@@ -21,30 +19,27 @@ export const Carrousel = () => {
   };
 
   return (
-    
     <div className="carousel-oficios">
-      <h1 style={{ fontFamily:"fantasy", 
-            color: '#001F3F',  // Azul oscuro
+      <h1
+        style={{
+          fontFamily: "fantasy",
+          color: "#001F3F", // Azul oscuro
           // Borde inferior // Hace que el borde inferior se ajuste al contenido
-        paddingBottom: '5px',  // Espacio entre el texto y el borde inferior
-        }}>
+          paddingBottom: "5px", // Espacio entre el texto y el borde inferior
+        }}
+      >
         OFICIOS
       </h1>
       <div className="carousel-container">
-      <div
-        className="carousel-wrapper"
-        style={{
-          display: "flex",
-          transition: "transform 0.2s ease-in-out",
-          transform: `translateX(-${currentIndex * 25}%)`,
-          backgroundColor: "#D1EFEA",
-          padding: "10px",
-          borderColor: '#000', // Color del borde
-          border: '2px solid', // Grosor del borde
-          borderRadius: '10px', // Radio de las esquinas
-          boxShadow: '0 4px 15px rgba(50, 60, 0, 25)', // Sombra
-        }}
-      >
+        <div
+          className="carousel-wrapper"
+          style={{
+            display: "flex",
+            transition: "transform 0.2s ease-in-out",
+            transform: `translateX(-${currentIndex * 25}%)`,
+            padding: "10px",
+          }}
+        >
           <div className="carousel-box" style={{ marginRight: "3%" }}>
             <h2 style={{ fontWeight: "bold" }}>Electricista</h2>
             <img
@@ -105,5 +100,3 @@ export const Carrousel = () => {
   );
 };
 export default Carrousel;
-
-
