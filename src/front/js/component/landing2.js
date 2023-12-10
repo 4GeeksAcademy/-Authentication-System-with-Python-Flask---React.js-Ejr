@@ -44,7 +44,7 @@ export const Landing = () => {
             </div>
           </div>
         </div>
-        {/* anexa las tarjetas de profesiones */}
+        {/* anexa las tarjetas de profesioness */}
         <div className="row">
           {profesiones.map((profesion, index) => (
             <div className="col-md-4" key={index}>
