@@ -25,35 +25,37 @@ export const Home = () => {
       nombre: "Gasfiter",
       calificacion: 4.5,
       comentarios: ["Excelente trabajo!", "Lo recomiendo."],
+      imagen: "https://img.freepik.com/vector-premium/icono-marco-fotos-foto-vacia-blanco-vector-sobre-fondo-transparente-aislado-eps-10_399089-1290.jpg?w=740", // Reemplaza con la URL correcta
     },
     {
       nombre: "Electricista",
       calificacion: 4.8,
       comentarios: ["excelente persona.", "Siempre cumple."],
+      //imagen: "https://img.freepik.com/vector-premium/icono-marco-fotos-foto-vacia-blanco-vector-sobre-fondo-transparente-aislado-eps-10_399089-1290.jpg?w=740", // Reemplaza con la URL correcta
     },
     {
-      nombre: "Pintor",
-      calificacion: 4.9,
+      nombre: "Electricista",
+      calificacion: 4.8,
       comentarios: ["excelente persona.", "Siempre cumple."],
+      //imagen: "https://img.freepik.com/vector-premium/icono-marco-fotos-foto-vacia-blanco-vector-sobre-fondo-transparente-aislado-eps-10_399089-1290.jpg?w=740", // Reemplaza con la URL correcta
     },
   ];
 
   return (
     <>
-      <div className="container easy-jobs">
-        <div className="text-container d-flex flex-column justify-content-fluid">
-          <h1
-            style={{
-              fontFamily: "fantasy",
-              color: "#001F3F", 
-            
-            }}
-          >
-            <strong>EASY JOBS</strong>
-          </h1>
-          <p style={{ color: "#616161", margin:"5px"}} className="mb-5">
+      <div className="container">
+        <div className="text-container d-flex flex-column">
+        <h1 style={{ fontFamily:"fantasy", 
+      color: '#001F3F',  // Azul oscuro
+    // Borde inferior // Hace que el borde inferior se ajuste al contenido
+  paddingBottom: '5px',  // Espacio entre el texto y el borde inferior
+}}>
+  <strong>EASY JOBS</strong>
+</h1>
+          <p  style={{color: "#616161" }}className="mb-5">
             Busca de forma sencilla y conecta con Prestadores para encontrar una
-            solución a tu medida, siempre tendrás un buen contacto en EasyJob.
+            solución a tu medida para tu casa o empresa. Siempre tendrás un buen
+            contacto en EasyJob.
           </p>
 
           <div
@@ -160,13 +162,12 @@ export const Home = () => {
                   }}
                 >
                   {" "}
-                  <br />
-                  "Somos una plataforma dedicada a conectar a profesionales de
+                  Somos una plataforma dedicada a conectar a profesionales de
                   diversos oficios como gasfitería, electricidad, pintura y más,
                   con personas y empresas que requieren sus servicios. Nuestra
                   misión es facilitar la contratación de trabajadores
                   capacitados y confiables para cualquier tipo de proyecto o
-                  reparación.."
+                  reparación..
                 </p>
               </div>
             </div>
@@ -189,12 +190,11 @@ export const Home = () => {
                   }}
                 >
                   {" "}
-                  <br />
-                  "En nuestra marketplace, podrás encontrar una amplia variedad
-                  de profesionales verificados y calificados. Ofrecemos un
-                  entorno seguro y fácil de usar donde podrás publicar trabajos,
-                  recibir presupuestos, comparar perfiles y seleccionar al
-                  experto que mejor se adapte a tus necesidades.."
+                  nuestra marketplace, podrás encontrar una amplia variedad de
+                  profesionales verificados y calificados. Ofrecemos un entorno
+                  seguro y fácil de usar donde podrás publicar trabajos, recibir
+                  presupuestos, comparar perfiles y seleccionar al experto que
+                  mejor se adapte a tus necesidades..
                 </p>
               </div>
             </div>

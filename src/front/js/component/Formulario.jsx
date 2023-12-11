@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-import { Form, Button, Container, Row, Col } from "react-bootstrap";
+import { Form, Button, Container, Row, Col, Modal } from "react-bootstrap";
 import "../../styles/elotroformulario.css";
 import { Link } from "react-router-dom";
+
 export class Formulario extends Component {
   constructor(props) {
     super(props);
@@ -12,41 +13,91 @@ export class Formulario extends Component {
       password: "",
       rut: "",
       telefono: "",
-      comuna: "", 
+      comuna: "",
       fecha_de_nacimiento: "",
       rubro: "",
       aceptoTerminos: false,
+      errores: {},
     };
   }
 
   handleChange = (event) => {
     const { name, value, type, checked } = event.target;
-    this.setState({
+
+
+    let error = null;
+    if (type === "checkbox" && !checked) {
+      error = "Debe aceptar los términos y condiciones";
+    } else if (type !== "checkbox" && !value.trim()) {
+      error = "Este campo es obligatorio";
+    }
+    if (type === "checkbox" && !checked) {
+      error = "Debe aceptar los términos y condiciones";
+    } else if (type !== "checkbox" && !value.trim()) {
+      error = "Este campo es obligatorio";
+    } else if (name === "password" && (value.length < 8 || value.length > 12)) {
+      error = "La contraseña debe tener entre 8 y 12 caracteres";
+    } else if (name === "email" && !this.validateEmail(value)) {
+      error = "El correo electrónico no es válido";
+    } else if (name === "telefono" && !/^\d{9}$/.test(value)) {
+      error = "El teléfono debe tener 9 dígitos";
+    }
+
+    this.setState((prevState) => ({
       [name]: type === "checkbox" ? checked : value,
-    });
+      errores: {
+        ...prevState.errores,
+        [name]: error,
+      },
+    }));
   };
 
   handleSubmit = async (event) => {
     event.preventDefault();
-  
-    const {
-      nombre,
-      apellido,
-      email,
-      password,
-      rut,
-      telefono,
-      comuna,
-      fecha_de_nacimiento,
-      rubro,
-      aceptoTerminos,
-    } = this.state;
-  
-    if (!aceptoTerminos) {
-      console.error("Debes aceptar los términos y condiciones.");
+
+    const { nombre, apellido, email, password, rut, telefono, comuna, fecha_de_nacimiento, rubro } = this.state;
+
+    const errores = {};
+    if (!nombre.trim()) {
+      errores.nombre = "El nombre es obligatorio";
+    }
+
+    if (!email.trim()) {
+      errores.email = "El correo electrónico es obligatorio";
+    } else if (!this.validateEmail(email)) {
+      errores.email = "El correo electrónico no es válido";
+    }
+
+    if (!apellido.trim()) {
+      errores.apellido = "El apellido es obligatorio";
+    }
+    if (!password.trim()) {
+      errores.password = "La contraseña es obligatoria";
+    }
+    if (!rut.trim()) {
+      errores.rut   = "El Rut es obligatorio";
+    }
+    if (!fecha_de_nacimiento.trim()) {
+      errores.fecha_de_nacimiento = "La fecha de nacimiento es obligatoria";
+    }
+    if (!telefono.trim()) {
+      errores.telefono = "El telefono es obligatorio";
+    }
+    if (!comuna.trim()) {
+      errores.comuna = "Su comuna es obligatoria";
+    }
+    if (!rubro.trim()) {
+      errores.rubro = "Su rubro es obligatorio";
+    }
+
+
+    
+    if (Object.keys(errores).length > 0) {
+      this.setState({ errores });
       return;
     }
-  
+
+
     try {
       const response = await fetch("http://localhost:3001/api/register", {
         method: "POST",
@@ -56,7 +107,7 @@ export class Formulario extends Component {
         body: JSON.stringify({
           nombre,
           apellido,
-          email,  
+          email,
           password,
           rut,
           telefono,
@@ -68,26 +119,31 @@ export class Formulario extends Component {
   
       if (response.ok) {
         const data = await response.json();
+        // Puedes manejar la respuesta del servidor aquí
+        console.log("Datos enviados correctamente:", data);
       } else {
-
         const errorData = await response.json();
         console.error("Error al enviar los datos al servidor:", errorData);
       }
     } catch (error) {
       console.error("Error de red:", error);
-    }
+    }}
+
+  validateEmail = (email) => {
+    return true;
   };
-  
-  
+
   render() {
+    const { errores } = this.state;
+
     return (
       <Container>
         <Row>
           <Col>
             <Form onSubmit={this.handleSubmit}>
               <h1>
-                Bienvenido, Por favor rellene los campos, para ofrecer sus
-                Servicios
+                Bienvenido! Por favor rellene los campos para ofrecer sus
+                servicios
               </h1>
               <Form.Group controlId="formNombre">
                 <Form.Label>
@@ -100,6 +156,9 @@ export class Formulario extends Component {
                   onChange={this.handleChange}
                   style={{ borderWidth: "3px", borderColor: "darkcyan" }}
                 />
+                {errores.nombre && (
+                  <Form.Text className="text-danger">{errores.nombre}</Form.Text>
+                )}
               </Form.Group>
 
               <Form.Group controlId="formApellido">
@@ -113,7 +172,11 @@ export class Formulario extends Component {
                   onChange={this.handleChange}
                   placeholder="Ingrese su apellido"
                   style={{ borderWidth: "3px", borderColor: "darkcyan" }}
+                  
                 />
+                {errores.apellido && (
+                  <Form.Text className="text-danger">{errores.apellido}</Form.Text>
+                )}
               </Form.Group>
 
               <Form.Group controlId="formRut">
@@ -128,6 +191,9 @@ export class Formulario extends Component {
                   placeholder="Ingrese su rut"
                   style={{ borderWidth: "3px", borderColor: "darkcyan" }}
                 />
+                {errores.rut && (
+                  <Form.Text className="text-danger">{errores.rut}</Form.Text>
+                )}
               </Form.Group>
 
               <Form.Group controlId="formEmail">
@@ -142,6 +208,9 @@ export class Formulario extends Component {
                     style={{ borderWidth: "3px", borderColor: "darkcyan" }}
                     onChange={this.handleChange}  
                 />
+                {errores.email && (
+                  <Form.Text className="text-danger">{errores.email}</Form.Text>
+                )}
               </Form.Group>
 
              < Form.Group controlId="formContraseña">
@@ -152,10 +221,13 @@ export class Formulario extends Component {
                     type="password"
                     name="password"  
                     value={this.state.password} 
-                    placeholder="password"
+                    placeholder="Ingrese su contraseña. Debe ser entre 8 y 12 carácteres"
                     style={{ borderWidth: "3px", borderColor: "darkcyan" }}
-                    onChange={this.handleChange}  
+                    onChange={this.handleChange}                 
                 />
+                {errores.password && (
+                      <Form.Text className="text-danger">{errores.password}</Form.Text>
+                    )}
               </Form.Group>
 
               <Form.Group controlId="formTelefono">
@@ -170,6 +242,9 @@ export class Formulario extends Component {
                   placeholder="Ingrese su telefono"
                   style={{ borderWidth: "3px", borderColor: "darkcyan" }}
                 />
+                {errores.telefono && (
+                      <Form.Text className="text-danger">{errores.telefono}</Form.Text>
+                    )}
               </Form.Group>
 
               <Form.Group controlId="formFechaNacimiento">
@@ -183,6 +258,9 @@ export class Formulario extends Component {
                   onChange={this.handleChange}
                   style={{ borderWidth: "3px", borderColor: "darkcyan" }}
                 />
+                {errores.fecha_de_nacimiento && (
+                      <Form.Text className="text-danger">{errores.fecha_de_nacimiento}</Form.Text>
+                    )}
               </Form.Group>
 
               <Form.Group controlId="formComuna">
@@ -195,16 +273,39 @@ export class Formulario extends Component {
                   name="comuna"
                   value={this.state.comuna}
                   onChange={this.handleChange}
+                  placeholder="Ingrese su comuna"
                   style={{ borderWidth: "3px", borderColor: "darkcyan" }}
-                >
+                > 
+                  <option value="" hidden>Seleccione su Comuna</option>
                   <option>La Florida</option>
                   <option>La Reina</option>
                   <option>Providencia</option>
                   <option>Santiago Centro</option>
                   <option>Independencia</option>
                 </Form.Control>
+                {errores.comuna && (
+                      <Form.Text className="text-danger">{errores.comuna}</Form.Text>
+                    )}
 
               </Form.Group>
+
+              
+              <Form.Group controlId="formTipoUsuario">
+              <Form.Label>
+                <h3>Tipo de Usuario</h3>
+              </Form.Label>
+              <Form.Control
+                as="select"
+                name="tipoUsuario"
+                value={state.tipoUsuario}
+                onChange={handleChange}
+                style={{ borderWidth: "3px", borderColor: "darkcyan" }}
+              >
+                <option value="">Seleccione...</option>
+                <option value="cliente">Cliente</option>
+                <option value="prestador">Prestador de Servicio</option>
+              </Form.Control>
+            </Form.Group>
 
               <Form.Group controlId="formRubro">
                 <Form.Label>
@@ -217,15 +318,17 @@ export class Formulario extends Component {
                   onChange={this.handleChange}
                   style={{ borderWidth: "3px", borderColor: "darkcyan" }}
                 >
+                  <option value="" hidden>Seleccione su rubro</option>
                   <option>Carpinteria</option>
                   <option>Electricista</option>
                   <option>Gasfitería</option>
                   <option>Pintor</option>
                   <option>Aseo</option>
                 </Form.Control>
+                {errores.rubro && (
+                      <Form.Text className="text-danger">{errores.rubro}</Form.Text>
+                    )}
               </Form.Group>
-
-              <Form.Group controlId="formTerminosCondiciones">
                 <h3>
                   <strong>Terminos y Condiciones</strong>
                 </h3>
@@ -268,6 +371,7 @@ export class Formulario extends Component {
                     relacionados con información bancaria o financiera.
                   </p>
                 </div>
+                <Form.Group>
                 <Form.Check
                   type="checkbox"
                   name="aceptoTerminos"

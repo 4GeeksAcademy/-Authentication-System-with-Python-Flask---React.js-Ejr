@@ -94,45 +94,31 @@ def login():
     
 @app.route('/api/register', methods=['POST'])
 def register():
-
     nombre = request.json.get("nombre")
     apellido = request.json.get("apellido")
     email = request.json.get("email")
     password = request.json.get("password")
-    rut = request.json.get ("rut")
-    telefono = request.json.get ("telefono")
+    rut = request.json.get("rut")
+    telefono = request.json.get("telefono")
     comuna = request.json.get("comuna")
     fecha_de_nacimiento = request.json.get("fecha_de_nacimiento")
+    tipoUsuario = request.json.get ("tipoUsuario")
+    rubro = request.json.get("rubro")
 
-    if not email:
-        return jsonify(("error: email obligatorio")), 400
-    if not password:
-        return jsonify(("error: password obligatorio")), 400
-    if not nombre:
-        return jsonify(("error: nombre obligatorio")), 400
-    if not apellido:
-        return jsonify(("error: apellido obligatorio")), 400
-    if not telefono:
-        return jsonify(("error: telefono obligatorio")), 400
-    if not rut:
-        return jsonify(("error: rut obligatorio")), 400
-    if not fecha_de_nacimiento:
-        return jsonify(("error: fecha de nacimiento obligatorio")), 400
-    if not comuna:
-        return jsonify(("error: comuna obligatorio")), 400
-
+    # Verificar la existencia del email en ambas tablas
     user_found = User.query.filter_by(email=email).first()
     buscador_found = UserBuscador.query.filter_by(email=email).first()
 
     if user_found or buscador_found:
-        return jsonify({ "error": "Email ya registrado"}), 400
+        return jsonify({"error": "Email ya registrado"}), 400
 
+    # Crear instancia de usuario basándose en la presencia de "rubro"
     if "rubro" in request.json:
-        new_user = User()
-        new_user.rubro = request.json.get("rubro")
+        new_user = User(rubro=rubro)
     else:
         new_user = UserBuscador()
 
+    # Configurar atributos comunes
     new_user.email = email
     new_user.password = generate_password_hash(password)
     new_user.nombre = nombre
@@ -140,18 +126,26 @@ def register():
     new_user.rut = rut
     new_user.telefono = telefono
     new_user.comuna = comuna
+    new_user.tipoUsuario = tipoUsuario
     new_user.fecha_de_nacimiento = fecha_de_nacimiento
 
+    # Agregar y hacer commit del nuevo usuario
     db.session.add(new_user)
     db.session.commit()
 
+    # Obtener el ID después del commit
+    id = new_user.idUser if hasattr(new_user, 'idUser') else new_user.idUserBuscador
+
     expires = datetime.timedelta(days=3)
-    access_token = create_access_token(identity=new_user.id, expires_delta=expires)
+    access_token = create_access_token(identity=id, expires_delta=expires)
 
     data = {
         "access_token": access_token,
         "user": new_user.serialize()
     }
+
+    if "rubro" not in request.json:
+         del data["user"]["rubro"]
 
     return jsonify(data), 200
 
@@ -267,12 +261,18 @@ def actualizar_perfil():
     return jsonify({'message': 'Datos de perfil actualizados correctamente'})
 
 # Ruta para obtener los datos del perfil (solo para demostración)
-@app.route('/api/perfil', methods=['GET'])
-def obtener_perfil():
-    global perfil_data
-    
+@app.route('/api/perfil/<int:id>', methods=['GET'])
+def obtener_perfil(id):
+   user = User.query.get(id) 
+   perfil_data = {
+    "firstName": user.nombre,
+    "lastName": user.apellido,
+    "email": user.email,
+    "comuna": user.comuna,
+    "birthDate": user.fecha_de_nacimiento
+   }
     # Devolver los datos actuales del perfil
-    return jsonify(perfil_data)
+   return jsonify(perfil_data)
 
 
 @app.route('/api/SegundoPerfil')
