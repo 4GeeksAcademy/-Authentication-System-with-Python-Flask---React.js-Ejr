@@ -3,7 +3,7 @@ import React from 'react';
 
 export const ProfesionCard = ({ nombre, calificacion, comentarios }) => {
   return (
-    <div className="card mb-3" style={{ maxWidth: "540px" }}>
+    <div className="card mb-3" style={{ maxWidth: "100%" }}>
       <div className="row g-0">
         <div className="col-md-4">
          

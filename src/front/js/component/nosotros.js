@@ -44,6 +44,8 @@ export const Nosotros = () => {
               </p>
               <p style={paragraphStyle}>
                 ¡Confía en nosotros para encontrar al profesional adecuado y realizar tus proyectos con éxito!
+                <br/>
+                <br/>
               </p>
             </div>
           </div>

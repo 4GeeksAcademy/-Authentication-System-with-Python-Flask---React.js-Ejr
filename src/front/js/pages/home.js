@@ -20,7 +20,6 @@ export const Home = () => {
     console.log("Botón 2 clickeado");
   };
 
-  
   const profesiones = [
     {
       nombre: "Gasfiter",
@@ -33,27 +32,26 @@ export const Home = () => {
       comentarios: ["excelente persona.", "Siempre cumple."],
     },
     {
-      nombre: "Electricista",
-      calificacion: 4.8,
+      nombre: "Pintor",
+      calificacion: 4.9,
       comentarios: ["excelente persona.", "Siempre cumple."],
     },
   ];
 
   return (
     <>
-      <div className="container">
-        <div className="text-container d-flex flex-column">
+      <div className="container easy-jobs">
+        <div className="text-container d-flex flex-column justify-content-fluid">
           <h1
             style={{
               fontFamily: "fantasy",
-              color: "#001F3F", // Azul oscuro
-              // Borde inferior // Hace que el borde inferior se ajuste al contenido
-              paddingBottom: "5px", // Espacio entre el texto y el borde inferior
+              color: "#001F3F", 
+            
             }}
           >
             <strong>EASY JOBS</strong>
           </h1>
-          <p style={{ color: "#616161", opacity: 0.9 }} className="mb-5">
+          <p style={{ color: "#616161", margin:"5px"}} className="mb-5">
             Busca de forma sencilla y conecta con Prestadores para encontrar una
             solución a tu medida, siempre tendrás un buen contacto en EasyJob.
           </p>
@@ -122,51 +120,81 @@ export const Home = () => {
           </div>
         </div>
         <div className="image-container">
-          <img src={easyJobUrl} />
+          <img style={{ margin: "0 auto" }} src={easyJobUrl} />
         </div>
       </div>
       <div className="container">
         <Carrousel />
       </div>
 
-      <div className="container2">
-        <h1>Nosotros</h1>
+      <div className="container2" >
+        <h1
+          style={{
+            fontFamily: "fantasy",
+            color: "#001F3F", // Azul oscuro
+            // Borde inferior // Hace que el borde inferior se ajuste al contenido
+            marginTop: "20%",
+            marginBottom: "5%",
+            // Espacio entre el texto y el borde inferior
+          }}
+        >
+          <strong>Nosotros</strong>{" "}
+        </h1>
         <div className="row">
+         
           <div className="col-md-6">
-            <div className="card mb-4">
-              <img
+            <div className="card mb-4 " style={{ borderRadius: "50px", marginRight:"50"}}>
+            <img
                 src="https://thumbs.dreamstime.com/b/electricista-30694651.jpg"
                 className="card-img-top"
                 alt="..."
               />
+
               <div className="card-body">
-                <p className="card-text">
+                <p
+                  className="card-text mt-5px"
+                  style={{
+                    textAlign: "justify",
+                    fontStyle: "italic",
+                    color: "rgba(0, 0, 0, 0.8)",
+                  }}
+                >
                   {" "}
-                  Somos una plataforma dedicada a conectar a profesionales de
+                  <br />
+                  "Somos una plataforma dedicada a conectar a profesionales de
                   diversos oficios como gasfitería, electricidad, pintura y más,
                   con personas y empresas que requieren sus servicios. Nuestra
                   misión es facilitar la contratación de trabajadores
                   capacitados y confiables para cualquier tipo de proyecto o
-                  reparación..
+                  reparación.."
                 </p>
               </div>
             </div>
           </div>
           <div className="col-md-6">
-            <div className="card mb-4">
+            <div className="card mb-4" style={{ borderRadius: "50px" }}>
               <img
                 src="https://thumbs.dreamstime.com/b/electricista-89764045.jpg"
                 className="card-img-top"
                 alt="..."
               />
+
               <div className="card-body">
-                <p className="card-text">
+                <p
+                  className="card-text mt-5px"
+                  style={{
+                    textAlign: "justify",
+                    fontStyle: "italic",
+                    color: "rgba(0, 0, 0, 0.8)",
+                  }}
+                >
                   {" "}
-                  nuestra marketplace, podrás encontrar una amplia variedad de
-                  profesionales verificados y calificados. Ofrecemos un entorno
-                  seguro y fácil de usar donde podrás publicar trabajos, recibir
-                  presupuestos, comparar perfiles y seleccionar al experto que
-                  mejor se adapte a tus necesidades..
+                  <br />
+                  "En nuestra marketplace, podrás encontrar una amplia variedad
+                  de profesionales verificados y calificados. Ofrecemos un
+                  entorno seguro y fácil de usar donde podrás publicar trabajos,
+                  recibir presupuestos, comparar perfiles y seleccionar al
+                  experto que mejor se adapte a tus necesidades.."
                 </p>
               </div>
             </div>
@@ -177,6 +205,7 @@ export const Home = () => {
           {profesiones.map((profesion, index) => (
             <div className="col-md-4" key={index}>
               <ProfesionCard
+                style={{ margin: "0", padding: "0" }}
                 nombre={profesion.nombre}
                 calificacion={profesion.calificacion}
                 comentarios={profesion.comentarios}

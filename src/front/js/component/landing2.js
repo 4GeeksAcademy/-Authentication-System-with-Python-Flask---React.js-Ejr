@@ -15,9 +15,9 @@ export const Landing = () => {
       comentarios: ["excelente persona.", "Siempre cumple."],
     },
     {
-      nombre: "Electricista",
-      calificacion: 4.8,
-      comentarios: ["excelente persona.", "Siempre cumple."],
+      nombre: "Pintor",
+      calificacion: 4.9,
+      comentarios: ["excelente", "Siempre puntual."],
     },
   ];
 
@@ -56,7 +56,7 @@ export const Landing = () => {
           <div className="card mb-4">
             <img src="..." className="card-img-top" alt="..." />
             <div className="card-body">
-              <h5 className="card-title">Card title</h5>
+              <h5 className="card-title"></h5>
               <p className="card-text">
                 This is a wider card with supporting text below as a natural
                 lead-in to additional content. This content is a little bit
