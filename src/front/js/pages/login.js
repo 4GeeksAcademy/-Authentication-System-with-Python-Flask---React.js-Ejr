@@ -4,14 +4,16 @@ import { Link } from "react-router-dom";
 const Login = () => {
   const [usuario, setUsuario] = useState("");
   const [contraseña, setContraseña] = useState("");
+  const [error, setError] = useState("");
 
   const handleLogin = () => {
     setUsuario("");
     setContraseña("");
-  
+    setError(""); // Reiniciar el mensaje de error
+
     // Aquí puedes realizar la lógica de autenticación
     console.log("Usuario:", usuario, "Contraseña:", contraseña);
-  
+
     // Ejemplo de solicitud POST usando fetch
     fetch("http://localhost:3001/api/login", {
       method: "POST",
@@ -23,22 +25,28 @@ const Login = () => {
         password: contraseña,
       }),
     })
-      .then((response) => response.json())
+      .then((response) => {
+        if (!response.ok) {
+          // Si la respuesta no es exitosa, lanzar un error
+          throw new Error("Email y/o contraseña son incorrectos");
+        }
+        return response.json();
+      })
       .then((data) => {
         // Manejar la respuesta del servidor
         console.log("Respuesta del servidor:", data);
-    
+
         // Si la autenticación fue exitosa, almacenar información del usuario
         if (data.access_token) {
           console.log("Usuario encontrado");
-    
+
           // Almacena información del usuario en localStorage
           localStorage.setItem("user", JSON.stringify(data.user));
-          
-          // Redirige al usuario a la página de perfil
-          history.push("/perfil");
-   } })
+        }
+      })
       .catch((error) => {
+        // Capturar errores de la solicitud y establecer el mensaje de error
+        setError("Email y/o contraseña son incorrectos");
         console.error("Error al enviar la solicitud:", error);
       });
   };
@@ -54,7 +62,7 @@ const Login = () => {
             </label>
             <input
               type="text"
-              className="form-control"
+              className={`form-control ${error ? 'is-invalid' : ''}`}
               id="usuario"
               value={usuario}
               onChange={(e) => setUsuario(e.target.value)}
@@ -66,29 +74,34 @@ const Login = () => {
             </label>
             <input
               type="password"
-              className="form-control"
+              className={`form-control ${error ? 'is-invalid' : ''}`}
               id="contraseña"
               value={contraseña}
               onChange={(e) => setContraseña(e.target.value)}
             />
+            {error && (
+              <div className="invalid-feedback">
+                {error}
+              </div>
+            )}
           </div>
 
           <button
             type="button"
             className="btn btn-primary"
             onClick={handleLogin}
-            >
+          >
             Iniciar sesión
           </button>
-            <Link to="/Home">
+          <Link to="/Home">
             <button
-            type="button"
-            className="btn btn-danger"
-            onClick={() => window.close()}>
-            Cerrar
-
+              type="button"
+              className="btn btn-danger"
+              onClick={() => window.close()}
+            >
+              Cerrar
             </button>
-            </Link>
+          </Link>
         </form>
       </div>
     </div>

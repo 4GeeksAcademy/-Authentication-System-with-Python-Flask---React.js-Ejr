@@ -15,6 +15,7 @@ class User(db.Model):
     fecha_de_nacimiento = db.Column(db.Date, default=datetime.date(2000, 1, 1), unique=False, nullable=True)
     rubro = db.Column(db.String(200), unique=False, nullable=True)
     comuna = db.Column(db.String(200), unique=False, nullable=True)
+    tipoUsuario = db.Column(db.String(20), default='', nullable=True)
     is_active = db.Column(db.Boolean(), default=True, nullable=False)
 
     def serialize(self):
@@ -36,6 +37,7 @@ class UserBuscador(db.Model):
     password = db.Column(db.String(200), unique=False, nullable=False)
     telefono = db.Column(db.String(200), unique=True, nullable=False)
     comuna = db.Column(db.String(200), unique=False, nullable=True)
+    tipoUsuario = db.Column(db.String(20), default='', nullable=False)
     fecha_de_nacimiento = db.Column(db.Date, default=datetime.date(2000, 1, 1), nullable=True)
     is_active = db.Column(db.Boolean(), default=True, nullable=False)
 
