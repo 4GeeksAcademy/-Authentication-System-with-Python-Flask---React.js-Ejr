@@ -12,11 +12,10 @@ const Login = () => {
   const handleLogin = () => {
     setUsuario("");
     setContraseña("");
-  
-    // Aquí puedes realizar la lógica de autenticación
+    setError("");
+
     console.log("Usuario:", usuario, "Contraseña:", contraseña);
-  
-    // Ejemplo de solicitud POST usando fetch
+
     fetch("http://localhost:3001/api/login", {
       method: "POST",
       headers: {
@@ -35,23 +34,22 @@ const Login = () => {
       })
       .then((data) => {
         console.log("Respuesta del servidor:", data);
-    
-        // Si la autenticación fue exitosa, almacenar información del usuario
+
         if (data.access_token) {
           console.log("Usuario encontrado");
-    
-          // Almacena información del usuario en localStorage
+
           localStorage.setItem("user", JSON.stringify(data.user));
-          
-          // Redirige al usuario a la página de perfil
-          history.push("/perfil");
-   } })
+
+          // Utiliza `navigate` para redirigir a la página principal después del inicio de sesión
+          navigate("/");
+        }
+      })
       .catch((error) => {
         setError("Email y/o contraseña son incorrectos");
         console.error("Error al enviar la solicitud:", error);
       });
   };
-
+  
   return (
     <div className="container mt-5">
       <div
@@ -114,13 +112,15 @@ const Login = () => {
           >
             Iniciar sesión
           </button>
-            <Link to="/Home">
-            <button
-            type="button"
-            className="btn btn-danger"
-            onClick={() => window.close()}>
-            Cerrar
 
+          <Link to="/Home">
+            <button
+              type="button"
+              className="btn btn-danger mt-5 me-2"
+              style={{ width: "40%" }}
+              onClick={() => window.close()}
+            >
+              Cerrar
             </button>
           </Link>
         </form>

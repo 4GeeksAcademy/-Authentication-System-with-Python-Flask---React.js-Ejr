@@ -64,7 +64,7 @@ export const Home = () => {
               backgroundImage: "img src={easyJobUrl}",
             }}
           >
-            <Link to="/OtroFormulario">
+            <Link to="/Registro">
               <button
                 style={{
                   color: "#000000",
@@ -72,8 +72,8 @@ export const Home = () => {
                   borderColor: "#fff5ba",
                   background: "#dd9e26",
                   borderRadius: "30px",
-                  margin: "5px",
-                  padding: "13px",
+                  marginLeft: "160px",
+                  padding: "15px",
                   transition: "background-color 0.3s ease, color 0.3s ease", // Transición suave para color de fondo y texto
                 }}
                 className="mb-5"
@@ -87,36 +87,7 @@ export const Home = () => {
                   e.target.style.color = "#000000"; // Vuelve al color original de las letras al salir el ratón
                 }}
               >
-                Regístrate aquí como cliente
-              </button>
-            </Link>
-
-            <Link to="/Formulario">
-              <button
-                style={{
-                  color: "#ffffff",
-                  fontWeight: "bold",
-                  borderColor: "#006b47",
-                  background: "#006b47",
-                  transition: "background-color 0.3s ease, color 0.3s ease",
-                  borderRadius: "30px",
-                  margin: "5px",
-                  padding: "13px",
-                }}
-                className="blue"
-                onClick={handleButtonClick2}
-                onMouseOver={(e) => {
-                  e.target.style.backgroundColor = "#3bd7ba"; // Cambio de color al pasar el ratón
-                  e.target.style.color = "#000000"; // Letras negras al pasar el ratón
-                  e.target.style.borderColor = "transparent"; // Quita el borde al pasar el ratón
-                }}
-                onMouseOut={(e) => {
-                  e.target.style.backgroundColor = "#006b47"; // Vuelve al color original al salir el ratón
-                  e.target.style.color = "#ffffff"; // Vuelve al color original de las letras al salir el ratón
-                  e.target.style.borderColor = "#006b47"; // Vuelve al color original del borde al salir el ratón
-                }}
-              >
-                Conviértete en Prestador
+                Regístrate aquí
               </button>
             </Link>
           </div>
@@ -201,18 +172,6 @@ export const Home = () => {
           </div>
         </div>
         {/* anexa las tarjetas de profesiones */}
-        <div className="row">
-          {profesiones.map((profesion, index) => (
-            <div className="col-md-4" key={index}>
-              <ProfesionCard
-                style={{ margin: "0", padding: "0" }}
-                nombre={profesion.nombre}
-                calificacion={profesion.calificacion}
-                comentarios={profesion.comentarios}
-              />
-            </div>
-          ))}
-        </div>
       </div>
     </>
   );
