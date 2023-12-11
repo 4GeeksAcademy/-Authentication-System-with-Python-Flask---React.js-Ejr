@@ -149,22 +149,26 @@ def register():
 
     return jsonify(data), 200
 
-@app.route("/user/<string:name>", methods=["GET"])
+@app.route("/publicacion/<string:name>", methods=["GET"])
 def get_user_by_name(name):
     return jsonify({"name": name}), 200
 
 
 # enviar datos en la url como query string
-@app.route("/user/publicacion/<int:id>", methods=["GET"])
-def get_user_by_id():
+@app.route("/publicacion/<int:id>", methods=["GET"])
+def get_user_by_id(id):
     query = request.args
     idPublicacion = query["id"]
-    id = query["id"]
+    idUser = query["idUser"]
     nombre = query["nombre"]
-    publicacion = query["publicacion"]
+    apellido = query["apellido"]
+    email = query["email"]
+    descripcion = query["descripcion"]
+    comuna = query["comuna"]
+    rubro = query["rubro"]
     fecha = query["fecha"]
 
-    return jsonify({"id":id, "name": name, "publicacion": publicacion, "fecha": fecha}), 200
+    return jsonify({"idPublicacion":id, "idUser":idUser, "nombre": nombre, "apellido": apellido, "email":email, "descripcion": descripcion, "comuna": comuna, "rubro":rubro , "fecha": fecha}), 200
 
 
 @app.route("/user/publicacion/<int:id>", methods=["POST"])

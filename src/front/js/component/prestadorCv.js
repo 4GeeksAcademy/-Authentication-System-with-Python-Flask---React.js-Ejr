@@ -4,18 +4,22 @@ import "../../styles/prestadorCv.css";
 import "./../pages/home.js"
 
 const data = [
-  { id: 1, title: 'Servicio de gasfitería', description: 'Reparación de cañerías', category: 'Gasfitería' },
-  { id: 2, title: 'Instalación eléctrica residencial', description: 'Cableado y conexiones', category: 'Electricista' },
-  { id: 3, title: 'Servicio de carpintería', description: 'Construcción y reparación de muebles', category: 'Carpintería' },
+  { id: 1, titulo: 'Servicio de gasfitería', 
+  nombre: 'Juan', apellido: 'Diaz'  ,  descripcion: 'Reparación de cañerías', comuna:'La Reina',  categoria: 'Gasfitería', fecha:'12-12-2023' },
+  { id: 2, titulo: 'Instalación eléctrica residencial', nombre: 'Juan', apellido: 'Diaz'  ,  descripcion: 'Reparación de cañerías', comuna:'La Reina',  categoria: 'Gasfitería', fecha:'12-12-2023' },
+  { id: 3, titulo: 'Servicio de carpintería', nombre: 'Juan', apellido: 'Diaz'  ,  descripcion: 'Reparación de cañerías', comuna:'La Reina',  categoria: 'Gasfitería', fecha:'12-12-2023' } ,
   // Añade más datos según sea necesario
 ];
 
 
-const JobPost = ({ id, title, description, category, onContact }) => (
+const JobPost = ({ id, titulo, nombre, apellido,descripcion ,comuna , rubro, fecha, onContact }) => (
   <div style={{ border: '1px solid #ccc', padding: '10px', marginBottom: '15px' }}>
-    <h3>{title}</h3>
-    <p><strong>Categoría:</strong> {category}</p>
-    <p>{description}</p>
+    <h3>{titulo}</h3>
+    <p><strong>Nombre:</strong> {nombre} {apellido}</p>
+    <p>{descripcion}</p>
+    <p><strong>Comuna:</strong> {comuna}</p>
+    <p><strong>Categoría:</strong> {rubro}</p>
+    <p><strong>Fecha:</strong> {fecha}</p>
     <button onClick={() => onContact(id)} className="btn btn-success">
       Contactar
     </button>
@@ -26,10 +30,10 @@ const JobPost = ({ id, title, description, category, onContact }) => (
 const PrestadorCv = () => {
   const [posts] = useState(data); // Datos de publicaciones
 
-  const [filteredCategory, setFilteredCategory] = useState(null); // Estado para filtrar por categoría
+  const [filteredCategoria, setFilteredCategoria] = useState(null); // Estado para filtrar por categoría
 
-  const handleCategoryFilter = category => {
-    setFilteredCategory(category === filteredCategory ? null : category);
+  const handleCategoriaFilter = categoria => {
+    setFilteredCategoria(categoria === filteredCategoria ? null : categoria);
   };
 
   const handleContact = postId => {

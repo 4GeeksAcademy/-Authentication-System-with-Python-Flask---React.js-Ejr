@@ -50,16 +50,16 @@ class UserBuscador(db.Model):
         "email": self.email,
     }
 
-class userPublicacion(db.Model):
-    __tablename__ = 'user_publicacion'
+class UserPublicacion(db.Model):
+    __tablename__ = 'publicacion'
     idPublicacion = db.Column(db.Integer, primary_key=True)
-    idUser = db.Column(db.Integer, foreign_key=True)
-    nombre = db.Column(db.String(200), default='', nullable=True, foreign_key=True)
-    apellido = db.Column(db.String(200), default='', nullable=False , foreign_key=True)
-    email = db.Column(db.String(200), unique=True, nullable=False , foreign_key=True)
+    idUser = db.Column(db.Integer)
+    nombre = db.Column(db.String(200), default='', nullable=True )
+    apellido = db.Column(db.String(200), default='', nullable=False)
+    email = db.Column(db.String(200), unique=True, nullable=False )
     descripcion = db.Column(db.String(200), default='', nullable=False )
-    comuna = db.Column(db.String(200), default='', nullable=False , foreign_key=True)   
-    rubro = db.Column(db.String(200), default='', nullable=False , foreign_key=True)
+    comuna = db.Column(db.String(200), default='', nullable=False )   
+    rubro = db.Column(db.String(200), default='', nullable=False )
     fecha = db.Column(db.String(200), unique=True, nullable=True)
     
 
