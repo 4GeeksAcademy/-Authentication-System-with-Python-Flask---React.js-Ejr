@@ -41,10 +41,14 @@ class UserBuscador(db.Model):
 
 class userPublicacion(db.Model):
     __tablename__ = 'user_publicacion'
-    id = db.Column(db.Integer, primary_key=True)
+    idPublicacion = db.Column(db.Integer, primary_key=True)
+    idUser = db.Column(db.Integer, foreign_key=True)
     nombre = db.Column(db.String(200), default='', nullable=True, foreign_key=True)
     apellido = db.Column(db.String(200), default='', nullable=False , foreign_key=True)
-    descripcion = db.Column(db.String(200), default='', nullable=False , foreign_key=True)
+    email = db.Column(db.String(200), unique=True, nullable=False , foreign_key=True)
+    descripcion = db.Column(db.String(200), default='', nullable=False )
+    comuna = db.Column(db.String(200), default='', nullable=False , foreign_key=True)   
+    rubro = db.Column(db.String(200), default='', nullable=False , foreign_key=True)
     fecha = db.Column(db.String(200), unique=True, nullable=True)
     
 

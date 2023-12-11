@@ -164,8 +164,9 @@ def get_user_by_name(name):
 @app.route("/user/publicacion/<int:id>", methods=["GET"])
 def get_user_by_id():
     query = request.args
+    idPublicacion = query["id"]
     id = query["id"]
-    name = query["name"]
+    nombre = query["nombre"]
     publicacion = query["publicacion"]
     fecha = query["fecha"]
 

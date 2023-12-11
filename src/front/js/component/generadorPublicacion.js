@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 const generadorPublicacion = () => {
-  const [tareas, setTareas] = useState([]);
+  const [publicaciones, setPublicaciones] = useState([]);
 
   useEffect(() => {
     fetch("http://localhost:3001/user/1", {
@@ -19,7 +19,7 @@ const generadorPublicacion = () => {
       })
       .then((data) => {
         console.log(data);
-        setTareas(data);
+        setPublicaciones(data);
       })
       .catch(error => {
         fetch('http://localhost:3001/user/publicacion/1', {
@@ -42,16 +42,16 @@ const generadorPublicacion = () => {
      });
   }, []);
 
-  const agregarTarea = (e) => {
+  const agregarPublicacion = (e) => {
     if (e.key === "Enter" && e.target.value) {
-      const nuevasTareas = [...tareas, { label: e.target.value, done: false }];
-      setTareas(nuevasTareas);
-      actualizarTareasEnServidor(nuevasTareas);
+      const nuevasPublicaciones = [...publicaciones, { label: e.target.value, done: false }];
+      setPublicaciones(nuevasPublicaciones);
+      actualizarPublicacionesEnServidor(nuevasPublicaciones);
       e.target.value = "";
     }
   };
 
-  const actualizarTareasEnServidor = (todos) => {
+  const actualizarPublicacionesEnServidor = (todos) => {
     fetch("http://localhost:3001/user/publicacion/", {
       method: "PUT",
       body: JSON.stringify(todos),
@@ -74,10 +74,10 @@ const generadorPublicacion = () => {
       });
   };
 
-  const eliminarTarea = (index) => {
-    const nuevasTareas = [...tareas];
-    nuevasTareas.splice(index, 1);
-    setTareas(nuevasTareas);
+  const eliminarPublicacion = (index) => {
+    const nuevasPublicaciones = [...publicaciones];
+    nuevasPublicaciones.splice(index, 1);
+    setPublicaciones(nuevasPublicaciones);
   };
 
   return (
@@ -93,22 +93,22 @@ const generadorPublicacion = () => {
             <input
               type="text"
               className="form-control"
-              placeholder="Nueva tarea"
-              onKeyPress={agregarTarea}
+              placeholder="Nueva publicacion"
+              onKeyPress={agregarPublicacion}
             />
           </div>
         </div>
       </div>
       <div className="row">
         <div className="col">
-          {tareas.length > 0 ? (
+          {publicaciones.length > 0 ? (
             <ul className="list-group">
-              {tareas.map((tarea, index) => (
+              {tareas.map((publicacion, index) => (
                 <li
                   key={index}
                   className="list-group-item d-flex justify-content-between align-items-center"
                 >
-                  {tarea.label}
+                  {publicacion.label}
                   <span
                     className="badge bg-danger rounded-pill cursor-pointer"
                     onClick={() => eliminarTarea(index)}
