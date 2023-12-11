@@ -19,17 +19,18 @@ export const Carrousel = () => {
   };
 
   return (
-    <div className="carousel-oficios">
-      <h1
-        style={{
-          fontFamily: "fantasy",
-          color: "#001F3F", // Azul oscuro
-          // Borde inferior // Hace que el borde inferior se ajuste al contenido
-          paddingBottom: "5px", // Espacio entre el texto y el borde inferior
-        }}
-      >
-        OFICIOS
-      </h1>
+    <div className="carousel-oficios mt-30">
+      <h2
+       
+       style={{
+         fontFamily: "fantasy",
+         color: "#001F3F", // Azul oscuro
+         // Borde inferior // Hace que el borde inferior se ajuste al contenido
+         marginTop:"8%",
+         paddingBottom: "2%", // Espacio entre el texto y el borde inferior
+       }}
+     >
+       <strong>OFICIOS</strong></h2>
       <div className="carousel-container">
         <div
           className="carousel-wrapper"

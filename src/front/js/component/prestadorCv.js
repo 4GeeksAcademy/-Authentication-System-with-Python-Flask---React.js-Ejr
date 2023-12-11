@@ -40,47 +40,65 @@ const PrestadorCv = () => {
 
   return (
 
-    <div>
-      <div className="prestadores-cv-container">
-        <button type="button" className="btn btn-primary btn-lg" onClick={() => handleCategoryFilter('Aseo')}>
-          Aseo
-        </button>
-        <button type="button" className="btn btn-primary btn-lg" onClick={() => handleCategoryFilter('Carpintería')}>
-          Carpintería
-        </button>
-        <button type="button" className="btn btn-primary btn-lg" onClick={() => handleCategoryFilter('Electricista')}>
-          Electricista
-        </button>
-        <button type="button" className="btn btn-primary btn-lg" onClick={() => handleCategoryFilter('Gasfitería')}>
-          Gasfitería
-        </button>
-        <button type="button" className="btn btn-primary btn-lg" onClick={() => handleCategoryFilter('Maestro Pintor')}>
-          Maestro Pintor
-        </button>
-      </div>
-      <div className="job-posts">
-        {posts.map(post => (
-          // Verificar si la publicación coincide con la categoría filtrada o mostrar todas si no hay filtro
-          (!filteredCategory || post.category === filteredCategory) && (
-            <JobPost
-              key={post.id}
-              id={post.id}
-              title={post.title}
-              description={post.description}
-              category={post.category}
-              onContact={handleContact} // Pasar la función handleContact al componente JobPost
-            />
-          )
-        ))}
-      </div>
-      <div>
-        <Link to="/">
-          <button className=' btn btn-primary btn-lg'>
-            Regresar
-          </button>
-        </Link>
-      </div>
+    <div div className="container" style={{ justifyContent: 'center' }}>
+    <div className="prestadores-cv-container">
+      <button
+        type="button"
+        className="btn btn btn-lg"
+        style={{
+          background: "#3Bd7BA",
+          margin: "5px",
+          width: "100%",
+        }}
+      >
+        Aseo
+      </button>
+      <button
+        type="button"
+        className="btn btn btn-lg"
+        style={{
+          background: "#3Bd7BA",
+          margin: "5px",
+          width: "100%",
+        }}
+      >
+        Carpintería
+      </button>
+      <button
+        type="button"
+        className="btn btn btn-lg"
+        style={{
+          background: "#3Bd7BA",
+          margin: "5px",
+          width: "100%",
+        }}
+      >
+        Electricista
+      </button>
+      <button
+        type="button"
+        className="btn btn btn-lg"
+        style={{
+          background: "#3Bd7BA",
+          margin: "5px",
+          width: "100%",
+        }}
+      >
+        Gasfitería
+      </button>
+      <button
+        type="button"
+        className="btn btn btn-lg"
+        style={{
+          background: "#3Bd7BA",
+          margin: "5px",
+          width: "100%",
+        }}
+      >
+        Pintor
+      </button>
 
+    </div>
     </div>
   );
 };

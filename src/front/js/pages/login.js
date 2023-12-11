@@ -1,18 +1,21 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";  // Cambiado a `useNavigate`
 
 const Login = () => {
   const [usuario, setUsuario] = useState("");
   const [contraseña, setContraseña] = useState("");
+  const [error, setError] = useState("");
+  
+  // Utiliza `useNavigate` en lugar de `useHistory`
+  const navigate = useNavigate();
 
   const handleLogin = () => {
     setUsuario("");
     setContraseña("");
-  
-    // Aquí puedes realizar la lógica de autenticación
+    setError("");
+
     console.log("Usuario:", usuario, "Contraseña:", contraseña);
-  
-    // Ejemplo de solicitud POST usando fetch
+
     fetch("http://localhost:3001/api/login", {
       method: "POST",
       headers: {
@@ -23,81 +26,106 @@ const Login = () => {
         password: contraseña,
       }),
     })
-      .then((response) => response.json())
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Email y/o contraseña son incorrectos");
+        }
+        return response.json();
+      })
       .then((data) => {
-        // Manejar la respuesta del servidor
         console.log("Respuesta del servidor:", data);
-    
-        // Si la autenticación fue exitosa, almacenar información del usuario
+
         if (data.access_token) {
           console.log("Usuario encontrado");
-    
-          // Almacena información del usuario en localStorage
+
           localStorage.setItem("user", JSON.stringify(data.user));
-          
-          // Redirige al usuario a la página de perfil
-          history.push("/perfil");
-   } })
+
+          // Utiliza `navigate` para redirigir a la página principal después del inicio de sesión
+          navigate("/");
+        }
+      })
       .catch((error) => {
+        setError("Email y/o contraseña son incorrectos");
         console.error("Error al enviar la solicitud:", error);
       });
   };
-
+  
   return (
     <div className="container mt-5">
-   <div className="col-md-5 offset-md-3 max-width-form text-center" style={{ border: "1px solid #616161", borderRadius: "10px", background: "#D1EFEA", margin: "auto", padding: "20px"}}>
-      <h2 style={{
-          fontFamily: "fantasy",
-          color: "#001F3F",
-          marginTop:"5px",
+      <div
+        className="col-md-5 offset-md-3 max-width-form text-center"
+        style={{
+          border: "1px solid #616161",
+          borderRadius: "10px",
           background: "#D1EFEA",
-          boxShadow: "initial"}}>Iniciar sesión</h2>
-      <form>
-        <div className="mb-6 mt-3">
-          <label htmlFor="usuario mt-5" className="form-label">
-            <strong>Usuario:</strong>
-          </label>
-          <input
-            type="text"
-            className="form-control"
-            id="usuario"
-            value={usuario}
-            onChange={(e) => setUsuario(e.target.value)}
-          />
-        </div>
-        <div className="mb-6 mt-3">
-          <label htmlFor="contraseña mt-5" className="form-label">
-            <strong>Contraseña:</strong>
-          </label>
-          <input
-            type="password"
-            className="form-control"
-            id="contraseña"
-            value={contraseña}
-            onChange={(e) => setContraseña(e.target.value)}
-          />
-        </div>
-  
-        <button
-          type="button"
-          className="btn btn-primary mt-5 me-5" style={{ width: "35%" }}
-          onClick={handleLogin}
+          margin: "auto",
+          padding: "20px",
+        }}
+      >
+        <h2
+          style={{
+            fontFamily: "fantasy",
+            color: "#001F3F",
+            marginTop: "5px",
+            background: "#D1EFEA",
+            boxShadow: "initial",
+          }}
         >
           Iniciar sesión
-        </button>
-  
-        <Link to="/Home">
+        </h2>
+        <form>
+          <div className="mb-6 mt-3">
+            <label htmlFor="usuario mt-5" className="form-label">
+              <strong>Usuario:</strong>
+            </label>
+            <input
+              type="text"
+              className={`form-control ${error ? 'is-invalid' : ''}`}
+              id="usuario"
+              value={usuario}
+              onChange={(e) => setUsuario(e.target.value)}
+            />
+          </div>
+          <div className="mb-6 mt-3">
+            <label htmlFor="contraseña mt-5" className="form-label">
+              <strong>Contraseña:</strong>
+            </label>
+            <input
+              type="password"
+              className={`form-control ${error ? 'is-invalid' : ''}`}
+              id="contraseña"
+              value={contraseña}
+              onChange={(e) => setContraseña(e.target.value)}
+            />
+            {error && (
+              <div className="invalid-feedback">
+                {error}
+              </div>
+            )}
+          </div>
+
           <button
             type="button"
-            className="btn btn-danger mt-5 me-2" style={{ width: "35%" }}
-            onClick={() => window.close()}
+            className="btn btn-primary mt-5 me-5"
+            style={{ width: "40%" }}
+            onClick={handleLogin}
           >
-            Cerrar
+            Iniciar sesión
           </button>
-        </Link>
-      </form>
+
+          <Link to="/Home">
+            <button
+              type="button"
+              className="btn btn-danger mt-5 me-2"
+              style={{ width: "40%" }}
+              onClick={() => window.close()}
+            >
+              Cerrar
+            </button>
+          </Link>
+        </form>
+      </div>
     </div>
-  </div>
   );
 };
 

@@ -20,22 +20,24 @@ export const Home = () => {
     console.log("Botón 2 clickeado");
   };
 
-  
   const profesiones = [
     {
       nombre: "Gasfiter",
       calificacion: 4.5,
       comentarios: ["Excelente trabajo!", "Lo recomiendo."],
+      imagen: "https://img.freepik.com/vector-premium/icono-marco-fotos-foto-vacia-blanco-vector-sobre-fondo-transparente-aislado-eps-10_399089-1290.jpg?w=740", // Reemplaza con la URL correcta
     },
     {
       nombre: "Electricista",
       calificacion: 4.8,
       comentarios: ["excelente persona.", "Siempre cumple."],
+      //imagen: "https://img.freepik.com/vector-premium/icono-marco-fotos-foto-vacia-blanco-vector-sobre-fondo-transparente-aislado-eps-10_399089-1290.jpg?w=740", // Reemplaza con la URL correcta
     },
     {
       nombre: "Electricista",
       calificacion: 4.8,
       comentarios: ["excelente persona.", "Siempre cumple."],
+      //imagen: "https://img.freepik.com/vector-premium/icono-marco-fotos-foto-vacia-blanco-vector-sobre-fondo-transparente-aislado-eps-10_399089-1290.jpg?w=740", // Reemplaza con la URL correcta
     },
   ];
 
@@ -43,19 +45,17 @@ export const Home = () => {
     <>
       <div className="container">
         <div className="text-container d-flex flex-column">
-          <h1
-            style={{
-              fontFamily: "fantasy",
-              color: "#001F3F", // Azul oscuro
-              // Borde inferior // Hace que el borde inferior se ajuste al contenido
-              paddingBottom: "5px", // Espacio entre el texto y el borde inferior
-            }}
-          >
-            <strong>EASY JOBS</strong>
-          </h1>
-          <p style={{ color: "#616161", opacity: 0.9 }} className="mb-5">
+        <h1 style={{ fontFamily:"fantasy", 
+      color: '#001F3F',  // Azul oscuro
+    // Borde inferior // Hace que el borde inferior se ajuste al contenido
+  paddingBottom: '5px',  // Espacio entre el texto y el borde inferior
+}}>
+  <strong>EASY JOBS</strong>
+</h1>
+          <p  style={{color: "#616161" }}className="mb-5">
             Busca de forma sencilla y conecta con Prestadores para encontrar una
-            solución a tu medida, siempre tendrás un buen contacto en EasyJob.
+            solución a tu medida para tu casa o empresa. Siempre tendrás un buen
+            contacto en EasyJob.
           </p>
 
           <div
@@ -64,7 +64,7 @@ export const Home = () => {
               backgroundImage: "img src={easyJobUrl}",
             }}
           >
-            <Link to="/OtroFormulario">
+            <Link to="/Registro">
               <button
                 style={{
                   color: "#000000",
@@ -72,8 +72,8 @@ export const Home = () => {
                   borderColor: "#fff5ba",
                   background: "#dd9e26",
                   borderRadius: "30px",
-                  margin: "5px",
-                  padding: "13px",
+                  marginLeft: "160px",
+                  padding: "15px",
                   transition: "background-color 0.3s ease, color 0.3s ease", // Transición suave para color de fondo y texto
                 }}
                 className="mb-5"
@@ -87,60 +87,51 @@ export const Home = () => {
                   e.target.style.color = "#000000"; // Vuelve al color original de las letras al salir el ratón
                 }}
               >
-                Regístrate aquí como cliente
-              </button>
-            </Link>
-
-            <Link to="/Formulario">
-              <button
-                style={{
-                  color: "#ffffff",
-                  fontWeight: "bold",
-                  borderColor: "#006b47",
-                  background: "#006b47",
-                  transition: "background-color 0.3s ease, color 0.3s ease",
-                  borderRadius: "30px",
-                  margin: "5px",
-                  padding: "13px",
-                }}
-                className="blue"
-                onClick={handleButtonClick2}
-                onMouseOver={(e) => {
-                  e.target.style.backgroundColor = "#3bd7ba"; // Cambio de color al pasar el ratón
-                  e.target.style.color = "#000000"; // Letras negras al pasar el ratón
-                  e.target.style.borderColor = "transparent"; // Quita el borde al pasar el ratón
-                }}
-                onMouseOut={(e) => {
-                  e.target.style.backgroundColor = "#006b47"; // Vuelve al color original al salir el ratón
-                  e.target.style.color = "#ffffff"; // Vuelve al color original de las letras al salir el ratón
-                  e.target.style.borderColor = "#006b47"; // Vuelve al color original del borde al salir el ratón
-                }}
-              >
-                Conviértete en Prestador
+                Regístrate aquí
               </button>
             </Link>
           </div>
         </div>
         <div className="image-container">
-          <img src={easyJobUrl} />
+          <img style={{ margin: "0 auto" }} src={easyJobUrl} />
         </div>
       </div>
       <div className="container">
         <Carrousel />
       </div>
 
-      <div className="container2">
-        <h1>Nosotros</h1>
+      <div className="container2" >
+        <h1
+          style={{
+            fontFamily: "fantasy",
+            color: "#001F3F", // Azul oscuro
+            // Borde inferior // Hace que el borde inferior se ajuste al contenido
+            marginTop: "20%",
+            marginBottom: "5%",
+            // Espacio entre el texto y el borde inferior
+          }}
+        >
+          <strong>Nosotros</strong>{" "}
+        </h1>
         <div className="row">
+         
           <div className="col-md-6">
-            <div className="card mb-4">
-              <img
+            <div className="card mb-4 " style={{ borderRadius: "50px", marginRight:"50"}}>
+            <img
                 src="https://thumbs.dreamstime.com/b/electricista-30694651.jpg"
                 className="card-img-top"
                 alt="..."
               />
+
               <div className="card-body">
-                <p className="card-text">
+                <p
+                  className="card-text mt-5px"
+                  style={{
+                    textAlign: "justify",
+                    fontStyle: "italic",
+                    color: "rgba(0, 0, 0, 0.8)",
+                  }}
+                >
                   {" "}
                   Somos una plataforma dedicada a conectar a profesionales de
                   diversos oficios como gasfitería, electricidad, pintura y más,
@@ -153,14 +144,22 @@ export const Home = () => {
             </div>
           </div>
           <div className="col-md-6">
-            <div className="card mb-4">
+            <div className="card mb-4" style={{ borderRadius: "50px" }}>
               <img
                 src="https://thumbs.dreamstime.com/b/electricista-89764045.jpg"
                 className="card-img-top"
                 alt="..."
               />
+
               <div className="card-body">
-                <p className="card-text">
+                <p
+                  className="card-text mt-5px"
+                  style={{
+                    textAlign: "justify",
+                    fontStyle: "italic",
+                    color: "rgba(0, 0, 0, 0.8)",
+                  }}
+                >
                   {" "}
                   nuestra marketplace, podrás encontrar una amplia variedad de
                   profesionales verificados y calificados. Ofrecemos un entorno
@@ -173,17 +172,6 @@ export const Home = () => {
           </div>
         </div>
         {/* anexa las tarjetas de profesiones */}
-        <div className="row">
-          {profesiones.map((profesion, index) => (
-            <div className="col-md-4" key={index}>
-              <ProfesionCard
-                nombre={profesion.nombre}
-                calificacion={profesion.calificacion}
-                comentarios={profesion.comentarios}
-              />
-            </div>
-          ))}
-        </div>
       </div>
     </>
   );

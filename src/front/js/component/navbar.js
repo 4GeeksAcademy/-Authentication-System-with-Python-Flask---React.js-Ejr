@@ -1,10 +1,22 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import "../../styles/home.css";
 import Carrousel from "../component/carrousel.js";
 import ".././component/nosotros.js";
 
 export const Navbar = () => {
+  const navigate = useNavigate(); 
+
+  const user = JSON.parse(localStorage.getItem("user"));
+
+  const handleLogout = () => {
+    // Elimina la información del usuario al cerrar sesión
+    localStorage.removeItem("user");
+
+    // Redirige a la página principal después de cerrar sesión
+   navigate("/");
+  };
+
   return (
     <nav className="navbar navbar-dark bg-dark p-2">
       <div className="container text-center">
@@ -40,10 +52,30 @@ export const Navbar = () => {
           Experiencias
         </Link>
         <div className="ml-auto">
-          <Link to="/login">
-            <button className="btn btn-primary">Entrar</button>
+        {user ? (
+            <><Link to="/perfil" className="text-white mr-5">
+            ¡Hola, {user.nombre}!
           </Link>
-        </div>
+              <button
+                className="btn btn-danger"
+                style={{
+                  width: 'auto', 
+                  padding: '0.1rem 0.5rem',
+                  margin: "10px",
+                  alignItems: 'center',
+                }}
+                onClick={handleLogout}
+              >
+                x
+              </button>
+
+            </>
+          ) : (
+            <Link to="/login">
+              <button className="btn btn-primary">Entrar</button>
+            </Link>
+          )}
+                  </div>
       </div>
     </nav>
   );
