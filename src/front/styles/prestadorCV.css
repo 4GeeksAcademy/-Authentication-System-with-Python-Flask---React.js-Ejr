@@ -10,3 +10,38 @@
   color: black; /* Cambia el color del texto */
   margin: 0 2px; /* Elimina el margen interno */
 }
+/* prestadorCv.css */
+
+.prestador-container {
+  padding: 20px;
+}
+
+.prestadores-cv-container {
+  margin-bottom: 20px;
+}
+
+.btn-category {
+  margin-right: 10px;
+  /* Agrega más estilos según tus preferencias */
+}
+
+.job-post-container {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 15px;
+}
+
+.btn-contact {
+  background-color: #28a745;
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  /* Agrega más estilos según tus preferencias */
+}
+.btn-back {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;}

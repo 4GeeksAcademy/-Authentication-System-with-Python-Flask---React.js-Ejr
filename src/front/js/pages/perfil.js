@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import "../../styles/perfil.css";
 import "bootstrap/dist/css/bootstrap.min.css"; 
 import { Link } from "react-router-dom";
 import "./../component/Buscador.jsx"
+import { Context } from "../store/appContext.js";
 
 
 

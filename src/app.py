@@ -123,15 +123,17 @@ def register():
 
     user_found = User.query.filter_by(email=email).first()
     buscador_found = UserBuscador.query.filter_by(email=email).first()
-
+    id = None
     if user_found or buscador_found:
         return jsonify({ "error": "Email ya registrado"}), 400
 
     if "rubro" in request.json:
         new_user = User()
         new_user.rubro = request.json.get("rubro")
+        id = new_user.idUser
     else:
         new_user = UserBuscador()
+        id = new_user.idUserBuscador
 
     new_user.email = email
     new_user.password = generate_password_hash(password)
@@ -146,7 +148,7 @@ def register():
     db.session.commit()
 
     expires = datetime.timedelta(days=3)
-    access_token = create_access_token(identity=new_user.id, expires_delta=expires)
+    access_token = create_access_token(identity=id, expires_delta=expires)
 
     data = {
         "access_token": access_token,
@@ -268,12 +270,18 @@ def actualizar_perfil():
     return jsonify({'message': 'Datos de perfil actualizados correctamente'})
 
 # Ruta para obtener los datos del perfil (solo para demostración)
-@app.route('/api/perfil', methods=['GET'])
-def obtener_perfil():
-    global perfil_data
-    
+@app.route('/api/perfil/<int:id>', methods=['GET'])
+def obtener_perfil(id):
+   user = User.query.get(id) 
+   perfil_data = {
+    "firstName": user.nombre,
+    "lastName": user.apellido,
+    "email": user.email,
+    "comuna": user.comuna,
+    "birthDate": user.fecha_de_nacimiento
+   }
     # Devolver los datos actuales del perfil
-    return jsonify(perfil_data)
+   return jsonify(perfil_data)
 
 
 @app.route('/api/SegundoPerfil')
