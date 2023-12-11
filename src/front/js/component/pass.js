@@ -2,7 +2,7 @@
 import React from 'react';
 import Login from './pass';
 
-function pass() {
+function Pass() {
   return (
     <div className="pass">
       <Login />
@@ -10,4 +10,4 @@ function pass() {
   );
 }
 
-export default Pass;
+export default pass;

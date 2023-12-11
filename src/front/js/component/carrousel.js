@@ -7,9 +7,7 @@ import easyJobUrl3 from "../../img/carpintero.jpg";
 import easyJobUrl4 from "../../img/aseo.jpg";
 import easyJobUrl5 from "../../img/maestro-pintor.jpg";
 
-
 export const Carrousel = () => {
-
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const handleNext = () => {
@@ -21,50 +19,86 @@ export const Carrousel = () => {
   };
 
   return (
-    <div className="carousel-oficios">
-      <h1>        
-          <strong>O f i c i o s</strong>        
-      </h1>
-
-      <div className="carousel-container">
+    <div className="carousel-oficios mt-30">
+      <h2
+        style={{
+          fontFamily: "fantasy",
+          color: "#001F3F", // Azul oscuro
+          borderBottom: "2px solid #001F3F", // Línea de subrayado
+          marginTop: "3%",
+          paddingBottom: "2%", // Espacio entre el texto y el borde inferior
+          textAlign: "center",
+        }}
+      >
+        <strong>OFICIOS</strong>
+      </h2>
+      <div className="carousel-container container-fluid">
         <div
           className="carousel-wrapper"
-          style={{ transform: `translateX(-${currentIndex * 33.33}%)` }}
+          style={{
+            display: "flex",
+            // transition: "transform 0.2s ease-in-out",
+            // transform: `translateX(-${currentIndex * 25}%)`,
+            // padding: "10px",
+          }}
         >
-          <div className="carousel-box">
-            <h2>Electricista</h2>
-            <img className="img-fluid" src={easyJobUrl1} />
+          <div className="carousel-box" style={{ marginRight: "2%" }}>
+            <h2 style={{ fontWeight: "bold" }}>Electricista</h2>
+            <img
+              className="img-fluid"
+              style={{ minWidth: "150px", width: "150%" }}
+              src={easyJobUrl1}
+              alt="Electricista"
+            />
           </div>
-          <div className="carousel-box">
-            <h2>Carpintero</h2>
-            <img className="img-fluid" src={easyJobUrl3} />
+          <div className="carousel-box" style={{ marginRight: "2%" }}>
+            <h2 style={{ fontWeight: "bold" }}>Carpintero</h2>
+            <img
+              className="img-fluid"
+              style={{ minWidth: "150px", width: "150%" }}
+              src={easyJobUrl3}
+              alt="Carpintero"
+            />
           </div>
-          <div className="carousel-box">
-            <h2>Aseo</h2>
-            <img className="img-fluid" src={easyJobUrl4} />
+          <div className="carousel-box" style={{ marginRight: "2%" }}>
+            <h2 style={{ fontWeight: "bold" }}>Aseo</h2>
+            <img
+              className="img-fluid"
+              style={{ minWidth: "150px", width: "150%" }}
+              src={easyJobUrl4}
+              alt="Aseo"
+            />
           </div>
-          <div className="carousel-box">
-            <h2>Gasfiteria</h2>
-            <img className="img-fluid" src={easyJobUrl2} />
+          <div className="carousel-box" style={{ marginRight: "2%" }}>
+            <h2 style={{ fontWeight: "bold" }}>Gasfitería</h2>
+            <img
+              className="img-fluid"
+              style={{ minWidth: "150px", width: "150%" }}
+              src={easyJobUrl2}
+              alt="Gasfitería"
+            />
           </div>
-          <div className="carousel-box">
-            <h2>Maestro Pintor</h2>
-            <img className="img-fluid" src={easyJobUrl5} />
+          <div className="carousel-box" style={{ marginRight: "2%" }}>
+            <h2 style={{ fontWeight: "bold" }}>Pintor</h2>
+            <img
+              className="img-fluid"
+              style={{ minWidth: "150px", width: "150%" }}
+              src={easyJobUrl5}
+              alt="Pintor"
+            />
           </div>
         </div>
       </div>
 
-      <div className="carousel-controls">
+      {/* <div className="carousel-controls">
         <div className="arrow" onClick={handlePrev}>
           &#9664;
         </div>
         <div className="arrow" onClick={handleNext}>
           &#9654;
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };
 export default Carrousel;
-
-

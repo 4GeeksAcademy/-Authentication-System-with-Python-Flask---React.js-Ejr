@@ -1,55 +1,103 @@
-import React, { Component, useState, useContext } from "react";
-import { useNavigate } from "react-router-dom";
-import { Form, Button, Container, Row, Col } from "react-bootstrap";
+import React, { Component } from "react";
+import { Form, Button, Container, Row, Col, Modal } from "react-bootstrap";
 import "../../styles/elotroformulario.css";
 import { Link } from "react-router-dom";
-import { Context } from "../store/appContext";
-import "./../pages/perfil"
 
-export const Formulario = (props) => {
-  const [state, setState] = useState({
-    nombre: "",
-    apellido: "",
-    email: "",
-    password: "",
-    rut: "",
-    telefono: "",
-    comuna: "",
-    fecha_de_nacimiento: "",
-    tipoUsuario: "", // Nuevo campo para almacenar la elección del usuario
-    rubro: "",
-    aceptoTerminos: false,
-  });
+export class Formulario extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      nombre: "",
+      apellido: "",
+      email: "",
+      password: "",
+      rut: "",
+      telefono: "",
+      comuna: "",
+      fecha_de_nacimiento: "",
+      rubro: "",
+      aceptoTerminos: false,
+      errores: {},
+    };
+  }
 
-  const handleChange = (event) => {
+  handleChange = (event) => {
     const { name, value, type, checked } = event.target;
-    setState({
-      ...state,
+
+
+    let error = null;
+    if (type === "checkbox" && !checked) {
+      error = "Debe aceptar los términos y condiciones";
+    } else if (type !== "checkbox" && !value.trim()) {
+      error = "Este campo es obligatorio";
+    }
+    if (type === "checkbox" && !checked) {
+      error = "Debe aceptar los términos y condiciones";
+    } else if (type !== "checkbox" && !value.trim()) {
+      error = "Este campo es obligatorio";
+    } else if (name === "password" && (value.length < 8 || value.length > 12)) {
+      error = "La contraseña debe tener entre 8 y 12 caracteres";
+    } else if (name === "email" && !this.validateEmail(value)) {
+      error = "El correo electrónico no es válido";
+    } else if (name === "telefono" && !/^\d{9}$/.test(value)) {
+      error = "El teléfono debe tener 9 dígitos";
+    }
+
+    this.setState((prevState) => ({
       [name]: type === "checkbox" ? checked : value,
-    });
+      errores: {
+        ...prevState.errores,
+        [name]: error,
+      },
+    }));
   };
 
-  const handleSubmit = async (event) => {
+  handleSubmit = async (event) => {
     event.preventDefault();
-    const {
-      nombre,
-      apellido,
-      email,
-      password,
-      rut,
-      telefono,
-      comuna,
-      fecha_de_nacimiento,
-      tipoUsuario,
-      rubro,
-      aceptoTerminos,
-    } = state;
 
-    if (!aceptoTerminos) {
-      console.error("Debes aceptar los términos y condiciones.");
+    const { nombre, apellido, email, password, rut, telefono, comuna, fecha_de_nacimiento, rubro } = this.state;
+
+    const errores = {};
+    if (!nombre.trim()) {
+      errores.nombre = "El nombre es obligatorio";
+    }
+
+    if (!email.trim()) {
+      errores.email = "El correo electrónico es obligatorio";
+    } else if (!this.validateEmail(email)) {
+      errores.email = "El correo electrónico no es válido";
+    }
+
+    if (!apellido.trim()) {
+      errores.apellido = "El apellido es obligatorio";
+    }
+    if (!password.trim()) {
+      errores.password = "La contraseña es obligatoria";
+    }
+    if (!rut.trim()) {
+      errores.rut   = "El Rut es obligatorio";
+    }
+    if (!fecha_de_nacimiento.trim()) {
+      errores.fecha_de_nacimiento = "La fecha de nacimiento es obligatoria";
+    }
+    if (!telefono.trim()) {
+      errores.telefono = "El telefono es obligatorio";
+    }
+    if (!comuna.trim()) {
+      errores.comuna = "Su comuna es obligatoria";
+    }
+    if (!rubro.trim()) {
+      errores.rubro = "Su rubro es obligatorio";
+    }
+
+
+    
+    if (Object.keys(errores).length > 0) {
+      this.setState({ errores });
       return;
     }
-console.log(state.tipoUsuario)
+
+
     try {
       const response = await fetch("http://localhost:3001/api/register", {
         method: "POST",
@@ -65,38 +113,37 @@ console.log(state.tipoUsuario)
           telefono,
           comuna,
           fecha_de_nacimiento,
-          tipoUsuario,
           rubro,
         }),
       });
-
+  
       if (response.ok) {
         const data = await response.json();
-        actions.guardarid(data?.user?.id);
-        navigate("/perfil");
+        // Puedes manejar la respuesta del servidor aquí
+        console.log("Datos enviados correctamente:", data);
       } else {
         const errorData = await response.json();
         console.error("Error al enviar los datos al servidor:", errorData);
       }
     } catch (error) {
       console.error("Error de red:", error);
-    }
+    }}
+
+  validateEmail = (email) => {
+    return true;
   };
 
-  
-  
- 
-    
+  render() {
+    const { errores } = this.state;
 
-   
     return (
       <Container>
         <Row>
           <Col>
-            <Form onSubmit={e=>{ handleSubmit(e)}}>
+            <Form onSubmit={this.handleSubmit}>
               <h1>
-                Bienvenido, Por favor rellene los campos, para ofrecer sus
-                Servicios
+                Bienvenido! Por favor rellene los campos para ofrecer sus
+                servicios
               </h1>
               <Form.Group controlId="formNombre">
                 <Form.Label>
@@ -106,9 +153,12 @@ console.log(state.tipoUsuario)
                   type="text"
                   name="nombre"
                   placeholder="Ingrese su nombre"
-                  onChange={handleChange}
+                  onChange={this.handleChange}
                   style={{ borderWidth: "3px", borderColor: "darkcyan" }}
                 />
+                {errores.nombre && (
+                  <Form.Text className="text-danger">{errores.nombre}</Form.Text>
+                )}
               </Form.Group>
 
               <Form.Group controlId="formApellido">
@@ -118,11 +168,15 @@ console.log(state.tipoUsuario)
                 <Form.Control
                   type="text"
                   name="apellido"
-                  value={state.apellido}
-                  onChange={handleChange}
+                  value={this.state.apellido}
+                  onChange={this.handleChange}
                   placeholder="Ingrese su apellido"
                   style={{ borderWidth: "3px", borderColor: "darkcyan" }}
+                  
                 />
+                {errores.apellido && (
+                  <Form.Text className="text-danger">{errores.apellido}</Form.Text>
+                )}
               </Form.Group>
 
               <Form.Group controlId="formRut">
@@ -132,11 +186,14 @@ console.log(state.tipoUsuario)
                 <Form.Control
                   type="text"
                   name="rut"
-                  value={state.rut}
-                  onChange={handleChange}
+                  value={this.state.rut}
+                  onChange={this.handleChange}
                   placeholder="Ingrese su rut"
                   style={{ borderWidth: "3px", borderColor: "darkcyan" }}
                 />
+                {errores.rut && (
+                  <Form.Text className="text-danger">{errores.rut}</Form.Text>
+                )}
               </Form.Group>
 
               <Form.Group controlId="formEmail">
@@ -146,11 +203,14 @@ console.log(state.tipoUsuario)
                 <Form.Control
                     type="email"
                     name="email"  
-                    value={state.email} 
+                    value={this.state.email} 
                     placeholder="Ingrese su correo electronico"
                     style={{ borderWidth: "3px", borderColor: "darkcyan" }}
-                    onChange={handleChange}  
+                    onChange={this.handleChange}  
                 />
+                {errores.email && (
+                  <Form.Text className="text-danger">{errores.email}</Form.Text>
+                )}
               </Form.Group>
 
              < Form.Group controlId="formContraseña">
@@ -160,11 +220,14 @@ console.log(state.tipoUsuario)
                 <Form.Control
                     type="password"
                     name="password"  
-                    value={state.password} 
-                    placeholder="password"
+                    value={this.state.password} 
+                    placeholder="Ingrese su contraseña. Debe ser entre 8 y 12 carácteres"
                     style={{ borderWidth: "3px", borderColor: "darkcyan" }}
-                    onChange={handleChange}  
+                    onChange={this.handleChange}                 
                 />
+                {errores.password && (
+                      <Form.Text className="text-danger">{errores.password}</Form.Text>
+                    )}
               </Form.Group>
 
               <Form.Group controlId="formTelefono">
@@ -174,11 +237,14 @@ console.log(state.tipoUsuario)
                 <Form.Control
                   type="text"
                   name="telefono"
-                  value={state.telefono}
-                  onChange={handleChange} 
+                  value={this.state.telefono}
+                  onChange={this.handleChange} 
                   placeholder="Ingrese su telefono"
                   style={{ borderWidth: "3px", borderColor: "darkcyan" }}
                 />
+                {errores.telefono && (
+                      <Form.Text className="text-danger">{errores.telefono}</Form.Text>
+                    )}
               </Form.Group>
 
               <Form.Group controlId="formFechaNacimiento">
@@ -188,10 +254,13 @@ console.log(state.tipoUsuario)
                 <Form.Control
                   type="date"
                   name="fecha_de_nacimiento"
-                  value={state.fecha_de_nacimiento}
-                  onChange={handleChange}
+                  value={this.state.fecha_de_nacimiento}
+                  onChange={this.handleChange}
                   style={{ borderWidth: "3px", borderColor: "darkcyan" }}
                 />
+                {errores.fecha_de_nacimiento && (
+                      <Form.Text className="text-danger">{errores.fecha_de_nacimiento}</Form.Text>
+                    )}
               </Form.Group>
 
               <Form.Group controlId="formComuna">
@@ -202,19 +271,25 @@ console.log(state.tipoUsuario)
                 <Form.Control
                   as="select"
                   name="comuna"
-                  value={state.comuna}
-                  onChange={handleChange}
+                  value={this.state.comuna}
+                  onChange={this.handleChange}
+                  placeholder="Ingrese su comuna"
                   style={{ borderWidth: "3px", borderColor: "darkcyan" }}
-                >
+                > 
+                  <option value="" hidden>Seleccione su Comuna</option>
                   <option>La Florida</option>
                   <option>La Reina</option>
                   <option>Providencia</option>
                   <option>Santiago Centro</option>
                   <option>Independencia</option>
                 </Form.Control>
+                {errores.comuna && (
+                      <Form.Text className="text-danger">{errores.comuna}</Form.Text>
+                    )}
 
               </Form.Group>
 
+              
               <Form.Group controlId="formTipoUsuario">
               <Form.Label>
                 <h3>Tipo de Usuario</h3>
@@ -232,8 +307,6 @@ console.log(state.tipoUsuario)
               </Form.Control>
             </Form.Group>
 
-            {/* Campo rubro visible si el tipo de usuario es "prestador" */}
-            {state.tipoUsuario === "prestador" && (
               <Form.Group controlId="formRubro">
                 <Form.Label>
                   <h3>Rubro</h3>
@@ -241,21 +314,21 @@ console.log(state.tipoUsuario)
                 <Form.Control
                   as="select"
                   name="rubro"
-                  value={state.rubro}
-                  onChange={handleChange}
+                  value={this.state.rubro}
+                  onChange={this.handleChange}
                   style={{ borderWidth: "3px", borderColor: "darkcyan" }}
                 >
-                  <option value="">Seleccione...</option>
+                  <option value="" hidden>Seleccione su rubro</option>
                   <option>Carpinteria</option>
                   <option>Electricista</option>
                   <option>Gasfitería</option>
                   <option>Pintor</option>
                   <option>Aseo</option>
                 </Form.Control>
+                {errores.rubro && (
+                      <Form.Text className="text-danger">{errores.rubro}</Form.Text>
+                    )}
               </Form.Group>
-            )}
-
-              <Form.Group controlId="formTerminosCondiciones">
                 <h3>
                   <strong>Terminos y Condiciones</strong>
                 </h3>
@@ -298,17 +371,17 @@ console.log(state.tipoUsuario)
                     relacionados con información bancaria o financiera.
                   </p>
                 </div>
+                <Form.Group>
                 <Form.Check
                   type="checkbox"
                   name="aceptoTerminos"
-                  checked={state.aceptoTerminos}
-                  onChange={handleChange}
+                  checked={this.state.aceptoTerminos}
+                  onChange={this.handleChange}
                   label="Acepto los términos y condiciones"
                 />
                 <br />
                 <Button className="buttonright" type="submit">
-                  
-                  Aceptar 
+                  Aceptar
                 </Button>{" "}
                 <Button
                   className="buttonright"
@@ -326,6 +399,7 @@ console.log(state.tipoUsuario)
         </Row>
       </Container>
     );
-  
+  }
 }
 
+export default Formulario;

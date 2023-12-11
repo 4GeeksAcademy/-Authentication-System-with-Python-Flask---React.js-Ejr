@@ -1,12 +1,12 @@
 /* landing2.css */
-
+body{
+  background: rgb(202, 246, 218);
+}
 .container2 {
   padding: 80px 30px; /* Ajuste del relleno */
   max-width: 1200px;
-  margin: 255px; /* Centrar el contenedor horizontalmente */
-  margin-top: 367px;
+  margin: 255px auto; /* Centrar el contenedor horizontalmente */
   
-
 }
 
 h1 {
@@ -18,7 +18,7 @@ h1 {
 .row {
   display: flex;
   flex-wrap: wrap;
-  gap: 20px;
+  gap: 10px;
   justify-content: center /* Centrar las columnas */
 }
 
@@ -32,24 +32,32 @@ h1 {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   width: 100%; /* Cambiado para que ocupe el ancho disponible */
   max-width: 400px;
-  text-align: left;
-  margin: auto;
-  background-color: #d1efea; /* Color de fondo de las tarjetas */
+  text-align: center;
+  margin: 0;
+  background-color: #82d2eb; /* Color de fondo de las tarjetas */
 }
 
 .card img {
   width: 100%;
   height: auto; /* Cambiado para mantener la proporción */
   object-fit: cover;
+  border-radius: 50px;
+  padding-bottom: 40px;
+ 
 }
 
 .card-title {
   font-size: 1.5rem;
+  text-align: center;
   margin-bottom: 10px;
   color: #1a1a1a; /* Color del título de la tarjeta */
 }
 
 .card-text {
+  display: flex;
   font-size: 1rem;
   color: #1a1a1a; /* Color del texto de la tarjeta */
+  justify-content: center;
+  text-align: justify;
+  margin:auto;
 }
