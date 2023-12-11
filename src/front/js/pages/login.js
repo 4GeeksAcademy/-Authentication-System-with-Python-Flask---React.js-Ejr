@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";  // Cambiado a `useNavigate`
+import { Link, useNavigate } from "react-router-dom"; // Cambiado a `useNavigate`
 
 const Login = () => {
   const [usuario, setUsuario] = useState("");
   const [contraseña, setContraseña] = useState("");
   const [error, setError] = useState("");
-  
+
   // Utiliza `useNavigate` en lugar de `useHistory`
   const navigate = useNavigate();
 
@@ -49,7 +49,7 @@ const Login = () => {
         console.error("Error al enviar la solicitud:", error);
       });
   };
-  
+
   return (
     <div className="container mt-5">
       <div
@@ -60,6 +60,8 @@ const Login = () => {
           background: "#D1EFEA",
           margin: "auto",
           padding: "20px",
+          backgroundColor: "#CCCCCC", // Agregado para establecer el fondo gris
+          boxShadow: "0 0 70px #000",
         }}
       >
         <h2
@@ -67,7 +69,6 @@ const Login = () => {
             fontFamily: "fantasy",
             color: "#001F3F",
             marginTop: "5px",
-            background: "#D1EFEA",
             boxShadow: "initial",
           }}
         >
@@ -80,10 +81,11 @@ const Login = () => {
             </label>
             <input
               type="text"
-              className={`form-control ${error ? 'is-invalid' : ''}`}
+              className={`form-control ${error ? "is-invalid" : ""}`}
               id="usuario"
               value={usuario}
               onChange={(e) => setUsuario(e.target.value)}
+              style={{ border: "1px solid #000000" }}
             />
           </div>
           <div className="mb-6 mt-3">
@@ -92,16 +94,13 @@ const Login = () => {
             </label>
             <input
               type="password"
-              className={`form-control ${error ? 'is-invalid' : ''}`}
+              className={`form-control ${error ? "is-invalid" : ""}`}
               id="contraseña"
               value={contraseña}
               onChange={(e) => setContraseña(e.target.value)}
+              style={{ border: "1px solid #000000" }}
             />
-            {error && (
-              <div className="invalid-feedback">
-                {error}
-              </div>
-            )}
+            {error && <div className="invalid-feedback">{error}</div>}
           </div>
 
           <button

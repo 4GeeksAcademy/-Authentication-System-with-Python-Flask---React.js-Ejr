@@ -21,67 +21,68 @@ export const Carrousel = () => {
   return (
     <div className="carousel-oficios mt-30">
       <h2
-       
-       style={{
-         fontFamily: "fantasy",
-         color: "#001F3F", // Azul oscuro
-         // Borde inferior // Hace que el borde inferior se ajuste al contenido
-         marginTop:"8%",
-         paddingBottom: "2%", // Espacio entre el texto y el borde inferior
-       }}
-     >
-       <strong>OFICIOS</strong></h2>
-      <div className="carousel-container">
+        style={{
+          fontFamily: "fantasy",
+          color: "#001F3F", // Azul oscuro
+          borderBottom: "2px solid #001F3F", // Línea de subrayado
+          marginTop: "3%",
+          paddingBottom: "2%", // Espacio entre el texto y el borde inferior
+          textAlign: "center",
+        }}
+      >
+        <strong>OFICIOS</strong>
+      </h2>
+      <div className="carousel-container container-fluid">
         <div
           className="carousel-wrapper"
           style={{
             display: "flex",
-            transition: "transform 0.2s ease-in-out",
-            transform: `translateX(-${currentIndex * 25}%)`,
-            padding: "10px",
+            // transition: "transform 0.2s ease-in-out",
+            // transform: `translateX(-${currentIndex * 25}%)`,
+            // padding: "10px",
           }}
         >
-          <div className="carousel-box" style={{ marginRight: "3%" }}>
+          <div className="carousel-box" style={{ marginRight: "2%" }}>
             <h2 style={{ fontWeight: "bold" }}>Electricista</h2>
             <img
               className="img-fluid"
-              style={{ minWidth: "100px", width: "100%" }}
+              style={{ minWidth: "150px", width: "150%" }}
               src={easyJobUrl1}
               alt="Electricista"
             />
           </div>
-          <div className="carousel-box" style={{ marginRight: "3%" }}>
+          <div className="carousel-box" style={{ marginRight: "2%" }}>
             <h2 style={{ fontWeight: "bold" }}>Carpintero</h2>
             <img
               className="img-fluid"
-              style={{ minWidth: "100px", width: "100%" }}
+              style={{ minWidth: "150px", width: "150%" }}
               src={easyJobUrl3}
               alt="Carpintero"
             />
           </div>
-          <div className="carousel-box" style={{ marginRight: "3%" }}>
+          <div className="carousel-box" style={{ marginRight: "2%" }}>
             <h2 style={{ fontWeight: "bold" }}>Aseo</h2>
             <img
               className="img-fluid"
-              style={{ minWidth: "100px", width: "100%" }}
+              style={{ minWidth: "150px", width: "150%" }}
               src={easyJobUrl4}
               alt="Aseo"
             />
           </div>
-          <div className="carousel-box" style={{ marginRight: "3%" }}>
-            <h2 style={{ fontWeight: "bold" }}>Gasfiteria</h2>
+          <div className="carousel-box" style={{ marginRight: "2%" }}>
+            <h2 style={{ fontWeight: "bold" }}>Gasfitería</h2>
             <img
               className="img-fluid"
-              style={{ minWidth: "100px", width: "100%" }}
+              style={{ minWidth: "150px", width: "150%" }}
               src={easyJobUrl2}
-              alt="Gasfiteria"
+              alt="Gasfitería"
             />
           </div>
-          <div className="carousel-box" style={{ marginRight: "3%" }}>
+          <div className="carousel-box" style={{ marginRight: "2%" }}>
             <h2 style={{ fontWeight: "bold" }}>Pintor</h2>
             <img
               className="img-fluid"
-              style={{ minWidth: "100px", width: "100%" }}
+              style={{ minWidth: "150px", width: "150%" }}
               src={easyJobUrl5}
               alt="Pintor"
             />
@@ -89,14 +90,14 @@ export const Carrousel = () => {
         </div>
       </div>
 
-      <div className="carousel-controls">
+      {/* <div className="carousel-controls">
         <div className="arrow" onClick={handlePrev}>
           &#9664;
         </div>
         <div className="arrow" onClick={handleNext}>
           &#9654;
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };
