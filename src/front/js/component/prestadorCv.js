@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "../../styles/prestadorCv.css";
+
 import "./../pages/home.js";
 
 // // const data = [
@@ -65,6 +66,7 @@ const JobPost = ({
     <p>
       <strong>Fecha:</strong> {fecha}
     </p>
+
     <button onClick={() => onContact(id)} className="btn btn-success">
       Contactar
     </button>
@@ -94,7 +96,9 @@ const PrestadorCv = () => {
   };
 
   return (
+
     <div div className="container" style={{ justifyContent: "center" }}>
+
       <div className="prestadores-cv-container">
         <button
           type="button"
@@ -153,10 +157,12 @@ const PrestadorCv = () => {
         </button>
       </div>
       <div>
+
         {data?.map((element) => (
           <JobPost {...element} />
         ))}
       </div>
+
     </div>
   );
 };

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-const generadorPublicacion = () => {
+const GeneradorPublicacion = () => {
   const [publicaciones, setPublicaciones] = useState([]);
   const [publicacion, setPublicacion] = useState({
     nombre: "",
@@ -12,83 +12,49 @@ const generadorPublicacion = () => {
     fecha: "",
     idUser: "",
   });
+
   useEffect(() => {
-    fetch("http://localhost:3001/user/1", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((resp) => {
-        if (resp.ok) {
-          return resp.json();
-        } else {
-          throw new Error("Failed to fetch data");
-        }
-      })
-      .then((data) => {
-        console.log(data);
-        setPublicaciones(data);
-      })
-      .catch((error) => {
-        fetch("http://localhost:3001/user/publicacion/1", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify([]),
-        })
-          .then((resp) => {
-            if (!resp.ok) {
-              throw new Error("Failed to create array");
-            }
-            return resp.json();
-          })
-          .then((data) => {
-            console.log("Array created successfully", data);
-          })
-          .catch((err) => console.error("Error:", err));
-      });
+    // Agregar código de inicialización si es necesario
   }, []);
+
   const handlePublicacion = (e) => {
-    e.preventDefault();
-  const { name, value } = e.target;
-  setPublicacion({ ...publicacion, [name]: value });
+    const { name, value } = e.target;
+    setPublicacion({ ...publicacion, [name]: value });
   };
-  const crearPublicacion = () => {
-    fetch("http://localhost:3001/user/publicacion/", {
-  const agregarPublicacion = (e) => {
-    if (e.key === "Enter" && e.target.value) {
-      const nuevasPublicaciones = [
-        ...publicaciones,
-        { label: e.target.value, done: false },
-      ];
+
+  const agregarPublicacion = () => {
+    if (publicacion.nombre && publicacion.apellido && publicacion.email) {
+      const nuevasPublicaciones = [...publicaciones, { ...publicacion }];
       setPublicaciones(nuevasPublicaciones);
       actualizarPublicacionesEnServidor(nuevasPublicaciones);
-      e.target.value = "";
+      // Puedes reiniciar el estado de publicacion aquí si es necesario
+      setPublicacion({
+        nombre: "",
+        apellido: "",
+        email: "",
+        descripcion: "",
+        comuna: "",
+        rubro: "",
+        fecha: "",
+        idUser: "",
+      });
     }
   };
 
   const actualizarPublicacionesEnServidor = (todos) => {
-    fetch("http://localhost:3001/publicacion/", {
+    fetch("http://localhost:3001/user/publicacion/", {
       method: "PUT",
       body: JSON.stringify(todos),
       headers: {
         "Content-Type": "application/json",
       },
     })
-      .then((resp) => {
-        console.log(resp.ok); // Será true (verdad) si la respuesta es exitosa.
-        console.log(resp.status); // el código de estado = 200 o código = 400 etc.
-        return resp.json(); // (regresa una promesa) will try to parse the result as json as return a promise that you can .then for results
-      })
+      .then((resp) => resp.json())
       .then((data) => {
-        //Aquí es donde debe comenzar tu código después de que finalice la búsqueda
-        console.log(data); //esto imprimirá en la consola el objeto exacto recibido del servidor
+        console.log("Publicaciones actualizadas en el servidor:", data);
       })
       .catch((error) => {
-        //manejo de errores
-        console.log(error);
+        console.error("Error al actualizar publicaciones:", error);
       });
   };
 
@@ -96,6 +62,7 @@ const generadorPublicacion = () => {
     const nuevasPublicaciones = [...publicaciones];
     nuevasPublicaciones.splice(index, 1);
     setPublicaciones(nuevasPublicaciones);
+    actualizarPublicacionesEnServidor(nuevasPublicaciones);
   };
 
   return (
@@ -207,4 +174,4 @@ const generadorPublicacion = () => {
   );
 };
 
-export default generadorPublicacion;
+export default GeneradorPublicacion;
