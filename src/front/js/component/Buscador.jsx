@@ -55,12 +55,29 @@ export const Buscador = () => {
           </button>
         </Link>
 
-        <div className="card" style={{maxWidth: "1000px", margin: "30px auto 0", borderColor: "black", borderWidth: "2px", borderStyle: "solid"}}>
+        <div
+          className="card"
+          style={{
+            maxWidth: "1000px",
+            margin: "30px auto 0",
+            borderColor: "black",
+            borderWidth: "2px",
+            borderStyle: "solid",
+          }}
+        >
           {" "}
           {/*EN ESTA LINEA COLOR DE BACKGROUND*/}
-          <div className="card-body" style={{ borderColor: "grey", borderWidth: "2px", borderStyle: "solid",  margin: '8px'}}>
+          <div
+            className="card-body"
+            style={{
+              borderColor: "grey",
+              borderWidth: "2px",
+              borderStyle: "solid",
+              margin: "8px",
+            }}
+          >
             <div className="card-body2">
-              <p style={{ width: "70%", margin: "10px"}}>
+              <p style={{ width: "70%", margin: "10px" }}>
                 CONSIGUE NUEVAS OPORTUNIDADES
               </p>
             </div>
@@ -69,8 +86,12 @@ export const Buscador = () => {
               className="button"
               style={{ display: "flex", justifyContent: "flex-end" }}
             >
-              <Link to="/Formulario">
-                <button type="button" className="submitbutton2 btn btn success" style={{ borderRadius:'35px', margin:'15px'}}>
+              <Link to="/Registro">
+                <button
+                  type="button"
+                  className="submitbutton2 btn btn success"
+                  style={{ borderRadius: "35px", margin: "15px" }}
+                >
                   Conviertete en Prestador
                 </button>
               </Link>
