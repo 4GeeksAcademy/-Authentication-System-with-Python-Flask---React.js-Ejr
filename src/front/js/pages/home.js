@@ -9,42 +9,6 @@ import ProfesionCard from "../component/ProfesionCard.js";
 export const Home = () => {
   const { store, actions } = useContext(Context);
 
-  const handleButtonClick1 = (e) => {
-    e.preventDefault(); // Prevent default form submission behavior
-    console.log("Botón 1 clickeado");
-    // Add logic for the first button click
-  };
-
-  const handleButtonClick2 = (e) => {
-    e.preventDefault(); // Prevent default form submission behavior
-    console.log("Botón 2 clickeado");
-    // Add logic for the second button click
-  };
-
-  const profesiones = [
-    {
-      nombre: "Gasfiter",
-      calificacion: 4.5,
-      comentarios: ["Excelente trabajo!", "Lo recomiendo."],
-      imagen:
-        "https://img.freepik.com/vector-premium/icono-marco-fotos-foto-vacia-blanco-vector-sobre-fondo-transparente-aislado-eps-10_399089-1290.jpg?w=740",
-    },
-    {
-      nombre: "Electricista",
-      calificacion: 4.8,
-      comentarios: ["excelente persona.", "Siempre cumple."],
-      // Replace with the correct URL
-      imagen: "https://example.com/electricista-image.jpg",
-    },
-    {
-      nombre: "Pintor",
-      calificacion: 4.8,
-      comentarios: ["excelente persona.", "Siempre cumple."],
-      // Replace with the correct URL
-      imagen: "https://example.com/pintor-image.jpg",
-    },
-  ];
-
   return (
     <>
       <div className="container">
@@ -74,6 +38,7 @@ export const Home = () => {
                   fontStyle: "italic",
                   fontFamily: "fantasy",
                   fontSize: "18px",
+                  marginBottom: "50px",
                 }}
                 className="mx-5 text-center"
               >
@@ -81,11 +46,15 @@ export const Home = () => {
                 una solución a tu medida para tu casa o empresa. Siempre tendrás
                 un buen contacto en EasyJob.
               </p>
-              <div className="container-fluid">
+
+              <div
+                className="button"
+                style={{ display: "flex", justifyContent: "center" }}
+              >
                 <Link
                   to="/Registro"
                   className="d-flex justify-content-center align-items-center"
-                  style={{ height: "25vh", textDecoration: "none" }}
+                  style={{ textDecoration: "none" }}
                 >
                   {/* Button styling and logic */}
                   <button
@@ -93,29 +62,13 @@ export const Home = () => {
                       display: "flex",
                       color: "#333333",
                       fontWeight: "bold",
-                      borderColor: "#fff5ba",
                       background: "#dd9e26",
                       borderRadius: "30px",
                       justifyContent: "center",
                       padding: "15px",
                       width: "250px",
                       textAlign: "center",
-                      transition:
-                        "background-color 0.3s ease, color 0.3s ease, transform 0.3s ease, width 0.3s ease",
-                    }}
-                    className="mb-5"
-                    onClick={handleButtonClick1}
-                    onMouseOver={(e) => {
-                      e.target.style.backgroundColor = "#dd9e26";
-                      e.target.style.color = "#333333";
-                      e.target.style.transform = "scale(1.1)";
-                      e.target.style.width = "275px";
-                    }}
-                    onMouseOut={(e) => {
-                      e.target.style.backgroundColor = "#dd9e26";
-                      e.target.style.color = "#333333";
-                      e.target.style.transform = "scale(1)";
-                      e.target.style.width = "250px";
+                      marginTop: "5px"
                     }}
                   >
                     <h5 style={{ margin: "auto", fontWeight: "bold" }}>
@@ -181,7 +134,6 @@ export const Home = () => {
                   borderRadius: "50px",
                   transition: "transform 0.3s ease-in-out",
                 }}
-                
                 onMouseOver={(e) =>
                   (e.currentTarget.style.transform = "scale(1.05)")
                 }

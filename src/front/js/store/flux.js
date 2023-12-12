@@ -4,7 +4,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
 			Formulario:[],
-			OtroFormulario:[],
+			
 			ususario:{},
 			ususario2:{},
 			Buscador:[],

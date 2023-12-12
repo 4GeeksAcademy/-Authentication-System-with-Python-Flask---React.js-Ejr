@@ -67,7 +67,7 @@ export const Buscador = () => {
               className="button"
               style={{ display: "flex", justifyContent: "flex-end" }}
             >
-              <Link to="/Formulario">
+              <Link to="/Registro">
                 <button type="button" className="submitbutton2 btn btn success" style={{ borderRadius:'35px', margin:'15px'}}>
                   Conviertete en Prestador
                 </button>
