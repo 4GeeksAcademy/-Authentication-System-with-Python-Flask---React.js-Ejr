@@ -19,15 +19,19 @@ export const Carrousel = () => {
   };
 
   return (
+    
     <div className="carousel-oficios mt-30">
       <h2
         style={{
           fontFamily: "fantasy",
           color: "#001F3F", // Azul oscuro
-          marginTop: "3%",
+          marginTop: "5%",
           paddingBottom: "2%", // Espacio entre el texto y el borde inferior
           textAlign: "center",
-        }}
+          transition: "background-color 0.1s ease transform 0.3s ease-in-out" }}
+          onMouseOver={(e) => (e.currentTarget.style.transform = "scale(1.4)")}
+          onMouseOut={(e) => (e.currentTarget.style.transform = "scale(1)")}
+       
       >
         <strong>PRESTADORES</strong>
       </h2>
@@ -52,8 +56,10 @@ export const Carrousel = () => {
                 padding: "5px 5px",
                 fontSize: "16px",
                 cursor: "pointer",
-                transition: "background-color 0.1s ease",
-              }}
+                transition: "background-color 0.1s ease transform 0.3s ease-in-out" }}
+        onMouseOver={(e) => (e.currentTarget.style.transform = "scale(1.05)")}
+        onMouseOut={(e) => (e.currentTarget.style.transform = "scale(1)")}
+              
             >
               <div className="carousel-box" style={{ background: "white" }}>
                 <h2 style={{ fontWeight: "bold" }}>Electricista</h2>
@@ -75,8 +81,10 @@ export const Carrousel = () => {
               padding: "5px 5px",
               fontSize: "16px",
               cursor: "pointer",
-              transition: "background-color 0.1s ease",
-            }}
+              transition: "background-color 0.1s ease transform 0.3s ease-in-out" }}
+              onMouseOver={(e) => (e.currentTarget.style.transform = "scale(1.05)")}
+              onMouseOut={(e) => (e.currentTarget.style.transform = "scale(1)")}
+            
           >
             <div className="carousel-box" style={{ background: "white" }}>
               <h2 style={{ fontWeight: "bold" }}>Carpintero</h2>
@@ -97,8 +105,9 @@ export const Carrousel = () => {
               padding: "5px 5px",
               fontSize: "16px",
               cursor: "pointer",
-              transition: "background-color 0.1s ease",
-            }}
+              transition: "background-color 0.1s ease transform 0.3s ease-in-out" }}
+              onMouseOver={(e) => (e.currentTarget.style.transform = "scale(1.05)")}
+              onMouseOut={(e) => (e.currentTarget.style.transform = "scale(1)")}
           >
             <div className="carousel-box" style={{ background: "white" }}>
               <h2 style={{ fontWeight: "bold" }}>Aseo</h2>
@@ -119,8 +128,9 @@ export const Carrousel = () => {
               padding: "5px 5px",
               fontSize: "16px",
               cursor: "pointer",
-              transition: "background-color 0.1s ease",
-            }}
+              transition: "background-color 0.1s ease transform 0.3s ease-in-out" }}
+              onMouseOver={(e) => (e.currentTarget.style.transform = "scale(1.05)")}
+              onMouseOut={(e) => (e.currentTarget.style.transform = "scale(1)")}
           >
             <div className="carousel-box" style={{ background: "white" }}>
               <h2 style={{ fontWeight: "bold" }}>Gasfitería</h2>
@@ -141,9 +151,9 @@ export const Carrousel = () => {
               padding: "5px 5px",
               fontSize: "16px",
               cursor: "pointer",
-
-              transition: "background-color 0.1s ease",
-            }}
+              transition: "background-color 0.1s ease transform 0.3s ease-in-out" }}
+              onMouseOver={(e) => (e.currentTarget.style.transform = "scale(1.05)")}
+              onMouseOut={(e) => (e.currentTarget.style.transform = "scale(1)")}
           >
             <div className="carousel-box" style={{ background: "white" }}>
               <h2 style={{ fontWeight: "bold" }}>Pintor</h2>

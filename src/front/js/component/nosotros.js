@@ -3,6 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 export const Nosotros = () => {
   const containerStyle = {
+    margin: "auto",
     justifyContent: "center",
     display: "flex",
     textAlign: "center",
@@ -15,19 +16,19 @@ export const Nosotros = () => {
   };
 
   const paragraphStyle = {
+    margin: "8px 8px",
     color: "black",
     fontSize: "1.1em",
     textAlign: "center",
     fontFamily: "fantasy",
     justifyContent: "center",
-    marginTop: "8px",
-    padding: "5px",
+    padding: "15px",
   };
 
   return (
     <div className="container mt-4" style={containerStyle}>
       <div className="row">
-        <div className="col-md-10 ">
+        <div className="col-md-12 ">
           <h1
             style={{
               fontFamily: "fantasy",
