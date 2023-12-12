@@ -24,13 +24,12 @@ export const Carrousel = () => {
         style={{
           fontFamily: "fantasy",
           color: "#001F3F", // Azul oscuro
-          borderBottom: "2px solid #001F3F", // Línea de subrayado
           marginTop: "3%",
           paddingBottom: "2%", // Espacio entre el texto y el borde inferior
           textAlign: "center",
         }}
       >
-        <strong>OFICIOS</strong>
+        <strong>PRESTADORES</strong>
       </h2>
       <div className="carousel-container container-fluid">
         <div
@@ -41,52 +40,114 @@ export const Carrousel = () => {
             // transform: `translateX(-${currentIndex * 25}%)`,
             // padding: "10px",
           }}
-        >
-          <div className="carousel-box" style={{ marginRight: "2%" }}>
+
+          
+        >  <Link to="/buscador">
+        <button 
+        style={{ 
+          marginRight: '-0.1%', 
+          backgroundColor: 'transparent',
+          border: '1px solid transparent', // Grosor del borde bajo y transparente
+          borderRadius: '35px',
+          padding: '5px 5px',
+          fontSize: '16px',
+          cursor: 'pointer',
+          transition: 'background-color 0.1s ease',
+      }}>
+         <div className="carousel-box" style={{ background:"white"}}>
+            
             <h2 style={{ fontWeight: "bold" }}>Electricista</h2>
             <img
               className="img-fluid"
-              style={{ minWidth: "150px", width: "150%" }}
+              style={{ minWidth: "100px", width: "100%" }}
               src={easyJobUrl1}
               alt="Electricista"
             />
           </div>
-          <div className="carousel-box" style={{ marginRight: "2%" }}>
+          </button>
+         </Link>
+
+          <button style={{ 
+       marginRight: '-0.1%', 
+       backgroundColor: 'transparent',
+       border: '1px solid transparent', // Grosor del borde bajo y transparente
+       borderRadius: '35px',
+       padding: '5px 5px',
+       fontSize: '16px',
+       cursor: 'pointer',
+       transition: 'background-color 0.1s ease',
+    }}>
+         <div className="carousel-box" style={{ background:"white"}}>
             <h2 style={{ fontWeight: "bold" }}>Carpintero</h2>
             <img
               className="img-fluid"
-              style={{ minWidth: "150px", width: "150%" }}
-              src={easyJobUrl3}
+              style={{  minWidth: "100px", width: "100%"}}
+              src={easyJobUrl2}
               alt="Carpintero"
             />
-          </div>
-          <div className="carousel-box" style={{ marginRight: "2%" }}>
+          </div></button>
+
+          <button style={{ 
+        marginRight: '-0.1%', 
+        backgroundColor: 'transparent',
+        border: '1px solid transparent', // Grosor del borde bajo y transparente
+        borderRadius: '35px',
+        padding: '5px 5px',
+        fontSize: '16px',
+        cursor: 'pointer',
+        transition: 'background-color 0.1s ease',
+    }}>
+          <div className="carousel-box" style={{ background:"white"}}>
             <h2 style={{ fontWeight: "bold" }}>Aseo</h2>
             <img
               className="img-fluid"
-              style={{ minWidth: "150px", width: "150%" }}
-              src={easyJobUrl4}
+              style={{minWidth: "100px", width: "100%"}}
+              src={easyJobUrl3}
               alt="Aseo"
             />
-          </div>
-          <div className="carousel-box" style={{ marginRight: "2%" }}>
+          </div></button>
+
+          <button style={{ 
+        marginRight: '-0.1%', 
+        backgroundColor: 'transparent',
+        border: '1px solid transparent', // Grosor del borde bajo y transparente
+        borderRadius: '35px',
+        padding: '5px 5px',
+        fontSize: '16px',
+        cursor: 'pointer',
+        transition: 'background-color 0.1s ease',
+    }}>
+          <div className="carousel-box" style={{ background:"white"}}>
             <h2 style={{ fontWeight: "bold" }}>Gasfitería</h2>
             <img
               className="img-fluid"
-              style={{ minWidth: "150px", width: "150%" }}
-              src={easyJobUrl2}
+              style={{minWidth: "100px", width: "100%" }}
+              src={easyJobUrl4}
               alt="Gasfitería"
             />
-          </div>
-          <div className="carousel-box" style={{ marginRight: "2%" }}>
-            <h2 style={{ fontWeight: "bold" }}>Pintor</h2>
+          </div></button>
+
+          <button style={{ 
+       marginRight: '-0.1%', 
+       backgroundColor: 'transparent',
+       border: '1px solid transparent', // Grosor del borde bajo y transparente
+       borderRadius: '35px',
+       padding: '5px 5px',
+       fontSize: '16px',
+       cursor: 'pointer',
+       transition: 'background-color 0.1s ease',
+    }}>
+          <div className="carousel-box" style={{ background:"white"}}>
+            <h2 style={{ fontWeight: "bold", }}>Pintor</h2> 
+           
             <img
               className="img-fluid"
-              style={{ minWidth: "150px", width: "150%" }}
+              style={{ minWidth: "100px", width: "100%"}}
               src={easyJobUrl5}
-              alt="Pintor"
+              alt="Pintor"  
+            
             />
-          </div>
+          </div></button>
         </div>
       </div>
 

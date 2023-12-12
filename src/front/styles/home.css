@@ -112,9 +112,10 @@
   display: flex;
   justify-content: space-between;
   transition: transform 0.5s ease-in-out;
+  
 }
 .carousel-box {
-  border: 1px solid rgb(71, 143, 210);
+  border: 1px solid rgb(230, 237, 244);
   border-radius: 10px;
   margin: 5px;
   height: 240px;
@@ -126,7 +127,7 @@
 }
 .carousel-box img {
   border: px solid  rgb(71, 143, 210);
-  border-radius: 10px;
+  
   height: 200px;
   width: 100%;
   object-fit: cover;
@@ -137,6 +138,10 @@
   margin-top: 10px;
 } */
 
+.button-carrousel{
+  border: px solid  rgb(71, 143, 210);
+  
+}
 
 .arrow {
   cursor: pointer;
@@ -149,6 +154,7 @@
   text-align: center;
   width: 100%;
   height: 15px;
+  
 }
 
 /*

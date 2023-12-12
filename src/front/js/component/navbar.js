@@ -5,7 +5,7 @@ import Carrousel from "../component/carrousel.js";
 import ".././component/nosotros.js";
 
 export const Navbar = () => {
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   const user = JSON.parse(localStorage.getItem("user"));
 
@@ -14,7 +14,7 @@ export const Navbar = () => {
     localStorage.removeItem("user");
 
     // Redirige a la página principal después de cerrar sesión
-   navigate("/");
+    navigate("/");
   };
 
   return (
@@ -52,30 +52,30 @@ export const Navbar = () => {
           Experiencias
         </Link>
         <div className="ml-auto">
-        {user ? (
-            <><Link to="/perfil" className="text-white mr-5">
-            ¡Hola, {user.nombre}!
-          </Link>
+          {user ? (
+            <>
+              <Link to="/perfil" className="text-white mr-5">
+                ¡Hola, {user.nombre}!
+              </Link>
               <button
                 className="btn btn-danger"
                 style={{
-                  width: 'auto', 
-                  padding: '0.1rem 0.5rem',
+                  width: "auto",
+                  padding: "0.1rem 0.5rem",
                   margin: "10px",
-                  alignItems: 'center',
+                  alignItems: "center",
                 }}
                 onClick={handleLogout}
               >
                 x
               </button>
-
             </>
           ) : (
             <Link to="/login">
               <button className="btn btn-primary">Entrar</button>
             </Link>
           )}
-                  </div>
+        </div>
       </div>
     </nav>
   );
