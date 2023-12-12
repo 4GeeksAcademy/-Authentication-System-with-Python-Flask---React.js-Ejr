@@ -130,7 +130,7 @@ export const Carrousel = () => {
           <button style={{ 
        marginRight: '-0.1%', 
        backgroundColor: 'transparent',
-       border: '1px solid transparent', // Grosores del borde bajo y transparente
+       border: '1px solid transparent', // Groso del borde bajo y transparente
        borderRadius: '35px',
        padding: '5px 5px',
        fontSize: '16px',
