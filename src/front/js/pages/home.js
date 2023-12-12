@@ -181,7 +181,6 @@ export const Home = () => {
                   borderRadius: "50px",
                   transition: "transform 0.3s ease-in-out",
                 }}
-                
                 onMouseOver={(e) =>
                   (e.currentTarget.style.transform = "scale(1.05)")
                 }
@@ -203,12 +202,11 @@ export const Home = () => {
                       color: "rgba(0, 0, 0, 0.8)",
                     }}
                   >
-                    "Somos una plataforma dedicada a conectar a profesionales de
-                    diversos oficios como gasfitería, electricidad, pintura y
-                    más, con personas y empresas que requieren sus servicios.
-                    Nuestra misión es facilitar la contratación de trabajadores
-                    capacitados y confiables para cualquier tipo de proyecto o
-                    reparación."
+                    Somos una plataforma dedicada a conectar con técnicos en
+                    oficios tales como: Carpintería, Electricidad, Gasfitería,
+                    Pintura y Aseo. Damos solución a problemas de tu hogar o
+                    empresa. Compara perfiles y selecciona al experto que mejor
+                    se adapte a tus necesidades.
                   </p>
                 </div>
               </div>
@@ -242,12 +240,11 @@ export const Home = () => {
                       color: "rgba(0, 0, 0, 0.8)",
                     }}
                   >
-                    "En nuestra marketplace, podrás encontrar una amplia
-                    variedad de profesionales verificados y calificados.
-                    Ofrecemos un entorno seguro y fácil de usar donde podrás
-                    publicar trabajos, recibir presupuestos, comparar perfiles y
-                    seleccionar al experto que mejor se adapte a tus
-                    necesidades."
+                    Nuestra misión es facilitar la búsqueda de técnicos o
+                    trabajador(es) capacitados y confiables en los Oficios que
+                    ofrecemos. Como prestador tendrás un entorno seguro y fácil
+                    de usar, podrás publicar tu Oficio (trabajo) de manera fácil
+                    y rápida.
                   </p>
                 </div>
               </div>
@@ -280,12 +277,11 @@ export const Home = () => {
                       color: "rgba(0, 0, 0, 0.8)",
                     }}
                   >
-                    "Easy Jobs es tu aliado para encontrar la solución perfecta
-                    que se adapte a tus necesidades. Desde limpieza y
-                    mantenimiento hasta reparaciones y renovaciones, nuestros
-                    prestadores están listos para ayudarte. Descubre la manera
-                    más fácil de encontrar y conectar con profesionales del
-                    hogar."
+                    Easy Jobs es tu aliado para encontrar la solución perfecta
+                    que se adapta a tus necesidades. Limpiezas, Mantenciones,
+                    Reparaciones y Renovaciones. Nuestros prestadores están
+                    listos para ayudarte, conécta fácil y seguro, aquí en Easy
+                    Job.{" "}
                   </p>
                 </div>
               </div>
