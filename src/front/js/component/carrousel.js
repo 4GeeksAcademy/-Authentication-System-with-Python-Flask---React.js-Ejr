@@ -135,6 +135,7 @@ export const Carrousel = () => {
        padding: '5px 5px',
        fontSize: '16px',
        cursor: 'pointer',
+       
        transition: 'background-color 0.1s ease',
     }}>
           <div className="carousel-box" style={{ background:"white"}}>
