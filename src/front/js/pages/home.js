@@ -15,35 +15,9 @@ export const Home = () => {
     // Add logic for the first button click
   };
 
-  const handleButtonClick2 = (e) => {
-    e.preventDefault(); // Prevent default form submission behavior
-    console.log("Botón 2 clickeado");
-    // Add logic for the second button click
-  };
+ 
 
-  const profesiones = [
-    {
-      nombre: "Gasfiter",
-      calificacion: 4.5,
-      comentarios: ["Excelente trabajo!", "Lo recomiendo."],
-      imagen:
-        "https://img.freepik.com/vector-premium/icono-marco-fotos-foto-vacia-blanco-vector-sobre-fondo-transparente-aislado-eps-10_399089-1290.jpg?w=740",
-    },
-    {
-      nombre: "Electricista",
-      calificacion: 4.8,
-      comentarios: ["excelente persona.", "Siempre cumple."],
-      // Replace with the correct URL
-      imagen: "https://example.com/electricista-image.jpg",
-    },
-    {
-      nombre: "Pintor",
-      calificacion: 4.8,
-      comentarios: ["excelente persona.", "Siempre cumple."],
-      // Replace with the correct URL
-      imagen: "https://example.com/pintor-image.jpg",
-    },
-  ];
+ 
 
   return (
     <>
@@ -85,7 +59,7 @@ export const Home = () => {
                 <Link
                   to="/Registro"
                   className="d-flex justify-content-center align-items-center"
-                  style={{ height: "25vh", textDecoration: "none" }}
+                  style={{ height: "25px", textDecoration: "none" }}
                 >
                   {/* Button styling and logic */}
                   <button
@@ -97,6 +71,7 @@ export const Home = () => {
                       background: "#dd9e26",
                       borderRadius: "30px",
                       justifyContent: "center",
+                      marginTop:"15%",
                       padding: "15px",
                       width: "250px",
                       textAlign: "center",
