@@ -143,16 +143,6 @@ const GeneradorPublicacion = () => {
               name="fecha"
             />
           </div>
-          <div className="mb-3">
-            <input
-              type="text"
-              className="form-control"
-              placeholder="ID Usuario"
-              value={publicacion.idUser}
-              onChange={handlePublicacion}
-              name="idUser"
-            />
-          </div>
         </div>
       </div>
       <div className="row mt-3">

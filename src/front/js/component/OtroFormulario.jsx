@@ -7,6 +7,7 @@ import { Context } from "../store/appContext";
 import "./../pages/perfil"
 
 export const OtroFormulario = (props) => {
+  const { store, actions } = useContext(Context);
   const [state, setState] = useState({
     nombre: "",
     apellido: "",
