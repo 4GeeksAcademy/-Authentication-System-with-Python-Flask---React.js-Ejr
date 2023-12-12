@@ -106,7 +106,7 @@ export const Home = () => {
                 className="mb-5"
                 onClick={handleButtonClick1}
                 onMouseOver={(e) => {
-                  e.target.style.backgroundColor = "#ffc966"; // Cambio de color al pasar el ratón a un tono máss claro
+                  e.target.style.backgroundColor = "#ffc966"; // Cambio de ccolor al pasar el ratón a un tono máss claro
                   e.target.style.color = "#333333"; // Cambio de color de texto al pasar el ratón a un tono más oscuro
                 }}
                 onMouseOut={(e) => {
