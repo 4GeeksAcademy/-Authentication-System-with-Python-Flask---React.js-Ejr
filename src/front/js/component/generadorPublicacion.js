@@ -64,7 +64,6 @@ const GeneradorPublicacion = () => {
     setPublicaciones(nuevasPublicaciones);
     actualizarPublicacionesEnServidor(nuevasPublicaciones);
   };
-
   return (
     <div className="container mt-5">
       <div className="row">
@@ -74,15 +73,17 @@ const GeneradorPublicacion = () => {
       </div>
       <div className="row">
         <div className="col">
-          <div className="input-group mb-3">
+          <div className="mb-3">
             <input
               type="text"
               className="form-control"
-              placeholder="nombre"
+              placeholder="Nombre"
               value={publicacion.nombre}
               onChange={handlePublicacion}
               name="nombre"
             />
+          </div>
+          <div className="mb-3">
             <input
               type="text"
               className="form-control"
@@ -91,50 +92,62 @@ const GeneradorPublicacion = () => {
               onChange={handlePublicacion}
               name="apellido"
             />
+          </div>
+          <div className="mb-3">
             <input
               type="text"
               className="form-control"
-              placeholder="email"
+              placeholder="Email"
               value={publicacion.email}
               onChange={handlePublicacion}
               name="email"
             />
+          </div>
+          <div className="mb-3">
             <input
               type="text"
               className="form-control"
-              placeholder="Descripcion"
+              placeholder="Descripción"
               value={publicacion.descripcion}
               onChange={handlePublicacion}
               name="descripcion"
             />
+          </div>
+          <div className="mb-3">
             <input
               type="text"
               className="form-control"
-              placeholder="comuna"
+              placeholder="Comuna"
               value={publicacion.comuna}
               onChange={handlePublicacion}
               name="comuna"
             />
+          </div>
+          <div className="mb-3">
             <input
               type="text"
               className="form-control"
-              placeholder="rubro"
+              placeholder="Rubro"
               value={publicacion.rubro}
               onChange={handlePublicacion}
               name="rubro"
             />
+          </div>
+          <div className="mb-3">
             <input
               type="text"
               className="form-control"
-              placeholder="fecha"
+              placeholder="Fecha"
               value={publicacion.fecha}
               onChange={handlePublicacion}
               name="fecha"
             />
+          </div>
+          <div className="mb-3">
             <input
               type="text"
               className="form-control"
-              placeholder="idUsuario"
+              placeholder="ID Usuario"
               value={publicacion.idUser}
               onChange={handlePublicacion}
               name="idUser"
@@ -142,11 +155,11 @@ const GeneradorPublicacion = () => {
           </div>
         </div>
       </div>
-      <div className="row">
+      <div className="row mt-3">
         <div className="col">
           {publicaciones.length > 0 ? (
             <ul className="list-group">
-              {tareas.map((publicacion, index) => (
+              {publicaciones.map((publicacion, index) => (
                 <li
                   key={index}
                   className="list-group-item d-flex justify-content-between align-items-center"
@@ -162,16 +175,21 @@ const GeneradorPublicacion = () => {
               ))}
             </ul>
           ) : (
-            <p className="mt-3 text-center">No hay publicaciones</p>
+            <div className="alert alert-info">No hay publicaciones</div>
           )}
-
-          <button type="button" onClick={crearPublicacion}>
-            <h4>Publicar</h4>
+        </div>
+      </div>
+      <div className="col mt-3">
+        <div className="col">
+          <button type="button" className="btn btn-success">
+            Publicar
           </button>
         </div>
       </div>
     </div>
   );
+  
+  
 };
 
 export default GeneradorPublicacion;

@@ -26,7 +26,9 @@ export const Buscador = () => {
         <Row className="justify-content-center mt-3">
           <Col md="auto">
             <Button variant="dark">
+              
               <h2>Gasfistería</h2>
+              
             </Button>
           </Col>
         </Row>

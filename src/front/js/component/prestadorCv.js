@@ -50,22 +50,36 @@ const JobPost = ({
   onContact,
 }) => (
   <div
-    style={{ border: "1px solid #ccc", padding: "10px", marginBottom: "15px" }}
+    style={{
+      border: "1px solid #ccc",
+      padding: "10px",
+      marginBottom: "15px",
+      backgroundColor: "white",  // Fondo blanco
+      display: "flex",           // Mostrar en formato flex
+      flexDirection: "column",   // Alinear elementos en columna
+    }}
   >
-    <h3>{titulo}</h3>
-    <p>
-      <strong>Nombre:</strong> {nombre} {apellido}
-    </p>
-    <p>{descripcion}</p>
-    <p>
-      <strong>Comuna:</strong> {comuna}
-    </p>
-    <p>
-      <strong>Categoría:</strong> {rubro}
-    </p>
-    <p>
-      <strong>Fecha:</strong> {fecha}
-    </p>
+    <div
+      style={{
+        borderLeft: "5px solid red", // Línea de color rojo en el lado izquierdo
+        padding: "5px",
+      }}
+    >
+      <h3>{titulo}</h3>
+      <p>
+        <strong>Nombre:</strong> {nombre} {apellido}
+      </p>
+      <p><strong>Descripcion:</strong>{descripcion}</p>
+      <p>
+        <strong>Comuna:</strong> {comuna}
+      </p>
+      <p>
+        <strong>Categoría:</strong> {rubro}
+      </p>
+      <p>
+        <strong>Fecha:</strong> {fecha}
+      </p>
+    </div>
 
     <button onClick={() => onContact(id)} className="btn btn-success">
       Contactar
@@ -96,9 +110,7 @@ const PrestadorCv = () => {
   };
 
   return (
-
     <div div className="container" style={{ justifyContent: "center" }}>
-
       <div className="prestadores-cv-container">
         <button
           type="button"
@@ -156,13 +168,13 @@ const PrestadorCv = () => {
           Pintor
         </button>
       </div>
-      <div>
-
-        {data?.map((element) => (
-          <JobPost {...element} />
+      <div className="row">
+        {data?.map((element, index) => (
+          <div key={index} className="col mb-3">
+            <JobPost {...element} />
+          </div>
         ))}
       </div>
-
     </div>
   );
 };
