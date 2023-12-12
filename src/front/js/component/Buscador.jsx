@@ -66,11 +66,9 @@ export const Buscador = () => {
           }}
         >
           {" "}
-<<<<<<< HEAD
+
           {/*EN ESTA LINEA COLOR DE BACKGROUND*/}
-=======
-          {/*EN ESTA LINEA COLOR DE BACKGROUNd*/}
->>>>>>> 1c45c89c846d49fb3198271bedb3f11e2b69b11a
+
           <div
             className="card-body"
             style={{
