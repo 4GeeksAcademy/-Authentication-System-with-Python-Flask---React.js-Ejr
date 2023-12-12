@@ -181,12 +181,12 @@ def enviar_datos_de_publicacion(id):
 
     # Capturamos los datos de manera individual
     id = body["id"]
-    name = request.json.get("name")
-    publicacion = request.json.get("publicacion")
-    date = request.json.get("date")
+    nombre = request.json.get("nombre"),
+    descripcion = request.json.get("descripcion"),
+    fecha = request.json.get("fecha")
 
     return (
-        jsonify({"body": body, "id":id,  "name": name, "publicacion": publicacion, "date": date}),
+        jsonify({"body": body, "id":id,  "nombre": nombre, "descripcion": descripcion, "fecha": fecha}),
         200,
     )
 
