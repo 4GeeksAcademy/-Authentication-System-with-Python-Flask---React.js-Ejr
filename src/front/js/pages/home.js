@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { Context } from "../store/appContext";
 import easyJobUrl from "../../img/Easy-Job.jpg";
 import "../../styles/home.css";
-import { Carrousel } from "../component/carrousel.js";
+import Carrousel from "../component/carrousel.js";
 import { Link } from "react-router-dom";
 
 import { ProfesionCard } from "../component/ProfesionCard.js";
@@ -73,47 +73,9 @@ export const Home = () => {
             }}
             className="mx-5 text-center"
           >
-            Descubre la manera más fácil de encontrar y conectar con
-            profesionales en servicios del hogar. En Easy Jobs, simplificamos la
-            búsqueda y conexión con prestadores para ofrecerte soluciones
-            personalizadas tanto para tu hogar como para tu empresa. Siempre
-            tendrás a tu disposición contactos confiables y eficientes en Easy
-            Jobs.
-          </p>
-
-          <p
-            style={{
-              color: "#616161", // Gris oscuro
-              fontStyle: "italic", // Texto en cursiva
-              fontFamily: "fantasy", // Letra fantasy
-            }}
-            className="mx-5 text-center"
-          >
-            <strong>
-              ¿Buscas servicios del hogar? ¿Necesitas ayuda con tareas
-              específicas?{" "}
-            </strong>
-            ¡No busques más! Easy Jobs es tu aliado para encontrar la solución
-            perfecta que se adapte a tus necesidades. Desde limpieza y
-            mantenimiento hasta reparaciones y renovaciones, nuestros
-            prestadores están listos para ayudarte.{" "}
-          </p>
-          <p
-            style={{
-              color: "#616161", // Gris oscuro
-              fontStyle: "italic", // Texto en cursiva
-              fontFamily: "fantasy", // Letra fantasy
-            }}
-            className="mx-5 text-center"
-          >
-            <strong>¿Ofreces servicios del hogar? </strong>Únete a nuestra
-            comunidad de prestadores de servicios en Easy Jobs y conecta con
-            clientes que buscan exactamente lo que ofreces. Construye tu
-            reputación y haz crecer tu negocio de forma sencilla y efectiva. En
-            Easy Jobs, nos comprometemos a hacer que la búsqueda y conexión de
-            servicios del hogar sean tan fáciles como deberían ser. ¡Encuentra,
-            conecta y disfruta de la tranquilidad de saber que siempre tendrás
-            un buen contacto en Easy Jobs!
+            Busca de forma sencilla y conecta con Prestadores para encontrar una
+            solución a tu medida para tu casa o empresa. Siempre tendrás un buen
+            contacto en EasyJob.
           </p>
 
           <div
@@ -144,7 +106,7 @@ export const Home = () => {
                 className="mb-5"
                 onClick={handleButtonClick1}
                 onMouseOver={(e) => {
-                  e.target.style.backgroundColor = "#ffc966"; // Cambio de color al pasar el ratón a un tono máss claro
+                  e.target.style.backgroundColor = "#ffc966"; // Cambio de ccolor al pasar el ratón a un tono máss claro
                   e.target.style.color = "#333333"; // Cambio de color de texto al pasar el ratón a un tono más oscuro
                 }}
                 onMouseOut={(e) => {
@@ -216,12 +178,11 @@ export const Home = () => {
                       color: "rgba(0, 0, 0, 0.8)",
                     }}
                   >
-                    "Somos una plataforma dedicada a conectar a profesionales de
-                    diversos oficios como gasfitería, electricidad, pintura y
-                    más, con personas y empresas que requieren sus servicios.
-                    Nuestra misión es facilitar la contratación de trabajadores
-                    capacitados y confiables para cualquier tipo de proyecto o
-                    reparación."
+                    "Somos una plataforma dedicada a conectar con técnicos en
+                    oficios tales como: Carpintería, Electricidad, Gasfitería,
+                    Pintura y Aseo. Buscamos solucionar problemas de tu hogar o
+                    empresa. Podrás comparar perfiles y seleccionar al experto
+                    que mejor se adapte a tus necesidades."
                   </p>
                 </div>
               </div>
@@ -236,19 +197,19 @@ export const Home = () => {
                 />
                 <div className="card-body">
                   <p
-                    className="card-text mt-5px"
+                    className="card-text mt-3px"
                     style={{
                       textAlign: "justify",
                       fontStyle: "italic",
                       color: "rgba(0, 0, 0, 0.8)",
                     }}
                   >
-                    "En nuestra marketplace, podrás encontrar una amplia
-                    variedad de profesionales verificados y calificados.
-                    Ofrecemos un entorno seguro y fácil de usar donde podrás
-                    publicar trabajos, recibir presupuestos, comparar perfiles y
-                    seleccionar al experto que mejor se adapte a tus
-                    necesidades."
+                    "Nuestra misión es facilitar la búsqueda de técnicos o
+                    trabajador(es) capacitados y confiables en los Oficios que
+                    ofrecemos. Como prestador tendrás un entorno seguro y fácil
+                    de usar, podrás publicar tu Oficio (trabajo) de manera fácil
+                    y rápida. Podrás recibir notificaciones cada vez que alguien
+                    solicite tu oficio y/o servicio."
                   </p>
                 </div>
               </div>
