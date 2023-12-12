@@ -5,7 +5,7 @@ from flask_migrate import Migrate
 from flask_jwt_extended import JWTManager, create_access_token, get_jwt_identity, jwt_required
 from flask_cors import CORS
 from api.utils import APIException, generate_sitemap
-from api.models import db, User, UserBuscador
+from api.models import db, User, UserBuscador, UserPublicacion
 from api.routes import api
 from api.admin import setup_admin
 from api.commands import setup_commands
@@ -153,6 +153,13 @@ def register():
 def get_user_by_name(name):
     return jsonify({"name": name}), 200
 
+@app.route("/publicaciones", methods=["GET"])
+def publicaciones():
+    publicaciones = UserPublicacion.query.all()
+    publicaciones = list(map(lambda publicacion: publicacion.serialize(), publicaciones))
+    return jsonify({"publicaciones": publicaciones}), 200
+
+
 
 # enviar datos en la url como query string
 @app.route("/publicacion/<int:id>", methods=["GET"])
@@ -171,7 +178,7 @@ def get_user_by_id(id):
     return jsonify({"idPublicacion":id, "idUser":idUser, "nombre": nombre, "apellido": apellido, "email":email, "descripcion": descripcion, "comuna": comuna, "rubro":rubro , "fecha": fecha}), 200
 
 
-@app.route("/user/publicacion/<int:id>", methods=["POST"])
+@app.route("/publicacion/<int:id>", methods=["POST"])
 def enviar_datos_de_publicacion(id):
     # Capturamos todo el body en un diccionario
     body = request.get_json(id)
@@ -191,8 +198,8 @@ def enviar_datos_de_publicacion(id):
     )
 
 
-@app.route("/user/publicacion/<int:id>", methods=["PUT"])
-def actualizar_datos_de_publicacion():
+@app.route("/publicacion/<int:id>", methods=["PUT"])
+def actualizar_datos_de_publicacion(id):
     if not "username" in request.form:
         return jsonify({"msg": "username is required!"}), 422
 
