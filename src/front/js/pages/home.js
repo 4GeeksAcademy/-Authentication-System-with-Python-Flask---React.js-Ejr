@@ -9,15 +9,11 @@ import ProfesionCard from "../component/ProfesionCard.js";
 export const Home = () => {
   const { store, actions } = useContext(Context);
 
-
   const handleButtonClick1 = (e) => {
     e.preventDefault(); // Prevent default form submission behavior
     console.log("Botón 1 clickeado");
     // Add logic for the first button click
   };
-
-
-
 
   return (
     <>
@@ -65,7 +61,6 @@ export const Home = () => {
                   to="/Registro"
                   className="d-flex justify-content-center align-items-center"
                   style={{ textDecoration: "none" }}
-
                 >
                   {/* Button styling and logic */}
                   <button
@@ -76,11 +71,11 @@ export const Home = () => {
                       background: "#dd9e26",
                       borderRadius: "30px",
                       justifyContent: "center",
-                      marginTop:"15%",
+                      marginTop: "15%",
                       padding: "15px",
                       width: "250px",
                       textAlign: "center",
-                      marginTop: "5px"
+                      marginTop: "5px",
                     }}
                   >
                     <h5 style={{ margin: "auto", fontWeight: "bold" }}>
