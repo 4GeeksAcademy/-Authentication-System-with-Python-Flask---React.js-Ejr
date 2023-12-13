@@ -261,7 +261,7 @@ export const OtroFormulario = (props) => {
                 type="password"
                 name="password"
                 value={state.password}
-                placeholder="password"
+                placeholder="Ingrese su contraseña. Debe tener entre 8 y 12 caracteres"
                 style={{ borderWidth: "3px", borderColor: "darkcyan" }}
                 onChange={handleChange}
               />
