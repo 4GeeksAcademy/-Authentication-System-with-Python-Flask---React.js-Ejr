@@ -21,6 +21,9 @@ export const OtroFormulario = (props) => {
     errores: {},
   });
 
+  const navigate = useNavigate ()
+  const {actions} = useContext (Context)
+
   const [showRubroField, setShowRubroField] = useState(false);
 
   const handleChange = (event) => {
@@ -95,7 +98,7 @@ export const OtroFormulario = (props) => {
       if (response.ok) {
         const data = await response.json();
         actions.guardarid(data?.user?.id);
-        navigate("/perfil");
+        navigate("/SegundoPerfil");
       } else {
         const errorData = await response.json();
         console.error("Error al enviar los datos al servidor:", errorData);

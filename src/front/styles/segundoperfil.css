@@ -52,6 +52,8 @@
 .description-wrapper {
   text-align: center;
   margin-bottom: 30px;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: large;
 }
 
 .comments-ratings {
@@ -84,4 +86,11 @@
 
 .btn:hover {
   opacity: 0.8;
+}
+.uploaded-image {
+  width: 150px; /* Ajusta el tamaño de la imagen según tus necesidades */
+  height: 150px; /* Ajusta el tamaño de la imagen según tus necesidades */
+  object-fit: cover; /* Ajusta el tamaño de la imagen manteniendo su relación de aspecto */
+  border-radius: 50%; /* Hace que la imagen sea redonda */
+  border: 2px solid #fff; /* Agrega un borde blanco al redondel */
 }

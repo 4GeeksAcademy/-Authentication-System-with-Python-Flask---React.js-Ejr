@@ -144,8 +144,8 @@ def register():
         "user": new_user.serialize()
     }
 
-    if "rubro" not in request.json:
-         del data["user"]["rubro"]
+    # if "rubro" not in request.json:
+        #  del data["user"]["rubro"]
 
     return jsonify(data), 200
 
@@ -269,7 +269,8 @@ def obtener_perfil(id):
     "lastName": user.apellido,
     "email": user.email,
     "comuna": user.comuna,
-    "birthDate": user.fecha_de_nacimiento
+    "birthDate": user.fecha_de_nacimiento,
+    "rubro": user.rubro
    }
     # Devolver los datos actuales del perfil
    return jsonify(perfil_data)
