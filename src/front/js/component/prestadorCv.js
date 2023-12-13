@@ -54,9 +54,9 @@ const JobPost = ({
       border: "1px solid #ccc",
       padding: "10px",
       marginBottom: "15px",
-      backgroundColor: "white",  // Fondo blanco
-      display: "flex",           // Mostrar en formato flex
-      flexDirection: "column",   // Alinear elementos en columna
+      backgroundColor: "white", // Fondo blanco
+      display: "flex", // Mostrar en formato flex
+      flexDirection: "column", // Alinear elementos en columna
     }}
   >
     <div
@@ -69,7 +69,10 @@ const JobPost = ({
       <p>
         <strong>Nombre:</strong> {nombre} {apellido}
       </p>
-      <p><strong>Descripcion:</strong>{descripcion}</p>
+      <p>
+        <strong>Descripcion:</strong>
+        {descripcion}
+      </p>
       <p>
         <strong>Comuna:</strong> {comuna}
       </p>

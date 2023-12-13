@@ -21,25 +21,25 @@ const Publicacion = () => {
         console.log(data);
         setTareas(data);
       })
-      .catch(error => {
-        fetch('http://localhost:3001/user/publicacion/1', {
-           method: "POST",
-           headers: {
-             "Content-Type": "application/json"
-           },
-           body: JSON.stringify([])
+      .catch((error) => {
+        fetch("http://localhost:3001/user/publicacion/1", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify([]),
         })
-        .then(resp => {
-           if (!resp.ok) {
-              throw new Error('Failed to create array');
-           }
-           return resp.json();
-        })
-        .then(data => {
-           console.log("Array created successfully", data);
-        })
-        .catch(err => console.error("Error:", err));
-     });
+          .then((resp) => {
+            if (!resp.ok) {
+              throw new Error("Failed to create array");
+            }
+            return resp.json();
+          })
+          .then((data) => {
+            console.log("Array created successfully", data);
+          })
+          .catch((err) => console.error("Error:", err));
+      });
   }, []);
 
   const agregarTarea = (e) => {
@@ -109,8 +109,7 @@ const Publicacion = () => {
           ))}
         </ul>
       ) : (
-        <p>Noy hay Publicaciones activas, añadir publicaciones
-        </p>
+        <p>Noy hay Publicaciones activas, añadir publicaciones</p>
       )}
     </div>
   );

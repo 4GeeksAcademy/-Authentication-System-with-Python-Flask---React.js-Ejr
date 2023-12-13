@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 
-
 export const Task = () => {
   const [tareas, setTareas] = useState([]);
 
@@ -22,25 +21,28 @@ export const Task = () => {
         console.log(data);
         setTareas(data);
       })
-      .catch(error => {
-        fetch('https://playground.4geeks.com/apis/fake/todos/user/felipelasheras', {
-           method: "POST",
-           headers: {
-             "Content-Type": "application/json"
-           },
-           body: JSON.stringify([])
-        })
-        .then(resp => {
-           if (!resp.ok) {
-              throw new Error('Failed to create array');
-           }
-           return resp.json();
-        })
-        .then(data => {
-           console.log("Array created successfully", data);
-        })
-        .catch(err => console.error("Error:", err));
-     });
+      .catch((error) => {
+        fetch(
+          "https://playground.4geeks.com/apis/fake/todos/user/felipelasheras",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify([]),
+          }
+        )
+          .then((resp) => {
+            if (!resp.ok) {
+              throw new Error("Failed to create array");
+            }
+            return resp.json();
+          })
+          .then((data) => {
+            console.log("Array created successfully", data);
+          })
+          .catch((err) => console.error("Error:", err));
+      });
   }, []);
 
   const agregarTarea = (e) => {
