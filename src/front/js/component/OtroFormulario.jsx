@@ -23,8 +23,7 @@ export const OtroFormulario = (props) => {
   });
 
   const navigate = useNavigate ()
-
-
+  const {action} = useContext (Context)
 
   const [showRubroField, setShowRubroField] = useState(false);
 
@@ -228,7 +227,7 @@ export const OtroFormulario = (props) => {
                 name="rut"
                 value={state.rut}
                 onChange={handleChange}
-                placeholder="Ingrese su rut"
+                placeholder="Ingrese su rut sin puntos ni guión"
                 style={{ borderWidth: "3px", borderColor: "darkcyan" }}
               />
               {state.errores.rut && (
@@ -263,7 +262,7 @@ export const OtroFormulario = (props) => {
                 type="password"
                 name="password"
                 value={state.password}
-                placeholder="password"
+                placeholder="Ingrese su contraseña. Debe tener entre 8 y 12 caracteres"
                 style={{ borderWidth: "3px", borderColor: "darkcyan" }}
                 onChange={handleChange}
               />

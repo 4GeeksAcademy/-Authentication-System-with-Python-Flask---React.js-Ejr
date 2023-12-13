@@ -110,8 +110,8 @@ export const SegundoPerfil = () => {
 
           <div className="action-buttons text-center">
             <div className="logout">
-              <Link to="/">
-                <button className="btn btn-danger logout-text">Salir</button>
+              <Link to="/generadorPublicacion">
+                <button className="btn btn-primary logout-text">Publicar Trabajo</button>
               </Link>
             </div>
           </div>
