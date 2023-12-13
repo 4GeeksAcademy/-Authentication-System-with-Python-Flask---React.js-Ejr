@@ -164,8 +164,8 @@ def register():
 
     data = {"access_token": access_token, "user": new_user.serialize()}
 
-    if "rubro" not in request.json:
-        del data["user"]["rubro"]
+    # if "rubro" not in request.json:
+        #  del data["user"]["rubro"]
 
     return jsonify(data), 200
 
@@ -342,16 +342,17 @@ def actualizar_perfil():
 # Ruta para obtener los datos del perfil (solo para demostración)
 @app.route("/api/perfil/<int:id>", methods=["GET"])
 def obtener_perfil(id):
-    user = User.query.get(id)
-    perfil_data = {
-        "firstName": user.nombre,
-        "lastName": user.apellido,
-        "email": user.email,
-        "comuna": user.comuna,
-        "birthDate": user.fecha_de_nacimiento,
-    }
-    # Devolver los datos actuales del perfil
-    return jsonify(perfil_data)
+   user = User.query.get(id) 
+   perfil_data = {
+    "firstName": user.nombre,
+    "lastName": user.apellido,
+    "email": user.email,
+    "comuna": user.comuna,
+    "birthDate": user.fecha_de_nacimiento,
+    "rubro": user.rubro
+   };
+   
+   return jsonify(perfil_data)
 
 
 @app.route("/api/SegundoPerfil")
