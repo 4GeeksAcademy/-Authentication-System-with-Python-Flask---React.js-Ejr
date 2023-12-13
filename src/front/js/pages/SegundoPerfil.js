@@ -1,15 +1,17 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { Context } from "../store/appContext.js";
 import "../../styles/segundoperfil.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./../component/Buscador.jsx";
 import "./../pages/home.js";
 
 export const SegundoPerfil = () => {
-  const profileData = {
+  const data = {
     name: "Nombre Prestador",
     jobs: ["Trabajo 1", "Trabajo 2", "Trabajo 3"],
     description: "Descripción/Experiencia/Comuna",
+    comuna: "Comuna",
     ratings: [
       {
         comment: "¡Gran trabajo! Muy profesional.",
@@ -22,6 +24,38 @@ export const SegundoPerfil = () => {
       // Puedes agregar más comentarios y calificaciones según sea necesario
     ],
   };
+  const {actions} = useContext(Context)
+  const [profileData, setData] = useState (data)
+useEffect(async ( ) => {
+  let perfil = await actions.cargarPerfil()
+  setData ({...profileData, name:perfil.firstName, comuna:perfil.comuna, description:perfil.rubro})
+}, [])
+
+  // const uploadImageToServer = async (image) => {
+  //   try {
+  //     const formData = new FormData();
+  //     formData.append('file', image); // 'file' debe coincidir con el nombre del campo que espera la API
+  
+  //     const response = await fetch('URL_DE_TU_API', {
+  //       method: 'POST',
+  //       body: formData,
+  //       // Puedes agregar encabezados adicionales aquí, como headers, si la API lo requiere
+  //     });
+  
+  //     if (response.ok) {
+  //       const data = await response.json();
+  //       // Realiza acciones con la respuesta si es necesario
+  //       console.log('Imagen subida exitosamente:', data);
+  //     } else {
+  //       console.error('Error al subir la imagen:', response.statusText);
+  //     }
+  //   } catch (error) {
+  //     console.error('Error de red:', error);
+  //   }
+  // };
+  
+  // // Suponiendo que tienes la imagen guardada en 'imageFile'
+  // uploadImageToServer(imageFile);
 
   const [image, setImage] = useState(null);
 
@@ -70,7 +104,7 @@ export const SegundoPerfil = () => {
         </div>
         <div className="col-md-6">
           <div className="description-wrapper">
-            <div className="description">{profileData.description}</div>
+            <div className="description">{profileData.description}, Comuna: {profileData.comuna}</div>
           </div>
           <div className="ratings-section">
             <div className="comments-ratings text-center">
@@ -91,14 +125,6 @@ export const SegundoPerfil = () => {
             <div className="logout">
               <Link to="/">
                 <button className="btn btn-danger logout-text">Salir</button>
-              </Link>
-            </div>
-            <div className="job-search">
-              <Link to="/Buscador">
-                {" "}
-                <button className="btn btn-primary job-search-text">
-                  Buscar Trabajo
-                </button>
               </Link>
             </div>
           </div>
