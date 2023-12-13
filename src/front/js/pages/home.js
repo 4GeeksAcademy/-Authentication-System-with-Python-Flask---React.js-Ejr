@@ -9,14 +9,14 @@ import ProfesionCard from "../component/ProfesionCard.js";
 export const Home = () => {
   const { store, actions } = useContext(Context);
 
-<<<<<<< HEAD
+
   const handleButtonClick1 = (e) => {
     e.preventDefault(); // Prevent default form submission behavior
     console.log("Botón 1 clickeado");
     // Add logic for the first button click
   };
-=======
->>>>>>> 1c45c89c846d49fb3198271bedb3f11e2b69b11a
+
+
   return (
     <>
       <div className="container">
