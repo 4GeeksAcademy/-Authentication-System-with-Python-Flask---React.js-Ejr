@@ -9,6 +9,7 @@ import "./../pages/home.js";
 export const SegundoPerfil = () => {
   const data = {
     name: "Nombre Prestador",
+    apellido: "Apellido Prestador",
     jobs: ["Trabajo 1", "Trabajo 2", "Trabajo 3"],
     description: "Descripción/Experiencia/Comuna",
     comuna: "Comuna",
@@ -21,47 +22,14 @@ export const SegundoPerfil = () => {
         comment: "Buen servicio, lo recomiendo.",
         rating: 4,
       },
-      // Puedes agregar más comentarios y calificaciones según sea necesario
     ],
   };
-  const {actions} = useContext(Context)
-  const [profileData, setData] = useState (data)
-useEffect(async ( ) => {
-  let perfil = await actions.cargarPerfil()
-  setData ({...profileData, name:perfil.firstName, comuna:perfil.comuna, description:perfil.rubro})
-}, [])
-
-  // const uploadImageToServer = async (image) => {
-  //   try {
-  //     const formData = new FormData();
-  //     formData.append('file', image); // 'file' debe coincidir con el nombre del campo que espera la API
-  
-  //     const response = await fetch('URL_DE_TU_API', {
-  //       method: 'POST',
-  //       body: formData,
-  //       // Puedes agregar encabezados adicionales aquí, como headers, si la API lo requiere
-  //     });
-  
-  //     if (response.ok) {
-  //       const data = await response.json();
-  //       // Realiza acciones con la respuesta si es necesario
-  //       console.log('Imagen subida exitosamente:', data);
-  //     } else {
-  //       console.error('Error al subir la imagen:', response.statusText);
-  //     }
-  //   } catch (error) {
-  //     console.error('Error de red:', error);
-  //   }
-  // };
-  
-  // // Suponiendo que tienes la imagen guardada en 'imageFile'
-  // uploadImageToServer(imageFile);
-
+  const { actions } = useContext(Context);
+  const [profileData, setData] = useState(data);
   const [image, setImage] = useState(null);
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
-    // Realizar validaciones o acciones con la imagen seleccionada, por ejemplo:
     if (file) {
       const reader = new FileReader();
       reader.onload = (event) => {
@@ -70,6 +38,25 @@ useEffect(async ( ) => {
       reader.readAsDataURL(file);
     }
   };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        let perfil = await actions.cargarPerfil();
+        setData((prevData) => ({
+          ...prevData,
+          name: perfil.firstName,
+          apellido: perfil.apellido,
+          comuna: perfil.comuna,
+          description: perfil.rubro,
+        }));
+      } catch (error) {
+        console.error('Error al cargar el perfil:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <div className="container profile-container">

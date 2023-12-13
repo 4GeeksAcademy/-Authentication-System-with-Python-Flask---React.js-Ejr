@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Form, Button, Container, Row, Col } from "react-bootstrap";
 import "../../styles/elotroformulario.css";
 import { Link } from "react-router-dom";
-import { Context } from "../store/appContext";
+import { Context, actions} from "../store/appContext";
 import "./../pages/perfil";
 
 export const OtroFormulario = (props) => {
@@ -23,7 +23,6 @@ export const OtroFormulario = (props) => {
   });
 
   const navigate = useNavigate ()
-  const {actions} = useContext (Context)
 
   const [showRubroField, setShowRubroField] = useState(false);
 
