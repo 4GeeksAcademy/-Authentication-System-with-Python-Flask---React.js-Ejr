@@ -26,9 +26,7 @@ export const Buscador = () => {
         <Row className="justify-content-center mt-3">
           <Col md="auto">
             <Button variant="dark">
-              
               <h2>Gasfistería</h2>
-              
             </Button>
           </Col>
         </Row>
@@ -63,6 +61,7 @@ export const Buscador = () => {
             borderColor: "black",
             borderWidth: "2px",
             borderStyle: "solid",
+            background: "white",
           }}
         >
           {" "}
@@ -81,6 +80,8 @@ export const Buscador = () => {
               borderWidth: "2px",
               borderStyle: "solid",
               margin: "8px",
+              background:"rgb(203, 210, 210)",
+             
             }}
           >
             <div className="card-body2">

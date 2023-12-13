@@ -80,12 +80,11 @@ def login():
     if not password:
         return jsonify({"error": "Contraseña es obligatoria"}), 400
 
-    # Intenta encontrar al usuario en la tabla User
     user_found = User.query.filter_by(email=email).first()
 
-    # Si no se encuentra en la tabla User, intenta en la tabla UserBuscador
     if not user_found:
         user_found = UserBuscador.query.filter_by(email=email).first()
+        print("User Found:", user_found)
 
     if not user_found:
         print("User not found")
@@ -96,13 +95,26 @@ def login():
         return jsonify({"error": "Email/contraseña son incorrectos"}), 401
 
     expires = datetime.timedelta(days=3)
-    access_token = create_access_token(
-        identity=str(user_found.idUserBuscador), expires_delta=expires
-    )
 
-    data = {"access_token": access_token, "user": user_found.serialize()}
 
-    return jsonify(data), 200
+    if isinstance(user_found, User):
+        access_token = create_access_token(
+            identity=str(user_found.idUser), expires_delta=expires
+        )
+    elif isinstance(user_found, UserBuscador):
+        access_token = create_access_token(
+            identity=str(user_found.idUserBuscador), expires_delta=expires
+        )
+    else:
+        access_token = None
+
+    if access_token:
+        data = {"access_token": access_token, "user": user_found.serialize()}
+
+        return jsonify(data), 200
+    else:
+        return jsonify({"error": "Tipo de usuario no válido"}), 400
+
 
 
 @app.route("/api/register", methods=["POST"])
@@ -154,8 +166,10 @@ def register():
 
     data = {"access_token": access_token, "user": new_user.serialize()}
 
-    if "rubro" not in request.json:
-        del data["user"]["rubro"]
+
+    # if "rubro" not in request.json:
+        #  del data["user"]["rubro"]
+
 
     return jsonify(data), 200
 
@@ -232,6 +246,26 @@ def enviar_datos_de_publicacion(id):
         ),
         200,
     )
+
+
+@app.route("/publicacionpost", methods=["POST"])
+def enviar_datos_de_publicacionpost():
+    # Capturamos todo el body en un diccionario
+    body = request.get_json()
+    publicacion = UserPublicacion()
+    publicacion.idUser = body["idUser"]
+    publicacion.nombre = body["nombre"]
+    publicacion.apellido = body["apellido"]
+    publicacion.email = body["email"]
+    publicacion.descripcion = body["descripcion"]
+    publicacion.comuna = body["comuna"]
+    publicacion.rubro = body["rubro"]
+    publicacion.fecha = body["fecha"]
+
+    db.session.add(publicacion)
+    db.session.commit()
+
+    return jsonify({"body": body}), 200
 
 
 @app.route("/publicacion/<int:id>", methods=["PUT"])
@@ -312,14 +346,17 @@ def actualizar_perfil():
 # Ruta para obtener los datos del perfil (solo para demostración)
 @app.route("/api/perfil/<int:id>", methods=["GET"])
 def obtener_perfil(id):
-    user = User.query.get(id)
-    perfil_data = {
-        "firstName": user.nombre,
-        "lastName": user.apellido,
-        "email": user.email,
-        "comuna": user.comuna,
-        "birthDate": user.fecha_de_nacimiento,
-    }
+
+   user = User.query.get(id) 
+   perfil_data = {
+    "firstName": user.nombre,
+    "lastName": user.apellido,
+    "email": user.email,
+    "comuna": user.comuna,
+    "birthDate": user.fecha_de_nacimiento,
+    "rubro": user.rubro
+   }
+
     # Devolver los datos actuales del perfil
     return jsonify(perfil_data)
 
