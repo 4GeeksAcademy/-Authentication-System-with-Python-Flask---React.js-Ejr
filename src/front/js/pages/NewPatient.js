@@ -24,7 +24,7 @@ const NewPatient = () => {
             email: email,
             password: password 
         }
-        await actions.createNewPatient(newInputPatient) 
+        await actions.createNewUser(newInputPatient) 
         navigate("/") //---------------------------->Colocar ruta creada por Leo ATENCION <------------------------------------
     }catch(error){
         console.error("Error trying to send info", error)
@@ -36,24 +36,24 @@ const NewPatient = () => {
     return (
         <div className='patientForm'>
             <div className="mb-3">
-                <label for="exampleFormControlInput1" className="form-label">First Name</label>
-                <input type="email" className="form-control" id="exampleFormControlInput1" placeholder="name@example.com" />
+                <label for="exampleFormControlInput1" className="form-label">Nombre</label>
+                <input onChange={(e)=>setFirstName(e.target.value)} type="email" className="form-control" id="exampleFormControlInput1" placeholder="name@example.com" />
             </div>
 
             <div className="mb-3">
-                <label for="exampleFormControlInput1" className="form-label">Last Name</label>
-                <input type="email" className="form-control" id="exampleFormControlInput1" placeholder="name@example.com" />
+                <label for="exampleFormControlInput1" className="form-label">Apellido</label>
+                <input onChange={(e)=>setLastName(e.target.value)} type="email" className="form-control" id="exampleFormControlInput1" placeholder="name@example.com" />
             </div>
 
             <div className="mb-3">
-                <label for="exampleFormControlInput1" className="form-label">Email address</label>
-                <input type="email" className="form-control" id="exampleFormControlInput1" placeholder="name@example.com" />
+                <label for="exampleFormControlInput1" className="form-label">Correo electronico</label>
+                <input onChange={(e)=>setEmail(e.target.value)} type="email" className="form-control" id="exampleFormControlInput1" placeholder="name@example.com" />
             </div>
 
-            <label for="inputPassword5" className="form-label">Password</label>
-            <input type="password" id="inputPassword5" className="form-control" aria-describedby="passwordHelpBlock" />
+            <label for="inputPassword5" className="form-label">Contraseña</label>
+            <input onChange={(e)=>setPassword(e.target.value)} type="password" id="inputPassword5" className="form-control" aria-describedby="passwordHelpBlock" />
             <div id="passwordHelpBlock" className="form-text">
-                Your password must be 8-20 characters long, contain letters and numbers, and must not contain spaces, special characters, or emoji.
+                Tu contraseña debe tener de 8-20 caracteres, letras y numeros y no debe contener caracteres epeciales o emojis
             </div>
 
             <div>
