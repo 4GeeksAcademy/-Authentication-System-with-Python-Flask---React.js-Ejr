@@ -11,6 +11,14 @@ export const Home = () => {
 
 
 
+  const handleButtonClick1 = (e) => {
+    e.preventDefault(); // Prevent default form submission behavior
+    console.log("Botón 1 clickeado");
+    // Add logic for the first button click
+  };
+
+
+
   return (
     <>
       <div className="container">

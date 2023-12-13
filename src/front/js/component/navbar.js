@@ -45,12 +45,12 @@ export const Navbar = () => {
         >
           Nosotros
         </Link>
-        <Link
+        {/* <Link
           to="/experiencias"
           className="navbar-brand mb-0 h1 navbar-brand-custom"
         >
           Experiencias
-        </Link>
+        </Link> */}
         <div className="ml-auto">
           {user ? (
             <>

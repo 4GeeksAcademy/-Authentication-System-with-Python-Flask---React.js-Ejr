@@ -23,7 +23,7 @@ export const OtroFormulario = (props) => {
   });
 
   const navigate = useNavigate ()
-  const {actions} = useContext (Context)
+  const {action} = useContext (Context)
 
   const [showRubroField, setShowRubroField] = useState(false);
 
