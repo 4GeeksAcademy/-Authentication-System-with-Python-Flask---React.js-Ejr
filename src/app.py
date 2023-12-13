@@ -96,7 +96,6 @@ def login():
 
     expires = datetime.timedelta(days=3)
 
-
     if isinstance(user_found, User):
         access_token = create_access_token(
             identity=str(user_found.idUser), expires_delta=expires
@@ -347,6 +346,7 @@ def actualizar_perfil():
 @app.route("/api/perfil/<int:id>", methods=["GET"])
 def obtener_perfil(id):
 
+
    user = User.query.get(id) 
    perfil_data = {
     "firstName": user.nombre,
@@ -355,10 +355,11 @@ def obtener_perfil(id):
     "comuna": user.comuna,
     "birthDate": user.fecha_de_nacimiento,
     "rubro": user.rubro
-   }
 
-    # Devolver los datos actuales del perfil
-    return jsonify(perfil_data)
+   };
+   
+   return jsonify(perfil_data)
+
 
 
 @app.route("/api/SegundoPerfil")
