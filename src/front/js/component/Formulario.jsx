@@ -24,7 +24,6 @@ export class Formulario extends Component {
   handleChange = (event) => {
     const { name, value, type, checked } = event.target;
 
-
     let error = null;
     if (type === "checkbox" && !checked) {
       error = "Debe aceptar los términos y condiciones";
@@ -55,7 +54,17 @@ export class Formulario extends Component {
   handleSubmit = async (event) => {
     event.preventDefault();
 
-    const { nombre, apellido, email, password, rut, telefono, comuna, fecha_de_nacimiento, rubro } = this.state;
+    const {
+      nombre,
+      apellido,
+      email,
+      password,
+      rut,
+      telefono,
+      comuna,
+      fecha_de_nacimiento,
+      rubro,
+    } = this.state;
 
     const errores = {};
     if (!nombre.trim()) {
@@ -75,7 +84,7 @@ export class Formulario extends Component {
       errores.password = "La contraseña es obligatoria";
     }
     if (!rut.trim()) {
-      errores.rut   = "El Rut es obligatorio";
+      errores.rut = "El Rut es obligatorio";
     }
     if (!fecha_de_nacimiento.trim()) {
       errores.fecha_de_nacimiento = "La fecha de nacimiento es obligatoria";
@@ -90,13 +99,10 @@ export class Formulario extends Component {
       errores.rubro = "Su rubro es obligatorio";
     }
 
-
-    
     if (Object.keys(errores).length > 0) {
       this.setState({ errores });
       return;
     }
-
 
     try {
       const response = await fetch("http://localhost:3001/api/register", {
@@ -116,7 +122,7 @@ export class Formulario extends Component {
           rubro,
         }),
       });
-  
+
       if (response.ok) {
         const data = await response.json();
         // Puedes manejar la respuesta del servidor aquí
@@ -127,7 +133,8 @@ export class Formulario extends Component {
       }
     } catch (error) {
       console.error("Error de red:", error);
-    }}
+    }
+  };
 
   validateEmail = (email) => {
     return true;
@@ -157,7 +164,9 @@ export class Formulario extends Component {
                   style={{ borderWidth: "3px", borderColor: "darkcyan" }}
                 />
                 {errores.nombre && (
-                  <Form.Text className="text-danger">{errores.nombre}</Form.Text>
+                  <Form.Text className="text-danger">
+                    {errores.nombre}
+                  </Form.Text>
                 )}
               </Form.Group>
 
@@ -172,10 +181,11 @@ export class Formulario extends Component {
                   onChange={this.handleChange}
                   placeholder="Ingrese su apellido"
                   style={{ borderWidth: "3px", borderColor: "darkcyan" }}
-                  
                 />
                 {errores.apellido && (
-                  <Form.Text className="text-danger">{errores.apellido}</Form.Text>
+                  <Form.Text className="text-danger">
+                    {errores.apellido}
+                  </Form.Text>
                 )}
               </Form.Group>
 
@@ -201,33 +211,35 @@ export class Formulario extends Component {
                   <h3>Correo electronico</h3>
                 </Form.Label>
                 <Form.Control
-                    type="email"
-                    name="email"  
-                    value={this.state.email} 
-                    placeholder="Ingrese su correo electronico"
-                    style={{ borderWidth: "3px", borderColor: "darkcyan" }}
-                    onChange={this.handleChange}  
+                  type="email"
+                  name="email"
+                  value={this.state.email}
+                  placeholder="Ingrese su correo electronico"
+                  style={{ borderWidth: "3px", borderColor: "darkcyan" }}
+                  onChange={this.handleChange}
                 />
                 {errores.email && (
                   <Form.Text className="text-danger">{errores.email}</Form.Text>
                 )}
               </Form.Group>
 
-             < Form.Group controlId="formContraseña">
+              <Form.Group controlId="formContraseña">
                 <Form.Label>
                   <h3>Contraseña</h3>
                 </Form.Label>
                 <Form.Control
-                    type="password"
-                    name="password"  
-                    value={this.state.password} 
-                    placeholder="Ingrese su contraseña. Debe ser entre 8 y 12 carácteres"
-                    style={{ borderWidth: "3px", borderColor: "darkcyan" }}
-                    onChange={this.handleChange}                 
+                  type="password"
+                  name="password"
+                  value={this.state.password}
+                  placeholder="Ingrese su contraseña. Debe ser entre 8 y 12 carácteres"
+                  style={{ borderWidth: "3px", borderColor: "darkcyan" }}
+                  onChange={this.handleChange}
                 />
                 {errores.password && (
-                      <Form.Text className="text-danger">{errores.password}</Form.Text>
-                    )}
+                  <Form.Text className="text-danger">
+                    {errores.password}
+                  </Form.Text>
+                )}
               </Form.Group>
 
               <Form.Group controlId="formTelefono">
@@ -238,13 +250,15 @@ export class Formulario extends Component {
                   type="text"
                   name="telefono"
                   value={this.state.telefono}
-                  onChange={this.handleChange} 
+                  onChange={this.handleChange}
                   placeholder="Ingrese su telefono"
                   style={{ borderWidth: "3px", borderColor: "darkcyan" }}
                 />
                 {errores.telefono && (
-                      <Form.Text className="text-danger">{errores.telefono}</Form.Text>
-                    )}
+                  <Form.Text className="text-danger">
+                    {errores.telefono}
+                  </Form.Text>
+                )}
               </Form.Group>
 
               <Form.Group controlId="formFechaNacimiento">
@@ -259,8 +273,10 @@ export class Formulario extends Component {
                   style={{ borderWidth: "3px", borderColor: "darkcyan" }}
                 />
                 {errores.fecha_de_nacimiento && (
-                      <Form.Text className="text-danger">{errores.fecha_de_nacimiento}</Form.Text>
-                    )}
+                  <Form.Text className="text-danger">
+                    {errores.fecha_de_nacimiento}
+                  </Form.Text>
+                )}
               </Form.Group>
 
               <Form.Group controlId="formComuna">
@@ -275,8 +291,10 @@ export class Formulario extends Component {
                   onChange={this.handleChange}
                   placeholder="Ingrese su comuna"
                   style={{ borderWidth: "3px", borderColor: "darkcyan" }}
-                > 
-                  <option value="" hidden>Seleccione su Comuna</option>
+                >
+                  <option value="" hidden>
+                    Seleccione su Comuna
+                  </option>
                   <option>La Florida</option>
                   <option>La Reina</option>
                   <option>Providencia</option>
@@ -284,28 +302,28 @@ export class Formulario extends Component {
                   <option>Independencia</option>
                 </Form.Control>
                 {errores.comuna && (
-                      <Form.Text className="text-danger">{errores.comuna}</Form.Text>
-                    )}
-
+                  <Form.Text className="text-danger">
+                    {errores.comuna}
+                  </Form.Text>
+                )}
               </Form.Group>
 
-              
               <Form.Group controlId="formTipoUsuario">
-              <Form.Label>
-                <h3>Tipo de Usuario</h3>
-              </Form.Label>
-              <Form.Control
-                as="select"
-                name="tipoUsuario"
-                value={state.tipoUsuario}
-                onChange={handleChange}
-                style={{ borderWidth: "3px", borderColor: "darkcyan" }}
-              >
-                <option value="">Seleccione...</option>
-                <option value="cliente">Cliente</option>
-                <option value="prestador">Prestador de Servicio</option>
-              </Form.Control>
-            </Form.Group>
+                <Form.Label>
+                  <h3>Tipo de Usuario</h3>
+                </Form.Label>
+                <Form.Control
+                  as="select"
+                  name="tipoUsuario"
+                  value={state.tipoUsuario}
+                  onChange={handleChange}
+                  style={{ borderWidth: "3px", borderColor: "darkcyan" }}
+                >
+                  <option value="">Seleccione...</option>
+                  <option value="cliente">Cliente</option>
+                  <option value="prestador">Prestador de Servicio</option>
+                </Form.Control>
+              </Form.Group>
 
               <Form.Group controlId="formRubro">
                 <Form.Label>
@@ -318,7 +336,9 @@ export class Formulario extends Component {
                   onChange={this.handleChange}
                   style={{ borderWidth: "3px", borderColor: "darkcyan" }}
                 >
-                  <option value="" hidden>Seleccione su rubro</option>
+                  <option value="" hidden>
+                    Seleccione su rubro
+                  </option>
                   <option>Carpinteria</option>
                   <option>Electricista</option>
                   <option>Gasfitería</option>
@@ -326,52 +346,51 @@ export class Formulario extends Component {
                   <option>Aseo</option>
                 </Form.Control>
                 {errores.rubro && (
-                      <Form.Text className="text-danger">{errores.rubro}</Form.Text>
-                    )}
+                  <Form.Text className="text-danger">{errores.rubro}</Form.Text>
+                )}
               </Form.Group>
-                <h3>
-                  <strong>Terminos y Condiciones</strong>
-                </h3>
-                <br />
-                <div
-                  className="Terms"
-                  type="text"
-                  style={{ borderWidth: "3px", borderColor: "darkcyan" }}
-                >
-                  {" "}
-                  <p>
-                    El documento denominado Términos y Condiciones Generales de
-                    Uso de una determinada página o sitio web es aquel que
-                    contiene las normas que regulan la interacción de las
-                    personas que acceden a ella (usuarias) con el contenido que
-                    la misma página pone a disposición, con los productos y/o
-                    servicios ofrecidos en ella, y con las personas responsables
-                    del sitio. Los Términos y Condiciones de Uso constituyen un
-                    documento que se ha vuelto cada vez más habitual y necesario
-                    para cualquier persona que sea propietaria de un Sitio Web,
-                    o bien que utilice algún tipo de servicio o host
-                    proporcionado por un proveedor (como las plataformas de
-                    blogging, microblogging y algunas redes sociales). Aunque en
-                    Chile no existe una regulación extensiva en la misma
-                    materia, este documento se ha elaborado teniendo en
-                    consideración la incipiente legislación aplicable y las
-                    recomendaciones realizadas por organismos públicos y no
-                    gubernamentales. Es por lo anterior que este modelo de
-                    Términos y Condiciones contiene una lista extensa de
-                    menciones que se consideran importantes para el correcto
-                    funcionamiento de todo sitio web, generando la confianza que
-                    incentive en los usuarios la interacción con la página y con
-                    los productos y servicios ofrecidos en ella. En relación a
-                    los sitios Web que entregan servicios o productos para que
-                    las personas usuarias puedan comprar o contratar deben
-                    respetar la normativa aplicable a las páginas de internet,
-                    así como entregar un acceso a la información claro y
-                    conciso, velando por la seguridad de las transacciones y el
-                    manejo de los datos personales, especialmente aquellos
-                    relacionados con información bancaria o financiera.
-                  </p>
-                </div>
-                <Form.Group>
+              <h3>
+                <strong>Terminos y Condiciones</strong>
+              </h3>
+              <br />
+              <div
+                className="Terms"
+                type="text"
+                style={{ borderWidth: "3px", borderColor: "darkcyan" }}
+              >
+                {" "}
+                <p>
+                  El documento denominado Términos y Condiciones Generales de
+                  Uso de una determinada página o sitio web es aquel que
+                  contiene las normas que regulan la interacción de las personas
+                  que acceden a ella (usuarias) con el contenido que la misma
+                  página pone a disposición, con los productos y/o servicios
+                  ofrecidos en ella, y con las personas responsables del sitio.
+                  Los Términos y Condiciones de Uso constituyen un documento que
+                  se ha vuelto cada vez más habitual y necesario para cualquier
+                  persona que sea propietaria de un Sitio Web, o bien que
+                  utilice algún tipo de servicio o host proporcionado por un
+                  proveedor (como las plataformas de blogging, microblogging y
+                  algunas redes sociales). Aunque en Chile no existe una
+                  regulación extensiva en la misma materia, este documento se ha
+                  elaborado teniendo en consideración la incipiente legislación
+                  aplicable y las recomendaciones realizadas por organismos
+                  públicos y no gubernamentales. Es por lo anterior que este
+                  modelo de Términos y Condiciones contiene una lista extensa de
+                  menciones que se consideran importantes para el correcto
+                  funcionamiento de todo sitio web, generando la confianza que
+                  incentive en los usuarios la interacción con la página y con
+                  los productos y servicios ofrecidos en ella. En relación a los
+                  sitios Web que entregan servicios o productos para que las
+                  personas usuarias puedan comprar o contratar deben respetar la
+                  normativa aplicable a las páginas de internet, así como
+                  entregar un acceso a la información claro y conciso, velando
+                  por la seguridad de las transacciones y el manejo de los datos
+                  personales, especialmente aquellos relacionados con
+                  información bancaria o financiera.
+                </p>
+              </div>
+              <Form.Group>
                 <Form.Check
                   type="checkbox"
                   name="aceptoTerminos"

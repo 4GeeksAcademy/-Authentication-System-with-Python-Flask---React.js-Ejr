@@ -51,7 +51,7 @@ export const Landing = () => {
             </div>
           ))}
         </div>
-        
+
         <div className="col-md-6">
           <div className="card mb-4">
             <img src="..." className="card-img-top" alt="..." />

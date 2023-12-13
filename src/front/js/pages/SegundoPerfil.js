@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "../../styles/segundoperfil.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "./../component/Buscador.jsx"
-import "./../pages/home.js"
+import "./../component/Buscador.jsx";
+import "./../pages/home.js";
 
 export const SegundoPerfil = () => {
   const profileData = {
@@ -89,12 +89,17 @@ export const SegundoPerfil = () => {
 
           <div className="action-buttons text-center">
             <div className="logout">
-              <Link to= "/"><button className="btn btn-danger logout-text">Salir</button></Link>
+              <Link to="/">
+                <button className="btn btn-danger logout-text">Salir</button>
+              </Link>
             </div>
             <div className="job-search">
-            <Link to= "/Buscador">  <button className="btn btn-primary job-search-text">
-                Buscar Trabajo
-              </button></Link>
+              <Link to="/Buscador">
+                {" "}
+                <button className="btn btn-primary job-search-text">
+                  Buscar Trabajo
+                </button>
+              </Link>
             </div>
           </div>
         </div>
@@ -102,6 +107,3 @@ export const SegundoPerfil = () => {
     </div>
   );
 };
-
-
-

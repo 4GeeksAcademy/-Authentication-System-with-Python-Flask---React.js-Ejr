@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const GeneradorPublicacion = () => {
   const [publicaciones, setPublicaciones] = useState([]);
@@ -12,7 +13,7 @@ const GeneradorPublicacion = () => {
     fecha: "",
     idUser: "",
   });
-
+  const navigate = useNavigate();
   useEffect(() => {
     // Agregar código de inicialización si es necesario
   }, []);
@@ -20,6 +21,24 @@ const GeneradorPublicacion = () => {
   const handlePublicacion = (e) => {
     const { name, value } = e.target;
     setPublicacion({ ...publicacion, [name]: value });
+  };
+  const publicarPublicacion = (e) => {
+    publicacion.idUser = JSON.parse(localStorage.getItem("user")).id;
+    fetch("http://localhost:3001/publicacionpost/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(publicacion),
+    })
+      .then((resp) => resp.json())
+      .then((data) => {
+        console.log("Publicación enviada al servidor:", data);
+        navigate("/prestadorCv");
+      })
+      .catch((error) => {
+        console.error("Error al enviar la publicación:", error);
+      });
   };
 
   const agregarPublicacion = () => {
@@ -171,15 +190,17 @@ const GeneradorPublicacion = () => {
       </div>
       <div className="col mt-3">
         <div className="col">
-          <button type="button" className="btn btn-success">
+          <button
+            type="button"
+            className="btn btn-success"
+            onClick={publicarPublicacion}
+          >
             Publicar
           </button>
         </div>
       </div>
     </div>
   );
-  
-  
 };
 
 export default GeneradorPublicacion;

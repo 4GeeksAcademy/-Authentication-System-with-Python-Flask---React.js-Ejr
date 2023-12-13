@@ -1,11 +1,9 @@
 import React, { useState, useEffect, useContext } from "react";
 import "../../styles/perfil.css";
-import "bootstrap/dist/css/bootstrap.min.css"; 
+import "bootstrap/dist/css/bootstrap.min.css";
 import { Link } from "react-router-dom";
-import "./../component/Buscador.jsx"
+import "./../component/Buscador.jsx";
 import { Context } from "../store/appContext.js";
-
-
 
 export const Perfil = () => {
   const [formData, setFormData] = useState({
@@ -28,10 +26,10 @@ export const Perfil = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch('http://localhost:3001/api/perfil', {
-        method: 'POST',
+      const response = await fetch("http://localhost:3001/api/perfil", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
       });
@@ -39,13 +37,13 @@ export const Perfil = () => {
       if (response.ok) {
         // Manejar la respuesta exitosa del servidor
         const data = await response.json();
-        console.log('Registro exitoso:', data);
+        console.log("Registro exitoso:", data);
       } else {
         // Manejar errores
-        console.error('Error al registrar usuario');
+        console.error("Error al registrar usuario");
       }
     } catch (error) {
-      console.error('Error de red:', error);
+      console.error("Error de red:", error);
     }
   };
   return (
@@ -136,8 +134,13 @@ export const Perfil = () => {
       </div>
       <div className="additional-info"></div>
       <div className="actions">
-       <Link to="/"> <button className="action-button">Salir</button></Link>
-       <Link to= "/Buscador"><button className="action-button">Buscar Trabajo</button></Link> 
+        <Link to="/">
+          {" "}
+          <button className="action-button">Salir</button>
+        </Link>
+        <Link to="/Buscador">
+          <button className="action-button">Buscar Trabajo</button>
+        </Link>
       </div>
     </div>
   );

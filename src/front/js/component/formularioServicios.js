@@ -14,8 +14,8 @@ export const FormularioServicios = () => {
     let servicio = {
       nombre: nombre,
       descripcion: descripcion,
-      categoria: categoria
-    }
+      categoria: categoria,
+    };
     crearServicio(servicio);
 
     // Limpiar los campos después del envío
@@ -24,24 +24,24 @@ export const FormularioServicios = () => {
     setCategoria("");
   };
   const crearServicio = (servicio) => {
-    fetch('https://playground.4geeks.com/apis/fake/todos/user/felipelasheras', {
-           method: "POST",
-           headers: {
-             "Content-Type": "application/json"
-           },
-           body: JSON.stringify([])
-        })
-        .then(resp => {
-           if (!resp.ok) {
-              throw new Error('Failed to create array');
-           }
-           return resp.json();
-        })
-        .then(data => {
-           console.log("Array created successfully", data);
-        })
-        .catch(err => console.error("Error:", err));
-  }
+    fetch("https://playground.4geeks.com/apis/fake/todos/user/felipelasheras", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify([]),
+    })
+      .then((resp) => {
+        if (!resp.ok) {
+          throw new Error("Failed to create array");
+        }
+        return resp.json();
+      })
+      .then((data) => {
+        console.log("Array created successfully", data);
+      })
+      .catch((err) => console.error("Error:", err));
+  };
 
   return (
     <div>
