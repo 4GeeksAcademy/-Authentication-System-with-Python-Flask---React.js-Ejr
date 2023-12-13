@@ -23,7 +23,7 @@ import { Buscador } from "./component/Buscador.jsx";
 import { Nosotros } from "./component/nosotros.js";
 import { Task } from "./component/task.js";
 import Carrousel from "./component/carrousel.js";
-import PrestadorCv from "./component/prestadorCv";
+import PrestadorCv from "./component/prestadorCv.js";
 
 import GeneradorPublicacion from "./component/generadorPublicacion";
 import { Landing } from "./component/landing2.js";
@@ -54,6 +54,7 @@ const Layout = () => {
             <Route element={<Formulario />} path="/RegistroPrestador" />
             <Route element={<Carrousel />} path="/carousel" />
             <Route element={<PrestadorCv />} path="/prestadorCV" />
+           
             <Route
               element={<GeneradorPublicacion />}
               path="/generadorPublicacion"

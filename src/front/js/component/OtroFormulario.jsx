@@ -23,6 +23,7 @@ export const OtroFormulario = (props) => {
   });
 
   const navigate = useNavigate ()
+  const {action} = useContext (Context)
 
   const [showRubroField, setShowRubroField] = useState(false);
 
@@ -226,7 +227,7 @@ export const OtroFormulario = (props) => {
                 name="rut"
                 value={state.rut}
                 onChange={handleChange}
-                placeholder="Ingrese su rut"
+                placeholder="Ingrese su rut sin puntos ni guión"
                 style={{ borderWidth: "3px", borderColor: "darkcyan" }}
               />
               {state.errores.rut && (
