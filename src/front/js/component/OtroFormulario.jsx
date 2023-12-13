@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Form, Button, Container, Row, Col } from "react-bootstrap";
 import "../../styles/elotroformulario.css";
 import { Link } from "react-router-dom";
-import { Context } from "../store/appContext";
+import { Context, actions} from "../store/appContext";
 import "./../pages/perfil";
 
 export const OtroFormulario = (props) => {
@@ -227,7 +227,7 @@ export const OtroFormulario = (props) => {
                 name="rut"
                 value={state.rut}
                 onChange={handleChange}
-                placeholder="Ingrese su rut"
+                placeholder="Ingrese su rut sin puntos ni guión"
                 style={{ borderWidth: "3px", borderColor: "darkcyan" }}
               />
               {state.errores.rut && (
@@ -262,7 +262,7 @@ export const OtroFormulario = (props) => {
                 type="password"
                 name="password"
                 value={state.password}
-                placeholder="password"
+                placeholder="Ingrese su contraseña. Debe tener entre 8 y 12 caracteres"
                 style={{ borderWidth: "3px", borderColor: "darkcyan" }}
                 onChange={handleChange}
               />
