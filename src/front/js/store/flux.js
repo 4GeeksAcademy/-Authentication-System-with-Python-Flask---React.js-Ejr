@@ -17,6 +17,29 @@ const getState = ({ getStore, getActions, setStore }) => {
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
+			createNewPatient:async (newPatient) => {
+				try{
+					const response = await fetch("https://laughing-winner-jj5474rwwgvpfgwr-3001.app.github.dev/api/patient_signup", {
+						method: "POST",
+						body: JSON.stringify(newPatient),
+						headers: {
+							"Content-Type": "application/json"
+						}
+
+					});
+					if(!response.ok){
+						throw new Error("There was a problem with the funtion in flux")
+					}
+					const data = await response.json();
+					console.log("User created successfully", data)
+					
+
+				}catch(error){
+					console.error("There was an error tryinig to create the Patient", error)
+				}
+			},
+
+
 			exampleFunction: () => {
 				getActions().changeColor(0, "green");
 			},
