@@ -1,57 +1,47 @@
 import React, { useState, useEffect } from "react";
 
-const generadorPublicacion = () => {
-  const [tareas, setTareas] = useState([]);
+const GeneradorPublicacion = () => {
+  const [publicaciones, setPublicaciones] = useState([]);
+  const [publicacion, setPublicacion] = useState({
+    nombre: "",
+    apellido: "",
+    email: "",
+    descripcion: "",
+    comuna: "",
+    rubro: "",
+    fecha: "",
+    idUser: "",
+  });
 
   useEffect(() => {
-    fetch("http://localhost:3001/user/1", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((resp) => {
-        if (resp.ok) {
-          return resp.json();
-        } else {
-          throw new Error("Failed to fetch data");
-        }
-      })
-      .then((data) => {
-        console.log(data);
-        setTareas(data);
-      })
-      .catch(error => {
-        fetch('http://localhost:3001/user/publicacion/1', {
-           method: "POST",
-           headers: {
-             "Content-Type": "application/json"
-           },
-           body: JSON.stringify([])
-        })
-        .then(resp => {
-           if (!resp.ok) {
-              throw new Error('Failed to create array');
-           }
-           return resp.json();
-        })
-        .then(data => {
-           console.log("Array created successfully", data);
-        })
-        .catch(err => console.error("Error:", err));
-     });
+    // Agregar código de inicialización si es necesario
   }, []);
 
-  const agregarTarea = (e) => {
-    if (e.key === "Enter" && e.target.value) {
-      const nuevasTareas = [...tareas, { label: e.target.value, done: false }];
-      setTareas(nuevasTareas);
-      actualizarTareasEnServidor(nuevasTareas);
-      e.target.value = "";
+  const handlePublicacion = (e) => {
+    const { name, value } = e.target;
+    setPublicacion({ ...publicacion, [name]: value });
+  };
+
+  const agregarPublicacion = () => {
+    if (publicacion.nombre && publicacion.apellido && publicacion.email) {
+      const nuevasPublicaciones = [...publicaciones, { ...publicacion }];
+      setPublicaciones(nuevasPublicaciones);
+      actualizarPublicacionesEnServidor(nuevasPublicaciones);
+      // Puedes reiniciar el estado de publicacion aquí si es necesario
+      setPublicacion({
+        nombre: "",
+        apellido: "",
+        email: "",
+        descripcion: "",
+        comuna: "",
+        rubro: "",
+        fecha: "",
+        idUser: "",
+      });
     }
   };
 
-  const actualizarTareasEnServidor = (todos) => {
+  const actualizarPublicacionesEnServidor = (todos) => {
     fetch("http://localhost:3001/user/publicacion/", {
       method: "PUT",
       body: JSON.stringify(todos),
@@ -59,27 +49,21 @@ const generadorPublicacion = () => {
         "Content-Type": "application/json",
       },
     })
-      .then((resp) => {
-        console.log(resp.ok); // Será true (verdad) si la respuesta es exitosa.
-        console.log(resp.status); // el código de estado = 200 o código = 400 etc.
-        return resp.json(); // (regresa una promesa) will try to parse the result as json as return a promise that you can .then for results
-      })
+      .then((resp) => resp.json())
       .then((data) => {
-        //Aquí es donde debe comenzar tu código después de que finalice la búsqueda
-        console.log(data); //esto imprimirá en la consola el objeto exacto recibido del servidor
+        console.log("Publicaciones actualizadas en el servidor:", data);
       })
       .catch((error) => {
-        //manejo de errores
-        console.log(error);
+        console.error("Error al actualizar publicaciones:", error);
       });
   };
 
-  const eliminarTarea = (index) => {
-    const nuevasTareas = [...tareas];
-    nuevasTareas.splice(index, 1);
-    setTareas(nuevasTareas);
+  const eliminarPublicacion = (index) => {
+    const nuevasPublicaciones = [...publicaciones];
+    nuevasPublicaciones.splice(index, 1);
+    setPublicaciones(nuevasPublicaciones);
+    actualizarPublicacionesEnServidor(nuevasPublicaciones);
   };
-
   return (
     <div className="container mt-5">
       <div className="row">
@@ -89,26 +73,88 @@ const generadorPublicacion = () => {
       </div>
       <div className="row">
         <div className="col">
-          <div className="input-group mb-3">
+          <div className="mb-3">
             <input
               type="text"
               className="form-control"
-              placeholder="Nueva tarea"
-              onKeyPress={agregarTarea}
+              placeholder="Nombre"
+              value={publicacion.nombre}
+              onChange={handlePublicacion}
+              name="nombre"
+            />
+          </div>
+          <div className="mb-3">
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Apellido"
+              value={publicacion.apellido}
+              onChange={handlePublicacion}
+              name="apellido"
+            />
+          </div>
+          <div className="mb-3">
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Email"
+              value={publicacion.email}
+              onChange={handlePublicacion}
+              name="email"
+            />
+          </div>
+          <div className="mb-3">
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Descripción"
+              value={publicacion.descripcion}
+              onChange={handlePublicacion}
+              name="descripcion"
+            />
+          </div>
+          <div className="mb-3">
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Comuna"
+              value={publicacion.comuna}
+              onChange={handlePublicacion}
+              name="comuna"
+            />
+          </div>
+          <div className="mb-3">
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Rubro"
+              value={publicacion.rubro}
+              onChange={handlePublicacion}
+              name="rubro"
+            />
+          </div>
+          <div className="mb-3">
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Fecha"
+              value={publicacion.fecha}
+              onChange={handlePublicacion}
+              name="fecha"
             />
           </div>
         </div>
       </div>
-      <div className="row">
+      <div className="row mt-3">
         <div className="col">
-          {tareas.length > 0 ? (
+          {publicaciones.length > 0 ? (
             <ul className="list-group">
-              {tareas.map((tarea, index) => (
+              {publicaciones.map((publicacion, index) => (
                 <li
                   key={index}
                   className="list-group-item d-flex justify-content-between align-items-center"
                 >
-                  {tarea.label}
+                  {publicacion.label}
                   <span
                     className="badge bg-danger rounded-pill cursor-pointer"
                     onClick={() => eliminarTarea(index)}
@@ -119,19 +165,21 @@ const generadorPublicacion = () => {
               ))}
             </ul>
           ) : (
-            <p className="mt-3 text-center">No hay publicaciones</p>
+            <div className="alert alert-info">No hay publicaciones</div>
           )}
-             
-      <button type="button">
-        <h4>Publicar</h4>
-      </button>
-       
         </div>
       </div>
-     
+      <div className="col mt-3">
+        <div className="col">
+          <button type="button" className="btn btn-success">
+            Publicar
+          </button>
+        </div>
+      </div>
     </div>
   );
   
+  
 };
 
-export default generadorPublicacion;
+export default GeneradorPublicacion;
