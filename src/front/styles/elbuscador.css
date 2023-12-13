@@ -46,12 +46,12 @@ h1 {
 }
 
 .submitbutton2 {
-  background-color: #006b47;
+  background-color: #0d7e58;
   border-radius: 35px;
 }
 
 .card {
-  background-color: aliceblue;
+  background-color: rgb(211, 223, 233);
   padding: 38px;
   margin-top: 30px;
   width: 80%; /* Puedes ajustar este valor según tus necesidades */

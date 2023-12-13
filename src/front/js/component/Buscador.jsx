@@ -61,6 +61,7 @@ export const Buscador = () => {
             borderColor: "black",
             borderWidth: "2px",
             borderStyle: "solid",
+            background: "white",
           }}
         >
           {" "}
@@ -74,6 +75,8 @@ export const Buscador = () => {
               borderWidth: "2px",
               borderStyle: "solid",
               margin: "8px",
+              background:"rgb(203, 210, 210)",
+             
             }}
           >
             <div className="card-body2">
