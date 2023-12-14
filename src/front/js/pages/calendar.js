@@ -23,7 +23,7 @@ let bgColor = "rgb(72 177 186 / 63%)";
 function Calendar(props) {
   const { store, actions } = useContext(Context);
   const [modalData, setModalData] = useState({});
-
+console.log(store)
   let trHeight = Math.floor(100 / store.programs.length);
 
   return (

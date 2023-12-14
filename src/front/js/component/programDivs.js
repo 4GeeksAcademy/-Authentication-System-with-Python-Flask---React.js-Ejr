@@ -24,6 +24,7 @@ function ProgramDivs() {
     <div>
       <ul className="nav nav-pills  nav-justified" role="tablist">
         {dayArray.map((day, i) => {
+          let capitalLetterDay =day[0].toUpperCase() + day.replace(day[0],"")
           return (
             <>
               <li className="nav-item" role="presentation">
@@ -39,7 +40,7 @@ function ProgramDivs() {
                   aria-selected={currentDay == day ? "true" : "false"}
                   onClick={() => setDays(day)}
                 >
-                  {day}
+                  {capitalLetterDay}
                 </button>
               </li>
             </>
