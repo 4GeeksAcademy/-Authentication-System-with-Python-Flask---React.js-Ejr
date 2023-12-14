@@ -1,63 +1,140 @@
 import React, { useContext, useState } from 'react'
 import { Context } from '../store/appContext'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import '../../styles/NewPatient.css';
+
+
 const NewPatient = () => {
     const navigate = useNavigate()
-    const {store, actions} = useContext(Context)
+    const { store, actions } = useContext(Context)
 
     const [firstName, setFirstName] = useState("")
     const [lastName, setLastName] = useState("")
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
 
+    //Estados de dinamizaciones
+    const [clickedFristName, setClickedFirstName] = useState(false)
+    const [clickedLastName, setClickedLastName] = useState(false)
+    const [clickedEmail, setClickedEmail] = useState(false)
+    const [clickedPassword, setClickedPassword] = useState(false)
+
+
+
+    //Funciones para dinamizmos de inputs
+
+    const handlerClickFirstName = () => {
+        setClickedFirstName(false)
+    }
+    const handlerBlurFirstName = () => {
+        if (!firstName.trim()) {
+            setClickedFirstName(true);
+        }
+    }
+
+    const handlerClickLastName = () => {
+        setClickedLastName(false)
+    }
+    const handlerBlurLastName = () => {
+        if (!lastName.trim()) {
+            setClickedLastName(true);
+        }
+    }
+
+    const handlerClickEmail = () => {
+        setClickedEmail(false)
+    }
+    const handlerBlurEmail = () => {
+        if (!email.trim()) {
+            setClickedEmail(true);
+        }
+    }
+
+    const handlerClickPassword = () => {
+        setClickedPassword(false)
+    }
+    const handlerBlurPassword = () => {
+        if (!password.trim()) {
+            setClickedPassword(true);
+        }
+    }
+
+
+
+
+
+
+    //Funcion para crear usuario
     const handlerCreatePatient = async () => {
-        try{ 
-            if(firstName == "" || lastName == "" || email == "" || password == ""){
+        try {
+            if (firstName == "" || lastName == "" || email == "" || password == "") {
                 alert("Todos los campos son requeridos")
                 return
             }
-            
-            
+
+
             let newInputPatient = {
-            first_name: firstName,
-            last_name: lastName,
-            email: email,
-            password: password 
+                first_name: firstName,
+                last_name: lastName,
+                email: email,
+                password: password
+            }
+            await actions.createNewUser(newInputPatient)
+            navigate("/") //---------------------------->Colocar ruta creada por Leo ATENCION <------------------------------------
+        } catch (error) {
+            console.error("Error trying to send info", error)
         }
-        await actions.createNewUser(newInputPatient) 
-        navigate("/") //---------------------------->Colocar ruta creada por Leo ATENCION <------------------------------------
-    }catch(error){
-        console.error("Error trying to send info", error)
-    }
-    
-       
+
+
     }
 
     return (
         <div className='patientForm'>
+            <div className='title'>
+                <h1>Regístrate :) </h1>
+                <br></br>
+            </div>
             <div className="mb-3">
-                <label for="exampleFormControlInput1" className="form-label">Nombre</label>
-                <input onChange={(e)=>setFirstName(e.target.value)} type="email" className="form-control" id="exampleFormControlInput1" placeholder="name@example.com" />
+                <input onChange={(e) => setFirstName(e.target.value)} onClick={handlerClickFirstName} onBlur={handlerBlurFirstName} type="email" className="form-control" id="exampleFormControlInput1" placeholder="Nombre" />
+                {clickedFristName && (<p className='errorMsg'>* El nombre es obligatorio *</p>)}
             </div>
 
             <div className="mb-3">
-                <label for="exampleFormControlInput1" className="form-label">Apellido</label>
-                <input onChange={(e)=>setLastName(e.target.value)} type="email" className="form-control" id="exampleFormControlInput1" placeholder="name@example.com" />
+                <input onChange={(e) => setLastName(e.target.value)} onClick={handlerClickLastName} onBlur={handlerBlurLastName} type="email" className="form-control" id="exampleFormControlInput1" placeholder="Apellido" />
+                {clickedLastName && (<p className='errorMsg'>* El apelido es obligatorio *</p>)}
             </div>
 
             <div className="mb-3">
-                <label for="exampleFormControlInput1" className="form-label">Correo electronico</label>
-                <input onChange={(e)=>setEmail(e.target.value)} type="email" className="form-control" id="exampleFormControlInput1" placeholder="name@example.com" />
+                <input onChange={(e) => setEmail(e.target.value)} onClick={handlerClickEmail} onBlur={handlerBlurEmail} type="email" className="form-control" id="exampleFormControlInput1" placeholder=" Correo electrónico" />
+                {clickedEmail && (<p className='errorMsg'>* El correo electrónico es obligatorio *</p>)}
+
             </div>
 
-            <label for="inputPassword5" className="form-label">Contraseña</label>
-            <input onChange={(e)=>setPassword(e.target.value)} type="password" id="inputPassword5" className="form-control" aria-describedby="passwordHelpBlock" />
-            <div id="passwordHelpBlock" className="form-text">
-                Tu contraseña debe tener de 8-20 caracteres, letras y numeros y no debe contener caracteres epeciales o emojis
-            </div>
+            <input onChange={(e) => setPassword(e.target.value)} onClick={handlerClickPassword} onBlur={handlerBlurPassword} type="password" id="inputPassword5" className="form-control" aria-describedby="passwordHelpBlock" placeholder='Contraseña' />
+            {clickedPassword && (<p className='errorMsg'>* La contraseña es obligatoria *</p>)}
+            <br></br>
 
-            <div>
-                <button onClick={handlerCreatePatient} type="button" class="btn btn-primary">Crear</button>
+            {/* <div>
+                <div class="progress">
+                    <div class="progress-bar bg-success" role="progressbar" style={{ width: '25%' }} aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <div class="progress">
+                    <div class="progress-bar bg-info" role="progressbar" style={{ width: '50%' }} aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <div class="progress">
+                    <div class="progress-bar bg-warning" role="progressbar" style={{ width: '75%' }} aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <div class="progress">
+                    <div class="progress-bar bg-danger" role="progressbar" style={{ width: '100%' }} aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+            </div> */}
+
+            <div className='createNewBtn'>
+                <button onClick={handlerCreatePatient} type="button" className="btn btn-success saveBtn">Crear</button>
+
+                <Link to={'/signup'}>
+                    <button type="button" className="btn btn-outline-primary exitBtn">Salir</button>
+                </Link>
             </div>
 
         </div>

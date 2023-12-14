@@ -1,6 +1,8 @@
 import React, { useContext, useState } from 'react'
 import { Context } from '../store/appContext'
 import { useNavigate, useSearchParams } from 'react-router-dom'
+
+
 const NewSpecialist = () => {
     const {store, actions} = useContext(Context)
     const navigate = useNavigate();
@@ -48,8 +50,8 @@ const NewSpecialist = () => {
 
     return (
         <div className='specialistForm'>
-            <h2>Bienvenido espcialista</h2>
-            <p>Por favor, introduce tus datos</p>
+            <h2>Bienvenido especialista</h2>
+            <p>Por favor, introduce tus datos para registrarte</p>
             <div className="mb-3">
                 <label for="exampleFormControlInput1" className="form-label">Nombre</label>
                 <input onChange={(e)=>setFirstName(e.target.value)} type="firstName" className="form-control" id="exampleFormControlInput1" placeholder="Nombre" />
@@ -57,7 +59,7 @@ const NewSpecialist = () => {
 
             <div className="mb-3">
                 <label for="exampleFormControlInput1" className="form-label">Apellido</label>
-                <input onChange={(e)=>setFirstName(e.target.value)} type="lastName" className="form-control" id="exampleFormControlInput2" placeholder="Apellido" />
+                <input onChange={(e)=>setLastName(e.target.value)} type="lastName" className="form-control" id="exampleFormControlInput2" placeholder="Apellido" />
             </div>
 
             <div className="mb-3">
