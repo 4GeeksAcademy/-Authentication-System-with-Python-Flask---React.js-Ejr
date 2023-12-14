@@ -11,35 +11,35 @@ export const Buscador = () => {
         <br />
         <Row className="justify-content-center">
           <Col md="auto">
-            <Button variant="dark"style={{borderRadius:"15px"}}>
+            <Button variant="dark" style={{ borderRadius: "15px" }}>
               <h2>Carpintería</h2>
             </Button>
           </Col>
         </Row>
         <Row className="justify-content-center mt-3">
           <Col md="auto">
-            <Button variant="dark" style={{borderRadius:"15px"}}>
+            <Button variant="dark" style={{ borderRadius: "15px" }}>
               <h2>Electricista</h2>
             </Button>
           </Col>
         </Row>
         <Row className="justify-content-center mt-3">
           <Col md="auto">
-            <Button variant="dark" style={{borderRadius:"15px"}}>
+            <Button variant="dark" style={{ borderRadius: "15px" }}>
               <h2>Gasfistería</h2>
             </Button>
           </Col>
         </Row>
         <Row className="justify-content-center mt-3">
           <Col md="auto">
-            <Button variant="dark" style={{borderRadius:"15px"}}>
+            <Button variant="dark" style={{ borderRadius: "15px" }}>
               <h2>Pintor</h2>
             </Button>
           </Col>
         </Row>
         <Row className="justify-content-center mt-3">
           <Col md="auto">
-            <Button variant="dark" style={{borderRadius:"15px"}}>
+            <Button variant="dark" style={{ borderRadius: "15px" }}>
               <h2>Aseo</h2>
             </Button>
           </Col>
@@ -61,18 +61,10 @@ export const Buscador = () => {
             borderColor: "black",
             borderWidth: "2px",
             borderStyle: "solid",
-            background: "white",
+            background: "rgb(203, 210, 210)",
           }}
         >
           {" "}
-
-
-          {/*EN ESTA LINEA COLOR DE BACKGROUNd*/}
-
-
-
-          {/*EN ESTA LINEA COLOR DE BACKGROUND*/}
-
           <div
             className="card-body"
             style={{
@@ -80,13 +72,12 @@ export const Buscador = () => {
               borderWidth: "2px",
               borderStyle: "solid",
               margin: "8px",
-              background:"rgb(203, 210, 210)",
-             
+              background: "rgb(190, 197, 203)",
             }}
           >
             <div className="card-body2">
-              <p style={{width: "70%", margin: "10px", textAlign: "left" }}>
-                CONSIGUE NUEVAS OPORTUNIDADES
+              <p style={{ width: "70%", margin: "10px", textAlign: "left" }}>
+                <strong>CONSIGUE NUEVAS OPORTUNIDADES</strong>
               </p>
             </div>
 

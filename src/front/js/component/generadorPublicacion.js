@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 const GeneradorPublicacion = () => {
-  const [publicaciones, setPublicaciones] = useState([]);
   const [publicacion, setPublicacion] = useState({
     nombre: "",
     apellido: "",
@@ -46,7 +45,7 @@ const GeneradorPublicacion = () => {
   };
 
   return (
-    <div className="container mt-5">
+    <div className="container mt-5" >
       <div
         className="col-md-5 offset-md-3 max-width-form text-center"
         style={{
@@ -55,7 +54,7 @@ const GeneradorPublicacion = () => {
           background: "#D1EFEA",
           margin: "auto",
           padding: "20px",
-          backgroundColor: "#CCCCCC",
+          backgroundColor: "#CCCCCC", // Agregado para establecer el fondo gris
           boxShadow: "0 0 70px #000",
         }}
       >
@@ -67,13 +66,13 @@ const GeneradorPublicacion = () => {
             boxShadow: "initial",
           }}
         >
-          Publicar
+          Publicación
         </h2>
 
         <div className="mb-6 mt-3">
           <div className="mb-3">
             <input
-              type="text"
+              type="text" style={{ border: '1px solid black' }}
               className="form-control"
               placeholder="Nombre"
               value={publicacion.nombre}
@@ -84,7 +83,7 @@ const GeneradorPublicacion = () => {
           </div>
           <div className="mb-3">
             <input
-              type="text"
+              type="text" style={{ border: '1px solid black' }}
               className="form-control"
               placeholder="Apellido"
               value={publicacion.apellido}
@@ -95,7 +94,7 @@ const GeneradorPublicacion = () => {
           </div>
           <div className="mb-3">
             <input
-              type="email" // Tipo de entrada email para la validación automática del formato de correo electrónico
+              type="email" style={{ border: '1px solid black' }}// Tipo de entrada email para la validación automática del formato de correo electrónico
               className="form-control"
               placeholder="Email"
               value={publicacion.email}
@@ -106,7 +105,7 @@ const GeneradorPublicacion = () => {
           </div>
           <div className="mb-3">
             <input
-              type="text"
+              type="text" style={{ border: '1px solid black' }}
               className="form-control"
               placeholder="Descripción"
               value={publicacion.descripcion}
@@ -117,7 +116,7 @@ const GeneradorPublicacion = () => {
           </div>
           <div className="mb-3">
             <input
-              type="text"
+              type="text" style={{ border: '1px solid black' }}
               className="form-control"
               placeholder="Comuna"
               value={publicacion.comuna}
@@ -128,7 +127,7 @@ const GeneradorPublicacion = () => {
           </div>
           <div className="mb-3">
             <input
-              type="text"
+              type="text" style={{ border: '1px solid black' }}
               className="form-control"
               placeholder="Rubro"
               value={publicacion.rubro}
@@ -139,7 +138,7 @@ const GeneradorPublicacion = () => {
           </div>
           <div className="mb-3">
             <input
-              type="text"
+              type="text" style={{ border: '1px solid black' }}
               className="form-control"
               placeholder="Fecha"
               value={publicacion.fecha}
@@ -150,14 +149,19 @@ const GeneradorPublicacion = () => {
           </div>
         </div>
 
-        <button
-          type="button"
-          className="btn btn-primary mt-5 me-5"
-          style={{ width: "40%", margin: "0 auto" }}
-          onClick={publicarPublicacion}
-        >
-          Publicar
-        </button>
+        {/* FALTA AGREGAR EL LINK  DEL BUTTON*/}
+             
+  
+  <button
+    type="button"
+    className="btn btn-primary mt-5 me-5"
+    style={{ width: "40%" , margin: "0 auto" }}
+    onClick={publicarPublicacion}
+  >
+    Publicar
+  </button>
+ 
+      
       </div>
     </div>
   );
