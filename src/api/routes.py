@@ -37,7 +37,7 @@ def handle_hello():
 
 
 @api.route("/signup_patient", methods=["POST"])
-def signup():
+def signup_patient():
     try:
         first_name=request.json.get("first_name")
         last_name=request.json.get("last_name")
@@ -57,7 +57,7 @@ def signup():
         db.session.commit()
 
 
-        return jsonify ({"Message":"Patient was created Succesfully!","Patient first name": first_name,"Patient last name": last_name}),200
+        return jsonify ({"Message":"Patient was created Succesfully!","First name": first_name,"Last name": last_name, "email":email}),200
 
 
     except Exception as e:
@@ -65,4 +65,36 @@ def signup():
 
 
 
+
+@api.route("signup_specialist",methods=["POST"])
+def signup_specialist():
+    try:
+        first_name=request.json.get("first_name")
+        last_name=request.json.get("last_name")
+        email=request.json.get("email")
+        password=request.json.get("password")
+        is_physiotherapist=request.json.get("is_physiotherapist")    
+        is_nurse=request.json.get("is_nurse")   
+        certificate=request.json.get("certificate")
+        description=request.json.get("description")
+        language=request.json.get("language") 
+        
+        if not first_name or not last_name or not email or not password:
+            return jsonify ({"Error":"You are missing information, check it out"}),400
+
+
+        existing_specialist=Specialist.query.filter_by(email=email).first()
+
+        if existing_specialist:
+            return jsonify ({"Error":"The Specialist already exist!"}),400
+        
+        password_hash=bcrypt.generate_password_hash(password).decode("utf-8")
+        new_specialist=Specialist(email=email,first_name=first_name,last_name=last_name,password=password_hash,is_physiotherapist=is_physiotherapist,is_nurse=is_nurse,certificate=certificate,description=description,language=language)
+        db.session.add(new_specialist)
+        db.session.commit()
+
+        return jsonify({"Message":"The Specialist was created succesfully!", "email":email,"first_name":first_name, "last_name": last_name,"is_physiotherapist":is_physiotherapist,"is_nurse":is_nurse,"certificate":certificate,"description":description,"language":language}),200
+
+    except Exception as e: 
+        return jsonify({"Error": "Error in Specialist creation " + str(e)}),400
 

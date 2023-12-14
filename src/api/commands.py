@@ -1,6 +1,6 @@
 
 import click
-from api.models import db, Patient
+from api.models import db, Patient,Specialist
 
 """
 In this file, you can add as many commands as you want using the @app.cli.command decorator
@@ -26,6 +26,26 @@ def setup_commands(app):
             db.session.add(user)
             db.session.commit()
             print("User: ", user.email, " created.")
+
+        print("All test users created")
+
+    @app.cli.command("insert-test-data")
+    def insert_test_data():
+        pass
+
+def setup_commands_specialist(app):
+    @app.cli.command("insert-test-users") # name of our command
+    @click.argument("count") # argument of out command
+    def insert_test_users(count):
+        print("Creating test Specialist")
+        for x in range(1, int(count) + 1):
+            user = Specialist()
+            user.email = "test_user" + str(x) + "@test.com"
+            user.password = "123456"
+            user.is_active = True
+            db.session.add(user)
+            db.session.commit()
+            print("Specialist: ", user.email, " created.")
 
         print("All test users created")
 
