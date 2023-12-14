@@ -145,7 +145,7 @@ const GeneradorPublicacion = () => {
           type="button"
           className="btn btn-primary mt-5 me-5"
           style={{ width: "40%" }}
-          onClick={() => navigate("/prestadorCv")}
+          onClick= {publicarPublicacion} 
           
         >
           Publicar
