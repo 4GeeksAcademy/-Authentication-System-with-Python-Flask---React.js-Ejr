@@ -25,7 +25,9 @@ const GeneradorPublicacion = () => {
   };
 
   const publicarPublicacion = () => {
-    publicacion.idUser = JSON.parse(localStorage.getItem("user")).id;
+    const userFromLocalStorage = JSON.parse(localStorage.getItem("user"));
+    publicacion.idUser = userFromLocalStorage ? userFromLocalStorage.id : null;
+
     fetch("http://localhost:3001/publicacionpost/", {
       method: "POST",
       headers: {
@@ -142,14 +144,12 @@ const GeneradorPublicacion = () => {
         </div>
        
         <button
-          type="button"
-          className="btn btn-primary mt-5 me-5"
-          style={{ width: "40%" }}
-          onClick={() => navigate("/prestadorCv")}
-          
-        >
-          Publicar
-        </button>
+            type="button"
+            className="btn btn-success"
+            onClick={publicarPublicacion}
+          >
+            Publicar
+          </button>
       
       </div>
     </div>

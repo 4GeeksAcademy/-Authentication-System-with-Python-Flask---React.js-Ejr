@@ -133,7 +133,19 @@ def register():
     buscador_found = UserBuscador.query.filter_by(email=email).first()
 
     if user_found or buscador_found:
-        return jsonify({"error": "Email ya registrado"}), 400
+        return jsonify({"message": "Email ya registrado"}), 400
+    
+    user_found = User.query.filter_by(telefono=telefono).first()
+    buscador_found = UserBuscador.query.filter_by(telefono=telefono).first()
+
+    if user_found or buscador_found:
+        return jsonify({"error": "Telefono ya registrado"}), 400
+    
+    user_found = User.query.filter_by(rut=rut).first()
+    buscador_found = UserBuscador.query.filter_by(rut=rut).first()
+
+    if user_found or buscador_found:
+        return jsonify({"error": "Rut ya registrado"}), 400
 
     # Crear instancia de usuario basándose en la presencia de "rubro"
     if "rubro" in request.json:
@@ -162,7 +174,7 @@ def register():
     expires = datetime.timedelta(days=3)
     access_token = create_access_token(identity=id, expires_delta=expires)
 
-    data = {"access_token": access_token, "user": new_user.serialize()}
+    data = {"message": "Usuario registrado con éxito","access_token": access_token, "user": new_user.serialize()}
 
 
     # if "rubro" not in request.json:

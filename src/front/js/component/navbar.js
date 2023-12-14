@@ -54,7 +54,7 @@ export const Navbar = () => {
         <div className="ml-auto">
           {user ? (
             <>
-              <Link to="/segundoperfil" className="text-white mr-5">
+              <Link to="/perfil" className="text-white mr-5">
                 ¡Hola, {user.nombre}!
               </Link>
               <button

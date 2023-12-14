@@ -85,16 +85,6 @@ export const Perfil = () => {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="region">Región:</label>
-          <input
-            type="text"
-            id="region"
-            name="region"
-            value={formData.region}
-            onChange={handleInputChange}
-          />
-        </div>
-        <div className="form-group">
           <label htmlFor="comuna">Comuna:</label>
           <input
             type="text"
@@ -118,28 +108,14 @@ export const Perfil = () => {
           Guardar
         </button>
       </form>
-
-      <div className="notices-section">
-        <div className="notice">Agenda 1</div>
-        <div className="notice">Aviso 2</div>
-        <div className="notice">Aviso 3</div>
-        <div className="notice">Aviso 4</div>
-        <div className="notice">Aviso 5</div>
-      </div>
-      <div className="services-history">
-        <h2>Historial de servicios</h2>
-      </div>
-      <div className="provider-comments">
-        <h3>Comentario Prestador 1</h3>
-      </div>
       <div className="additional-info"></div>
       <div className="actions">
+        <Link to="/Buscador">
+          <button className="action-button">Publicar Trabajo</button>
+        </Link>
         <Link to="/">
           {" "}
           <button className="action-button">Salir</button>
-        </Link>
-        <Link to="/Buscador">
-          <button className="action-button">Buscar Trabajo</button>
         </Link>
       </div>
     </div>
