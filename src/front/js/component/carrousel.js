@@ -45,7 +45,7 @@ export const Carrousel = () => {
           }}
         >
           {" "}
-          <Link to="/buscador">
+          {/* <Link to="/buscador"> */}
             <button
               style={{
                 marginRight: "-0.1%",
@@ -73,7 +73,7 @@ export const Carrousel = () => {
                 />
               </div>
             </button>
-          </Link>
+          {/* </Link> */}
           <button
             style={{
               marginRight: "-0.1%",
