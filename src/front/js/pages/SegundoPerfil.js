@@ -51,7 +51,11 @@ export const SegundoPerfil = () => {
           description: perfil.rubro,
         }));
       } catch (error) {
+
         console.error("Error al cargar el perfil:", error);
+
+        console.error('Error al cargar el perfil:', error);
+
       }
     };
 
@@ -131,12 +135,14 @@ export const SegundoPerfil = () => {
           <div className="action-buttons text-center">
             <div className="logout">
               <Link to="/generadorPublicacion">
+
                 <button
                   className="btn btn-primary logout-text"
                   style={{ marginTop: "95px" }}
                 >
                   Publicar Trabajo
                 </button>
+
               </Link>
             </div>
           </div>
