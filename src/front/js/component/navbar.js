@@ -2,18 +2,37 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 export const Navbar = () => {
-	return (
-		<nav className="navbar navbar-light bg-light">
-			<div className="container">
-				<Link to="/">
-					<span className="navbar-brand mb-0 h1">React Boilerplate</span>
-				</Link>
-				<div className="ml-auto">
-					<Link to="/demo">
-						<button className="btn btn-primary">Check the Context in action</button>
-					</Link>
-				</div>
-			</div>
-		</nav>
-	);
+  return (
+    <header className="typefloating">
+      <div className="brand">
+        <img className="icon" alt="" src="/icon.svg" />
+        <b className="brandname">PhysioCareSync</b>
+      </div>
+      <div className="navLinks">
+        <nav className="navLinks1">
+          <Link to="/dashboard" className="navLink button-like">
+            Dashboard
+          </Link>
+          <Link to="/servicios" className="navLink button-like">
+            Servicios
+          </Link>
+          <Link to="/profesionales" className="navLink button-like">
+            Profesionales
+          </Link>
+          <Link to="/iniciar-sesion" className="button">
+            <div className="textContainer">
+              <b className="cta">Inciar Sesión</b>
+            </div>
+          </Link>
+          <Link to="/registrarse" className="button1">
+            <div className="textContainer">
+              <b className="cta">Registrarse</b>
+            </div>
+          </Link>
+        </nav>
+      </div>
+    </header>
+  );
 };
+
+export default Navbar;
