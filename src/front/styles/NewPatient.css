@@ -17,8 +17,11 @@
 }
 
 .title{
+display: flex;
 margin: auto;
 color: white;
+flex-direction: column;
+align-items: center;
 }
 
 .createNewBtn{
@@ -33,4 +36,10 @@ color: white;
     margin-left: 2.5%;
     color: yellow;
     margin-bottom: -10px;
+}
+
+.speciality{
+    display: flex;
+    justify-content: center;
+    color: white;
 }

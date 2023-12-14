@@ -13,7 +13,7 @@ const NewPatient = () => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
 
-    //Estados de dinamizaciones
+    //Dinamizations states
     const [clickedFristName, setClickedFirstName] = useState(false)
     const [clickedLastName, setClickedLastName] = useState(false)
     const [clickedEmail, setClickedEmail] = useState(false)
@@ -90,9 +90,9 @@ const NewPatient = () => {
 
     return (
         <div className='patientForm'>
-            <div className='title'>
-                <h1>Regístrate :) </h1>
-                <br></br>
+             <div className='title'>
+            <h1>Bienvenido paciente!</h1>
+            <p className='subTitle'>Por favor, introduce tus datos para registrarte</p>
             </div>
             <div className="mb-3">
                 <input onChange={(e) => setFirstName(e.target.value)} onClick={handlerClickFirstName} onBlur={handlerBlurFirstName} type="email" className="form-control" id="exampleFormControlInput1" placeholder="Nombre" />
@@ -101,7 +101,7 @@ const NewPatient = () => {
 
             <div className="mb-3">
                 <input onChange={(e) => setLastName(e.target.value)} onClick={handlerClickLastName} onBlur={handlerBlurLastName} type="email" className="form-control" id="exampleFormControlInput1" placeholder="Apellido" />
-                {clickedLastName && (<p className='errorMsg'>* El apelido es obligatorio *</p>)}
+                {clickedLastName && (<p className='errorMsg'>* El apellido es obligatorio *</p>)}
             </div>
 
             <div className="mb-3">

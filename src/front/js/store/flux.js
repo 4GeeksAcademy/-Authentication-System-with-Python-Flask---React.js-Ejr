@@ -41,7 +41,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			createNewSpecialist:async (newSpecialist) => {
 				try{
-					const response = await fetch("https://laughing-winner-jj5474rwwgvpfgwr-3001.app.github.dev/api/patient_signup", {
+					const response = await fetch("https://laughing-winner-jj5474rwwgvpfgwr-3001.app.github.dev/api/signup_specialist", {
 						method: "POST",
 						body: JSON.stringify(newSpecialist),
 						headers: {
