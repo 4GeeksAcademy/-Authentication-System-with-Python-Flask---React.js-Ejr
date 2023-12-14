@@ -11,35 +11,35 @@ export const Buscador = () => {
         <br />
         <Row className="justify-content-center">
           <Col md="auto">
-            <Button variant="dark">
+            <Button variant="dark"style={{borderRadius:"15px"}}>
               <h2>Carpintería</h2>
             </Button>
           </Col>
         </Row>
         <Row className="justify-content-center mt-3">
           <Col md="auto">
-            <Button variant="dark">
+            <Button variant="dark" style={{borderRadius:"15px"}}>
               <h2>Electricista</h2>
             </Button>
           </Col>
         </Row>
         <Row className="justify-content-center mt-3">
           <Col md="auto">
-            <Button variant="dark">
+            <Button variant="dark" style={{borderRadius:"15px"}}>
               <h2>Gasfistería</h2>
             </Button>
           </Col>
         </Row>
         <Row className="justify-content-center mt-3">
           <Col md="auto">
-            <Button variant="dark">
+            <Button variant="dark" style={{borderRadius:"15px"}}>
               <h2>Pintor</h2>
             </Button>
           </Col>
         </Row>
         <Row className="justify-content-center mt-3">
           <Col md="auto">
-            <Button variant="dark">
+            <Button variant="dark" style={{borderRadius:"15px"}}>
               <h2>Aseo</h2>
             </Button>
           </Col>
@@ -85,7 +85,7 @@ export const Buscador = () => {
             }}
           >
             <div className="card-body2">
-              <p style={{ width: "70%", margin: "10px" }}>
+              <p style={{width: "70%", margin: "10px", textAlign: "left" }}>
                 CONSIGUE NUEVAS OPORTUNIDADES
               </p>
             </div>
@@ -97,8 +97,8 @@ export const Buscador = () => {
               <Link to="/Registro">
                 <button
                   type="button"
-                  className="submitbutton2 btn btn success"
-                  style={{ borderRadius: "35px", margin: "15px" }}
+                  className="submitbutton2 btn btn"
+                  style={{ borderRadius: "12px", margin: "15px" }}
                 >
                   Conviertete en Prestador
                 </button>
