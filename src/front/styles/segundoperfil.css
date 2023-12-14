@@ -9,13 +9,14 @@
   padding: 30px;
   background-color: #ece6e6;
   box-shadow: 0 0 70px #000;
-  width: 60%;
+  width: 60% !important;
   height:50%;
 }
 
 @media (max-width: 768px) {
   .profile-container {
-    width: 90%;
+    width: 90% !important;
+    display: block;
   }
 
   .photo.text-center {
@@ -64,7 +65,7 @@
   margin-bottom: 15px;
   padding: 8px;
   border: 2px solid #ccc;
-  border-radius: 8px;
+  border-radius:4px;
   width: 100%;
 
 }
@@ -134,4 +135,10 @@ Estilos para los botones */
   object-fit: cover; /* Ajusta el tamaño de la imagen manteniendo su relación de aspecto */
   border-radius: 50%; /* Hace que la imagen sea redonda */
   border: 2px solid #fff; /* Agrega un borde blanco al redondel */
+}
+
+@media (max-width: 768px) {
+  .logout button {
+    width: 100%;
+  }
 }

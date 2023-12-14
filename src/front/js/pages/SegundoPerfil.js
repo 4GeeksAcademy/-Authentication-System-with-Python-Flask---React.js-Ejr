@@ -6,6 +6,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./../component/Buscador.jsx";
 import "./../pages/home.js";
 
+
 export const SegundoPerfil = () => {
   const data = {
     name: "Nombre Prestador",
@@ -172,14 +173,14 @@ export const SegundoPerfil = () => {
               <Link to="/generadorPublicacion">
                 <button
                   className="btn btn-primary logout-text"
-                  style={{ marginTop: "95px" }}
+                  style={{ marginTop: "50px", marginBottom:"15px" }}
                 >
                   Publicar Trabajo
                 </button>
               </Link>
-
               <Link to="/">
-                <button className="btn btn-danger logout-text">Salir</button>
+          {" "}
+                <button className="btn btn-danger logout-text" >Salir</button>
               </Link>
             </div>
           </div>

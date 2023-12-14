@@ -158,14 +158,6 @@ const GeneradorPublicacion = () => {
         >
           Publicar
         </button>
-
-        <button
-          type="button"
-          className="btn btn-success"
-          onClick={publicarPublicacion}
-        >
-          Publicar
-        </button>
       </div>
     </div>
   );
