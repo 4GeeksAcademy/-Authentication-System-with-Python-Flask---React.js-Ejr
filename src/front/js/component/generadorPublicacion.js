@@ -25,7 +25,9 @@ const GeneradorPublicacion = () => {
   };
 
   const publicarPublicacion = () => {
-    publicacion.idUser = JSON.parse(localStorage.getItem("user")).id;
+    const userFromLocalStorage = JSON.parse(localStorage.getItem("user"));
+    publicacion.idUser = userFromLocalStorage ? userFromLocalStorage.id : null;
+
     fetch("http://localhost:3001/publicacionpost/", {
       method: "POST",
       headers: {
@@ -76,7 +78,8 @@ const GeneradorPublicacion = () => {
               placeholder="Nombre"
               value={publicacion.nombre}
               onChange={handlePublicacion}
-              name="nombre" required  
+              name="nombre"
+              required
             />
           </div>
           <div className="mb-3">
@@ -86,19 +89,20 @@ const GeneradorPublicacion = () => {
               placeholder="Apellido"
               value={publicacion.apellido}
               onChange={handlePublicacion}
-              name="apellido" required  
+              name="apellido"
+              required
             />
           </div>
           <div className="mb-3">
-          <input
-  type="email"  // Tipo de entrada email para la validación automática del formato de correo electrónico
-  className="form-control"
-  placeholder="Email"
-  value={publicacion.email}
-  onChange={handlePublicacion}
-  name="email"
-  required    // Campo obligatorio
-/>
+            <input
+              type="email" // Tipo de entrada email para la validación automática del formato de correo electrónico
+              className="form-control"
+              placeholder="Email"
+              value={publicacion.email}
+              onChange={handlePublicacion}
+              name="email"
+              required // Campo obligatorio
+            />
           </div>
           <div className="mb-3">
             <input
@@ -107,7 +111,8 @@ const GeneradorPublicacion = () => {
               placeholder="Descripción"
               value={publicacion.descripcion}
               onChange={handlePublicacion}
-              name="descripcion" required  
+              name="descripcion"
+              required
             />
           </div>
           <div className="mb-3">
@@ -117,7 +122,8 @@ const GeneradorPublicacion = () => {
               placeholder="Comuna"
               value={publicacion.comuna}
               onChange={handlePublicacion}
-              name="comuna" required  
+              name="comuna"
+              required
             />
           </div>
           <div className="mb-3">
@@ -127,7 +133,8 @@ const GeneradorPublicacion = () => {
               placeholder="Rubro"
               value={publicacion.rubro}
               onChange={handlePublicacion}
-              name="rubro" required  
+              name="rubro"
+              required
             />
           </div>
           <div className="mb-3">
@@ -137,23 +144,28 @@ const GeneradorPublicacion = () => {
               placeholder="Fecha"
               value={publicacion.fecha}
               onChange={handlePublicacion}
-              name="fecha" required  
+              name="fecha"
+              required
             />
           </div>
         </div>
-       
-        
-  
-  <button
-    type="button"
-    className="btn btn-primary mt-5 me-5"
-    style={{ width: "40%" , margin: "0 auto" }}
-    onClick={publicarPublicacion}
-  >
-    Publicar
-  </button>
- 
-      
+
+        <button
+          type="button"
+          className="btn btn-primary mt-5 me-5"
+          style={{ width: "40%", margin: "0 auto" }}
+          onClick={publicarPublicacion}
+        >
+          Publicar
+        </button>
+
+        <button
+          type="button"
+          className="btn btn-success"
+          onClick={publicarPublicacion}
+        >
+          Publicar
+        </button>
       </div>
     </div>
   );
