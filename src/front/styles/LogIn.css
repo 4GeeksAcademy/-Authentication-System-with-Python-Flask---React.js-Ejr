@@ -1,0 +1,45 @@
+.patientForm {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    width: 60%;
+    background-color: rgba(0, 0, 0, 0.801);
+    margin-top: 5%;
+    border-radius: 25px;
+    padding: 20px;
+}
+
+.form-control{
+    width: 95%;
+    margin: auto;
+    background-color: rgb(68, 68, 68);
+    border: none;
+}
+
+.title{
+display: flex;
+margin: auto;
+color: white;
+flex-direction: column;
+align-items: center;
+}
+
+.createNewBtn{
+    margin: auto;
+}
+
+.exitBtn{
+    margin-left: 50px;
+}
+
+.errorMsg{
+    margin-left: 2.5%;
+    color: yellow;
+    margin-bottom: -10px;
+}
+
+.speciality{
+    display: flex;
+    justify-content: center;
+    color: white;
+}
