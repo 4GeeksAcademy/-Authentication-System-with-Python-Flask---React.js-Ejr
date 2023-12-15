@@ -3,12 +3,10 @@
   width: 24px;
   height: 24px;
 }
-
 .brandname {
   position: relative;
   line-height: 160%;
 }
-
 .brand,
 .navLink {
   align-self: stretch;
@@ -17,17 +15,53 @@
   align-items: center;
   justify-content: flex-start;
 }
+.button {
+  cursor: pointer;
+  padding: var(--padding-xs) var(--padding-xl);
+  box-sizing: border-box;
+  text-decoration: none;
+  border: 1px solid var(--color-lightseagreen);
+  border-radius: 12px;
+  transition: background-color 0.3s ease, color 0.3s ease, border 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-size-xs);
+  font-family: 'Roboto', sans-serif; 
+  background-color: var(--color-lightseagreen);
+  color: #fff;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+
+.button:hover {
+  animation: pulse 0.5s infinite ease-in-out;
+  background-color: var(--color-verydarkseagreen);
+  color: #fff;
+  border: 1px solid var(--color-verydarkseagreen);
+  transition: all 0.3s ease;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    background-color: var(--color-darkseagreen);
+  }
+  50% {
+    transform: scale(1.1);
+    background-color: var(--color-verydarkseagreen);
+  }
+}
+
 
 .brand {
   background-color: var(--color-gray-300);
   padding: 0 var(--padding-base) 0 var(--padding-5xs);
   gap: var(--gap-9xs);
 }
-
 .navLink {
   padding: 0 var(--padding-base);
 }
-
 .cta {
   position: relative;
   font-size: var(--font-size-xs);
@@ -36,59 +70,62 @@
   color: var(--color-mintcream);
   text-align: center;
 }
-
 .button-like {
   cursor: pointer;
   padding: var(--padding-xs) var(--padding-xl);
   box-sizing: border-box;
   text-decoration: none;
-  background-color: var(--color-gray-300);
-  color: var(--color-mintcream);
-  border: 1px solid var(--color-mintcream);
-  border-radius: 4px;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  border: 1px solid var(--color-lightseagreen);
+  border-radius: 12px;
+  transition: background-color 0.3s ease, color 0.3s ease, border 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-size-xs);
+  font-family: var(--font-manrope);
+  background-color: var(--color-lightseagreen);
+  color: #fff;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
+
+.button1 {
+  cursor: pointer;
+  padding: var(--padding-xs) var(--padding-xl);
+  box-sizing: border-box;
+  text-decoration: none;
+  border: 1px solid #1c161a; 
+  border-radius: 12px;
+  transition: background-color 0.3s ease, color 0.3s ease, border 0.3s ease, transform 0.3s ease; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px; 
+  font-weight: 600; 
+  font-family: 'Roboto', sans-serif; 
+  background-color: #1c161a; 
+  color: #fff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); 
+}
+
+.button1:hover {
+  background-color: #ff6900; 
+  color: #fff;
+  border: 1px solid #ff6900;
+  transform: scale(1.1); 
+}
+
+.button1:focus {
+  outline: 2px solid #ff6900; 
+}
+
+
 
 .button-like:hover {
   background-color: #1c161a;
   color: #fff;
+  border: 1px solid #1c161a;
 }
 
-.button,
-.button1,
-.textContainer {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  padding: 0 var(--padding-9xs);
-}
-
-.button,
-.button1 {
-  cursor: pointer;
-  padding: var(--padding-xs) var(--padding-xl);
-}
-
-.button {
-  border: 1px solid var(--color-mintcream);
-  background-color: var(--color-gray-300);
-  box-sizing: border-box;
-  height: 43px;
-}
-
-.button:hover {
-  background-color: #1c161a;
-}
-
-.button1 {
-  border: 1px solid #c70000;
-  background-color: #009ca6;
-}
-
-.button1:hover {
-  background-color: #364647;
-}
 
 .navLinks1 {
   margin: 0;
@@ -100,7 +137,6 @@
   color: var(--color-mintcream);
   font-family: var(--font-manrope);
 }
-
 .navLinks,
 .navLinks1,
 .typefloating {
@@ -108,12 +144,10 @@
   flex-direction: row;
   align-items: center;
 }
-
 .navLinks {
   flex: 1;
   justify-content: flex-end;
 }
-
 .typefloating {
   align-self: stretch;
   margin: 0 !important;
@@ -259,13 +293,43 @@
   color: var(--color-gainsboro);
 }
 .howItWorks2 {
-  position: relative;
+  cursor: pointer;
   font-size: var(--font-size-sm);
-  line-height: 150%;
+  padding: 8px 16px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-family: var(--font-manrope);
   color: var(--color-mintcream);
-  text-align: center;
+  position: relative;
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border: 1px solid transparent;
+    border-radius: 12px;
+    transition: background-color 0.5s ease-in, color 0.5s ease-in, font-size 0.5s ease-in;
+  }
 }
+
+.howItWorks2:hover {
+  background-color: #145a32; /* Color final */
+  color: #fff;
+  font-size: var(--font-size-base);
+
+  &::after {
+    background-color: rgba(20, 90, 50, 0.2); /* Color de transición sutil */
+  }
+}
+
+
+
+
 .copyComponent1,
 .ctaButton1 {
   display: flex;
@@ -274,12 +338,24 @@
 .ctaButton1 {
   cursor: pointer;
   border: 1px solid var(--color-dimgray);
-  padding: var(--padding-base) var(--padding-21xl);
+  border-radius: 12px;
+  padding: 12px 24px; 
   background-color: transparent;
   box-sizing: border-box;
-  flex-direction: row;
+  display: flex;
   align-items: center;
+  justify-content: center;
+  font-size: var(--font-size-sm); 
+  font-family: var(--font-manrope);
+  color: var(--color-mintcream);
+  transition: background-color 0.3s ease, color 0.3s ease, border 0.3s ease;
   max-width: 360px;
+}
+
+.ctaButton1:hover {
+  background-color: #145a32; 
+  color: #fff; 
+  border: 1px solid #145a32; 
 }
 .copyComponent1 {
   flex: 1;
@@ -408,16 +484,19 @@
 }
 .button2,
 .buttonCombo {
+  border-radius: 12px;
   display: flex;
   flex-direction: row;
 }
 .button2 {
+  border-radius: 12px;
   background-color: var(--color-lightseagreen);
   align-items: center;
   justify-content: center;
   padding: var(--padding-base) var(--padding-21xl);
 }
 .buttonCombo {
+  border-radius: 12px;
   cursor: pointer;
   border: 0;
   padding: 0;
@@ -458,6 +537,9 @@
 .ctaButton:hover,
 .button2:hover,
 .buttonCombo:hover {
-  background-color: #145a32; /* Cambia este color según tus preferencias */
-  color: #fff; /* Cambia este color según tus preferencias */
+  background-color: #145a32; 
+  color: #fff;
 }
+
+
+

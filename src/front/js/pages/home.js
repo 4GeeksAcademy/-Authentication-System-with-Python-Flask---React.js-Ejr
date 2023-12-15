@@ -23,7 +23,7 @@ export const Home = () => {
             </button>
           </div>
         </div>
-        <img className="imageContainerIcon" alt="" src="https://situ.care/salud/wp-content/uploads/2022/12/old-man-in-nursing-home-helped-by-female-doctor-to-take-his-medicine.jpg" />
+        <img className="imageContainerIcon" alt="" src="https://www.kolabtree.com/blog/wp-content/uploads/2021/08/instructor-assisting-senior-woman-exercising.jpg" />
       </section>
       <section className="property1comprehensive">
         <div className="headingWrapper">
@@ -47,28 +47,28 @@ export const Home = () => {
         <div className="stepsWrapper">
           <div className="howItWorksGrid">
             <div className="step">
-            <i class="fa-regular fa-comment"></i>
+            <i className="fa-regular fa-comment"></i>
               <b className="featureTitle">Inicio de sesión del paciente</b>
               <div className="stepDescription">
 			  Inicie sesión como paciente y busque profesionales.
               </div>
             </div>
             <div className="step">
-            <i class="fa-solid fa-camera" ></i>
+            <i className="fa-solid fa-camera" ></i>
               <b className="featureTitle">Inicio de sesión profesional</b>
               <div className="stepDescription">
 			  Inicia sesión como profesional y encuentra trabajo.
               </div>
             </div>
             <div className="step">
-             <i class="fa-solid fa-plus"></i>
+             <i className="fa-solid fa-plus"></i>
               <b className="featureTitle">Crea una cuenta</b>
               <div className="stepDescription">
-			  ¿Nuevo en HealthPro? Comience creando una cuenta.
+			  ¿Nuevo en PhysioCareSync? Comience creando una cuenta.
               </div>
             </div>
             <div className="step">
-            <i class="fa-solid fa-magnifying-glass-chart"></i>
+            <i className="fa-solid fa-magnifying-glass-chart"></i>
               <b className="featureTitle">Contratar a un profesional</b>
               <div className="stepDescription">
 			  Encuentre y contrate fisioterapeutas y enfermeras cerca de usted.
