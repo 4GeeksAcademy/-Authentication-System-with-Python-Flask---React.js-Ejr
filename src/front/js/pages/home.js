@@ -75,10 +75,11 @@ export const Home = () => {
                       background: "#dd9e26",
                       borderRadius: "30px",
                       justifyContent: "center",
+                      marginTop: "15%",
                       padding: "15px",
                       width: "250px",
                       textAlign: "center",
-                      marginTop: "5px"
+                      marginTop: "5px",
                     }}
                   >
                     <h5 style={{ margin: "auto", fontWeight: "bold" }}>

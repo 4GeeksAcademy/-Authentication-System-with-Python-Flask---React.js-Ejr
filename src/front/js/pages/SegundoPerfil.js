@@ -6,10 +6,10 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./../component/Buscador.jsx";
 import "./../pages/home.js";
 
+
 export const SegundoPerfil = () => {
   const data = {
     name: "Nombre Prestador",
-    apellido: "Apellido Prestador",
     jobs: ["Trabajo 1", "Trabajo 2", "Trabajo 3"],
     description: "Descripción/Experiencia/Comuna",
     comuna: "Comuna",
@@ -22,14 +22,52 @@ export const SegundoPerfil = () => {
         comment: "Buen servicio, lo recomiendo.",
         rating: 4,
       },
+      // Puedes agregar más comentarios y calificaciones según sea necesario
     ],
   };
   const { actions } = useContext(Context);
   const [profileData, setData] = useState(data);
+  useEffect(async () => {
+    let perfil = await actions.cargarPerfil();
+    setData({
+      ...profileData,
+      name: perfil.firstName,
+      comuna: perfil.comuna,
+      description: perfil.rubro,
+    });
+  }, []);
+
+  // const uploadImageToServer = async (image) => {
+  //   try {
+  //     const formData = new FormData();
+  //     formData.append('file', image); // 'file' debe coincidir con el nombre del campo que espera la API
+
+  //     const response = await fetch('URL_DE_TU_API', {
+  //       method: 'POST',
+  //       body: formData,
+  //       // Puedes agregar encabezados adicionales aquí, como headers, si la API lo requiere
+  //     });
+
+  //     if (response.ok) {
+  //       const data = await response.json();
+  //       // Realiza acciones con la respuesta si es necesario
+  //       console.log('Imagen subida exitosamente:', data);
+  //     } else {
+  //       console.error('Error al subir la imagen:', response.statusText);
+  //     }
+  //   } catch (error) {
+  //     console.error('Error de red:', error);
+  //   }
+  // };
+
+  // // Suponiendo que tienes la imagen guardada en 'imageFile'
+  // uploadImageToServer(imageFile);
+
   const [image, setImage] = useState(null);
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
+    // Realizar validaciones o acciones con la imagen seleccionada, por ejemplo:
     if (file) {
       const reader = new FileReader();
       reader.onload = (event) => {
@@ -51,7 +89,9 @@ export const SegundoPerfil = () => {
           description: perfil.rubro,
         }));
       } catch (error) {
-        console.error('Error al cargar el perfil:', error);
+        console.error("Error al cargar el perfil:", error);
+
+        console.error("Error al cargar el perfil:", error);
       }
     };
 
@@ -63,11 +103,19 @@ export const SegundoPerfil = () => {
       <div className="row">
         <div className="col-md-6">
           <div className="photo text-center">
-            <label htmlFor="upload-photo" className="photo-text">
+            <label
+              htmlFor="upload-photo"
+              className="photo-text"
+              style={{ color: "grey" }}
+            >
               {image ? (
-                <img src={image} alt="uploaded" className="uploaded-image" />
+                <img
+                  src={image}
+                  alt="uploaded"
+                  className="uploaded-image img-fluid"
+                />
               ) : (
-                "FOTO"
+                "Click para ingresar una foto"
               )}
             </label>
             <input
@@ -84,20 +132,33 @@ export const SegundoPerfil = () => {
           <div className="jobs">
             {profileData.jobs.map((job, index) => (
               <div className={`job job-${index + 1}`} key={index}>
-                <div className="job-text">{job}</div>
+                <input
+                  type="text"
+                  className="job-text"
+                  value={job}
+                  onChange={(e) => {
+                    const newJobs = [...profileData.jobs];
+                    newJobs[index] = e.target.value;
+                    setData((prevData) => ({
+                      ...prevData,
+                      jobs: newJobs,
+                    }));
+                  }}
+                />
               </div>
             ))}
           </div>
         </div>
         <div className="col-md-6">
-          <div className="description-wrapper">
-            <div className="description">{profileData.description}, Comuna: {profileData.comuna}</div>
+          <div className="description-wrapper mt-4">
+            <div className="description">
+              {" "}
+              {profileData.description}, <strong>Comuna:</strong>{" "}
+              {profileData.comuna}
+            </div>
           </div>
           <div className="ratings-section">
-            <div className="comments-ratings text-center">
-              COMENTARIOS Y CALIFICACIONES
-            </div>
-
+            <div className="comments-ratings">COMENTARIOS Y CALIFICACIONES</div>
             <div className="ratings-list">
               {profileData.ratings.map((item, index) => (
                 <div className="rating-item" key={index}>
@@ -107,11 +168,19 @@ export const SegundoPerfil = () => {
               ))}
             </div>
           </div>
-
           <div className="action-buttons text-center">
             <div className="logout">
               <Link to="/generadorPublicacion">
-                <button className="btn btn-primary logout-text">Publicar Trabajo</button>
+                <button
+                  className="btn btn-primary logout-text"
+                  style={{ marginTop: "50px", marginBottom:"15px" }}
+                >
+                  Publicar Trabajo
+                </button>
+              </Link>
+              <Link to="/">
+          {" "}
+                <button className="btn btn-danger logout-text" >Salir</button>
               </Link>
             </div>
           </div>
