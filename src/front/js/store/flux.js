@@ -19,7 +19,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			// Use getActions to call a function within a fuction
 			createNewPatient:async (newPatient) => {
 				try{
-					const response = await fetch("https://laughing-winner-jj5474rwwgvpfgwr-3001.app.github.dev/api/patient_signup", {
+					const response = await fetch("https://super-broccoli-v5q5vp6q647hwrpx-3001.app.github.dev/api/signup_patient", {
 						method: "POST",
 						body: JSON.stringify(newPatient),
 						headers: {
@@ -41,7 +41,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			createNewSpecialist:async (newSpecialist) => {
 				try{
-					const response = await fetch("https://laughing-winner-jj5474rwwgvpfgwr-3001.app.github.dev/api/signup_specialist", {
+					const response = await fetch("https://super-broccoli-v5q5vp6q647hwrpx-3001.app.github.dev/api/signup_specialist", {
 						method: "POST",
 						body: JSON.stringify(newSpecialist),
 						headers: {
@@ -57,7 +57,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					
 
 				}catch(error){
-					console.error("There was an error tryinig to create the Patient", error)
+					console.error("There was an error tryinig to create the Specialist", error)
 				}
 			},		
 

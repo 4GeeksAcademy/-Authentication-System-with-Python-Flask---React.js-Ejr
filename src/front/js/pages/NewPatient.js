@@ -79,7 +79,7 @@ const NewPatient = () => {
                 email: email,
                 password: password
             }
-            await actions.createNewUser(newInputPatient)
+            await actions.createNewPatient(newInputPatient)
             navigate("/") //---------------------------->Colocar ruta creada por Leo ATENCION <------------------------------------
         } catch (error) {
             console.error("Error trying to send info", error)

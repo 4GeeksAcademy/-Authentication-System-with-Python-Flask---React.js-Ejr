@@ -82,18 +82,32 @@ const NewSpecialist = () => {
                 return
             }
 
-            let newInputSpecialist = {
+            // let newInputSpecialist = {
+            //     first_name: firstName,
+            //     last_name: lastName,
+            //     email: email,
+            //     passsword: password,
+            //     is_physiotherapist: isPhysio,
+            //     is_nurse: isNurse,
+            //     certificate: null,
+            //     description: null,
+            //     language: null
+
+
+              let newInputSpecialist ={
+                email: email,
+                password: password,
                 first_name: firstName,
                 last_name: lastName,
-                email: email,
-                passsword: password,
                 is_physiotherapist: isPhysio,
                 is_nurse: isNurse,
                 certificate: null,
                 description: null,
                 language: null
 
-            }
+              }  
+            
+            
             await actions.createNewSpecialist(newInputSpecialist)
             navigate("/")
 
