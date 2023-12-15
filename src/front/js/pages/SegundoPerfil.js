@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Context } from "../store/appContext.js";
+
 import "../../styles/segundoperfil.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./../component/Buscador.jsx";
@@ -9,10 +10,11 @@ import "./../pages/home.js";
 
 export const SegundoPerfil = () => {
   const data = {
-    name: "Nombre Prestador",
+    nombre: "Nombre",
+    apellido: "apellido",
     jobs: ["Trabajo 1", "Trabajo 2", "Trabajo 3"],
-    description: "Descripción/Experiencia/Comuna",
-    comuna: "Comuna",
+    comuna: "comuna",
+    telefono: "telefono",
     ratings: [
       {
         comment: "¡Gran trabajo! Muy profesional.",
@@ -25,18 +27,34 @@ export const SegundoPerfil = () => {
       // Puedes agregar más comentarios y calificaciones según sea necesario
     ],
   };
-  const { actions } = useContext(Context);
+  const {  } = useContext(Context);
   const [profileData, setData] = useState(data);
-  useEffect(async () => {
-    let perfil = await actions.cargarPerfil();
-    setData({
-      ...profileData,
-      name: perfil.firstName,
-      comuna: perfil.comuna,
-      description: perfil.rubro,
-    });
-  }, []);
-
+  useEffect(() => {
+    let token = localStorage.getItem("token")
+    console.log(token)
+    let user = JSON.parse(localStorage.getItem("user"))
+    console.log(user)
+    fetch("http://localhost:3001/api/perfil_logeado", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        //"Authorization": "Bearer " + token
+      },
+      body: JSON.stringify({email: user.email})
+    })
+    .then(response => response.json())
+    .then(data => {
+     setData({
+        ...profileData,
+        nombre: data.usuario.nombre,
+        apellido: data.usuario.apellido,
+        email: data.usuario.email,
+        comuna: data.usuario.comuna,
+        telefono: data.usuario.telefono
+      })
+    })
+    .catch(error => console.log (error))
+  },[])
   // const uploadImageToServer = async (image) => {
   //   try {
   //     const formData = new FormData();
@@ -77,26 +95,26 @@ export const SegundoPerfil = () => {
     }
   };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        let perfil = await actions.cargarPerfil();
-        setData((prevData) => ({
-          ...prevData,
-          name: perfil.firstName,
-          apellido: perfil.apellido,
-          comuna: perfil.comuna,
-          description: perfil.rubro,
-        }));
-      } catch (error) {
-        console.error("Error al cargar el perfil:", error);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       let perfil = await actions.cargarPerfil();
+  //       setData((prevData) => ({
+  //         ...prevData,
+  //         name: perfil.firstName,
+  //         apellido: perfil.apellido,
+  //         comuna: perfil.comuna,
+  //         description: perfil.rubro,
+  //       }));
+  //     } catch (error) {
+  //       console.error("Error al cargar el perfil:", error);
 
-        console.error("Error al cargar el perfil:", error);
-      }
-    };
+  //       console.error("Error al cargar el perfil:", error);
+  //     }
+  //   };
 
-    fetchData();
-  }, []);
+  //   fetchData();
+  // }, []);
 
   return (
     <div className="container profile-container">
@@ -127,7 +145,7 @@ export const SegundoPerfil = () => {
             />
           </div>
           <div className="provider-name text-center">
-            <div className="provider-name-text">{profileData.name}</div>
+            <div className="provider-name-text">{profileData.nombre}{" "}{profileData.apellido}</div>
           </div>
           <div className="jobs">
             {profileData.jobs.map((job, index) => (
@@ -154,7 +172,7 @@ export const SegundoPerfil = () => {
             <div className="description">
               {" "}
               {profileData.description}, <strong>Comuna:</strong>{" "}
-              {profileData.comuna}
+              {profileData.comuna},{" "}<strong>Telefono:</strong> {profileData.telefono}
             </div>
           </div>
           <div className="ratings-section">

@@ -62,7 +62,7 @@ class UserBuscador(db.Model):
 class UserPublicacion(db.Model):
     __tablename__ = "publicacion"
     idPublicacion = db.Column(db.Integer, primary_key=True)
-    idUser = db.Column(db.Integer)
+    idUsuario = db.Column(db.Integer)
     nombre = db.Column(db.String(200), default="", nullable=True)
     apellido = db.Column(db.String(200), default="", nullable=False)
     email = db.Column(db.String(200), unique=True, nullable=False)

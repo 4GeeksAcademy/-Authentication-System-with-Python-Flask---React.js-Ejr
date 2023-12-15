@@ -83,10 +83,11 @@ const JobPost = ({
         <strong>Fecha:</strong> {fecha}
       </p>
     </div>
-
-    <button onClick={() => onContact(id)} className="btn btn-success">
+     <Link to= "/segundoPerfil">
+    <button className="btn btn-success">
       Contactar
     </button>
+    </Link>
   </div>
 );
 

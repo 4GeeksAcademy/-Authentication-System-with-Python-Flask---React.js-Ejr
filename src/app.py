@@ -264,7 +264,7 @@ def enviar_datos_de_publicacionpost():
     # Capturamos todo el body en un diccionario
     body = request.get_json()
     publicacion = UserPublicacion()
-    publicacion.idUser = body["idUser"]
+    publicacion.idUsuario = body["idUsers"]
     publicacion.nombre = body["nombre"]
     publicacion.apellido = body["apellido"]
     publicacion.email = body["email"]
