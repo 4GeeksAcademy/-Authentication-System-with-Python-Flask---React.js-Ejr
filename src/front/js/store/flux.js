@@ -17,6 +17,29 @@ const getState = ({ getStore, getActions, setStore }) => {
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
+			
+			loginPatient: async (patient) => {
+				try{
+					const response = await fetch("https://super-broccoli-v5q5vp6q647hwrpx-3001.app.github.dev/api/token_patient", {
+						method: 'POST',
+						body: JSON.stringify(patient),
+						headers: {
+							'Content-Type': 'application/json'
+						}
+					});
+					if(!response.ok){
+						throw new Error("An error occurred with the query")
+					}
+					const data = await response.json();
+					console.log("Log In successful")
+					return data
+
+				}catch(error){
+					console.error("There was an error with the login action", error)
+				}
+			},
+
+
 			exampleFunction: () => {
 				getActions().changeColor(0, "green");
 			},

@@ -31,6 +31,32 @@ const LogInPatient = () => {
             setClickedPassword(true);
         }
     }
+
+    const handlerLogInPatient = async () => {
+        if(email == "" || password == ""){
+            alert("All fields are required")
+           return
+      }
+
+      let loginPatient = {
+            email: email,
+            password: password
+          }
+
+          const result = await actions.loginPatient(loginPatient)
+          console.log("This is the result:", result)
+          if(result && result.AccessToken){
+            const token = result.AccessToken;
+            sessionStorage.setItem('token', token)
+            navigate("/private")
+            console.log("Aita tu token", token)
+          }else{
+            alert("email or password incorrect");
+          }
+    
+
+    }
+    
   return (
     <div>
            <div className='patientForm'>
@@ -50,7 +76,7 @@ const LogInPatient = () => {
             <br></br>
 
             <div className='createNewBtn'>
-                <button  type="button" className="btn btn-success saveBtn">Ingresar</button>
+                <button type="button" onClick={handlerLogInPatient} className="btn btn-success saveBtn">Ingresar</button>
 
                 <Link to={'/login'}>
                     <button type="button" className="btn btn-outline-primary exitBtn">Salir</button>
