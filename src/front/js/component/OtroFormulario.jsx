@@ -181,14 +181,13 @@ export const OtroFormulario = (props) => {
     if (confirmpassword !== password){
       errores.confirmpassword = "Las contraseñas deben coincidir"
     }
+    if (!tipoUsuario) {
+      errores.tipoUsuario = "El tipo de usuario es obligatorio";
+    }
 
 
 
     return errores;
-  };
-
-  const RegistroCompletado = () => {
-    setState({ ...state, showModal: true });
   };
 
   const cerrarModal = () => {
@@ -400,6 +399,11 @@ export const OtroFormulario = (props) => {
                 <option value="cliente">Cliente</option>
                 <option value="prestador">Prestador de Servicio</option>
               </Form.Control>
+              {state.errores.tipoUsuario && (
+                <Form.Text className="text-danger">
+                  {state.errores.tipoUsuario}
+                </Form.Text>
+              )}
             </Form.Group>
 
             {showRubroField && (
