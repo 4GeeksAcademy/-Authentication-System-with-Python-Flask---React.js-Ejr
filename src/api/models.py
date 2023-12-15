@@ -11,6 +11,7 @@ class Patient(db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(80), unique=False, nullable=False)
 
+
     def __repr__(self):
         return f'<Patient {self.first_name}>'
 
@@ -20,7 +21,6 @@ class Patient(db.Model):
             "first_name": self.first_name,
             "last_name": self.last_name,
             "email": self.email,
-
             # do not serialize the password, its a security breach
         }
     

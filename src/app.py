@@ -17,7 +17,8 @@ from api.commands import setup_commands, setup_commands_specialist
 from flask_jwt_extended import  JWTManager, create_access_token, jwt_required, get_jwt_identity
 from flask_bcrypt import Bcrypt
 
-app=Flask(__name__)
+
+app = Flask (__name__)
 app.config["JWT_SECRET_KEY"] = "value_variable"
 jwt=JWTManager(app)
 bcrypt=Bcrypt(app)
@@ -27,7 +28,7 @@ bcrypt=Bcrypt(app)
 ENV = "development" if os.getenv("FLASK_DEBUG") == "1" else "production"
 static_file_dir = os.path.join(os.path.dirname(
     os.path.realpath(__file__)), '../public/')
-app = Flask(__name__)
+app = Flask (__name__)
 app.url_map.strict_slashes = False
 
 # database condiguration
