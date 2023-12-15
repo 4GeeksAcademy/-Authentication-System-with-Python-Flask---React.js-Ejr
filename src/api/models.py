@@ -25,7 +25,10 @@ class User(db.Model):
         return {
             "id": self.idUser,
             "nombre": self.nombre,
+            "apellido": self.apellido,
             "email": self.email,
+            "telefono": self.telefono,
+            "comuna": self.comuna
         }
 
     def get_id(self):

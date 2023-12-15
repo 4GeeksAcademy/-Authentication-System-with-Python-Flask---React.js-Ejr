@@ -10,10 +10,36 @@ export const Perfil = () => {
     firstName: "",
     lastName: "",
     email: "",
-    region: "",
-    comuna: "",
-    birthDate: "",
+    telefono: "",
+    comuna: ""
   });
+
+useEffect(() => {
+  let token = localStorage.getItem("token")
+  console.log(token)
+  let user = JSON.parse(localStorage.getItem("user"))
+  console.log(user)
+  fetch("http://localhost:3001/api/perfil_logeado", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      //"Authorization": "Bearer " + token
+    },
+    body: JSON.stringify({email: user.email})
+  })
+  .then(response => response.json())
+  .then(data => {
+   setFormData({
+      ...formData,
+      firstName: data.usuario.nombre,
+      lastName: data.usuario.apellido,
+      email: data.usuario.email,
+      comuna: data.usuario.comuna,
+      telefono: data.usuario.telefono
+    })
+  })
+  .catch(error => console.log (error))
+},[])
 
   const handleInputChange = (e) => {
     setFormData({
@@ -85,22 +111,22 @@ export const Perfil = () => {
           />
         </div>
         <div className="form-group mt-2">
+          <label htmlFor="comuna">Telefono:</label>
+          <input
+            type="text"
+            id="comuna"
+            name="comuna"
+            value={formData.telefono}
+            onChange={handleInputChange}
+          />
+        </div>
+        <div className="form-group mt-2">
           <label htmlFor="comuna">Comuna:</label>
           <input
             type="text"
             id="comuna"
             name="comuna"
             value={formData.comuna}
-            onChange={handleInputChange}
-          />
-        </div>
-        <div className="form-group mt-2">
-          <label htmlFor="birthDate">Fecha de Nacimiento:</label>
-          <input
-            type="date"
-            id="birthDate"
-            name="birthDate"
-            value={formData.birthDate}
             onChange={handleInputChange}
           />
         </div>
@@ -120,7 +146,7 @@ export const Perfil = () => {
         >
           Guardar
         </button>
-        <Link to="/Buscador">
+        <Link to="/generadorPublicacion">
           <button
             className="action-button custom-button"
             style={{

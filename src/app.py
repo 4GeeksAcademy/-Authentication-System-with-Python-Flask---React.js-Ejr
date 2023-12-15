@@ -43,9 +43,10 @@ setup_commands(app)
 app.register_blueprint(api, url_prefix="/api")
 
 
+app.config["JWT_SECRET_KEY"] = os.getenv("SECRET_KEY")
 jwt = JWTManager(app)
 CORS(app)
-app.config["JWT_SECRET_KEY"] = os.getenv("SECRET_KEY")
+
 
 
 @app.errorhandler(APIException)
@@ -388,6 +389,20 @@ def get_profile():
         ],
     }
     return jsonify(profile_data)
+
+
+@app.route("/api/perfil_logeado", methods = ["POST"])
+#@jwt_required()
+def perfil_logeado():
+    email= request.json.get("email")
+    user = User.query.filter_by(email=email).first()
+    print(email)
+    user_cliente = UserBuscador.query.filter_by(email=email).first()
+    print(user)
+    if not user and not user_cliente:
+        return jsonify({"error":"usuario no encontrado"}), 400
+    
+    return jsonify({"usuario": user.serialize() if user else user_cliente.serialize()})
 
 
 if __name__ == "__main__":
