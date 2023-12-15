@@ -113,7 +113,7 @@ const PrestadorCv = () => {
   };
 
   return (
-    <div div className="container" style={{ justifyContent: "center" }}>
+    <div className="container row" style={{ justifyContent: "center" }}>
       <div className="prestadores-cv-container">
         <button
           type="button"
@@ -121,7 +121,6 @@ const PrestadorCv = () => {
           style={{
             background: "#3Bd7BA",
             margin: "5px",
-            width: "100%",
           }}
         >
           Aseo
@@ -132,7 +131,6 @@ const PrestadorCv = () => {
           style={{
             background: "#3Bd7BA",
             margin: "5px",
-            width: "100%",
           }}
         >
           Carpintería
@@ -143,7 +141,6 @@ const PrestadorCv = () => {
           style={{
             background: "#3Bd7BA",
             margin: "5px",
-            width: "100%",
           }}
         >
           Electricista
@@ -154,7 +151,6 @@ const PrestadorCv = () => {
           style={{
             background: "#3Bd7BA",
             margin: "5px",
-            width: "100%",
           }}
         >
           Gasfitería
@@ -165,13 +161,12 @@ const PrestadorCv = () => {
           style={{
             background: "#3Bd7BA",
             margin: "5px",
-            width: "100%",
           }}
         >
           Pintor
         </button>
       </div>
-      <div className="row">
+      <div className="row flex-column">
         {data?.map((element, index) => (
           <div key={index} className="col mb-3">
             <JobPost {...element} />
