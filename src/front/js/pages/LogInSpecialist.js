@@ -30,6 +30,34 @@ const LogInSpecialist = () => {
             setClickedPassword(true);
         }
     }
+
+    const handlerLogInSpecialist = async () => {
+        try{
+            if(email == "" || password == ""){
+           alert("All fields are required")
+          return
+     }
+
+     let loginSpecialist = {
+           email: email,
+           password: password
+         }
+
+         const result = await actions.loginSpecialist(loginSpecialist)
+         console.log("This is the result:", result)
+         if(result && result.AccessToken){
+           const token = result.AccessToken;
+           sessionStorage.setItem('token', token)
+           navigate("/privateSpecialist")
+           console.log("This is your token", token)
+         }else{
+           alert("email or password incorrect");
+         }
+       }catch(error){
+           console.error("There was an error with the query", error)
+       }
+      
+    }
   return (
     <div>
         
@@ -50,10 +78,10 @@ const LogInSpecialist = () => {
             <br></br>
 
             <div className='createNewBtn'>
-                <button  type="button" className="btn btn-success saveBtn">Ingresar</button>
+                <button onClick={handlerLogInSpecialist} type="button" className="btn btn-success saveBtn">Ingresar</button>
 
                 <Link to={'/login'}>
-                    <button type="button" className="btn btn-outline-primary exitBtn">Salir</button>
+                    <button  type="button" className="btn btn-outline-primary exitBtn">Salir</button>
                 </Link>
             </div>
             </div>

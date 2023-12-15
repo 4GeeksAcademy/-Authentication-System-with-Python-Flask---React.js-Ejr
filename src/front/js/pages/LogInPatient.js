@@ -33,7 +33,8 @@ const LogInPatient = () => {
     }
 
     const handlerLogInPatient = async () => {
-        if(email == "" || password == ""){
+        try{
+             if(email == "" || password == ""){
             alert("All fields are required")
            return
       }
@@ -48,11 +49,15 @@ const LogInPatient = () => {
           if(result && result.AccessToken){
             const token = result.AccessToken;
             sessionStorage.setItem('token', token)
-            navigate("/private")
-            console.log("Aita tu token", token)
+            navigate("/privatePatient")
+            console.log("This is your token", token)
           }else{
             alert("email or password incorrect");
           }
+        }catch(error){
+            console.error("There was an error with the query", error)
+        }
+       
     
 
     }

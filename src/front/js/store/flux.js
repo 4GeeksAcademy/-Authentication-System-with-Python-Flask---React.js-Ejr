@@ -39,6 +39,27 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
+			loginSpecialist: async (specialist) => {
+				try{
+					const response = await fetch("https://super-broccoli-v5q5vp6q647hwrpx-3001.app.github.dev/api/token_specialist", {
+						method: 'POST',
+						body: JSON.stringify(specialist),
+						headers: {
+							'Content-Type': 'application/json'
+						}
+					});
+					if(!response.ok){
+						throw new Error("An error occurred with the query")
+					}
+					const data = await response.json();
+					console.log("Log In successful")
+					return data
+
+				}catch(error){
+					console.error("There was an error with the login action", error)
+				}
+			},
+
 
 			exampleFunction: () => {
 				getActions().changeColor(0, "green");
