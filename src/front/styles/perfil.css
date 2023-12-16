@@ -1,4 +1,6 @@
-
+.container{
+  font-family: fantasy;
+}
 .profile-container, data-form {
   justify-content: center;
   max-width: 600px;
@@ -20,7 +22,7 @@
   width: 100%;
   padding: 5px;
   border: 1px solid #ccc;
-  border-radius: 4px;
+  border-radius: 10px;
 }
 
 
@@ -38,7 +40,7 @@
   margin-bottom: 8px;
   padding: 10px;
   background-color: #d1efea;
-  border-radius: 4px;
+  
 }
 
 .services-history h2,
@@ -47,15 +49,24 @@
 }
 
 /* Estilos para los botones */
-.profile-container .action-button {
+.button-container{
+  margin-top: 35px;
   display: flex;
-  width: 30%;
-  padding: 10px;
-  margin-top: 15px;
-  border: 10px;
-  border-radius: 5px;
-  font-weight: bold;
-  cursor: pointer;
+  width: 90%;
 }
 
+.action-button {
+  width: 10rem;
+}
+
+@media (max-width: 768px) {
+  .button-container {
+    display: block;
+  }
+
+  .action-button {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+}
 

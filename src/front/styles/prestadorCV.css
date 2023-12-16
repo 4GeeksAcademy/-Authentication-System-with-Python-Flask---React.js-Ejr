@@ -1,9 +1,13 @@
 .prestadores-cv-container {
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
+  max-width: 100%;
   margin-top: 10px;
+  margin-bottom: 20px;
 }
+
 .btn.btn-primary.btn-lg {
   width: 200px; /* Puedes ajustar el ancho según tus preferencias */
   background-color: green; /* Cambia el color de fondo */
@@ -14,10 +18,6 @@
 
 .prestador-container {
   padding: 20px;
-}
-
-.prestadores-cv-container {
-  margin-bottom: 20px;
 }
 
 .btn-category {
@@ -44,4 +44,5 @@
   color: #fff;
   border: none;
   padding: 5px 10px;
-  cursor: pointer;}
+  cursor: pointer;
+}

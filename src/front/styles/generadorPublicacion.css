@@ -4,6 +4,7 @@
 .container {
     display: flex;
     flex-wrap: wrap;
+    background-color: #CCCCCC;
   }
   
   /* Establece el ancho de cada input al 33.33% de la página */
@@ -39,3 +40,4 @@
     resize: vertical;
   }
   
+ 

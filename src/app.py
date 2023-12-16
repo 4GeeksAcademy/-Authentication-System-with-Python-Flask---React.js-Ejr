@@ -43,9 +43,10 @@ setup_commands(app)
 app.register_blueprint(api, url_prefix="/api")
 
 
+app.config["JWT_SECRET_KEY"] = os.getenv("SECRET_KEY")
 jwt = JWTManager(app)
 CORS(app)
-app.config["JWT_SECRET_KEY"] = os.getenv("SECRET_KEY")
+
 
 
 @app.errorhandler(APIException)
@@ -133,7 +134,19 @@ def register():
     buscador_found = UserBuscador.query.filter_by(email=email).first()
 
     if user_found or buscador_found:
-        return jsonify({"error": "Email ya registrado"}), 400
+        return jsonify({"message": "Email ya registrado"}), 400
+    
+    user_found = User.query.filter_by(telefono=telefono).first()
+    buscador_found = UserBuscador.query.filter_by(telefono=telefono).first()
+
+    if user_found or buscador_found:
+        return jsonify({"error": "Telefono ya registrado"}), 400
+    
+    user_found = User.query.filter_by(rut=rut).first()
+    buscador_found = UserBuscador.query.filter_by(rut=rut).first()
+
+    if user_found or buscador_found:
+        return jsonify({"error": "Rut ya registrado"}), 400
 
     # Crear instancia de usuario basándose en la presencia de "rubro"
     if "rubro" in request.json:
@@ -162,7 +175,7 @@ def register():
     expires = datetime.timedelta(days=3)
     access_token = create_access_token(identity=id, expires_delta=expires)
 
-    data = {"access_token": access_token, "user": new_user.serialize()}
+    data = {"message": "Usuario registrado con éxito","access_token": access_token, "user": new_user.serialize()}
 
 
     # if "rubro" not in request.json:
@@ -376,6 +389,20 @@ def get_profile():
         ],
     }
     return jsonify(profile_data)
+
+
+@app.route("/api/perfil_logeado", methods = ["POST"])
+#@jwt_required()
+def perfil_logeado():
+    email= request.json.get("email")
+    user = User.query.filter_by(email=email).first()
+    print(email)
+    user_cliente = UserBuscador.query.filter_by(email=email).first()
+    print(user)
+    if not user and not user_cliente:
+        return jsonify({"error":"usuario no encontrado"}), 400
+    
+    return jsonify({"usuario": user.serialize() if user else user_cliente.serialize()})
 
 
 if __name__ == "__main__":

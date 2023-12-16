@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import "../../styles/perfil.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Link } from "react-router-dom";
-import "./../component/Buscador.jsx";
+// import "./../component/Buscador.jsx";
 import { Context } from "../store/appContext.js";
 
 export const Perfil = () => {
@@ -10,10 +10,36 @@ export const Perfil = () => {
     firstName: "",
     lastName: "",
     email: "",
-    region: "",
-    comuna: "",
-    birthDate: "",
+    telefono: "",
+    comuna: ""
   });
+
+useEffect(() => {
+  let token = localStorage.getItem("token")
+  console.log(token)
+  let user = JSON.parse(localStorage.getItem("user"))
+  console.log(user)
+  fetch("http://localhost:3001/api/perfil_logeado", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      //"Authorization": "Bearer " + token
+    },
+    body: JSON.stringify({email: user.email})
+  })
+  .then(response => response.json())
+  .then(data => {
+   setFormData({
+      ...formData,
+      firstName: data.usuario.nombre,
+      lastName: data.usuario.apellido,
+      email: data.usuario.email,
+      comuna: data.usuario.comuna,
+      telefono: data.usuario.telefono
+    })
+  })
+  .catch(error => console.log (error))
+},[])
 
   const handleInputChange = (e) => {
     setFormData({
@@ -47,7 +73,7 @@ export const Perfil = () => {
     }
   };
   return (
-    <div className="profile-container">
+    <div className="profile-container mt-4">
       <div className="header">
         <h1 className="profile-name">Nombre Cliente</h1>
       </div>
@@ -64,7 +90,7 @@ export const Perfil = () => {
             onChange={handleInputChange}
           />
         </div>
-        <div className="form-group">
+        <div className="form-group mt-2">
           <label htmlFor="lastName">Apellido:</label>
           <input
             type="text"
@@ -74,7 +100,7 @@ export const Perfil = () => {
             onChange={handleInputChange}
           />
         </div>
-        <div className="form-group">
+        <div className="form-group mt-2">
           <label htmlFor="email">Correo Electrónico:</label>
           <input
             type="email"
@@ -84,17 +110,17 @@ export const Perfil = () => {
             onChange={handleInputChange}
           />
         </div>
-        <div className="form-group">
-          <label htmlFor="region">Región:</label>
+        <div className="form-group mt-2">
+          <label htmlFor="comuna">Telefono:</label>
           <input
             type="text"
-            id="region"
-            name="region"
-            value={formData.region}
+            id="comuna"
+            name="comuna"
+            value={formData.telefono}
             onChange={handleInputChange}
           />
         </div>
-        <div className="form-group">
+        <div className="form-group mt-2">
           <label htmlFor="comuna">Comuna:</label>
           <input
             type="text"
@@ -104,42 +130,53 @@ export const Perfil = () => {
             onChange={handleInputChange}
           />
         </div>
-        <div className="form-group">
-          <label htmlFor="birthDate">Fecha de Nacimiento:</label>
-          <input
-            type="date"
-            id="birthDate"
-            name="birthDate"
-            value={formData.birthDate}
-            onChange={handleInputChange}
-          />
-        </div>
-        <button className="action-button" type="submit">
+      </form>
+      <div className="button-container">
+        <button
+          className="action-button custom-button"
+          style={{
+            borderRadius: "12px",
+            borderColor: "white",
+            backgroundColor: "#2c94da",
+            height: "40px",
+            color: "black",
+            textAlign: "center",
+          }}
+          type="submit"
+        >
           Guardar
         </button>
-      </form>
-
-      <div className="notices-section">
-        <div className="notice">Agenda 1</div>
-        <div className="notice">Aviso 2</div>
-        <div className="notice">Aviso 3</div>
-        <div className="notice">Aviso 4</div>
-        <div className="notice">Aviso 5</div>
-      </div>
-      <div className="services-history">
-        <h2>Historial de servicios</h2>
-      </div>
-      <div className="provider-comments">
-        <h3>Comentario Prestador 1</h3>
-      </div>
-      <div className="additional-info"></div>
-      <div className="actions">
+        <Link to="/generadorPublicacion">
+          <button
+            className="action-button custom-button"
+            style={{
+              borderRadius: "12px",
+              borderColor: "white",
+              backgroundColor: "#2c94da",
+              height: "40px",
+              color: "black",
+              textAlign: "center",
+            }}
+          >
+            Publicar Trabajo
+          </button>
+        </Link>
         <Link to="/">
           {" "}
-          <button className="action-button">Salir</button>
-        </Link>
-        <Link to="/Buscador">
-          <button className="action-button">Buscar Trabajo</button>
+          <button
+            className="action-button custom-button"
+            style={{
+              fontFamily: "fantasy",
+              borderRadius: "12px",
+              borderColor: "white",
+              backgroundColor: "#d74338",
+              height: "40px",
+              color: "black",
+              textAlign: "center",
+            }}
+          >
+            Salir
+          </button>
         </Link>
       </div>
     </div>

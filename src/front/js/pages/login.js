@@ -39,7 +39,7 @@ const Login = () => {
           console.log("Usuario encontrado");
 
           localStorage.setItem("user", JSON.stringify(data.user));
-
+          localStorage.setItem("token", JSON.stringify(data.access_token))
           // Utiliza `navigate` para redirigir a la página principal después del inicio de sesión
           navigate("/");
         }

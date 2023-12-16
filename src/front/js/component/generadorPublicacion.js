@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 const GeneradorPublicacion = () => {
-  const [publicaciones, setPublicaciones] = useState([]);
   const [publicacion, setPublicacion] = useState({
     nombre: "",
     apellido: "",
@@ -25,7 +24,9 @@ const GeneradorPublicacion = () => {
   };
 
   const publicarPublicacion = () => {
-    publicacion.idUser = JSON.parse(localStorage.getItem("user")).id;
+    const userFromLocalStorage = JSON.parse(localStorage.getItem("user"));
+    publicacion.idUser = userFromLocalStorage ? userFromLocalStorage.id : null;
+
     fetch("http://localhost:3001/publicacionpost/", {
       method: "POST",
       headers: {
@@ -44,7 +45,7 @@ const GeneradorPublicacion = () => {
   };
 
   return (
-    <div className="container mt-5">
+    <div className="container mt-5" >
       <div
         className="col-md-5 offset-md-3 max-width-form text-center"
         style={{
@@ -53,7 +54,7 @@ const GeneradorPublicacion = () => {
           background: "#D1EFEA",
           margin: "auto",
           padding: "20px",
-          backgroundColor: "#CCCCCC",
+          backgroundColor: "#CCCCCC", // Agregado para establecer el fondo gris
           boxShadow: "0 0 70px #000",
         }}
       >
@@ -65,91 +66,101 @@ const GeneradorPublicacion = () => {
             boxShadow: "initial",
           }}
         >
-          Publicar
+          Publicación
         </h2>
 
         <div className="mb-6 mt-3">
           <div className="mb-3">
             <input
-              type="text"
+              type="text" style={{ border: '1px solid black' }}
               className="form-control"
               placeholder="Nombre"
               value={publicacion.nombre}
               onChange={handlePublicacion}
               name="nombre"
+              required
             />
           </div>
           <div className="mb-3">
             <input
-              type="text"
+              type="text" style={{ border: '1px solid black' }}
               className="form-control"
               placeholder="Apellido"
               value={publicacion.apellido}
               onChange={handlePublicacion}
               name="apellido"
+              required
             />
           </div>
           <div className="mb-3">
             <input
-              type="text"
+              type="email" style={{ border: '1px solid black' }}// Tipo de entrada email para la validación automática del formato de correo electrónico
               className="form-control"
               placeholder="Email"
               value={publicacion.email}
               onChange={handlePublicacion}
               name="email"
+              required // Campo obligatorio
             />
           </div>
           <div className="mb-3">
             <input
-              type="text"
+              type="text" style={{ border: '1px solid black' }}
               className="form-control"
               placeholder="Descripción"
               value={publicacion.descripcion}
               onChange={handlePublicacion}
               name="descripcion"
+              required
             />
           </div>
           <div className="mb-3">
             <input
-              type="text"
+              type="text" style={{ border: '1px solid black' }}
               className="form-control"
               placeholder="Comuna"
               value={publicacion.comuna}
               onChange={handlePublicacion}
               name="comuna"
+              required
             />
           </div>
           <div className="mb-3">
             <input
-              type="text"
+              type="text" style={{ border: '1px solid black' }}
               className="form-control"
               placeholder="Rubro"
               value={publicacion.rubro}
               onChange={handlePublicacion}
               name="rubro"
+              required
             />
           </div>
           <div className="mb-3">
             <input
-              type="text"
+              type="text" style={{ border: '1px solid black' }}
               className="form-control"
               placeholder="Fecha"
               value={publicacion.fecha}
               onChange={handlePublicacion}
               name="fecha"
+              required
             />
           </div>
         </div>
-       
-        <button
-          type="button"
-          className="btn btn-primary mt-5 me-5"
-          style={{ width: "40%" }}
-          onClick={() => navigate("/prestadorCv")}
-          
-        >
-          Publicar
-        </button>
+
+        {/* FALTA AGREGAR EL LINK  DEL BUTTON*/}
+             
+  
+  <button
+    type="button"
+    className="btn btn-primary mt-5 me-5"
+    style={{ width: "40%" , margin: "0 auto" }}
+    onClick={publicarPublicacion}
+  >
+    Publicar
+  </button>
+ 
       
       </div>
     </div>

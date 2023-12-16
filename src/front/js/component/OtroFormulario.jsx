@@ -1,6 +1,6 @@
 import React, { Component, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { Form, Button, Container, Row, Col } from "react-bootstrap";
+import { Form, Button, Container, Row, Col, Modal } from "react-bootstrap";
 import "../../styles/elotroformulario.css";
 import { Link } from "react-router-dom";
 import { Context, actions} from "../store/appContext";
@@ -13,17 +13,19 @@ export const OtroFormulario = (props) => {
     apellido: "",
     email: "",
     password: "",
+    confirmpassword: "",
     rut: "",
     telefono: "",
     comuna: "",
     fecha_de_nacimiento: "",
     tipoUsuario: "",
     aceptoTerminos: false,
+    emailregistrado: false,
+    rutregistrado: false,
+    telefonoregistrado: false,
     errores: {},
   });
 
-  const navigate = useNavigate ()
-  const {action} = useContext (Context)
 
   const [showRubroField, setShowRubroField] = useState(false);
 
@@ -42,16 +44,15 @@ export const OtroFormulario = (props) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
+  
     const errores = validarFormulario();
-
+  
     if (Object.keys(errores).length > 0) {
-      // Hay errores, actualizamos el estado con los errores
       setState({ ...state, errores });
       console.error("Formulario inválido:", errores);
       return;
     }
-
+  
     const {
       nombre,
       apellido,
@@ -65,14 +66,14 @@ export const OtroFormulario = (props) => {
       rubro,
       aceptoTerminos,
     } = state;
-
+  
     if (!aceptoTerminos) {
       console.error("Debes aceptar los términos y condiciones.");
       return;
     }
-
+  
     const rubroToSend = tipoUsuario === "cliente" ? undefined : rubro;
-
+  
     try {
       const payload = {
         nombre,
@@ -86,7 +87,7 @@ export const OtroFormulario = (props) => {
         tipoUsuario,
         ...(rubroToSend !== undefined && { rubro: rubroToSend }), // Agrega rubro solo si no es undefined
       };
-
+  
       const response = await fetch("http://localhost:3001/api/register", {
         method: "POST",
         headers: {
@@ -94,15 +95,21 @@ export const OtroFormulario = (props) => {
         },
         body: JSON.stringify(payload),
       });
-
+  
       if (response.ok) {
         const data = await response.json();
-        actions.guardarid(data?.user?.id);
-        navigate("/SegundoPerfil");
+        if (data?.message === "Usuario registrado con éxito") {
+          // Registro exitoso
+          setState({ ...state, showModal: true });
+          actions.guardarid(data?.user?.id);
+          if (data?.message === "Email ya registrado") {
+            // Registro exitoso
+            setState({ ...state, emailregistrado: true });
+        }
       } else {
         const errorData = await response.json();
         console.error("Error al enviar los datos al servidor:", errorData);
-      }
+      } }
     } catch (error) {
       console.error("Error de red:", error);
     }
@@ -114,6 +121,8 @@ export const OtroFormulario = (props) => {
       apellido,
       email,
       password,
+      confirmpassword,
+      emailregistrado,
       rut,
       telefono,
       comuna,
@@ -132,6 +141,10 @@ export const OtroFormulario = (props) => {
       errores.apellido = "El apellido es obligatorio";
     }
 
+    if (!email.trim()) {
+      errores.email = "El correo eléctronico es obligatorio";
+    } 
+
     if (!password.trim()) {
       errores.password = "La contraseña es obligatoria";
     } else if (password.length < 8 || password.length > 12) {
@@ -142,7 +155,7 @@ export const OtroFormulario = (props) => {
       errores.rut = "El Rut es obligatorio";
     } else if (rut.length < 8 || rut.length > 10) {
       errores.rut = "El Rut debe tener 8 o 9 dígitos";
-    }
+    } 
 
     if (!fecha_de_nacimiento.trim()) {
       errores.fecha_de_nacimiento = "La fecha de nacimiento es obligatoria";
@@ -152,7 +165,7 @@ export const OtroFormulario = (props) => {
       errores.telefono = "El telefono es obligatorio";
     } else if (telefono.length !== 9) {
       errores.telefono = "El telefono debe tener 9 dígitos";
-    }
+    } 
 
     if (!comuna.trim()) {
       errores.comuna = "Su comuna es obligatoria";
@@ -165,9 +178,21 @@ export const OtroFormulario = (props) => {
     if (!aceptoTerminos) {
       errores.aceptoTerminos = "Debes aceptar los términos y condiciones.";
     }
+    if (confirmpassword !== password){
+      errores.confirmpassword = "Las contraseñas deben coincidir"
+    }
+    if (!tipoUsuario) {
+      errores.tipoUsuario = "El tipo de usuario es obligatorio";
+    }
+
+
 
     return errores;
   };
+
+  const cerrarModal = () => {
+    setState({ ...state, showModal: false});
+  }
 
   return (
     <Container>
@@ -237,23 +262,28 @@ export const OtroFormulario = (props) => {
               )}
             </Form.Group>
             <Form.Group controlId="formEmail">
-              <Form.Label>
-                <h3>Correo electronico</h3>
-              </Form.Label>
-              <Form.Control
-                type="email"
-                name="email"
-                value={state.email}
-                placeholder="Ingrese su correo electronico"
-                style={{ borderWidth: "3px", borderColor: "darkcyan" }}
-                onChange={handleChange}
-              />
-              {state.errores.email && (
-                <Form.Text className="text-danger">
-                  {state.errores.email}
-                </Form.Text>
-              )}
-            </Form.Group>
+  <Form.Label>
+    <h3>Correo electrónico</h3>
+  </Form.Label>
+  <Form.Control
+    type="email"
+    name="email"
+    value={state.email}
+    placeholder="Ingrese su correo electronico"
+    style={{ borderWidth: "3px", borderColor: "darkcyan" }}
+    onChange={handleChange}
+  />
+  {state.errores.email && (
+    <Form.Text className="text-danger">
+      {state.errores.email}
+    </Form.Text>
+  )}
+  {state.emailregistrado && (
+    <div className="alert alert-warning" role="alert">
+      El correo electrónico ya está registrado. Por favor, utilice otro.
+    </div>
+  )}
+</Form.Group>
             <Form.Group controlId="formContraseña">
               <Form.Label>
                 <h3>Contraseña</h3>
@@ -269,6 +299,23 @@ export const OtroFormulario = (props) => {
               {state.errores.password && (
                 <Form.Text className="text-danger">
                   {state.errores.password}
+                </Form.Text>
+              )}
+            </Form.Group>
+            <Form.Group controlId="formConfirmContraseña">
+              <Form.Label>
+                <h3>Confirmar Contraseña</h3>
+              </Form.Label>
+              <Form.Control
+                type="password"
+                name="confirmpassword"
+                placeholder="Repita su contraseña"
+                style={{ borderWidth: "3px", borderColor: "darkcyan" }}
+                onChange={handleChange}
+              />
+              {state.errores.confirmpassword && (
+                <Form.Text className="text-danger">
+                  {state.errores.confirmpassword}
                 </Form.Text>
               )}
             </Form.Group>
@@ -289,6 +336,8 @@ export const OtroFormulario = (props) => {
                   {state.errores.telefono}
                 </Form.Text>
               )}
+              
+              
             </Form.Group>
             <Form.Group controlId="formFechaNacimiento">
               <Form.Label>
@@ -350,6 +399,11 @@ export const OtroFormulario = (props) => {
                 <option value="cliente">Cliente</option>
                 <option value="prestador">Prestador de Servicio</option>
               </Form.Control>
+              {state.errores.tipoUsuario && (
+                <Form.Text className="text-danger">
+                  {state.errores.tipoUsuario}
+                </Form.Text>
+              )}
             </Form.Group>
 
             {showRubroField && (
@@ -431,7 +485,9 @@ export const OtroFormulario = (props) => {
                 label="Acepto los términos y condiciones"
               />
               <br />
-              <Button className="buttonright" type="submit">
+              <Button
+               className="buttonright"
+                type="submit">
                 Aceptar
               </Button>{" "}
               <Button className="buttonright" variant="secondary" type="reset">
@@ -440,6 +496,21 @@ export const OtroFormulario = (props) => {
             </Form.Group>
             <br />
             <Button type="submit">Regresar</Button>
+            <Modal show={state.showModal} onHide={cerrarModal}>
+            <Modal.Header closeButton>
+          <Modal.Title>¡Registro Exitoso!</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+            <Link to="/login">
+            Pulsa aquí para ingresar a tu perfil</Link>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={cerrarModal}>
+            Cerrar
+          </Button>
+        </Modal.Footer>
+
+            </Modal>
           </Form>
         </Col>
       </Row>
