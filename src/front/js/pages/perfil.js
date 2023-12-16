@@ -11,6 +11,7 @@ export const Perfil = () => {
     lastName: "",
     email: "",
     telefono: "",
+    rubro: "",
     comuna: ""
   });
 
@@ -35,7 +36,8 @@ useEffect(() => {
       lastName: data.usuario.apellido,
       email: data.usuario.email,
       comuna: data.usuario.comuna,
-      telefono: data.usuario.telefono
+      telefono: data.usuario.telefono,
+      rubro: data.usuario.rubro
     })
   })
   .catch(error => console.log (error))
@@ -72,10 +74,23 @@ useEffect(() => {
       console.error("Error de red:", error);
     }
   };
+
+  const publicarAviso = () => {
+    const {
+      rubro
+    } = state;
+
+    if (rubro === ""){
+
+    }
+
+  }
+
+
   return (
     <div className="profile-container mt-4">
       <div className="header">
-        <h1 className="profile-name">Nombre Cliente</h1>
+        <h1 className="profile-name">¡Bienvenido {formData.firstName}!</h1>
       </div>
 
       {/* Formulario de datos */}
@@ -130,6 +145,16 @@ useEffect(() => {
             onChange={handleInputChange}
           />
         </div>
+        <div className="form-group mt-2">
+          <label htmlFor="rubro">Rubro:</label>
+          <input
+            type="text"
+            id="rubro"
+            name="rubro"
+            value={formData.rubro}
+            onChange={handleInputChange}
+          />
+        </div>
       </form>
       <div className="button-container">
         <button
@@ -146,20 +171,22 @@ useEffect(() => {
         >
           Guardar
         </button>
-        <Link to="/generadorPublicacion">
-          <button
-            className="action-button custom-button"
-            style={{
-              borderRadius: "12px",
-              borderColor: "white",
-              backgroundColor: "#2c94da",
-              height: "40px",
-              color: "black",
-              textAlign: "center",
-            }}
-          >
-            Publicar Trabajo
-          </button>
+       <Link to="/generadorPublicacion">
+          {["Electricista", "Carpintero", "Pintor", "Gasfitería", "Aseo"].includes(formData.rubro) && (
+            <button
+              className="action-button custom-button"
+              style={{
+                borderRadius: "12px",
+                borderColor: "white",
+                backgroundColor: "#2c94da",
+                height: "40px",
+                color: "black",
+                textAlign: "center",
+              }}
+            >
+              Publicar Trabajo
+            </button>
+          )}
         </Link>
         <Link to="/">
           {" "}

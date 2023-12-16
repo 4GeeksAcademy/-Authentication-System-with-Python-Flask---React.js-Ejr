@@ -10,7 +10,7 @@ from flask_jwt_extended import (
 )
 from flask_cors import CORS
 from api.utils import APIException, generate_sitemap
-from api.models import db, User, UserBuscador, UserPublicacion
+from api.models import db, User, UserPublicacion
 from api.routes import api
 from api.admin import setup_admin
 from api.commands import setup_commands
@@ -83,9 +83,7 @@ def login():
 
     user_found = User.query.filter_by(email=email).first()
 
-    if not user_found:
-        user_found = UserBuscador.query.filter_by(email=email).first()
-        print("User Found:", user_found)
+    print("User Found:", user_found)
 
     if not user_found:
         print("User not found")
@@ -101,10 +99,7 @@ def login():
         access_token = create_access_token(
             identity=str(user_found.idUser), expires_delta=expires
         )
-    elif isinstance(user_found, UserBuscador):
-        access_token = create_access_token(
-            identity=str(user_found.idUserBuscador), expires_delta=expires
-        )
+    
     else:
         access_token = None
 
@@ -129,32 +124,28 @@ def register():
     tipoUsuario = request.json.get("tipoUsuario")
     rubro = request.json.get("rubro")
 
-    # Verificar la existencia del email en ambas tablas
+    # Verificar la existencia del email
     user_found = User.query.filter_by(email=email).first()
-    buscador_found = UserBuscador.query.filter_by(email=email).first()
 
-    if user_found or buscador_found:
+    if user_found:
         return jsonify({"message": "Email ya registrado"}), 400
     
     user_found = User.query.filter_by(telefono=telefono).first()
-    buscador_found = UserBuscador.query.filter_by(telefono=telefono).first()
 
-    if user_found or buscador_found:
+    if user_found:
         return jsonify({"error": "Telefono ya registrado"}), 400
     
     user_found = User.query.filter_by(rut=rut).first()
-    buscador_found = UserBuscador.query.filter_by(rut=rut).first()
 
-    if user_found or buscador_found:
+    if user_found:
         return jsonify({"error": "Rut ya registrado"}), 400
 
     # Crear instancia de usuario basándose en la presencia de "rubro"
-    if "rubro" in request.json:
-        new_user = User(rubro=rubro)
-    else:
-        new_user = UserBuscador()
+   
 
-    # Configurar atributos comunes
+    new_user= User()
+
+
     new_user.email = email
     new_user.password = generate_password_hash(password)
     new_user.nombre = nombre
@@ -165,21 +156,20 @@ def register():
     new_user.tipoUsuario = tipoUsuario
     new_user.fecha_de_nacimiento = fecha_de_nacimiento
 
+    if "rubro" in request.json:
+          new_user.rubro = rubro
+
     # Agregar y hacer commit del nuevo usuario
     db.session.add(new_user)
     db.session.commit()
 
     # Obtener el ID después del commit
-    id = new_user.idUser if hasattr(new_user, "idUser") else new_user.idUserBuscador
-
+    id = new_user.idUser if hasattr(new_user, "idUser") else None
     expires = datetime.timedelta(days=3)
     access_token = create_access_token(identity=id, expires_delta=expires)
 
     data = {"message": "Usuario registrado con éxito","access_token": access_token, "user": new_user.serialize()}
 
-
-    # if "rubro" not in request.json:
-        #  del data["user"]["rubro"]
 
 
     return jsonify(data), 200
@@ -397,12 +387,11 @@ def perfil_logeado():
     email= request.json.get("email")
     user = User.query.filter_by(email=email).first()
     print(email)
-    user_cliente = UserBuscador.query.filter_by(email=email).first()
-    print(user)
-    if not user and not user_cliente:
+    
+    if not user:
         return jsonify({"error":"usuario no encontrado"}), 400
     
-    return jsonify({"usuario": user.serialize() if user else user_cliente.serialize()})
+    return jsonify({"usuario": user.serialize()})
 
 @app.route("/api/contactar", methods=[ "POST" ])
 @jwt_required()
