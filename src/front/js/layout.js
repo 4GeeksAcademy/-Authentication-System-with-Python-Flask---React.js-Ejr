@@ -61,7 +61,8 @@ const Layout = () => {
             />
             <Route element={<Perfil />} path="/perfil" />
             <Route element={<Landing />} path="/landing2" />
-            <Route element={<SegundoPerfil />} path="/SegundoPerfil" />
+            <Route element={<SegundoPerfil />} path="/SegundoPerfil/"/>
+            <Route element={<SegundoPerfil />} path="/SegundoPerfil/:idUsuario" />
             <Route element={<Nosotros />} path="/nosotros" />
             <Route element={<h1>Not found!</h1>} />
             <Route element={<Task />} path="/task" />

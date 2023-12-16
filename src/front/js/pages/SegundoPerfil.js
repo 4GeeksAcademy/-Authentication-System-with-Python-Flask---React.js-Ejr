@@ -1,5 +1,5 @@
-import React, { useContext, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useContext, useEffect, useState, } from "react";
+import { Link, useParams } from "react-router-dom";
 import { Context } from "../store/appContext.js";
 
 import "../../styles/segundoperfil.css";
@@ -27,60 +27,59 @@ export const SegundoPerfil = () => {
       // Puedes agregar más comentarios y calificaciones según sea necesario
     ],
   };
-  const {  } = useContext(Context);
+
+
+
+
+
+  const { store, actions } = useContext(Context);
   const [profileData, setData] = useState(data);
+  const { idUsuario } = useParams();
+
   useEffect(() => {
-    let token = localStorage.getItem("token")
-    console.log(token)
-    let user = JSON.parse(localStorage.getItem("user"))
-    console.log(user)
-    fetch("http://localhost:3001/api/perfil_logeado", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        //"Authorization": "Bearer " + token
-      },
-      body: JSON.stringify({email: user.email})
-    })
-    .then(response => response.json())
-    .then(data => {
-     setData({
-        ...profileData,
-        nombre: data.usuario.nombre,
-        apellido: data.usuario.apellido,
-        email: data.usuario.email,
-        comuna: data.usuario.comuna,
-        telefono: data.usuario.telefono
+    fetch(`http://localhost:3001/api/perfil/${idUsuario}`)
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data)
+        setData(data);
       })
-    })
-    .catch(error => console.log (error))
-  },[])
-  // const uploadImageToServer = async (image) => {
-  //   try {
-  //     const formData = new FormData();
-  //     formData.append('file', image); // 'file' debe coincidir con el nombre del campo que espera la API
+      .catch((error) => {
+        // Manejo de errores
+        console.error('Error fetching data:', error);
+      });
+  }, [idUsuario]);
 
-  //     const response = await fetch('URL_DE_TU_API', {
-  //       method: 'POST',
-  //       body: formData,
-  //       // Puedes agregar encabezados adicionales aquí, como headers, si la API lo requiere
-  //     });
 
-  //     if (response.ok) {
-  //       const data = await response.json();
-  //       // Realiza acciones con la respuesta si es necesario
-  //       console.log('Imagen subida exitosamente:', data);
-  //     } else {
-  //       console.error('Error al subir la imagen:', response.statusText);
-  //     }
-  //   } catch (error) {
-  //     console.error('Error de red:', error);
-  //   }
-  // };
 
-  // // Suponiendo que tienes la imagen guardada en 'imageFile'
-  // uploadImageToServer(imageFile);
 
+
+  // useEffect(() => {
+
+  //   let token = localStorage.getItem("token")
+  //   console.log(token)
+  //   let user = JSON.parse(localStorage.getItem("user"))
+  //   console.log(user)
+  //   fetch("http://localhost:3001/api/perfil_logeado", {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       //"Authorization": "Bearer " + token
+  //     },
+  //     body: JSON.stringify({email: user.email})
+  //   })
+  //   .then(response => response.json())
+  //   .then(data => {
+  //    setData({
+  //       ...profileData,
+  //       nombre: data.usuario.nombre,
+  //       apellido: data.usuario.apellido,
+  //       email: data.usuario.email,
+  //       comuna: data.usuario.comuna,
+  //       telefono: data.usuario.telefono
+  //     })
+  //   })
+  //   .catch(error => console.log (error))
+  // },[])
   const [image, setImage] = useState(null);
 
   const handleImageChange = (e) => {
@@ -145,17 +144,17 @@ export const SegundoPerfil = () => {
             />
           </div>
           <div className="provider-name text-center">
-            <div className="provider-name-text">{profileData.nombre}{" "}{profileData.apellido}</div>
+            <div className="provider-name-text">{profileData?.firstName}{" "}{profileData?.lastName}</div>
           </div>
           <div className="jobs">
-            {profileData.jobs.map((job, index) => (
+            {profileData?.jobs?.map((job, index) => (
               <div className={`job job-${index + 1}`} key={index}>
                 <input
                   type="text"
                   className="job-text"
                   value={job}
                   onChange={(e) => {
-                    const newJobs = [...profileData.jobs];
+                    const newJobs = [...profileData?.jobs];
                     newJobs[index] = e.target.value;
                     setData((prevData) => ({
                       ...prevData,
@@ -172,13 +171,14 @@ export const SegundoPerfil = () => {
             <div className="description">
               {" "}
               {profileData.description}, <strong>Comuna:</strong>{" "}
-              {profileData.comuna},{" "}<strong>Telefono:</strong> {profileData.telefono}
+              {profileData.comuna},{" "}<strong>Telefono:</strong> {profileData.telefono},{""}
+              <strong>Email: </strong>{profileData.email}
             </div>
           </div>
           <div className="ratings-section">
             <div className="comments-ratings">COMENTARIOS Y CALIFICACIONES</div>
             <div className="ratings-list">
-              {profileData.ratings.map((item, index) => (
+              {profileData?.ratings?.map((item, index) => (
                 <div className="rating-item" key={index}>
                   <div className="comment">{item.comment}</div>
                   <div className="rating">Calificación: {item.rating}</div>
@@ -191,13 +191,13 @@ export const SegundoPerfil = () => {
               <Link to="/generadorPublicacion">
                 <button
                   className="btn btn-primary logout-text"
-                  style={{ marginTop: "50px", marginBottom:"15px" }}
+                  style={{ marginTop: "50px", marginBottom: "15px" }}
                 >
                   Publicar Trabajo
                 </button>
               </Link>
               <Link to="/">
-          {" "}
+                {" "}
                 <button className="btn btn-danger logout-text" >Salir</button>
               </Link>
             </div>

@@ -41,7 +41,8 @@ import "./../pages/home.js";
 
 
 const JobPost = ({
-  id,
+  idPublicacion,
+  idUsuario,
   titulo,
   nombre,
   apellido,
@@ -51,67 +52,49 @@ const JobPost = ({
   fecha,
   onContact,
 }) => {
-  const navigate = useNavigate()
-  const contactar = ()  =>  {
-    let token = localStorage.getItem('token');
-    fetch("http://localhost:3001/api/contactar", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${sessionStorage.getItem("token")}` 
-      }, 
-    })
-  .then(response =>{
-    response.json()
-    if(response.status == 200)
-    {
-      navigate("/segundoPerfil")
-    }
-  })
-  .then(data => console.log(data))
-  }
- return (
-  <div
-    style={{
-      border: "1px solid #ccc",
-      padding: "10px",
-      marginBottom: "15px",
-      backgroundColor: "white", // Fondo blanco
-      display: "flex", // Mostrar en formato flex
-      flexDirection: "column", // Alinear elementos en columna
-    }}
-  >
+  // Lógica o JSX relacionado con JobPost
+
+  return (
     <div
       style={{
-        borderLeft: "5px solid red", // Línea de color rojo en el lado izquierdo
-        padding: "5px",
+        border: "1px solid #ccc",
+        padding: "10px",
+        marginBottom: "15px",
+        backgroundColor: "white", // Fondo blanco
+        display: "flex", // Mostrar en formato flex
+        flexDirection: "column", // Alinear elementos en columna
       }}
     >
-      <h3>{titulo}</h3>
-      <p>
-        <strong>Nombre:</strong> {nombre} {apellido}
-      </p>
-      <p>
-        <strong>Descripcion:</strong>
-        {descripcion}
-      </p>
-      <p>
-        <strong>Comuna:</strong> {comuna}
-      </p>
-      <p>
-        <strong>Categoría:</strong> {rubro}
-      </p>
-      <p>
-        <strong>Fecha:</strong> {fecha}
-      </p>
+      <div
+        style={{
+          borderLeft: "5px solid red", // Línea de color rojo en el lado izquierdo
+          padding: "5px",
+        }}
+      >
+        <h3>{titulo}</h3>
+        <p>
+          <strong>Nombre:</strong> {nombre} {apellido}
+        </p>
+        <p>
+          <strong>Descripción:</strong> {descripcion}
+        </p>
+        <p>
+          <strong>Comuna:</strong> {comuna}
+        </p>
+        <p>
+          <strong>Categoría:</strong> {rubro}
+        </p>
+        <p>
+          <strong>Fecha:</strong> {fecha}
+        </p>
+      </div>
+
+      <Link to={`/segundoPerfil/${idUsuario}`} className="btn btn-success">  
+        Contactar
+      </Link>
     </div>
-     
-    <button className="btn btn-success" onClick={contactar}>
-      Contactar
-    </button>
-  
-  </div>
-)};
+  );
+};
 
 // Componente principal
 const PrestadorCv = () => {
@@ -191,11 +174,13 @@ const PrestadorCv = () => {
         </button>
       </div>
       <div className="row flex-column">
-        {data?.map((element, index) => (
+        {data?.map((element, index) => {
+          console.log(element)
+          return (
           <div key={index} className="col mb-3">
             <JobPost {...element} />
           </div>
-        ))}
+        )})}
       </div>
     </div>
   );
