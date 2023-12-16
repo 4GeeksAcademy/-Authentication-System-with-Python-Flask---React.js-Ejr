@@ -160,7 +160,7 @@ def get_private_pacient():
         if patient_validation:
              patient=Patient.query.get(patient_validation)
              return jsonify ({"message":"Token is valid", "patient_id": patient.id, "patient_first_name": patient.first_name ,"patient_email": patient.email})
-                
+                       
     except ExpiredSignatureError:
         logging.warning("Token has expired")
         return jsonify ({"Error": "Token has expired"}),400
@@ -189,3 +189,27 @@ def get_private_specialist():
         logging.error("Token verification error: " + str(e))
         return jsonify ({"Error": "The token is invalid " + str (e)}), 400
 
+
+
+# delete user
+
+@api.route("/delete_patient/<int:patient_id>",methods=['DELETE'])
+def delete_patient_by_id(patient_id):
+    patient=Patient.query.get(patient_id)
+    if patient:
+        db.session.delete(patient)
+        db.session.commit()
+        return jsonify({"message":"Patient Deleted"})
+    else:
+        return jsonify({"Error":"The Patient does not exist"})
+
+
+@api.route("/delete_specialist/<int:specialist_id>",methods=['DELETE'])
+def delete_specialist_by_id(specialist_id):
+    specialist=Specialist.query.get(specialist_id)
+    if specialist:
+        db.session.delete(specialist)
+        db.session.commit()
+        return jsonify({"message":"Specialist Deleted"})
+    else:
+        return jsonify({"Error":"The Specialist does not exist"})
