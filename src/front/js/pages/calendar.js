@@ -1,7 +1,9 @@
 import React, { useContext, useState } from "react";
 import { Context } from "../store/appContext";
 import "../../styles/calendar.css";
-import Modal from "../component/modal";
+import ModalComponent from "../component/modal";
+import 'react-responsive-modal/styles.css';
+import { Modal } from 'react-responsive-modal';
 
 let hourArray = [
   "9:00 AM",
@@ -21,6 +23,9 @@ let hourArray = [
 let bgColor = "rgb(72 177 186 / 63%)";
 
 function Calendar(props) {
+  const [open, setOpen] = useState(false);
+  const onOpenModal = () => setOpen(true);
+  const onCloseModal = () => setOpen(false);
   const { store, actions } = useContext(Context);
   const [modalData, setModalData] = useState({});
 console.log(store)
@@ -28,7 +33,28 @@ console.log(store)
 
   return (
     <div>
-      <Modal data={modalData} />
+ 
+      <Modal 
+      open={open} 
+      onClose={onCloseModal} 
+      center
+      classNames={{
+        modal: 'customModal',
+      }}
+      >
+      <div className="content">
+            <span className="header">
+              <h5 className="title fw-bold  border-bottom" >
+                {modalData.name}
+              </h5>
+             
+            </span>
+            <div className="body">{modalData.description}</div>
+            <div className="footer">
+              
+            </div>
+          </div>
+      </Modal>
       <table className="table table-bordered ">
         <thead>
           <tr>
@@ -147,7 +173,9 @@ console.log(store)
                           className={`p-0 ${
                             left ? "titleLeft" : "titleRight"
                           } `}
-                          onClick={() => setModalData(store.programs[index])}
+                          onClick={() => {
+                            onOpenModal()
+                            setModalData(store.programs[index])}}
                           style={{
                             height: "1px",
                             overflow: "visible",
@@ -163,8 +191,7 @@ console.log(store)
                           ></div>
                           <div
                             className="scroller p-2 z-2 modalTD "
-                            data-bs-toggle="modal"
-                            data-bs-target="#programModal"
+                          
                             style={{
                               backgroundColor: bgColor,
                               fontSize: "87%",
@@ -198,7 +225,9 @@ console.log(store)
                         <td
                           key={i}
                           colSpan={parseInt(programTotalHours) + 1}
-                          onClick={() => setModalData(store.programs[index])}
+                          onClick={() => {
+                            onOpenModal()
+                            setModalData(store.programs[index])}}
                           data-program-name={store.programs[index].name}
                           className={`p-0 ${
                             left ? "titleLeft" : "titleRight"
@@ -218,8 +247,7 @@ console.log(store)
                           ></div>
                           <div
                             className="scroller p-2 z-2 modalTD "
-                            data-bs-toggle="modal"
-                            data-bs-target="#programModal"
+                            
                             style={{
                               backgroundColor: bgColor,
                               fontSize: "87%",
@@ -254,7 +282,9 @@ console.log(store)
                         <td
                           key={i}
                           colSpan={parseInt(programTotalHours) + 1}
-                          onClick={() => setModalData(store.programs[index])}
+                          onClick={() => {
+                            onOpenModal()
+                            setModalData(store.programs[index])}}
                           data-program-name={store.programs[index].name}
                           className={`p-0 ${
                             left ? "titleLeft" : "titleRight"
@@ -274,8 +304,6 @@ console.log(store)
                           ></div>
                           <div
                             className="scroller p-2 z-2 modalTD "
-                            data-bs-toggle="modal"
-                            data-bs-target="#programModal"
                             style={{
                               backgroundColor: bgColor,
                               fontSize: "87%",
@@ -310,7 +338,9 @@ console.log(store)
                         <td
                           key={i}
                           colSpan={parseInt(programTotalHours) + 1}
-                          onClick={() => setModalData(store.programs[index])}
+                          onClick={() => {
+                            onOpenModal()
+                            setModalData(store.programs[index])}}
                           data-program-name={store.programs[index].name}
                           //  solution to bug where startTime was 10:30 or 11:30
                           // the program would duplicate, but data would not duplicate

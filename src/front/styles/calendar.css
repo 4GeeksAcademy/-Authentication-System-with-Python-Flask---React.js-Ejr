@@ -73,3 +73,31 @@
     left: 4%;
     top: 1px;
   }
+
+  .react-responsive-modal-closeButton {
+    display: flex;
+    justify-content: center;
+    top: 1px !important;
+    right: 3px !important;
+    width: 7%;
+    fill: rgb(53 133 140);
+}
+
+.customModal {
+  
+  width: 34%;
+}
+@media screen and (max-width: 1001px ){
+  .customModal {
+    
+    width: 45%;
+  }
+  
+}
+@media screen and (max-width: 668px ){
+  .customModal {
+    
+    width: 60%;
+  }
+  
+}

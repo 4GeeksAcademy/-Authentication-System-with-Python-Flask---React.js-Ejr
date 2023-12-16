@@ -30,7 +30,7 @@ function ProgramDivs() {
               <li className="nav-item" role="presentation">
                 <button
                   className={`nav-link ${
-                    currentDay == day ? "active" : ""
+                    currentDay == day ? "active " : "d-none d-md-block"
                   } dayFont border  `}
                   data-bs-toggle="pill"
                   data-bs-target={`#pills-${day}`}
