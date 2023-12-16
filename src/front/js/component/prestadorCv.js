@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import "../../styles/prestadorCv.css";
 
 import "./../pages/home.js";
@@ -38,6 +38,8 @@ import "./../pages/home.js";
 //   // Añade más datos según sea necesario
 // ];
 
+
+
 const JobPost = ({
   id,
   titulo,
@@ -48,7 +50,27 @@ const JobPost = ({
   rubro,
   fecha,
   onContact,
-}) => (
+}) => {
+  const navigate = useNavigate()
+  const contactar = ()  =>  {
+    let token = localStorage.getItem('token');
+    fetch("http://localhost:3001/api/contactar", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${sessionStorage.getItem("token")}` 
+      }, 
+    })
+  .then(response =>{
+    response.json()
+    if(response.status == 200)
+    {
+      navigate("/segundoPerfil")
+    }
+  })
+  .then(data => console.log(data))
+  }
+ return (
   <div
     style={{
       border: "1px solid #ccc",
@@ -83,13 +105,13 @@ const JobPost = ({
         <strong>Fecha:</strong> {fecha}
       </p>
     </div>
-     <Link to= "/segundoPerfil">
-    <button className="btn btn-success">
+     
+    <button className="btn btn-success" onClick={contactar}>
       Contactar
     </button>
-    </Link>
+  
   </div>
-);
+)};
 
 // Componente principal
 const PrestadorCv = () => {
@@ -106,6 +128,7 @@ const PrestadorCv = () => {
   const handleCategoriaFilter = (categoria) => {
     setFilteredCategoria(categoria === filteredCategoria ? null : categoria);
   };
+ 
 
   const handleContact = (postId) => {
     // Aquí puedes implementar la lógica para contactar al prestador usando el postId

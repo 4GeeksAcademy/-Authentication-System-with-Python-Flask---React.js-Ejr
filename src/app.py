@@ -404,6 +404,12 @@ def perfil_logeado():
     
     return jsonify({"usuario": user.serialize() if user else user_cliente.serialize()})
 
+@app.route("/api/contactar", methods=[ "POST" ])
+@jwt_required()
+def contactar():
+    id= get_jwt_identity()
+    return jsonify({"msg": id}), 200
+
 
 if __name__ == "__main__":
     PORT = int(os.environ.get("PORT", 3001))
