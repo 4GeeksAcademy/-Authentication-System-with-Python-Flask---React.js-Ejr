@@ -53,6 +53,8 @@ class UserPublicacion(db.Model):
 
     def serialize(self):
         return {
+            "idPublicacion": self.idPublicacion,
+            "idUsuario": self.idUsuario,
             "email": self.email,
             "nombre": self.nombre,
             "apellido": self.apellido,

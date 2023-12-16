@@ -254,7 +254,7 @@ def enviar_datos_de_publicacionpost():
     # Capturamos todo el body en un diccionario
     body = request.get_json()
     publicacion = UserPublicacion()
-    publicacion.idUsuario = body["idUsers"]
+    publicacion.idUsuario = body["idUser"]
     publicacion.nombre = body["nombre"]
     publicacion.apellido = body["apellido"]
     publicacion.email = body["email"]
@@ -398,6 +398,7 @@ def perfil_logeado():
 def contactar():
     id= get_jwt_identity()
     return jsonify({"msg": id}), 200
+    
 
 
 if __name__ == "__main__":
