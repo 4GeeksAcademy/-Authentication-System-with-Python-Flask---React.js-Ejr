@@ -1,0 +1,129 @@
+import React from 'react'
+import style from './Home.module.css'
+
+const Home = () => {
+    return (
+        <div>
+            <nav className={style.navbar}>
+                <div className={style.navbar__container}>
+                    <a href="/" id="navbar__logo"><i className="fa-solid fa-dumbbell"></i>GYMApp</a>
+                    <div className="navbar__toggle" id="mobile-menu">
+                        <span className={style.bar}></span>
+                        <span className={style.bar}></span>
+                        <span className={style.bar}></span>
+                    </div>
+                    <ul className={style.navbar__menu}>
+                        <li className={style.navbar__item}>
+                            <a href="/" className={style.navbar__links}>Home</a>
+                        </li>
+                        <li className={style.nabvar__item}>
+                            <a href="/routines.html" className={style.navbar__links}>Routines</a>
+                        </li>
+                        <li className={style.navbar__item}>
+                            <a href="/diets.html" className={style.navbar__links}>Diets</a>
+                        </li>
+                        <li className={style.nabvar__btn}>
+                            <a href="/" className={style.button}>Sign Up</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+
+            <div className={style.main}>
+                <div className={style.main__container}>
+                    <div className={style.main__content}>
+                        <h1>NEXT GENERATION GYM</h1>
+                        <h2>TECHNOLOGY</h2>
+                        <p>See what makes us different.</p>
+                        <button className={style.main__btn}><a href="/">Get Started</a></button>
+                    </div>
+                    <div className={style.main__img__container}>
+                        <img src="images/undraw_fitness_tracker_3033.png" alt="pic" id={style.main__img} />
+                    </div>
+                </div>
+            </div>
+
+
+            <div className={style.service}>
+                <h1>See what the hype is about</h1>
+                <div className={style.services__container}>
+                    <div className={style.services__card}>
+                        <h2>Experience Fitness</h2>
+                        <p>Best Technology Gym</p>
+                        <button>Get Started</button>
+                    </div>
+                    <div className={style.services__card}>
+                        <h2>Are You Ready</h2>
+                        <p>Take The Challenge</p>
+                        <button>Get Started</button>
+                    </div>
+                </div>
+            </div>
+
+
+            <div className={style.footer__container}>
+                <div className={style.footer__links}>
+                    <div className={style.footer__link__wrapper}>
+                        <div className={style.footer__link__items}>
+                            <h2>About Us</h2>
+                            <a href="/">How it works</a>
+                            <a href="/">Testimonials</a>
+                            <a href="/">Careers</a>
+                            <a href="/">Investments</a>
+                            <a href="/">Terms of service</a>
+                        </div>
+                        <div className={style.footer__link__items}>
+                            <h2>Contact Us</h2>
+                            <a href="/">Contact</a>
+                            <a href="/">Support</a>
+                            <a href="/">Destinations</a>
+                            <a href="/">Sponsorship</a>
+                        </div>
+                    </div>
+                    <div className={style.footer__link__wrapper}>
+                        <div className={style.footer__link__items}>
+                            <h2>Videos</h2>
+                            <a href="/">Submit Video</a>
+                            <a href="/">Ambassadors</a>
+                            <a href="/">Agency</a>
+                            <a href="/">Influencer</a>
+
+                        </div>
+                        <div className={style.footer__link__items}>
+                            <h2>Social Media</h2>
+                            <a href="/">Instagram</a>
+                            <a href="/">Facebook</a>
+                            <a href="/">Youtube</a>
+                            <a href="/">Tweeter</a>
+                        </div>
+                    </div>
+                </div>
+                <div className={style.social__media}>
+                    <div className={style.social__media__wrap}>
+                        <div className={style.footer__logo}>
+                            <a href="/" id="footer__logo"><i className="fa-solid fa-dumbbell"></i>GYMApp</a>
+                        </div>
+                        <p className={style.website__rights}>GYMApp 2023. All rights reserved</p>
+                    <div className={style.social__icons}>
+                        <a href="/" className={style.social__icon__link} target="_blank">
+                            <i className="fa-brands fa-facebook"></i>
+                        </a>
+                        <a href="/" className={style.social__icon__link} target="_blank">
+                            <i className="fa-brands fa-instagram"></i>
+                        </a>
+                        <a href="/" className={style.social__icon__link} target="_blank">
+                            <i className="fa-brands fa-youtube"></i>
+                        </a>
+                        <a href="/" className={style.social__icon__link} target="_blank">
+                            <i className="fa-brands fa-x-twitter"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div >
+    )
+}
+
+export default Home
