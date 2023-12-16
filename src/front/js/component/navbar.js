@@ -1,38 +1,33 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHeartbeat } from '@fortawesome/free-solid-svg-icons';
 
 export const Navbar = () => {
   return (
-    <header className="typefloating">
-      <div className="brand">
-        <img className="icon" alt="" src="/icon.svg" />
-        <b className="brandname">PhysioCareSync</b>
-      </div>
+    <div className="bubbleContainer">
       <div className="navLinks">
-        <nav className="navLinks1">
-          <Link to="/dashboard" className="navLink button-like">
-            Dashboard
-          </Link>
-          <Link to="/servicios" className="navLink button-like">
-            Servicios
-          </Link>
-          <Link to="/profesionales" className="navLink button-like">
-            Profesionales
-          </Link>
-          <Link to="/iniciar-sesion" className="button">
-            <div className="textContainer">
-              <b className="cta">Inciar Sesión</b>
-            </div>
-          </Link>
-          <Link to="/registrarse" className="button1">
-            <div className="textContainer">
-              <b className="cta">Registrarse</b>
-            </div>
-          </Link>
-        </nav>
+        <button className="navLink">
+          <div className="navLabel">Inicio</div>
+        </button>
+        <button className="navLink">
+          <div className="navLabel">Servicios</div>
+        </button>
+        <button className="navLink">
+          <div className="navLabel">Profesionales</div>
+        </button>
       </div>
-    </header>
+      <div className="navLinks1">
+        <button className="navLink">
+          <div className="navLabel">Iniciar Sesión</div>
+        </button>
+        <button className="navLink">
+          <div className="navLabel">Registrarse</div>
+        </button>
+      </div>
+      <div className="brand">
+        <FontAwesomeIcon icon={faHeartbeat} />
+        <div className="brandname">PhysioCareSync</div>
+      </div>
+    </div>
   );
 };
-
-export default Navbar;
