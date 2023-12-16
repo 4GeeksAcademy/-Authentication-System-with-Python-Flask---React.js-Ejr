@@ -10,10 +10,11 @@ from flask_jwt_extended import JWTManager, jwt_required, create_access_token, ge
 
 api = Blueprint('api', __name__)
 bcrypt = Bcrypt()
-
+CORS(api)
 jwt = JWTManager()
+
 @api.route('/signup', methods=['POST'])
-# CORS(api)
+
 def create_one_user():    
     email = request.json.get('email')
     existing_user = User.query.filter_by(email=email).first()
@@ -44,3 +45,4 @@ def create_one_user():
         }
 
     return jsonify({"msg": "user created succesfull", "user_added": ok_to_share }), 200
+
