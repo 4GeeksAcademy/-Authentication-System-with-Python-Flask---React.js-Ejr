@@ -1,13 +1,16 @@
 import React from 'react'
 import style from './Home.module.css'
 
+
 const Home = () => {
     return (
+
+        
         <div>
             <nav className={style.navbar}>
                 <div className={style.navbar__container}>
-                    <a href="/" id="navbar__logo"><i className="fa-solid fa-dumbbell"></i>GYMApp</a>
-                    <div className="navbar__toggle" id="mobile-menu">
+                    <a href="/" id={style.navbar__logo}><i className="fa-solid fa-dumbbell"></i>__GYMApp</a>
+                    <div className={style.navbar__toggle} id={style.mobile_menu}>
                         <span className={style.bar}></span>
                         <span className={style.bar}></span>
                         <span className={style.bar}></span>
@@ -39,13 +42,13 @@ const Home = () => {
                         <button className={style.main__btn}><a href="/">Get Started</a></button>
                     </div>
                     <div className={style.main__img__container}>
-                        <img src="images/undraw_fitness_tracker_3033.png" alt="pic" id={style.main__img} />
+                        <img src="/src/front/img/undraw_fitness_tracker_3033.svg" alt="pic" id={style.main__img} />
                     </div>
                 </div>
             </div>
 
 
-            <div className={style.service}>
+            <div className={style.services}>
                 <h1>See what the hype is about</h1>
                 <div className={style.services__container}>
                     <div className={style.services__card}>
@@ -54,6 +57,7 @@ const Home = () => {
                         <button>Get Started</button>
                     </div>
                     <div className={style.services__card}>
+                    <img src="/src/front/img/pexels-pixabay-416809.jpg" alt="pic" id={style.main__img} />
                         <h2>Are You Ready</h2>
                         <p>Take The Challenge</p>
                         <button>Get Started</button>
@@ -95,16 +99,16 @@ const Home = () => {
                             <a href="/">Instagram</a>
                             <a href="/">Facebook</a>
                             <a href="/">Youtube</a>
-                            <a href="/">Tweeter</a>
+                            <a href="/">LinkedIn</a>
                         </div>
                     </div>
                 </div>
                 <div className={style.social__media}>
                     <div className={style.social__media__wrap}>
                         <div className={style.footer__logo}>
-                            <a href="/" id="footer__logo"><i className="fa-solid fa-dumbbell"></i>GYMApp</a>
+                            <a href="/" id={style.footer__logo}><i className="fa-solid fa-dumbbell"></i>__GYMApp</a>
                         </div>
-                        <p className={style.website__rights}>GYMApp 2023. All rights reserved</p>
+                        <p className={style.website__rights}><i class="fa-solid fa-copyright"></i>GYMApp 2023. All rights reserved</p>
                     <div className={style.social__icons}>
                         <a href="/" className={style.social__icon__link} target="_blank">
                             <i className="fa-brands fa-facebook"></i>
@@ -116,7 +120,7 @@ const Home = () => {
                             <i className="fa-brands fa-youtube"></i>
                         </a>
                         <a href="/" className={style.social__icon__link} target="_blank">
-                            <i className="fa-brands fa-x-twitter"></i>
+                        <i class="fa-brands fa-linkedin"></i>
                         </a>
                     </div>
                 </div>
@@ -125,5 +129,6 @@ const Home = () => {
     </div >
     )
 }
+
 
 export default Home
