@@ -5,7 +5,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       Formulario: [],
       OtroFormulario: [],
       ususario: {},
-      publicaciones: {},
+      publicaciones: [],
       Buscador: [],
       id: null,
     },

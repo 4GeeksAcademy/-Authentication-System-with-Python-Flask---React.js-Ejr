@@ -30,8 +30,6 @@ export const SegundoPerfil = () => {
 
 
 
-
-
   const { store, actions } = useContext(Context);
   const [profileData, setData] = useState(data);
   const { idUsuario } = useParams();
@@ -188,17 +186,9 @@ export const SegundoPerfil = () => {
           </div>
           <div className="action-buttons text-center">
             <div className="logout">
-              <Link to="/generadorPublicacion">
-                <button
-                  className="btn btn-primary logout-text"
-                  style={{ marginTop: "50px", marginBottom: "15px" }}
-                >
-                  Publicar Trabajo
-                </button>
-              </Link>
-              <Link to="/">
+              <Link to="/prestadorCv">
                 {" "}
-                <button className="btn btn-danger logout-text" >Salir</button>
+                <button className="btn btn-danger logout-text" >Volver</button>
               </Link>
             </div>
           </div>

@@ -6,6 +6,7 @@ const GeneradorPublicacion = () => {
     nombre: "",
     apellido: "",
     email: "",
+    titulo: "",
     descripcion: "",
     comuna: "",
     rubro: "",
@@ -89,6 +90,17 @@ const GeneradorPublicacion = () => {
               value={publicacion.apellido}
               onChange={handlePublicacion}
               name="apellido"
+              required
+            />
+          </div>
+          <div className="mb-3">
+            <input
+              type="text" style={{ border: '1px solid black' }}
+              className="form-control"
+              placeholder="Titulo"
+              value={publicacion.titulo}
+              onChange={handlePublicacion}
+              name="Titulo"
               required
             />
           </div>

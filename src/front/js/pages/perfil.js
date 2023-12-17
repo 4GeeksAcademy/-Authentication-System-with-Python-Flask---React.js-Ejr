@@ -50,12 +50,10 @@ useEffect(() => {
     });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
+  const handleEditProfile = async () => {
     try {
       const response = await fetch("http://localhost:3001/api/perfil", {
-        method: "POST",
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
@@ -63,28 +61,17 @@ useEffect(() => {
       });
 
       if (response.ok) {
-        // Manejar la respuesta exitosa del servidor
-        const data = await response.json();
-        console.log("Registro exitoso:", data);
+        console.log("Perfil actualizado exitosamente");
+        // Puedes agregar lógica adicional aquí, si es necesario
       } else {
-        // Manejar errores
-        console.error("Error al registrar usuario");
+        console.error("Error al actualizar el perfil");
       }
     } catch (error) {
       console.error("Error de red:", error);
     }
   };
 
-  const publicarAviso = () => {
-    const {
-      rubro
-    } = state;
-
-    if (rubro === ""){
-
-    }
-
-  }
+  
 
 
   return (
@@ -94,7 +81,7 @@ useEffect(() => {
       </div>
 
       {/* Formulario de datos */}
-      <form className="data-form" onSubmit={handleSubmit}>
+      <form className="data-form">
         <div className="form-group">
           <label htmlFor="firstName">Nombre:</label>
           <input
@@ -103,6 +90,7 @@ useEffect(() => {
             name="firstName"
             value={formData.firstName}
             onChange={handleInputChange}
+            disabled
           />
         </div>
         <div className="form-group mt-2">
@@ -113,6 +101,7 @@ useEffect(() => {
             name="lastName"
             value={formData.lastName}
             onChange={handleInputChange}
+            disabled
           />
         </div>
         <div className="form-group mt-2">
@@ -157,8 +146,10 @@ useEffect(() => {
         </div>
       </form>
       <div className="button-container">
-        <button
+      <button
+          type="button"
           className="action-button custom-button"
+          onClick={handleEditProfile}
           style={{
             borderRadius: "12px",
             borderColor: "white",
@@ -167,7 +158,6 @@ useEffect(() => {
             color: "black",
             textAlign: "center",
           }}
-          type="submit"
         >
           Guardar
         </button>

@@ -42,14 +42,13 @@ class UserPublicacion(db.Model):
     idUsuario = db.Column(db.Integer)
     nombre = db.Column(db.String(200), default="", nullable=True)
     apellido = db.Column(db.String(200), default="", nullable=False)
-    email = db.Column(db.String(200), unique=True, nullable=False)
+    titulo = db.Column(db.String(200), default="", nullable=False)
+    email = db.Column(db.String(200), unique=False, nullable=False)
     descripcion = db.Column(db.String(200), default="", nullable=False)
     comuna = db.Column(db.String(200), default="", nullable=False)
     rubro = db.Column(db.String(200), default="", nullable=False)
-    fecha = db.Column(db.String(200), unique=True, nullable=True)
+    fecha = db.Column(db.String(200), unique=False, nullable=True)
 
-    def __repr__(self):
-        return f"<UserBuscador {self.email}>"
 
     def serialize(self):
         return {
@@ -58,6 +57,7 @@ class UserPublicacion(db.Model):
             "email": self.email,
             "nombre": self.nombre,
             "apellido": self.apellido,
+            "titulo": self.titulo,
             "descripcion": self.descripcion,
             "comuna": self.comuna,
             "rubro": self.rubro,

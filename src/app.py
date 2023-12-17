@@ -251,23 +251,26 @@ def enviar_datos_de_publicacion(id):
 
 @app.route("/publicacionpost", methods=["POST"])
 def enviar_datos_de_publicacionpost():
-    # Capturamos todo el body en un diccionario
-    body = request.get_json()
-    publicacion = UserPublicacion()
-    publicacion.idUsuario = body["idUser"]
-    publicacion.nombre = body["nombre"]
-    publicacion.apellido = body["apellido"]
-    publicacion.email = body["email"]
-    publicacion.descripcion = body["descripcion"]
-    publicacion.comuna = body["comuna"]
-    publicacion.rubro = body["rubro"]
-    publicacion.fecha = body["fecha"]
+    try:
+        # Capturamos todo el body en un diccionario
+        body = request.get_json()
+        publicacion = UserPublicacion()
+        publicacion.idUsuario = body["idUser"]
+        publicacion.nombre = body["nombre"]
+        publicacion.apellido = body["apellido"]
+        publicacion.titulo = body["titulo"]
+        publicacion.email = body["email"]
+        publicacion.descripcion = body["descripcion"]
+        publicacion.comuna = body["comuna"]
+        publicacion.rubro = body["rubro"]
+        publicacion.fecha = body["fecha"]
 
-    db.session.add(publicacion)
-    db.session.commit()
+        db.session.add(publicacion)
+        db.session.commit()
 
-    return jsonify({"body": body}), 200
-
+        return jsonify({"message": "Publicación exitosa"}), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 @app.route("/publicacion/<int:id>", methods=["PUT"])
 def actualizar_datos_de_publicacion(id):
@@ -308,43 +311,33 @@ def publicacion(id=None):
         return jsonify({"message": "eliminando una publicacion"}), 200
 
 
-@app.route("/api/profile", methods=["GET"])
-@jwt_required()
-def profile():
-    id = get_jwt_identity()
-    user = User.query.get(id)
-    return jsonify({"data": "Hola Mundo", "user": user.serialize()})
 
-
-# Datos de ejemplo para simular una base de datos
-perfil_data = {
-    "firstName": "",
-    "lastName": "",
-    "email": "",
-    "region": "",
-    "comuna": "",
-    "birthDate": "",
-}
-
-
-@app.route("/api/perfil", methods=["POST"])
-
-# Ruta para manejar las solicitudes POST desde React
-@app.route("/api/perfil", methods=["POST"])
+@app.route("/api/perfil", methods=["PUT"])
 def actualizar_perfil():
-    global perfil_data
-
-    # Obtener los datos enviados desde React
+   
     data = request.json
 
-    # Actualizar los datos del perfil con los nuevos datos recibidos
-    perfil_data.update(data)
+    try:
+      
+        user = User.query.filter_by(email=data["email"]).first()
 
-    # Devolver una respuesta
-    return jsonify({"message": "Datos de perfil actualizados correctamente"})
+     
+        user.telefono = data.get("telefono", user.telefono)
+        user.rubro = data.get("rubro", user.rubro)
+        user.comuna = data.get("comuna", user.comuna)
+
+   
+        db.session.commit()
+
+        
+        return jsonify({"message": "Datos de perfil actualizados correctamente"})
+
+    except Exception as e:
+       
+        return jsonify({"error": str(e)}), 500
 
 
-# Ruta para obtener los datos del perfil (solo para demostración)
+
 @app.route("/api/perfil/<int:id>", methods=["GET"])
 def obtener_perfil(id):
     user = User.query.get(id) 
@@ -353,6 +346,7 @@ def obtener_perfil(id):
         "lastName": user.apellido,
         "email": user.email,
         "comuna": user.comuna,
+        "telefono": user.telefono,
         "birthDate": user.fecha_de_nacimiento,
         "rubro": user.rubro
     }
