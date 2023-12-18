@@ -56,7 +56,7 @@ console.log(store)
           </div>
       </Modal>
       {/* mobile */}
-      <div>
+      <div className="d-block d-md-none">
         {store.programs.map((program,i)=>{
           return(
             <div className="d-block d-md-none d-lg-none" key={i}>
