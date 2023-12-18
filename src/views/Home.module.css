@@ -387,14 +387,18 @@
         height: 525px;
         width: 400px;
         border-radius: 4px;
-        background-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(17,17,17,0.6) 100%), url('/src/front/img/pexels-pixabay-416809.jpg');
+        background-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(17,17,17,0.6) 100%), url('https://images.pexels.com/photos/416809/pexels-photo-416809.jpeg?auto=compress&cs=tinysrgb&w=800');
         background-size: cover;
         position: relative;
         color: #fff;
     }
 
     .services__card:nth-child(2) {
-        background-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(17,17,17,0.6) 100%), url('/src/front/img/pexels-anush-gorak-1431282.jpg');
+        background-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(17,17,17,0.6) 100%), url('https://images.pexels.com/photos/3289711/pexels-photo-3289711.jpeg?auto=compress&cs=tinysrgb&w=600');
+    }
+
+    .services__card:nth-child(3) {
+        background-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(17,17,17,0.6) 100%), url('https://images.pexels.com/photos/3490348/pexels-photo-3490348.jpeg?auto=compress&cs=tinysrgb&w=600');
     }
 
     .services h2 {
@@ -564,9 +568,35 @@
 
     .website__rights {
         color: #fff;
-        font-size: 1rem;
-        padding-top: 20px;
-        padding-right: 100px;
     }
 
+    @media screen and (max-width: 820px) {
+        .footer__links {
+            padding-top: 2rem;
+        }
+
+        #footer__logo {
+            margin-bottom: 2rem;
+        }
+
+        .website__rights {
+            margin-bottom: 2rem;
+        }
+
+        .footer__link__wrapper {
+            flex-direction: column;
+        }
+
+        .social__media__wrap {
+            flex-direction: column;
+        }
+    }
+
+    @media screen and (max-width: 480px) {
+        .footer__link__items {
+            margin: 0;
+            padding: 10px;
+            width: 100%;
+        }
+    }
 

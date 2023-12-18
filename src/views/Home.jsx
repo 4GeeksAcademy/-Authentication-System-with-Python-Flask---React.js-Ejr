@@ -42,7 +42,7 @@ const Home = () => {
                         <button className={style.main__btn}><a href="/">Get Started</a></button>
                     </div>
                     <div className={style.main__img__container}>
-                        <img src="/src/front/img/undraw_fitness_tracker_3033.svg" alt="pic" id={style.main__img} />
+                        <img src="https://images.pexels.com/photos/5384000/pexels-photo-5384000.jpeg?auto=compress&cs=tinysrgb&w=600" alt="pic" id={style.main__img} />
                     </div>
                 </div>
             </div>
@@ -57,9 +57,15 @@ const Home = () => {
                         <button>Get Started</button>
                     </div>
                     <div className={style.services__card}>
-                    <img src="/src/front/img/pexels-pixabay-416809.jpg" alt="pic" id={style.main__img} />
+                    
                         <h2>Are You Ready</h2>
                         <p>Take The Challenge</p>
+                        <button>Get Started</button>
+                    </div>
+                    <div className={style.services__card}>
+                    
+                        <h2>Transform Yourself</h2>
+                        <p>Get Motivated</p>
                         <button>Get Started</button>
                     </div>
                 </div>
