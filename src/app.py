@@ -6,17 +6,29 @@ from flask import Flask, request, jsonify, url_for, send_from_directory
 from flask_migrate import Migrate
 from flask_swagger import swagger
 from api.utils import APIException, generate_sitemap
-from api.models import db
+from api.models import db,Patient,Specialist
 from api.routes import api
 from api.admin import setup_admin
-from api.commands import setup_commands
+from api.commands import setup_commands, setup_commands_specialist
+
+
+# from app import app
+
+from flask_jwt_extended import  JWTManager, create_access_token, jwt_required, get_jwt_identity
+from flask_bcrypt import Bcrypt
+
+
+app = Flask (__name__)
+app.config["JWT_SECRET_KEY"] = "value_variable"
+jwt=JWTManager(app)
+bcrypt=Bcrypt(app)
 
 # from models import Person
 
 ENV = "development" if os.getenv("FLASK_DEBUG") == "1" else "production"
 static_file_dir = os.path.join(os.path.dirname(
     os.path.realpath(__file__)), '../public/')
-app = Flask(__name__)
+app = Flask (__name__)
 app.url_map.strict_slashes = False
 
 # database condiguration
@@ -36,6 +48,7 @@ setup_admin(app)
 
 # add the admin
 setup_commands(app)
+setup_commands_specialist(app)
 
 # Add all endpoints form the API with a "api" prefix
 app.register_blueprint(api, url_prefix='/api')
@@ -67,6 +80,8 @@ def serve_any_other_file(path):
     response.cache_control.max_age = 0  # avoid cache memory
     return response
 
+app.config["JWT_SECRET_KEY"] = "value_variable"
+jwt=JWTManager(app)
 
 # this only runs if `$ python src/main.py` is executed
 if __name__ == '__main__':
