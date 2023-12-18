@@ -87,21 +87,57 @@
   
   width: 34%;
 }
-@media screen and (max-width: 1001px ){
+@media screen and (max-width: 1168px ){
   .customModal {
     
     width: 45%;
   }
   
 }
-@media screen and (max-width: 668px ){
+@media screen and (max-width: 1001px ){
+  .customModal {
+    
+    width: 50%;
+  }
+  
+}
+@media screen and (max-width: 830px ){
+  .customModal {
+    
+    width: 50%;
+  }
+  
+}
+@media screen and (max-width: 765px ){
   .customModal {
     
     width: 60%;
   }
   
 }
+@media screen and (max-width: 610px ){
+  .customModal {
+    
+    width: 70%;
+  }
+  
+}
+@media screen and (max-width: 505px ){
+  .customModal {
+    
+    width: 80%;
+  }
+  
+}
+@media screen and (max-width: 380px ){
+  .customModal {
+    
+    width: 90%;
+  }
+  
+}
 
 .mobileInfoText{
-  font-size:.88rem;
+  font-size:4.6vw;
+
 }

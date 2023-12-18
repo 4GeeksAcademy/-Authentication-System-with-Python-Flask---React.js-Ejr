@@ -58,13 +58,16 @@ console.log(store)
       {/* mobile start */}
   
       <div 
-      className="d-block d-md-none d-lg-none  w-50 m-auto p-3 rounded text-start"
-      style={{ backgroundColor: "rgba(72, 177, 186, 0.63)"}}
+      className="d-block d-md-none d-lg-none  m-auto px-3 py-1 rounded text-start"
+      style={{ 
+        backgroundColor: "rgba(72, 177, 186, 0.63)",
+        width:"86%"
+    }}
       >
         {store.programs.map((program,i)=>{
           return(
             <div 
-            className={`${program[`${props.days}_start`] != null ? "d-block" : "d-none"} d-md-none d-lg-none m-2 p-2 ` }
+            className={`${program[`${props.days}_start`] != null ? "d-block" : "d-none"} d-md-none d-lg-none my-3 p-2 ` }
             key={i}
             style={{backgroundColor: "rgb(72 177 186)"}}
             onClick={() => {
@@ -75,13 +78,15 @@ console.log(store)
                 <>
                   <span 
                   className="fw-bold text-white p-1 rounded  "
-                  style={{backgroundColor:"#ea6f36"}}
+                  style={{backgroundColor:"#ea6f36",
+                  fontSize:" 5vw"
+                }}
                   >
                       {program.name}
                   </span>
-                  <div className="d-flex align-items-center justify-content-between ">
+                  <div className=" mt-2 align-items-center justify-content-between ">
                   <p 
-                  className="mb-0 mt-1  mobileInfoText"  
+                  className="mb-0   mobileInfoText"  
                   >
                   {program[`${props.days}_start`]
                     ? program[`${props.days}_start`] +
@@ -89,9 +94,10 @@ console.log(store)
                       program[`${props.days}_end`]
                     : " "}
                 </p>
-                <span
-                className="mobileInfoText text-decoration-underline"
-                >*Click for more info</span>
+                <div
+                className=" text-decoration-underline text-end"
+                style={{fontSize:"4vw"}}
+                >*Click for more info</div>
 
                   </div>
                 
