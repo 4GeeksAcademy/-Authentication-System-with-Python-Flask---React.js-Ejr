@@ -43,7 +43,7 @@ def signup_patient():
         last_name=request.json.get("last_name")
         email=request.json.get("email")
         password=request.json.get("password")
-
+        
         if not first_name or not last_name or not email or not password:
             return jsonify ({"Error":"You are missing information, check it out"}),400
         
@@ -57,8 +57,8 @@ def signup_patient():
         new_patient=Patient(first_name=first_name,last_name=last_name,email=email,password=password_hash)
         db.session.add(new_patient)
         db.session.commit()
-
-        return jsonify ({"Message":"Patient was created Succesfully!","First name": first_name,"Last name": last_name, "email":email}),200
+        
+        return jsonify ({"Message":"Patient was created Succesfully!","patient_id":new_patient.id,"First name": first_name,"Last name": last_name, "email":email}),200
 
     except Exception as e:
         return jsonify({"Error":"Error in patient creation " + str(e)}),400
@@ -93,7 +93,7 @@ def signup_specialist():
         db.session.add(new_specialist)
         db.session.commit()
 
-        return jsonify({"Message":"The Specialist was created succesfully!", "email":email,"first_name":first_name, "last_name": last_name,"is_physiotherapist":is_physiotherapist,"is_nurse":is_nurse,"certificate":certificate,"description":description,"language":language}),200
+        return jsonify({"Message":"The Specialist was created succesfully!","specialist_id":new_specialist.id, "email":email,"first_name":first_name, "last_name": last_name,"is_physiotherapist":is_physiotherapist,"is_nurse":is_nurse,"certificate":certificate,"description":description,"language":language}),200
 
     except Exception as e: 
         return jsonify({"Error": "Error in Specialist creation " + str(e)}),400
@@ -106,23 +106,28 @@ def login_patient():
     try:
         email=request.json.get("email")
         password=request.json.get("password")
+
         if not email or not password:
             return jsonify ({"Error": "Invalid credentials"}),400
         
         get_patient_by_email=Patient.query.filter_by(email=email).one()
         check_password_of_existing=get_patient_by_email.password
         is_correctly_password=bcrypt.check_password_hash(check_password_of_existing,password)
-
-
+       
+      
+        serialized_patient = get_patient_by_email.serialize()
+        
         if is_correctly_password:
             patient_id=get_patient_by_email.id
             access_token=create_access_token(identity=patient_id)
-            return jsonify({"AccessToken": access_token}),200
+        
+        
+            return jsonify({"accessToken": access_token, "patient":serialized_patient}),200
         else:
             return jsonify({"Error":"Invalid credentials"}),400
         
     except Exception as e:
-        return jsonify ({"Error": "Invalid credentials"}),400
+        return jsonify ({"Error": e}),400
 
 
 @api.route("/token_specialist",methods=["POST"])
@@ -138,11 +143,13 @@ def login_specialist():
         check_password_of_existing=get_specialist_by_email.password
         is_password_correctly=bcrypt.check_password_hash(check_password_of_existing,password)
 
+        serialized_specialist=get_specialist_by_email.serialize()
+
         if is_password_correctly:
             specialist_id=get_specialist_by_email.id
             access_token=create_access_token(identity= specialist_id)
 
-            return jsonify ({"AccessToken": access_token}),200
+            return jsonify ({"AccessToken": access_token,"specialist":serialized_specialist}),200
         else:
             return jsonify({"Error":"The password is wrong"}),400
 
@@ -190,8 +197,6 @@ def get_private_specialist():
         return jsonify ({"Error": "The token is invalid " + str (e)}), 400
 
 
-
-# delete user
 
 @api.route("/delete_patient/<int:patient_id>",methods=['DELETE'])
 def delete_patient_by_id(patient_id):
