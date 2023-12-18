@@ -43,11 +43,11 @@ let dayArray = [
 function Input() {
   const { store, actions } = useContext(Context);
 
-  const [hide, setHide] = useState(-1);
   const [programIndex, setProgramIndex] = useState(0);
   const [dropdownTitle, setDropdownTitle] = useState("");
   const [refresh, setRefresh] = useState(false);
   const [updatedPrograms, setUpdatedPrograms] = useState([]);
+  const [mobileDayIndex, setMobileDayIndex] = useState(0);
 
   useEffect(() => {
     if (store.programs.length > 0) {
@@ -58,14 +58,14 @@ function Input() {
 
   return (
     <div className="mx-4">
-      <div className="row mb-2">
+      <div className="row mb-4 mb-md-2 mb-lg-2">
         <div className="col">
           <h1 className="my-4  font-weight-bold display-5 ">Program Entry</h1>
         </div>
       </div>
 
-      <div className="row border border-2 p-3">
-        <div className="col-4">
+      <div className="row border border-2 p-lg-3 p-md-3 p-2">
+        <div className="col-md-4 col-lg-4 col-6">
           <div className="row">
             <div className="dropdown ">
               <a
@@ -105,7 +105,7 @@ function Input() {
                 })}
               </ul>
             </div>
-            <div className="inputDiv">
+            <div className="inputDiv px-0 px-md-1 px-lg-1">
               <label className="mb-2" htmlFor="program-name ">
                 Program Name
               </label>
@@ -158,7 +158,308 @@ function Input() {
           </div>
         </div>
 
-        <div className="col-8 ">
+        <div className="col-md-8 col-lg-8 col-6 pe-0">
+          {/* mobile view start */}
+         <div className="d-block d-md-none d-lg-none">
+         <div 
+         id="carouselExample" 
+         className=" w-75 m-auto carousel slide mb-4 mt-1  p-2"
+         style={{backgroundColor:"#00000057"}}
+         >
+  <div class="carousel-inner">
+    {dayArray.map((day,i)=>{
+      return(
+        <div
+         className={`carousel-item ${day == dayArray[mobileDayIndex] ? "active" : ""}active text-center`}
+         key={i}
+         >
+         { dayArray[mobileDayIndex]}
+        </div>
+
+      );
+    })}
+   
+  </div>
+  <button 
+  className="carousel-control-prev" 
+  type="button" 
+  data-bs-target="#carouselExample"
+  data-bs-slide="prev"
+  onClick={()=> {
+    if(mobileDayIndex == 0){
+      setMobileDayIndex(dayArray.length-1)
+    }
+    else{
+      setMobileDayIndex(mobileDayIndex -1 )
+    }
+  }} 
+   >
+    <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span className="visually-hidden">Previous</span>
+  </button>
+  <button 
+  className="carousel-control-next" 
+  type="button" data-bs-target="#carouselExample" 
+  data-bs-slide="next"
+  onClick={()=> {
+    if(mobileDayIndex == dayArray.length-1){
+      setMobileDayIndex(0)
+    }
+    else{
+      setMobileDayIndex(mobileDayIndex + 1)
+    }
+  }}
+  >
+    <span className="carousel-control-next-icon" aria-hidden="true"></span>
+    <span className="visually-hidden">Next</span>
+  </button>
+</div>
+         </div>
+          <div className="d-flex justify-content-start ">
+            {dayArray.map((day, i) => {
+              
+              return (
+                
+                <div
+                  key={i}
+                  className={`dayCheck border p-2 ${
+                   day == dayArray[mobileDayIndex] ? "d-md-none d-lg-none d-block" : "d-none"
+                  }`}
+                  style={{ width: "100%" }}
+                >
+                  <div className="col d-flex">
+                    <div className="form-check form-switch ">
+                      <input
+                        onClick={() => {
+                          // set start and end time to null
+                          if (
+                            updatedPrograms[programIndex]?.[
+                              `${day.toLowerCase()}_start`
+                            ] &&
+                            updatedPrograms[programIndex]?.[
+                              `${day.toLowerCase()}_start`
+                            ] != null
+                          ) {
+                            setUpdatedPrograms((prevUpdatedPrograms) => {
+                              const updatedProgramsList = [
+                                ...prevUpdatedPrograms,
+                              ];
+                              updatedProgramsList[programIndex] = {
+                                ...updatedProgramsList[programIndex],
+                                [`${day.toLowerCase()}_start`]: null,
+                                [`${day.toLowerCase()}_end`]: null,
+                              };
+                              return updatedProgramsList;
+                            });
+                          } else if (
+                            // set start and end time to 9am/9:30am as default when first setting to active
+                            !updatedPrograms[programIndex]?.[
+                              `${day.toLowerCase()}_start`
+                            ] ||
+                            updatedPrograms[programIndex]?.[
+                              `${day.toLowerCase()}_start`
+                            ] == null
+                          ) {
+                            setUpdatedPrograms((prevUpdatedPrograms) => {
+                              const updatedProgramsList = [
+                                ...prevUpdatedPrograms,
+                              ]; // Create a copy of the previous state
+                              updatedProgramsList[programIndex] = {
+                                ...updatedProgramsList[programIndex],
+                                [`${day.toLowerCase()}_start`]: "9:00 AM",
+                                [`${day.toLowerCase()}_end`]: "9:30 AM",
+                              };
+                              return updatedProgramsList; // Return the updated array
+                            });
+                          }
+                        }}
+                        checked={
+                          updatedPrograms[programIndex]?.[
+                            `${day.toLowerCase()}_start`
+                          ] &&
+                          updatedPrograms[programIndex]?.[
+                            `${day.toLowerCase()}_start`
+                          ] != null
+                            ? true
+                            : false
+                        }
+                        className="form-check-input "
+                        type="checkbox"
+                        role="switch"
+                        id="flexSwitchCheckDefault"
+                      />
+                      <label
+                        className="form-check-label"
+                        htmlFor="flexSwitchCheckDefault"
+                      >
+                        {/* set text on switch button to  "Disable" if currently active and vice versa */}
+                        {updatedPrograms[programIndex]?.[
+                          `${day.toLowerCase()}_start`
+                        ] &&
+                        updatedPrograms[programIndex]?.[
+                          `${day.toLowerCase()}_start`
+                        ] != null
+                          ? "Disable"
+                          : "Set Time"}
+                      </label>
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col">
+                      <h6 className="me-3">{day}</h6>
+                    </div>
+                  </div>
+                  <div
+                    // set opacity to show disabled effect if set to not active
+                    className={`row startEndTime ${
+                      updatedPrograms[programIndex]?.[
+                        `${day.toLowerCase()}_start`
+                      ] &&
+                      updatedPrograms[programIndex]?.[
+                        `${day.toLowerCase()}_start`
+                      ] != null
+                        ? ""
+                        : "pe-none opacity-25"
+                    }`}
+                  >
+                    <div className="col">
+                      <div className="btn-group m-1">
+                        <h6 className="me-2">Start Time: </h6>
+                        <button
+                          type="button"
+                          className=" btn btn-success dropdown-toggle p-1  "
+                          data-bs-toggle="dropdown"
+                          aria-expanded="false"
+                          style={{ fontSize: "14px" }}
+                        >
+                          {updatedPrograms[programIndex]?.[
+                            `${day.toLowerCase()}_start`
+                          ] == null
+                            ? "N/A"
+                            : updatedPrograms[programIndex]?.[
+                                `${day.toLowerCase()}_start`
+                              ]}
+                        </button>
+                        <ul className="dropdown-menu overflow-auto">
+                          {timeArray.map((hour, i) => {
+                            return (
+                              <>
+                                <li
+                                  key={i}
+                                  onClick={() => {
+                                    // update start time
+                                    setUpdatedPrograms(
+                                      (prevUpdatedPrograms) => {
+                                        const updatedProgramsList = [
+                                          ...prevUpdatedPrograms,
+                                        ];
+                                        updatedProgramsList[programIndex] = {
+                                          ...updatedProgramsList[programIndex],
+                                          [`${day.toLowerCase()}_start`]: hour,
+                                        };
+
+                                        return updatedProgramsList;
+                                      }
+                                    );
+                                    // update end time so when a user click on
+                                    // a given hour for start time, the available end times in dropdown
+                                    // are all after given start time
+                                    if (
+                                      timeArray[i + 1] &&
+                                      timeArray[i + 1] != "undefined"
+                                    ) {
+                                      setUpdatedPrograms(
+                                        (prevUpdatedPrograms) => {
+                                          const updatedProgramsList = [
+                                            ...prevUpdatedPrograms,
+                                          ];
+                                          updatedProgramsList[programIndex] = {
+                                            ...updatedProgramsList[
+                                              programIndex
+                                            ],
+                                            [`${day.toLowerCase()}_end`]:
+                                              timeArray[i + 1],
+                                          };
+                                          return updatedProgramsList;
+                                        }
+                                      );
+                                    }
+                                  }}
+                                >
+                                  <p className="">{hour}</p>
+                                </li>
+                              </>
+                            );
+                          })}
+                        </ul>
+                      </div>
+                      <div className="btn-group m-1">
+                        <h6 className="me-3">End Time: </h6>
+                        <button
+                          style={{ fontSize: "14px" }}
+                          type="button"
+                          className="btn btn-danger dropdown-toggle p-1"
+                          data-bs-toggle="dropdown"
+                          aria-expanded="false"
+                        >
+                          {updatedPrograms[programIndex]?.[
+                            `${day.toLowerCase()}_start`
+                          ] == null
+                            ? "N/A"
+                            : updatedPrograms[programIndex]?.[
+                                `${day.toLowerCase()}_end`
+                              ]}
+                        </button>
+                        <ul className="dropdown-menu overflow-auto">
+                          {timeArray.map((hour, i) => {
+                            return (
+                              <>
+                                <li
+                                  key={i}
+                                  onClick={() => {
+                                    setUpdatedPrograms(
+                                      (prevUpdatedPrograms) => {
+                                        const updatedProgramsList = [
+                                          ...prevUpdatedPrograms,
+                                        ];
+                                        updatedProgramsList[programIndex] = {
+                                          ...updatedProgramsList[programIndex],
+                                          [`${day.toLowerCase()}_end`]: hour,
+                                        };
+                                        return updatedProgramsList;
+                                      }
+                                    );
+                                  }}
+                                >
+                                  <p className="">
+                                    {/* ternary operator to display end times
+                                     only  after selected start Time */}
+
+                                    {updatedPrograms[programIndex]?.[
+                                      `${day.toLowerCase()}_start`
+                                    ] != undefined &&
+                                    i >
+                                      timeArray.indexOf(
+                                        updatedPrograms[programIndex]?.[
+                                          `${day.toLowerCase()}_start`
+                                        ]
+                                      )
+                                      ? hour
+                                      : ""}
+                                  </p>
+                                </li>
+                              </>
+                            );
+                          })}
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+           {/* mobile view end */}
           <div className="d-flex justify-content-center align-items-center">
             {dayArray.map((day, i) => {
               return (
@@ -166,7 +467,7 @@ function Input() {
                 <div
                   key={i}
                   className={`dayCheck border p-2 ${
-                    i < 3 ? "d-block" : "d-none"
+                    i < 3 ? "d-md-block d-lg-block d-none" : "d-none"
                   }`}
                   style={{ width: "30%" }}
                 >
@@ -408,7 +709,7 @@ function Input() {
                 <div
                   key={i}
                   className={`dayCheck border p-2 ${
-                    i > 2 ? "d-block" : "d-none"
+                    i > 2 ? "d-md-block d-lg-block d-none" : "d-none"
                   }`}
                   style={{ width: "30%" }}
                 >
@@ -424,7 +725,7 @@ function Input() {
                               `${day.toLowerCase()}_start`
                             ] != null
                           ) {
-                            setHide(-1);
+                            
                             setUpdatedPrograms((prevUpdatedPrograms) => {
                               const updatedProgramsList = [
                                 ...prevUpdatedPrograms,

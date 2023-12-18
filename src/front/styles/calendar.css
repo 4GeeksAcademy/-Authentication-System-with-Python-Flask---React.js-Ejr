@@ -73,3 +73,71 @@
     left: 4%;
     top: 1px;
   }
+
+  .react-responsive-modal-closeButton {
+    display: flex;
+    justify-content: center;
+    top: 1px !important;
+    right: 3px !important;
+    width: 7%;
+    fill: rgb(53 133 140);
+}
+
+.customModal {
+  
+  width: 34%;
+}
+@media screen and (max-width: 1168px ){
+  .customModal {
+    
+    width: 45%;
+  }
+  
+}
+@media screen and (max-width: 1001px ){
+  .customModal {
+    
+    width: 50%;
+  }
+  
+}
+@media screen and (max-width: 830px ){
+  .customModal {
+    
+    width: 50%;
+  }
+  
+}
+@media screen and (max-width: 765px ){
+  .customModal {
+    
+    width: 60%;
+  }
+  
+}
+@media screen and (max-width: 610px ){
+  .customModal {
+    
+    width: 70%;
+  }
+  
+}
+@media screen and (max-width: 505px ){
+  .customModal {
+    
+    width: 80%;
+  }
+  
+}
+@media screen and (max-width: 380px ){
+  .customModal {
+    
+    width: 90%;
+  }
+  
+}
+
+.mobileInfoText{
+  font-size:4.6vw;
+
+}
