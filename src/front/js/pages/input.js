@@ -58,13 +58,13 @@ function Input() {
 
   return (
     <div className="mx-4">
-      <div className="row mb-2">
+      <div className="row mb-4 mb-md-2 mb-lg-2">
         <div className="col">
           <h1 className="my-4  font-weight-bold display-5 ">Program Entry</h1>
         </div>
       </div>
 
-      <div className="row border border-2 p-lg- p-md-3 p-2">
+      <div className="row border border-2 p-lg-3 p-md-3 p-2">
         <div className="col-md-4 col-lg-4 col-6">
           <div className="row">
             <div className="dropdown ">
@@ -105,7 +105,7 @@ function Input() {
                 })}
               </ul>
             </div>
-            <div className="inputDiv">
+            <div className="inputDiv px-0 px-md-1 px-lg-1">
               <label className="mb-2" htmlFor="program-name ">
                 Program Name
               </label>
@@ -158,10 +158,14 @@ function Input() {
           </div>
         </div>
 
-        <div className="col-md-4 col-lg-4 col-6 pe-0">
+        <div className="col-md-8 col-lg-8 col-6 pe-0">
           {/* mobile view start */}
-         <div>
-         <div id="carouselExample" className="bg-secondary w-75 m-auto carousel slide mb-4 mt-1  p-2">
+         <div className="d-block d-md-none d-lg-none">
+         <div 
+         id="carouselExample" 
+         className=" w-75 m-auto carousel slide mb-4 mt-1  p-2"
+         style={{backgroundColor:"#00000057"}}
+         >
   <div class="carousel-inner">
     {dayArray.map((day,i)=>{
       return(
