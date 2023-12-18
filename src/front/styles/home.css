@@ -1,4 +1,4 @@
-/* Estilos mejorados */
+
 
 .navLabel {
   line-height: 160%;
@@ -23,15 +23,14 @@
 }
 
 .navLink:hover {
-  background-color: #333; /* Negro menos intenso */
+  background-color: #333;
   color: #fff;
 }
 
 .navLink:active {
-  background-color: #222; /* Tono más oscuro de negro */
+  background-color: #222; 
 }
 
-/* Accesibilidad */
 
 .navLink {
   tabindex: 0;
@@ -41,18 +40,17 @@
   display: inline-block;
 }
 
-/* Estilos adicionales */
+
 
 .navLink--primary {
-  background-color: #444; /* Gris oscuro */
+  background-color: #444; 
   color: #fff;
 }
 
 .navLink--primary:hover {
-  background-color: #333; /* Negro menos intenso */
+  background-color: #333; 
 }
 
-/* Estilos para el contenedor de navLinks1 */
 
 .navLinks1 {
   display: flex;
@@ -85,7 +83,7 @@
   transform: translate(-50%, -50%);
   display: flex;
   align-items: center;
-  gap: 10px; /* Ajuste de espaciado entre el icono y el texto */
+  gap: 10px; 
   z-index: 2;
 }
 
@@ -96,9 +94,9 @@
 }
 
 .brandname {
-  font-size: var(--font-size-lg); /* Ajuste del tamaño de la fuente */
-  font-weight: 700; /* Hace el texto más audaz */
-  color: #333; /* Color del texto más oscuro */
+  font-size: var(--font-size-lg); 
+  font-weight: 700; 
+  color: #333; 
 }
 
 
@@ -106,7 +104,7 @@
 .typebubbleInverted {
   justify-content: space-between;
   box-sizing: border-box;
-  width: 100%; /* Ajuste para ocupar el 100% del ancho de la página */
+  width: 100%; 
 }
 
 .bubbleContainer {
@@ -277,12 +275,12 @@
 }
 
 .howItWorks2:hover {
-  background-color: #145a32; /* Color final */
+  background-color: #145a32; 
   color: #fff;
   font-size: var(--font-size-base);
 
   &::after {
-    background-color: rgba(20, 90, 50, 0.2); /* Color de transición sutil */
+    background-color: rgba(20, 90, 50, 0.2); 
   }
 }
 
@@ -498,6 +496,121 @@
 .buttonCombo:hover {
   background-color: #145a32; 
   color: #fff;
+}
+.heading,
+.subheading {
+  margin: 0;
+  align-self: stretch;
+  position: relative;
+  font-family: inherit;
+}
+.heading {
+  font-size: inherit;
+  letter-spacing: -0.02em;
+  line-height: 120%;
+  font-weight: 700;
+  display: -webkit-inline-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+.subheading {
+  font-size: var(--font-size-3xl);
+  line-height: 130%;
+  font-weight: 400;
+  color: var(--color-gainsboro);
+}
+.copyComponent,
+.headingText {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.headingText {
+  align-self: stretch;
+  align-items: flex-start;
+  gap: var(--gap-base);
+}
+.copyComponent {
+  width: 100%;
+  align-items: center;
+  min-width: 304px;
+  max-width: 800px;
+  text-align: center;
+  font-size: var(--font-size-32xl);
+  color: var(--color-mintcream);
+  font-family: var(--font-inter);
+}
+.avatarAisplashavatarsIcon {
+  border-radius: var(--br-base);
+  max-width: 100%;
+  overflow: hidden;
+  height: 256px;
+  flex-shrink: 0;
+  object-fit: cover;
+}
+.avatarAisplashavatarsIcon,
+.jobTitle,
+.name {
+  align-self: stretch;
+  position: relative;
+}
+.name {
+  line-height: 140%;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.jobTitle {
+  font-size: var(--font-size-sm);
+  line-height: 150%;
+  color: var(--color-gainsboro);
+}
+.info,
+.teamMember {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+.info {
+  align-self: stretch;
+}
+.teamMember {
+  flex: 1;
+  gap: var(--gap-base);
+  min-width: 260px;
+  margin-right: 10px; 
+  margin-left: 10px;  
+}
+
+.teamList,
+.typesimpleSquare {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.teamList {
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: var(--gap-13xl);
+  max-width: 1200px;
+  text-align: left;
+  font-size: var(--font-size-lg);
+  color: var(--color-mintcream);
+  font-family: var(--font-inter);
+}
+.typesimpleSquare {
+  position: relative;
+  background-color: var(--color-gray-300);
+  flex-direction: column;
+  align-items: center;
+  padding: 144px var(--padding-base);
+  box-sizing: border-box;
+  gap: var(--gap-21xl);
 }
 
 
