@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowCircleRight } from "@fortawesome/free-solid-svg-icons";
-import { faCircleUser } from "@fortawesome/free-solid-svg-icons";
-import { faHouseCircleCheck } from "@fortawesome/free-solid-svg-icons";
+import "../../styles/updateLink.css"
+
 import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
 export const UpdateLink = (props) => {
@@ -10,7 +10,7 @@ export const UpdateLink = (props) => {
   return (
     <div className={` text-center ${props.pt} pb-1 `}>
       <div
-        className="alert d-flex justify-content-center align-items-start ms-auto pt-2 pb-1"
+        className=" updateLink alert d-flex justify-content-center align-items-start ms-auto pt-2 pb-1"
         role="alert"
         style={{
           width: `${props.width}`,

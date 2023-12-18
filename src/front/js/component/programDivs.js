@@ -43,34 +43,35 @@ function ProgramDivs() {
                   {capitalLetterDay}
                 </button>
               </li>
-              <div class="btn-group">
-  <button 
-  type="button" 
-  className={`nav-link dropdown-toggle ${
-    currentDay == day ? "active " : "d-none d-md-block"
-  } dayFont border  `} 
-  data-bs-toggle="dropdown" 
-  aria-expanded="false">
-    {capitalLetterDays}
-  </button>
-  <ul class="dropdown-menu">
-    {dayArray.map((dropdownDay,i)=>{
-      let capitalLetterDropwdownDay =dropdownDay[0].toUpperCase() + dropdownDay.replace(dropdownDay[0],"")
-      return(
-        <div key={i}>
-        <li
-        onClick={() => setDays(dropdownDay)}
-        ><a class="dropdown-item" >{capitalLetterDropwdownDay}</a></li>        
+              {/* mobile viewing */}
+              <div className="btn-group d-block d-md-none">
+          <button 
+          type="button" 
+          className={`nav-link dropdown-toggle ${
+            currentDay == day ? "active " : "d-none d-md-block"
+          } dayFont border  `} 
+          data-bs-toggle="dropdown" 
+          aria-expanded="false">
+            {capitalLetterDays}
+          </button>
+          <ul class="dropdown-menu">
+            {dayArray.map((dropdownDay,i)=>{
+              let capitalLetterDropwdownDay =dropdownDay[0].toUpperCase() + dropdownDay.replace(dropdownDay[0],"")
+              return(
+                <div key={i}>
+                <li
+                onClick={() => setDays(dropdownDay)}
+                ><a class="dropdown-item" >{capitalLetterDropwdownDay}</a></li>        
+                </div>
+              );
+            })}
+          </ul>
         </div>
-      );
-    })}
-  </ul>
-</div>
-            </>
-          );
-        })}
-      </ul>
-      
+                    </>
+                  );
+                })}
+              </ul>
+              
 
       <Calendar days={days} />
     </div>
