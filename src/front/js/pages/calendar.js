@@ -59,7 +59,7 @@ console.log(store)
       <div>
         {store.programs.map((program,i)=>{
           return(
-            <div key={i}>
+            <div className="d-block d-md-none d-lg-none" key={i}>
                 {program[`${props.days}_start`] && program[`${props.days}_start`] != null ? 
                 <>
                   <h2>

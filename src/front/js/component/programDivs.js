@@ -47,13 +47,13 @@ function ProgramDivs() {
   <button 
   type="button" 
   className={`nav-link dropdown-toggle ${
-    currentDay == day ? "active " : "d-none d-md-block"
+    currentDay == day ? "active d-block d-md-none " : "d-none d-md-none"
   } dayFont border  `} 
   data-bs-toggle="dropdown" 
   aria-expanded="false">
     {capitalLetterDays}
   </button>
-  <ul class="dropdown-menu">
+  <ul class="dropdown-menu d-block d-md-none">
     {dayArray.map((dropdownDay,i)=>{
       let capitalLetterDropwdownDay =dropdownDay[0].toUpperCase() + dropdownDay.replace(dropdownDay[0],"")
       return(
