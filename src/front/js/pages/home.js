@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { Context } from "../store/appContext";
 import easyJobUrl from "../../img/Easy-Job.jpg";
+import worker from "../../img/worker.png";
 import "../../styles/home.css";
 import Carrousel from "../component/carrousel.js";
 import { Link } from "react-router-dom";
@@ -17,14 +18,18 @@ export const Home = () => {
 
   return (
     <>
-      <div className="container">
-        <div className="row">
+      <div className="container" style={{
+        display: "flex",
+        flexWrap: "wrap",
+        alignItems: "center",
+        justifyContent: "center",
+      }}>
           <div className="col-md-8">
             <div className="custom-container">
               {/* Existing content in custom-container */}
               <h1
                 style={{
-                  fontFamily: "Calibri", // Agregué Montserrat y también una opción de respaldo con sans-serif
+                  fontFamily: "Calibri",
                   fontSize: "30px",
                   color: "#001F3F",
                   marginTop: "5%",
@@ -41,9 +46,9 @@ export const Home = () => {
               <p
                 style={{
                   color: "#616161",
-                  fontStyle: "sans-serif",
-                  fontFamily: "Calibri, sans-serif", // Agregué Montserrat y también una opción de respaldo con sans-serif
-                  fontSize: "22px",
+                  fontStyle: "normal",
+                  fontFamily: "Calibri",
+                  fontSize: "24px",
                   marginBottom: "50px",
                 }}
                 className="mx-5 text-center"
@@ -87,17 +92,16 @@ export const Home = () => {
               </div>
             </div>
           </div>
-          <div className="col-md-4 text-right mt-3">
+          <div className="col-md-4 text-center mt-3">
             {/* Image styling */}
             <img
               className="img-fluid"
               style={{
                 marginTop: "15px",
-                borderRadius: "10%", // Cambié el valor para hacerlo más cuadrado
-                boxShadow: "0 0 50px #444",
-                maxWidth: "600px", // Ajusté el tamaño máximo
-                width: "120%",
-                height: "auto", // Añadí esta propiedad para mantener la proporción
+                borderRadius: "70px",
+                boxShadow: "0 0 70px #000",
+                maxWidth: "300px",
+                width: "100%",
                 textAlign: "center",
                 transition:
                   "background-color 0.1s ease transform 0.3s ease-in-out",
@@ -107,11 +111,10 @@ export const Home = () => {
                 (e.currentTarget.style.transform = "scale(1.05)")
               }
               onMouseOut={(e) => (e.currentTarget.style.transform = "scale(1)")}
-              src={easyJobUrl}
+              src={worker}
               alt="Easy Job"
             />
           </div>
-        </div>
       </div>
 
       <div className="container">
