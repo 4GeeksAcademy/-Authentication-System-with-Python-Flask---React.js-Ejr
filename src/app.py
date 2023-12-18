@@ -311,6 +311,19 @@ def publicacion(id=None):
         return jsonify({"message": "eliminando una publicacion"}), 200
 
 
+@app.route("/publicacion/<int:id>", methods=["DELETE"])
+def eliminar_publicacion(id):
+    global publicaciones
+
+    publicacion = next((pub for pub in publicaciones if pub['id'] == id), None)
+
+    if publicacion:
+        publicaciones = [pub for pub in publicaciones if pub['id'] != id]
+        return jsonify({"message": f"Publicación con ID {id} eliminada correctamente"}), 200
+    else:
+        return jsonify({"message": f"No se encontró la publicación con ID {id}"}), 404
+
+
 
 @app.route("/api/perfil", methods=["PUT"])
 def actualizar_perfil():

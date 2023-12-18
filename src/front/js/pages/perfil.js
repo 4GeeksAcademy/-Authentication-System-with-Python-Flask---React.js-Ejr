@@ -3,7 +3,69 @@ import "../../styles/perfil.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Link } from "react-router-dom";
 // import "./../component/Buscador.jsx";
-import { Context } from "../store/appContext.js";
+
+
+
+const JobPost = ({
+  idPublicacion,
+  idUsuario,
+  titulo,
+  nombre,
+  apellido,
+  descripcion,
+  comuna,
+  rubro,
+  fecha,
+  onDelete
+}) => {
+  // Lógica o JSX relacionado con JobPost
+
+  return (
+    <div
+      style={{
+        border: "1px solid #ccc",
+        padding: "10px",
+        marginBottom: "15px",
+        backgroundColor: "white", // Fondo blanco
+        display: "flex", // Mostrar en formato flex
+        flexDirection: "column", // Alinear elementos en columna
+      }}
+    >
+      <div
+        style={{
+          borderLeft: "5px solid red", // Línea de color rojo en el lado izquierdo
+          padding: "5px",
+        }}
+      >
+        <h3>{titulo}</h3>
+        <p>
+          <strong>Nombre:</strong> {nombre} {apellido}
+        </p>
+        <p>
+          <strong>Descripción:</strong> {descripcion}
+        </p>
+        <p>
+          <strong>Comuna:</strong> {comuna}
+        </p>
+        <p>
+          <strong>Categoría:</strong> {rubro}
+        </p>
+        <p>
+          <strong>Fecha:</strong> {fecha}
+        </p>
+      </div>
+      <button
+        className="btn btn-danger"
+        onClick={() => onDelete(idPublicacion)}
+      >
+        Borrar
+      </button>
+    </div>
+  );
+};
+
+
+
 
 export const Perfil = () => {
   const [formData, setFormData] = useState({
@@ -42,6 +104,19 @@ useEffect(() => {
   })
   .catch(error => console.log (error))
 },[])
+const [data, setData] = useState(data); // Datos de publicaciones
+
+  const [filteredCategoria, setFilteredCategoria] = useState(null); // Estado para filtrar por categoría
+  useEffect(() => {
+    fetch("http://localhost:3001/publicaciones")
+      .then((response) => response.json())
+      .then((data) => {
+        setData(data.publicaciones);
+      });
+  }, []);
+  const handleCategoriaFilter = (categoria) => {
+    setFilteredCategoria(categoria === filteredCategoria ? null : categoria);
+  };
 
   const handleInputChange = (e) => {
     setFormData({
@@ -70,9 +145,27 @@ useEffect(() => {
       console.error("Error de red:", error);
     }
   };
+  const handleDelete = async (id) => {
+    try {
+      const response = await fetch(`http://localhost:3001/publicaciones/${id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        
+      });
 
-  
-
+      if (response.ok) {
+        const updatedData = data.filter((item) => item.idPublicacion !== id);
+        setData(updatedData);
+        console.log(`Publicación con ID ${id} eliminada exitosamente.`);
+      } else {
+        console.error("Error al eliminar la publicación.");
+      }
+    } catch (error) {
+      console.error("Error de red:", error);
+    }
+  };
 
   return (
     <div className="profile-container mt-4">
@@ -196,6 +289,17 @@ useEffect(() => {
           </button>
         </Link>
       </div>
+      <div className="row flex-column">
+        {data?.map((element, index) => {
+          console.log(element)
+          return (
+          <div key={index} className="col mb-3">
+            <JobPost {...element} 
+            onDelete={(id) => handleDelete(id)}
+            />
+          </div>
+        )})}
+    </div>
     </div>
   );
 };
