@@ -31,12 +31,41 @@ const getState = ({ getStore, getActions, setStore }) => {
 						throw new Error("An error occurred with the query")
 					}
 					const data = await response.json();
-					console.log("Log In successful")
+					console.log("Log In successful") //Eliminar
 					return data
 
 				}catch(error){
 					console.error("There was an error with the login action", error)
 				}
+			},
+
+			accessConfirmationPatient: async () => {
+				try{
+					const token = sessionStorage.getItem('tokenPatient')
+					const response = await fetch("https://super-broccoli-v5q5vp6q647hwrpx-3001.app.github.dev/api/private_patient",{
+						method: 'GET',
+						headers: {
+							'Authorization': `Bearer ${token}`,
+							'Content-Type' : 'application/json'
+						}
+					})
+
+					if(!response.ok){
+						getActions().deleteTokenPatient();
+						throw new Error("There was an error with the token confirmation in flux")
+					}
+
+					const data = await response.json();
+					console.log("Still have access this is the information you need from back end", data)
+					
+
+				}catch(error){
+					console.log("Authentication issue you do not have access", error)
+				}
+				
+			},
+			deleteTokenPatient: async () => {
+				localStorage.removeItem('tokenPatient')
 			},
 
 			loginSpecialist: async (specialist) => {

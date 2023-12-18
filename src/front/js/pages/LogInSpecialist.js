@@ -45,11 +45,11 @@ const LogInSpecialist = () => {
 
          const result = await actions.loginSpecialist(loginSpecialist)
          console.log("This is the result:", result)
-         if(result && result.AccessToken){
-           const token = result.AccessToken;
-           sessionStorage.setItem('token', token)
+         if(result && result.accessToken){
+           const token = result.accessToken;
+          // sessionStorage.setItem('tokenSpecialist', token)
            navigate("/privateSpecialist")
-           console.log("This is your token", token)
+           console.log("This is your token specialist", token)
          }else{
            alert("email or password incorrect");
          }
