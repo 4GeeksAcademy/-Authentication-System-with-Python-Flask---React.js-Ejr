@@ -2,3 +2,24 @@
     width: 66%;
     height: 27rem;
   }
+  @media screen and (max-width: 1085px ){
+    .parentDiv {
+      
+      width: 77%;
+    }
+    
+  }
+  @media screen and (max-width: 911px ){
+    .parentDiv {
+      
+      width: 85%;
+    }
+    
+  }
+  @media screen and (max-width: 800px ){
+    .parentDiv {
+      
+      width: 92%;
+    }
+    
+  }

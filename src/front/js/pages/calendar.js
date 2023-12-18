@@ -55,16 +55,17 @@ console.log(store)
             </div>
           </div>
       </Modal>
-      {/* mobile */}
-      <div className="d-block d-md-none">
+      {/* mobile start */}
+  
+      <div className="d-block d-md-none d-lg-none bg-secondary w-50 m-auto p-3 rounded text-start">
         {store.programs.map((program,i)=>{
           return(
             <div className="d-block d-md-none d-lg-none" key={i}>
                 {program[`${props.days}_start`] && program[`${props.days}_start`] != null ? 
                 <>
-                  <h2>
+                  <h5>
                       {program.name}
-                  </h2>
+                  </h5>
                   <p className="mb-0  ">
                   {program[`${props.days}_start`]
                     ? program[`${props.days}_start`] +
@@ -83,6 +84,7 @@ console.log(store)
           );
         })}
       </div>
+          {/* mobile end */}
       <table className="table d-none d-md-table d-lg-table table-bordered ">
         <thead>
           <tr>
