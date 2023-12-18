@@ -77,48 +77,54 @@ export const Perfil = () => {
     comuna: ""
   });
 
-useEffect(() => {
-  let token = localStorage.getItem("token")
-  console.log(token)
-  let user = JSON.parse(localStorage.getItem("user"))
-  console.log(user)
-  fetch("http://localhost:3001/api/perfil_logeado", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      //"Authorization": "Bearer " + token
-    },
-    body: JSON.stringify({email: user.email})
-  })
-  .then(response => response.json())
-  .then(data => {
-   setFormData({
-      ...formData,
-      firstName: data.usuario.nombre,
-      lastName: data.usuario.apellido,
-      email: data.usuario.email,
-      comuna: data.usuario.comuna,
-      telefono: data.usuario.telefono,
-      rubro: data.usuario.rubro
-    })
-  })
-  .catch(error => console.log (error))
-},[])
-const [data, setData] = useState(data); // Datos de publicaciones
+  const [data, setData] = useState([]); 
 
-  const [filteredCategoria, setFilteredCategoria] = useState(null); // Estado para filtrar por categoría
   useEffect(() => {
-    fetch("http://localhost:3001/publicaciones")
+    let token = localStorage.getItem("token");
+    let user = JSON.parse(localStorage.getItem("user"));
+  
+    fetch("http://localhost:3001/api/perfil_logeado", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        //"Authorization": "Bearer " + token
+      },
+      body: JSON.stringify({ email: user.email }),
+    })
       .then((response) => response.json())
       .then((data) => {
+        setFormData({
+          ...formData,
+          firstName: data.usuario.nombre,
+          lastName: data.usuario.apellido,
+          email: data.usuario.email,
+          comuna: data.usuario.comuna,
+          telefono: data.usuario.telefono,
+          rubro: data.usuario.rubro,
+        });
+  
+        // Establecer las publicaciones en el estado
         setData(data.publicaciones);
-      });
+      })
+      .catch((error) => console.log(error));
   }, []);
-  const handleCategoriaFilter = (categoria) => {
-    setFilteredCategoria(categoria === filteredCategoria ? null : categoria);
-  };
 
-  const handleInputChange = (e) => {
+const [correoElectronicoFiltrar, setCorreoElectronicoFiltrar] = useState(''); // Agrega un estado para el correo electrónico a filtrar
+
+useEffect(() => {
+  fetch("http://localhost:3001/publicaciones-perfil")
+    .then((response) => response.json())
+    .then((data) => {
+      // Filtra las publicaciones por correo electrónico
+      const publicacionesFiltradas = data.publicaciones.filter(publicacion => publicacion.email === correoElectronicoFiltrar);
+
+      // Almacena las publicaciones filtradas en el estado
+      setData(publicacionesFiltradas);
+    });
+}, [correoElectronicoFiltrar]); // Agrega correoElectronicoFiltrar a las dependencias para que el efecto se vuelva a ejecutar cuando cambie
+  
+
+const handleInputChange = (e) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
@@ -147,7 +153,7 @@ const [data, setData] = useState(data); // Datos de publicaciones
   };
   const handleDelete = async (id) => {
     try {
-      const response = await fetch(`http://localhost:3001/publicaciones/${id}`, {
+      const response = await fetch(`http://localhost:3001/publicacion/${id}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",

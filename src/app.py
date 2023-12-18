@@ -185,11 +185,11 @@ def publicaciones():
     publicaciones = UserPublicacion.query.all()
     publicaciones = list(
         map(lambda publicacion: publicacion.serialize(), publicaciones)
+
+    
     )
     return jsonify({"publicaciones": publicaciones}), 200
 
-
-# enviar datos en la url como query string
 @app.route("/publicacion/<int:id>", methods=["GET"])
 def get_user_by_id(id):
     query = request.args
@@ -292,7 +292,6 @@ def actualizar_datos_de_publicacion(id):
     )
 
 
-@app.route("/publicacion", methods=["GET", "POST"])
 @app.route("/publicacion/<int:id>", methods=["GET", "PUT", "DELETE"])
 def publicacion(id=None):
     if request.method == "GET":
@@ -388,17 +387,21 @@ def get_profile():
     return jsonify(profile_data)
 
 
-@app.route("/api/perfil_logeado", methods = ["POST"])
-#@jwt_required()
+@app.route("/api/perfil_logeado", methods=["POST"])
 def perfil_logeado():
-    email= request.json.get("email")
+    email = request.json.get("email")
     user = User.query.filter_by(email=email).first()
-    print(email)
-    
+
     if not user:
-        return jsonify({"error":"usuario no encontrado"}), 400
-    
-    return jsonify({"usuario": user.serialize()})
+        return jsonify({"error": "Usuario no encontrado"}), 400
+
+    # Obtener las publicaciones del usuario
+    publicaciones = UserPublicacion.query.filter_by(email=email).all()
+    publicaciones_data = [publicacion.serialize() for publicacion in publicaciones]
+
+    return jsonify({"usuario": user.serialize(), "publicaciones": publicaciones_data})
+
+
 
 @app.route("/api/contactar", methods=[ "POST" ])
 @jwt_required()
