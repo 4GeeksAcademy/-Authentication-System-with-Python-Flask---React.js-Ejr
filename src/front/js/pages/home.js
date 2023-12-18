@@ -1,10 +1,13 @@
 import React from "react";
 import "../../styles/home.css";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faSignInAlt, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 
 
+
 export const Home = () => {
+
 
     const handleLoginClick = () => {
       console.log("Botón de iniciar sesión clicado");
@@ -169,6 +172,7 @@ export const Home = () => {
       </div>
     </div>
   );
+
 };
 
 export default Home;
