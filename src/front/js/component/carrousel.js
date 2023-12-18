@@ -22,7 +22,7 @@ export const Carrousel = () => {
     <div className="carousel-oficios mt-30">
       <h2
         style={{
-          fontFamily: "fantasy",
+          fontFamily: "Calibri", // Agregué Montserrat y también una opción de respaldo con sans-serif
           color: "#001F3F", // Azul oscuro
           marginTop: "5%",
           paddingBottom: "2%", // Espacio entre el texto y el borde inferior
@@ -39,6 +39,7 @@ export const Carrousel = () => {
           className="carousel-wrapper"
           style={{
             display: "flex",
+            fontSize: "32px",
             // transition: "transform 0.2s ease-in-out",
             // transform: `translateX(-${currentIndex * 25}%)`,
             // padding: "10px",
@@ -46,33 +47,34 @@ export const Carrousel = () => {
         >
           {" "}
           {/* <Link to="/buscador"> */}
-            <button
-              style={{
-                marginRight: "-0.1%",
-                backgroundColor: "transparent",
-                border: "1px solid transparent", // Grosor del borde bajo y transparente
-                borderRadius: "35px",
-                padding: "5px 5px",
-                fontSize: "16px",
-                cursor: "pointer",
-                transition:
-                  "background-color 0.1s ease transform 0.3s ease-in-out",
-              }}
-              onMouseOver={(e) =>
-                (e.currentTarget.style.transform = "scale(1.05)")
-              }
-              onMouseOut={(e) => (e.currentTarget.style.transform = "scale(1)")}
-            >
-              <div className="carousel-box" style={{ background: "white" }}>
-                <h2 style={{ fontWeight: "bold" }}>Electricista</h2>
-                <img
-                  className="img-fluid"
-                  style={{ minWidth: "100px", width: "100%" }}
-                  src={easyJobUrl1}
-                  alt="Electricista"
-                />
-              </div>
-            </button>
+          <button
+            style={{
+              marginRight: "-0.1%",
+              backgroundColor: "transparent",
+              border: "1px solid transparent", // Grosor del borde bajo y transparente
+              borderRadius: "35px",
+              padding: "5px 5px",
+              fontSize: "16px",
+              cursor: "pointer",
+              transition:
+                "background-color 0.1s ease transform 0.3s ease-in-out",
+                fontFamily: "Calibri"
+            }}
+            onMouseOver={(e) =>
+              (e.currentTarget.style.transform = "scale(1.05)")
+            }
+            onMouseOut={(e) => (e.currentTarget.style.transform = "scale(1)")}
+          >
+            <div className="carousel-box" style={{ background: "white" }}>
+              <h2 style={{ fontWeight: "bold" }}>Electricista</h2>
+              <img
+                className="img-fluid"
+                style={{ minWidth: "100px", width: "100%" }}
+                src={easyJobUrl1}
+                alt="Electricista"
+              />
+            </div>
+          </button>
           {/* </Link> */}
           <button
             style={{
@@ -85,6 +87,7 @@ export const Carrousel = () => {
               cursor: "pointer",
               transition:
                 "background-color 0.1s ease transform 0.3s ease-in-out",
+                fontFamily: "Calibri"
             }}
             onMouseOver={(e) =>
               (e.currentTarget.style.transform = "scale(1.05)")
@@ -112,6 +115,7 @@ export const Carrousel = () => {
               cursor: "pointer",
               transition:
                 "background-color 0.1s ease transform 0.3s ease-in-out",
+                fontFamily: "Calibri"
             }}
             onMouseOver={(e) =>
               (e.currentTarget.style.transform = "scale(1.05)")
@@ -139,6 +143,7 @@ export const Carrousel = () => {
               cursor: "pointer",
               transition:
                 "background-color 0.1s ease transform 0.3s ease-in-out",
+                fontFamily: "Calibri"
             }}
             onMouseOver={(e) =>
               (e.currentTarget.style.transform = "scale(1.05)")
@@ -166,6 +171,7 @@ export const Carrousel = () => {
               cursor: "pointer",
               transition:
                 "background-color 0.1s ease transform 0.3s ease-in-out",
+                fontFamily: "Calibri"
             }}
             onMouseOver={(e) =>
               (e.currentTarget.style.transform = "scale(1.05)")
