@@ -57,16 +57,29 @@ console.log(store)
       </Modal>
       {/* mobile start */}
   
-      <div className="d-block d-md-none d-lg-none bg-secondary w-50 m-auto p-3 rounded text-start">
+      <div 
+      className="d-block d-md-none d-lg-none  w-50 m-auto p-3 rounded text-start"
+      style={{ backgroundColor: "rgba(72, 177, 186, 0.63)"}}
+      >
         {store.programs.map((program,i)=>{
           return(
-            <div className="d-block d-md-none d-lg-none" key={i}>
+            <div 
+            className={`${program[`${props.days}_start`] != null ? "d-block" : "d-none"} d-md-none d-lg-none m-2 p-2 ` }
+            key={i}
+            style={{backgroundColor: "rgb(72 177 186)"}}
+            >
                 {program[`${props.days}_start`] && program[`${props.days}_start`] != null ? 
                 <>
-                  <h5>
+                  <span 
+                  className="fw-bold text-white p-1 rounded  "
+                  style={{backgroundColor:"#ea6f36"}}
+                  >
                       {program.name}
-                  </h5>
-                  <p className="mb-0  ">
+                  </span>
+                  <p 
+                  className="mb-0 mt-1  "
+                  style={{fontSize:".88rem"}}
+                  >
                   {program[`${props.days}_start`]
                     ? program[`${props.days}_start`] +
                       "-" +
