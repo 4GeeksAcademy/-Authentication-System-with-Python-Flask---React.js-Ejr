@@ -62,18 +62,22 @@ function ProgramDivs() {
                               } dayFont border  `} 
                               data-bs-toggle="dropdown" 
                               aria-expanded="false"
-                              style={{fontSize:"5vw"}}
+                              style={{fontSize:"5.5vw"}}
                               >
                                 {capitalLetterDays}
                               </button>
-                              <ul class="dropdown-menu">
+                              <ul 
+                              className="dropdown-menu bg-transparent"
+                            
+                              >
                                 {dayArray.map((dropdownDay,i)=>{
                                   let capitalLetterDropwdownDay =dropdownDay[0].toUpperCase() + dropdownDay.replace(dropdownDay[0],"")
                                   return(
                                     <div key={i}>
                                     <li
                                     onClick={() => setDays(dropdownDay)}
-                                    ><a class="dropdown-item" >{capitalLetterDropwdownDay}</a></li>        
+                                    style={{fontSize:"5.5vw"}}
+                                  ><a className={`dropdown-item ${dropdownDay != days ? "d-block" : "d-none"} bg-light border p-2` }>{capitalLetterDropwdownDay}</a></li>        
                                     </div>
                                   );
                                 })}
