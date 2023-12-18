@@ -76,9 +76,9 @@ console.log(store)
                   >
                       {program.name}
                   </span>
+                  <div className="d-flex align-items-center justify-content-between ">
                   <p 
-                  className="mb-0 mt-1  "
-                  style={{fontSize:".88rem"}}
+                  className="mb-0 mt-1  mobileInfoText"  
                   >
                   {program[`${props.days}_start`]
                     ? program[`${props.days}_start`] +
@@ -86,6 +86,11 @@ console.log(store)
                       program[`${props.days}_end`]
                     : " "}
                 </p>
+                <span
+                className="mobileInfoText text-decoration-underline"
+                >*Click for more info</span>
+
+                  </div>
                 
                 </>
                 
