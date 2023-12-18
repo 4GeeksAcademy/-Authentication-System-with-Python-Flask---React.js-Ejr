@@ -19,18 +19,18 @@ let currentDay = dayArray[currentDayIndex];
 function ProgramDivs() {
   const { store, actions } = useContext(Context);
   const [days, setDays] = useState(currentDay);
+  let capitalLetterDays =days[0].toUpperCase() + days.replace(days[0],"")
   return (
     <div>
       <ul className="nav nav-pills  nav-justified" role="tablist">
         {dayArray.map((day, i) => {
           let capitalLetterDay =day[0].toUpperCase() + day.replace(day[0],"")
-          console.log(currentDayIndex,day,"day day")
           return (
             <>
               <li className="nav-item" role="presentation">
                 <button
                   className={`nav-link ${
-                    currentDay == day ? "active " : "d-none d-md-block"
+                    currentDay == day ? "active d-none d-md-block " : "d-none d-md-block"
                   } dayFont border  `}
                   data-bs-toggle="pill"
                   data-bs-target={`#pills-${day}`}
@@ -43,10 +43,35 @@ function ProgramDivs() {
                   {capitalLetterDay}
                 </button>
               </li>
+              <div class="btn-group">
+  <button 
+  type="button" 
+  className={`nav-link dropdown-toggle ${
+    currentDay == day ? "active " : "d-none d-md-block"
+  } dayFont border  `} 
+  data-bs-toggle="dropdown" 
+  aria-expanded="false">
+    {capitalLetterDays}
+  </button>
+  <ul class="dropdown-menu">
+    {dayArray.map((dropdownDay,i)=>{
+      let capitalLetterDropwdownDay =dropdownDay[0].toUpperCase() + dropdownDay.replace(dropdownDay[0],"")
+      return(
+        <div key={i}>
+        <li
+        onClick={() => setDays(dropdownDay)}
+        ><a class="dropdown-item" >{capitalLetterDropwdownDay}</a></li>        
+        </div>
+      );
+    })}
+  </ul>
+</div>
             </>
           );
         })}
       </ul>
+      
+
       <Calendar days={days} />
     </div>
   );

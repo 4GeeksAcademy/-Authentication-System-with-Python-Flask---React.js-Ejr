@@ -55,7 +55,35 @@ console.log(store)
             </div>
           </div>
       </Modal>
-      <table className="table table-bordered ">
+      {/* mobile */}
+      <div>
+        {store.programs.map((program,i)=>{
+          return(
+            <div key={i}>
+                {program[`${props.days}_start`] && program[`${props.days}_start`] != null ? 
+                <>
+                  <h2>
+                      {program.name}
+                  </h2>
+                  <p className="mb-0  ">
+                  {program[`${props.days}_start`]
+                    ? program[`${props.days}_start`] +
+                      "-" +
+                      program[`${props.days}_end`]
+                    : " "}
+                </p>
+                
+                </>
+                
+                :
+                ""
+              }
+
+            </div>
+          );
+        })}
+      </div>
+      <table className="table d-none d-md-table d-lg-table table-bordered ">
         <thead>
           <tr>
             {hourArray.map((hour, i) => {
