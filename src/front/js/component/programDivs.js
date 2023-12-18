@@ -5,18 +5,17 @@ import NoPrograms from "./noPrograms";
 import Calendar from "../pages/calendar";
 
 let dayArray = [
+  "sunday",
   "monday",
   "tuesday",
   "wednesday",
   "thursday",
   "friday",
   "saturday",
-  "sunday",
 ];
 let date = new Date();
 let currentDayIndex = date.getDay();
-let currentDay = dayArray[currentDayIndex - 1];
-
+let currentDay = dayArray[currentDayIndex];
 function ProgramDivs() {
   const { store, actions } = useContext(Context);
   const [days, setDays] = useState(currentDay);
@@ -25,6 +24,7 @@ function ProgramDivs() {
       <ul className="nav nav-pills  nav-justified" role="tablist">
         {dayArray.map((day, i) => {
           let capitalLetterDay =day[0].toUpperCase() + day.replace(day[0],"")
+          console.log(currentDayIndex,day,"day day")
           return (
             <>
               <li className="nav-item" role="presentation">
