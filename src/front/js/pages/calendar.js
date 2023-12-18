@@ -67,6 +67,9 @@ console.log(store)
             className={`${program[`${props.days}_start`] != null ? "d-block" : "d-none"} d-md-none d-lg-none m-2 p-2 ` }
             key={i}
             style={{backgroundColor: "rgb(72 177 186)"}}
+            onClick={() => {
+              onOpenModal()
+              setModalData(program)}}
             >
                 {program[`${props.days}_start`] && program[`${props.days}_start`] != null ? 
                 <>
