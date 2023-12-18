@@ -35,12 +35,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			const data = await resp.json();
 			if (resp.status == 200) {
 			  setStore({ inputStatusMessage: "Programs successfully updated!" });
-			} else {
-			
-			  setStore({
-				inputStatusMessage: "Programs not updated, please try again.",
-			  });
-			}
+			} 
 			setStore({ programs: data });
   
 			return data;
