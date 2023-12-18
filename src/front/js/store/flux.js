@@ -22,6 +22,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 		  }
 		},
 		updateProgram: async (programData) => {
+			
 		  try {
 			const resp = await fetch(
 			  process.env.BACKEND_URL + "/api/updateProgram",
@@ -35,6 +36,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			if (resp.status == 200) {
 			  setStore({ inputStatusMessage: "Programs successfully updated!" });
 			} else {
+			
 			  setStore({
 				inputStatusMessage: "Programs not updated, please try again.",
 			  });

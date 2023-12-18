@@ -48,6 +48,7 @@ function Input() {
   const [refresh, setRefresh] = useState(false);
   const [updatedPrograms, setUpdatedPrograms] = useState([]);
   const [mobileDayIndex, setMobileDayIndex] = useState(0);
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     if (store.programs.length > 0) {
@@ -938,7 +939,7 @@ function Input() {
         </div>
         <span
           className={`${
-            store.inputStatusMessage == "" ? "d-none" : "d-block"
+            store.inputStatusMessage == "" && errorMessage == "" ? "d-none" : "d-block"
           }  ${
             store.inputStatusMessage == "Programs successfully updated!"
               ? "text-success"
@@ -946,7 +947,7 @@ function Input() {
           }  mb-0`}
           role="alert"
         >
-          {store?.inputStatusMessage}
+          {store?.inputStatusMessage ? store?.inputStatusMessage : errorMessage}
         </span>
         <div className="row mt-4 submitReset">
           <div className=" d-flex align-items-center">
@@ -956,6 +957,7 @@ function Input() {
                 e.preventDefault();
                 setProgramIndex(0);
                 setRefresh(true);
+                setErrorMessage("Programs not updated, please try again.")
                 actions.updateProgram(updatedPrograms);
               }}
               className=" btn btn-info px-3 me-3 h-50"
