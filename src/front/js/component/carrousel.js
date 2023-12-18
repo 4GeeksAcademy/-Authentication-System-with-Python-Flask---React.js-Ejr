@@ -185,6 +185,7 @@ export const Carrousel = () => {
           </button>
         </div>
       </div>
+      
 
       {/* <div className="carousel-controls">
         <div className="arrow" onClick={handlePrev}>

@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { Context } from "../store/appContext";
 import easyJobUrl from "../../img/Easy-Job.jpg";
+import worker from "../../img/worker.png";
 import "../../styles/home.css";
 import Carrousel from "../component/carrousel.js";
 import { Link } from "react-router-dom";
@@ -21,14 +22,18 @@ export const Home = () => {
 
   return (
     <>
-      <div className="container">
-        <div className="row">
+      <div className="container" style={{
+        display: "flex",
+        flexWrap: "wrap",
+        alignItems: "center",
+        justifyContent: "center",
+      }}>
           <div className="col-md-8">
             <div className="custom-container">
               {/* Existing content in custom-container */}
               <h1
                 style={{
-                  fontFamily: "fantasy",
+                 
                   fontSize: "30px",
                   color: "#001F3F",
                   marginTop: "5%",
@@ -46,7 +51,6 @@ export const Home = () => {
                 style={{
                   color: "#616161",
                   fontStyle: "italic",
-                  fontFamily: "fantasy",
                   fontSize: "18px",
                   marginBottom: "50px",
                 }}
@@ -90,30 +94,19 @@ export const Home = () => {
               </div>
             </div>
           </div>
-          <div className="col-md-4 text-right mt-3">
+          <div className="col-md-4 text-center mt-3">
             {/* Image styling */}
             <img
               className="img-fluid"
-              style={{
-                marginTop: "15px",
-                borderRadius: "70px",
-                boxShadow: "0 0 70px #000",
-                maxWidth: "300px",
-                width: "100%",
-                textAlign: "center",
-                transition:
-                  "background-color 0.1s ease transform 0.3s ease-in-out",
-                marginRight: "20px",
-              }}
+             
               onMouseOver={(e) =>
                 (e.currentTarget.style.transform = "scale(1.05)")
               }
               onMouseOut={(e) => (e.currentTarget.style.transform = "scale(1)")}
-              src={easyJobUrl}
+              src={worker}
               alt="Easy Job"
             />
           </div>
-        </div>
       </div>
 
       <div className="container">
