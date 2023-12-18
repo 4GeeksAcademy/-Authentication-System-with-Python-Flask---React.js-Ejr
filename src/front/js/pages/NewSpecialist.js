@@ -137,7 +137,7 @@ const NewSpecialist = () => {
             </div>
 
             <div className="mb-3">
-                <input onChange={(e) => setEmail(e.target.value)} onClick={handlerClickEmail} onBlur={handlerBlurEmail} type="email" className="form-control" id="exampleFormControlInput3" placeholder="name@example.com" />
+                <input onChange={(e) => setEmail(e.target.value)} onClick={handlerClickEmail} onBlur={handlerBlurEmail} type="email" className="form-control" id="exampleFormControlInput3" placeholder="Correo electrónico" />
                 {clickedEmail && (<p className='errorMsg'>* El correo electrónico es obligatorio *</p>)}
             </div>
 
