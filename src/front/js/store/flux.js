@@ -17,6 +17,51 @@ const getState = ({ getStore, getActions, setStore }) => {
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
+			createNewPatient:async (newPatient) => {
+				try{
+					const response = await fetch("https://super-broccoli-v5q5vp6q647hwrpx-3001.app.github.dev/api/signup_patient", {
+						method: "POST",
+						body: JSON.stringify(newPatient),
+						headers: {
+							"Content-Type": "application/json"
+						}
+
+					});
+					if(!response.ok){
+						throw new Error("There was a problem with the funtion in flux")
+					}
+					const data = await response.json();
+					console.log("User created successfully", data)
+					
+
+				}catch(error){
+					console.error("There was an error tryinig to create the Patient", error)
+				}
+			},
+
+			createNewSpecialist:async (newSpecialist) => {
+				try{
+					const response = await fetch("https://super-broccoli-v5q5vp6q647hwrpx-3001.app.github.dev/api/signup_specialist", {
+						method: "POST",
+						body: JSON.stringify(newSpecialist),
+						headers: {
+							"Content-Type": "application/json"
+						}
+
+					});
+					if(!response.ok){
+						throw new Error("There was a problem with the funtion in flux")
+					}
+					const data = await response.json();
+					console.log("User created successfully", data)
+					
+
+				}catch(error){
+					console.error("There was an error tryinig to create the Specialist", error)
+				}
+			},		
+
+
 			exampleFunction: () => {
 				getActions().changeColor(0, "green");
 			},

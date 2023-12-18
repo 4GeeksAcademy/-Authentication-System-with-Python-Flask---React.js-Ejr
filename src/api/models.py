@@ -15,6 +15,7 @@ class Patient(db.Model):
     def __repr__(self):
         return f'<Patient {self.first_name}>'
 
+
     def serialize(self):
         return {
             "id": self.id,
@@ -24,6 +25,7 @@ class Patient(db.Model):
             # do not serialize the password, its a security breach
         }
     
+
 class Specialist(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String(120), unique=False, nullable=False)
@@ -40,13 +42,16 @@ class Specialist(db.Model):
     def __repr__(self):
         return f'<Specialist {self.first_name}>'
 
+
     def serialize(self):
         return {
             "id": self.id,
             "first_name": self.first_name,
             "last_name": self.last_name,
             "email": self.email,
+
             "is_physiotherapist": self.is_physiotherapist,
+
             "is_nurse": self.is_nurse,
             "picture": self.picture,
             "certificate": self.certificate,
@@ -61,3 +66,4 @@ class Specialist(db.Model):
 #     img=db.Column(db.Text,unique=True, nullable=False)
 #     name=db.Column(db.Text, nullable=False)
 #     mimetype=db.Column(db.Text,nullable=False)
+
