@@ -1,5 +1,6 @@
 import React from "react";
 import "../../styles/home.css";
+import LogInBtn from "../component/LogInBtn.jsx";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faSignInAlt, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
@@ -7,6 +8,7 @@ import { faUser, faSignInAlt, faInfoCircle } from "@fortawesome/free-solid-svg-i
 
 
 export const Home = () => {
+
 
 
     const handleLoginClick = () => {

@@ -20,6 +20,77 @@ const getState = ({ getStore, getActions, setStore }) => {
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
+
+			
+			loginPatient: async (patient) => {
+				try{
+					const response = await fetch(API_URL+"/api/token_patient", {
+						method: 'POST',
+						body: JSON.stringify(patient),
+						headers: {
+							'Content-Type': 'application/json'
+						}
+					});
+					if(!response.ok){
+						throw new Error("An error occurred with the query")
+					}
+					const data = await response.json();
+					console.log("Log In successful") //Eliminar
+					return data
+
+				}catch(error){
+					console.error("There was an error with the login action", error)
+				}
+			},
+
+			accessConfirmationPatient: async () => {
+				try{
+					const token = sessionStorage.getItem('tokenPatient')
+					const response = await fetch(API_URL+"/api/private_patient",{
+						method: 'GET',
+						headers: {
+							'Authorization': `Bearer ${token}`,
+							'Content-Type' : 'application/json'
+						}
+					})
+
+					if(!response.ok){
+						getActions().deleteTokenPatient();
+						throw new Error("There was an error with the token confirmation in flux")
+					}
+
+					const data = await response.json();
+					console.log("Still have access this is the information you need from back end", data)
+					
+
+				}catch(error){
+					console.log("Authentication issue you do not have access", error)
+				}
+				
+			},
+			deleteTokenPatient: async () => {
+				localStorage.removeItem('tokenPatient')
+			},
+
+			loginSpecialist: async (specialist) => {
+				try{
+					const response = await fetch(API_URL+"/api/token_specialist", {
+						method: 'POST',
+						body: JSON.stringify(specialist),
+						headers: {
+							'Content-Type': 'application/json'
+						}
+					});
+					if(!response.ok){
+						throw new Error("An error occurred with the query")
+					}
+					const data = await response.json();
+					console.log("Log In successful")
+					return data
+
+				}catch(error){
+					console.error("There was an error with the login action", error)
+
 			createNewPatient: async (newPatient) => {
 				try {
 					const response = await fetch(API_URL + "/api/signup_patient", {
@@ -61,6 +132,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				} catch (error) {
 					console.error("There was an error tryinig to create the Specialist", error)
+
 				}
 			},
 
