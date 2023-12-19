@@ -16,7 +16,7 @@ let dayArray = [
 let date = new Date();
 let currentDayIndex = date.getDay();
 let currentDay = dayArray[currentDayIndex];
-function ProgramDivs() {
+function DayTabs() {
   const { store, actions } = useContext(Context);
   const [days, setDays] = useState(currentDay);
   let capitalLetterDays =days[0].toUpperCase() + days.replace(days[0],"")
@@ -94,4 +94,4 @@ function ProgramDivs() {
   );
 }
 
-export default ProgramDivs;
+export default DayTabs;

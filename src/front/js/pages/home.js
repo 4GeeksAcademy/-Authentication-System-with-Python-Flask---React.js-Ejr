@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import { Context } from "../store/appContext";
 import "../../styles/home.css";
-import ProgramDivs from "../component/programDivs";
+import DayTabs from "../component/dayTabs";
 import { UpdateLink } from "../component/updateLink";
 
 import { faCircleUser } from "@fortawesome/free-solid-svg-icons";
@@ -25,7 +25,7 @@ export const Home = () => {
         icon={faCircleUser}
       />
 
-      <ProgramDivs />
+      <DayTabs />
     </div>
   );
 };
