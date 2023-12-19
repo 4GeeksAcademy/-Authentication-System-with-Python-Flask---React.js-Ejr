@@ -82,7 +82,7 @@ let noProgramCount = 0
         {store.programs.map((program,i)=>{
           return(
             <div 
-            className={`${program[`${props.days}_start`] != null ? "d-block" : "d-none"} d-md-none d-lg-none my-3 p-2 ` }
+            className={`${program[`${props.days}_start`] != null ? "d-block" : "d-none"} d-md-none d-lg-none mb-3 p-2 ` }
             key={i}
             style={{backgroundColor: "rgb(72 177 186)"}}
             onClick={() => {
