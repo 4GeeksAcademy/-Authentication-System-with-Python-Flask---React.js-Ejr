@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState,useEffect } from "react";
 import { Context } from "../store/appContext";
 import "../../styles/calendar.css";
 import ModalComponent from "../component/modal";
@@ -24,7 +24,7 @@ let bgColor = "rgb(72 177 186 / 63%)";
 
 function Calendar(props) {
   const [open, setOpen] = useState(false);
-  const [match, setMatch] = useState(false);
+  const [animate, setAnimate] = useState(false);
   const onOpenModal = () => setOpen(true);
   const onCloseModal = () => setOpen(false);
   const { store, actions } = useContext(Context);
@@ -45,7 +45,15 @@ let noProgramCount = 0
    
   }
   noProgramsToday()
+
   
+  useEffect(() => {
+    setAnimate(true);
+
+    const timeoutId = setTimeout(() => setAnimate(false), 1500);
+
+    return () => clearTimeout(timeoutId);
+  }, [props.days]);
   return (
     <div>
  
@@ -82,7 +90,7 @@ let noProgramCount = 0
         {store.programs.map((program,i)=>{
           return(
             <div 
-            className={`${program[`${props.days}_start`] != null ? "d-block" : "d-none"} d-md-none d-lg-none mb-3 p-2 ` }
+            className={`${program[`${props.days}_start`] != null ? "d-block  " : "d-none"} ${animate ? "animation-fade" : ""}  d-md-none d-lg-none mb-3 p-2 ` }
             key={i}
             style={{backgroundColor: "rgb(72 177 186)"}}
             onClick={() => {
@@ -92,9 +100,8 @@ let noProgramCount = 0
                 {program[`${props.days}_start`] && program[`${props.days}_start`] != null ? 
                 <>
                   <span 
-                  className="fw-bold text-white p-1 rounded  "
-                  style={{backgroundColor:"#ea6f36",
-                  fontSize:" 5vw"
+                  className="fw-bold text-white p-1 rounded bg-orange "
+                  style={{ fontSize:" 5vw"
                 }}
                   >
                       {program.name}
@@ -126,7 +133,7 @@ let noProgramCount = 0
           );
         })}
       </div>
-      <div className={` w-75 m-auto mt-2 ${noProgramCount==0 ? "d-block" : "d-none"}`}> <h1>No Programs Scheduled for Today</h1> </div>
+      <div className={` w-75 m-auto mt-2 ${noProgramCount==0 ? "d-block d-md-none d-lg-none" : "d-none"}`}> <h1>No Programs Scheduled for Today</h1> </div>
           {/* mobile end */}
       <table className="table d-none d-md-table d-lg-table table-bordered ">
         <thead>

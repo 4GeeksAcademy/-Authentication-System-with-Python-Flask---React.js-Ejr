@@ -2,6 +2,10 @@
     width: 66%;
     height: 27rem;
   }
+
+  .bg-orange{
+background-color: #ea6f36;
+  }
   @media screen and (max-width: 1085px ){
     .parentDiv {
       
