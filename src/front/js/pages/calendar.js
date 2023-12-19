@@ -24,6 +24,7 @@ let bgColor = "rgb(72 177 186 / 63%)";
 
 function Calendar(props) {
   const [open, setOpen] = useState(false);
+  const [match, setMatch] = useState(false);
   const onOpenModal = () => setOpen(true);
   const onCloseModal = () => setOpen(false);
   const { store, actions } = useContext(Context);
@@ -31,6 +32,20 @@ function Calendar(props) {
 console.log(store)
   let trHeight = Math.floor(100 / store.programs.length);
 
+  
+let noProgramCount = 0
+  const noProgramsToday = ()=>{
+    store.programs.forEach((program,index)=>{   
+      if(program[`${props.days}_start`] != null ){
+        noProgramCount++
+      }
+      
+    })
+    
+   
+  }
+  noProgramsToday()
+  
   return (
     <div>
  
@@ -60,7 +75,7 @@ console.log(store)
       <div 
       className="d-block d-md-none d-lg-none  m-auto px-3 py-1 rounded text-start"
       style={{ 
-        backgroundColor: "rgba(72, 177, 186, 0.63)",
+        // backgroundColor: " rgb(72 177 186 / 40%)",
         width:"86%"
     }}
       >
@@ -111,6 +126,7 @@ console.log(store)
           );
         })}
       </div>
+      <div className={` w-75 m-auto mt-2 ${noProgramCount==0 ? "d-block" : "d-none"}`}> <h1>No Programs Scheduled for Today</h1> </div>
           {/* mobile end */}
       <table className="table d-none d-md-table d-lg-table table-bordered ">
         <thead>
