@@ -1,19 +1,59 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHeartbeat } from '@fortawesome/free-solid-svg-icons';
 
 export const Navbar = () => {
-	return (
-		<nav className="navbar navbar-light bg-light">
-			<div className="container">
-				<Link to="/">
-					<span className="navbar-brand mb-0 h1">React Boilerplate</span>
-				</Link>
-				<div className="ml-auto">
-					<Link to="/demo">
-						<button className="btn btn-primary">Check the Context in action</button>
-					</Link>
-				</div>
-			</div>
-		</nav>
-	);
+
+    const handleInicioClick = () => {
+        console.log("Botón de Inicio clicado");
+
+    };
+
+    const handleServiciosClick = () => {
+        console.log("Botón de Servicios clicado");
+
+    };
+
+    const handleProfesionalesClick = () => {
+        console.log("Botón de Profesionales clicado");
+
+    };
+
+    const handleLoginClick = () => {
+        console.log("Botón de Iniciar Sesión clicado");
+    
+    };
+
+    const handleRegisterClick = () => {
+        console.log("Botón de Registrarse clicado");
+  
+    };
+
+    return (
+        <div className="bubbleContainer">
+            <div className="navLinks">
+                <button className="navLink" onClick={handleInicioClick}>
+                    <div className="navLabel">Inicio</div>
+                </button>
+                <button className="navLink" onClick={handleServiciosClick}>
+                    <div className="navLabel">Servicios</div>
+                </button>
+                <button className="navLink" onClick={handleProfesionalesClick}>
+                    <div className="navLabel">Profesionales</div>
+                </button>
+            </div>
+            <div className="navLinks1">
+                <button className="navLink" onClick={handleLoginClick}>
+                    <div className="navLabel">Iniciar Sesión</div>
+                </button>
+                <button className="navLink" onClick={handleRegisterClick}>
+                    <div className="navLabel">Registrarse</div>
+                </button>
+            </div>
+            <div className="brand">
+                <FontAwesomeIcon icon={faHeartbeat} />
+                <div className="brandname">PhysioCareSync</div>
+            </div>
+        </div>
+    );
 };
