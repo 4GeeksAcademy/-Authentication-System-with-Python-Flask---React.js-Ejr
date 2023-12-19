@@ -1,3 +1,51 @@
-/* 
-    General Styles used on every website (Don't Repeat Yourself)
-*/
+
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;700&display=swap");
+body {
+  margin: 0;
+  line-height: normal;
+}
+:root {
+  /* fonts */
+  --font-manrope: Manrope;
+
+  /* font sizes */
+  --font-size-sm: 14px;
+  --font-size-lg: 18px;
+  --font-size-32xl: 51px;
+  --font-size-xs: 12px;
+  --font-size-19xl: 38px;
+  --font-size-3xl: 22px;
+  --font-size-48xl: 67px;
+
+  /* Colors */
+  --color-mintcream: #f7fffb;
+  --color-gray-100: #2b2629;
+  --color-gray-200: #1d1a1c;
+  --color-gray-300: #181618;
+  --color-dimgray: #72656d;
+  --color-gainsboro: #d0dbd6;
+  --color-lightseagreen: #00a795;
+
+  /* Gaps */
+  --gap-21xl: 40px;
+  --gap-base: 16px;
+  --gap-5xl: 24px;
+  --gap-5xs: 8px;
+  --gap-9xs: 4px;
+
+  /* Paddings */
+  --padding-101xl: 120px;
+  --padding-base: 16px;
+  --padding-5xl: 24px;
+  --padding-9xs: 4px;
+  --padding-11xs: 2px;
+  --padding-21xl: 40px;
+  --padding-37xl: 56px;
+  --padding-5xs: 8px;
+  --padding-xs: 12px;
+  --padding-xl: 20px;
+
+  /* Border radiuses */
+  --br-21xl: 40px;
+}
+
