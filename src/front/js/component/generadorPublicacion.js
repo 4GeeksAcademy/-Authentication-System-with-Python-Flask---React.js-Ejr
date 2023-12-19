@@ -1,45 +1,80 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { Modal, Button } from "react-bootstrap";
 
 const GeneradorPublicacion = () => {
-  const [publicacion, setPublicacion] = useState({
+  const [formData, setFormData] = useState({
     nombre: "",
     apellido: "",
     email: "",
-    titulo: "",
-    descripcion: "",
-    comuna: "",
+    telefono: "",
     rubro: "",
+    comuna: "",
     fecha: "",
-    idUser: "",
+    titulo: "",
+    descripcion: ""
   });
-  const navigate = useNavigate();
+
+  const [data, setData] = useState([]); 
 
   useEffect(() => {
-    // Puedes agregar código de inicialización si es necesario
+    let token = localStorage.getItem("token");
+    let user = JSON.parse(localStorage.getItem("user"));
+  
+    fetch("http://localhost:3001/api/perfil_logeado", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        //"Authorization": "Bearer " + token
+      },
+      body: JSON.stringify({ email: user.email }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setFormData({
+          ...formData,
+          nombre: data.usuario.nombre,
+          apellido: data.usuario.apellido,
+          email: data.usuario.email,
+          comuna: data.usuario.comuna,
+          telefono: data.usuario.telefono,
+          rubro: data.usuario.rubro,
+        });
+  
+        // Establecer las publicaciones en el estado
+        setData(data.publicaciones);
+      })
+      .catch((error) => console.log(error));
   }, []);
+
+  
 
   const handlePublicacion = (e) => {
     const { name, value } = e.target;
-    setPublicacion({ ...publicacion, [name]: value });
+    setFormData({ ...formData, [name]: value });
   };
+
+  const [showModal, setShowModal] = useState(false);
+  const abrirModal = () => setShowModal(true);
+  const cerrarModal = () => setShowModal(false);
 
   const publicarPublicacion = () => {
     const userFromLocalStorage = JSON.parse(localStorage.getItem("user"));
-    publicacion.idUser = userFromLocalStorage ? userFromLocalStorage.id : null;
+    formData.idUser = userFromLocalStorage ? userFromLocalStorage.id : null;
 
     fetch("http://localhost:3001/publicacionpost/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(publicacion),
+      body: JSON.stringify(formData),
     })
       .then((resp) => resp.json())
       .then((data) => {
         console.log("Publicación enviada al servidor:", data);
-        navigate("/prestadorCv");
-      })
+        abrirModal();
+    })
+      
       .catch((error) => {
         console.error("Error al enviar la publicación:", error);
       });
@@ -76,31 +111,9 @@ const GeneradorPublicacion = () => {
               type="text" style={{ border: '1px solid black' }}
               className="form-control"
               placeholder="Nombre"
-              value={publicacion.nombre}
+              value={`${formData.nombre} ${formData.apellido}`}
               onChange={handlePublicacion}
               name="nombre"
-              required
-            />
-          </div>
-          <div className="mb-3">
-            <input
-              type="text" style={{ border: '1px solid black' }}
-              className="form-control"
-              placeholder="Apellido"
-              value={publicacion.apellido}
-              onChange={handlePublicacion}
-              name="apellido"
-              required
-            />
-          </div>
-          <div className="mb-3">
-            <input
-              type="text" style={{ border: '1px solid black' }}
-              className="form-control"
-              placeholder="Titulo"
-              value={publicacion.titulo}
-              onChange={handlePublicacion}
-              name="Titulo"
               required
             />
           </div>
@@ -109,7 +122,7 @@ const GeneradorPublicacion = () => {
               type="email" style={{ border: '1px solid black' }}// Tipo de entrada email para la validación automática del formato de correo electrónico
               className="form-control"
               placeholder="Email"
-              value={publicacion.email}
+              value={formData.email}
               onChange={handlePublicacion}
               name="email"
               required // Campo obligatorio
@@ -119,19 +132,8 @@ const GeneradorPublicacion = () => {
             <input
               type="text" style={{ border: '1px solid black' }}
               className="form-control"
-              placeholder="Descripción"
-              value={publicacion.descripcion}
-              onChange={handlePublicacion}
-              name="descripcion"
-              required
-            />
-          </div>
-          <div className="mb-3">
-            <input
-              type="text" style={{ border: '1px solid black' }}
-              className="form-control"
               placeholder="Comuna"
-              value={publicacion.comuna}
+              value={formData.comuna}
               onChange={handlePublicacion}
               name="comuna"
               required
@@ -142,39 +144,67 @@ const GeneradorPublicacion = () => {
               type="text" style={{ border: '1px solid black' }}
               className="form-control"
               placeholder="Rubro"
-              value={publicacion.rubro}
+              value={formData.rubro}
               onChange={handlePublicacion}
               name="rubro"
               required
             />
-          </div>
-          <div className="mb-3">
+          <div className="mt-3">
             <input
               type="text" style={{ border: '1px solid black' }}
               className="form-control"
+              placeholder="Titulo de la publicación"
+              onChange={handlePublicacion}
+              name="titulo"
+              required
+            />
+          </div>
+          </div>
+          <div className="mb-3">
+            <input
+              type="date" style={{ border: '1px solid black' }}
+              className="form-control"
               placeholder="Fecha"
-              value={publicacion.fecha}
               onChange={handlePublicacion}
               name="fecha"
               required
             />
           </div>
         </div>
-
-        {/* FALTA AGREGAR EL LINK  DEL BUTTON*/}
-             
-  
-  <button
-    type="button"
-    className="btn btn-primary mt-5 me-5"
-    style={{ width: "40%" , margin: "0 auto" }}
-    onClick={publicarPublicacion}
-  >
-    Publicar
-  </button>
- 
-      
-      </div>
+        <div className="mb-3">
+            <textarea
+                style={{ border: '1px solid black', height: '150px', resize: 'none', textAlign: 'left', verticalAlign: 'top' }}
+                className="form-control"
+                placeholder="Descripción"
+                onChange={handlePublicacion}
+                name="descripcion"
+                required
+            ></textarea>
+        </div>     
+        <button
+          type="button"
+          className="btn btn-primary mt-5 me-5"
+          style={{ width: "40%" , margin: "0 auto" }}
+          onClick={publicarPublicacion}
+        >
+          Publicar
+        </button>
+          <Modal show={showModal} onHide={cerrarModal}>
+            <Modal.Header closeButton>
+                <Modal.Title>¡Publicación registrada con éxito!</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+                <Link to="/Perfil">
+                    Pulsa aquí para ver tus publicaciones
+                </Link>
+            </Modal.Body>
+            <Modal.Footer>
+                <Button variant="secondary" onClick={cerrarModal}>
+                    Cerrar
+                </Button>
+            </Modal.Footer>
+        </Modal>
+       </div>
     </div>
   );
 };

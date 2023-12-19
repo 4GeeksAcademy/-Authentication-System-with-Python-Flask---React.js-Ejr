@@ -252,21 +252,26 @@ def enviar_datos_de_publicacion(id):
 @app.route("/publicacionpost", methods=["POST"])
 def enviar_datos_de_publicacionpost():
     try:
-        # Capturamos todo el body en un diccionario
         body = request.get_json()
         publicacion = UserPublicacion()
-        publicacion.idUsuario = body["idUser"]
-        publicacion.nombre = body["nombre"]
-        publicacion.apellido = body["apellido"]
-        publicacion.titulo = body["titulo"]
-        publicacion.email = body["email"]
-        publicacion.descripcion = body["descripcion"]
-        publicacion.comuna = body["comuna"]
-        publicacion.rubro = body["rubro"]
-        publicacion.fecha = body["fecha"]
+        publicacion.idUsuario = body.get("idUser")
+        publicacion.nombre = body.get("nombre")
+        publicacion.apellido = body.get("apellido")
+        publicacion.titulo = body.get("titulo")
+        publicacion.email = body.get("email")
+        publicacion.descripcion = body.get("descripcion")
+        publicacion.comuna = body.get("comuna")
+        publicacion.rubro = body.get("rubro")
+        publicacion.fecha = body.get("fecha")
 
         db.session.add(publicacion)
         db.session.commit()
+       
+        required_fields = ["idUser", "nombre", "apellido", "titulo", "email", "descripcion", "comuna", "rubro", "fecha"]
+
+        for field in required_fields:
+            if field not in body:
+             return jsonify({"error": f"Campo '{field}' faltante en la solicitud"}), 400
 
         return jsonify({"message": "Publicación exitosa"}), 200
     except Exception as e:
@@ -307,20 +312,17 @@ def publicacion(id=None):
         return jsonify({"message": "actualizando una publicacion"}), 200
 
     if request.method == "DELETE":
-        return jsonify({"message": "eliminando una publicacion"}), 200
-
-
-@app.route("/publicacion/<int:id>", methods=["DELETE"])
-def eliminar_publicacion(id):
-    global publicaciones
-
-    publicacion = next((pub for pub in publicaciones if pub['id'] == id), None)
-
-    if publicacion:
-        publicaciones = [pub for pub in publicaciones if pub['id'] != id]
-        return jsonify({"message": f"Publicación con ID {id} eliminada correctamente"}), 200
-    else:
-        return jsonify({"message": f"No se encontró la publicación con ID {id}"}), 404
+        # Lógica para eliminar una publicación por ID
+        try:
+            publicacion = UserPublicacion.query.get(id)
+            if publicacion:
+                db.session.delete(publicacion)
+                db.session.commit()
+                return jsonify({"message": f"Publicación con ID {id} eliminada correctamente"}), 200
+            else:
+                return jsonify({"error": f"No se encontró la publicación con ID {id}"}), 404
+        except Exception as e:
+            return jsonify({"error": str(e)}), 500
 
 
 
