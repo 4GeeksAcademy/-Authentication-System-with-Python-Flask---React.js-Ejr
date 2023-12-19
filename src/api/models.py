@@ -29,8 +29,7 @@ def serialize(self):
             "date_of_birth": self.date_of_birth,
             "routine": self.routine,
             "diet": self.diet,
-            "pathologies": self.pathologies
-           
+            "pathologies": self.pathologies           
         }
     
 
