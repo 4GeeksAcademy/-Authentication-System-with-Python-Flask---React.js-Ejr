@@ -53,7 +53,7 @@ const Layout = () => {
             <Route element={<OtroFormulario />} path="/Registro" />
             <Route element={<Formulario />} path="/RegistroPrestador" />
             <Route element={<Carrousel />} path="/carousel" />
-            <Route element={<PrestadorCv />} path="/prestadorCV" />
+            {/* <Route element={<PrestadorCv />} path="/perfil" /> */}
            
             <Route
               element={<GeneradorPublicacion />}
