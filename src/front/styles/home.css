@@ -1,6 +1,11 @@
 .navbar-brand-custom {
   display: inline-block;
   margin-right: 15px; /* Ajusta el margen derecho según tus necesidades */
+  /* Agrega estilos de fuente */
+  font-family: "TuFuente", Calibri; /* Reemplaza 'TuFuente' con la fuente que prefieras */
+  font-size: 28px; /* Ajusta el tamaño de la fuente según tus necesidades */
+  font-weight: normal; /* Ajusta el peso de la fuente según tus necesidades */
+  color: #333; /* Ajusta el color del texto según tus necesidades */
 }
 
 .navbar-brand-custom:last-child {
@@ -25,6 +30,7 @@
 
 .navbar-brand.mb-0.h1 {
   margin-bottom: 0; /* Elimina el margen inferior predeterminado de las etiquetas h1 */
+  font-size: 24px;
 }
 
 .easy-jobs {
@@ -48,11 +54,10 @@
 
 .text-container p {
   text-align: center;
-  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-family: "Calibri", sans-serif;
   font-size: 25px;
   /* Otros estilos de texto según tu preferencia */
 }
-
 
 .image-container > img {
   margin: 0 auto;
@@ -96,7 +101,7 @@
 
 .nosotros {
   display: flex;
-  margin: 0 auto; 
+  margin: 0 auto;
   justify-content: space-between;
 }
 
@@ -129,7 +134,7 @@
   font-size: 1.5rem;
 }
 .carousel-box img {
-  border: px solid  rgb(71, 143, 210);
+  border: px solid rgb(71, 143, 210);
   border-radius: 10px;
   height: 200px;
   width: 100%;
@@ -140,7 +145,6 @@
 /* .carousel-controls {
   margin-top: 10px;
 } */
-
 
 .arrow {
   cursor: pointer;
