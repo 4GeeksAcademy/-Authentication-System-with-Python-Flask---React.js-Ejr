@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { Context } from "../store/appContext";
 import easyJobUrl from "../../img/Easy-Job.jpg";
+import worker from "../../img/worker.png";
 import "../../styles/home.css";
 import Carrousel from "../component/carrousel.js";
 import { Link } from "react-router-dom";
@@ -9,26 +10,26 @@ import ProfesionCard from "../component/ProfesionCard.js";
 export const Home = () => {
   const { store, actions } = useContext(Context);
 
-
-
   const handleButtonClick1 = (e) => {
     e.preventDefault(); // Prevent default form submission behavior
     console.log("Botón 1 clickeado");
     // Add logic for the first button click
   };
 
-
-
   return (
     <>
-      <div className="container">
-        <div className="row">
+      <div className="container" style={{
+        display: "flex",
+        flexWrap: "wrap",
+        alignItems: "center",
+        justifyContent: "center",
+      }}>
           <div className="col-md-8">
             <div className="custom-container">
               {/* Existing content in custom-container */}
               <h1
                 style={{
-                  fontFamily: "fantasy",
+                  fontFamily: "Calibri",
                   fontSize: "30px",
                   color: "#001F3F",
                   marginTop: "5%",
@@ -45,9 +46,9 @@ export const Home = () => {
               <p
                 style={{
                   color: "#616161",
-                  fontStyle: "italic",
-                  fontFamily: "fantasy",
-                  fontSize: "18px",
+                  fontStyle: "normal",
+                  fontFamily: "Calibri",
+                  fontSize: "24px",
                   marginBottom: "50px",
                 }}
                 className="mx-5 text-center"
@@ -71,7 +72,6 @@ export const Home = () => {
                     style={{
                       display: "flex",
                       color: "#333333",
-                      fontWeight: "bold",
                       background: "#dd9e26",
                       borderRadius: "30px",
                       justifyContent: "center",
@@ -80,6 +80,8 @@ export const Home = () => {
                       width: "250px",
                       textAlign: "center",
                       marginTop: "5px",
+                      fontFamily: "Calibri, sans-serif", // Reemplaza "TuFuentePreferida" con la fuente que desees usar
+                      fontSize: "20px", // Cambiado a "20px" para aumentar el tamaño de la letra
                     }}
                   >
                     <h5 style={{ margin: "auto", fontWeight: "bold" }}>
@@ -90,7 +92,7 @@ export const Home = () => {
               </div>
             </div>
           </div>
-          <div className="col-md-4 text-right mt-3">
+          <div className="col-md-4 text-center mt-3">
             {/* Image styling */}
             <img
               className="img-fluid"
@@ -109,11 +111,10 @@ export const Home = () => {
                 (e.currentTarget.style.transform = "scale(1.05)")
               }
               onMouseOut={(e) => (e.currentTarget.style.transform = "scale(1)")}
-              src={easyJobUrl}
+              src={worker}
               alt="Easy Job"
             />
           </div>
-        </div>
       </div>
 
       <div className="container">
@@ -123,7 +124,7 @@ export const Home = () => {
       <div className="container2">
         <h2
           style={{
-            fontFamily: "fantasy",
+            fontFamily: "Calibri, sans-serif", // Agregué Calibri y también una opción de respaldo con sans-serif
             color: "#001F3F", // Azul oscuro
             marginTop: "25%",
             paddingBottom: "2%", // Espacio entre el texto y el borde inferior
@@ -142,7 +143,7 @@ export const Home = () => {
               <div
                 className="card mb-4"
                 style={{
-                  borderRadius: "50px",
+                  borderRadius: "30px",
                   transition: "transform 0.3s ease-in-out",
                 }}
                 onMouseOver={(e) =>
@@ -162,13 +163,16 @@ export const Home = () => {
                     className="card-text mt-5px"
                     style={{
                       textAlign: "justify",
-                      fontStyle: "italic",
+                      fontWeight: "bold",
                       color: "rgba(0, 0, 0, 0.8)",
+                      fontFamily: "Calibri",
+                      fontSize: "18px",
                     }}
                   >
-                    Somos una plataforma dedicada a conectar con técnicos en
-                    oficios tales como: Carpintería, Electricidad, Gasfitería,
-                    Pintura y Aseo. Damos solución a problemas de tu hogar o
+                    Somos una plataforma dedicada a conectar con Técnicos en
+                    Oficios tales como: Carpintería, Electricidad, Gasfitería,
+                    Pintura y Aseo. 
+                    Damos solución a problemas de tu hogar o
                     empresa. Compara perfiles y selecciona al experto que mejor
                     se adapte a tus necesidades.
                   </p>
@@ -180,7 +184,7 @@ export const Home = () => {
               <div
                 className="card mb-4"
                 style={{
-                  borderRadius: "50px",
+                  borderRadius: "30px",
                   transition: "transform 0.3s ease-in-out",
                 }}
                 onMouseOver={(e) =>
@@ -200,8 +204,10 @@ export const Home = () => {
                     className="card-text mt-5px"
                     style={{
                       textAlign: "justify",
-                      fontStyle: "italic",
+                      fontWeight: "bold",
                       color: "rgba(0, 0, 0, 0.8)",
+                      fontFamily: "Calibri",
+                      fontSize: "18px",
                     }}
                   >
                     Nuestra misión es facilitar la búsqueda de técnicos o
@@ -217,7 +223,7 @@ export const Home = () => {
               <div
                 className="card mb-4"
                 style={{
-                  borderRadius: "50px",
+                  borderRadius: "30px",
                   transition: "transform 0.3s ease-in-out",
                 }}
                 onMouseOver={(e) =>
@@ -237,8 +243,10 @@ export const Home = () => {
                     className="card-text mt-5px"
                     style={{
                       textAlign: "justify",
-                      fontStyle: "italic",
+                      fontWeight: "bold",
                       color: "rgba(0, 0, 0, 0.8)",
+                      fontFamily: "Calibri",
+                      fontSize: "18px",
                     }}
                   >
                     Easy Jobs es tu aliado para encontrar la solución perfecta
