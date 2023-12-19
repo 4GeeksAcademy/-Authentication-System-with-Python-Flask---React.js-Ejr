@@ -1,6 +1,11 @@
 .navbar-brand-custom {
   display: inline-block;
   margin-right: 15px; /* Ajusta el margen derecho según tus necesidades */
+  /* Agrega estilos de fuente */
+  font-family: "TuFuente", Calibri; /* Reemplaza 'TuFuente' con la fuente que prefieras */
+  font-size: 28px; /* Ajusta el tamaño de la fuente según tus necesidades */
+  font-weight: normal; /* Ajusta el peso de la fuente según tus necesidades */
+  color: #333; /* Ajusta el color del texto según tus necesidades */
 }
 
 .navbar-brand-custom:last-child {
@@ -15,13 +20,20 @@
 /* Agrega estilos para centrar los elementos en la barra de navegación */
 .container {
   display: flex;
+  align-items: center;.container {
+  display: flex;
   align-items: center;
   width: 100%;
   height: 75%;
+
+
+}
+
 }
 
 .navbar-brand.mb-0.h1 {
   margin-bottom: 0; /* Elimina el margen inferior predeterminado de las etiquetas h1 */
+  font-size: 24px;
 }
 
 .easy-jobs {
@@ -45,7 +57,11 @@
 
 .text-container p {
   text-align: center;
+
   font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+
+  font-family: "Calibri", sans-serif;
+
   font-size: 25px;
   /* Otros estilos de texto según tu preferencia */
 }

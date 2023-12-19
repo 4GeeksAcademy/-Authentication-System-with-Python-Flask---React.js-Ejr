@@ -77,7 +77,7 @@ const Login = () => {
         <form>
           <div className="mb-6 mt-3">
             <label htmlFor="usuario mt-5" className="form-label">
-              <strong>Usuario:</strong>
+              <strong>Correo:</strong>
             </label>
             <input
               type="text"
@@ -103,25 +103,27 @@ const Login = () => {
             {error && <div className="invalid-feedback">{error}</div>}
           </div>
 
-          <button
-            type="button"
-            className="btn btn-primary mt-5 me-5"
-            style={{ width: "40%" }}
-            onClick={handleLogin}
-          >
-            Iniciar sesión
-          </button>
+          <div style={{display: "flex", justifyContent: "space-evenly", alignItems: "center"}}>
 
-          <Link to="/Home">
             <button
               type="button"
-              className="btn btn-danger mt-5 me-2"
+              className="btn btn-primary mt-5"
               style={{ width: "40%" }}
-              onClick={() => window.close()}
+              onClick={handleLogin}
             >
-              Cerrar
+              Iniciar sesión
             </button>
-          </Link>
+
+            <Link to="/Home">
+              <button
+                type="button"
+                className="btn btn-danger mt-5"
+                onClick={() => window.close()}
+              >
+                Cerrar
+              </button>
+            </Link>
+          </div>
         </form>
       </div>
     </div>

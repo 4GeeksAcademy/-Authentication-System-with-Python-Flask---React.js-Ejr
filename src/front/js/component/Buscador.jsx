@@ -88,8 +88,7 @@ export const Buscador = () => {
               <Link to="/Registro">
                 <button
                   type="button"
-                  className="submitbutton2 btn btn"
-                  style={{ borderRadius: "12px", margin: "15px" }}
+                  className="submitbutton2 btn"
                 >
                   Conviertete en Prestador
                 </button>
