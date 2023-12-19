@@ -1,45 +1,54 @@
-// flux.js store
-const initialState = {
-	whoIsLogged: null, // Puede ser 'Patient', 'Professional', 'Admin', o null si no está loggeado
-	isLogged: false,
-  };
-  
-  const demoState = {
-	demo: [
-	  {
-		title: "FIRST",
-		background: "white",
-		initial: "white"
-	  },
-	  {
-		title: "SECOND",
-		background: "white",
-		initial: "white"
-	  }
-	],
-  };
-  
-  const rootState = {
-	...initialState,
-	...demoState,
-  };
-  
-  const rootReducer = (state = rootState, action) => {
-	switch (action.type) {
-	  case 'SET_WHO_IS_LOGGED':
-		return { ...state, whoIsLogged: action.payload };
-	  case 'SET_LOGGED_IN':
-		return { ...state, isLogged: true };
-	  case 'SET_LOGGED_OUT':
-		return { ...state, whoIsLogged: null, isLogged: false };
-	  case 'DELETE_TOKEN':
-		// Llama a la función de eliminación del token
-		deleteTokenAction();
-		return state;
-	  default:
-		return state;
-	}
-  };
-  
-  export default rootReducer;
-  
+const getState = ({ getStore, getActions, setStore }) => {
+	return {
+		store: {
+			message: null,
+			demo: [
+				{
+					title: "FIRST",
+					background: "white",
+					initial: "white"
+				},
+				{
+					title: "SECOND",
+					background: "white",
+					initial: "white"
+				}
+			]
+		},
+		actions: {
+			// Use getActions to call a function within a fuction
+			exampleFunction: () => {
+				getActions().changeColor(0, "green");
+			},
+
+			getMessage: async () => {
+				try{
+					// fetching data from the backend
+					const resp = await fetch(process.env.BACKEND_URL + "/api/hello")
+					const data = await resp.json()
+					setStore({ message: data.message })
+					// don't forget to return something, that is how the async resolves
+					return data;
+				}catch(error){
+					console.log("Error loading message from backend", error)
+				}
+			},
+			changeColor: (index, color) => {
+				//get the store
+				const store = getStore();
+
+				//we have to loop the entire demo array to look for the respective index
+				//and change its color
+				const demo = store.demo.map((elm, i) => {
+					if (i === index) elm.background = color;
+					return elm;
+				});
+
+				//reset the global store
+				setStore({ demo: demo });
+			}
+		}
+	};
+};
+
+export default getState;
