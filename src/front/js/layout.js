@@ -15,6 +15,12 @@ import LogInPatient from "./pages/LogInPatient";
 import LogInSpecialist from "./pages/LogInSpecialist";
 import PrivatePatient from "./pages/PrivatePatient";
 
+import SignUp from "./pages/SignUp.js";
+import NewPatient from "./pages/NewPatient.js";
+import NewSpecialist from "./pages/NewSpecialist.js";
+
+
+
 //create your first component
 const Layout = () => {
     //the basename is used when your project is published in a subdirectory and not in the root of the domain
@@ -27,18 +33,25 @@ const Layout = () => {
         <div>
             <BrowserRouter basename={basename}>
                 <ScrollToTop>
-                    <Navbar />
+                <Navbar />
                     <Routes>
+
                         <Route element={<Home />} path="/" />
                         <Route element={<Demo />} path="/demo" />
+
                         <Route element={<LogIn />} path="/login" />
                         <Route element={<LogInPatient/>} path="/login/loginPatient"/>
                         <Route element={<LogInSpecialist/>} path="/login/loginSpecialist"/>
                         <Route element={<PrivatePatient/>} path="/privatePatient"/>
+
+                        <Route element={<SignUp />} path="/signup" />
+                        <Route element={<NewPatient />} path="/signup/newPatient" />
+                        <Route element={<NewSpecialist />} path="/signup/newSpecialist" />
+
                         <Route element={<Single />} path="/single/:theid" />
                         <Route element={<h1>Not found!</h1>} />
+
                     </Routes>
-                    <Footer />
                 </ScrollToTop>
             </BrowserRouter>
         </div>
