@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: e068158b0280
+Revision ID: 4351076e7a49
 Revises: 
-Create Date: 2023-12-14 12:40:08.218243
+Create Date: 2023-12-18 22:20:15.917091
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'e068158b0280'
+revision = '4351076e7a49'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -24,10 +24,9 @@ def upgrade():
     sa.Column('last_name', sa.String(length=120), nullable=False),
     sa.Column('email', sa.String(length=120), nullable=False),
     sa.Column('password', sa.String(length=80), nullable=False),
+    sa.Column('img', sa.String(length=250), nullable=True),
     sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('email'),
-    sa.UniqueConstraint('first_name'),
-    sa.UniqueConstraint('last_name')
+    sa.UniqueConstraint('email')
     )
     op.create_table('specialist',
     sa.Column('id', sa.Integer(), nullable=False),
@@ -35,20 +34,15 @@ def upgrade():
     sa.Column('last_name', sa.String(length=120), nullable=False),
     sa.Column('email', sa.String(length=120), nullable=False),
     sa.Column('password', sa.String(length=80), nullable=False),
-    sa.Column('is_physio', sa.Boolean(), nullable=False),
+    sa.Column('is_physiotherapist', sa.Boolean(), nullable=False),
     sa.Column('is_nurse', sa.Boolean(), nullable=False),
     sa.Column('picture', sa.String(length=120), nullable=True),
     sa.Column('certificate', sa.String(length=120), nullable=True),
     sa.Column('description', sa.String(length=250), nullable=True),
     sa.Column('language', sa.String(length=120), nullable=True),
+    sa.Column('img', sa.String(length=250), nullable=True),
     sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('certificate'),
-    sa.UniqueConstraint('description'),
-    sa.UniqueConstraint('email'),
-    sa.UniqueConstraint('first_name'),
-    sa.UniqueConstraint('language'),
-    sa.UniqueConstraint('last_name'),
-    sa.UniqueConstraint('picture')
+    sa.UniqueConstraint('email')
     )
     # ### end Alembic commands ###
 

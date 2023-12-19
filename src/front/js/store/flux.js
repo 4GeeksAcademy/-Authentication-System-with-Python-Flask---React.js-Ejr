@@ -1,3 +1,6 @@
+
+const API_URL = process.env.BACKEND_URL
+
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
@@ -17,9 +20,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
-			createNewPatient:async (newPatient) => {
-				try{
-					const response = await fetch("https://super-broccoli-v5q5vp6q647hwrpx-3001.app.github.dev/api/signup_patient", {
+			createNewPatient: async (newPatient) => {
+				try {
+					const response = await fetch(API_URL + "/api/signup_patient", {
 						method: "POST",
 						body: JSON.stringify(newPatient),
 						headers: {
@@ -27,21 +30,21 @@ const getState = ({ getStore, getActions, setStore }) => {
 						}
 
 					});
-					if(!response.ok){
+					if (!response.ok) {
 						throw new Error("There was a problem with the funtion in flux")
 					}
 					const data = await response.json();
 					console.log("User created successfully", data)
-					
 
-				}catch(error){
+
+				} catch (error) {
 					console.error("There was an error tryinig to create the Patient", error)
 				}
 			},
 
-			createNewSpecialist:async (newSpecialist) => {
-				try{
-					const response = await fetch("https://super-broccoli-v5q5vp6q647hwrpx-3001.app.github.dev/api/signup_specialist", {
+			createNewSpecialist: async (newSpecialist) => {
+				try {
+					const response = await fetch(API_URL + "/api/signup_specialist", {
 						method: "POST",
 						body: JSON.stringify(newSpecialist),
 						headers: {
@@ -49,17 +52,17 @@ const getState = ({ getStore, getActions, setStore }) => {
 						}
 
 					});
-					if(!response.ok){
+					if (!response.ok) {
 						throw new Error("There was a problem with the funtion in flux")
 					}
 					const data = await response.json();
 					console.log("User created successfully", data)
-					
 
-				}catch(error){
+
+				} catch (error) {
 					console.error("There was an error tryinig to create the Specialist", error)
 				}
-			},		
+			},
 
 
 			exampleFunction: () => {
@@ -67,14 +70,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 
 			getMessage: async () => {
-				try{
+				try {
 					// fetching data from the backend
 					const resp = await fetch(process.env.BACKEND_URL + "/api/hello")
 					const data = await resp.json()
 					setStore({ message: data.message })
 					// don't forget to return something, that is how the async resolves
 					return data;
-				}catch(error){
+				} catch (error) {
 					console.log("Error loading message from backend", error)
 				}
 			},
