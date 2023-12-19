@@ -16,7 +16,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 					background: "white",
 					initial: "white"
 				}
-			]
+			],
+        isAuthenticated: false, 
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
@@ -135,11 +136,34 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				}
 			},
+        
+         login: () => {
+	   setStore({ isAuthenticated: true });
+	  },
+   
+	  logout: () => {
+	  
+	   const confirm = window.confirm('¿Estás seguro de que quieres cerrar sesión?');
+   
+	   
+	   if (confirm) {
+		
+		localStorage.removeItem('token');
+   
+		
+		setStore({ isAuthenticated: false });
+   
+		
+		const history = useHistory();
+		history.push('/');
+	   }
+	  },
 
 
 			exampleFunction: () => {
 				getActions().changeColor(0, "green");
 			},
+        
 
 			getMessage: async () => {
 				try {
@@ -172,3 +196,4 @@ const getState = ({ getStore, getActions, setStore }) => {
 };
 
 export default getState;
+
