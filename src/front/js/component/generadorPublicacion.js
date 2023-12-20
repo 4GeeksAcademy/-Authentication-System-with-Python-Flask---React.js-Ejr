@@ -171,40 +171,21 @@ const GeneradorPublicacion = () => {
             />
           </div>
         </div>
-        <div className="mb-3">
-            <textarea
-                style={{ border: '1px solid black', height: '150px', resize: 'none', textAlign: 'left', verticalAlign: 'top' }}
-                className="form-control"
-                placeholder="Descripción"
-                onChange={handlePublicacion}
-                name="descripcion"
-                required
-            ></textarea>
-        </div>     
-        <button
-          type="button"
-          className="btn btn-primary mt-5 me-5"
-          style={{ width: "40%" , margin: "0 auto" }}
-          onClick={publicarPublicacion}
-        >
-          Publicar
-        </button>
-          <Modal show={showModal} onHide={cerrarModal}>
-            <Modal.Header closeButton>
-                <Modal.Title>¡Publicación registrada con éxito!</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-                <Link to="/Perfil">
-                    Pulsa aquí para ver tus publicaciones
-                </Link>
-            </Modal.Body>
-            <Modal.Footer>
-                <Button variant="secondary" onClick={cerrarModal}>
-                    Cerrar
-                </Button>
-            </Modal.Footer>
-        </Modal>
-       </div>
+
+        {/* FALTA AGREGAR EL LINK  DEL BUTTON*/}
+             
+  
+  <button
+    type="button"
+    className="btn btn-primary mt-5 me-5"
+    style={{ width: "40%" , margin: "0 auto" }}
+    onClick={publicarPublicacion}
+  >
+    Publicar
+  </button>
+ 
+      
+      </div>
     </div>
   );
 };

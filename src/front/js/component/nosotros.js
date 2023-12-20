@@ -24,6 +24,7 @@ export const Nosotros = () => {
     fontFamily: "fantasy",
     justifyContent: "center",
     padding: "15px",
+    color:"rgb(90, 77, 77);",
   };
 
   return (
