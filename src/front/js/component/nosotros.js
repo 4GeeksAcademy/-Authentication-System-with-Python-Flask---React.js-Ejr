@@ -7,24 +7,24 @@ export const Nosotros = () => {
     justifyContent: "center",
     display: "flex",
     textAlign: "center",
-    background: "#D1EFEA",
-    backgroundColor: "#CCCCCC",
     borderRadius: "16px",
     boxShadow: "0 4px 8px rgba(0, 0, 0, 0.3)",
     border: "2px solid black",
     paddingBottom: "20px",
-    boxShadow: "0 0 70px #000",
+    backgroundColor: "white", // Agregado para establecer el fondo gris
+    boxShadow: "0 0 45px #546",
+    opacity: "0.9"
   };
 
   const paragraphStyle = {
     margin: "8px 8px",
     color: "black",
-    fontSize: "1.1em",
+    fontSize: "1.2em",
     textAlign: "center",
-    fontFamily: "fantasy",
+    fontFamily: "calibrí",
     justifyContent: "center",
     padding: "15px",
-    color:"rgb(90, 77, 77);",
+    color: "black",
   };
 
   return (

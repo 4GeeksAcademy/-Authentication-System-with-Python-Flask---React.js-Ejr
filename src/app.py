@@ -10,7 +10,7 @@ from flask_jwt_extended import (
 )
 from flask_cors import CORS
 from api.utils import APIException, generate_sitemap
-from api.models import db, User, UserBuscador, UserPublicacion
+from api.models import db, User, UserPublicacion
 from api.routes import api
 from api.admin import setup_admin
 from api.commands import setup_commands
@@ -83,9 +83,7 @@ def login():
 
     user_found = User.query.filter_by(email=email).first()
 
-    if not user_found:
-        user_found = UserBuscador.query.filter_by(email=email).first()
-        print("User Found:", user_found)
+    print("User Found:", user_found)
 
     if not user_found:
         print("User not found")
@@ -101,10 +99,7 @@ def login():
         access_token = create_access_token(
             identity=str(user_found.idUser), expires_delta=expires
         )
-    elif isinstance(user_found, UserBuscador):
-        access_token = create_access_token(
-            identity=str(user_found.idUserBuscador), expires_delta=expires
-        )
+    
     else:
         access_token = None
 
@@ -129,32 +124,28 @@ def register():
     tipoUsuario = request.json.get("tipoUsuario")
     rubro = request.json.get("rubro")
 
-    # Verificar la existencia del email en ambas tablas
+    # Verificar la existencia del email
     user_found = User.query.filter_by(email=email).first()
-    buscador_found = UserBuscador.query.filter_by(email=email).first()
 
-    if user_found or buscador_found:
+    if user_found:
         return jsonify({"message": "Email ya registrado"}), 400
     
     user_found = User.query.filter_by(telefono=telefono).first()
-    buscador_found = UserBuscador.query.filter_by(telefono=telefono).first()
 
-    if user_found or buscador_found:
+    if user_found:
         return jsonify({"error": "Telefono ya registrado"}), 400
     
     user_found = User.query.filter_by(rut=rut).first()
-    buscador_found = UserBuscador.query.filter_by(rut=rut).first()
 
-    if user_found or buscador_found:
+    if user_found:
         return jsonify({"error": "Rut ya registrado"}), 400
 
     # Crear instancia de usuario basándose en la presencia de "rubro"
-    if "rubro" in request.json:
-        new_user = User(rubro=rubro)
-    else:
-        new_user = UserBuscador()
+   
 
-    # Configurar atributos comunes
+    new_user= User()
+
+
     new_user.email = email
     new_user.password = generate_password_hash(password)
     new_user.nombre = nombre
@@ -165,21 +156,20 @@ def register():
     new_user.tipoUsuario = tipoUsuario
     new_user.fecha_de_nacimiento = fecha_de_nacimiento
 
+    if "rubro" in request.json:
+          new_user.rubro = rubro
+
     # Agregar y hacer commit del nuevo usuario
     db.session.add(new_user)
     db.session.commit()
 
     # Obtener el ID después del commit
-    id = new_user.idUser if hasattr(new_user, "idUser") else new_user.idUserBuscador
-
+    id = new_user.idUser if hasattr(new_user, "idUser") else None
     expires = datetime.timedelta(days=3)
     access_token = create_access_token(identity=id, expires_delta=expires)
 
     data = {"message": "Usuario registrado con éxito","access_token": access_token, "user": new_user.serialize()}
 
-
-    # if "rubro" not in request.json:
-        #  del data["user"]["rubro"]
 
 
     return jsonify(data), 200
@@ -195,11 +185,11 @@ def publicaciones():
     publicaciones = UserPublicacion.query.all()
     publicaciones = list(
         map(lambda publicacion: publicacion.serialize(), publicaciones)
+
+    
     )
     return jsonify({"publicaciones": publicaciones}), 200
 
-
-# enviar datos en la url como query string
 @app.route("/publicacion/<int:id>", methods=["GET"])
 def get_user_by_id(id):
     query = request.args
@@ -261,23 +251,31 @@ def enviar_datos_de_publicacion(id):
 
 @app.route("/publicacionpost", methods=["POST"])
 def enviar_datos_de_publicacionpost():
-    # Capturamos todo el body en un diccionario
-    body = request.get_json()
-    publicacion = UserPublicacion()
-    publicacion.idUser = body["idUser"]
-    publicacion.nombre = body["nombre"]
-    publicacion.apellido = body["apellido"]
-    publicacion.email = body["email"]
-    publicacion.descripcion = body["descripcion"]
-    publicacion.comuna = body["comuna"]
-    publicacion.rubro = body["rubro"]
-    publicacion.fecha = body["fecha"]
+    try:
+        body = request.get_json()
+        publicacion = UserPublicacion()
+        publicacion.idUsuario = body.get("idUser")
+        publicacion.nombre = body.get("nombre")
+        publicacion.apellido = body.get("apellido")
+        publicacion.titulo = body.get("titulo")
+        publicacion.email = body.get("email")
+        publicacion.descripcion = body.get("descripcion")
+        publicacion.comuna = body.get("comuna")
+        publicacion.rubro = body.get("rubro")
+        publicacion.fecha = body.get("fecha")
 
-    db.session.add(publicacion)
-    db.session.commit()
+        db.session.add(publicacion)
+        db.session.commit()
+       
+        required_fields = ["idUser", "nombre", "apellido", "titulo", "email", "descripcion", "comuna", "rubro", "fecha"]
 
-    return jsonify({"body": body}), 200
+        for field in required_fields:
+            if field not in body:
+             return jsonify({"error": f"Campo '{field}' faltante en la solicitud"}), 400
 
+        return jsonify({"message": "Publicación exitosa"}), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 @app.route("/publicacion/<int:id>", methods=["PUT"])
 def actualizar_datos_de_publicacion(id):
@@ -299,7 +297,6 @@ def actualizar_datos_de_publicacion(id):
     )
 
 
-@app.route("/publicacion", methods=["GET", "POST"])
 @app.route("/publicacion/<int:id>", methods=["GET", "PUT", "DELETE"])
 def publicacion(id=None):
     if request.method == "GET":
@@ -315,46 +312,46 @@ def publicacion(id=None):
         return jsonify({"message": "actualizando una publicacion"}), 200
 
     if request.method == "DELETE":
-        return jsonify({"message": "eliminando una publicacion"}), 200
+        # Lógica para eliminar una publicación por ID
+        try:
+            publicacion = UserPublicacion.query.get(id)
+            if publicacion:
+                db.session.delete(publicacion)
+                db.session.commit()
+                return jsonify({"message": f"Publicación con ID {id} eliminada correctamente"}), 200
+            else:
+                return jsonify({"error": f"No se encontró la publicación con ID {id}"}), 404
+        except Exception as e:
+            return jsonify({"error": str(e)}), 500
 
 
-@app.route("/api/profile", methods=["GET"])
-@jwt_required()
-def profile():
-    id = get_jwt_identity()
-    user = User.query.get(id)
-    return jsonify({"data": "Hola Mundo", "user": user.serialize()})
 
-
-# Datos de ejemplo para simular una base de datos
-perfil_data = {
-    "firstName": "",
-    "lastName": "",
-    "email": "",
-    "region": "",
-    "comuna": "",
-    "birthDate": "",
-}
-
-
-@app.route("/api/perfil", methods=["POST"])
-
-# Ruta para manejar las solicitudes POST desde React
-@app.route("/api/perfil", methods=["POST"])
+@app.route("/api/perfil", methods=["PUT"])
 def actualizar_perfil():
-    global perfil_data
-
-    # Obtener los datos enviados desde React
+   
     data = request.json
 
-    # Actualizar los datos del perfil con los nuevos datos recibidos
-    perfil_data.update(data)
+    try:
+      
+        user = User.query.filter_by(email=data["email"]).first()
 
-    # Devolver una respuesta
-    return jsonify({"message": "Datos de perfil actualizados correctamente"})
+     
+        user.telefono = data.get("telefono", user.telefono)
+        user.rubro = data.get("rubro", user.rubro)
+        user.comuna = data.get("comuna", user.comuna)
+
+   
+        db.session.commit()
+
+        
+        return jsonify({"message": "Datos de perfil actualizados correctamente"})
+
+    except Exception as e:
+       
+        return jsonify({"error": str(e)}), 500
 
 
-# Ruta para obtener los datos del perfil (solo para demostración)
+
 @app.route("/api/perfil/<int:id>", methods=["GET"])
 def obtener_perfil(id):
     user = User.query.get(id) 
@@ -363,6 +360,7 @@ def obtener_perfil(id):
         "lastName": user.apellido,
         "email": user.email,
         "comuna": user.comuna,
+        "telefono": user.telefono,
         "birthDate": user.fecha_de_nacimiento,
         "rubro": user.rubro
     }
@@ -391,18 +389,28 @@ def get_profile():
     return jsonify(profile_data)
 
 
-@app.route("/api/perfil_logeado", methods = ["POST"])
-#@jwt_required()
+@app.route("/api/perfil_logeado", methods=["POST"])
 def perfil_logeado():
-    email= request.json.get("email")
+    email = request.json.get("email")
     user = User.query.filter_by(email=email).first()
-    print(email)
-    user_cliente = UserBuscador.query.filter_by(email=email).first()
-    print(user)
-    if not user and not user_cliente:
-        return jsonify({"error":"usuario no encontrado"}), 400
+
+    if not user:
+        return jsonify({"error": "Usuario no encontrado"}), 400
+
+    # Obtener las publicaciones del usuario
+    publicaciones = UserPublicacion.query.filter_by(email=email).all()
+    publicaciones_data = [publicacion.serialize() for publicacion in publicaciones]
+
+    return jsonify({"usuario": user.serialize(), "publicaciones": publicaciones_data})
+
+
+
+@app.route("/api/contactar", methods=[ "POST" ])
+@jwt_required()
+def contactar():
+    id= get_jwt_identity()
+    return jsonify({"msg": id}), 200
     
-    return jsonify({"usuario": user.serialize() if user else user_cliente.serialize()})
 
 
 if __name__ == "__main__":

@@ -49,11 +49,11 @@ const Layout = () => {
             <Route element={<Single />} path="/single/:theid" />
             <Route element={<Login />} path="/login" />
             <Route element={<Footer />} path="/footer" />
-            <Route element={<Buscador />} path="/RegistroPrestador" />
+            <Route element={<Buscador />} path="/buscador" />
             <Route element={<OtroFormulario />} path="/Registro" />
             <Route element={<Formulario />} path="/RegistroPrestador" />
             <Route element={<Carrousel />} path="/carousel" />
-            {/* <Route element={<PrestadorCv />} path="/perfil" /> */}
+            <Route element={<PrestadorCv />} path="/prestadorCV" />
            
             <Route
               element={<GeneradorPublicacion />}
@@ -61,7 +61,8 @@ const Layout = () => {
             />
             <Route element={<Perfil />} path="/perfil" />
             <Route element={<Landing />} path="/landing2" />
-            <Route element={<SegundoPerfil />} path="/SegundoPerfil" />
+            <Route element={<SegundoPerfil />} path="/SegundoPerfil/"/>
+            <Route element={<SegundoPerfil />} path="/SegundoPerfil/:idUsuario" />
             <Route element={<Nosotros />} path="/nosotros" />
             <Route element={<h1>Not found!</h1>} />
             <Route element={<Task />} path="/task" />
