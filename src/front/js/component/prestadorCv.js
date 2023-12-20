@@ -113,7 +113,10 @@ const PrestadorCv = () => {
   };
 
   return (
-    <div className="container row" style={{ justifyContent: "center" }}>
+    <div
+      className="container row"
+      style={{ justifyContent: "center", margin: "0 auto" }}
+    >
       <div className="prestadores-cv-container">
         <button
           type="button"
