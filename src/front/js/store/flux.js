@@ -5,7 +5,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       Formulario: [],
       OtroFormulario: [],
       ususario: {},
-      ususario2: {},
+      publicaciones: [],
       Buscador: [],
       id: null,
     },
@@ -38,6 +38,22 @@ const getState = ({ getStore, getActions, setStore }) => {
       guardarid(id) {
         setStore({ id: id });
       },
+      
+      getPublicaciones: async (idUsers)=>{
+				try {
+					const response = await fetch('http://localhost:3001/api/perfil/' + idUsers)
+					const data = await response.json()
+					console.log(data)
+					setStore({
+						publicaciones: data
+					})
+				} catch (error) {
+					console.log(error)
+				}
+			},
+
+
+      
     },
   };
 };
