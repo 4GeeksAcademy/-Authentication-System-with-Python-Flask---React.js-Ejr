@@ -78,3 +78,16 @@ def update_program():
     
 
     return jsonify([program.serialize() for program in updated_programs])
+
+@api.route('/deleteProgram/<int:program_number>',methods=['DELETE'])
+def delete_program(program_number):
+    program = Programs.query.filter_by(program_number=program_number).first()
+    if not program:
+        return jsonify("program does not exists")
+    else:
+        db.session.delete(program)
+        db.session.commit()
+
+        return jsonify("program sucessfully deleted")
+        
+
