@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-const GeneradorPublicacion = () => {
+const GeneradorPublicacion = ({ onRubroSeleccionado }) => {
   const [publicacion, setPublicacion] = useState({
     nombre: "",
     apellido: "",
@@ -42,6 +42,9 @@ const GeneradorPublicacion = () => {
       .catch((error) => {
         console.error("Error al enviar la publicación:", error);
       });
+  };
+  const handleRubroSeleccionado = (rubro) => {
+    onRubroSeleccionado(rubro);
   };
 
   return (
@@ -126,15 +129,22 @@ const GeneradorPublicacion = () => {
             />
           </div>
           <div className="mb-3">
-            <input
-              type="text" style={{ border: '1px solid black' }}
-              className="form-control"
-              placeholder="Rubro"
+          <select
+              className="form-select"
+              style={{ border: '1px solid black' }}
               value={publicacion.rubro}
               onChange={handlePublicacion}
               name="rubro"
               required
-            />
+            >
+              <option value="">Seleccionar Rubro</option>
+              <option value="Aseo">Aseo</option>
+              <option value="Carpintería">Carpintería</option>
+              <option value="Gasfitería">Gasfitería</option>
+              <option value="Pintor">Pintor</option>
+              <option value="Electricista">Electricista</option>
+              {/* Agregar más opciones de rubro según sea necesario */}
+            </select>
           </div>
           <div className="mb-3">
             <input
