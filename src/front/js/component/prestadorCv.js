@@ -89,7 +89,7 @@ const JobPost = ({
         </p>
       </div>
 
-      <Link to={`/segundoPerfil/${idUsuario}`} className="btn btn-success">  
+      <Link to={`/Prestador/${idUsuario}`} className="btn btn-success">  
         Contactar
       </Link>
     </div>

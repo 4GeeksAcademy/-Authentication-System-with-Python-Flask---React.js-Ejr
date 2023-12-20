@@ -141,8 +141,8 @@ export const SegundoPerfil = () => {
               style={{ display: "none" }}
             />
           </div>
-          <div className="provider-name text-center">
-            <div className="provider-name-text">{profileData?.firstName}{" "}{profileData?.lastName}</div>
+          <div className="provider-name text-center ">
+            <div className="provider-name-text" style={{marginLeft:"50px", marginTop: "20px"}}>{profileData?.firstName}{" "}{profileData?.lastName}</div>
           </div>
           <div className="jobs">
             {profileData?.jobs?.map((job, index) => (
@@ -168,9 +168,14 @@ export const SegundoPerfil = () => {
           <div className="description-wrapper mt-4">
             <div className="description">
               {" "}
-              {profileData.description}, <strong>Comuna:</strong>{" "}
-              {profileData.comuna},{" "}<strong>Telefono:</strong> {profileData.telefono},{""}
-              <strong>Email: </strong>{profileData.email}
+              {profileData.description}<strong>Comuna:</strong>{" "}
+              {profileData.comuna}{" "}
+              <div>
+              <strong>Telefono:</strong> {profileData.telefono}{""}
+              </div>
+              <div>
+              <strong>Email:</strong>{profileData.email}
+              </div>
             </div>
           </div>
           <div className="ratings-section">
@@ -188,7 +193,7 @@ export const SegundoPerfil = () => {
             <div className="logout">
               <Link to="/prestadorCv">
                 {" "}
-                <button className="btn btn-danger logout-text" >Volver</button>
+                <button className="btn btn-danger logout-text mt-5" >Volver</button>
               </Link>
             </div>
           </div>

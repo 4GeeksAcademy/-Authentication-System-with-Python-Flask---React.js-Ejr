@@ -1,14 +1,18 @@
 /* Contenedor principal */
+
+.container{
+  font-size: 25px;
+}
 .profile-container {
-  font-family: fantasy;
+  
+  font-family:  "Calibri", "san-serif";
   margin-top: 70px;
   justify-content: center;
   border: 1px solid #616161;
-  border-radius: 10px;
-  background: #ffffff;
+  border-radius: 25px;
+  background: white;
   padding: 30px;
-  background-color: #ece6e6;
-  box-shadow: 0 0 70px #000;
+  box-shadow: 0 0 50px #000;
   width: 60% !important;
   height:50%;
 }
@@ -26,7 +30,7 @@
 
 /* Estilos para los elementos específicos dentro del contenedor */
 .profile-container * {
-  font-family: fantasy;
+  font-family: calibrí;
 }
 
 @media (min-width: 1080px) {
@@ -47,7 +51,7 @@
   align-items: center;
   justify-content: center;
   background-color: #fcfcfc;
-  margin-right: 100%;
+  margin-right: 30;
 }
 
 .provider-name-text {
@@ -71,7 +75,7 @@
 }
 
 .description-wrapper {
-  font-family: "fantasy";
+  font-family:  "Calibri", "san-serif";
   color: "#001F3F";
   text-align: center; 
  
@@ -82,11 +86,11 @@ margin-top: 5px;
 }
 
 .comments-ratings {
-  
+  font-size: 25px;
   text-align: center;
   margin-top: 20px;
   margin-bottom: 20px;
-  font-size: 14px; /* Puedes ajustar el tamaño según tus preferencias */
+ 
   line-height: 1.5; /* Ajusta la altura de línea según tus preferencias */
   font-weight: bold;
   text-decoration: underline;
@@ -94,7 +98,7 @@ margin-top: 5px;
 
 
 .rating-list{
-font-family: fantasy;
+font-family:  "Calibri", "san-serif";
 }
 
 .rating{
@@ -105,7 +109,7 @@ font-family: fantasy;
 /*
 Estilos para los botones */
 .btn {
-  font-family: Arial, sans-serif;
+  font-family:  "Calibri", "san-serif";
   font-weight: bold;
   text-transform: uppercase;
   padding: 12px 24px;
@@ -117,6 +121,8 @@ Estilos para los botones */
   background-color: #dc3545;
   color: white;
   border: none;
+  font-size: 18px;
+  max-width: 100%;
 }
 
 .btn.btn-primary {
@@ -124,6 +130,8 @@ Estilos para los botones */
   color: white;
   border: none;
   justify-content: center;
+  font-size: 18px;
+  max-width: 100%;
 }
 
 .btn:hover {
