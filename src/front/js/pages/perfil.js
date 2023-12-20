@@ -153,7 +153,7 @@ const handleInputChange = (e) => {
   };
   const handleDelete = async (id) => {
     try {
-      const response = await fetch(`http://localhost:3001/publicaciones/${id}`, {
+      const response = await fetch(`http://localhost:3001/publicacion/${id}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",

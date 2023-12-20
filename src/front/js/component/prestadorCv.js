@@ -121,61 +121,9 @@ const PrestadorCv = () => {
 
   return (
     <div
-      className="container row"
+      className="container row mt-5"
       style={{ justifyContent: "center", margin: "0 auto" }}
     >
-      <div className="prestadores-cv-container">
-        <button
-          type="button"
-          className="btn btn btn-lg"
-          style={{
-            background: "#3Bd7BA",
-            margin: "5px",
-          }}
-        >
-          Aseo
-        </button>
-        <button
-          type="button"
-          className="btn btn btn-lg"
-          style={{
-            background: "#3Bd7BA",
-            margin: "5px",
-          }}
-        >
-          Carpintería
-        </button>
-        <button
-          type="button"
-          className="btn btn btn-lg"
-          style={{
-            background: "#3Bd7BA",
-            margin: "5px",
-          }}
-        >
-          Electricista
-        </button>
-        <button
-          type="button"
-          className="btn btn btn-lg"
-          style={{
-            background: "#3Bd7BA",
-            margin: "5px",
-          }}
-        >
-          Gasfitería
-        </button>
-        <button
-          type="button"
-          className="btn btn btn-lg"
-          style={{
-            background: "#3Bd7BA",
-            margin: "5px",
-          }}
-        >
-          Pintor
-        </button>
-      </div>
       <div className="row flex-column">
         {data?.map((element, index) => {
           console.log(element)
