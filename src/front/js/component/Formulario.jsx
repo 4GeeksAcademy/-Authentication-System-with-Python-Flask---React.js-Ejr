@@ -154,14 +154,25 @@ export class Formulario extends Component {
               </h1>
               <Form.Group controlId="formNombre">
                 <Form.Label>
-                  <h3>Nombre</h3>
+                  <h3
+                    style={{
+                      fontFamily: "Calibri, sans-serif",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    Nombre
+                  </h3>
                 </Form.Label>
                 <Form.Control
                   type="text"
                   name="nombre"
                   placeholder="Ingrese su nombre"
                   onChange={this.handleChange}
-                  style={{ borderWidth: "3px", borderColor: "darkcyan" }}
+                  style={{
+                    fontFamily: "Calibri, sans-serif",
+                    borderWidth: "3px",
+                    borderColor: "darkcyan",
+                  }}
                 />
                 {errores.nombre && (
                   <Form.Text className="text-danger">
@@ -172,7 +183,9 @@ export class Formulario extends Component {
 
               <Form.Group controlId="formApellido">
                 <Form.Label>
-                  <h3>Apellido</h3>
+                  <h3 style={{ fontFamily: "Calibri, sans-serif" }}>
+                    Apellido
+                  </h3>
                 </Form.Label>
                 <Form.Control
                   type="text"
@@ -180,7 +193,11 @@ export class Formulario extends Component {
                   value={this.state.apellido}
                   onChange={this.handleChange}
                   placeholder="Ingrese su apellido"
-                  style={{ borderWidth: "3px", borderColor: "darkcyan" }}
+                  style={{
+                    fontFamily: "Calibri, sans-serif",
+                    borderWidth: "3px",
+                    borderColor: "darkcyan",
+                  }}
                 />
                 {errores.apellido && (
                   <Form.Text className="text-danger">
@@ -191,7 +208,7 @@ export class Formulario extends Component {
 
               <Form.Group controlId="formRut">
                 <Form.Label>
-                  <h3>Rut</h3>
+                  <h3 style={{ fontFamily: "Calibri, sans-serif" }}>Rut</h3>
                 </Form.Label>
                 <Form.Control
                   type="text"
@@ -199,7 +216,11 @@ export class Formulario extends Component {
                   value={this.state.rut}
                   onChange={this.handleChange}
                   placeholder="Ingrese su rut"
-                  style={{ borderWidth: "3px", borderColor: "darkcyan" }}
+                  style={{
+                    fontFamily: "Calibri, sans-serif",
+                    borderWidth: "3px",
+                    borderColor: "darkcyan",
+                  }}
                 />
                 {errores.rut && (
                   <Form.Text className="text-danger">{errores.rut}</Form.Text>
@@ -208,14 +229,20 @@ export class Formulario extends Component {
 
               <Form.Group controlId="formEmail">
                 <Form.Label>
-                  <h3>Correo electronico</h3>
+                  <h3 style={{ fontFamily: "Calibri, sans-serif" }}>
+                    Correo electronico
+                  </h3>
                 </Form.Label>
                 <Form.Control
                   type="email"
                   name="email"
                   value={this.state.email}
                   placeholder="Ingrese su correo electronico"
-                  style={{ borderWidth: "3px", borderColor: "darkcyan" }}
+                  style={{
+                    fontFamily: "Calibri, sans-serif",
+                    borderWidth: "3px",
+                    borderColor: "darkcyan",
+                  }}
                   onChange={this.handleChange}
                 />
                 {errores.email && (
@@ -225,14 +252,20 @@ export class Formulario extends Component {
 
               <Form.Group controlId="formContraseña">
                 <Form.Label>
-                  <h3>Contraseña</h3>
+                  <h3 style={{ fontFamily: "Calibri, sans-serif" }}>
+                    Contraseña
+                  </h3>
                 </Form.Label>
                 <Form.Control
                   type="password"
                   name="password"
                   value={this.state.password}
                   placeholder="Ingrese su contraseña. Debe ser entre 8 y 12 carácteres"
-                  style={{ borderWidth: "3px", borderColor: "darkcyan" }}
+                  style={{
+                    fontFamily: "Calibri, sans-serif",
+                    borderWidth: "3px",
+                    borderColor: "darkcyan",
+                  }}
                   onChange={this.handleChange}
                 />
                 {errores.password && (
@@ -244,7 +277,9 @@ export class Formulario extends Component {
 
               <Form.Group controlId="formTelefono">
                 <Form.Label>
-                  <h3>Teléfono</h3>
+                  <h3 style={{ fontFamily: "Calibri, sans-serif" }}>
+                    Teléfono
+                  </h3>
                 </Form.Label>
                 <Form.Control
                   type="text"
@@ -252,7 +287,11 @@ export class Formulario extends Component {
                   value={this.state.telefono}
                   onChange={this.handleChange}
                   placeholder="Ingrese su telefono"
-                  style={{ borderWidth: "3px", borderColor: "darkcyan" }}
+                  style={{
+                    fontFamily: "Calibri, sans-serif",
+                    borderWidth: "3px",
+                    borderColor: "darkcyan",
+                  }}
                 />
                 {errores.telefono && (
                   <Form.Text className="text-danger">
@@ -263,14 +302,20 @@ export class Formulario extends Component {
 
               <Form.Group controlId="formFechaNacimiento">
                 <Form.Label>
-                  <h3>Fecha de nacimiento</h3>
+                  <h3 style={{ fontFamily: "Calibri, sans-serif" }}>
+                    Fecha de nacimiento
+                  </h3>
                 </Form.Label>
                 <Form.Control
                   type="date"
                   name="fecha_de_nacimiento"
                   value={this.state.fecha_de_nacimiento}
                   onChange={this.handleChange}
-                  style={{ borderWidth: "3px", borderColor: "darkcyan" }}
+                  style={{
+                    fontFamily: "Calibri, sans-serif",
+                    borderWidth: "3px",
+                    borderColor: "darkcyan",
+                  }}
                 />
                 {errores.fecha_de_nacimiento && (
                   <Form.Text className="text-danger">
@@ -281,7 +326,7 @@ export class Formulario extends Component {
 
               <Form.Group controlId="formComuna">
                 <Form.Label>
-                  <h3>Comuna</h3>
+                  <h3 style={{ fontFamily: "Calibri, sans-serif" }}>Comuna</h3>
                 </Form.Label>
 
                 <Form.Control
@@ -290,7 +335,11 @@ export class Formulario extends Component {
                   value={this.state.comuna}
                   onChange={this.handleChange}
                   placeholder="Ingrese su comuna"
-                  style={{ borderWidth: "3px", borderColor: "darkcyan" }}
+                  style={{
+                    fontFamily: "Calibri, sans-serif",
+                    borderWidth: "3px",
+                    borderColor: "darkcyan",
+                  }}
                 >
                   <option value="" hidden>
                     Seleccione su Comuna
@@ -310,14 +359,20 @@ export class Formulario extends Component {
 
               <Form.Group controlId="formTipoUsuario">
                 <Form.Label>
-                  <h3>Tipo de Usuario</h3>
+                  <h3 style={{ fontFamily: "Calibri, sans-serif" }}>
+                    Tipo de Usuario
+                  </h3>
                 </Form.Label>
                 <Form.Control
                   as="select"
                   name="tipoUsuario"
                   value={state.tipoUsuario}
                   onChange={handleChange}
-                  style={{ borderWidth: "3px", borderColor: "darkcyan" }}
+                  style={{
+                    fontFamily: "Calibri, sans-serif",
+                    borderWidth: "3px",
+                    borderColor: "darkcyan",
+                  }}
                 >
                   <option value="">Seleccione...</option>
                   <option value="cliente">Cliente</option>
@@ -327,14 +382,18 @@ export class Formulario extends Component {
 
               <Form.Group controlId="formRubro">
                 <Form.Label>
-                  <h3>Rubro</h3>
+                  <h3 style={{ fontFamily: "Calibri, sans-serif" }}>Rubro</h3>
                 </Form.Label>
                 <Form.Control
                   as="select"
                   name="rubro"
                   value={this.state.rubro}
                   onChange={this.handleChange}
-                  style={{ borderWidth: "3px", borderColor: "darkcyan" }}
+                  style={{
+                    fontFamily: "Calibri, sans-serif",
+                    borderWidth: "3px",
+                    borderColor: "darkcyan",
+                  }}
                 >
                   <option value="" hidden>
                     Seleccione su rubro
@@ -349,16 +408,19 @@ export class Formulario extends Component {
                   <Form.Text className="text-danger">{errores.rubro}</Form.Text>
                 )}
               </Form.Group>
-              <h3>
+              <h3 style={{ fontFamily: "Calibri, sans-serif" }}>
                 <strong>Terminos y Condiciones</strong>
               </h3>
               <br />
               <div
                 className="Terms"
                 type="text"
-                style={{ borderWidth: "3px", borderColor: "darkcyan" }}
+                style={{
+                  fontFamily: "Calibri, sans-serif",
+                  borderWidth: "3px",
+                  borderColor: "darkcyan",
+                }}
               >
-                {" "}
                 <p>
                   El documento denominado Términos y Condiciones Generales de
                   Uso de una determinada página o sitio web es aquel que
@@ -396,6 +458,7 @@ export class Formulario extends Component {
                   name="aceptoTerminos"
                   checked={this.state.aceptoTerminos}
                   onChange={this.handleChange}
+                  style={{ fontFamily: "Calibri, sans-serif" }}
                   label="Acepto los términos y condiciones"
                 />
                 <br />

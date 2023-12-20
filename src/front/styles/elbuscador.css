@@ -41,6 +41,7 @@
 h1 {
   display: flex;
   justify-content: center;
+  font-family: "Calibri", "sans-serif";
   font-size: 2.5rem;
   margin-top: 5px;
   padding: 1px;
@@ -95,5 +96,6 @@ h1 {
 }
 
 p{
-  font-weight: bold;
+  font-weight: normal;
+  font-family: "Calibri", "sans-serif";
 }
