@@ -10,7 +10,7 @@ export const Home = () => {
   const { store, actions } = useContext(Context);
 
   useEffect(() => {
-    if (store.programs.length > 0 && store.programs.length <= 6) {
+    if (store.programs.length > 0) {
       actions.addTotalHours();
     }
   }, [store.programs]);

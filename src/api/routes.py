@@ -15,6 +15,35 @@ def get_all_programs():
     programs_serialized = [program.serialize() for program in programs_list] 
     return jsonify(programs_serialized), 200
 
+@api.route('/newProgram',methods=['POST'])
+def new_program():
+    data = request.get_json()
+
+          
+    new_program = Programs(
+    name = data["name"],
+    program_number = data["program_number"],
+    description = data["description"],
+    monday_start = data["monday_start"]
+    ,monday_end = data["monday_end"]
+    ,tuesday_start = data["tuesday_start"]
+    ,tuesday_end = data["tuesday_end"]
+    ,wednesday_start = data["wednesday_start"]
+    ,wednesday_end = data["wednesday_end"]
+    ,thursday_start = data["thursday_start"]
+    ,thursday_end = data["thursday_end"]
+    ,friday_start = data["friday_start"]
+    ,friday_end = data["friday_end"]
+    ,saturday_start = data["saturday_start"]
+    ,saturday_end = data["saturday_end"]
+    ,sunday_start = data["sunday_start"]
+    ,sunday_end = data["sunday_end"]
+    )
+    db.session.add(new_program)
+    db.session.commit()
+    
+    return jsonify("program created succesfully"), 200
+
 
 @api.route("/updateProgram", methods=['PUT'])
 def update_program():
@@ -46,28 +75,6 @@ def update_program():
 
             db.session.commit()  
             updated_programs.append(existing_program)
-        else:
-          
-            new_program = Programs(
-            name = item["name"],
-            description = item["description"],
-            monday_start = item["monday_start"]
-            , monday_end = item["monday_end"]
-            ,tuesday_start = item["tuesday_start"]
-            , tuesday_end = item["tuesday_end"]
-            ,wednesday_start = item["wednesday_start"]
-            , wednesday_end = item["wednesday_end"]
-            ,thursday_start = item["thursday_start"]
-            , thursday_end = item["thursday_end"]
-            ,friday_start = item["friday_start"]
-            ,friday_end = item["friday_end"]
-            ,saturday_start = item["saturday_start"]
-            , saturday_end = item["saturday_end"]
-            ,sunday_start = item["sunday_start"]
-            ,sunday_end = item["sunday_end"]
-            )
-            db.session.add(new_program)
-            db.session.commit()
-            updated_programs.append(new_program)
+    
 
     return jsonify([program.serialize() for program in updated_programs])
