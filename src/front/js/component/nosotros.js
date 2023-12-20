@@ -13,13 +13,13 @@ export const Nosotros = () => {
     paddingBottom: "20px",
     backgroundColor: "white", // Agregado para establecer el fondo gris
     boxShadow: "0 0 45px #546",
-    opacity: "0.9"
+   
   };
 
   const paragraphStyle = {
     margin: "8px 8px",
     color: "black",
-    fontSize: "1.2em",
+    fontSize: "0.85em",
     textAlign: "center",
     fontFamily: "calibrí",
     justifyContent: "center",

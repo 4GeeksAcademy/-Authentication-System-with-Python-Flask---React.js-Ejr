@@ -32,7 +32,7 @@ export const Navbar = () => {
         </Link>
 
         <Link
-          to="/Buscador"
+          to="/prestadorCV"
           className="navbar-brand mb-0 h1 navbar-brand-custom"
         >
           {" "}

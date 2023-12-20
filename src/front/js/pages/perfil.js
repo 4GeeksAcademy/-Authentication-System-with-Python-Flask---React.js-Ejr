@@ -282,7 +282,7 @@ const handleInputChange = (e) => {
           <button
             className="action-button custom-button"
             style={{
-              fontFamily: "fantasy",
+              fontFamily: "Calibri", 
               borderRadius: "12px",
               borderColor: "white",
               backgroundColor: "#d74338",

@@ -195,9 +195,20 @@ export const OtroFormulario = (props) => {
   }
 
   return (
-    <Container>
+    <Container >
       <Row>
-        <Col>
+        <Col   style={{
+          display: "flex",
+          flexWrap: "wrap",
+          alignItems: "center",
+          justifyContent: "center",
+          border: "1px solid #616161",
+          borderRadius: "35px",
+          margin: "30px auto 0",
+          padding: "40px",
+          backgroundColor: "white", // Agregado para establecer el fondo gris
+          boxShadow: "0 0 45px #546",
+        }}>
           <Form
             onSubmit={(e) => {
               handleSubmit(e);
@@ -207,7 +218,7 @@ export const OtroFormulario = (props) => {
               Bienvenido! Por favor rellene los campos para registrarse en
               EasyJob
             </h1>
-            <Form.Group controlId="formNombre">
+            <Form.Group controlId="formNombre" >
               <Form.Label>
                 <h3>Nombre</h3>
               </Form.Label>

@@ -102,7 +102,7 @@ const PrestadorCv = () => {
 
   const [filteredCategoria, setFilteredCategoria] = useState(null); // Estado para filtrar por categoría
   useEffect(() => {
-    fetch("http://localhost:3001/publicaciones")
+    fetch("http://localhost:3001/publicacion")
       .then((response) => response.json())
       .then((data) => {
         setData(data.publicaciones);

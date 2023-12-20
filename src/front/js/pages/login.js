@@ -56,13 +56,12 @@ const Login = () => {
         className="col-md-5 offset-md-3 max-width-form text-center"
         style={{
           border: "1px solid #616161",
-          borderRadius: "10px",
+          borderRadius: "20px",
           background: "#D1EFEA",
           margin: "auto",
-          padding: "20px",
+          padding: "40px",
           backgroundColor: "white", // Agregado para establecer el fondo gris
           boxShadow: "0 0 45px #546",
-          opacity: "0.9",
         }}
       >
         <h2

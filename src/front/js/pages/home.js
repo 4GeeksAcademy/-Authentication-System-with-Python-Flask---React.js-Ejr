@@ -27,8 +27,7 @@ export const Home = () => {
           justifyContent: "center",
           border: "1px solid #616161",
           borderRadius: "35px",
-        
-          opacity:"0.9",
+          
           margin: "30px auto 0",
           padding: "40px",
           backgroundColor: "white", // Agregado para establecer el fondo gris
@@ -149,9 +148,7 @@ export const Home = () => {
             border: "1px solid #616161",
             borderRadius: "35px",
             background: "#D1EFEA",
-            opacity: "0.9",
             padding: "40px",
-            backgroundColor: " #93C0C6E2",
             boxShadow: "0 0 70px #000",
             backgroundSize: "cover", // Puedes ajustar "cover" según tus necesidades
             backgroundPosition: "center", // Ajusta la posición del fondo si es necesario
