@@ -59,7 +59,7 @@ export const Carrousel = () => {
           }}
         >
           {" "}
-          {/* <Link to="/buscador"> */}
+          <Link to="/prestadorCV">
           <button
             style={{
               marginRight: "-0.1%",
@@ -88,7 +88,9 @@ export const Carrousel = () => {
               />
             </div>
           </button>
-          {/* </Link> */}
+          </Link>
+
+          <Link to="/prestadorCV">
           <button
             style={{
               marginRight: "-0.1%",
@@ -117,6 +119,9 @@ export const Carrousel = () => {
               />
             </div>
           </button>
+          </Link>
+
+          <Link to="/prestadorCV">
           <button
             style={{
               marginRight: "-0.1%",
@@ -145,6 +150,9 @@ export const Carrousel = () => {
               />
             </div>
           </button>
+          </Link>
+
+          <Link to="/prestadorCV">
           <button
             style={{
               marginRight: "-0.1%",
@@ -173,6 +181,9 @@ export const Carrousel = () => {
               />
             </div>
           </button>
+          </Link>
+
+          <Link to="/prestadorCV">
           <button
             style={{
               marginRight: "-0.1%",
@@ -202,6 +213,7 @@ export const Carrousel = () => {
               />
             </div>
           </button>
+          </Link>
         </div>
       </div>
       
