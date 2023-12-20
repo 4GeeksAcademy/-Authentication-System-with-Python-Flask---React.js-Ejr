@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Modal, Button } from "react-bootstrap";
 
-const GeneradorPublicacion = () => {
-  const [formData, setFormData] = useState({
+const GeneradorPublicacion = ({ onRubroSeleccionado }) => {
+  const [publicacion, setPublicacion] = useState({
     nombre: "",
     apellido: "",
     email: "",
@@ -79,6 +79,9 @@ const GeneradorPublicacion = () => {
         console.error("Error al enviar la publicación:", error);
       });
   };
+  const handleRubroSeleccionado = (rubro) => {
+    onRubroSeleccionado(rubro);
+  };
 
   return (
     <div className="container mt-5" >
@@ -140,25 +143,22 @@ const GeneradorPublicacion = () => {
             />
           </div>
           <div className="mb-3">
-            <input
-              type="text" style={{ border: '1px solid black' }}
-              className="form-control"
-              placeholder="Rubro"
-              value={formData.rubro}
+          <select
+              className="form-select"
+              style={{ border: '1px solid black' }}
+              value={publicacion.rubro}
               onChange={handlePublicacion}
               name="rubro"
               required
-            />
-          <div className="mt-3">
-            <input
-              type="text" style={{ border: '1px solid black' }}
-              className="form-control"
-              placeholder="Titulo de la publicación"
-              onChange={handlePublicacion}
-              name="titulo"
-              required
-            />
-          </div>
+            >
+              <option value="">Seleccionar Rubro</option>
+              <option value="Aseo">Aseo</option>
+              <option value="Carpintería">Carpintería</option>
+              <option value="Gasfitería">Gasfitería</option>
+              <option value="Pintor">Pintor</option>
+              <option value="Electricista">Electricista</option>
+              {/* Agregar más opciones de rubro según sea necesario */}
+            </select>
           </div>
           <div className="mb-3">
             <input
