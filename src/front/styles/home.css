@@ -55,7 +55,11 @@
 
 .text-container p {
   text-align: center;
+
   font-family: "Calibri", sans-serif;
+  
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+
   font-size: 25px;
   /* Otros estilos de texto según tu preferencia */
 }
