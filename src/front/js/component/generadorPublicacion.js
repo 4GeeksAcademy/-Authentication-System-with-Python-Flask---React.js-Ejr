@@ -102,7 +102,7 @@ const GeneradorPublicacion = () => {
             boxShadow: "initial",
           }}
         >
-          Publicación
+          Publicar Aviso
         </h2>
 
         <div className="mb-6 mt-3">
@@ -183,8 +183,8 @@ const GeneradorPublicacion = () => {
         </div>     
         <button
           type="button"
-          className="btn btn-primary mt-5 me-5"
-          style={{ width: "40%" , margin: "0 auto" }}
+          className="btn btn-primary mt-3"
+          style={{ width: "50%" , margin: "0 auto" }}
           onClick={publicarPublicacion}
         >
           Publicar

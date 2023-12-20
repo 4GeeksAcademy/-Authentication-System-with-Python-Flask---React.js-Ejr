@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import "../../styles/perfil.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Link } from "react-router-dom";
-// import "./../component/Buscador.jsx";
+import { Form } from "react-bootstrap";
 
 
 
@@ -153,7 +153,7 @@ const handleInputChange = (e) => {
   };
   const handleDelete = async (id) => {
     try {
-      const response = await fetch(`http://localhost:3001/publicacion/${id}`, {
+      const response = await fetch(`http://localhost:3001/publicaciones/${id}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -234,15 +234,24 @@ const handleInputChange = (e) => {
           />
         </div>
         <div className="form-group mt-2">
-          <label htmlFor="rubro">Rubro:</label>
-          <input
-            type="text"
-            id="rubro"
-            name="rubro"
-            value={formData.rubro}
-            onChange={handleInputChange}
-          />
-        </div>
+        <label htmlFor="comuna">Rubro:</label>
+        <select
+              className="form-select"
+              style={{ border: '1px solid black' }}
+              value={formData.rubro}
+              onChange={handleInputChange}
+              name="rubro"
+              required
+              >
+              <option value="">Seleccionar Rubro</option>
+              <option value="Aseo">Aseo</option>
+              <option value="Carpintería">Carpintería</option>
+              <option value="Gasfitería">Gasfitería</option>
+              <option value="Pintor">Pintor</option>
+              <option value="Electricista">Electricista</option>
+              {/* Agregar más opciones de rubro según sea necesario */}
+            </select>
+          </div>
       </form>
       <div className="button-container">
       <button
@@ -261,7 +270,7 @@ const handleInputChange = (e) => {
           Guardar
         </button>
        <Link to="/generadorPublicacion">
-          {["Electricista", "Carpintero", "Pintor", "Gasfitería", "Aseo"].includes(formData.rubro) && (
+          {["Electricista", "Carpintería", "Pintor", "Gasfitería", "Aseo"].includes(formData.rubro) && (
             <button
               className="action-button custom-button"
               style={{
