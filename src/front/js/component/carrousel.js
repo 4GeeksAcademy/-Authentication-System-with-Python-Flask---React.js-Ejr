@@ -22,14 +22,27 @@ export const Carrousel = () => {
     <div className="carousel-oficios mt-30">
       <h2
         style={{
-          fontFamily: "Calibri", // Agregué Montserrat y también una opción de respaldo con sans-serif
-          color: "#001F3F", // Azul oscuro
+          fontFamily: "Calibri",
+          color: "#001F3F",
           marginTop: "5%",
-          paddingBottom: "2%", // Espacio entre el texto y el borde inferior
+          paddingBottom: "2%",
           textAlign: "center",
           transition: "background-color 0.1s ease transform 0.3s ease-in-out",
+          display: "flex",
+          flexWrap: "wrap",
+          alignItems: "center",
+          justifyContent: "center",
+          border: "1px solid #616161",
+          borderRadius: "35px",
+          background: "#D1EFEA",
+          opacity: "0.9",
+          padding: "40px",
+          backgroundColor: " #93C0C6E2",
+          boxShadow: "0 0 70px #000",
+          backgroundSize: "cover", // Puedes ajustar "cover" según tus necesidades
+          backgroundPosition: "center", // Ajusta la posición del fondo si es necesario
         }}
-        onMouseOver={(e) => (e.currentTarget.style.transform = "scale(1.4)")}
+        onMouseOver={(e) => (e.currentTarget.style.transform = "scale(1.1)")}
         onMouseOut={(e) => (e.currentTarget.style.transform = "scale(1)")}
       >
         <strong>PRESTADORES</strong>

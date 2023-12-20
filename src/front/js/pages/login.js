@@ -39,7 +39,7 @@ const Login = () => {
           console.log("Usuario encontrado");
 
           localStorage.setItem("user", JSON.stringify(data.user));
-          localStorage.setItem("token", JSON.stringify(data.access_token))
+          localStorage.setItem("token", JSON.stringify(data.access_token));
           // Utiliza `navigate` para redirigir a la página principal después del inicio de sesión
           navigate("/");
         }
@@ -60,13 +60,14 @@ const Login = () => {
           background: "#D1EFEA",
           margin: "auto",
           padding: "20px",
-          backgroundColor: "#CCCCCC", // Agregado para establecer el fondo gris
-          boxShadow: "0 0 70px #000",
+          backgroundColor: "white", // Agregado para establecer el fondo gris
+          boxShadow: "0 0 45px #546",
+          opacity: "0.9",
         }}
       >
         <h2
           style={{
-            fontFamily: "fantasy",
+            fontFamily: "Calibri",
             color: "#001F3F",
             marginTop: "5px",
             boxShadow: "initial",
@@ -103,8 +104,13 @@ const Login = () => {
             {error && <div className="invalid-feedback">{error}</div>}
           </div>
 
-          <div style={{display: "flex", justifyContent: "space-evenly", alignItems: "center"}}>
-
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-evenly",
+              alignItems: "center",
+            }}
+          >
             <button
               type="button"
               className="btn btn-primary mt-5"
