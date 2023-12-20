@@ -169,6 +169,9 @@ export const Home = () => {
                       fontSize: "18px",
                     }}
                   >
+
+
+                    
                     Somos una plataforma dedicada a conectar con Técnicos en
                     Oficios tales como: Carpintería, Electricidad, Gasfitería,
                     Pintura y Aseo. 
