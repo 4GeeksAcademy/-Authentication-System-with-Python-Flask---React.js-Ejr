@@ -73,31 +73,11 @@ function Input() {
         <div className=" input-name-description-container col-md-4 col-lg-4 col-6">
           <div className="">
             {newProgram ? 
-            <div>
-               <button
-              className="btn mb-3 me-3" 
-              style={{
-                border: "1.5px solid rgb(43 165 12)",
-                boxShadow: "rgb(29 227 51) 0px 1px 4.5px 0px",
-         
-              }}
-              
-              aria-expanded="false"
+           ""
+            : <div 
+            className="dropdown "
+            onClick={()=> actions.clearInputStatusMessage()}
             >
-              Save {programName == "" ? "new program" : programName} 
-            </button>
-               <button
-              className="btn mb-3"
-              style={{
-                border: "1.5px solid rgb(252 10 10)",
-                boxShadow: "rgb(204 0 0) 0px 1px 4.5px 0px",
-              }}
-              aria-expanded="false"
-            >
-              Cancel
-            </button>
-            </div>
-            : <div className="dropdown ">
             <a
               className="btn dropdown-toggle mb-3"
               style={{
@@ -131,7 +111,7 @@ function Input() {
                               description: "",
                               friday_end: null,
                               friday_start: null,
-                              monday_end: "3:00 PM",
+                              monday_end: null,
                               monday_start: null,
                               name: "",
                               program_number: store.programs.length +1,
@@ -195,9 +175,8 @@ function Input() {
                 placeholder="type name of program here"
                 className="form-control mb-2"
                 value={
-                  !refresh 
-                    ? updatedPrograms[programIndex]?.name
-                    : store.programs[programIndex]?.name
+                   updatedPrograms[programIndex]?.name
+                    
                 }
               />
               <label className="mb-2" htmlFor="floatingTextarea">
@@ -207,9 +186,7 @@ function Input() {
                 className="form-control "
                 placeholder="type brief description of your program"
                 value={
-                  !refresh
-                    ? updatedPrograms[programIndex]?.description
-                    : store.programs[programIndex]?.description
+                  updatedPrograms[programIndex]?.description
                 }
                 onChange={(e) => {
                   const value = e.target.value;
@@ -996,10 +973,8 @@ function Input() {
             <button
               type="submit"
               onClick={(e) => {
-                console.log(programDescription,"submit")
                 if(programName.length == 0 && programDescription.length == 0){
                   setErrorMessage("Program name and description cannot be left blank")
-
                 }
                 else if(programName.length == 0 ){
                   setErrorMessage("Program name cannot be left blank")
@@ -1008,6 +983,17 @@ function Input() {
                   
                   setErrorMessage("Program description cannot be left blank")
                 }
+                else if(newProgram){
+                  setErrorMessage("")
+                  e.preventDefault();
+                  setProgramIndex(0);
+                  setRefresh(true);
+                  // actions.newProgram(updatedPrograms);
+                  console.log(updatedPrograms[updatedPrograms.length-1],"new progs")
+                  setNewProgram(false)
+                  setDropdownTitle(updatedPrograms[0])
+                }
+
                 else {
                   setErrorMessage("")
                   e.preventDefault();
