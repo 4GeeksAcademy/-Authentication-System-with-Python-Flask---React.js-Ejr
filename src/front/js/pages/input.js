@@ -49,17 +49,18 @@ function Input() {
   const [updatedPrograms, setUpdatedPrograms] = useState([]);
   const [mobileDayIndex, setMobileDayIndex] = useState(0);
   const [errorMessage, setErrorMessage] = useState("");
-  const [programName, setProgramName] = useState("name");
-  const [programDescription, setProgramDescription] = useState("description");
+  const [programName, setProgramName] = useState("");
+  const [programDescription, setProgramDescription] = useState("");
   const [newProgram, setNewProgram] = useState(false);
 
   useEffect(() => {
     if (store.programs.length > 0) {
+      setProgramName("name")
+      setProgramDescription("description")
       setDropdownTitle(store.programs[0]);
       setUpdatedPrograms(store.programs);
     }
   }, [store.programs]);
-console.log(updatedPrograms,"updted")
   return (
     <div className="mx-4 input-container">
       <div className=" input-title row mb-4 mb-md-2 mb-lg-2">
@@ -71,81 +72,107 @@ console.log(updatedPrograms,"updted")
       <div className=" input-content row border border-2 p-lg-3 p-md-3 p-2">
         <div className=" input-name-description-container col-md-4 col-lg-4 col-6">
           <div className="">
-            <div className="dropdown ">
-              <a
-                className="btn dropdown-toggle mb-3"
-                style={{
-                  border: "1.5px solid #ea6f36",
-                  boxShadow: "0px 1px 4.5px 0px #ea6f36",
-                }}
-                href="#"
-                role="button"
-                id="dropdownMenuLink"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
-                {dropdownTitle?.name == "" ? "New Program" : dropdownTitle?.name}
-              </a>
+            {newProgram ? 
+            <div>
+               <button
+              className="btn mb-3 me-3" 
+              style={{
+                border: "1.5px solid rgb(43 165 12)",
+                boxShadow: "rgb(29 227 51) 0px 1px 4.5px 0px",
+         
+              }}
+              
+              aria-expanded="false"
+            >
+              Save {programName == "" ? "new program" : programName} 
+            </button>
+               <button
+              className="btn mb-3"
+              style={{
+                border: "1.5px solid rgb(252 10 10)",
+                boxShadow: "rgb(204 0 0) 0px 1px 4.5px 0px",
+              }}
+              aria-expanded="false"
+            >
+              Cancel
+            </button>
+            </div>
+            : <div className="dropdown ">
+            <a
+              className="btn dropdown-toggle mb-3"
+              style={{
+                border: "1.5px solid #ea6f36",
+                boxShadow: "0px 1px 4.5px 0px #ea6f36",
+              }}
+              href="#"
+              role="button"
+              id="dropdownMenuLink"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              {newProgram ? "New Program" : dropdownTitle?.name}
+            </a>
 
-              <ul
-                className="dropdown-menu overflow-auto"
-                aria-labelledby="dropdownMenuLink"
-              >
-                {[...store?.programs,{name:"Create New Program"}].map((programTitle, index) => {
-                  return (
-                    <li
-                      key={index}
-                      onClick={() => {
-                        setRefresh(false);
-                        if(programTitle.name == "Create New Program"){
-                          setNewProgram(true);
-                          setUpdatedPrograms((prevUpdatedPrograms) => {
-                            const updatedProgramsList = [...prevUpdatedPrograms,
-                              {
-                                description: "",
-                                friday_end: null,
-                                friday_start: null,
-                                monday_end: "3:00 PM",
-                                monday_start: null,
-                                name: "",
-                                program_number: store.programs.length +1,
-                                saturday_end: null,
-                                saturday_start: null,
-                                sunday_end: null,
-                                sunday_start: null,
-                                thursday_end: null,
-                                thursday_start: null,
-                                tuesday_end: null,
-                                tuesday_start: null,
-                                wednesday_end: null,
-                                wednesday_start: null
-                            }
-                            ];
-                            
-                            setProgramIndex(
-                              updatedProgramsList[index ].program_number - 1
-                            );
-                            setDropdownTitle(updatedProgramsList[index]);
-                            
-                            return updatedProgramsList;
-                          });
+            <ul
+              className="dropdown-menu overflow-auto"
+              aria-labelledby="dropdownMenuLink"
+            >
+              {[...store?.programs,{name:"Create New Program"}].map((programTitle, index) => {
+                return (
+                  <li
+                    key={index}
+                    onClick={() => {
+                      setRefresh(false);
+                      if(programTitle.name == "Create New Program"){
+                        setNewProgram(true);
+                        setUpdatedPrograms((prevUpdatedPrograms) => {
+                          const updatedProgramsList = [...prevUpdatedPrograms,
+                            {
+                              description: "",
+                              friday_end: null,
+                              friday_start: null,
+                              monday_end: "3:00 PM",
+                              monday_start: null,
+                              name: "",
+                              program_number: store.programs.length +1,
+                              saturday_end: null,
+                              saturday_start: null,
+                              sunday_end: null,
+                              sunday_start: null,
+                              thursday_end: null,
+                              thursday_start: null,
+                              tuesday_end: null,
+                              tuesday_start: null,
+                              wednesday_end: null,
+                              wednesday_start: null
+                          }
+                          ];
                           
-                        }
-                        else{
                           setProgramIndex(
-                            store.programs[index].program_number - 1
+                            updatedProgramsList[index ].program_number - 1
                           );
-                          setDropdownTitle(store.programs[index]);
-                        }
+                          setDropdownTitle(updatedProgramsList[index]);
+                          
+                          return updatedProgramsList;
+                        });
+                        
+                      }
+                      else{
+                        setProgramIndex(
+                          store.programs[index].program_number - 1
+                        );
+                        setDropdownTitle(store.programs[index]);
                       }
                     }
-                    >
-                      <a className="dropdown-item">{programTitle.name}</a>
-                    </li>
-                  );
-                })}
-              </ul>
-            </div>
+                  }
+                  >
+                    <a className="dropdown-item">{programTitle.name}</a>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>}
+            
             <div className="inputDiv px-0 px-md-1 px-lg-1">
               <label className="mb-2" htmlFor="program-name ">
                 Program Name
@@ -185,7 +212,6 @@ console.log(updatedPrograms,"updted")
                     : store.programs[programIndex]?.description
                 }
                 onChange={(e) => {
-                  console.log("hello")
                   const value = e.target.value;
                   setProgramDescription(value);
                   setUpdatedPrograms((prevUpdatedPrograms) => {
@@ -963,15 +989,19 @@ console.log(updatedPrograms,"updted")
           }  mb-0`}
           role="alert"
         >
-          {store?.inputStatusMessage ? store?.inputStatusMessage : errorMessage}
+          {errorMessage == ""   ? store?.inputStatusMessage : errorMessage}
         </span>
         <div className="row mt-4 submitReset">
           <div className=" d-flex align-items-center">
             <button
               type="submit"
               onClick={(e) => {
-            
-                if(programName.length == 0 ){
+                console.log(programDescription,"submit")
+                if(programName.length == 0 && programDescription.length == 0){
+                  setErrorMessage("Program name and description cannot be left blank")
+
+                }
+                else if(programName.length == 0 ){
                   setErrorMessage("Program name cannot be left blank")
                 }
                 else if(programDescription.length == 0 ){
@@ -979,11 +1009,10 @@ console.log(updatedPrograms,"updted")
                   setErrorMessage("Program description cannot be left blank")
                 }
                 else {
-
+                  setErrorMessage("")
                   e.preventDefault();
                   setProgramIndex(0);
                   setRefresh(true);
-                  setErrorMessage("Programs not updated, please try again.")
                   actions.updateProgram(updatedPrograms);
                 }
               }}

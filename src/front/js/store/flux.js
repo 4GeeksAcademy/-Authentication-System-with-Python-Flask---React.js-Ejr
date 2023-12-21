@@ -36,10 +36,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 			if (resp.status == 200) {
 			  setStore({ inputStatusMessage: "Programs successfully updated!" });
 			} 
+			
 			setStore({ programs: data });
-  
+			
 			return data;
-		  } catch (error) {
+		} catch (error) {
+			setStore({ inputStatusMessage: "Programs not updated, please try again" });
 			console.log("Error loading message from backend", error);
 		  }
 		},
