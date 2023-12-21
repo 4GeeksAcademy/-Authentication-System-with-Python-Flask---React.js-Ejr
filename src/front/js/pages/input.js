@@ -55,8 +55,8 @@ function Input() {
 
   useEffect(() => {
     if (store.programs.length > 0) {
-      setProgramName("New Program")
-      setProgramDescription("description")
+      setProgramName("")
+      setProgramDescription("")
       setDropdownTitle(store.programs[0]);
       setUpdatedPrograms(store.programs);
     }
@@ -969,60 +969,74 @@ function Input() {
           {errorMessage == ""   ? store?.inputStatusMessage : errorMessage}
         </span>
         <div className="row mt-4 submitReset">
-          <div className=" d-flex align-items-center">
-            <button
-              type="submit"
-              style={{
-                border: "2.5px solid rgb(0 223 255)",
-                boxShadow: "rgb(5 218 210) 0px 1px 4.5px 0px",
-                paddingBottom:"2rem"
-              }}
-              onClick={(e) => {
-                if(programName.length == 0 && programDescription.length == 0){
-                  setErrorMessage("Program name and description cannot be left blank")
-                }
-                else if(programName.length == 0 ){
-                  setErrorMessage("Program name cannot be left blank")
-                }
-                else if(programDescription.length == 0 ){
-                  
-                  setErrorMessage("Program description cannot be left blank")
-                }
-                else if(newProgram){
-                  setErrorMessage("")
-                  e.preventDefault();
-                  setProgramIndex(0);
-                  setRefresh(true);
-                  // actions.newProgram(updatedPrograms);
-                  console.log(updatedPrograms[updatedPrograms.length-1],"new progs")
-                  setNewProgram(false)
-                  setDropdownTitle(updatedPrograms[0])
-                }
-
-                else {
-                  setErrorMessage("")
-                  e.preventDefault();
-                  setProgramIndex(0);
-                  setRefresh(true);
-                  actions.updateProgram(updatedPrograms);
-                }
-              }}
-              className=" btn  px-3 me-3 h-50"
-            >
-              {newProgram ? "Save" : "Submit"} {newProgram && programName == "" ? "New Program" : newProgram ? programName: ""} 
-            </button>
-            {newProgram ? <>
+          <div className={` ${newProgram ? "d-md-flex d-lg-flex d-block" : "d-flex"} align-items-center`}>
+            <div className="submit-btn-group mb-3 mb-md-0 mb-lg-0 d-flex">
               <button
-              className="btn me-5"
-              style={{
-                border: "1.5px solid rgb(252 10 10)",
-                boxShadow: "rgb(204 0 0) 0px 1px 4.5px 0px",
-              }}
-              aria-expanded="false"
-            >
-              Cancel
-            </button>
-            </>:""}
+                type="submit"
+                style={{
+                  
+                  border: "2.5px solid rgb(0 223 255)",
+                  boxShadow: "rgb(5 218 210) 0px 1px 4.5px 0px",
+                }}
+                onClick={(e) => {
+                  console.log(programName,programDescription)
+                  if(programName.length == 0 && programDescription.length == 0){
+                    setErrorMessage("Program name and description cannot be left blank")
+                  }
+                  else if(programName.length == 0 ){
+                    setErrorMessage("Program name cannot be left blank")
+                  }
+                  else if(programDescription.length == 0 ){
+                    
+                    setErrorMessage("Program description cannot be left blank")
+                  }
+                  else if(newProgram ){
+                    setErrorMessage("")
+                    e.preventDefault();
+                    setProgramIndex(0);
+                    setRefresh(true);
+                    actions.newProgram(updatedPrograms[updatedPrograms.length-1]);
+                    setNewProgram(false)
+                    setDropdownTitle(updatedPrograms[0])
+                  }
+
+                  else {
+                    setErrorMessage("")
+                    e.preventDefault();
+                    setProgramIndex(0);
+                    setRefresh(true);
+                    actions.updateProgram(updatedPrograms);
+                  }
+                }}
+                className=" btn  px-3 me-3 h-50"
+              >
+                {newProgram ? "Save" : "Submit"} {newProgram && programName == "" ? "New Program" : newProgram ? programName: ""} 
+              </button>
+              {newProgram ? <>
+                <button
+                onClick={()=>{
+                    setErrorMessage("")
+                    setProgramIndex(0);
+                    setRefresh(true);
+                    setNewProgram(false)
+                    setUpdatedPrograms((prevUpdatedPrograms)=> prevUpdatedPrograms.pop())
+                    setDropdownTitle(updatedPrograms[0])
+                    setProgramDescription(updatedPrograms[0])
+                    
+                }}
+                className="btn me-md-5 me-lg-5 me-0 "
+                style={{
+                  
+                  border: "1.5px solid rgb(252 10 10)",
+                  boxShadow: "rgb(204 0 0) 0px 1px 4.5px 0px",
+                }}
+                aria-expanded="false"
+              >
+                Cancel
+              </button>
+              </>:""}
+
+            </div>
             <div>
               <UpdateLink
                 title="Back to schedule!"

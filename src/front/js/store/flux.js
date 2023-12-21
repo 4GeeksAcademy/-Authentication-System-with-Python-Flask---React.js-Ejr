@@ -45,6 +45,30 @@ const getState = ({ getStore, getActions, setStore }) => {
 			console.log("Error loading message from backend", error);
 		  }
 		},
+		createProgram: async (programData) => {
+			let store= getStore();
+		  try {
+			const resp = await fetch(
+			  process.env.BACKEND_URL + "/api/newProgram",
+			  {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify(programData),
+			  }
+			);
+			const data = await resp.json();
+			if (resp.status == 200) {
+			  setStore({ inputStatusMessage: "Program successfully created!" });
+			} 
+			
+			
+			
+			return data;
+		} catch (error) {
+			setStore({ inputStatusMessage: "Program not created, please try again" });
+			console.log("Error loading message from backend", error);
+		  }
+		},
 		clearInputStatusMessage: () => {
 		  setStore({ inputStatusMessage: "" });
 		},
