@@ -10,12 +10,13 @@ export const UpdateLink = (props) => {
   return (
     <div className={` text-center ${props.pt} pb-1 `}>
       <div
-        className=" updateLink alert d-flex justify-content-center align-items-start ms-auto pt-2 pb-1"
+        className={` updateLink alert d-flex justify-content-center align-items-start ms-auto pt-2 pb-1 ${props.mb}`}
         role="alert"
         style={{
           width: `${props.width}`,
           color: "#525252",
-          backgroundColor: "rgb(129 229 127)",
+          border: "3px solid rgb(129 229 127)",
+          boxShadow: "rgb(129 229 127) 0px 1px 4.5px 0px",
         }}
       >
         <FontAwesomeIcon icon={props.icon} size="sm" className="me-3 mt-1" />

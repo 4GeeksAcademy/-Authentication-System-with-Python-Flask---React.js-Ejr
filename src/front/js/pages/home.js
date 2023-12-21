@@ -18,6 +18,7 @@ export const Home = () => {
     <div className="text-center mx-auto my-3 parentDiv ">
       <UpdateLink
         pt="pt-3"
+        mb="mb-3"
         title="Update Programs"
         link="/input"
         rotate={false}

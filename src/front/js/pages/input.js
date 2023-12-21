@@ -55,7 +55,7 @@ function Input() {
 
   useEffect(() => {
     if (store.programs.length > 0) {
-      setProgramName("name")
+      setProgramName("New Program")
       setProgramDescription("description")
       setDropdownTitle(store.programs[0]);
       setUpdatedPrograms(store.programs);
@@ -972,6 +972,11 @@ function Input() {
           <div className=" d-flex align-items-center">
             <button
               type="submit"
+              style={{
+                border: "2.5px solid rgb(0 223 255)",
+                boxShadow: "rgb(5 218 210) 0px 1px 4.5px 0px",
+                paddingBottom:"2rem"
+              }}
               onClick={(e) => {
                 if(programName.length == 0 && programDescription.length == 0){
                   setErrorMessage("Program name and description cannot be left blank")
@@ -1002,10 +1007,22 @@ function Input() {
                   actions.updateProgram(updatedPrograms);
                 }
               }}
-              className=" btn btn-info px-3 me-3 h-50"
+              className=" btn  px-3 me-3 h-50"
             >
-              Submit
+              {newProgram ? "Save" : "Submit"} {newProgram && programName == "" ? "New Program" : newProgram ? programName: ""} 
             </button>
+            {newProgram ? <>
+              <button
+              className="btn me-5"
+              style={{
+                border: "1.5px solid rgb(252 10 10)",
+                boxShadow: "rgb(204 0 0) 0px 1px 4.5px 0px",
+              }}
+              aria-expanded="false"
+            >
+              Cancel
+            </button>
+            </>:""}
             <div>
               <UpdateLink
                 title="Back to schedule!"
@@ -1014,6 +1031,7 @@ function Input() {
                 width="100%"
                 icon={faHouseCircleCheck}
                 pt="pt-0"
+                mb="mb-0"
               />
             </div>
           </div>
