@@ -51,6 +51,7 @@ function Input() {
   const [errorMessage, setErrorMessage] = useState("");
   const [programName, setProgramName] = useState("name");
   const [programDescription, setProgramDescription] = useState("description");
+  const [newProgram, setNewProgram] = useState(false);
 
   useEffect(() => {
     if (store.programs.length > 0) {
@@ -58,7 +59,7 @@ function Input() {
       setUpdatedPrograms(store.programs);
     }
   }, [store.programs]);
-
+console.log(updatedPrograms,"updted")
   return (
     <div className="mx-4 input-container">
       <div className=" input-title row mb-4 mb-md-2 mb-lg-2">
@@ -83,24 +84,61 @@ function Input() {
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
               >
-                {dropdownTitle?.name}
+                {dropdownTitle?.name == "" ? "New Program" : dropdownTitle?.name}
               </a>
 
               <ul
                 className="dropdown-menu overflow-auto"
                 aria-labelledby="dropdownMenuLink"
               >
-                {store?.programs.map((programTitle, index) => {
+                {[...store?.programs,{name:"Create New Program"}].map((programTitle, index) => {
                   return (
                     <li
                       key={index}
                       onClick={() => {
                         setRefresh(false);
-                        setProgramIndex(
-                          store.programs[index].program_number - 1
-                        );
-                        setDropdownTitle(store.programs[index]);
-                      }}
+                        if(programTitle.name == "Create New Program"){
+                          setNewProgram(true);
+                          setUpdatedPrograms((prevUpdatedPrograms) => {
+                            const updatedProgramsList = [...prevUpdatedPrograms,
+                              {
+                                description: "",
+                                friday_end: null,
+                                friday_start: null,
+                                monday_end: "3:00 PM",
+                                monday_start: null,
+                                name: "",
+                                program_number: store.programs.length +1,
+                                saturday_end: null,
+                                saturday_start: null,
+                                sunday_end: null,
+                                sunday_start: null,
+                                thursday_end: null,
+                                thursday_start: null,
+                                tuesday_end: null,
+                                tuesday_start: null,
+                                wednesday_end: null,
+                                wednesday_start: null
+                            }
+                            ];
+                            
+                            setProgramIndex(
+                              updatedProgramsList[index ].program_number - 1
+                            );
+                            setDropdownTitle(updatedProgramsList[index]);
+                            
+                            return updatedProgramsList;
+                          });
+                          
+                        }
+                        else{
+                          setProgramIndex(
+                            store.programs[index].program_number - 1
+                          );
+                          setDropdownTitle(store.programs[index]);
+                        }
+                      }
+                    }
                     >
                       <a className="dropdown-item">{programTitle.name}</a>
                     </li>
@@ -115,7 +153,7 @@ function Input() {
               <input
                 onChange={(e) => {
                   const value = e.target.value;
-                 
+     
                   setProgramName(value)
                   setUpdatedPrograms((prevUpdatedPrograms) => {
                     const updatedProgramsList = [...prevUpdatedPrograms];
@@ -130,7 +168,7 @@ function Input() {
                 placeholder="type name of program here"
                 className="form-control mb-2"
                 value={
-                  !refresh
+                  !refresh 
                     ? updatedPrograms[programIndex]?.name
                     : store.programs[programIndex]?.name
                 }
