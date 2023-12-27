@@ -46,7 +46,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 		  }
 		},
 		createProgram: async (programData) => {
-			let store= getStore();
+			
 		  try {
 			const resp = await fetch(
 			  process.env.BACKEND_URL + "/api/newProgram",

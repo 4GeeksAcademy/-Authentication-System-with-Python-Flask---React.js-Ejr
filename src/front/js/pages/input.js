@@ -52,15 +52,21 @@ function Input() {
   const [programName, setProgramName] = useState("");
   const [programDescription, setProgramDescription] = useState("");
   const [newProgram, setNewProgram] = useState(false);
-
+  
   useEffect(() => {
     if (store.programs.length > 0) {
       setProgramName("")
       setProgramDescription("")
       setDropdownTitle(store.programs[0]);
       setUpdatedPrograms(store.programs);
+     
     }
   }, [store.programs]);
+  
+    let storageUpdatedPrograms = JSON.parse(localStorage.getItem("updatedPrograms"))
+    let programArray = storageUpdatedPrograms ? storageUpdatedPrograms : store?.programs
+  
+    console.log(programArray,"parray")
   return (
     <div className="mx-4 input-container">
       <div className=" input-title row mb-4 mb-md-2 mb-lg-2">
@@ -97,8 +103,9 @@ function Input() {
               className="dropdown-menu overflow-auto"
               aria-labelledby="dropdownMenuLink"
             >
-              {[...store?.programs,{name:"Create New Program"}].map((programTitle, index) => {
-                console.log(updatedPrograms,"new fresh")
+              
+              {[...programArray,{name:"Create New Program"}].map((programTitle, index) => {
+            
                 return (
                   <li
                     key={index}
@@ -115,7 +122,7 @@ function Input() {
                               monday_end: null,
                               monday_start: null,
                               name: "",
-                              program_number: store.programs.length +1,
+                              program_number: programArray.length +1,
                               saturday_end: null,
                               saturday_start: null,
                               sunday_end: null,
@@ -140,9 +147,11 @@ function Input() {
                       }
                       else{
                         setProgramIndex(
-                          store.programs[index].program_number - 1
+                          programArray[index].program_number - 1
                         );
-                        setDropdownTitle(store.programs[index]);
+                        setDropdownTitle(programArray[index]);
+                        setProgramName(programArray[index].name)
+                        setProgramDescription(programArray[index].description)
                       }
                     }
                   }
@@ -208,8 +217,8 @@ function Input() {
         {!newProgram ? <>
                 <button
                 onClick={()=>{
-                  console.log(updatedPrograms, programIndex,"updated delete")
-                  actions.deleteProgram(updatedPrograms[programIndex].program_number,updatedPrograms);
+         
+                  actions.deleteProgram(updatedPrograms[programIndex].program_number);
                   setProgramIndex(0);
                   setDropdownTitle(updatedPrograms[0])
                   setProgramDescription(updatedPrograms[0])
@@ -985,7 +994,7 @@ function Input() {
           className={`${
             store.inputStatusMessage == "" && errorMessage == "" ? "d-none" : "d-block"
           }  ${
-            store.inputStatusMessage == "Programs successfully updated!"
+            store.inputStatusMessage.includes("successfully") 
               ? "text-success"
               : "text-danger"
           }  mb-0`}
@@ -1004,7 +1013,7 @@ function Input() {
                   boxShadow: "rgb(5 218 210) 0px 1px 4.5px 0px",
                 }}
                 onClick={(e) => {
-                  console.log(programName,programDescription)
+               
                   if(programName.length == 0 && programDescription.length == 0){
                     setErrorMessage("Program name and description cannot be left blank")
                   }
@@ -1020,7 +1029,9 @@ function Input() {
                     e.preventDefault();
                     setProgramIndex(0);
                     setRefresh(true);
-                    actions.newProgram(updatedPrograms[updatedPrograms.length-1]);
+                    actions.createProgram(updatedPrograms[updatedPrograms.length-1]);
+                    let updatedProgramsString = JSON.stringify(updatedPrograms);
+                    localStorage.setItem("updatedPrograms",updatedProgramsString)
                     setNewProgram(false)
                     setDropdownTitle(updatedPrograms[0])
                   }
