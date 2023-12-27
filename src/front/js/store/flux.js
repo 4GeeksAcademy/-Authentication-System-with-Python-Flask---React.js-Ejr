@@ -112,6 +112,25 @@ const getState = ({ getStore, getActions, setStore }) => {
   
 		  setStore({ totalHours: totalHoursArray });
 		},
+		deleteProgram: async (program_number)=>{
+			try{
+				const resp = await fetch(
+					process.env.BACKEND_URL + `/api/deleteProgram/${program_number}`,
+					{
+					  method: "DELETE",
+					  headers: { "Content-Type": "application/json" },
+					}
+				  );
+				  if (resp.status == 200) {
+					setStore({ inputStatusMessage: "Program successfully deleted!" });
+				  } 
+			}
+			catch (error) {
+				setStore({ inputStatusMessage: "Program not deleted, please try again" });
+				console.log("Error loading message from backend", error);
+			  }
+
+		},
 	  },
 	};
   };

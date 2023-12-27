@@ -88,6 +88,15 @@ def delete_program(program_number):
         db.session.delete(program)
         db.session.commit()
 
-        return jsonify("program sucessfully deleted")
+    remaining_programs = Programs.query.all()
+    remaining_programs.sort(key=lambda p: p.program_number)
+
+    for index, remaining_program in enumerate(remaining_programs):
+        remaining_program.program_number = index + 1
+
+    db.session.commit()
+
+
+    return jsonify("program sucessfully deleted")
         
 

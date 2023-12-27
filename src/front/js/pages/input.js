@@ -98,6 +98,7 @@ function Input() {
               aria-labelledby="dropdownMenuLink"
             >
               {[...store?.programs,{name:"Create New Program"}].map((programTitle, index) => {
+                console.log(updatedPrograms,"new fresh")
                 return (
                   <li
                     key={index}
@@ -202,6 +203,30 @@ function Input() {
                 }}
                 id="floatingTextarea"
               ></textarea>
+                   <div className="deleteBtn mt-3">
+
+        {!newProgram ? <>
+                <button
+                onClick={()=>{
+                  console.log(updatedPrograms, programIndex,"updated delete")
+                  actions.deleteProgram(updatedPrograms[programIndex].program_number,updatedPrograms);
+                  setProgramIndex(0);
+                  setDropdownTitle(updatedPrograms[0])
+                  setProgramDescription(updatedPrograms[0])
+                  setRefresh(true);                    
+                }}
+                className="btn me-md-5 me-lg-5 me-0 "
+                style={{
+                  
+                  border: "1.5px solid rgb(252 10 10)",
+                  boxShadow: "rgb(204 0 0) 0px 1px 4.5px 0px",
+                }}
+                aria-expanded="false"
+              >
+                Delete Program
+              </button>
+              </>:""}
+              </div>
             </div>
           </div>
         </div>
@@ -1019,7 +1044,11 @@ function Input() {
                     setProgramIndex(0);
                     setRefresh(true);
                     setNewProgram(false)
-                    setUpdatedPrograms((prevUpdatedPrograms)=> prevUpdatedPrograms.pop())
+                    setUpdatedPrograms((prevUpdatedPrograms)=> {
+                      
+                      prevUpdatedPrograms.pop()
+                      return prevUpdatedPrograms
+                    })
                     setDropdownTitle(updatedPrograms[0])
                     setProgramDescription(updatedPrograms[0])
                     
