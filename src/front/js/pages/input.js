@@ -49,24 +49,26 @@ function Input() {
   const [updatedPrograms, setUpdatedPrograms] = useState([]);
   const [mobileDayIndex, setMobileDayIndex] = useState(0);
   const [errorMessage, setErrorMessage] = useState("");
-  const [programName, setProgramName] = useState("");
-  const [programDescription, setProgramDescription] = useState("");
+  const [programName, setProgramName] = useState("name");
+  const [programDescription, setProgramDescription] = useState("description");
   const [newProgram, setNewProgram] = useState(false);
   
   useEffect(() => {
     if (store.programs.length > 0) {
-      setProgramName("")
-      setProgramDescription("")
+      // setProgramName("")
+      // setProgramDescription("")
       setDropdownTitle(store.programs[0]);
       setUpdatedPrograms(store.programs);
      
     }
   }, [store.programs]);
+
+
   
-    let storageUpdatedPrograms = JSON.parse(localStorage.getItem("updatedPrograms"))
-    let programArray = storageUpdatedPrograms ? storageUpdatedPrograms : store?.programs
+   
+    let programArray =  store?.programs
   
-    console.log(programArray,"parray")
+
   return (
     <div className="mx-4 input-container">
       <div className=" input-title row mb-4 mb-md-2 mb-lg-2">
@@ -108,7 +110,7 @@ function Input() {
             
                 return (
                   <li
-                    key={index}
+                    key={programTitle.id}
                     onClick={() => {
                       setRefresh(false);
                       if(programTitle.name == "Create New Program"){
@@ -217,12 +219,18 @@ function Input() {
         {!newProgram ? <>
                 <button
                 onClick={()=>{
-         
                   actions.deleteProgram(updatedPrograms[programIndex].program_number);
+                  let newProgramList = updatedPrograms.filter((item)=> item.program_number != updatedPrograms[programIndex].program_number)
+                  newProgramList.forEach((item,i)=>{
+                    item.program_number = i + 1
+                  })
+                  console.log(newProgramList,"filter")
+          
                   setProgramIndex(0);
                   setDropdownTitle(updatedPrograms[0])
                   setProgramDescription(updatedPrograms[0])
-                  setRefresh(true);                    
+                  setRefresh(true);  
+                          
                 }}
                 className="btn me-md-5 me-lg-5 me-0 "
                 style={{
@@ -249,7 +257,7 @@ function Input() {
                   className=" w-75 m-auto carousel slide mb-4 mt-1  p-2"
                   style={{backgroundColor:"#00000057"}}
                 >
-                    <div class="carousel-inner">
+                    <div className="carousel-inner">
                       {dayArray.map((day,i)=>{
                         return(
                           <div
@@ -1013,7 +1021,8 @@ function Input() {
                   boxShadow: "rgb(5 218 210) 0px 1px 4.5px 0px",
                 }}
                 onClick={(e) => {
-               
+               console.log(programName,"name")
+               console.log(programDescription,"descr")
                   if(programName.length == 0 && programDescription.length == 0){
                     setErrorMessage("Program name and description cannot be left blank")
                   }
@@ -1030,8 +1039,7 @@ function Input() {
                     setProgramIndex(0);
                     setRefresh(true);
                     actions.createProgram(updatedPrograms[updatedPrograms.length-1]);
-                    let updatedProgramsString = JSON.stringify(updatedPrograms);
-                    localStorage.setItem("updatedPrograms",updatedProgramsString)
+                  
                     setNewProgram(false)
                     setDropdownTitle(updatedPrograms[0])
                   }
@@ -1041,6 +1049,7 @@ function Input() {
                     e.preventDefault();
                     setProgramIndex(0);
                     setRefresh(true);
+                    console.log(updatedPrograms,"submit")
                     actions.updateProgram(updatedPrograms);
                   }
                 }}

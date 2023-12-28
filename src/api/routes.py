@@ -41,6 +41,8 @@ def new_program():
     )
     db.session.add(new_program)
     db.session.commit()
+
+   
     
     return jsonify("program created succesfully"), 200
 
@@ -97,6 +99,6 @@ def delete_program(program_number):
     db.session.commit()
 
 
-    return jsonify("program sucessfully deleted")
+    return jsonify(remaining_program.serialize())
         
 

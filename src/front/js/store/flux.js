@@ -62,8 +62,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 			} 
 			
 			
-			
+			setTimeout(window.location.reload(false),9000);
 			return data;
+
 		} catch (error) {
 			setStore({ inputStatusMessage: "Program not created, please try again" });
 			console.log("Error loading message from backend", error);
@@ -121,8 +122,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 					  headers: { "Content-Type": "application/json" },
 					}
 				  );
+				 
+		
 				  if (resp.status == 200) {
 					setStore({ inputStatusMessage: "Program successfully deleted!" });
+					setTimeout(window.location.reload(false),12000);
 				  } 
 			}
 			catch (error) {

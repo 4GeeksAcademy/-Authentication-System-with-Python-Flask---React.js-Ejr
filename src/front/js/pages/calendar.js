@@ -91,7 +91,7 @@ let noProgramCount = 0
           return(
             <div 
             className={`${program[`${props.days}_start`] != null ? "d-block  " : "d-none"} ${animate ? "animation-fade" : ""}  d-md-none d-lg-none mb-3 p-2 ` }
-            key={i}
+            key={program.id}
             style={{backgroundColor: "rgb(72 177 186)"}}
             onClick={() => {
               onOpenModal()
@@ -247,7 +247,7 @@ let noProgramCount = 0
                       !startTime30 &&
                       !endTime30 ? (
                         <td
-                          key={i}
+                          key={program.id}
                           colSpan={programTotalHours}
                           data-program-name={store.programs[index].name}
                           className={`p-0 ${
@@ -303,7 +303,7 @@ let noProgramCount = 0
                         startTime30 &&
                         !endTime30 ? (
                         <td
-                          key={i}
+                          key={program.id}
                           colSpan={parseInt(programTotalHours) + 1}
                           onClick={() => {
                             onOpenModal()
@@ -360,7 +360,7 @@ let noProgramCount = 0
                         endTime30 &&
                         firstAndLastTextMatch ? (
                         <td
-                          key={i}
+                          key={program.id}
                           colSpan={parseInt(programTotalHours) + 1}
                           onClick={() => {
                             onOpenModal()
@@ -416,7 +416,7 @@ let noProgramCount = 0
                         endTime30 &&
                         firstAndLastTextMatch ? (
                         <td
-                          key={i}
+                          key={program.id}
                           colSpan={parseInt(programTotalHours) + 1}
                           onClick={() => {
                             onOpenModal()
