@@ -7,3 +7,11 @@
   .form-check-input:checked {
     background-color: #ea6f36;
   }
+
+  @media screen and (max-width: 376px ){
+    #day-carousel {
+      
+      margin-left: auto !important;
+      margin-right: .25rem !important;
+    }
+  }

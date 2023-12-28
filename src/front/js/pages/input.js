@@ -250,11 +250,11 @@ function Input() {
 
         <div className=" input-start-end col-md-8 col-lg-8 col-6 pe-0">
           {/* mobile view start */}
-         <div className=" input-mobile-container d-block d-md-none d-lg-none">
+         <div className=" input-mobile-container d-block  d-md-none d-lg-none">
           {/* day carousel */}
                 <div 
                   id="day-carousel" 
-                  className=" w-75 m-auto carousel slide mb-4 mt-1  p-2"
+                  className=" w-75 m-auto carousel slide  mb-4 mt-1  p-2"
                   style={{backgroundColor:"#00000057"}}
                 >
                     <div className="carousel-inner">
