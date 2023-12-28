@@ -162,11 +162,13 @@ let noProgramCount = 0
         </thead>
         <tbody style={{ height: "58vh" }}>
           {store.programs.map((program, index) => {
+          let noProgramScheduled = !program[`${props.days}_start`]
             return (
               <tr
                 style={{
                   height: `${trHeight}%`,
                 }}
+                // className={`${noProgramScheduled ? "d-none" : ""}`}
               >
                 {hourArray.map((hour, i) => {
                   // set up conditions in variables
@@ -279,6 +281,7 @@ let noProgramCount = 0
                               overflowY: "hidden",
                             }}
                           >
+                            
                             <div className="row ">
                               <p className="mb-0  ">
                                 {program[`${props.days}_start`]
