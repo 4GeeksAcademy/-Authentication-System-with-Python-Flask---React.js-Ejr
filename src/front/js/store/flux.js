@@ -15,7 +15,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 					initial: "white"
 				}
 			],
-			movie: {}
+			movie: {},
+			results: [], 
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
@@ -37,15 +38,36 @@ const getState = ({ getStore, getActions, setStore }) => {
 					.then(response => response.json())
 					.then(response => {
 						console.log("Respuesta de la API:", response);
-						// Actualizar el estado con los datos de la película
 						setStore({ movie: response });
-						return response; // Devolver los datos para un posible uso posterior
+						return response; 
 					})
 					.catch(err => {
 						console.error(err);
-						throw err; // Propagar el error para un manejo posterior si es necesario
+						throw err;
 					});
 			},
+
+			getMovieList: () => {
+				console.log("Lista desde Flux");
+				const options = {
+					method: 'GET',
+					headers: {
+						accept: 'application/json',
+						Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5M2ZhNzNkZjUyZTYyNWQ5NGQ1NzMyNGI1YTFlNDgzYSIsInN1YiI6IjY1OTQwNzAwY2U0ZGRjNmQzODdmMDIzMyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.DNQabtAWxQcVNGg9_oMH8JWkdoAHIrOkmlBiwpj1oG8'
+					}
+				};
+				
+				fetch('https://api.themoviedb.org/3/movie/top_rated?language=es-ES&page=1', options)
+					.then(response => response.json())
+					.then(data => {
+						console.log(data)
+						setStore({ results: data.results });
+					})
+					.catch(err => console.error(err));
+			},
+
+			
+
 
 			getMessage: async () => {
 				try{

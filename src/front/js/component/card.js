@@ -7,9 +7,6 @@ export const Card = ({ title, overview, poster_path, release_date }) => (
         <h5 className="card-title">{title}</h5>
         <p className="card-text">{overview}</p>
         <p className="card-text">Estreno: {release_date}</p>
-        <a href="#" className="btn btn-primary">
-          Go somewhere
-        </a>
       </div>
     </div>
   );
