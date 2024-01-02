@@ -1,3 +1,4 @@
+
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
@@ -13,7 +14,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 					background: "white",
 					initial: "white"
 				}
-			]
+			],
+			movie: {}
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
@@ -21,13 +23,35 @@ const getState = ({ getStore, getActions, setStore }) => {
 				getActions().changeColor(0, "green");
 			},
 
+			getMovie: () => {
+				console.log("Hola desde flux");
+				const options = {
+					method: 'GET',
+					headers: {
+						accept: 'application/json',
+						Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5M2ZhNzNkZjUyZTYyNWQ5NGQ1NzMyNGI1YTFlNDgzYSIsInN1YiI6IjY1OTQwNzAwY2U0ZGRjNmQzODdmMDIzMyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.DNQabtAWxQcVNGg9_oMH8JWkdoAHIrOkmlBiwpj1oG8'
+					}
+				};
+			
+				return fetch('https://api.themoviedb.org/3/movie/500?language=es-ES', options)
+					.then(response => response.json())
+					.then(response => {
+						console.log("Respuesta de la API:", response);
+						// Actualizar el estado con los datos de la película
+						setStore({ movie: response });
+						return response; // Devolver los datos para un posible uso posterior
+					})
+					.catch(err => {
+						console.error(err);
+						throw err; // Propagar el error para un manejo posterior si es necesario
+					});
+			},
+
 			getMessage: async () => {
 				try{
-					// fetching data from the backend
 					const resp = await fetch(process.env.BACKEND_URL + "/api/hello")
 					const data = await resp.json()
 					setStore({ message: data.message })
-					// don't forget to return something, that is how the async resolves
 					return data;
 				}catch(error){
 					console.log("Error loading message from backend", error)
