@@ -12,6 +12,11 @@ export const Home = () => {
   useEffect(() => {
   }, []);
 
+  const handleGetMovieList = async () => {
+	actions.getMovieList()
+	// actions.getMovieList2()
+  }
+
   const chunkArray = (array, size) => {
     const chunkedArray = [];
     for (let i = 0; i < array.length; i += size) {
@@ -26,7 +31,7 @@ export const Home = () => {
     <div className="text-center mt-5">
       <Card title={title} overview={overview} poster_path={poster_path} release_date={release_date} />
       <button onClick={() => actions.getMovie()}>Get movie</button>
-	  <button onClick={() => actions.getMovieList()}>Get movie List</button>
+	  <button onClick={() => handleGetMovieList()}>Get movie List</button>
       {groupedResults.map((group, groupIndex) => (
         <div key={groupIndex} className="row justify-content-center">
           {group.map((movie, index) => (

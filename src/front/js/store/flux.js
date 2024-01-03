@@ -16,7 +16,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			],
 			movie: {},
-			results: [], 
+			results: [],
+			page: 1,
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
@@ -34,7 +35,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					}
 				};
 			
-				return fetch('https://api.themoviedb.org/3/movie/500?language=es-ES', options)
+				return fetch('https://api.themoviedb.org/3/movie/500?language=en-EN', options)
 					.then(response => response.json())
 					.then(response => {
 						console.log("Respuesta de la API:", response);
@@ -58,6 +59,26 @@ const getState = ({ getStore, getActions, setStore }) => {
 				};
 				
 				fetch('https://api.themoviedb.org/3/movie/top_rated?language=es-ES&page=1', options)
+					.then(response => response.json())
+					.then(data => {
+						console.log(data)
+						setStore({ results: data.results });
+					})
+					.catch(err => console.error(err));
+			},
+
+			getMovieList2: () => {
+				console.log("Lista desde Flux");
+				const { page } = getStore()
+				const options = {
+					method: 'GET',
+					headers: {
+						accept: 'application/json',
+						Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5M2ZhNzNkZjUyZTYyNWQ5NGQ1NzMyNGI1YTFlNDgzYSIsInN1YiI6IjY1OTQwNzAwY2U0ZGRjNmQzODdmMDIzMyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.DNQabtAWxQcVNGg9_oMH8JWkdoAHIrOkmlBiwpj1oG8'
+					}
+				};
+				
+				fetch('https://api.themoviedb.org/3/movie/top_rated?language=es-ES&page=2', options)
 					.then(response => response.json())
 					.then(data => {
 						console.log(data)
