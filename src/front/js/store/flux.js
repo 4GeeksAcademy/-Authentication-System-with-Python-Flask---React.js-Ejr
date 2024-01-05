@@ -1,4 +1,6 @@
 
+
+
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
@@ -18,6 +20,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			movie: {},
 			results: [],
 			page: 1,
+			movies_from_api:[],
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
@@ -58,7 +61,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					}
 				};
 				
-				fetch('https://api.themoviedb.org/3/movie/top_rated?language=es-ES&page=1', options)
+				fetch('https://api.themoviedb.org/3/movie/top_rated?language=es-ES&page=3', options)
 					.then(response => response.json())
 					.then(data => {
 						console.log(data)
@@ -77,12 +80,30 @@ const getState = ({ getStore, getActions, setStore }) => {
 						Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5M2ZhNzNkZjUyZTYyNWQ5NGQ1NzMyNGI1YTFlNDgzYSIsInN1YiI6IjY1OTQwNzAwY2U0ZGRjNmQzODdmMDIzMyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.DNQabtAWxQcVNGg9_oMH8JWkdoAHIrOkmlBiwpj1oG8'
 					}
 				};
+			
+			
 				
 				fetch('https://api.themoviedb.org/3/movie/top_rated?language=es-ES&page=2', options)
 					.then(response => response.json())
 					.then(data => {
 						console.log(data)
 						setStore({ results: data.results });
+					})
+					.catch(err => console.error(err));
+			},
+
+
+			getMovieListFromApi: () => {
+				console.log("Lista del api personal desde flux");
+				const options = {
+					method: 'GET',
+				};
+				
+				fetch('https://ominous-invention-7gwqjv65g5qhwwrw-3001.app.github.dev/api/movies', options)
+					.then(response => response.json())
+					.then(data => {
+						console.log(data)
+						setStore({ movies_from_api: data || [] });
 					})
 					.catch(err => console.error(err));
 			},
