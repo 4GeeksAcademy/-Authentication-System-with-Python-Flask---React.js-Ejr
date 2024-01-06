@@ -1,9 +1,10 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
 
 export const Demo2 = () => {
     const { store, actions } = useContext(Context);
+    const [selectedOption, setSelectedOption] = useState(null);
     useEffect(() => {
         actions.getMovieListFromApi2();
     }, []);
@@ -12,40 +13,40 @@ export const Demo2 = () => {
         actions.getMovieListFromApi2();
     };
 
+    const handleSelectChange = (event) => {
+        setSelectedOption(event.target.value);
+    };
+
+
     return (
         <>
-        <div className="container">
-            <ul className="list-group">
-            {store.movies_from_api_2.map((movie, index) => (
-                    <li key={index} className="list-group-item">
-                        <h2>{movie.name}</h2>
-                        <p>{movie.description}</p>
-                        <img src={movie.poster} alt={movie.name} />
-                        <p>Fecha de lanzamiento: {movie.relese_date}</p>
-                    </li>
-                ))} 
-            </ul>
-            <br />
-            <Link to="/">
-                <button className="btn btn-primary">Back home</button>
-            </Link>
-            <button onClick={()=>handleGetMovieApi()}>Click me</button>
-        </div>
-        <div>
-                <select>
+                <select onChange={handleSelectChange}>
+                    <option disabled selected>Selecciona una opción</option>
                     <option value={"funny"}>Funny</option>
                     <option value={"sad"}>Sad</option>
                 </select>
-                <button onClick={()=>actions.getRecommendation()}>Una peli!</button>
-                {store.recommendedMovie && (
+                {selectedOption === "funny" && (
+                    <button onClick={() => actions.getFunnyRecommendation()}>Una peli funny!</button>
+                )}
+                {selectedOption === "sad" && (
+                    <button onClick={() => actions.getSadRecommendation()}>Una peli sad!</button>
+                )}
+                {store.recommendedFunnyMovie && (
                     <div>
-                        <h2>{store.recommendedMovie.name}</h2>
-                        <p>{store.recommendedMovie.description}</p>
-                        <img src={store.recommendedMovie.poster} alt={store.recommendedMovie.name} />
-                        <p>Fecha de lanzamiento: {store.recommendedMovie.relese_date}</p>
+                        <h2>{store.recommendedFunnyMovie.name}</h2>
+                        <p>{store.recommendedFunnyMovie.description}</p>
+                        <img src={store.recommendedFunnyMovie.poster} alt={store.recommendedFunnyMovie.name} />
+                        <p>Fecha de lanzamiento: {store.recommendedFunnyMovie.relese_date}</p>
                     </div>
                 )}
-        </div>
+                {store.recommendedSadMovie && (
+                    <div>
+                        <h2>{store.recommendedSadMovie.name}</h2>
+                        <p>{store.recommendedSadMovie.description}</p>
+                        <img src={store.recommendedSadMovie.poster} alt={store.recommendedSadMovie.name} />
+                        <p>Fecha de lanzamiento: {store.recommendedSadMovie.relese_date}</p>
+                    </div>
+                )}
         </>
     );
 };

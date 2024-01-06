@@ -22,7 +22,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 			page: 1,
 			movies_from_api:[],
 			movies_from_api_2:[],
-			recommendedMovie: null,
+			recommendedFunnyMovie: null,
+			recommendedSadMovie: null,
 			
 
 		},
@@ -32,8 +33,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 				getActions().changeColor(0, "green");
 			},
 
-			setRecommendedMovie: movie => {
-                setStore({ recommendedMovie: movie });
+			setRecommendedFunnyMovie: movie => {
+                setStore({ recommendedFunnyMovie: movie });
+			},
+
+			setRecommendedSadMovie: movie => {
+                setStore({ recommendedSadMovie: movie });
 			},
 
 			getMovie: () => {
@@ -69,7 +74,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					}
 				};
 				
-				fetch('https://api.themoviedb.org/3/movie/top_rated?language=es-ES&page=1', options)
+				fetch('https://api.themoviedb.org/3/movie/top_rated?language=es-ES&page=100', options)
 					.then(response => response.json())
 					.then(data => {
 						console.log(data)
@@ -131,7 +136,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					.catch(err => console.error(err));
 			},
 
-			getRecommendation: () => {
+			getFunnyRecommendation: () => {
 				console.log("Hola desde Flux")
 				const options = {
 					method: 'GET',
@@ -146,7 +151,30 @@ const getState = ({ getStore, getActions, setStore }) => {
 					if (funnyMovie.length > 0){
 						const ramdomIndex = Math.floor(Math.random() * funnyMovie.length);
 						const ramdomMovie = funnyMovie[ramdomIndex];
-						getActions().setRecommendedMovie(ramdomMovie);
+						getActions().setRecommendedFunnyMovie(ramdomMovie);
+						console.log(ramdomMovie)
+					}
+					})
+					.catch(err => console.error(err));
+				
+			},
+
+			getSadRecommendation: () => {
+				console.log("Hola desde Flux")
+				const options = {
+					method: 'GET',
+				};
+
+				fetch('https://ominous-invention-7gwqjv65g5qhwwrw-3001.app.github.dev/api/movies_2', options)
+					.then(response => response.json())
+					.then(data => {
+						const sadMovie = data.filter(movie => movie.sad === true);
+						console.log(sadMovie)
+
+					if (sadMovie.length > 0){
+						const ramdomIndex = Math.floor(Math.random() * sadMovie.length);
+						const ramdomMovie = sadMovie[ramdomIndex];
+						getActions().setRecommendedSadMovie(ramdomMovie);
 						console.log(ramdomMovie)
 					}
 					})
