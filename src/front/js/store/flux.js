@@ -21,11 +21,19 @@ const getState = ({ getStore, getActions, setStore }) => {
 			results: [],
 			page: 1,
 			movies_from_api:[],
+			movies_from_api_2:[],
+			recommendedMovie: null,
+			
+
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
 			exampleFunction: () => {
 				getActions().changeColor(0, "green");
+			},
+
+			setRecommendedMovie: movie => {
+                setStore({ recommendedMovie: movie });
 			},
 
 			getMovie: () => {
@@ -61,7 +69,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					}
 				};
 				
-				fetch('https://api.themoviedb.org/3/movie/top_rated?language=es-ES&page=3', options)
+				fetch('https://api.themoviedb.org/3/movie/top_rated?language=es-ES&page=1', options)
 					.then(response => response.json())
 					.then(data => {
 						console.log(data)
@@ -106,6 +114,44 @@ const getState = ({ getStore, getActions, setStore }) => {
 						setStore({ movies_from_api: data || [] });
 					})
 					.catch(err => console.error(err));
+			},
+
+			getMovieListFromApi2: () => {
+				console.log("Lista del api personal desde flux");
+				const options = {
+					method: 'GET',
+				};
+				
+				fetch('https://ominous-invention-7gwqjv65g5qhwwrw-3001.app.github.dev/api/movies_2', options)
+					.then(response => response.json())
+					.then(data => {
+						console.log(data)
+						setStore({ movies_from_api_2: data || [] });
+					})
+					.catch(err => console.error(err));
+			},
+
+			getRecommendation: () => {
+				console.log("Hola desde Flux")
+				const options = {
+					method: 'GET',
+				};
+
+				fetch('https://ominous-invention-7gwqjv65g5qhwwrw-3001.app.github.dev/api/movies_2', options)
+					.then(response => response.json())
+					.then(data => {
+						const funnyMovie = data.filter(movie => movie.funny === true);
+						console.log(funnyMovie)
+
+					if (funnyMovie.length > 0){
+						const ramdomIndex = Math.floor(Math.random() * funnyMovie.length);
+						const ramdomMovie = funnyMovie[ramdomIndex];
+						getActions().setRecommendedMovie(ramdomMovie);
+						console.log(ramdomMovie)
+					}
+					})
+					.catch(err => console.error(err));
+				
 			},
 
 			
