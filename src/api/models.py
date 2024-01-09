@@ -10,12 +10,17 @@ Base = declarative_base()
 
 db = SQLAlchemy()
 
-
-class Admin(Base):
+class Admin(db.Model):
     __tablename__ = 'admin'
-    id = Column(Integer, primary_key=True)
-    full_name = Column(String(250))
-    email = Column(String(250))
+    id = db.Column(db.Integer, primary_key=True)
+    full_name = db.Column(db.String(250), unique=False, nullable=False)
+    email = db.Column(db.String(250), unique=True, nullable=False)
+    admin_nickname = db.Column(db.String(250), unique=False, nullable=False)
+    password = db.Column(db.String(250), unique=False, nullable=False)	
+    videogame_id = db.Column(db.Integer, db.ForeignKey('videogame.videogame_id'))
+    # genre_id = db.Column(db.Integer, db.ForeignKey('genre.genre_id')) 
+    # console_id = db.Column(db.Integer, db.ForeignKey('console.console_id'))
+
     # is_active = db.Column(db.Boolean(), unique=False)
     
     def serialize(self):
@@ -24,24 +29,26 @@ class Admin(Base):
             "email": self.email,
         }
     
-class Videogame(Base):
+class User(db.Model):
+    __tablename__ = 'user'
+    id = db.Column(db.Integer, primary_key=True)
+    full_name = db.Column(db.String(250), unique=False, nullable=False)
+    email = db.Column(String(250), unique=True, nullable=False)
+    user_name = db.Column(db.String(250), unique=False, nullable=False)
+    city = db.Column(db.String(250), unique=False, nullable=False)
+    country = db.Column(db.String(250), unique=False, nullable=False)
+
+class Videogame(db.Model):
     __tablename__ = 'videogame'
-    videogame_id = Column(Integer, primary_key=True)
-    name = Column(String(250))
-    pegi = Column(String(250))
-    year = Column(String(50))
+    videogame_id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(250), unique=False, nullable=False)
+    pegi = db.Column(db.String(50), unique=False, nullable=False)
+    year = db.Column(db.String(50), unique=False, nullable=False)
     # admin_id = Column(Integer, ForeignKey('admin.id'))
     # admin = relationship(Admin)
 
 
-class User(Base):
-    __tablename__ = 'user'
-    id = Column(Integer, primary_key=True)
-    full_name = Column(String(250))
-    email = Column(String(250))
-    user_name = Column(String(250))
-    city = Column(String(250))
-    country = Column(String(250))
+
      
 
 
