@@ -10,24 +10,24 @@ Base = declarative_base()
 
 db = SQLAlchemy()
 
-class Admin(db.Model):
-    __tablename__ = 'admin'
-    id = db.Column(db.Integer, primary_key=True)
-    full_name = db.Column(db.String(250), unique=False, nullable=False)
-    email = db.Column(db.String(250), unique=True, nullable=False)
-    admin_nickname = db.Column(db.String(250), unique=False, nullable=False)
-    password = db.Column(db.String(250), unique=False, nullable=False)	
-    videogame_id = db.Column(db.Integer, db.ForeignKey('videogame.videogame_id'))
+# class Admin(db.Model):
+#     __tablename__ = 'admin'
+#     id = db.Column(db.Integer, primary_key=True)
+#     full_name = db.Column(db.String(250), unique=False, nullable=False)
+#     email = db.Column(db.String(250), unique=True, nullable=False)
+#     admin_nickname = db.Column(db.String(250), unique=False, nullable=False)
+#     password = db.Column(db.String(250), unique=False, nullable=False)	
+#     videogame_id = db.Column(db.Integer, db.ForeignKey('videogame.videogame_id'))
     # genre_id = db.Column(db.Integer, db.ForeignKey('genre.genre_id')) 
     # console_id = db.Column(db.Integer, db.ForeignKey('console.console_id'))
 
     # is_active = db.Column(db.Boolean(), unique=False)
     
-    def serialize(self):
-        return {
-            "id": self.id,
-            "email": self.email,
-        }
+    # def serialize(self):
+    #     return {
+    #         "id": self.id,
+    #         "email": self.email,
+    #     }
     
 class User(db.Model):
     __tablename__ = 'user'
@@ -35,9 +35,22 @@ class User(db.Model):
     full_name = db.Column(db.String(250), unique=False, nullable=False)
     email = db.Column(String(250), unique=True, nullable=False)
     user_name = db.Column(db.String(250), unique=False, nullable=False)
+    password = db.Column(db.String(250), unique=True, nullable=False)
     city = db.Column(db.String(250), unique=False, nullable=False)
     country = db.Column(db.String(250), unique=False, nullable=False)
+    is_active = db.Column(db.Boolean(), unique=False, nullable=False)
 
+    def serialize(self):
+        return {
+            "id": self.id,
+            "full_name": self.id,
+            "email": self.email,
+            "user_name": self.user_name,
+            "city": self.city,
+            "country": self.country,
+            # do not serialize the password, its a security breach
+        }
+    
 class Videogame(db.Model):
     __tablename__ = 'videogame'
     videogame_id = db.Column(db.Integer, primary_key=True)
@@ -47,7 +60,13 @@ class Videogame(db.Model):
     # admin_id = Column(Integer, ForeignKey('admin.id'))
     # admin = relationship(Admin)
 
-
+    def serialize(self):
+        return {
+            "name": self.name,
+            "pegi": self.pegi,
+            "year": self.year,
+            # do not serialize the password, its a security breach
+        }
 
      
 

@@ -23,25 +23,37 @@ def handle_hello():
     return jsonify(response_body), 200
 
 # GET ALL Videogames
-@api.route('/videogames', methods=['GET'])
-def get_all_Videogame():
+@api.route('/videogame', methods=['GET'])
+def get_all_videogame():
     videogame = Videogame.query.all()
     if len(videogame) < 1:
         return jsonify({"msg": "not found"}), 404
     
-    response_body = list(map(lambda item: item.serialize(), get_all_Videogame))
+    response_body = list(map(lambda item: item.serialize(), videogame))
     
     return jsonify(response_body), 200
 
 # CREATE VIDEOJUEGO
-@api.route('/Videogame', methods=['POST'])
-def save_videogame(videogame_id):
-    name = request.json.get("name" ,None)
-    pegi = request.json.get("pegi" ,None)
-    year = request.json.get("year" ,None)
+@api.route('/videogame', methods=['POST'])
+def save_videogame():
+    data = {
+        "name": data.get("name" ,None),
+        "pegi": data.get("pegi" ,None),
+        "year": data.get("year" ,None)
+    }
+    
+    videogame = Videogame(
+        name=data.get("name"),
+        pegi=data.get("pegi"),
+        year=data.get("year"),
+    )
 
-    new_videogame = Videogame(videogame_id = videogame_id)
-    db.session.add(new_videogame)
-    db.session.commit()
+    # new_videogame = Videogame(videogame_id = videogame_id)
+    db.session.add(videogame)
 
-    return jsonify("Videojuego created"), 200
+    try:
+        db.session.commit()
+        return jsonify({"message":"post created succesfully"}),201
+    except Exception as error:
+        print(error)
+        return jsonify({"message":"error creating post"}), 500
