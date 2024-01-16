@@ -1,6 +1,11 @@
 /* navbar.css */
 
 /* Override Bootstrap's navbar-dark styles */
+img {
+  height: 45px;
+  padding-left: 10px;
+}
+
 .navbar {
     background-color: #FFA500; /* Orange background color */
   }
