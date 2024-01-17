@@ -9,29 +9,44 @@ export const Signup = () => {
   const {store,actions}=useContext(Context)
   
   const [signup, setSignup]=useState(store.formSignup)
+  const [confirmPassword, setConfirmPassword] = useState('');
 
   const goToLogin=useNavigate()
   const formRef= useRef (null)
 
-  const handleInputForm = (value,name)=>{
-
-    setSignup({...signup,[name]:value})
-
-  }
-
-  const handleSubmit = async (formSignup)=>{
-    try{
-      console.log(formSignup)
-      await actions.signupNewUser(formSignup)
-      alert(`The user  was created succesfully`)
-      formRef.current.reset()
-      setSignup(store.formSignup)
-      goToLogin("/login")
+  const handleInputForm = (value, name) => {
+    if (name === 'confirmPassword') {
+      setConfirmPassword(value);
+    } else {
+      setSignup({ ...signup, [name]: value });
     }
-    catch(e){
-      console.log("An error was occurred, check it out", e)
+   };
+
+   const handleSubmit = async (formSignup) => {
+    // Iterate over the signup state object
+    for (let key in formSignup) {
+      // Check if the value of the current field is empty
+      if (!formSignup[key]) {
+        alert(`Please fill in the ${key} field.`);
+        return;
+      }
     }
-  }
+   
+    try {
+      if (signup.password !== confirmPassword) {
+        alert("Passwords don't match");
+        return;
+      }
+      console.log(formSignup);
+      await actions.signupNewUser(formSignup);
+      alert(`The user was created successfully`);
+      formRef.current.reset();
+      setSignup(store.formSignup);
+      goToLogin("/login");
+    } catch (e) {
+      console.log("An error occurred, check it out", e);
+    }
+   };
 
   return (
     <div className='container-form'>
@@ -45,6 +60,9 @@ export const Signup = () => {
 
             <label className='label-signup' for="password">Password:</label>
             <input className='input-signup' type="password" id="password" name="password"  onChange={(e)=>(handleInputForm(e.target.value, e.target.name))} required/>
+
+            <label className='label-signup' for="confirmPassword">Confirm Password:</label>
+            <input className='input-signup' type="password" id="confirmPassword" name="confirmPassword" onChange={(e)=>(handleInputForm(e.target.value, e.target.name))} required/>
 
             <button className="button-signup" type="button" onClick={()=>handleSubmit(signup)}>Sign Up</button>
         </form>
