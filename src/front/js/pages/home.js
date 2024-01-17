@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Context } from "../store/appContext";
-import road66 from "../../img/road66.jpg";
+
 import "../../styles/home.css";
 
 export const Home = () => {
@@ -8,13 +8,14 @@ export const Home = () => {
 
 	return (
 		<div className="home-container">
-			<img src={road66} alt="Road 66" className="home-background" />
-			<div className="jumbotron">
-				<h1>Ever wondered what to pack? How many days to spend? What museum to visit?</h1>
-				<p>Because life is too short to cross check each travel blog..</p>
-			</div>
-			<div className="jumbotron" style={{ top: '100%' }}>
-				<h1>DioDio's got you covered!</h1>
+			<div className="bg position-relative text-center">
+				<div className="overlay"></div>
+				<div className="jumbo">
+				<h1 className="display-5 fw-bold">Ever wondered what to pack in February? How many days to spend? Which museum to visit?</h1>
+				<div className="col-lg-6 mx-auto">
+					<h2 className="lead mb-4">DioDio's got you covered!</h2>
+				</div>
+				</div>
 			</div>
 		</div>
 	);
