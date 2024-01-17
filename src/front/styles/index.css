@@ -1,3 +1,107 @@
-/* 
-    General Styles used on every website (Don't Repeat Yourself)
-*/
+.body {
+    font-family: 'Poppins', sans-serif;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+h4 {
+    font-size: medium;
+}
+
+a {
+    text-decoration: none;
+  }
+
+button {
+    border-radius: 5px;
+}
+
+.btn-primary{
+    background: #FF8D91;
+    color: black;
+}
+
+.btn-secondary{
+    background: none;
+    border: solid;
+    border-width: 1px;
+}
+
+.custom-btn {
+    border-color: #FF8D91; 
+  
+    /* Hover effect */
+    &:hover {
+      background-color: #000; 
+      color: #fff; 
+      border-color: #FF8D91; 
+    }
+  }
+  
+.custom-btn-dark {
+    border-color: #FF8D91; 
+  
+    /* Hover effect */
+    &:hover {
+      background-color: #FF8D91; 
+      color: #000; 
+    }
+  }
+  
+
+
+.navbar-custom {
+    background-color: #000; 
+    padding: 15px 0; 
+
+  }
+
+  .navbar-custom .navbar-brand {
+    font-size: 1.5rem; 
+  }
+
+  .navbar-custom .navbar-nav {
+    margin: 0;
+  }
+
+  .navbar-custom .navbar-nav .nav-link {
+    color: #fff; 
+    font-size: 1rem;
+    padding: 0.5rem 1rem; 
+  }
+
+  .navbar-custom .nav-buttons button {
+    margin-left: 1rem; 
+    padding: 5px 30px;
+  }
+
+.footer {
+    background: #000;
+    font-size: small;
+    font-weight: 100;
+    margin: 50px 0 50px 0;
+}
+
+.footer-item {
+    margin: 0px 100px 0px 100px;
+}
+
+.footer-header {
+    color: #FF8D91;
+}
+
+.footer-paragraph {
+    color: white;
+    margin-bottom: 0; 
+  }
+  
+
+.footer-link {
+    color: white;
+  }
+  
+.footer-link:hover {
+    color: #FF8D91; 
+  }

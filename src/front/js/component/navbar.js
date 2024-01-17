@@ -3,17 +3,34 @@ import { Link } from "react-router-dom";
 
 export const Navbar = () => {
 	return (
-		<nav className="navbar navbar-light bg-light">
-			<div className="container">
-				<Link to="/">
-					<span className="navbar-brand mb-0 h1">React Boilerplate</span>
-				</Link>
-				<div className="ml-auto">
-					<Link to="/demo">
-						<button className="btn btn-primary">Check the Context in action</button>
-					</Link>
+		<div className="container-full nav-container">
+			<nav className="navbar navbar-expand-lg navbar-dark navbar-custom d-flex justify-content-between px-5">
+
+				<div className="site-logo">
+				<a className="navbar-brand" href="#">Our Logo</a>
 				</div>
-			</div>
-		</nav>
+
+				<div className="nav-items">
+				<div className="collapse navbar-collapse" id="navbarNav">
+					<ul className="navbar-nav ml-auto">
+					<li className="nav-item active mx-3">
+						<a className="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+					</li>
+					<li className="nav-item mx-3">
+						<a className="nav-link" href="#">Events</a>
+					</li>
+					<li className="nav-item mx-3">
+						<a className="nav-link" href="#">Contact</a>
+					</li>
+					</ul>
+				</div>
+				</div>
+
+				<div className="nav-buttons">
+					<button class="btn btn-primary custom-btn" id="signUpBtn">Sign Up</button>
+					<button class="btn btn-secondary custom-btn-dark ml-3" id="logInBtn">Log In</button>
+				</div>
+			</nav>
+		</div>
 	);
 };
