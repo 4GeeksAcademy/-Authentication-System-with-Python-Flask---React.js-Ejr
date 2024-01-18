@@ -50,7 +50,9 @@ button {
     }
   }
   
+/* ------ BACKGROUND PHOTOS ------ */
 
+/* ------ NAVBAR STYLING ------ */
 
 .navbar-custom {
     background-color: #000; 
@@ -77,6 +79,8 @@ button {
     padding: 5px 30px;
   }
 
+/* ------ FOOTER STYLING ------ */
+
 .footer {
     background: #000;
     font-size: small;
@@ -96,7 +100,6 @@ button {
     color: white;
     margin-bottom: 0; 
   }
-  
 
 .footer-link {
     color: white;
