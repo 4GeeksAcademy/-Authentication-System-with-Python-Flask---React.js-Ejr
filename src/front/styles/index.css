@@ -6,6 +6,26 @@
     overflow: hidden;
 }
 
+.black-background {
+  background: rgb(18, 18, 18);
+  color: white;
+}
+
+.about {
+  display: flex;
+  align-content: center;
+  justify-content: space-evenly;
+  padding: 100px 0px ;
+  text-align: left;
+}
+
+.image-container {
+  width: 500px;
+  height: 400px;
+  background: white;
+  margin-right: 50px;
+}
+
 h4 {
     font-size: medium;
 }
@@ -51,7 +71,14 @@ button {
   }
   
 /* ------ BACKGROUND PHOTOS ------ */
-
+.home-hero {
+  background: #272727;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 600px;
+}
 /* ------ NAVBAR STYLING ------ */
 
 .navbar-custom {

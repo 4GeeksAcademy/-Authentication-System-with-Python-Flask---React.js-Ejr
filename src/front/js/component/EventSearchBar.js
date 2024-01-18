@@ -15,7 +15,7 @@ const EventSearchBar = () => {
           <input type="text" className="form-control" id="locationInput" placeholder="Enter location" />
         </div>
         <div className="col-md-1 mb-3">
-          <button type="button" className="btn btn-primary w-100">Search</button>
+          <button type="button" className="btn btn-primary custom-btn w-100">Search</button>
         </div>
       </div>
     </div>

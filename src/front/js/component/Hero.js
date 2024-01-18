@@ -17,7 +17,7 @@ const Hero = ({ header, text }) => {
 
         <EventSearchBar />
 
-        <div className="row d-flex align-items-center justify-content-center mb-5">
+        <div className="row d-flex align-items-center justify-content-center pb-5">
           <div className="col-8 hero-text">
             <p>{text}</p>
           </div>
