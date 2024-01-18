@@ -19,6 +19,10 @@
   text-align: left;
 }
 
+.about-text {
+  padding-right: 100px;
+}
+
 .image-container {
   width: 500px;
   height: 400px;

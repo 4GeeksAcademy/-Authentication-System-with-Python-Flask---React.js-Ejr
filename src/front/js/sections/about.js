@@ -11,9 +11,9 @@ const AboutSection = () => {
                     {/*  <img src="/workspaces/ryandornan-full-stack-project/src/front/img/how-to.png"></img> */} 
                 </div>
 
-                <div className="col-md-5 mb-4">
+                <div className="col-md-5 mb-4 about-text">
 
-                    <h1 className="mt-4 mb-5">About Us</h1>
+                    <h1 className="mt-3 mb-5">About Us</h1>
 
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In id odio ultrices, rhoncus leo ac, 
                         placerat diam. Etiam id nulla ut est interdum mattis a eget tellus. Integer in erat imperdiet 
@@ -22,7 +22,7 @@ const AboutSection = () => {
                         placerat diam. Etiam id nulla ut est interdum mattis a eget tellus. Integer in erat imperdiet 
                         orci ullamcorper venenatis. </p>
 
-                    <button class="btn btn-primary custom-btn mt-5" id="signUpBtn">Sign Up</button>
+                    <button class="btn btn-primary custom-btn mt-5" id="signUpBtn">View All Events</button>
 
                 </div>
 
