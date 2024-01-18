@@ -13,7 +13,7 @@ const AboutSection = () => {
 
                 <div className="col-md-5 mb-4 about-text">
 
-                    <h1 className="mt-3 mb-5">About Us</h1>
+                    <h2 className="mt-3 mb-5">About Us</h2>
 
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In id odio ultrices, rhoncus leo ac, 
                         placerat diam. Etiam id nulla ut est interdum mattis a eget tellus. Integer in erat imperdiet 
