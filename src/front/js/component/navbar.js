@@ -11,14 +11,9 @@ export const Navbar = () => {
   const offcanvasRef = useRef(null)
 
   const openLoginModal = () => {
-    if (offcanvasRef.current) {
-      const offcanvas = new window.bootstrap.Offcanvas(offcanvasRef.current);
-      offcanvas.hide();
-    }
-  
     setTimeout(() => {
       setIsLoginOpen(true);
-    }, 500); // 
+    }, 1); // 
   };
 
 
@@ -86,7 +81,7 @@ export const Navbar = () => {
                       offcanvas.classList.remove("show");
                       const backdrop = document.querySelector(".offcanvas-backdrop");
                       if (backdrop) {
-                        backdrop.remove();
+                        backdrop.classList.remove("show");
                       }
                     }}
                 }
