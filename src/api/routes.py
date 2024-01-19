@@ -29,12 +29,14 @@ def handle_hello():
 @api.route('/signup', methods=['POST'])
 def create_user():
     email = request.json.get("email")
+    username = request.json.get("username")
     password = request.json.get("password")
     secure_password = get_hash(
         password)
     
     new_user = User()
     new_user.email = email
+    new_user.username = username
     new_user.password = secure_password
     new_user.is_active = True
     db.session.add(new_user)
@@ -67,3 +69,18 @@ def protected():
 def handle_get_hash():
     to_hash = request.json.get("string")
     return get_hash(to_hash)
+
+@api.route('/users', methods=['GET'])
+def handle_get_users():
+   all_users = User.query.all()
+   all_users = list(map(lambda item: item.serialize(), all_users))
+   results = all_users
+
+   if not results:
+       return jsonify({"msg": "There are no users "}), 404
+
+   response_body = {
+       "results": results
+   }
+
+   return jsonify(response_body), 200
