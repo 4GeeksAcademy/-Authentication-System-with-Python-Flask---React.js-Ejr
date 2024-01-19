@@ -144,13 +144,13 @@ class Personal_List(db.Model):
             # do not serialize the password, its a security breach
         }
         
-        #PREGUNTAR RELACION DOBLE CON MISMA TABLA
 class Follower(db.Model):
     __tablename__='follower'
     id = db.Column(db.Integer, primary_key=True)
     user_from_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     user_to_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    user_relationship = db.relationship(User)
+    user_from_id_relationship = db.relationship(User, foreign_keys = [user_from_id])
+    user_to_id_relationship = db.relationship(User, foreign_keys = [user_to_id])
 
 #informacion cuando se hace print en el admin
     def __repr__(self):
