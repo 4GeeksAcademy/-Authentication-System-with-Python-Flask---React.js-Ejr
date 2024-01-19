@@ -9,12 +9,14 @@
 .jumbo {
     line-height: 50px;
     height: 100%;
+    width: 100%;
     display: flex;
     justify-content: center;
     position: relative;
     flex-direction: column;
     z-index: 2;
     color: white;
+    
 }
 
 h1 {
@@ -35,4 +37,24 @@ p {
 
 .home-container {
     position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
 }
+
+.button {
+    display: inline-block;
+    border: 2px solid;
+    padding: 10px 20px;
+    color: #fff;
+    text-decoration: none;
+    transition: 0.3s;
+    font-weight: 700;
+    border-radius: 8px;;
+  }
+
+.button:hover {
+    background: orange;
+    color: black;
+  }
