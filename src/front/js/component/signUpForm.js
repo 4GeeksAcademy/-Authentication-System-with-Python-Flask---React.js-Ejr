@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import '../../styles/authForms.css';
 
+
 const SignUpForm = () => {
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
