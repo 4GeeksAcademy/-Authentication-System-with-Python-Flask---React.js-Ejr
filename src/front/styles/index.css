@@ -11,6 +11,10 @@
   color: white;
 }
 
+.grey-background {
+  background: #272727;
+}
+
 .about {
   display: flex;
   align-content: center;

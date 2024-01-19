@@ -5,6 +5,7 @@ import "../../styles/home.css";
 import EventSearchBar from "../component/EventSearchBar";
 import Hero from "../component/Hero";
 import AboutSection from "../sections/about";
+import { LoginForm } from "../component/logInForm";
 
 export const Home = () => {
 	const { store, actions } = useContext(Context);
@@ -24,6 +25,8 @@ export const Home = () => {
 			</div>
 			
 			<AboutSection />
+
+			<LoginForm />
 			
 
 		</div>
