@@ -118,6 +118,109 @@ def logout():
     # Perform any additional logout actions here, if needed    
     return jsonify({'msg': 'Logout successful'}), 200
 
+@app.route("/forgotpassword", methods=["POST"])
+@jwt_required()
+def forgot_password():
+    if not request.is_json:
+        return jsonify({"msg": "Missing JSON in request"}), 400
+
+    email = request.json.get("email", None)
+    if not email:
+        return jsonify({"msg": "Missing email parameter"}), 400
+
+    if email not in User:
+        return jsonify({"msg": "Email not registered"}), 404
+
+    # Generate a token for password recovery
+    recovery_token = create_access_token(identity=email)
+
+    # Here you might want to send an email with the recovery_token to the user
+    # For demonstration purposes, we're just returning the token in the response
+    return jsonify(recovery_token=recovery_token), 200
+
+# Followed users management
+@app.route("/follwouser/<int:id>", methods=["POST"])
+def follow_user():
+    return jsonify({"msg": "ok"})
+
+@app.route("/unfollowuser/<int:id>", methods=["POST"])
+def unfollow_user():
+    return jsonify({"msg": "ok"})
+
+# Personal movie list management
+@app.route("/favoritemovies", methods=["POST"])
+def add_movie_personal():
+    return jsonify({"msg": "ok"})
+
+@app.route("/favoritemovies/<int:id>", methods=["DELETE"])
+def remove_movie_personal():
+    return jsonify({"msg": "ok"})
+
+# Personal view state management
+@app.route("/viewstate/<int:id>", methods=["GET"])
+def change_view_status():
+    return jsonify({"msg": "ok"})
+
+# Movie management
+@app.route("/movies", methods=["GET"])
+def get_movies():
+    return jsonify({"msg": "ok"})
+
+@app.route("/movie/<int:id>", methods=["GET"])
+def get_movie():
+    return jsonify({"msg": "ok"})
+
+@app.route("/addmovie", methods=["POST"])
+def add_movie():
+    return jsonify({"msg": "ok"})
+
+@app.route("/deletemovie/<int:id>", methods=["DELETE"])
+def delete_movie():
+    return jsonify({"msg": "ok"})
+
+@app.route("/updatemovie/<int:id>", methods=["PUT"])
+def update_movie():
+    return jsonify({"msg": "ok"})
+
+# Movie review management
+@app.route("/reviews", methods=["POST"])
+def add_review():
+    return jsonify({"msg": "ok"})
+
+@app.route("/reviews/<int:id>", methods=["PUT"])
+def update_review():
+    return jsonify({"msg": "ok"})
+
+@app.route("/reviews/<int:id>", methods=["DELETE"])
+def delete_review():
+    return jsonify({"msg": "ok"})
+
+# Movie details management
+@app.route("/moviedetails/<int:id>", methods=["GET"])
+def get_movie_details():
+    return jsonify({"msg": "ok"})
+
+# Actor management
+@app.route("/actors", methods=["GET"])
+def get_actors():
+    return jsonify({"msg": "ok"})
+
+@app.route("/actors/<int:id>", methods=["GET"])
+def get_actor():
+    return jsonify({"msg": "ok"})
+
+@app.route("/actors", methods=["POST"])
+def add_actor():
+    return jsonify({"msg": "ok"})
+
+@app.route("/actors/<int:id>", methods=["PUT"])
+def update_actor():
+    return jsonify({"msg": "ok"})
+
+@app.route("/actors/<int:id>", methods=["DELETE"])
+def delete_actor():
+    return jsonify({"msg": "ok"})
+
 
 @app.route('/<path:path>', methods=['GET'])
 def serve_any_other_file(path):
