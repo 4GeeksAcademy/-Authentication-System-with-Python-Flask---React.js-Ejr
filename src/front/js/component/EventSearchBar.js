@@ -4,7 +4,7 @@ const EventSearchBar = () => {
   return (
     <div className="container my-5">
 
-      <div className="row justify-content-center align-items-center">
+      <div className="row justify-content-space-between align-items-center">
 
         {/* Event Input */}
         <div className="col-md-3 mb-3">
@@ -50,8 +50,8 @@ const EventSearchBar = () => {
         </div>
 
         {/* Search Button */}
-        <div className="col-md-2 mb-3 pr-5">
-          <button type="button" className="btn btn-primary custom-btn btn-block">
+        <div className="search-button col-md-2 mb-3 p-0">
+          <button type="button" className="btn btn-primary custom-btn btn-block m-0">
             Search
           </button>
         </div>

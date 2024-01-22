@@ -7,6 +7,7 @@ import Hero from "../component/Hero";
 import AboutSection from "../sections/about";
 import { LoginForm } from "../component/logInForm";
 import { SignUpForm } from "../component/signUpForm";
+import PopularEvents from "../sections/popularEvents";
 
 export const Home = () => {
 	const { store, actions } = useContext(Context);
@@ -24,12 +25,14 @@ export const Home = () => {
 					/>
 				</div>
 			</div>
-			
+
 			<AboutSection />
 
-			<LoginForm />
+			<PopularEvents />
 
 			<SignUpForm />
+
+			<LoginForm />
 			
 
 		</div>

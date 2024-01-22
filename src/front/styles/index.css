@@ -6,6 +6,8 @@
     overflow: hidden;
 }
 
+/* ------ BACKGROUND COLOUR STYLING ------ */
+
 .black-background {
   background: rgb(18, 18, 18);
   color: white;
@@ -21,14 +23,6 @@
   justify-content: space-evenly;
   padding: 80px 0px 60px 0px ;
   text-align: left;
-}
-
-.login {
-  margin: 150px;
-}
-
-.signup {
-  margin: 150px
 }
 
 .about-text {
@@ -86,15 +80,18 @@ button {
     }
   }
   
-/* ------ BACKGROUND PHOTOS ------ */
+/* ------ HOME HERO STYLING ------ */
+
+
 .home-hero {
   background: #272727;
   color: white;
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 600px;
+  height: 75vh;
 }
+
 /* ------ NAVBAR STYLING ------ */
 
 .navbar-custom {
@@ -121,6 +118,16 @@ button {
     margin-left: 1rem; 
     padding: 5px 30px;
   }
+
+/* ------ POPULAR EVENTS STYLING ------ */
+
+.popular-events {
+  padding: 100px 0px; 
+}
+
+.popular-events h2 {
+  color: white;
+}
 
 /* ------ FOOTER STYLING ------ */
 
@@ -152,13 +159,15 @@ button {
     color: #FF8D91; 
   }
 
-  .custom-card {
+/* ------ LOGIN & SIGN UP CARD & SECTION STYLING ------ */  
+
+.custom-card {
     background: rgba(255, 255, 255, 0.1); 
     border: none; 
     color: white;
   }
 
-  .custom-card label {
+.custom-card label {
     color: #a8a8a8;
   }
 
@@ -168,4 +177,27 @@ button {
 
 .form-control::placeholder {
   font-size: 14px;
+}
+
+.login {
+  margin: 150px;
+}
+
+.signup {
+  margin: 150px
+}
+
+.search-button {
+  margin: none;
+  padding: none;
+}
+
+/* ------ EVENT CARD STYLING ------ */  
+
+.event-card {
+  margin: 0px 20px;
+}
+
+.event-card-body {
+  padding: 30px;
 }
