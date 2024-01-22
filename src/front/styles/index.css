@@ -23,6 +23,14 @@
   text-align: left;
 }
 
+.login {
+  margin: 150px;
+}
+
+.signup {
+  margin: 150px
+}
+
 .about-text {
   padding-right: 100px;
 }
@@ -156,4 +164,8 @@ button {
 
 .card-body {
   text-align: left;
+}
+
+.form-control::placeholder {
+  font-size: 14px;
 }
