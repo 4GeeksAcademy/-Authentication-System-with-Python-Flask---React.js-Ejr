@@ -85,7 +85,7 @@ def signup():
     db.session.add(new_user)
     db.session.commit()
 
-    return jsonify({'msg':'Registrado correctamente'}), 200
+    return jsonify({'msg':'Usuarion registrado correctamente'}), 200
 
 @app.route('/login', methods=['POST'])
 def login():
@@ -137,6 +137,45 @@ def forgot_password():
     # Here you might want to send an email with the recovery_token to the user
     # For demonstration purposes, we're just returning the token in the response
     return jsonify(recovery_token=recovery_token), 200
+
+#EDIT USER
+@app.route('/edituser/<int:user_id>', methods=['PUT'])
+def update_user(user_id):
+    body = request.get_json(silent=True)
+    if body is None:
+        return jsonify({'msg': 'Debes enviar información en el body'}), 400
+    user = User.query.get(user_id)
+    if user is None:
+        return jsonify({'msg': 'Usuario no encontrado'}), 404
+    if "name" in body:
+        user.name = body['name']
+    if "username" in body:
+        user.username = body['username']
+    db.session.commit()
+    return jsonify({'msg': 'Usuario actualizado con éxito'}),200
+
+#DELETE USER
+@app.route('/deleteuser/<int:user_id>', methods=['DELETE'])
+def delete_user(user_id):
+    user = User.query.get(user_id)
+    db.session.delete(user)
+    db.session.commit()
+    return jsonify({'msg': 'Usuario se eliminó con éxito'}), 200
+
+#GET ALL USERS
+@app.route('/users', methods=['GET'])
+def get_all_users():
+    all_users = User.query.all()
+    serialized_all_users = list(map(lambda users: users.serialize(), all_users))
+    return jsonify({'msg': 'Usuario obtenidos:', 'results': serialized_all_users}), 200
+
+#GET ONE USER
+@app.route('/user/<int:user_id>', methods=['GET'])
+def get_user(user_id):
+    print(user_id)
+    user = User.query.get(user_id)
+    serialized_user = user.serialize()
+    return jsonify({'msg': 'El Usuario obtenido es:', 'results': serialized_user}), 200
 
 # Followed users management
 @app.route("/follwouser/<int:id>", methods=["POST"])
