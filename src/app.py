@@ -102,7 +102,7 @@ def login():
     access_token = create_access_token(identity=user.id)
     return jsonify({'msg':'ok','token':access_token})
 
-@app.route("/private", methods=["GET"])
+@app.route("/profile", methods=["GET"])
 @jwt_required()
 def private():
     # Access the identity of the current user with get_jwt_identity
