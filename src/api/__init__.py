@@ -47,5 +47,30 @@ def create_event():
 #message for the user that the event was created succesfully, maybe we need a modal for this 
     return jsonify({'message': 'Event created successfully'}), 201
 
+#Delete function for the promoter to delete their 
+def delete_event(event_id):
+    event = Event.query.get(event_id)
+    if event:
+        # Remove the event from the database
+        db.session.delete(event)
+        db.session.commit()
+        return jsonify({'message': 'Event deleted successfully'}), 200
+    else:
+        return jsonify({'message': 'Event not found'}), 404
+        @app.route('/api/edit_event/<int:event_id>', methods=['PUT'])
+def edit_event(event_id):
+    event = Event.query.get(event_id)
+    if event:
+        # Update event details
+        updated_event_data = request.json
+        event.event_name = updated_event_data.get('event_name', event.event_name)
+        event.event_address = updated_event_data.get('event_address', event.event_address)
+        event.ticket_price = updated_event_data.get('ticket_price', event.ticket_price)
+        event.description = updated_event_data.get('description', event.description)
+
+        db.session.commit()
+        return jsonify({'message': 'Event updated successfully', 'event': event}), 200
+    else:
+        return jsonify({'message': 'Event not found'}), 404
 if __name__ == '__main__':
     app.run(debug=True)
