@@ -143,3 +143,17 @@ button {
 .footer-link:hover {
     color: #FF8D91; 
   }
+
+  .custom-card {
+    background: rgba(255, 255, 255, 0.1); 
+    border: none; 
+    color: white;
+  }
+
+  .custom-card label {
+    color: #a8a8a8;
+  }
+
+.card-body {
+  text-align: left;
+}
