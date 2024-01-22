@@ -83,6 +83,10 @@ export const Navbar = () => {
                       if (backdrop) {
                         backdrop.classList.remove("show");
                       }
+                      const overlay = document.querySelector(".modal-overlay");
+                      if (overlay) {
+                        overlay.remove()
+                      }
                     }}
                 }
                 >
