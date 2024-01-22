@@ -69,7 +69,7 @@ export const Navbar = () => {
             <div className="offcanvas-body bg-dark">
               <ul className="navbar-nav justify-content-end flex-grow-1 pe-3">
                 <li className="nav-item">
-                  <Link className="nav-link active" to="#">
+                  <Link className="nav-link active" to="/">
                     Home
                   </Link>
                 </li>

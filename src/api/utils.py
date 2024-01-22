@@ -1,5 +1,7 @@
 from flask import jsonify, url_for
-import openai
+from openai import OpenAI
+
+client = OpenAI(api_key="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")
 
 
 class APIException(Exception):
@@ -49,7 +51,6 @@ def generate_sitemap(app):
     )
 
 
-openai.api_key = "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"
 
 
 def get_openai_response():
@@ -87,8 +88,6 @@ def get_openai_response():
         },
     ]
 
-    response = openai.Completion.create(
-        model="gpt-3.5-turbo", messages=user_messages, max_tokens=1024
-    )
-    assistant_reply = response["choices"][0]["message"]["content"]
+    response = client.completions.create(model="gpt-3.5-turbo", messages=user_messages, max_tokens=1024)
+    assistant_reply = response.choices[0].message.content
     return assistant_reply
