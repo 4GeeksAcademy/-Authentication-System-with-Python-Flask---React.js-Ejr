@@ -3,7 +3,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, Users, Planets,  Movies, Profiles, Characters
+from api.models import db, Users, Planets,  Movies, Profiles, Characters, FavoriteCharacters, FavoritePlanets
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from datetime import datetime
@@ -27,7 +27,8 @@ def handle_hello():
 
 @api.route('/users', methods=['GET', 'POST'])  
 def handle_users():
-    response_body = results = {}
+    response_body = {}
+    results = {}
     if request.method == 'GET':
         users = db.session.execute(db.select(Users)).scalars() #
         # Ejemplo 1 ¿qué pasaría si no hay ningún usuario?
@@ -90,7 +91,7 @@ def handle_user(user_id):
         response_body['results'] = results
         return response_body, 200
     if request.method == 'DELETE':
-        user = db.session.get(Users, user_id)
+        user = db.session.execute(db.select(Users).where(Users.id == user_id)).scalar()
         if not user:
             response_body['message'] = 'No Existe el Usuario'
             return response_body, 400

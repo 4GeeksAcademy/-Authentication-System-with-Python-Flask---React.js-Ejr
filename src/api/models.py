@@ -9,43 +9,70 @@ class Users(db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(80), unique=False, nullable=False)
     is_active = db.Column(db.Boolean(), unique=False, nullable=False)
-    subscription_date = db.Column(db.Date)
+    
 
     def __repr__(self):
-        return f'<Users {self.email}>'
+        return '<User: %r>' % self.email
 
     def serialize(self):
-        # do not serialize the password, its a security breach
-        return {"id": self.id,
+        return {"id": self.id, 
                 "email": self.email,
-                "is_active": self.is_active,
-                "subscription_date": self.subscription_date}
-
+                "is_active": self.is_active}
 
 class Profiles(db.Model):
     __tablename__ = 'profiles'
     id = db.Column(db.Integer, primary_key=True)
-    lastname = db.Column(db.String(20))
-    firstname = db.Column(db.String(20))
-    nickname = db.Column(db.String(6))
-    imgurl = db.Column(db.String())
+    lastname = db.Column(db.String(20), nullable=False)
+    firstname = db.Column(db.String(20), nullable=False)
+    nickname = db.Column(db.String(6), nullable=False)
+    imgurl = db.Column(db.String(), nullable=False)
+    # Relacion One to One. Un usuario un perfil.
     users_id = db.Column(db.Integer, db.ForeignKey('users.id'), unique=True) #Define un user a un perfil únicamente
     users = db.relationship(Users)
 
 
     def __repr__(self):
-        return '<Profiles %r>' % self.nickname
+        return '<Profiles %r>' % self.firstname
        
     def serialize(self):
         return {
             "id": self.id,
+            "firstname": self.firstname,
             "nickname": self.nickname,
             "lastname": self.lastname,
             "firstname": self.firstname,
             "imgurl": self.imgurl,
-            "users_id": self.users_id
-        }
+            "users_id": self.users_id}
+        
+    
+class Characters(db.Model):
+    __tablename__ = 'characters'
+    id = db.Column(db.Integer, primary_key = True)
+    name = db.Column(db.String, nullable=False)
+    gender = db.Column(db.String, nullable=False)
+    height = db.Column(db.Integer)
+    mass = db.Column(db.Integer)
+    hair_color = db.Column(db.String)
+    skin_color = db.Column(db.String)
+    # users_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    # users = db.relationship(Users)
+
+
+    def __repr__(self):
+        return '<Characters %r>' % self.name
    
+    def serialize(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            "gender": self.gender,
+            "height": self.height,
+            "hair_color": self.hair_color,
+            "skin_color": self.skin_color
+            # "users_id": self.users_id
+        }
+
+
 class Planets(db.Model):
     __tablename__ = 'planets'
     id = db.Column(db.Integer, primary_key = True)
@@ -57,9 +84,9 @@ class Planets(db.Model):
     climate = db.Column(db.String)
     terrain = db.Column(db.String)
     surface_water = db.Column(db.Integer)
-    url = db.Column(db.String, nullable=False)
-    users_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    users = db.relationship(Users)
+    # url = db.Column(db.String, nullable=False)
+    # users_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    # users = db.relationship(Users)
 
 
     def __repr__(self):
@@ -75,8 +102,8 @@ class Planets(db.Model):
             "population": self.population,
             "climate": self.climate,
             "terrain": self.terrain,
-            "surface_water": self.surface_water,
-            "users_id": self.users_id
+            "surface_water": self.surface_water
+            # "users_id": self.users_id
             # do not serialize the password, its a security breach
         }
  
@@ -85,8 +112,8 @@ class Movies(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     title = db.Column(db.String, nullable=False)
     year  = db.Column(db.Integer, nullable=False)
-    users_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    users = db.relationship(Users)
+    # users_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    # users = db.relationship(Users)
 
     def __repr__(self):
         return '<Movies %r>' % self.title
@@ -95,36 +122,9 @@ class Movies(db.Model):
         return {
             "id": self.id,
             "title": self.title,
-            "year": self.year,
-            "users_id": self.users_id
+            "year": self.year
+            # "users_id": self.users_id
             # do not serialize the password, its a security breach
-        }
-   
-class Characters(db.Model):
-    __tablename__ = 'characters'
-    id = db.Column(db.Integer, primary_key = True)
-    name = db.Column(db.String, nullable=False)
-    gender = db.Column(db.String, nullable=False)
-    height = db.Column(db.Integer)
-    mass = db.Column(db.Integer)
-    hair_color = db.Column(db.String)
-    skin_color = db.Column(db.String)
-    users_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    users = db.relationship(Users)
-
-
-    def __repr__(self):
-        return '<Characters %r>' % self.name
-   
-    def serialize(self):
-        return {
-            "id": self.id,
-            "name": self.name,
-            "gender": self.gender,
-            "height": self.height,
-            "hair_color": self.hair_color,
-            "skin_color": self.skin_color,
-            "users_id": self.users_id
         }
 
 
