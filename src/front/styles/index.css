@@ -34,3 +34,7 @@ body {
     font-weight: 400;
 }
 
+.btn-custom-purple {
+    background-color: #A259FF; 
+    color: #fff;
+}

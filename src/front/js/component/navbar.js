@@ -1,4 +1,3 @@
-
 import { Link } from "react-router-dom";
 import logo from "../../img/logo.png";
 import React, { useContext } from "react";
@@ -22,7 +21,7 @@ export const Navbar = () => {
 
 				
 				<div className="dropdown">
-				<a class="nav-link dropdown-toggle align-items-center" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+				<a className="nav-link dropdown-toggle align-items-center" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 						Mi Lista <div className="bg-danger px-1 mx-1 rounded d-flex justify-content-center">{store.contador}</div>
 				</a>
 
