@@ -5,9 +5,12 @@ import "../../styles/home.css";
 import EventSearchBar from "../component/EventSearchBar";
 import Hero from "../component/Hero";
 import AboutSection from "../sections/about";
-import { LoginForm } from "../component/logInForm";
-import { SignUpForm } from "../component/signUpForm";
-import PopularEvents from "../sections/popularEvents";
+import { LoginForm } from "../component/LogInForm";
+import { SignUpForm } from "../component/SignUpForm";
+import PopularEvents from "../sections/PopularEvents";
+import EventForm from "../component/CreateEventForm";
+import PopularCategories from "../sections/PopularCategories";
+
 
 export const Home = () => {
 	const { store, actions } = useContext(Context);
@@ -30,10 +33,14 @@ export const Home = () => {
 
 			<PopularEvents />
 
+			<PopularCategories />
+
 			<SignUpForm />
 
 			<LoginForm />
 			
+			<EventForm />
+
 
 		</div>
 	);

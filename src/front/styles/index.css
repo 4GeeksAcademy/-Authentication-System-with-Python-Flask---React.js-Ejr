@@ -17,6 +17,10 @@
   background: #272727;
 }
 
+.grey-two-background {
+  background: #1a1a1a;
+}
+
 .about {
   display: flex;
   align-content: center;
@@ -34,6 +38,10 @@
   height: 400px;
   background: white;
   margin-right: 50px;
+}
+
+.section-header {
+  margin-bottom: 100px;
 }
 
 h4 {
@@ -89,7 +97,7 @@ button {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 75vh;
+  height: 90vh;
 }
 
 /* ------ NAVBAR STYLING ------ */
@@ -119,10 +127,24 @@ button {
     padding: 5px 30px;
   }
 
+  
+/* ------ ABOUT STYLING ------ */
+
+.about {
+  padding: 130px 0px 100px 0px;
+}
+
+.img-fluid {
+  width: 500px;
+  height: 400px;
+}
+
+
+
 /* ------ POPULAR EVENTS STYLING ------ */
 
 .popular-events {
-  padding: 100px 0px; 
+  padding: 75px 0px; 
 }
 
 .popular-events h2 {
@@ -195,9 +217,9 @@ button {
 /* ------ EVENT CARD STYLING ------ */  
 
 .event-card {
-  margin: 0px 20px;
+  margin: 0px 0px;
 }
 
 .event-card-body {
-  padding: 30px;
+  padding: 20px;
 }
