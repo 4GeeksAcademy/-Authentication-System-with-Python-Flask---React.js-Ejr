@@ -69,15 +69,15 @@ export const Navbar = () => {
             <div className="offcanvas-body bg-dark">
               <ul className="navbar-nav justify-content-end flex-grow-1 pe-3">
                 <li className="nav-item">
-                  <Link className="nav-link active" to="#">
+                  <Link className="nav-link active" to="/">
                     Home
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <Link className="nav-link" to="#" onClick={()=> {
+                  <Link className="nav-link" to="#" onClick={() => {
                     openLoginModal();
                     const offcanvas = offcanvasRef.current;
-                    if(offcanvas) {
+                    if (offcanvas) {
                       offcanvas.classList.remove("show");
                       const backdrop = document.querySelector(".offcanvas-backdrop");
                       if (backdrop) {
@@ -87,9 +87,10 @@ export const Navbar = () => {
                       if (overlay) {
                         overlay.remove()
                       }
-                    }}
-                }
-                >
+                    }
+                  }
+                  }
+                  >
                     Login
                   </Link>
                 </li>
