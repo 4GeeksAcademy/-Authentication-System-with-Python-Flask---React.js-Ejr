@@ -8,6 +8,12 @@ from flask_cors import CORS
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import jwt_required
 from flask_jwt_extended import get_jwt_identity
+import os
+import stripe 
+
+stripe.api_key = os.getenv('STRIPE_SECRET_KEY')
+stripe.api_version = "2022-08-01"
+
 
  
 api = Blueprint('api', __name__)
@@ -84,3 +90,26 @@ def handle_get_users():
    }
 
    return jsonify(response_body), 200
+
+@api.route('/config', methods=['GET'])
+def get_config():
+    return jsonify({
+        'publishableKey': os.getenv('STRIPE_PUBLISHABLE_KEY'),
+    })
+
+@api.route("/create-payment-intent", methods=["POST"])
+def create_payment_intent():
+    try:
+        payment_intent = stripe.PaymentIntent.create(
+            amount=100,
+            currency='eur',
+            automatic_payment_methods={
+                'enabled': True
+            }
+        
+        )
+        
+    
+        return jsonify ({"client_secret": payment_intent.client_secret})
+    except Exception as e:
+        return jsonify(error=str(e)), 400
