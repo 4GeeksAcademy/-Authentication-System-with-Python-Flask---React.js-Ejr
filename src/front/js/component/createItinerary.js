@@ -5,8 +5,9 @@ import '../../styles/createItinerary.css';
 
 const CreateItinerary = () =>{
   const [userAnswer, setUserAnswer] = useState('');
-    
-  const question = [
+  const [questionIndex,setQuestionIndex] = useState(0)
+
+  const questions = [
       'PlaceHolderQuestion',
       'PlaceHolderQuestion',
       'PlaceHolderQuestion',
@@ -30,13 +31,19 @@ const CreateItinerary = () =>{
         <div className="container">
          <div className="avatar-container" id='avatarcontainer'>
             <div className="card">
-            <div className='avatar' id='avatar'></div> 
-            
+              <div className='avatar-box '>
+                <div className='avatar me-5' id='avatar'></div> 
+                <div className='box n1 ' id='question'>Question</div>
+               </div>
                 <div className="card-body">
-                  <p className="card-text">Assistant DioDio</p>
+                  <p className="card-text" id='Dio'>Assistant DioDio</p>
                 </div>
             </div>
-            <div className='talk-bubble tri-right left-in' id='question'></div>
+            <div className='card2'>
+              <div className='answer-box'>
+                <div className='answer-item'> AI Answer </div>
+              </div>
+            </div>
           
           <input 
             type='text' 
