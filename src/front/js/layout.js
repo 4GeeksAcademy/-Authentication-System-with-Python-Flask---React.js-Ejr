@@ -8,6 +8,8 @@ import { Demo } from "./pages/demo";
 import { Single } from "./pages/single";
 import SignUpPage from "./pages/signUpPage";
 import CreateItineraryPage from "./pages/createItineraryPage";
+import PrivatePageContainer from "./pages/privatePage";
+
 import injectContext from "./store/appContext";
 
 import { Navbar } from "./component/navbar";
@@ -32,6 +34,7 @@ const Layout = () => {
                         <Route element={<Single />} path="/single/:theid" />
                         <Route element={<SignUpPage />} path="/signup" />
                         <Route element={<CreateItineraryPage />} path="/createItinerary" />
+                        <Route element={<PrivatePageContainer />} path="/privatePage" />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
                     <Footer />
