@@ -31,8 +31,7 @@ class User(db.Model):
 class Movie_Review(db.Model):
     __tablename__='movie_review'
     id = db.Column(db.Integer, primary_key=True)
-    movie_id = db.Column(db.Integer, db.ForeignKey('movie.id'), nullable=False)
-    movie_relationship = db.relationship(Movie)
+    movie_id = db.Column(db.String(120),unique=False, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     user_relationship = db.relationship(User)
 
@@ -66,8 +65,7 @@ class View_State(db.Model):
 class Personal_List(db.Model):
     __tablename__='personal_list'
     id = db.Column(db.Integer, primary_key=True)
-    movie_id = db.Column(db.Integer, db.ForeignKey('movie.id'), nullable=False)
-    movie_relationship = db.relationship(Movie)
+    movie_id = db.Column(db.String(120),unique=False, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     user_relationship = db.relationship(User)
     view_state_id = db.Column(db.Integer, db.ForeignKey('view_state.id'), nullable=False)
