@@ -12,7 +12,7 @@ import EventForm from "../component/CreateEventForm";
 import PopularCategories from "../sections/PopularCategories";
 import { ContactForm } from "../component/ContactForm";
 import HeroImage from "/workspaces/ryandornan-full-stack-project/src/front/img/music/crowd-02.png";
-
+import EventSingle from "../component/EventSingle";
 
 export const Home = () => {
 	const { store, actions } = useContext(Context);
@@ -20,8 +20,8 @@ export const Home = () => {
 	return (
 		<div className="text-center">
 
-			<div className="home-hero" /*style={{ backgroundImage: `url(${HeroImage})` }}*/>
-				<div className="home-hero-content">
+			<div className="hero" /*style={{ backgroundImage: `url(${HeroImage})` }}*/>
+				<div className="hero-content">
 					<Hero 
 					header="Experience Events Near You!"
 					text="We’re here to bring you a variety of exciting experiences. 
@@ -44,6 +44,8 @@ export const Home = () => {
 			<LoginForm />
 			
 			<EventForm />
+
+			<EventSingle />
 
 
 		</div>

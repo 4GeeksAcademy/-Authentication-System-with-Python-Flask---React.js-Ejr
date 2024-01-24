@@ -13,6 +13,10 @@
   color: white;
 }
 
+.black-two-background {
+  background: rgb(18, 18, 18);
+}
+
 .grey-background {
   background: #272727;
 }
@@ -28,12 +32,12 @@
   display: flex;
   align-content: center;
   justify-content: space-evenly;
-  padding: 80px 0px 60px 0px ;
+  padding: 100px 100px;
   text-align: left;
 }
 
-.about-text {
-  padding-right: 100px;
+.about h2 {
+  color: #FF8D91;
 }
 
 .image-container {
@@ -43,11 +47,46 @@
   margin-right: 50px;
 }
 
+.img-fluid {
+  width: 500px;
+  height: 400px;
+}
+
+/* ------ EVENT SINGLE STYLING ------ */
+
+
+.event-single {
+  display: flex;
+  align-content: center;
+  justify-content: space-evenly;
+  padding: 100px 100px;
+  text-align: left;
+  color: white;
+}
+
+.event-single-text {
+  padding-right: 100px;
+}
+
+.event-single h3 {
+  color: #FF8D91;
+}
+
+.event-single i {
+  margin-right: 20px;
+  color: #FF8D91;
+}
+
 /* ------ SECTION STYLING ------ */
 
 
 .section-header {
   margin-bottom: 100px;
+}
+
+.section-header-white {
+  color: white;
+  margin-bottom: 50px;
 }
 
 h4 {
@@ -100,13 +139,13 @@ button {
 /* ------ HOME HERO STYLING ------ */
 
 
-.home-hero {
+.hero {
   background: #272727;
   color: white;
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 80vh;
+  height: 85vh;
 }
 
 
@@ -137,17 +176,7 @@ button {
     padding: 5px 30px;
   }
 
-  
-/* ------ ABOUT STYLING ------ */
 
-.about {
-  padding: 130px 0px 100px 0px;
-}
-
-.img-fluid {
-  width: 500px;
-  height: 400px;
-}
 /* ------ CONTACT STYLING ------ */
 
 .contact {
@@ -261,7 +290,7 @@ button {
 /* ------ EVENT CARD STYLING ------ */  
 
 .event-card {
-  margin: 0px 0px;
+  margin: 10px 10px;
 }
 
 .event-card-body {
