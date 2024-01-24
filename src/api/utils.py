@@ -1,7 +1,10 @@
 from flask import jsonify, url_for
+import hashlib
+from flask_bcrypt import Bcrypt
 from openai import OpenAI
+import os
 
-client = OpenAI(api_key="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")
+client = OpenAI(api_key=os.environ.get("OPENAPI_KEY", ""))
 
 
 class APIException(Exception):
@@ -51,10 +54,7 @@ def generate_sitemap(app):
     )
 
 
-
-
 def get_openai_response():
-
     user_messages = [
         {
             "role": "system",
@@ -88,6 +88,25 @@ def get_openai_response():
         },
     ]
 
-    response = client.completions.create(model="gpt-3.5-turbo", messages=user_messages, max_tokens=1024)
+    response = client.chat.completions.create(
+        model="gpt-3.5-turbo", messages=user_messages, max_tokens=1024
+    )
     assistant_reply = response.choices[0].message.content
     return assistant_reply
+
+
+def get_hash(string):
+    return hashlib.sha256(bytes(string, "utf-8")).hexdigest()
+
+
+def hash_password(password):
+    try:
+        hashed_password = bcrypt.generate_password_hash(password).decode("utf-8")
+        return hashed_password
+    except Exception as e:
+        print(f"Error hashing password: {e}")
+        return None
+
+
+def verify_password(hashed_password, password):
+    return bcrypt.check_password_hash(hashed_password, password)
