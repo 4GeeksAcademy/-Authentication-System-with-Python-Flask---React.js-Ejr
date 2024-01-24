@@ -4,8 +4,8 @@ import AboutImage from "/workspaces/ryandornan-full-stack-project/src/front/img/
 const AboutSection = () => {
   return (
     <div className="container-full black-background">
-      <div className="container about">
-        <div className="col-md-5 mb-4 image-container d-flex justify-content-center align-items-center">
+      <div className="container about  d-flex justify-content-center align-items-center">
+        <div className="col-md-5 mb-4 image-container">
           <img
             src={AboutImage}
             className="img-fluid"
@@ -14,7 +14,7 @@ const AboutSection = () => {
         </div>
 
         <div className="col-md-5 mb-4 about-text">
-          <h2 className="mt-3 mb-5">About Us</h2>
+          <h2 className="about-header">About Us</h2>
 
           <p>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. In id

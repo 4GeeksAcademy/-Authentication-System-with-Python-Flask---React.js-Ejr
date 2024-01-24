@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import ContactElements from "./ContactElements";
 
 export const ContactForm = () => {
   return (
@@ -10,7 +11,7 @@ export const ContactForm = () => {
             <div className="card-body p-5 text-center">
 
               {/* Header */}
-              <h2 className="mb-5">Contact Us</h2>
+              <h2 className="mb-5">Contact Us.</h2>
 
               {/* Name and Email */}
               <div className="row mb-4">
@@ -19,7 +20,7 @@ export const ContactForm = () => {
                     <input
                       type="text"
                       id="inputName"
-                      className="form-control form-control-lg"
+                      className="form-control"
                       placeholder="Your Name"
                     />
                   </div>
@@ -29,7 +30,7 @@ export const ContactForm = () => {
                     <input
                       type="email"
                       id="inputEmail"
-                      className="form-control form-control-lg"
+                      className="form-control"
                       placeholder="Your Email"
                     />
                   </div>
@@ -43,7 +44,7 @@ export const ContactForm = () => {
                     <input
                       type="text"
                       id="inputCompany"
-                      className="form-control form-control-lg"
+                      className="form-control form-control-lg form-lettering"
                       placeholder="Company Name"
                     />
                   </div>
@@ -52,7 +53,7 @@ export const ContactForm = () => {
                   <div className="form-outline">
                     <select
                       id="inputCountry"
-                      className="form-select form-select-lg"
+                      className="form-select form-select-lg form-lettering"
                     >
                       <option value="">Select Continent</option>
                       <option value="">United Kingdom</option>
@@ -80,14 +81,16 @@ export const ContactForm = () => {
 
               {/* Send Message Button */}
               <button
-                className="btn btn-primary btn-lg btn-block custom-btn"
+                className="btn btn-primary custom-btn btn-block "
                 type="submit"
               >
                 Send Message
               </button>
             </div>
           </div>
+          <ContactElements />
         </div>
+        
       </div>
     </div>
   );

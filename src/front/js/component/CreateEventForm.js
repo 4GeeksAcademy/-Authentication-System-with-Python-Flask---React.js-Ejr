@@ -39,7 +39,7 @@ const CreateEventForm = ({ onFormSubmit }) => {
           <div className="card custom-card shadow-2-strong" style={{ borderRadius: '1rem' }}>
             <div className="card-body p-5">
               {/* Header */}
-              <h2 className="mb-5">Create Event</h2>
+              <h2 className="mb-5">Create Your Event!</h2>
 
               {/* Event Form */}
               <form onSubmit={handleFormSubmit}>

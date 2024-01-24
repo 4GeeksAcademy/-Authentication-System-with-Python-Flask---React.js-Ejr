@@ -106,8 +106,9 @@ button {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 90vh;
+  height: 80vh;
 }
+
 
 /* ------ NAVBAR STYLING ------ */
 
@@ -152,6 +153,28 @@ button {
 .contact {
   padding: 100px 0px 100px 0px;
 }
+
+.contact-elements {
+  padding-top: 100px;
+}
+
+.contact-elements i {
+  color: white;
+}
+
+.contact-elements p {
+  color: white;
+}
+
+.contact-elements h3 {
+  color: #FF8D91;
+}
+
+.contact-elements a {
+  color: #FF8D91;
+}
+
+
 
 
 /* ------ POPULAR EVENTS STYLING ------ */
@@ -202,6 +225,10 @@ button {
     color: white;
   }
 
+.custom-card a {
+  color: #FF8D91;
+}
+
 .custom-card label {
     color: #a8a8a8;
   }
@@ -211,6 +238,10 @@ button {
 }
 
 .form-control::placeholder {
+  font-size: 14px;
+}
+
+.form-lettering {
   font-size: 14px;
 }
 
@@ -236,3 +267,9 @@ button {
 .event-card-body {
   padding: 20px;
 }
+
+
+/*.form-select {
+  font-size: 14px;
+
+}*/

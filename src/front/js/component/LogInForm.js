@@ -10,7 +10,7 @@ export const LoginForm = () => {
             <div className="card-body p-5">
 
               {/* Header */}
-              <h2 className="mb-5">Welcome back!</h2>
+              <h2 className="mb-5">Welcome Back!</h2>
 
               {/* Email Input */}
               <div className="form-outline mb-4">

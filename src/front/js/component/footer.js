@@ -2,6 +2,7 @@ import React, { Component } from "react";
 
 export const Footer = () => (
 	<footer className="footer container-full mt-auto py-5 d-flex justify-content-center">
+		
   
 	  <div className="footer-item d-flex flex-column">
 		<h4 className="footer-header">Browse The Site</h4>
