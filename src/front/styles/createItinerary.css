@@ -1,0 +1,106 @@
+body {
+  font-family: Arial, sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  }
+
+.container {
+  width: 100%;
+}
+
+.card {
+  width: 100%;
+  max-width: 35rem;
+}
+.avatar-container {
+  text-align: center;
+  height: 100vh;
+  margin-top: 100px;
+}
+
+.avatar-box{
+  display: flex;
+  align-items: center;
+}
+
+.avatar {
+  width: 200px;
+  height: 200px;
+  background-color: #3498db;
+  border-radius: 50%;
+  margin: 10px auto;
+}
+
+#Dio {
+  text-align: start;
+}
+
+.answer-box {
+  width: 80%;
+  margin: 20px auto;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: gray;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.answer-item {
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: #3498db;
+  color: #fff;
+  font-weight: bold;
+  font-size: 16px;
+  text-align: center;
+}
+
+.question {
+  font-size: 18px;
+    padding: 10px;
+    background-color: #e41919;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: inline-block;
+}
+
+#answerInput {
+  padding: 5px;
+  margin-right: 5px;
+}
+
+button {
+  padding: 5px;
+}
+
+/* CSS talk bubble */
+.box {
+  
+  width: 300px;
+  margin: 50px auto;
+  border-radius: 15px;
+  background: #00bfb6;
+  color: #fff;
+  padding: 20px;
+  text-align: center;
+  font-weight: 900;
+  font-family: arial;
+  position: relative;
+}
+
+.n1:before {
+  content: "";
+  width: 0px;
+  height: 0px;
+  position: absolute;
+  border-left: 15px solid transparent;
+  border-right: 15px solid #00bfb6;
+  border-top: 15px solid #00bfb6;
+  border-bottom: 15px solid transparent;
+  left: -16px;
+  top: 0px;
+}
