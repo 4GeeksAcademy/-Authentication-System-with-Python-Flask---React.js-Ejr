@@ -2,8 +2,9 @@ from flask import jsonify, url_for
 import hashlib
 from flask_bcrypt import Bcrypt
 from openai import OpenAI
+import os
 
-client = OpenAI(api_key=OPENAPI_KEY)
+client = OpenAI(api_key=os.environ.get("OPENAPI_KEY", ""))
 
 
 class APIException(Exception):
