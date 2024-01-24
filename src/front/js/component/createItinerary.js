@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Modal, Form } from 'react-bootstrap';
 import '../../styles/createItinerary.css';
+import avatar1 from "../../img/avatar1.png";
 
 
 const CreateItinerary = () =>{
@@ -30,28 +31,27 @@ const CreateItinerary = () =>{
       <>
         <div className="container">
          <div className="avatar-container" id='avatarcontainer'>
-            <div className="card">
+            <div className="card mb-5">
               <div className='avatar-box '>
-                <div className='avatar me-5' id='avatar'></div> 
-                <div className='box n1 ' id='question'>Question</div>
+                <div className='avatar me-5' id='avatar-placeholder'><img src={avatar1} alt="avatar" id='avatar' /> </div> 
+                <div className='box n1 ' id='question'>Whats your favorite food?</div>
                </div>
                 <div className="card-body">
                   <p className="card-text" id='Dio'>Assistant DioDio</p>
+                  <input 
+                    type='text' 
+                    id='answerInput' 
+                    placeholder='Your answer'
+                    value={userAnswer}
+                    onChange={handleAnswerInput}></input>
+                   <button>Next Question</button>
                 </div>
             </div>
-            <div className='card2'>
-              <div className='answer-box'>
+            <div className='answer-box'>
                 <div className='answer-item'> AI Answer </div>
-              </div>
-            </div>
+                  </div>
           
-          <input 
-            type='text' 
-            id='answerInput' 
-            placeholder='Your answer'
-            value={userAnswer}
-            onChange={handleAnswerInput}></input>
-          <button>Next Question</button>
+          
          </div>
         </div>
         </>

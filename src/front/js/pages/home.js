@@ -13,7 +13,7 @@ export const Home = () => {
 				<div className="jumbo">
 					<h1 className="display-5 fw-bold">Why the fork is this not behaving?</h1>
 					<div className="col-lg-6 mx-auto">
-						<a href="#" class="button lead mb-4">DioDio's got you covered!</a>
+						<a href="#" className="button lead mb-4">DioDio's got you covered!</a>
 					</div>
 				</div>
 			</div>
