@@ -1,6 +1,7 @@
 """
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
+import json
 from flask import Flask, request, render_template, jsonify, url_for, Blueprint
 from flask_jwt_extended import (
     JWTManager,
@@ -92,8 +93,10 @@ def logout():
 def create_itinerary():
     if request.method == "GET":
         assistant_reply = get_openai_response()
-
-        return assistant_reply
+        
+        assistant_dict = json.loads(assistant_reply)
+        
+        return jsonify(assistant_dict)
 
 
 if __name__ == "__main__":

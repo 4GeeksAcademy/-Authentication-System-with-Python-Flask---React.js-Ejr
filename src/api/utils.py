@@ -89,7 +89,7 @@ def get_openai_response():
     ]
 
     response = client.chat.completions.create(
-        model="gpt-3.5-turbo", messages=user_messages, max_tokens=1024
+        model="gpt-3.5-turbo-1106", messages=user_messages, max_tokens=1024, response_format={ "type": "json_object" },
     )
     assistant_reply = response.choices[0].message.content
     return assistant_reply
