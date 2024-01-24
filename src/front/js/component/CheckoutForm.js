@@ -3,6 +3,7 @@ import { PaymentElement } from "@stripe/react-stripe-js";
 import { useState } from "react";
 import { useStripe, useElements } from "@stripe/react-stripe-js";
 
+
 export default function CheckoutForm() {
   const stripe = useStripe();
   const elements = useElements();
@@ -14,8 +15,7 @@ export default function CheckoutForm() {
     e.preventDefault();
 
     if (!stripe || !elements) {
-      // Stripe.js has not yet loaded.
-      // Make sure to disable form submission until Stripe.js has loaded.
+     
       return;
     }
 
@@ -24,7 +24,7 @@ export default function CheckoutForm() {
     const { error } = await stripe.confirmPayment({
       elements,
       confirmParams: {
-        // Make sure to change this to your payment completion page
+        
         return_url: `${window.location.origin}/completion`,
       },
     });
@@ -43,7 +43,7 @@ export default function CheckoutForm() {
       <PaymentElement id="payment-element" />
       <button disabled={isProcessing || !stripe || !elements} id="submit">
         <span id="button-text">
-          {isProcessing ? "Processing ... " : "Pay now"}
+          {isProcessing ? "Processing ... " : "Donate"}
         </span>
       </button>
       {/* Show any error or success messages */}

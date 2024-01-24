@@ -97,19 +97,22 @@ def get_config():
         'publishableKey': os.getenv('STRIPE_PUBLISHABLE_KEY'),
     })
 
+from flask import request
+
 @api.route("/create-payment-intent", methods=["POST"])
 def create_payment_intent():
     try:
+        data = request.get_json()
+        amount = data.get('amount')
+
         payment_intent = stripe.PaymentIntent.create(
-            amount=100,
+            amount=amount,
             currency='eur',
             automatic_payment_methods={
                 'enabled': True
             }
-        
         )
-        
-    
-        return jsonify ({"client_secret": payment_intent.client_secret})
+
+        return jsonify({"client_secret": payment_intent.client_secret})
     except Exception as e:
         return jsonify(error=str(e)), 400
