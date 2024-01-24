@@ -20,3 +20,22 @@ class User(db.Model):
             "is_active": self.is_active,
             # do not serialize the password, its a security breach
         }
+
+class UserData(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column (db.Integer, db.ForeignKey ('user.id'))
+    date_time = db.Column(db.DateTime, unique=False, nullable=False)
+    location = db.Column(db.String, unique=False, nullable=False)
+    liters = db.Column(db.Float, unique=False, nullable=False)
+
+    def __repr__(self):
+        return f'<UserData {self.date_time} {self.location} {self.liters}>'
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "user_id": self.user_id,
+            "date_time": self.date_time,
+            "location": self.location,
+            "liters": self.liters,
+        }
