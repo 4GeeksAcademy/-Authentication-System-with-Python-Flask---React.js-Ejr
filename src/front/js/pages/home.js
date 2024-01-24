@@ -10,6 +10,7 @@ import { SignUpForm } from "../component/SignUpForm";
 import PopularEvents from "../sections/PopularEvents";
 import EventForm from "../component/CreateEventForm";
 import PopularCategories from "../sections/PopularCategories";
+import { ContactForm } from "../component/ContactForm";
 
 
 export const Home = () => {
@@ -34,6 +35,8 @@ export const Home = () => {
 			<PopularEvents />
 
 			<PopularCategories />
+
+			<ContactForm />
 
 			<SignUpForm />
 

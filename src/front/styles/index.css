@@ -21,6 +21,9 @@
   background: #1a1a1a;
 }
 
+/* ------ ABOUT SECTION STYLING ------ */
+
+
 .about {
   display: flex;
   align-content: center;
@@ -40,6 +43,9 @@
   margin-right: 50px;
 }
 
+/* ------ SECTION STYLING ------ */
+
+
 .section-header {
   margin-bottom: 100px;
 }
@@ -51,6 +57,9 @@ h4 {
 a {
     text-decoration: none;
   }
+
+/* ------ BUTTON STYLING ------ */
+
 
 button {
     border-radius: 5px;
@@ -138,7 +147,11 @@ button {
   width: 500px;
   height: 400px;
 }
+/* ------ CONTACT STYLING ------ */
 
+.contact {
+  padding: 100px 0px 100px 0px;
+}
 
 
 /* ------ POPULAR EVENTS STYLING ------ */
