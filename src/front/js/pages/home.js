@@ -13,6 +13,7 @@ import PopularCategories from "../sections/PopularCategories";
 import { ContactForm } from "../component/ContactForm";
 import HeroImage from "/workspaces/ryandornan-full-stack-project/src/front/img/music/crowd-02.png";
 import EventSingle from "../component/EventSingle";
+import SignUpNow from "../sections/SignUpNow";
 
 export const Home = () => {
 	const { store, actions } = useContext(Context);
@@ -37,16 +38,9 @@ export const Home = () => {
 
 			<PopularCategories />
 
+			<SignUpNow /> 
+
 			<ContactForm />
-
-			<SignUpForm />
-
-			<LoginForm />
-			
-			<EventForm />
-
-			<EventSingle />
-
 
 		</div>
 	);

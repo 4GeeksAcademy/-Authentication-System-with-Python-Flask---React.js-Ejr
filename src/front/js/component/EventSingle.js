@@ -5,7 +5,7 @@ import AboutImage from '/workspaces/ryandornan-full-stack-project/src/front/img/
 
 const EventSingle = () => {
   return (
-    <div className="container-full grey-background">
+    <div className="container-full black-background">
       <div className="container event-single d-flex justify-content-center align-items-center">
         {/* Left Column - Image */}
         <div className="col-md-5 image-container">

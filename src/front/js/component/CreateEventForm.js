@@ -75,8 +75,10 @@ const CreateEventForm = ({ onFormSubmit }) => {
                   />
                 </div>
 
+                <div className='row'>
+
                 {/* Event Date */}
-                <div className="mb-4">
+                <div className="mb-4 col-6">
                   <input
                     type="date"
                     className="form-control form-control-lg"
@@ -86,7 +88,7 @@ const CreateEventForm = ({ onFormSubmit }) => {
                 </div>
 
                 {/* Event Price */}
-                <div className="mb-4">
+                <div className="mb-4 col-6">
                   <input
                     type="text"
                     className="form-control form-control-lg"
@@ -95,6 +97,8 @@ const CreateEventForm = ({ onFormSubmit }) => {
                     onChange={(e) => setEventPrice(e.target.value)}
                   />
                 </div>
+                </div>
+               
 
                 {/* Event Image */}
                 <div className="mb-4">

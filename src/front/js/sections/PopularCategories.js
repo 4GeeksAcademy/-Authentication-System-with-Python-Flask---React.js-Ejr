@@ -9,7 +9,7 @@ const PopularCategories = () => {
   const imageUrl07 = "https://picsum.photos/200/150?random=7";
 
   return (
-    <div className="container-fluid popular-events grey-two-background d-flex align-items-center justify-content-center">
+    <div className="container-fluid popular-categories grey-two-background d-flex align-items-center justify-content-center">
       <div className="container">
 
         <div className="section-header">

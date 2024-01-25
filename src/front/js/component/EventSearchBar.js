@@ -2,9 +2,9 @@ import React from "react";
 
 const EventSearchBar = () => {
   return (
-    <div className="container my-5">
+    <div className="container my-5 event-search">
 
-      <div className="row justify-content-space-between align-items-center">
+      <div className="row justify-content-space-between align-items-center event-search-container">
 
         {/* Event Input */}
         <div className="col-md-3 mb-3">
@@ -50,8 +50,8 @@ const EventSearchBar = () => {
         </div>
 
         {/* Search Button */}
-        <div className="search-button col-md-2 mb-3 p-0">
-          <button type="button" className="btn btn-primary custom-btn btn-block m-0">
+        <div className="col-md-3 mb-3 p-0 ">
+          <button type="button" className="btn btn-primary custom-btn w-100 ml-2 search-button">
             Search
           </button>
         </div>

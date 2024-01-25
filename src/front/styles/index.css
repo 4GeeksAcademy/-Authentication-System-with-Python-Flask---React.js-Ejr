@@ -52,6 +52,41 @@
   height: 400px;
 }
 
+
+/* ------ SIGN UP SECTION STYLING ------ */
+
+
+.sign-up {
+  display: flex;
+  align-content: center;
+  justify-content: space-evenly;
+  padding: 100px 50px 100px;
+  text-align: left;
+}
+
+.sign-up h2 {
+  color: #000000;
+}
+
+.image-container {
+  width: 500px;
+  height: 400px;
+  background: white;
+  margin-right: 50px;
+}
+
+.img-fluid {
+  width: 500px;
+  height: 400px;
+}
+
+
+.pink-div {
+  background: #FF8D91;
+  color: black;
+  padding: 50px 30px 50px 30px;
+}
+
 /* ------ EVENT SINGLE STYLING ------ */
 
 
@@ -62,6 +97,7 @@
   padding: 100px 100px;
   text-align: left;
   color: white;
+  height: 90vh;
 }
 
 .event-single-text {
@@ -81,7 +117,7 @@
 
 
 .section-header {
-  margin-bottom: 100px;
+  margin-bottom: 70px;
 }
 
 .section-header-white {
@@ -110,7 +146,14 @@ button {
 }
 
 .btn-secondary{
-    background: none;
+    background: black;
+    border: solid;
+    border-width: 1px;
+}
+
+.btn-sign-up-now{
+    background: black;
+    color: white;
     border: solid;
     border-width: 1px;
 }
@@ -169,6 +212,10 @@ button {
     color: #fff; 
     font-size: 1rem;
     padding: 0.5rem 1rem; 
+
+    &:hover {
+      color: #FF8D91; 
+    }
   }
 
   .navbar-custom .nav-buttons button {
@@ -209,10 +256,20 @@ button {
 /* ------ POPULAR EVENTS STYLING ------ */
 
 .popular-events {
-  padding: 75px 0px; 
+  padding: 50px 0px 30px 0px; 
 }
 
 .popular-events h2 {
+  color: white;
+}
+
+/* ------ POPULAR CATEGORIES STYLING ------ */
+
+.popular-categories {
+  padding: 50px 0px 70px 0px; 
+}
+
+.popular-categories h2 {
   color: white;
 }
 
@@ -275,17 +332,13 @@ button {
 }
 
 .login {
-  margin: 150px;
+  margin: 100px;
 }
 
 .signup {
-  margin: 150px
+  margin: 100px
 }
 
-.search-button {
-  margin: none;
-  padding: none;
-}
 
 /* ------ EVENT CARD STYLING ------ */  
 
@@ -302,3 +355,18 @@ button {
   font-size: 14px;
 
 }*/
+
+/* ------ EVENT SEARCH STYLING ------ */  
+
+.search-button {
+  margin-left: 13px;
+  padding: 5px;
+}
+
+.event-search {
+  margin: 0px;
+}
+
+.event-search-container{
+  margin: 0px;
+}

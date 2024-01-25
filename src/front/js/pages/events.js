@@ -71,26 +71,6 @@ export const Events = () => {
               <EventCard imageUrl={imageUrl08}/>
             </div>
           </div>
-
-          {/* THIRD ROW */}
-
-          <div className="row">
-            <div className="col-md-3 mb-4">
-              <EventCard imageUrl={imageUrl01}/>
-            </div>
-            <div className="col-md-3 mb-4">
-              <EventCard imageUrl={imageUrl02}/>
-            </div>
-            <div className="col-md-3 mb-4">
-              <EventCard imageUrl={imageUrl03}/>
-            </div>
-            <div className="col-md-3 mb-4">
-              <EventCard imageUrl={imageUrl04}/>
-            </div>
-          </div>
-        
-          {/* Add more rows as needed */}
-
         </div>
       </div>
 
