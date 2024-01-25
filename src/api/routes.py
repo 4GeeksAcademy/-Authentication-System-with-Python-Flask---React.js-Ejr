@@ -91,6 +91,7 @@ def handle_get_users():
 
    return jsonify(response_body), 200
 
+ donation-api-implementation
 @api.route('/config', methods=['GET'])
 def get_config():
     return jsonify({
@@ -115,4 +116,34 @@ def create_payment_intent():
 
         return jsonify({"client_secret": payment_intent.client_secret})
     except Exception as e:
-        return jsonify(error=str(e)), 400
+        app.logger.error(str(e))
+        return jsonify({}), 400
+
+
+@api.route ("/userdata/", methods=["POST"]) 
+@jwt_required()
+def handle_userdata():
+
+    data = request.json 
+
+    date_time = data.get("date_time", None)
+    location = data.get("location", None)
+    liters = data.get("liters", None)
+
+    arr = ["date_time", "location", "liters"]
+    if any(item not in data for item in arr):
+        return jsonify({"error": "All data is required"}), 400
+
+    current_user_id = get_jwt_identity()  
+    new_data = UserData(user_id=current_user_id, date_time=date_time, location=location, liters=liters)
+
+    try:
+        db.session.add(new_data)
+        db.session.commit()
+        return jsonify({"message":"Your data is succesfully updated"}), 200
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": str(e)}), 500
+    finally:
+        db.session.close()
+ main
