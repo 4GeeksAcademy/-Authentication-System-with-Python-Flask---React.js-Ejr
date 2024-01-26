@@ -184,20 +184,22 @@ def forgot_password():
     return jsonify(recovery_token=recovery_token), 200
 
 #EDIT USER
-@app.route('/edituser/<int:user_id>', methods=['PUT'])
-def update_user(user_id):
+@app.route("/edituser", methods=["PUT"])
+@jwt_required()
+def update_user():
+    current_user_id = get_jwt_identity()
     body = request.get_json(silent=True)
     if body is None:
-        return jsonify({'msg': 'Debes enviar información en el body'}), 400
-    user = User.query.get(user_id)
+        return jsonify({"msg": "Debes enviar información en el body"}), 400
+    user = User.query.get(current_user_id)
     if user is None:
-        return jsonify({'msg': 'Usuario no encontrado'}), 404
+        return jsonify({"msg": "Usuario no encontrado"}), 404
     if "name" in body:
-        user.name = body['name']
+        user.name = body["name"]
     if "username" in body:
-        user.username = body['username']
+        user.username = body["username"]
     db.session.commit()
-    return jsonify({'msg': 'Usuario actualizado con éxito'}),200
+    return jsonify({"msg": "Usuario actualizado con éxito"}), 200
 
 #DELETE USER
 @app.route('/deleteuser/<int:user_id>', methods=['DELETE'])
@@ -219,12 +221,16 @@ def get_all_users():
     return jsonify({'msg': 'Usuario obtenidos:', 'results': serialized_all_users}), 200
 
 #GET ONE USER
-@app.route('/user/<int:user_id>', methods=['GET'])
+@app.route("/user/<int:user_id>", methods=["GET"])
+@jwt_required()
 def get_user(user_id):
-    print(user_id)
-    user = User.query.get(user_id)
-    serialized_user = user.serialize()
-    return jsonify({'msg': 'El Usuario obtenido es:', 'results': serialized_user}), 200
+    current_user = get_jwt_identity()
+    if current_user.is_admin:
+        user = User.query.get(user_id)
+        serialized_user = user.serialize()
+        return jsonify({"msg": "El Usuario obtenido es:", "results": serialized_user}), 200
+
+    return jsonify({"msg": "No tiene los permisos para hacer esta consulta"}), 404
 
 # Followed users management
 @app.route("/followuser/<int:id>", methods=["POST"])
@@ -234,6 +240,7 @@ def follow_user(id):
 
     # Check if the user to be followed exists
     user_to_follow = User.query.get(id)
+
     if user_to_follow is None:
         return jsonify({"msg": "User not found"}), 404
 
@@ -242,11 +249,16 @@ def follow_user(id):
         return jsonify({"msg": "Cannot follow yourself"}), 400
 
     # Check if the user is not already being followed
-    if Follower.query.filter_by(follower_id=current_user_id, following_id=id).first():
+    if Follower.query.filter_by(user_from_id=current_user_id, user_to_id=id).first():
         return jsonify({"msg": "You are already following this user"}), 400
 
     # Create a new Follower entry to represent the follow relationship
-    new_follower = Follower(follower_id=current_user_id, following_id=id)
+    new_follower = Follower(user_from_id=current_user_id, user_to_id=user_to_follow.id)
+    """
+    new_follower = Follower()
+    new_follower.user_from_id = current_user_id
+    new_follower.user_to_id = user_to_follow.id
+    """
     db.session.add(new_follower)
     db.session.commit()
 
@@ -269,7 +281,7 @@ def unfollow_user(id):
 
     # Check if the user is currently being followed
     follower_entry = Follower.query.filter_by(
-        follower_id=current_user_id, following_id=id
+        user_from_id=current_user_id, user_to_id=id
     ).first()
     if not follower_entry:
         return jsonify({"msg": "You are not following this user"}), 400
@@ -279,6 +291,57 @@ def unfollow_user(id):
     db.session.commit()
 
     return jsonify({"msg": "Successfully unfollowed user"}), 200
+
+
+# Lista de seguidos
+@app.route("/followed", methods=["GET"])
+@jwt_required()
+def get_followed_list():
+    current_user_id = get_jwt_identity()
+
+    # Query the Follower table to get all entries where current_user_id is the follower
+    followers_entries = Follower.query.filter_by(user_from_id=current_user_id).all()
+
+    # Extract the user_to_id values from the followers entries
+    users_followed_ids = [entry.user_to_id for entry in followers_entries]
+
+    # Query the User table to get the details of users followed by current_user_id
+    users_followed = User.query.filter(User.id.in_(users_followed_ids)).all()
+
+    # Serialize the user details
+    serialized_users_followed = [user.serialize() for user in users_followed]
+
+    return (
+        jsonify(
+            {
+                "msg": "Usuarios seguidos por el usuario actual:",
+                "results": serialized_users_followed,
+            }
+        ),
+        200,
+    )
+
+# Lista de seguidores
+@app.route("/followers", methods=["GET"])
+@jwt_required()
+def get_followers_list():
+    current_user_id = get_jwt_identity()
+
+    # Query the Follower table to get all entries where current_user_id is the one being followed
+    followers_entries = Follower.query.filter_by(user_to_id=current_user_id).all()
+
+    # Extract the user_from_id values from the followers entries
+    followers_ids = [entry.user_from_id for entry in followers_entries]
+
+    # Query the User table to get the details of users who are following the current user
+    followers = User.query.filter(User.id.in_(followers_ids)).all()
+
+    # Serialize the user details
+    serialized_followers = [follower.serialize() for follower in followers]
+
+    return jsonify({"msg": "Users following the current user:", "results": serialized_followers}), 200
+
+
 
 # Personal movie list management
 @app.route("/favoritemovies", methods=["POST"])
