@@ -38,3 +38,40 @@ body {
     background-color: #A259FF; 
     color: #fff;
 }
+
+.btn-con-espacio {
+    margin-right: 20px;
+}
+
+.back {
+ background-color:#2B2B2B;
+ color: #fff;
+}
+
+.numero-de-color{
+    color: #A259FF;
+}
+
+.numero-normal {
+    color: #fff;
+}
+
+.card-text {
+    color: #858584;
+    font-family: 'Space Mono', monospace;
+}
+.rounded-container {
+    width: 100px;
+    height: 40px;
+    background-color: #3B3B3B;
+    border-radius: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .rounded-content {
+    font-size: 15px;
+    font-weight: bold;
+    text-align: center;
+  }
