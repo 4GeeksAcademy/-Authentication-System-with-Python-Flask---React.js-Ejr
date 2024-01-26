@@ -548,10 +548,6 @@ def update_review():
 def delete_review():
     return jsonify({"msg": "ok"})
 
-# Movie details management
-@app.route("/moviedetails/<int:id>", methods=["GET"])
-def get_movie_details():
-    return jsonify({"msg": "ok"})
 
 # Actor management
 @app.route("/actors", methods=["GET"])
