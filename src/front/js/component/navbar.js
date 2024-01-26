@@ -9,7 +9,8 @@ export const Navbar = () => {
 
 
 	return (
-		<nav className="navbar navbar-dark mb-3 px-5">
+		<nav className="navbar navbar-dark mb-3 px-5 d-flex flex-row"> 
+		 <div className="container-fluid">
 			<Link className="navbar-brand" to="/">
 
 				<p className=" m-1">
@@ -20,24 +21,24 @@ export const Navbar = () => {
 			<div className="ml-auto">
 
 
+			<div class="navbar-nav d-flex flex-row">
+			<form class="d-flex" role="search">
+      <input class="form-control buscar " type="Search" placeholder="Buscar" aria-label="Search"></input>
+      <button class="btn btn-outline me-5" type="submit">Buscar</button>
+    </form>
+        <a class="nav-link" href="#">Película Semanal</a>
+        <a class="nav-link" href="#">Generos</a>
+        <a class="nav-link" href="#">Rankings</a>
+		<a class="nav-link" href="#">Mi lista</a>
+		<Link className="nav-link" to="/crearCuenta">
+  <button type="button" className="btn ms-4">
+    <i className="fa-solid fa-user me-2"></i> Iniciar Sesión
+  </button>
+</Link>
+      </div>
 				
-				<div className="dropdown">
-				<a class="nav-link dropdown-toggle align-items-center" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-						Mi Lista <div className="bg-danger px-1 mx-1 rounded d-flex justify-content-center">{store.contador}</div>
-				</a>
 
-					<ul className="dropdown-menu">
-
-							<li>
-								Agrega películas!
-
-							</li>
-
-
-					</ul>
-
-				</div>
-
+			</div>
 			</div>
 		</nav>
 	);

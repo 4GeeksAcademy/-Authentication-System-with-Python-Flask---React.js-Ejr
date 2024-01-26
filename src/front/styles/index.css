@@ -1,17 +1,20 @@
-
 body {
     background: #2B2B2B;
+    height: 100vh;
 
 }
 
-.navbar a {
+.navbar-dark .navbar-nav .nav-link {
     color: white;
     display: inline-flex;
     font-size: 12px;
     font-weight: 500;
-    
+    margin-left: 30px;
+    font-family: 'Work Sans', sans-serif;
+
 }
-.nav-link:hover{
+
+.navbar-dark .navbar-nav .nav-link:hover {
     color: #A259FF;
 }
 
@@ -19,18 +22,122 @@ body {
     color: #A259FF;
 }
 
-.navbar .dropdown-toggle {
-    display:inline-flex
-}
-
-.navbar .dropdown-menu {
-    background: #3B3B3B;
+.navbar-nav .btn {
+    background-color: #A259FF;
     color: white;
-    padding: 10px;
-    border: none;
-    font-family: 'Work Sans', sans-serif;
     font-size: 12px;
-    font-style: normal;
-    font-weight: 400;
+    font-weight: 500;
+    border-radius: 15px;
+    font-family: 'Work Sans', sans-serif;
 }
 
+.navbar-nav .btn:hover {
+    background-color: #7148a7;
+}
+
+.btn-outline {
+    margin-left: 10px;
+    border-radius: 20px;
+}
+
+.buscar {
+    margin: 0;
+    background-color: #2B2B2B;
+    color: white;
+    border-color: #A259FF;
+    border-radius: 12px;
+    width: 300px;
+}
+
+.CrearCuenta {
+    height: 500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: white;
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 500;
+}
+
+.CrearCuenta h1 {
+    font-weight: 500;
+}
+
+.CrearCuenta a {
+    width: 450px;
+    text-align: center;
+    font-family: "Work Sans";
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 300;
+    margin-bottom: 15px;
+}
+
+.btnCrearCuenta {
+    background-color: #A259FF;
+    color: white;
+    font-weight: 500;
+    border-radius: 50px;
+    font-family: 'Work Sans', sans-serif;
+    width: 300px;
+}
+
+.btnCrearCuenta:hover {
+    background-color: #7148a7;
+    color: white;
+}
+
+.link{
+    display: flex;
+    justify-content: space-between;
+    width: 300px;
+    margin-top: 20px;
+}
+.linkIngresar{
+    text-decoration: none;
+    color: #A259FF;
+    margin-left: 5px;
+}
+
+.linkIngresar:hover{
+    color: #8a4fd6;
+}
+
+.error{
+    text-align: center;
+    font-family: "Work Sans";
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 500;
+    color: #8a4fd6;
+    margin-bottom: 0px;
+    margin-top: 20px;
+}
+.inputCuenta {
+    border-radius: 50px;
+    width: 300px;
+}
+
+/* Este elemento debe tener "position: relative" */
+div#is-relative {
+    max-width: 420px;
+    position: relative;
+}
+
+/* El icono debe ser "position: absolute"
+   * Ademas le damos un "display: block" y lo posicionamos */
+#icon {
+    position: absolute;
+    display: block;
+    bottom: .4rem;
+    right: 1rem;
+    color: #8b8b8b;
+
+    user-select: none;
+    cursor: pointer;
+}
+
+input.input {
+    padding-right: 2.5rem;
+}
