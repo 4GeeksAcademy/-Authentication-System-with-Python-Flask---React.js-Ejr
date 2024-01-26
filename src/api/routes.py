@@ -1,6 +1,7 @@
 """
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
+import json
 from flask import Flask, request, render_template, jsonify, url_for, Blueprint
 from flask_jwt_extended import (
     JWTManager,
@@ -10,7 +11,7 @@ from flask_jwt_extended import (
     unset_jwt_cookies,
 )
 from api.models import db, User
-from api.utils import get_openai_response
+from api.utils import get_openai_response, format_user_input, validate_user_input
 from flask_cors import CORS
 
 app = Flask(__name__)
@@ -88,12 +89,32 @@ def logout():
     return response, 200
 
 
-@api.route("/createItinerary", methods=["GET"])
+@api.route("/createItinerary", methods=["GET", "POST"])
 def create_itinerary():
-    if request.method == "GET":
-        assistant_reply = get_openai_response()
+    try:
+        if request.method == "GET":
+            assistant_reply = get_openai_response()
+            assistant_dict = json.loads(assistant_reply)
+            return jsonify(assistant_dict)
+        
+        elif request.method == "POST":
+            json_data = request.json
+            user_input = format_user_input(json_data)
+            
+            validation_result = validate_user_input(json_data)
+            if not validation_result["valid"]:
+                return jsonify({"error": validation_result["error"]}), 400
 
-        return assistant_reply
+            assistant_reply = get_openai_response(user_input)
+            assistant_dict = json.loads(assistant_reply)
+            return jsonify(assistant_dict)
+
+        else:
+            return jsonify({"error": "Unsupported request method"}), 405
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+    
 
 
 if __name__ == "__main__":
