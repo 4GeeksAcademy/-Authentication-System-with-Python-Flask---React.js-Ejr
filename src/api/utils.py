@@ -3,6 +3,7 @@ import hashlib
 from flask_bcrypt import Bcrypt
 from openai import OpenAI
 import os
+import json
 
 client = OpenAI(api_key=os.environ.get("OPENAPI_KEY", ""))
 
@@ -54,45 +55,68 @@ def generate_sitemap(app):
     )
 
 
-def get_openai_response():
+def get_openai_response(user_input):
     user_messages = [
         {
             "role": "system",
             "content": """
-            you are a helpful assistant, you are able to provide all the information useful for a traveler who is planning a trip. You know all the restaurants in the world, all the roads in the world, all the public transports in the world, all the activities in the world. Based on some inputs you are able to tailor and provide an itinerary based on the number of days at disposal, the number of travellers in the group, the age of the travellers, the dietary requirements, the activities suggested. You will return a JSON string.
+            you are a helpful assistant, you are able to provide all the information useful for a traveler who is planning a trip. You know all the restaurants in the world, all the roads in the world, all the public transports in the world, all the activities in the world. Based on some inputs you are able to tailor and provide a very detailed itinerary based on the number of days at disposal, the number of travellers in the group, the age of the travellers, the dietary requirements, the activities suggested and so on. I would like for you to suggest specific hotels, specific restaurants and what transport methods to use to move from one place to the other. Remember to adjust the itinerary based on the group size and level of fitness. You will return a JSON string.
 
             Example of input:
 
             Location: Iceland
-            Group: Couple
-            Age: 30years old
+            Group size: Couple
             Time at disposal: 7 days
-            time of the year: February
-            Level of fitness: good
-            Dietary requirement: vegan
+            Time of the year: February
+            Level of fitness: Good
+            Dietary requirement: Vegan
             Budget: 100£ per day
+            
+            If the user is not providing all the values needed for each key, please don't provide an itinerary but just tell the user you were not able to provide the itinerary because of info not sufficient.
             """,
         },
         {
             "role": "user",
-            "content": """
-            Location: Iceland
-            Group: Couple
-            Age: 30years old
-            Time at disposal: 7 days
-            time of the year: February
-            Level of fitness: good
-            Dietary requirement: vegan
-            Budget: 100£ per day
-        """,
+            "content": user_input,
         },
     ]
 
     response = client.chat.completions.create(
-        model="gpt-3.5-turbo-1106", messages=user_messages, max_tokens=1024, response_format={ "type": "json_object" },
+        model="gpt-3.5-turbo-1106",
+        messages=user_messages,
+        max_tokens=1024,
+        response_format={"type": "json_object"},
     )
     assistant_reply = response.choices[0].message.content
     return assistant_reply
+
+
+def format_user_input(user_input):
+    formatted_input = "\n".join(
+        [f"{key}: {value}" for key, value in user_input.items()]
+    )
+    return formatted_input
+
+
+def validate_user_input(user_input):
+    required_keys = [
+        "Location",
+        "Group size",
+        "Time at disposal",
+        "Time of the year",
+        "Level of fitness",
+        "Dietary requirement",
+        "Budget",
+    ]
+
+    missing_keys = [key for key in required_keys if key not in user_input]
+    if missing_keys:
+        return {
+            "valid": False,
+            "error": f"Missing required keys: {', '.join(missing_keys)}",
+        }
+
+    return {"valid": True, "error": None}
 
 
 def get_hash(string):
