@@ -94,6 +94,7 @@ def signup():
     new_user.email = body["email"]
     new_user.password = pw_hash
     new_user.is_active = True
+    new_user.is_admin = False
     db.session.add(new_user)
     db.session.commit()
 
@@ -112,7 +113,39 @@ def login():
     if user is None or not Bcrypt.check_password_hash(user.password, body['password']):
         return jsonify({'msg': 'Usuario o contraseña incorrectos'}), 400
     access_token = create_access_token(identity=user.id)
-    return jsonify({'msg':'ok','token':access_token})
+     # Retrieve TMDb API key and base URL from environment variables
+    api_key = os.getenv("API_KEY")
+    base_url = os.getenv("APIMOVIES_URL")
+
+    # Specify the TMDb API endpoint with the specific movie ID
+    tmdb_api_url = f"{base_url}/authentication/guest_session/new?api_key=" + api_key
+
+    # Set up parameters for the TMDb API request
+    params = {}
+
+    try:
+        # Make a GET request to TMDb API
+        response = requests.get(tmdb_api_url, params=params)
+        response.raise_for_status()  # Check for errors
+
+        # Parse the JSON response
+        data = response.json()
+
+        # Return the movie details as JSON response
+        return (
+            jsonify(
+                {
+                    "msg": "Logged in and guest session created correctly",
+                    "token": access_token,
+                    "guest_token": data,
+                }
+            ),
+            200,
+        )
+
+    except requests.exceptions.RequestException as e:
+        return jsonify({"msg": f"Error fetching data from TMDb API: {str(e)}"}), 500
+
 
 @app.route("/profile", methods=["GET"])
 @jwt_required()
@@ -170,9 +203,13 @@ def update_user(user_id):
 @app.route('/deleteuser/<int:user_id>', methods=['DELETE'])
 def delete_user(user_id):
     user = User.query.get(user_id)
-    db.session.delete(user)
-    db.session.commit()
-    return jsonify({'msg': 'Usuario se eliminó con éxito'}), 200
+    if user:
+        user.is_active = False
+        db.session.commit()
+
+        return jsonify({"msg": "Usuario se desactivó con éxito"}), 200
+    else:
+        return jsonify({"error": "Usuario no encontrado"}), 404
 
 #GET ALL USERS
 @app.route('/users', methods=['GET'])
@@ -256,20 +293,48 @@ def remove_movie_personal():
 @app.route("/viewstate/<int:id>", methods=["GET"])
 def change_view_status():
     return jsonify({"msg": "ok"})
+    
+# Busqueda multiple
+@app.route("/multi/<string:value>", methods=["GET"])
+def get_multi(value):
+    # Retrieve TMDb API key and base URL from environment variables
+    api_key = os.getenv("API_KEY")
+    base_url = os.getenv("APIMOVIES_URL")
+
+    # Specify the TMDb API endpoint with the specific movie ID
+    tmdb_api_url = f"{base_url}/search/multi?query={value}&api_key=" + api_key
+
+    # Set up parameters for the TMDb API request
+    params = {}
+
+    try:
+        # Make a GET request to TMDb API
+        response = requests.get(tmdb_api_url, params=params)
+        response.raise_for_status()  # Check for errors
+
+        # Parse the JSON response
+        data = response.json()
+
+        # Return the movie details as JSON response
+        return (
+            jsonify({"msg": "Data obtained successfully", "result": data}),
+            200,
+        )
+
+    except requests.exceptions.RequestException as e:
+        return jsonify({"msg": f"Error fetching data from TMDb API: {str(e)}"}), 500
 
 # Movie management
-@app.route("/movies", methods=["GET"])
 def get_movies():
     # Retrieve TMDb API key and base URL from environment variables
     api_key = os.getenv("API_KEY")
     base_url = os.getenv("APIMOVIES_URL")
 
     # Specify the TMDb API endpoint
-    tmdb_api_url =  f"{base_url}/discover/movie?" + api_key
+    tmdb_api_url = f"{base_url}/discover/movie?api_key=" + api_key
 
     # Set up parameters for the TMDb API request
     params = {
-        "language": "en-US",  # Specify the language
         "sort_by": "popularity.desc",  # Specify the sorting criteria
     }
 
@@ -294,14 +359,82 @@ def get_movies():
         return jsonify({"msg": f"Error fetching movies from TMDb API: {str(e)}"}), 500
 
 
-@app.route("/movie/<int:id>", methods=["GET"])
-def get_movie(id):
+# Busqueda por id de IMDB
+@app.route("/movie/id/<string:id>", methods=["GET"])
+def get_movie_id(id):
     # Retrieve TMDb API key and base URL from environment variables
     api_key = os.getenv("API_KEY")
     base_url = os.getenv("APIMOVIES_URL")
 
     # Specify the TMDb API endpoint with the specific movie ID
-    tmdb_api_url = f"{base_url}/movie/{id}?" + api_key
+    tmdb_api_url = f"{base_url}/find/{id}?api_key=" + api_key
+
+    # Set up parameters for the TMDb API request
+    params = {
+        "external_source": "imdb_id",  # Specify search by IMDB id
+    }
+
+    try:
+        # Make a GET request to TMDb API
+        response = requests.get(tmdb_api_url, params=params)
+        response.raise_for_status()  # Check for errors
+
+        # Parse the JSON response
+        movie_data = response.json()
+
+        # Return the movie details as JSON response
+        return (
+            jsonify({"msg": "Movie obtained successfully", "result": movie_data}),
+            200,
+        )
+
+    except requests.exceptions.RequestException as e:
+        return jsonify({"msg": f"Error fetching movie from TMDb API: {str(e)}"}), 500
+
+
+# Busqueda por titulo
+@app.route("/movie/title/<string:title>", methods=["GET"])
+def get_movie_title(title):
+    # Retrieve TMDb API key and base URL from environment variables
+    api_key = os.getenv("API_KEY")
+    base_url = os.getenv("APIMOVIES_URL")
+
+    # Specify the TMDb API endpoint with the specific movie ID
+    tmdb_api_url = f"{base_url}/search/movie?query={title}&api_key=" + api_key
+
+    # https://image.tmdb.org/t/p/original/[poster_path] para mostrar imagenes en front
+    # https://image.tmdb.org/t/p/w185/[poster_path] cambio image size
+
+    # Set up parameters for the TMDb API request
+    params = {}
+
+    try:
+        # Make a GET request to TMDb API
+        response = requests.get(tmdb_api_url, params=params)
+        response.raise_for_status()  # Check for errors
+
+        # Parse the JSON response
+        movie_data = response.json()
+
+        # Return the movie details as JSON response
+        return (
+            jsonify({"msg": "Movie obtained successfully", "result": movie_data}),
+            200,
+        )
+
+    except requests.exceptions.RequestException as e:
+        return jsonify({"msg": f"Error fetching movie from TMDb API: {str(e)}"}), 500
+
+
+# Por conflicto se cambio la ruta, solo da los detalles de las peliculas que se busquen por el id propio de TMDB
+@app.route("/moviedetails/<int:id>", methods=["GET"])
+def get_movie_details(id):
+    # Retrieve TMDb API key and base URL from environment variables
+    api_key = os.getenv("API_KEY")
+    base_url = os.getenv("APIMOVIES_URL")
+
+    # Specify the TMDb API endpoint with the specific movie ID
+    tmdb_api_url = f"{base_url}/movie/{id}?api_key=" + api_key
 
     # Set up parameters for the TMDb API request
     params = {
@@ -317,10 +450,14 @@ def get_movie(id):
         movie_data = response.json()
 
         # Return the movie details as JSON response
-        return jsonify({"msg": "Movie obtained successfully", "result": movie_data}), 200
+        return (
+            jsonify({"msg": "Movie obtained successfully", "result": movie_data}),
+            200,
+        )
 
     except requests.exceptions.RequestException as e:
         return jsonify({"msg": f"Error fetching movie from TMDb API: {str(e)}"}), 500
+str(e)}"}), 500
 
 
 @app.route("/addmovie", methods=["POST"])
@@ -356,7 +493,37 @@ def get_movie_details():
 # Actor management
 @app.route("/actors", methods=["GET"])
 def get_actors():
-    return jsonify({"msg": "ok"})
+    # Retrieve TMDb API key and base URL from environment variables
+    api_key = os.getenv("API_KEY")
+    base_url = os.getenv("APIMOVIES_URL")
+
+    # Specify the TMDb API endpoint for popular actors
+    tmdb_api_url = f"{base_url}/person/popular?api_key={api_key}"
+
+    # Set up parameters for the TMDb API request
+    params = {}
+
+    try:
+        # Make a GET request to TMDb API
+        response = requests.get(tmdb_api_url, params=params)
+        response.raise_for_status()  # Check for errors
+
+        # Parse the JSON response
+        actors_data = response.json()
+
+        # Extract relevant information (you may adjust this based on TMDb API response structure)
+        actors_list = actors_data.get("results", [])
+
+        # Return the list of popular actors as JSON response
+        return (
+            jsonify(
+                {"msg": "Popular actors obtained successfully", "results": actors_list}
+            ),
+            200,
+        )
+
+    except requests.exceptions.RequestException as e:
+        return jsonify({"msg": f"Error fetching actors from TMDb API: {str(e)}"}), 500
 
 @app.route("/actors/<int:id>", methods=["GET"])
 def get_actor():
