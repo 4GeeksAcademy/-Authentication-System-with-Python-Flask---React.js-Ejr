@@ -520,7 +520,6 @@ def get_movie_details(id):
 
     except requests.exceptions.RequestException as e:
         return jsonify({"msg": f"Error fetching movie from TMDb API: {str(e)}"}), 500
-str(e)}"}), 500
 
 
 @app.route("/addmovie", methods=["POST"])
