@@ -3,6 +3,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  
   }
 
 .container {
@@ -12,6 +13,8 @@ body {
 .card {
   width: 100%;
   max-width: 35rem;
+  background-color: darkgray;
+  border-radius: 5px;
 }
 .avatar-container {
   text-align: center;
@@ -24,12 +27,21 @@ body {
   align-items: center;
 }
 
-.avatar {
+.avatar-placeholder {
   width: 200px;
   height: 200px;
   background-color: #3498db;
   border-radius: 50%;
   margin: 10px auto;
+}
+
+#avatar {
+  width: 200px;
+  height: 200px;
+  background-color: gray;
+  border: 5px solid black;
+  border-radius: 5%;
+
 }
 
 #Dio {
@@ -52,29 +64,45 @@ body {
   margin: 10px 0;
   padding: 10px;
   border-radius: 5px;
-  background-color: #3498db;
-  color: #fff;
+  background-color: #ffa500;
+  color: black;
   font-weight: bold;
   font-size: 16px;
   text-align: center;
 }
 
-.question {
-  font-size: 18px;
-    padding: 10px;
-    background-color: #e41919;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    display: inline-block;
-}
 
 #answerInput {
-  padding: 5px;
+  padding: 10px;
   margin-right: 5px;
+  border: 2px solid black;
+  border-radius: 5px;  
+  background-color: #ffa500;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.3s ease-in-out;
+}
+
+#answerInput:hover,
+#answerInput:focus {
+  border-color: #ffa500;
 }
 
 button {
-  padding: 5px;
+  padding: 10px 20px;
+  background-color: #FF8C00;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease-in-out;
+  
+
+}
+
+button:hover {
+  background-color: #ffa500; 
 }
 
 /* CSS talk bubble */
@@ -83,12 +111,13 @@ button {
   width: 300px;
   margin: 50px auto;
   border-radius: 15px;
-  background: #00bfb6;
-  color: #fff;
+  background: #ffa500;
+  color: black;
   padding: 20px;
   text-align: center;
-  font-weight: 900;
-  font-family: arial;
+  font-family: "VT323", monospace;
+  font-weight: 400;
+  font-style: normal;
   position: relative;
 }
 
@@ -98,8 +127,8 @@ button {
   height: 0px;
   position: absolute;
   border-left: 15px solid transparent;
-  border-right: 15px solid #00bfb6;
-  border-top: 15px solid #00bfb6;
+  border-right: 15px solid #ffa500;
+  border-top: 15px solid #ffa500;
   border-bottom: 15px solid transparent;
   left: -16px;
   top: 0px;
