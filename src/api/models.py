@@ -11,6 +11,7 @@ class User(db.Model):
     profile_picture = db.Column(db.String(120), unique=False, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(80), unique=False, nullable=False)
+    is_admin = db.Column(db.Boolean(), unique=False, nullable=False)
     is_active = db.Column(db.Boolean(), unique=False, nullable=False)
 
 #informacion cuando se hace print en el admin
@@ -49,7 +50,9 @@ class Movie_Review(db.Model):
 class View_State(db.Model):
     __tablename__='view_state'
     id = db.Column(db.Integer, primary_key=True)
-    value = db.Column(db.String(30), unique=False, nullable=False)
+    value = db.Column(
+        db.Enum("Visto", "Por Ver", name="State"), unique=True, nullable=False
+    )
 
 
 #informacion cuando se hace print en el admin
