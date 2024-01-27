@@ -14,6 +14,7 @@ import { Userdata } from "./pages/userdata";
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 import { UserInsertData } from "./component/userInsertData";
+import { TimeCounter } from "./component/timeCounter";
 
 //create your first component
 const Layout = () => {
@@ -33,6 +34,7 @@ const Layout = () => {
                         <Route element={<Login />} path="/login" />
                         <Route element={<Signup />} path="/signup" />
                         <Route element={<Userdata />} path="/userdata" />
+                        <Route element= {<TimeCounter />} path="/timecounter"/> 
                         <Route element={<UserInsertData />} path="/userinsertdata" />
                         <Route element={<Demo />} path="/demo" />
                         <Route element={<Single />} path="/single/:theid" />

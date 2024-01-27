@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 
 export const UserInsertData = () => {
-    const [newDateTime, setNewDateTime] = useState([]);
-    const [newLocation, setNewLocation] = useState([]);
-    const [liters, setLiters] = useState([]);
+    const [newDateTime, setNewDateTime] = useState('');
+    const [newLocation, setNewLocation] = useState({ latitude: '', longitude: '' });
+    const [liters, setLiters] = useState('');
 
     const handleSubmit = (e) => {
         e.preventDefault();
+
         setNewDateTime([...newDateTime, { label: newDateTime, done: false }]);
         setNewDateTime("");
         setNewLocation([...newLocation, { label: newLocation, done: false }]);
@@ -20,7 +21,6 @@ export const UserInsertData = () => {
             handleSubmit(e);
         } else {
             setNewDateTime(e.target.value);
-            setNewLocation(e.target.value);
             setLiters(e.target.value);
         }
     };
@@ -34,8 +34,10 @@ export const UserInsertData = () => {
                     className="form-control"
                     placeholder="Date & Time"
                     aria-describedby="button-addon2"
+                    value={newDateTime}
+                    onChange={(e) => setNewDateTime(e.target.value)}
                 />
-                <button className="btn btn-outline-secondary" type="button" id="button-addon2">
+                <button className="btn btn-outline-secondary" type="button" id="button-addon2" onClick={handleSubmit}>
                     Add
                 </button>
             </div>
@@ -46,8 +48,9 @@ export const UserInsertData = () => {
                     placeholder="Location"
                     aria-label="Location"
                     aria-describedby="button-addon2"
+                    onChange={(e) => setNewLocation({ ...newLocation, newLocation: e.target.value })}
                 />
-                <button className="btn btn-outline-secondary" type="button" id="button-addon2">
+                <button className="btn btn-outline-secondary" type="button" id="button-addon2" onClick={handleSubmit}>
                     Add
                 </button>
             </div>
@@ -58,13 +61,16 @@ export const UserInsertData = () => {
                     className="form-control"
                     placeholder="Liters"
                     aria-label="Liters"
+                    step="0.1" min="0"
                     aria-describedby="button-addon2"
+                    value={liters}
+                    onChange={(e) => setLiters(e.target.value)}
                 />
-                <button className="btn btn-outline-secondary" type="button" id="button-addon2">
+                <button className="btn btn-outline-secondary" type="button" id="button-addon2" onClick={handleSubmit}>
                     Add
                 </button>
             </div>
 
         </div>
-    );
+    )
 }; 

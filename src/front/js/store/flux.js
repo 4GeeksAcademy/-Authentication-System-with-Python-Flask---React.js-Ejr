@@ -99,6 +99,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.error("An error occurred: ", error);
 				}
 			 }
+
 		}
 	};
 };
