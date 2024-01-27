@@ -19,6 +19,7 @@
 
 .nav-item{
     padding: 5px;
+    
 }
 
 
@@ -29,6 +30,7 @@
     border-radius: 8px;
     transition: background-color  0.3s ease, color 0.3s ease;
     outline: none;
+    
 }
 
 .nav-tabs .nav-item .nav-link:focus {
@@ -59,4 +61,9 @@
     background-color: #FFA500;
     padding: 20px;
     border-radius: 0 0 10px 10px;
+}
+
+.bi {
+    padding: 2px;
+    
 }
