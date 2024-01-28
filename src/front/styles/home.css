@@ -1,1 +1,141 @@
+body {
+  font-family: 'Atkinson Hyperlegible', sans-serif;
+}
+
+.home {
+  position: relative;
+}
+
+.hero {
+    position: relative;
+    min-height: 100vh;
+    overflow: hidden;
+  }
+  
+.hero__video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero__spacer {
+  position: relative;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.nav {
+  height: 80px;
+  min-width :100%;
+  margin-top: 25px;
+  position: absolute;
+  top: 0;
+  z-index: 1;
+}
+
+.nav__menu {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav__logo {
+  height: 100%;
+}
+
+.nav__item {
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+  font-size: 1.3rem;
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+
+  :nth-child(1) {
+    margin-left: 20px;
+  }
+}
+
+.nav__item:hover {
+  color: #4e6462;
+}
+
+.btn {
+  color: #fff;
+  background-color: #4e646294;
+  border-color: #a0bbb9;
+  border-radius: 24px;
+}
+
+.btn:hover,
+.btn:focus,
+.btn:active,
+.btn.active,
+.open .dropdown-toggle.btn {
+  color: #fff;
+  background-color: #32b171;
+  border-color: #8e2828;
+  border-width: 5px;
+}
+
+.hero__content {
+  position: absolute;
+  bottom: 10%;
+  color: white;
+  font-size: 10rem;
+  left: 50%;
+  transform: translate(-50%, 0);
+}
+
+.about {
+  text-align: justify;
+}
+
+.info__bubbles {
+  display: flex;
+  justify-content: space-between;
+}
+
+.info__bubble {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.info__bubble > * + * {
+  margin-top: 10px;
+}
+
+.info__blob {
+  width: 425px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgb(77, 100, 98);
+  border-radius: 20px;
+  color: white;
+  font-size: 20px;
+}
+
+.info__img {
+  width: 425px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 20px;
+}
+
 button { margin: 20px;}
+
