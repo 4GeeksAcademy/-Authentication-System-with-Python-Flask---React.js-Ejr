@@ -5,7 +5,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 		
 		},
 		actions: {
-		
+	
 		
 			signupNewUser: async (formSignup)=>{
 				const url=process.env.BACKEND_URL;
