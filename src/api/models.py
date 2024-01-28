@@ -7,9 +7,8 @@ class User(db.Model):
     username = db.Column(db.String(120), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(80), unique=False, nullable=False)
-    is_active = db.Column(db.Boolean(), unique=False, nullable=False)
-    is_superuser = db.Column(db.Boolean(), unique=False, default=False)
-    is_admin = db.Column(db.Boolean(), unique=False, default=False) 
+    level = db.Column(db.Integer, default=1)
+
 
     def __repr__(self):
         return f'<User {self.email}>'
@@ -20,8 +19,8 @@ class User(db.Model):
             "username": self.username,
             "email": self.email,
             "is_active": self.is_active,
-            "is_superuser": self.is_superuser,
-            "is_admin": self.is_admin, 
+            "level": self.level,
+          
         }
 
 class UserData(db.Model):

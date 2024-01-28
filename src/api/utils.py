@@ -1,5 +1,10 @@
-from flask import jsonify, url_for
+from flask import jsonify, url_for, abort
 import hashlib
+from functools import wraps
+
+from flask_jwt_extended import current_user, get_jwt_identity, jwt_required
+
+from api.models import User
 
 class APIException(Exception):
     status_code = 400
@@ -43,3 +48,13 @@ def generate_sitemap(app):
 
 def get_hash(string):
     return hashlib.sha256(bytes(string, 'utf-8')).hexdigest()
+
+def admin_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        identity = get_jwt_identity()
+        if 'level' in identity and identity['level'] == 3:
+            return f(*args, **kwargs)
+        else:
+            abort(403)
+    return decorated_function
