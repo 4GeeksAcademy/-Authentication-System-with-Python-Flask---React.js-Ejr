@@ -74,14 +74,15 @@ def handle_get_hash():
 @api.route('/users', methods=['GET'])
 def handle_get_users():
    all_users = User.query.all()
-   all_users = list(map(lambda item: item.serialize(), all_users))
-   results = all_users
+   all_users = [{
+       "email": user.email
+   } for user in all_users]
 
-   if not results:
-       return jsonify({"msg": "There are no users "}), 404
+   if not all_users:
+       return jsonify({"msg": "There are no users"}), 404
 
    response_body = {
-       "results": results
+       "results": all_users
    }
 
    return jsonify(response_body), 200
@@ -115,25 +116,18 @@ def handle_userdata():
         db.session.close()
 
 
-@api.route('/admin', methods=['POST'])
-@admin_required
+
+
+@api.route('/admin', methods=['PUT'])
 def promote_user():
-    email = request.json.get("email")
+    data = request.get_json()
+    email = data.get('email')
     user = User.query.filter_by(email=email).first()
+    if user:
+        user.level = 2
+        db.session.commit()
+        return {'message': 'User promoted successfully'}, 200
+    else:
+        return {'error': 'No user found with the provided email'}, 404
+    
 
-    if user is None:
-        return jsonify({"msg": "User not found"}), 404
-    print(user)
-
-    user.is_superuser = True
-    db.session.commit()
-
-    return jsonify({"msg": "User promoted successfully"}), 200
-
-@api.route('/user', methods=['POST'])
-def get_user_info():
-    email = request.json.get("email")
-    user = User.query.filter_by(email=email).first()
-    if user is None:
-        return jsonify({"msg": "User not found"}), 404
-    return jsonify(user.serialize()), 200
