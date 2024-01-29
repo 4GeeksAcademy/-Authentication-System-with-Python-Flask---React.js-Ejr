@@ -81,7 +81,7 @@ def handle_get_hash():
     return get_hash(to_hash)
 
 
-@api.route("/private_page", methods=["GET"])
+@api.route("/privatePage", methods=["GET"])
 @jwt_required()
 def private_page():
     current_user = get_jwt_identity()

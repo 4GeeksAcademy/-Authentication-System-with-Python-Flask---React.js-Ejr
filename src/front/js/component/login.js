@@ -23,7 +23,7 @@ function Login({ show, handleClose }) {
       if (response.ok) {
         const data = await response.json();
 
-        history.push("/private_page");
+        history.push("/privatePage");
 
         handleClose();
       } else {
