@@ -74,7 +74,7 @@
     font-weight: 400;
     font-style: normal;
     animation-name: pixel;
-    animation-duration: 3s;
+    animation-duration: 6s;
 
 }
 
@@ -129,8 +129,8 @@ label {
   }
   
   button {
-    background-color: #007bff;
-    color: #fff;
+    background-color: black;
+    color: #FFA500;
     padding: 10px;
     border: none;
     border-radius: 4px;
@@ -139,5 +139,46 @@ label {
   }
   
   button:hover {
-    background-color: #0056b3;
-  }    
+    background-color: black;
+    color: white;
+  } 
+
+
+
+  /* eye */
+
+  .eye-icon-container {
+    display: flex;
+    align-items: center;
+    justify-content: center
+  }
+  
+  .eye {
+    position: relative;
+  }
+  
+  .eye button {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    outline: none;
+  }
+  
+  .eye svg {
+    width: 20px;
+    height: 20px;
+    fill: #666; 
+    transition: fill 0.3s ease; 
+  }
+  
+  .eye:hover svg {
+    fill: #4CAF50; /* Change the color on hover */
+  }
+  
+  /* Optional: Add some padding and styling to "Show Passwords" text */
+  .eye-icon-container .pe-2 {
+    padding-right: 8px;
+    color: #333; /* Adjust the color as needed */
+    font-weight: bold;
+  }
