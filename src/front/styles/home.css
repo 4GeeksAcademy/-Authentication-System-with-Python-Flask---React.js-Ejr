@@ -6,31 +6,9 @@ body {
   position: relative;
 }
 
-.hero {
-    position: relative;
-    min-height: 100vh;
-    overflow: hidden;
-  }
-  
-.hero__video {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.hero__spacer {
-  position: relative;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-}
-
+/* 
+    home nav bar
+*/
 .nav {
   height: 80px;
   min-width :100%;
@@ -49,56 +27,88 @@ body {
 }
 
 .nav__logo {
-  height: 100%;
+  height: 120%;
+  border-radius: 20px;
+  box-shadow: 0px 0px 10px #6e6e6e;
+  
 }
 
-.nav__item {
+.nav__btn {
   text-decoration: none;
   color: white;
   font-weight: bold;
-  font-size: 1.3rem;
+  font-size: 20px;
   text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  color: #fff;
+  background-color: #b99e23;
+ 
 
   :nth-child(1) {
     margin-left: 20px;
   }
 }
 
-.nav__item:hover {
+.nav__btn:hover {
   color: #4e6462;
+}
+
+/* 
+    hero - video
+*/
+.hero {
+    position: relative;
+    min-height: 100vh;
+    overflow: hidden;
+  }
+  
+.hero__video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+
+/* 
+    about - text
+*/
+.about {
+  text-align: justify;
+  font-size: 17px;
+}
+
+/* 
+    donations
+*/
+.donations {
+  text-align: justify;
+  font-size: 17px;
+}
+.donations__button {
+  font-size: 20px;
 }
 
 .btn {
   color: #fff;
-  background-color: #4e646294;
-  border-color: #a0bbb9;
-  border-radius: 24px;
+  background-color: #b99e23;
+  border-radius: 10px;
 }
-
 .btn:hover,
 .btn:focus,
 .btn:active,
 .btn.active,
 .open .dropdown-toggle.btn {
   color: #fff;
-  background-color: #32b171;
-  border-color: #8e2828;
-  border-width: 5px;
+  background-color:rgb(168, 78, 50);
 }
 
-.hero__content {
-  position: absolute;
-  bottom: 10%;
-  color: white;
-  font-size: 10rem;
-  left: 50%;
-  transform: translate(-50%, 0);
-}
-
-.about {
-  text-align: justify;
-}
-
+/* 
+    live - counter
+*/
 .info__bubbles {
   display: flex;
   justify-content: space-between;
@@ -122,7 +132,7 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: rgb(77, 100, 98);
+  background: rgb(129, 172, 168);
   border-radius: 20px;
   color: white;
   font-size: 20px;

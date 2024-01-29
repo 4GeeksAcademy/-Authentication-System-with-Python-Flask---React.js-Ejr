@@ -8,10 +8,11 @@ export const HomeNavbar = () => {
 		<nav className="nav">
 			<div className="container nav__menu">
 				<img src={logo} className="nav__logo"/>
-				<Link to="/clients" className="nav__item">
-					<span>Clients</span>
+				<Link to="/users" className="nav__btn round">
+					<span>CLEANERS</span>
 				</Link>
 			</div>
 		</nav>
 	);
 };
+
