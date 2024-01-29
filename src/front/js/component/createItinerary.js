@@ -50,6 +50,30 @@ const CreateItinerary = () => {
     }
   };
 
+  const handleSaveItinerary = async () => {
+    try {
+      const response = await fetch('/saveItinerary', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          userId,
+          itineraryDetails: generatedItinerary,
+        }),
+      });
+  
+      if (response.ok) {
+        const result = await response.json();
+        console.log(result.message);
+      } else {
+        console.error('Error saving itinerary:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Error:', error.message);
+    }
+  };
+
 
 
   return (
@@ -80,6 +104,7 @@ const CreateItinerary = () => {
               <div>
                 <h3>Generated Itinerary</h3>
                 <p>{generatedItinerary}</p>
+                <Button onClick={handleSaveItinerary}>Save Itinerary</Button>
               </div>
             ) : (
               'AI Answer'

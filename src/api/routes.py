@@ -115,7 +115,16 @@ def create_itinerary():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
     
+@api.route("/saveItinerary", methods=["POST"])
+def save_itinerary():
+    # Extract data from the request, e.g., itinerary details, user ID, etc.
+    data = request.json
 
+    # Implement logic to save the itinerary to the user's bookmarks
+    # For now, let's just log the data.
+    print('Saved itinerary:', data)
+
+    return jsonify({"message": "Itinerary saved successfully"})
 
 if __name__ == "__main__":
     app.run(debug=True)
