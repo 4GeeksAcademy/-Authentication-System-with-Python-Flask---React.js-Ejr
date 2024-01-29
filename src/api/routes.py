@@ -11,10 +11,14 @@ from flask_jwt_extended import JWTManager, create_access_token
 from flask_jwt_extended import jwt_required
 from flask_jwt_extended import get_jwt_identity
 import os
-import stripe 
+import stripe
 
 stripe.api_key = os.getenv('STRIPE_SECRET_KEY')
 stripe.api_version = "2022-08-01"
+
+#update the keys in .en file when a new codespaces is cretaed
+#STRIPE_SECRET_KEY=
+#STRIPE_PUBLISHABLE_KEY=
 
 
 
@@ -117,7 +121,7 @@ def create_payment_intent():
 
         return jsonify({"client_secret": payment_intent.client_secret})
     except Exception as e:
-        app.logger.error(str(e))
+        api.logger.error(str(e))
         return jsonify({}), 400
 
 

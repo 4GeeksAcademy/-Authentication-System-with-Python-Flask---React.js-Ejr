@@ -10,7 +10,9 @@ export const Payment = () => {
  const [amount, setAmount] = useState('');
 
  useEffect(() => {
-    fetch("https://solid-sniffle-7vpx5qp4qrjcqwp-3001.app.github.dev/api/config")
+  const routeRequirement = "/api/config";
+  const url = `${process.env.BACKEND_URL}${routeRequirement}`;
+  fetch(url)
        .then(async (response) => {
          const { publishableKey } = await response.json();
          setStripePromise(loadStripe(publishableKey)); 
@@ -21,7 +23,9 @@ export const Payment = () => {
    }, []);
 
    useEffect(() => {
-    fetch("https://solid-sniffle-7vpx5qp4qrjcqwp-3001.app.github.dev/api/create-payment-intent", {
+    const routeRequirement = "/api/create-payment-intent";
+    const url = `${process.env.BACKEND_URL}${routeRequirement}`;
+    fetch(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
