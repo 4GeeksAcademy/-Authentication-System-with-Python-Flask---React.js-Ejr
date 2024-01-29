@@ -163,6 +163,8 @@ def logout():
     # Perform any additional logout actions here, if needed    
     return jsonify({'msg': 'Logout successful'}), 200
 
+
+'''
 @app.route("/forgotpassword", methods=["POST"])
 @jwt_required()
 def forgot_password():
@@ -182,6 +184,35 @@ def forgot_password():
     # Here you might want to send an email with the recovery_token to the user
     # For demonstration purposes, we're just returning the token in the response
     return jsonify(recovery_token=recovery_token), 200
+'''
+
+@app.route("/api/passwordreset", methods=["POST"])
+@jwt_required()
+def update_password():
+    try:
+        data = request.get_json(silent=True)
+
+        if data is None:
+            return jsonify({"error": "No JSON data provided in the request"}), 400
+        if "password" not in data:
+            return jsonify({"error": "Required fields are missing"}), 400
+
+        new_password = data["password"]
+        current_user = get_jwt_identity()
+
+        user = User.query.filter_by(email=current_user).first()
+
+        if not user:
+            return jsonify({"error": "User not found"}), 404
+
+        user.password = bcrypt.generate_password_hash(new_password).decode("utf-8")
+        db.session.commit()
+        return jsonify({"message": "Password updated succesfully"}), 200
+
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": str(e)}), 500
+
 
 #EDIT USER
 @app.route("/edituser", methods=["PUT"])
@@ -342,20 +373,92 @@ def get_followers_list():
     return jsonify({"msg": "Users following the current user:", "results": serialized_followers}), 200
 
 
-
 # Personal movie list management
-@app.route("/favoritemovies", methods=["POST"])
-def add_movie_personal():
-    return jsonify({"msg": "ok"})
+@app.route("/favoritemovies/<int:id>", methods=["POST"])
+@jwt_required()
+def add_movie_personal(id):
+    current_user_id = get_jwt_identity()
+
+    # Check if the movie is already in the user's personal list
+    existing_entry = Personal_List.query.filter_by(
+        user_id=current_user_id, movie_id=int(id)
+    ).first()
+
+    if existing_entry:
+        return jsonify({"msg": "La película ya está en tu lista personal"}), 400
+
+    # Add the movie to the user's personal list
+    new_entry = Personal_List(user_id=current_user_id, movie_id=int(id))
+    db.session.add(new_entry)
+
+    try:
+        db.session.commit()
+        return jsonify({"msg": "Película agregada a tu lista personal"}), 200
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": str(e)}), 500
+    finally:
+        db.session.close()
+
 
 @app.route("/favoritemovies/<int:id>", methods=["DELETE"])
-def remove_movie_personal():
-    return jsonify({"msg": "ok"})
+@jwt_required()
+def remove_movie_personal(id):
+    try:
+        # Get user identity
+        current_user_id = get_jwt_identity()
+
+        # Check if the movie is in the user's personal list
+        entry_to_remove = Personal_List.query.filter_by(
+            user_id=current_user_id, movie_id=int(id)
+        ).first()
+
+        if not entry_to_remove:
+            return jsonify({"msg": "La película no está en tu lista personal"}), 404
+
+        # Remove the movie from the user's personal list
+        db.session.delete(entry_to_remove)
+        db.session.commit()
+
+        return jsonify({"msg": "Película eliminada de tu lista personal"}), 200
+
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": str(e)}), 500
+    finally:
+        db.session.close()
+
 
 # Personal view state management
 @app.route("/viewstate/<int:id>", methods=["GET"])
-def change_view_status():
-    return jsonify({"msg": "ok"})
+@jwt_required()
+def change_view_status(id):
+    try:
+        # Get user identity
+        current_user_id = get_jwt_identity()
+
+        # Check if the movie is in the user's personal list
+        entry_to_update = Personal_List.query.filter_by(
+            user_id=current_user_id, movie_id=id
+        ).first()
+
+        if not entry_to_update:
+            return jsonify({"msg": "La película no está en tu lista personal"}), 404
+
+        # Update the view state of the movie
+        entry_to_update.view_state_id = 1  # Assuming 2 represents the "watched" state
+        db.session.commit()
+
+        return (
+            jsonify({"msg": "Estado de visualización actualizado correctamente"}),
+            200,
+        )
+
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": str(e)}), 500
+    finally:
+        db.session.close()
     
 # Busqueda multiple
 @app.route("/multi/<string:value>", methods=["GET"])
@@ -521,7 +624,7 @@ def get_movie_details(id):
     except requests.exceptions.RequestException as e:
         return jsonify({"msg": f"Error fetching movie from TMDb API: {str(e)}"}), 500
 
-
+'''
 @app.route("/addmovie", methods=["POST"])
 def add_movie():
     return jsonify({"msg": "ok"})
@@ -532,20 +635,120 @@ def delete_movie():
 
 @app.route("/updatemovie/<int:id>", methods=["PUT"])
 def update_movie():
-    return jsonify({"msg": "ok"})
+     return jsonify({"msg": "ok"})
+'''
+
 
 # Movie review management
 @app.route("/reviews", methods=["POST"])
+@jwt_required()
 def add_review():
-    return jsonify({"msg": "ok"})
+    try:
+        # Get user identity
+        current_user_id = get_jwt_identity()
+
+        # Get data from request body
+        data = request.get_json(silent=True)
+        if data is None:
+            return jsonify({"error": "No JSON data provided in the request"}), 400
+
+        # Validate required fields
+        if "movie_id" not in data:
+            return jsonify({"error": "Movie ID is required"}), 400
+        if "rating" not in data:
+            return jsonify({"error": "Rating is required"}), 400
+        if "review" not in data:
+            return jsonify({"error": "Review is required"}), 400
+
+        # Create a new Movie_Review entry
+        new_review = Movie_Review(
+            user_id=current_user_id,
+            movie_id=data["movie_id"],
+            rating=data["rating"],
+            review=data["review"],
+        )
+        db.session.add(new_review)
+        db.session.commit()
+
+        return jsonify({"msg": "Review added successfully"}), 200
+
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": str(e)}), 500
+    finally:
+        db.session.close()
+
 
 @app.route("/reviews/<int:id>", methods=["PUT"])
-def update_review():
-    return jsonify({"msg": "ok"})
+@jwt_required()
+def update_review(id):
+    try:
+        # Get user identity
+        current_user_id = get_jwt_identity()
+
+        # Get data from request body
+        data = request.get_json(silent=True)
+        if data is None:
+            return jsonify({"error": "No JSON data provided in the request"}), 400
+
+        # Validate required fields
+        if "rating" not in data:
+            return jsonify({"error": "Rating is required"}), 400
+        if "review" not in data:
+            return jsonify({"error": "Review is required"}), 400
+
+        # Check if the review exists
+        review = Movie_Review.query.filter_by(id=id, user_id=current_user_id).first()
+        if not review:
+            return (
+                jsonify(
+                    {"error": "Review not found or you don't have permission to update"}
+                ),
+                404,
+            )
+
+        # Update the review
+        review.rating = data["rating"]
+        review.review = data["review"]
+        db.session.commit()
+
+        return jsonify({"msg": "Review updated successfully"}), 200
+
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": str(e)}), 500
+    finally:
+        db.session.close()
+
 
 @app.route("/reviews/<int:id>", methods=["DELETE"])
-def delete_review():
-    return jsonify({"msg": "ok"})
+@jwt_required()
+def delete_review(id):
+    try:
+        # Get user identity
+        current_user_id = get_jwt_identity()
+
+        # Check if the review exists
+        review = Movie_Review.query.filter_by(id=id, user_id=current_user_id).first()
+        if not review:
+            return (
+                jsonify(
+                    {"error": "Review not found or you don't have permission to delete"}
+                ),
+                404,
+            )
+
+        # Delete the review
+        db.session.delete(review)
+        db.session.commit()
+
+        return jsonify({"msg": "Review deleted successfully"}), 200
+
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": str(e)}), 500
+    finally:
+        db.session.close()
 
 
 # Actor management
@@ -583,10 +786,67 @@ def get_actors():
     except requests.exceptions.RequestException as e:
         return jsonify({"msg": f"Error fetching actors from TMDb API: {str(e)}"}), 500
 
-@app.route("/actors/<int:id>", methods=["GET"])
-def get_actor():
-    return jsonify({"msg": "ok"})
+@app.route("/actors/<string:name>", methods=["GET"])
+def get_actor_name(name):
+    # Retrieve TMDb API key and base URL from environment variables
+    api_key = os.getenv("API_KEY")
+    base_url = os.getenv("APIMOVIES_URL")
 
+    # Specify the TMDb API endpoint with the specific movie ID
+    tmdb_api_url = f"{base_url}/search/person?query={name}&api_key=" + api_key
+
+    # Set up parameters for the TMDb API request
+    params = {}
+
+    try:
+        # Make a GET request to TMDb API
+        response = requests.get(tmdb_api_url, params=params)
+        response.raise_for_status()  # Check for errors
+
+        # Parse the JSON response
+        actor_data = response.json()
+
+        # Return the movie details as JSON response
+        return (
+            jsonify({"msg": "Actor obtained successfully", "result": actor_data}),
+            200,
+        )
+
+    except requests.exceptions.RequestException as e:
+        return jsonify({"msg": f"Error fetching actor from TMDb API: {str(e)}"}), 500
+
+
+@app.route("/actors/<int:id>", methods=["GET"])
+def get_actor_id(id):
+    # Retrieve TMDb API key and base URL from environment variables
+    api_key = os.getenv("API_KEY")
+    base_url = os.getenv("APIMOVIES_URL")
+
+    # Specify the TMDb API endpoint with the specific movie ID
+    tmdb_api_url = f"{base_url}/search/person/{id}&api_key=" + api_key
+
+    # Set up parameters for the TMDb API request
+    params = {}
+
+    try:
+        # Make a GET request to TMDb API
+        response = requests.get(tmdb_api_url, params=params)
+        response.raise_for_status()  # Check for errors
+
+        # Parse the JSON response
+        actor_data = response.json()
+
+        # Return the movie details as JSON response
+        return (
+            jsonify({"msg": "Actor obtained successfully", "result": actor_data}),
+            200,
+        )
+
+    except requests.exceptions.RequestException as e:
+        return jsonify({"msg": f"Error fetching actor from TMDb API: {str(e)}"}), 500
+
+
+'''
 @app.route("/actors", methods=["POST"])
 def add_actor():
     return jsonify({"msg": "ok"})
@@ -598,7 +858,7 @@ def update_actor():
 @app.route("/actors/<int:id>", methods=["DELETE"])
 def delete_actor():
     return jsonify({"msg": "ok"})
-
+'''
 
 @app.route('/<path:path>', methods=['GET'])
 def serve_any_other_file(path):
