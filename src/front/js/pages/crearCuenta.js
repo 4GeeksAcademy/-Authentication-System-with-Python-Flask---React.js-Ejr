@@ -1,56 +1,33 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { Context } from "../store/appContext";
 
 const CrearCuenta = () => {
+  const { actions, store } = useContext(Context); // Agrega store al contexto
+
   const [email, setEmail] = useState('');
   const [nombre, setNombre] = useState('');
   const [password, setPassword] = useState('');
   const [repeatPassword, setRepeatPassword] = useState('');
-  const [error, setError] = useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Verificar si las contraseñas coinciden
-    if (password !== repeatPassword) {
-      setError('Las contraseñas no coinciden');
-      return;
-    }
-
-    // Limpiar el error si no hay problema
-    setError(null);
-
     try {
-      const response = await fetch('URL_DEL_BACKEND', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email,
-          nombre,
-          password,
-        }),
-      });
+      // Llama a la acción del contexto para crear una cuenta
+      await actions.createAccount(email, nombre, password);
 
-      if (!response.ok) {
-        const responseData = await response.json();
-        if (response.status === 409) { // 409: Conflict, ya existe el recurso
-          setError('Este correo electrónico ya está registrado. Por favor, utiliza otro.');
-        } else if (responseData.error) {
-          setError(responseData.error);
-        } else {
-          setError('Error en la solicitud al servidor');
-        }
-        return;
+      // Limpiar inputs
+      setEmail('');
+      setNombre('');
+      setPassword('');
+      setRepeatPassword('');
+
+      // Accede al mensaje del estado global y muestra el mensaje si existe
+      if (store.message) {
+        console.log("Mensaje del estado global:", store.message);
       }
-
-      // Éxito en la creación de la cuenta
-      const data = await response.json();
-      console.log(data);
-
     } catch (error) {
       console.error('Error al enviar los datos:', error);
-      setError('Error al enviar los datos. Por favor, inténtalo de nuevo.');
     }
   };
 
@@ -107,7 +84,7 @@ const CrearCuenta = () => {
         <button type="submit" className="btn btnCrearCuenta"> Crear Cuenta </button>
       </form>
 
-      {error && <p className='error'>{error}</p>}
+      {store.message && <p className='error'>{store.message}</p>}
 
       <div className='link'>
         <a>Ya tienes una cuenta? <a className='linkIngresar' href="/ingresar">Ingresa Aquí</a> </a>
