@@ -81,13 +81,13 @@
 
 @keyframes pixel {
     0%    {background-color: orange;}
-    15%   {background-color: #FF8C00;}
+    15%   {background-color: black; color: orange;}
     30%   {background-color: orange;}
-    45%   {background-color: #FF8C00;}
+    45%   {background-color: black; color: orange;}
     60%   {background-color: orange;}
-    75%  {background-color: #FF8C00;}
+    75%  {background-color: black; color: orange;}
     90%  {background-color: orange;}
-    100%  {background-color: #FF8C00;}
+    100%  {background-color: black; color: orange;}
 
 }
 
@@ -128,7 +128,7 @@ label {
     border-radius: 4px;
   }
   
-  button {
+  #colorChange {
     background-color: black;
     color: #FFA500;
     padding: 10px;
@@ -138,9 +138,11 @@ label {
     transition: background-color 0.3s ease;
   }
   
-  button:hover {
-    background-color: black;
-    color: white;
+  #colorChange:hover {
+    background-color: white;
+    color: black;
+    outline: 3px solid black;
+    
   } 
 
 
@@ -173,12 +175,11 @@ label {
   }
   
   .eye:hover svg {
-    fill: #4CAF50; /* Change the color on hover */
+    fill: #4CAF50; 
   }
   
-  /* Optional: Add some padding and styling to "Show Passwords" text */
-  .eye-icon-container .pe-2 {
+   .eye-icon-container .pe-2 {
     padding-right: 8px;
-    color: #333; /* Adjust the color as needed */
+    color: #333; 
     font-weight: bold;
   }
