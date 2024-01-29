@@ -30,7 +30,7 @@ export const Payment = () => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ amount: amount }), 
+      body: JSON.stringify({ amount: amount * 100 }), 
     })
       
       .then(async (result) => {

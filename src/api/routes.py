@@ -109,7 +109,7 @@ from flask import request
 def create_payment_intent():
     try:
         data = request.get_json()
-        amount = data.get('amount')
+        amount = data.get('amount') 
 
         payment_intent = stripe.PaymentIntent.create(
             amount=amount,
