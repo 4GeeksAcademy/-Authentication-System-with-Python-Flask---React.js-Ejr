@@ -1,17 +1,38 @@
 // Login.js
 import React, { useState } from "react";
 import Modal from "react-modal";
+import { useHistory } from "react-router-dom";
 import "../../styles/login.css";
 
 function Login({ show, handleClose }) {
+  const history = useHistory();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState(null);
 
-  const handleLogin = () => {
-    // Add your login logic here
+  const handleLogin = async () => {
+    try {
+      const response = await fetch("/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
 
-    // Close the modal
-    handleClose();
+      if (response.ok) {
+        const data = await response.json();
+
+        history.push("/private_page");
+
+        handleClose();
+      } else {
+        const errorData = await response.json();
+        setError(errorData.error || "Login failed");
+      }
+    } catch (error) {
+      setError("An unexpected error occurred");
+    }
   };
 
   return (
@@ -23,8 +44,8 @@ function Login({ show, handleClose }) {
       contentLabel="Login Modal"
     >
       <h2 >Login</h2>
-      
-        <form>
+
+      <form>
         <label htmlFor="email">
           <b>Email</b>
         </label>

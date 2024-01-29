@@ -1,3 +1,4 @@
+import bcrypt
 from flask import jsonify, url_for
 import hashlib
 from flask_bcrypt import Bcrypt
