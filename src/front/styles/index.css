@@ -1,17 +1,20 @@
-
 body {
     background: #2B2B2B;
+    height: 100vh;
 
 }
 
-.navbar a {
+.navbar-dark .navbar-nav .nav-link {
     color: white;
     display: inline-flex;
     font-size: 12px;
     font-weight: 500;
-    
+    margin-left: 30px;
+    font-family: 'Work Sans', sans-serif;
+
 }
-.nav-link:hover{
+
+.navbar-dark .navbar-nav .nav-link:hover {
     color: #A259FF;
 }
 
@@ -19,68 +22,7 @@ body {
     color: #A259FF;
 }
 
-.navbar .dropdown-toggle {
-    display:inline-flex
-}
-
-.navbar .dropdown-menu {
-    background: #3B3B3B;
-    color: white;
-    padding: 10px;
-    border: none;
-    font-family: 'Work Sans', sans-serif;
-    font-size: 12px;
-    font-style: normal;
-    font-weight: 400;
-}
-
-.btn-custom-purple {
-    background-color: #A259FF; 
-    color: #fff;
-}
-
-.btn-con-espacio {
-    margin-right: 20px;
-}
-
-.back {
- background-color:#2B2B2B;
- color: #fff;
-}
-
-.numero-de-color{
-    color: #A259FF;
-}
-
-.numero-normal {
-    color: #fff;
-}
-
-.card-text {
-    color: #858584;
-    font-family: 'Space Mono', monospace;
-}
-.rounded-container {
-    width: 100px;
-    height: 40px;
-    background-color: #3B3B3B;
-    border-radius: 18px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .rounded-content {
-    font-size: 15px;
-    font-weight: bold;
-    text-align: center;
-  }
-
-  .color-footer{
-    font-family: 'Work Sans', sans-serif;
-    color: #CCCCCC;
-  }
-  .navbar-nav .btn {
+.navbar-nav .btn {
     background-color: #A259FF;
     color: white;
     font-size: 12px;
@@ -94,8 +36,6 @@ body {
 }
 
 .btn-outline {
-    background-color: #A259FF;
-    color: white;
     margin-left: 10px;
     border-radius: 20px;
 }
@@ -108,3 +48,70 @@ body {
     border-radius: 12px;
     width: 300px;
 }
+
+.CrearCuenta {
+    height: 500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: white;
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 500;
+}
+
+.CrearCuenta h1 {
+    font-weight: 500;
+}
+
+.CrearCuenta a {
+    width: 450px;
+    text-align: center;
+    font-family: "Work Sans";
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 300;
+    margin-bottom: 15px;
+}
+
+.btnCrearCuenta {
+    background-color: #A259FF;
+    color: white;
+    font-weight: 500;
+    border-radius: 50px;
+    font-family: 'Work Sans', sans-serif;
+    width: 300px;
+}
+
+.btnCrearCuenta:hover {
+    background-color: #7148a7;
+    color: white;
+}
+
+.link{
+    display: flex;
+    justify-content: space-between;
+    width: 300px;
+    margin-top: 20px;
+}
+.linkIngresar{
+    text-decoration: none;
+    color: #A259FF;
+    margin-left: 5px;
+}
+
+.linkIngresar:hover{
+    color: #8a4fd6;
+}
+
+.error{
+    text-align: center;
+    font-family: "Work Sans";
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 500;
+    color: #8a4fd6;
+    margin-bottom: 0px;
+    margin-top: 20px;
+}
+

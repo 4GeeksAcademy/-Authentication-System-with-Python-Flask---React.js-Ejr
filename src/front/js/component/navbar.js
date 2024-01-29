@@ -8,7 +8,8 @@ export const Navbar = () => {
 
 
 	return (
-		<nav className="navbar navbar-dark mb-3 px-5">
+		<nav className="navbar navbar-dark mb-3 px-5 d-flex flex-row"> 
+		 <div className="container-fluid">
 			<Link className="navbar-brand" to="/">
 
 				<p className=" m-1">
@@ -21,7 +22,7 @@ export const Navbar = () => {
 
 				
 				<div className="dropdown">
-				<a className="nav-link dropdown-toggle align-items-center" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+				<a class="nav-link dropdown-toggle align-items-center" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 						Mi Lista <div className="bg-danger px-1 mx-1 rounded d-flex justify-content-center">{store.contador}</div>
 				</a>
 
@@ -35,8 +36,7 @@ export const Navbar = () => {
 
 					</ul>
 
-				</div>
-
+			</div>
 			</div>
 		</nav>
 	);
