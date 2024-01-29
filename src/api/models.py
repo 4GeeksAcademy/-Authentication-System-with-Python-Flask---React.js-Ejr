@@ -4,12 +4,13 @@ db = SQLAlchemy()
 
 
 class User(db.Model):
-    class User(db.Model):
-        id = db.Column(db.Integer, primary_key=True)
-        first_name = db.Column(db.String(50))
-        last_name = db.Column(db.String(50))
-        saved_trips = db.Column(db.Text)
-        xp_points = db.Column(db.Integer)
+    id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String(50))
+    password = db.Column(db.String(50))
+    first_name = db.Column(db.String(50))
+    last_name = db.Column(db.String(50))
+    saved_trips = db.Column(db.Text)
+    xp_points = db.Column(db.Integer)
 
     def __repr__(self):
         return f"<User {self.email}>"

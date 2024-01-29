@@ -121,24 +121,24 @@ export const Navbar = () => {
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <Link className="nav-link" to="/" onClick={() => {
-                    handleLogout();
-                    const offcanvas = offcanvasRef.current;
-                    if (offcanvas) {
-                      offcanvas.classList.remove("show");
-                      const backdrop = document.querySelector(".offcanvas-backdrop");
-                      if (backdrop) {
-                        backdrop.classList.remove("show");
-                      }
-                      const overlay = document.querySelector(".modal-overlay");
-                      if (overlay) {
-                        overlay.remove()
-                      }
-                    }
-                  }}>
-                    Logout
-                  </Link>
-                </li>
+            <Link className="nav-link" to="/" onClick={() => {
+              handleLogout();
+              const offcanvas = offcanvasRef.current;
+              if (offcanvas) {
+                offcanvas.classList.remove("show");
+                const backdrop = document.querySelector(".offcanvas-backdrop");
+                if (backdrop) {
+                  backdrop.classList.remove("show");
+                }
+                const overlay = document.querySelector(".modal-overlay");
+                if (overlay) {
+                  overlay.remove()
+                }
+              }
+            }}>
+              Logout
+            </Link>
+          </li>
               </ul>
             </div>
           </div>
