@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 import json
-from flask import Flask, request, render_template, jsonify, url_for, Blueprint
+from flask import Flask, request, render_template, jsonify, redirect, url_for, Blueprint
 from flask_jwt_extended import (
     JWTManager,
     create_access_token,
@@ -11,7 +11,7 @@ from flask_jwt_extended import (
     unset_jwt_cookies,
 )
 from api.models import db, User
-from api.utils import get_openai_response, format_user_input, validate_user_input
+from api.utils import get_openai_response, format_user_input, validate_user_input, hash_password, get_hash, verify_password
 from flask_cors import CORS
 
 app = Flask(__name__)
@@ -60,6 +60,14 @@ def login():
     return jsonify(access_token=access_token, user_id=user.id)
 
 
+@api.route("/logout", methods=["POST"])
+@jwt_required()
+def logout():
+    response = jsonify({"message": "Logout successful"})
+    unset_jwt_cookies(response)
+    return redirect(url_for('/')), 200
+
+
 @api.route("/any-route", methods=["GET"])
 @jwt_required()
 def protected():
@@ -79,14 +87,6 @@ def private_page():
     current_user = get_jwt_identity()
     user = User.query.filter_by(email=current_user).first()
     return render_template("private_page.html", user=user)
-
-
-@api.route("/logout", methods=["POST"])
-@jwt_required()
-def logout():
-    response = jsonify({"message": "Logout successful"})
-    unset_jwt_cookies(response)
-    return response, 200
 
 
 @api.route("/createItinerary", methods=["GET", "POST"])
