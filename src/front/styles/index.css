@@ -75,3 +75,36 @@ body {
     font-weight: bold;
     text-align: center;
   }
+
+  .color-footer{
+    font-family: 'Work Sans', sans-serif;
+    color: #CCCCCC;
+  }
+  .navbar-nav .btn {
+    background-color: #A259FF;
+    color: white;
+    font-size: 12px;
+    font-weight: 500;
+    border-radius: 15px;
+    font-family: 'Work Sans', sans-serif;
+}
+
+.navbar-nav .btn:hover {
+    background-color: #7148a7;
+}
+
+.btn-outline {
+    background-color: #A259FF;
+    color: white;
+    margin-left: 10px;
+    border-radius: 20px;
+}
+
+.buscar {
+    margin: 0;
+    background-color: #2B2B2B;
+    color: white;
+    border-color: #A259FF;
+    border-radius: 12px;
+    width: 300px;
+}

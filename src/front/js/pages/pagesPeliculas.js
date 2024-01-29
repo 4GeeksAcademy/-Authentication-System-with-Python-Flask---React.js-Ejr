@@ -20,7 +20,7 @@ export const PagesPeliculas = () => {
 
   return (
     <div>
-      <div className="card mb-5" style={{ height: "800px", backgroundColor: "transparent", maxWidth: "800px", margin: "0 auto", border: "none" }} >
+      <div className="card mb-5 vh-100" style={{ height: "800px", backgroundColor: "transparent", maxWidth: "800px", margin: "0 auto", border: "none" }} >
         <div className="row g-0">
           <div className="col-md container text-center" >
             <img
