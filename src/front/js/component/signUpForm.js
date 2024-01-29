@@ -32,7 +32,9 @@ const SignUpForm = () => {
     };
 
     return (
+        
         <form onSubmit={handleSubmit} className="form-container">
+            <div className="page-title">SignUp</div>
             <div className="form-group">
                 <label className="label">First Name:</label>
                 <input type="firstName" value={firstName} onChange={(e) => setFirstName(e.target.value)} className="input" />

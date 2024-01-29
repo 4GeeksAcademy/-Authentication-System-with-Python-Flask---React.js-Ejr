@@ -5,8 +5,7 @@ import '../../styles/authForms.css';
 
 const SignUpPage = () => {
   return (
-    <div className="form-container">
-      <div className="page-title">SignUp</div>
+    <div className="container">
       <SignUpForm />
       <Link to="/">Go back to Home</Link>
     </div>
