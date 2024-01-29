@@ -69,6 +69,7 @@ def get_openai_response(user_input):
             Group size: Couple
             Time at disposal: 7 days
             Time of the year: February
+            Interests: Museums
             Level of fitness: Good
             Dietary requirement: Vegan
             Budget: 100£ per day
@@ -105,6 +106,7 @@ def validate_user_input(user_input):
         "Group size",
         "Time at disposal",
         "Time of the year",
+        "Interests",
         "Level of fitness",
         "Dietary requirement",
         "Budget",
