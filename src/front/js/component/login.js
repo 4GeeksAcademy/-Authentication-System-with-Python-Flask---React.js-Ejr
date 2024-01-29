@@ -1,11 +1,11 @@
-// Login.js
+
 import React, { useState } from "react";
 import Modal from "react-modal";
-import { useHistory } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import "../../styles/login.css";
 
 function Login({ show, handleClose }) {
-  const history = useHistory();
+  const location = useLocation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
@@ -23,7 +23,11 @@ function Login({ show, handleClose }) {
       if (response.ok) {
         const data = await response.json();
 
-        history.push("/privatePage");
+        const currentPathname = location.pathname;
+
+        if (currentPathname === "/login") {
+          history.push("/privatePage");
+        }
 
         handleClose();
       } else {
@@ -35,47 +39,47 @@ function Login({ show, handleClose }) {
     }
   };
 
-  return (
-    <Modal
-      isOpen={show}
-      onRequestClose={handleClose}
-      className="modal-content"
-      overlayClassName="modal-overlay"
-      contentLabel="Login Modal"
-    >
-      <h2 >Login</h2>
+    return (
+      <Modal
+        isOpen={show}
+        onRequestClose={handleClose}
+        className="modal-content"
+        overlayClassName="modal-overlay"
+        contentLabel="Login Modal"
+      >
+        <h2 >Login</h2>
 
-      <form>
-        <label htmlFor="email">
-          <b>Email</b>
-        </label>
-        <input
-          type="email"
-          placeholder="Enter Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          className="input-field"
-        />
-        <label htmlFor="password">
-          <b>Password</b>
-        </label>
-        <input
-          type="password"
-          placeholder="Enter Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          className="input-field"
-        />
-        <button
-          type="button"
-          onClick={handleLogin}
-          className="modal-button"
-        >
-          Login
-        </button>
-      </form>
-    </Modal>
-  );
-}
+        <form>
+          <label htmlFor="email">
+            <b>Email</b>
+          </label>
+          <input
+            type="email"
+            placeholder="Enter Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="input-field"
+          />
+          <label htmlFor="password">
+            <b>Password</b>
+          </label>
+          <input
+            type="password"
+            placeholder="Enter Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="input-field"
+          />
+          <button
+            type="button"
+            onClick={handleLogin}
+            className="modal-button"
+          >
+            Login
+          </button>
+        </form>
+      </Modal>
+    );
+  }
 
-export default Login;
+  export default Login;

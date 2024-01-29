@@ -6,13 +6,13 @@ import avatar1 from "../../img/avatar1.png";
 
 const CreateItinerary = () => {
   const [questions, setQuestions] = useState([
-    'Where do you want to go?',
+    'We have 8 questions for you..Where do you want to go?',
     'How many people are there in your group?',
     'How many days do you plan to stay?',
     'What time of the year would you like to go?',
-    'What are your interests?',
+    'What are your interests? Like food, history, nature, arts..',
     'What is your level of fitness?',
-    'Please indicate your dietary preferences?',
+    'Almost there, please indicate your dietary preferences?',
     'And finally.. your daily budget?',
   ]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -35,7 +35,7 @@ const CreateItinerary = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({userAnswers}),
+        body: JSON.stringify({ userAnswers }),
       });
 
       const result = await response.json();
@@ -52,13 +52,15 @@ const CreateItinerary = () => {
 
   const handleSaveItinerary = async () => {
     try {
+      const accessToken = getActions().getAccessToken();
+  
       const response = await fetch('/saveItinerary', {
         method: 'POST',
         headers: {
+          'Authorization': `Bearer ${accessToken}`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          userId,
           itineraryDetails: generatedItinerary,
         }),
       });
@@ -100,15 +102,15 @@ const CreateItinerary = () => {
           </div>
           <div className='answer-box'>
             <div className='answer-item'>
-            {generatedItinerary ? (
-              <div>
-                <h3>Generated Itinerary</h3>
-                <p>{generatedItinerary}</p>
-                <Button onClick={handleSaveItinerary}>Save Itinerary</Button>
-              </div>
-            ) : (
-              'AI Answer'
-            )}
+              {generatedItinerary ? (
+                <div>
+                  <h3>Generated Itinerary</h3>
+                  <p>{generatedItinerary}</p>
+                  <Button onClick={handleSaveItinerary}>Save Itinerary</Button>
+                </div>
+              ) : (
+                'AI Answer'
+              )}
             </div>
           </div>
         </div>

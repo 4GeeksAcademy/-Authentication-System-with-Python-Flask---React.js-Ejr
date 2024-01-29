@@ -34,16 +34,28 @@ def handle_hello():
 
 @api.route("/signup", methods=["POST"])
 def signup():
-    email = request.json.get("email")
-    password = request.json.get("password")
+    try:
+        email = request.json.get("email")
+        password = request.json.get("password")
 
-    hashed_password = hash_password(password)
+        if not email or not password:
+                return jsonify({"error": "Email and password are required"}), 400
 
-    new_user = User(email=email, password=hashed_password)
-    db.session.add(new_user)
-    db.session.commit()
+        existing_user = User.query.filter_by(email=email).first()
+        if existing_user:
+                return jsonify({"error": "Email is already in use"}), 409
 
-    return jsonify({"Success": "User created successfully"}), 200
+        hashed_password = hash_password(password)
+
+        new_user = User(email=email, password=hashed_password)
+        db.session.add(new_user)
+        db.session.commit()
+
+        return jsonify({"success": "User created successfully"}), 200
+
+    except Exception as e:
+        print(f"Error during signup: {str(e)}")
+        return jsonify({"error": "Internal Server Error"}), 500
 
 
 @api.route("/login", methods=["POST"])
@@ -65,7 +77,7 @@ def login():
 def logout():
     response = jsonify({"message": "Logout successful"})
     unset_jwt_cookies(response)
-    return redirect(url_for('/')), 200
+    return response, 200
 
 
 @api.route("/any-route", methods=["GET"])
