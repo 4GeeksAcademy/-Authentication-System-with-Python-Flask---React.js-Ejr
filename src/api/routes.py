@@ -1,11 +1,13 @@
 """
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
-from flask import Flask, request, jsonify, url_for, Blueprint
+from functools import wraps
+from flask import Flask, request, jsonify, url_for, Blueprint, abort
+import jwt
 from api.models import db, User
-from api.utils import  get_hash
+from api.utils import   admin_required, get_hash
 from flask_cors import CORS
-from flask_jwt_extended import create_access_token
+from flask_jwt_extended import JWTManager, create_access_token
 from flask_jwt_extended import jwt_required
 from flask_jwt_extended import get_jwt_identity
 import os
@@ -13,6 +15,7 @@ import stripe
 
 stripe.api_key = os.getenv('STRIPE_SECRET_KEY')
 stripe.api_version = "2022-08-01"
+
 
 
  
@@ -57,11 +60,9 @@ def login_user():
     password = request.json.get("password", None)
     
     found_user = User.query.filter_by(email=email, password=get_hash(password)).one_or_none()
-
     if found_user is None:
         return "email or password incorrect", 400
-    
-    token = create_access_token(identity=email)
+    token = create_access_token(identity={'email': email, 'level': found_user.level})
     return jsonify(token=token)
 
 @api.route("/private", methods=["GET"])
@@ -79,14 +80,15 @@ def handle_get_hash():
 @api.route('/users', methods=['GET'])
 def handle_get_users():
    all_users = User.query.all()
-   all_users = list(map(lambda item: item.serialize(), all_users))
-   results = all_users
+   all_users = [{
+       "email": user.email
+   } for user in all_users]
 
-   if not results:
-       return jsonify({"msg": "There are no users "}), 404
+   if not all_users:
+       return jsonify({"msg": "There are no users"}), 404
 
    response_body = {
-       "results": results
+       "results": all_users
    }
 
    return jsonify(response_body), 200
@@ -146,4 +148,17 @@ def handle_userdata():
         return jsonify({"error": str(e)}), 500
     finally:
         db.session.close()
- main
+
+
+@api.route('/admin', methods=['PUT'])
+def promote_user():
+    data = request.get_json()
+    email = data.get('email')
+    user = User.query.filter_by(email=email).first()
+    if user:
+        user.level = 2
+        db.session.commit()
+        return {'message': 'User promoted successfully'}, 200
+    else:
+        return {'error': 'No user found with the provided email'}, 404
+
