@@ -58,7 +58,7 @@ const CreateItinerary = () => {
         <div className="avatar-container" id='avatarcontainer'>
           <div className="card mb-5">
             <div className='avatar-box '>
-              <div className='avatar me-5' id='avatar-placeholder'><img src={avatar1} alt="avatar" id='avatar' /> </div>
+              <div className='avatar ' id='avatar-placeholder'><img src={avatar1} alt="avatar" id='avatar' /> </div>
               <div className='box n1 ' id='question'>
                 {questions[currentQuestionIndex]}
               </div>
@@ -71,7 +71,7 @@ const CreateItinerary = () => {
                 placeholder='Your answer'
                 value={userAnswers}
                 onChange={handleAnswerInput}></input>
-              <button onClick={askNextQuestion}>Next Question</button>
+              <button id='nextbutton' onClick={askNextQuestion}>Next Question</button>
             </div>
           </div>
           <div className='answer-box'>
