@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, Modal, Form } from 'react-bootstrap';
 import '../../styles/createItinerary.css';
 import avatar1 from "../../img/avatar1.png";
 
-
 const CreateItinerary = () => {
-  const [questions, setQuestions] = useState([
+  const initialQuestions = [
     'We have 8 questions for you..Where do you want to go?',
     'How many people are there in your group?',
     'How many days do you plan to stay?',
@@ -14,10 +13,13 @@ const CreateItinerary = () => {
     'What is your level of fitness?',
     'Almost there, please indicate your dietary preferences?',
     'And finally.. your daily budget?',
-  ]);
+  ];
+
+  const [questions, setQuestions] = useState(initialQuestions);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [userAnswers, setUserAnswers] = useState([]);
   const [generatedItinerary, setGeneratedItinerary] = useState(null);
+  const [quizInProgress, setQuizInProgress] = useState(true);
 
   const handleAnswerInput = (e) => {
     setUserAnswers(e.target.value);
@@ -28,6 +30,9 @@ const CreateItinerary = () => {
   };
 
   const askNextQuestion = async () => {
+    if (!quizInProgress) {
+      return;
+    }
 
     if (!userAnswers.trim()) {
       alert("Please provide an answer before moving to the next question.");
@@ -39,7 +44,6 @@ const CreateItinerary = () => {
     setUserAnswers('');
 
     if (currentQuestionIndex === 7) {
-
       const response = await fetch('/createItinerary', {
         method: 'POST',
         headers: {
@@ -52,6 +56,7 @@ const CreateItinerary = () => {
 
       if (response.ok) {
         setGeneratedItinerary(result);
+        setQuizInProgress(false);
       } else {
         console.error('Error generating itinerary:', result.error);
       }
@@ -84,6 +89,29 @@ const CreateItinerary = () => {
     }
   };
 
+  const handleStartAgain = () => {
+    setQuestions(initialQuestions);
+    setCurrentQuestionIndex(0);
+    setUserAnswers([]);
+    setGeneratedItinerary(null);
+    setQuizInProgress(true);
+  };
+
+  useEffect(() => {
+    const handleKeyPress = (e) => {
+      if (e.key === 'Enter' && currentQuestionIndex === 8) {
+        handleStartAgain();
+      }
+    };
+  
+    if (currentQuestionIndex === 8) {
+      document.addEventListener('keypress', handleKeyPress);
+    }
+
+    return () => {
+      document.removeEventListener('keypress', handleKeyPress);
+    };
+  }, [currentQuestionIndex]);
 
 
   return (
@@ -98,24 +126,27 @@ const CreateItinerary = () => {
                   ? 'Here is your itinerary, enjoy your holiday!'
                   : questions[currentQuestionIndex]}
               </div>
-          </div>
-          <div className="card-body">
-            <p className="card-text" id='Dio'>Assistant DioDio</p>
-            {currentQuestionIndex !== 8 && (
-              <div>
-              <input
-                type='text'
-                id='answerInput'
-                placeholder='Your answer'
-                value={userAnswers}
-                onChange={handleAnswerInput}
-                onKeyPress={handleAnswerInput}
-                required/>
-              <button onClick={askNextQuestion}>{currentQuestionIndex === 7 ? 'Generate Itinerary' : 'Next Question'}
-              </button>
             </div>
-            )}
-          </div>
+            <div className="card-body">
+              <p className="card-text" id='Dio'>Assistant DioDio</p>
+              {currentQuestionIndex !== 8 && (
+                <div>
+                  <input
+                    type='text'
+                    id='answerInput'
+                    placeholder='Your answer'
+                    value={userAnswers}
+                    onChange={handleAnswerInput}
+                    onKeyPress={handleAnswerInput}
+                    required
+                  />
+                  <button onClick={askNextQuestion}>{currentQuestionIndex === 7 ? 'Generate Itinerary' : 'Next Question'}</button>
+                </div>
+              )}
+              {currentQuestionIndex === 8 && (
+                <button onClick={handleStartAgain}>Start Again</button>
+              )}
+            </div>
           </div>
           <div className='answer-box'>
             <div className='answer-item'>
