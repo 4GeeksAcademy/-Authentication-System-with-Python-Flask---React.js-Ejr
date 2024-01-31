@@ -20,7 +20,7 @@ const CreateItinerary = () => {
   const [userAnswers, setUserAnswers] = useState([]);
   const [generatedItinerary, setGeneratedItinerary] = useState(null);
   const [quizInProgress, setQuizInProgress] = useState(true);
-
+  
   const handleAnswerInput = (e) => {
     setUserAnswers(e.target.value);
 
@@ -140,11 +140,11 @@ const CreateItinerary = () => {
                     onKeyPress={handleAnswerInput}
                     required
                   />
-                  <button onClick={askNextQuestion}>{currentQuestionIndex === 7 ? 'Generate Itinerary' : 'Next Question'}</button>
+                  <button id='nextbutton' onClick={askNextQuestion}>{currentQuestionIndex === 7 ? 'Generate Itinerary' : 'Next Question'}</button>
                 </div>
               )}
               {currentQuestionIndex === 8 && (
-                <button onClick={handleStartAgain}>Start Again</button>
+                <button id='nextbutton' onClick={handleStartAgain}>Start Again</button>
               )}
             </div>
           </div>

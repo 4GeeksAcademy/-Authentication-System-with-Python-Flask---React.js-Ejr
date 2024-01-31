@@ -80,13 +80,15 @@ function Login({ show, handleClose }) {
                 </button>
               </div>
           </div>
-        <button
-          type="button"
-          onClick={handleLogin}
-          className="modal-button m-2"
-        >
-          Login
-        </button>
+        <div className="login-button">
+          <button
+            type="button"
+            onClick={handleLogin}
+            className="modal-button m-2"
+          >
+            Login
+          </button>
+        </div>
       </form>
     </Modal>
   );
