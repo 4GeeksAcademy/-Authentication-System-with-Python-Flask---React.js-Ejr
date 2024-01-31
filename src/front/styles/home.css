@@ -1,0 +1,31 @@
+.timer-container {
+    position: absolute;
+    transform: translate(-80%, -80%);
+    text-align: center;
+    z-index: 100;
+  }
+  
+  .timer {
+    color: white;
+    background-color: #3B3B3B;
+    padding: 20px;
+    border-radius: 5px;
+    display: inline-block;
+    border-radius: 15px;
+    opacity: 0.8;
+    font-family: "Work Sans";
+  }
+  
+  .timer span {
+    display: inline-block;
+    margin-right: 5px; /* Ajusta el espaciado entre las partes del tiempo según sea necesario */
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  .boton{
+    border-radius: 20px;
+    background-color: white;
+    color: #3B3B3B;
+    font-weight: bold;
+  }
