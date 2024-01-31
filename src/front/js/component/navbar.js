@@ -10,7 +10,7 @@ export const Navbar = () => {
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const offcanvasRef = useRef(null)
   const location = useLocation();
-
+  
 
   const openLoginModal = () => {
     setTimeout(() => {
@@ -90,7 +90,21 @@ export const Navbar = () => {
             <div className="offcanvas-body bg-dark">
               <ul className="navbar-nav justify-content-end flex-grow-1 pe-3">
                 <li className="nav-item">
-                  <Link className="nav-link active" to="/">
+                  <Link className="nav-link active" to="/" onClick={() => {
+                    const offcanvas = offcanvasRef.current;
+                    if (offcanvas) {
+                      offcanvas.classList.remove("show");
+                      const backdrop = document.querySelector(".offcanvas-backdrop");
+                      if (backdrop) {
+                        backdrop.classList.remove("show");
+                      }
+                      const overlay = document.querySelector(".modal-overlay");
+                      if (overlay) {
+                        overlay.remove()
+                      }
+                    }
+                  }
+                  }>
                     Home
                   </Link>
                 </li>
@@ -116,7 +130,21 @@ export const Navbar = () => {
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <Link className="nav-link" to="/signup">
+                  <Link className="nav-link" to="/signup" onClick={() => {
+                    const offcanvas = offcanvasRef.current;
+                    if (offcanvas) {
+                      offcanvas.classList.remove("show");
+                      const backdrop = document.querySelector(".offcanvas-backdrop");
+                      if (backdrop) {
+                        backdrop.classList.remove("show");
+                      }
+                      const overlay = document.querySelector(".modal-overlay");
+                      if (overlay) {
+                        overlay.remove()
+                      }
+                    }
+                  }
+                  }>
                     Sign Up
                   </Link>
                 </li>
