@@ -84,7 +84,7 @@ def login():
 def logout():
     response = jsonify({"message": "Logout successful"})
     unset_jwt_cookies(response)
-    return redirect(url_for('/')), 200
+    return response, 200
 
 
 @api.route("/any-route", methods=["GET"])
@@ -134,7 +134,28 @@ def create_itinerary():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
     
+@api.route("/saveItinerary", methods=["POST"])
+@jwt_required()
+def save_itinerary():
+    try:
+        current_user_email = get_jwt_identity()
+        user = User.query.filter_by(email=current_user_email).first()
 
+        if not user:
+            return jsonify({"error": "User not found"}), 404
+
+        data = request.json
+
+        if "itinerary" in data:
+            user.saved_trips.append(data["itinerary"])
+            db.session.commit()
+
+            return jsonify({"message": "Itinerary saved successfully"})
+
+        return jsonify({"error": "Invalid request data"}), 400
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 if __name__ == "__main__":
     app.run(debug=True)

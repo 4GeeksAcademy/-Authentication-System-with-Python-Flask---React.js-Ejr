@@ -1,6 +1,6 @@
 // Navbar.js
 import React, { useState, useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import "../../styles/navbar.css";
 import logoOrange from "../../img/logoOrange.png";
 import Login from "./login";
@@ -9,6 +9,8 @@ import Login from "./login";
 export const Navbar = () => {
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const offcanvasRef = useRef(null)
+  const location = useLocation();
+  
 
   const openLoginModal = () => {
     setTimeout(() => {
@@ -16,14 +18,33 @@ export const Navbar = () => {
     }, 1); // 
   };
 
-
   const closeLoginModal = () => setIsLoginOpen(false);
+
+  const handleLogout = async () => {
+    try {
+      const response = await fetch('/logout', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${accessToken}`,
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (response.ok) {
+        window.location.href = '/';
+      } else {
+        console.error('Logout failed:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Error during logout:', error.message);
+    }
+  };
 
   return (
     <>
       <nav className="navbar navbar fixed-top p-0">
         <div className="container-fluid p-1">
-          <a className="navbar-brand" href="#">
+          <a className="navbar-brand" href="/">
             <img src={logoOrange} alt="Logo" />
           </a>
 
@@ -69,7 +90,21 @@ export const Navbar = () => {
             <div className="offcanvas-body bg-dark">
               <ul className="navbar-nav justify-content-end flex-grow-1 pe-3">
                 <li className="nav-item">
-                  <Link className="nav-link active" to="/">
+                  <Link className="nav-link active" to="/" onClick={() => {
+                    const offcanvas = offcanvasRef.current;
+                    if (offcanvas) {
+                      offcanvas.classList.remove("show");
+                      const backdrop = document.querySelector(".offcanvas-backdrop");
+                      if (backdrop) {
+                        backdrop.classList.remove("show");
+                      }
+                      const overlay = document.querySelector(".modal-overlay");
+                      if (overlay) {
+                        overlay.remove()
+                      }
+                    }
+                  }
+                  }>
                     Home
                   </Link>
                 </li>
@@ -95,10 +130,43 @@ export const Navbar = () => {
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <Link className="nav-link" to="/signup">
+                  <Link className="nav-link" to="/signup" onClick={() => {
+                    const offcanvas = offcanvasRef.current;
+                    if (offcanvas) {
+                      offcanvas.classList.remove("show");
+                      const backdrop = document.querySelector(".offcanvas-backdrop");
+                      if (backdrop) {
+                        backdrop.classList.remove("show");
+                      }
+                      const overlay = document.querySelector(".modal-overlay");
+                      if (overlay) {
+                        overlay.remove()
+                      }
+                    }
+                  }
+                  }>
                     Sign Up
                   </Link>
                 </li>
+                <li className="nav-item">
+            <Link className="nav-link" to="/" onClick={() => {
+              handleLogout();
+              const offcanvas = offcanvasRef.current;
+              if (offcanvas) {
+                offcanvas.classList.remove("show");
+                const backdrop = document.querySelector(".offcanvas-backdrop");
+                if (backdrop) {
+                  backdrop.classList.remove("show");
+                }
+                const overlay = document.querySelector(".modal-overlay");
+                if (overlay) {
+                  overlay.remove()
+                }
+              }
+            }}>
+              Logout
+            </Link>
+          </li>
               </ul>
             </div>
           </div>

@@ -12,7 +12,7 @@ body {
 
 .card {
   width: 100%;
-  max-width: 35rem;
+  max-width: 40rem;
   background-color: darkgray;
   border-radius: 5px;
 }
@@ -147,4 +147,8 @@ body {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   background-color: #333;
   color: #fff;
+}
+
+#createIt a {
+  text-decoration: none;
 }

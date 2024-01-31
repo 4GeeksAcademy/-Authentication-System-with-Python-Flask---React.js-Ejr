@@ -1,4 +1,4 @@
-// Login.js
+
 import React, { useState } from "react";
 import Modal from "react-modal";
 import "../../styles/login.css";
@@ -80,13 +80,15 @@ function Login({ show, handleClose }) {
                 </button>
               </div>
           </div>
-        <button
-          type="button"
-          onClick={handleLogin}
-          className="modal-button m-2"
-        >
-          Login
-        </button>
+        <div className="login-button">
+          <button
+            type="button"
+            onClick={handleLogin}
+            className="modal-button m-2"
+          >
+            Login
+          </button>
+        </div>
       </form>
     </Modal>
   );
