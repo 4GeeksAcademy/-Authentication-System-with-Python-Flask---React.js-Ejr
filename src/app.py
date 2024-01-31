@@ -2,26 +2,56 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 import os
+
+# Import use for .env
 from dotenv import load_dotenv
+
+# Import app functionalities
+import re
+import random
 import requests
 from flask import Flask, request, jsonify, url_for, send_from_directory
 from flask_migrate import Migrate
 from flask_swagger import swagger
 from api.utils import APIException, generate_sitemap
-from api.models import db, User, Movie_Review, View_State, Personal_List, Follower
+from api.models import (
+    db,
+    User,
+    Movie_Review,
+    View_State,
+    Personal_List,
+    Follower,
+    Support,
+)
 from api.routes import api
 from api.admin import setup_admin
 from api.commands import setup_commands
+from flask_cors import CORS
+
+# Import user token authentication
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required
 from flask_jwt_extended import JWTManager
+
+# Import password encrypt
 from flask_bcrypt import Bcrypt
+
+"""         Status codes
+200 OK: Successful GET requests.
+201 Created: Successful POST requests.
+204 No Content: Successful DELETE requests with no additional content to return.
+400 Bad Request: Invalid data or missing parameters in the request body.
+404 Not Found: The requested resource (user, planet, character, etc.) is not found.
+409 Conflict: Indicates a conflict, such as trying to add a resource that already exists in the list of favorites.
+500 Server error
+"""
 
 # from models import Person
 ENV = "development" if os.getenv("FLASK_DEBUG") == "1" else "production"
-static_file_dir = os.path.join(os.path.dirname(
-    os.path.realpath(__file__)), '../public/')
+static_file_dir = os.path.join(
+    os.path.dirname(os.path.realpath(__file__)), "../public/"
+)
 app = Flask(__name__)
 app.url_map.strict_slashes = False
 
@@ -35,15 +65,19 @@ bcrypt = Bcrypt(app)
 # Load environment variables from .env file
 load_dotenv()
 
+# Enable CORS
+CORS(app)
+
 # database condiguration
 db_url = os.getenv("DATABASE_URL")
 if db_url is not None:
-    app.config['SQLALCHEMY_DATABASE_URI'] = db_url.replace(
-        "postgres://", "postgresql://")
+    app.config["SQLALCHEMY_DATABASE_URI"] = db_url.replace(
+        "postgres://", "postgresql://"
+    )
 else:
-    app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:////tmp/test.db"
+    app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:////tmp/test.db"
 
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 MIGRATE = Migrate(app, db, compare_type=True)
 db.init_app(app)
 
@@ -54,66 +88,88 @@ setup_admin(app)
 setup_commands(app)
 
 # Add all endpoints form the API with a "api" prefix
-app.register_blueprint(api, url_prefix='/api')
+app.register_blueprint(api, url_prefix="/api")
+
 
 # Handle/serialize errors like a JSON object
 @app.errorhandler(APIException)
 def handle_invalid_usage(error):
     return jsonify(error.to_dict()), error.status_code
 
+
 # generate sitemap with all your endpoints
-@app.route('/')
+@app.route("/")
 def sitemap():
     if ENV == "development":
         return generate_sitemap(app)
-    return send_from_directory(static_file_dir, 'index.html')
+    return send_from_directory(static_file_dir, "index.html")
+
 
 # User management
-@app.route('/signup', methods=['POST'])
+@app.route("/signup", methods=["POST"])
 def signup():
-    body=request.get_json(silent=True)
+    body = request.get_json(silent=True)
     if body is None:
-        return jsonify({'msg':'Se debe enviar informacion en el body'}),400
-    if 'email' not in body:
-        return jsonify({'msg':'Se debe ingresar email'}),400
-    if 'password' not in body:
-        return jsonify({'msg':'Se debe ingresar password'}),400
-    if 'username' not in body:
-        return jsonify({'msg': 'No se ha proporcionado username'}), 400
-    if 'name' not in body:
-        return jsonify({'msg':'Se debe ingresar password'}),400
-    if 'age' not in body:
-        return jsonify({'msg': 'No se ha proporcionado age'}), 400
-    
-    pw_hash = Bcrypt.generate_password_hash(body['password']).decode('utf-8')
-    
+        return jsonify({"msg": "You must send information on the body"}), 400
+    if "email" not in body:
+        return jsonify({"msg": "Email is required"}), 400
+    if "password" not in body:
+        return jsonify({"msg": "Password is required"}), 400
+    if "username" not in body:
+        return jsonify({"msg": "Username is required"}), 400
+    if "name" not in body:
+        return jsonify({"msg": "Name is required"}), 400
+    if "age" not in body:
+        return jsonify({"msg": "Age is required"}), 400
+
+    # Verificar formato de correo electrónico con expresion regular
+    email_regex = r"^[\w\.-]+@[a-zA-Z\d\.-]+\.[a-zA-Z]{2,}$"
+    if not re.match(email_regex, body["email"]):
+        return jsonify({"msg": "Invalid email format"}), 400
+
+    pw_hash = bcrypt.generate_password_hash(body["password"]).decode("utf-8")
+
     new_user = User()
     new_user.username = body["username"]
     new_user.name = body["name"]
     new_user.age = body["age"]
-    new_user.email = body["email"]
+    new_user.email = body["email"].lower()
     new_user.password = pw_hash
     new_user.is_active = True
     new_user.is_admin = False
+
+    if new_user.email == os.getenv("SMTP_USERNAME"):
+        new_user.is_admin = True
+
     db.session.add(new_user)
-    db.session.commit()
 
-    return jsonify({'msg':'Usuarion registrado correctamente'}), 200
+    try:
+        db.session.commit()
+        return jsonify({"msg": "User registered correctly"}), 200
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": f"Unexpected error has occurred {e}"}), 500
 
-@app.route('/login', methods=['POST'])
+
+@app.route("/login", methods=["POST"])
 def login():
     body = request.get_json(silent=True)
     if body is None:
-        return jsonify({'msg':'Debes enviar informacion en el body'}), 400
-    if 'email' not in body:
-        return jsonify({'msg': 'No se ha proporcionado email'}), 400
-    if 'password' not in body:
-        return jsonify({'msg': 'No se ha proporcionado password'}), 400
-    user = User.query.filter_by(email=body['email']).first()
-    if user is None or not Bcrypt.check_password_hash(user.password, body['password']):
-        return jsonify({'msg': 'Usuario o contraseña incorrectos'}), 400
+        return jsonify({"msg": "You must send information on the body"}), 400
+    if "email" not in body:
+        return jsonify({"msg": "Email is required"}), 400
+    if "password" not in body:
+        return jsonify({"msg": "Password is required"}), 400
+    user = User.query.filter_by(email=body["email"].lower()).first()
+    if (
+        user is None
+        or not bcrypt.check_password_hash(user.password, body["password"])
+        or user.is_active == False
+    ):
+        return jsonify({"msg": "Wrong user or password"}), 400
     access_token = create_access_token(identity=user.id)
-     # Retrieve TMDb API key and base URL from environment variables
+
+    # Retrieve TMDb API key and base URL from environment variables
     api_key = os.getenv("API_KEY")
     base_url = os.getenv("APIMOVIES_URL")
 
@@ -149,22 +205,23 @@ def login():
 
 @app.route("/profile", methods=["GET"])
 @jwt_required()
-def private():
+def profile():
     # Access the identity of the current user with get_jwt_identity
     current_user = get_jwt_identity()
     return jsonify(logged_in_as=current_user), 200
 
-@app.route('/logout', methods=['POST'])
+
+@app.route("/logout", methods=["POST"])
 @jwt_required()
 def logout():
     # Access the identity of the current user with get_jwt_identity
     current_user = get_jwt_identity()
-    
-    # Perform any additional logout actions here, if needed    
-    return jsonify({'msg': 'Logout successful'}), 200
+
+    # Perform any additional logout actions here, if needed
+    return jsonify({"msg": "Logout successful"}), 200
 
 
-'''
+"""
 @app.route("/forgotpassword", methods=["POST"])
 @jwt_required()
 def forgot_password():
@@ -184,7 +241,8 @@ def forgot_password():
     # Here you might want to send an email with the recovery_token to the user
     # For demonstration purposes, we're just returning the token in the response
     return jsonify(recovery_token=recovery_token), 200
-'''
+"""
+
 
 @app.route("/api/passwordreset", methods=["POST"])
 @jwt_required()
@@ -206,52 +264,75 @@ def update_password():
             return jsonify({"error": "User not found"}), 404
 
         user.password = bcrypt.generate_password_hash(new_password).decode("utf-8")
+
         db.session.commit()
         return jsonify({"message": "Password updated succesfully"}), 200
 
     except Exception as e:
         db.session.rollback()
-        return jsonify({"error": str(e)}), 500
+        return jsonify({"error": f"Unexpected error has occurred {e}"}), 500
 
 
-#EDIT USER
 @app.route("/edituser", methods=["PUT"])
 @jwt_required()
 def update_user():
     current_user_id = get_jwt_identity()
     body = request.get_json(silent=True)
     if body is None:
-        return jsonify({"msg": "Debes enviar información en el body"}), 400
+        return jsonify({"msg": "You must send information on the body"}), 400
     user = User.query.get(current_user_id)
     if user is None:
-        return jsonify({"msg": "Usuario no encontrado"}), 404
+        return jsonify({"msg": "User not found"}), 404
     if "name" in body:
         user.name = body["name"]
     if "username" in body:
         user.username = body["username"]
-    db.session.commit()
-    return jsonify({"msg": "Usuario actualizado con éxito"}), 200
+    if "profile_picture" in body:
+        user.profile_picture = body["profile_picture"]
 
-#DELETE USER
-@app.route('/deleteuser/<int:user_id>', methods=['DELETE'])
+    try:
+        db.session.commit()
+        return jsonify({"msg": "User updated correctly"}), 200
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"msg": f"An error has occurred {e}"}), 500
+
+
+# Baja logica
+@app.route("/deleteuser/<int:user_id>", methods=["DELETE"])
 def delete_user(user_id):
     user = User.query.get(user_id)
+
     if user:
         user.is_active = False
-        db.session.commit()
+        try:
+            db.session.commit()
+            return jsonify({"msg": "User deactivated succesfully"}), 200
+        except Exception as e:
+            db.session.rollback()
+            return jsonify({"msg": f"Unexpected error {e}"}), 500
 
-        return jsonify({"msg": "Usuario se desactivó con éxito"}), 200
     else:
-        return jsonify({"error": "Usuario no encontrado"}), 404
+        return jsonify({"error": "User not found"}), 404
 
-#GET ALL USERS
-@app.route('/users', methods=['GET'])
+
+"""
+def delete_user(user_id):
+    user = User.query.get(user_id)
+    db.session.delete(user)
+    db.session.commit()
+    return jsonify({"msg": "Usuario se eliminó con éxito"}), 200
+"""
+
+
+@app.route("/users", methods=["GET"])
 def get_all_users():
     all_users = User.query.all()
     serialized_all_users = list(map(lambda users: users.serialize(), all_users))
-    return jsonify({'msg': 'Usuario obtenidos:', 'results': serialized_all_users}), 200
+    return jsonify({"msg": "Users obtained:", "results": serialized_all_users}), 200
 
-#GET ONE USER
+
+# Datos de usuario mediante permisos administrador
 @app.route("/user/<int:user_id>", methods=["GET"])
 @jwt_required()
 def get_user(user_id):
@@ -259,9 +340,13 @@ def get_user(user_id):
     if current_user.is_admin:
         user = User.query.get(user_id)
         serialized_user = user.serialize()
-        return jsonify({"msg": "El Usuario obtenido es:", "results": serialized_user}), 200
+        return (
+            jsonify({"msg": "The obtained user is:", "results": serialized_user}),
+            200,
+        )
 
-    return jsonify({"msg": "No tiene los permisos para hacer esta consulta"}), 404
+    return jsonify({"msg": "You dont have permissions to make this request"}), 404
+
 
 # Followed users management
 @app.route("/followuser/<int:id>", methods=["POST"])
@@ -271,6 +356,9 @@ def follow_user(id):
 
     # Check if the user to be followed exists
     user_to_follow = User.query.get(id)
+
+    if user_to_follow.is_active == False:
+        return jsonify({"msg": "User does not exist"})
 
     if user_to_follow is None:
         return jsonify({"msg": "User not found"}), 404
@@ -285,15 +373,13 @@ def follow_user(id):
 
     # Create a new Follower entry to represent the follow relationship
     new_follower = Follower(user_from_id=current_user_id, user_to_id=user_to_follow.id)
-    """
-    new_follower = Follower()
-    new_follower.user_from_id = current_user_id
-    new_follower.user_to_id = user_to_follow.id
-    """
     db.session.add(new_follower)
-    db.session.commit()
-
-    return jsonify({"msg": "Successfully followed user"}), 200
+    try:
+        db.session.commit()
+        return jsonify({"msg": "Successfully followed user"}), 200
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"msg": f"Unexpected error {e}"}), 500
 
 
 @app.route("/unfollowuser/<int:id>", methods=["POST"])
@@ -319,9 +405,12 @@ def unfollow_user(id):
 
     # Remove the Follower entry to unfollow the user
     db.session.delete(follower_entry)
-    db.session.commit()
-
-    return jsonify({"msg": "Successfully unfollowed user"}), 200
+    try:
+        db.session.commit()
+        return jsonify({"msg": "Successfully unfollowed user"}), 200
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"msg": f"Unexpected error {e}"}), 500
 
 
 # Lista de seguidos
@@ -345,12 +434,13 @@ def get_followed_list():
     return (
         jsonify(
             {
-                "msg": "Usuarios seguidos por el usuario actual:",
+                "msg": "Followed users:",
                 "results": serialized_users_followed,
             }
         ),
         200,
     )
+
 
 # Lista de seguidores
 @app.route("/followers", methods=["GET"])
@@ -370,96 +460,17 @@ def get_followers_list():
     # Serialize the user details
     serialized_followers = [follower.serialize() for follower in followers]
 
-    return jsonify({"msg": "Users following the current user:", "results": serialized_followers}), 200
+    return (
+        jsonify(
+            {
+                "msg": "Followers:",
+                "results": serialized_followers,
+            }
+        ),
+        200,
+    )
 
 
-# Personal movie list management
-@app.route("/favoritemovies/<int:id>", methods=["POST"])
-@jwt_required()
-def add_movie_personal(id):
-    current_user_id = get_jwt_identity()
-
-    # Check if the movie is already in the user's personal list
-    existing_entry = Personal_List.query.filter_by(
-        user_id=current_user_id, movie_id=int(id)
-    ).first()
-
-    if existing_entry:
-        return jsonify({"msg": "La película ya está en tu lista personal"}), 400
-
-    # Add the movie to the user's personal list
-    new_entry = Personal_List(user_id=current_user_id, movie_id=int(id))
-    db.session.add(new_entry)
-
-    try:
-        db.session.commit()
-        return jsonify({"msg": "Película agregada a tu lista personal"}), 200
-    except Exception as e:
-        db.session.rollback()
-        return jsonify({"error": str(e)}), 500
-    finally:
-        db.session.close()
-
-
-@app.route("/favoritemovies/<int:id>", methods=["DELETE"])
-@jwt_required()
-def remove_movie_personal(id):
-    try:
-        # Get user identity
-        current_user_id = get_jwt_identity()
-
-        # Check if the movie is in the user's personal list
-        entry_to_remove = Personal_List.query.filter_by(
-            user_id=current_user_id, movie_id=int(id)
-        ).first()
-
-        if not entry_to_remove:
-            return jsonify({"msg": "La película no está en tu lista personal"}), 404
-
-        # Remove the movie from the user's personal list
-        db.session.delete(entry_to_remove)
-        db.session.commit()
-
-        return jsonify({"msg": "Película eliminada de tu lista personal"}), 200
-
-    except Exception as e:
-        db.session.rollback()
-        return jsonify({"error": str(e)}), 500
-    finally:
-        db.session.close()
-
-
-# Personal view state management
-@app.route("/viewstate/<int:id>", methods=["GET"])
-@jwt_required()
-def change_view_status(id):
-    try:
-        # Get user identity
-        current_user_id = get_jwt_identity()
-
-        # Check if the movie is in the user's personal list
-        entry_to_update = Personal_List.query.filter_by(
-            user_id=current_user_id, movie_id=id
-        ).first()
-
-        if not entry_to_update:
-            return jsonify({"msg": "La película no está en tu lista personal"}), 404
-
-        # Update the view state of the movie
-        entry_to_update.view_state_id = 1  # Assuming 2 represents the "watched" state
-        db.session.commit()
-
-        return (
-            jsonify({"msg": "Estado de visualización actualizado correctamente"}),
-            200,
-        )
-
-    except Exception as e:
-        db.session.rollback()
-        return jsonify({"error": str(e)}), 500
-    finally:
-        db.session.close()
-    
 # Busqueda multiple
 @app.route("/multi/<string:value>", methods=["GET"])
 def get_multi(value):
@@ -490,7 +501,9 @@ def get_multi(value):
     except requests.exceptions.RequestException as e:
         return jsonify({"msg": f"Error fetching data from TMDb API: {str(e)}"}), 500
 
+
 # Movie management
+@app.route("/movies", methods=["GET"])
 def get_movies():
     # Retrieve TMDb API key and base URL from environment variables
     api_key = os.getenv("API_KEY")
@@ -592,6 +605,46 @@ def get_movie_title(title):
         return jsonify({"msg": f"Error fetching movie from TMDb API: {str(e)}"}), 500
 
 
+# Get random movie
+@app.route("/randommovie", methods=["GET"])
+def get_random_movie():
+    # Retrieve TMDb API key and base URL from environment variables
+    api_key = os.getenv("API_KEY")
+    base_url = os.getenv("APIMOVIES_URL")
+
+    # Specify the TMDb API endpoint
+    tmdb_api_url = f"{base_url}/discover/movie?api_key=" + api_key
+
+    # Set up parameters for the TMDb API request
+    params = {}
+
+    try:
+        # Make a GET request to TMDb API
+        response = requests.get(tmdb_api_url, params=params)
+        response.raise_for_status()  # Check for errors
+
+        # Parse the JSON response
+        movies_data = response.json()
+
+        # Extract relevant information (you may adjust this based on TMDb API response structure)
+        movies_list = movies_data.get("results", [])
+
+        # Randomly select one movie from the list
+        if movies_list:
+            selected_movie = random.choice(movies_list)
+            return (
+                jsonify(
+                    {"msg": "Movie obtained successfully", "result": selected_movie}
+                ),
+                200,
+            )
+        else:
+            return jsonify({"msg": "No movies found"}), 404
+
+    except requests.exceptions.RequestException as e:
+        return jsonify({"msg": f"Error fetching movies from TMDb API: {str(e)}"}), 500
+
+
 # Por conflicto se cambio la ruta, solo da los detalles de las peliculas que se busquen por el id propio de TMDB
 @app.route("/moviedetails/<int:id>", methods=["GET"])
 def get_movie_details(id):
@@ -624,19 +677,23 @@ def get_movie_details(id):
     except requests.exceptions.RequestException as e:
         return jsonify({"msg": f"Error fetching movie from TMDb API: {str(e)}"}), 500
 
-'''
+
+"""
 @app.route("/addmovie", methods=["POST"])
 def add_movie():
     return jsonify({"msg": "ok"})
+
 
 @app.route("/deletemovie/<int:id>", methods=["DELETE"])
 def delete_movie():
     return jsonify({"msg": "ok"})
 
+
 @app.route("/updatemovie/<int:id>", methods=["PUT"])
 def update_movie():
-     return jsonify({"msg": "ok"})
-'''
+    return jsonify({"msg": "ok"})
+
+"""
 
 
 # Movie review management
@@ -668,10 +725,12 @@ def add_review():
             review=data["review"],
         )
         db.session.add(new_review)
-        db.session.commit()
-
-        return jsonify({"msg": "Review added successfully"}), 200
-
+        try:
+            db.session.commit()
+            return jsonify({"msg": "Review added successfully"}), 200
+        except Exception as e:
+            db.session.rollback()
+            return jsonify({"msg": f"Unexpected error {e}"}), 500
     except Exception as e:
         db.session.rollback()
         return jsonify({"error": str(e)}), 500
@@ -710,10 +769,12 @@ def update_review(id):
         # Update the review
         review.rating = data["rating"]
         review.review = data["review"]
-        db.session.commit()
-
-        return jsonify({"msg": "Review updated successfully"}), 200
-
+        try:
+            db.session.commit()
+            return jsonify({"msg": "Review updated successfully"}), 200
+        except Exception as e:
+            db.session.rollback()
+            return jsonify({"msg": f"Unexpected error {e}"}), 500
     except Exception as e:
         db.session.rollback()
         return jsonify({"error": str(e)}), 500
@@ -740,15 +801,126 @@ def delete_review(id):
 
         # Delete the review
         db.session.delete(review)
+
+        try:
+            db.session.commit()
+            return jsonify({"msg": "Review deleted successfully"}), 200
+        except Exception as e:
+            db.session.rollback()
+            return jsonify({"msg": f"Unexpected error {e}"}), 500
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": str(e)}), 500
+    finally:
+        db.session.close()
+
+
+# Personal movie list management
+@app.route("/favoritemovies/<int:view_status>", methods=["GET"])
+@jwt_required()
+def get_personal_movies(view_status):
+    current_user_id = get_jwt_identity()
+
+    # Retrieve movies from the user's personal list with a specific view status
+    personal_movies = Personal_List.query.filter_by(
+        user_id=current_user_id, view_status_id=view_status
+    ).all()
+
+    # Extract movie information (you may adjust this based on your model structure)
+    movies_list = [entry.movie.title for entry in personal_movies]
+
+    return (
+        jsonify(
+            {"msg": "Personal movies obtained successfully", "results": movies_list}
+        ),
+        200,
+    )
+
+
+@app.route("/favoritemovies/<int:id>", methods=["POST"])
+@jwt_required()
+def add_movie_personal(id):
+    current_user_id = get_jwt_identity()
+
+    # Check if the movie is already in the user's personal list
+    existing_entry = Personal_List.query.filter_by(
+        user_id=current_user_id, movie_id=int(id)
+    ).first()
+
+    if existing_entry:
+        return jsonify({"msg": "The movie is already in your personal list"}), 400
+
+    # Add the movie to the user's personal list
+    new_entry = Personal_List(
+        user_id=current_user_id, movie_id=int(id), view_state_id=2
+    )
+    db.session.add(new_entry)
+
+    try:
+        db.session.commit()
+        return jsonify({"msg": "Movie added to the personal list correctly"}), 200
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": str(e)}), 500
+    finally:
+        db.session.close()
+
+
+@app.route("/favoritemovies/<int:id>", methods=["DELETE"])
+@jwt_required()
+def remove_movie_personal(id):
+    try:
+        # Get user identity
+        current_user_id = get_jwt_identity()
+
+        # Check if the movie is in the user's personal list
+        entry_to_remove = Personal_List.query.filter_by(
+            user_id=current_user_id, movie_id=int(id)
+        ).first()
+
+        if not entry_to_remove:
+            return jsonify({"msg": "The movie isn't in your personal list"}), 404
+
+        # Remove the movie from the user's personal list
+        db.session.delete(entry_to_remove)
         db.session.commit()
 
-        return jsonify({"msg": "Review deleted successfully"}), 200
+        return (
+            jsonify({"msg": "Movie deleted from your personal list succesfully"}),
+            200,
+        )
 
     except Exception as e:
         db.session.rollback()
         return jsonify({"error": str(e)}), 500
     finally:
         db.session.close()
+
+
+# Personal view state management
+@app.route("/viewstate/<int:id>", methods=["GET"])
+@jwt_required()
+def change_view_status(id):
+    # Get user identity
+    current_user_id = get_jwt_identity()
+
+    # Check if the movie is in the user's personal list
+    entry_to_update = Personal_List.query.filter_by(
+        user_id=current_user_id, movie_id=id
+    ).first()
+
+    if not entry_to_update:
+        return jsonify({"msg": "The movie isn't in your personal list"}), 404
+
+    # Update the view state of the movie
+    entry_to_update.view_state_id = 1  # Assuming 2 represents the "To watch" state
+
+    try:
+        db.session.commit()
+        return jsonify({"msg": "View state updated succesfully"}), 200
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"msg": f"Unexpected error {e}"}), 500
 
 
 # Actor management
@@ -785,6 +957,7 @@ def get_actors():
 
     except requests.exceptions.RequestException as e:
         return jsonify({"msg": f"Error fetching actors from TMDb API: {str(e)}"}), 500
+
 
 @app.route("/actors/<string:name>", methods=["GET"])
 def get_actor_name(name):
@@ -846,30 +1019,145 @@ def get_actor_id(id):
         return jsonify({"msg": f"Error fetching actor from TMDb API: {str(e)}"}), 500
 
 
-'''
+@app.route("/randomactor", methods=["GET"])
+def get_random_actor():
+    # Retrieve TMDb API key and base URL from environment variables
+    api_key = os.getenv("API_KEY")
+    base_url = os.getenv("APIMOVIES_URL")
+
+    # Specify the TMDb API endpoint for popular actors
+    tmdb_api_url = f"{base_url}/person/popular?api_key={api_key}"
+
+    # Set up parameters for the TMDb API request
+    params = {}
+
+    try:
+        # Make a GET request to TMDb API
+        response = requests.get(tmdb_api_url, params=params)
+        response.raise_for_status()  # Check for errors
+
+        # Parse the JSON response
+        actors_data = response.json()
+
+        # Extract relevant information (you may adjust this based on TMDb API response structure)
+        actors_list = actors_data.get("results", [])
+
+        # Randomly select one actor from the list
+        if actors_list:
+            selected_actor = random.choice(actors_list)
+            return (
+                jsonify(
+                    {"msg": "Actor obtained successfully", "result": selected_actor}
+                ),
+                200,
+            )
+        else:
+            return jsonify({"msg": "No actors found"}), 404
+
+    except requests.exceptions.RequestException as e:
+        return jsonify({"msg": f"Error fetching actors from TMDb API: {str(e)}"}), 500
+
+
+"""
 @app.route("/actors", methods=["POST"])
 def add_actor():
     return jsonify({"msg": "ok"})
+
 
 @app.route("/actors/<int:id>", methods=["PUT"])
 def update_actor():
     return jsonify({"msg": "ok"})
 
+
 @app.route("/actors/<int:id>", methods=["DELETE"])
 def delete_actor():
     return jsonify({"msg": "ok"})
-'''
 
-@app.route('/<path:path>', methods=['GET'])
+    """
+
+
+# Support
+@app.route("/support", methods=["POST"])
+@jwt_required()
+def create_issue():
+    current_user = get_jwt_identity()
+    data = request.get_json(silent=True)
+    if data is None:
+        return jsonify({"msg": "You must send data on the body"}), 400
+
+    if current_user is None:
+        return jsonify({"msg": "You must be logged in to proceed"}), 400
+    if "issue" not in data or len(data["issue"].strip()) == 0:
+        return jsonify({"error": "Please provide an issue."}), 400
+
+    existing_user = User.query.filter_by(id=current_user).first()
+
+    if existing_user.is_active:
+        new_issue = Support()
+        new_issue.email = existing_user.email
+        new_issue.issue = data["issue"]
+        new_issue.is_active = True
+        db.session.add(new_issue)
+        try:
+            db.session.commit()
+            return jsonify({"msg": "Issue added correctly"}), 200
+        except Exception as e:
+            db.session.rollback()
+            return jsonify({"error": f"Unexpected error has occurred {e}"}), 500
+    return jsonify({"msg": "You must be logged in to proceed"}), 400
+
+
+@app.route("/support", methods=["DELETE"])
+@jwt_required()
+def delete_issue():
+    data = request.get_json(silent=True)
+    if data is None:
+        return jsonify({"msg": "You must send data on the body"}), 400
+    if "email" not in data:
+        return jsonify({"error": "Please provide an email address."}), 400
+    if "issue" not in data or len(data["issue"].strip()) == 0:
+        return jsonify({"error": "Please provide an issue."}), 400
+
+    current_user = get_jwt_identity()
+
+    # Assuming you have a unique way to identify the issue, for example, using email and issue fields
+    issue_to_delete = Support.query.filter_by(
+        email=data["email"], issue=data["issue"]
+    ).first()
+
+    if issue_to_delete:
+        # Check if the current user is the one who published the issue or is an admin
+        if current_user["email"] == issue_to_delete.email or current_user["is_admin"]:
+            issue_to_delete.is_active = False
+            try:
+                db.session.commit()
+                return jsonify({"msg": "Issue deleted correctly"}), 200
+            except Exception as e:
+                db.session.rollback()
+                return jsonify({"error": f"Unexpected error has occurred {e}"}), 500
+        else:
+            return (
+                jsonify(
+                    {
+                        "error": "Permission denied. You are not allowed to delete this issue."
+                    }
+                ),
+                403,
+            )
+    else:
+        return jsonify({"error": "Issue not found"}), 404
+
+
+@app.route("/<path:path>", methods=["GET"])
 def serve_any_other_file(path):
     if not os.path.isfile(os.path.join(static_file_dir, path)):
-        path = 'index.html'
+        path = "index.html"
     response = send_from_directory(static_file_dir, path)
     response.cache_control.max_age = 0  # avoid cache memory
     return response
 
 
 # this only runs if `$ python src/main.py` is executed
-if __name__ == '__main__':
-    PORT = int(os.environ.get('PORT', 3001))
-    app.run(host='0.0.0.0', port=PORT, debug=True)
+if __name__ == "__main__":
+    PORT = int(os.environ.get("PORT", 3001))
+    app.run(host="0.0.0.0", port=PORT, debug=True)
