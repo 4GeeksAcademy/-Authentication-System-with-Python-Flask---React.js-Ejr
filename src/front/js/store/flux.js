@@ -5,6 +5,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       user: [],
       followed: [],
       followers: [],
+      genres: [],
       movies: [],
       movie: [],
       actors: [],
@@ -473,6 +474,29 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
 
+      // Genres
+      getGenres: async () => {
+        try {
+          const resp = await fetch(process.env.BACKEND_URL + "/genres", {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          });
+
+          const data = await resp.json();
+          if (resp.ok) {
+            setStore({ genres: data.result });
+            return true;
+          } else {
+            throw new Error(data.error);
+          }
+        } catch (error) {
+          console.log("Error getting genres: ", error);
+          return false;
+        }
+      },
+      
       // Movies
       getAllMovies: async () => {
         try {
