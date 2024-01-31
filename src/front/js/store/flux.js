@@ -10,6 +10,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       actors: [],
       actor: [],
       reviews: [],
+      multiSearchResult: []
     },
 
     actions: {
@@ -702,9 +703,126 @@ const getState = ({ getStore, getActions, setStore }) => {
           return false;
         }
       },
-      // Reviews
-
-      // Multi search
+      
+      // Reviews Managment - Create, Update y Delete Reviews
+      createReview: async (reviewData) => {
+        try {
+          const authToken = localStorage.getItem("authToken");
+      
+          if (!authToken) {
+            throw new Error("User not authenticated");
+          }
+      
+          const resp = await fetch(process.env.BACKEND_URL + "/reviews", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${authToken}`,
+            },
+            body: JSON.stringify(reviewData),
+          });
+      
+          const data = await resp.json();
+      
+          if (resp.ok) {
+            setStore({ message: data.msg });
+            return true;
+          } else {
+            throw new Error(data.error);
+          }
+        } catch (error) {
+          console.log("Error creating review:", error);
+          return false;
+        }
+      },
+      
+      updateReview: async (reviewId, reviewData) => {
+        try {
+          const authToken = localStorage.getItem("authToken");
+      
+          if (!authToken) {
+            throw new Error("User not authenticated");
+          }
+      
+          const resp = await fetch(process.env.BACKEND_URL + `/reviews/${reviewId}`, {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${authToken}`,
+            },
+            body: JSON.stringify(reviewData),
+          });
+      
+          const data = await resp.json();
+      
+          if (resp.ok) {
+            setStore({ message: data.msg });
+            return true;
+          } else {
+            throw new Error(data.error);
+          }
+        } catch (error) {
+          console.log("Error updating review:", error);
+          return false;
+        }
+      },
+      
+      deleteReview: async (reviewId) => {
+        try {
+          const authToken = localStorage.getItem("authToken");
+      
+          if (!authToken) {
+            throw new Error("User not authenticated");
+          }
+      
+          const resp = await fetch(process.env.BACKEND_URL + `/reviews/${reviewId}`, {
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${authToken}`,
+            },
+          });
+      
+          const data = await resp.json();
+      
+          if (resp.ok) {
+            setStore({ message: data.msg });
+            return true;
+          } else {
+            throw new Error(data.error);
+          }
+        } catch (error) {
+          console.log("Error deleting review:", error);
+          return false;
+        }
+      },
+      
+      // Multi Search
+      getMulti: async (value) => {
+        try {
+          const resp = await fetch(
+            process.env.BACKEND_URL + `/multi/${value}`,
+            {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
+      
+          const data = await resp.json();
+      
+          if (resp.ok) {
+            setStore({ multiSearchResult: data.result });
+            return true;
+          } else {
+            throw new Error(data.msg || "Failed to get multi search results");
+          }
+        } catch (error) {
+          console.log("Error getting multi search results:", error);
+          return false;
+        }
+      },
     },
   };
 };
