@@ -4,7 +4,7 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 from functools import wraps
 from flask import Flask, request, jsonify, url_for, Blueprint, abort
 import jwt
-from api.models import db, User, UserData
+from api.models import db, User, UserData, Event
 from api.utils import   admin_required, get_hash
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager, create_access_token
@@ -164,4 +164,19 @@ def promote_user():
         return {'message': 'User promoted successfully'}, 200
     else:
         return {'error': 'No user found with the provided email'}, 404
+    
+
+@api.route("/events", methods=["POST"])
+def create_event():
+    day = request.json.get("day")
+    location = request.json.get("location")
+    meeting_point = request.json.get("meeting_point")
+   
+    new_event = Event()
+    new_event.day = day
+    new_event.location = location
+    new_event.meeting_point = meeting_point
+    db.session.add(new_event)
+    db.session.commit()
+    return jsonify({"msg": "Event created"}), 201
 

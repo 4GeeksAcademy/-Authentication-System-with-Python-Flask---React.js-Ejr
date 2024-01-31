@@ -41,3 +41,22 @@ class UserData(db.Model):
             "location": self.location,
             "liters": self.liters,
         }
+
+class Event(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    day = db.Column(db.DateTime, nullable=False)
+    location = db.Column(db.String(120), nullable=False)
+    meeting_point = db.Column(db.String(120), nullable=False)
+    clicks_counter = db.Column(db.Integer, default=0)
+
+    def __repr__(self):
+        return f'<Event {self.location} {self.day} {self.meeting_point} {self.clicks_counter}>'
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "day": self.day,
+            "location": self.location,
+            "meeting_point": self.meeting_point,
+            "clicks_counter": self.clicks_counter,
+        }

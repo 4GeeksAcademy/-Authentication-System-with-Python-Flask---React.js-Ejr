@@ -5,6 +5,10 @@ export const AdminPage = () => {
  const [users, setUsers] = useState([]);
  const [selectedEmail, setSelectedEmail] = useState("");
  const [loading, setLoading] = useState(true);
+ const [day, setDay] = useState("");
+const [location, setLocation] = useState("");
+const [meetingPoint, setMeetingPoint] = useState("");
+
 
  useEffect(() => {
     const routeRequirement = "/api/users";
@@ -54,8 +58,39 @@ export const AdminPage = () => {
     return <div>Loading...</div>;
  }
 
+ const handleSubmit = (event) => {
+  event.preventDefault();
+ 
+  const adminRouteRequirement = "/api/events";
+  const url = `${process.env.BACKEND_URL}${adminRouteRequirement}`;
+  
+  const eventData = {
+     day: day,
+     location: location,
+     meeting_point: meetingPoint,
+     
+  };
+ 
+
+  fetch(url, {
+     method: 'POST',
+     headers: {
+       'Content-Type': 'application/json',
+     },
+     body: JSON.stringify(eventData),
+  })
+     .then(response => response.json())
+     .then(data => {
+       console.log('Success:', data);
+     })
+     .catch((error) => {
+       console.error('Error:', error);
+     });
+ };
+
  return (
     <div>
+      <h3>Select and upgrade a user</h3>
       <select onChange={e => setSelectedEmail(e.target.value)}>
       {users.map(user => (
  <option key={user.email} value={user.email}>
@@ -64,6 +99,23 @@ export const AdminPage = () => {
         ))}
       </select>
       <button onClick={handlePromote}>Promote</button>
+      <h3>Create the next event</h3>
+      <form onSubmit={handleSubmit}>
+    <label>
+      Day:
+      <input type="date" value={day} onChange={e => setDay(e.target.value)} />
+    </label>
+    <label>
+      Location:
+      <input type="text" value={location} onChange={e => setLocation(e.target.value)} />
+    </label>
+    <label>
+      Meeting Point:
+      <input type="text" value={meetingPoint} onChange={e => setMeetingPoint(e.target.value)} />
+    </label>
+    <input type="submit" value="Submit" />
+ </form>
     </div>
+    
  );
 };
