@@ -128,11 +128,13 @@ def get_hash(string):
 
 def hash_password(password):
     try:
-        hashed_password = bcrypt.generate_password_hash(password).decode("utf-8")
-        return hashed_password
+        bytes = password.encode('utf-8') 
+        salt = bcrypt.gensalt() 
+        hash = bcrypt.hashpw(bytes, salt)
+        return hash
     except Exception as e:
         print(f"Error hashing password: {e}")
-        return None
+    return None
 
 
 def verify_password(hashed_password, password):

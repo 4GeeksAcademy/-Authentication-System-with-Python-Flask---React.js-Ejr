@@ -34,28 +34,35 @@ def handle_hello():
 
 @api.route("/signup", methods=["POST"])
 def signup():
+    first_name = request.json.get("first_name")
+    last_name = request.json.get("last_name")
+    email = request.json.get("email")
+    password = request.json.get("password")
+    confirm_password = request.json.get("confirm_password")
+
+    if password != confirm_password:
+        return jsonify({"error": "Password and confirm password do not match"}), 400
+
+    existing_user = User.query.filter_by(email=email).first()
+    if existing_user:
+        return jsonify({"error": "Email is already in use"}), 400
+
+    hashed_password = hash_password(password)
+
+    new_user = User(
+        first_name=first_name,
+        last_name=last_name,
+        email=email,
+        password=hashed_password,
+    )
+    db.session.add(new_user)
+    
     try:
-        email = request.json.get("email")
-        password = request.json.get("password")
-
-        if not email or not password:
-                return jsonify({"error": "Email and password are required"}), 400
-
-        existing_user = User.query.filter_by(email=email).first()
-        if existing_user:
-                return jsonify({"error": "Email is already in use"}), 409
-
-        hashed_password = hash_password(password)
-
-        new_user = User(email=email, password=hashed_password)
-        db.session.add(new_user)
         db.session.commit()
-
         return jsonify({"success": "User created successfully"}), 200
-
     except Exception as e:
-        print(f"Error during signup: {str(e)}")
-        return jsonify({"error": "Internal Server Error"}), 500
+        db.session.rollback()
+        return jsonify({"error": f"Error creating user: {e}"}), 500
 
 
 @api.route("/login", methods=["POST"])

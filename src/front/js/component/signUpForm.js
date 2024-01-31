@@ -21,21 +21,17 @@ const SignUpForm = () => {
             return;
         }
 
-        // Send a POST request to the backend API
         const response = await fetch('/signup', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ email, password }),
+            body: JSON.stringify({ first_name: firstName, last_name: lastName, email, password }),
         });
 
-        // Handle the response, e.g., redirect on successful signup
         if (response.ok) {
-            // Redirect to login or another page
-            window.location.href = '/login';
+            alert('User created successfully. Please go to the menu and login.');
         } else {
-            // Handle errors, e.g., display an error message
             console.error('Signup failed');
         }
     };
