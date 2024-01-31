@@ -43,7 +43,7 @@ p {
     left: 0;
 }
 
-.button {
+#button-lead {
     display: inline-block;
     border: 2px solid;
     padding: 10px 20px;
@@ -51,10 +51,11 @@ p {
     text-decoration: none;
     transition: 0.3s;
     font-weight: 700;
-    border-radius: 8px;;
+    border-radius: 8px;
+    
   }
 
-.button:hover {
+#button-lead:hover {
     background: orange;
     color: black;
   }
