@@ -1,15 +1,39 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
 
 export const SignUpForm = () => {
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleSignUp = async () => {
+    try {
+      const response = await fetch("/api/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ firstName, lastName, email, password }),
+      });
+
+      if (response.ok) {
+        // SignUp successful
+        console.log("SignUp successful");
+      } else {
+        // Handle SignUp error
+        console.error("SignUp failed");
+      }
+    } catch (error) {
+      console.error("Error during SignUp:", error);
+    }
+  };
+
   return (
     <div className="container-full py-5 h-100 black-background">
       <div className="signup row d-flex justify-content-center align-items-center h-100">
         <div className="col-12 col-md-8 col-lg-6 col-xl-5">
           <div className="card custom-card shadow-2-strong" style={{ borderRadius: "1rem" }}>
             <div className="card-body p-5">
-
-              {/* Header */}
               <h2 className="mb-5">Sign Up Now.</h2>
 
               {/* Names Input */}
@@ -22,6 +46,8 @@ export const SignUpForm = () => {
                       id="typeFirstName"
                       className="form-control form-control-lg"
                       placeholder="First Name"
+                      value={firstName}
+                      onChange={(e) => setFirstName(e.target.value)}
                     />
                   </div>
                 </div>
@@ -34,6 +60,8 @@ export const SignUpForm = () => {
                       id="typeLastName"
                       className="form-control form-control-lg"
                       placeholder="Last Name"
+                      value={lastName}
+                      onChange={(e) => setLastName(e.target.value)}
                     />
                   </div>
                 </div>
@@ -46,6 +74,8 @@ export const SignUpForm = () => {
                   id="typeEmailX-2"
                   className="form-control form-control-lg"
                   placeholder="Email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
 
@@ -56,20 +86,21 @@ export const SignUpForm = () => {
                   id="typePasswordX-2"
                   className="form-control form-control-lg"
                   placeholder="Password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
 
-              {/* Remember Password and Login Button */}
+              {/* SignUp Button */}
               <div className="d-flex flex-column align-items-center mb-4">
-                {/* Sign Up Button*/}
                 <button
                   className="btn btn-primary custom-btn"
-                  type="submit"
+                  type="button" // Change type to "button" to prevent form submission
+                  onClick={handleSignUp}
                 >
                   Sign Up
                 </button>
               </div>
-
             </div>
           </div>
         </div>

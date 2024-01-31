@@ -17,6 +17,11 @@
   background: rgb(18, 18, 18);
 }
 
+.black-three-background {
+  background: rgb(36, 36, 36);
+  color: white;
+}
+
 .grey-background {
   background: #272727;
 }

@@ -20,6 +20,7 @@ export const Navbar = () => {
             <ul className="navbar-nav ml-auto">
 
               {/* Home Link */}
+              
               <li className="nav-item active mx-3">
                 <Link to="/" className="nav-link">
                   Home
@@ -27,6 +28,7 @@ export const Navbar = () => {
               </li>
 
               {/* Events Link */}
+
               <li className="nav-item mx-3">
                 <Link to="/events" className="nav-link">
                   Events
@@ -34,6 +36,7 @@ export const Navbar = () => {
               </li>
 
               {/* Contact Link */}
+
               <li className="nav-item mx-3">
                 <Link to="/contact" className="nav-link">
                   Contact

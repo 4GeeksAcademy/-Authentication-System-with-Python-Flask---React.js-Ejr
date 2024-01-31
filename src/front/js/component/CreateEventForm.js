@@ -42,6 +42,7 @@ const CreateEventForm = ({ onFormSubmit }) => {
               <h2 className="mb-5">Create Your Event!</h2>
 
               {/* Event Form */}
+              
               <form onSubmit={handleFormSubmit}>
                 {/* Event Name */}
                 <div className="mb-4">

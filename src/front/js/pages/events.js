@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
 import Hero from "../component/Hero";
 import { EventCard } from "../component/EventCard";
+import { SignUpForm } from "../component/SignUpForm";
+import SignUpNow from "../sections/SignUpNow";
 
 export const Events = () => {
   const { store, actions } = useContext(Context);
@@ -71,6 +73,9 @@ export const Events = () => {
               <EventCard imageUrl={imageUrl08}/>
             </div>
           </div>
+
+          <SignUpNow />
+
         </div>
       </div>
 
