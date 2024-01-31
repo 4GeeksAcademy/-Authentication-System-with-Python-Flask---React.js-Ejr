@@ -8,6 +8,6 @@
         "editor.defaultFormatter": "vscode.typescript-language-features"
     },
     "[python]": {
-        "editor.defaultFormatter": "ms-python.black-formatter"
+        "editor.defaultFormatter": "mikoz.black-py"
     }
 }

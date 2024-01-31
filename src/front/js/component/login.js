@@ -1,4 +1,4 @@
-// Login.js
+
 import React, { useState } from "react";
 import Modal from "react-modal";
 import "../../styles/login.css";
