@@ -34,9 +34,17 @@
   
   }
   
+  .login-button {
+    display: flex;
+    justify-content: center;
+  }
+
   .modal-button {
     background-color: #ffa500;
     color: #000000;
+    border-radius: 5px;
+    width: 50%;
+    font-size: 20px;
   }
 
   .text {
@@ -61,3 +69,4 @@
   #eye1:hover svg {
     fill: #4CAF50; /* Change the color on hover */
   }
+
