@@ -1,7 +1,7 @@
 // EventSingleTwo.js
 
 import React from 'react';
-import AboutImage from '/workspaces/ryandornan-full-stack-project/src/front/img/music/crowd-02.png';
+import AboutImage from '/workspaces/europe-fs-pt-14-ryandornan-mariahurtado/src/front/img/music/crowd-02.png';
 
 const EventSingle = () => {
   return (
