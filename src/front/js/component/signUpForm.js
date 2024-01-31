@@ -32,7 +32,9 @@ const SignUpForm = () => {
     };
 
     return (
+        
         <form onSubmit={handleSubmit} className="form-container">
+            <div className="page-title">SignUp</div>
             <div className="form-group">
                 <label className="label">First Name:</label>
                 <input type="firstName" value={firstName} onChange={(e) => setFirstName(e.target.value)} className="input" />
@@ -48,10 +50,18 @@ const SignUpForm = () => {
             <div className="form-group">
                 <label className="label">Password:</label>
                 <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} className="input" />
+            </div> 
+            
+            <div className="form-group">
+                <label className="label">Confirm Password:</label>
+                <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} className="input" />
             </div>
+
             <button type="submit" className="submit-button">Submit</button>
+            
         </form>
     );
 };
-
+//Change logic for Confirm password 
+//add visibility option for password
 export default SignUpForm;
