@@ -18,7 +18,7 @@
   
   .timer span {
     display: inline-block;
-    margin-right: 5px; /* Ajusta el espaciado entre las partes del tiempo según sea necesario */
+    margin-right: 5px;
     font-size: 24px;
     font-weight: bold;
   }
