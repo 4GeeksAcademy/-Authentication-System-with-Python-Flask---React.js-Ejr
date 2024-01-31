@@ -11,6 +11,7 @@ class User(db.Model):
     profile_picture = db.Column(db.String(120), unique=False, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(80), unique=False, nullable=False)
+    is_admin = db.Column(db.Boolean(), unique=False, nullable=False)
     is_active = db.Column(db.Boolean(), unique=False, nullable=False)
 
 #informacion cuando se hace print en el admin
@@ -28,86 +29,35 @@ class User(db.Model):
             # do not serialize the password, its a security breach
         }
     
-class Movie(db.Model):
-    __tablename__='movie'
-    id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(120), unique=False, nullable=False)
-    genre = db.Column(db.String(120), unique=False, nullable=False)
-    year = db.Column(db.Integer, unique=False, nullable=False)
-
-#informacion cuando se hace print en el admin
-    def __repr__(self):
-        return 'Movie ID: {} - Titulo: {}'.format(self.id, self.username)
-
-    def serialize(self):
-        return {
-            "id": self.id,
-            "title": self.title,
-            "genre": self.genre,
-            "year": self.year
-            # do not serialize the password, its a security breach
-        }
-
 class Movie_Review(db.Model):
-    __tablename__='movie_review'
+    __tablename__ = "movie_review"
     id = db.Column(db.Integer, primary_key=True)
-    movie_id = db.Column(db.Integer, db.ForeignKey('movie.id'), nullable=False)
-    movie_relationship = db.relationship(Movie)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    movie_id = db.Column(db.String(120), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
     user_relationship = db.relationship(User)
+    review = db.Column(db.String(300), nullable=False)
+    rating = db.Column(db.Float())
 
-#informacion cuando se hace print en el admin
+    # informacion cuando se hace print en el admin
     def __repr__(self):
-        return 'Movie ID: {} - User ID: {}'.format(self.movie_id, self.user_id)
+        return "Movie ID: {} - User ID: {}".format(self.movie_id, self.user_id)
 
     def serialize(self):
         return {
             "id": self.id,
             "movie_id": self.movie_id,
-            "user_id": self.user_id
-            # do not serialize the password, its a security breach
-        }
-
-class Actor(db.Model):
-    __tablename__='actor'
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(120), unique=False, nullable=False)
-
-#informacion cuando se hace print en el admin
-    def __repr__(self):
-        return 'Actor ID: {} - Nombre: {}'.format(self.id, self.name)
-
-    def serialize(self):
-        return {
-            "id": self.id,
-            "name": self.name
-            # do not serialize the password, its a security breach
-        }   
-
-class Movie_Details(db.Model):
-    __tablename__='movie_details'
-    id = db.Column(db.Integer, primary_key=True)
-    movie_id = db.Column(db.Integer, db.ForeignKey('movie.id'), nullable=False)
-    movie_relationship = db.relationship(Movie)
-    actor_id = db.Column(db.Integer, db.ForeignKey('actor.id'), nullable=False)
-    actor_relationship = db.relationship(Actor)
-
-#informacion cuando se hace print en el admin
-    def __repr__(self):
-        return 'Movie ID: {} - Actor ID: {}'.format(self.movie_id, self.actor_id)
-
-    def serialize(self):
-        return {
-            "id": self.id,
-            "movie_id": self.movie_id,
-            "actor_id": self.actor_id
+            "user_id": self.user_id,
+            "rating": round(float(self.rating), 2) if self.rating else None,
+            "review": self.review
             # do not serialize the password, its a security breach
         }
 
 class View_State(db.Model):
     __tablename__='view_state'
     id = db.Column(db.Integer, primary_key=True)
-    value = db.Column(db.String(30), unique=False, nullable=False)
+    value = db.Column(
+        db.Enum("Visto", "Por Ver", name="State"), unique=True, nullable=False
+    )
 
 
 #informacion cuando se hace print en el admin
@@ -118,14 +68,12 @@ class View_State(db.Model):
         return {
             "id": self.id,
             "value": self.value
-            # do not serialize the password, its a security breach
         }
     
 class Personal_List(db.Model):
     __tablename__='personal_list'
     id = db.Column(db.Integer, primary_key=True)
-    movie_id = db.Column(db.Integer, db.ForeignKey('movie.id'), nullable=False)
-    movie_relationship = db.relationship(Movie)
+    movie_id = db.Column(db.String(120),unique=False, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     user_relationship = db.relationship(User)
     view_state_id = db.Column(db.Integer, db.ForeignKey('view_state.id'), nullable=False)
@@ -141,7 +89,6 @@ class Personal_List(db.Model):
             "movie_id": self.movie_id,
             "user_id": self.user_id,
             "view_state_id": self.view_state_id
-            # do not serialize the password, its a security breach
         }
         
 class Follower(db.Model):
@@ -161,6 +108,4 @@ class Follower(db.Model):
             "id": self.id,
             "user_from_id": self.user_from_id,
             "user_to_id": self.user_to_id
-            # do not serialize the password, its a security breach
         }
-        
