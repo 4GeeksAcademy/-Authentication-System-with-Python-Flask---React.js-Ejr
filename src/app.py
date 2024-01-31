@@ -501,6 +501,36 @@ def get_multi(value):
     except requests.exceptions.RequestException as e:
         return jsonify({"msg": f"Error fetching data from TMDb API: {str(e)}"}), 500
 
+# Get genres
+@app.route("/genres", methods=["GET"])
+def get_genres():
+    # Retrieve TMDb API key and base URL from environment variables
+    api_key = os.getenv("API_KEY")
+    base_url = os.getenv("APIMOVIES_URL")
+
+    # Specify the TMDb API endpoint with the specific movie ID
+    tmdb_api_url = f"{base_url}/genre/movie/list?api_key=" + api_key
+
+    # Set up parameters for the TMDb API request
+    params = {}
+
+    try:
+        # Make a GET request to TMDb API
+        response = requests.get(tmdb_api_url, params=params)
+        response.raise_for_status()  # Check for errors
+
+        # Parse the JSON response
+        data = response.json()
+
+        # Return the movie details as JSON response
+        return (
+            jsonify({"msg": "Data obtained successfully", "result": data}),
+            200,
+        )
+
+    except requests.exceptions.RequestException as e:
+        return jsonify({"msg": f"Error fetching data from TMDb API: {str(e)}"}), 500
+
 
 # Movie management
 @app.route("/movies", methods=["GET"])
