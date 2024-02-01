@@ -56,8 +56,8 @@ class Event(db.Model):
     def serialize(self):
         return {
             "id": self.id,
-            "day": self.day,
-            "hour": self.hour,
+            "day": self.day.isoformat() if self.day else None,
+            "hour": str(self.hour) if self.hour else None,
             "location": self.location,
             "meeting_point": self.meeting_point,
             "clicks_counter": self.clicks_counter,

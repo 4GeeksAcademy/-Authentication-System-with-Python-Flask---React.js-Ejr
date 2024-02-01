@@ -2,6 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from functools import wraps
+import json
 from flask import Flask, request, jsonify, url_for, Blueprint, abort
 import jwt
 from api.models import db, User, UserData, Event
@@ -169,11 +170,13 @@ def promote_user():
 @api.route("/event", methods=["POST"])
 def create_event():
     day = request.json.get("day")
+    hour = request.json.get("hour")
     location = request.json.get("location")
     meeting_point = request.json.get("meeting_point")
     
     new_event = Event()
     new_event.day = day
+    new_event.hour = hour
     new_event.location = location
     new_event.meeting_point = meeting_point
     db.session.add(new_event)

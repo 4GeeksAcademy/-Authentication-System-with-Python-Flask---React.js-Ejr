@@ -8,6 +8,7 @@ export const AdminPage = () => {
  const [day, setDay] = useState("");
 const [location, setLocation] = useState("");
 const [meetingPoint, setMeetingPoint] = useState("");
+const [hour, setHour] = useState("");
 
 
  useEffect(() => {
@@ -60,36 +61,38 @@ const [meetingPoint, setMeetingPoint] = useState("");
 
  const handleSubmit = (event) => {
   event.preventDefault();
- 
+  
   const adminRouteRequirement = "/api/event";
   const url = `${process.env.BACKEND_URL}${adminRouteRequirement}`;
-  
+   
   const eventData = {
-     day: day,
-     location: location,
-     meeting_point: meetingPoint,
-     
+      day: day,
+      hour: hour,
+      location: location,
+      meeting_point: meetingPoint,
   };
- 
+  
   fetch(url, {
-     method: 'POST',
-     headers: {
-       'Content-Type': 'application/json',
-     },
-     body: JSON.stringify(eventData),
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(eventData),
   })
-     .then(response => response.json())
-     .then(data => {
-       console.log('Success:', data);
-     })
-     .catch((error) => {
-       console.error('Error:', error);
-     });
+      .then(response => response.json())
+      .then(data => {
+        console.log('Success:', data);
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
  };
-
+ 
  return (
-    <div>
-      <h3>Select and upgrade a user</h3>
+  <div>
+     ...
+     <h3>Create the next event</h3>
+     <div>
       <select onChange={e => setSelectedEmail(e.target.value)}>
       {users.map(user => (
  <option key={user.email} value={user.email}>
@@ -98,23 +101,27 @@ const [meetingPoint, setMeetingPoint] = useState("");
         ))}
       </select>
       <button onClick={handlePromote}>Promote</button>
-      <h3>Create the next event</h3>
-      <form onSubmit={handleSubmit}>
-    <label>
-      Day:
-      <input type="date" value={day} onChange={e => setDay(e.target.value)} />
-    </label>
-    <label>
-      Location:
-      <input type="text" value={location} onChange={e => setLocation(e.target.value)} />
-    </label>
-    <label>
-      Meeting Point:
-      <input type="text" value={meetingPoint} onChange={e => setMeetingPoint(e.target.value)} />
-    </label>
-    <input type="submit" value="Submit" />
- </form>
     </div>
+     <form onSubmit={handleSubmit}>
+       <label>
+         Day:
+         <input type="date" value={day} onChange={e => setDay(e.target.value)} />
+       </label>
+       <label>
+         Hour:
+         <input type="time" value={hour} onChange={e => setHour(e.target.value)} />
+       </label>
+       <label>
+         Location:
+         <input type="text" value={location} onChange={e => setLocation(e.target.value)} />
+       </label>
+       <label>
+         Meeting Point:
+         <input type="text" value={meetingPoint} onChange={e => setMeetingPoint(e.target.value)} />
+       </label>
+       <input type="submit" value="Submit" />
+     </form>
+  </div>
     
  );
 };
