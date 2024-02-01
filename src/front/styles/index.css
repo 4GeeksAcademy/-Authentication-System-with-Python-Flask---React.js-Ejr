@@ -1,7 +1,7 @@
+
 body {
     background: #2B2B2B;
     height: 100vh;
-
 }
 
 .navbar-dark .navbar-nav .nav-link {
@@ -11,7 +11,6 @@ body {
     font-weight: 500;
     margin-left: 30px;
     font-family: 'Work Sans', sans-serif;
-
 }
 
 .navbar-dark .navbar-nav .nav-link:hover {
@@ -41,11 +40,11 @@ body {
 }
 
 .back {
- background-color:#2B2B2B;
- color: #fff;
+    background-color:#2B2B2B;
+    color: #fff;
 }
 
-.numero-de-color{
+.numero-de-color {
     color: #A259FF;
 }
 
@@ -57,6 +56,7 @@ body {
     color: #858584;
     font-family: 'Space Mono', monospace;
 }
+
 .rounded-container {
     width: 100px;
     height: 40px;
@@ -65,19 +65,20 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-  }
-  
-  .rounded-content {
+}
+
+.rounded-content {
     font-size: 15px;
     font-weight: bold;
     text-align: center;
-  }
+}
 
-  .color-footer{
+.color-footer {
     font-family: 'Work Sans', sans-serif;
     color: #CCCCCC;
-  }
-  .navbar-nav .btn {
+}
+
+.navbar-nav .btn {
     background-color: #A259FF;
     color: white;
     font-size: 12px;
@@ -145,23 +146,24 @@ body {
     color: white;
 }
 
-.link{
+.link {
     display: flex;
     justify-content: space-between;
     width: 300px;
     margin-top: 20px;
 }
-.linkIngresar{
+
+.linkIngresar {
     text-decoration: none;
     color: #A259FF;
     margin-left: 5px;
 }
 
-.linkIngresar:hover{
+.linkIngresar:hover {
     color: #8a4fd6;
 }
 
-.error{
+.error {
     text-align: center;
     font-family: "Work Sans";
     font-size: 15px;
@@ -171,6 +173,7 @@ body {
     margin-bottom: 0px;
     margin-top: 20px;
 }
+
 .inputCuenta {
     border-radius: 50px;
     width: 300px;

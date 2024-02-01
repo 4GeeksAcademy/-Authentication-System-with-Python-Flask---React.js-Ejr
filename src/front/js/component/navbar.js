@@ -7,7 +7,7 @@ export const Navbar = () => {
   const { store, actions } = useContext(Context);
 
   return (
-    <nav className="navbar navbar-dark mb-3 px-5 d-flex flex-row">
+    <nav className="navbar navbar-dark mb-1 px-5 d-flex flex-row">
       <div className="container-fluid">
         <Link className="navbar-brand" to="/">
           <p className="m-1">
@@ -15,7 +15,7 @@ export const Navbar = () => {
           </p>
         </Link>
         <div className="ml-auto">
-          <div className="navbar-nav d-flex flex-row">
+          <div className="navbar-nav d-flex flex-row align-items-center">
             <form className="d-flex" role="search">
               <input
                 className="form-control buscar"
