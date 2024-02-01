@@ -11,7 +11,8 @@ const getState = ({ getStore, getActions, setStore }) => {
       actors: [],
       actor: [],
       reviews: [],
-      multiSearchResult: []
+      multiSearchResult: [],
+      personalMovies: []
     },
 
     actions: {
@@ -474,6 +475,121 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
 
+      // Personal movies
+      getPersonalMovies: async (viewStatus) => {
+        const authToken = localStorage.getItem("authToken");
+        try {
+          const resp = await fetch(
+            process.env.BACKEND_URL + `/favoritemovies/${viewStatus}`,
+            {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${authToken}`,
+              },
+            }
+          );
+
+          const data = await resp.json();
+
+          if (resp.ok) {
+            setStore({ personalMovies: data.results });
+            return true;
+          } else {
+            throw new Error(data.msg || "Failed to get personal movies");
+          }
+        } catch (error) {
+          console.error("Error getting personal movies:", error);
+          return false;
+        }
+      },
+
+      addPersonalMovie: async (movieId) => {
+        const authToken = localStorage.getItem("authToken");
+        try {
+          const resp = await fetch(
+            process.env.BACKEND_URL + `/favoritemovies/${movieId}`,
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${authToken}`,
+              },
+            }
+          );
+
+          const data = await resp.json();
+
+          if (resp.ok) {
+            console.log("Movie added to personal list successfully");
+            return true;
+          } else {
+            throw new Error(data.msg || "Failed to add movie to personal list");
+          }
+        } catch (error) {
+          console.error("Error adding personal movie:", error);
+          return false;
+        }
+      },
+
+      removePersonalMovie: async (movieId) => {
+        const authToken = localStorage.getItem("authToken");
+        try {
+          const resp = await fetch(
+            process.env.BACKEND_URL + `/favoritemovies/${movieId}`,
+            {
+              method: "DELETE",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${authToken}`,
+              },
+            }
+          );
+
+          const data = await resp.json();
+
+          if (resp.ok) {
+            console.log("Movie removed from personal list successfully");
+            return true;
+          } else {
+            throw new Error(
+              data.msg || "Failed to remove movie from personal list"
+            );
+          }
+        } catch (error) {
+          console.error("Error removing personal movie:", error);
+          return false;
+        }
+      },
+
+      changeViewStatus: async (movieId) => {
+        const authToken = localStorage.getItem("authToken");
+        try {
+          const resp = await fetch(
+            process.env.BACKEND_URL + `/viewstate/${movieId}`,
+            {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${authToken}`, // Include your JWT token here
+              },
+            }
+          );
+
+          const data = await resp.json();
+
+          if (resp.ok) {
+            console.log("View state updated successfully");
+            return true;
+          } else {
+            throw new Error(data.msg || "Failed to update view state");
+          }
+        } catch (error) {
+          console.error("Error changing view state:", error);
+          return false;
+        }
+      },
+      
       // Genres
       getGenres: async () => {
         try {
