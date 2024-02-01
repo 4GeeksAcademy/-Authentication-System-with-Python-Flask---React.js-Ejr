@@ -550,6 +550,34 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
 
+      getMoviesByGenre: async (genreId) => {
+        try {
+          // Fetch data from the backend route "/movies/genre/<genre_id>"
+          const response = await fetch(
+            process.env.BACKEND_URL + `/movies/genre/${genreId}`,
+            {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
+
+          const data = await response.json();
+
+          if (response.ok) {
+            // Assuming setStore is a function to update your application state
+            setStore({ movies: data.result });
+            return true;
+          } else {
+            throw new Error(data.msg || "Failed to get movies by genre");
+          }
+        } catch (error) {
+          console.error("Error getting movies by genre:", error);
+          return false;
+        }
+      },
+      
       getMovieByTitle: async (title) => {
         try {
           // Fetch data from the backend, which in turn fetches from the external API
