@@ -18,7 +18,6 @@ from api.models import (
     db,
     User,
     Movie_Review,
-    View_State,
     Personal_List,
     Follower,
     Support,
@@ -567,6 +566,38 @@ def get_movies():
     except requests.exceptions.RequestException as e:
         return jsonify({"msg": f"Error fetching movies from TMDb API: {str(e)}"}), 500
 
+# Busqueda por genero
+@app.route("/movies/genre/<int:genre_id>", methods=["GET"])
+def get_movies_genre(genre_id):
+    # Retrieve TMDb API key and base URL from environment variables
+    api_key = os.getenv("API_KEY")
+    base_url = os.getenv("APIMOVIES_URL")
+
+    # Specify the TMDb API endpoint to discover movies by genre
+    tmdb_api_url = f"{base_url}/discover/movie?api_key=" + api_key
+
+    # Set up parameters for the TMDb API request
+    params = {
+        "with_genres": genre_id,
+    }
+
+    try:
+        # Make a GET request to TMDb API
+        response = requests.get(tmdb_api_url, params=params)
+        response.raise_for_status()  # Check for errors
+
+        # Parse the JSON response
+        movies_data = response.json()
+
+        # Return the list of movies as JSON response
+        return (
+            jsonify({"msg": "Movies obtained successfully", "result": movies_data}),
+            200,
+        )
+
+    except requests.exceptions.RequestException as e:
+        return jsonify({"msg": f"Error fetching movies from TMDb API: {str(e)}"}), 500
+
 
 # Busqueda por id de IMDB
 @app.route("/movie/id/<string:id>", methods=["GET"])
@@ -846,14 +877,14 @@ def delete_review(id):
 
 
 # Personal movie list management
-@app.route("/favoritemovies/<int:view_status>", methods=["GET"])
+@app.route("/favoritemovies/<string:view_status>", methods=["GET"])
 @jwt_required()
 def get_personal_movies(view_status):
     current_user_id = get_jwt_identity()
 
     # Retrieve movies from the user's personal list with a specific view status
     personal_movies = Personal_List.query.filter_by(
-        user_id=current_user_id, view_status_id=view_status
+        user_id=current_user_id, view_status=view_status
     ).all()
 
     # Extract movie information (you may adjust this based on your model structure)
@@ -870,20 +901,27 @@ def get_personal_movies(view_status):
 @app.route("/favoritemovies/<int:id>", methods=["POST"])
 @jwt_required()
 def add_movie_personal(id):
-    current_user_id = get_jwt_identity()
+    current_user = get_jwt_identity()
+
+    # Find the current user in the Users table
+    existing_user = User.query.filter_by(id=current_user).first()
+
+    if not existing_user:
+        return jsonify({"msg": "User not found"}), 404
 
     # Check if the movie is already in the user's personal list
     existing_entry = Personal_List.query.filter_by(
-        user_id=current_user_id, movie_id=int(id)
+        user_id=existing_user.id, movie_id=int(id)
     ).first()
 
     if existing_entry:
         return jsonify({"msg": "The movie is already in your personal list"}), 400
 
     # Add the movie to the user's personal list
-    new_entry = Personal_List(
-        user_id=current_user_id, movie_id=int(id), view_state_id=2
-    )
+    new_entry = Personal_List()
+    new_entry.user_id=existing_user.id 
+    new_entry.movie_id=id 
+    new_entry.view_state="Por Ver"
     db.session.add(new_entry)
 
     try:
