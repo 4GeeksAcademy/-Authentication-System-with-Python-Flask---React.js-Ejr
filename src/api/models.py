@@ -52,13 +52,6 @@ class Movie_Review(db.Model):
             # do not serialize the password, its a security breach
         }
 
-class View_State(db.Model):
-    __tablename__='view_state'
-    id = db.Column(db.Integer, primary_key=True)
-    value = db.Column(
-        db.Enum("Visto", "Por Ver", name="State"), unique=True, nullable=False
-    )
-
 
 #informacion cuando se hace print en el admin
     def __repr__(self):
@@ -71,24 +64,27 @@ class View_State(db.Model):
         }
     
 class Personal_List(db.Model):
-    __tablename__='personal_list'
-    id = db.Column(db.Integer, primary_key=True)
-    movie_id = db.Column(db.String(120),unique=False, nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    __tablename__ = "personal_list"
+    id = db.Column(db.Integer(), primary_key=True)
+    movie_id = db.Column(db.Integer(), nullable=False)
+    user_id = db.Column(db.Integer(), db.ForeignKey("user.id"), nullable=False)
+    view_state = db.Column(
+        db.Enum("Visto", "Por Ver", name="State"), unique=False, nullable=False
+    )
     user_relationship = db.relationship(User)
-    view_state_id = db.Column(db.Integer, db.ForeignKey('view_state.id'), nullable=False)
-    view_state_relationship = db.relationship(View_State)
 
-#informacion cuando se hace print en el admin
+    # informacion cuando se hace print en el admin
     def __repr__(self):
-        return 'Usuario ID: {} - Movie ID: {} - Estado ID: {}'.format(self.user_id, self.movie_id, self.view_state_id)
+        return "Usuario ID: {} - Movie ID: {} - Estado ID: {}".format(
+            self.user_id, self.movie_id, self.view_state
+        )
 
     def serialize(self):
         return {
             "id": self.id,
             "movie_id": self.movie_id,
             "user_id": self.user_id,
-            "view_state_id": self.view_state_id
+            "view_state": self.view_state,
         }
         
 class Follower(db.Model):
