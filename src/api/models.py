@@ -52,16 +52,6 @@ class Movie_Review(db.Model):
             # do not serialize the password, its a security breach
         }
 
-
-#informacion cuando se hace print en el admin
-    def __repr__(self):
-        return 'Estado de Visualización: {}'.format(self.value)
-
-    def serialize(self):
-        return {
-            "id": self.id,
-            "value": self.value
-        }
     
 class Personal_List(db.Model):
     __tablename__ = "personal_list"
@@ -105,3 +95,17 @@ class Follower(db.Model):
             "user_from_id": self.user_from_id,
             "user_to_id": self.user_to_id
         }
+
+
+class Support(db.Model):
+    __tablename__ = "issues"
+    id = db.Column(db.Integer(), primary_key=True)
+    email = db.Column(db.String(120), unique=False, nullable=False)
+    issue = db.Column(db.String(400), nullable=False)
+    is_active = db.Column(db.Boolean(), nullable=False)
+
+    def __repr__(self):
+        return "<Issue {}>".format(self.issue)
+
+    def serialize(self):
+        return {"email": self.email, "issue": self.issue, "is_active": self.is_active}
