@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { EventInfoBox } from '../component/eventInfoBox';
 import { useNavigate } from 'react-router-dom'
 import { TimeCounter } from '../component/timeCounter';
 import { UserInsertData } from '../component/userInsertData';
@@ -30,6 +31,7 @@ export const Userdata = () => {
       <TimeCounter /> 
       <UserInsertData />
       <button onClick={logout}>Logout</button>
+      <EventInfoBox />
     </div>
     </>
     

@@ -44,7 +44,7 @@ class UserData(db.Model):
 
 class Event(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    day = db.Column(db.DateTime, nullable=False)
+    day = db.Column(db.Date, nullable=False)
     hour = db.Column(db.Time, nullable=False)
     location = db.Column(db.String(120), nullable=False)
     meeting_point = db.Column(db.String(120), nullable=False)
