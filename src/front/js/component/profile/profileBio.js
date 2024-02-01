@@ -2,11 +2,11 @@ import React, { useContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Context } from "../../store/appContext";
 
-export const ProfileBio = () =>  {
+export const ProfileBio = () => {
   const { store, actions } = useContext(Context);
   const navigate = useNavigate();
 
-//   const joinedDate = format(new Date(user.created_at), 'MMMM RRRR')
+  //   const joinedDate = format(new Date(user.created_at), 'MMMM RRRR')
 
   useEffect(() => {
 
@@ -23,16 +23,11 @@ export const ProfileBio = () =>  {
   const user = store.users.length > 0 ? store.users[0] : {};
 
   return (
-    <Container>
-      <div className="topBio">
-        <div className="image">
-          {' '}
-          <img src={user.data?.image} alt="" />
-        </div>
-      </div>
+    <div>
+
       <div className="detailsBio">
-        <span className="user__name">{user.data?.name}</span>
-        <span className="user__id">@{user.id}</span>
+        <span className="user-name">{user.data?.name}Stefix</span>
+        <span className="user-id">@{user.id}Stefi123</span>
 
         {/* Estaría bueno agregar este dato en el perfil */}
         {/* <div className="user__joined">
@@ -40,19 +35,19 @@ export const ProfileBio = () =>  {
           <span className="user__joined--text">Joined {joinedDate}</span>
         </div> */}
 
-        <div className="user__follows">
-          <span className="user__follows__following">
+        <div className="user-follows">
+          <span className="user-follows-following">
             <b>{store.followed.length || 0}</b> Following
           </span>
-          <span className="user__follows__followers">
+          <span className="user-follows-followers">
             <b>{store.followers.length || 0}</b> Followers
           </span>
         </div>
-        <div className="user__followed-by">
+        <div className="user-followed-by">
           Not followed by anyone you are following
         </div>
       </div>
-    </Container>
+    </div>
   );
 };
 

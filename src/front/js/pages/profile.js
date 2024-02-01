@@ -10,7 +10,7 @@
  export const Profile = () => {
 
    return (
-    <div>
+    <div className='container-md'>
         <ProfileHeader />
         <ProfileBio />
         <TabList />
