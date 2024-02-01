@@ -61,7 +61,7 @@ const [meetingPoint, setMeetingPoint] = useState("");
  const handleSubmit = (event) => {
   event.preventDefault();
  
-  const adminRouteRequirement = "/api/events";
+  const adminRouteRequirement = "/api/event";
   const url = `${process.env.BACKEND_URL}${adminRouteRequirement}`;
   
   const eventData = {
@@ -71,7 +71,6 @@ const [meetingPoint, setMeetingPoint] = useState("");
      
   };
  
-
   fetch(url, {
      method: 'POST',
      headers: {

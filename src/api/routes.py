@@ -166,17 +166,30 @@ def promote_user():
         return {'error': 'No user found with the provided email'}, 404
     
 
-@api.route("/events", methods=["POST"])
+@api.route("/event", methods=["POST"])
 def create_event():
     day = request.json.get("day")
     location = request.json.get("location")
     meeting_point = request.json.get("meeting_point")
-   
+    
     new_event = Event()
     new_event.day = day
     new_event.location = location
     new_event.meeting_point = meeting_point
     db.session.add(new_event)
     db.session.commit()
+
     return jsonify({"msg": "Event created"}), 201
 
+@api.route('/events', methods=['GET'])
+def get_event():
+    event = Event.query.order_by(Event.id.desc()).first()
+    return jsonify(event.serialize())
+
+@api.route('/events', methods=['DELETE'])
+def delete_all_events():
+    events = Event.query.all()
+    for event in events:
+        db.session.delete(event)
+    db.session.commit()
+    return jsonify({"message": "All events were successfully deleted."})
