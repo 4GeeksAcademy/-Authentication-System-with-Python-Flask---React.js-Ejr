@@ -26,7 +26,7 @@ const SignUpForm = () => {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ first_name: firstName, last_name: lastName, email, password }),
+            body: JSON.stringify({ first_name: firstName, last_name: lastName, email, password, confirmPassword }),
         });
 
         if (response.ok) {
@@ -37,7 +37,7 @@ const SignUpForm = () => {
     };
 
     return (
-        
+
         <form onSubmit={handleSubmit} className="form-container">
             <div className="page-title">Sign Up</div>
             
@@ -56,8 +56,7 @@ const SignUpForm = () => {
             <div className="form-group">
                 <label className="label">Password:</label>
                 <input type={showPassword ? 'text' : 'password'} value={password} onChange={(e) => setPassword(e.target.value)} className="input" />
-            </div> 
-            
+            </div>
             <div className="form-group">
                 <label className="label">Confirm Password:</label>
                 <input type={showPassword ? 'text' : 'password'} value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} className="input" />
