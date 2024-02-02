@@ -1,4 +1,5 @@
-import React, { useContext, useState,useEffect } from "react";
+/*
+import React, { useContext, useState, useEffect } from "react";
 import { useStreamContext } from 'react-activity-feed'
 import { useNavigate } from 'react-router-dom'
 import { Context } from "../../store/appContext";
@@ -18,7 +19,7 @@ export const TabList = () => {
             aria-controls="nav-home"
             aria-selected="true"
           >
-            Reseñas <span class="badge badge-light">9</span>
+            Reseñas <span className="badge badge-light">9</span>
           </a>
           <a
             className="nav-item nav-link"
@@ -29,7 +30,7 @@ export const TabList = () => {
             aria-controls="nav-vistas"
             aria-selected="false"
           >
-            Vistas <span class="badge badge-light">9</span>
+            Vistas <span className="badge badge-light">9</span>
           </a>
           <a
             className="nav-item nav-link"
@@ -40,7 +41,7 @@ export const TabList = () => {
             aria-controls="nav-porVer"
             aria-selected="false"
           >
-        Por ver <span class="badge badge-light">9</span>
+            Por ver <span className="badge badge-light">9</span>
           </a>
         </div>
       </nav>
@@ -51,7 +52,7 @@ export const TabList = () => {
           role="tabpanel"
           aria-labelledby="nav-home-tab"
         >
-          {/* COMPONENTE RESEÑAS */}
+          {/ * COMPONENTE RESEÑAS * /}
         </div>
         <div
           className="tab-pane fade"
@@ -59,7 +60,7 @@ export const TabList = () => {
           role="tabpanel"
           aria-labelledby="nav-profile-tab"
         >
-         {/* COMPONENTE LISTA VISTAS */}
+          {/ * COMPONENTE LISTA VISTAS * /}
         </div>
         <div
           className="tab-pane fade"
@@ -67,10 +68,10 @@ export const TabList = () => {
           role="tabpanel"
           aria-labelledby="nav-contact-tab"
         >
-         {/* COMPONENTE LISTA POR VER */}
+          {/ * COMPONENTE LISTA POR VER * /}
         </div>
       </div>
     </div>
   );
 };
-
+*/

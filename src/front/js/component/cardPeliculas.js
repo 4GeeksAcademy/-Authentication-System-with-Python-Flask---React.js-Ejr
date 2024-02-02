@@ -79,13 +79,9 @@ export const CardPeliculas = ({ nombrePelicula, generoPelicula }) => {
                                 <div className="col-md d-flex justify-content-end">
                                     <Link to={"/pagesPeliculas/"} className="btn btn-dark btn-no-border mt-3" style={{ marginRight: "140px", width: "36px" }} title="Más información">
                                         <i class="fa-solid fa-arrow-down"></i>
-<<<<<<< HEAD
-                                    </Link>                                                                        {/*FLUX*/}
-                                    <button className="btn btn-sm btn-custom-purple border-0 mt-3" onClick={() => actions.agregarMiLista(nombrePelicula)}>
-=======
-                                    </Link>                                                                       {/*FLUX*/}
+                                    </Link>                                                                       
+                                                                                                                                              {/*FLUX*/}
                                     <button className="btn btn-sm btn-custom-purple border-0 mt-3" style={{fontWeight:"bold"}} onClick={() => actions.agregarMiLista(nombrePelicula)}>
->>>>>>> ff68db7 ([Más de la Pag Inicial])
                                         + Mi Lista
                                     </button>
                                 </div>
