@@ -13,6 +13,46 @@ const CreateEventForm = ({ onFormSubmit }) => {
   const handleFormSubmit = (e) => {
     e.preventDefault();
 
+    const formData = new FormData();
+    formData.append('name', eventName);
+    formData.append('description', eventDescription);
+    formData.append('location', eventLocation);
+    formData.append('date', eventDate);
+    formData.append('price',setEventPrice);
+    if(eventImage){
+      formData.append('image', eventImage, eventImage.name);
+    }
+
+
+    try {
+      const token = localStorage.getItem('token'); // Get the stored token
+      const response = await fetch('your-backend-endpoint/api/events', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`, // Send the token in the Authorization header
+          // 'Content-Type': 'multipart/form-data' is not needed with FormData
+        },
+        body: formData, // Send the form data
+      });
+      const data = await response.json();
+      if (response.ok) {
+        console.log('Event created:', data);
+        onFormSubmit(data); // Call the onFormSubmit callback, if needed
+        // Reset form fields after successful submission
+        setEventName('');
+        setEventDescription('');
+        setEventLocation('');
+        setEventDate('');
+        setEventPrice('');
+        setEventImage(null);
+      } else {
+        console.log('Failed to create event:', data.message);
+      }
+    } catch (error) {
+      console.log("There is an error: ", error);
+    }
+  };
+
     const newEvent = {
       name: eventName,
       description: eventDescription,
