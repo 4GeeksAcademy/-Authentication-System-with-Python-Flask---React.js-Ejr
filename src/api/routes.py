@@ -3,6 +3,7 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 """
 from functools import wraps
 import json
+import resource
 from flask import Flask, request, jsonify, url_for, Blueprint, abort
 import jwt
 from api.models import db, User, UserData, Event
@@ -196,3 +197,31 @@ def delete_all_events():
         db.session.delete(event)
     db.session.commit()
     return jsonify({"message": "All events were successfully deleted."})
+
+@api.route("/clickupdate", methods=["PUT"])
+def UpdateClicksCounter():
+    event = Event.query.order_by(Event.id.desc()).first()
+    if event is None:
+        return {"message": "No events found"}, 404
+
+    # Get the checkbox state from the request body
+    checkbox_state = request.json.get('checkbox_state')
+
+    if checkbox_state == 'on':
+        # Increment the clicks_counter if the checkbox is checked
+        event.clicks_counter += 1
+    elif checkbox_state == 'off':
+        # Decrement the clicks_counter if the checkbox is unchecked
+        # Ensure clicks_counter doesn't go below 0
+        event.clicks_counter = max(0, event.clicks_counter - 1)
+
+    db.session.add(event)
+    db.session.commit()
+
+    return jsonify ({"message": "Clicks counter updated successfully"}), 200
+
+@api.route("/clicks", methods=["GET"])
+def UShowClicksCounter():
+    event = Event.query.order_by(Event.id.desc()).first()
+    return jsonify(event.clicks_counter)
+     
