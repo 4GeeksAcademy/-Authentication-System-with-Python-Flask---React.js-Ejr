@@ -1,60 +1,57 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from "react";
+import { Context } from "../store/appContext";
+import { useNavigate } from "react-router-dom";
 
-const Login = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState(null);
+export const Login = () => {
+  const { store, actions } = useContext(Context);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false); // State to track password visibility
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Limpiar el error si no hay problema
-    setError(null);
-
     try {
-      const response = await fetch('https://super-duper-yodel-g4qwxg67qv44fv7jj-3001.app.github.dev/', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email,
-          password,
-        }),
-      });
-
-      if (!response.ok) {
-        const responseData = await response.json();
-        if (responseData.error) {
-          setError(responseData.error);
-        } else {
-          setError('Error en la solicitud al servidor');
-        }
-        return;
+      if (await actions.login(email, password)) {
+        navigate("/profile");
+        // Limpiar inputs
+        setEmail("");
+        setPassword("");
+      } else {
+        alert("Data doesn't match");
+        setEmail("");
+        setPassword("");
       }
 
-      // Éxito en el inicio de sesión
-      const data = await response.json();
-      console.log(data);
-
+      // Accede al mensaje del estado global y muestra el mensaje si existe
+      if (store.message) {
+        console.log("Mensaje del estado global:", store.message);
+      }
     } catch (error) {
-      console.error('Error al enviar los datos:', error);
-      setError('Algunos datos no coinciden. Por favor, inténtalo de nuevo.');
+      console.error("Error al enviar los datos:", error);
     }
   };
 
   return (
-    <div className='CrearCuenta'>
-      <h1 className='mb-3'>Ingresar</h1>
-      <a>Bienvenido de nuevo! Ingresa tus datos y vuelve a disfrutar de tus películas y series </a>
+    <div className="container-fluid CrearCuenta vh-100">
+      <h1 className="mb-3">Ingresar</h1>
+      <a>
+        Bienvenido de nuevo! Ingresa tus datos y vuelve a disfrutar de tus películas y series{" "}
+      </a>
       <form onSubmit={handleSubmit}>
-
         <div id="is-relative">
           <label>
             <span id="icon">
               <i className="fa-regular fa-envelope"></i>
             </span>
-            <input className="form-control inputCuenta" placeholder="Email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+            <input
+              className="form-control inputCuenta"
+              placeholder="Email"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
           </label>
         </div>
 
@@ -62,25 +59,40 @@ const Login = () => {
 
         <div id="is-relative">
           <label>
-            <span id="icon">
-              <i className="fa-regular fa-eye"></i>
+            <span id="icon" onClick={() => setShowPassword(!showPassword)}>
+              <i className={showPassword ? "fa-regular fa-eye-slash" : "fa-regular fa-eye"}></i>
             </span>
-            <input className="form-control inputCuenta" placeholder="Contraseña" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+            <input
+              className="form-control inputCuenta"
+              placeholder="Contraseña"
+              type={showPassword ? "text" : "password"} // Show/hide password based on state
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
           </label>
         </div>
 
         <br />
-        
-        <button type="submit" className="btn btnCrearCuenta"> Ingresar </button>
+
+        <button
+          type="submit"
+          className="btn btnCrearCuenta"
+          onClick={handleSubmit}
+        >
+          {" "}
+          Ingresar{" "}
+        </button>
       </form>
 
-      {error && <p className='error'> {error}</p>}
-      
-      <div className='link'>
-        <a>Aun no tienes una cuenta? <a className='linkIngresar' href="/signUp">Registrate</a> </a>
+      <div className="link">
+        <p>
+          <a>Aun no tienes una cuenta?</a>
+          <a className="linkIngresar" href="/signUp">
+            {" "}
+            Registrate{" "}
+          </a>
+        </p>
       </div>
     </div>
   );
 };
-
-export default Login;
