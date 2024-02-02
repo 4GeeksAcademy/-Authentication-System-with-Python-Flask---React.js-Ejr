@@ -32,6 +32,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 				if ( token && token != "" && token != undefined) setStore ({ token: token })
 			},
 
+			logout: () => {
+				sessionStorage.removeItem("token")
+				console.log ("Logging user out")
+				setStore ({ token: null })
+			},
+
 			logOut: () => {
 				const token = sessionStorage.removeItem("token")
 				console.log ("Logging the user out.")

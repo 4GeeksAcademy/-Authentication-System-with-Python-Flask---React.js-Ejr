@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import { Context } from "../store/appContext"; // Make sure to import your context
 
 export const Navbar = () => {
+  const { store, actions } = useContext(Context);
+
   return (
     <div className="container-full nav-container">
       <nav className="navbar navbar-expand-lg navbar-dark navbar-custom d-flex justify-content-between px-5">
@@ -55,7 +58,7 @@ export const Navbar = () => {
         </div>
 
         {/* Nav Buttons */}
-        <div className="nav-buttons">
+        <div className="nav-buttons d-flex">
 
           {/* Create Event Button */}
           <Link to="/create-event">
@@ -65,11 +68,22 @@ export const Navbar = () => {
           </Link>
 
           {/* Log In Button */}
-          <Link to="/login">
-            <button className="btn btn-secondary custom-btn-dark ml-3" id="logInBtn">
-              Log In
-            </button>
-          </Link>
+
+          <div>
+            { !store.token ? 
+              <Link to="/login">
+                <button className="btn btn-secondary custom-btn-dark ml-3" id="logInBtn">
+                  Log In
+                </button>
+              </Link>
+              :
+              <Link to="/">
+                <button onClick={() => actions.logout() } className="btn btn-secondary custom-btn-dark ml-3" id="logInBtn">
+                  Log Out
+                </button>
+              </Link>
+            }
+          </div>
 
         </div>
       </nav>
