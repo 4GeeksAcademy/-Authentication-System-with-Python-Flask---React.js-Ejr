@@ -4,23 +4,33 @@ import '../../styles/createItinerary.css';
 import avatar1 from "../../img/avatar1.png";
 
 const CreateItinerary = () => {
-  const initialQuestions = [
-    'We have 8 questions for you..Where do you want to go?',
-    'How many people are there in your group?',
-    'How many days do you plan to stay?',
-    'What time of the year would you like to go?',
-    'What are your interests? Like food, history, nature, arts..',
-    'What is your level of fitness?',
-    'Almost there, please indicate your dietary preferences?',
-    'And finally.. your daily budget?',
-  ];
+  const initialQuestions =
+    {"Location":'We have 8 questions for you..Where do you want to go?',
+    "Group size":'How many people are there in your group?',
+    "Time at disposal":'How many days do you plan to stay?',
+    "Time of the year":'What time of the year would you like to go?',
+    "Interests":'What are your interests? Like food, history, nature, arts..',
+    "Level of fitness":'What is your level of fitness?',
+    "Dietary requirement":'Almost there, please indicate your dietary preferences?',
+    "Budget":'And finally.. your daily budget?',};
 
   const [questions, setQuestions] = useState(initialQuestions);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [userAnswers, setUserAnswers] = useState([]);
+  const [userAnswers, setUserAnswers] = useState(
+    {
+      "Location": null,
+      "Group size": null,
+      "Time at disposal": null,
+      "Time of the year": null,
+      "Interests": null,
+      "Level of fitness": null,
+      "Dietary requirement": null,
+      "Budget": null,
+    }
+  );
   const [generatedItinerary, setGeneratedItinerary] = useState(null);
   const [quizInProgress, setQuizInProgress] = useState(true);
-  
+
   const handleAnswerInput = (e) => {
     setUserAnswers(e.target.value);
 
@@ -41,10 +51,15 @@ const CreateItinerary = () => {
 
     setUserAnswers([...userAnswers, userAnswers]);
     setCurrentQuestionIndex(currentQuestionIndex + 1);
-    setUserAnswers('');
+    setUserAnswers((oldValue) => (
+      {
+      ...oldValue,
+      [getKeyByIndex()]: answer
+      }
+      ));
 
-    if (currentQuestionIndex === 7) {
-      const response = await fetch('/createItinerary', {
+    if (currentQuestionIndex === 8 ) {
+      const response = await fetch(process.env.BACKEND_URL + '/api/createItinerary', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -91,7 +106,6 @@ const CreateItinerary = () => {
 
   const handleStartAgain = () => {
     setQuestions(initialQuestions);
-    setCurrentQuestionIndex(0);
     setUserAnswers([]);
     setGeneratedItinerary(null);
     setQuizInProgress(true);
@@ -99,12 +113,12 @@ const CreateItinerary = () => {
 
   useEffect(() => {
     const handleKeyPress = (e) => {
-      if (e.key === 'Enter' && currentQuestionIndex === 8) {
+      if (e.key === 'Enter' && currentQuestionIndex === 0) {
         handleStartAgain();
       }
     };
-  
-    if (currentQuestionIndex === 8) {
+
+    if (currentQuestionIndex === 0) {
       document.addEventListener('keypress', handleKeyPress);
     }
 
@@ -113,6 +127,9 @@ const CreateItinerary = () => {
     };
   }, [currentQuestionIndex]);
 
+  const getKeyByIndex = () => {
+    return Object.keys(questions)[currentQuestionIndex]
+  };
 
   return (
     <>
@@ -122,14 +139,13 @@ const CreateItinerary = () => {
             <div className='avatar-box '>
               <div className='avatar me-5' id='avatar-placeholder'><img src={avatar1} alt="avatar" id='avatar' /> </div>
               <div className='box n1 ' id='question'>
-                {currentQuestionIndex === 8
-                  ? 'Here is your itinerary, enjoy your holiday!'
-                  : questions[currentQuestionIndex]}
+                  
+                   {questions[getKeyByIndex()]}
               </div>
             </div>
             <div className="card-body">
               <p className="card-text" id='Dio'>Assistant DioDio</p>
-              {currentQuestionIndex !== 8 && (
+              
                 <div>
                   <input
                     type='text'
@@ -140,12 +156,9 @@ const CreateItinerary = () => {
                     onKeyPress={handleAnswerInput}
                     required
                   />
-                  <button id='nextbutton' onClick={askNextQuestion}>{currentQuestionIndex === 7 ? 'Generate Itinerary' : 'Next Question'}</button>
-                </div>
-              )}
-              {currentQuestionIndex === 8 && (
+                  <button id='nextbutton' onClick={askNextQuestion}>{'Next Question'}</button>
+                </div>                           
                 <button id='nextbutton' onClick={handleStartAgain}>Start Again</button>
-              )}
             </div>
           </div>
           <div className='answer-box'>

@@ -11,7 +11,7 @@ from flask_jwt_extended import (
     unset_jwt_cookies,
 )
 from api.models import db, User
-from api.utils import get_openai_response, format_user_input, validate_user_input, hash_password, get_hash, verify_password
+from api.utils import get_openai_response, format_user_input, validate_user_input,get_hash
 from flask_cors import CORS
 
 app = Flask(__name__)
@@ -47,7 +47,7 @@ def signup():
     if existing_user:
         return jsonify({"error": "Email is already in use"}), 400
 
-    hashed_password = hash_password(password)
+    hashed_password = get_hash(password)
 
     new_user = User(
         first_name=first_name,
@@ -69,9 +69,9 @@ def signup():
 def login():
     email = request.json.get("email", None)
     password = request.json.get("password", None)
-    user = User.query.filter_by(email=email).first()
+    user = User.query.filter_by(email=email, password=get_hash(password)).first()
 
-    if not user or not verify_password(user.password, password):
+    if not user :
         return jsonify({"error": "Invalid email or password"}), 401
 
     access_token = create_access_token(identity={"email": email, "user_id": user.id})
