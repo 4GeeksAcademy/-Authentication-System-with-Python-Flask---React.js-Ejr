@@ -43,7 +43,7 @@ export const Home = () => {
   }, [tiempoInicial]);
 
   return (
-    <div className="main-container" style={{ maxHeight: "calc(100vh - 50px)", overflowY: "auto" }}>
+    <div className="main-container" style={{ minHeight: "100vh", paddingBottom: "150px" }}>
       <div className="text-center">
         <div style={{ position: "relative" }}>
           <img
@@ -73,12 +73,13 @@ export const Home = () => {
             </div>
           </div>
 
-          <div className="card" style={{ width:"18rem", position: "absolute", right: "25%",borderRadius: "15px", marginTop: "20px", backgroundColor:"#3B3B3B" }}>
-            <img className="card-img-top" 
-            style={{ borderTopLeftRadius: "15px", borderTopRightRadius: "15px" }}
-            src="https://musicart.xboxlive.com/7/99ce1100-0000-0000-0000-000000000002/504/image.jpg?w=1920&h=1080" alt="Card image cap"/>
-              <div className="card-body">
-              </div>
+          {/* Carta Película de la Semana */}
+          <div className="card" style={{ width: "18rem", position: "absolute", right: "25%", borderRadius: "15px", marginTop: "20px", backgroundColor: "#3B3B3B" }}>
+            <img className="card-img-top"
+              style={{ borderTopLeftRadius: "15px", borderTopRightRadius: "15px" }}
+              src="https://musicart.xboxlive.com/7/99ce1100-0000-0000-0000-000000000002/504/image.jpg?w=1920&h=1080" alt="Card image cap" />
+            <div className="card-body">
+            </div>
           </div>
 
           <p style={{ fontFamily: "Work Sans", fontSize: "18px", margin: "10px 0", textAlign: "center", color: "white", position: "absolute", bottom: "200px", left: "10%" }}>
@@ -103,9 +104,11 @@ export const Home = () => {
         <h1 className="text-light" style={{ marginLeft: "10%" }}>Película De</h1>
         <h1 className="text-light d-flex" style={{ marginLeft: "10%" }}>La Semana</h1>
         <h5 className="text-light" style={{ fontSize: "15px", marginLeft: "10%", marginBottom: "50px" }}>No te podes perder la más vista de la semana.</h5>
+        
+        {/* Botón2 Ver ahora */}
         <button
           className="boton2 btn btn-lg btn-custom border-0 mt-3"
-          style={{ marginBottom: "50px", marginLeft: "10%", display: "flex", alignItems: "center", padding: "15px 20px", backgroundColor:"#A259FF" }}
+          style={{ marginBottom: "50px", marginLeft: "10%", display: "flex", alignItems: "center", padding: "15px 20px", backgroundColor: "#A259FF" }}
         >
           <span style={{ fontSize: "14px", color: "white" }}>
             <i class="fa-solid fa-rocket"></i>
@@ -117,6 +120,12 @@ export const Home = () => {
           <h3 style={{ fontSize: "20px", marginRight: "50px" }}>150k+<p>Me Gusta</p></h3>
           <h3 style={{ fontSize: "20px" }}>240k+<p>Comentarios</p></h3>
         </div>
+      </div>
+
+      <div className="mas-visto">
+        <h3 className="text-light">Explora lo más visto</h3>
+        <h5 className="text-light" style={{ fontSize: "15px", marginBottom: "50px" }}>Manten Actualizado</h5>
+
       </div>
     </div>
   );
