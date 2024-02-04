@@ -10,6 +10,12 @@ export const EventInfoBox = () => {
     const url = `${process.env.BACKEND_URL}${adminRouteRequirement}`;
 
     useEffect(() => {
+        fetch(url)
+            .then(response => response.json())
+            .then(data => setEventDetails(data));
+    }, []);
+
+    useEffect(() => {
         const clicksApiUrl = `${process.env.BACKEND_URL}/api/clicks`;
         fetch(clicksApiUrl)
             .then(response => response.json())

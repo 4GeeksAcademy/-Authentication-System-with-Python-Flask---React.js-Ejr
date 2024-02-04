@@ -1,4 +1,4 @@
-import React, from 'react'
+import React from 'react';
 
 import { UserInsertData } from '../component/userInsertData';
 import { TimeCounter } from '../component/timeCounter';
