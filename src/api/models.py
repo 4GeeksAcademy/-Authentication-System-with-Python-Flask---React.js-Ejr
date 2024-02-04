@@ -11,7 +11,7 @@ class User(db.Model):
 
 
     def __repr__(self):
-        return f'<User {self.email}>'
+        return f'<User {self.email} {self.id} {self.level}>'
 
     def serialize(self):
         return {
@@ -49,6 +49,7 @@ class Event(db.Model):
     location = db.Column(db.String(120), nullable=False)
     meeting_point = db.Column(db.String(120), nullable=False)
     clicks_counter = db.Column(db.Integer, default=0)
+    user_email = db.Column(db.String(120), db.ForeignKey('user.email'))
 
     def __repr__(self):
         return f'<Event {self.location} {self.day} {self.meeting_point} {self.clicks_counter} {self.hour}>'
@@ -61,4 +62,5 @@ class Event(db.Model):
             "location": self.location,
             "meeting_point": self.meeting_point,
             "clicks_counter": self.clicks_counter,
+            "user_email": self.user_email, 
         }

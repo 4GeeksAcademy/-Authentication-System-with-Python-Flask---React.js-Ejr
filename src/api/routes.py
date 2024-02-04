@@ -87,8 +87,11 @@ def handle_get_hash():
 def handle_get_users():
    all_users = User.query.all()
    all_users = [{
-       "email": user.email
-   } for user in all_users]
+   "id": user.id,
+   "username": user.username,
+   "email": user.email,
+   "level": user.level
+} for user in all_users]
 
    if not all_users:
        return jsonify({"msg": "There are no users"}), 404
@@ -98,6 +101,15 @@ def handle_get_users():
    }
 
    return jsonify(response_body), 200
+
+@api.route('/users', methods=['DELETE'])
+def delete_all_users():
+        all_users = User.query.all()
+        for user in all_users:
+            db.session.delete(user)
+        db.session.commit()
+        return jsonify({"msg": "All users have been deleted."}), 200
+   
 
 @api.route('/config', methods=['GET'])
 def get_config():
@@ -188,6 +200,8 @@ def create_event():
 @api.route('/events', methods=['GET'])
 def get_event():
     event = Event.query.order_by(Event.id.desc()).first()
+    if event is None:
+        return jsonify({"message": "No events found"}), 404
     return jsonify(event.serialize())
 
 @api.route('/events', methods=['DELETE'])
