@@ -1,38 +1,56 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import '../../styles/authForms.css';
+import { Context } from "../store/appContext";
+import { Link, useNavigate } from 'react-router-dom'
 
+const SignUpForm = ({openLoginModal}) => {
 
-const SignUpForm = () => {
+    const {store, actions} = useContext(Context)
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    //confirm password logic
     const [confirmPassword, setConfirmPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('')
     //show password
     const [showPassword, setShowPassword] = useState(false);
+    //login logic
+    const toLogin = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         if (password !== confirmPassword) {
-            setErrorMessage('The passwords do not match')
+            setErrorMessage('The passwords do not match');
             return;
         }
 
-        const response = await fetch('/signup', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ first_name: firstName, last_name: lastName, email, password, confirmPassword }),
-        });
+        try {
+            const response = await actions.signup({
+                first_name: firstName,
+                last_name: lastName,
+                email: email,
+                password: password,
+                confirm_password: confirmPassword,
+            });
+    
+            console.log("Full Response:", response); // Log the full response
 
-        if (response.ok) {
-            alert('User created successfully. Please go to the menu and login.');
-        } else {
-            console.error('Signup failed');
+            if (response) {
+                alert('The user was created successfully')
+                toLogin ("/")
+
+                openLoginModal();
+                //redirect user to Home Page and open login modal useLocation()
+                console.log("SignUp successful");
+            } else {
+                const errorText = response?.message || 'An unknown error occurred';
+                setErrorMessage(`SignUp failed: ${errorText}`);
+                console.error("SignUp failed:", errorText);
+            }
+        } catch (error) {
+            setErrorMessage('An error occurred during SignUp', error);
+            console.error("Error during SignUp:", error);
         }
     };
 
