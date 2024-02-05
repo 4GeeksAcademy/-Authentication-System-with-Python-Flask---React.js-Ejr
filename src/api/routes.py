@@ -23,7 +23,7 @@ CORS(api)
 def login():
     email = request.json.get("email", None)
     password = request.json.get("password", None)
-    if email != "test" or password != "test":
+    if email != email or password != password:
         return jsonify({"msg": "Bad email or password"}), 401
 
     access_token = create_access_token(identity=email)
@@ -43,12 +43,43 @@ def handle_hello():
     
 #SignUp Route 
 
-@api.route('/signup', methods=['POST'])
-def signup():
-    data = request.json  
-    # Process the data (e.g., store it in a database)
+@api.route('/sign-up', methods=['POST'])
+def sign_up():
+    try:
+        # Parse and validate the incoming JSON data
+        data = request.json
+        required_fields = ['firstName', 'lastName', 'email', 'password']
+        for field in required_fields:
+            if field not in data:
+                raise APIException(f"Missing {field} in request body", status_code=400)
 
-    return jsonify({'message': 'Signup successful'})
+        # Check if the user already exists in the database
+        existing_user = User.query.filter_by(email=data['email']).first()
+        if existing_user:
+            raise APIException("User with this email already exists", status_code=400)
+
+        # Create a new user and save it to the database
+        new_user = User(
+            first_name=data['firstName'],
+            last_name=data['lastName'],
+            email=data['email'],
+            password=data['password']
+        )
+        db.session.add(new_user)
+        db.session.commit()
+
+        # Generate JWT token for the new user
+        access_token = create_access_token(identity=data['email'])
+
+        # Return success message and token
+        return jsonify({
+            'message': 'User registered successfully',
+            'access_token': access_token
+        }), 201
+
+    except Exception as e:
+        # Handle any exceptions and return an error message
+        return jsonify({'error': str(e)}), 500
 
 #Event Route 
 
