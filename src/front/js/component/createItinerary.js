@@ -70,13 +70,13 @@ const CreateItinerary = () => {
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify( userAnswers ),
+          body: JSON.stringify(userAnswers),
         });
 
         const result = await response.json();
 
         if (response.ok) {
-          setGeneratedItinerary(result);
+          setGeneratedItinerary(result.itinerary);
           setQuizInProgress(false);
         } else {
           console.error('Error generating itinerary:', result.error);
@@ -178,8 +178,24 @@ const CreateItinerary = () => {
               <div className='answer-item'>
                 {generatedItinerary ? (
                   <div>
-                    <h3>Generated Itinerary</h3>
-                    <p>{generatedItinerary}</p>
+                    <h3>Generated Itinerary:</h3>
+                    {generatedItinerary.map((day, index) => (
+                      <div key={index}>
+                        <h4>Day {index + 1}</h4>
+                        <div>
+                          <strong>Accommodation:</strong> {day.accommodation}<br />
+                          <strong>Activities:</strong>
+                          <ul>
+                            {day.activities.map((activity, i) => (
+                              <li key={i}>{activity}</li>
+                            ))}
+                          </ul>
+                          <strong>Lunch:</strong> {day.lunch}<br />
+                          <strong>Dinner:</strong> {day.dinner}<br />
+                          <strong>Transportation:</strong> {day.transportation}
+                        </div>
+                      </div>
+                    ))}
                     <Button onClick={handleSaveItinerary}>Save Itinerary</Button>
                   </div>
                 ) : (
@@ -187,6 +203,8 @@ const CreateItinerary = () => {
                 )}
               </div>
             </div>
+
+
           </div>
         </div>
       </>
