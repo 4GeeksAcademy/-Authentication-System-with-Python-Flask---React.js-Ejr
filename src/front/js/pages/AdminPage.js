@@ -61,33 +61,38 @@ const [hour, setHour] = useState("");
 
  const handleSubmit = (event) => {
   event.preventDefault();
-  
+   
   const adminRouteRequirement = "/api/event";
   const url = `${process.env.BACKEND_URL}${adminRouteRequirement}`;
-   
+    
   const eventData = {
-      day: day,
-      hour: hour,
-      location: location,
-      meeting_point: meetingPoint,
+       day: day,
+       hour: hour,
+       location: location,
+       meeting_point: meetingPoint,
   };
-  
+   
   fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(eventData),
+       method: 'POST',
+       headers: {
+         'Content-Type': 'application/json',
+       },
+       body: JSON.stringify(eventData),
   })
-      .then(response => response.json())
-      .then(data => {
-        console.log('Success:', data);
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-      });
+       .then(response => {
+           if (!response.ok) {
+             throw new Error('Network response was not ok');
+           }
+           return response.json();
+       })
+       .then(data => {
+         console.log('Success:', data);
+         alert("Event created successfully"); 
+       })
+       .catch((error) => {
+         console.error('Error:', error);
+       });
  };
- 
  return (
   <div>
      ...
