@@ -73,8 +73,31 @@ def get_openai_response(user_input):
             Level of fitness: Good
             Dietary requirement: Vegan
             Budget: 100£ per day
-            
-            The JSON must contain an array of recommendations. Consider each index as a different day.
+
+            This is the expected output format and the info:
+            [
+            {
+            // each object is considered a new day
+            "accomodation":"Bob's hotel 4 stars",
+            "lunch":"MCDonnalds at president's shopping mall",
+            "activities":[
+                "Museum of classic Rome History",
+                "Museum of Big Bang"
+            ],
+            "transportation":"Public transportation: Bus or Metro",  // Verify if public transportation of the given location is good otherwise choose alternatives
+            "dinner":"Seafood at sea's restaurant, av. lib. 25" // choose a different food style from lunch that matches the user's particularities
+            },
+            {
+            "accomodation": "Junior AirBnB at street 25",
+            "lunch": "Italian Republic at Principal street",
+            "activities": ["Walk at the lake's shore", "Go to the giant monument of Leo"],
+            "transportation": "Taxi or Uber",
+            "dinner": "Fruit salad at Geoge fuits on street 2nd of march",
+            }
+            ]            
+
+            Please note that the comments are not valid as an output in a JSON format. Just use them for guidance.
+
             """,
         },
         {
