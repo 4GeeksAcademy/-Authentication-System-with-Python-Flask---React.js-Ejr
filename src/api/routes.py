@@ -39,14 +39,15 @@ def signup():
     email = request.json.get("email")
     password = request.json.get("password")
     confirm_password = request.json.get("confirm_password")
-    print (password)
-    print (confirm_password)
+
     if password != confirm_password:
         return jsonify({"error": "Password and confirm password do not match"}), 400
+    
 
+    
     existing_user = User.query.filter_by(email=email).first()
     if existing_user:
-        return jsonify({"error": "Email is already in use"}), 400
+       return jsonify({"error": "Email is already in use"}), 400
 
     hashed_password = get_hash(password)
 
@@ -56,6 +57,7 @@ def signup():
         email=email,
         password=hashed_password,
     )
+    
     db.session.add(new_user)
     
     try:

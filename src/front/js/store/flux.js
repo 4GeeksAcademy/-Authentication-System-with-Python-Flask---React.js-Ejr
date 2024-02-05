@@ -27,40 +27,24 @@ const getState = ({ getStore, getActions, setStore }) => {
 						body: JSON.stringify(User),
 					});
 			
-					if (!response) {
-						console.error('Signup failed: Response is undefined');
-						setStore({ message: 'Signup failed. Please try again.' });
-						return;
-					}
-			
-					if (response.ok) {
-						try {
-							const data = await response.json();
-							setStore({ message: data.success });
-							// Optionally, you might want to do something else with the response data
-							// (e.g., update the store or trigger another action).
-						} catch (jsonError) {
-							console.error('Error parsing JSON response:', jsonError);
-							setStore({ message: 'Signup failed. Please try again.' });
-						}
+					if (!response.ok) {
+						const errorData = await response.json().catch(() => ({}));
+						console.error('Signup failed:', errorData);
+						setStore({ message: errorData.error || 'Signup failed. Please try again.' });
 					} else {
-						try {
-							const errorData = await response.json();
-							console.error('Signup failed:', errorData);
-							setStore({ message: errorData.error || 'Signup failed. Please try again.' });
-						} catch (jsonError) {
-							console.error('Error parsing JSON error response:', jsonError);
-							setStore({ message: 'Signup failed. Please try again.' });
-						}
+						const data = await response.json().catch(() => ({}));
+						const successMessage = data.success || 'Signup successful';
+						setStore({ message: successMessage });
+						//always return something
+						return successMessage
+		
 					}
 				} catch (error) {
 					console.error('Error during signup:', error);
 					setStore({ message: 'Signup failed. Please try again.' });
 				}
 			},
-
-
-
+		
 
 
 
