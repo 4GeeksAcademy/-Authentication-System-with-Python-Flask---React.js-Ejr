@@ -68,7 +68,7 @@ def login_user():
     found_user = User.query.filter_by(email=email, password=get_hash(password)).one_or_none()
     if found_user is None:
         return "email or password incorrect", 400
-    token = create_access_token(identity={'email': email, 'level': found_user.level})
+    token = create_access_token(identity={'email': email} )
     return jsonify(token=token)
 
 @api.route("/private", methods=["GET"])
@@ -218,15 +218,14 @@ def UpdateClicksCounter():
     if event is None:
         return {"message": "No events found"}, 404
 
-    # Get the checkbox state from the request body
+
     checkbox_state = request.json.get('checkbox_state')
 
     if checkbox_state == 'on':
-        # Increment the clicks_counter if the checkbox is checked
+
         event.clicks_counter += 1
     elif checkbox_state == 'off':
-        # Decrement the clicks_counter if the checkbox is unchecked
-        # Ensure clicks_counter doesn't go below 0
+   
         event.clicks_counter = max(0, event.clicks_counter - 1)
 
     db.session.add(event)
@@ -239,3 +238,19 @@ def UShowClicksCounter():
     event = Event.query.order_by(Event.id.desc()).first()
     return jsonify(event.clicks_counter)
      
+@api.route('/userslevel', methods=['GET'])
+@jwt_required()
+def handle_get_user_level():
+    try:
+       
+        jwt_data = get_jwt_identity()
+        email = jwt_data.get('email') 
+
+        user = User.query.filter_by(email=email).first()
+
+        if user is None:
+            return jsonify({"msg": "User not found"}), 404
+
+        return jsonify({"level": user.level}), 200
+    except Exception as e:
+        return jsonify({"msg": str(e)}), 500

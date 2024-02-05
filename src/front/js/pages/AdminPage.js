@@ -1,14 +1,42 @@
 import React, { useEffect, useState } from 'react';
-
+import { jwtDecode } from 'jwt-decode';
+import { useNavigate } from 'react-router-dom'
 
 export const AdminPage = () => {
- const [users, setUsers] = useState([]);
- const [selectedEmail, setSelectedEmail] = useState("");
- const [loading, setLoading] = useState(true);
- const [day, setDay] = useState("");
+const [users, setUsers] = useState([]);
+const [selectedEmail, setSelectedEmail] = useState("");
+const [loading, setLoading] = useState(true);
+const [day, setDay] = useState("");
 const [location, setLocation] = useState("");
 const [meetingPoint, setMeetingPoint] = useState("");
 const [hour, setHour] = useState("");
+const [userLevel, setUserLevel] = useState(null)
+const [userToken, setUserToken] = useState("");
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const userToken = localStorage.getItem("userToken");
+    if (!userToken) {
+      navigate("/login");
+      return;
+    }
+    setUserToken(userToken);
+
+    fetch(`${process.env.BACKEND_URL}/api/userslevel`, {
+      headers: {
+        'Authorization': `Bearer ${userToken}`
+      }
+    })
+    .then(response => response.json())
+    .then(data => {
+      setUserLevel(data.level);
+    })
+    .catch(error => {
+      console.error('Error fetching user level:', error);
+      navigate("/login");
+    });
+ }, [navigate]);
 
 
  useEffect(() => {
@@ -93,10 +121,18 @@ const [hour, setHour] = useState("");
          console.error('Error:', error);
        });
  };
+ if (loading) {
+  return <div>Loading...</div>;
+}
+
+if (userLevel !== 3) {
+  return <div>Access denied. Only users with level 3 can access this page.</div>;
+}
+
  return (
   <div>
      ...
-     <h3>Create the next event</h3>
+     <h3>Select a user email to update for level 2</h3>
      <div>
       <select onChange={e => setSelectedEmail(e.target.value)}>
       {users.map(user => (
@@ -107,6 +143,7 @@ const [hour, setHour] = useState("");
       </select>
       <button onClick={handlePromote}>Promote</button>
     </div>
+    <h3>Create the next event</h3>
      <form onSubmit={handleSubmit}>
        <label>
          Day:
