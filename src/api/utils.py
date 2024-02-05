@@ -66,7 +66,7 @@ def get_openai_response(user_input):
             Example of input:
 
             Location: Iceland
-            Group size: Couple
+            Group size: 2
             Time at disposal: 7 days
             Time of the year: February
             Interests: Museums
@@ -74,7 +74,7 @@ def get_openai_response(user_input):
             Dietary requirement: Vegan
             Budget: 100£ per day
             
-            If the user is not providing all the values needed for each key, please don't provide an itinerary but just tell the user you were not able to provide the itinerary because of info not sufficient.
+            The JSON must contain an array of recommendations. Consider each index as a different day.
             """,
         },
         {
@@ -82,7 +82,7 @@ def get_openai_response(user_input):
             "content": user_input,
         },
     ]
-
+    print(user_input)
     response = client.chat.completions.create(
         model="gpt-3.5-turbo-1106",
         messages=user_messages,
