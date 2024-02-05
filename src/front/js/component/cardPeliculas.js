@@ -30,32 +30,34 @@ export const CardPeliculas = ({ nombrePelicula, generoPelicula }) => {
 
     return (
         <>
-            <div className="card-title text-light" style={{ paddingLeft: "25px", fontFamily: "Poppins, Work Sans" }}>
+            <div className="card-title text-light" style={{ paddingLeft: "8%", fontFamily: "Poppins, Work Sans" }}>
                 <h3>Explora Todas Las Peliculas Que Tenemos Para Vos</h3>
             </div>
             <div className="container-fliud d-flex" style={{ backgroundColor: "#3B3B3B" }}>
                 <div className="row justify-content-evenly">
                     <div className="col-md-4 mb-4">
-                        <div className="card text-light rounded-lg" style={{ width: "18rem", backgroundColor: "#2B2B2B", borderRadius: "15px", marginLeft: "20px" }}>
-                            {/* Contenido de la tarjeta */}
+                        <div className="card text-light rounded-lg" style={{ width: "18rem", marginTop:"30%", backgroundColor: "#2B2B2B", borderRadius: "15px", marginLeft: "20px" }}>
+
+                            {/* Contenido de la carta */}
                             <img
-                                src={"https://images.pexels.com/photos/4065578/pexels-photo-4065578.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"} //#+ (id) + ".jpg"
-                                className="card-img-top"
-                                style={{ borderTopLeftRadius: "15px", borderTopRightRadius: "15px" }}
+                                src={"https://musicart.xboxlive.com/7/99ce1100-0000-0000-0000-000000000002/504/image.jpg?w=1920&h=1080" /*+ (id) + ".jpg"*/}
+                                className="card-img-top" style={{ borderTopLeftRadius: "15px", borderTopRightRadius: "15px" }}
                                 alt="..."
                             />
                             <div className="card-body">
-                                <h5 className="card-title" style={{ fontFamily: "Poppins, Work Sans" }}>Título: {nombrePelicula}</h5>
-                                <p className="card-title" style={{ fontFamily: "Poppins, Work Sans" }}> Género: {generoPelicula} </p>
-                                {/*<Link to={"/pagesPeliculas/" + id} className="btn bg-dark text-white">Learn More!</Link>*/}
+                                <h5 className="card-title text-light" style={{ fontFamily: "Poppins, Work Sans" }}> Nombre </h5>
+                                <p className="card-text text-light" style={{ fontFamily: "Poppins, Work Sans" }}>Género </p>
+
                                 <div className="col-md d-flex justify-content-end">
-                                    <Link to={"/pagesPeliculas/"} className="btn btn-dark btn-no-border mt-3" style={{ marginRight: "140px", width: "36px" }} title="Más información">
+                                    <Link to={"/pagesPeliculas/" /*+ id*/} className="btn btn-dark btn-no-border mt-3" style={{ marginRight: "40%", width: "36px" }} title="Más información">
                                         <i class="fa-solid fa-arrow-down"></i>
-                                    </Link>                                                                        {/*FLUX*/}
-                                    <button className="btn btn-sm btn-custom-purple border-0 mt-3" onClick={() => actions.agregarMiLista(nombrePelicula)}>
+                                    </Link>
+
+                                    <button className="btn btn-custom-purple border border-0 mt-3" style={{ marginRight: "3%" }}>
                                         + Mi Lista
                                     </button>
                                 </div>
+
                             </div>
                         </div>
                     </div>
@@ -67,24 +69,24 @@ export const CardPeliculas = ({ nombrePelicula, generoPelicula }) => {
                         <div className="card text-light rounded-lg" style={{ width: "18rem", backgroundColor: "#2B2B2B", borderRadius: "15px", marginLeft: "20px" }}>
                             {/* Contenido de la tarjeta */}
                             <img
-                                src={"https://images.pexels.com/photos/4065578/pexels-photo-4065578.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"} //#+ (id) + ".jpg"
-                                className="card-img-top"
-                                style={{ borderTopLeftRadius: "15px", borderTopRightRadius: "15px" }}
+                                src={"https://musicart.xboxlive.com/7/99ce1100-0000-0000-0000-000000000002/504/image.jpg?w=1920&h=1080" /*+ (id) + ".jpg"*/}
+                                className="card-img-top" style={{ borderTopLeftRadius: "15px", borderTopRightRadius: "15px" }}
                                 alt="..."
                             />
                             <div className="card-body">
-                                <h5 className="card-title" style={{ fontFamily: "Poppins, Work Sans" }}>Título: {nombrePelicula}</h5>
-                                <p className="card-title" style={{ fontFamily: "Poppins, Work Sans" }}> Género: {generoPelicula} </p>
-                                {/*<Link to={"/pagesPeliculas/" + id} className="btn bg-dark text-white">Learn More!</Link>*/}
+                                <h5 className="card-title text-light" style={{ fontFamily: "Poppins, Work Sans" }}> Nombre </h5>
+                                <p className="card-text text-light" style={{ fontFamily: "Poppins, Work Sans" }}>Género </p>
+
                                 <div className="col-md d-flex justify-content-end">
-                                    <Link to={"/pagesPeliculas/"} className="btn btn-dark btn-no-border mt-3" style={{ marginRight: "140px", width: "36px" }} title="Más información">
+                                    <Link to={"/pagesPeliculas/" /*+ id*/} className="btn btn-dark btn-no-border mt-3" style={{ marginRight: "40%", width: "36px" }} title="Más información">
                                         <i class="fa-solid fa-arrow-down"></i>
-                                    </Link>                                                                       
-                                                                                                                                              {/*FLUX*/}
-                                    <button className="btn btn-sm btn-custom-purple border-0 mt-3" style={{fontWeight:"bold"}} onClick={() => actions.agregarMiLista(nombrePelicula)}>
+                                    </Link>
+
+                                    <button className="btn btn-custom-purple border border-0 mt-3" style={{ marginRight: "3%" }}>
                                         + Mi Lista
                                     </button>
                                 </div>
+
                             </div>
                         </div>
                     </div>

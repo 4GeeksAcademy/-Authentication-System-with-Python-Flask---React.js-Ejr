@@ -2,7 +2,7 @@ import React from "react";
 import logo from "../../img/logo.png";
 
 export const Footer = () => (
-  <footer className="footer py-3 text-center" style={{minHeight:"150px"}}>
+  <footer className="footer py-3 text-center">
     <div className="color-footer container text-center d-flex" style={{paddingBottom: "100px" }}>
 
       {/* Primera Columna */}
