@@ -193,7 +193,7 @@ div#is-relative {
     display: block;
     bottom: .4rem;
     right: 1rem;
-    color: #8b8b8b;
+    color:  #8b8b8b;
 
     user-select: none;
     cursor: pointer;
@@ -201,4 +201,41 @@ div#is-relative {
 
 input.input {
     padding-right: 2.5rem;
+}
+
+
+.nav-tabs {
+    border-bottom: none;
+    justify-content: space-between;
+}
+
+.nav1 {
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+    border-top: 1px solid  #4c4c4c;
+}
+
+.nav-link {
+    text-decoration: none;
+    border: none;
+    padding: 8px 90px;
+    color: white;
+}
+
+.nav-link:hover {
+    border: none;
+    color: #A259FF;
+}
+
+.nav-link:focus {
+    border: none;
+    color: #A259FF;
+}
+
+.nav-tabs .nav-link.active {
+    background-color: #3B3B3B;
+    color: white;
+    border: none;
+    border-bottom: 3px solid #A259FF;
 }

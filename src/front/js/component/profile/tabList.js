@@ -1,13 +1,11 @@
-/*
+
 import React, { useContext, useState, useEffect } from "react";
-import { useStreamContext } from 'react-activity-feed'
-import { useNavigate } from 'react-router-dom'
-import { Context } from "../../store/appContext";
+
 
 
 export const TabList = () => {
   return (
-    <div>
+    <div className="nav1">
       <nav>
         <div className="nav nav-tabs" id="nav-tab" role="tablist">
           <a
@@ -22,7 +20,7 @@ export const TabList = () => {
             Reseñas <span className="badge badge-light">9</span>
           </a>
           <a
-            className="nav-item nav-link"
+            className="nav-item nav-link nav-link-midle"
             id="nav-profile-tab"
             data-toggle="tab"
             href="#nav-vistas"
@@ -33,7 +31,7 @@ export const TabList = () => {
             Vistas <span className="badge badge-light">9</span>
           </a>
           <a
-            className="nav-item nav-link"
+            className="nav-item nav-link "
             id="nav-contact-tab"
             data-toggle="tab"
             href="#nav-porVer"
@@ -52,7 +50,7 @@ export const TabList = () => {
           role="tabpanel"
           aria-labelledby="nav-home-tab"
         >
-          {/ * COMPONENTE RESEÑAS * /}
+          {/* {/ * COMPONENTE RESEÑAS * /} */}
         </div>
         <div
           className="tab-pane fade"
@@ -60,7 +58,7 @@ export const TabList = () => {
           role="tabpanel"
           aria-labelledby="nav-profile-tab"
         >
-          {/ * COMPONENTE LISTA VISTAS * /}
+          {/* {/ * COMPONENTE LISTA VISTAS * /} */}
         </div>
         <div
           className="tab-pane fade"
@@ -68,10 +66,10 @@ export const TabList = () => {
           role="tabpanel"
           aria-labelledby="nav-contact-tab"
         >
-          {/ * COMPONENTE LISTA POR VER * /}
+          {/* {/ * COMPONENTE LISTA POR VER * /} */}
         </div>
       </div>
     </div>
   );
 };
-*/
+
