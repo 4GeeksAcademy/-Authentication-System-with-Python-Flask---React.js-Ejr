@@ -17,6 +17,53 @@ const getState = ({ getStore, getActions, setStore }) => {
 			accessToken: null,
 		},
 		actions: {
+			signup: async (User) => {
+				try {
+					const response = await fetch(process.env.BACKEND_URL + "/api/signup", {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json',
+						},
+						body: JSON.stringify(User),
+					});
+			
+					if (!response) {
+						console.error('Signup failed: Response is undefined');
+						setStore({ message: 'Signup failed. Please try again.' });
+						return;
+					}
+			
+					if (response.ok) {
+						try {
+							const data = await response.json();
+							setStore({ message: data.success });
+							// Optionally, you might want to do something else with the response data
+							// (e.g., update the store or trigger another action).
+						} catch (jsonError) {
+							console.error('Error parsing JSON response:', jsonError);
+							setStore({ message: 'Signup failed. Please try again.' });
+						}
+					} else {
+						try {
+							const errorData = await response.json();
+							console.error('Signup failed:', errorData);
+							setStore({ message: errorData.error || 'Signup failed. Please try again.' });
+						} catch (jsonError) {
+							console.error('Error parsing JSON error response:', jsonError);
+							setStore({ message: 'Signup failed. Please try again.' });
+						}
+					}
+				} catch (error) {
+					console.error('Error during signup:', error);
+					setStore({ message: 'Signup failed. Please try again.' });
+				}
+			},
+
+
+
+
+
+
 			// Use getActions to call a function within a fuction
 			exampleFunction: () => {
 				getActions().changeColor(0, "green");

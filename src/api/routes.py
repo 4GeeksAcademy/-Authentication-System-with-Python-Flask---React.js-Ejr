@@ -39,7 +39,8 @@ def signup():
     email = request.json.get("email")
     password = request.json.get("password")
     confirm_password = request.json.get("confirm_password")
-
+    print (password)
+    print (confirm_password)
     if password != confirm_password:
         return jsonify({"error": "Password and confirm password do not match"}), 400
 
@@ -60,9 +61,11 @@ def signup():
     try:
         db.session.commit()
         return jsonify({"success": "User created successfully"}), 200
+    
     except Exception as e:
         db.session.rollback()
         return jsonify({"error": f"Error creating user: {e}"}), 500
+    
 
 
 @api.route("/login", methods=["POST"])

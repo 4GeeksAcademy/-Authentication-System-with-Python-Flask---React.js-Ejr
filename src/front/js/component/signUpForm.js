@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import '../../styles/authForms.css';
-
+import { Context } from "../store/appContext";
 
 const SignUpForm = () => {
+    const {store, actions} = useContext(Context)
+
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
@@ -17,22 +19,33 @@ const SignUpForm = () => {
         e.preventDefault();
 
         if (password !== confirmPassword) {
-            setErrorMessage('The passwords do not match')
+            setErrorMessage('The passwords do not match');
             return;
         }
 
-        const response = await fetch('/signup', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ first_name: firstName, last_name: lastName, email, password, confirmPassword }),
-        });
-
-        if (response.ok) {
-            alert('User created successfully. Please go to the menu and login.');
-        } else {
-            console.error('Signup failed');
+        try {
+            // Call the signup action with user data
+            const response = await actions.signup({
+                first_name: firstName,
+                last_name: lastName,
+                email: email,
+                password: password,
+                confirm_Password: confirmPassword,
+            });
+            if (response && response.ok) {
+                // Optionally, you can perform other actions after successful signup
+                alert('User created successfully. Please go to the menu and login.');
+            } else if (response) {
+                const errorData = await response.json();
+                console.error('Signup failed:', errorData);
+                setErrorMessage(errorData.error || 'Signup failed. Please try again.');
+            } else {
+                console.error('Signup failed: Response is undefined');
+                setErrorMessage('Signup failed. Please try again.');
+            }
+        } catch (error) {
+            console.error('An error occurred during signup:', error);
+            setErrorMessage('Signup failed. Please try again.');
         }
     };
 
