@@ -101,6 +101,7 @@ body {
   font-size: 16px;
   transition: background-color 0.3s ease-in-out;
   margin-top: 15px;
+  
 
 }
 
@@ -151,4 +152,38 @@ body {
 
 #createIt a {
   text-decoration: none;
+}
+
+.back-button {
+  padding: 10px 20px;
+  background-color: #FF8C00;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  text-decoration: none;
+  transition: background-color 0.3s ease-in-out;
+  display: inline-block; /* Ensures the link behaves like a block element */
+}
+
+.back-button:hover {
+  background-color: #ffa500;
+  color: white;
+}
+
+.save-button {
+  padding: 10px 20px;
+  background-color: #FF8C00;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 15px;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.save-button:hover {
+  background-color: #ffa500;
 }

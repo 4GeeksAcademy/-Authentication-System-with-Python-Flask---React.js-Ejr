@@ -196,15 +196,13 @@ const CreateItinerary = () => {
                         </div>
                       </div>
                     ))}
-                    <Button onClick={handleSaveItinerary}>Save Itinerary</Button>
+                    <Button className="save-button" onClick={handleSaveItinerary}>Save Itinerary</Button>
                   </div>
                 ) : (
                   'AI Answer'
                 )}
               </div>
             </div>
-
-
           </div>
         </div>
       </>
