@@ -20,11 +20,11 @@ class User(db.Model):
         }
     
 
-    class Event(db.Model):
-        id = db.Column(db.Integer, primary_key=True)
-        name = db.Column(db.String(255), nullable=False)
-        description = db.Column(db.Text, nullable=False)
-        location = db.Column(db.String(255), nullable=False)
-        date = db.Column(db.String(10), nullable=False)  # Adjust as needed
-        price = db.Column(db.String(50), nullable=False)
-        image = db.Column(db.String(255))  # Assuming you store file paths, adjust as needed
+class Event(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(255), nullable=False)
+    description = db.Column(db.Text, nullable=False)
+    location = db.Column(db.String(255), nullable=False)
+    date = db.Column(db.String(10), nullable=False)  # Adjust as needed
+    price = db.Column(db.String(50), nullable=False)
+    image = db.Column(db.String(255))  # Assuming you store file paths, adjust as needed
