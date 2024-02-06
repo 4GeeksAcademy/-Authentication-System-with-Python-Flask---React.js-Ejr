@@ -94,7 +94,7 @@ const CreateItinerary = () => {
       try {
         const accessToken = actions.getAccessToken();
 
-        const response = await fetch('/saveItinerary', {
+        const response = await fetch(process.env.BACKEND_URL + '/api/saveItinerary', {
           method: 'POST',
           headers: {
             'Authorization': `Bearer ${accessToken}`,

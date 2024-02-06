@@ -10,7 +10,7 @@ from flask_jwt_extended import (
     jwt_required,
     unset_jwt_cookies,
 )
-from api.models import db, User
+from api.models import Itinerary, db, User
 from api.utils import get_openai_response, format_user_input, validate_user_input,get_hash
 from flask_cors import CORS
 
@@ -152,16 +152,55 @@ def save_itinerary():
         data = request.json
 
         if "itinerary" in data:
-            for day in data["itinerary"]:
-
-                simplified_day = f"{day.get('Location', '')}, {day.get('Time of the year', '')}"
-                user.saved_trips.append(simplified_day)
-            
+            itinerary = Itinerary(user_id=user.id, data=data["itinerary"])
+            db.session.add(itinerary)
             db.session.commit()
 
             return jsonify({"message": "Itinerary saved successfully"})
 
         return jsonify({"error": "Invalid request data"}), 400
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@api.route("/getItineraries", methods=["GET"])
+@jwt_required()
+def get_itineraries():
+    try:
+        current_user_email = get_jwt_identity()
+        user = User.query.filter_by(email=current_user_email).first()
+
+        if not user:
+            return jsonify({"error": "User not found"}), 404
+
+        itineraries = Itinerary.query.filter_by(user_id=user.id).all()
+
+        serialized_itineraries = [itinerary.serialize() for itinerary in itineraries]
+
+        return jsonify({"itineraries": serialized_itineraries})
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+    
+@api.route("/deleteItinerary/<int:itinerary_id>", methods=["DELETE"])
+@jwt_required()
+def delete_itinerary(itinerary_id):
+    try:
+        current_user_email = get_jwt_identity()
+        user = User.query.filter_by(email=current_user_email).first()
+
+        if not user:
+            return jsonify({"error": "User not found"}), 404
+
+        itinerary = Itinerary.query.filter_by(id=itinerary_id, user_id=user.id).first()
+
+        if not itinerary:
+            return jsonify({"error": "Itinerary not found or does not belong to the user"}), 404
+
+        db.session.delete(itinerary)
+        db.session.commit()
+
+        return jsonify({"message": "Itinerary deleted successfully"})
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
