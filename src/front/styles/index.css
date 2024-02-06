@@ -163,6 +163,13 @@ button {
     border-width: 1px;
 }
 
+.register{
+    background: #000;
+    color: white;
+    border: solid;
+    border-width: 1px;
+}
+
 .custom-btn {
     border-color: #FF8D91; 
   
@@ -176,6 +183,7 @@ button {
   
 .custom-btn-dark {
     border-color: #FF8D91; 
+    background: #000;
   
     /* Hover effect */
     &:hover {

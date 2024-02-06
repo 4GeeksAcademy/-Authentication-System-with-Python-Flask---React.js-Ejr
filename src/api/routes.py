@@ -3,12 +3,13 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 """
 import os
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User
+from api.models import db, User, Event
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS 
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required
+
 
 #Create flask app
 api = Blueprint('api', __name__)
@@ -81,6 +82,7 @@ def sign_up():
         # Handle any exceptions and return an error message
         return jsonify({'error': str(e)}), 500
 
+
 #Event Route 
 
 @api.route('/create-event', methods=['POST'])
@@ -99,7 +101,13 @@ def create_event():
     )
 
     # Save to database or perform any required actions
-    # For example: db.session.add(new_event)
-    #               db.session.commit()
+    db.session.add(new_event)
+    db.session.commit()
 
     return jsonify({'message': 'Event created successfully'}), 201
+
+@api.route('/edit-event', methods=['PATCH'])
+def edit_event():
+    data = request.json
+
+    update
