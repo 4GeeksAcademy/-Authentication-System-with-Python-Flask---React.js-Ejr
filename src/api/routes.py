@@ -152,7 +152,11 @@ def save_itinerary():
         data = request.json
 
         if "itinerary" in data:
-            user.saved_trips.append(data["itinerary"])
+            for day in data["itinerary"]:
+
+                simplified_day = f"{day.get('Location', '')}, {day.get('Time of the year', '')}"
+                user.saved_trips.append(simplified_day)
+            
             db.session.commit()
 
             return jsonify({"message": "Itinerary saved successfully"})

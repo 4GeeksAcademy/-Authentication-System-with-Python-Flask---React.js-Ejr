@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Button, Modal, Form } from 'react-bootstrap';
 import '../../styles/createItinerary.css';
 import avatar1 from "../../img/avatar1.png";
+import { Context } from "../store/appContext";
 
 const CreateItinerary = () => {
   {
@@ -32,7 +33,7 @@ const CreateItinerary = () => {
 
     const [generatedItinerary, setGeneratedItinerary] = useState(null);
     const [quizInProgress, setQuizInProgress] = useState(true);
-
+    const {store, actions} = useContext(Context);
 
     const handleAnswerInput = (e) => {
       e.persist();
@@ -91,7 +92,7 @@ const CreateItinerary = () => {
 
     const handleSaveItinerary = async () => {
       try {
-        const accessToken = getActions().getAccessToken();
+        const accessToken = actions.getAccessToken();
 
         const response = await fetch('/saveItinerary', {
           method: 'POST',
@@ -196,15 +197,13 @@ const CreateItinerary = () => {
                         </div>
                       </div>
                     ))}
-                    <Button onClick={handleSaveItinerary}>Save Itinerary</Button>
+                    <Button className="save-button" onClick={handleSaveItinerary}>Save Itinerary</Button>
                   </div>
                 ) : (
                   'AI Answer'
                 )}
               </div>
             </div>
-
-
           </div>
         </div>
       </>
