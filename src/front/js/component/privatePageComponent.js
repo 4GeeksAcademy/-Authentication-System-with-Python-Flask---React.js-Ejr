@@ -1,13 +1,45 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import "../../styles/privatePage.css";
 import BasicInfo from "./PrivatePage/basicInfo.js";
 import { Link } from 'react-router-dom';
 import Password from './PrivatePage/password.js';
+import { Context } from "../store/appContext";
 
 
 
 const PrivatePage = ({ user }) => {
     const [activeTab, setActiveTab] = useState('basic-info');
+    const [savedItineraries, setSavedItineraries] = useState([]);
+    const {store, actions} = useContext(Context);
+
+    useEffect(() => {
+        const fetchSavedItineraries = async () => {
+          try {
+            const accessToken = actions.getAccessToken();
+    
+            const response = await fetch('/getSavedItineraries', {
+              method: 'GET',
+              headers: {
+                'Authorization': `Bearer ${accessToken}`,
+                'Content-Type': 'application/json',
+              },
+            });
+    
+            if (response.ok) {
+              const result = await response.json();
+              setSavedItineraries(result.savedItineraries);
+            } else {
+              console.error('Error fetching saved itineraries:', response.statusText);
+            }
+          } catch (error) {
+            console.error('Error:', error.message);
+          }
+        };
+    
+        if (activeTab === 'bookmarks') {
+          fetchSavedItineraries();
+        }
+      }, [activeTab]);
 
     const handleTabChange = (tabId) => {
         setActiveTab(tabId);

@@ -42,10 +42,12 @@ def signup():
 
     if password != confirm_password:
         return jsonify({"error": "Password and confirm password do not match"}), 400
+    
 
+    
     existing_user = User.query.filter_by(email=email).first()
     if existing_user:
-        return jsonify({"error": "Email is already in use"}), 400
+       return jsonify({"error": "Email is already in use"}), 400
 
     hashed_password = get_hash(password)
 
@@ -55,14 +57,17 @@ def signup():
         email=email,
         password=hashed_password,
     )
+    
     db.session.add(new_user)
     
     try:
         db.session.commit()
         return jsonify({"success": "User created successfully"}), 200
+    
     except Exception as e:
         db.session.rollback()
         return jsonify({"error": f"Error creating user: {e}"}), 500
+    
 
 
 @api.route("/login", methods=["POST"])
