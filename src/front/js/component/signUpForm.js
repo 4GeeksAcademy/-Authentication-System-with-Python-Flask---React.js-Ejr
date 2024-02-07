@@ -38,9 +38,9 @@ const SignUpForm = ({openLoginModal}) => {
 
             if (response) {
                 alert('The user was created successfully')
-                toLogin ("/")
+                toLogin ("/?openLogin=true")
 
-                openLoginModal();
+                
                 //redirect user to Home Page and open login modal useLocation()
                 console.log("SignUp successful");
             } else {
