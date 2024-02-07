@@ -75,7 +75,7 @@ export const Home = () => {
           </div>
 
           {/* Carta Película de la Semana */}
-          <div className="card" style={{ width: "18rem", position: "absolute", right: "25%", borderRadius: "15px", marginTop: "1%", backgroundColor: "#3B3B3B" }}>
+          <div className="card" style={{ width: "18rem", position: "absolute", right: "15%", borderRadius: "15px", marginTop: "1%", backgroundColor: "#3B3B3B" }}>
             <img className="card-img-top"
               style={{ borderTopLeftRadius: "15px", borderTopRightRadius: "15px" }}
               src="https://musicart.xboxlive.com/7/99ce1100-0000-0000-0000-000000000002/504/image.jpg?w=1920&h=1080" alt="Card image cap" />
@@ -83,7 +83,7 @@ export const Home = () => {
             </div>
           </div>
 
-          <p style={{ fontFamily: "Work Sans", fontSize: "18px", margin: "10px 0", textAlign: "center", color: "white", position: "absolute", bottom: "200px", left: "10%" }}>
+          <p style={{ fontFamily: "Poppins, Work Sans", fontSize: "18px", margin: "10px 0", textAlign: "center", color: "white", position: "absolute", bottom: "200px", left: "10%" }}>
             Mirala ahora y obtén 5 puntos!
           </p>
 
@@ -100,7 +100,7 @@ export const Home = () => {
 
         </div>
       </div>
-      <div className="container-fluid" style={{ fontFamily: "Work Sans", paddingTop: "20px" }}>
+      <div className="container-fluid" style={{ fontFamily: "Poppins, Work Sans", paddingTop: "20px" }}>
 
         <h1 className="text-light" style={{ marginLeft: "10%" }}>Película De</h1>
         <h1 className="text-light d-flex" style={{ marginLeft: "10%" }}>La Semana</h1>
