@@ -64,6 +64,7 @@ export const Navbar = () => {
           {/* Create Event Button */}
           { !store.token ? 
           <div></div>
+
           :
           <Link to="/create-event">
             <button className="btn btn-primary custom-btn" id="signUpBtn">

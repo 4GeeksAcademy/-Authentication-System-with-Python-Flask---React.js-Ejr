@@ -1,36 +1,69 @@
-// CreateEventForm.js
-
 import React, { useState } from 'react';
 
-const CreateEventForm = ({ onFormSubmit }) => {
+const CreateEventForm = () => {
   const [eventName, setEventName] = useState('');
   const [eventDescription, setEventDescription] = useState('');
   const [eventLocation, setEventLocation] = useState('');
   const [eventDate, setEventDate] = useState('');
   const [eventPrice, setEventPrice] = useState('');
   const [eventImage, setEventImage] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
-
-    const newEvent = {
-      name: eventName,
-      description: eventDescription,
-      location: eventLocation,
-      date: eventDate,
-      price: eventPrice,
-      image: eventImage,
-    };
-
-    onFormSubmit(newEvent);
-
+    setError(null); // Reset error state
+    setLoading(true);
+  
+    const formData = new FormData();
+    formData.append('name', eventName);
+    formData.append('description', eventDescription);
+    formData.append('location', eventLocation);
+    formData.append('date', eventDate);
+    formData.append('price', eventPrice);
+    formData.append('image', eventImage);
+  
+    try {
+      const response = await fetch(`${process.env.BACKEND_URL}/api/create-event`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json', // Set the Content-Type header explicitly
+        },
+        body: JSON.stringify({
+          name: eventName,
+          description: eventDescription,
+          location: eventLocation,
+          date: eventDate,
+          price: eventPrice,
+          image: eventImage,
+        }),
+      });
+  
+      const data = await response.json();
+  
+      if (response.ok) {
+        console.log('Event created successfully:', data);
+        // Optionally, redirect the user or perform other actions upon successful submission
+      } else {
+        setError(data.message || 'Failed to create event');
+        console.error('Failed to create event:', data);
+      }
+    } catch (error) {
+      setError('An error occurred while creating event');
+      console.error('Error creating event:', error);
+    } finally {
+      setLoading(false);
+    }
+  
+    // Reset form fields after submission
     setEventName('');
     setEventDescription('');
     setEventLocation('');
     setEventDate('');
     setEventPrice('');
-    setEventImage(null);
+    setEventImage(null); // Reset image to null
   };
+  
 
   return (
     <div className="container-full py-5 h-100 black-background">
@@ -42,7 +75,6 @@ const CreateEventForm = ({ onFormSubmit }) => {
               <h2 className="mb-5">Create Your Event!</h2>
 
               {/* Event Form */}
-              
               <form onSubmit={handleFormSubmit}>
                 {/* Event Name */}
                 <div className="mb-4">
@@ -76,30 +108,28 @@ const CreateEventForm = ({ onFormSubmit }) => {
                   />
                 </div>
 
-                <div className='row'>
+                <div className="row">
+                  {/* Event Date */}
+                  <div className="mb-4 col-6">
+                    <input
+                      type="date"
+                      className="form-control form-control-lg"
+                      value={eventDate}
+                      onChange={(e) => setEventDate(e.target.value)}
+                    />
+                  </div>
 
-                {/* Event Date */}
-                <div className="mb-4 col-6">
-                  <input
-                    type="date"
-                    className="form-control form-control-lg"
-                    value={eventDate}
-                    onChange={(e) => setEventDate(e.target.value)}
-                  />
+                  {/* Event Price */}
+                  <div className="mb-4 col-6">
+                    <input
+                      type="text"
+                      className="form-control form-control-lg"
+                      placeholder="Event Price"
+                      value={eventPrice}
+                      onChange={(e) => setEventPrice(e.target.value)}
+                    />
+                  </div>
                 </div>
-
-                {/* Event Price */}
-                <div className="mb-4 col-6">
-                  <input
-                    type="text"
-                    className="form-control form-control-lg"
-                    placeholder="Event Price"
-                    value={eventPrice}
-                    onChange={(e) => setEventPrice(e.target.value)}
-                  />
-                </div>
-                </div>
-               
 
                 {/* Event Image */}
                 <div className="mb-4">
@@ -111,10 +141,13 @@ const CreateEventForm = ({ onFormSubmit }) => {
                   />
                 </div>
 
+                {/* Error Message */}
+                {error && <p className="text-danger">{error}</p>}
+
                 {/* Submit Button */}
                 <div className="d-flex flex-column align-items-center mb-4">
-                  <button className="btn btn-primary custom-btn" type="submit">
-                    Create Event
+                  <button className="btn btn-primary custom-btn" type="submit" disabled={loading}>
+                    {loading ? 'Creating Event...' : 'Create Event'}
                   </button>
                 </div>
               </form>
