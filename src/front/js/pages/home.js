@@ -3,8 +3,8 @@ import { Context } from "../store/appContext";
 import "../../styles/home.css";
 import { Link } from "react-router-dom";
 
-export const Home = () => {
-  const { } = useContext(Context);
+export const Home = ({ nombrePelicula }) => {
+  const { actions } = useContext(Context);
 
   const [tiempoInicial, setTiempoInicial] = useState({
     horas: 5,
@@ -137,7 +137,7 @@ export const Home = () => {
                 alt="..."
               />
               <div className="card-body">
-                <h5 className="card-title text-light" style={{ fontFamily: "Poppins, Work Sans" }}> Nombre </h5>
+                <h5 className="card-title text-light" style={{ fontFamily: "Poppins, Work Sans" }}> Nombre {nombrePelicula} </h5>
                 <p className="card-text text-light" style={{ fontFamily: "Poppins, Work Sans" }}>Género </p>
                 
                 <div className="col-md d-flex justify-content-end">
@@ -145,7 +145,7 @@ export const Home = () => {
                     <i class="fa-solid fa-arrow-down"></i>
                   </Link>
 
-                  <button className="btn btn-custom-purple border border-0 mt-3" style={{marginRight:"3%"}}>
+                  <button className="btn btn-custom-purple border border-0 mt-3" onClick={() => actions.agregarLista(nombrePelicula)} style={{marginRight:"3%"}}>
                     + Mi Lista
                   </button>
                 </div>

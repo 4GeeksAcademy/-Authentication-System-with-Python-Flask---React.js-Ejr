@@ -12,7 +12,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 			actor: [],
 			reviews: [],
 			multiSearchResult: [],
-			personalMovies: []
+			personalMovies: [],
+			lista: []
 		},
 
 		actions: {
@@ -904,6 +905,23 @@ const getState = ({ getStore, getActions, setStore }) => {
 				  return false;
 				}
 			  },
+
+			  agregarLista: (lista) => {
+				console.log("funciona");
+				let store = getStore();
+				if (lista !== "" && !store.lista.includes(lista))
+				   setStore({
+				       lista: [...store.lista, lista]
+					});
+			  },
+
+			  eliminarLista: (lista) => {
+				console.log("funciona");
+				let store = getStore();
+				setStore({
+					lista: store.lista.filter((list) => list !== lista),
+				});
+			  }
 			},
 		  };
 		};
