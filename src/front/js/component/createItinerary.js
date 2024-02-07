@@ -33,7 +33,7 @@ const CreateItinerary = () => {
 
     const [generatedItinerary, setGeneratedItinerary] = useState(null);
     const [quizInProgress, setQuizInProgress] = useState(true);
-    const {store, actions} = useContext(Context);
+    const { store, actions } = useContext(Context);
 
     const handleAnswerInput = (e) => {
       e.persist();
@@ -176,25 +176,26 @@ const CreateItinerary = () => {
               </div>
             </div>
             <div className='answer-box'>
-              <div className='answer-item'>
+              <div className='answer-item '>
                 {generatedItinerary ? (
-                  <div>
-                    <h3>Generated Itinerary:</h3>
+                  <div className='generated-itinerary' id='generated-itinerary'>
+                    <h2>Generated Itinerary</h2>
                     {generatedItinerary.map((day, index) => (
-                      <div key={index}>
-                        <h4>Day {index + 1}</h4>
-                        <div>
-                          <strong>Accommodation:</strong> {day.accommodation}<br />
-                          <strong>Activities:</strong>
+                      <div className="mapped" key={index}>
+                        <div className='days'> <h3>Day {index + 1}</h3> </div>
+                        <div className='itinerary'>
+                          <div className='object'><strong>Accomodation</strong> {day.accomodation}</div> <br />
+                           <div className='object'><strong>Activities</strong></div>
                           <ul>
                             {day.activities.map((activity, i) => (
                               <li key={i}>{activity}</li>
                             ))}
                           </ul>
-                          <strong>Lunch:</strong> {day.lunch}<br />
-                          <strong>Dinner:</strong> {day.dinner}<br />
-                          <strong>Transportation:</strong> {day.transportation}
+                          <div className='object'> <strong>Lunch</strong> {day.lunch}</div> <br />
+                          <div className='object'> <strong>Dinner</strong> {day.dinner}</div> <br />
+                          <div className='object'> <strong>Transportation</strong> {day.transportation}</div>
                         </div>
+                        {index < generatedItinerary.length -1 && <hr className='day-divider'/>}
                       </div>
                     ))}
                     <Button className="save-button" onClick={handleSaveItinerary}>Save Itinerary</Button>
