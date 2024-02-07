@@ -42,7 +42,7 @@ def handle_hello():
 
     return jsonify(response_body), 200
     
-#SignUp Route 
+##### SignUp Route ######
 
 @api.route('/sign-up', methods=['POST'])
 def sign_up():
@@ -81,15 +81,37 @@ def sign_up():
     except Exception as e:
         # Handle any exceptions and return an error message
         return jsonify({'error': str(e)}), 500
+    
+##### Get All Events Route ######
 
+@api.route('/events', methods=['GET'])
+def get_events():
+    # Get all events from the database
+    events = Event.query.all()
 
-#Event Route 
+    # Format events data for response
+    event_list = []
+    for event in events:
+        event_data = {
+            'id': event.id,
+            'name': event.name,
+            'description': event.description,
+            'location': event.location,
+        #    'date': event.date.strftime('%Y-%m-%d %H:%M:%S'),  # Format date as string
+            'date': event.date,  # Format date as string
+            'price': event.price,
+            'image': event.image
+        }
+        event_list.append(event_data)
+
+    # Return events data
+    return jsonify({'events': event_list}), 200
+
+##### Create Event Route ######
 
 @api.route('/create-event', methods=['POST'])
 def create_event():
     data = request.json
-
-    # Event model with appropriate fields (name, description, location, date, price, image)
 
     new_event = Event(
         name=data['name'],
@@ -100,14 +122,52 @@ def create_event():
         image=data['image']
     )
 
-    # Save to database or perform any required actions
+    # Save event to database 
     db.session.add(new_event)
     db.session.commit()
 
     return jsonify({'message': 'Event created successfully'}), 201
 
-@api.route('/edit-event', methods=['PATCH'])
-def edit_event():
+##### Edit Event Route ######
+
+@api.route('/edit-event/<int:event_id>', methods=['PATCH'])
+def edit_event(event_id):
     data = request.json
 
-    update
+    event = Event.query.get(event_id)
+    if not event:
+        return jsonify({'message': 'Event not found'}), 404
+
+    # Update event fields if provided in the request data
+    if 'name' in data:
+        event.name = data['name']
+    if 'description' in data:
+        event.description = data['description']
+    if 'location' in data:
+        event.location = data['location']
+    if 'date' in data:
+        event.date = data['date']
+    if 'price' in data:
+        event.price = data['price']
+    if 'image' in data:
+        event.image = data['image']
+
+    # Commit changes to the database
+    db.session.commit()
+
+    return jsonify({'message': 'Event updated successfully'}), 200
+
+
+##### Delete Event Route ######
+
+@api.route('/delete-event/<int:event_id>', methods=['DELETE'])
+def delete_event(event_id):
+    event = Event.query.get(event_id)
+    if not event:
+        return jsonify({'message': 'Event not found'}), 404
+
+    # Delete the event from the database
+    db.session.delete(event)
+    db.session.commit()
+
+    return jsonify({'message': 'Event deleted successfully'}), 200
