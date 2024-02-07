@@ -82,7 +82,7 @@ def sign_up():
         # Handle any exceptions and return an error message
         return jsonify({'error': str(e)}), 500
     
-##### Get All Events Route ######
+#Get All Events Route ######
 
 @api.route('/events', methods=['GET'])
 def get_events():
@@ -106,6 +106,29 @@ def get_events():
 
     # Return events data
     return jsonify({'events': event_list}), 200
+
+# Get Single Event Route #
+
+@api.route('/event/<int:event_id>', methods=['GET'])
+def get_event(event_id):
+    # Query the database for the event with the provided ID
+    event = Event.query.get(event_id)
+    if not event:
+        return jsonify({'message': 'Event not found'}), 404
+
+    # Format event data for response
+    event_data = {
+        'id': event.id,
+        'name': event.name,
+        'description': event.description,
+        'location': event.location,
+        'date': event.date,  # Assuming you want to send the date as is
+        'price': event.price,
+        'image': event.image
+    }
+
+    # Return event data
+    return jsonify({'event': event_data}), 200
 
 # Create Event Route #
 
