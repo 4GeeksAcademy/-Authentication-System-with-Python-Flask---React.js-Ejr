@@ -2,19 +2,25 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from functools import wraps
+import json
+import resource
 from flask import Flask, request, jsonify, url_for, Blueprint, abort
 import jwt
-from api.models import db, User, UserData
+from api.models import db, User, UserData, Event
 from api.utils import   admin_required, get_hash
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager, create_access_token
 from flask_jwt_extended import jwt_required
 from flask_jwt_extended import get_jwt_identity
 import os
-import stripe 
+import stripe
 
 stripe.api_key = os.getenv('STRIPE_SECRET_KEY')
 stripe.api_version = "2022-08-01"
+
+#update the keys in .en file when a new codespaces is cretaed
+#STRIPE_SECRET_KEY=
+#STRIPE_PUBLISHABLE_KEY=
 
 
 
@@ -62,7 +68,7 @@ def login_user():
     found_user = User.query.filter_by(email=email, password=get_hash(password)).one_or_none()
     if found_user is None:
         return "email or password incorrect", 400
-    token = create_access_token(identity={'email': email, 'level': found_user.level})
+    token = create_access_token(identity={'email': email} )
     return jsonify(token=token)
 
 @api.route("/private", methods=["GET"])
@@ -81,8 +87,11 @@ def handle_get_hash():
 def handle_get_users():
    all_users = User.query.all()
    all_users = [{
-       "email": user.email
-   } for user in all_users]
+   "id": user.id,
+   "username": user.username,
+   "email": user.email,
+   "level": user.level
+} for user in all_users]
 
    if not all_users:
        return jsonify({"msg": "There are no users"}), 404
@@ -92,6 +101,15 @@ def handle_get_users():
    }
 
    return jsonify(response_body), 200
+
+@api.route('/users', methods=['DELETE'])
+def delete_all_users():
+        all_users = User.query.all()
+        for user in all_users:
+            db.session.delete(user)
+        db.session.commit()
+        return jsonify({"msg": "All users have been deleted."}), 200
+   
 
 @api.route('/config', methods=['GET'])
 def get_config():
@@ -105,7 +123,7 @@ from flask import request
 def create_payment_intent():
     try:
         data = request.get_json()
-        amount = data.get('amount')
+        amount = data.get('amount') 
 
         payment_intent = stripe.PaymentIntent.create(
             amount=amount,
@@ -117,7 +135,7 @@ def create_payment_intent():
 
         return jsonify({"client_secret": payment_intent.client_secret})
     except Exception as e:
-        app.logger.error(str(e))
+        api.logger.error(str(e))
         return jsonify({}), 400
 
 
@@ -160,4 +178,79 @@ def promote_user():
         return {'message': 'User promoted successfully'}, 200
     else:
         return {'error': 'No user found with the provided email'}, 404
+    
 
+@api.route("/event", methods=["POST"])
+def create_event():
+    day = request.json.get("day")
+    hour = request.json.get("hour")
+    location = request.json.get("location")
+    meeting_point = request.json.get("meeting_point")
+    
+    new_event = Event()
+    new_event.day = day
+    new_event.hour = hour
+    new_event.location = location
+    new_event.meeting_point = meeting_point
+    db.session.add(new_event)
+    db.session.commit()
+
+    return jsonify({"msg": "Event created"}), 201
+
+@api.route('/events', methods=['GET'])
+def get_event():
+    event = Event.query.order_by(Event.id.desc()).first()
+    if event is None:
+        return jsonify({"message": "No events found"}), 404
+    return jsonify(event.serialize())
+
+@api.route('/events', methods=['DELETE'])
+def delete_all_events():
+    events = Event.query.all()
+    for event in events:
+        db.session.delete(event)
+    db.session.commit()
+    return jsonify({"message": "All events were successfully deleted."})
+
+@api.route("/clickupdate", methods=["PUT"])
+def UpdateClicksCounter():
+    event = Event.query.order_by(Event.id.desc()).first()
+    if event is None:
+        return {"message": "No events found"}, 404
+
+
+    checkbox_state = request.json.get('checkbox_state')
+
+    if checkbox_state == 'on':
+
+        event.clicks_counter += 1
+    elif checkbox_state == 'off':
+   
+        event.clicks_counter = max(0, event.clicks_counter - 1)
+
+    db.session.add(event)
+    db.session.commit()
+
+    return jsonify ({"message": "Clicks counter updated successfully"}), 200
+
+@api.route("/clicks", methods=["GET"])
+def UShowClicksCounter():
+    event = Event.query.order_by(Event.id.desc()).first()
+    return jsonify(event.clicks_counter)
+     
+@api.route('/userslevel', methods=['GET'])
+@jwt_required()
+def handle_get_user_level():
+    try:
+       
+        jwt_data = get_jwt_identity()
+        email = jwt_data.get('email') 
+
+        user = User.query.filter_by(email=email).first()
+
+        if user is None:
+            return jsonify({"msg": "User not found"}), 404
+
+        return jsonify({"level": user.level}), 200
+    except Exception as e:
+        return jsonify({"msg": str(e)}), 500

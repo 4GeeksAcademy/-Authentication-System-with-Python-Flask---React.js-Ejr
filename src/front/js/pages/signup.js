@@ -23,9 +23,9 @@ export const Signup = () => {
    };
 
    const handleSubmit = async (formSignup) => {
-    // Iterate over the signup state object
+ 
     for (let key in formSignup) {
-      // Check if the value of the current field is empty
+    
       if (!formSignup[key]) {
         alert(`Please fill in the ${key} field.`);
         return;
