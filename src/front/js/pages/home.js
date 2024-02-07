@@ -14,7 +14,7 @@ export const Home = () => {
 				<div className="jumbo">
 					<h1 className="display-5 fw-bold">Why the fork is this not behaving?</h1>
 					<div className="col-lg-6 mx-auto">
-						<Link to="#" className="mb-4" id="button-lead"  >
+						<Link to="createItinerary" className="mb-4" id="button-lead"  >
 							DioDio's got you covered!
 						</Link>
 					</div>
