@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
+import { EventInfoBox } from '../component/eventInfoBox';
 import { useNavigate } from 'react-router-dom'
-
-
-
+import { TimeCounter } from '../component/timeCounter';
+import { UserInsertData } from '../component/userInsertData';
 
 export const Userdata = () => {  
 
@@ -28,7 +28,10 @@ export const Userdata = () => {
     <>
     <div className="text-center mt-5">
       {userToken && <p>User loged in!</p>}
+      <TimeCounter /> 
+      <UserInsertData />
       <button onClick={logout}>Logout</button>
+      <EventInfoBox />
     </div>
     </>
     
