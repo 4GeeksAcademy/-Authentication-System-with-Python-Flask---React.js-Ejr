@@ -1,17 +1,25 @@
 // Navbar.js
-import React, { useState, useRef } from "react";
-import { Link, useLocation } from "react-router-dom";
+import React, { useState, useRef, useEffect } from "react";
+import { Link, useLocation, useParams, useSearchParams } from "react-router-dom";
 import "../../styles/navbar.css";
 import logoOrange from "../../img/logoOrange.png";
 import Login from "./login";
-import SignUpForm from "./signUpForm";
+
 
 
 export const Navbar = () => {
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const offcanvasRef = useRef(null)
   const location = useLocation();
+  const openLogin = useParams();
+  let [searchParams, setSearchParams] = useSearchParams();
+
+
   
+  useEffect(() => {
+    if (searchParams.get("openLogin"))
+    openLoginModal()  
+  } , [searchParams])
 
   const openLoginModal = () => {
     setTimeout(() => {
