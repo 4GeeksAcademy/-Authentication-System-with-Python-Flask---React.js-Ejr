@@ -108,9 +108,18 @@ def handle_get_hash():
 @api.route("/privatePage", methods=["GET"])
 @jwt_required()
 def private_page():
-    current_user = get_jwt_identity()
-    user = User.query.filter_by(email=current_user).first()
-    return render_template("private_page.html", user=user)
+    try:
+        current_user = get_jwt_identity()
+        user = User.query.filter_by(email=current_user["email"]).first()
+
+        if not user:
+            return jsonify({"error": "User not found"}), 404
+
+        return jsonify(first_name=user.first_name, last_name=user.last_name, email=user.email)
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
 
 
 @api.route("/createItinerary", methods=["GET", "POST"])
