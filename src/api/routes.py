@@ -107,7 +107,7 @@ def get_events():
     # Return events data
     return jsonify({'events': event_list}), 200
 
-##### Create Event Route ######
+# Create Event Route #
 
 @api.route('/create-event', methods=['POST'])
 def create_event():
@@ -128,7 +128,7 @@ def create_event():
 
     return jsonify({'message': 'Event created successfully'}), 201
 
-##### Edit Event Route ######
+# Edit Event Route #
 
 @api.route('/edit-event/<int:event_id>', methods=['PATCH'])
 def edit_event(event_id):
@@ -158,7 +158,7 @@ def edit_event(event_id):
     return jsonify({'message': 'Event updated successfully'}), 200
 
 
-##### Delete Event Route ######
+# Delete Event Route #
 
 @api.route('/delete-event/<int:event_id>', methods=['DELETE'])
 def delete_event(event_id):
