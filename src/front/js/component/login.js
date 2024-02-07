@@ -11,7 +11,7 @@ function Login({ show, handleClose }) {
 
   const handleLogin = async () => {
     try {
-      const response = await fetch("/login", {
+      const response = await fetch(process.env.BACKEND_URL + "/api/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -22,7 +22,7 @@ function Login({ show, handleClose }) {
       if (response.ok) {
         const data = await response.json();
 
-        
+        //if func returns true redirects user to the private page, if not redirect to modal
 
         handleClose();
       } else {
