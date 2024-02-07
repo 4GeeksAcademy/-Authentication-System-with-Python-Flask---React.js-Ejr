@@ -11,7 +11,7 @@ const SignUpForm = ({openLoginModal}) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
-    const [errorMessage, setErrorMessage] = useState('')
+    const [errorMessage, setErrorMessage] = useState('');
     //show password
     const [showPassword, setShowPassword] = useState(false);
     //login logic
