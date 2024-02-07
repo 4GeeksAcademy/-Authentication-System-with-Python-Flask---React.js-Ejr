@@ -13,9 +13,36 @@ const PrivatePage = ({ user }) => {
     const { store, actions } = useContext(Context);
     const [showModal, setShowModal] = useState(false);
     const [selectedItinerary, setSelectedItinerary] = useState(null);
-    
+    const [userData, setUserData] = useState(null);
+
 
     useEffect(() => {
+        const fetchUserData = async () => {
+            try {
+                const accessToken = actions.getAccessToken();
+
+                const response = await fetch(process.env.BACKEND_URL + '/api/privatePage', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${accessToken}`,
+                        'Content-Type': 'application/json',
+                    },
+                });
+
+                if (response.ok) {
+                    const userData = await response.json();
+                    setUserData(userData);
+                    console.log(userData);
+                } else {
+                    console.error('Error fetching user data:', response.statusText);
+                }
+            } catch (error) {
+                console.error('Error:', error.message);
+            }
+        };
+
+        fetchUserData();
+
         const fetchSavedItineraries = async () => {
             try {
                 const accessToken = actions.getAccessToken();
@@ -42,7 +69,7 @@ const PrivatePage = ({ user }) => {
         if (activeTab === 'bookmarks') {
             fetchSavedItineraries();
         }
-    }, [activeTab]);
+    }, [activeTab, setSavedItineraries]);
 
     const handleTabChange = (tabId) => {
         setActiveTab(tabId);
@@ -138,7 +165,7 @@ const PrivatePage = ({ user }) => {
                 </div>
                 <div className="card-body tab-content">
                     <div className={`tab-pane fade show ${activeTab === 'basic-info' ? 'active' : ''}`} id="basic-info">
-                        <BasicInfo></BasicInfo>
+                        <BasicInfo email={userData?.email} firstName={userData?.first_name} lastName={userData?.last_name} />
                     </div>
                     <div className={`tab-pane fade show ${activeTab === 'change-password' ? 'active' : ''}`} id="change-password">
                         <Password></Password>
