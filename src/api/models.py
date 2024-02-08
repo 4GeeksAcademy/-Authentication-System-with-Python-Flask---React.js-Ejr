@@ -8,7 +8,7 @@ class User(db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(80), unique=False, nullable=False)
     level = db.Column(db.Integer, default=1)
-
+    stripe_link_integration = db.Column(db.String(120), nullable=True, default='')
 
     def __repr__(self):
         return f'<User {self.email} {self.id} {self.level}>'
@@ -20,8 +20,9 @@ class User(db.Model):
             "email": self.email,
             "is_active": self.is_active,
             "level": self.level,
-          
+            "stripe_link_integration": self.stripel_link_integration,
         }
+
 
 class UserData(db.Model):
     id = db.Column(db.Integer, primary_key=True)
