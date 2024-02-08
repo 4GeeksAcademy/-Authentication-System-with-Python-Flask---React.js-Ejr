@@ -14,6 +14,8 @@ import { Footer } from "./component/footer";
 import { CardPeliculas } from "./component/cardPeliculas"
 import { PagesPeliculas }  from "./pages/pagesPeliculas";
 import { Profile } from "./pages/profile"
+import { MovieReviewForm } from "./component/movieReviewForm";
+import { EditUserProfile } from "./component/profile/editUserProfile";
 
 
 
@@ -38,8 +40,9 @@ const Layout = () => {
                         <Route element={<SignUp />} path="/signUp" />
                         <Route element={<Login />} path="/login" />
                         <Route element={<Profile />} path="/profile" />
+                        <Route element={<EditUserProfile/>} path="/editProfile" />
+                        <Route element={<MovieReviewForm />} path="/reviewForm" />
                         <Route element={<h1>Not found!</h1>} />
-                       
                     </Routes>
                     <Footer />
                 </ScrollToTop>
