@@ -1,25 +1,27 @@
 import React, { useState, useEffect } from 'react';
 
-export const UserLevelConnectLink= () => {
-  const [role, setRole] = useState(null); // State to store the user role
-  const [error, setError] = useState(null); // State to handle any errors
+export const UserLevelConnectLink = () => {
+  const [role, setRole] = useState(null);
+  const [error, setError] = useState(null);
+  const [stripeLink, setStripeLink] = useState(null);
 
   useEffect(() => {
-    const fetchUserRole = async () => {
+    const fetchUserLevelAndStripeLink = async () => {
       try {
-        const userToken = localStorage.getItem("userToken");
-        const response = await fetch(`${process.env.BACKEND_URL}/api/userslevel`, {
+        const userToken = localStorage.getItem('userToken');
+        // Fetch user level
+        const responseUserLevel = await fetch(`${process.env.BACKEND_URL}/api/userslevel`, {
           headers: {
             'Authorization': `Bearer ${userToken}`
           }
         });
 
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
+        if (!responseUserLevel.ok) {
+          throw new Error(`HTTP error! status: ${responseUserLevel.status}`);
         }
 
-        const data = await response.json();
-        const userLevel = data.level;
+        const dataUserLevel = await responseUserLevel.json();
+        const userLevel = dataUserLevel.level;
         let roleName;
 
         switch (userLevel) {
@@ -36,18 +38,50 @@ export const UserLevelConnectLink= () => {
             roleName = "Unknown Role";
         }
 
-        setRole(roleName); 
+        setRole(roleName);
+
+        // Fetch stripe link integration
+        const responseStripeLink = await fetch(`${process.env.BACKEND_URL}/api/usersstripelink`, {
+          headers: {
+            'Authorization': `Bearer ${userToken}`
+          }
+        });
+
+        if (!responseStripeLink.ok) {
+          throw new Error(`HTTP error! status: ${responseStripeLink.status}`);
+        }
+
+        const dataStripeLink = await responseStripeLink.json();
+        setStripeLink(dataStripeLink.stripe_link_integration);
+      
       } catch (err) {
-        setError(err.message); 
+        setError(err.message);
       }
     };
-
-    fetchUserRole(); 
+    console.log(stripeLink)
+    fetchUserLevelAndStripeLink();
   }, []);
 
   if (error) {
     return <p>Error: {error}</p>;
   }
 
-  return <p>Your role is: {role}</p>;
+  const handleButtonClick = () => {
+    if (stripeLink) {
+      window.location.href = stripeLink;
+    } else {
+      console.log('No Stripe link available');
+    }
+  };
+
+  return (
+    <>
+      <p>Your role is: {role}</p>
+      {role === "Super User" && (
+        <button onClick={handleButtonClick}>
+          Link your account
+        </button>
+      )}
+    </>
+  );
 };

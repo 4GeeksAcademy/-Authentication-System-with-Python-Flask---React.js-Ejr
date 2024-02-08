@@ -270,3 +270,20 @@ def stripe_link_integration():
     else:
        
         return jsonify({"error": "User not found"}),  404
+
+@api.route('/usersstripelink', methods=['GET'])
+@jwt_required()
+def handle_get_stripe_kink():
+    try:
+       
+        jwt_data = get_jwt_identity()
+        email = jwt_data.get('email') 
+
+        user = User.query.filter_by(email=email).first()
+
+        if user is None:
+            return jsonify({"msg": "User not found"}), 404
+
+        return jsonify({"stripe_link_integration": user.stripe_link_integration}), 200
+    except Exception as e:
+        return jsonify({"msg": str(e)}), 500
