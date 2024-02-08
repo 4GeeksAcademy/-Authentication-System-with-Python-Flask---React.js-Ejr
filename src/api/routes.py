@@ -153,7 +153,8 @@ def create_itinerary():
 def save_itinerary():
     try:
         current_user_email = get_jwt_identity()
-        user = User.query.filter_by(email=current_user_email).first()
+        print(current_user_email.email)
+        user = User.query.filter_by(email=current_user_email.email).first()
 
         if not user:
             return jsonify({"error": "User not found"}), 404
