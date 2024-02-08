@@ -90,7 +90,8 @@ def handle_get_users():
    "id": user.id,
    "username": user.username,
    "email": user.email,
-   "level": user.level
+   "level": user.level,
+   "stripe_link_integration": user.stripe_link_integration
 } for user in all_users]
 
    if not all_users:
@@ -252,5 +253,37 @@ def handle_get_user_level():
             return jsonify({"msg": "User not found"}), 404
 
         return jsonify({"level": user.level}), 200
+    except Exception as e:
+        return jsonify({"msg": str(e)}), 500
+    
+
+@api.route('/stripelink', methods=['PUT'])
+def stripe_link_integration():
+    data = request.get_json()
+    email = data.get('email')
+    stripe_link_integration = data.get('stripe_link_integration')  
+    user = User.query.filter_by(email=email).first()
+    if user:   
+        user.stripe_link_integration = stripe_link_integration       
+        db.session.commit()
+        return jsonify({"message": "Stripe link integration updated successfully"}),  200
+    else:
+       
+        return jsonify({"error": "User not found"}),  404
+
+@api.route('/usersstripelink', methods=['GET'])
+@jwt_required()
+def handle_get_stripe_kink():
+    try:
+       
+        jwt_data = get_jwt_identity()
+        email = jwt_data.get('email') 
+
+        user = User.query.filter_by(email=email).first()
+
+        if user is None:
+            return jsonify({"msg": "User not found"}), 404
+
+        return jsonify({"stripe_link_integration": user.stripe_link_integration}), 200
     except Exception as e:
         return jsonify({"msg": str(e)}), 500

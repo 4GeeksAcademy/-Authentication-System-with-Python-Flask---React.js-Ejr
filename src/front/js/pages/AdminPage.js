@@ -10,6 +10,7 @@ const [day, setDay] = useState("");
 const [location, setLocation] = useState("");
 const [meetingPoint, setMeetingPoint] = useState("");
 const [hour, setHour] = useState("");
+const [link, setLink] = useState("");
 const [userLevel, setUserLevel] = useState(null)
 const [userToken, setUserToken] = useState("");
 
@@ -59,27 +60,49 @@ const [userToken, setUserToken] = useState("");
   const url = `${process.env.BACKEND_URL}${adminRouteRequirement}`;
   
   fetch(url, {
-       method: 'PUT',
-       headers: {
-           'Content-Type': 'application/json',
-       },
-       body: JSON.stringify({
-          email: selectedEmail
-       }),
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      email: selectedEmail
+    }),
   })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      return response.json();
-    })
-    .then(data => {
-      console.log(data.message || data.error);
-      alert('User updated successfully!'); 
-    })
-    .catch(error => {
-      console.error(`Error promoting user: ${error}`);
+  .then(response => {
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    return response.json();
+  })
+  .then(data => {
+    console.log(data.message || data.error);
+    alert('User updated successfully!');
+  
+    // After the first request completes, proceed with the second request
+    return fetch(`${process.env.BACKEND_URL}/api/stripelink`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email: selectedEmail,
+        stripe_link_integration: link
+      }),
     });
+  })
+  .then(response => {
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    return response.json();
+  })
+  .then(data => {
+    console.log(data.message || data.error);
+    alert('Stripe link updated successfully!');
+  })
+  .catch(error => {
+    console.error(`Error updating user or Stripe link: ${error}`);
+  });
  };
  
 
@@ -141,6 +164,7 @@ if (userLevel !== 3) {
  </option>
         ))}
       </select>
+      <input type="text" value={link} onChange={e => setLink(e.target.value)} />
       <button onClick={handlePromote}>Promote</button>
     </div>
     <h3>Create the next event</h3>

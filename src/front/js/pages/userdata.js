@@ -3,6 +3,7 @@ import { EventInfoBox } from '../component/eventInfoBox';
 import { useNavigate } from 'react-router-dom'
 import { TimeCounter } from '../component/timeCounter';
 import { UserInsertData } from '../component/userInsertData';
+import { UserLevelConnectLink} from '../component/userLevelConectLink';
 
 export const Userdata = () => {  
 
@@ -28,6 +29,7 @@ export const Userdata = () => {
     <>
     <div className="text-center mt-5">
       {userToken && <p>User loged in!</p>}
+      <UserLevelConnectLink />
       <TimeCounter /> 
       <UserInsertData />
       <button onClick={logout}>Logout</button>
