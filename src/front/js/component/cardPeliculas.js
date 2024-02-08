@@ -53,7 +53,7 @@ export const CardPeliculas = ({ nombrePelicula, generoPelicula }) => {
                                         <i class="fa-solid fa-arrow-down"></i>
                                     </Link>
 
-                                    <button className="btn btn-custom-purple border border-0 mt-3" onClick={() => actions.agregarLista(nombrePelicula)} style={{ marginRight: "3%" }}>
+                                    <button className="btn btn-custom-purple border border-0 mt-3" style={{ marginRight: "3%" }}>
                                         + Mi Lista
                                     </button>
                                 </div>
@@ -82,7 +82,7 @@ export const CardPeliculas = ({ nombrePelicula, generoPelicula }) => {
                                         <i class="fa-solid fa-arrow-down"></i>
                                     </Link>
 
-                                    <button className="btn btn-custom-purple border border-0 mt-3" onClick={() => actions.agregarLista(nombrePelicula)} style={{ marginRight: "3%" }}>
+                                    <button className="btn btn-custom-purple border border-0 mt-3" style={{ marginRight: "3%" }}>
                                         + Mi Lista
                                     </button>
                                 </div>

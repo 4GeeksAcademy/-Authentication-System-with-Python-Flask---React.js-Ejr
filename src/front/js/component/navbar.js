@@ -27,8 +27,8 @@ export const Navbar = () => {
                 Buscar
               </button>
             </form>
-            <Link className="nav-link" to="#">
-              Película Semanal
+            <Link className="nav-link" onClick={() => actions.getRandomMovie()} to="#">
+              Ver En Aleatorio
             </Link>
             <Link className="nav-link" to="#">
               Géneros
@@ -36,21 +36,9 @@ export const Navbar = () => {
             <Link className="nav-link" to="#">
               Rankings
             </Link>
-            <button
-              type="button"
-              className="btn btn-secondary dropdown-toggle"
-              data-bs-toggle="dropdown"
-              aria-expanded="false" style={{marginLeft:"30px"}}>Mi Lista</button>
-            <ul className="dropdown-menu">
-              {store.lista.map((item) => (
-                <li key={item}>
-                  {item}
-                  <button className="btn" onClick={() => actions.eliminarLista(item)}>
-                    <i className="fas fa-trash-alt" />
-                  </button>
-                </li>
-              ))}
-            </ul>
+            <Link className="nav-link" to="#">
+              Mi lista
+            </Link>
             <Link className="nav-link" to="/login">
               <button type="button" className="btn ms-4">
                 <i className="fa-solid fa-user me-2"></i> Iniciar Sesión

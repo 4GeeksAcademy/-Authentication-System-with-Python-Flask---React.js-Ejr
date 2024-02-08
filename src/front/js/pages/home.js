@@ -102,20 +102,31 @@ export const Home = ({ nombrePelicula }) => {
       </div>
       <div className="container-fluid" style={{ fontFamily: "Poppins, Work Sans", paddingTop: "20px" }}>
 
-        <h1 className="text-light" style={{ marginLeft: "10%" }}>Película De</h1>
-        <h1 className="text-light d-flex" style={{ marginLeft: "10%" }}>La Semana</h1>
-        <h5 className="text-light" style={{ fontSize: "15px", marginLeft: "10%", marginBottom: "50px" }}>No te podes perder la más vista de la semana.</h5>
+        <h1 className="text-light" style={{ marginLeft: "10%" }}>¿No Sabes </h1>
+        <h1 className="text-light d-flex" style={{ marginLeft: "10%" }}>Que Ver?</h1>
+        <h5 className="text-light" style={{ fontSize: "15px", marginLeft: "10%", marginBottom: "50px" }}>Deja que nosotros elijamos por ti.</h5>
 
         {/* Botón2 Ver ahora */}
         <button
-          className="boton2 btn btn-lg btn-custom border-0 mt-3"
-          style={{ marginBottom: "50px", marginLeft: "10%", display: "flex", alignItems: "center", padding: "15px 20px", backgroundColor: "#A259FF" }}
+          className="boton2 btn btn-lg btn-custom border-0 mt-3" onClick={() => actions.getRandomMovie()}
+          style={{
+            marginBottom: "50px",
+            marginLeft: "10%",
+            display: "flex",
+            alignItems: "center",
+            padding: "15px 20px",
+            backgroundColor: "#A259FF",
+          }}
         >
-          <span style={{ fontSize: "14px", color: "white" }}>
-            <i class="fa-solid fa-rocket"></i>
+          <span style={{ fontSize: "12px", color: "white" }}>
+            <i className="fa-solid fa-rocket"></i>
           </span>
-          <span className="text-center text-light" style={{ fontSize: "14px", marginLeft: "5px" }}>Ver ahora</span>
+          <div style={{ display: "flex", flexDirection: "column", marginLeft: "5px" }}>
+            <span className="text-center text-light" style={{ fontSize: "14px" }}>Ver En</span>
+            <span className="text-center text-light" style={{ fontSize: "14px" }}>Aleatorio</span>
+          </div>
         </button>
+
         <div className="d-flex text-light" style={{ marginLeft: "10%" }}>
           <h3 style={{ fontSize: "20px", marginRight: "50px" }}>240k+<p>Visitas</p></h3>
           <h3 style={{ fontSize: "20px", marginRight: "50px" }}>150k+<p>Me Gusta</p></h3>
@@ -139,13 +150,13 @@ export const Home = ({ nombrePelicula }) => {
               <div className="card-body">
                 <h5 className="card-title text-light" style={{ fontFamily: "Poppins, Work Sans" }}> Nombre {nombrePelicula} </h5>
                 <p className="card-text text-light" style={{ fontFamily: "Poppins, Work Sans" }}>Género </p>
-                
+
                 <div className="col-md d-flex justify-content-end">
-                  <Link to={"/pagesPeliculas/" /*+ id*/} className="btn btn-dark btn-no-border mt-3" style={{marginRight:"40%", width: "36px" }} title="Más información">
+                  <Link to={"/pagesPeliculas/" /*+ id*/} className="btn btn-dark btn-no-border mt-3" style={{ marginRight: "40%", width: "36px" }} title="Más información">
                     <i class="fa-solid fa-arrow-down"></i>
                   </Link>
 
-                  <button className="btn btn-custom-purple border border-0 mt-3" onClick={() => actions.agregarLista(nombrePelicula)} style={{marginRight:"3%"}}>
+                  <button className="btn btn-custom-purple border border-0 mt-3" style={{ marginRight: "3%" }}>
                     + Mi Lista
                   </button>
                 </div>
