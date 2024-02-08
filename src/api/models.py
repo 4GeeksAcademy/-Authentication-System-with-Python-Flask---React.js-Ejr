@@ -105,3 +105,38 @@ class Follower(db.Model):
             "user_from_id": self.user_from_id,
             "user_to_id": self.user_to_id
         }
+
+
+class Support(db.Model):
+    __tablename__ = "issues"
+    id = db.Column(db.Integer(), primary_key=True)
+    email = db.Column(db.String(120), unique=False, nullable=False)
+    issue = db.Column(db.String(400), nullable=False)
+    is_active = db.Column(db.Boolean(), nullable=False)
+
+    def __repr__(self):
+        return "<Issue {}>".format(self.issue)
+
+    def serialize(self):
+        return {"email": self.email, "issue": self.issue, "is_active": self.is_active}
+
+
+class TokenBlocklist(db.Model):
+    __tablename__ = "blacklist_token"
+    id = db.Column(db.Integer, primary_key=True)
+    jti = db.Column(db.String(36), nullable=False, index=True)
+    created_at = db.Column(db.DateTime, nullable=False)
+
+    @staticmethod
+    def check_blacklist(auth_token):
+        # check whether auth token has been blacklisted
+        res = TokenBlocklist.query.filter_by(jti=auth_token).first()
+        return res is not None
+        #cambiar a true/false
+
+    def __init__(self, jti, created_at):
+        self.jti = jti
+        self.created_at = created_at
+
+    def __repr__(self):
+        return "<id: jti: {}".format(self.jti)
