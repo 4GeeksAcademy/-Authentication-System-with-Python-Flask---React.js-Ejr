@@ -15,6 +15,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			],
 			accessToken: null,
+			isLoggedIn: false,
 		},
 		actions: {
 			signup: async (User) => {
@@ -45,8 +46,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 		
-			//create function after user is logged in and token is not expired 
-
+			
+			setIsLoggedIn: (isLoggedIn) => {
+				const store = getStore();
+				setStore({...store, isLoggedIn})
+			},
 
 			// Use getActions to call a function within a fuction
 			exampleFunction: () => {

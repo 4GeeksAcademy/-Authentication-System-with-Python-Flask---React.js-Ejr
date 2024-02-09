@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import "../../styles/login.css";
 import { Context } from "../store/appContext";
 
-function Login({ show, handleClose }) {
+function Login({ show, handleClose, }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
@@ -27,10 +27,12 @@ function Login({ show, handleClose }) {
       const data = await response.json();
 
       actions.setAccessToken(data.access_token);
+      actions.setIsLoggedIn (true);
+
+      localStorage.setItem("accessToken", data.access_token)
       
       navigate(`/privatePage`);
-      //if func returns true redirects user to the private page, if not redirect to modal
-
+      
       handleClose();
 
     } catch (error) {

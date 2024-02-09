@@ -13,6 +13,7 @@ from flask_jwt_extended import (
 from api.models import Itinerary, db, User
 from api.utils import get_openai_response, format_user_input, validate_user_input,get_hash
 from flask_cors import CORS
+import datetime
 
 app = Flask(__name__)
 jwt = JWTManager(app)
@@ -79,7 +80,7 @@ def login():
     if not user :
         return jsonify({"error": "Invalid email or password"}), 401
 
-    access_token = create_access_token(identity={"email": email, "user_id": user.id})
+    access_token = create_access_token(identity={"email": email, "user_id": user.id}, expires_delta=datetime.timedelta(hours=6))
 
     return jsonify(access_token=access_token, user_id=user.id)
 
@@ -87,9 +88,15 @@ def login():
 @api.route("/logout", methods=["POST"])
 @jwt_required()
 def logout():
-    response = jsonify({"message": "Logout successful"})
-    unset_jwt_cookies(response)
-    return response, 200
+    try:
+        current_user = get_jwt_identity()
+        if current_user is None:
+            return jsonify({"error": "Invalid JWT token"}), 401
+        response = jsonify({"message": "Successfully logged out"})
+        unset_jwt_cookies(response)
+        return response
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 
 @api.route("/any-route", methods=["GET"])
@@ -152,8 +159,8 @@ def create_itinerary():
 @jwt_required()
 def save_itinerary():
     try:
-        current_user_email = get_jwt_identity()
-        user = User.query.filter_by(email=current_user_email).first()
+        current_user = get_jwt_identity()
+        user = User.query.filter_by(email=current_user["email"]).first()
 
         if not user:
             return jsonify({"error": "User not found"}), 404
@@ -161,7 +168,7 @@ def save_itinerary():
         data = request.json
 
         if "itinerary" in data:
-            itinerary = Itinerary(user_id=user.id, data=data["itinerary"])
+            itinerary = Itinerary(user=user, data=data["itinerary"], itinerary_name=data["Itinerary Name"])
             db.session.add(itinerary)
             db.session.commit()
 
@@ -176,8 +183,8 @@ def save_itinerary():
 @jwt_required()
 def get_itineraries():
     try:
-        current_user_email = get_jwt_identity()
-        user = User.query.filter_by(email=current_user_email).first()
+        current_user = get_jwt_identity()
+        user = User.query.filter_by(email=current_user["email"]).first()
 
         if not user:
             return jsonify({"error": "User not found"}), 404
