@@ -176,9 +176,27 @@ const PrivatePage = ({ user }) => {
                         {savedItineraries && savedItineraries.length > 0 ? (
                             savedItineraries.map((itinerary, index) => (
                                 <div key={index}>
-                                    <p>
-                                        Location: {itinerary.location}, Time of the Year: {itinerary.timeOfYear}
-                                    </p>
+                                    {itinerary.itinerary_name && <h2>{itinerary.itinerary_name}</h2>}
+                                    <div>
+                                        {itinerary.data.map((day, index) => (
+                                            <div className="mapped" key={index}>
+                                                <div className='days'> <h3>Day {index + 1}</h3> </div>
+                                                <div className='itinerary'>
+                                                    <div className='object'><strong>Accomodation</strong> {day.accomodation}</div> <br />
+                                                    <div className='object'><strong>Activities</strong></div>
+                                                    <ul>
+                                                        {day.activities.map((activity, i) => (
+                                                            <li key={i}>{activity}</li>
+                                                        ))}
+                                                    </ul>
+                                                    <div className='object'> <strong>Lunch</strong> {day.lunch}</div> <br />
+                                                    <div className='object'> <strong>Dinner</strong> {day.dinner}</div> <br />
+                                                    <div className='object'> <strong>Transportation</strong> {day.transportation}</div>
+                                                </div>
+                                                {index < itinerary.data.length - 1 && <hr className='day-divider' />}
+                                            </div>
+                                        ))}
+                                    </div>
                                     <button onClick={() => handleViewItinerary(index)}>
                                         View Full Itinerary
                                     </button>

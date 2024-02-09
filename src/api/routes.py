@@ -88,9 +88,19 @@ def login():
 @api.route("/logout", methods=["POST"])
 @jwt_required()
 def logout():
-    response = jsonify({"message": "Logout successful"})
-    unset_jwt_cookies(response)
-    return response, 200
+    try:
+        current_user = get_jwt_identity()
+
+        if current_user is None:
+            return jsonify({"error": "Invalid JWT token"}), 401
+
+        response = jsonify({"message": "Successfully logged out"})
+        unset_jwt_cookies(response)
+
+        return response
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 
 @api.route("/any-route", methods=["GET"])
@@ -162,7 +172,7 @@ def save_itinerary():
         data = request.json
 
         if "itinerary" in data:
-            itinerary = Itinerary(user=user, data=data["itinerary"], itinerary_name=data["Itinerary Name"])
+            itinerary = Itinerary(user=user, data=data["itinerary"], itinerary_name=data["itineraryName"])
             db.session.add(itinerary)
             db.session.commit()
 

@@ -38,5 +38,6 @@ class Itinerary(db.Model):
         return {
             "id": self.id,
             "data": self.data,
+            "itinerary_name": self.itinerary_name,
             # do not serialize the password, it's a security breach
         }

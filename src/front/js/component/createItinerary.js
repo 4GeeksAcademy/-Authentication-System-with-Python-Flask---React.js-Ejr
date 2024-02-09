@@ -93,24 +93,23 @@ const CreateItinerary = () => {
 
     const handleSaveItinerary = async () => {
       try {
-        const accessToken = actions.getAccessToken();
-
+        const accessToken = store.accessToken;
+   
         const response = await fetch(process.env.BACKEND_URL + '/api/saveItinerary', {
           method: 'POST',
           headers: {
-            'Authorization': `Bearer ${accessToken}`,
+            'Authorization': `Bearer ${store.accessToken}`,
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            itineraryDetails: generatedItinerary,
+            itinerary: generatedItinerary,
             itineraryName: itineraryName,
           }),
         });
-
-        if (response.ok) {
-          const result = await response.json();
-          console.log(result.message);
-        } else {
+    
+        console.log(response);
+    
+        if (!response.ok) {
           console.error('Error saving itinerary:', response.statusText);
         }
       } catch (error) {
