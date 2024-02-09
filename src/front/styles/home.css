@@ -27,7 +27,7 @@ body {
   align-items: center;
 }
 
-.nav__logo {
+.nav__logo, a {
   height: 120%; 
 }
 
@@ -45,7 +45,7 @@ body {
   justify-content: center;
   line-height: 20px;
   width: 200px;
-  min-height: 40px;
+ height: 40px;
   min-width: 0px;
   overflow: hidden;
   padding: 0px;
@@ -53,6 +53,7 @@ body {
   padding-right: 20px;
   text-align: center;
   vertical-align: middle;
+  text-decoration: none;
 }
 
 .nav__btn:hover,
@@ -70,6 +71,7 @@ body {
   :nth-child(1) {
     margin-left: 20px;
   }
+
 
 /* 
     hero - video
