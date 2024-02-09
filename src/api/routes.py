@@ -162,7 +162,7 @@ def save_itinerary():
         data = request.json
 
         if "itinerary" in data:
-            itinerary = Itinerary(user=user, data=data["itinerary"])
+            itinerary = Itinerary(user=user, data=data["itinerary"], itinerary_name=data["Itinerary Name"])
             db.session.add(itinerary)
             db.session.commit()
 
@@ -177,8 +177,8 @@ def save_itinerary():
 @jwt_required()
 def get_itineraries():
     try:
-        current_user_email = get_jwt_identity()
-        user = User.query.filter_by(email=current_user_email).first()
+        current_user = get_jwt_identity()
+        user = User.query.filter_by(email=current_user["email"]).first()
 
         if not user:
             return jsonify({"error": "User not found"}), 404

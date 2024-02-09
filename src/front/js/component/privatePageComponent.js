@@ -47,7 +47,7 @@ const PrivatePage = ({ user }) => {
             try {
                 const accessToken = actions.getAccessToken();
 
-                const response = await fetch(process.env.BACKEND_URL + '/api/getSavedItineraries', {
+                const response = await fetch(process.env.BACKEND_URL + '/api/getItineraries', {
                     method: 'GET',
                     headers: {
                         'Authorization': `Bearer ${accessToken}`,
@@ -57,7 +57,8 @@ const PrivatePage = ({ user }) => {
 
                 if (response.ok) {
                     const result = await response.json();
-                    setSavedItineraries(result.savedItineraries);
+                    console.log(result)
+                    setSavedItineraries(result.itineraries);
                 } else {
                     console.error('Error fetching saved itineraries:', response.statusText);
                 }
@@ -171,7 +172,8 @@ const PrivatePage = ({ user }) => {
                         <Password></Password>
                     </div>
                     <div className={`tab-pane fade show ${activeTab === 'bookmarks' ? 'active' : ''}`} id="bookmarks">
-                        {savedItineraries.length > 0 ? (
+                        {console.log(savedItineraries)}
+                        {savedItineraries && savedItineraries.length > 0 ? (
                             savedItineraries.map((itinerary, index) => (
                                 <div key={index}>
                                     <p>

@@ -34,6 +34,7 @@ const CreateItinerary = () => {
     const [generatedItinerary, setGeneratedItinerary] = useState(null);
     const [quizInProgress, setQuizInProgress] = useState(true);
     const { store, actions } = useContext(Context);
+    const [itineraryName, setItineraryName] = useState("");
 
     const handleAnswerInput = (e) => {
       e.persist();
@@ -102,6 +103,7 @@ const CreateItinerary = () => {
           },
           body: JSON.stringify({
             itineraryDetails: generatedItinerary,
+            itineraryName: itineraryName,
           }),
         });
 
@@ -198,6 +200,7 @@ const CreateItinerary = () => {
                         {index < generatedItinerary.length -1 && <hr className='day-divider'/>}
                       </div>
                     ))}
+                    <input type="text" name="Itinerary Name" onChange={e => setItineraryName(e.target.value)}></input>
                     <Button className="save-button" onClick={handleSaveItinerary}>Save Itinerary</Button>
                   </div>
                 ) : (

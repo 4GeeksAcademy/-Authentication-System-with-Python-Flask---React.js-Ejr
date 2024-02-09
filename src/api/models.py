@@ -27,7 +27,7 @@ class Itinerary(db.Model):
     __tablename__= 'itinerary'
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    itinerary_name = db.Column(db.String(50), nullable=False)
+    itinerary_name = db.Column(db.String(50))
     user = db.relationship(User)
     data = db.Column(db.JSON)
 

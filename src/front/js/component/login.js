@@ -27,6 +27,7 @@ function Login({ show, handleClose }) {
       const data = await response.json();
 
       actions.setAccessToken(data.access_token);
+      localStorage.setItem("accessToken", data.access_token)
       
       navigate(`/privatePage`);
       //if func returns true redirects user to the private page, if not redirect to modal
