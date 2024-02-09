@@ -7,7 +7,7 @@ import { Context } from "../store/appContext";
 
 
 
-const PrivatePage = ({ user }) => {
+const PrivatePage = () => {
     const [activeTab, setActiveTab] = useState('basic-info');
     const [savedItineraries, setSavedItineraries] = useState([]);
     const { store, actions } = useContext(Context);
@@ -32,7 +32,9 @@ const PrivatePage = ({ user }) => {
                 if (response.ok) {
                     const userData = await response.json();
                     setUserData(userData);
+                    actions.setIsLoggedIn(true);
                     console.log(userData);
+                    
                 } else {
                     console.error('Error fetching user data:', response.statusText);
                 }
