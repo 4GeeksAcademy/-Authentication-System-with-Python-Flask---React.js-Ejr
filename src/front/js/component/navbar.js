@@ -1,17 +1,19 @@
 // Navbar.js
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
 import { Link, useLocation, useParams, useSearchParams } from "react-router-dom";
 import "../../styles/navbar.css";
 import logoOrange from "../../img/logoOrange.png";
 import Login from "./login";
+import { Context } from "../store/appContext";
 
-export const Navbar = ({ isLoggedIn, setIsLoggedIn, accessToken  }) => {
+export const Navbar = () => {
 
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const offcanvasRef = useRef(null);
   const location = useLocation();
   const openLogin = useParams();
   let [searchParams, setSearchParams] = useSearchParams();
+  const { store, actions } = useContext(Context);
 
   useEffect(() => {
     if (searchParams.get("openLogin"))
@@ -31,17 +33,13 @@ export const Navbar = ({ isLoggedIn, setIsLoggedIn, accessToken  }) => {
       const response = await fetch(process.env.BACKEND_URL +'/api/logout', {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${accessToken}`,
+          'Authorization': `Bearer ${store.accessToken}`,
           'Content-Type': 'application/json',
         },
       });
-
-      if (response.ok) {
-        setIsLoggedIn(false)
+        console.log(response)
+        actions.setIsLoggedIn(false)
         window.location.href = '/';
-      } else {
-        console.error('Logout failed:', response.statusText);
-      }
     } catch (error) {
       console.error('Error during logout:', error.message);
     }
@@ -115,7 +113,7 @@ export const Navbar = ({ isLoggedIn, setIsLoggedIn, accessToken  }) => {
                   </Link>
                 </li>
                 <li className="nav-item">
-                  {isLoggedIn ? (
+                  {store.isLoggedIn ? (
                     <Link className="nav-link" to="#" onClick={() => {
                       handleLogout();
                       const offcanvas = offcanvasRef.current;
@@ -175,7 +173,7 @@ export const Navbar = ({ isLoggedIn, setIsLoggedIn, accessToken  }) => {
             </div>
           </div>
         </div>
-        <Login show={isLoginOpen} handleClose={closeLoginModal} setIsLoggedIn={setIsLoggedIn} />
+        <Login show={isLoginOpen} handleClose={closeLoginModal} />
       </nav>
     </>
   );

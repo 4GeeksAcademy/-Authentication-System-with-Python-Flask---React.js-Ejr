@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import "../../styles/login.css";
 import { Context } from "../store/appContext";
 
-function Login({ show, handleClose, setIsLoggedIn }) {
+function Login({ show, handleClose, }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
@@ -27,7 +27,7 @@ function Login({ show, handleClose, setIsLoggedIn }) {
       const data = await response.json();
 
       actions.setAccessToken(data.access_token);
-      setIsLoggedIn (true);
+      actions.setIsLoggedIn (true);
 
       localStorage.setItem("accessToken", data.access_token)
       
