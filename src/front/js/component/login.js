@@ -27,12 +27,13 @@ function Login({ show, handleClose, setIsLoggedIn }) {
       const data = await response.json();
 
       actions.setAccessToken(data.access_token);
-      setIsLoggedIn (true)
-      
-      handleClose();
+      setIsLoggedIn (true);
 
+      localStorage.setItem("accessToken", data.access_token)
+      
       navigate(`/privatePage`);
       
+      handleClose();
 
     } catch (error) {
       setError("An unexpected error occurred");
