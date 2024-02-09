@@ -32,7 +32,9 @@ const PrivatePage = ({ user }) => {
                 if (response.ok) {
                     const userData = await response.json();
                     setUserData(userData);
+                    setIsLoggedIn(true);
                     console.log(userData);
+                    
                 } else {
                     console.error('Error fetching user data:', response.statusText);
                 }

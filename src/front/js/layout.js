@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
 import { BackendURL } from "./component/backendURL";
@@ -17,6 +17,8 @@ import { Footer } from "./component/footer";
 
 //create your first component
 const Layout = () => {
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [accessToken, setAccessToken] = useState(null);
     //the basename is used when your project is published in a subdirectory and not in the root of the domain
     // you can set the basename on the .env file located at the root of this project, E.g: BASENAME=/react-hello-webapp/
     const basename = process.env.BASENAME || "";
@@ -27,14 +29,14 @@ const Layout = () => {
         <div>
             <BrowserRouter basename={basename}>
                 <ScrollToTop>
-                    <Navbar />
+                    <Navbar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} accessToken={accessToken} />
                     <Routes>
                         <Route element={<Home />} path="/" />
                         <Route element={<Demo />} path="/demo" />
                         <Route element={<Single />} path="/single/:theid" />
                         <Route element={<SignUpPage />} path="/signup" />
                         <Route element={<CreateItineraryPage />} path="/createItinerary" />
-                        <Route element={<PrivatePageContainer />} path="/privatePage" />
+                        <Route element={<PrivatePageContainer isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />} path="/privatePage" />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
                     <Footer />

@@ -5,33 +5,30 @@ import "../../styles/navbar.css";
 import logoOrange from "../../img/logoOrange.png";
 import Login from "./login";
 
+export const Navbar = ({ isLoggedIn, setIsLoggedIn, accessToken  }) => {
 
-
-export const Navbar = () => {
   const [isLoginOpen, setIsLoginOpen] = useState(false);
-  const offcanvasRef = useRef(null)
+  const offcanvasRef = useRef(null);
   const location = useLocation();
   const openLogin = useParams();
   let [searchParams, setSearchParams] = useSearchParams();
 
-
-  
   useEffect(() => {
     if (searchParams.get("openLogin"))
-    openLoginModal()  
-  } , [searchParams])
+      openLoginModal();
+  }, [searchParams]);
 
   const openLoginModal = () => {
     setTimeout(() => {
       setIsLoginOpen(true);
-    }, 1); // 
+    }, 1);
   };
 
   const closeLoginModal = () => setIsLoginOpen(false);
 
   const handleLogout = async () => {
     try {
-      const response = await fetch('/logout', {
+      const response = await fetch(process.env.BACKEND_URL +'/api/logout', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${accessToken}`,
@@ -40,6 +37,7 @@ export const Navbar = () => {
       });
 
       if (response.ok) {
+        setIsLoggedIn(false)
         window.location.href = '/';
       } else {
         console.error('Logout failed:', response.statusText);
@@ -112,31 +110,48 @@ export const Navbar = () => {
                         overlay.remove()
                       }
                     }
-                  }
-                  }>
+                  }}>
                     Home
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <Link className="nav-link" to="#" onClick={() => {
-                    openLoginModal();
-                    const offcanvas = offcanvasRef.current;
-                    if (offcanvas) {
-                      offcanvas.classList.remove("show");
-                      const backdrop = document.querySelector(".offcanvas-backdrop");
-                      if (backdrop) {
-                        backdrop.classList.remove("show");
+                  {isLoggedIn ? (
+                    <Link className="nav-link" to="#" onClick={() => {
+                      handleLogout();
+                      const offcanvas = offcanvasRef.current;
+                      if (offcanvas) {
+                        offcanvas.classList.remove("show");
+                        const backdrop = document.querySelector(".offcanvas-backdrop");
+                        if (backdrop) {
+                          backdrop.classList.remove("show");
+                        }
+                        const overlay = document.querySelector(".modal-overlay");
+                        if (overlay) {
+                          overlay.remove()
+                        }
                       }
-                      const overlay = document.querySelector(".modal-overlay");
-                      if (overlay) {
-                        overlay.remove()
+                    }}>
+                      Logout
+                    </Link>
+                  ) : (
+                    <Link className="nav-link" to="#" onClick={() => {
+                      openLoginModal();
+                      const offcanvas = offcanvasRef.current;
+                      if (offcanvas) {
+                        offcanvas.classList.remove("show");
+                        const backdrop = document.querySelector(".offcanvas-backdrop");
+                        if (backdrop) {
+                          backdrop.classList.remove("show");
+                        }
+                        const overlay = document.querySelector(".modal-overlay");
+                        if (overlay) {
+                          overlay.remove()
+                        }
                       }
-                    }
-                  }
-                  }
-                  >
-                    Login
-                  </Link>
+                    }}>
+                      Login
+                    </Link>
+                  )}
                 </li>
                 <li className="nav-item">
                   <Link className="nav-link" to="/signup" onClick={() => {
@@ -152,35 +167,15 @@ export const Navbar = () => {
                         overlay.remove()
                       }
                     }
-                  }
-                  }>
+                  }}>
                     Sign Up
                   </Link>
                 </li>
-                <li className="nav-item">
-            <Link className="nav-link" to="/" onClick={() => {
-              handleLogout();
-              const offcanvas = offcanvasRef.current;
-              if (offcanvas) {
-                offcanvas.classList.remove("show");
-                const backdrop = document.querySelector(".offcanvas-backdrop");
-                if (backdrop) {
-                  backdrop.classList.remove("show");
-                }
-                const overlay = document.querySelector(".modal-overlay");
-                if (overlay) {
-                  overlay.remove()
-                }
-              }
-            }}>
-              Logout
-            </Link>
-          </li>
               </ul>
             </div>
           </div>
         </div>
-        <Login show={isLoginOpen} handleClose={closeLoginModal} />
+        <Login show={isLoginOpen} handleClose={closeLoginModal} setIsLoggedIn={setIsLoggedIn} />
       </nav>
     </>
   );

@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import "../../styles/login.css";
 import { Context } from "../store/appContext";
 
-function Login({ show, handleClose }) {
+function Login({ show, handleClose, setIsLoggedIn }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
@@ -27,11 +27,12 @@ function Login({ show, handleClose }) {
       const data = await response.json();
 
       actions.setAccessToken(data.access_token);
+      setIsLoggedIn (true)
       
-      navigate(`/privatePage`);
-      //if func returns true redirects user to the private page, if not redirect to modal
-
       handleClose();
+
+      navigate(`/privatePage`);
+      
 
     } catch (error) {
       setError("An unexpected error occurred");
