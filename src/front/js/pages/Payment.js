@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Elements } from "@stripe/react-stripe-js";
-import CheckoutForm from "./CheckoutForm";
+import CheckoutForm from "../component/CheckoutForm";
 import { loadStripe } from "@stripe/stripe-js";
-import { AmountSubmit } from "./amountSubmitForm";
+import { AmountSubmit } from "../component/amountSubmitForm";
 
 export const Payment = () => {
  const [stripePromise, setStripePromise] = useState(null);

@@ -45,7 +45,7 @@ body {
   justify-content: center;
   line-height: 20px;
   width: 200px;
- height: 40px;
+  height: 40px;
   min-width: 0px;
   overflow: hidden;
   padding: 0px;
@@ -194,10 +194,9 @@ object-fit: cover;
 }
 
 /*
-  home_form: login/signup
+  login/signup
 */
 .box {
-  position: absolute;
   background: rgba(129, 172, 168, 0.616);
   max-width: 360px;
   margin: 0 auto 100px;
@@ -224,8 +223,8 @@ object-fit: cover;
 /*
   login page
 */
+
 .login-form {
-  position: relative;
   background: rgba(129, 172, 168, 0.616);
   max-width: 360px;
   margin: 0 auto 100px;

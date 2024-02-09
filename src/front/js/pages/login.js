@@ -41,7 +41,7 @@ export const Login = () => {
             <img className="hero__image" src={Image4} />
         </div>
         <div className="login-page">
-            <div className='container login-form'>
+            <div>
                 <form 
                      id='contact-form' className='login-form__input'>
                     <input type="email" id="email" name="email" value={email} onChange={(e)=> setEmail(e.target.value)} required placeholder='e-mail'/>
