@@ -2,16 +2,20 @@ import React from "react";
 import { Link } from "react-router-dom";
 import ContactElements from "./ContactElements";
 
+import ContactImage from "../../img/pitch/overlay/contact-section-overlay.png"
+
 export const ContactForm = () => {
   return (
-    <div className="container-full py-5 h-100 grey-background">
+    <div className="container-full py-5 h-100 " style={{ backgroundImage: `url(${ContactImage})`, backgroundSize: 'cover', backgroundPosition: 'center'  }}>
       <div className="row d-flex justify-content-center align-items-center h-100 contact">
-        <div className="col-12 col-md-8 col-lg-6 col-xl-5">
-          <div className="card custom-card shadow-2-strong" style={{ borderRadius: "1rem" }}>
-            <div className="card-body p-5 text-center">
+        <div className="col-12 col-md-8 col-lg-6 col-xl-5 text-center">
 
-              {/* Header */}
-              <h2 className="mb-5">Contact Us.</h2>
+          {/* Header */}
+          <h1 className="mb-4">Contact Us.</h1>
+          <p className="mb-5">If you need our help, have questions about how to use the platform or are experiencing technical difficulties, please do not hesitate to contact us.</p>
+
+          <div className="card contact-card shadow-2-strong" style={{ borderRadius: "1rem" }}>
+            <div className="card-body p-5 text-center">
 
               {/* Name and Email */}
               <div className="row mb-4">

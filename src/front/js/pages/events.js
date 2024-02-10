@@ -39,40 +39,7 @@ export const Events = () => {
             </div>
           </div>
 
-
-          {/* FIRST ROW */}
-
-          <div className="row">
-            <div className="col-md-3 mb-4">
-              <EventCard imageUrl={imageUrl01}/>
-            </div>
-            <div className="col-md-3 mb-4">
-              <EventCard imageUrl={imageUrl02}/>
-            </div>
-            <div className="col-md-3 mb-4">
-              <EventCard imageUrl={imageUrl03}/>
-            </div>
-            <div className="col-md-3 mb-4">
-              <EventCard imageUrl={imageUrl04}/>
-            </div>
-          </div>
-
-          {/* SECOND ROW */}
-
-          <div className="row">
-            <div className="col-md-3 mb-4">
-              <EventCard imageUrl={imageUrl05}/>
-            </div>
-            <div className="col-md-3 mb-4">
-              <EventCard imageUrl={imageUrl06}/>
-            </div>
-            <div className="col-md-3 mb-4">
-              <EventCard imageUrl={imageUrl07}/>
-            </div>
-            <div className="col-md-3 mb-4">
-              <EventCard imageUrl={imageUrl08}/>
-            </div>
-          </div>
+          <div>Events Here</div>
 
           <SignUpNow />
 

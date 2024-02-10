@@ -11,7 +11,7 @@ export const Contact = () => {
 	const params = useParams();
 
 	return (
-		<div className>
+		<div>
             <ContactForm />
 		</div>
 	);
