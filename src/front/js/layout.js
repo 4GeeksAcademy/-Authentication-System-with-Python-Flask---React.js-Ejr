@@ -6,6 +6,10 @@ import { BackendURL } from "./component/backendURL";
 import { Home } from "./pages/home";
 import { Demo } from "./pages/demo";
 import { Single } from "./pages/single";
+import { Artists } from "./pages/artists";
+import { Contactus } from "./pages/contact";
+import { Exhibits } from "./pages/exhibits";
+import { Favorites } from "./pages/favorites";
 import injectContext from "./store/appContext";
 
 import  Navbar  from "./component/navbar";
@@ -27,6 +31,10 @@ const Layout = () => {
                     <Routes>
                         <Route element={<Home />} path="/" />
                         <Route element={<Demo />} path="/demo" />
+                        <Route element={<Artists />} path="/artists" />
+                        <Route element={<Contactus />} path="/contactus" />
+                        <Route element={<Exhibits />} path="/exhibits" />
+                        <Route element={<Favorites />} path="/favorites" />
                         <Route element={<Single />} path="/single/:theid" />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
