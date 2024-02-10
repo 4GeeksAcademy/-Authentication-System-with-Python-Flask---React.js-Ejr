@@ -8,9 +8,9 @@ class Navbar extends Component {
       <React.Fragment>
         <nav className="navbar navbar-expand-lg navbar-dark  navbar-style">
           <div className="container-fluid">
-          <div className="container">
+          
           <img className="navbar-logo" src={logoImage} />
-          </div>
+          
             <a className="navbar-brand" href="/#">
               ArtSeekers
             </a>
