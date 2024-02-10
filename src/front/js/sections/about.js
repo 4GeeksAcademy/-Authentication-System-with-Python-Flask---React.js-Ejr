@@ -20,19 +20,16 @@ const AboutSection = () => {
 
         {/* Right Column - About Text */}
         <div className="col-md-5 mb-4">
-          <h2 className="about-header mb-4">About Us</h2>
+          <h2 className="about-header mb-4">Welcome To Eventure</h2>
 
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. In id odio
-            ultrices, rhoncus leo ac, placerat diam. Etiam id nulla ut est
-            interdum mattis a eget tellus. Integer in erat imperdiet orci
-            ullamcorper venenatis.
+          At Eventure, we're here to redefine event planning. Say goodbye to stress and hello to seamless, 
+          unforgettable experiences. From intimate gatherings to grand celebrations, Eventure empowers you to create, 
+          organize, and collaborate like never before.
           </p>
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. In id odio
-            ultrices, rhoncus leo ac, placerat diam. Etiam id nulla ut est
-            interdum mattis a eget tellus. Integer in erat imperdiet orci
-            ullamcorper venenatis.
+          Let's embark on a journey of endless possibilities, where every event 
+          is a new adventure waiting to unfold.
           </p>
 
           

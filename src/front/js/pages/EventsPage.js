@@ -1,0 +1,98 @@
+import React, { useState, useEffect } from "react";
+import EventCardSingle from "../component/EventCardSingle";
+import Hero from "../component/Hero";
+import SignUpNow from "../sections/SignUpNow";
+
+const EventsPage = () => {
+    // Define a state to hold event IDs and current page
+    const [eventIds, setEventIds] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const eventsPerPage = 8;
+
+    // Fetch event IDs or use a predefined list
+    useEffect(() => {
+        // Fetch event IDs from an external API or use a predefined list
+        const fetchedEventIds = [1, 2, 3, 6, 7, 8, 9, 10, 11, 12, 13, 14]; // Example: Replace with actual fetched event IDs
+        setEventIds(fetchedEventIds);
+    }, []);
+
+    // Calculate indexes of events to display based on current page
+    const indexOfLastEvent = currentPage * eventsPerPage;
+    const indexOfFirstEvent = indexOfLastEvent - eventsPerPage;
+    const currentEventIds = eventIds.slice(indexOfFirstEvent, indexOfLastEvent);
+
+    // Function to handle pagination
+    const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+    return (
+        <div className="text-center">
+
+            {/* Events Page Hero */}
+            <div className="hero">
+                <Hero
+                    header="Discover An Event Near You"
+                    text="Explore a world of diverse events tailored to your interests. From exciting concerts and captivating art exhibitions to thrilling sports and enriching workshops, there’s something for everyone. Find your next unforgettable experience by browsing the events below."
+                />
+            </div>
+
+            <div className="container-fluid popular-events black-two-background d-flex align-items-center justify-content-center">
+                <div className="container text-center">
+
+                    <div className="row mb-4">
+                        <div className="col">
+                            <h2 className="section-header-white">Featured Events</h2>
+                        </div>
+                    </div>
+
+                    <div className="row">
+                        {currentEventIds.map(eventId => (
+                            <div className="col-md-3 mb-4" key={eventId}>
+                                <EventCardSingle eventId={eventId} />
+                            </div>
+                        ))}
+                    </div>
+
+                    {/* Pagination Component */}
+                    <div className="row mt-4">
+                        <div className="col">
+                            <Pagination
+                                eventsPerPage={eventsPerPage}
+                                totalEvents={eventIds.length}
+                                paginate={paginate}
+                            />
+                        </div>
+                    </div>
+
+                    <SignUpNow />
+
+                </div>
+            </div>
+
+        </div>
+    );
+};
+
+// Pagination Component
+const Pagination = ({ eventsPerPage, totalEvents, paginate }) => {
+    const pageNumbers = [];
+
+    for (let i = 1; i <= Math.ceil(totalEvents / eventsPerPage); i++) {
+        pageNumbers.push(i);
+    }
+
+    return (
+        <nav>
+            <ul className="pagination justify-content-center">
+                {pageNumbers.map(number => (
+                    <li key={number} className="page-item">
+                        <button onClick={() => paginate(number)} className="page-link">
+                            {number}
+                        </button>
+                    </li>
+                ))}
+            </ul>
+        </nav>
+    );
+};
+
+export default EventsPage;

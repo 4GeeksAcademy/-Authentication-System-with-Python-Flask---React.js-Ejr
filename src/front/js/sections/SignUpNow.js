@@ -20,13 +20,16 @@ const SignUpNow = () => {
 
         {/* Right Column - Sign Up Now Text */}
         <div className="col-md-5 mb-4 pink-div">
-          <h2 className="sign-up-header mb-4">Want to promote your own event?</h2>
+          <h2 className="sign-up-header mb-4">Ready to take your event to the next level?</h2>
 
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. In id odio
-            ultrices, rhoncus leo ac, placerat diam. Etiam id nulla ut est
-            interdum mattis a eget tellus. Integer in erat imperdiet orci
-            ullamcorper venenatis.
+          Join Eventure and gain access to a world of possibilities. 
+          Whether you're organizing a concert, workshop, or art exhibition, 
+          Eventure makes it easy to promote your event and connect with your audience.
+          </p>
+
+          <p>
+          Sign up now and start making your event a success with Eventure!
           </p>
 
 

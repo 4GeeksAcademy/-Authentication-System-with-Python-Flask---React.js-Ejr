@@ -9,7 +9,9 @@ const PopularEvents = () => {
 
   return (
     <div className="container-fluid popular-events grey-background d-flex align-items-center justify-content-center">
+
       <div className="container text-center section-header">
+        
         <div className="section-header">
           <h2 className="text-center mt-4">Popular Events Near You</h2>
         </div>

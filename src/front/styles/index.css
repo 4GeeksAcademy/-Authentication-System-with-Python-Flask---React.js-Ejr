@@ -356,13 +356,22 @@ button {
 /* ------ EVENT CARD STYLING ------ */  
 
 .event-card {
-  margin: 10px 10px;
+  margin: 10px 20px;
+  text-align: left;
+}
+
+.event-card-title {
+  font-weight: bold;
 }
 
 .event-card-body {
   padding: 20px;
 }
 
+.event-card-info {
+  color: #828282;
+  padding-bottom: 8px;
+}
 
 /*.form-select {
   font-size: 14px;

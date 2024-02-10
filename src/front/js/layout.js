@@ -15,6 +15,7 @@ import { SignUp } from "./pages/signUp";
 import { CreateEvent } from "./pages/createEvent";
 import { Contact } from "./pages/contact";
 import EventSingle from "./component/EventSingle";
+import EventsPage from "./pages/EventsPage";
 
 const Layout = () => {
     const basename = process.env.BASENAME || "";
@@ -28,8 +29,8 @@ const Layout = () => {
                     <Navbar />
                     <Routes>
                         <Route element={<Home />} path="/" />
-                        <Route element={<Events />} path="/events" />
-                        <Route element={<Single />} path="/single/:id" /> {/* Updated route */}
+                        <Route element={<EventsPage /> } path="/events" />
+                        <Route element={<Single />} path="/event/:id" /> {/* Updated route */}
                         <Route element={<Contact />} path="/contact" />
                         <Route element={<LogIn />} path="/login" />
                         <Route element={<SignUp />} path="/sign-up" />

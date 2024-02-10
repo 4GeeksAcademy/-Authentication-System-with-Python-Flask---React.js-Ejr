@@ -46,13 +46,6 @@ export const Navbar = () => {
                 </Link>
               </li>
 
-              {/* Event Single Link */}
-              <li className="nav-item mx-3">
-                <Link to="/single" className="nav-link">
-                  Single Event
-                </Link>
-              </li>
-
             </ul>
           </div>
         </div>
