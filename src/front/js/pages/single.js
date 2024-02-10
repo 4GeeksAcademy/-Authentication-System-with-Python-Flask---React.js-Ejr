@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { useParams } from "react-router-dom";
 import { Context } from "../store/appContext";
 import EventSingle from "../component/EventSingle";
-import PopularEventsTwo from "../sections/PopularEvents";
+import PopularEventsTwo from "../sections/PopularEventsTwo";
 
 const Single = () => {
     const { store, actions } = useContext(Context);
@@ -24,8 +24,10 @@ const Single = () => {
     }, [actions, params.id]);
 
     return (
-        <div className="container-full black-background">
-            {event && <EventSingle event={event} />}
+        <div>
+            <div className="container-full black-background">
+                {event && <EventSingle event={event} />}
+            </div>
             <PopularEventsTwo />
         </div>
     );
