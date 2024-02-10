@@ -32,15 +32,15 @@ const EventCardSingle = ({ eventId }) => {
             <img src={event.image} className="card-img-top" alt="Event Image" />
             <div className="event-card-body">
                 <h5>{event.name}</h5>
-                <p className="event-card-location">Venue: {event.location}</p>
+                <p className="event-card-info">Location: {event.location}</p>
                 <div className="d-flex justify-content-between event-card-info"> 
-                    <p className="card-text">Tickets: £{event.price}</p>
-                    <p className="card-text">Date: {event.date}</p>
+                    <p className="event-card-info">Tickets: £{event.price}</p>
+                    <p className="event-card-info">Date: {event.date}</p>
                 </div>
                 <div className="d-flex justify-content-between align-items-center"> 
                     <Link to={`/event/${eventId}`} className="btn btn-primary custom-btn">More info.</Link>
                     <button className="btn" onClick={toggleFavorite}>
-                        <i className={`fa-solid fa-heart${favorited ? ' text-danger' : ''}`}></i>
+                        <i className={`fa-solid fa-heart ${favorited ? 'pink-heart' : ''}`}></i>
                     </button>
                 </div>
             </div>

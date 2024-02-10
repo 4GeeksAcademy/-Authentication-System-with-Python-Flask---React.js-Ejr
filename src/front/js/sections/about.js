@@ -1,7 +1,7 @@
 // AboutSection.js
 
 import React from 'react';
-import AboutImage from '/workspaces/europe-fs-pt-14-ryandornan-mariahurtado/src/front/img/music/crowd-02.png';
+import AboutImage from "../../img/pitch/hands-01.png";
 import { Link } from "react-router-dom";
 
 

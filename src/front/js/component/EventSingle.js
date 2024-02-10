@@ -5,7 +5,7 @@ const EventSingle = ({ event }) => {
         <div className="container event-single d-flex justify-content-center align-items-center">
             {/* Left Column - Image */}
             <div className="col-md-5 image-container">
-                <img src={event.image} className="img-fluid" alt="Event Image" />
+                <img src={event.image} className="img-fluid" alt="Event" />
             </div>
 
             {/* Right Column - Event Details */}
@@ -20,19 +20,19 @@ const EventSingle = ({ event }) => {
 
                 {/* Event Date */}
                 <div className="d-flex align-items-center mb-3">
-                    <i className="fas fa-calendar-alt"></i>
+                    <i className="fas fa-calendar-alt me-2"></i>
                     <span>{event.date}</span>
                 </div>
 
                 {/* Event Location */}
                 <div className="d-flex align-items-center mb-3">
-                    <i className="fa-solid fa-location-dot"></i>
+                    <i className="fas fa-map-marker-alt me-2"></i>
                     <span>{event.location}</span>
                 </div>
 
                 {/* Ticket Price */}
                 <div className="d-flex align-items-center mb-4">
-                    <i className="fa-solid fa-ticket"></i>
+                    <i className="fas fa-ticket-alt me-2"></i>
                     <span>Ticket Price: £{event.price}</span>
                 </div>
 

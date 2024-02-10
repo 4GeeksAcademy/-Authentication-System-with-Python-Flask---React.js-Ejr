@@ -9,8 +9,12 @@
 /* ------ BACKGROUND COLOUR STYLING ------ */
 
 .black-background {
-  background: rgb(18, 18, 18);
+  background: rgb(11, 11, 11);
   color: white;
+}
+
+.popular-events-background {
+  background: rgb(11, 11, 11);;
 }
 
 .black-two-background {
@@ -18,16 +22,16 @@
 }
 
 .black-three-background {
-  background: rgb(36, 36, 36);
+  background: rgb(14, 14, 14);
   color: white;
 }
 
 .grey-background {
-  background: #272727;
+  background: #131313;
 }
 
 .grey-two-background {
-  background: #1a1a1a;
+  background: rgb(11, 11, 11);
 }
 
 /* ------ ABOUT SECTION STYLING ------ */
@@ -47,14 +51,14 @@
 
 .image-container {
   width: 500px;
-  height: 400px;
+  height: 500px;
   background: white;
   margin-right: 50px;
 }
 
 .img-fluid {
   width: 500px;
-  height: 400px;
+  height: 500px;
 }
 
 
@@ -65,12 +69,19 @@
   display: flex;
   align-content: center;
   justify-content: space-evenly;
-  padding: 100px 50px 100px;
+  padding: 100px 0px 100px;
   text-align: left;
 }
 
 .sign-up h2 {
   color: #000000;
+}
+
+.sign-up-now-section {
+  background: rgb(18, 18, 18);
+}
+.sign-up-now-section-text {
+  color: #000;
 }
 
 .image-container {
@@ -89,7 +100,7 @@
 .pink-div {
   background: #FF8D91;
   color: black;
-  padding: 50px 30px 50px 30px;
+  padding: 50px 30px 30px 30px;
 }
 
 /* ------ EVENT SINGLE STYLING ------ */
@@ -191,17 +202,28 @@ button {
       color: #000; 
     }
   }
+
+.sign-up-now-btn-dark {
+    border-color: #FF8D91; 
+    background: #000;
+  
+    /* Hover effect */
+    &:hover {
+      border-color: black;
+      background-color: #FF8D91; 
+      color: #000; 
+    }
+  }
   
 /* ------ HOME HERO STYLING ------ */
 
 
 .hero {
-  background: #272727;
   color: white;
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 85vh;
+  height: 100vh;
 }
 
 
@@ -243,6 +265,10 @@ button {
   padding: 100px 0px 100px 0px;
 }
 
+.contact h1, p {
+  color: white;
+}
+
 .contact-elements {
   padding-top: 100px;
 }
@@ -269,6 +295,7 @@ button {
 /* ------ POPULAR EVENTS STYLING ------ */
 
 .popular-events {
+  background: #131313;
   padding: 50px 0px 30px 0px; 
 }
 
@@ -276,10 +303,18 @@ button {
   color: white;
 }
 
+/* ------ ALL EVENTS STYLING ------ */
+
+.all-events {
+  background: #000000;
+  padding: 70px 0px 30px 0px; 
+}
+
 /* ------ POPULAR CATEGORIES STYLING ------ */
 
 .popular-categories {
-  padding: 50px 0px 70px 0px; 
+  padding: 50px 0px 100px 0px; 
+  background: #000;
 }
 
 .popular-categories h2 {
@@ -324,6 +359,29 @@ button {
     color: white;
   }
 
+.login-card {
+    background: rgba(255, 255, 255, 0); 
+    border: none; 
+    color: white;
+  }
+
+
+.signup-card {
+    background: rgba(255, 255, 255, 0); 
+    border: none; 
+    color: white;
+  }
+
+  .signup-card a {
+    color: #FF8D91;
+  }  
+
+.contact-card {
+    background: rgba(255, 255, 255); 
+    border: none; 
+    color: white;
+  }
+
 .custom-card a {
   color: #FF8D91;
 }
@@ -358,6 +416,7 @@ button {
 .event-card {
   margin: 10px 20px;
   text-align: left;
+  background: #f6f6f6;
 }
 
 .event-card-title {
@@ -369,9 +428,14 @@ button {
 }
 
 .event-card-info {
-  color: #828282;
+  color: #000000;
   padding-bottom: 8px;
 }
+
+.pink-heart {
+  color:#FF8D91; 
+}
+
 
 /*.form-select {
   font-size: 14px;
@@ -391,4 +455,18 @@ button {
 
 .event-search-container{
   margin: 0px;
+}
+
+/* ------ EVENT PAGE SELECT STYLING ------ */  
+
+.page-link {
+  background: #FF8D91;
+  color: #000;
+
+  /* Hover effect */
+  &:hover {
+    background-color: rgb(0, 0, 0); 
+    color: #FF8D91; 
+    border-color: #FF8D91; 
+  }
 }

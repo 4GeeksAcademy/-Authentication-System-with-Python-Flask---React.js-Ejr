@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
+import SignupHeroImage from "../../img/pitch/overlay/signup-hero-overlay.png";
+
+
 export const SignUpForm = () => {
   const [formData, setFormData] = useState({
     firstName: '',
@@ -63,12 +66,12 @@ export const SignUpForm = () => {
   };
 
   return (
-    <div className="container-full py-5 h-100 black-background">
+    <div className="container-full py-5 h-100" style={{ backgroundImage: `url(${SignupHeroImage})`, backgroundSize: 'cover', backgroundPosition: 'center'  }}>
       <div className="signup row d-flex justify-content-center align-items-center h-100">
         <div className="col-12 col-md-8 col-lg-6 col-xl-5">
-          <div className="card custom-card shadow-2-strong" style={{ borderRadius: "1rem" }}>
+          <div className="card signup-card shadow-2-strong" style={{ borderRadius: "1rem" }}>
             <div className="card-body p-5">
-              <h2 className="mb-5">Sign Up Now.</h2>
+              <h2 className="mb-5 text-center">Sign Up Now.</h2>
 
               <form onSubmit={handleSubmit}>
                 {/* Names Input */}
@@ -149,7 +152,7 @@ export const SignUpForm = () => {
                 {/* SignUp Button */}
                 <div className="d-flex flex-column align-items-center mb-4">
                   <button
-                    className="btn btn-primary custom-btn"
+                    className="btn btn-primary custom-btn my-4"
                     type="button" // Change type to "button" to prevent form submission
                     onClick={handleSubmit}
                     disabled={loading}

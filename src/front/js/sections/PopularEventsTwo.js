@@ -13,7 +13,7 @@ const PopularEventsTwo = () => {
     }, []);
 
     return (
-        <div className="container-fluid popular-events grey-background d-flex align-items-center justify-content-center">
+        <div className="container-fluid popular-events d-flex align-items-center justify-content-center">
 
             <div className="container text-center section-header">
             

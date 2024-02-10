@@ -3,6 +3,8 @@ import EventCardSingle from "../component/EventCardSingle";
 import Hero from "../component/Hero";
 import SignUpNow from "../sections/SignUpNow";
 
+import EventsHeroImage from "../../img/pitch/overlay/events-hero-overlay.png"
+
 const EventsPage = () => {
     // Define a state to hold event IDs and current page
     const [eventIds, setEventIds] = useState([]);
@@ -28,19 +30,19 @@ const EventsPage = () => {
         <div className="text-center">
 
             {/* Events Page Hero */}
-            <div className="hero">
+            <div className="hero" style={{ backgroundImage: `url(${EventsHeroImage})`, backgroundSize: 'cover', backgroundPosition: 'center'  }}>
                 <Hero
                     header="Discover An Event Near You"
                     text="Explore a world of diverse events tailored to your interests. From exciting concerts and captivating art exhibitions to thrilling sports and enriching workshops, there’s something for everyone. Find your next unforgettable experience by browsing the events below."
                 />
             </div>
 
-            <div className="container-fluid popular-events black-two-background d-flex align-items-center justify-content-center">
+            <div className="container-fluid all-events d-flex align-items-center justify-content-center">
                 <div className="container text-center">
 
                     <div className="row mb-4">
                         <div className="col">
-                            <h2 className="section-header-white">Featured Events</h2>
+                            <h2 className="section-header-white">View All Events</h2>
                         </div>
                     </div>
 
@@ -53,7 +55,7 @@ const EventsPage = () => {
                     </div>
 
                     {/* Pagination Component */}
-                    <div className="row mt-4">
+                    <div className="row my-4">
                         <div className="col">
                             <Pagination
                                 eventsPerPage={eventsPerPage}
@@ -63,10 +65,10 @@ const EventsPage = () => {
                         </div>
                     </div>
 
-                    <SignUpNow />
-
                 </div>
             </div>
+
+			<SignUpNow /> 
 
         </div>
     );
@@ -84,7 +86,7 @@ const Pagination = ({ eventsPerPage, totalEvents, paginate }) => {
         <nav>
             <ul className="pagination justify-content-center">
                 {pageNumbers.map(number => (
-                    <li key={number} className="page-item">
+                    <li key={number} className="page-item px-3">
                         <button onClick={() => paginate(number)} className="page-link">
                             {number}
                         </button>
