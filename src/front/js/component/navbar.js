@@ -8,7 +8,7 @@ class Navbar extends Component {
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark navbar-style">
           <div className="container-fluid">
             <a className="navbar-brand" href="/#">
-              ArtSeeker
+              ArtSeekers
             </a>
             <button
               className="navbar-toggler"
@@ -60,7 +60,7 @@ class Navbar extends Component {
             </div>
             <div className="text-end p-3">
               <button className="btn btn-primary">
-              Login
+              Login/Sign Up
           </button>
           </div>
           </div>
