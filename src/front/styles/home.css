@@ -5,9 +5,69 @@
     one more css for each page that will contain the selected used 
     on that page only (the ones not reused in other pages).
 */
+.row1 {
+    display: flex;
+    text-align: center;
+    justify-content: space-between;
+    margin: 45px 75px;
+    margin-top: 100px;
+}
 
-.footer {
-    flex-shrink: 0;
-    bottom: 0;
- 
-  }
+.row2 {
+    display: flex;
+    text-align: center;
+    justify-content: space-between;
+    margin: 45px 75px;
+}
+
+.row3 {
+    display: flex;
+    text-align: center;
+    justify-content: space-between;
+    margin: 45px 75px;
+}
+
+.art-poster-1 {
+    border: 10px solid black;
+    padding: 75px 50px;
+}
+
+.art-poster-2 {
+    border: 10px solid black;
+    padding: 75px 50px;
+}
+
+.art-poster-3 {
+    border: 10px solid black;
+    padding: 75px 50px;
+}
+
+.art-poster-4 {
+    border: 10px solid black;
+    padding: 75px 50px;
+}
+
+.art-poster-5 {
+    border: 10px solid black;
+    padding: 75px 50px;
+}
+
+.art-poster-6 {
+    border: 10px solid black;
+    padding: 75px 50px;
+}
+
+.art-poster-7 {
+    border: 10px solid black;
+    padding: 75px 50px;
+}
+
+.art-poster-8 {
+    border: 10px solid black;
+    padding: 75px 50px;
+}
+
+.art-poster-9 {
+    border: 10px solid black;
+    padding: 75px 50px;
+}
