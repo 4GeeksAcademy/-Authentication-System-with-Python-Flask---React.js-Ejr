@@ -5,6 +5,28 @@
     one more css for each page that will contain the selected used 
     on that page only (the ones not reused in other pages).
 */
+
+
+.footer {
+    flex-shrink: 0;
+    bottom: 0;
+    background-color: 
+    #29627D;
+ 
+  }
+
+  .navbar {
+    background-color: 
+    #29627D;
+  }
+
+  .container img {
+    max-width: 10%;
+    height: auto;
+}
+
+
+
 .row1 {
     display: flex;
     text-align: center;
