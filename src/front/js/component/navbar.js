@@ -8,7 +8,7 @@ class Navbar extends Component {
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark navbar-style">
           <div className="container-fluid">
             <a className="navbar-brand" href="/#">
-              eCommerce
+              ArtSeeker
             </a>
             <button
               className="navbar-toggler"
@@ -28,29 +28,41 @@ class Navbar extends Component {
               <ul className="navbar-nav mr-auto">
                 <li className="nav-item">
                   <Link to="/" className="nav-link">
-                    Login
+                    Home
                   </Link>
                 </li>
 
                 <li className="nav-item">
-                  <Link to="/dashboard" className="nav-link">
-                    Dashboard
+                  <Link to="/exhibits" className="nav-link">
+                    Exhibits
                   </Link>
                 </li>
 
                 <li className="nav-item">
-                  <Link to="/customers" className="nav-link">
-                    Customers
+                  <Link to="/artists" className="nav-link">
+                    Artists
                   </Link>
                 </li>
 
                 <li className="nav-item">
-                  <Link to="/cart" className="nav-link">
-                    Shopping Cart
+                  <Link to="/favorites" className="nav-link">
+                    Favorites
                   </Link>
                 </li>
+
+                <li className="nav-item">
+                  <Link to="/contact" className="nav-link">
+                    Contact Us
+                  </Link>
+                </li>
+
               </ul>
             </div>
+            <div className="text-end p-3">
+              <button className="btn btn-primary">
+              Login
+          </button>
+          </div>
           </div>
         </nav>
       </React.Fragment>
