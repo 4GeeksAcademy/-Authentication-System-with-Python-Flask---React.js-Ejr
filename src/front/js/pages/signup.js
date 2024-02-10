@@ -3,7 +3,7 @@ import { useContext } from 'react'
 import { Context } from '../store/appContext'
 import { Link, useNavigate } from 'react-router-dom'
 import { NavBar } from "../component/navbar";
-import Image4 from "../../img/image4.jpg";
+import Image5 from "../../img/image5.jpg";
 
 export const Signup = () => {
 
@@ -53,7 +53,7 @@ export const Signup = () => {
     <div className='signup'>
          <NavBar />
         <div className="hero">
-            <img className="hero__image" src={Image4} />
+            <img className="hero__image" src={Image5} />
         </div>
         <div className="signup-page">
           <div className='container signup-form'>

@@ -2,14 +2,14 @@ import React, { useContext } from "react";
 import "../../styles/home.css";
 import { Link } from "react-router-dom";
 import { NavBar } from "../component/navbar";
-import Image4 from "../../img/image4.jpg";
+import Image5 from "../../img/image5.jpg";
 
 export const SignupLogin = () => {
 	return (
 		<div className="home">
 			<NavBar />
 			<div className="hero">
-				<img className="hero__image" src={Image4} />
+				<img className="hero__image" src={Image5} />
 			</div>
 			<div className="container box">
 				<div className="text-center mt-5">

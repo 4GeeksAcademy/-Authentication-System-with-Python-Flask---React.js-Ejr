@@ -3,6 +3,8 @@ import { Elements } from "@stripe/react-stripe-js";
 import CheckoutForm from "../component/CheckoutForm";
 import { loadStripe } from "@stripe/stripe-js";
 import { AmountSubmit } from "../component/amountSubmitForm";
+import { NavBar } from "../component/navbar";
+import Image4 from "../../img/image4.jpg";
 
 export const Payment = () => {
  const [stripePromise, setStripePromise] = useState(null);
@@ -44,13 +46,24 @@ export const Payment = () => {
 
  return (
     <>
-      <h1>Donation</h1>
-      <AmountSubmit setParentAmount={setAmount} /> {}
-      {clientSecret && stripePromise && (
-        <Elements stripe={stripePromise} options={{ clientSecret }}>
-          <CheckoutForm />
-        </Elements>
-      )}
+        <div className="home">
+          <NavBar />
+          <div className="hero">
+				    <img className="hero__image" src={Image4} />
+			    </div>
+          <div className="container donate-box ">
+              <h><strong>JOIN THE CLEANUP!</strong></h>
+              <p>Please enter the amount in <strong>euros</strong> you wish to donate to our cause</p>
+              <AmountSubmit setParentAmount={setAmount} /> {}
+              {clientSecret && stripePromise && (
+                <Elements stripe={stripePromise} options={{ clientSecret }} >
+                  <CheckoutForm />
+                </Elements>
+              )}
+              <p>This is a secure system, your data will never be used in ways that you haven’t explicitly opted in to.</p>
+          </div>
+        </div> 
     </>
  );
 };
+
