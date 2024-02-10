@@ -1,12 +1,16 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import logoImage from "../../img/logo.jpg";
 
 class Navbar extends Component {
   render() {
     return (
       <React.Fragment>
-        <nav className="navbar navbar-expand-lg navbar-dark bg-dark navbar-style">
+        <nav className="navbar navbar-expand-lg navbar-dark  navbar-style">
           <div className="container-fluid">
+          
+          <img className="navbar-logo" src={logoImage} />
+          
             <a className="navbar-brand" href="/#">
               ArtSeekers
             </a>
