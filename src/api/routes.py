@@ -16,6 +16,7 @@ from flask_jwt_extended import get_jwt_identity
 import os
 import stripe
 from datetime import datetime, timedelta
+from flask import current_app
 
 stripe.api_key = os.getenv('STRIPE_SECRET_KEY')
 stripe.api_version = "2022-08-01"
@@ -138,7 +139,7 @@ def create_payment_intent():
 
         return jsonify({"client_secret": payment_intent.client_secret})
     except Exception as e:
-        api.logger.error(str(e))
+        current_app.logger.error(str(e))
         return jsonify({}), 400
 
 

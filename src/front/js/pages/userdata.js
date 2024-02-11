@@ -35,7 +35,6 @@ export const Userdata = () => {
       <UserLevelConnectLink />
       <TimeCounter /> 
       <InsertData /> 
-      <UserInsertData />
       <InsertLocationLiters />
       <SubmitButton /> 
       <ShowUserImpact />
