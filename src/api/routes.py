@@ -2,6 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from functools import wraps
+from xml.dom import UserDataHandler
 import json
 import resource
 from flask import Flask, request, jsonify, url_for, Blueprint, abort
@@ -14,6 +15,8 @@ from flask_jwt_extended import jwt_required
 from flask_jwt_extended import get_jwt_identity
 import os
 import stripe
+from datetime import datetime, timedelta
+from flask import current_app
 
 stripe.api_key = os.getenv('STRIPE_SECRET_KEY')
 stripe.api_version = "2022-08-01"
@@ -136,37 +139,154 @@ def create_payment_intent():
 
         return jsonify({"client_secret": payment_intent.client_secret})
     except Exception as e:
-        api.logger.error(str(e))
+        current_app.logger.error(str(e))
         return jsonify({}), 400
 
 
-@api.route ("/userdata/", methods=["POST"]) 
+@api.route ("/userdata", methods=["POST"]) 
 @jwt_required()
 def handle_userdata():
 
-    data = request.json 
-
-    date_time = data.get("date_time", None)
+    data = request.json
+    
+    start_time = data.get("start_time", None)
+    finish_time = data.get ("finish_time", None)
+    status = data.get ("status", None)
     location = data.get("location", None)
     liters = data.get("liters", None)
 
-    arr = ["date_time", "location", "liters"]
-    if any(item not in data for item in arr):
-        return jsonify({"error": "All data is required"}), 400
-
-    current_user_id = get_jwt_identity()  
-    new_data = UserData(user_id=current_user_id, date_time=date_time, location=location, liters=liters)
+    user_token_info = get_jwt_identity()
+    email = user_token_info["email"] 
+    user= User.query.filter_by(email=email).first()
 
     try:
+        new_data = UserData(user_id=user.id, start_time=start_time, finish_time=finish_time or None, status=status if finish_time else "pending", location=location if location else None, liters=liters if liters else None)
         db.session.add(new_data)
         db.session.commit()
-        return jsonify({"message":"Your data is succesfully updated"}), 200
+        return jsonify({"message":"Your data is succesfully created", "userdata_id": new_data.id}), 200
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": str(e)}), 500
+    finally:
+        db.session.close()
+        
+@api.route ("/userdata/<int:id>", methods=["PUT"]) 
+@jwt_required()
+def update_userdata(id):
+
+    data = request.json
+
+    finish_time = data.get ("finish_time", None)
+    location = data.get("location", None)
+    liters = data.get("liters", None)
+
+    user_token_info = get_jwt_identity()
+    email = user_token_info["email"] 
+    
+    try:
+        current = UserData.query.get(id)
+        if current : 
+            if finish_time: 
+                current.finish_time = finish_time
+            if location:     
+                current.location = location if location else None
+            if liters: 
+                current.liters = liters if liters else None
+            current.status = "completed"
+            db.session.commit()
+            return jsonify({"message":"Your data is succesfully updated"}), 200
+        else:
+            return jsonify ({"message": "No userdata for this id"}), 404
+        
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": str(e)}), 500
+    finally:
+        db.session.close()
+    
+
+@api.route ("/userdata/getimpact", methods=['GET'])
+@jwt_required()
+def getimpact_userdata():
+
+    user_token_info = get_jwt_identity()
+    email = user_token_info["email"] 
+    user= User.query.filter_by(email=email).first()
+
+    try: 
+        user_data_entries = UserData.query.filter_by(user_id=user.id).all() 
+        
+        if not user_data_entries:
+            return jsonify({"message": "No data available"}), 404
+        else: 
+            aux = []
+            total_time = 0
+            for entry in user_data_entries:
+                if entry.finish_time is not None: 
+                    
+                    start_time = entry.start_time
+                    finish_time = entry.finish_time 
+                    delta = finish_time - start_time
+                    aux.append(delta)
+                    
+                
+            for i in range (len (aux)-1): 
+                sub = aux[i] + aux[i+1] 
+                total_time = sub
+            
+            print (total_time)
+
+            total_liters = sum(int(entry.liters) for entry in user_data_entries if entry.liters is not None)
+            average_liters = round((total_liters / len(user_data_entries) if user_data_entries else 0), 1) 
+            average_time = (total_time / len (aux)) 
+
+        return jsonify({
+            "message": "Your Sandsmile impact processed successfully",
+            "total_time": str (total_time).split(".")[0],
+            "total_liters": total_liters,
+            "average_liters": average_liters,
+            "average_time": str (average_time).split(".")[0]
+        }), 200
     except Exception as e:
         db.session.rollback()
         return jsonify({"error": str(e)}), 500
     finally:
         db.session.close()
 
+@api.route ("/totalimpact",  methods=['GET'])
+def total_impact():
+    all_users = UserData.query.all()
+    total_users = len(all_users)
+    total_impact_time = datetime.now () - datetime.now ()
+    total_impact_liters = 0
+
+    try: 
+        if not all_users:
+            return jsonify({"message": "No user data available"}), 404
+        else:
+            aux = []
+            for entry in all_users:
+                if entry.finish_time is not None and entry.start_time is not None:
+                    delta = entry.finish_time - entry.start_time
+                    aux.append(delta)    
+                
+            for i in range (len (aux)): 
+                total_impact_time = total_impact_time + aux[i]
+            print (type(entry.liters))
+            total_impact_liters = sum(int(entry.liters) for entry in all_users if entry.liters is not None)
+           
+        return jsonify({
+            "message": "Sandsmile impact",
+            "total_users": total_users, 
+            "total_impact_time": str (total_impact_time).split(".")[0],
+            "total_impact_liters": total_impact_liters,
+
+        }), 200
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": str(e)}), 500
+    finally:
+        db.session.close()        
 
 @api.route('/admin', methods=['PUT'])
 def promote_user():

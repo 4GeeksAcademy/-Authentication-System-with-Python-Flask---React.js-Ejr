@@ -4,6 +4,10 @@ import { useNavigate } from 'react-router-dom'
 import { TimeCounter } from '../component/timeCounter';
 import { UserInsertData } from '../component/userInsertData';
 import { UserLevelConnectLink} from '../component/userLevelConectLink';
+import { InsertData } from '../component/insertData';
+import { InsertLocationLiters } from '../component/inserLocationLiters';
+import { SubmitButton } from '../component/submitButton';
+import { ShowUserImpact } from '../component/showUserImpact';
 
 export const Userdata = () => {  
 
@@ -28,12 +32,14 @@ export const Userdata = () => {
   return (
     <>
     <div className="text-center mt-5">
-      {userToken && <p>User loged in!</p>}
       <UserLevelConnectLink />
       <TimeCounter /> 
-      <UserInsertData />
-      <button onClick={logout}>Logout</button>
+      <InsertData /> 
+      <InsertLocationLiters />
+      <SubmitButton /> 
+      <ShowUserImpact />
       <EventInfoBox />
+      <button onClick={logout}>Logout</button>
     </div>
     </>
     

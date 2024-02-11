@@ -2,6 +2,18 @@ const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
 			message: null,
+			liters: [],
+			location: [],
+			start_time: [],
+			finish_time: [],
+			total_time: [],
+			total_days: [],
+			total_liters: [],
+			average_time: [],
+			average_liters: [],
+			total_users: [],
+			total_impact_time: [],
+			total_impact_liters: []
 		
 		},
 		actions: {
@@ -100,10 +112,157 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
+			start_time: async () => {
+				const url = process.env.BACKEND_URL;
+				const tokenRequirement = "/api/userdata";
+
+				try {
+					const response = await fetch(url + tokenRequirement, {
+						method: 'POST',
+						headers: {
+							'Authorization': `Bearer ${localStorage.getItem("userToken")}`,
+							'Content-Type': 'application/json',
+						},
+						body: JSON.stringify({
+							start_time: new Date().toISOString(),
+						})
+					});
+
+					if (response.status !== 200) {
+						throw new Error(`Error: ${response.status}`);
+					}
+
+					const data = await response.json();
+					console.log(data);
+					setStore({ current: data.userdata_id })
+				} catch (error) {
+					console.error(error);
+				}
+			},
+
+			submitData: async (start_time, finish_time, location, liters) => {
+				const url = process.env.BACKEND_URL;
+				const tokenRequirement = "/api/userdata/" + getStore().current;
+
+				const requestBody = {
+					finish_time: new Date().toISOString(),
+					location: location,
+					liters: liters
+				};
+
+				if (start_time !== 'pending') {
+					requestBody.start_time = start_time;
+				}
+
+				try {
+					const response = await fetch(url + tokenRequirement, {
+						method: 'PUT',
+						headers: {
+							'Authorization': `Bearer ${localStorage.getItem("userToken")}`,
+							'Content-Type': 'application/json',
+						},
+						body: JSON.stringify(requestBody)
+
+					});
 			
 
+					const jsonResponse = await response.json();
+					if (response.status !== 200) {
+						throw new Error(`Error: ${response.status}`);
+					}
+					return jsonResponse;
+
+				}
+
+					catch(error) {
+					console.error("An error occurred: ", error);
+				}
+			},
+		
+
+			setStartTime: (start_time) => {
+				const store = getStore()
+				const currentDate = datetime.now ()
+				setStore({ ...store, start_time: currentDate });
+		},
+		
+
+		setFinishTime: (finish_time) => {
+			const store = getStore()
+			const finishTime = datetime.now ()
+			setStore({ ...store, finish_time: finishTime });
+		},
+
+		
+		
+		
+
+			getUserImpact: async () => {
+				const url = process.env.BACKEND_URL;
+				const tokenRequirement = "/api/userdata/getimpact/";
+
+				try {
+					const response = await fetch(url + tokenRequirement, {
+						method: 'GET',
+						headers: {
+							'Authorization': `Bearer ${localStorage.getItem("userToken")}`,
+							'Content-Type': 'application/json',
+						},
+					});
+
+					const jsonResponse = await response.json();
+
+					if (response.status !== 200) {
+						throw new Error(`Error: ${response.status}`);
+					}
+					setStore({
+						messageToShowAlert: jsonResponse,
+						total_time: jsonResponse.total_time,
+						total_liters: jsonResponse.total_liters,
+						average_time: jsonResponse.average_time,
+						average_liters: jsonResponse.average_liters
+
+					})
+					return jsonResponse;
+
+				} catch (error) {
+					console.error("An error occurred: ", error);
+				}
+			},
+
+			getTotalImpact: async () => {
+				const url = process.env.BACKEND_URL;
+				const tokenRequirement = "/api/totalimpact/";
+
+				try {
+					const response = await fetch(url + tokenRequirement, {
+						method: 'GET',
+						headers: {
+							'Content-Type': 'application/json',
+						},
+					});
+
+					const jsonResponse = await response.json();
+
+					if (response.status !== 200) {
+						throw new Error(`Error: ${response.status}`);
+					}
+					setStore({
+						messageToShowAlert: jsonResponse,
+						total_users: jsonResponse.total_users,
+						total_impact_time: jsonResponse.total_impact_time,
+						total_impact_liters: jsonResponse.total_impact_liters
+					});
+					return jsonResponse;
+
+				} catch (error) {
+					console.error("An error occurred: ", error)
+				}
+			}
 		}
-	};
-};
+
+	}
+
+}
 
 export default getState;
