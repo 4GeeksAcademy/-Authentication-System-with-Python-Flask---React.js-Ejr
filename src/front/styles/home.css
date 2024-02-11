@@ -296,3 +296,37 @@ object-fit: cover;
 .signup-form button:hover,.signup-form button:active,.signup-form button:focus {
   background: rgb(77, 156, 148);
 }
+
+.admin-page {
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-container {
+  flex-grow: 1; 
+  padding-top: 70px;
+  margin-top: 50px;
+  padding-left: 40px;
+  padding-right: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-family: 'Atkinson Hyperlegible', sans-serif;
+}
+
+.infoblock {
+  background-color: #f2f2f2;
+  padding: 10px;
+  border: 1px solid rgb(77, 156, 148); 
+  border-radius: 5px; 
+  margin: auto;
+}
+
+.input-group-text {
+  width: 110px;
+  font-family: 'Atkinson Hyperlegible', sans-serif;
+} 
+
+.input-section {
+  margin-bottom: 10px;
+}
