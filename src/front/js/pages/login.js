@@ -3,7 +3,7 @@ import { useContext } from 'react'
 import { Context } from '../store/appContext'
 import { useNavigate,Link } from 'react-router-dom'
 import { NavBar } from "../component/navbar";
-import Image4 from "../../img/image4.jpg";
+import Image5 from "../../img/image5.jpg";
 
 
 
@@ -38,9 +38,8 @@ export const Login = () => {
     <div className="login">
         <NavBar />
         <div className="hero">
-            <img className="hero__image" src={Image4} />
-        </div>
-        <div className="login-page">
+            <img className="hero__image" src={Image5} />
+            <div className="login-page">
             <div className='container login-form'>
                 <form 
                      id='contact-form' className='login-form__input'>
@@ -51,6 +50,8 @@ export const Login = () => {
             {error && <p>{error}</p>}
             </div>
         </div>
+        </div>
+        
     </div>
     )
 }
