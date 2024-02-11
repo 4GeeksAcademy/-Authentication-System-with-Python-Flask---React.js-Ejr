@@ -3,7 +3,7 @@ import { useContext } from 'react'
 import { Context } from '../store/appContext'
 import { Link, useNavigate } from 'react-router-dom'
 import { NavBar } from "../component/navbar";
-import Image4 from "../../img/image4.jpg";
+import Image5 from "../../img/image5.jpg";
 
 export const Signup = () => {
 
@@ -53,22 +53,22 @@ export const Signup = () => {
     <div className='signup'>
          <NavBar />
         <div className="hero">
-            <img className="hero__image" src={Image4} />
-        </div>
-        <div className="signup-page">
-          <div className='container signup-form'>
-              <form 
-            ref={formRef}
-            id='contact-form' className='form-signup'
-            onSubmit={(e) => { e.preventDefault(); handleSubmit(signup); }}>
-                <input type="username" id="username" name="username" onChange={(e)=>(handleInputForm(e.target.value, e.target.name))} required placeholder='name'/>
-                <input type="email" id="email" name="email" onChange={(e)=>(handleInputForm(e.target.value, e.target.name))} required placeholder='e-mail'/>
-                <input type="password" id="password" name="password"  onChange={(e)=>(handleInputForm(e.target.value, e.target.name))} required placeholder='password'/>
-                <input type="password" id="confirmPassword" name="confirmPassword" onChange={(e)=>(handleInputForm(e.target.value, e.target.name))} required placeholder='confirm password'/>
-                <button type="button" onClick={()=>handleSubmit(signup)}><strong>Sign Up</strong></button>
-            </form>  
-          </div>
-        </div>
+            <img className="hero__image" src={Image5} />
+            <div className="signup-page">
+              <div className='container signup-form'>
+                  <form 
+                ref={formRef}
+                id='contact-form' className='form-signup'
+                onSubmit={(e) => { e.preventDefault(); handleSubmit(signup); }}>
+                    <input type="username" id="username" name="username" onChange={(e)=>(handleInputForm(e.target.value, e.target.name))} required placeholder='name'/>
+                    <input type="email" id="email" name="email" onChange={(e)=>(handleInputForm(e.target.value, e.target.name))} required placeholder='e-mail'/>
+                    <input type="password" id="password" name="password"  onChange={(e)=>(handleInputForm(e.target.value, e.target.name))} required placeholder='password'/>
+                    <input type="password" id="confirmPassword" name="confirmPassword" onChange={(e)=>(handleInputForm(e.target.value, e.target.name))} required placeholder='confirm password'/>
+                    <button type="button" onClick={()=>handleSubmit(signup)}><strong>Sign Up</strong></button>
+                </form>  
+              </div>
+           </div>
+        </div> 
     </div>
   )
 }
