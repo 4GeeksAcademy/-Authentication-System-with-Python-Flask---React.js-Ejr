@@ -10,18 +10,17 @@ export const SignupLogin = () => {
 			<NavBar />
 			<div className="hero">
 				<img className="hero__image" src={Image5} />
-			</div>
-			<div className="container box">
-				<div className="text-center mt-5">
-					<Link to="/signup">
-						<button><strong>SIGN UP</strong></button>
-					</Link>
-					<Link to="/login">
-						<button><strong>LOGIN</strong></button>
-					</Link>
+				<div className="container box">
+					<div className="mt-5">
+						<Link to="/signup">
+							<button><strong>SIGN UP</strong></button>
+						</Link>
+						<Link to="/login">
+							<button><strong>LOGIN</strong></button>
+						</Link>
+					</div>
 				</div>
 			</div>
 		</div>
-
 	);
 };

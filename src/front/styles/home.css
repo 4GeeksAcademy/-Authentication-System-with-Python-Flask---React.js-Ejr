@@ -197,11 +197,12 @@ object-fit: cover;
   login/signup
 */
 .box {
-  background: rgba(129, 172, 168, 0.616);
+  background: rgba(61, 85, 82, 0.616);
   max-width: 360px;
   margin: 0 auto 100px;
   padding: 45px;
   text-align: center;
+  z-index: 1;
 }
 
 .box button {
@@ -223,13 +224,14 @@ object-fit: cover;
 /*
   login page
 */
-
 .login-form {
-  background: rgba(129, 172, 168, 0.616);
+  position: relative;
+  background:rgba(61, 85, 82, 0.616); 
   max-width: 360px;
   margin: 0 auto 100px;
   padding: 45px;
   text-align: center;
+  z-index: 1;
 }
 
 .login-form input {
@@ -264,11 +266,12 @@ object-fit: cover;
 */
 .signup-form {
   position: relative;
-  background: rgba(129, 172, 168, 0.616);
+  background: rgba(61, 85, 82, 0.616);
   max-width: 360px;
   margin: 0 auto 100px;
   padding: 45px;
   text-align: center;
+  z-index: 1;
 }
 
 .signup-form input {
@@ -356,6 +359,7 @@ object-fit: cover;
   color: #FFFFFF;
   font-size: 17px;
   text-align: center;
+   z-index: 1;
 
   .ty-box .p{
     text-align: justify;

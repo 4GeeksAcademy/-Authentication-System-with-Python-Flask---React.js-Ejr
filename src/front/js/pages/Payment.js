@@ -50,18 +50,18 @@ export const Payment = () => {
           <NavBar />
           <div className="hero">
 				    <img className="hero__image" src={Image4} />
-			    </div>
-          <div className="container donate-box ">
-              <h><strong>JOIN THE CLEANUP!</strong></h>
-              <p>Please enter the amount in <strong>euros</strong> you wish to donate to our cause</p>
-              <AmountSubmit setParentAmount={setAmount} /> {}
-              {clientSecret && stripePromise && (
-                <Elements stripe={stripePromise} options={{ clientSecret }} >
-                  <CheckoutForm />
-                </Elements>
-              )}
-              <p>This is a secure system, your data will never be used in ways that you haven’t explicitly opted in to.</p>
-          </div>
+              <div className="container donate-box ">
+                <h><strong>JOIN THE CLEANUP!</strong></h>
+                <p>Please enter the amount in <strong>euros</strong> you wish to donate to our cause</p>
+                <AmountSubmit setParentAmount={setAmount} /> {}
+                {clientSecret && stripePromise && (
+                  <Elements stripe={stripePromise} options={{ clientSecret }} >
+                    <CheckoutForm />
+                  </Elements>
+                )}
+                <p>This is a secure system, your data will never be used in ways that you haven’t explicitly opted in to.</p>
+            </div>
+          </div>        
         </div> 
     </>
  );

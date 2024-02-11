@@ -39,9 +39,8 @@ export const Login = () => {
         <NavBar />
         <div className="hero">
             <img className="hero__image" src={Image5} />
-        </div>
-        <div className="login-page">
-            <div>
+            <div className="login-page">
+            <div className='container login-form'>
                 <form 
                      id='contact-form' className='login-form__input'>
                     <input type="email" id="email" name="email" value={email} onChange={(e)=> setEmail(e.target.value)} required placeholder='e-mail'/>
@@ -51,6 +50,8 @@ export const Login = () => {
             {error && <p>{error}</p>}
             </div>
         </div>
+        </div>
+        
     </div>
     )
 }
