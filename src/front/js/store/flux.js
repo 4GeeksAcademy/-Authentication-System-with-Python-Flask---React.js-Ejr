@@ -14,83 +14,83 @@ const getState = ({ getStore, getActions, setStore }) => {
 			total_users: [],
 			total_impact_time: [],
 			total_impact_liters: []
-		
+
 		},
 		actions: {
-	
-		
-			signupNewUser: async (formSignup)=>{
-				const url=process.env.BACKEND_URL;
-				const signupRequirement="/api/signup"
-				try{
-					
-					const response= await fetch(url+signupRequirement,{
-						method:"POST",
+
+
+			signupNewUser: async (formSignup) => {
+				const url = process.env.BACKEND_URL;
+				const signupRequirement = "/api/signup"
+				try {
+
+					const response = await fetch(url + signupRequirement, {
+						method: "POST",
 						body: JSON.stringify(formSignup),
-						headers:{
-							'Content-type': 'application/json'
-						},					
-					})
-	
-					if (response.ok){
-						const jsonResponse= await response.json()
-						console.log(jsonResponse)
-						const store = getStore()
-						setStore({...store,messageToShowAlert:jsonResponse})
-					}
-				
-					else{
-						const jsonResponse=await response.json()
-						console.log(jsonResponse)
-	
-					}
-	
-				}
-	
-				catch(e){
-					
-					console.log("An error has occured",e)
-					
-				}
-			},
-			
-			loginUserExisting:async({ email, password })=>{
-				const url= process.env.BACKEND_URL;
-				const loginRequirement="/api/login"
-				try{
-					const response = await fetch(url+loginRequirement, {
-						method:'POST',
-						headers:{
+						headers: {
 							'Content-type': 'application/json'
 						},
-						body:JSON.stringify({
+					})
+
+					if (response.ok) {
+						const jsonResponse = await response.json()
+						console.log(jsonResponse)
+						const store = getStore()
+						setStore({ ...store, messageToShowAlert: jsonResponse })
+					}
+
+					else {
+						const jsonResponse = await response.json()
+						console.log(jsonResponse)
+
+					}
+
+				}
+
+				catch (e) {
+
+					console.log("An error has occured", e)
+
+				}
+			},
+
+			loginUserExisting: async ({ email, password }) => {
+				const url = process.env.BACKEND_URL;
+				const loginRequirement = "/api/login"
+				try {
+					const response = await fetch(url + loginRequirement, {
+						method: 'POST',
+						headers: {
+							'Content-type': 'application/json'
+						},
+						body: JSON.stringify({
 							email,
 							password
 						})
 					});
-					
-					if(response.status !==200) return false	
-						
-					const jsonResponse= await response.json()
-	
-					if (jsonResponse["token"]){
+
+					if (response.status !== 200) return false
+
+					const jsonResponse = await response.json()
+
+					if (jsonResponse["token"]) {
 						localStorage.setItem("userToken", jsonResponse["token"])
 						return true;
-	
+
 					}
 					return false;
-						
+
 				}
-			
-				catch(e){
-							console.log("An error was occurred, check it out!",e)
+
+				catch (e) {
+					console.log("An error was occurred, check it out!", e)
 				}
 			},
-	
+
 			getInformationOfToken: async () => {
 				const url = process.env.BACKEND_URL;
 				const tokenRequirement = "/api/userdata";
-			 
+
 				try {
 					const response = await fetch(url + tokenRequirement, {
 						method: 'GET',
@@ -98,13 +98,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 							'Authorization': `Bearer ${localStorage.getItem("userToken")}`
 						}
 					});
-			 
+
 					if (response.status !== 200) {
 						throw new Error(`Error: ${response.status}`);
 					}
-			 
+
 					const jsonResponse = await response.json();
-			 
+
 					return jsonResponse;
 
 				} catch (error) {
@@ -164,7 +164,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						body: JSON.stringify(requestBody)
 
 					});
-			
+
 
 					const jsonResponse = await response.json();
 					if (response.status !== 200) {
@@ -174,28 +174,58 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				}
 
-					catch(error) {
+				catch (error) {
 					console.error("An error occurred: ", error);
 				}
 			},
-		
+
 
 			setStartTime: (start_time) => {
 				const store = getStore()
-				const currentDate = datetime.now ()
+				const currentDate = datetime.now()
 				setStore({ ...store, start_time: currentDate });
-		},
-		
+			},
 
-		setFinishTime: (finish_time) => {
-			const store = getStore()
-			const finishTime = datetime.now ()
-			setStore({ ...store, finish_time: finishTime });
-		},
 
-		
-		
-		
+			setFinishTime: (finish_time) => {
+				const store = getStore()
+				const finishTime = datetime.now()
+				setStore({ ...store, finish_time: finishTime });
+			},
+
+			submit_manual_data: async () => {
+				const url = process.env.BACKEND_URL;
+				const tokenRequirement = "/api/userdata";
+
+				try {
+					const response = await fetch(url + tokenRequirement, {
+						method: 'POST',
+						headers: {
+							'Authorization': `Bearer ${localStorage.getItem("userToken")}`,
+							'Content-Type': 'application/json',
+						},
+						body: JSON.stringify({
+							start_time: getStore().start_time,
+							finish_time: getStore().finish_time,
+							location: getStore().location,
+							liters: getStore().liters,
+							status: "completed"
+						})
+					});
+
+					const jsonResponse = await response.json();
+
+					if (response.status !== 200) {
+						throw new Error(`Error: ${response.status}`);
+					}
+
+					return jsonResponse;
+				} catch (error) {
+					console.error("An error occurred: ", error);
+				}
+
+			},
+
 
 			getUserImpact: async () => {
 				const url = process.env.BACKEND_URL;

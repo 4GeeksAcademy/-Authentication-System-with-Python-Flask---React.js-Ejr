@@ -7,11 +7,16 @@ export const SubmitButton = () => {
     const [pending, setPending] = useState(false);
   
 
-    const handleSubmitData = async () => {
+    const handleSubmit = async () => {
 
         try {
             setPending(true);
-            await actions.submitData();
+            if (store.start_time && store.finish_time &&  store.location && store.liters){
+                actions.submit_manual_data();
+            } else { 
+                await actions.submitData();
+            }
+            
            
         } catch (error) {
             console.error("An error occurred while submitting data: ", error);
@@ -21,7 +26,7 @@ export const SubmitButton = () => {
     };
 
     return (
-        <button type="button" className="btn btn-info btn-sm me-2" disabled={!active} onClick={handleSubmitData}>
+        <button type="button" className="btn btn-info btn-sm me-2" disabled={!active} onClick={handleSubmit}>
             Submit tracking
         </button>
     );
