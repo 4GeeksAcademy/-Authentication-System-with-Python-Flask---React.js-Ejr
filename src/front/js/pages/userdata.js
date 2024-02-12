@@ -2,12 +2,13 @@ import React, { useEffect, useState } from 'react'
 import { EventInfoBox } from '../component/eventInfoBox';
 import { useNavigate } from 'react-router-dom'
 import { TimeCounter } from '../component/timeCounter';
-import { UserInsertData } from '../component/userInsertData';
 import { UserLevelConnectLink} from '../component/userLevelConectLink';
 import { InsertData } from '../component/insertData';
 import { InsertLocationLiters } from '../component/inserLocationLiters';
 import { SubmitButton } from '../component/submitButton';
 import { ShowUserImpact } from '../component/showUserImpact';
+import { TotalImpact } from '../component/TotalImpact';
+
 
 export const Userdata = () => {  
 
@@ -39,6 +40,7 @@ export const Userdata = () => {
       <SubmitButton /> 
       <ShowUserImpact />
       <EventInfoBox />
+      
       <button onClick={logout}>Logout</button>
     </div>
     </>
