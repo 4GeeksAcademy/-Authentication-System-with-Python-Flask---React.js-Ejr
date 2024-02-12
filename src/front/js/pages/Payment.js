@@ -7,24 +7,24 @@ import { NavBar } from "../component/navbar";
 import Image4 from "../../img/image4.jpg";
 
 export const Payment = () => {
- const [stripePromise, setStripePromise] = useState(null);
- const [clientSecret, setClientSecret] = useState("");
- const [amount, setAmount] = useState('');
+  const [stripePromise, setStripePromise] = useState(null);
+  const [clientSecret, setClientSecret] = useState("");
+  const [amount, setAmount] = useState('');
 
- useEffect(() => {
-  const routeRequirement = "/api/config";
-  const url = `${process.env.BACKEND_URL}${routeRequirement}`;
-  fetch(url)
-       .then(async (response) => {
-         const { publishableKey } = await response.json();
-         setStripePromise(loadStripe(publishableKey)); 
-       })
-       .catch((error) => {
-         console.error("Failed to fetch config:", error);
-       });
-   }, []);
+  useEffect(() => {
+    const routeRequirement = "/api/config";
+    const url = `${process.env.BACKEND_URL}${routeRequirement}`;
+    fetch(url)
+      .then(async (response) => {
+        const { publishableKey } = await response.json();
+        setStripePromise(loadStripe(publishableKey));
+      })
+      .catch((error) => {
+        console.error("Failed to fetch config:", error);
+      });
+  }, []);
 
-   useEffect(() => {
+  useEffect(() => {
     const routeRequirement = "/api/create-payment-intent";
     const url = `${process.env.BACKEND_URL}${routeRequirement}`;
     fetch(url, {
@@ -32,9 +32,9 @@ export const Payment = () => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ amount: amount * 100 }), 
+      body: JSON.stringify({ amount: amount * 100 }),
     })
-      
+
       .then(async (result) => {
         const { client_secret } = await result.json();
         setClientSecret(client_secret);
@@ -42,16 +42,15 @@ export const Payment = () => {
       .catch((error) => {
         console.error("Failed to create payment intent:", error);
       });
- }, [amount]);
+  }, [amount]);
 
- return (
-    <>
-        <div className="home">
+  return (
+    <div className="home">
           <NavBar />
           <div className="hero">
 				    <img className="hero__image" src={Image4} />
               <div className="container donate-box ">
-                <h><strong>JOIN THE CLEANUP!</strong></h>
+                <h4><strong>JOIN THE CLEANUP!</strong></h4>
                 <p>Please enter the amount in <strong>euros</strong> you wish to donate to our cause</p>
                 <AmountSubmit setParentAmount={setAmount} /> {}
                 {clientSecret && stripePromise && (
@@ -63,7 +62,6 @@ export const Payment = () => {
             </div>
           </div>        
         </div> 
-    </>
- );
-
+  );
 };
+

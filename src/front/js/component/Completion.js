@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import { NavBar } from "../component/navbar";
 import video2 from "../../assets/video2.mp4";
 

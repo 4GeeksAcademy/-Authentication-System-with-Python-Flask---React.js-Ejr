@@ -139,7 +139,7 @@ def create_payment_intent():
 
         return jsonify({"client_secret": payment_intent.client_secret})
     except Exception as e:
-        current_app.logger.error(str(e))
+        api.logger.error(str(e))
         return jsonify({}), 400
 
 
