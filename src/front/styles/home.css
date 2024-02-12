@@ -301,67 +301,37 @@ object-fit: cover;
   background: rgb(77, 156, 148);
 }
 
-/*
-  donations page
-*/
 
-
-.donate-box {
-  position: relative;
-  background:  #b99d2391;
-  max-width: 360px;
-  margin: 0 auto 100px;
-  padding: 45px;
-  text-align: center;
-
-  p:nth-of-type(2) {
-    font-size: 10px;
-  }
+.admin-page {
+  display: flex;
+  flex-direction: column;
 }
 
-.donate-box, h5{
-  color: #FFFFFF;
+.admin-container {
+  flex-grow: 1; 
+  padding-top: 70px;
+  margin-top: 50px;
+  padding-left: 40px;
+  padding-right: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-family: 'Atkinson Hyperlegible', sans-serif;
 }
 
-.donate-box input {
-  outline: 0;
-  background: #f2f2f2;
-  width: 100%;
-  border: 0;
-  margin: 0 0 15px;
-  padding: 15px;
-  box-sizing: border-box;
-  font-size: 17px;
+.infoblock {
+  background-color: #f2f2f2;
+  padding: 10px;
+  border: 1px solid rgb(77, 156, 148); 
+  border-radius: 5px; 
+  margin: auto;
 }
 
-.donate-box button {
-  text-transform: uppercase;
-  outline: 0;
-  background: #b99e23;
-  width: 100%;
-  border: 0;
-  margin: 0 0 15px;
-  padding: 15px;
-  color: #FFFFFF;
-  font-size: 17px;
-}
+.input-group-text {
+  width: 110px;
+  font-family: 'Atkinson Hyperlegible', sans-serif;
+} 
 
-.donate-box button:hover,.donate-box button:active,.donate-box button:focus {
-  background: rgb(168, 78, 50);
-}
-
-.ty-box {
-  position: relative;
-  background:  #b99d2391;
-  width: 1050px;
-  margin: 0 auto 0px;
-  padding: 20px 30px 10px 30px;
-  color: #FFFFFF;
-  font-size: 17px;
-  text-align: center;
-   z-index: 1;
-
-  .ty-box .p{
-    text-align: justify;
-  }
+.input-section {
+  margin-bottom: 10px;
 }
