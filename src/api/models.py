@@ -24,21 +24,30 @@ class User(db.Model):
         }
 
 
+class status ():
+    pending = "pending"
+    complete = "completed"
+    invalid = "invalid"
+
 class UserData(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column (db.Integer, db.ForeignKey ('user.id'))
-    date_time = db.Column(db.DateTime, unique=False, nullable=False)
-    location = db.Column(db.String, unique=False, nullable=False)
-    liters = db.Column(db.Float, unique=False, nullable=False)
+    start_time = db.Column(db.DateTime, unique=False, nullable=False)
+    finish_time =db.Column(db.DateTime, unique=False, nullable=True)
+    status = db.Column(db.String, unique=False, nullable=False)
+    location = db.Column(db.String, unique=False, nullable=True)
+    liters = db.Column(db.Integer, unique=False, nullable=True)
 
     def __repr__(self):
-        return f'<UserData {self.date_time} {self.location} {self.liters}>'
+        return f'<UserData {self.user_id}>'
 
     def serialize(self):
         return {
             "id": self.id,
             "user_id": self.user_id,
-            "date_time": self.date_time,
+            "start_time": self.start_time,
+            "finish_time": self.finish_time,
+            "status": self.status.value, 
             "location": self.location,
             "liters": self.liters,
         }

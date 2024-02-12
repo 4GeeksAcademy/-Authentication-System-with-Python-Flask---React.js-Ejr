@@ -12,7 +12,7 @@ import { Login } from "./pages/login";
 import { Signup } from "./pages/signup";
 import { Userdata } from "./pages/userdata";
 import { AdminPage } from "./pages/AdminPage";
-import { Payment } from "./component/Payment";
+import { Payment } from "./pages/Payment";
 import { Completion } from "./component/Completion";
 import CheckoutForm from "./component/CheckoutForm";
 import { AmountSubmit } from "./component/amountSubmitForm";

@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { jwtDecode } from 'jwt-decode';
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import { NavBar } from "../component/navbar";
+
+
 
 export const AdminPage = () => {
   const [users, setUsers] = useState([]);
@@ -54,13 +56,32 @@ export const AdminPage = () => {
         console.error(`Error fetching users: ${error}`);
         setLoading(false);
       });
-  }, []);
 
-  const handlePromote = () => {
-    const adminRouteRequirement = "/api/admin";
-    const url = `${process.env.BACKEND_URL}${adminRouteRequirement}`;
 
-    fetch(url, {
+ const handlePromote = () => {
+  const adminRouteRequirement = "/api/admin";
+  const url = `${process.env.BACKEND_URL}${adminRouteRequirement}`;
+  
+  fetch(url, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      email: selectedEmail
+    }),
+  })
+  .then(response => {
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    return response.json();
+  })
+  .then(data => {
+    console.log(data.message || data.error);
+    alert('User updated successfully!');
+  
+    return fetch(`${process.env.BACKEND_URL}/api/stripelink`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -145,6 +166,7 @@ export const AdminPage = () => {
         console.error('Error:', error);
       });
   };
+
   if (loading) {
     return <div>Loading...</div>;
   }
