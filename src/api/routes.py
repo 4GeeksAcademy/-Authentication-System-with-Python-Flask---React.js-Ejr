@@ -82,6 +82,135 @@ def sign_up():
         # Handle any exceptions and return an error message
         return jsonify({'error': str(e)}), 500
     
+# Load Default Events #
+
+@api.route('/load_default_events', methods=['POST'])
+def load_default_events():
+    default_events = [
+        {
+      "date": "02-02-2022",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras vel neque eros. Pellentesque pretium faucibus mattis. Phasellus faucibus non diam vitae condimentum.",
+      "id": 1,
+      "image": None,
+      "location": "Thompsons",
+      "name": "Event 01",
+      "price": "20"
+    },
+    {
+      "date": "06-08-2024",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras vel neque eros. Pellentesque pretium faucibus mattis. Phasellus faucibus non diam vitae condimentum.",
+      "id": 2,
+      "image": None,
+      "location": "Laverys",
+      "name": "Event 02",
+      "price": "10"
+    },
+    {
+      "date": "23-12-2024",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras vel neque eros. Pellentesque pretium faucibus mattis. Phasellus faucibus non diam vitae condimentum.",
+      "id": 3,
+      "image": None,
+      "location": "Ollies",
+      "name": "Event 03",
+      "price": "15"
+    },
+    {
+      "date": "05-05-2024",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras vel neque eros. Pellentesque pretium faucibus mattis. Phasellus faucibus non diam vitae condimentum.",
+      "id": 6,
+      "image": None,
+      "location": "4Geeks",
+      "name": "Event 04",
+      "price": "35"
+    },
+    {
+      "date": "2024-02-24",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras vel neque eros. Pellentesque pretium faucibus mattis. Phasellus faucibus non diam vitae condimentum.",
+      "id": 7,
+      "image": None,
+      "location": "Voodoo",
+      "name": "Event 05",
+      "price": "25"
+    },
+    {
+      "date": "2024-02-25",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras vel neque eros. Pellentesque pretium faucibus mattis. Phasellus faucibus non diam vitae condimentum.",
+      "id": 8,
+      "image": None,
+      "location": "Liquor",
+      "name": "Event 06",
+      "price": "50"
+    },
+    {
+      "date": "2024-03-15",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras vel neque eros. Pellentesque pretium faucibus mattis. Phasellus faucibus non diam vitae condimentum.",
+      "id": 9,
+      "image": None,
+      "location": "The SSE Arena",
+      "name": "Event 07",
+      "price": "30"
+    },
+    {
+      "date": "2024-04-20",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras vel neque eros. Pellentesque pretium faucibus mattis. Phasellus faucibus non diam vitae condimentum.",
+      "id": 10,
+      "image": None,
+      "location": "Ulster Sports Club",
+      "name": "Event 08",
+      "price": "15"
+    },
+    {
+      "date": "06-08-2024",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras vel neque eros. Pellentesque pretium faucibus mattis. Phasellus faucibus non diam vitae condimentum.",
+      "id": 11,
+      "image": None,
+      "location": "Thompsons",
+      "name": "Event 09",
+      "price": "10"
+    },
+    {
+      "date": "19-05-2024",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras vel neque eros. Pellentesque pretium faucibus mattis. Phasellus faucibus non diam vitae condimentum.",
+      "id": 12,
+      "image": None,
+      "location": "Boneyard",
+      "name": "Event 10",
+      "price": "30"
+    },
+    {
+      "date": "19-05-2024",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras vel neque eros. Pellentesque pretium faucibus mattis. Phasellus faucibus non diam vitae condimentum.",
+      "id": 13,
+      "image": None,
+      "location": "Boneyard",
+      "name": "Event 11",
+      "price": "30"
+    },
+    {
+      "date": "11-05-2024",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras vel neque eros. Pellentesque pretium faucibus mattis. Phasellus faucibus non diam vitae condimentum.",
+      "id": 14,
+      "image": None,
+      "location": "Thompsons",
+      "name": "Event 12",
+      "price": "20"
+    },
+    ]
+
+    for event_data in default_events:
+        new_event = Event(
+            name=event_data['name'],
+            description=event_data['description'],
+            location=event_data['location'],
+            date=event_data['date'],
+            price=event_data['price'],
+            image=event_data.get('image')  # Assume image might not be provided
+        )
+        db.session.add(new_event)
+    db.session.commit()
+
+    return jsonify({"message": "Default events loaded successfully"}), 200
+    
 #Get All Events Route ######
 
 @api.route('/events', methods=['GET'])
@@ -194,3 +323,4 @@ def delete_event(event_id):
     db.session.commit()
 
     return jsonify({'message': 'Event deleted successfully'}), 200
+

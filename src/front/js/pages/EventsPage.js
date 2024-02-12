@@ -13,9 +13,21 @@ const EventsPage = () => {
 
     // Fetch event IDs or use a predefined list
     useEffect(() => {
-        // Fetch event IDs from an external API or use a predefined list
-        const fetchedEventIds = [1, 2, 3, 6, 7, 8, 9, 10, 11, 12, 13, 14]; // Example: Replace with actual fetched event IDs
-        setEventIds(fetchedEventIds);
+        const fetchEventIdsFromDatabase = async () => {
+            try {
+                const response = await fetch(`${process.env.BACKEND_URL}/api/events`);
+                if (!response.ok) {
+                    throw new Error("Failed to fetch events");
+                }
+                const data = await response.json();
+                const fetchedEventIds = data.events.map(event => event.id);
+                setEventIds(fetchedEventIds);
+            } catch (error) {
+                console.error("Error fetching event IDs:", error);
+            }
+        };
+
+        fetchEventIdsFromDatabase();
     }, []);
 
     // Calculate indexes of events to display based on current page
@@ -28,7 +40,6 @@ const EventsPage = () => {
 
     return (
         <div className="text-center">
-
             {/* Events Page Hero */}
             <div className="hero" style={{ backgroundImage: `url(${EventsHeroImage})`, backgroundSize: 'cover', backgroundPosition: 'center'  }}>
                 <Hero
@@ -68,7 +79,7 @@ const EventsPage = () => {
                 </div>
             </div>
 
-			<SignUpNow /> 
+            <SignUpNow />
 
         </div>
     );
