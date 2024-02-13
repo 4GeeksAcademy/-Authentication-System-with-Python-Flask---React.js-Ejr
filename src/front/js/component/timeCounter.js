@@ -5,7 +5,6 @@ import { SubmitButton } from "./submitButton";
 export const TimeCounter = () => {
   const [timer, setTime] = useState(0)
   const [active, setActive] = useState(false)
-  const [buttonText, setButtonText] = useState("Begin tracking")
   const {store, actions} = useContext (Context)
   const [pending, setPending] = useState (false)
   useEffect(() => {
@@ -22,11 +21,16 @@ export const TimeCounter = () => {
     };
   }, [timer, active, setTime]);
 
-  const startStop = () => {
-    setActive((prevActive) => !prevActive);
-    setButtonText((prevText) => (prevText === "Begin tracking" ? "Stop tracking" : "Begin tracking")) 
-    if (!pending) actions.start_time() 
+  const start = () => {
+    setActive(prevActive => !prevActive);
+    actions.setStartTime()
     setPending (true)
+  }
+
+  const stop = () => {
+    setActive(prevActive => !prevActive);
+    actions.setFinishTime()
+    setPending (false)
   }
 
   const hours = Math.floor(timer / 3600);
@@ -64,9 +68,12 @@ export const TimeCounter = () => {
       </div>
       <div className="card-footer text-light-emphasis fw-lighter">
         <div className="buttons text-light-emphasis fw-lighter">
-          <button type="buttonStart" className="btn btn-info btn-sm me-2" onClick={startStop}>
-            {buttonText}
-          </button>
+          
+          {!pending && <button type="buttonStart" className="btn btn-info btn-sm me-2" onClick={start}>
+            "Begin tracking"
+          </button>} {pending && <button type="buttonStart" className="btn btn-info btn-sm me-2" onClick={stop}>
+            "Stop tracking"
+          </button>} 
         </div>
       </div>
     </div>
