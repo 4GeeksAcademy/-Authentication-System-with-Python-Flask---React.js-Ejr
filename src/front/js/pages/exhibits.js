@@ -1,27 +1,24 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Context } from "../store/appContext";
 
 import "../../styles/exhibit.css";
 
 export const Exhibits = () => {
+	let fallBackURL = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzqX-q4R4VGGs1ArQpqZ-Y5deWIBVJ97KHOp4bkuQlmg&s"
 	const { store, actions } = useContext(Context);
-
+	const [artPieces , setArtPieces] = useState([])
+	useEffect(()=>{
+		setArtPieces(store.artPieces)
+	},[store])
 	return (
 		<div className="text-center mt-5">
 			<div className="row1"> 
-				<div className="art-poster-1">1</div>
-				<div className="art-poster-2">2</div>
-				<div className="art-poster-3">3</div>
-			</div>
-			<div className="row2">
-				<div className="art-poster-4">4</div>
-				<div className="art-poster-5">5</div>
-				<div className="art-poster-6">6</div>
-			</div>
-			<div className="row3">
-				<div className="art-poster-7">7</div>
-				<div className="art-poster-8">8</div>
-				<div className="art-poster-9">9</div>
+				{artPieces.map(item => (
+					<div className="art-poster">
+						<p>{item.title}  {item.objectID}</p>
+						<img className="w-100" src={item.primaryImageSmall} onError= {(e)=>{e.target.src = fallBackURL}} alt = {item.objectName} />
+					</div>
+				))}
 			</div>
 		</div>
 	);

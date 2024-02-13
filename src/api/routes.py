@@ -55,7 +55,7 @@ def sign_up():
     check_user = User.query.filter_by(email = email).first()
     if check_user:
         return jsonify({"message" : "This user already exist"}),409
-    new_user = User(emali = email, password = password, is_active = True)
+    new_user = User(email = email, password = password, is_active = True)
     db.session.add(new_user)
     db.session.commit()
 
