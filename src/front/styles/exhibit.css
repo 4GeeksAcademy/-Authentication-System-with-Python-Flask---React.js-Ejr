@@ -1,0 +1,99 @@
+/*
+    home.css: This website contains selectors only used in home.css
+
+    All pages share the styles on index.css but you should create 
+    one more css for each page that will contain the selected used 
+    on that page only (the ones not reused in other pages).
+*/
+
+
+.footer {
+    flex-shrink: 0;
+    bottom: 0;
+    background-color: 
+    #29627D;
+ 
+  }
+
+  .navbar {
+    background-color: 
+    #29627D;
+    justify-content: flex-start;
+  }
+
+
+
+.navbar-logo {
+    width: 100px;
+    height: 100px;
+    padding-right: 1%;
+}
+
+
+
+.row1 {
+    display: flex;
+    text-align: center;
+    justify-content: space-between;
+    margin: 45px 75px;
+    margin-top: 100px;
+}
+
+.row2 {
+    display: flex;
+    text-align: center;
+    justify-content: space-between;
+    margin: 45px 75px;
+}
+
+.row3 {
+    display: flex;
+    text-align: center;
+    justify-content: space-between;
+    margin: 45px 75px;
+}
+
+.art-poster-1 {
+    border: 10px solid black;
+    padding: 75px 50px;
+}
+
+.art-poster-2 {
+    border: 10px solid black;
+    padding: 75px 50px;
+}
+
+.art-poster-3 {
+    border: 10px solid black;
+    padding: 75px 50px;
+}
+
+.art-poster-4 {
+    border: 10px solid black;
+    padding: 75px 50px;
+}
+
+.art-poster-5 {
+    border: 10px solid black;
+    padding: 75px 50px;
+}
+
+.art-poster-6 {
+    border: 10px solid black;
+    padding: 75px 50px;
+}
+
+.art-poster-7 {
+    border: 10px solid black;
+    padding: 75px 50px;
+}
+
+.art-poster-8 {
+    border: 10px solid black;
+    padding: 75px 50px;
+}
+
+.art-poster-9 {
+    border: 10px solid black;
+    padding: 75px 50px;
+}
