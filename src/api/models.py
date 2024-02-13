@@ -50,12 +50,14 @@ class UsersGroup(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     group_id = db.Column(db.Integer, db.ForeignKey('group.id'), nullable=False)
+    admin = db.Column(db.Boolean, nullable=False)
 
     def serialize(self):
         return {
             "id": self.id,
             "user_id": self.user_id,
-            "group_id": self.group_id
+            "group_id": self.group_id,
+            "admin": self.admin
         }
 
 class Event(db.Model):
@@ -116,6 +118,8 @@ class Selected(db.Model):
             "movie_id": self.movie_id,
             "winner": self.winner
         }
+
+
 
 
 
