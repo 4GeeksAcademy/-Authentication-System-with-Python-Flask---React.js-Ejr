@@ -144,7 +144,7 @@ def create_payment_intent():
 
 
 @api.route ("/userdata", methods=["POST"]) 
-@jwt_required()
+
 def handle_userdata():
 
     data = request.json

@@ -24,15 +24,16 @@ export const UserLevelConnectLink = () => {
         const dataUserLevel = await responseUserLevel.json();
         const userLevel = dataUserLevel.level;
         let roleName;
+      
 
         switch (userLevel) {
-          case  1:
+          case 1:
             roleName = "Basic User";
             break;
-          case  2:
+          case 2:
             roleName = "Super User";
             break;
-          case  3:
+          case 3:
             roleName = "Admin";
             break;
           default:
@@ -54,7 +55,7 @@ export const UserLevelConnectLink = () => {
 
         const dataStripeLink = await responseStripeLink.json();
         setStripeLink(dataStripeLink.stripe_link_integration);
-      
+
       } catch (err) {
         setError(err.message);
       }
@@ -77,19 +78,22 @@ export const UserLevelConnectLink = () => {
 
   return (
     <>
-      <p>Your role is: {role}</p>
-      {role === "Super User" && (
-        <button onClick={handleButtonClick}>
-          Link your account
-        </button>
-      )}
-      {role === "Admin" && (
-        <Link to="/admin">
-        <button >
-          Go to Admin Page
-        </button>
-      </Link> 
-      )}
-    </>
+      <div className="user-level">
+        <p className="level"> Your <span className="sandsmile"> SANDSMILE</span>: 
+        <div className="role mt-2">  {role} </div></p>
+        {role === "Super User" && (
+          <button onClick={handleButtonClick}>
+            Link your account
+          </button>
+        )}
+        {role === "Admin" && (
+          <Link to="/admin">
+            <button >
+              Go to Admin Page
+            </button>
+          </Link>
+        )}
+       </div >
+      </>
   );
 };
