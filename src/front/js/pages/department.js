@@ -11,7 +11,7 @@ export const Department = props => {
 	return (
         <div>
             {artPieces.map((item) => {
-                
+                <p>{item.displayName}</p>
             })}
         </div>
         

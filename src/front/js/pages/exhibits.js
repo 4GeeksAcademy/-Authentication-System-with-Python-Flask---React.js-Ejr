@@ -15,7 +15,7 @@ export const Exhibits = () => {
 			<div className="row1"> 
 				{artPieces.map(item => (
 					<div className="art-poster">
-						<p>{item.title}  {item.objectID}</p>
+						<p>{item.title}  ({item.objectID})</p>
 						<img className="w-100" src={item.primaryImageSmall} onError= {(e)=>{e.target.src = fallBackURL}} alt = {item.objectName} />
 					</div>
 				))}

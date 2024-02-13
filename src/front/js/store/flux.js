@@ -6,7 +6,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 		},
 		actions: {
 		getObjects: () => {
-			for (let i = 1; i < 500; i++){
+			for (let i = 1; i < 250; i++){
 				fetch("https://collectionapi.metmuseum.org/public/collection/v1/objects/"+i)
 				.then(response => response.json())
 				.then(data => {
@@ -20,7 +20,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			}
 		},
 		getDepartments: () => {
-				fetch("https://collectionapi.metmuseum.org/public/collection/v1/departments/")
+				fetch("https://collectionapi.metmuseum.org/public/collection/v1/departments")
 				.then(response => response.json())
 				.then(data => {
 					let store = getStore()
@@ -29,7 +29,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				})
 
 			}
-		
+		// GET (by department) - > https://collectionapi.metmuseum.org/public/collection/v1/objects?departmentIds=1 
 			
 		}
 	};

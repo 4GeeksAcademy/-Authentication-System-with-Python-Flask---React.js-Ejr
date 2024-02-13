@@ -16,9 +16,10 @@ export const Departments = () => {
 						<Link to={"/departments/" + displayName}>
 							<div className="d-flex navbar">
 								<h1>{item.displayName}</h1>
+								console.log(item)
 								<img />
 							</div>
-					</Link>
+						</Link>
 						
 					)
 
