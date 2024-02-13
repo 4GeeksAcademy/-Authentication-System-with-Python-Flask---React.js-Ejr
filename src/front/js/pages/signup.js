@@ -1,9 +1,9 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { Context } from "../store/appContext";
 
 export const Signup = () => {
     const { actions } = useContext(Context);
-    
+
     const [usernameInput, setUsernameInput] = useState("")
     const [emailInput, setEmailInput] = useState("")
     const [passwordInput, setPasswordInput] = useState("")
