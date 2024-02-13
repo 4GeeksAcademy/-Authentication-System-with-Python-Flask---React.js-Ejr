@@ -47,5 +47,6 @@ def handle_login():
 
     payload = {"username" : user.username, "rol": "usuario"}
     token = create_access_token(identity=user.id, additional_claims=payload)
-    return jsonify({"token": token})
+
+    return jsonify({"token": token}), 200
     

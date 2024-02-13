@@ -7,14 +7,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 		},
 		actions: {
 
-			sendSignup: async (email, password) => {
+			sendSignup: async (username, email, password) => {
 				try {
 					const resp = await fetch(process.env.BACKEND_URL + "/signup", {
 						method: "POST",
 						headers: {
 							"Content-Type": "application/json",
 						},
-						body: JSON.stringify({ email, password }),
+						body: JSON.stringify({ username, email, password }),
 					});
 
 					if (!resp.ok) {
