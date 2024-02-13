@@ -1,7 +1,8 @@
 import React, { useContext } from "react";
 import { Context } from "../store/appContext";
-import rigoImageUrl from "../../img/rigo-baby.jpg";
+import jumbotron from "../../img/jumbotron.png";
 import "../../styles/home.css";
+import "../../img/jumbotron.png"
 
 export const Home = () => {
 	const { store, actions } = useContext(Context);
@@ -9,7 +10,7 @@ export const Home = () => {
 	return (
 		<div className="text-center mt-5">
 			<div className="jumbotron">
-				The Jumbotron goes here
+				<img src="../../img/jumbotron.png"></img>
 			</div>
 			<div className="history-title"><h3>HISTORY OF THE MET</h3></div>
 			<div className="history">
