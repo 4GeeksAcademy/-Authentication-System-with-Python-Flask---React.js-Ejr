@@ -3,7 +3,7 @@ import { Context } from "../store/appContext";
 import { Link, useNavigate } from "react-router-dom";
 
 export const Login = () => {
-    const { store, actions } = useContext(Context);
+    const { actions } = useContext(Context);
     const navigate = useNavigate();
 
     const [userInput, setUserInput] = useState("");
@@ -16,7 +16,7 @@ export const Login = () => {
 
         if (result.token) {
             sessionStorage.setItem("token", result.token);
-            navigate("/")
+            navigate("/home")
         }
     }
 
@@ -26,7 +26,7 @@ export const Login = () => {
             <div>
                 <form onSubmit={handleLogin}>
                     <div class="mb-3">
-                        <label htmlFor="userInput" class="form-label">Usuario</label>
+                        <label htmlFor="userInput" class="form-label">Nombre de usuario</label>
                         <input type="username" class="form-control" id="userInput" value={userInput} onChange={(e) => setUserInput(e.target.value)} required />
                     </div>
                     <div class="mb-3">
