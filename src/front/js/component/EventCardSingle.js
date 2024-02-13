@@ -29,7 +29,12 @@ const EventCardSingle = ({ eventId }) => {
 
     return (
         <div className="card event-card" style={{ width: "18rem" }}>
-            <img src={event.image} className="card-img-top" alt="Event Image" />
+            <img
+                src={event.image}
+                className="card-img-top"
+                alt="Event Image"
+                style={{ height: "200px", objectFit: "cover" }} // Adjust the height as needed
+            />
             <div className="event-card-body">
                 <h5>{event.name}</h5>
                 <p className="event-card-info">Location: {event.location}</p>
