@@ -22,7 +22,7 @@ def handle_hello():
 
     return jsonify(response_body), 200
 
-@api.route('/sign-in', methods=['POST'])
+@api.route('/login', methods=['POST'])
 def sign_in():
     body = request.json
     if body is None:

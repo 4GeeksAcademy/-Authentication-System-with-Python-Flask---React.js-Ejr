@@ -63,9 +63,12 @@ class Navbar extends Component {
               </ul>
             </div>
             <div className="text-end p-3">
+            <Link to="/login" className="nav-link">
               <button className="btn btn-primary">
-              Login/Sign Up
-          </button>
+                Login/Sign Up
+              </button>
+                  </Link>
+              
           </div>
           </div>
         </nav>
