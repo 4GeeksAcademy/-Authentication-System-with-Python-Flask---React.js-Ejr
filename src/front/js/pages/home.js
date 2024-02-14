@@ -2,15 +2,15 @@ import React, { useContext } from "react";
 import { Context } from "../store/appContext";
 import jumbotron from "../../img/jumbotron.png";
 import "../../styles/home.css";
-import "../../img/jumbotron.png"
+import Jumbotron from "../../img/jumbotron.png";
 
 export const Home = () => {
 	const { store, actions } = useContext(Context);
 
 	return (
 		<div className="text-center mt-5">
-			<div className="jumbotron">
-				<img src="../../img/jumbotron.png"></img>
+			<div className="">
+				<img src= { Jumbotron } />
 			</div>
 			<div className="history-title"><h3>HISTORY OF THE MET</h3></div>
 			<div className="history">
