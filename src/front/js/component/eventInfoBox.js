@@ -68,7 +68,7 @@ export const EventInfoBox = () => {
 
     return (
         <div className="EventCard">
-            <h3>Upcoming events:</h3>
+            <h3> Upcoming <span className="events"> EVENTS:</span></h3>
             <p>Day:{eventDetails.day}</p>
             <p>Time:{eventDetails.hour}</p>
             <p>Location:{eventDetails.location}</p>

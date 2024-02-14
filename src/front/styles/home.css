@@ -389,7 +389,8 @@ button {
   background: rgba(61, 85, 82, 0.616);
   max-width: 600px;
   max-height: 600px;
-  padding: 20px;
+  padding: 10px;
+  paddin-top: 2px;
   z-index: 1;
 }
 
@@ -408,7 +409,10 @@ button {
 
 .user-level,
 .user-impact,
-.logout-button {
+.logout-button, 
+.counter-submit-button,
+.time-counter-header, 
+.counter_button {
   background-color: rgba(129, 172, 168, 0.616);
   border: 0;
   box-sizing: border-box;
@@ -436,16 +440,19 @@ button {
 }
 
 .user-level:before,
-.user-impact:before,
-.logout-button:before {
+.user-impact:before, 
+.logout-button:before, 
+.counter-submit-button:before,
+.time-counter-header::before,
+.counter_button:before {
   content: '';
   position: absolute;
   top: -6px;
   left: -6px;
   right: -6px;
   bottom: -6px;
-  border: 3px solid rgba(255, 255, 255, 0.5);
-  border-radius: 5px;
+  border: 4px solid rgba(255, 255, 255, 0.5); 
+  border-radius: 8px;
 }
 
 .user-level {
@@ -462,6 +469,24 @@ button {
   margin-right: auto;
   margin-top: 10px;
 }
+/* buttons */
+
+.counter_button,
+.counter-submit-button {
+  display: flex;
+  justify-content: center;
+  justify-items: center;
+  align-items: center;
+  background-color:  #b99e23;;
+  align-items: center;
+  margin: 8px;
+  padding: 8px;
+  width: 200px;
+  height: 40px;
+  font-size: smaller;
+  
+
+}
 
 .logout-button {
   max-width: fit-content;
@@ -477,7 +502,9 @@ button {
 }
 
 .sandsmile,
-.impact {
+.impact,
+.tracker,
+.events {
   color: #b99e23;
   text-shadow:
     -0.5px -0.5px 0 #a84e32,
@@ -489,35 +516,17 @@ button {
 /* time counter 
 */
 
-.blinking {
-  animation: blink-animation 1s step-end infinite;
-}
-
-@keyframes blink-animation {
-  0% {
-    opacity: 1;
-  }
-
-  50% {
-    opacity: 0;
-  }
-
-  100% {
-    opacity: 1;
-  }
-}
-
 .typing-animation span {
   display: block;
   overflow: hidden;
   white-space: nowrap;
-  text-overflow: ellipsis;
-  border-right: 2px solid;
-  animation: typing 6s steps(50, end) forwards;
+  border-right: 1px solid;
+  animation: typing 6s steps(70, end) forwards;
   padding-bottom: 2%;
-  color: #b99e23;
+  color: #f2f2f2;
+  text-transform: uppercase;
   text-shadow: 1px #a84e32;
-  text-decoration: double;
+  text-align: center;
 }
 
 @keyframes typing {
@@ -529,9 +538,9 @@ button {
     width: 100%;
   }
 }
-
 .time-counter-container {
-  padding-top: 10px;
+  padding-top: 0;
+  justify-content: center;
 }
 
 .digit {
@@ -543,11 +552,12 @@ button {
   position: relative;
   color: #ffffff;
   text-align: center;
+  text-decoration: dotted;
   padding: 14px;
   display: flex;
   justify-content: center;
   border: 2px solid #81aca8;
-  /* Add border */
+ 
 }
 
 .counter-body .digit {
@@ -555,7 +565,7 @@ button {
   padding: 18px 18px;
   position: relative;
   border: 2px solid #81aca8;
-  /* Add border */
+
 }
 
 .counter-body .digit:before {
@@ -569,17 +579,6 @@ button {
   border-radius: 5px;
 }
 
-/* buttons */
-
-.counter_button,
-.counter-submit-button {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 250px;
-  height: 40px;
-  justify-items: center;
-}
 
 .card-footer,
 .buttons {
@@ -611,7 +610,8 @@ button {
 .inser-data-text {
   border: 0;
   font-size: 12px;
-  max-width: 210px;
+  max-width: fit-content;
+  margin-top: 0;
   font-family: 'Atkinson Hyperlegible', sans-serif;
   color: #ffffff;
   opacity: 0.6;
@@ -645,4 +645,14 @@ button {
   position: relative;
   z-index: 1;
   padding: 20px;
+}
+
+.EventCard {
+  background-color: rgba(129, 172, 168, 0.616); /* Background color */
+  border: 3px solid #b99e23; /* Border color and thickness */
+  border-radius: 3px; /* Border radius for rounded corners */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Box shadow for depth */
+  padding: 20px; /* Padding inside the box */
+  margin: 20px auto; /* Center horizontally */
+  width: 600px; /* Width of the box */
 }

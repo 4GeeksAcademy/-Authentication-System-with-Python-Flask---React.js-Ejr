@@ -26,8 +26,8 @@ export const SubmitButton = () => {
     };
 
     return (
-        <button type="button" className="counter-submit-button btn btn-info btn-sm me-2" disabled={!active} onClick={handleSubmit}>
-            Submit tracking
+        <button type="button" className="counter-submit-button" disabled={!active} onClick={handleSubmit}>
+            SUBMIT 
         </button>
     );
    

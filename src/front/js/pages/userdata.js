@@ -38,7 +38,7 @@ export const Userdata = () => {
         <div className="user-data-page-left">
           <UserLevelConnectLink />
           <ShowUserImpact />
-          <button className="logout-button" onClick={logout}>Logout</button>
+          <button className="logout-button" onClick={logout}>LOGOUT</button>
         </div>
         <div className="user-data-page-right">
           <TimeCounter />

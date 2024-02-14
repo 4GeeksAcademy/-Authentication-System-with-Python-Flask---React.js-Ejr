@@ -5,7 +5,7 @@ import { SubmitButton } from "./submitButton";
 export const TimeCounter = () => {
   const [timer, setTime] = useState(0)
   const [active, setActive] = useState(false)
-  const [buttonText, setButtonText] = useState("Begin tracking")
+  const [buttonText, setButtonText] = useState("BEGIN")
   const { store, actions } = useContext(Context)
   const [pending, setPending] = useState(false)
   const clockHandRef = useRef(null);
@@ -29,7 +29,7 @@ export const TimeCounter = () => {
       clockHandRef.current.classList.toggle('blinking');
     }
     setActive(prevActive => !prevActive);
-    setButtonText(prevText => (prevText === "Begin tracking" ? "Stop tracking" : "Begin tracking"));
+    setButtonText(prevText => (prevText === "BEGIN" ? "STOP" : "BEGIN"));
     if (!pending) {
       actions.start_time();
       setPending(true);
@@ -44,8 +44,8 @@ export const TimeCounter = () => {
   const seconds = timer % 60;
 
   return (
-    <div className="time-counter-container container-fluid  overflow-hidden col-sm-8 col-md-8 col-lg-8">
-
+    <div className="time-counter-container container-fluid">
+      <h4 className="time-counter-header"> Impact &nbsp; <span className="tracker"> TRACKER</span> </h4>
       <div className="counter-body d-flex flex-row align-items-center fs-1 text-light" style={{ height: "5rem" }}>
         <div className="digit col-sm-1 col-md-1 col-lg-1">
           {Math.floor(hours / 10) % 10}
@@ -73,11 +73,11 @@ export const TimeCounter = () => {
         </div>
       </div>
       <div className="counter-footer">
-        <div className="typing-animation mt-5">
+        <div className="typing-animation mt-4">
           <span>Every second you spent collecting the waste, does matter..</span>
         </div>
         <div className="start-button">
-          <button type="buttonStart" className="counter_button btn btn-info" id="clockHand" onClick={startStop}>
+          <button type="buttonStart" className="counter_button" id="clockHand" onClick={startStop}>
             {buttonText}
           </button>
         </div>
