@@ -22,10 +22,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 
 			getMessage: async () => {
+				let actions=getActions()
 				try{
 					// fetching data from the backend
-					const resp = await fetch(process.env.BACKEND_URL + "/api/hello")
-					const data = await resp.json()
+
+					const data = actions.APIfetch("/hello")
 					setStore({ message: data.message })
 					// don't forget to return something, that is how the async resolves
 					return data;
@@ -44,9 +45,30 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return elm;
 				});
 
+
 				//reset the global store
 				setStore({ demo: demo });
+			},
+			APIfetch: async (endpoint,method="GET",body=null)=>{
+				let params={method}
+				if (body!=null){
+					params.headers={
+						"Content-Type": "application/json",
+						"Access-Control-Allow-Origin":"*"
+					}
+					params.body=JSON.stringify(body) 
+				}
+				let res=await fetch(process.env.BACKEND_URL+"/api"+endpoint,params)
+				if (!res.ok){
+					console.error(res.statusText)
+					return ({error:res.statusText})
+
+				}
+				let json=res.json()
+				return json
+				
 			}
+			
 		}
 	};
 };
