@@ -1,3 +1,4 @@
+
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
@@ -15,8 +16,30 @@ const getState = ({ getStore, getActions, setStore }) => {
 			total_impact_time: [],
 			total_impact_liters: []
 
+
 		},
 		actions: {
+
+			setStartTime: (start_time) => {
+				const store = getStore()
+				setStore({ ...store, start_time: new Date().toISOString() });
+			},
+
+
+			setFinishTime: (finish_time) => {
+				const store = getStore()
+				setStore({ ...store, finish_time: new Date().toISOString() });
+			},
+
+			setNewLiters: (value) => {
+				const store = getStore()
+				setStore({ ...store, liters: value })
+			},
+
+			setNewLocation: (value) => {
+				const store = getStore()
+				setStore({ ...store, location: value })
+			},
 
 
 			signupNewUser: async (formSignup) => {
@@ -44,7 +67,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 						console.log(jsonResponse)
 
 					}
-
 				}
 
 				catch (e) {
@@ -153,6 +175,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 				if (start_time !== 'pending') {
 					requestBody.start_time = start_time;
 				}
+				console.log(getStore().start_time, getStore().finish_time, getStore().location, getStore().liters)
+
 
 				try {
 					const response = await fetch(url + tokenRequirement, {
@@ -179,24 +203,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
-
-			setStartTime: (start_time) => {
-				const store = getStore()
-				const currentDate = datetime.now()
-				setStore({ ...store, start_time: currentDate });
-			},
-
-
-			setFinishTime: (finish_time) => {
-				const store = getStore()
-				const finishTime = datetime.now()
-				setStore({ ...store, finish_time: finishTime });
-			},
-
 			submit_manual_data: async () => {
 				const url = process.env.BACKEND_URL;
 				const tokenRequirement = "/api/userdata";
-
+				
 				try {
 					const response = await fetch(url + tokenRequirement, {
 						method: 'POST',
@@ -225,7 +235,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 
 			},
-
 
 			getUserImpact: async () => {
 				const url = process.env.BACKEND_URL;
@@ -292,7 +301,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 		}
 
 	}
+};
 
-}
-
-export default getState;
+	export default getState;

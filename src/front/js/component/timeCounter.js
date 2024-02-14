@@ -25,6 +25,7 @@ export const TimeCounter = () => {
   }, [timer, active, setTime]);
 
   const startStop = () => {
+
     if (clockHandRef.current) {
       clockHandRef.current.classList.toggle('blinking');
     }
@@ -38,6 +39,7 @@ export const TimeCounter = () => {
     }
   };
   console.log(clockHandRef.current);
+
 
   const hours = Math.floor(timer / 3600);
   const minutes = Math.floor(timer % 3600 / 60);

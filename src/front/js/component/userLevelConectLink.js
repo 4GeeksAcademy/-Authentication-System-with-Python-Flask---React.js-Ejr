@@ -42,7 +42,7 @@ export const UserLevelConnectLink = () => {
 
         setRole(roleName);
 
-        // Fetch stripe link integration
+        
         const responseStripeLink = await fetch(`${process.env.BACKEND_URL}/api/usersstripelink`, {
           headers: {
             'Authorization': `Bearer ${userToken}`

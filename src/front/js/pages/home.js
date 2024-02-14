@@ -1,15 +1,15 @@
 import React, { useContext } from "react";
 import "../../styles/home.css";
 import { Link } from "react-router-dom";
+import { Context } from "../store/appContext";
+import { TotalImpact } from "../component/TotalImpact";
+
 
 import { NavBar } from "../component/navbar";
 import video from "../../assets/video.mp4";
-import image1 from "../../img/image1.jpg";
-import image2 from "../../img/image2.jpg";
-import image3 from "../../img/image3.jpg";
-
 
 export const Home = () => {
+	const { store} = useContext(Context);
 	return (
 		<div className="home">
 			<NavBar />
@@ -41,29 +41,7 @@ export const Home = () => {
 				<p>Cleaners who have been registered for more than half a year, with monthly registered activity and who have attended at least once an event organized by the platform are considered Cleaners Plus <strong>"Smilers". With this upgrade you receive 5% of donations.</strong>
 				</p>
 			</div>	
-			<div className="info container mt-5 mb-5 overflow-hidden">
-				<h2><strong>OUR IMPACT IN THE WORLD</strong></h2>
-				<div className="info__bubbles">
-					<div className="info__bubble">
-						<div className="info__blob">
-							<strong>200</strong>cleaners registered on our platform
-						</div>
-						<img className="info__img" src={image1} />
-					</div>
-					<div className="info__bubble">
-						<div className="info__blob">
-							<strong>200</strong>liters collected from our shores
-						</div>
-						<img className="info__img" src={image2} />
-					</div>
-					<div className="info__bubble">
-						<div className="info__blob">
-							<strong>200</strong>time dedicated to the cause
-						</div>
-						<img className="info__img" src={image3} />
-					</div>
-				</div>
-			</div>
+			<TotalImpact />
 		</div>
 	);
 };
