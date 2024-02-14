@@ -1,5 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
 
+
 db = SQLAlchemy()
 
 class User(db.Model):
@@ -17,3 +18,18 @@ class User(db.Model):
             "email": self.email,
             # do not serialize the password, its a security breach
         }
+class Books(db.Model):
+    #isbn no se que es 
+    title=db.Column(db.String(50),unique=True,nullable=False)
+    author_name=db.Column(db.String(50),unique=True,nullable=False)
+    reviews=db.Column(db.String(450),nullable=True)
+    first_publish_year=db.Column(db.Integer(),unique=True,nullable=True)
+    #cover_i no se que es
+    #num_readers creo que no va acá
+    #num_comments 
+    languages=db.Column
+    publishers
+    publisher_places
+    excerpt
+    typeOfBook
+    num_stars
