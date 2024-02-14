@@ -37,7 +37,8 @@ const EventCardSingle = ({ eventId }) => {
             />
             <div className="event-card-body">
                 <h5>{event.name}</h5>
-                <p className="event-card-info">Location: {event.location}</p>
+                <p className="event-card-venue">{event.venue}, {event.city} </p>
+                <p className="event-card-category">Category: {event.category}</p>
                 <div className="d-flex justify-content-between event-card-info"> 
                     <p className="event-card-info">Tickets: £{event.price}</p>
                     <p className="event-card-info">Date: {event.date}</p>

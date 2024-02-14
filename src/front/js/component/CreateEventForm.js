@@ -5,7 +5,9 @@ import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 const CreateEventForm = () => {
   const [eventName, setEventName] = useState('');
   const [eventDescription, setEventDescription] = useState('');
-  const [eventLocation, setEventLocation] = useState('');
+  const [eventVenue, setEventVenue] = useState('');
+  const [eventCity, setEventCity] = useState('');
+  const [eventCategory, setEventCategory] = useState('');
   const [eventDate, setEventDate] = useState('');
   const [eventPrice, setEventPrice] = useState('');
   const [eventImage, setEventImage] = useState(null);
@@ -68,7 +70,9 @@ const CreateEventForm = () => {
       const eventData = {
         name: eventName,
         description: eventDescription,
-        location: eventLocation,
+        venue: eventVenue,
+        city: eventCity,
+        category: eventCategory,
         date: eventDate,
         price: eventPrice,
         image: imageUrl,
@@ -98,7 +102,9 @@ const CreateEventForm = () => {
     // Reset form fields after submission
     setEventName('');
     setEventDescription('');
-    setEventLocation('');
+    setEventVenue('');
+    setEventCity('');
+    setEventCategory('');
     setEventDate('');
     setEventPrice('');
     setEventImage(null);
@@ -133,11 +139,41 @@ const CreateEventForm = () => {
                   <input
                     type="text"
                     className="form-control form-control-lg"
-                    placeholder="Event Location"
-                    value={eventLocation}
-                    onChange={(e) => setEventLocation(e.target.value)}
+                    placeholder="Event Venue"
+                    value={eventVenue}
+                    onChange={(e) => setEventVenue(e.target.value)}
                   />
                 </div>
+
+                <div className="mb-4">
+                    <select
+                        className={`form-select form-select-lg ${eventCity ? 'custom-select-selected' : 'custom-select-placeholder'}`}
+                        value={eventCity}
+                        onChange={(e) => setEventCity(e.target.value)}
+                    >
+                        <option value="" disabled hidden>Select City</option>
+                        <option value="London">London</option>
+                        <option value="New York">New York</option>
+                        <option value="Paris">Paris</option>
+                        <option value="Berlin">Berlin</option>
+                    </select>
+                </div>
+
+                <div className="mb-4">
+                    <select
+                        className={`form-select form-select-lg ${eventCategory ? 'custom-select-selected' : 'custom-select-placeholder'}`}
+                        value={eventCategory}
+                        onChange={(e) => setEventCategory(e.target.value)}
+                    >
+                        <option value="" disabled hidden>Select Category</option>
+                        <option value="Music">Music</option>
+                        <option value="Comedy">Comedy</option>
+                        <option value="Business">Business</option>
+                        <option value="Sport">Sport</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                
                 <div className="row">
                   <div className="mb-4 col-6">
                     <input

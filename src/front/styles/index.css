@@ -306,7 +306,7 @@ button {
 /* ------ ALL EVENTS STYLING ------ */
 
 .all-events {
-  background: #000000;
+  background: black;
   padding: 70px 0px 30px 0px; 
 }
 
@@ -314,11 +314,26 @@ button {
 
 .popular-categories {
   padding: 50px 0px 100px 0px; 
-  background: #000;
+  background:  rgb(11, 11, 11);
 }
 
 .popular-categories h2 {
   color: white;
+}
+
+.categories-placeholder {
+  width: 300px;
+  height: 300px;
+  background: grey;
+  margin-bottom: 30px;
+}
+
+.categories-placeholder h3 {
+  color: white;
+}
+
+.text-shadow {
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 1);
 }
 
 /* ------ FOOTER STYLING ------ */
@@ -432,6 +447,14 @@ button {
   padding-bottom: 8px;
 }
 
+.event-card-venue {
+  color: #000000;
+}
+
+.event-card-category {
+  color: #7e7e7e;;
+}
+
 .pink-heart {
   color:#FF8D91; 
 }
@@ -469,4 +492,34 @@ button {
     color: #FF8D91; 
     border-color: #FF8D91; 
   }
+}
+
+.event-single-span {
+  margin-left: 10px;
+}
+.event-single-date {
+  margin-left: 10px;
+}
+.event-single-location {
+  margin-left: 12px;
+}
+.event-single-category {
+  margin-left: 10px;
+}
+.event-single-ticket {
+  margin-left: 8px;
+}
+
+
+/* ------ CREATE EVENT FROM STYLING ------ */  
+
+.custom-select-placeholder {
+  color: #6c757d; /* Placeholder text color */
+  font-size: 14px;
+  padding-top: 13px;
+  padding-bottom: 13px;
+}
+
+.custom-select-selected {
+  color: #495057; /* Selected option text color */
 }

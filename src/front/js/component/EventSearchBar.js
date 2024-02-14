@@ -44,8 +44,9 @@ const EventSearchBar = () => {
             <option value="">Select location</option>
             {/* Add your location options here */}
             <option value="">London</option>
+            <option value="">New Yorks</option>
             <option value="">Paris</option>
-            <option value="">New York</option>
+            <option value="">Berlin</option>
           </select>
         </div>
 

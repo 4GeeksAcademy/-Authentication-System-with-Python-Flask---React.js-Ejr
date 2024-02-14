@@ -95,113 +95,16 @@ def load_default_events():
       "location": "Thompsons",
       "name": "Event 01",
       "price": "20"
-    },
-    {
-      "date": "06-08-2024",
-      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras vel neque eros. Pellentesque pretium faucibus mattis. Phasellus faucibus non diam vitae condimentum.",
-      "id": 2,
-      "image": None,
-      "location": "Laverys",
-      "name": "Event 02",
-      "price": "10"
-    },
-    {
-      "date": "23-12-2024",
-      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras vel neque eros. Pellentesque pretium faucibus mattis. Phasellus faucibus non diam vitae condimentum.",
-      "id": 3,
-      "image": None,
-      "location": "Ollies",
-      "name": "Event 03",
-      "price": "15"
-    },
-    {
-      "date": "05-05-2024",
-      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras vel neque eros. Pellentesque pretium faucibus mattis. Phasellus faucibus non diam vitae condimentum.",
-      "id": 6,
-      "image": None,
-      "location": "4Geeks",
-      "name": "Event 04",
-      "price": "35"
-    },
-    {
-      "date": "2024-02-24",
-      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras vel neque eros. Pellentesque pretium faucibus mattis. Phasellus faucibus non diam vitae condimentum.",
-      "id": 7,
-      "image": None,
-      "location": "Voodoo",
-      "name": "Event 05",
-      "price": "25"
-    },
-    {
-      "date": "2024-02-25",
-      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras vel neque eros. Pellentesque pretium faucibus mattis. Phasellus faucibus non diam vitae condimentum.",
-      "id": 8,
-      "image": None,
-      "location": "Liquor",
-      "name": "Event 06",
-      "price": "50"
-    },
-    {
-      "date": "2024-03-15",
-      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras vel neque eros. Pellentesque pretium faucibus mattis. Phasellus faucibus non diam vitae condimentum.",
-      "id": 9,
-      "image": None,
-      "location": "The SSE Arena",
-      "name": "Event 07",
-      "price": "30"
-    },
-    {
-      "date": "2024-04-20",
-      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras vel neque eros. Pellentesque pretium faucibus mattis. Phasellus faucibus non diam vitae condimentum.",
-      "id": 10,
-      "image": None,
-      "location": "Ulster Sports Club",
-      "name": "Event 08",
-      "price": "15"
-    },
-    {
-      "date": "06-08-2024",
-      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras vel neque eros. Pellentesque pretium faucibus mattis. Phasellus faucibus non diam vitae condimentum.",
-      "id": 11,
-      "image": None,
-      "location": "Thompsons",
-      "name": "Event 09",
-      "price": "10"
-    },
-    {
-      "date": "19-05-2024",
-      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras vel neque eros. Pellentesque pretium faucibus mattis. Phasellus faucibus non diam vitae condimentum.",
-      "id": 12,
-      "image": None,
-      "location": "Boneyard",
-      "name": "Event 10",
-      "price": "30"
-    },
-    {
-      "date": "19-05-2024",
-      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras vel neque eros. Pellentesque pretium faucibus mattis. Phasellus faucibus non diam vitae condimentum.",
-      "id": 13,
-      "image": None,
-      "location": "Boneyard",
-      "name": "Event 11",
-      "price": "30"
-    },
-    {
-      "date": "11-05-2024",
-      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras vel neque eros. Pellentesque pretium faucibus mattis. Phasellus faucibus non diam vitae condimentum.",
-      "id": 14,
-      "image": None,
-      "location": "Thompsons",
-      "name": "Event 12",
-      "price": "20"
-    },
+    }
     ]
 
     for event_data in default_events:
         new_event = Event(
             name=event_data['name'],
             description=event_data['description'],
-            location=event_data['location'],
+            venue=event_data['venue'],
+            city=event_data['city'],
+            category=event_data['category'],
             date=event_data['date'],
             price=event_data['price'],
             image=event_data.get('image')  # Assume image might not be provided
@@ -225,7 +128,9 @@ def get_events():
             'id': event.id,
             'name': event.name,
             'description': event.description,
-            'location': event.location,
+            'venue': event.venue,
+            'city': event.city,
+            'category': event.category,
         #    'date': event.date.strftime('%Y-%m-%d %H:%M:%S'),  # Format date as string
             'date': event.date,  # Format date as string
             'price': event.price,
@@ -250,7 +155,9 @@ def get_event(event_id):
         'id': event.id,
         'name': event.name,
         'description': event.description,
-        'location': event.location,
+        'venue': event.venue,
+        'city': event.city,
+        'category': event.category,
         'date': event.date,  # Assuming you want to send the date as is
         'price': event.price,
         'image': event.image
@@ -268,7 +175,9 @@ def create_event():
     new_event = Event(
         name=data['name'],
         description=data['description'],
-        location=data['location'],
+        venue=data['venue'],
+        city=data['city'],
+        category=data['category'],
         date=data['date'],
         price=data['price'],
         image=data['image']
@@ -295,8 +204,12 @@ def edit_event(event_id):
         event.name = data['name']
     if 'description' in data:
         event.description = data['description']
-    if 'location' in data:
-        event.location = data['location']
+    if 'venue' in data:
+        event.venue = data['venue']
+    if 'city' in data:
+        event.city = data['city']
+    if 'category' in data:
+        event.category = data['category']
     if 'date' in data:
         event.date = data['date']
     if 'price' in data:
@@ -324,3 +237,100 @@ def delete_event(event_id):
 
     return jsonify({'message': 'Event deleted successfully'}), 200
 
+#Get Music Events Route #
+
+@api.route('/events/music', methods=['GET'])
+def get_music_events():
+    # Query the database for music events
+    music_events = Event.query.filter_by(category='Music').all()
+
+    # Format music events data for response
+    music_event_list = []
+    for event in music_events:
+        music_event_data = {
+            'id': event.id,
+            'name': event.name,
+            'description': event.description,
+            'venue': event.venue,
+            'city': event.city,
+            'date': event.date,  # Assuming you want to send the date as is
+            'price': event.price,
+            'image': event.image
+        }
+        music_event_list.append(music_event_data)
+
+    # Return music events data
+    return jsonify({'music_events': music_event_list}), 200
+
+# Get Comedy Events Route
+
+@api.route('/events/comedy', methods=['GET'])
+def get_comedy_events():
+    # Query the database for comedy events
+    comedy_events = Event.query.filter_by(category='Comedy').all()
+
+    # Format comedy events data for response
+    comedy_event_list = []
+    for event in comedy_events:
+        comedy_event_data = {
+            'id': event.id,
+            'name': event.name,
+            'description': event.description,
+            'venue': event.venue,
+            'city': event.city,
+            'date': event.date,  # Assuming you want to send the date as is
+            'price': event.price,
+            'image': event.image
+        }
+        comedy_event_list.append(comedy_event_data)
+
+    # Return comedy events data
+    return jsonify({'comedy_events': comedy_event_list}), 200
+
+# Route for fetching business events
+@api.route('/events/business', methods=['GET'])
+def get_business_events():
+    # Query the database for business events
+    business_events = Event.query.filter_by(category='Business').all()
+
+    # Format business events data for response
+    business_event_list = []
+    for event in business_events:
+        business_event_data = {
+            'id': event.id,
+            'name': event.name,
+            'description': event.description,
+            'venue': event.venue,
+            'city': event.city,
+            'date': event.date,  # Assuming you want to send the date as is
+            'price': event.price,
+            'image': event.image
+        }
+        business_event_list.append(business_event_data)
+
+    # Return business events data
+    return jsonify({'business_events': business_event_list}), 200
+
+# Route for fetching sports events
+@api.route('/events/sports', methods=['GET'])
+def get_sports_events():
+    # Query the database for sports events
+    sports_events = Event.query.filter_by(category='Sport').all()
+
+    # Format sports events data for response
+    sports_event_list = []
+    for event in sports_events:
+        sports_event_data = {
+            'id': event.id,
+            'name': event.name,
+            'description': event.description,
+            'venue': event.venue,
+            'city': event.city,
+            'date': event.date,  # Assuming you want to send the date as is
+            'price': event.price,
+            'image': event.image
+        }
+        sports_event_list.append(sports_event_data)
+
+    # Return sports events data
+    return jsonify({'sports_events': sports_event_list}), 200
