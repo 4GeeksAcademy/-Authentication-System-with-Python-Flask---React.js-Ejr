@@ -144,24 +144,36 @@ const CreateEventForm = () => {
                     onChange={(e) => setEventVenue(e.target.value)}
                   />
                 </div>
+
                 <div className="mb-4">
-                  <input
-                    type="text"
-                    className="form-control form-control-lg"
-                    placeholder="Event City"
-                    value={eventCity}
-                    onChange={(e) => setEventCity(e.target.value)}
-                  />
+                    <select
+                        className={`form-select form-select-lg ${eventCity ? 'custom-select-selected' : 'custom-select-placeholder'}`}
+                        value={eventCity}
+                        onChange={(e) => setEventCity(e.target.value)}
+                    >
+                        <option value="" disabled hidden>Select City</option>
+                        <option value="London">London</option>
+                        <option value="New York">New York</option>
+                        <option value="Paris">Paris</option>
+                        <option value="Berlin">Berlin</option>
+                    </select>
                 </div>
+
                 <div className="mb-4">
-                  <input
-                    type="text"
-                    className="form-control form-control-lg"
-                    placeholder="Event Category"
-                    value={eventCategory}
-                    onChange={(e) => setEventCategory(e.target.value)}
-                  />
+                    <select
+                        className={`form-select form-select-lg ${eventCategory ? 'custom-select-selected' : 'custom-select-placeholder'}`}
+                        value={eventCategory}
+                        onChange={(e) => setEventCategory(e.target.value)}
+                    >
+                        <option value="" disabled hidden>Select Category</option>
+                        <option value="Music">Music</option>
+                        <option value="Comedy">Comedy</option>
+                        <option value="Business">Business</option>
+                        <option value="Sport">Sport</option>
+                        <option value="Other">Other</option>
+                    </select>
                 </div>
+                
                 <div className="row">
                   <div className="mb-4 col-6">
                     <input
