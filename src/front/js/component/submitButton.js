@@ -10,7 +10,6 @@ export const SubmitButton = () => {
     const handleSubmit = async () => {
 
         try {
-            setPending(true);
             actions.setLiters;
             actions.setLocation;
 

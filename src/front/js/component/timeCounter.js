@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Context } from "../store/appContext";
-import { SubmitButton } from "./submitButton";
 
 export const TimeCounter = () => {
   const [timer, setTime] = useState(0)
@@ -24,14 +23,17 @@ export const TimeCounter = () => {
   const start = () => {
     setActive(prevActive => !prevActive);
     actions.setStartTime()
+    actions.start_time ()
     setPending (true)
   }
 
+  
   const stop = () => {
     setActive(prevActive => !prevActive);
     actions.setFinishTime()
     setPending (false)
   }
+  console.log (actions.setFinishTime)
 
   const hours = Math.floor(timer / 3600);
   const minutes = Math.floor(timer % 3600 / 60);
@@ -70,9 +72,9 @@ export const TimeCounter = () => {
         <div className="buttons text-light-emphasis fw-lighter">
           
           {!pending && <button type="buttonStart" className="btn btn-info btn-sm me-2" onClick={start}>
-            "Begin tracking"
+            "Begin"
           </button>} {pending && <button type="buttonStart" className="btn btn-info btn-sm me-2" onClick={stop}>
-            "Stop tracking"
+            "Stop "
           </button>} 
         </div>
       </div>

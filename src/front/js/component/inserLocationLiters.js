@@ -4,23 +4,13 @@ import debounce from "lodash.debounce";
 
 export const InsertLocationLiters = () => {
     const { store, actions } = useContext(Context);
-    const [location, setLocation] = useState('');
-    const [liters, setLiters] = useState('');
-
-    const debouncedHandleSubmit = useCallback(
-        debounce(() => {
-            try {
-                const response = actions.submitData(undefined, undefined, location, liters);
-                
-            } catch (error) {
-                console.error(error);
-            }
-        },  500), 
-        [location, liters] 
-    );
-
-    const handleBlur = () => {
-        debouncedHandleSubmit();
+       
+    const handleLocation = (e) => {
+        actions.setLocation(e.target.value);
+    };
+    
+    const handleLiters = (e) => {
+        actions.setLiters (e.target.value); 
     };
 
     return (
@@ -32,9 +22,9 @@ export const InsertLocationLiters = () => {
                         <input
                             id="location"
                             type="text"
-                            value={location}
-                            onChange={(e) => setLocation(e.target.value)}
-                            onBlur={handleBlur}
+                            value={store.location}
+                            onChange={(e) => handleLocation(e)}
+                           
                         />
             </form>
             <form className="form-floating">
@@ -42,9 +32,9 @@ export const InsertLocationLiters = () => {
                         <input
                             id="liters"
                             type="number"
-                            value={liters}
-                            onChange={(e) => setLiters(e.target.value)}
-                            onBlur={handleBlur}
+                            value={store.liters}
+                            onChange={(e) => handleLiters(e)}
+                         
                         />
             </form>
             </div>

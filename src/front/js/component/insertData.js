@@ -19,13 +19,6 @@ export const InsertData = () => {
         actions.setFinishTime(e.target.value);
     };
 
-    const handleNewLocation = (e) => {
-        actions.setNewLocation(e.target.value);
-    };
-    
-    const handleNewLiters = (e) => {
-        actions.setNewLiters (e.target.value); 
-    };
 
     return (
         <div className="card container-fluid col-sm-8 col-md-8 col-lg-8 bg-body-tertiary text-center p-1">
