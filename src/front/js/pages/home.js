@@ -7,10 +7,6 @@ import { TotalImpact } from "../component/TotalImpact";
 
 import { NavBar } from "../component/navbar";
 import video from "../../assets/video.mp4";
-import image1 from "../../img/image1.jpg";
-import image2 from "../../img/image2.jpg";
-import image3 from "../../img/image3.jpg";
-
 
 export const Home = () => {
 	const { store} = useContext(Context);

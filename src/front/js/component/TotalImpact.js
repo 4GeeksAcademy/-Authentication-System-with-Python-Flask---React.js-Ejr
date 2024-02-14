@@ -24,31 +24,29 @@ export const TotalImpact = () => {
         handleTotalImpact();
     }, []);
 
-    return isLoading ? (
-        <p>Smile.. total impact is uploading</p>
-    ) : (
-        <div className="info container mt-5 mb-5 overflow-hidden">
-				<h2><strong>OUR IMPACT IN THE WORLD</strong></h2>
-				<div className="info__bubbles">
-					<div className="info__bubble">
-						<div className="info__blob">
-							<strong>{store.total_users}</strong>cleaners registered on our platform
-						</div>
-						<img className="info__img" src={image1} />
+    return (  
+		<div className="info container mt-5 mb-5 overflow-hidden">
+			<h2><strong>OUR IMPACT IN THE WORLD</strong></h2>
+			<div className="info__bubbles">
+				<div className="info__bubble">
+					<div className="info__blob">
+						<strong>{store.total_users}</strong>cleaners registered on our platform
 					</div>
-					<div className="info__bubble">
-						<div className="info__blob">
-							<strong>{store.total_impact_liters}</strong>liters collected from our shores
-						</div>
-						<img className="info__img" src={image2} />
+					<img className="info__img" src={image1} />
+				</div>
+				<div className="info__bubble">
+					<div className="info__blob">
+						<strong>{store.total_impact_liters}</strong>liters collected from our shores
 					</div>
-					<div className="info__bubble">
-						<div className="info__blob">
-							<strong>{store.total_impact_time}</strong>time dedicated to the cause
-						</div>
-						<img className="info__img" src={image3} />
+					<img className="info__img" src={image2} />
+				</div>
+				<div className="info__bubble">
+					<div className="info__blob">
+						<strong>{store.total_impact_time}</strong>time dedicated to the cause
 					</div>
+					<img className="info__img" src={image3} />
 				</div>
 			</div>
-    );
+		</div>
+    )
 };
