@@ -22,18 +22,18 @@ export const InsertData = () => {
     const handleNewLocation = (e) => {
         actions.setNewLocation(e.target.value);
     };
-    
+
     const handleNewLiters = (e) => {
-        actions.setNewLiters (e.target.value); 
+        actions.setNewLiters(e.target.value);
     };
 
     return (
-        <div className="card container-fluid col-sm-8 col-md-8 col-lg-8 bg-body-tertiary text-center p-1">
+        <div className="insert-data-container container-fluid d-flex justify-content-center">
             <div className="dropdown">
-                <p className="title mt-4"> Did you go to the Sandsmiler's mission without the Timecounter?
-                    Don't worry! </p>
-                <button className="btn btn-secondary dropdown-toggle btn-sm" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Add your off-site collection data here:
+                <h4 className="insert-data-title "> Did you go to the Sandsmiler's mission without the Timecounter? </h4>  
+                    <p className="inser-data-text"> Don't worry! Add <span class="arrow-down">&#9660;</span>  </p> 
+                <button className="calendar-dropdown btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Off-site time:
                 </button>
                 <ul className="dropdown-menu">
                     <li>
@@ -42,8 +42,8 @@ export const InsertData = () => {
                             id="start_time"
                             className="form-control"
                             aria-describedby="button-addon2"
-                            onChange={e=>handleStartTimeChange(e)}
-                          
+                            onChange={e => handleStartTimeChange(e)}
+
                         />
                     </li>
                     <li>
@@ -52,8 +52,8 @@ export const InsertData = () => {
                             id="finish_time"
                             className="form-control"
                             aria-describedby="button-addon2"
-                            onChange={e=>handleFinishTimeChange(e)}
-                            
+                            onChange={e => handleFinishTimeChange(e)}
+
                         />
                     </li>
                 </ul>
