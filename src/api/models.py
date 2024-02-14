@@ -55,13 +55,13 @@ class Exhibits(db.Model):
             "artist_id": self.artist_id
         }
     
-class Artist(db.Model):
+class Artist (db.Model):
     __tablename__ = 'artists'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(250), nullable=False)
-    birth_year = db.Column(db.Integer, nullable=True)
-    death_year = db.Column(db.Integer, nullable=True)
-    nationality = db.Column(db.String(100), nullable=True)
+    # birth_year = db.Column(db.Integer, nullable=True)
+    # death_year = db.Column(db.Integer, nullable=True)
+    # nationality = db.Column(db.String(100), nullable=True)
 
     def __repr__(self):
         return f'<Artist {self.name}>'
@@ -70,7 +70,30 @@ class Artist(db.Model):
         return {
             "id": self.id,
             "name": self.name,
-            "birth_year": self.birth_year,
-            "death_year": self.death_year,
-            "nationality": self.nationality
+            # "birth_year": self.birth_year,
+            # "death_year": self.death_year,
+            # "nationality": self.nationality
         }
+    
+class Departments (db.Model):
+    __tablename__ = 'departments'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(250), nullable=False)
+    # birth_year = db.Column(db.Integer, nullable=True)
+    # death_year = db.Column(db.Integer, nullable=True)
+    # nationality = db.Column(db.String(100), nullable=True)
+
+    def __repr__(self):
+        return f'<departments {self.name}>'
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            # "birth_year": self.birth_year,
+            # "death_year": self.death_year,
+            # "nationality": self.nationality
+        }
+
+# class Review(db.Model):
+#     __tablename__ = 'reviews'

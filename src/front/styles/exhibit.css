@@ -37,6 +37,9 @@
     justify-content: space-between;
     margin: 45px 75px;
     margin-top: 100px;
+    max-width: 100%;
+    flex-wrap: wrap;
+
 }
 
 .row2 {
@@ -53,9 +56,14 @@
     margin: 45px 75px;
 }
 
-.art-poster-1 {
+.art-poster {
     border: 10px solid black;
     padding: 75px 50px;
+    width: 33%;
+}
+
+.art-poster img {
+    object-fit: contain;
 }
 
 .art-poster-2 {
