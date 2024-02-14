@@ -352,11 +352,13 @@ button {
 */
 
 .user-data-background {
+ 
   position: relative;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
+  min-height: 100vh; 
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -384,24 +386,24 @@ button {
 /* Right side */
 .user-data-page-right {
   position: absolute;
-  right: 10px;
+  right: 5%; 
   top: 20%;
   background: rgba(61, 85, 82, 0.616);
   max-width: 600px;
   max-height: 600px;
-  padding: 10px;
-  paddin-top: 2px;
+  padding: 20px;
+  padding-top: 2px;
   z-index: 1;
 }
 
-/* Shared styles for data items */
+/* Shared styles for user data items */
 .user-total-impact-data,
 .insert-data-container {
   outline: 0;
   background: #f2f2f2;
   width: calc(100% - 50px);
   margin: 0 auto 0 auto;
-  border: 0;
+  border: 2px solid #b99e23;;
   padding: 25px;
   box-sizing: border-box;
   font-size: 17px;
@@ -469,6 +471,16 @@ button {
   margin-right: auto;
   margin-top: 10px;
 }
+
+@media (max-width: 768px) {
+  .user-data-page-left,
+  .user-data-page-right {
+    position: static;
+    max-width: none;
+    margin: 20px;
+  }
+}
+
 /* buttons */
 
 .counter_button,
@@ -501,6 +513,19 @@ button {
   padding-bottom: 0;
 }
 
+/* header text styling 
+*/
+.total, 
+.average,
+.event-day,
+.event-time,
+.event-location,
+.event-meeting-point {
+  color:  #a84e32;
+  text-shadow:
+  -0.5px -0.5px 0 #81aca8;
+
+}
 .sandsmile,
 .impact,
 .tracker,
@@ -513,6 +538,12 @@ button {
     0.5px 0.5px 0 #a84e32;
 }
 
+/* icons 
+*/
+.fa-sharp {
+  color:  #81aca8;
+}
+
 /* time counter 
 */
 
@@ -521,12 +552,13 @@ button {
   overflow: hidden;
   white-space: nowrap;
   border-right: 1px solid;
-  animation: typing 6s steps(70, end) forwards;
+  animation: typing 6s steps(80, end) forwards;
   padding-bottom: 2%;
   color: #f2f2f2;
   text-transform: uppercase;
-  text-shadow: 1px #a84e32;
-  text-align: center;
+  text-shadow: 2px #a84e32;
+  opacity: 0.7;
+  font-size: 14.5px; 
 }
 
 @keyframes typing {
@@ -647,6 +679,10 @@ button {
   padding: 20px;
 }
 
+
+/* event and checkbox 
+*/
+
 .EventCard {
   background-color: rgba(129, 172, 168, 0.616); /* Background color */
   border: 3px solid #b99e23; /* Border color and thickness */
@@ -655,4 +691,50 @@ button {
   padding: 20px; /* Padding inside the box */
   margin: 20px auto; /* Center horizontally */
   width: 600px; /* Width of the box */
+}
+
+.checkbox-container {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  font-family: Arial, sans-serif;
+}
+
+.checkbox-container input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #b99e23;
+  border-radius: 3px;
+  margin-right: 10px;
+  position: relative;
+}
+
+.checkbox-container input[type="checkbox"]::after {
+  content: "";
+  position: absolute;
+  display: none;
+  left: 5px;
+  top: 2px;
+  width: 5px;
+  height: 10px;
+  border: solid #b99e23;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.checkbox-container input[type="checkbox"]:checked::after {
+  display: block;
+}
+
+.label-text {
+  margin-right: 10px;
+  color: #000;
+}
+
+.clicks-count {
+  margin: 0;
+  color: #666;
 }

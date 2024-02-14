@@ -46,7 +46,7 @@ export const TimeCounter = () => {
   return (
     <div className="time-counter-container container-fluid">
       <h4 className="time-counter-header"> Impact &nbsp; <span className="tracker"> TRACKER</span> </h4>
-      <div className="counter-body d-flex flex-row align-items-center fs-1 text-light" style={{ height: "5rem" }}>
+      <div className="counter-body d-flex flex-row  fs-1 text-light" style={{ height: "5rem", justifyContent: "center"}}>
         <div className="digit col-sm-1 col-md-1 col-lg-1">
           {Math.floor(hours / 10) % 10}
         </div>
@@ -74,9 +74,9 @@ export const TimeCounter = () => {
       </div>
       <div className="counter-footer">
         <div className="typing-animation mt-4">
-          <span>Every second you spent collecting the waste, does matter..</span>
+          <span>Every second you spent collecting the waste, does matter...</span>
         </div>
-        <div className="start-button">
+        <div className="counter-button">
           <button type="buttonStart" className="counter_button" id="clockHand" onClick={startStop}>
             {buttonText}
           </button>

@@ -34,21 +34,23 @@ export const Userdata = () => {
     <div className="user-data-page">
       <img className="user-data-background" src={userdata_background} />
       <NavBar />
-      <div class="user-data-container">
-        <div className="user-data-page-left">
-          <UserLevelConnectLink />
-          <ShowUserImpact />
-          <button className="logout-button" onClick={logout}>LOGOUT</button>
-        </div>
-        <div className="user-data-page-right">
-          <TimeCounter />
-          <InsertData />
-          <InsertLocationLiters />
-          <SubmitButton />
+      <div className="user-data-container">
+        <div className="user-data-page-sides d-flex row flex-sm-column">
+          <div className="user-data-page-left">
+            <UserLevelConnectLink />
+            <ShowUserImpact />
+            <button className="logout-button" onClick={logout}>LOGOUT</button>
+          </div>
+          <div className="user-data-page-right">
+            <TimeCounter />
+            <InsertData />
+            <InsertLocationLiters />
+            <SubmitButton />
+
+          </div>
         </div>
         <div className="user-data-events">
           <EventInfoBox />
-         
         </div>
       </div>
     </div>
