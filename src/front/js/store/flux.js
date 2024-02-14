@@ -53,6 +53,26 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.error("Error comprobando credenciales.")
 					return "Error al comprobar datos."
 				}
+			},
+
+			sendPasswordRecoveryRequest: async (emailInput, setRecoveryMessage) => {
+				try {
+					const response = await fetch(process.env.BACKEND_URL + "/recovery", {
+						method: "POST",
+						headers: {
+							"Content-Type": "application/json",
+						},
+						body: JSON.stringify({ email: emailInput }),
+					});
+
+					if (!response.ok) {
+						throw new Error("Error al enviar la solicitud de recuperación de contraseña.");
+					}
+
+					setRecoveryMessage("Se ha enviado un correo electrónico con instrucciones para restablecer tu contraseña.");
+				} catch (error) {
+					console.error("Error al enviar la solicitud de recuperación de contraseña:", error.message);
+				}
 			}
 		}
 	}
