@@ -5,7 +5,9 @@ import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 const CreateEventForm = () => {
   const [eventName, setEventName] = useState('');
   const [eventDescription, setEventDescription] = useState('');
-  const [eventLocation, setEventLocation] = useState('');
+  const [eventVenue, setEventVenue] = useState('');
+  const [eventCity, setEventCity] = useState('');
+  const [eventCategory, setEventCategory] = useState('');
   const [eventDate, setEventDate] = useState('');
   const [eventPrice, setEventPrice] = useState('');
   const [eventImage, setEventImage] = useState(null);
@@ -68,7 +70,9 @@ const CreateEventForm = () => {
       const eventData = {
         name: eventName,
         description: eventDescription,
-        location: eventLocation,
+        venue: eventVenue,
+        city: eventCity,
+        category: eventCategory,
         date: eventDate,
         price: eventPrice,
         image: imageUrl,
@@ -98,7 +102,9 @@ const CreateEventForm = () => {
     // Reset form fields after submission
     setEventName('');
     setEventDescription('');
-    setEventLocation('');
+    setEventVenue('');
+    setEventCity('');
+    setEventCategory('');
     setEventDate('');
     setEventPrice('');
     setEventImage(null);
@@ -133,9 +139,27 @@ const CreateEventForm = () => {
                   <input
                     type="text"
                     className="form-control form-control-lg"
-                    placeholder="Event Location"
-                    value={eventLocation}
-                    onChange={(e) => setEventLocation(e.target.value)}
+                    placeholder="Event Venue"
+                    value={eventVenue}
+                    onChange={(e) => setEventVenue(e.target.value)}
+                  />
+                </div>
+                <div className="mb-4">
+                  <input
+                    type="text"
+                    className="form-control form-control-lg"
+                    placeholder="Event City"
+                    value={eventCity}
+                    onChange={(e) => setEventCity(e.target.value)}
+                  />
+                </div>
+                <div className="mb-4">
+                  <input
+                    type="text"
+                    className="form-control form-control-lg"
+                    placeholder="Event Category"
+                    value={eventCategory}
+                    onChange={(e) => setEventCategory(e.target.value)}
                   />
                 </div>
                 <div className="row">

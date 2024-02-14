@@ -432,6 +432,14 @@ button {
   padding-bottom: 8px;
 }
 
+.event-card-venue {
+  color: #000000;
+}
+
+.event-card-category {
+  color: #7e7e7e;;
+}
+
 .pink-heart {
   color:#FF8D91; 
 }
@@ -469,4 +477,20 @@ button {
     color: #FF8D91; 
     border-color: #FF8D91; 
   }
+}
+
+.event-single-span {
+  margin-left: 10px;
+}
+.event-single-date {
+  margin-left: 10px;
+}
+.event-single-location {
+  margin-left: 12px;
+}
+.event-single-category {
+  margin-left: 10px;
+}
+.event-single-ticket {
+  margin-left: 8px;
 }

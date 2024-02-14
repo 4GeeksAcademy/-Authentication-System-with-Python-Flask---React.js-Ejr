@@ -5,7 +5,7 @@ const EventSingle = ({ event }) => {
         <div className="container event-single d-flex justify-content-center align-items-center">
             {/* Left Column - Image */}
             <div className="col-md-5 image-container">
-                <img src={event.image} className="img-fluid" alt="Event" />
+                <img src={event.image} className="img-fluid" alt="Event" style={{objectFit: 'cover', width: '100%', height: '100%'}} />
             </div>
 
             {/* Right Column - Event Details */}
@@ -21,19 +21,25 @@ const EventSingle = ({ event }) => {
                 {/* Event Date */}
                 <div className="d-flex align-items-center mb-3">
                     <i className="fas fa-calendar-alt me-2"></i>
-                    <span>{event.date}</span>
+                    <span className="event-single-date">{event.date}</span>
                 </div>
 
                 {/* Event Location */}
                 <div className="d-flex align-items-center mb-3">
                     <i className="fas fa-map-marker-alt me-2"></i>
-                    <span>{event.location}</span>
+                    <span className="event-single-location">{event.venue}</span><span className="event-single-span">:</span><span className="event-single-span"> {event.city}</span>
+                </div>
+
+                {/* Event Category */}
+                <div className="d-flex align-items-center mb-3">
+                <i class="fa-solid fa-list me-2"></i>
+                    <span className="event-single-category">{event.category}</span>
                 </div>
 
                 {/* Ticket Price */}
                 <div className="d-flex align-items-center mb-4">
                     <i className="fas fa-ticket-alt me-2"></i>
-                    <span>Ticket Price: £{event.price}</span>
+                    <span className="event-single-ticket">Ticket Price: £{event.price}</span>
                 </div>
 
                 {/* Buy Tickets Button */}
