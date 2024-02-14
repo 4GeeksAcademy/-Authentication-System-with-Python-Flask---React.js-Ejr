@@ -1,56 +1,49 @@
 import React, { useContext, useState } from "react";
 import login from "../../styles/login.css"
-//import LogoURL from "../../img/BabySteps.png";
 import { Context } from "../store/appContext";
 
-
 export const Login = () => {
-    const { store, actions } = useContext(Context)
+    const { actions } = useContext(Context);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    const login = (e) => {
+    const handleLogin = (e) => {
         e.preventDefault();
-        actions.login(email, password)
+        actions.login(email, password);
     };
 
     return (
-        <form>
-            <div class="mb-3">
-                <label for="userNameInput" class="form-label">Username</label>
-                <input type="text" class="form-control" id="userNameInput" aria-describedby="emailHelp"/>
+        <form onSubmit={handleLogin}>
+            <div>
+                <h1>Login</h1>
+                <p>Don’t have an account? <a href="">Create now</a></p>
             </div>
 
-            <div class="mb-3">
-                <label for="exampleInputEmail1" class="form-label">Email address</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"/>
+            <div className="mb-3">
+                <label htmlFor="exampleInputEmail1" className="form-label">Email address</label>
+                <input placeholder="email@email.com" type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"/>
             </div>
 
-            <div class="mb-3">
-                <label for="nameInput" class="form-label">Name</label>
-                <input type="text" class="form-control" id="nameInput" aria-describedby="emailHelp"/>
+            <div className="mb-3">
+                <label htmlFor="exampleInputPassword1" className="form-label">Password</label>
+                <div className="input-group">
+                    <input placeholder="**********" type="password" className="form-control" id="exampleInputPassword1"/>
+                    <div className="input-group-text"><i className="fa fa-eye"></i></div>
+                </div>
+            </div>
+            
+            <div className="mb-3 row form-check">
+                <div className="col-auto">
+                    <input type="checkbox" className="form-check-input" id="exampleCheck1"/>
+                    <label className="form-check-label" htmlFor="exampleCheck1"> Remember me</label>
+                
+                    <a className="form-check-label forgotPassword">Forgot Password?</a>
+                </div>
             </div>
 
-            <div class="mb-3">
-                <label for="nameInput" class="form-label">Lastname</label>
-                <input type="text" class="form-control" id="nameInput" aria-describedby="emailHelp"/>
+            <div className="d-grid gap-2">
+                <button type="submit" className="btn btn-success">Login</button>
             </div>
-
-            <div class="mb-3">
-                <label for="exampleInputPassword1" class="form-label">Password</label>
-                <input type="password" class="form-control" id="exampleInputPassword1"/>
-            </div>
-
-            <div class="mb-3">
-                <label for="exampleInputPassword2" class="form-label">Confirm Password</label>
-                <input type="password" class="form-control" id="exampleInputPassword2"/>
-            </div>
-
-            <div class="mb-3 form-check">
-                <input type="checkbox" class="form-check-input" id="exampleCheck1"/>
-                <label class="form-check-label" for="exampleCheck1">Check me out</label>
-            </div>
-            <button type="submit" class="btn btn-primary" disabled>SEND</button>
         </form>
     );
 };
