@@ -237,3 +237,100 @@ def delete_event(event_id):
 
     return jsonify({'message': 'Event deleted successfully'}), 200
 
+#Get Music Events Route #
+
+@api.route('/events/music', methods=['GET'])
+def get_music_events():
+    # Query the database for music events
+    music_events = Event.query.filter_by(category='Music').all()
+
+    # Format music events data for response
+    music_event_list = []
+    for event in music_events:
+        music_event_data = {
+            'id': event.id,
+            'name': event.name,
+            'description': event.description,
+            'venue': event.venue,
+            'city': event.city,
+            'date': event.date,  # Assuming you want to send the date as is
+            'price': event.price,
+            'image': event.image
+        }
+        music_event_list.append(music_event_data)
+
+    # Return music events data
+    return jsonify({'music_events': music_event_list}), 200
+
+# Get Comedy Events Route
+
+@api.route('/events/comedy', methods=['GET'])
+def get_comedy_events():
+    # Query the database for comedy events
+    comedy_events = Event.query.filter_by(category='Comedy').all()
+
+    # Format comedy events data for response
+    comedy_event_list = []
+    for event in comedy_events:
+        comedy_event_data = {
+            'id': event.id,
+            'name': event.name,
+            'description': event.description,
+            'venue': event.venue,
+            'city': event.city,
+            'date': event.date,  # Assuming you want to send the date as is
+            'price': event.price,
+            'image': event.image
+        }
+        comedy_event_list.append(comedy_event_data)
+
+    # Return comedy events data
+    return jsonify({'comedy_events': comedy_event_list}), 200
+
+# Route for fetching business events
+@api.route('/events/business', methods=['GET'])
+def get_business_events():
+    # Query the database for business events
+    business_events = Event.query.filter_by(category='Business').all()
+
+    # Format business events data for response
+    business_event_list = []
+    for event in business_events:
+        business_event_data = {
+            'id': event.id,
+            'name': event.name,
+            'description': event.description,
+            'venue': event.venue,
+            'city': event.city,
+            'date': event.date,  # Assuming you want to send the date as is
+            'price': event.price,
+            'image': event.image
+        }
+        business_event_list.append(business_event_data)
+
+    # Return business events data
+    return jsonify({'business_events': business_event_list}), 200
+
+# Route for fetching sports events
+@api.route('/events/sports', methods=['GET'])
+def get_sports_events():
+    # Query the database for sports events
+    sports_events = Event.query.filter_by(category='Sport').all()
+
+    # Format sports events data for response
+    sports_event_list = []
+    for event in sports_events:
+        sports_event_data = {
+            'id': event.id,
+            'name': event.name,
+            'description': event.description,
+            'venue': event.venue,
+            'city': event.city,
+            'date': event.date,  # Assuming you want to send the date as is
+            'price': event.price,
+            'image': event.image
+        }
+        sports_event_list.append(sports_event_data)
+
+    # Return sports events data
+    return jsonify({'sports_events': sports_event_list}), 200

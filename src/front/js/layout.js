@@ -16,6 +16,10 @@ import { CreateEvent } from "./pages/createEvent";
 import { Contact } from "./pages/contact";
 import EventSingle from "./component/EventSingle";
 import EventsPage from "./pages/EventsPage";
+import MusicEventsPage from "./pages/MusicEventsPage";
+import ComedyEventsPage from "./pages/ComedyEventsPage";
+import BusinessEventsPage from "./pages/BusinessEventsPage";
+import SportsEventsPage from "./pages/SportsEventsPage";
 
 const Layout = () => {
     const basename = process.env.BASENAME || "";
@@ -30,6 +34,10 @@ const Layout = () => {
                     <Routes>
                         <Route element={<Home />} path="/" />
                         <Route element={<EventsPage /> } path="/events" />
+                        <Route element={<MusicEventsPage /> } path="/events/music" />
+                        <Route element={<ComedyEventsPage /> } path="/events/comedy" />
+                        <Route element={<BusinessEventsPage /> } path="/events/business" />
+                        <Route element={<SportsEventsPage /> } path="/events/sports" />
                         <Route element={<Single />} path="/event/:id" /> {/* Updated route */}
                         <Route element={<Contact />} path="/contact" />
                         <Route element={<LogIn />} path="/login" />
