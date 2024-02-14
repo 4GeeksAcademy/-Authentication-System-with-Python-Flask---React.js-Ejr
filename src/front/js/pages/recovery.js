@@ -41,8 +41,8 @@ export const Recovery = () => {
                         <input type="email" class="form-control" id="emailInput" value={emailInput} onChange={(e) => setEmailInput(e.target.value)} required />
                         {emailError && <p style={{ color: 'red' }}>{emailError}</p>}
                     </div>
+                    <button type="submit" className="btn btn-primary">Enviar solicitud de recuperación de contraseña</button>
                 </form>
-                <button type="submit" className="btn btn-primary">Enviar solicitud de recuperación de contraseña</button>
                 {error && <p style={{ color: 'red' }}>{error}</p>}
                 {recoveryMessage && <p>{recoveryMessage}</p>}
             </div>
