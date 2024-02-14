@@ -14,27 +14,27 @@ export const InsertLocationLiters = () => {
     };
 
     return (
-        
-
-            <div className="card container-fluid col-sm-8 col-md-8 col-lg-8 bg-body-tertiary text-center p-1">
+            <div className="insert-location-liters-container container-fluid d-flex justify-content-center">
             <form className="form-floating">
-            <label htmlFor="location">Location:</label>
+            <label className="label pr-" htmlFor="location"></label>
                         <input
                             id="location"
                             type="text"
                             value={store.location}
                             onChange={(e) => handleLocation(e)}
-                           
+                            placeholder="location"
+                     
                         />
             </form>
             <form className="form-floating">
-            <label htmlFor="liters">Liters:</label>
+            <label htmlFor="liters"></label>
                         <input
                             id="liters"
                             type="number"
                             value={store.liters}
-                            onChange={(e) => handleLiters(e)}
-                         
+                            onChange={(e) => handleLiters(e)} 
+                            placeholder="liters"
+
                         />
             </form>
             </div>

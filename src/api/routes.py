@@ -139,12 +139,12 @@ def create_payment_intent():
 
         return jsonify({"client_secret": payment_intent.client_secret})
     except Exception as e:
-        api.logger.error(str(e))
+        current_app.logger.error(str(e))
         return jsonify({}), 400
 
 
 @api.route ("/userdata", methods=["POST"]) 
-@jwt_required()
+
 def handle_userdata():
 
     data = request.json
