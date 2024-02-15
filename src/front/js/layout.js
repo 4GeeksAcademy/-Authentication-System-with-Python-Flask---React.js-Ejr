@@ -3,11 +3,16 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
 import { BackendURL } from "./component/backendURL";
 
-import { Home } from "./pages/home";
 import injectContext from "./store/appContext";
 
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
+import { Home } from "./pages/home";
+import { Landing } from "./pages/landing";
+import { Login } from "./pages/login";
+import { Signup } from "./pages/signup";
+import { Recovery } from "./pages/recovery"
+import { ResetPassword } from "./pages/resetPassword";
 
 const Layout = () => {
     const basename = process.env.BASENAME || "";
@@ -25,6 +30,7 @@ const Layout = () => {
                         <Route element={<Home />} path="/home" />
                         <Route element={<Signup />} path="/signup" />
                         <Route element={<Recovery />} path="/recovery" />
+                        <Route element={<ResetPassword />} path="/reset_password/:token" />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
                     <Footer />

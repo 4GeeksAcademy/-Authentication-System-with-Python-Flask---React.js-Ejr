@@ -70,8 +70,29 @@ const getState = ({ getStore, getActions, setStore }) => {
 					}
 
 					setRecoveryMessage("Se ha enviado un correo electrónico con instrucciones para restablecer tu contraseña.");
+					
 				} catch (error) {
 					console.error("Error al enviar la solicitud de recuperación de contraseña:", error.message);
+				}
+			},
+
+			resetPassword: async (token, newPassword) => {
+				try {
+					const response = await fetch(process.env.BACKEND_URL + `/reset-password/${token}`, {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json'
+						},
+						body: JSON.stringify({ new_password: newPassword })
+					});
+
+					if (!response.ok) {
+						throw new Error('Failed to reset password');
+					}
+
+					return { success: true };
+				} catch (error) {
+					return { success: false, error: error.message };
 				}
 			}
 		}
