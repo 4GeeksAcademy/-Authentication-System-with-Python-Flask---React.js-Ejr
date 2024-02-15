@@ -28,7 +28,6 @@ export const Recovery = () => {
             setError("Error al enviar la solicitud de recuperación de contraseña.");
         } else {
             setRecoveryMessage("Se ha enviado un correo electrónico con instrucciones para restablecer tu contraseña.");
-            navigate("/login")
         }
     }
 
@@ -37,11 +36,11 @@ export const Recovery = () => {
             <div>
                 <form onSubmit={handleSubmit}>
                     <div className="mb-3">
-                        <label htmlFor="emailInput" class="form-label">Ingresa la dirección de tu correo electronico, te enviaremos un mail para que recuperes tu contraseña</label>
-                        <input type="email" class="form-control" id="emailInput" value={emailInput} onChange={(e) => setEmailInput(e.target.value)} required />
+                        <label htmlFor="emailInput" className="form-label">Ingresa la dirección de tu correo electronico, te enviaremos un mail para que recuperes tu contraseña</label>
+                        <input type="email" className="form-control" id="emailInput" value={emailInput} onChange={(e) => setEmailInput(e.target.value)} required />
                         {emailError && <p style={{ color: 'red' }}>{emailError}</p>}
                     </div>
-                    <button type="submit" className="btn btn-primary">Enviar solicitud de recuperación de contraseña</button>
+                    <button type="submit" className="btn btn-primary">Recuperar contraseña</button>
                 </form>
                 {error && <p style={{ color: 'red' }}>{error}</p>}
                 {recoveryMessage && <p>{recoveryMessage}</p>}

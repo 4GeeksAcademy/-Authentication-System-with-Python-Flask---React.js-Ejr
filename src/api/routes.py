@@ -26,7 +26,7 @@ def generate_password_reset_token(user_id):
 def verify_password_reset_token(token, max_age=3600):
     # Deserializar el token para ver el id del usuario
     try:
-        user_id = serializer.loads(token, salt='password-reset', max_age=max_age)
+        user_id = serializer.loads(token, salt='password-reset-salt', max_age=max_age)
         return user_id
     except Exception as e:
         return None
@@ -89,7 +89,7 @@ def handle_password_recovery():
     return jsonify({"message": "Se ha enviado un correo electrónico con instrucciones para restablecer tu contraseña."}), 200
 
 
-@api.route('/reset-password/<token>', methods=['POST'])
+@api.route('/reset_password/<token>', methods=['POST'])
 def reset_password(token):
     user_id = verify_password_reset_token(token)
     if user_id is None:
@@ -100,6 +100,10 @@ def reset_password(token):
 
     # Actualizar la contraseña en la bd
     user = User.query.get(user_id)
+
+    if user is None:
+        return jsonify({"error": "Usuario no encotnrado"}), 404
+    
     user.password = bcrypt.generate_password_hash(new_password)
     db.session.commit()
 
