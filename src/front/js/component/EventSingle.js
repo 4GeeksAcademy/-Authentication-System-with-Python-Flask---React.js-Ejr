@@ -1,5 +1,5 @@
 import React from "react";
-
+import { Link } from "react-router-dom"; 
 import EventsSingleImage from "../../img/pitch/overlay/event-single-background.png"
 
 
@@ -49,6 +49,11 @@ const EventSingle = ({ event }) => {
 
                 {/* Buy Tickets Button */}
                 <button className="btn btn-primary custom-btn mt-2">Buy Tickets Now</button>
+
+                    {/* Update Event Button */}
+                    <div>
+                        <Link to={`/update-event/${event.id}`} className="btn btn-primary custom-btn mt-2">Update Event</Link>
+                    </div>
             </div>
         </div>
         </div>

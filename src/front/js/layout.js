@@ -20,6 +20,7 @@ import MusicEventsPage from "./pages/MusicEventsPage";
 import ComedyEventsPage from "./pages/ComedyEventsPage";
 import BusinessEventsPage from "./pages/BusinessEventsPage";
 import SportsEventsPage from "./pages/SportsEventsPage";
+import UpdateEvent from './pages/updateEvent';
 
 const Layout = () => {
     const basename = process.env.BASENAME || "";
@@ -43,6 +44,7 @@ const Layout = () => {
                         <Route element={<LogIn />} path="/login" />
                         <Route element={<SignUp />} path="/sign-up" />
                         <Route element={<CreateEvent />} path="/create-event" />
+                        <Route element={<UpdateEvent />} path="/update-event/:id" /> {/* Include the route for UpdateEventForm */}
                         <Route element={<h1>Not found!</h1>} />
                         <Route element={<EventSingle />} path="/single-event" />
                     </Routes>
