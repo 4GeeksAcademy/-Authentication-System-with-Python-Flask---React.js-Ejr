@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { storage } from './firebaseConfig';
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
+import CreateEventImage from "../../img/pitch/sections/create-event-background.png";
+import { useNavigate } from 'react-router-dom';
 
 const CreateEventForm = () => {
   const [eventName, setEventName] = useState('');
@@ -14,6 +16,8 @@ const CreateEventForm = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [percent, setPercent] = useState(0);
+  const [successMessage, setSuccessMessage] = useState('');
+  const navigate = useNavigate();
 
   const handleChange = (event) => {
     setEventImage(event.target.files[0]);
@@ -91,7 +95,12 @@ const CreateEventForm = () => {
       }
 
       console.log('Event created successfully');
-      // Optionally, redirect the user or perform other actions upon successful submission
+      // Display success message
+      setSuccessMessage('Your event has been created successfully!');
+      // Redirect to the events page after 3 seconds
+      setTimeout(() => {
+        navigate("/events");
+      }, 3000);
     } catch (error) {
       setError('An error occurred while creating event');
       console.error('Error creating event:', error);
@@ -111,12 +120,12 @@ const CreateEventForm = () => {
   };
 
   return (
-    <div className="container-full py-5 h-100 black-background">
+    <div className="container-full py-5 h-100 black-background" style={{ backgroundImage: `url(${CreateEventImage})`, backgroundSize: 'cover', backgroundPosition: 'center'  }}>
       <div className="signup row d-flex justify-content-center align-items-center h-100">
         <div className="col-12 col-md-8 col-lg-6 col-xl-5">
           <div className="card custom-card shadow-2-strong" style={{ borderRadius: '1rem' }}>
             <div className="card-body p-5">
-              <h2 className="mb-5">Create Your Event!</h2>
+              <h2 className="mb-5 text-center">Create Your Event!</h2>
               <form onSubmit={handleUploadAndCreateEvent}>
                 <div className="mb-4">
                   <input
@@ -144,34 +153,35 @@ const CreateEventForm = () => {
                     onChange={(e) => setEventVenue(e.target.value)}
                   />
                 </div>
+                <div className='row'> 
+                  <div className="mb-4 col-6">
+                      <select
+                          className={`form-select form-select-lg ${eventCity ? 'custom-select-selected' : 'custom-select-placeholder'}`}
+                          value={eventCity}
+                          onChange={(e) => setEventCity(e.target.value)}
+                      >
+                          <option value="" disabled hidden>Select City</option>
+                          <option value="London">London</option>
+                          <option value="New York">New York</option>
+                          <option value="Paris">Paris</option>
+                          <option value="Berlin">Berlin</option>
+                      </select>
+                  </div>
 
-                <div className="mb-4">
-                    <select
-                        className={`form-select form-select-lg ${eventCity ? 'custom-select-selected' : 'custom-select-placeholder'}`}
-                        value={eventCity}
-                        onChange={(e) => setEventCity(e.target.value)}
-                    >
-                        <option value="" disabled hidden>Select City</option>
-                        <option value="London">London</option>
-                        <option value="New York">New York</option>
-                        <option value="Paris">Paris</option>
-                        <option value="Berlin">Berlin</option>
-                    </select>
-                </div>
-
-                <div className="mb-4">
-                    <select
-                        className={`form-select form-select-lg ${eventCategory ? 'custom-select-selected' : 'custom-select-placeholder'}`}
-                        value={eventCategory}
-                        onChange={(e) => setEventCategory(e.target.value)}
-                    >
-                        <option value="" disabled hidden>Select Category</option>
-                        <option value="Music">Music</option>
-                        <option value="Comedy">Comedy</option>
-                        <option value="Business">Business</option>
-                        <option value="Sport">Sport</option>
-                        <option value="Other">Other</option>
-                    </select>
+                  <div className="mb-4 col-6">
+                      <select
+                          className={`form-select form-select-lg ${eventCategory ? 'custom-select-selected' : 'custom-select-placeholder'}`}
+                          value={eventCategory}
+                          onChange={(e) => setEventCategory(e.target.value)}
+                      >
+                          <option value="" disabled hidden>Select Category</option>
+                          <option value="Music">Music</option>
+                          <option value="Comedy">Comedy</option>
+                          <option value="Business">Business</option>
+                          <option value="Sport">Sport</option>
+                          <option value="Other">Other</option>
+                      </select>
+                  </div>
                 </div>
                 
                 <div className="row">
@@ -194,17 +204,21 @@ const CreateEventForm = () => {
                   </div>
                 </div>
                 <div className="mb-4">
-                  <input
-                    type="file"
-                    accept="image/*"
-                    className="form-control-file"
-                    onChange={handleChange}
-                  />
+                  <label className='mb-3'>Upload Your Image Here</label>
+                  <div>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      className="form-control-file"
+                      onChange={handleChange}
+                    />
+                  </div>
                 </div>
                 {percent > 0 && <p>{percent}% done</p>}
                 {error && <p className="text-danger">{error}</p>}
+                {successMessage && <p className="text-white mb-4">{successMessage}</p>}
                 <div className="d-flex flex-column align-items-center mb-4">
-                  <button className="btn btn-primary custom-btn" type="submit" disabled={loading}>
+                  <button className="btn btn-primary custom-btn create-event-button" type="submit" disabled={loading}>
                     {loading ? 'Creating Event...' : 'Create Event'}
                   </button>
                 </div>

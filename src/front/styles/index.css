@@ -524,6 +524,14 @@ button {
   color: #495057; /* Selected option text color */
 }
 
+.form-control-file {
+  padding:
+}
+
+.create-event-button {
+  padding: 10px 30px
+}
+
 /*-----CHECKOUT STYLING------*/
 
 .big-round {
