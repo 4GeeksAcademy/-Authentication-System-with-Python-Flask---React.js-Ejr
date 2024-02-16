@@ -46,7 +46,33 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				//reset the global store
 				setStore({ demo: demo });
-			}
+			},
+			login: async (email, password) => {
+                console.log(email, password);
+                console.log("funciona")
+                try {
+                    let response = await fetch("https://bookish-umbrella-wrg6x6xgqqr3pvg-3001.app.github.dev/user/",{
+                        method: "POST",
+                        headers: {
+                            "Content-Type":"application/json"
+                        },
+                            body: JSON.stringify({
+                            "email": email,
+                            "password": password
+                        })
+                    })
+                    let data = await response.json()
+                    if (response.status === 401) {
+                        return false;
+                    }
+                    localStorage.setItem("token", data.access_token)
+                    console.log(data);
+                        return true
+                } catch(error) {
+                    console.log(error);
+                    return false
+                }
+            },
 		}
 	};
 };
