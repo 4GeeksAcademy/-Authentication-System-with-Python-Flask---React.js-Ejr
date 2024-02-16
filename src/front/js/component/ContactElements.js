@@ -20,7 +20,7 @@ const ContactElements = () => {
             <p>Email us for general queries, including marketing and partnership opportunities.</p>
 
             {/* Email address */}
-            <a href="mailto:hello@helpcentre.com">hello@helpcentre.com</a>
+            <a href="mailto:hello@eventure.com">hello@eventure.com</a>
           </div>
         </div>
        

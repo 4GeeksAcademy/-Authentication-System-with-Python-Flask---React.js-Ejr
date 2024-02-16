@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import { storage } from './firebaseConfig';
+import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
+import UpdateEventImage from "../../img/pitch/sections/update-event-background.png";
+import { useNavigate } from 'react-router-dom';
 
 const UpdateEventForm = ({ event }) => {
   const [eventName, setEventName] = useState(event.name);
@@ -13,6 +16,13 @@ const UpdateEventForm = ({ event }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [percent, setPercent] = useState(0);
+  const [updateSuccess, setUpdateSuccess] = useState(false);
+  const [deleteConfirm, setDeleteConfirm] = useState(false);
+  const [deleteSuccess, setDeleteSuccess] = useState(false);
+  const navigate = useNavigate();
+
+  const locations = ['London', 'New York', 'Paris', 'Berlin'];
+  const categories = ['Music', 'Comedy', 'Business', 'Sport', 'Other'];
 
   const handleChange = (event) => {
     setEventImage(event.target.files[0]);
@@ -24,6 +34,51 @@ const UpdateEventForm = ({ event }) => {
     setLoading(true);
 
     try {
+      let imageUrl = event.image; // Default to existing image
+
+      if (eventImage) {
+        // If a new image is selected, upload it
+        const storageRef = ref(storage, `/event_images/${eventImage.name}`);
+        const uploadTask = uploadBytesResumable(storageRef, eventImage);
+
+        uploadTask.on(
+          'state_changed',
+          (snapshot) => {
+            const percent = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+            setPercent(percent);
+          },
+          (error) => {
+            console.error(error);
+            setError('An error occurred while uploading the image.');
+            setLoading(false);
+          },
+          () => {
+            getDownloadURL(uploadTask.snapshot.ref)
+              .then((downloadURL) => {
+                imageUrl = downloadURL;
+                // Update event with new image
+                updateEvent(imageUrl);
+              })
+              .catch((error) => {
+                console.error(error);
+                setError('An error occurred while getting download URL.');
+                setLoading(false);
+              });
+          }
+        );
+      } else {
+        // If no new image selected, update event with existing image
+        updateEvent(imageUrl);
+      }
+    } catch (error) {
+      console.error(error);
+      setError('An error occurred while updating the event.');
+      setLoading(false);
+    }
+  };
+
+  const updateEvent = async (imageUrl) => {
+    try {
       const eventData = {
         name: eventName,
         description: eventDescription,
@@ -32,7 +87,7 @@ const UpdateEventForm = ({ event }) => {
         category: eventCategory,
         date: eventDate,
         price: eventPrice,
-        image: eventImage ? eventImage : event.image, // Retain existing image if no new image selected
+        image: imageUrl,
       };
 
       const response = await fetch(`${process.env.BACKEND_URL}/api/edit-event/${event.id}`, {
@@ -48,6 +103,11 @@ const UpdateEventForm = ({ event }) => {
       }
 
       console.log('Event updated successfully');
+      setUpdateSuccess(true);
+      setTimeout(() => {
+        setUpdateSuccess(false);
+        navigate(`/event/${event.id}`);
+      }, 3000);
     } catch (error) {
       setError('An error occurred while updating the event');
       console.error('Error updating event:', error);
@@ -57,25 +117,35 @@ const UpdateEventForm = ({ event }) => {
   };
 
   const handleDeleteEvent = async () => {
-    try {
-      const response = await fetch(`${process.env.BACKEND_URL}/api/delete-event/${event.id}`, {
-        method: 'DELETE',
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to delete event');
+    if (!deleteConfirm) {
+      const confirmDelete = window.confirm('Are you sure you want to delete this event? This action cannot be undone.');
+      if (confirmDelete) {
+        setDeleteConfirm(true);
       }
+    } else {
+      try {
+        const response = await fetch(`${process.env.BACKEND_URL}/api/delete-event/${event.id}`, {
+          method: 'DELETE',
+        });
 
-      console.log('Event deleted successfully');
-      // Optionally, redirect the user or perform other actions upon successful deletion
-    } catch (error) {
-      setError('An error occurred while deleting the event');
-      console.error('Error deleting event:', error);
+        if (!response.ok) {
+          throw new Error('Failed to delete event');
+        }
+
+        console.log('Event deleted successfully');
+        setDeleteSuccess(true);
+        setTimeout(() => {
+          navigate("/");
+        }, 3000);
+      } catch (error) {
+        setError('An error occurred while deleting the event');
+        console.error('Error deleting event:', error);
+      }
     }
   };
 
   return (
-    <div className="container-full py-5 h-100 black-background">
+    <div className="container-full py-5 h-100 black-background" style={{ backgroundImage: `url(${UpdateEventImage})`, backgroundSize: 'cover', backgroundPosition: 'center'  }}>
       <div className="signup row d-flex justify-content-center align-items-center h-100">
         <div className="col-12 col-md-8 col-lg-6 col-xl-5">
           <div className="card custom-card shadow-2-strong" style={{ borderRadius: '1rem' }}>
@@ -110,42 +180,57 @@ const UpdateEventForm = ({ event }) => {
                     onChange={(e) => setEventVenue(e.target.value)}
                   />
                 </div>
-                <div className="mb-4">
-                  <input
-                    type="text"
-                    className="form-control form-control-lg"
-                    placeholder="Event City"
-                    value={eventCity}
-                    onChange={(e) => setEventCity(e.target.value)}
-                  />
+                <div className="row mb-4">
+                  <div className="col-6">
+                    <select
+                      className={`form-select form-select-lg ${eventCity ? 'custom-select-selected' : 'custom-select-placeholder'}`}
+                      value={eventCity}
+                      onChange={(e) => setEventCity(e.target.value)}
+                    >
+                      <option value="" disabled hidden>Select City</option>
+                      {locations.map((location, index) => (
+                        <option key={index} value={location}>
+                          {location}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="col-6">
+                    <select
+                      className={`form-select form-select-lg ${eventCategory ? 'custom-select-selected' : 'custom-select-placeholder'}`}
+                      value={eventCategory}
+                      onChange={(e) => setEventCategory(e.target.value)}
+                    >
+                      <option value="" disabled hidden>Select Category</option>
+                      {categories.map((category, index) => (
+                        <option key={index} value={category}>
+                          {category}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-6">
+                    <input
+                      type="date"
+                      className="form-control form-control-lg"
+                      value={eventDate}
+                      onChange={(e) => setEventDate(e.target.value)}
+                    />
+                  </div>
+                  <div className="col-6">
+                    <input
+                      type="text"
+                      className="form-control form-control-lg"
+                      placeholder="Event Price"
+                      value={eventPrice}
+                      onChange={(e) => setEventPrice(e.target.value)}
+                    />
+                  </div>
                 </div>
                 <div className="mb-4">
-                  <input
-                    type="text"
-                    className="form-control form-control-lg"
-                    placeholder="Event Category"
-                    value={eventCategory}
-                    onChange={(e) => setEventCategory(e.target.value)}
-                  />
-                </div>
-                <div className="mb-4">
-                  <input
-                    type="date"
-                    className="form-control form-control-lg"
-                    value={eventDate}
-                    onChange={(e) => setEventDate(e.target.value)}
-                  />
-                </div>
-                <div className="mb-4">
-                  <input
-                    type="text"
-                    className="form-control form-control-lg"
-                    placeholder="Event Price"
-                    value={eventPrice}
-                    onChange={(e) => setEventPrice(e.target.value)}
-                  />
-                </div>
-                <div className="mb-4">
+                  <label className='mb-3 mt-3'>Upload Your Image Here</label>
                   <input
                     type="file"
                     accept="image/*"
@@ -155,12 +240,24 @@ const UpdateEventForm = ({ event }) => {
                 </div>
                 {percent > 0 && <p>{percent}% done</p>}
                 {error && <p className="text-danger">{error}</p>}
-                <div className="d-flex flex-column align-items-center mb-4">
+                {updateSuccess && (
+                  <p className="text-white mt-3">Your event has been updated successfully.</p>
+                )}
+                <div className="d-flex justify-content-between align-items-center">
                   <button className="btn btn-primary custom-btn" type="submit" disabled={loading}>
                     {loading ? 'Updating Event...' : 'Update Event'}
                   </button>
-                  <button className="btn btn-danger mt-3" onClick={handleDeleteEvent}>Delete Event</button>
+                  <button
+                    className="btn btn-danger custom-btn"
+                    onClick={handleDeleteEvent}
+                    disabled={loading}
+                  >
+                    {deleteConfirm ? 'Confirm Delete' : 'Delete Event'}
+                  </button>
                 </div>
+                {deleteSuccess && (
+                  <p className="text-white mt-3">Your event has now been deleted.</p>
+                )}
               </form>
             </div>
           </div>

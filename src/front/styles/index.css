@@ -5,7 +5,6 @@
     padding: 0;
     overflow: hidden;
 }
-
 /* ------ BACKGROUND COLOUR STYLING ------ */
 
 .black-background {
@@ -224,6 +223,24 @@ button {
   align-items: center;
   justify-content: center;
   height: 100vh;
+}
+
+.hero-text {
+  font-size: larger;
+}
+/* ------ OTHER HERO STYLING ------ */
+
+
+.hero-section {
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: vh;
+}
+
+.hero-text {
+  font-size: larger;
 }
 
 
@@ -519,6 +536,20 @@ button {
   margin-left: 8px;
 }
 
+.custom-btn-event-update {
+  border-color: #FF8D91; 
+  background: #000;
+  color: #ffffff;
+  margin-left: 20px;
+
+  /* Hover effect */
+  &:hover {
+    background-color: #FF8D91; 
+    color: #000; 
+  }
+}
+
+
 
 /* ------ CREATE EVENT FROM STYLING ------ */  
 
@@ -531,10 +562,6 @@ button {
 
 .custom-select-selected {
   color: #495057; /* Selected option text color */
-}
-
-.form-control-file {
-  padding:
 }
 
 .create-event-button {

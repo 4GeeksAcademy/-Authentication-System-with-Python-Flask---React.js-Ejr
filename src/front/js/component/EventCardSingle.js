@@ -45,9 +45,11 @@ const EventCardSingle = ({ eventId }) => {
                 </div>
                 <div className="d-flex justify-content-between align-items-center"> 
                     <Link to={`/event/${eventId}`} className="btn btn-primary custom-btn">More info.</Link>
-                    <button className="btn" onClick={toggleFavorite}>
+
+                    {/*<button className="btn" onClick={toggleFavorite}>
                         <i className={`fa-solid fa-heart ${favorited ? 'pink-heart' : ''}`}></i>
-                    </button>
+                    </button>*/}
+
                 </div>
             </div>
         </div>

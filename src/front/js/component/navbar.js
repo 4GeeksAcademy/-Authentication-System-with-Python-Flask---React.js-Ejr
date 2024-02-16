@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { Context } from "../store/appContext"; // Make sure to import your context
+import { SiteLogo } from "../../img/pitch/logo/web-logo.png";
 
 export const Navbar = () => {
   const { store, actions } = useContext(Context);
@@ -12,7 +13,7 @@ export const Navbar = () => {
         {/* Site Logo */}
         <div className="site-logo">
           <Link to="/" className="navbar-brand">
-            Our Logo
+            Eventure
           </Link>
         </div>
 
