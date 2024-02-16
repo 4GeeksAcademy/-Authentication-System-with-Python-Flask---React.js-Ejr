@@ -47,8 +47,8 @@ const EventSingle = ({ event }) => {
                     <span className="event-single-ticket">Ticket Price</span><span className="event-single-span">:</span><span className="event-single-span">${event.price}</span>
                 </div>
 
-                {/* Buy Tickets Button */}
-                <button className="btn btn-primary custom-btn mt-2">Buy Tickets Now</button>
+                    {/* Buy Tickets Button */}
+                    <Link to={`/checkout/${event.id}`} className="btn btn-primary custom-btn mt-2">Buy Tickets Now</Link>
 
                     {/* Update Event Button */}
                     <div>
