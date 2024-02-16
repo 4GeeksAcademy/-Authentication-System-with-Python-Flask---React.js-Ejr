@@ -30,6 +30,7 @@ const Layout = () => {
                         <Route element={<Home />} path="/home" />
                         <Route element={<Signup />} path="/signup" />
                         <Route element={<Recovery />} path="/recovery" />
+                        <Route element={<Profile />} path="/profile" />
                         <Route element={<ResetPassword />} path="/reset_password/:token" />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
