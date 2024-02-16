@@ -1,18 +1,19 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { Context } from "../store/appContext"; // Make sure to import your context
+import { SiteLogo } from "../../img/pitch/logo/web-logo.png";
 
 export const Navbar = () => {
   const { store, actions } = useContext(Context);
 
   return (
     <div className="container-full nav-container">
-      <nav className="navbar navbar-expand-lg navbar-dark navbar-custom d-flex justify-content-between px-5">
+      <nav className="navbar navbar-expand-lg navbar-dark navbar-custom d-flex justify-content-between px-5 py-3">
 
         {/* Site Logo */}
         <div className="site-logo">
           <Link to="/" className="navbar-brand">
-            Our Logo
+            Eventure
           </Link>
         </div>
 
@@ -24,7 +25,7 @@ export const Navbar = () => {
 
               {/* Home Link */}
               
-              <li className="nav-item active mx-3">
+              <li className="nav-item active mx-5">
                 <Link to="/" className="nav-link">
                   Home
                 </Link>
@@ -32,7 +33,7 @@ export const Navbar = () => {
 
               {/* Events Link */}
 
-              <li className="nav-item mx-3">
+              <li className="nav-item mx-5">
                 <Link to="/events" className="nav-link">
                   Events
                 </Link>
@@ -40,7 +41,7 @@ export const Navbar = () => {
 
               {/* Contact Link */}
 
-              <li className="nav-item mx-3">
+              <li className="nav-item mx-5">
                 <Link to="/contact" className="nav-link">
                   Contact
                 </Link>

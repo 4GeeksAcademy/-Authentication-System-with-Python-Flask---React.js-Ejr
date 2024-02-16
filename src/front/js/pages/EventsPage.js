@@ -41,7 +41,7 @@ const EventsPage = () => {
     return (
         <div className="text-center">
             {/* Events Page Hero */}
-            <div className="hero" style={{ backgroundImage: `url(${EventsHeroImage})`, backgroundSize: 'cover', backgroundPosition: 'center'  }}>
+            <div className="hero-section" style={{ backgroundImage: `url(${EventsHeroImage})`, backgroundSize: 'cover', backgroundPosition: 'center'  }}>
                 <Hero
                     header="Discover An Event Near You"
                     text="Explore a world of diverse events tailored to your interests. From exciting concerts and captivating art exhibitions to thrilling sports and enriching workshops, there’s something for everyone. Find your next unforgettable experience by browsing the events below."

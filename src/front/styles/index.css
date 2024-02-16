@@ -5,7 +5,6 @@
     padding: 0;
     overflow: hidden;
 }
-
 /* ------ BACKGROUND COLOUR STYLING ------ */
 
 .black-background {
@@ -226,6 +225,24 @@ button {
   height: 100vh;
 }
 
+.hero-text {
+  font-size: larger;
+}
+/* ------ OTHER HERO STYLING ------ */
+
+
+.hero-section {
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: vh;
+}
+
+.hero-text {
+  font-size: larger;
+}
+
 
 /* ------ NAVBAR STYLING ------ */
 
@@ -289,6 +306,15 @@ button {
   color: #FF8D91;
 }
 
+.contact-btn {
+  margin-top: 20px;
+}
+
+.contact-success {
+  margin-top: 50px;
+  color: #000;
+  font-size: large;
+}
 
 
 
@@ -510,6 +536,20 @@ button {
   margin-left: 8px;
 }
 
+.custom-btn-event-update {
+  border-color: #FF8D91; 
+  background: #000;
+  color: #ffffff;
+  margin-left: 20px;
+
+  /* Hover effect */
+  &:hover {
+    background-color: #FF8D91; 
+    color: #000; 
+  }
+}
+
+
 
 /* ------ CREATE EVENT FROM STYLING ------ */  
 
@@ -522,4 +562,37 @@ button {
 
 .custom-select-selected {
   color: #495057; /* Selected option text color */
+}
+
+.create-event-button {
+  padding: 10px 30px
+}
+
+/*-----CHECKOUT STYLING------*/
+
+.big-round {
+  border-radius: 30px;
+}
+
+.checkout {
+  padding: 75px 0px;
+  border-radius: 80px;
+}
+
+.card-body-checkout {
+  padding: 40px;
+  color: #434343;
+  box-shadow: 0px 0px 71px 25px rgba(0,0,0,0.75);
+}
+
+.checkout-button {
+  padding: 5px 30px;
+}
+
+.checkout-confirm {
+  color: #9e9797;
+}
+
+.checkout-thank-you {
+  color: #000;
 }
