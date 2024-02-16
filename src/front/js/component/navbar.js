@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { Context } from "../store/appContext"; // Make sure to import your context
-import { SiteLogo } from "../../img/pitch/logo/web-logo.png";
 
 export const Navbar = () => {
   const { store, actions } = useContext(Context);
@@ -46,6 +45,15 @@ export const Navbar = () => {
                   Contact
                 </Link>
               </li>
+
+              {/* My Events Link */}
+              {store.token && (
+                <li className="nav-item mx-5">
+                  <Link to="/my-events" className="nav-link">
+                    My Events
+                  </Link>
+                </li>
+              )}
 
             </ul>
           </div>

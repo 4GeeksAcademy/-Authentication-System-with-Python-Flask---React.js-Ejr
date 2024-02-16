@@ -325,6 +325,11 @@ button {
   padding: 50px 0px 30px 0px; 
 }
 
+.popular-events {
+  background: #131313;
+  padding: 50px 0px 30px 0px; 
+}
+
 .popular-events h2 {
   color: white;
 }

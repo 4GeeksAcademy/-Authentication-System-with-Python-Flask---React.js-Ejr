@@ -22,6 +22,7 @@ import BusinessEventsPage from "./pages/BusinessEventsPage";
 import SportsEventsPage from "./pages/SportsEventsPage";
 import UpdateEvent from './pages/updateEvent';
 import Checkout from './pages/Checkout'
+import MyEvents from "./pages/MyEvents";
 
 const Layout = () => {
     const basename = process.env.BASENAME || "";
@@ -35,6 +36,7 @@ const Layout = () => {
                     <Navbar />
                     <Routes>
                         <Route element={<Home />} path="/" />
+                        <Route element={<MyEvents /> } path="/my-events" />
                         <Route element={<EventsPage /> } path="/events" />
                         <Route element={<MusicEventsPage /> } path="/events/music" />
                         <Route element={<ComedyEventsPage /> } path="/events/comedy" />

@@ -1,8 +1,11 @@
-import React from "react";
-import { Link } from "react-router-dom"; 
-import EventsSingleImage from "../../img/pitch/overlay/event-single-background.png"
+import React, { useContext } from "react";
+import { Link } from "react-router-dom";
+import { Context } from "../store/appContext"; // Make sure to import your context
+import EventsSingleImage from "../../img/pitch/overlay/event-single-background.png";
 
 const EventSingle = ({ event }) => {
+    const { store } = useContext(Context);
+
     return (
         <div className="container-full" style={{ backgroundImage: `url(${EventsSingleImage})`, backgroundSize: 'cover', backgroundPosition: 'center'  }}>
 
@@ -51,8 +54,10 @@ const EventSingle = ({ event }) => {
                         {/* Buy Tickets Button */}
                         <Link to={`/checkout/${event.id}`} className="btn btn-primary custom-btn mt-2 me-2">Buy Tickets Now</Link>
                         
-                        {/* Update Event Button */}
-                        <Link to={`/update-event/${event.id}`} className="btn btn-primary custom-btn-event-update mt-2">Update Event</Link>
+                        {/* Update Event Button - Conditionally rendered */}
+                        {store.token && (
+                            <Link to={`/update-event/${event.id}`} className="btn btn-primary custom-btn-event-update mt-2">Update Event</Link>
+                        )}
                     </div>
                 </div>
             </div>

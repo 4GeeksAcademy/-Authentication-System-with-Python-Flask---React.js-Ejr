@@ -29,3 +29,4 @@ const Hero = ({ header, text }) => {
 };
 
 export default Hero;
+

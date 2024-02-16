@@ -99,7 +99,7 @@ const CreateEventForm = () => {
       setSuccessMessage('Your event has been created successfully!');
       // Redirect to the events page after 3 seconds
       setTimeout(() => {
-        navigate("/events");
+        navigate("/my-events");
       }, 3000);
     } catch (error) {
       setError('An error occurred while creating event');
