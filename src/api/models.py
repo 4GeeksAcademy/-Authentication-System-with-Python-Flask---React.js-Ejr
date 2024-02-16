@@ -1,4 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
+from datetime import datetime
 
 
 db = SQLAlchemy()
@@ -73,6 +74,7 @@ class Evento(db.Model):
     descripcion = db.Column(db.String(250), nullable=True)
     ciudad = db.Column(db.String(250), nullable=True)
     ubicación = db.Column(db.String(250), nullable=True)
+    fecha = db.Column(db.DateTime, default=datetime.utcnow)
     precio = db.Column(db.String(250), nullable=True)
     max_personas = db.Column(db.Integer, nullable=True)
     id_categoria = db.Column(db.Integer, db.ForeignKey('categoria.id'), nullable=False)
@@ -88,6 +90,7 @@ class Evento(db.Model):
             "ciudad": self.ciudad,
             "ubicación":self.ubicación,
             "precio":self.precio,
+            "fecha": self.fecha,
             "max_personas": self.max_personas,
             # do not serialize the password, its a security breach
         }
