@@ -142,6 +142,7 @@ const CreateEventForm = () => {
                     placeholder="Event Description"
                     value={eventDescription}
                     onChange={(e) => setEventDescription(e.target.value)}
+                    style={{ resize: 'vertical' }} // Add this style
                   />
                 </div>
                 <div className="mb-4">

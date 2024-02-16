@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { storage } from './firebaseConfig';
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import UpdateEventImage from "../../img/pitch/sections/update-event-background.png";
@@ -23,6 +23,11 @@ const UpdateEventForm = ({ event }) => {
 
   const locations = ['London', 'New York', 'Paris', 'Berlin'];
   const categories = ['Music', 'Comedy', 'Business', 'Sport', 'Other'];
+
+  useEffect(() => {
+    // Adjust textarea height when component mounts
+    adjustTextareaHeight(document.getElementById('event-description'));
+  }, []);
 
   const handleChange = (event) => {
     setEventImage(event.target.files[0]);
@@ -147,6 +152,11 @@ const UpdateEventForm = ({ event }) => {
     }
   };
 
+  const adjustTextareaHeight = (textarea) => {
+    textarea.style.height = 'auto'; // Reset height to auto to adjust it
+    textarea.style.height = `${textarea.scrollHeight}px`; // Set the height to match the scroll height
+  };
+
   return (
     <div className="container-full py-5 h-100 black-background" style={{ backgroundImage: `url(${UpdateEventImage})`, backgroundSize: 'cover', backgroundPosition: 'center'  }}>
       <div className="signup row d-flex justify-content-center align-items-center h-100">
@@ -166,12 +176,17 @@ const UpdateEventForm = ({ event }) => {
                   />
                 </div>
                 <div className="mb-4">
-                  <input
-                    type="text"
+                  <textarea
+                    id="event-description" // Add an ID for referencing
                     className="form-control form-control-lg"
                     placeholder="Event Description"
                     value={eventDescription}
-                    onChange={(e) => setEventDescription(e.target.value)}
+                    onChange={(e) => {
+                      setEventDescription(e.target.value);
+                      adjustTextareaHeight(e.target);
+                    }}
+                    ref={(textarea) => textarea && adjustTextareaHeight(textarea)} // Set initial height
+                    style={{ resize: 'vertical' }}
                   />
                 </div>
                 <div className="mb-4">
@@ -250,16 +265,16 @@ const UpdateEventForm = ({ event }) => {
                   <button className="btn btn-primary custom-btn" type="submit" disabled={loading}>
                     {loading ? 'Updating Event...' : 'Update Event'}
                   </button>
-                    <button
-                      className="btn btn-danger custom-btn"
-                      onClick={(e) => {
-                        e.preventDefault(); // Prevent default form submission action
-                        handleDeleteEvent();
-                      }}
-                      disabled={loading}
-                    >
-                      {deleteConfirm ? 'Confirm Delete' : 'Delete Event'}
-                    </button>
+                  <button
+                    className="btn btn-danger custom-btn"
+                    onClick={(e) => {
+                      e.preventDefault(); // Prevent default form submission action
+                      handleDeleteEvent();
+                    }}
+                    disabled={loading}
+                  >
+                    {deleteConfirm ? 'Confirm Delete' : 'Delete Event'}
+                  </button>
                 </div>
                 {deleteSuccess && (
                   <p className="text-white mt-3">Your event has now been deleted.</p>
