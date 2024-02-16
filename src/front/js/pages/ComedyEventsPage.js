@@ -1,141 +1,60 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import EventCardSingle from "../component/EventCardSingle";
+import Hero from "../component/Hero";
 
-import CheckoutImage from "../../img/pitch/sections/checkout-backdrop.png";
+import EventsHeroImage from "../../img/pitch/overlay/events-hero-overlay.png";
 
-const CheckoutPage = ({ event }) => {
-  const [processingPayment, setProcessingPayment] = useState(false);
-  const [paymentConfirmed, setPaymentConfirmed] = useState(false);
-  const navigate = useNavigate();
+const ComedyEventsPage = () => {
+    const [comedyEventIds, setComedyEventIds] = useState([]);
 
-  const handlePayment = (event) => {
-    event.preventDefault();
-    setProcessingPayment(true);
+    useEffect(() => {
+        const fetchComedyEventIdsFromDatabase = async () => {
+            try {
+                const response = await fetch(`${process.env.BACKEND_URL}/api/events/comedy`);
+                if (!response.ok) {
+                    throw new Error("Failed to fetch comedy events");
+                }
+                const data = await response.json();
+                const fetchedComedyEventIds = data.comedy_events.map(event => event.id);
+                setComedyEventIds(fetchedComedyEventIds.slice(0, 12)); // Limiting to 12 events
+            } catch (error) {
+                console.error("Error fetching comedy event IDs:", error);
+            }
+        };
 
-    // Simulating payment processing for 3 seconds
-    setTimeout(() => {
-      setProcessingPayment(false);
-      setPaymentConfirmed(true);
+        fetchComedyEventIdsFromDatabase();
+    }, []);
 
-      // Navigate back to the homepage after 3 seconds
-      setTimeout(() => {
-        navigate("/");
-      }, 4000);
-    }, 2000);
-  };
-
-  if (!event) {
-    return <div>Loading...</div>; // Placeholder for when event data is being fetched
-  }
-
-  return (
-    <div className="container py-5">
-      <div className="row checkout">
-        {/* Left Column */}
-        <div className="col-md-6">
-          <h1>Eventure</h1>
-          <h4 className="mb-4">Thank you for shopping with Eventure! Check your order below.</h4>
-          <div className="mb-4">
-            <div>
-              <img src={event.image} alt="Event" className="img mb-4" style={{ width: "25%" }} />
+    return (
+        <div className="text-center">
+            <div className="hero" style={{ backgroundImage: `url(${EventsHeroImage})`, backgroundSize: 'cover', backgroundPosition: 'center'  }}>
+                <Hero
+                    header="Discover Comedy Events Near You"
+                    text="Explore a world of laughter with hilarious comedy events tailored to your sense of humor. From stand-up comedy shows to comedy festivals and improv performances, find your next laugh-out-loud experience below."
+                />
             </div>
-            <h3 className="mb-4">{event.name}</h3>
-            <div className="d-flex">
-              <div className="col-4">
-                <p>Date: {event.date}</p>
-              </div>
-              <div>
-                <p>Location: {event.venue}, {event.city}</p>
-              </div>
+
+            <div className="container-fluid all-events d-flex align-items-center justify-content-center">
+                <div className="container text-center">
+
+                    <div className="row mb-4">
+                        <div className="col">
+                            <h2 className="section-header-white">View All Comedy Events</h2>
+                        </div>
+                    </div>
+
+                    <div className="row">
+                        {comedyEventIds.map(eventId => (
+                            <div className="col-md-3 mb-4" key={eventId}>
+                                <EventCardSingle eventId={eventId} />
+                            </div>
+                        ))}
+                    </div>
+
+                </div>
             </div>
-            <p>Ticket Price: ${event.price}</p>
-          </div>
         </div>
-
-        {/* Right Column */}
-        <div className="col-md-6 checkout-details">
-          <div className="card">
-            <div className="card-body-checkout">
-              <h3>Checkout</h3>
-              <form onSubmit={handlePayment}>
-                <div className="mb-3">
-                  <label htmlFor="email" className="form-label">
-                    Email
-                  </label>
-                  <input
-                    type="email"
-                    className="form-control"
-                    id="email"
-                    placeholder="john@example.com"
-                  />
-                </div>
-                <div className="mb-3">
-                  <label htmlFor="name" className="form-label">
-                    Customer Details
-                  </label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="name"
-                    placeholder="Name"
-                  />
-                </div>
-                <div className="mb-3">
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="address"
-                    placeholder="Address"
-                  />
-                </div>
-                <div className="mb-3">
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="country"
-                    placeholder="Country"
-                  />
-                </div>
-
-                <div className="mb-3">
-                  <label htmlFor="cardNumber" className="form-label">
-                    Card Details
-                  </label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="cardNumber"
-                    placeholder="1234 5678 9012 3456"
-                  />
-                </div>
-                <div className="mb-3 d-flex">
-                  <div style={{ flex: "1", marginRight: "7px" }}>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="expiry"
-                      placeholder="MM/YY"
-                    />
-                  </div>
-                  <div style={{ flex: "1", marginLeft: "7px" }}>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="cvv"
-                      placeholder="123"
-                    />
-                  </div>
-                </div>
-                <button type="submit" className="btn btn-primary custom-btn checkout-button" disabled={processingPayment}>
-                  {processingPayment ? "Processing Payment..." : `Pay $${event.price}`}
-                </button>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+    );
 };
 
-export default CheckoutPage;
+export default ComedyEventsPage;
