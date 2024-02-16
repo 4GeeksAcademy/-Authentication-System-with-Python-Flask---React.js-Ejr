@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import EventCardSingle from "../component/EventCardSingle";
 import Hero from "../component/Hero";
+import PopularEventsTwo from "../sections/PopularEventsTwo";
+
 
 import EventsHeroImage from "../../img/pitch/overlay/events-hero-overlay.png";
 
@@ -34,7 +36,7 @@ const SportsEventsPage = () => {
                 />
             </div>
 
-            <div className="container-fluid all-events d-flex align-items-center justify-content-center">
+            <div className="container-fluid category-events d-flex align-items-center justify-content-center">
                 <div className="container text-center">
 
                     <div className="row mb-4">
@@ -53,6 +55,7 @@ const SportsEventsPage = () => {
 
                 </div>
             </div>
+            <PopularEventsTwo className="grey-background" />
         </div>
     );
 };

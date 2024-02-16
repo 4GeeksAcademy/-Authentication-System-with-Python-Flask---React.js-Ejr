@@ -7,12 +7,11 @@ const PopularEventsTwo = () => {
     const [eventIds, setEventIds] = useState([]);
 
     useEffect(() => {
-        // Fetch the list of event IDs from your database here
-        // For demonstration, let's assume you have a function fetchEventIdsFromDatabase() to do this
+        // Fetch the list of event IDs from database 
+      
         const fetchEventIdsFromDatabase = async () => {
             try {
-                // Perform your fetch operation to get event IDs from your database
-                // Replace this with your actual fetch operation
+                // Perform  fetch operation to get event IDs from  database
                 const response = await fetch(`${process.env.BACKEND_URL}/api/events`);
                 if (!response.ok) {
                     throw new Error("Failed to fetch events");
@@ -20,7 +19,7 @@ const PopularEventsTwo = () => {
                 const data = await response.json();
                 // Extract event IDs from the data
                 const fetchedEventIds = data.events.map(event => event.id);
-                // Ensure you have at least 3 event IDs
+                // Display 3 events
                 if (fetchedEventIds.length < 3) {
                     throw new Error("Insufficient events in the database");
                 }
@@ -39,7 +38,7 @@ const PopularEventsTwo = () => {
         <div className="container-fluid popular-events d-flex align-items-center justify-content-center">
             <div className="container text-center section-header">
                 <div className="section-header">
-                    <h2 className="text-center mt-4">Popular Events Near You</h2>
+                    <h2 className="text-center mt-4">Popular Events</h2>
                 </div>
                 <div className="d-flex justify-content-center">
                     {eventIds.map(eventId => (

@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import EventCardSingle from "../component/EventCardSingle";
 import Hero from "../component/Hero";
 import SignUpNow from "../sections/SignUpNow";
+import PopularCategories from "../sections/PopularCategories";
+
 
 import EventsHeroImage from "../../img/pitch/overlay/events-hero-overlay.png"
 
@@ -11,7 +13,7 @@ const EventsPage = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const eventsPerPage = 8;
 
-    // Fetch event IDs or use a predefined list
+    // Fetch event IDs 
     useEffect(() => {
         const fetchEventIdsFromDatabase = async () => {
             try {
@@ -78,6 +80,8 @@ const EventsPage = () => {
 
                 </div>
             </div>
+
+            <PopularCategories />
 
             <SignUpNow />
 
