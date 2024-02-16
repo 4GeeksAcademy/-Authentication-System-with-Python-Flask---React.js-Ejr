@@ -1,6 +1,8 @@
 import React, { useContext, useState } from "react";
 import login from "../../styles/login.css"
 import { Context } from "../store/appContext";
+import { Link } from "react-router-dom";
+
 
 export const Login = () => {
     const { actions } = useContext(Context);
@@ -21,7 +23,9 @@ export const Login = () => {
 
             <div className="mb-3">
                 <label htmlFor="exampleInputEmail1" className="form-label">Email address</label>
-                <input placeholder="email@email.com" type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"/>
+                <input placeholder="email@email.com" 
+                type="email" className="form-control" 
+                id="exampleInputEmail1" aria-describedby="emailHelp"/>
             </div>
 
             <div className="mb-3">
@@ -37,7 +41,11 @@ export const Login = () => {
                     <input type="checkbox" className="form-check-input" id="exampleCheck1"/>
                     <label className="form-check-label" htmlFor="exampleCheck1"> Remember me</label>
                 
-                    <a className="form-check-label forgotPassword">Forgot Password?</a>
+                    <Link className="form-check-label forgotPassword" 
+                        to="/forgot"
+                    >   
+                    Forgot Password?    
+                    </Link>
                 </div>
             </div>
 
