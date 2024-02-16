@@ -16,7 +16,7 @@ export const LoginModal = props => {
 		<div className="modal" tabIndex="-1" role="dialog" style={{ display: "inline-block"}}>
 			<div className="modal-dialog" role="document">
 
-				<div className="modal-content">
+				<div className="modal-content px-5">
 
 					<div className="modal-header d-flex flex-column">
 						<div className="d-flex flex-row justify-content-end w-100">
@@ -39,7 +39,7 @@ export const LoginModal = props => {
 					</div>
 
 					<div className="modal-body w-100">
-						<form className="d-flex flex-column justify-content-center align-items-center w-100">
+						<form className="d-flex flex-column justify-content-center align-items-center w-100 row gy-3">
 							<div className="form-group d-flex flex-column justify-content-center align-items-center w-100">
 								<label className="d-flex justify-content-start w-100">Correo electrónico</label>
 								<input
@@ -58,14 +58,14 @@ export const LoginModal = props => {
 								/>
 							</div>
 	
-							<div className="form-check d-flex flex-row justify-content-start w-100">
+							<div className="form-group d-flex flex-row justify-content-start w-100">
 								<input className="form-check-input" type="checkbox" value="" id="flexCheckDefault"/>
 								<label className="form-check-label" for="flexCheckDefault">
 								Mantener sesión iniciada
 								</label>
 							</div>
 							<button type="submit" className="btn btn-primary form-control" onClick={() => sentFormInfo()}>
-								Inicia sesión
+								¡Entra!
 							</button>
 						</form>
 					</div>
