@@ -30,42 +30,45 @@ const UpdateEventForm = ({ event }) => {
 
   const handleUpdateEvent = async (e) => {
     e.preventDefault();
-
+  
     setLoading(true);
-
+  
     try {
       let imageUrl = event.image; // Default to existing image
-
+  
       if (eventImage) {
         // If a new image is selected, upload it
         const storageRef = ref(storage, `/event_images/${eventImage.name}`);
         const uploadTask = uploadBytesResumable(storageRef, eventImage);
-
+  
         uploadTask.on(
           'state_changed',
           (snapshot) => {
-            const percent = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+            const percent = Math.round(
+              (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+            );
             setPercent(percent);
           },
           (error) => {
             console.error(error);
             setError('An error occurred while uploading the image.');
             setLoading(false);
-          },
-          () => {
-            getDownloadURL(uploadTask.snapshot.ref)
-              .then((downloadURL) => {
-                imageUrl = downloadURL;
-                // Update event with new image
-                updateEvent(imageUrl);
-              })
-              .catch((error) => {
-                console.error(error);
-                setError('An error occurred while getting download URL.');
-                setLoading(false);
-              });
           }
         );
+  
+        uploadTask.then((snapshot) => {
+          getDownloadURL(snapshot.ref)
+            .then((downloadURL) => {
+              imageUrl = downloadURL;
+              // Update event with new image
+              updateEvent(imageUrl);
+            })
+            .catch((error) => {
+              console.error(error);
+              setError('An error occurred while getting download URL.');
+              setLoading(false);
+            });
+        });
       } else {
         // If no new image selected, update event with existing image
         updateEvent(imageUrl);
@@ -136,7 +139,7 @@ const UpdateEventForm = ({ event }) => {
         setDeleteSuccess(true);
         setTimeout(() => {
           navigate("/");
-        }, 3000);
+        }, 4000);
       } catch (error) {
         setError('An error occurred while deleting the event');
         console.error('Error deleting event:', error);
@@ -247,13 +250,16 @@ const UpdateEventForm = ({ event }) => {
                   <button className="btn btn-primary custom-btn" type="submit" disabled={loading}>
                     {loading ? 'Updating Event...' : 'Update Event'}
                   </button>
-                  <button
-                    className="btn btn-danger custom-btn"
-                    onClick={handleDeleteEvent}
-                    disabled={loading}
-                  >
-                    {deleteConfirm ? 'Confirm Delete' : 'Delete Event'}
-                  </button>
+                    <button
+                      className="btn btn-danger custom-btn"
+                      onClick={(e) => {
+                        e.preventDefault(); // Prevent default form submission action
+                        handleDeleteEvent();
+                      }}
+                      disabled={loading}
+                    >
+                      {deleteConfirm ? 'Confirm Delete' : 'Delete Event'}
+                    </button>
                 </div>
                 {deleteSuccess && (
                   <p className="text-white mt-3">Your event has now been deleted.</p>
