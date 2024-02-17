@@ -1,25 +1,34 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
+import { Context } from '../store/appContext';
 const Login = () => {
+  const {store,actions} = useContext(Context);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
-  const onLoginClick = async () => {
-    console.log({ email, password });
-    try {
-      const response = await fetch(`http://localhost:5000/users?email=${email}&password=${password}`, { method: 'GET' });
-      const body = await response.json();
-      console.log(body);
-      if (body.length > 0) {
-        // Success
-        setMessage(<span className="text-success">Successfully logged in</span>);
-      } else {
-        // Error
-        setMessage(<span className="text-danger">Invalid login, please try again.</span>);
+
+
+  const onLoginClick = async (email, password) => {
+    console.log(email, password)
+      const response = await fetch(`${process.env.BACKEND_URL}/login`, 
+      { method: 'POST', headers: {"Content-Type": "application/json"}, body: JSON.stringify({email, password})});
+      if (response.ok){
+        const data = await response.json()
+        store.token = data.access_token
+        console.log(store.token)
       }
-    } catch (error) {
-      console.error('Login error:', error);
-      setMessage(<span className="text-danger">An error occurred during login.</span>);
-    }
+      // const body = await response.json();
+      // console.log(body);
+    //   if (body.length > 0) {
+    //     // Success
+    //     setMessage(<span className="text-success">Successfully logged in</span>);
+    //   } else {
+    //     // Error
+    //     setMessage(<span className="text-danger">Invalid login, please try again.</span>);
+    //   }
+    // } catch (error) {
+    //   console.error('Login error:', error);
+    //   setMessage(<span className="text-danger">An error occurred during login.</span>);
+    // }
   };
   return (
     <div className='mx-5 px-5'>
@@ -48,7 +57,7 @@ const Login = () => {
       {/* Password Ends */}
       <div className="text-end p-3">
         {message}
-        <button className="btn btn-primary" onClick={onLoginClick}>
+        <button className="btn btn-primary" onClick={() => onLoginClick(email, password)}>
           Login
         </button>
       </div>

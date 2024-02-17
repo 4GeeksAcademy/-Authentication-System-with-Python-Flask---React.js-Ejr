@@ -13,6 +13,7 @@ import { Favorites } from "./pages/favorites";
 import injectContext from "./store/appContext";
 import  Login  from "./component/login"
 import { Department } from "./pages/department";
+import { Museums } from "./pages/museums";
 
 import  Navbar  from "./component/navbar";
 import { Footer } from "./component/footer";
@@ -38,6 +39,7 @@ const Layout = () => {
                         <Route element={<Exhibits />} path="/exhibits" />
                         <Route element={<Favorites />} path="/favorites" />
                         <Route element={<Department />} path="/department/:thedepartment" />
+                        <Route element={<Museums />} path="/museums" />
                         <Route element={<Login />} path="/login" />
                         <Route element={<Single />} path="/single/:theid" />
                         <Route element={<h1>Not found!</h1>} />

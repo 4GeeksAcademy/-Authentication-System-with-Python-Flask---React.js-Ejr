@@ -1,6 +1,7 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
+			token: null,
 			artPieces : [],
 			artDepartments: [],
 		},
@@ -28,9 +29,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 						setStore(store)
 				})
 
-			}
+			},
 		// GET (by department) - > https://collectionapi.metmuseum.org/public/collection/v1/objects?departmentIds=1 
-			
+		
+		usersFavoritePage: async () => {
+			const store = getStore()
+			const response = await fetch(`${process.env.BACKEND_URL}/private`, {headers: {Authorization: store.token }})  
+			if (!response.ok) {console.error("Failed to fetch user's information")}
+		}
 		}
 	};
 };
