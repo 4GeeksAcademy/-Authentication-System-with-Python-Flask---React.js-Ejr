@@ -1,15 +1,21 @@
 import React, { useContext, useState, useEffect } from "react";
 import { Context } from "../store/appContext";
 
-import "../../styles/home.css";
+import "../../styles/departments.css";
 import { Link } from "react-router-dom";
 
 export const Departments = () => {
 	const { store, actions } = useContext(Context);
 	const [artDepartments , setArtDepartments] = useState([])
+	
 	useEffect(()=>{
+			actions.getDepartments()
+	},[])
+	
+	useEffect(() => {
 		setArtDepartments(store.artDepartments)
-	},[store])
+	},[store.artDepartments])
+
 	console.log(artDepartments);
 	return (
 		
@@ -17,9 +23,11 @@ export const Departments = () => {
 			<p>This is the department page</p>
 			<div className="row1"> 
 				{artDepartments.map(item => (
-					<div className="art-poster">
-						<p>{item.departments.displayName} </p>
+					<div className="art-Poster">
+						{console.log(item)}
+						<p>{item.displayName} </p>
 					</div>
+					
 				))}
 			</div>
 		</div>
