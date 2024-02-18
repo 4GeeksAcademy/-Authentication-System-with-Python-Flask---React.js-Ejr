@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
+import { Container, Row, Col, Card } from "react-bootstrap";
 import { Context } from "../store/appContext";
 
 
@@ -44,7 +45,7 @@ const Home = () => {
         <Row>
           <h2>Libros populares</h2>
           {popularBooks.map((book) => (
-            <Col key={book.key} md={2}>
+            <Col className="col-2" key={book.key} md={2}>
               <BookCard book={book} />
             </Col>
           ))}
