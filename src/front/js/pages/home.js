@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
+import "../../styles/home.css";
 import { Container, Row, Col, Card } from "react-bootstrap";
 import { Context } from "../store/appContext";
 
@@ -85,11 +86,12 @@ const BookCard = ({ book }) => {
 
   return (
     <Card>
-      <Card.Img variant="top" src={`https://covers.openlibrary.org/b/id/${book.cover_id}-M.jpg`} />
+      <Card.Img className="card-img-top" variant="top" src={`https://covers.openlibrary.org/b/id/${book.cover_id}-M.jpg`} />
       <Card.Body>
         <Card.Title>{book.title}</Card.Title>
         <Card.Text>{book.author_name}</Card.Text>
-        <button onClick={() => addToFavorites(book)}>Agregar a favoritos</button>
+        <button className="btn btn-success" onClick={() => addToFavorites(book)}>LEER</button>
+        <button className="btn btn-danger" onClick={() => addToFavorites(book)}><i className="fa fa-heart"></i></button>
       </Card.Body>
     </Card>
   );

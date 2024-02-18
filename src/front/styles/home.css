@@ -5,3 +5,14 @@
     one more css for each page that will contain the selected used 
     on that page only (the ones not reused in other pages).
 */
+
+img.card-img-top{
+    height: 300px !important;
+}
+
+.btn-success{
+    background-color: #79736A !important;
+    width: 60%;
+    margin-right: 20px;
+    border: none;
+}
