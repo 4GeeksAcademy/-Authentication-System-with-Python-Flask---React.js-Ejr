@@ -10,7 +10,7 @@ class User(db.Model):
     date_of_birth = db.Column(db.String(120), unique=False, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(80), unique=False, nullable=False)
-    role = db.Column(db.Enum('Studient', 'Instructor', name='role'), unique=False, nullable=False)
+    role = db.Column(db.Enum('Student', 'Instructor', name='role'), unique=False, nullable=False)
 
     id_subscription = db.Column(db.Integer, db.ForeignKey('subscription.id'))
     subscription = db.relationship('Subscription', backref='user', lazy=True)
