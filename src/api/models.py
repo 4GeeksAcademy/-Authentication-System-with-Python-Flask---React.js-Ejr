@@ -1,4 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
+from enum import Enum
 
 db = SQLAlchemy()
 
@@ -9,17 +10,17 @@ class User(db.Model):
     date_of_birth = db.Column(db.String(120), unique=False, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(80), unique=False, nullable=False)
-    role = db.Column(db.String(120), unique=False, nullable=False)
+    role = db.Column(db.Enum('Studient', 'Instructor', name='role'), unique=False, nullable=False)
 
     id_subscription = db.Column(db.Integer, db.ForeignKey('subscription.id'))
     subscription = db.relationship('Subscription', backref='user', lazy=True)
     subscription_start_date = db.Column(db.String(120), unique=False, nullable=False)
-    subscription_end_date = db.Column(db.String(120), unique=False, nullable=True)
+    subscription_end_date = db.Column(db.String(120), unique=False, nullable=True) #Hacer funcion para si el usuario se da de baja, retorne en description_end_date la fecha?
 
     # is_active = db.Column(db.Boolean(), unique=False, nullable=False)
 
     def __repr__(self):
-        return f'<User {self.id}>'
+        return f'{self.name} {self.last_name}'
 
     def serialize(self):
         return {
@@ -37,7 +38,7 @@ class Subscription(db.Model):
     price = db.Column(db.String(120), unique=False, nullable=False)
 
     def __repr__(self):
-        return f'<Subscription {self.id}>'
+        return f'{self.plan}'
 
     def serialize(self):
         return {
@@ -56,7 +57,7 @@ class Testimony(db.Model):
     id_user = db.Column(db.Integer, db.ForeignKey('user.id'))
     user =  db.relationship('User', backref='testimony', lazy=True)
     
-    # id_session = db.Column(db.Integer, db.ForeignKey('session.id'))
+    id_session = db.Column(db.Integer, db.ForeignKey('session.id')) #unimos la sesion de la que crea el testimonio en caso necesario 
 
 
 
@@ -77,7 +78,7 @@ class Types_of_session(db.Model):
     description = db.Column(db.String(120), unique=False, nullable=False)
 
     def __repr__(self):
-        return f'<Types_of_session {self.id}>'
+        return f'{self.type}'
 
     def serialize(self):
         return {
@@ -86,6 +87,27 @@ class Types_of_session(db.Model):
             "description": self.description,
             # do not serialize the password, its a security breach
         }
+
+class Instructor(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(120), unique=True, nullable=False)
+    last_name = db.Column(db.String(120), unique=False, nullable=False)
+    biografy = db.Column(db.String(300), unique=False, nullable=False)
+    # sessions =  db.relationship('Session', backref='instructor', lazy=True)
+
+
+    def __repr__(self):
+        return f'{self.name} {self.last_name}' #Aquí ponemos que cuando se seleccione en sesion se haga con el nombre no el id
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            "last_name": self.last_name,
+            "biografy": self.biografy,
+            # do not serialize the password, its a security breach
+        }
+    
 
 class Session(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -96,13 +118,11 @@ class Session(db.Model):
     asana_focus = db.Column(db.String(120), unique=False, nullable=False)
     level = db.Column(db.String(120), unique=False, nullable=False)
     duration = db.Column(db.String(120), unique=False, nullable=False)
-    # type = db.Column(db.String(120), unique=False, nullable=False) #hacer enum?
     id_type_of_session = db.Column(db.Integer, db.ForeignKey('types_of_session.id'))
     type = db.relationship('Types_of_session', backref='sessions', lazy=True)
+    instructor = db.relationship('Instructor', backref='sessions', lazy=True)
 
     id_instructor = db.Column(db.Integer, db.ForeignKey('instructor.id'))
-    instructor_name = db.Column(db.String(120), unique=True, nullable=False)
-
 
     def __repr__(self):
         return f'<Session {self.id}>'
@@ -123,24 +143,5 @@ class Session(db.Model):
         }
     
 
-class Instructor(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(120), unique=True, nullable=False)
-    last_name = db.Column(db.String(120), unique=False, nullable=False)
-    biografy = db.Column(db.String(300), unique=False, nullable=False)
-    sessions =  db.relationship('Session', backref='instructor', lazy=True)
 
-
-    def __repr__(self):
-        return f'<Instructor {self.id}>'
-
-    def serialize(self):
-        return {
-            "id": self.id,
-            "name": self.name,
-            "last_name": self.last_name,
-            "biografy": self.biografy,
-            # do not serialize the password, its a security breach
-        }
-    
 
