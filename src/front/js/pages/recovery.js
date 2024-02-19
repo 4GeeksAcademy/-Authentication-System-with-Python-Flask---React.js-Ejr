@@ -33,7 +33,6 @@ export const Recovery = () => {
             setEmailError("Formato de correo electronico inválido.");
         } else {
             setEmailError("");
-            setRecoveryMessage("Se ha enviado un correo electrónico con instrucciones para restablecer tu contraseña.");
         }
     }
 
@@ -42,7 +41,6 @@ export const Recovery = () => {
             <div>
                 <form onSubmit={handleSubmit}>
                     <div className="mb-3">
-
                         <label htmlFor="emailInput" className="form-label">Ingresa la dirección de tu correo electrónico, te enviaremos un mail para que recuperes tu contraseña</label>
                         <input type="email" className="form-control" id="emailInput" value={emailInput} onChange={handleEmailChange} required />
                         {emailError && <p style={{ color: 'red' }}>{emailError}</p>}

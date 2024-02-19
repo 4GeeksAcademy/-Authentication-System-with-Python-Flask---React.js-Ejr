@@ -27,7 +27,7 @@ def generate_password_reset_token(user_id):
 def verify_password_reset_token(token, max_age=3600):
     # Deserializar el token para ver el id del usuario
     try:
-        user_id = serializer.loads(token, salt='password-reset-salt', max_age=max_age)
+        user_id = serializer.loads(token, salt='password-reset', max_age=max_age)
         return user_id
     except Exception as e:
         return None
@@ -122,14 +122,13 @@ def handle_password_recovery():
     reset_token = generate_password_reset_token(user.id)
     reset_link = url_for('api.reset_password', token=reset_token, _external=True)
 
-    # El mail desde el cual se envia no existe, debe ser reemplazado por uno real
     msg = Message("Reestablecimiento de contraseña", sender="no-reply@kever.com", recipients=[user.email])
     msg.body = f"Para resetear tu contraseña, sigue este enlace: {reset_link}"
     mail.send(msg)
 
     return jsonify({"message": "Se ha enviado un correo electrónico con instrucciones para restablecer tu contraseña."}), 200
 
-
+# Resetear contraseña
 @api.route('/reset_password/<token>', methods=['POST'])
 def reset_password(token):
     user_id = verify_password_reset_token(token)
@@ -141,10 +140,6 @@ def reset_password(token):
 
     # Actualizar la contraseña en la bd
     user = User.query.get(user_id)
-
-    if user is None:
-        return jsonify({"error": "Usuario no encotnrado"}), 404
-    
     user.password = bcrypt.generate_password_hash(new_password)
     db.session.commit()
 
