@@ -67,3 +67,20 @@ def signup():
     db.session.commit()
     
     return jsonify({"msg": "Usuario registrado exitosamente"}), 201
+
+
+
+
+# GET Mostrar detalles Eventos
+@api.route('/events/<int:id>', methods=['GET'])
+def event(id):
+    event_query = Evento.query.filter_by(id = id).first()
+    event_data = event_query.serialize()
+    num_asistentes = User.query.join(User.eventos).filter(Evento.id == id).count()
+    response_body = {
+        "msg": "ok",
+        "result": event_data,
+        "asistentes": num_asistentes
+    }
+
+    return jsonify(response_body), 200
