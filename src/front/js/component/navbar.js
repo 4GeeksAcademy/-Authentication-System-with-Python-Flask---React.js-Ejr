@@ -13,15 +13,15 @@ export const Navbar = () => {
 				<div className="ml-auto">
 					<Link to="/demo">
 						<button className="btn btn-primary">Check the Context in action</button>
-						<ul class="nav">
-							<li class="nav-item">
-								<a class="nav-link active" aria-current="page" href="#">Home</a>
+						<ul className="nav">
+							<li className="nav-item">
+								<a className="nav-link active" aria-current="page" href="#">Home</a>
 							</li>
-							<li class="nav-item">
-								<a class="nav-link" href="#">Suscriptions</a>
+							<li className="nav-item">
+								<a className="nav-link" href="#">Suscriptions</a>
 							</li>
-							<li class="nav-item">
-								<a class="nav-link" href="#">Contact Us</a>
+							<li className="nav-item">
+								<a className="nav-link" href="#">Contact Us</a>
 							</li>
 						</ul>
 					</Link>
