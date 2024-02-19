@@ -84,3 +84,66 @@ def event(id):
     }
 
     return jsonify(response_body), 200
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+##########post para evento #############
+
+
+@api.route('/event', methods=['POST'])
+def create_event():
+    # Verificar si se proporcionaron los campos requeridos en la solicitud JSON
+    required_fields = ['evento', 'ciudad', 'ubicacion', 'fecha', 'max_personas']
+    if not all(field in request.json for field in required_fields):
+        return jsonify({"msg": "Error al crear el evento: faltan campos requeridos"}), 400
+
+    # Crear un nuevo evento con los datos proporcionados en la solicitud JSON
+    try:
+        new_event = Evento(
+            evento=request.json['evento'],
+            ciudad=request.json['ciudad'],
+            ubicación=request.json['ubicacion'],
+            descripcion=request.json['descripcion'],
+            fecha=request.json['fecha'],
+            precio=request.json['precio'],
+            max_personas=request.json['max_personas'],
+            id_categoria=request.json["id_categoria"],
+            user_creador=request.json["user_creador"]
+            # Agregar otros campos aquí si es necesario
+        )
+        db.session.add(new_event)
+        db.session.commit()
+    except Exception as e:
+        return jsonify({"msg": f"Error al crear el evento: {str(e)}"}), 500
+
+    return jsonify({"msg": "Evento creado exitosamente"}), 201
