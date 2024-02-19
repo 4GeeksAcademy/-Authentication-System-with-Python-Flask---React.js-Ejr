@@ -1,43 +1,44 @@
 const getState = ({ getStore, getActions, setStore }) => {
-	return {
-		store: {
-			user: {}
-		},
-		actions: {
-			logIn: (email, password) => {
-				console.log(email, password);
-				fetch(BACKEND_URL + "/api/login", {
-					method: "POST",
-					body: JSON.stringify({
-						"email": email,
-						"password": password
-					}),
-					headers: {
-						"Content-Type": "application/json"
-					}
-				})
-					.then(response => {
-						console.log(response);
-						return response.json();
-					})
-					// .then(data => console.log(data)) guardar en localStore
-					.catch(error => console.log(error));
-			},
+    return {
+        store: {
+            message: null,
+            demo: [
+                {
+                    title: "FIRST",
+                    background: "white",
+                    initial: "white"
+                },
+                {
+                    title: "SECOND",
+                    background: "white",
+                    initial: "white"
+                }
+            ]
+        },
+        actions: {
+            login: async (email, password) => {
 
-			getMessage: async () => {
-				try{
-					// fetching data from the backend
-					const resp = await fetch(process.env.BACKEND_URL + "/api/hello")
-					const data = await resp.json()
-					setStore({ message: data.message })
-					// don't forget to return something, that is how the async resolves
-					return data;
-				}catch(error){
-					console.log("Error loading message from backend", error)
+				try {
+					let response = await fetch("https://shiny-dollop-qgq7xr79pxg24747-3001.app.github.dev/api/login", {
+						method:"POST",
+						headers: {
+							"Content-type":"application/json"
+						},
+						body: JSON.stringify({
+							"email": email,
+							"password": password
+						})
+					});
+
+					let data = await response.json();
+					localStorage.setItem("token",data);
+						return true;
+				} catch (error) {
+					console.log(error);
+						return false;
 				}
-			},
-		}
-	};
+            }
+        }
+    };
 };
-
 export default getState;
