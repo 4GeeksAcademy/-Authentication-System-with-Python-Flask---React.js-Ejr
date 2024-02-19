@@ -96,6 +96,26 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.error("Error al enviar la solicitud de recuperación de contraseña:", error);
 					setError(error.message); // Mostrar un mensaje de error genérico en caso de un error no controlado
 				}
+			},
+
+			resetPassword: async (token, newPassword) => {
+				try {
+					const response = await fetch(process.env.BACKEND_URL + `/reset-password/${token}`, {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json'
+						},
+						body: JSON.stringify({ new_password: newPassword })
+					});
+
+					if (!response.ok) {
+						throw new Error('Failed to reset password');
+					}
+
+					return { success: true };
+				} catch (error) {
+					return { success: false, error: error.message };
+				}
 			}
 			
         }
