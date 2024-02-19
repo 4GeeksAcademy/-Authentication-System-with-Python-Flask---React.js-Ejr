@@ -91,3 +91,26 @@ def event(id):
     }
 
     return jsonify(response_body), 200
+
+# GET User information
+
+@api.route('/user/details', methods=['GET'])
+@jwt_required()
+def user_detail():
+    current_user = get_jwt_identity()
+    user_query = User.query.filter_by(email = current_user).first()
+    user_data = user_query.serialize()
+    item ={"id": user_data["id"],
+           "name": user_data["name"],
+           "email": user_data["email"],
+           "hobbies": list(map(lambda item: item["name"], user_data["hobbies"])),
+           "num eventos asistido": len(user_data["eventos"]),
+           "eventos asistido": list(map(lambda item: item["evento"], user_data["eventos"]))
+           } 
+    print(item)
+    response_body = {
+        "msg": "ok",
+        "details user": user_data
+    }
+
+    return jsonify(response_body), 200
