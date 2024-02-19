@@ -122,7 +122,7 @@ def handle_password_recovery():
     reset_token = generate_password_reset_token(user.id)
     reset_link = url_for('api.reset_password', token=reset_token, _external=True)
 
-    msg = Message("Reestablecimiento de contraseña", sender="no-reply@kever.com", recipients=[user.email])
+    msg = Message("Reestablecimiento de contraseña", sender="marmargara.mm@gmail.com", recipients=[user.email])
     msg.body = f"Para resetear tu contraseña, sigue este enlace: {reset_link}"
     mail.send(msg)
 

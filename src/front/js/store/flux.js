@@ -85,19 +85,18 @@ const getState = ({ getStore, getActions, setStore }) => {
 						body: JSON.stringify({ email: emailInput }),
 					});
 					
-					const responseData = await response.json(); // Parsear la respuesta JSON
+					const responseData = await response.json(); 
 					
 					if (response.ok) {
-						setRecoveryMessage(responseData.message); // Mostrar el mensaje de éxito
+						setRecoveryMessage(responseData.message); 
 					} else {
-						throw new Error(responseData.error || "Error al enviar la solicitud de recuperación de contraseña."); // Mostrar el mensaje de error del servidor, si está disponible
+						throw new Error(responseData.error || "Error al enviar la solicitud de recuperación de contraseña."); 
 					}
 				} catch (error) {
 					console.error("Error al enviar la solicitud de recuperación de contraseña:", error);
-					setError(error.message); // Mostrar un mensaje de error genérico en caso de un error no controlado
+					setError(error.message); 
 				}
 			}
-			
         }
     };
 };
