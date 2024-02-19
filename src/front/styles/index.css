@@ -1,3 +1,33 @@
-/* 
-    General Styles used on every website (Don't Repeat Yourself)
-*/
+/* FONDOS */
+.bg-100 {
+    background-color: #FFFBF5;
+}
+.bg-200{
+    background-color: #F7EFE5;
+}
+.bg-300 {
+    background-color: #D7A8EB;
+}
+.bg-400 {
+    background-color: #B50DFD;
+}   
+
+/* BOTONES */
+.btn-300 {
+    background-color: #D7A8EB;
+    border-color: #D7A8EB;
+    color: #FFFBF5;
+}
+.to-be-hoved:hover {
+    background-color: #B50DFD;
+    border-color: #B50DFD;
+    color: #F7EFE5;
+    transition: all .6s ease;
+    -webkit-transition: all .6s ease;
+}
+
+.btn-400 {
+    background-color: #B50DFD;
+    border-color: #B50DFD;
+    color: #F7EFE5;
+}
