@@ -8,7 +8,8 @@ class User(db.Model):
     username = db.Column(db.String(50), nullable=False)
     email = db.Column(db.String(250), unique=True, nullable=False)
     password = db.Column(db.String(255), nullable=False) 
-    profile_picture = db.Column(db.LargeBinary, nullable=True) 
+    profile_picture = db.Column(db.String, nullable=True) 
+    is_active = db.Column(db.Boolean, nullable=False, default=False)
     groups = db.relationship("Group", secondary='users_group', back_populates='users')
 
     def __repr__(self):
@@ -21,6 +22,7 @@ class User(db.Model):
             "email": self.email,
             "password": self.password,
             "profile_picture": self.profile_picture,
+            "is_active": self.is_active
         }
 
 class Group(db.Model):
@@ -28,7 +30,7 @@ class Group(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(100), nullable=False)
     description = db.Column(db.String(255), nullable=True)
-    profile_picture = db.Column(db.LargeBinary, nullable=True)
+    profile_picture = db.Column(db.String, nullable=True)
     users = db.relationship("User", secondary='users_group', back_populates='groups')
 
     def __repr__(self):
@@ -50,7 +52,7 @@ class UsersGroup(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     group_id = db.Column(db.Integer, db.ForeignKey('group.id'), nullable=False)
-    admin = db.Column(db.Boolean, nullable=False)
+    admin = db.Column(db.Boolean, default=False, nullable=False)
 
     def serialize(self):
         return {

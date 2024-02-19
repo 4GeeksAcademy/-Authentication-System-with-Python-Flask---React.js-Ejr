@@ -1,50 +1,84 @@
-import React, { useContext } from "react";
-import { Context } from "../store/appContext";
+import React, { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { Context } from "../store/appContext";
 
 export const Login = () => {
     const { actions } = useContext(Context);
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
     const navigate = useNavigate();
-
-    const [userInput, setUserInput] = useState("");
-    const [passwordInput, setPasswordInput] = useState("");
 
     const handleLogin = async (e) => {
         e.preventDefault();
+        try {
+            const result = await actions.loginUser(email, password);
+            if (result) {
+                navigate("/home");
+                setEmail('');
+                setPassword('');
+            }
+          } catch (error) {
+            console.error("Error en el inicio de sesión:", error.message);
+            setErrorMessage(error.message); 
+        }  
+    };
 
-        const result = await actions.checkLoginInfo(userInput, passwordInput);
-
-        if (result.token) {
-            sessionStorage.setItem("token", result.token);
-            navigate("/home")
-        }
-    }
-
+    const handleInputChange = () => {
+        setErrorMessage('');
+    };
 
     return (
-        <div className="container">
-            <div>
-                <form onSubmit={handleLogin}>
-                    <div class="mb-3">
-                        <label htmlFor="userInput" class="form-label">Nombre de usuario</label>
-                        <input type="username" class="form-control" id="userInput" value={userInput} onChange={(e) => setUserInput(e.target.value)} required />
+        <div className="container login">
+            <form onSubmit={handleLogin}>
+                <div className="form-group">
+                    <label htmlFor="email">Email:</label>
+                    <input
+                        type="email"
+                        className="form-control"
+                        id="email"
+                        name="email"
+                        placeholder="Enter your email"
+                        value={email}
+                        onChange={(e) => {setEmail(e.target.value); handleInputChange(); }}
+                        required
+                    />
+                </div>
+                <div className="form-group">
+                    <label htmlFor="password">Password:</label>
+                    <input
+                        type="password"
+                        className="form-control"
+                        id="password"
+                        name="password"
+                        placeholder="Enter your password"
+                        value={password}
+                        onChange={(e) => {setPassword(e.target.value); handleInputChange(); }}
+                        required
+                    />
+                </div>
+                {errorMessage && (
+                    <div className="alert alert-danger" role="alert">
+                        {errorMessage}
                     </div>
-                    <div class="mb-3">
-                        <label htmlFor="passwordInput" class="form-label">Contraseña</label>
-                        <input type="password" class="form-control" id="passwordInput" value={passwordInput} onChange={(e) => setPasswordInput(e.target.value)} required />
-                    </div>
-                    <button type="submit" class="btn btn-primary">Iniciar sesión</button>
-                </form>
+                )}
+                <div className="text-center">
+                    <button type="submit" className="btn btnLogin">
+                        Login
+                    </button>
+                </div>
+            </form>
+            <div className="mt-3 text-center link">
+                <p>
+                    Don't have an account? <Link to="/signup">Create account</Link>
+                </p>
+                <p>
+                     Forgot your password? <Link to="/recovery">Recover it here</Link>
+                </p>
+                <p>
+                    <Link to="/">← Go Back</Link>
+                </p>
             </div>
-            <Link to="/recovery">
-                <p className="text-primary">¿Olvidaste tu contraseña?</p>
-            </Link>
-            <p>
-                ¿No tienes una cuenta?
-                <Link to="/signup">
-                    <p> Crear cuenta</p>
-                </Link>
-            </p>
         </div>
     );
-}
+};

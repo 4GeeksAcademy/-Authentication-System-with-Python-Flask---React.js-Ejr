@@ -7,11 +7,12 @@ import injectContext from "./store/appContext";
 
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
-import { Home } from "./pages/home";
 import { Landing } from "./pages/landing";
-import { Login } from "./pages/login";
+import { Login } from "./pages/login"
 import { Signup } from "./pages/signup";
-import { Recovery } from "./pages/recovery"
+import { Recovery } from "./pages/recovery";
+import { Create_group } from "./pages/create_group";
+import { Home } from "./pages/home";
 import { ResetPassword } from "./pages/resetPassword";
 
 const Layout = () => {
@@ -30,6 +31,7 @@ const Layout = () => {
                         <Route element={<Home />} path="/home" />
                         <Route element={<Signup />} path="/signup" />
                         <Route element={<Recovery />} path="/recovery" />
+                        <Route element={<Create_group />} path="/create_group" />
                         <Route element={<Profile />} path="/profile" />
                         <Route element={<ResetPassword />} path="/reset_password/:token" />
                         <Route element={<h1>Not found!</h1>} />

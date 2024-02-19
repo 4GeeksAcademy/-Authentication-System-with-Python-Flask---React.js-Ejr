@@ -1,101 +1,121 @@
-import React, { useContext } from "react";
+import React, { useState, useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
 
 export const Signup = () => {
-    const { actions } = useContext(Context);
+  const { actions } = useContext(Context);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [username, setUsername] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+  const navigate = useNavigate();
 
-    const [usernameInput, setUsernameInput] = useState("")
-    const [emailInput, setEmailInput] = useState("")
-    const [passwordInput, setPasswordInput] = useState("")
-    const [confirmInput, setConfirmInput] = useState("")
-    const [emailError, setEmailError] = useState("")
-    const [passwordError, setPasswordError] = useState("")
-    const [confirmationError, setConfirmationError] = useState("")
-    const [showModal, setShowModal] = useState(false)
+  const handleSignup = async (e) => {
+    e.preventDefault();
 
-    const handleSignup = async (e) => {
-        e.preventDefault();
-
-        // Para comprobar si la contraseña tiene 1 caracter especial y 1 mayuscula
-        const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{8,}$/;
-
-        if (!passwordRegex.test(passwordInput)) {
-            // La contraseña no cumple con los requisitos
-            setPasswordError("La contraseña debe contener al menos 1 mayuscula y 1 caracter especial.");
-            return;
-        } else {
-            // La contraseña si cumple
-            setPasswordError("")
-        }
-
-        if (passwordInput !== confirmInput) {
-            setConfirmationError("Las contraseñas no coinciden.")
-            return;
-        } else {
-            setConfirmationError("")
-        }
-
-        // Para comprobar que el mail este en el formato correcto
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-        if (!emailRegex.test(emailInput)) {
-            // El mail esta mal escrito
-            setEmailError("Formato de correo electronico inválido.");
-            return;
-        } else {
-            // El email es correcto
-            setEmailError("");
-        }
-
-        const result = await actions.sendSignup(usernameInput, emailInput, passwordInput);
-
-        if (result.token) {
-            setShowModal(true);
-        }
+    if (password !== confirmPassword) {
+      setErrorMessage("Las contraseñas no coinciden");
+      return;
     }
 
-    return (
-        <div className="container">
-            <div>
-                <form onSubmit={handleSignup}>
-                    <div class="mb-3">
-                        <label htmlFor="usernameInput" class="form-label">Nombre de usuario</label>
-                        <input type="text" class="form-control" id="usernameInput" value={usernameInput} onChange={(e) => setUsernameInput(e.target.value)} required />
-                    </div>
-                    <div class="mb-3">
-                        <label htmlFor="emailInput" class="form-label">Correo electronico</label>
-                        <input type="email" class="form-control" id="emailInput" value={emailInput} onChange={(e) => setEmailInput(e.target.value)} required />
-                        {emailError && <p style={{ color: 'red' }}>{emailError}</p>}
-                    </div>
-                    <div class="mb-3">
-                        <label htmlFor="passwordInput" class="form-label">Contraseña</label>
-                        <input type="password" class="form-control" id="passwordInput" value={passwordInput} onChange={(e) => setPasswordInput(e.target.value)} required />
-                        {passwordError && <p style={{ color: 'red' }}>{passwordError}</p>}
-                    </div>
-                    <div class="mb-3">
-                        <label htmlFor="confirmInput" class="form-label">Confirmar contraseña</label>
-                        <input type="password" class="form-control" id="confirmInput" value={confirmInput} onChange={(e) => setConfirmInput(e.target.value)} required />
-                        {confirmationError && <p style={{ color: 'red' }}>{confirmationError}</p>}
-                    </div>
-                    <button type="submit">Crear</button>
-                </form>
-            </div>
-            {showModal && (
-                <Modal>
-                    <div className="modal-dialog">
-                        <div className="modal-content">
-                            <div className="modal-body">
-                                <p>Usuario creado exitosamente.</p>
-                            </div>
-                            <div className="modal-footer">
-                                <Link to="/login">
-                                    <button type="button" className="btn btn-primary">Iniciar sesión</button>
-                                </Link>
-                            </div>
-                        </div>
-                    </div>
-                </Modal>
-            )}
+    const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{8,}$/;
+    if (!passwordRegex.test(password)) {
+      setErrorMessage("La contraseña debe tener al menos 8 caracteres, una mayúscula y un carácter especial");
+      return;
+    }
+    
+    try {
+      const data = await actions.createUser(username, email, password);
+      console.log('Usuario creado con éxito:', data);
+      navigate("/login");
+    } catch (error) {
+      console.error('Error creating user:', error.message);
+      setErrorMessage(error.message);
+      setEmail('');
+      setPassword('');
+      setConfirmPassword('');
+    }
+  };
+  
+  const handleInputChange = () => {
+    setErrorMessage('');
+  };
+
+  return(
+    <div className="container signup">
+      <div className="row">
+        <div className="col-md-5">
+          <h1 className="titleSignup">Create an account</h1>
         </div>
-    );
-}
+        <div className="col-md-7">
+          {errorMessage && (
+            <div className="alert alert-danger" role="alert">
+              {errorMessage}
+            </div>
+          )}
+          <form onSubmit={handleSignup}> 
+            <div className="form-group">
+              <label>Username</label>
+              <input
+                type="username"
+                className="form-control"
+                placeholder="Enter your username"
+                value={username}
+                onChange={(e) => { setUsername(e.target.value); handleInputChange(); }}
+                required
+              />
+            </div>
+            <div className="form-group">
+              <label>Email address</label>
+              <input
+                type="email"
+                className="form-control"
+                placeholder="Enter your email"
+                value={email}
+                onChange={(e) => { setEmail(e.target.value); handleInputChange(); }}
+                required
+              />
+            </div>
+            <div className="form-group">
+              <label>Password</label>
+              <input
+                type="password"
+                className="form-control"
+                placeholder="Enter your password"
+                value={password}
+                onChange={(e) => { setPassword(e.target.value); handleInputChange(); }}
+                required
+              />
+            </div>
+            <div className="form-group">
+              <label>Confirm Password</label>
+              <input
+                type="password"
+                className="form-control"
+                placeholder="Confirm your password"
+                value={confirmPassword}
+                onChange={(e) => { setConfirmPassword(e.target.value); handleInputChange(); }}
+                required
+              />
+            </div>
+            <button type="submit" className="btn btnSignup">
+              Create account
+            </button>
+          </form>
+        </div>
+      </div>
+      <div className="row aling-items-center">
+            <div className="col-md-5">
+              <Link to="/login" className="linkSignup">
+              ← Go Back
+              </Link>
+            </div>
+            <div className="col-md-7">
+              <hr className="mt-4" />
+            </div>
+      </div>
+    </div>
+  );
+};
+
