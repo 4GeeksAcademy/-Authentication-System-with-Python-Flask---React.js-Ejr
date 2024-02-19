@@ -47,33 +47,26 @@ def get_users_attend_all_events():
     return jsonify(response_body), 200
 
 
+############################ endpoint registro usuario ########### de la linea 50 a la 80#####################
 
+@api.route("/signup", methods=["POST"])
+def signup():
 
+    name = request.json.get("name")
+    email = request.json.get("email")
+    password = request.json.get("password")
+    
+    ############ manejo de errores ##############
+    existing_user = User.query.filter_by(email=email).first()
+    if existing_user:
+        return jsonify({"msg": "El correo electrónico ya está en uso"}), 400
+    
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    new_user = User(name=name, email=email, password=password)
+    db.session.add(new_user)
+    db.session.commit()
+    
+    return jsonify({"msg": "Usuario registrado exitosamente"}), 201
 
 
 
