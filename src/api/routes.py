@@ -8,11 +8,22 @@ from flask_mail import Mail, Message
 from flask import url_for
 from itsdangerous import URLSafeTimedSerializer
 from werkzeug.security import check_password_hash
+import os
+
 
 app = Flask(__name__)
 bcrypt = Bcrypt(app)
 mail = Mail(app)
 api = Blueprint('api', __name__)
+
+# Cargar variables de entorno de el archivo .env
+app.config['MAIL_SERVER'] = os.getenv('MAIL_SERVER')
+app.config['MAIL_PORT'] = int(os.getenv('MAIL_PORT'))
+app.config['MAIL_USE_TLS'] = os.getenv('MAIL_USE_TLS').lower() == 'true'
+app.config['MAIL_USERNAME'] = os.getenv('MAIL_USERNAME')
+app.config['MAIL_PASSWORD'] = os.getenv('MAIL_PASSWORD')
+
+mail_server = app.config['MAIL_SERVER']
 
 CORS(api)
 
@@ -122,7 +133,7 @@ def handle_password_recovery():
     reset_token = generate_password_reset_token(user.id)
     reset_link = url_for('api.reset_password', token=reset_token, _external=True)
 
-    msg = Message("Reestablecimiento de contraseña", sender="marmargara.mm@gmail.com", recipients=[user.email])
+    msg = Message("Reestablecimiento de contraseña", sender=mail_server, recipients=[user.email])
     msg.body = f"Para resetear tu contraseña, sigue este enlace: {reset_link}"
     mail.send(msg)
 
