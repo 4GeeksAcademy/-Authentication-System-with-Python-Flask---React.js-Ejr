@@ -100,7 +100,7 @@ export const Signup = () => {
               />
             </div>
             <button type="submit" className="btn btnSignup">
-              Create account
+              Create 
             </button>
           </form>
         </div>
