@@ -1,0 +1,44 @@
+.footer {
+    flex-shrink: 0;
+    bottom: 0;
+    background-color: 
+    #29627D;
+ 
+  }
+
+  .navbar {
+    background-color: 
+    #29627D;
+    justify-content: flex-start;
+  }
+
+
+
+.navbar-logo {
+    width: 100px;
+    height: 100px;
+    padding-right: 1%;
+}
+
+.jumbotron{
+    display: flex;
+    text-align: center;
+    justify-content: space-around;
+    margin: auto;
+    padding: 20% 47%;
+    height: 10px;
+    width: 200px;
+    border: 2px black solid;
+}
+
+.history {
+    font-size: 8px;
+    border: 2px black solid;
+    margin: 5px;
+    width: 100%;   
+}
+
+.history-title {
+    text-decoration: underline;
+    margin: 25px;
+}

@@ -1,44 +1,78 @@
-.footer {
-    flex-shrink: 0;
-    bottom: 0;
-    background-color: 
-    #29627D;
- 
+.animate-charcter
+{
+   text-transform: uppercase;
+  background-image: linear-gradient(
+    -225deg,
+    #231557 0%,
+    #44107a 29%,
+    #ff1361 67%,
+    #fff800 100%
+  );
+  background-size: auto auto;
+  background-clip: border-box;
+  background-size: 200% auto;
+  color: #fff;
+  background-clip: text;
+  text-fill-color: transparent;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: textclip 2s linear infinite;
+  display: inline-block;
+      font-size: 190px;
+}
+
+@keyframes textclip {
+  to {
+    background-position: 200% center;
   }
-
-  .navbar {
-    background-color: 
-    #29627D;
-    justify-content: flex-start;
-  }
-
-
-
-.navbar-logo {
-    width: 100px;
-    height: 100px;
-    padding-right: 1%;
 }
 
-.jumbotron{
-    display: flex;
-    text-align: center;
-    justify-content: space-around;
-    margin: auto;
-    padding: 20% 47%;
-    height: 10px;
-    width: 200px;
-    border: 2px black solid;
-}
-
-.history {
-    font-size: 8px;
-    border: 2px black solid;
-    margin: 5px;
-    width: 100%;   
-}
-
-.history-title {
-    text-decoration: underline;
-    margin: 25px;
+#list{
+    body {
+        font-family: sans-serif;
+        font-family: "Quicksand", sans-serif;
+        color: #333;
+        text-indent: 1.5em;
+        font-size: 1.1em;
+        background-color: #eee;
+        width: 96vw;
+        max-width: 600px;
+        margin: 0 auto;
+      }
+      span b {
+        color: #000;
+      }
+      h1 {
+        font-size: 3em;
+        margin-bottom: 0.2em;
+        color: deeppink;
+        text-align: center;
+      }
+      div {
+        background-color: #fff;
+        border: 1px solid #fff;
+        border-radius: 8px;
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 50px;
+        text-align: center;
+      }
+      div:focus {
+        outline: none;
+      }
+      div div {
+        position: relative;
+        background-color: deeppink;
+        color: #fff;
+        margin: 16px;
+        border-radius: 999px;
+        line-height: 3em;
+        border: none;
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px,
+          rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
+      }
+      div b {
+        text-decoration: line-through;
+        font-weight: normal;
+        display: none;
+      }
+      
 }

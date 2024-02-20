@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { Context } from "../store/appContext";
-import "../../styles/home.css";
+import "../../styles/museums.css";
 
 export const Contactus = () => {
     const { store, actions } = useContext(Context);

@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { Context } from "../store/appContext";
 import jumbotron from "../../img/jumbotron.png";
-import "../../styles/home.css";
+import "../../styles/museums.css";
 import Jumbotron from "../../img/jumbotron.png";
 
 export const Museums = () => {
