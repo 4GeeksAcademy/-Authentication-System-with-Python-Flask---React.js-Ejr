@@ -45,7 +45,7 @@
       h1 {
         font-size: 3em;
         margin-bottom: 0.2em;
-        color: deeppink;
+        color: #29627d;
         text-align: center;
       }
       div {
@@ -60,7 +60,7 @@
       }
       div div {
         position: relative;
-        background-color: deeppink;
+        background-color: #29627d;
         color: #fff;
         margin: 16px;
         border-radius: 999px;
