@@ -93,17 +93,23 @@ def user_detail():
     current_user = get_jwt_identity()
     user_query = User.query.filter_by(email = current_user).first()
     user_data = user_query.serialize()
-    item ={"id": user_data["id"],
+    eventos = Evento.query.filter_by(user_creador=user_data["id"]).all()
+    # eventos_data = eventos.serialize()
+    print(eventos)
+    user_info ={"id": user_data["id"],
            "name": user_data["name"],
            "email": user_data["email"],
            "hobbies": list(map(lambda item: item["name"], user_data["hobbies"])),
            "num eventos asistido": len(user_data["eventos"]),
-           "eventos asistido": list(map(lambda item: item["evento"], user_data["eventos"]))
+           "eventos asistido": list(map(lambda item: item["evento"], user_data["eventos"])),
+           "num eventos creados" : Evento.query.filter_by(user_creador = user_data["id"]).count(),
+           "eventos creados": list(map(lambda item: item["evento"], eventos)),
+        #    "eventos creados": [evento.serialize() for evento in Evento.query.filter_by(user_creador=user_data["id"]).all()]
            } 
-    print(item)
+    
     response_body = {
         "msg": "ok",
-        "details user": user_data
+        "details user": user_info
     }
 
     return jsonify(response_body), 200
