@@ -121,6 +121,7 @@ def event(id):
 
 
 @api.route('/event', methods=['POST'])
+@jwt_required()
 def create_event():
     # Verificar si se proporcionaron los campos requeridos en la solicitud JSON
     required_fields = ['evento', 'ciudad', 'ubicacion', 'fecha', 'max_personas']
