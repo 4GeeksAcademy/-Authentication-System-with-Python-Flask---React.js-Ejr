@@ -119,6 +119,7 @@ class Session(db.Model):
     asana_focus = db.Column(db.String(120), unique=False, nullable=False)
     level = db.Column(db.String(120), unique=False, nullable=False)
     duration = db.Column(db.String(120), unique=False, nullable=False)
+    url_imagen = db.Column(db.String(250), unique=False, nullable=False)
     id_type_of_session = db.Column(db.Integer, db.ForeignKey('types_of_session.id'))
     type = db.relationship('Types_of_session', backref='session', lazy=True)
     instructor = db.relationship('Instructor', backref='session', lazy=True)
