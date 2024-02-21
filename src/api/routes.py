@@ -145,3 +145,13 @@ def create_event():
         return jsonify({"msg": f"Error al crear el evento: {str(e)}"}), 500
 
     return jsonify({"msg": "Evento creado exitosamente"}), 201
+
+
+@api.route('/validate_token', methods=['GET'])
+@jwt_required()
+def validate_token():
+    current_user = get_jwt_identity()
+    if(current_user):
+        return jsonify({"is_loged": True}), 201
+    
+    return jsonify({"is_loged": False}), 401
