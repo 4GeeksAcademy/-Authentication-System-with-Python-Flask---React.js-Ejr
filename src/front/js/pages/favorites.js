@@ -8,7 +8,7 @@ export const Favorites = () => {
 
 	return (
 		<div className="text-center mt-5">
-			This is the favorites page
+			Your Favorites Should Appear Below
 		</div>
 	);
 };
