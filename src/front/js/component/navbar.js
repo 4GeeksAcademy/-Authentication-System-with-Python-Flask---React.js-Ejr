@@ -1,7 +1,35 @@
-import React from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
+import { LoginModal } from "./LoginModal";
+import Context from "../store/appContext";
 
 export const Navbar = () => {
+
+  const {store, actions} = useContext(Context);
+  const [loggedNavbar, setLoggedNavbar] = useState(false);
+  const [modalState, setModalState] = useState({
+		showModal: false,
+		showModalUpdate: false,
+	});
+
+  function updateModalState() {
+    setModalState({ showModal: true });
+  }
+
+  function logOut() {
+    localStorage.removeItem("token");
+    window.location.reload();
+  }
+
+  useEffect(() => {
+    if(!store.auth) {
+      setLoggedNavbar(true);
+
+    } else {
+      setLoggedNavbar(false);
+    }
+	},[]);
+
 	return (
         <nav className="navbar navbar-expand-lg bg-body-tertiary">
           <div className="container-fluid col-sm-12 col-md-12 col-lg-12">
@@ -30,17 +58,32 @@ export const Navbar = () => {
     
     
             {/*Esta parte son los botones de la derecha */}
-            <div className="collapse navbar-collapse justify-content-end" id="navbarNav">
+            {loggedNavbar ? 
+            (<div className="collapse navbar-collapse justify-content-end" id="navbarNav">
               <ul className="navbar-nav">
                 <li className="nav-item flex">
-                  <a className="nav-link active fs-3 text-white btn btn-lg m-1 bg-400" aria-current="page" href="#">Log in</a>
+                  <a className="nav-link active fs-3 text-white btn btn-lg m-1 bg-400" aria-current="page" href="#" onClick={updateModalState}>Log in</a>
                 </li>
                 <li className="nav-item flex">
                   <a className="nav-link fs-3 text-white btn btn-lg m-1 bg-300" href="#">Sign up</a>
                 </li>
               </ul>
-            </div>
-          </div>
+            </div>) :             
+            (<div className="collapse navbar-collapse justify-content-end" id="navbarNav">
+              <ul className="navbar-nav">
+                <li className="nav-item flex">
+                  <p>El nombre del usuario</p>
+                </li>
+                <li className="nav-item flex">
+                  <p>Imagen</p>
+                </li>
+              </ul>
+              <button onClick={logOut}>Cerrar sesión</button>
+            </div>)
+            }
+          </div> 
+
+          <LoginModal show={modalState.showModal} onClose={() => setModalState({ showModal: false })}/>
         </nav>
     
       )

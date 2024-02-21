@@ -19,7 +19,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             login: async (email, password) => {
 
 				try {
-					let response = await fetch("https://shiny-dollop-qgq7xr79pxg24747-3001.app.github.dev/api/login", {
+					let response = await fetch("https://friendly-orbit-gwq4p945p5wfpvgp-3001.app.github.dev/api/login", {
 						method:"POST",
 						headers: {
 							"Content-type":"application/json"
@@ -29,9 +29,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 							"password": password
 						})
 					});
-
 					let data = await response.json();
-					localStorage.setItem("token",data);
+					localStorage.setItem("token",data.access_token);
 						return true;
 				} catch (error) {
 					console.log(error);
