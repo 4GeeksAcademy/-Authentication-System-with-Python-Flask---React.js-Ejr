@@ -115,13 +115,17 @@ def user_detail():
 
 
 @api.route('/event', methods=['POST'])
+@jwt_required()
 def create_event():
-    # Verificar si se proporcionaron los campos requeridos en la solicitud JSON
+    current_user = get_jwt_identity()
+    user_query = User.query.filter_by(email = current_user).first()
+    user_data = user_query.serialize()
+    
     required_fields = ['evento', 'ciudad', 'ubicacion', 'fecha', 'max_personas']
     if not all(field in request.json for field in required_fields):
         return jsonify({"msg": "Error al crear el evento: faltan campos requeridos"}), 400
 
-    # Crear un nuevo evento con los datos proporcionados en la solicitud JSON
+   
     try:
         new_event = Evento(
             evento=request.json['evento'],
@@ -132,8 +136,8 @@ def create_event():
             precio=request.json['precio'],
             max_personas=request.json['max_personas'],
             id_categoria=request.json["id_categoria"],
-            user_creador=request.json["user_creador"]
-            # Agregar otros campos aquí si es necesario
+            user_creador=user_data["id"]
+        
         )
         db.session.add(new_event)
         db.session.commit()
