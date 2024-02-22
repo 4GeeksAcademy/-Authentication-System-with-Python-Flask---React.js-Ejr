@@ -6,35 +6,23 @@ import { useNavigate } from "react-router-dom";
 export const LoginModal = props => {
 
 	const {store, actions} = useContext(Context);
-	const navigate = useNavigate();
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
-	const [isOpen, setOpen] = useState(true);
 
 	function handleLogIn(e) {
 		e.preventDefault();
-		let looged = actions.login(email, password);
-
-		if (looged) {
-			navigate("/demo");
-		} else {
-
-		}
-	}
-
-	function closeModal() {
-		setOpen(false);
+		actions.login(email, password);
 	}
 
 	return (
-		<div className="modal" tabIndex="-1" role="dialog" style={{ display: isOpen ? "inline-block" : "none", cursor: "pointer" }}>
+		<div className="modal" tabIndex="-1" role="dialog" style={{ display: props.show ? "inline-block" : "none", cursor: "pointer" }}>
 			<div className="modal-dialog" role="document">
 
 				<div className="modal-content">
 
 					<div className="modal-header bg-100 d-flex flex-column px-5">
 						<div className="d-flex flex-row justify-content-end w-100">
-							<i className="fa-solid fa-xmark" onClick={closeModal}></i>
+							<i className="fa-solid fa-xmark" onClick={() => props.onClose()}></i>
 						</div>
 						<h4 className="modal-title">Inicia sesión</h4>
 						<h6>¿Aún no eres miembro? Regístrate.</h6>
