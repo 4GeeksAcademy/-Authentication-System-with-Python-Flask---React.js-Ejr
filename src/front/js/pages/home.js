@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useContext } from "react";
 import "../../styles/home.css";
 import { Container, Row, Col, Card } from "react-bootstrap";
+import { Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { Context } from "../store/appContext";
 
 
@@ -80,17 +82,19 @@ const Home = () => {
   );
 };
 
-// Componente para mostrar la tarjeta de un libro
 const BookCard = ({ book }) => {
   const { addToFavorites } = useContext(FavoritesContext);
 
   return (
     <Card>
-      <Card.Img className="card-img-top" variant="top" src={`https://covers.openlibrary.org/b/id/${book.cover_id}-M.jpg`} />
+      <Card.Img className="card-img-top" variant="top" src={`https://covers.openlibrary.org/b/id/${book.cover_id ? book.cover_id : 'default'}-M.jpg`} />
       <Card.Body>
         <Card.Title>{book.title}</Card.Title>
         <Card.Text>{book.author_name}</Card.Text>
-        <button className="btn btn-success" onClick={() => addToFavorites(book)}>VER LIBRO</button>
+		<Link to={`/book/${book.key}`}>
+          <button className="btn btn-success">VER LIBRO</button>
+        </Link>
+        
         <button className="btn btn-danger" onClick={() => addToFavorites(book)}><i className="fa fa-heart"></i></button>
       </Card.Body>
     </Card>
