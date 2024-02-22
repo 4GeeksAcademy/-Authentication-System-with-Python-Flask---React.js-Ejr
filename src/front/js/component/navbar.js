@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import { LoginModal } from "./LoginModal";
 import { Context } from "../store/appContext";
+import { SignUpModal } from "./SignUpModal";
 
 export const Navbar = () => {
 
@@ -15,6 +16,10 @@ export const Navbar = () => {
 
   function updateModalState() {
     setModalState({ showModal: true });
+  }
+
+  function updateModalRegistrerState() {
+    setModalState({ showModalUpdate: true });
   }
 
   function logOut() {
@@ -81,7 +86,7 @@ export const Navbar = () => {
                   <a className="nav-link active fs-3 text-white btn btn-lg m-1 bg-400" aria-current="page" href="#" onClick={updateModalState}>Log in</a>
                 </li>
                 <li className="nav-item flex">
-                  <a className="nav-link fs-3 text-white btn btn-lg m-1 bg-300" href="#">Sign up</a>
+                  <a className="nav-link fs-3 text-white btn btn-lg m-1 bg-300" href="#" onClick={updateModalRegistrerState}>Sign up</a>
                 </li>
               </ul>
             </div>)
@@ -89,6 +94,7 @@ export const Navbar = () => {
           </div> 
 
           <LoginModal show={modalState.showModal} onClose={() => setModalState({ showModal: false })}/>
+          <SignUpModal show={modalState.showModalUpdate} onClose={() => setModalState({ showModalUpdate: false })}/>
         </nav>
     
       )
