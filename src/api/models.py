@@ -121,7 +121,11 @@ class Selected(db.Model):
             "winner": self.winner
         }
 
-
+class BlockedTokenList(db.Model):
+    id = db.Column(db.Integer, primary_key = True)
+    jti = db.Column(db.String(100), unique = True)
+    date_time = db.Column(db.DateTime, nullable = True)
+    expires = db.Column(db.DateTime, nullable = True)
 
 
 

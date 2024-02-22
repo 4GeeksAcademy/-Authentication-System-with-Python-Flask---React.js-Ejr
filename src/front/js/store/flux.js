@@ -1,19 +1,53 @@
 const getState = ({ getStore, getActions, setStore }) => {
-    return {
-        store: {
-            user: [
-				{	
+	return {
+		store: {
+			user: [
+				{
 					"id": "",
 					"username": "",
 					"email": "",
 					"password": "",
 					"profile_pictur": "",
-					"is_active": ""
-				}
+					"is_active": "",
+				},
 			],
-        },
-        actions: {
-            loginUser: async (email, password) => {
+
+		},
+		actions: {
+			protectedFetch: async (endpoint, method = "GET", body = null) => {
+				const token = localStorage.getItem("token")
+				if (!token) return jsonify({ "error": "Token not found." })
+				try {
+					let params = {
+						method,
+						headers: {
+							"Access-Control-Allow-Origin": "*",
+							"Authorization": "Bearer " + token
+						}
+					}
+					if (body != null) {
+						params.headers = {
+							"Content-Type": "application/json"
+						}
+						params.body = JSON.stringify(body)
+					}
+					let resp = await fetch(process.env.BACKEND_URL + "api" + endpoint, params)
+					if (!resp.ok) {
+						console.error(resp.statusText)
+						return { error: resp.statusText }
+					}
+				} catch (error) {
+					return error
+				}
+			},
+
+			logout: async () => {
+				await getActions().protectedFetch("/logout", "POST", null)
+				localStorage.removeItem("token")
+			},
+
+
+			loginUser: async (email, password) => {
 				try {
 					const resp = await fetch(process.env.BACKEND_URL + "api/login", {
 						method: 'POST',
@@ -33,23 +67,24 @@ const getState = ({ getStore, getActions, setStore }) => {
 							return u;
 						});
 						setStore({ user: updatedUserList });
-						setStore({ isAuthenticated: true });
+						setStore({ is_active: true });
 						return data;
 					} else {
-						throw new Error("Invalid credentials"); 
+						throw new Error("Credenciales invalidas.");
 					}
 				} catch (error) {
 					console.error("Error en la autenticación:", error.message);
-					throw new Error(error.message); 
+					throw new Error(error.message);
 				}
 			},
-			createUser : async (username, email, password) => {
+
+			createUser: async (username, email, password) => {
 				try {
 					const resp = await fetch(process.env.BACKEND_URL + "api/signup", {
 						method: 'POST',
 						headers: {
 							'Content-Type': 'application/json',
-							'Access-Control-Allow-Origin':'*'
+							'Access-Control-Allow-Origin': '*'
 						},
 						body: JSON.stringify({ username, email, password }),
 					});
@@ -67,7 +102,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						setStore({ user: updatedUserList });
 						return data;
 					} else {
-						throw new Error("That email is already associated with an account."); 
+						throw new Error("That email is already associated with an account.");
 					}
 				} catch (error) {
 					console.log("Error creating user:", error);
@@ -84,21 +119,21 @@ const getState = ({ getStore, getActions, setStore }) => {
 						},
 						body: JSON.stringify({ email: emailInput }),
 					});
-					
-					const responseData = await response.json(); 
-					
+
+					const responseData = await response.json();
+
 					if (response.ok) {
-						setRecoveryMessage(responseData.message); 
+						setRecoveryMessage(responseData.message);
 					} else {
-						throw new Error(responseData.error || "Error al enviar la solicitud de recuperación de contraseña."); 
+						throw new Error(responseData.error || "Error al enviar la solicitud de recuperación de contraseña.");
 					}
 				} catch (error) {
 					console.error("Error al enviar la solicitud de recuperación de contraseña:", error);
-					setError(error.message); 
+					setError(error.message);
 				}
 			}
-        }
-    };
+		}
+	};
 };
 
 export default getState;
