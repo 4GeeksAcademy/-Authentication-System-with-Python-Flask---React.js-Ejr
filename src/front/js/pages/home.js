@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { LoginModal } from "../component/LoginModal.js"
 import "../../styles/home.css";
 
@@ -9,8 +9,16 @@ import {Navbar} from "../component/navbar.js";
 // import rigoImage from "../../img/rigo-baby.jpg";
 import Jumbotron from "../component/jumbotron.js";
 import {Footer} from "../component/footer.js";
+import { Context } from "../store/appContext.js";
 
 export const Home = () => {
+
+	const {store, actions} = useContext(Context)
+
+	useEffect(() => { // // cada vez que quiera ejecutar una funcion ni bien se cargue el componente debo hacer un useEffect, React dice esto va asi! siempre antes del return
+        actions.obtenerEventos()
+		console.log(process.env.BACKEND_URL)
+    }, [])
 
 	return (
 		<div className="container">

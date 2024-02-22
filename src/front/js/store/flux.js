@@ -15,7 +15,110 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }
             ]
         },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
         actions: {
+            obtenerEventos: async ()=> {
+                try {
+                    const res = await fetch(process.env.BACKEND_URL+"/api/events")
+                    const data = await res.json()
+                    setStore({events:data.result})
+                    
+                } catch (error) {
+                    console.error(error) 
+                }               
+                    
+                    
+            },
             login: async (email, password) => {
 
 				try {
