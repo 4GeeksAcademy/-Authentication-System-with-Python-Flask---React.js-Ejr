@@ -85,49 +85,47 @@ def event(id):
 
     return jsonify(response_body), 200
 
+# GET User information
 
+@api.route('/user/details', methods=['GET'])
+@jwt_required()
+def user_detail():
+    current_user = get_jwt_identity()
+    user_query = User.query.filter_by(email = current_user).first()
+    user_data = user_query.serialize()
+    eventos = [evento.serialize() for evento in Evento.query.filter_by(user_creador=user_data["id"]).all()]
+    user_info ={"id": user_data["id"],
+                "name": user_data["name"],
+                "email": user_data["email"],
+                "hobbies": list(map(lambda item: item["name"], user_data["hobbies"])),
+                "num_eventos_asistido": len(user_data["eventos"]),
+                "eventos_asistido": list(map(lambda item: item["evento"], user_data["eventos"])),
+                "num_eventos_creados" : Evento.query.filter_by(user_creador = user_data["id"]).count(),
+                "eventos_creados": list(map(lambda item: item["evento"], eventos))
+                } 
+    
+    response_body = {
+        "msg": "ok",
+        "details": user_info
+    }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    return jsonify(response_body), 200
 
 ##########post para evento #############
 
 
 @api.route('/event', methods=['POST'])
+@jwt_required()
 def create_event():
-    # Verificar si se proporcionaron los campos requeridos en la solicitud JSON
+    current_user = get_jwt_identity()
+    user_query = User.query.filter_by(email = current_user).first()
+    user_data = user_query.serialize()
+    
     required_fields = ['evento', 'ciudad', 'ubicacion', 'fecha', 'max_personas']
     if not all(field in request.json for field in required_fields):
         return jsonify({"msg": "Error al crear el evento: faltan campos requeridos"}), 400
 
-    # Crear un nuevo evento con los datos proporcionados en la solicitud JSON
+   
     try:
         new_event = Evento(
             evento=request.json['evento'],
@@ -138,8 +136,8 @@ def create_event():
             precio=request.json['precio'],
             max_personas=request.json['max_personas'],
             id_categoria=request.json["id_categoria"],
-            user_creador=request.json["user_creador"]
-            # Agregar otros campos aquí si es necesario
+            user_creador=user_data["id"]
+        
         )
         db.session.add(new_event)
         db.session.commit()
@@ -147,3 +145,13 @@ def create_event():
         return jsonify({"msg": f"Error al crear el evento: {str(e)}"}), 500
 
     return jsonify({"msg": "Evento creado exitosamente"}), 201
+
+
+@api.route('/validate_token', methods=['GET'])
+@jwt_required()
+def validate_token():
+    current_user = get_jwt_identity()
+    if(current_user):
+        return jsonify({"is_loged": True}), 201
+    
+    return jsonify({"is_loged": False}), 401

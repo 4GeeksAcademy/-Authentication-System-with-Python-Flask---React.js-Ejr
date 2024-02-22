@@ -21,6 +21,7 @@ app = Flask(__name__)
 app.config["JWT_SECRET_KEY"] = "super-secret"  # Change this!
 jwt = JWTManager(app)
 app.url_map.strict_slashes = False
+# app.config['JWT_ACCESS_TOKEN_EXPIRES'] = False  # Desactivar expiración de tokens
 
 # database condiguration
 db_url = os.getenv("DATABASE_URL")
