@@ -7,14 +7,15 @@ const Login = () => {
   const [message, setMessage] = useState('');
 
 
-  const onLoginClick = async (email, password) => {
+  const onLoginClick = async () => {
     console.log(email, password)
       const response = await fetch(`${process.env.BACKEND_URL}/login`, 
-      { method: 'POST', headers: {"Content-Type": "application/json"}, body: JSON.stringify({email, password})});
+      { method: 'POST', headers: {"Content-Type": "application/json"}, body: JSON.stringify({email:email , password:password})});
       if (response.ok){
         const data = await response.json()
-        store.token = data.access_token
-        console.log(store.token)
+        // store.token = data.access_token
+        // console.log(store.token)
+        sessionStorage.setItem("token",data.access_token)
       }
       // const body = await response.json();
       // console.log(body);

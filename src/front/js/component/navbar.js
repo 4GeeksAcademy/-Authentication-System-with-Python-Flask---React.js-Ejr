@@ -1,9 +1,23 @@
-import React, { Component } from "react";
+import React, { useState , useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import logoImage from "../../img/logo.jpg";
+import {Context} from "../store/appContext"
 
-class Navbar extends Component {
-  render() {
+const Navbar = () => {
+const [authStatus, setAuthStatus] = useState("pending")
+const {store,actions} = useContext(Context)
+useEffect(()=>{
+  let authenticate = async () => {
+    let result = await actions.authenticateUser
+    if(result){
+      setAuthStatus("denied")
+    }else{
+      setAuthStatus("denied")
+    }
+  }
+  authenticate()
+},[])
+
     return (
       <React.Fragment>
         <nav className="navbar navbar-expand-lg navbar-dark  navbar-style">
@@ -35,8 +49,14 @@ class Navbar extends Component {
                     Home
                   </Link>
                 </li>
-
                 <li className="nav-item">
+                  <Link to="/museums" className="nav-link">
+                    Museums
+                  </Link>
+                </li>
+              {authStatus == "approved"?(
+                <div className="d-flex">
+              <li className="nav-item">
                   <Link to="/exhibits" className="nav-link">
                     Exhibits
                   </Link>
@@ -47,18 +67,13 @@ class Navbar extends Component {
                     Departments
                   </Link>
                 </li>
-
-                <li className="nav-item">
-                  <Link to="/museums" className="nav-link">
-                    Museums
-                  </Link>
-                </li>
-
                 <li className="nav-item">
                   <Link to="/favorites" className="nav-link">
                     Favorites
                   </Link>
                 </li>
+                </div>
+                ):''}
 
                 <li className="nav-item">
                   <Link to="/contact" className="nav-link">
@@ -81,6 +96,6 @@ class Navbar extends Component {
       </React.Fragment>
     );
   }
-}
+
 
 export default Navbar;
