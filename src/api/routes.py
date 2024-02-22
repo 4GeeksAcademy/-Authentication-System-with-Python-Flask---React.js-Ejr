@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Group, UsersGroup
+from api.models import db, User, Group, UsersGroup, BlockedTokenList
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity, get_jwt
@@ -8,16 +8,21 @@ from flask_mail import Mail, Message
 from flask import url_for
 from itsdangerous import URLSafeTimedSerializer
 from werkzeug.security import check_password_hash
+import os
+import requests
+import datetime
 
 app = Flask(__name__)
 bcrypt = Bcrypt(app)
 mail = Mail(app)
 api = Blueprint('api', __name__)
 
+
 CORS(api)
 
-SECRET_KEY = "a7418a26bb534e638f15127acc89f7f1"
-serializer = URLSafeTimedSerializer(SECRET_KEY)
+
+serializer = URLSafeTimedSerializer(os.environ['SECRET_KEY'])
+
 
 # Crear el token
 def generate_password_reset_token(user_id):
@@ -31,6 +36,29 @@ def verify_password_reset_token(token, max_age=3600):
         return user_id
     except Exception as e:
         return None
+    
+# Funcion para enviar el mail de recuperación 
+def send_email_recovery_email(recipient_email, link):
+    api_key = os.environ['API_KEY']
+    domain = os.environ['DOMAIN']
+    url = f"https://api.mailgun.net/v3/{domain}/messages"
+
+    text = f"Click the link below to reset your password:\n{link}"
+
+    payload = {
+        "from": "keverapp@gmail.com",
+        "to": recipient_email,
+        "subject": "Kever password reset.",
+        "text": text
+    }
+
+    response = requests.post(url, auth=("api", api_key), data=payload)
+
+    if response.status_code == 200:
+        print("Password reset email sent successfully.")
+    else:
+        print("Failed to send password reset email.")
+    
 
 # Alta a nuevo usuario
 @api.route('/signup', methods=['POST'])
@@ -108,6 +136,18 @@ def login():
     else:
         return jsonify({"error": "Credenciales inválidas"}), 401
 
+# Para cerrar sesión
+@api.route('/logout', methods=['POST'])
+@jwt_required()
+def logout_user():
+    payload = get_jwt()
+    jti = payload['jti']
+    exp = datetime.datetime.fromtimestamp(payload['exp'])
+    blocked_token = BlockedTokenList(jti = jti, expires = exp)
+    db.session.add(blocked_token)
+    db.session.commit()
+    return jsonify({"msg": "Sesión cerrada exitosamente."}), 200
+
 
 # Link para recupero de contraseña
 @api.route('/recovery', methods=['POST'])
@@ -119,12 +159,17 @@ def handle_password_recovery():
     if user is None:
         return jsonify({"error": "Usuario no encontrado"}), 404
 
-    reset_token = generate_password_reset_token(user.id)
-    reset_link = url_for('api.reset_password', token=reset_token, _external=True)
+    try:
+        reset_token = generate_password_reset_token(user.id)
+        reset_link = url_for('api.reset_password', token=reset_token, _external=True)
 
-    msg = Message("Reestablecimiento de contraseña", sender="marmargara.mm@gmail.com", recipients=[user.email])
-    msg.body = f"Para resetear tu contraseña, sigue este enlace: {reset_link}"
-    mail.send(msg)
+        msg = Message("Reestablecimiento de contraseña", sender="keverapp@gmail.com", recipients=[user.email])
+        msg.body = f"Para reestablecer tu contraseña, sigue este enlace: {reset_link}"
+        mail.send(msg)
+    except Exception as error: 
+        print(error)
+        return jsonify({"error": "No se pudo enviar el correo."}), 500
+    
 
     return jsonify({"message": "Se ha enviado un correo electrónico con instrucciones para restablecer tu contraseña."}), 200
 
@@ -138,7 +183,7 @@ def reset_password(token):
     data = request.get_json()
     new_password = data.get("new_password")
 
-    # Actualizar la contraseña en la bd
+    # Actualizar la contraseña en la bdd
     user = User.query.get(user_id)
     user.password = bcrypt.generate_password_hash(new_password)
     db.session.commit()
