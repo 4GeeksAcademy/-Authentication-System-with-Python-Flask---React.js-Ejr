@@ -6,7 +6,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				{
 					title: "FIRST",
 					background: "white",
-					initial:  
+					initial: "white"  
 				},
 				{
 					title: "SECOND",
@@ -44,6 +44,5 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 	},
 };
-
-export default getState;
 }
+export default getState;
