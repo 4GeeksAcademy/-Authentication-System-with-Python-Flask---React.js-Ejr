@@ -11,14 +11,14 @@ export const SignUpModal = props => {
     const [password, setPassword] = useState("");
     const [isOpen, setOpen] = useState(true);
 
-    function handleSignUp(e) {
+    function handleSignUp(e) {987621``
         e.preventDefault();
         let registered = actions.register(name, email, password);
 
         if (registered) {
             navigate("/demo");
         } else {
-            // Aquí puedes agregar manejo de errores o retroalimentación para el usuario en caso de fallo en el registro
+           
         }
     }
 
@@ -74,9 +74,9 @@ export const SignUpModal = props => {
 };
 
 SignUpModal.propTypes = {
-    // Propiedades del componente
+    
 };
 
 SignUpModal.defaultProps = {
-    // Valores predeterminados de las propiedades del componente
+    
 };
