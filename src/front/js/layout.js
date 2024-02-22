@@ -7,6 +7,8 @@ import { Home } from "./pages/home";
 import { Demo } from "./pages/demo";
 import { Single } from "./pages/single";
 import injectContext from "./store/appContext";
+import { ContextProvider } from "./store/appContext"; // Importa el proveedor de contexto existente
+import { BookProvider } from "./book"; // 
 
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
@@ -29,6 +31,7 @@ const Layout = () => {
                         <Route element={<Demo />} path="/demo" />
                         <Route element={<Single />} path="/single/:theid" />
                         <Route element={<h1>Not found!</h1>} />
+                        <Route path="/book/:id" component={BookDetails} />
                     </Routes>
                     <Footer />
                 </ScrollToTop>
