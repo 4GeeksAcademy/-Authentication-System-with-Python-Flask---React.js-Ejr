@@ -1,81 +1,30 @@
-# WebApp boilerplate with React JS and Flask API
+Tech Sports is a website project for sports event management with database usage, user signup and login, and password recovery.
 
-Build web applications using React.js for the front end and python/flask for your backend API.
+It has this sections:
+- A list of sporting events available so far is shown with the dates, place and description of the event, being able to access each of them to see more details about it.
+- A gallery of images of the events held.
+- Contact page for sending messages through a form and the view of a map with the company's location.
+- User registration with name and password, as well as login and password recovery by sending a link to the email address entered, if registered.
 
-- Documentation can be found here: https://start.4geeksacademy.com/starters/react-flask
-- Here is a video on [how to use this template](https://www.loom.com/share/f37c6838b3f1496c95111e515e83dd9b)
-- Integrated with Pipenv for package managing.
-- Fast deployment to heroku [in just a few steps here](https://start.4geeksacademy.com/backend/deploy-heroku-posgres).
-- Use of .env file.
-- SQLAlchemy integration for database abstraction.
+Once registered, when the user logs in, a profile page is displayed with the following options: 
+• Profile image. Account image customization. If you don't have it by default it shows the TechSports logo.
 
-### 1) Installation:
+• User data. Displays the full name and email with which the user registered, we can also add the phone and address.
 
-> If you use Github Codespaces (recommended) or Gitpod this template will already come with Python, Node and the Posgres Database installed. If you are working locally make sure to install Python 3.10, Node 
+• Manage Events. Shows the list of events created by the user, if any. In this option you can create, modify or delete sport events to save them in the database, it has the following options:
+ - Create event. Allows you to create an event with the following data: event name, short description, start date, end date, address, event logo (image), long description, event rules (pdf document), contact name, email, phone, registration deadline, registration deadline, registration deadline time and event cost.
+- Edit event. Modify data of the created event.
+- Delete event. Delete the event from the database.
 
-It is recomended to install the backend first, make sure you have Python 3.8, Pipenv and a database engine (Posgress recomended)
+• Manage Teams: Shows the list of the teams created by the user with the registration date, the name and the image of the team, if it exists. In this option you can register, modify the data or delete the equipment, it has the following options:
+- Create team. Allows to add a new team to the database with the name, the list of players (pdf file), image of the team.
+- Edit equipment. Allows you to modify the equipment data.
+- Delete team. Is used to delete a team from the database.
 
-1. Install the python packages: `$ pipenv install`
-2. Create a .env file based on the .env.example: `$ cp .env.example .env`
-3. Install your database engine and create your database, depending on your database you have to create a DATABASE_URL variable with one of the possible values, make sure you replace the valudes with your database information:
+• Equipment Registration. Displays a list of existing events, allowing to select an event to see a page with its description with a button that we can choose to register the equipment to that event. Selecting the registration shows us a window to choose the number of teams to register and the total cost of the event. We can choose a payment method such as paypal or bank card, which will take us to a window to write the data of our paypal account and make the payment digitally.
 
-| Engine    | DATABASE_URL                                        |
-| --------- | --------------------------------------------------- |
-| SQLite    | sqlite:////test.db                                  |
-| MySQL     | mysql://username:password@localhost:port/example    |
-| Postgress | postgres://username:password@localhost:5432/example |
+• Manage registrations. In this option we can register the teams to a specific event. Only the number of teams paid for the event can be registered.
 
-4. Migrate the migrations: `$ pipenv run migrate` (skip if you have not made changes to the models on the `./src/api/models.py`)
-5. Run the migrations: `$ pipenv run upgrade`
-6. Run the application: `$ pipenv run start`
+• Payment Query. Displays the list of payments made by the user, including the number of teams registered for payment, the order number generated, the name of the event to which it was registered and the amount paid.
 
-> Note: Codespaces users can connect to psql by typing: `psql -h localhost -U gitpod example`
-
-### Undo a migration
-
-You are also able to undo a migration by running
-
-```sh
-$ pipenv run downgrade
-```
-
-### Backend Populate Table Users
-
-To insert test users in the database execute the following command:
-
-```sh
-$ flask insert-test-users 5
-```
-
-And you will see the following message:
-
-```
-  Creating test users
-  test_user1@test.com created.
-  test_user2@test.com created.
-  test_user3@test.com created.
-  test_user4@test.com created.
-  test_user5@test.com created.
-  Users created successfully!
-```
-
-### **Important note for the database and the data inside it**
-
-Every Github codespace environment will have **its own database**, so if you're working with more people eveyone will have a different database and different records inside it. This data **will be lost**, so don't spend too much time manually creating records for testing, instead, you can automate adding records to your database by editing ```commands.py``` file inside ```/src/api``` folder. Edit line 32 function ```insert_test_data``` to insert the data according to your model (use the function ```insert_test_users``` above as an example). Then, all you need to do is run ```pipenv run insert-test-data```.
-
-### Front-End Manual Installation:
-
--   Make sure you are using node version 14+ and that you have already successfully installed and runned the backend.
-
-1. Install the packages: `$ npm install`
-2. Start coding! start the webpack dev server `$ npm run start`
-
-## Publish your website!
-
-This boilerplate it's 100% read to deploy with Render.com and Heroku in a matter of minutes. Please read the [official documentation about it](https://start.4geeksacademy.com/deploy).
-
-### Contributors
-
-This template was built as part of the 4Geeks Academy [Coding Bootcamp](https://4geeksacademy.com/us/coding-bootcamp) by [Alejandro Sanchez](https://twitter.com/alesanchezr) and many other contributors. Find out more about our [Full Stack Developer Course](https://4geeksacademy.com/us/coding-bootcamps/part-time-full-stack-developer), and [Data Science Bootcamp](https://4geeksacademy.com/us/coding-bootcamps/datascience-machine-learning).
-
-You can find other templates and resources like this at the [school github page](https://github.com/4geeksacademy/).
+There is an administrator user that at the moment of logging in shows a page with the administration panel where the list of users registered in the web site, the list of events and the list of payments of all users can be consulted.
