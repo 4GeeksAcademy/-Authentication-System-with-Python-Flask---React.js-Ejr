@@ -1,13 +1,30 @@
 const getState = ({ getStore, getActions, setStore }) => {
     return {
         store: {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            
             auth: false
         },
         actions: {
             login: async (email, password) => {
 
 				try {
-					let response = await fetch("https://friendly-orbit-gwq4p945p5wfpvgp-3001.app.github.dev/api/login", {
+					let response = await fetch(process.env.BACKEND_URL + "/api/login", {
 						method:"POST",
 						headers: {
 							"Content-type":"application/json"
@@ -33,7 +50,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
                 if(token){
                     try {
-					let response = await fetch("https://friendly-orbit-gwq4p945p5wfpvgp-3001.app.github.dev/api/validate_token", {
+					let response = await fetch(process.env.BACKEND_URL + "/api/validate_token", {
 					    headers: {
 						    'Content-Type': 'application/json',
 						    'Authorization': `Bearer ${token}`
@@ -53,9 +70,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 				
             },
 
-            register: async (name, email, password) => {
+            register: async (name, email, password)  => {
                 try {
-                    let response = await fetch("https://shiny-dollop-qgq7xr79pxg24747-3001.app.github.dev/api/signup", {
+                    let response = await fetch(process.env.BACKEND_URL + "/api/signup", {
                         method: "POST",
                         headers: {
                             "Content-type": "application/json"
@@ -68,8 +85,9 @@ const getState = ({ getStore, getActions, setStore }) => {
                     });
             
                     let data = await response.json();
-                    if (response.ok) {
-                        return true; // Registro exitoso
+                    
+                    if (response.status >= 200 &&  response.status < 300) {
+                        return true ; // Registro exitoso
                     } else {
                         console.error(data.msg); // Manejo de errores
                         return false;
@@ -81,6 +99,46 @@ const getState = ({ getStore, getActions, setStore }) => {
             }
 
             
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
            
   
         }

@@ -9,30 +9,34 @@ export const SignUpModal = props => {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [isOpen, setOpen] = useState(true);
 
-    function handleSignUp(e) {987621``
-        e.preventDefault();
-        let registered = actions.register(name, email, password);
+    const handleSignUp = async (e)  => {
+        // e.preventDefault();
+        let registrer = await  actions.register(name, email, password);
 
-        if (registered) {
-            navigate("/demo");
-        } else {
-           
-        }
+          if (registrer == true ){
+             await actions.login(email,password)
+             alert(`user ${name} registred`)
+          }
+
+          else{
+            alert(`email its allready exist`)
+          }
+          window.location.reload();
+
+
+     
     }
 
-    function closeModal() {
-        setOpen(false);
-    }
+
 
     return (
-        <div className="modal" tabIndex="-1" role="dialog" style={{ display: isOpen ? "inline-block" : "none", cursor: "pointer" }}>
+        <div className="modal" tabIndex="-1" role="dialog" style={{ display: props.show ? "inline-block" : "none", cursor: "pointer" }}>
             <div className="modal-dialog" role="document">
                 <div className="modal-content">
                     <div className="modal-header bg-100 d-flex flex-column px-5">
                         <div className="d-flex flex-row justify-content-end w-100">
-                            <i className="fa-solid fa-xmark" onClick={closeModal}></i>
+                        <i className="fa-solid fa-xmark" onClick={() => props.onClose()}></i>
                         </div>
                         <h4 className="modal-title">Regístrate</h4>
                     </div>
