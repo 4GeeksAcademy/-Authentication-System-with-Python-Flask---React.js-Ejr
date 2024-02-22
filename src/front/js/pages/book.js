@@ -3,15 +3,17 @@ import { useParams } from "react-router-dom";
 import { Container, Row, Col } from "react-bootstrap";
 
 const BookDetails = () => {
-  const { id } = useParams(); // Obtén el parámetro de la URL que contiene el ID del libro
+  const { id } = useParams(); 
   const [bookDetails, setBookDetails] = useState(null);
-
+console.log(bookDetails)
   useEffect(() => {
     const fetchBookDetails = async () => {
       try {
         const response = await fetch(`https://openlibrary.org/works/${id}.json`);
         if (!response.ok) {
           throw new Error('meee');
+
+          //la url tiene que estar en una variable de entorno en el archivo .env
         }
         const data = await response.json();
         setBookDetails(data);
