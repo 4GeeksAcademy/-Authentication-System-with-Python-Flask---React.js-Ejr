@@ -6,19 +6,12 @@ import { useNavigate } from "react-router-dom";
 export const LoginModal = props => {
 
 	const {store, actions} = useContext(Context);
-	const navigate = useNavigate();
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 
 	function handleLogIn(e) {
 		e.preventDefault();
-		let looged = actions.login(email, password);
-
-		if (looged) {
-			navigate("/");
-		} else {
-
-		}
+		actions.login(email, password);
 	}
 
 	return (

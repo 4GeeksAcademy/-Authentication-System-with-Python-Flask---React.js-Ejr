@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import { LoginModal } from "./LoginModal";
-import Context from "../store/appContext";
+import { Context } from "../store/appContext";
 
 export const Navbar = () => {
 
-  const {store, actions} = useContext(Context);
+  const { store, actions } = useContext(Context);
+
   const [loggedNavbar, setLoggedNavbar] = useState(false);
   const [modalState, setModalState] = useState({
 		showModal: false,
@@ -18,16 +19,20 @@ export const Navbar = () => {
 
   function logOut() {
     localStorage.removeItem("token");
+    actions.validate_token();
     window.location.reload();
   }
 
-  useEffect(() => {
-    if(!store.auth) {
-      setLoggedNavbar(true);
+  useEffect(async() => {
+    await actions.validate_token();
 
+    if (store.auth) {
+      setLoggedNavbar(true);
     } else {
       setLoggedNavbar(false);
     }
+
+    console.log(store.auth);
 	},[]);
 
 	return (
@@ -62,16 +67,6 @@ export const Navbar = () => {
             (<div className="collapse navbar-collapse justify-content-end" id="navbarNav">
               <ul className="navbar-nav">
                 <li className="nav-item flex">
-                  <a className="nav-link active fs-3 text-white btn btn-lg m-1 bg-400" aria-current="page" href="#" onClick={updateModalState}>Log in</a>
-                </li>
-                <li className="nav-item flex">
-                  <a className="nav-link fs-3 text-white btn btn-lg m-1 bg-300" href="#">Sign up</a>
-                </li>
-              </ul>
-            </div>) :             
-            (<div className="collapse navbar-collapse justify-content-end" id="navbarNav">
-              <ul className="navbar-nav">
-                <li className="nav-item flex">
                   <p>El nombre del usuario</p>
                 </li>
                 <li className="nav-item flex">
@@ -79,6 +74,16 @@ export const Navbar = () => {
                 </li>
               </ul>
               <button onClick={logOut}>Cerrar sesión</button>
+            </div>):
+            (<div className="collapse navbar-collapse justify-content-end" id="navbarNav">
+              <ul className="navbar-nav">
+                <li className="nav-item flex">
+                  <a className="nav-link active fs-3 text-white btn btn-lg m-1 bg-400" aria-current="page" href="#" onClick={updateModalState}>Log in</a>
+                </li>
+                <li className="nav-item flex">
+                  <a className="nav-link fs-3 text-white btn btn-lg m-1 bg-300" href="#">Sign up</a>
+                </li>
+              </ul>
             </div>)
             }
           </div> 
