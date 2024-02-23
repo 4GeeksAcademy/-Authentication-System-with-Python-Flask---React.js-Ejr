@@ -2,22 +2,41 @@ const getState = ({ getStore, getActions, setStore }) => {
     return {
         store: {
             auth: false,
-            events: []
+            events: [],
+            user: []
         },
 
         actions: {
+            obtenerInfoUsuario: async ()=> {
+                let token = localStorage.getItem("token");
+                console.log(token);
+                try {
+                    const res = await fetch(process.env.BACKEND_URL + "/api/user/details", {
+						method:"GET",
+                        headers: {
+                            "Content-type": "application/json",
+                            "Authorization": `Bearer ${token}`,
+                        },
+                    });
+                    const data = await res.json()
+                    console.log(data.details)
+                    setStore({user:data.details})
+                } catch (error) {
+                    console.error(error) 
+                }               
+            },
+
             obtenerEventos: async ()=> {
                 try {
-                    const res = await fetch(process.env.BACKEND_URL+"/api/events")
+                    const res = await fetch(process.env.BACKEND_URL + "/api/events")
                     const data = await res.json()
                     setStore({events:data.results})
                     
                 } catch (error) {
                     console.error(error) 
                 }               
-                    
-                    
             },
+
             login: async (email, password) => {
 
 				try {
@@ -64,7 +83,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 					    console.log(error);
 				    }
                 }
-				
             },
 
             register: async (name, email, password)  => {

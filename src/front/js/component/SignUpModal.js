@@ -54,7 +54,7 @@ export const SignUpModal = props => {
                                 <label className="d-flex justify-content-start w-100">Correo electrónico</label>
                                 <input
                                     className="w-100 rounded-3"
-                                    type="text"
+                                    type="email"
                                     onChange={(e) => setEmail(e.target.value)}
                                 />
                             </div>
@@ -66,7 +66,7 @@ export const SignUpModal = props => {
                                     onChange={(e) => setPassword(e.target.value)}
                                 />
                             </div>
-                            <button type="submit" className="btn-300 to-be-hoved form-control">
+                            <button type="submit" className="btn-300 to-be-hoved form-control w-50">
                                 ¡REGÍSTRATE!
                             </button>
                         </form>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
 import { Context } from "../store/appContext";
+import { SignUpModal } from "./SignUpModal";
 import { useNavigate } from "react-router-dom";
 
 export const LoginModal = props => {
@@ -8,11 +9,19 @@ export const LoginModal = props => {
 	const {store, actions} = useContext(Context);
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
+	const [modalRegisterState, setModalRegisterState] = useState({
+		showModal: false,
+		showModalUpdate: false,
+	});
 
 	function handleLogIn(e) {
 		e.preventDefault();
 		actions.login(email, password);
 	}
+
+	function updateModalRegistrerState() {
+		setModalRegisterState({ showModalUpdate: true });
+	  }
 
 	return (
 		<div className="modal" tabIndex="-1" role="dialog" style={{ display: props.show ? "inline-block" : "none", cursor: "pointer" }}>
@@ -25,7 +34,7 @@ export const LoginModal = props => {
 							<i className="fa-solid fa-xmark" onClick={() => props.onClose()}></i>
 						</div>
 						<h4 className="modal-title">Inicia sesión</h4>
-						<h6>¿Aún no eres miembro? Regístrate.</h6>
+						<h6>¿Aún no eres miembro? <a className="text-primary" onClick={updateModalRegistrerState}>Regístrate.</a></h6>
 					</div>
 
 					<div className="modal-body w-100 px-5">
@@ -34,7 +43,7 @@ export const LoginModal = props => {
 								<label className="d-flex justify-content-start w-100">Correo electrónico</label>
 								<input
 									className="w-100 rounded-3"
-									type="text"
+									type="email"
 									onChange={(e) => setEmail(e.target.value)}
 								/>
 							</div>
@@ -48,13 +57,13 @@ export const LoginModal = props => {
 								/>
 							</div>
 	
-							<div className="form-group d-flex flex-row justify-content-start w-100">
+							{/* <div className="form-group d-flex flex-row justify-content-start w-100">
 								<input className="form-check-input" type="checkbox" value="" id="flexCheckDefault"/>
 								<label className="form-check-label" for="flexCheckDefault">
 								Mantener sesión iniciada
 								</label>
-							</div>
-							<button type="submit" className="btn-300 to-be-hoved form-control">
+							</div> */}
+							<button type="submit" className="btn-300 to-be-hoved form-control w-50">
 								¡ENTRA!
 							</button>
 						</form>
@@ -62,6 +71,7 @@ export const LoginModal = props => {
 
 				</div>
 			</div>
+			<SignUpModal show={modalRegisterState.showModalUpdate} onClose={() => setModalRegisterState({ showModalUpdate: false })}/>
 		</div>
 	);
 };
