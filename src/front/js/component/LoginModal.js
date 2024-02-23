@@ -3,6 +3,8 @@ import PropTypes from "prop-types";
 import { Context } from "../store/appContext";
 import { SignUpModal } from "./SignUpModal";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export const LoginModal = props => {
 
@@ -14,9 +16,16 @@ export const LoginModal = props => {
 		showModalUpdate: false,
 	});
 
-	function handleLogIn(e) {
-		e.preventDefault();
-		actions.login(email, password);
+	const handleLogIn = async(e) => {
+		let log = await actions.login(email, password);
+		if(log){
+			props.onClose()
+		}
+		else{
+			toast.error(`Email or password are incorrect`)
+			setEmail("")
+			setPassword("")
+		}
 	}
 
 	function updateModalRegistrerState() {
@@ -42,18 +51,22 @@ export const LoginModal = props => {
 							<div className="form-group d-flex flex-column justify-content-center align-items-center w-100">
 								<label className="d-flex justify-content-start w-100">Correo electrónico</label>
 								<input
+									value={email}
 									className="w-100 rounded-3"
 									type="email"
 									onChange={(e) => setEmail(e.target.value)}
+									required
 								/>
 							</div>
 
 							<div className="form-group d-flex flex-column justify-content-center align-items-center w-100">
 								<label className="d-flex justify-content-start w-100">Contraseña</label>
 								<input
+									value={password}
 									className="w-100 rounded-3"
 									type="password"
 									onChange={(e) => setPassword(e.target.value)}
+									required
 								/>
 							</div>
 	
@@ -66,6 +79,18 @@ export const LoginModal = props => {
 							<button type="submit" className="btn-300 to-be-hoved form-control w-50">
 								¡ENTRA!
 							</button>
+							<ToastContainer 
+								position="top-center"
+								autoClose={5000}
+								hideProgressBar={false}
+								newestOnTop={false}
+								closeOnClick
+								rtl={false}
+								pauseOnFocusLoss
+								draggable
+								pauseOnHover
+								theme="dark"
+							/>
 						</form>
 					</div>
 
