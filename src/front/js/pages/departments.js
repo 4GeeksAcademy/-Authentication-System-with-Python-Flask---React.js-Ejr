@@ -16,7 +16,7 @@ export const Departments = () => {
 		setArtDepartments(store.artDepartments)
 	},[store.artDepartments])
 
-	console.log(artDepartments);
+	// console.log(artDepartments);
 	return (
 		
 		<div className="text-center mt-5">
@@ -24,7 +24,7 @@ export const Departments = () => {
 			<div className="row1"> 
 				{artDepartments.map(item => (
 					<div className="art-Poster">
-						{console.log(item)}
+						{/* {console.log(item)} */}
 						<p>{item.displayName} </p>
 					</div>
 					
