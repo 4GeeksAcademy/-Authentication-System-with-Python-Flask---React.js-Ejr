@@ -39,12 +39,11 @@ const Layout = () => {
                         <Route element={Home} path="/home" /> 
                         <Route element={<Signup />} path="/signup" />
                         <Route element={<Recovery />} path="/recovery" />
-                        <Route element={<Scheduling/>} path="/scheduling>"/>
-                        <Route element={<AppointmentScheduler/>} path="/appointment_scheduling>"/>
-                        <Route element={<IncomeControl/>} path="/income_control>"/>
-                        <Route element={<Inbox/>} path="/inbox>"/>
-                        <Route element={<Patients/>} path="/patients>"/>
-                        <Route element={<h1>Not found!</h1>} />
+                        <Route element={<Scheduling/>} path="/scheduling"/>
+                        <Route element={<AppointmentScheduler/>} path="/appointment_scheduling"/>
+                        <Route element={<IncomeControl/>} path="/income_control"/>
+                        <Route element={<Inbox/>} path="/inbox"/>
+                        <Route element={<Patients/>} path="/patients"/>
                     </Routes>
                     <Footer />
                 </ScrollToTop>
