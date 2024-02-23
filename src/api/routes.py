@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Group, UsersGroup, BlockedTokenList
+from api.models import db, User, BlockedTokenList
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity, get_jwt
@@ -59,7 +59,6 @@ def send_email_recovery_email(recipient_email, link):
     else:
         print("Failed to send password reset email.")
     
-
 # Alta a nuevo usuario
 @api.route('/signup', methods=['POST'])
 def create_user():
@@ -109,7 +108,6 @@ def delete_user(user_id):
 
     return jsonify({"message": "User deleted successfully"}), 200
 
-
 #Listar todos los usuarios
 @api.route('/users', methods=['GET'])
 def list_users():
@@ -147,7 +145,6 @@ def logout_user():
     db.session.add(blocked_token)
     db.session.commit()
     return jsonify({"msg": "Sesión cerrada exitosamente."}), 200
-
 
 # Link para recupero de contraseña
 @api.route('/recovery', methods=['POST'])
@@ -189,50 +186,3 @@ def reset_password(token):
     db.session.commit()
 
     return jsonify({"message": "Contraseña restablecida exitosamente."}), 200
-
-# Crear un nuevo grupo
-@api.route('/groups', methods=['POST'])
-@jwt_required()
-def create_group_and_invite_users():
-    current_user_id = get_jwt_identity()
-    data = request.json
-    name = data.get('name')
-    description = data.get('description')
-    profile_picture = data.get('profile_picture')
-    emails = data.get('emails')
-
-    if not name:
-        return jsonify({"error": "Name is required"}), 400
-
-    if emails is None:
-        return jsonify({"error": "Emails field is required"}), 400
-
-    nuevo_grupo = Group(name=name, description=description, profile_picture=profile_picture)
-    user = User.query.get(current_user_id)
-
-    db.session.add(nuevo_grupo)
-
-    db.session.commit()
-
-    admin_relation = UsersGroup(user_id=current_user_id, group_id=nuevo_grupo.id, admin=True)
-    db.session.add(admin_relation)
-
-    for email in emails:
-        user = User.query.filter_by(email=email).first()
-
-        if user: 
-            nuevo_grupo.users.append(user)
-        else:  
-            return jsonify({"error": "Credenciales inválidas"}), 401
-
-    db.session.commit()
-
-    return jsonify({"message": "Group created successfully and invitations sent"}), 200
-
-#Listar grupos existentes
-@api.route('/groups', methods=['GET'])
-def list_groups():
-    groups = Group.query.all()
-    serialized_groups = [group.serialize() for group in groups]  # Aquí corregido
-    return jsonify(serialized_groups), 200
-
