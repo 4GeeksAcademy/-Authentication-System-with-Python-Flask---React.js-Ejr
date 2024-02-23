@@ -3,20 +3,20 @@ import { Link } from "react-router-dom";
 import logoImage from "../../img/logo.jpg";
 import {Context} from "../store/appContext"
 
-const Navbar = () => {
+const Navbar = ({authAttempt}) => {
 const [authStatus, setAuthStatus] = useState("pending")
 const {store,actions} = useContext(Context)
 useEffect(()=>{
   let authenticate = async () => {
-    let result = await actions.authenticateUser
+    let result = await actions.authenticateUser()
     if(result){
-      setAuthStatus("denied")
+      setAuthStatus("approved")
     }else{
       setAuthStatus("denied")
     }
   }
   authenticate()
-},[])
+},[authAttempt])
 
     return (
       <React.Fragment>

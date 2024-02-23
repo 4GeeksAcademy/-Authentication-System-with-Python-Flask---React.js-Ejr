@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { Context } from '../store/appContext';
-const Login = () => {
+const Login = ({setAuthAttempt}) => {
   const {store,actions} = useContext(Context);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -9,13 +9,14 @@ const Login = () => {
 
   const onLoginClick = async () => {
     console.log(email, password)
-      const response = await fetch(`${process.env.BACKEND_URL}/login`, 
+      const response = await fetch(`${process.env.BACKEND_URL}/api/login`, 
       { method: 'POST', headers: {"Content-Type": "application/json"}, body: JSON.stringify({email:email , password:password})});
       if (response.ok){
         const data = await response.json()
         // store.token = data.access_token
         // console.log(store.token)
         sessionStorage.setItem("token",data.access_token)
+        setAuthAttempt("made")
       }
       // const body = await response.json();
       // console.log(body);

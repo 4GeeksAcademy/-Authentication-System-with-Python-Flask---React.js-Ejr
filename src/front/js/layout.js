@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
 import { BackendURL } from "./component/backendURL";
@@ -23,6 +23,7 @@ const Layout = () => {
     //the basename is used when your project is published in a subdirectory and not in the root of the domain
     // you can set the basename on the .env file located at the root of this project, E.g: BASENAME=/react-hello-webapp/
     const basename = process.env.BASENAME || "";
+    const [authAttempt, setAuthAttempt]= useState(null)
 
     if(!process.env.BACKEND_URL || process.env.BACKEND_URL == "") return <BackendURL/ >;
 
@@ -30,7 +31,7 @@ const Layout = () => {
         <div>
             <BrowserRouter basename={basename}>
                 <ScrollToTop>
-                    <Navbar />
+                    <Navbar authAttempt={authAttempt} />
                     <Routes>
                         <Route element={<Home />} path="/" />
                         <Route element={<Demo />} path="/demo" />
@@ -40,7 +41,7 @@ const Layout = () => {
                         <Route element={<Favorites />} path="/favorites" />
                         <Route element={<Department />} path="/department/:thedepartment" />
                         <Route element={<Museums />} path="/museums" />
-                        <Route element={<Login />} path="/login" />
+                        <Route element={<Login setAuthAttempt={setAuthAttempt}/>} path="/login" />
                         <Route element={<Single />} path="/single/:theid" />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>

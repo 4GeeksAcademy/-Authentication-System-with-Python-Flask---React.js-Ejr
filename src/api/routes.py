@@ -69,6 +69,7 @@ def sign_up():
 @jwt_required()
 def private():
     # Access the identity of the current user with get_jwt_identity
+    print("private is running")
     email = get_jwt_identity()
     user=User.query.filter_by(email=email).first()
     if user:
