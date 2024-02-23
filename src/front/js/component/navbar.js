@@ -1,12 +1,17 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 // import { Login } from "../pages/login";
 
 export const Navbar = () => {
+
+	let location = useLocation();
+	console.log(location.pathname)
+	
 	return (
 		//<nav className="navbar p-0">
-			
-		<nav className="navbar navbar-light bg-light">
+		<>
+		{location.pathname !== "/" && 
+		(<nav className="navbar navbar-light bg-light">
 			<div className="container">
 				<Link to="/">
 					<span className="navbar-brand mb-0 h1">Ocean Of Om</span>
@@ -30,5 +35,8 @@ export const Navbar = () => {
 				</div>
 			</div>
 		</nav>
+		)
+	  }
+	  </>
 	);
 };
