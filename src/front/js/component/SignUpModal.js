@@ -2,6 +2,8 @@ import React, { useState, useContext } from "react";
 import PropTypes from "prop-types";
 import { Context } from "../store/appContext";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export const SignUpModal = props => {
     const { store, actions } = useContext(Context);
@@ -10,24 +12,19 @@ export const SignUpModal = props => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    const handleSignUp = async (e)  => {
-        // e.preventDefault();
-        let registrer = await  actions.register(name, email, password);
-
-          if (registrer == true ){
+    const handleSignUp = async ()  => {
+            let registrer = await  actions.register(name, email, password);
+            if (registrer == true ){
              await actions.login(email,password)
-             alert(`user ${name} registred`)
-          }
-
-          else{
-            alert(`email its allready exist`)
-          }
-          window.location.reload();
-
-
-     
+             props.onClose()
+            }
+            else{
+            toast.error(`Email already exists`)
+            setName("")
+            setEmail("")
+            setPassword("")
+            }
     }
-
 
 
     return (
@@ -45,30 +42,48 @@ export const SignUpModal = props => {
                             <div className="form-group d-flex flex-column justify-content-center align-items-center w-100">
                                 <label className="d-flex justify-content-start w-100">Nombre</label>
                                 <input
+                                    value={name}
                                     className="w-100 rounded-3"
                                     type="text"
                                     onChange={(e) => setName(e.target.value)}
+                                    required
                                 />
                             </div>
                             <div className="form-group d-flex flex-column justify-content-center align-items-center w-100">
                                 <label className="d-flex justify-content-start w-100">Correo electrónico</label>
                                 <input
+                                    value={email}
                                     className="w-100 rounded-3"
                                     type="email"
                                     onChange={(e) => setEmail(e.target.value)}
+                                    required
                                 />
                             </div>
                             <div className="form-group d-flex flex-column justify-content-center align-items-center w-100">
                                 <label className="d-flex justify-content-start w-100">Contraseña</label>
                                 <input
+                                    value={password}
                                     className="w-100 rounded-3"
                                     type="password"
                                     onChange={(e) => setPassword(e.target.value)}
+                                    required
                                 />
                             </div>
                             <button type="submit" className="btn-300 to-be-hoved form-control w-50">
                                 ¡REGÍSTRATE!
                             </button>
+                            <ToastContainer
+                                position="top-center"
+								autoClose={5000}
+								hideProgressBar={false}
+								newestOnTop={false}
+								closeOnClick
+								rtl={false}
+								pauseOnFocusLoss
+								draggable
+								pauseOnHover
+								theme="dark"
+                            />
                         </form>
                     </div>
                 </div>
