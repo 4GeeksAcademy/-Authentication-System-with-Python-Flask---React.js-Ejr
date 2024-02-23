@@ -16,7 +16,9 @@ export const Home = () => {
 				
 					<div className="d-flex justify-content-end">
 						<button type="button" className="btn btn-outline-light p-2 mx-2">Free Trial</button>
+						<Link to="/login">
 						<button type="button" className="btn btn-outline-light">Login</button>
+						</Link>
 					</div>
 
 					<div className="mt-5 ms-4">
@@ -24,9 +26,9 @@ export const Home = () => {
 						
 					</div>
 					<div>
-						<Link to="/login">
+						
 						<button type="button" className="btn btn-outline-light btn-lg ms-5">Dive In</button>
-						</Link>
+						
 						
 					</div>
 					
