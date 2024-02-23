@@ -36,7 +36,7 @@ def login():
 @api.route('/events', methods=['GET'])
 def get_users_attend_all_events():
     date = datetime.now()
-    all_events = Evento.query.filter(Evento.fecha > date).all()
+    all_events = Evento.query.filter(Evento.fecha > date).order_by(Evento.fecha).limit(6).all()
     results_events = list(map(lambda item: item.serialize(), all_events))
     
     response_body = {

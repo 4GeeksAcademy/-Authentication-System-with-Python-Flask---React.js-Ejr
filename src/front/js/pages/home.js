@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from "react";
 import { LoginModal } from "../component/LoginModal.js"
 import "../../styles/home.css";
 
-import Card from "../component/card.js";
+import {Card} from "../component/card.js";
 import {Navbar} from "../component/navbar.js";
 
 //include images into your bundle
@@ -16,8 +16,8 @@ export const Home = () => {
 	const {store, actions} = useContext(Context)
 
 	useEffect(() => { // // cada vez que quiera ejecutar una funcion ni bien se cargue el componente debo hacer un useEffect, React dice esto va asi! siempre antes del return
-        actions.obtenerEventos()
-		console.log(process.env.BACKEND_URL)
+       actions.obtenerEventos()
+
     }, [])
 
 	return (
@@ -33,7 +33,7 @@ export const Home = () => {
 			<div className="Don't forget to see the events row py-5">
 				<p className="fs-2 col-sm-12 col-md-6 col-lg-5"><strong>Don't forget to see the events!</strong></p>
 
-				<div className="col-sm-12 col-md-6 col-lg-2">
+				{/* <div className="col-sm-12 col-md-6 col-lg-2">
 					<label class="visually-hidden" for="inlineFormSelectPref">Preference</label>
 					<select class="form-select" id="inlineFormSelectPref">
 						<option selected>Choose...</option>
@@ -43,10 +43,19 @@ export const Home = () => {
 					</select>
 				</div>
 
-				<p className="d-flex justify-content-end col-sm-12 col-md-6 col-lg-3"><strong>or took all the events today!</strong></p>
+				<p className="d-flex justify-content-end col-sm-12 col-md-6 col-lg-3"><strong>or took all the events today!</strong></p> */}
 
 			</div>
 			<div className="row m-1">
+				<ul className="list-group d-flex flex-row overflow-auto mb-5" id="contact-list">
+					{store.events.map((item) => (
+						<li className="list-group col-xl-3 col-lg-4 col-md-6 col-12 mb-2 pe-2" key={item.id}>
+							<Card evento={item.evento} descripcion={item.descripcion} ciudad={item.ciudad} fecha={item.fecha}/>
+						</li>
+				))}
+				</ul>
+			</div>
+			{/* <div className="row m-1">
 				<div className="col-sm-12 col-md-6 col-lg-4">
 					<Card />
 				</div>
@@ -56,18 +65,7 @@ export const Home = () => {
 				<div className="col-sm-12 col-md-6 col-lg-4  ">
 					<Card />
 				</div>
-			</div>
-			<div className="row m-1">
-				<div className="col-sm-12 col-md-6 col-lg-4">
-					<Card />
-				</div>
-				<div className="col-sm-12 col-md-6 col-lg-4  ">
-					<Card />
-				</div>
-				<div className="col-sm-12 col-md-6 col-lg-4  ">
-					<Card />
-				</div>
-			</div>
+			</div> */}
 			<p className="fs-2 col-sm-12 col-md-6 col-lg-12 d-flex justify-content-center py-5"><strong>If you don't have the time to travel, we bring the plans for you!</strong></p>
 
 		</div>

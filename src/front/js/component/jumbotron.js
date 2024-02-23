@@ -11,7 +11,7 @@ function Jumbotron() {
                     <a className="btn bg-300 text-white p-4 btn-lg mx-auto d-flex justify-content-center col-sm-12 col-md-12 col-lg-5" href="#" role="button">Join events</a>
             </div>
             <div className="Derecha-Imagen mt-4 flex col-sm-12 col-md-6 col-lg-6">
-                <img class="img-thumbnail rounded-circle float-end border-0" src={imageSample} alt="" />
+                <img class="img-thumbnail rounded-circle float-end border-0" src="https://static.vecteezy.com/system/resources/previews/025/835/903/non_2x/three-male-best-friends-are-laughing-enjoying-together-free-hand-drawing-vector.jpg" alt="" />
             </div>
         </div>
     );

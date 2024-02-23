@@ -1,122 +1,16 @@
 const getState = ({ getStore, getActions, setStore }) => {
     return {
         store: {
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            
-            auth: false
+            auth: false,
+            events: []
         },
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
         actions: {
             obtenerEventos: async ()=> {
                 try {
                     const res = await fetch(process.env.BACKEND_URL+"/api/events")
                     const data = await res.json()
-                    setStore({events:data.result})
+                    setStore({events:data.results})
                     
                 } catch (error) {
                     console.error(error) 
