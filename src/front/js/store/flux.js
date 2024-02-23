@@ -4,11 +4,17 @@ const getState = ({ getStore, getActions, setStore }) => {
 			user: [
 				{
 					"id": "",
+					"role":"",
 					"username": "",
+					"name": "",
+					"lastname": "",
+					"birth_date" :"",
 					"email": "",
+					"phone" :"",
 					"password": "",
-					"profile_pictur": "",
+					"virtual_link": "",
 					"is_active": "",
+				
 				},
 			],
 
@@ -45,7 +51,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 				await getActions().protectedFetch("/logout", "POST", null)
 				localStorage.removeItem("token")
 			},
-
 
 			loginUser: async (email, password) => {
 				try {
