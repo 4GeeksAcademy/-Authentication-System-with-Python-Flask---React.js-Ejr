@@ -6,7 +6,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				{
 					title: "FIRST",
 					background: "white",
-					initial: "white"
+					initial:  ""
 				},
 				{
 					title: "SECOND",
@@ -16,9 +16,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 			]
 		},
 		actions: {
-			// Use getActions to call a function within a fuction
-			exampleFunction: () => {
-				getActions().changeColor(0, "green");
+			login: async (email, password) => {
+			  const actions = getActions()
+			  const data = await api.login(email, password)
+			  setStore({ user: data.user, token: data.token })
+			  actions.getFavorites()
+			  if (!data.user.is_admin) localStorage.setItem('myToken', data.token)
+			  return data
 			},
 
 			getMessage: async () => {
