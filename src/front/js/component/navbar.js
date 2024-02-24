@@ -67,6 +67,8 @@ useEffect(()=>{
                     Departments
                   </Link>
                 </li>
+                </div>
+                ):''}
 
                 <li className="nav-item">
                   <Link to="/contact" className="nav-link">
@@ -74,6 +76,9 @@ useEffect(()=>{
                   </Link>
                 </li>
 
+                {/* </div> */}
+                {authStatus == "approved"?(
+                  <div>
                 <li className="nav-item">
                   <Link to="/profile" className="nav-link">
                     Profile

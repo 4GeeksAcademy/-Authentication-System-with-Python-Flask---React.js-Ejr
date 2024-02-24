@@ -7,12 +7,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 		},
 		actions: {
 		getObjects: () => {
-			for (let i = 1050; i < 1075; i++){
+			for (let i = 1000; i < 1075; i++){
 				fetch("https://collectionapi.metmuseum.org/public/collection/v1/objects/"+i)
 				.then(response => response.json())
 				.then(data => {
 					let store = getStore()
-					if (data.objectName){
+					if (data.objectName && data.primaryImageSmall){
 						store.artPieces.push(data)
 						setStore(store)
 					}
