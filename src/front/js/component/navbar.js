@@ -67,19 +67,21 @@ useEffect(()=>{
                     Departments
                   </Link>
                 </li>
-                <li className="nav-item">
-                  <Link to="/favorites" className="nav-link">
-                    Favorites
-                  </Link>
-                </li>
-                </div>
-                ):''}
 
                 <li className="nav-item">
                   <Link to="/contact" className="nav-link">
                     Contact Us
                   </Link>
                 </li>
+
+                <li className="nav-item">
+                  <Link to="/profile" className="nav-link">
+                    Profile
+                  </Link>
+                </li>
+                </div>
+                ):''}
+
 
               </ul>
             </div>

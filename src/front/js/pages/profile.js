@@ -3,12 +3,12 @@ import { Context } from "../store/appContext";
 
 import "../../styles/home.css";
 
-export const Favorites = () => {
+export const Profile = () => {
 	const { store, actions } = useContext(Context);
 
 	return (
 		<div className="text-center mt-5">
-			Your Favorites Should Appear Below
+			Your Profile Should Appear Below
 		</div>
 	);
 };
