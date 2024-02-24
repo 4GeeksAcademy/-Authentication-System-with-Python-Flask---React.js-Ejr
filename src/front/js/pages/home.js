@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useContext } from "react";
 import "../../styles/home.css";
 import { Container, Row, Col, Card } from "react-bootstrap";
+import { Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { Context } from "../store/appContext";
 
 
@@ -86,7 +88,7 @@ const BookCard = ({ book }) => {
 
   return (
     <Card>
-      <Card.Img className="card-img-top" variant="top" src={`https://covers.openlibrary.org/b/id/${book.cover_id}-M.jpg`} />
+      <Card.Img className="card-img-top" variant="top" src={`https://covers.openlibrary.org/b/id/${book.cover_id ? book.cover_id : 'default'}-M.jpg`} />
       <Card.Body>
         <Card.Title>{book.title}</Card.Title>
         <Card.Text>{book.author_name}</Card.Text>
