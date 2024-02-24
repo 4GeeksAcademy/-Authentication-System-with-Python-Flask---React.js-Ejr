@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { Context } from '../store/appContext';
+import { Link } from "react-router-dom";
 const Login = ({setAuthAttempt}) => {
   const {store,actions} = useContext(Context);
   const [email, setEmail] = useState('');
@@ -57,11 +58,20 @@ const Login = ({setAuthAttempt}) => {
         />
       </div>
       {/* Password Ends */}
-      <div className="text-end p-3">
+      <div className="row">
+          <div className='col p-3'>
+            {/* <Link> */}
+              <p className="">
+                Sign Up
+              </p> 
+            {/* </Link */}
+          </div>
+      <div className="col text-end p-3">
         {message}
         <button className="btn btn-primary" onClick={() => onLoginClick(email, password)}>
           Login
         </button>
+      </div>
       </div>
     </div>
   );

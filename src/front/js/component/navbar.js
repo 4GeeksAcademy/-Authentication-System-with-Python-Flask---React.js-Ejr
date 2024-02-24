@@ -20,7 +20,7 @@ useEffect(()=>{
 
     return (
       <React.Fragment>
-        <nav className="navbar navbar-expand-lg navbar-dark  navbar-style">
+        <nav className="navbar navbar-expand-lg navbar-dark navbar-style">
           <div className="container-fluid">
           
           <img className="navbar-logo" src={logoImage} />
@@ -86,7 +86,7 @@ useEffect(()=>{
             <div className="text-end p-3">
             <Link to="/login" className="nav-link">
               <button className="btn btn-primary">
-                Login/Sign Up
+                Login
               </button>
                   </Link>
               
