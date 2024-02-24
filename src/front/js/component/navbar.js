@@ -44,12 +44,12 @@ export const Navbar = () => {
 	},[]);
 
 	return (
-        <nav className="navbar navbar-expand-lg bg-body-tertiary px-5">
-          <div className="container-fluid d-flex justify-content-between align-item-center col-sm-12 col-md-12 col-lg-12">
-            <div className="col-9">
+        <nav className="navbar navbar-expand-lg bg-body-tertiary px-5 row">
+          <div className="container-fluid d-flex justify-content-between align-item-center row">
+            <div className="col-sm-3 col-md-4 col-lg-3">
               {/* <a className="navbar-brand text-black fs-2" href="#"><strong>Never Hobby Alone</strong></a> */}
 
-              <img class="img-thumbnail border-0 col-3" src={ Logo } alt="" />
+              <img class="img-thumbnail border-0" src={ Logo } alt="" />
 
               {/* <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span className="navbar-toggler-icon"></span>
@@ -76,7 +76,7 @@ export const Navbar = () => {
 
             {/*Esta parte son los botones de la derecha */}
             {loggedNavbar ? 
-            (<div className="collapse navbar-collapse col-3" id="navbarNav">
+            (<div className="collapse navbar-collapse col-sm-4 col-md-4 col-lg-3" id="navbarNav">
 
               <div className="d-flex flex-row justify-content-end align-items-center">
                 <img className="img-fluid col-3" src={ ProfilePicture }/>
@@ -85,13 +85,13 @@ export const Navbar = () => {
 
               <button className="btn-400 px-4 ms-3 rounded" onClick={logOut}>Cerrar sesión</button>
             </div>):
-            (<div className="collapse navbar-collapse justify-content-end  col-3" id="navbarNav">
+            (<div className="collapse navbar-collapse d-flex justify-content-end col-sm-6 col-md-4 col-lg-3" id="navbarNav">
               <ul className="navbar-nav">
                 <li className="nav-item flex">
-                  <a className="nav-link active fs-5 text-white btn m-1 bg-400" aria-current="page" href="#" onClick={updateModalState}>Log in</a>
+                  <a className="nav-link active fs-5 text-white btn m-1 p-2 bg-400" aria-current="page" href="#" onClick={updateModalState}>Log in</a>
                 </li>
                 <li className="nav-item flex">
-                  <a className="nav-link fs-5 text-white btn m-1 bg-300" href="#" onClick={updateModalRegistrerState}>Sign up</a>
+                  <a className="nav-link fs-5 text-white btn m-1 p-2 bg-300" href="#" onClick={updateModalRegistrerState}>Sign up</a>
                 </li>
               </ul>
             </div>)
