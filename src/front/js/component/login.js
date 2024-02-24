@@ -55,11 +55,20 @@ const Login = ({ setAuthAttempt }) => {
         />
       </div>
       {/* Password Ends */}
-      <div className="text-end p-3">
+      <div className="row">
+          <div className='col p-3'>
+            {/* <Link> */}
+              <p className="">
+                Sign Up
+              </p> 
+            {/* </Link */}
+          </div>
+      <div className="col text-end p-3">
         {message}
         <button className="btn btn-primary" onClick={onLoginClick}>
           Login
         </button>
+      </div>
       </div>
     </div>
   );
