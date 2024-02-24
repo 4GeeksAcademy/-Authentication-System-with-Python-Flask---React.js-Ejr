@@ -30,7 +30,7 @@ const Home = () => {
         const data = await response.json();
         setter(data.works);
       } catch (error) {
-        console.error('Error fetching books:', error);
+        console.error('error fetch:', error);
       }
     };
 
@@ -90,7 +90,10 @@ const BookCard = ({ book }) => {
       <Card.Body>
         <Card.Title>{book.title}</Card.Title>
         <Card.Text>{book.author_name}</Card.Text>
-        <button className="btn btn-success" onClick={() => addToFavorites(book)}>VER LIBRO</button>
+		<Link to={`books${book.key}`}>
+          <button className="btn btn-success">VER LIBRO</button>
+        </Link>
+        
         <button className="btn btn-danger" onClick={() => addToFavorites(book)}><i className="fa fa-heart"></i></button>
       </Card.Body>
     </Card>
