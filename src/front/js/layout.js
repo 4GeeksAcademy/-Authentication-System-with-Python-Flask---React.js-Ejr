@@ -9,7 +9,7 @@ import { Single } from "./pages/single";
 import { Departments } from "./pages/departments";
 import { Contactus } from "./pages/contact";
 import { Exhibits } from "./pages/exhibits";
-import { Favorites } from "./pages/favorites";
+import { Profile } from "./pages/profile";
 import injectContext from "./store/appContext";
 import  Login  from "./component/login"
 import { Department } from "./pages/department";
@@ -38,7 +38,7 @@ const Layout = () => {
                         <Route element={<Departments />} path="/departments" />
                         <Route element={<Contactus />} path="/contact" />
                         <Route element={<Exhibits />} path="/exhibits" />
-                        <Route element={<Favorites />} path="/favorites" />
+                        <Route element={<Profile />} path="/profile" />
                         <Route element={<Department />} path="/department/:thedepartment" />
                         <Route element={<Museums />} path="/museums" />
                         <Route element={<Login setAuthAttempt={setAuthAttempt}/>} path="/login" />

@@ -1,37 +1,35 @@
 import React, { useContext, useState } from 'react';
 import { Context } from '../store/appContext';
-const Login = ({setAuthAttempt}) => {
-  const {store,actions} = useContext(Context);
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
+
+const Login = ({ setAuthAttempt }) => {
+  const { store, actions } = useContext(Context);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
 
+  const navigate = useNavigate(); // Initialize useNavigate
 
   const onLoginClick = async () => {
-    console.log(email, password)
-      const response = await fetch(`${process.env.BACKEND_URL}/api/login`, 
-      { method: 'POST', headers: {"Content-Type": "application/json"}, body: JSON.stringify({email:email , password:password})});
-      if (response.ok){
-        const data = await response.json()
-        // store.token = data.access_token
-        // console.log(store.token)
-        sessionStorage.setItem("token",data.access_token)
-        setAuthAttempt("made")
-      }
-      // const body = await response.json();
-      // console.log(body);
-    //   if (body.length > 0) {
-    //     // Success
-    //     setMessage(<span className="text-success">Successfully logged in</span>);
-    //   } else {
-    //     // Error
-    //     setMessage(<span className="text-danger">Invalid login, please try again.</span>);
-    //   }
-    // } catch (error) {
-    //   console.error('Login error:', error);
-    //   setMessage(<span className="text-danger">An error occurred during login.</span>);
-    // }
+    console.log(email, password);
+    const response = await fetch(`${process.env.BACKEND_URL}/api/login`, {
+      method: 'POST',
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email: email, password: password })
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      sessionStorage.setItem("token", data.access_token);
+      setAuthAttempt("made");
+
+      navigate('/profile'); // Navigate to the 'favorite' page on successful login
+    } else {
+      // Handle unsuccessful login attempts here, maybe set a message to display to the user
+      setMessage(<span className="text-danger">Invalid login, please try again.</span>);
+    }
   };
+
   return (
     <div className='mx-5 px-5'>
       <h4 className="m-1 p-2 border-bottom">Login</h4>
@@ -59,14 +57,16 @@ const Login = ({setAuthAttempt}) => {
       {/* Password Ends */}
       <div className="text-end p-3">
         {message}
-        <button className="btn btn-primary" onClick={() => onLoginClick(email, password)}>
+        <button className="btn btn-primary" onClick={onLoginClick}>
           Login
         </button>
       </div>
     </div>
   );
 };
+
 export default Login;
+
 
 
 
