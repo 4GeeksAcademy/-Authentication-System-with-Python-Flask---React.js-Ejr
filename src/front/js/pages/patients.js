@@ -1,14 +1,56 @@
 import "../../styles/home.css";
-import { Link } from "react-router-dom";
 import React, { useState, useContext } from "react";
+import { Context } from "../store/appContext";
 
 export const Patients = () => {
+    const { actions } = useContext(Context);
     const [showModal, setShowModal] = useState(false);
+    const [userData, setUserData] = useState({
+        role_id: 1,
+        username: "",
+        name: "",
+        lastname: "",
+        dni: "",
+        phone: "",
+        email: "",
+        virtual_link: ""
+    });
+ 
     const openModal = () => {
         setShowModal(true);
     };
+
     const closeModal = () => {
         setShowModal(false);
+    };
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setUserData(prevState => ({
+            ...prevState,
+            [name]: value
+        }));
+    };
+
+    const handleSubmit = async () => {
+        try {
+            await actions.createUser(
+                userData
+            );
+            closeModal();
+            setUserData({
+                role_id: 2,
+                username: "",
+                name: "",
+                lastname: "",
+                birth_date: "",
+                phone: "",
+                email: "",
+                virtual_link: ""
+            });
+        } catch (error) {
+            console.error("Error al crear usuario:", error.message);
+        }
     };
 
     return (
@@ -28,38 +70,7 @@ export const Patients = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>John</td>
-                        <td>Doe</td>
-                        <td>20/05/1992</td>
-                        <td>123-456-7890</td>
-                        <td></td>
-                        <td>Activo / Inactivo</td>
-                    </tr>
-                    <tr>
-                        <td>John</td>
-                        <td>Doe</td>
-                        <td>20/05/1992</td>
-                        <td>123-456-7890</td>
-                        <td></td>
-                        <td>Activo / Inactivo</td>
-                    </tr>
-                    <tr>
-                        <td>John</td>
-                        <td>Doe</td>
-                        <td>20/05/1992</td>
-                        <td>123-456-7890</td>
-                        <td></td>
-                        <td>Activo / Inactivo</td>
-                    </tr>
-                    <tr>
-                        <td>John</td>
-                        <td>Doe</td>
-                        <td>20/05/1992</td>
-                        <td>123-456-7890</td>
-                        <td></td>
-                        <td>Activo / Inactivo</td>
-                    </tr>
+                    
                 </tbody>
             </table>
 
@@ -73,30 +84,36 @@ export const Patients = () => {
                         <div className="modal-body">
                             <form>
                                 <div className="row">
+                                    <div className="mb-3">
+                                        <label htmlFor="userName" className="col-form-label">Nombre de usuario:</label>
+                                        <input type="text" className="form-control" id="userName" name="username" value={userData.username} onChange={handleChange} />
+                                    </div>
+                                </div>
+                                <div className="row">
                                     <div className="col-6">    
                                         <div className="mb-3">
                                             <label htmlFor="name" className="col-form-label">Nombre:</label>
-                                            <input type="text" className="form-control" id="name" />
+                                            <input type="text" className="form-control" id="name" name="name" value={userData.name} onChange={handleChange} />
                                         </div>
                                     </div>
                                     <div className="col-6">
                                         <div className="mb-3">
                                             <label htmlFor="lastName" className="col-form-label">Apellido:</label>
-                                            <input type="text" className="form-control" id="lastName" />
+                                            <input type="text" className="form-control" id="lastName" name="lastname" value={userData.lastname} onChange={handleChange} />
                                         </div>
                                     </div>
                                 </div>
                                 <div className="row">
                                     <div className="col-6">
                                         <div className="mb-3">
-                                            <label htmlFor="birth_date" className="col-form-label">Fecha de nacimiento:</label>
-                                            <input type="text" className="form-control" id="birth_date" />
+                                            <label htmlFor="dni" className="col-form-label">DNI:</label>
+                                            <input type="text" className="form-control" id="dni" name="dni" value={userData.dni} onChange={handleChange} />
                                         </div>
                                     </div>
                                     <div className="col-6">
                                         <div className="mb-3">
                                             <label htmlFor="phone" className="col-form-label">Telefono de contacto:</label>
-                                            <input type="text" className="form-control" id="phone" />
+                                            <input type="text" className="form-control" id="phone" name="phone" value={userData.phone} onChange={handleChange} />
                                         </div>
                                     </div>
                                 </div>
@@ -104,20 +121,20 @@ export const Patients = () => {
                                     <div className="col-6">
                                         <div className="mb-3">
                                             <label htmlFor="email" className="col-form-label">Email:</label>
-                                            <textarea className="form-control" id="email"></textarea>
+                                            <textarea className="form-control" id="email" name="email" value={userData.email} onChange={handleChange} />
                                         </div>
                                     </div>
                                     <div className="col-6">
                                         <div className="mb-3">
                                             <label htmlFor="virtual_link" className="col-form-label">Link a sala vitual:</label>
-                                            <textarea className="form-control" id="virtual_link"></textarea>
+                                            <textarea className="form-control" id="virtual_link" name="virtual_link" value={userData.virtual_link} onChange={handleChange} />
                                         </div>
                                     </div>
                                 </div>
                             </form>
                         </div>
                         <div className="modal-footer">
-                            <button type="button" className="btn btn-primary">Guardar</button>
+                            <button type="button" className="btn btn-primary" onClick={handleSubmit}>Guardar</button>
                         </div>
                     </div>
                 </div>

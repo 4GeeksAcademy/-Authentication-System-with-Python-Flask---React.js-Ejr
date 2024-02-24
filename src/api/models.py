@@ -1,6 +1,9 @@
 from flask_sqlalchemy import SQLAlchemy
+import datetime
 
 db = SQLAlchemy()
+
+import datetime
 
 class User(db.Model):
     __tablename__ = 'user'
@@ -8,25 +11,29 @@ class User(db.Model):
     role_id = db.Column(db.Integer, db.ForeignKey('role.id'), nullable=False)
     role = db.relationship("Role")
     username = db.Column(db.String(50), nullable=False)
-    name = db.Column (db.String(25), nullable=False)
-    lastname = db.Column (db.String(25), nullable=False)
-    birth_date = db.Column (db.Date, nullable=False)
+    name = db.Column(db.String(25), nullable=False)
+    lastname = db.Column(db.String(25), nullable=False)
+    dni = db.Column(db.String(8), nullable=False)
     email = db.Column(db.String(250), unique=True, nullable=False)
-    phone = db.Column (db.String(10), nullable=False)
+    phone = db.Column(db.String(10), nullable=False)
     password = db.Column(db.String(8), nullable=False) 
-    virtual_link = db.Column (db.String(250), nullable=False)
-    is_active = db.Column (db.Boolean, default=False )
-   
+    virtual_link = db.Column(db.String(250), nullable=True)
+    is_active = db.Column(db.Boolean, default=False)
+
+    def __init__(self, *args, **kwargs):
+        super(User, self).__init__(*args, **kwargs)
+        if not self.password:
+            self.password = self.dni
     def __repr__(self):
         return f'<User {self.name} {self.lastname}>'
     def serialize(self):
         return {
             "id": self.id,
-            "role_id": self.role,
+            "role_id": self.role.id, 
             "username": self.username,
             "name": self.name,
             "lastname": self.lastname,
-            "birth_date": self.birth_date,
+            "dni": self.dni,  
             "email": self.email,
             "phone": self.phone,
             "password": self.password,
@@ -46,6 +53,8 @@ class Role(db.Model):
             "id": self.id,
             "name": self.name
         }
+    
+    
 
 class Reservation(db.Model):
     __tablename__='reservation'

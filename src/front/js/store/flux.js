@@ -8,7 +8,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					"username": "",
 					"name": "",
 					"lastname": "",
-					"birth_date" :"",
+					"dni" :"",
 					"email": "",
 					"phone" :"",
 					"password": "",
@@ -82,38 +82,46 @@ const getState = ({ getStore, getActions, setStore }) => {
 					throw new Error(error.message);
 				}
 			},
-
-			createUser: async (username, email, password) => {
+			createUser: async (body) => {
 				try {
+					if (!body.username || !body.name || !body.lastname || !body.dni || !body.phone || !body.email) {
+						throw new Error("Por favor, complete todos los campos requeridos.");
+					}
+					
+					const role_id = 2; 
 					const resp = await fetch(process.env.BACKEND_URL + "api/signup", {
 						method: 'POST',
 						headers: {
 							'Content-Type': 'application/json',
-							'Access-Control-Allow-Origin': '*'
+							'Access-Control-Allow-Origin':'*'
 						},
-						body: JSON.stringify({ username, email, password }),
+						body: JSON.stringify(body),
 					});
+			
 					if (resp.ok) {
 						const data = await resp.json();
 						const newUser = {
-							id: data.id,
+							id: data.role_id,
 							username: data.username,
+							name: data.name,
+							lastname: data.lastname,
+							dni: data.dni,
+							phone: data.phone,
 							email: data.email,
-							password: data.password,
-							profile_picture: data.profile_picture,
-							is_active: data.is_active
+							virtual_link: data.virtual_link
 						};
 						const updatedUserList = [...getStore().user, newUser];
 						setStore({ user: updatedUserList });
 						return data;
 					} else {
-						throw new Error("That email is already associated with an account.");
+						const errorMessage = await resp.text(); 
+						throw new Error(errorMessage || "Error al crear el usuario.");
 					}
 				} catch (error) {
-					console.log("Error creating user:", error);
+					console.error("Error creating user:", error);
 					throw error;
 				}
-			},
+			},								
 			sendPasswordRecoveryRequest: async (emailInput, setRecoveryMessage, setError) => {
 				try {
 					const response = await fetch(process.env.BACKEND_URL + "api/recovery", {
@@ -137,6 +145,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					setError(error.message);
 				}
 			}
+
 		}
 	};
 };

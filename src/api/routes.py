@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, BlockedTokenList
+from api.models import db, User, BlockedTokenList, Role
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity, get_jwt
@@ -17,12 +17,9 @@ bcrypt = Bcrypt(app)
 mail = Mail(app)
 api = Blueprint('api', __name__)
 
-
 CORS(api)
 
-
 serializer = URLSafeTimedSerializer(os.environ['SECRET_KEY'])
-
 
 # Crear el token
 def generate_password_reset_token(user_id):
@@ -63,20 +60,31 @@ def send_email_recovery_email(recipient_email, link):
 @api.route('/signup', methods=['POST'])
 def create_user():
     data = request.get_json()
-    email = data.get("email")
-    password = data.get("password")
+    role_id = data.get("role_id", 1)
     username = data.get("username")
-    profile_picture = data.get("profile_picture")
+    name = data.get("name")
+    lastname = data.get("lastname")
+    dni = data.get("dni")  
+    phone = data.get("phone")
+    email = data.get("email")
+    virtual_link = data.get("virtual_link")
 
     existing_user = User.query.filter_by(email=email).first()
     if existing_user:
         return jsonify({"error": "Este correo ya está registrado."}), 400
 
+    default_password = dni
+
     new_user = User(
-        email=email,
-        password=bcrypt.generate_password_hash(password, 10).decode("utf-8"),
+        role_id=role_id,
         username=username,
-        profile_picture=profile_picture
+        name=name,
+        lastname=lastname,
+        dni=dni, 
+        email=email,
+        phone=phone,
+        password=default_password, 
+        virtual_link=virtual_link
     )
 
     db.session.add(new_user)
@@ -85,6 +93,20 @@ def create_user():
     token = create_access_token(identity=new_user.id)
 
     return jsonify({"message": "Usuario creado exitosamente", "token": token}), 201
+
+# Crear roles de usuario
+@app.route('/roles', methods=['POST'])
+def create_role():
+    data = request.json
+    if 'name' not in data:
+        return jsonify({'error': 'Missing name parameter'}), 400
+
+    name = data['name']
+    new_role = Role(name=name)
+
+    db.session.add(new_role)
+    db.session.commit()
+    return jsonify({'message': 'Role created successfully', 'role': new_role.serialize()}), 201
 
 # Eliminar un usuario
 @api.route('/users/<int:user_id>', methods=['DELETE'])
