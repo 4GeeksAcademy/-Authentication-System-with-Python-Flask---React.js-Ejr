@@ -19,7 +19,6 @@ const getState = ({ getStore, getActions, setStore }) => {
                         },
                     });
                     const data = await res.json()
-                    console.log(data.details)
                     setStore({user:data.details})
                 } catch (error) {
                     console.error(error) 
@@ -51,9 +50,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 						})
 					});
 					let data = await response.json();
-					localStorage.setItem("token",data.access_token);
-                    window.location.reload();
-						return true;
+                    if(response.status>=200 && response.status<300){
+                        localStorage.setItem("token",data.access_token);
+                        setStore({ auth: true})
+					    return true;
+                    }
+					
 				} catch (error) {
 					console.log(error);
 						return false;

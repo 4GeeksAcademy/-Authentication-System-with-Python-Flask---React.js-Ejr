@@ -30,18 +30,14 @@ export const Navbar = () => {
     window.location.reload();
   }
 
-  useEffect(async() => {
-    await actions.validate_token();
-
+  useEffect(() => {
     if (store.auth) {
       setLoggedNavbar(true);
-      await actions.obtenerInfoUsuario();
-      console.log(store.user);
+      actions.obtenerInfoUsuario();
     } else {
       setLoggedNavbar(false);
     }
-
-	},[]);
+	},[store.auth]);
 
 	return (
         <nav className="navbar navbar-expand-lg bg-body-tertiary px-5 row">
