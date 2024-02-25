@@ -6,7 +6,16 @@
     on that page only (the ones not reused in other pages).
 */
 
-.landingfixed{
-    overflow-y: hidden;
-    height: 100%;
-}
+body {
+    margin: 0;
+    overflow: hidden; /* Evita que haya desplazamiento vertical */
+  }
+  
+  #imagenFija {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw; /* Ancho del viewport */
+    height: 100vh; /* Altura del viewport */
+    object-fit: cover; /* Ajusta la imagen al contenedor sin perder la proporción y cubriendo completamente */
+  }
