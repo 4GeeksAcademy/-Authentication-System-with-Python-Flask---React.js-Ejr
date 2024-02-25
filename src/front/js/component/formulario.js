@@ -3,16 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import "../../styles/login.css";
 
-let stylebackgroundimg = {
-    backgroundColor: "#FBF9F1",
-    //  backgroundImage: `url("https://www.sattology.com/wp-content/uploads/2020/06/simbolo-do-om-ornamental_1058-101.jpg")`,
-    backgroundImage: `url("https://res.cloudinary.com/dx23woi99/image/upload/v1708370471/om_1_cmnuza.png")`,
-
-    backgroundRepeat: "no-repeat",
-    backgroundPosition: "80% 40%",
-    backgroundSize: "20%",
-}
 
 export const Formulario = () => {
 
@@ -44,8 +36,8 @@ export const Formulario = () => {
     return (
         /*añadimos esto para poder meter en toast*/
         <>
-            <ToastContainer /> {/* Coloca ToastContainer aquí */}
-            <form className="d-flex flex-column justify-content-center h-100 align-items-center opacity-50 p-5" style={stylebackgroundimg} onSubmit={handleLogin}>
+            <ToastContainer />
+            <form className="stylebackgroundimg d-flex flex-column justify-content-center h-100 align-items-center opacity-50 p-5" onSubmit={handleLogin}>
                 <div className="text-center col-11 col-sm-6 col-lg-4 mb-5">
                     <div className="card-body">
                         <h1 style={{ fontFamily: 'Poiret One' }}>Login Om</h1>
