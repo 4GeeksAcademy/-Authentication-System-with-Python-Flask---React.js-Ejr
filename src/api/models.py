@@ -84,7 +84,6 @@ class Planets(db.Model):
     climate = db.Column(db.String())
     terrain = db.Column(db.String())
     surface_water = db.Column(db.Integer)
-    url = db.Column(db.String())
     # users_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     # users = db.relationship(Users)
 

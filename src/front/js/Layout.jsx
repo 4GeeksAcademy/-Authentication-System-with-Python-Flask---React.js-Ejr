@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { ScrollToTop } from "./component/ScrollToTop.jsx";
+// import { ScrollToTop } from "./component/ScrollToTop.jsx";
 import { BackendURL } from "./component/BackendURL.jsx";
 
 import { Home } from "./pages/Home.jsx";
@@ -22,7 +22,7 @@ const Layout = () => {
     return (
         <div>
             <BrowserRouter basename={basename}>
-                <ScrollToTop>
+                {/* <ScrollToTop> */}
                     <Navbar />
                     <Routes>
                         <Route element={<Home />} path="/" />
@@ -31,7 +31,7 @@ const Layout = () => {
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
                     <Footer />
-                </ScrollToTop>
+                {/* </ScrollToTop> */}
             </BrowserRouter>
         </div>
     );
