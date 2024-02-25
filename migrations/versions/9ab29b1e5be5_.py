@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 5eeb3a07d8c5
+Revision ID: 9ab29b1e5be5
 Revises: 
-Create Date: 2024-02-19 20:12:54.811683
+Create Date: 2024-02-25 19:15:42.297665
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '5eeb3a07d8c5'
+revision = '9ab29b1e5be5'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -65,8 +65,11 @@ def upgrade():
     sa.Column('password', sa.String(length=80), nullable=False),
     sa.Column('role', sa.Enum('Student', 'Instructor', name='role'), nullable=True),
     sa.Column('id_subscription', sa.Integer(), nullable=True),
-    sa.Column('subscription_start_date', sa.String(length=120), nullable=True),
-    sa.Column('subscription_end_date', sa.String(length=120), nullable=True),
+    sa.Column('subscription_start_date', sa.DateTime(timezone=120), nullable=True),
+    sa.Column('last_payment_date', sa.DateTime(timezone=120), nullable=True),
+    sa.Column('next_payment_date', sa.DateTime(timezone=120), nullable=True),
+    sa.Column('subscription_end_date', sa.DateTime(timezone=120), nullable=True),
+    sa.Column('is_subscription_active', sa.Boolean(), nullable=True),
     sa.ForeignKeyConstraint(['id_subscription'], ['subscription.id'], ),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('email'),
