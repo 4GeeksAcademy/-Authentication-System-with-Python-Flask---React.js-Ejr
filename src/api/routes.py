@@ -41,10 +41,12 @@ def get_users():
 #endpoint para iniciar sesion con usuario existente
 @api.route("/login", methods=["POST"])
 def login():
+    print("HOLA")
     email = request.json.get("email", None)
     password = request.json.get("password", None)
     user_query = User.query.filter_by(email=email).first()
     if email != user_query.email or password != user_query.password:
+        print("CHAO")
         return jsonify({"msg": "Bad email or password"}), 401    
     access_token = create_access_token(identity=email)
     return jsonify(access_token=access_token)
