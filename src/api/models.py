@@ -18,7 +18,7 @@ class User(db.Model):
     last_payment_date = db.Column(db.String(120), unique=False, nullable=True)
     next_payment_date = db.Column(db.String(120), unique=False, nullable=True)
     subscription_end_date = db.Column(db.String(120), unique=False, nullable=True) #Hacer funcion para si el usuario se da de baja, retorne en description_end_date la fecha?
-
+    is_subscription_active = db.Column(db.Boolean(), unique=False, nullable=True)
     # is_active = db.Column(db.Boolean(), unique=False, nullable=False)
 
     def __repr__(self):

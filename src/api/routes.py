@@ -118,9 +118,9 @@ def signup():
     role = data.get('role')
     subscription_start_date = datetime.utcnow() #para que aparezca la fecha de registro en la fecha actual de rellenar el formulario
     plan = data.get('plan')
-    first_payment_date = ''
     last_payment_date = ''
     next_payment_date = ''
+    is_subscription_active = True
 
 
     # Example validation
@@ -142,7 +142,8 @@ def signup():
         role=role,
         subscription_start_date=subscription_start_date,
         next_payment_date=next_payment_date,
-        last_payment_date=last_payment_date
+        last_payment_date=last_payment_date,
+        is_subscription_active=is_subscription_active
         )
     
 
@@ -172,6 +173,7 @@ def unsubscribe():
     if user:
         if user.subscription_end_date is None: #si no hay fecha de subscripción, añade la actual
             user.subscription_end_date = datetime.utcnow()
+            user.is_subscription_active = False
             db.session.commit()
             return jsonify({
                 "msg": "User unsubscribed succesfully"
