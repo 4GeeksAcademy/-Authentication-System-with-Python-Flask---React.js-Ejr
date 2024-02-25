@@ -163,6 +163,62 @@ def signup():
     return jsonify(response_body), 200
 
 
+#endpoint para registrarse
+@api.route("/signup/freetrial", methods=["POST"])
+def signup_free_trial():
+    # El request_body o cuerpo de la solicitud ya está decodificado en formato JSON y se encuentra en la variable request.json
+    request_body = request.json
+    
+    data = request.json
+    name = data.get('name')
+    password = data.get('password')
+    last_name = data.get('last_name')
+    email = data.get('email')
+    date_of_birth = data.get('date_of_birth')
+    role = data.get('role')
+    subscription_start_date = datetime.utcnow() #para que aparezca la fecha de registro en la fecha actual de rellenar el formulario
+    subscription = Subscription.query.filter_by(plan='Free Trial').first() #seleccionamos la opcion del plan Free Trial
+    last_payment_date = ''
+    next_payment_date = ''
+    is_subscription_active = True
+
+    # Example validation
+    if not email or not password or not name or not last_name or not date_of_birth or not role:
+        return jsonify({'Error': 'All the fields are required'}), 400    # Example database interaction (using SQLAlchemy)
+    
+    # if subscription == 'Free Trial':
+    next_payment_date = subscription_start_date + timedelta(days=4) #que el proximo pago sea 3 dias después de registrarse
+    
+
+    new_user = User(
+        name=name, 
+        last_name=last_name, 
+        password=password, 
+        email=email, 
+        date_of_birth=date_of_birth, 
+        role=role,
+        subscription_start_date=subscription_start_date,
+        subscription=subscription,
+        next_payment_date=next_payment_date,
+        last_payment_date=last_payment_date,
+        is_subscription_active=is_subscription_active
+        )
+    
+    # print(new_user)
+    # Le decimos que lo agregue y que lo comitee 
+    db.session.add(new_user)
+    db.session.commit()
+
+    # generamos el token de este usuario
+    access_token = create_access_token(identity=new_user.name)
+
+    response_body = {
+        "msg": "the user has been created with the Free Trial plan",
+        "access_token": access_token
+        }
+    return jsonify(response_body), 200
+
+
 #endpoint para desuscribirse
 @api.route("/unsubscribe", methods=["POST"])
 @jwt_required()
