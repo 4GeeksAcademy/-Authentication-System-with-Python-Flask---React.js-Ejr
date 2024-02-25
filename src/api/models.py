@@ -15,6 +15,8 @@ class User(db.Model):
     id_subscription = db.Column(db.Integer, db.ForeignKey('subscription.id'))
     subscription = db.relationship('Subscription', backref='user', lazy=True)
     subscription_start_date = db.Column(db.String(120), unique=False, nullable=True)
+    last_payment_date = db.Column(db.String(120), unique=False, nullable=True)
+    next_payment_date = db.Column(db.String(120), unique=False, nullable=True)
     subscription_end_date = db.Column(db.String(120), unique=False, nullable=True) #Hacer funcion para si el usuario se da de baja, retorne en description_end_date la fecha?
 
     # is_active = db.Column(db.Boolean(), unique=False, nullable=False)

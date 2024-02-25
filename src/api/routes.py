@@ -6,7 +6,7 @@ from api.models import db, User, Subscription, Testimony, Session, Instructor, T
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
-from datetime import datetime
+from datetime import datetime, timedelta
 
 api = Blueprint('api', __name__)
 
@@ -23,7 +23,7 @@ CORS(api)
 def get_users():    
     user_query = User.query.all()
     user_query = list(map(lambda item: item.serialize(), user_query))
-    print(user_query)    
+    # print(user_query)    
     if user_query == []:
         return jsonify({
              "Msg": "No hay usuarios registrados"
@@ -36,6 +36,24 @@ def get_users():
     return jsonify(response_body), 200
     # Create a route to authenticate your users and return JWTs. The
     # create_access_token() function is used to actually generate the JWT.
+
+#api para traer un usuario en concreto
+@api.route('/user/<int:user_id>', methods=['GET'])
+# Si devuelve ok aparecerá en la consola de vscode el numero de id.
+def get_one_user(user_id):
+    user_query = User.query.filter_by(id = user_id).first() #El filter sera con el id, no se podrá repetir
+    # Te lo devuelve en crudo.
+    
+    if user_query is None:
+        return jsonify({
+            "msg": "User not found"
+        }), 404
+    
+    response_body = {
+        "msg": "ok",
+        "user": user_query.serialize() #Hacemos el serialize para mostrar la informacion tratada.
+    }
+    return jsonify(response_body), 200
 
 
 #endpoint para iniciar sesion con usuario existente
@@ -98,18 +116,33 @@ def signup():
     email = data.get('email')
     date_of_birth = data.get('date_of_birth')
     role = data.get('role')
+    subscription_start_date = datetime.utcnow() #para que aparezca la fecha de registro en la fecha actual de rellenar el formulario
+    plan = data.get('plan')
+    first_payment_date = ''
+    last_payment_date = ''
+    next_payment_date = ''
+
 
     # Example validation
     if not email or not password or not name or not last_name or not date_of_birth or not role:
         return jsonify({'Error': 'All the fields are required'}), 400    # Example database interaction (using SQLAlchemy)
     
+    if plan == "Free Trial":
+        next_payment_date = subscription_start_date + timedelta(days=4) #que el proximo pago sea 3 dias después de registrarse
+    else:
+        last_payment_date = subscription_start_date
+        next_payment_date = subscription_start_date + timedelta(days=30)
+
     new_user = User(
         name=name, 
         last_name=last_name, 
         password=password, 
         email=email, 
         date_of_birth=date_of_birth, 
-        role=role
+        role=role,
+        subscription_start_date=subscription_start_date,
+        next_payment_date=next_payment_date,
+        last_payment_date=last_payment_date
         )
     
 
@@ -127,3 +160,28 @@ def signup():
         }
     
     return jsonify(response_body), 200
+
+
+#endpoint para desuscribirse
+@api.route("/unsubscribe", methods=["POST"])
+@jwt_required()
+def unsubscribe():
+    current_user_email = get_jwt_identity()
+    user = User.query.filter_by(email=current_user_email).first()
+
+    if user:
+        if user.subscription_end_date is None: #si no hay fecha de subscripción, añade la actual
+            user.subscription_end_date = datetime.utcnow()
+            db.session.commit()
+            return jsonify({
+                "msg": "User unsubscribed succesfully"
+            }), 200
+        else:
+            return jsonify({
+                "msg": "User alredy unsubscribed"
+            }), 200
+    
+    else:
+        return jsonify({
+            "msg": "User not found"
+        }), 404
